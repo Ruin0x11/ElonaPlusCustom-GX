@@ -37,7 +37,6 @@ if instr(s,0,%1)!-1{	%c\
 #define chatList(%1,%2) list(0,listmax)=%1 : listn(0,listmax)=%2 : listmax++
 #define chatMore(%1,%2=strmore,%3=0) listmax=0:buff=%1:tc=tc*(%3=0)+(%3!0)*%3:chatList 0,%2:chatesc=1:gosub *chat_select :if scenemode:if scene_cut=1 : goto *chat_end
 
-
 #deffunc netload str netload_filename
 	netrequest netload_filename
 	repeat
@@ -53,7 +52,6 @@ if instr(s,0,%1)!-1{	%c\
 	neterror locvar_netload_estr
 	dialog lang("エラー:", "Error:") + locvar_netload_estr
 	return
-
 
 /********** ANNA CUSTOM - BEGINNING **********/
 
@@ -431,7 +429,7 @@ if instr(s,0,%1)!-1{	%c\
 
 	bdataref(0, BUFF_PUNISHMENT) = BUFF_TYPE_HEX, 1, 0
 	buffname(BUFF_PUNISHMENT) = lang("天罰", "Punishment")
-	bufftxt(0, BUFF_PUNISHMENT) = lang("は雷に打たれた！", " incur"), " the wrath of God."
+	bufftxt(0, BUFF_PUNISHMENT) = lang("は雷に打たれた！", " incur"), " the wrath of the gods."
 
 	bdataref(0, BUFF_LULWYS_TRICK) = BUFF_TYPE_BUFF, 1, 0
 	buffname(BUFF_LULWYS_TRICK) = lang("ルルウィの憑依", "Lulwy's Trick")
@@ -554,19 +552,19 @@ if instr(s,0,%1)!-1{	%c\
 	bufftxt(0, BUFF_CONCENTRATION) = lang("の集中力が向上した。", " feel"), " concentrated."
 
 	bdataref(0, BUFF_FORM_SHIFT_ALPHA) = BUFF_TYPE_BUFF, 1, 0
-	buffname(BUFF_FORM_SHIFT_ALPHA) = lang("フォルムシフト", "Form Shift")
+	buffname(BUFF_FORM_SHIFT_ALPHA) = lang("フォルムシフト", "Form Shift (A)")
 	bufftxt(0, BUFF_FORM_SHIFT_ALPHA) = lang("に変化した。", " change"), " form."
 
 	bdataref(0, BUFF_FORM_SHIFT_BETA) = BUFF_TYPE_BUFF, 1, 0
-	buffname(BUFF_FORM_SHIFT_BETA) = lang("フォルムシフト", "Form Shift")
+	buffname(BUFF_FORM_SHIFT_BETA) = lang("フォルムシフト", "Form Shift (B)")
 	bufftxt(0, BUFF_FORM_SHIFT_BETA) = lang("に変化した。", " change"), " form."
 
 	bdataref(0, BUFF_FORM_SHIFT_GAMMA) = BUFF_TYPE_BUFF, 1, 0
-	buffname(BUFF_FORM_SHIFT_GAMMA) = lang("フォルムシフト", "Form Shift")
+	buffname(BUFF_FORM_SHIFT_GAMMA) = lang("フォルムシフト", "Form Shift (G)")
 	bufftxt(0, BUFF_FORM_SHIFT_GAMMA) = lang("に変化した。", " change"), " form."
 
 	bdataref(0, BUFF_FORM_SHIFT_DELTA) = BUFF_TYPE_BUFF, 1, 0
-	buffname(BUFF_FORM_SHIFT_DELTA) = lang("フォルムシフト", "Form Shift")
+	buffname(BUFF_FORM_SHIFT_DELTA) = lang("フォルムシフト", "Form Shift (D)")
 	bufftxt(0, BUFF_FORM_SHIFT_DELTA) = lang("に変化した。", " change"), " form."
 
 	bdataref(0, BUFF_FORM_SHIFT_OMEGA) = BUFF_TYPE_BUFF, 1, 0
@@ -1054,7 +1052,7 @@ if instr(s,0,%1)!-1{	%c\
 				return
 			}
 			else {
-				buffdesc = lang("ターンごとの飢えと渇きが激しくなる", "Increase hunger and thirst")
+				buffdesc = lang("ターンごとの飢えと渇きが激しくなる", "Increase hunger")
 				return
 			}
 		}
@@ -1898,12 +1896,12 @@ if instr(s,0,%1)!-1{	%c\
 	skilldesc(SKILL_NORMAL_PERFORMER) = lang("質の高い演奏を可能にする", "Shows how good of a performer you are.")
 	skillencdesc(SKILL_NORMAL_PERFORMER) = lang("演奏の質をあげる", "makes your performance better.")
 
-	sdataref(SKILL_DATAREF_USE, SKILL_NORMAL_COOKING) = SKILL_ATTR_LER, SKILL_TYPE_SP, 15, TARGET_TYPE_SELF_ONLY, 0
+	sdataref(SKILL_DATAREF_USE, SKILL_NORMAL_COOKING) = SKILL_ATTR_LER, SKILL_TYPE_SP, 3, TARGET_TYPE_SELF_ONLY, 0
 	skillname(SKILL_NORMAL_COOKING) = lang("料理", "Cooking")
 	skilldesc(SKILL_NORMAL_COOKING) = lang("料理の腕を上げる", "Improves your cooking skill.")
 	skillencdesc(SKILL_NORMAL_COOKING) = lang("料理の腕を上げる", "enhances your cooking skill.")
 
-	sdataref(SKILL_DATAREF_USE, SKILL_NORMAL_FISHING) = SKILL_ATTR_PER, SKILL_TYPE_SP, 5, TARGET_TYPE_SELF_ONLY, 0
+	sdataref(SKILL_DATAREF_USE, SKILL_NORMAL_FISHING) = SKILL_ATTR_PER, SKILL_TYPE_SP, 1, TARGET_TYPE_SELF_ONLY, 0
 	skillname(SKILL_NORMAL_FISHING) = lang("釣り", "Fishing")
 	skilldesc(SKILL_NORMAL_FISHING) = lang("釣りを可能にする", "Displays your fishing skill.")
 	skillencdesc(SKILL_NORMAL_FISHING) = lang("釣りの腕をあげる", "makes you a better fisherman.")
@@ -2398,7 +2396,7 @@ if instr(s,0,%1)!-1{	%c\
 	skillname(SKILL_SPACT_TOUCH_OF_SLEEP) = lang("眠りの手", "Touch of Sleep")
 	skilldesc(SKILL_SPACT_TOUCH_OF_SLEEP) = lang("精神攻撃", "Sleep target")
 
-	sdataref(SKILL_DATAREF_USE, SKILL_SPACT_SHADOW_STEP) = SKILL_ATTR_WIL, SKILL_TYPE_TELEPORT, 27, TARGET_TYPE_ENEMY + SKILL_TYPE_FOV_BOLT, 0
+	sdataref(SKILL_DATAREF_USE, SKILL_SPACT_SHADOW_STEP) = SKILL_ATTR_WIL, SKILL_TYPE_TELEPORT, 5, TARGET_TYPE_ENEMY + SKILL_TYPE_FOV_BOLT, 0
 	skillname(SKILL_SPACT_SHADOW_STEP) = lang("シャドウステップ", "Shadow Step")
 	skilldesc(SKILL_SPACT_SHADOW_STEP) = lang("対象へ突撃", "Teleport to target")
 
@@ -2554,7 +2552,7 @@ if instr(s,0,%1)!-1{	%c\
 	skillname(SKILL_SPACT_MEWMEWMEW) = lang("うみみゃぁ！", "Mewmewmew!")
 	skilldesc(SKILL_SPACT_MEWMEWMEW) = lang("全体高ダメージ", "Map-wide high damage")
 
-	sdataref(SKILL_DATAREF_USE, SKILL_SPACT_DECAPITATION) = SKILL_ATTR_DEX, SKILL_TYPE_SP, 30, TARGET_TYPE_ENEMY + 1, 0
+	sdataref(SKILL_DATAREF_USE, SKILL_SPACT_DECAPITATION) = SKILL_ATTR_DEX, SKILL_TYPE_SP, 10, TARGET_TYPE_ENEMY + 1, 0
 	skillname(SKILL_SPACT_DECAPITATION) = lang("首狩り", "Decapitation")
 	skilldesc(SKILL_SPACT_DECAPITATION) = lang("器用依存攻撃/対象が瀕死なら即死", "Attack and kill low-health target")
 
@@ -2756,7 +2754,7 @@ if instr(s,0,%1)!-1{	%c\
 
 	sdataref(SKILL_DATAREF_USE, SKILL_SPACT_EXPLOSION) = SKILL_ATTR_WIL, SKILL_TYPE_SP, 30, TARGET_TYPE_ENEMY, 0
 	skillname(SKILL_SPACT_EXPLOSION) = lang("魂の一撃", "Explosion")
-	skilldesc(SKILL_SPACT_EXPLOSION) = lang("消費後15％回復/ゲージ100％消費", "Braze Fighting spirit")
+	skilldesc(SKILL_SPACT_EXPLOSION) = lang("消費後15％回復/ゲージ100％消費", "Blaze Fighting spirit")
 
 	sdataref(SKILL_DATAREF_USE, SKILL_SPACT_QUICK_USE) = SKILL_ATTR_MAG, SKILL_TYPE_SP, 40, TARGET_TYPE_SELF_ONLY, 0
 	skillname(SKILL_SPACT_QUICK_USE) = lang("モーメント", "Quick Use")
@@ -2938,7 +2936,7 @@ if instr(s,0,%1)!-1{	%c\
 	skillname(SKILL_SPACT_PSYCHIC_WAVE) = lang("サイキックウェーブ", "Psychic Wave")
 	skilldesc(SKILL_SPACT_PSYCHIC_WAVE) = lang("束縛＋LV依存の変動固定ダメージ", "Bind and level dependent fixed damage")
 
-	sdataref(SKILL_DATAREF_USE, SKILL_SPACT_READING_PARTY) = SKILL_ATTR_LER, SKILL_TYPE_SP, 25, TARGET_TYPE_SELF + SKILL_TYPE_FOV_BOLT, 500
+	sdataref(SKILL_DATAREF_USE, SKILL_SPACT_READING_PARTY) = SKILL_ATTR_LER, SKILL_TYPE_SP, 5, TARGET_TYPE_SELF + SKILL_TYPE_FOV_BOLT, 500
 	skillname(SKILL_SPACT_READING_PARTY) = lang("読書会", "Reading Party")
 	skilldesc(SKILL_SPACT_READING_PARTY) = lang("仲間と一緒に書物の解読を行う", "Reading Party")
 
@@ -2950,7 +2948,7 @@ if instr(s,0,%1)!-1{	%c\
 	skillname(SKILL_SPACT_DUPLICANE) = lang("デュプリケイン", "Dupli-Cane")
 	skilldesc(SKILL_SPACT_DUPLICANE) = lang("攻撃杖の回数減無効/威力減/Sp3消費", "Use rods without consuming charges/Reduced Power/Consumes 3 SP")
 
-	sdataref(SKILL_DATAREF_USE, SKILL_SPACT_LOCK_BREAK) = SKILL_ATTR_STR, SKILL_TYPE_SP, 30, TARGET_TYPE_SELF_ONLY, 500
+	sdataref(SKILL_DATAREF_USE, SKILL_SPACT_LOCK_BREAK) = SKILL_ATTR_STR, SKILL_TYPE_SP, 6, TARGET_TYPE_SELF_ONLY, 500
 	skillname(SKILL_SPACT_LOCK_BREAK) = lang("破錠攻撃", "Lock Break")
 	skilldesc(SKILL_SPACT_LOCK_BREAK) = lang("力を結集し鍵破壊/中身微破損", "Join forces to break the lock")
 
@@ -3066,7 +3064,7 @@ if instr(s,0,%1)!-1{	%c\
 	skillname(SKILL_SPACT_HYPER_DASH) = lang("烈走破", "Hyper Dash")
 	skilldesc(SKILL_SPACT_HYPER_DASH) = lang("押しのけ移動しつつ攻撃", "Run through and attack")
 
-	sdataref(SKILL_DATAREF_USE, SKILL_SPACT_VIOLENT_GARDEN) = SKILL_ATTR_LER, SKILL_TYPE_SP, 18, TARGET_TYPE_SELF + SKILL_TYPE_FOV_BOLT, 500
+	sdataref(SKILL_DATAREF_USE, SKILL_SPACT_VIOLENT_GARDEN) = SKILL_ATTR_LER, SKILL_TYPE_SP, 22, TARGET_TYPE_SELF + SKILL_TYPE_FOV_BOLT, 500
 	skillname(SKILL_SPACT_VIOLENT_GARDEN) = lang("暴虐の庭園", "Violent Garden")
 	skilldesc(SKILL_SPACT_VIOLENT_GARDEN) = lang("視界内束縛毒ダメージ", "Bind and poison")
 

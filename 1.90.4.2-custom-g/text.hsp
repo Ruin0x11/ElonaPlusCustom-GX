@@ -9,10 +9,10 @@
 #define global txt_impossible txt lang("それは無理だ。", "It's impossible.")
 #define global txt_shortcut txt lang("{" + sc + "}キーにショートカットを割り当てた。", "You have assigned the shortcut to {" + sc + "} key.")
 #define global txt_createitem txt lang(itemname(ci, 1) + "の作成に成功した！", "You successfully create " + itemname(ci, 1) + "!")
-#define global txt_skillname txt "*" + skillname(efid) + "* "
+#define global txt_skillname txt "*" + skillname(efid) + lang("* ", "*")
 #define global txt_guard txt lang(name(tc) + "は" + name(cdata(CDATA_TAGTEAM_PARTNER, tc)) + "をかばった！", name(tc) + " guarded " + name(cdata(CDATA_TAGTEAM_PARTNER, tc)) + ".")
-#define global txt_invfull txt lang("バックパックが一杯だ。", "Your backpack is full.")
-#define global txt_invfull2 txt lang("バックパックには、もうアイテムを入れる余裕がない。", "You can't afford to put any more items in your backpack.")
+#define global txt_invfull txt lang("バックパックが一杯だ。", "Your inventory is full.")
+#define global txt_invfull2 txt lang("バックパックには、もうアイテムを入れる余裕がない。", "Your inventory is full.")
 #define global txt_nospace txt lang("充分なスペースがない。", "There's not enough space.")
 #define global txt_exhausted txt lang("疲労し過ぎて失敗した！", "You are too exhausted!")
 #define global txt_nodrop txt lang("それはあなたの大事なものだ。<調べる>メニューから解除できる。", "It's set as no-drop. You can reset it from the <examine> menu.")
@@ -24,7 +24,6 @@
 #define global txt_noteleport txt lang("魔法の力がテレポートを防いだ。", "Magical field prevents teleportation.")
 #define global txt_cantusehere txt lang("ここでは使えない。", "You can't use it here.")
 #define global txt_targetwho txt lang("誰を対象にする？", "Who is the target?")
-#define global txt_unfair txt lang("それは反則すぎて装備できない。", "It's too unfair to equip.")
 #define global txt_notyours txt lang("それはあなたの物ではない。", "It's not your property."), lang("盗むなんてとんでもない。", "You can't just take it."), lang("それは拾えない。", "It's not yours.")
 
 #deffunc text_set
@@ -146,8 +145,8 @@
 	strfix = lang("修正", "bonus")
 	strsex = lang("性別", "sex")
 	strdoomed = lang("堕落した", "doomed")
-	strgold = lang(" gold", "gp")
-	strplat = lang(" plat", "pp")
+	strgold = lang(" gold", " gp")
+	strplat = lang(" plat", " platinum pieces")
 	strweight = "s"
 	stryes = lang("ああ", "Yes")
 	strno = lang("いや…", "No..")
@@ -366,7 +365,7 @@
 	loop
 	repeat txtsetwinwordc_arg1
 		if ( p(cnt) == 0 ) {
-			s(cnt) = lang("神は死んだ", "God is dead!")
+			s(cnt) = lang("神は死んだ", "Killed a god!")
 		}
 		if ( p(cnt) == 1 ) {
 			s(cnt) = lang("終わった…", "It's finally over...")
@@ -1250,10 +1249,10 @@
 	loop
 	repeat txtsettamer_arg1
 		if ( p(cnt) == 0 ) {
-			s(cnt) = lang("拾い食いの禁止/解除", "Prohibit of eating picked up food")
+			s(cnt) = lang("拾い食いの禁止/解除", "Prohibit eating picked up food")
 		}
 		if ( p(cnt) == 1 ) {
-			s(cnt) = lang("アイテム拾いの禁止/解除", "Prohibit of picking up items")
+			s(cnt) = lang("アイテム拾いの禁止/解除", "Prohibit picking up items")
 		}
 		if ( p(cnt) == 2 ) {
 			s(cnt) = lang("喋り方を変える", "Change the tone")
@@ -1943,13 +1942,13 @@
 		s = lang("アクリ・テオラ", "Cyber Dome"), lang("何やら奇妙な建物がある。", "You see a very strange building.")
 	}
 	if ( adata(ADATA_ID, mapname_mapid) == AREA_BEAST_FORT ) {
-		s = lang("混沌の城《獣》", "Fort of Chaos <Beast>"), lang("不気味な城がある。絶対に入ってはいけない予感がする。(危険度は80階相当)", "You see an unearthly fort. Your instinct warns you not to go there. (Approximate danger level: 80)")
+		s = lang("混沌の城《獣》", "Fort of Chaos <Beast>"), lang("不気味な城がある。絶対に入ってはいけない予感がする。(危険度は80階相当)", "You see an unearthly fort. Your instinct warns you not to go there. (Approximate danger level: 666)")
 	}
 	if ( adata(ADATA_ID, mapname_mapid) == AREA_MACHINE_FORT ) {
-		s = lang("混沌の城《機甲》", "Fort of Chaos <Machine>"), lang("不気味な城がある。絶対に入ってはいけない予感がする。(危険度は80階相当)", "You see an unearthly fort. Your instinct warns you not to go there. (Approximate danger level: 80)")
+		s = lang("混沌の城《機甲》", "Fort of Chaos <Machine>"), lang("不気味な城がある。絶対に入ってはいけない予感がする。(危険度は80階相当)", "You see an unearthly fort. Your instinct warns you not to go there. (Approximate danger level: 666)")
 	}
 	if ( adata(ADATA_ID, mapname_mapid) == AREA_COLLAPSED_FORT ) {
-		s = lang("混沌の城《奇形》", "Fort of Chaos <Collapsed>"), lang("不気味な城がある。絶対に入ってはいけない予感がする。(危険度は80階相当)", "You see an unearthly fort. Your instinct warns you not to go there. (Approximate danger level: 80)")
+		s = lang("混沌の城《奇形》", "Fort of Chaos <Collapsed>"), lang("不気味な城がある。絶対に入ってはいけない予感がする。(危険度は80階相当)", "You see an unearthly fort. Your instinct warns you not to go there. (Approximate danger level: 666)")
 	}
 	if ( adata(ADATA_ID, mapname_mapid) == AREA_PET_ARENA ) {
 		s = lang("コロシアム", "Pet Arena")
@@ -2057,13 +2056,13 @@
 		s = lang("ラスキリスの谷間・南", "South Raskilis Valley"), lang("谷の奥に街道が見える。", "You see the way to the back of the valley.")
 	}
 	if ( adata(ADATA_ID, mapname_mapid) == AREA_LOST_YLVA ) {
-		s = lang("ロストイルヴァ", "Lost Ylva")
+		s = lang("ロストイルヴァ", "Lost Irva")
 	}
 	if ( adata(ADATA_ID, mapname_mapid) == AREA_ULM_LESON ) {
 		s = lang("ウールム・レゾン", "Ulm-Leson"), lang("森の奥に謎の遺跡が見える。", "You see a ruin in the depths of the forest.")
 	}
 	if ( adata(ADATA_ID, mapname_mapid) == AREA_YLVA_LIBRARY ) {
-		s = lang("イルヴァ神立図書館", "Sacred Library of Ylva"), lang("山間に図書館がある。表にはイルヴァ神立図書館と書かれている。", "You see the library of gods.")
+		s = lang("イルヴァ神立図書館", "Sacred Library of Irva"), lang("山間に図書館がある。表にはイルヴァ神立図書館と書かれている。", "You see the library of gods.")
 	}
 	if ( adata(ADATA_ID, mapname_mapid) == AREA_BLIMP ) {
 		s = lang("エウダーナ魔導船", "Eulderna blimp"), lang("巨大な飛行船の周りに大勢の魔法使いの姿が見える。", "You see eulderna magicians around blimp.")
@@ -2156,7 +2155,7 @@
 		s = lang("重力谷", "the Gravity Valley")
 	}
 	if ( adata(ADATA_ID, mapname_mapid) == AREA_MOUNTAIN_RUIN ) {
-		s = lang("山麓遺跡", "the Foothills Ruins")
+		s = lang("山麓遺跡", "the Foothill Ruins")
 	}
 	if ( adata(ADATA_ID, mapname_mapid) == AREA_MOUNTAIN_PASS_WINDY ) {
 		s = lang("風の山道", "the Windy Mountain Pass")
@@ -2174,20 +2173,20 @@
 		s = lang("道場", "Dojo")
 	}
 	if ( adata(ADATA_ID, mapname_mapid) == AREA_DESTRUCTION_FORT ) {
-		s = lang("混沌の城《破壊》", "Fort of Chaos <Destruction>"), lang("不気味な城がある。絶対に入ってはいけない予感がする。(危険度は200階相当)", "You see an unearthly fort. Your instinct warns you not to go there. (Approximate danger level: 200) ")
+		s = lang("混沌の城《破壊》", "Fort of Chaos <Destruction>"), lang("不気味な城がある。絶対に入ってはいけない予感がする。(危険度は200階相当)", "You see an unearthly fort. Your instinct warns you not to go there. (Approximate danger level: 999) ")
 	}
 	if ( adata(ADATA_ID, mapname_mapid) == AREA_WEAPONS_FORT ) {
-		s = lang("混沌の城《機皇》", "Fort of Chaos <Weapons>"), lang("不気味な城がある。絶対に入ってはいけない予感がする。(危険度は200階相当)", "You see an unearthly fort. Your instinct warns you not to go there. (Approximate danger level: 200) ")
+		s = lang("混沌の城《機皇》", "Fort of Chaos <Weapons>"), lang("不気味な城がある。絶対に入ってはいけない予感がする。(危険度は200階相当)", "You see an unearthly fort. Your instinct warns you not to go there. (Approximate danger level: 999) ")
 	}
 	if ( adata(ADATA_ID, mapname_mapid) == AREA_HELL_FORT ) {
-		s = lang("混沌の城《地獄》", "Fort of Chaos <Hell>"), lang("不気味な城がある。絶対に入ってはいけない予感がする。(危険度は200階相当)", "You see an unearthly fort. Your instinct warns you not to go there. (Approximate danger level: 200) ")
+		s = lang("混沌の城《地獄》", "Fort of Chaos <Hell>"), lang("不気味な城がある。絶対に入ってはいけない予感がする。(危険度は200階相当)", "You see an unearthly fort. Your instinct warns you not to go there. (Approximate danger level: 999) ")
 	}
 	if ( adata(ADATA_ID, mapname_mapid) == AREA_QUEST ) {
 		if ( gdata(GDATA_QUEST) == QUEST_TYPE_HUNT ) {
-			s = lang("街近辺", "the Outskirts")
+			s = lang("街近辺", "The outskirts")
 		}
 		if ( gdata(GDATA_QUEST) == QUEST_TYPE_HUNTEX | gdata(GDATA_QUEST) == QUEST_TYPE_CONQUER ) {
-			s = lang("市街地", "Urban Area")
+			s = lang("市街地", "Urban area")
 		}
 	}
 	if ( adata(ADATA_ID, mapname_mapid) == AREA_RANDOM_DUNGEON ) {
@@ -4464,93 +4463,6 @@
 	}
 	return locvar__yoro__tone
 
-#defcfunc _miruna int _miruna_arg1
-	if ( cdata(CDATA_TONE, tc) == 0 ) {
-		if ( cdata(CDATA_TONE_SEX, tc) == 1 ) {
-			locvar__yoro__tone = "み、見ないでください…", "", "", "", ""
-			locvar__yoro_p = 1 + ("" != "") + ("" != "") + ("" != "") + ("" != "")
-			locvar__yoro__tone = locvar__yoro__tone(rnd(locvar__yoro_p)) + _mark(_miruna_arg1)
-		}
-		else {
-			locvar__yoro__tone = "うぅ…見ないでください…", "", "", "", ""
-			locvar__yoro_p = 1 + ("" != "") + ("" != "") + ("" != "") + ("" != "")
-			locvar__yoro__tone = locvar__yoro__tone(rnd(locvar__yoro_p)) + _mark(_miruna_arg1)
-		}
-	}
-	if ( cdata(CDATA_TONE, tc) == 1 ) {
-		if ( cdata(CDATA_TONE_SEX, tc) == 1 ) {
-			locvar__yoro__tone = "くっ…！見るなっ！", "", "", "", ""
-			locvar__yoro_p = 1 + ("" != "") + ("" != "") + ("" != "") + ("" != "")
-			locvar__yoro__tone = locvar__yoro__tone(rnd(locvar__yoro_p)) + _mark(_miruna_arg1)
-		}
-		else {
-			locvar__yoro__tone = "見るなっ！見るなぁぁ…！！", "", "", "", ""
-			locvar__yoro_p = 1 + ("" != "") + ("" != "") + ("" != "") + ("" != "")
-			locvar__yoro__tone = locvar__yoro__tone(rnd(locvar__yoro_p)) + _mark(_miruna_arg1)
-		}
-	}
-	if ( cdata(CDATA_TONE, tc) == 2 ) {
-		if ( cdata(CDATA_TONE_SEX, tc) == 1 ) {
-			locvar__yoro__tone = "ごめん…こっち見ないで！", "", "", "", ""
-			locvar__yoro_p = 1 + ("" != "") + ("" != "") + ("" != "") + ("" != "")
-			locvar__yoro__tone = locvar__yoro__tone(rnd(locvar__yoro_p)) + _mark(_miruna_arg1)
-		}
-		else {
-			locvar__yoro__tone = "ひっ！？駄目っ…！", "", "", "", ""
-			locvar__yoro_p = 1 + ("" != "") + ("" != "") + ("" != "") + ("" != "")
-			locvar__yoro__tone = locvar__yoro__tone(rnd(locvar__yoro_p)) + _mark(_miruna_arg1)
-		}
-	}
-	if ( cdata(CDATA_TONE, tc) == 3 ) {
-		if ( cdata(CDATA_TONE_SEX, tc) == 1 ) {
-			locvar__yoro__tone = "わ、わああああっ…！", "", "", "", ""
-			locvar__yoro_p = 1 + ("" != "") + ("" != "") + ("" != "") + ("" != "")
-			locvar__yoro__tone = locvar__yoro__tone(rnd(locvar__yoro_p)) + _mark(_miruna_arg1)
-		}
-		else {
-			locvar__yoro__tone = "いやぁぁあ…！", "", "", "", ""
-			locvar__yoro_p = 1 + ("" != "") + ("" != "") + ("" != "") + ("" != "")
-			locvar__yoro__tone = locvar__yoro__tone(rnd(locvar__yoro_p)) + _mark(_miruna_arg1)
-		}
-	}
-	if ( cdata(CDATA_TONE, tc) == 4 ) {
-		if ( cdata(CDATA_TONE_SEX, tc) == 1 ) {
-			locvar__yoro__tone = "ううっ…なんということ…", "", "", "", ""
-			locvar__yoro_p = 1 + ("" != "") + ("" != "") + ("" != "") + ("" != "")
-			locvar__yoro__tone = locvar__yoro__tone(rnd(locvar__yoro_p)) + _mark(_miruna_arg1)
-		}
-		else {
-			locvar__yoro__tone = "み…見世物ではないぞよ…！", "", "", "", ""
-			locvar__yoro_p = 1 + ("" != "") + ("" != "") + ("" != "") + ("" != "")
-			locvar__yoro__tone = locvar__yoro__tone(rnd(locvar__yoro_p)) + _mark(_miruna_arg1)
-		}
-	}
-	if ( cdata(CDATA_TONE, tc) == 5 ) {
-		if ( cdata(CDATA_TONE_SEX, tc) == 1 ) {
-			locvar__yoro__tone = "なんたる不覚ッ…！", "", "", "", ""
-			locvar__yoro_p = 1 + ("" != "") + ("" != "") + ("" != "") + ("" != "")
-			locvar__yoro__tone = locvar__yoro__tone(rnd(locvar__yoro_p)) + _mark(_miruna_arg1)
-		}
-		else {
-			locvar__yoro__tone = "ど、どうか見ないでくださいまし…！", "", "", "", ""
-			locvar__yoro_p = 1 + ("" != "") + ("" != "") + ("" != "") + ("" != "")
-			locvar__yoro__tone = locvar__yoro__tone(rnd(locvar__yoro_p)) + _mark(_miruna_arg1)
-		}
-	}
-	if ( cdata(CDATA_TONE, tc) == 6 ) {
-		if ( cdata(CDATA_TONE_SEX, tc) == 1 ) {
-			locvar__yoro__tone = "み…見ないでほしいッス…", "", "", "", ""
-			locvar__yoro_p = 1 + ("" != "") + ("" != "") + ("" != "") + ("" != "")
-			locvar__yoro__tone = locvar__yoro__tone(rnd(locvar__yoro_p)) + _mark(_miruna_arg1)
-		}
-		else {
-			locvar__yoro__tone = "見るにゃあああ…！", "", "", "", ""
-			locvar__yoro_p = 1 + ("" != "") + ("" != "") + ("" != "") + ("" != "")
-			locvar__yoro__tone = locvar__yoro__tone(rnd(locvar__yoro_p)) + _mark(_miruna_arg1)
-		}
-	}
-	return locvar__yoro__tone
-
 #defcfunc _ru int _ru_arg1
 	if ( cdata(CDATA_TONE, tc) == 0 ) {
 		if ( cdata(CDATA_TONE_SEX, tc) == 1 ) {
@@ -5868,10 +5780,6 @@
 				s = _siro(3)
 				break
 			}
-			if ( s == "見るな" ) {
-				s = _miruna(3)
-				break
-			}
 			if ( s == "onii" ) {
 				if ( jp ) {
 					if ( cdata(CDATA_SEX, CHARA_PLAYER) == 0 ) {
@@ -5982,7 +5890,11 @@
 			p = instr(buff, 0, "%BORED," + lang("JP", "EN"))
 			break
 		}
-		if ( tc < MAX_CHARA_FOLLOWER | cbit(CHARA_BIT_LIVESTOCK, tc) == 1 ) {
+		if ( tc < MAX_CHARA_FOLLOWER ) {
+			p = instr(buff, 0, "%ALLY_DEFAULT," + lang("JP", "EN"))
+			break
+		}
+		if ( cbit(CHARA_BIT_LIVESTOCK, tc) == 1 & TweakData(54, 2) == 1 ) {
 			p = instr(buff, 0, "%ALLY_DEFAULT," + lang("JP", "EN"))
 			break
 		}
@@ -6303,10 +6215,10 @@
 		s1 = lang("メルガスでガベラに話をきこう。", "I should go see Gavela in his lab in Melugas.")
 	}
 	if ( gdata(GDATA_FLAG_MAIN) >= 367 & gdata(GDATA_FLAG_MAIN) < 370 ) {
-		s1 = lang("古の庭園からメルガストでロストイルヴァへ行き、調査してまわろう。", "I need to take the Melugast from the Ancient Garden to Lost Ylva so that I can continue my investigation.")
+		s1 = lang("古の庭園からメルガストでロストイルヴァへ行き、調査してまわろう。", "I need to take the Melugast from the Ancient Garden to Lost Irva so that I can continue my investigation.")
 	}
 	if ( gdata(GDATA_FLAG_MAIN) == 370 ) {
-		s1 = lang("ロストイルヴァの調査をしつつ神の間を目指そう。", "I should investigate Lost Ylva while aiming for The Eternal Seal.")
+		s1 = lang("ロストイルヴァの調査をしつつ神の間を目指そう。", "I should investigate Lost Irva while aiming for The Eternal Seal.")
 	}
 	if ( gdata(GDATA_FLAG_MAIN) >= 370 & gdata(GDATA_FLAG_MAIN) < 400 ) {
 		s1 = lang("混沌の巨城の最深層、神の間を目指そう。", "I should try to reach the Eternal Seal, located at the lowest level of the Cradle of Chaos.")
@@ -6318,7 +6230,7 @@
 		s1 = lang("混沌の巨城の最深層、神の間を目指そう。", "I should try to reach the Eternal Seal, located at the lowest level of the Cradle of Chaos.")
 	}
 	if ( gdata(GDATA_FLAG_MAIN) >= 394 & gdata(GDATA_FLAG_MAIN) < 396 ) {
-		s1 = lang("本当にノルンの言うとおりにノースティリスと行き来が出来るのか確かめよう。", "I need to find out if I can really get back and forth between North Tyris and Lost Ylva like Norne said.")
+		s1 = lang("本当にノルンの言うとおりにノースティリスと行き来が出来るのか確かめよう。", "I need to find out if I can really get back and forth between North Tyris and Lost Irva like Norne said.")
 	}
 	if ( gdata(GDATA_FLAG_MAIN) >= 396 & gdata(GDATA_FLAG_MAIN) < 398 ) {
 		s1 = lang("サウスティリスの方向から、何かに呼ばれているような感覚がする。", "I feel as if I'm being called by something in South Tyris.")
@@ -6342,13 +6254,13 @@
 		s1 = lang("メイルーンの悪魔の討伐をエリステアに報告しよう。", "I've defeated the demon in Mayroon. I should report to Erystia in Palmia.")
 	}
 	if ( gdata(GDATA_FLAG_SUB_REGULUS_EULDERNA) > 0 & gdata(GDATA_FLAG_SUB_REGULUS_EULDERNA) < 100 ) {
-		s1 = lang("ロストイルヴァの魔導船にいるライゼルとともにエウダーナへ悪魔討伐に向かおう。", "I need to join forces with Raizel at the Eulderna Blimp in Lost Ylva in order to face the demon of Vengeance that's assaulting Eulderna.")
+		s1 = lang("ロストイルヴァの魔導船にいるライゼルとともにエウダーナへ悪魔討伐に向かおう。", "I need to join forces with Raizel at the Eulderna Blimp in Lost Irva in order to face the demon of Vengeance that's assaulting Eulderna.")
 	}
 	if ( gdata(GDATA_FLAG_SUB_REGULUS_EULDERNA) >= 100 & gdata(GDATA_FLAG_SUB_REGULUS_EULDERNA) < 1000 ) {
 		s1 = lang("エウダーナの悪魔の討伐をエリステアに報告しよう。", "The demon in Eulderna has been defeated. I should report to Erystia in Palmia.")
 	}
 	if ( gdata(GDATA_FLAG_SUB_REGULUS_KIKKASU) > 0 & gdata(GDATA_FLAG_SUB_REGULUS_KIKKASU) < 100 ) {
-		s1 = lang("ロストイルヴァ北端に存在する神艦から傭兵と一緒にキッカスへ悪魔討伐に向かおう。", "I need to join forces with the mercenary waiting at the God's Warship in the northern reaches of Lost Ylva to face the demon attacking Kikkasu.")
+		s1 = lang("ロストイルヴァ北端に存在する神艦から傭兵と一緒にキッカスへ悪魔討伐に向かおう。", "I need to join forces with the mercenary waiting at the God's Warship in the northern reaches of Lost Irva to face the demon attacking Kikkasu.")
 	}
 	if ( gdata(GDATA_FLAG_SUB_REGULUS_KIKKASU) >= 100 & gdata(GDATA_FLAG_SUB_REGULUS_KIKKASU) < 1000 ) {
 		s1 = lang("キッカスの悪魔の討伐をエリステアに報告しよう。", "The demon in Kikkasu has been defeated. I should report to Erystia in Palmia.")
@@ -6366,19 +6278,19 @@
 		s1 = lang("混沌の巨城の最深層、神の間を目指そう。", "I should try to reach the Eternal Seal, located at the lowest level of the Cradle of Chaos.")
 	}
 	if ( gdata(GDATA_FLAG_MAIN) >= 685 & gdata(GDATA_FLAG_MAIN) < 695 ) {
-		s1 = lang("神立図書館でソピアーと話そう。", "I have to talk with <Sophia> at the Sacred Library of Ylva.")
+		s1 = lang("神立図書館でソピアーと話そう。", "I have to talk with <Sophia> at the Sacred Library of Irva.")
 	}
 	if ( gdata(GDATA_FLAG_MAIN) >= 695 & gdata(GDATA_FLAG_MAIN) < 700 ) {
 		s1 = lang("混沌の巨城の最深層、神の間を目指そう。", "I should aim for the bottom of the Cradle of Chaos.")
 	}
 	if ( gdata(GDATA_FLAG_MAIN) >= 700 & gdata(GDATA_FLAG_MAIN) < 720 ) {
-		s1 = lang("混沌の神を倒す時が来た。", "It is time to beat the God of Chaos.")
+		s1 = lang("混沌の神を倒す時が来た。", "It is time to beat the god of chaos.")
 	}
 	if ( gdata(GDATA_FLAG_MAIN) >= 720 & gdata(GDATA_FLAG_MAIN) < 760 ) {
 		s1 = lang("混沌の超児を無力化しよう。", "I have to neutralize the Chaos Child.")
 	}
 	if ( gdata(GDATA_FLAG_MAIN) >= 760 & gdata(GDATA_FLAG_MAIN) < 770 ) {
-		s1 = lang("ロストイルヴァは平和になっただろうか？", "Did Lost Ylva become peaceful?")
+		s1 = lang("ロストイルヴァは平和になっただろうか？", "Did Lost Irva become peaceful?")
 	}
 	if ( gdata(GDATA_FLAG_MAIN) >= 770 & gdata(GDATA_FLAG_MAIN) < 780 ) {
 		s1 = lang("気が向いたらノルンの頼み通りヴェルニースに向かおう。", "If I have some spare time, I should visit Vernis as Norne requested.")
@@ -6424,7 +6336,7 @@
 	}
 	p = 0
 	if ( gdata(GDATA_FLAG_SUB_ROGUE) != 0 ) {
-		s = lang("お酒泥棒 Lv2相当", "[Lv. 2] Booze Thief")
+		s = lang("お酒泥棒 Lv2相当", "[Lv. 2] Booze Thieves")
 		p = gdata(GDATA_FLAG_SUB_ROGUE)
 		if ( val == 1 ) {
 			if ( p >= 1000 ) {
@@ -6592,7 +6504,7 @@
 	}
 	p = 0
 	if ( gdata(GDATA_FLAG_SUB_WIFE) != 0 ) {
-		s = lang("嫁泥棒 Lv3相当", "[Lv. 3] Bride Thief")
+		s = lang("嫁泥棒 Lv3相当", "[Lv. 3] Wife Collector")
 		p = gdata(GDATA_FLAG_SUB_WIFE)
 		if ( val == 1 ) {
 			if ( p >= 1000 ) {
@@ -6636,7 +6548,7 @@
 	}
 	p = 0
 	if ( gdata(GDATA_FLAG_SUB_WAR) != 0 ) {
-		s = lang("防衛戦線の死闘 Lv17相当", "[Lv. 17] Struggle to the Death in the Defense Line")
+		s = lang("防衛戦線の死闘 Lv17相当", "[Lv. 17] Defense Line")
 		p = gdata(GDATA_FLAG_SUB_WAR)
 		if ( val == 1 ) {
 			if ( p >= 1000 ) {
@@ -6670,7 +6582,7 @@
 	}
 	p = 0
 	if ( gdata(GDATA_FLAG_SUB_YEEK) != 0 ) {
-		s = lang("騎士昇格試験の手伝い Lv8相当", "[Lv. 8] Helping with the Knight Promotion Exam")
+		s = lang("騎士昇格試験の手伝い Lv8相当", "[Lv. 8] Novice Knight")
 		p = gdata(GDATA_FLAG_SUB_YEEK)
 		if ( val == 1 ) {
 			if ( p >= 1000 ) {
@@ -6748,7 +6660,7 @@
 	}
 	p = 0
 	if ( gdata(GDATA_FLAG_SUB_VEIN) != 0 ) {
-		s = lang("幻の絵本 Lv12相当", "[Lv. 12] Illusory Books")
+		s = lang("幻の絵本 Lv12相当", "[Lv. 12] Rare Books")
 		p = gdata(GDATA_FLAG_SUB_VEIN)
 		if ( val == 1 ) {
 			if ( p >= 1000 ) {
@@ -6766,7 +6678,7 @@
 	}
 	p = 0
 	if ( gdata(GDATA_FLAG_SUB_PYRAMID) != 0 ) {
-		s = lang("ピラミッドからの挑戦状 Lv16相当", "[Lv. 16] Pyramid's Trial")
+		s = lang("ピラミッドからの挑戦状 Lv16相当", "[Lv. 16] Challenge of the Pyramid")
 		p = gdata(GDATA_FLAG_SUB_PYRAMID)
 		if ( val == 1 ) {
 			if ( p >= 1000 ) {
@@ -6810,7 +6722,7 @@
 	}
 	p = 0
 	if ( gdata(GDATA_FLAG_SUB_BIOLOGIST) != 0 ) {
-		s = lang("生化学者の野望 Lv5相当", "[Lv. 5] Ambitious Biochemist")
+		s = lang("生化学者の野望 Lv5相当", "[Lv. 5] Biochemist's Ambition")
 		p = gdata(GDATA_FLAG_SUB_BIOLOGIST)
 		if ( val == 1 ) {
 			if ( p >= 1000 ) {
@@ -6828,7 +6740,7 @@
 	}
 	p = 0
 	if ( gdata(GDATA_FLAG_SUB_SEWER) != 0 ) {
-		s = lang("下水道大作戦 Lv23相当", "[Lv. 23] Sewer Grand Strategy")
+		s = lang("下水道大作戦 Lv23相当", "[Lv. 23] Sewer Sweeping")
 		p = gdata(GDATA_FLAG_SUB_SEWER)
 		if ( val == 1 ) {
 			if ( p >= 1000 ) {
@@ -6854,7 +6766,7 @@
 	}
 	p = 0
 	if ( gdata(GDATA_FLAG_SUB_GUILD_MAGE) != 0 ) {
-		s = lang("魔術士ギルド審査", "[Lv. Any] Joining the Mages Guild")
+		s = lang("魔術士ギルド審査", "Joining the Mages Guild")
 		p = gdata(GDATA_FLAG_SUB_GUILD_MAGE)
 		if ( val == 1 ) {
 			if ( p >= 1000 ) {
@@ -6872,7 +6784,7 @@
 	}
 	p = 0
 	if ( gdata(GDATA_FLAG_SUB_GUILD_THIEF) != 0 ) {
-		s = lang("盗賊ギルド審査", "[Lv. Any] Joining the Thieves Guild")
+		s = lang("盗賊ギルド審査", "Joining the Thieves Guild")
 		p = gdata(GDATA_FLAG_SUB_GUILD_THIEF)
 		if ( val == 1 ) {
 			if ( p >= 1000 ) {
@@ -6890,7 +6802,7 @@
 	}
 	p = 0
 	if ( gdata(GDATA_FLAG_SUB_GUILD_FIGHTER) != 0 ) {
-		s = lang("戦士ギルド審査", "[Lv. Any] Joining the Fighters Guild")
+		s = lang("戦士ギルド審査", "Joining the Fighters Guild")
 		p = gdata(GDATA_FLAG_SUB_GUILD_FIGHTER)
 		if ( val == 1 ) {
 			if ( p >= 1000 ) {
@@ -6908,7 +6820,7 @@
 	}
 	p = 0
 	if ( gdata(GDATA_FLAG_SUB_MAGE_1) != 0 ) {
-		s = lang("魔術士ギルドノルマ", "[Lv. Any] The Mages Guild Quota")
+		s = lang("魔術士ギルドノルマ", "The Mages Guild Quota")
 		p = gdata(GDATA_FLAG_SUB_MAGE_1)
 		if ( val == 1 ) {
 			if ( p >= 1000 ) {
@@ -6926,7 +6838,7 @@
 	}
 	p = 0
 	if ( gdata(GDATA_FLAG_SUB_FIGHTER_1) != 0 ) {
-		s = lang("戦士ギルドノルマ", "[Lv. Any] The Fighters Guild Quota")
+		s = lang("戦士ギルドノルマ", "The Fighters Guild Quota")
 		p = gdata(GDATA_FLAG_SUB_FIGHTER_1)
 		if ( val == 1 ) {
 			if ( p >= 1000 ) {
@@ -6944,7 +6856,7 @@
 	}
 	p = 0
 	if ( gdata(GDATA_FLAG_SUB_THIEF_1) != 0 ) {
-		s = lang("盗賊ギルドノルマ", "[Lv. Any] The Thieves Guild Quota")
+		s = lang("盗賊ギルドノルマ", "The Thieves Guild Quota")
 		p = gdata(GDATA_FLAG_SUB_THIEF_1)
 		if ( val == 1 ) {
 			if ( p >= 1000 ) {
@@ -6954,7 +6866,7 @@
 	}
 	if ( val == 0 ) {
 		if ( p == 1 ) {
-			s1 = lang("盗賊ギルドのランクを上げるためには、あと金貨" + gdata(GDATA_FLAG_GUILD_THIEF_NORMA) + "枚分の盗品を売りさばき、ダルフィのギルドの番人に話しかける必要がある。", "To raise the rank in the Thieves Guild, I need to sell stolen goods worth total of " + gdata(GDATA_FLAG_GUILD_THIEF_NORMA) + "gp and talk to the guild guard in Derphy.")
+			s1 = lang("盗賊ギルドのランクを上げるためには、あと金貨" + gdata(GDATA_FLAG_GUILD_THIEF_NORMA) + "枚分の盗品を売りさばき、ダルフィのギルドの番人に話しかける必要がある。", "To raise the rank in the Thieves Guild, I need to sell stolen goods worth total of " + gdata(GDATA_FLAG_GUILD_THIEF_NORMA) + " gold pieces and talk to the guild guard in Derphy.")
 			talk_conv s1, 40 - en * 4
 			buff += "(" + s + ")\n" + s1
 			noteadd ""
@@ -7476,7 +7388,7 @@
 	}
 	p = 0
 	if ( gdata(GDATA_FLAG_SUB_THE_LIFE_IN_THIS_WORLD) != 0 ) {
-		s = lang("この世界に生きる者 Lv50相当", "[Lv. 50] The Life in This World")
+		s = lang("この世界に生きる者 Lv50相当", "[Lv. 50] The Life of This World")
 		p = gdata(GDATA_FLAG_SUB_THE_LIFE_IN_THIS_WORLD)
 		if ( val == 1 ) {
 			if ( p >= 1000 ) {
@@ -7504,7 +7416,7 @@
 	}
 	if ( val == 0 ) {
 		if ( p == gdata(GDATA_FLAG_SUB_THE_TRUE_APPEARANCE) * (gdata(GDATA_FLAG_SUB_THE_TRUE_APPEARANCE) < 5) + (gdata(GDATA_FLAG_SUB_THE_TRUE_APPEARANCE) == 0) ) {
-			s1 = lang("神立図書館のマリアからアイテム集めを頼まれている。", "Maria in the Sacred Library of Ylva has asked me to collect some items for her.")
+			s1 = lang("神立図書館のマリアからアイテム集めを頼まれている。", "Maria in the Sacred Library of Irva has asked me to collect some items for her.")
 			talk_conv s1, 40 - en * 4
 			buff += "(" + s + ")\n" + s1
 			noteadd ""
@@ -7512,7 +7424,7 @@
 	}
 	if ( val == 0 ) {
 		if ( p == 5 ) {
-			s1 = lang("神立図書館のアリスに薬をあげよう。", "I need to give the medicine to Alice at the Sacred Library of Ylva.")
+			s1 = lang("神立図書館のアリスに薬をあげよう。", "I need to give the medicine to Alice at the Sacred Library of Irva.")
 			talk_conv s1, 40 - en * 4
 			buff += "(" + s + ")\n" + s1
 			noteadd ""
@@ -7646,7 +7558,7 @@
 			}
 			if ( val == 0 ) {
 				if ( p == gdata(GDATA_FLAG_SUB_SOPHIA_THE_WISE) ) {
-					s1 = lang("神立図書館にいるソピアーに手伝えることはないか尋ねよう。", "I need to help out Sophia in the Sacred Library of Ylva.")
+					s1 = lang("神立図書館にいるソピアーに手伝えることはないか尋ねよう。", "I need to help out Sophia in the Sacred Library of Irva.")
 					talk_conv s1, 40 - en * 4
 					buff += "(" + s + ")\n" + s1
 					noteadd ""
@@ -7730,7 +7642,7 @@
 	}
 	if ( val == 0 ) {
 		if ( p == 1 ) {
-			s1 = lang("ルストール仙窟のイルマが武具作成の技法についての情報を知りたがっている。", "Irma in the Enchanted Cave in Lost Ylva wants to know the hill's ancient forging techniques.")
+			s1 = lang("ルストール仙窟のイルマが武具作成の技法についての情報を知りたがっている。", "Irma in the Enchanted Cave in Lost Irva wants to know the hill's ancient forging techniques.")
 			talk_conv s1, 40 - en * 4
 			buff += "(" + s + ")\n" + s1
 			noteadd ""
@@ -7778,7 +7690,7 @@
 	}
 	if ( val == 0 ) {
 		if ( p == 7 ) {
-			s1 = lang("日を改めてまたルストール仙窟を訪れよう。", "I should go visit the Enchanted Cave in Lost Ylva on another day.")
+			s1 = lang("日を改めてまたルストール仙窟を訪れよう。", "I should go visit the Enchanted Cave in Lost Irva on another day.")
 			talk_conv s1, 40 - en * 4
 			buff += "(" + s + ")\n" + s1
 			noteadd ""
@@ -7786,7 +7698,7 @@
 	}
 	if ( val == 0 ) {
 		if ( p == 8 ) {
-			s1 = lang("ルストール仙窟真北の山のふもとにある廃屋でイルマ・サリムと合流しよう。", "I should go visit Irma and Thalia at the old house due north from the Enchanted Cave in Lost Ylva.")
+			s1 = lang("ルストール仙窟真北の山のふもとにある廃屋でイルマ・サリムと合流しよう。", "I should go visit Irma and Thalia at the old house due north from the Enchanted Cave in Lost Irva.")
 			talk_conv s1, 40 - en * 4
 			buff += "(" + s + ")\n" + s1
 			noteadd ""
@@ -7794,7 +7706,7 @@
 	}
 	if ( val == 0 ) {
 		if ( p == 9 ) {
-			s1 = lang("ルストール仙窟真北の山のふもとにある廃屋でイルマ・サリムと合流しよう。", "I should go visit Irma and Thalia at the old house due north from the Enchanted Cave in Lost Ylva.")
+			s1 = lang("ルストール仙窟真北の山のふもとにある廃屋でイルマ・サリムと合流しよう。", "I should go visit Irma and Thalia at the old house due north from the Enchanted Cave in Lost Irva.")
 			talk_conv s1, 40 - en * 4
 			buff += "(" + s + ")\n" + s1
 			noteadd ""
@@ -7854,7 +7766,7 @@
 	}
 	p = 0
 	if ( gdata(GDATA_FLAG_SUB_RESEARCH_DESTRUCTION_CRISIS) != 0 ) {
-		s = lang("調査隊壊滅の危機 Lv180相当", "[Lv. 180] Research Destruction Crisis")
+		s = lang("調査隊壊滅の危機 Lv180相当", "[Lv. 180] Researcher Crisis")
 		p = gdata(GDATA_FLAG_SUB_RESEARCH_DESTRUCTION_CRISIS)
 		if ( val == 1 ) {
 			if ( p >= 1000 ) {
@@ -7981,7 +7893,7 @@
 		}
 	}
 	s(6) = ""
-	s(5) = lang("金貨" + qdata(QDATA_REWARD, rq) + "枚", "" + qdata(QDATA_REWARD, rq) + "gp")
+	s(5) = lang("金貨" + qdata(QDATA_REWARD, rq) + "枚", "" + qdata(QDATA_REWARD, rq) + " gold pieces")
 	if ( qdata(QDATA_REWARD_ITEM, rq) != QUEST_REWARD_NONE ) {
 		if ( qdata(QDATA_REWARD_ITEM, rq) < FILTER_WEAPON ) {
 			s(5) += lang("と", " and ") + _reward(qdata(QDATA_REWARD_ITEM, rq))
@@ -8274,10 +8186,6 @@
 				s = _kure(3)
 				break
 			}
-			if ( s == "見るな" ) {
-				s = _miruna(3)
-				break
-			}
 			if ( s == "onii" ) {
 				if ( jp ) {
 					if ( cdata(CDATA_SEX, CHARA_PLAYER) == 0 ) {
@@ -8503,7 +8411,7 @@
 			txt lang("「やっと帰ってきたんやな！さぁ、今日もバリバリ稼ぐんやで！」", cnvtalk("You finally came back! Let's get to work making money!"))
 		}
 		if ( txtgod_godid == GOD_KUMIROMI ) {
-			txt lang("「おかえり…待っていた」", cnvtalk("Welcome back...I was...waiting for you."))
+			txt lang("「おかえり…待っていた」", cnvtalk("Welcome back... I was... waiting for you."))
 		}
 	}
 	if ( txtgod_flavor == GOD_TEXT_JOIN ) {
