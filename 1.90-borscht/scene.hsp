@@ -1,0 +1,4025 @@
+*scene
+	procid = (procid + 1) \ 4
+	proclist(procid) = "Scene:Init" + " ct:" + ct
+	if ( gdata(GDATA_STORY_BOOKMARK) < sceneid ) {
+		gdata(GDATA_STORY_BOOKMARK) = sceneid
+	}
+	if ( cfg_story == 0 | (en == 1 & sceneid != 0) ) {
+		return
+	}
+	scene_cut = 0
+	msgtempprev = msgtemp
+	scenemode = TRUE
+	sdim actor, 20, 3, 10
+	file = "void"
+	y1 = 60
+	y2 = windowh - 60
+	notesel buff
+	noteload lang("scene1.hsp", "scene2.hsp")
+	s = "{" + sceneid + "}"
+	scidx = instr(buff, 0, s)
+	if ( scidx == (-1) ) {
+		goto *scene_end
+	}
+	scidx += strlen(s)
+
+*scene_loop
+	procid = (procid + 1) \ 4
+	proclist(procid) = "Scene:Loop" + " ct:" + ct
+	await
+	stick a, 128
+	if ( a == 128 ) {
+		scene_cut = 1
+	}
+	if ( scene_cut == 1 ) {
+		goto *scene_end
+	}
+	notesel buff
+	noteload lang("scene1.hsp", "scene2.hsp")
+	cs = 0
+	key_list = key_enter
+	scidxtop = scidx
+	scidxtop = 0
+	val = 0
+
+*scene_loop_WHILE1
+	if ( 1 == 0 ) {
+		goto *scene_loop_WEND1
+	}
+	p(1) = instr(buff, scidx, "{") + scidx
+	if ( p(1) == (-1) ) {
+		goto *scene_end
+	}
+	p(2) = instr(buff, scidx, "}") + scidx + 1
+	if ( p(2) == (-1) ) {
+		goto *scene_end
+	}
+	if ( scidxtop != 0 ) {
+		scidx = p(1)
+		goto *scene_loop_WEND1
+	}
+	s = strmid(buff, p(1), p(2) - p(1))
+	scidx = p(2) + 1
+	if ( s == "{txt}" ) {
+		scidxtop = scidx
+		val = 0
+		goto *scene_loop_WHILE1_CONTINUE
+	}
+	if ( instr(s, 0, "{chat_") != (-1) ) {
+		rc = int(strmid(s, 6, 1))
+		scidxtop = scidx
+		val = 1
+		goto *scene_loop_WHILE1_CONTINUE
+	}
+	if ( s == "{fade}" ) {
+		gsel BUFFER_BUF
+		color 0, 0, 0
+		boxf
+		gsel BUFFER_SCREEN
+		gosub *screen_fadeOut
+		goto *scene_loop_WHILE1_CONTINUE
+	}
+	if ( s == "{fadein}" ) {
+		repeat 25
+			redraw 1
+			pos 0, 0
+			gmode 4, , , cnt * 15
+			pos 0, 0
+			gcopy BUFFER_BUF, 0, 0, windoww, windowh
+			gmode 2
+			await 10
+		loop
+		goto *scene_loop_WHILE1_CONTINUE
+	}
+	if ( s == "{wait}" ) {
+		scidxtop = scidx
+		val = 2
+		goto *scene_loop_WHILE1_CONTINUE
+	}
+	if ( s == "{end}" ) {
+		await 1000
+		goto *scene_end
+	}
+	p(3) = instr(buff, scidx, "\"") + scidx + 1
+	p(4) = instr(buff, p(3), "\"") + p(3)
+	s(1) = strmid(buff, p(3), p(4) - p(3))
+	scidx = p(4) + 1
+	if ( s == "{pic}" ) {
+		file = s(1)
+		goto *scene_loop_WHILE1_CONTINUE
+	}
+	if ( s == "{mc}" ) {
+		music = MUSICLIST_NONE2
+		if ( s(1) == "mcUnrest2" ) {
+			music = MUSICLIST_MCUNREST2
+		}
+		if ( s(1) == "mcTown1" ) {
+			music = MUSICLIST_MCTOWN1
+		}
+		if ( s(1) == "mcTown2" ) {
+			music = MUSICLIST_MCTOWN2
+		}
+		if ( s(1) == "mcTown3" ) {
+			music = MUSICLIST_MCTOWN3
+		}
+		if ( s(1) == "mcTown4" ) {
+			music = MUSICLIST_MCTOWN4
+		}
+		if ( s(1) == "mcDungeon1" ) {
+			music = MUSICLIST_MCDUNGEON1
+		}
+		if ( s(1) == "mcDungeon2" ) {
+			music = MUSICLIST_MCDUNGEON2
+		}
+		if ( s(1) == "mcDungeon3" ) {
+			music = MUSICLIST_MCDUNGEON3
+		}
+		if ( s(1) == "mcDungeon4" ) {
+			music = MUSICLIST_MCDUNGEON4
+		}
+		if ( s(1) == "mcDungeon5" ) {
+			music = MUSICLIST_MCDUNGEON5
+		}
+		if ( s(1) == "mcDungeon6" ) {
+			music = MUSICLIST_MCDUNGEON6
+		}
+		if ( s(1) == "mcPuti" ) {
+			music = MUSICLIST_MCPUTI
+		}
+		if ( s(1) == "mcBoss" ) {
+			music = MUSICLIST_MCBOSS
+		}
+		if ( s(1) == "mcBoss2" ) {
+			music = MUSICLIST_MCBOSS2
+		}
+		if ( s(1) == "mcVictory" ) {
+			music = MUSICLIST_MCVICTORY
+		}
+		if ( s(1) == "mcOpening" ) {
+			music = MUSICLIST_MCOPENING
+		}
+		if ( s(1) == "mcLastBoss" ) {
+			music = MUSICLIST_MCLASTBOSS
+		}
+		if ( s(1) == "mcHome" ) {
+			music = MUSICLIST_MCHOME
+		}
+		if ( s(1) == "mcLonely" ) {
+			music = MUSICLIST_MCLONELY
+		}
+		if ( s(1) == "mcChaos" ) {
+			music = MUSICLIST_MCCHAOS
+		}
+		if ( s(1) == "mcMarch1" ) {
+			music = MUSICLIST_MCMARCH1
+		}
+		if ( s(1) == "mcMarch2" ) {
+			music = MUSICLIST_MCMARCH2
+		}
+		if ( s(1) == "mcMarch3" ) {
+			music = MUSICLIST_MCMARCH3
+		}
+		if ( s(1) == "mcArena" ) {
+			music = MUSICLIST_MCARENA
+		}
+		if ( s(1) == "mcFanfare" ) {
+			music = MUSICLIST_MCFANFARE
+		}
+		if ( s(1) == "mcVillage1" ) {
+			music = MUSICLIST_MCVILLAGE1
+		}
+		if ( s(1) == "mcBattle1" ) {
+			music = MUSICLIST_MCBATTLE1
+		}
+		if ( s(1) == "mcCasino" ) {
+			music = MUSICLIST_MCCASINO
+		}
+		if ( s(1) == "mcCoda" ) {
+			music = MUSICLIST_MCCODA
+		}
+		if ( s(1) == "mcRuin" ) {
+			music = MUSICLIST_MCRUIN
+		}
+		if ( s(1) == "mcWedding" ) {
+			music = MUSICLIST_MCWEDDING
+		}
+		if ( s(1) == "mcPetArena" ) {
+			music = MUSICLIST_MCPETARENA
+		}
+		if ( s(1) == "mcUnrest" ) {
+			music = MUSICLIST_MCUNREST
+		}
+		if ( s(1) == "mcTown5" ) {
+			music = MUSICLIST_MCTOWN5
+		}
+		if ( s(1) == "mcTown6" ) {
+			music = MUSICLIST_MCTOWN6
+		}
+		if ( s(1) == "mcField1" ) {
+			music = MUSICLIST_MCFIELD1
+		}
+		if ( s(1) == "mcField2" ) {
+			music = MUSICLIST_MCFIELD2
+		}
+		if ( s(1) == "mcField3" ) {
+			music = MUSICLIST_MCFIELD3
+		}
+		if ( s(1) == "mcMemory" ) {
+			music = MUSICLIST_MCMEMORY
+		}
+		if ( s(1) == "mcIntro" ) {
+			music = MUSICLIST_MCINTRO
+		}
+		if ( s(1) == "mcBattle2" ) {
+			music = MUSICLIST_MCBATTLE2
+		}
+		if ( s(1) == "mcBoss3" ) {
+			music = MUSICLIST_MCBOSS3
+		}
+		if ( s(1) == "mcTown7" ) {
+			music = MUSICLIST_MCTOWN7
+		}
+		if ( s(1) == "mcTown8" ) {
+			music = MUSICLIST_MCTOWN8
+		}
+		if ( s(1) == "mcTown9" ) {
+			music = MUSICLIST_MCTOWN9
+		}
+		if ( s(1) == "mcDungeon7" ) {
+			music = MUSICLIST_MCDUNGEON7
+		}
+		if ( s(1) == "mcDungeon8" ) {
+			music = MUSICLIST_MCDUNGEON8
+		}
+		if ( s(1) == "mcDungeon9" ) {
+			music = MUSICLIST_MCDUNGEON9
+		}
+		if ( s(1) == "mcLog" ) {
+			music = MUSICLIST_MCLOG
+		}
+		if ( s(1) == "mcVoyage" ) {
+			music = MUSICLIST_MCVOYAGE
+		}
+		if ( s(1) == "mcOpening2" ) {
+			music = MUSICLIST_MCOPENING2
+		}
+		if ( s(1) == "mcMaid" ) {
+			music = MUSICLIST_MCMAID
+		}
+		if ( s(1) == "mcLonely2" ) {
+			music = MUSICLIST_MCLONELY2
+		}
+		if ( s(1) == "mcMemory2" ) {
+			music = MUSICLIST_MCMEMORY2
+		}
+		if ( s(1) == "mcOpening3" ) {
+			music = MUSICLIST_MCOPENING3
+		}
+		if ( s(1) == "mcLastBoss3" ) {
+			music = MUSICLIST_MCLASTBOSS3
+		}
+		if ( s(1) == "mcBoss4" ) {
+			music = MUSICLIST_MCBOSS4
+		}
+		if ( s(1) == "mcUnrest3" ) {
+			music = MUSICLIST_MCUNREST3
+		}
+		if ( s(1) == "mcDungeon10" ) {
+			music = MUSICLIST_MCDUNGEON10
+		}
+		if ( s(1) == "mcFest" ) {
+			music = MUSICLIST_MCFEST
+		}
+		if ( s(1) == "mcJapan" ) {
+			music = MUSICLIST_MCJAPAN
+		}
+		if ( s(1) == "mcSand" ) {
+			music = MUSICLIST_MCSAND
+		}
+		if ( s(1) == "mcBoss5" ) {
+			music = MUSICLIST_MCBOSS5
+		}
+		if ( s(1) == "mcTown10" ) {
+			music = MUSICLIST_MCTOWN10
+		}
+		if ( s(1) == "mcDungeon11" ) {
+			music = MUSICLIST_MCDUNGEON11
+		}
+		if ( s(1) == "mcLost1" ) {
+			music = MUSICLIST_MCLOST1
+		}
+		if ( s(1) == "mcLost2" ) {
+			music = MUSICLIST_MCLOST2
+		}
+		if ( s(1) == "mcLost3" ) {
+			music = MUSICLIST_MCLOST3
+		}
+		if ( s(1) == "mcTown11" ) {
+			music = MUSICLIST_MCTOWN11
+		}
+		if ( s(1) == "mcTown12" ) {
+			music = MUSICLIST_MCTOWN12
+		}
+		if ( s(1) == "mcSad" ) {
+			music = MUSICLIST_MCSAD
+		}
+		if ( s(1) == "mcEND" ) {
+			music = MUSICLIST_MCEND
+		}
+		if ( s(1) == "mcEND2" ) {
+			music = MUSICLIST_MCEND2
+		}
+		if ( s(1) == "mcHuge" ) {
+			music = MUSICLIST_MCHUGE
+		}
+		if ( s(1) == "mcLastBoss4" ) {
+			music = MUSICLIST_MCLASTBOSS4
+		}
+		if ( s(1) == "mcLastBoss5" ) {
+			music = MUSICLIST_MCLASTBOSS5
+		}
+		if ( music == MUSICLIST_NONE2 ) {
+			musicfile(MUSICLIST_SCENE_MUSIC) = s(1)
+			music = MUSICLIST_SCENE_MUSIC
+			gosub *music_play
+		}
+		else {
+			gosub *music_play
+		}
+		goto *scene_loop_WHILE1_CONTINUE
+	}
+	if ( s == "{se}" ) {
+		folder = exedir + "sound\\"
+		sndload folder + s(1), SOUNDLIST_SCENE_SOUND
+		snd SOUNDLIST_SCENE_SOUND
+		goto *scene_loop_WHILE1_CONTINUE
+	}
+	if ( instr(s, 0, "{actor_") != (-1) ) {
+		rc = int(strmid(s, 7, 1))
+		csvsort s, s(1), 44
+		actor(0, rc) = s, s(1), s(2)
+	}
+
+*scene_loop_WHILE1_CONTINUE
+	goto *scene_loop_WHILE1
+
+*scene_loop_WEND1
+	buff = strmid(buff, scidxtop, scidx - scidxtop)
+	p = noteinfo(0)
+	repeat noteinfo(0)
+		noteget s, p - cnt - 1
+		if ( s == "" ) {
+			notedel p - cnt - 1
+		}
+	loop
+	redraw 0
+	gsel BUFFER_BUF
+	gmode 0
+	pos 0, 0
+	picload exedir + "\\graphic\\" + file + devfile + ".bmp", 1
+	pos 0, y1
+	gzoom windoww, y2 - y1, 4, 0, 0, 640, 480
+	gmode 2
+	color 5, 5, 5
+	boxf 0, 0, windoww, y1
+	boxf 0, y2, windoww, windowh
+	if ( val == 1 ) {
+		gsel BUFFER_SCREEN
+		redraw 0
+		gmode 0
+		pos 0, 0
+		gcopy BUFFER_BUF, 0, 0, windoww, windowh
+		gmode 2
+		tc = CHARA_PLAYER
+		gosub *chat
+		goto *scene_loop
+	}
+	if ( val == 2 ) {
+		gsel BUFFER_SCREEN
+		redraw 0
+		gmode 0
+		pos 0, 0
+		gcopy BUFFER_BUF, 0, 0, windoww, windowh
+		gmode 2
+		redraw 1
+		await 1000
+		goto *scene_loop
+	}
+	font lang(cfg_font1, cfg_font2), 16 - en * 2, 0
+	x = 44
+	repeat noteinfo(0)
+		y = y1 + 31 + (9 - noteinfo(0) / 2 + cnt) * 20
+		noteget s, cnt
+		x = windoww / 2 - strlen(s) * 4
+		dx = 80 + strlen(s) * 8
+		if ( dx < 180 ) {
+			dx = 0
+		}
+		pos windoww / 2, y + 4
+		gmode 6, 344, 72, 70
+		grotate BUFFER_INF, 456, 144, 0, dx, 72
+		color 20, 20, 20
+	loop
+	x = 40
+	repeat noteinfo(0)
+		y = y1 + 28 + (9 - noteinfo(0) / 2 + cnt) * 20
+		noteget s, cnt
+		x = windoww / 2 - strlen(s) * 4
+		color 10, 10, 10
+		pos x, y
+		bmes s, 240, 240, 240
+	loop
+	gsel BUFFER_SCREEN
+	color 500, 500, 500
+	repeat 15, 1
+		redraw 0
+		await 30
+		stick a, 128
+		if ( a == 128 ) {
+			scene_cut = 1
+		}
+		gmode 4, , , cnt * 16
+		pos 0, 0
+		gcopy BUFFER_BUF, 0, 0, windoww, windowh
+		redraw 1
+	loop
+	gmode 2
+	redraw 0
+	gmode 0
+	pos 0, 0
+	gcopy BUFFER_BUF, 0, 0, windoww, windowh
+	gmode 2
+	redraw 0
+	locvar_anime_halt_x = windoww - 120
+	locvar_anime_halt_y = windowh - 60
+	anime_halt
+	redraw 0
+	color 5, 5, 5
+	boxf 0, 0, windoww, y1
+	boxf 0, y2, windoww, windowh
+	goto *scene_loop
+
+*scene_end
+	procid = (procid + 1) \ 4
+	proclist(procid) = "Scene:Exit" + " ct:" + ct
+	gsel BUFFER_BUF
+	color 0, 0, 0
+	boxf
+	gsel BUFFER_SCREEN
+	gosub *screen_fadeOut
+	scenemode = FALSE
+	msgtemp = msgtempprev
+	msgtempprev = ""
+	return
+
+#deffunc ai_check
+	repeat 3
+		if ( dir == 2 ) {
+			cdata(CDATA_X_NEW, cc) = cdata(CDATA_X, cc) + 1
+			cdata(CDATA_Y_NEW, cc) = dirchk(cnt, p) + cdata(CDATA_Y, cc)
+		}
+		if ( dir == 1 ) {
+			cdata(CDATA_X_NEW, cc) = cdata(CDATA_X, cc) - 1
+			cdata(CDATA_Y_NEW, cc) = dirchk(cnt, p) + cdata(CDATA_Y, cc)
+		}
+		if ( dir == 3 ) {
+			cdata(CDATA_Y_NEW, cc) = cdata(CDATA_Y, cc) - 1
+			cdata(CDATA_X_NEW, cc) = dirchk(cnt, p) + cdata(CDATA_X, cc)
+		}
+		if ( dir == 0 ) {
+			cdata(CDATA_Y_NEW, cc) = cdata(CDATA_Y, cc) + 1
+			cdata(CDATA_X_NEW, cc) = dirchk(cnt, p) + cdata(CDATA_X, cc)
+		}
+		cell_check cdata(CDATA_X_NEW, cc), cdata(CDATA_Y_NEW, cc)
+		if ( cellaccess == 1 ) {
+			break
+		}
+		if ( cellchara != (-1) ) {
+			if ( cdata(CDATA_RELATION, cc) == RELATION_ALLY ) {
+				if ( cdata(CDATA_RELATION, cellchara) == RELATION_ENEMY ) {
+					cdata(CDATA_TARGET, cc) = cellchara
+				}
+				else {
+					blockedbychara = 1
+				}
+			}
+			if ( cdata(CDATA_RELATION, cc) == RELATION_ENEMY ) {
+				if ( cdata(CDATA_RELATION, cellchara) == RELATION_ALLY ) {
+					cdata(CDATA_TARGET, cc) = cellchara
+				}
+				else {
+					blockedbychara = 1
+				}
+			}
+		}
+		if ( cellfeat != (-1) ) {
+			if ( cellfeat == 21 ) {
+				cellaccess = 1
+				break
+			}
+		}
+	loop
+	if ( cellaccess == 1 ) {
+		return 1
+	}
+	return 0
+
+*ai_turn
+	if ( cdata(CDATA_CHAIN_ATTACK_COUNT, cc) != 0 ) {
+		cdata(CDATA_CHAIN_ATTACK_COUNT, cc) = 0
+	}
+	if ( cc < MAX_CHARA_FOLLOWER ) {
+		if ( cdata(CDATA_ALLIED, cc) == 0 ) {
+			cdata(CDATA_ALLIED, cc) = 100
+		}
+	}
+	if ( cdata(CDATA_ID, cc) == CREATURE_ID_WEREWOLF ) {
+		if ( cc < MAX_CHARA_FOLLOWER | cdata(CDATA_ROLE, cc) == ROLE_SPECIAL | cdata(CDATA_ALLIED, cc) == 100 ) {
+			if ( cdata(CDATA_PIC, cc) == xy2pic(4, 4) | cdata(CDATA_PIC, cc) == xy2pic(21, 4) ) {
+				cdata(CDATA_PIC, cc) = xy2pic(0, 23)
+			}
+			if ( cdata(CDATA_PIC, cc) == xy2pic(5, 4) | cdata(CDATA_PIC, cc) == xy2pic(23, 9) ) {
+				cdata(CDATA_PIC, cc) = xy2pic(1, 23)
+			}
+			evname = lang("人狼", "werewolf")
+			evold = lang("市民", "citizen")
+			if ( strmid(cdatan(CDATAN_NAME, cc), 0, strlen(evold)) == evold ) {
+				cdatan(CDATAN_NAME, cc) = evname + strmid(cdatan(CDATAN_NAME, cc), strlen(evold), strlen(cdatan(CDATAN_NAME, cc)) - strlen(evold))
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, cc) == CREATURE_ID_WEREWOLF_DETECTIVE ) {
+		if ( cc < MAX_CHARA_FOLLOWER | cdata(CDATA_ROLE, cc) == ROLE_SPECIAL | cdata(CDATA_ALLIED, cc) == 100 ) {
+			if ( cdata(CDATA_PIC, cc) == xy2pic(22, 23) ) {
+				if ( cdata(CDATA_SEX, cc) == 0 ) {
+					cdata(CDATA_PIC, cc) = 759 + 6 * 1000
+				}
+				else {
+					cdata(CDATA_PIC, cc) = 760 + 6 * 1000
+				}
+			}
+			evname = lang("人狼探偵", "werewolf detective")
+			evold = lang("探偵", "detective")
+			if ( strmid(cdatan(CDATAN_NAME, cc), 0, strlen(evold)) == evold ) {
+				cdatan(CDATAN_NAME, cc) = evname + strmid(cdatan(CDATAN_NAME, cc), strlen(evold), strlen(cdatan(CDATAN_NAME, cc)) - strlen(evold))
+			}
+		}
+	}
+	if ( cdata(CDATA_EVOCHAT_POINTS, cc) > 0 ) {
+		if ( cc != CHARA_PLAYER ) {
+			if ( cdata(CDATA_POWER_GAUGE, cc) < cdata(CDATA_EVOCHAT_POINTS, cc) ) {
+				cdata(CDATA_POWER_GAUGE, cc) = cdata(CDATA_EVOCHAT_POINTS, cc)
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, cc) == CREATURE_ID_FOX_SPIRIT ) {
+		if ( cc < MAX_CHARA_FOLLOWER | cdata(CDATA_ROLE, cc) == ROLE_SPECIAL | cdata(CDATA_ALLIED, cc) == 100 ) {
+			if ( cdata(CDATA_PIC, cc) == xy2pic(4, 4) | cdata(CDATA_PIC, cc) == xy2pic(21, 4) | cdata(CDATA_PIC, cc) == xy2pic(5, 4) | cdata(CDATA_PIC, cc) == xy2pic(23, 9) ) {
+				cdata(CDATA_PIC, cc) = xy2pic(5, 23)
+			}
+			evname = lang("妖狐", "fox")
+			evold = lang("市民", "citizen")
+			if ( strmid(cdatan(CDATAN_NAME, cc), 0, strlen(evold)) == evold ) {
+				cdatan(CDATAN_NAME, cc) = evname + strmid(cdatan(CDATAN_NAME, cc), strlen(evold), strlen(cdatan(CDATAN_NAME, cc)) - strlen(evold))
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, cc) == CREATURE_ID_SUNBARARIAN ) {
+		if ( cc < MAX_CHARA_FOLLOWER | cdata(CDATA_ROLE, cc) == ROLE_SPECIAL | cdata(CDATA_ALLIED, cc) == 100 ) {
+			if ( cdata(CDATA_PIC, cc) == xy2pic(4, 4) | cdata(CDATA_PIC, cc) == xy2pic(21, 4) | cdata(CDATA_PIC, cc) == xy2pic(5, 4) | cdata(CDATA_PIC, cc) == xy2pic(23, 9) ) {
+				cdata(CDATA_PIC, cc) = xy2pic(6, 23)
+				evname = lang("スンバラリア星人", "sunbararian")
+				evold = lang("市民", "citizen")
+				if ( strmid(cdatan(CDATAN_NAME, cc), 0, strlen(evold)) == evold ) {
+					cdatan(CDATAN_NAME, cc) = evname + strmid(cdatan(CDATAN_NAME, cc), strlen(evold), strlen(cdatan(CDATAN_NAME, cc)) - strlen(evold))
+				}
+			}
+		}
+	}
+	if ( cdata(CDATA_IN_TAGTEAM, cc) == 1 ) {
+		cdata(CDATA_X, cc) = cdata(CDATA_X, cdata(CDATA_TAGTEAM_PARTNER, cc))
+		cdata(CDATA_Y, cc) = cdata(CDATA_Y, cdata(CDATA_TAGTEAM_PARTNER, cc))
+	}
+	if ( cdata(CDATA_ID, cc) == CREATURE_ID_AIKAGE_THE_SHINOBI_MASK ) {
+		if ( cdata(CDATA_PIC, cc) == xy2pic(0, 25) ) {
+			cdata(CDATA_PIC, cc) = xy2pic(20, 4)
+		}
+	}
+	if ( cdata(CDATA_PIC, cc) == xy2pic(13, 22) ) {
+		if ( findbuff(cc, BUFF_RUN_WILDLY) != (-1) ) {
+			cdata(CDATA_PIC, cc) = xy2pic(25, 24)
+		}
+	}
+	if ( cdata(CDATA_PIC, cc) == xy2pic(25, 24) ) {
+		if ( findbuff(cc, BUFF_RUN_WILDLY) == (-1) ) {
+			cdata(CDATA_PIC, cc) = xy2pic(13, 22)
+		}
+	}
+	if ( cdata(CDATA_PIC, tc) == xy2pic(7, 26) ) {
+		if ( findbuff(cc, BUFF_RUN_WILDLY) == (-1) ) {
+			cdata(CDATA_PIC, tc) = xy2pic(6, 26)
+			if ( cdata(CDATA_PORTRAIT, tc) == 87 ) {
+				cdata(CDATA_PORTRAIT, tc) = 86
+			}
+		}
+	}
+	if ( cdata(CDATA_PIC, cc) == xy2pic(18, 17) ) {
+		if ( findbuff(cc, BUFF_RUN_WILDLY) != (-1) | findbuff(cc, BUFF_BOOST) != (-1) ) {
+			cdata(CDATA_PIC, cc) = xy2pic(20, 19)
+		}
+	}
+	if ( cdata(CDATA_PIC, cc) == xy2pic(20, 19) ) {
+		if ( findbuff(cc, BUFF_RUN_WILDLY) == (-1) & findbuff(cc, BUFF_BOOST) == (-1) ) {
+			cdata(CDATA_PIC, cc) = xy2pic(18, 17)
+		}
+	}
+	if ( cdata(CDATA_SHIFT_FORM, cc) > SHIFT_FORM_NONE ) {
+		if ( findbuff(cc, BUFF_FORM_SHIFT_ALPHA) == (-1) & findbuff(cc, BUFF_FORM_SHIFT_BETA) == (-1) & findbuff(cc, BUFF_FORM_SHIFT_GAMMA) == (-1) & findbuff(cc, BUFF_FORM_SHIFT_DELTA) == (-1) & findbuff(cc, BUFF_FORM_SHIFT_OMEGA) == (-1) ) {
+			hikae = cdata(CDATA_PORTRAIT, cc)
+			cdata(CDATA_PORTRAIT, cc) = cdata(CDATA_FORM_SHIFT_PORTRAIT, cc)
+			cdata(CDATA_FORM_SHIFT_PORTRAIT, cc) = hikae
+			hikae = cdata(CDATA_FACE, cc)
+			cdata(CDATA_FACE, cc) = cdata(CDATA_FORM_SHIFT_FACE, cc)
+			cdata(CDATA_FORM_SHIFT_FACE, cc) = hikae
+			hikae = cdatan(CDATAN_NAME, cc)
+			cdatan(CDATAN_NAME, cc) = cdatan(CDATAN_FORM_SHIFT_NAME, cc)
+			cdatan(CDATAN_FORM_SHIFT_NAME, cc) = hikae
+			hikae = pcc(PCC_HAIR, cc)
+			pcc(PCC_HAIR, cc) = cdata(CDATA_FORM_SHIFT_PCC_HAIR, cc)
+			cdata(CDATA_FORM_SHIFT_PCC_HAIR, cc) = hikae
+			hikae = pcc(PCC_SUB_HAIR, cc)
+			pcc(PCC_SUB_HAIR, cc) = cdata(CDATA_FORM_SHIFT_PCC_SUB_HAIR, cc)
+			cdata(CDATA_FORM_SHIFT_PCC_SUB_HAIR, cc) = hikae
+			hikae = pcc(PCC_BODY, cc)
+			pcc(PCC_BODY, cc) = cdata(CDATA_FORM_SHIFT_PCC_BODY, cc)
+			cdata(CDATA_FORM_SHIFT_PCC_BODY, cc) = hikae
+			hikae = pcc(PCC_CLOTH, cc)
+			pcc(PCC_CLOTH, cc) = cdata(CDATA_FORM_SHIFT_PCC_CLOTH, cc)
+			cdata(CDATA_FORM_SHIFT_PCC_CLOTH, cc) = hikae
+			hikae = pcc(PCC_PANTS, cc)
+			pcc(PCC_PANTS, cc) = cdata(CDATA_FORM_SHIFT_PCC_PANTS, cc)
+			cdata(CDATA_FORM_SHIFT_PCC_PANTS, cc) = hikae
+			hikae = pcc(PCC_ETC1, cc)
+			pcc(PCC_ETC1, cc) = cdata(CDATA_FORM_SHIFT_PCC_ETC1, cc)
+			cdata(CDATA_FORM_SHIFT_PCC_ETC1, cc) = hikae
+			hikae = pcc(PCC_ETC2, cc)
+			pcc(PCC_ETC2, cc) = cdata(CDATA_FORM_SHIFT_PCC_ETC2, cc)
+			cdata(CDATA_FORM_SHIFT_PCC_ETC2, cc) = hikae
+			hikae = pcc(PCC_ETC3, cc)
+			pcc(PCC_ETC3, cc) = cdata(CDATA_FORM_SHIFT_PCC_ETC3, cc)
+			cdata(CDATA_FORM_SHIFT_PCC_ETC3, cc) = hikae
+			hikae = pcc(PCC_EYE, cc)
+			pcc(PCC_EYE, cc) = cdata(CDATA_FORM_SHIFT_PCC_EYE, cc)
+			cdata(CDATA_FORM_SHIFT_PCC_EYE, cc) = hikae
+			hikae = pcc(PCC_RIDE, cc)
+			pcc(PCC_RIDE, cc) = cdata(CDATA_FORM_SHIFT_PCC_RIDE, cc)
+			cdata(CDATA_FORM_SHIFT_PCC_RIDE, cc) = hikae
+			create_pcpic cc, 1
+			hikae = cdata(CDATA_PIC, cc)
+			cdata(CDATA_PIC, cc) = cdata(CDATA_FORM_SHIFT_PIC, cc)
+			cdata(CDATA_FORM_SHIFT_PIC, cc) = hikae
+			hikae = cdata(CDATA_CHARA_PIC, cc)
+			cdata(CDATA_CHARA_PIC, cc) = cdata(CDATA_CHARA_PIC_ORG, cc)
+			cdata(CDATA_CHARA_PIC_ORG, cc) = hikae
+			cdata(CDATA_SHIFT_FORM, cc) = SHIFT_FORM_NONE
+		}
+	}
+	if ( cdata(CDATA_ID, cc) == CREATURE_ID_SLEEPING_GIANT ) {
+		if ( cdata(CDATA_CONDITION_SLEEP, cc) == 0 ) {
+			if ( rnd(2) == 0 ) {
+				cdata(CDATA_CONDITION_SLEEP, cc) += 20
+			}
+			else {
+				if ( findbuff(cc, BUFF_BOOST) == (-1) ) {
+					addbuff cc, BUFF_BOOST, 20, 10
+				}
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, cc) == CREATURE_ID_THE_CHAOS_CHILD ) {
+		if ( gdata(GDATA_FLAG_MAIN) < 760 ) {
+			tekagen = limit(sdata(SKILL_ATTR_SPD, cc) / sdata(SKILL_ATTR_SPD, CHARA_PLAYER), 1, 10)
+			if ( rnd(20) > 0 ) {
+				cdata(CDATA_TARGET, cc) = 0
+			}
+			if ( cdata(CDATA_HP, cc) >= cdata(CDATA_MAX_HP, cc) / 2 ) {
+				if ( rnd(tekagen + 1) != 0 ) {
+					goto *turn_end
+				}
+			}
+			if ( dist(cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), cdata(CDATA_X, cc), cdata(CDATA_Y, cc)) <= 1 ) {
+				if ( cdata(CDATA_HP, cc) >= cdata(CDATA_MAX_HP, cc) / 2 ) {
+					if ( rnd(tekagen + 1) != 0 ) {
+						goto *turn_end
+					}
+				}
+			}
+			gdata(GDATA_FLAG_CHAOS_CHILD_FORGET)++
+			if ( gdata(GDATA_FLAG_MAIN) >= 750 ) {
+				cdata(CDATA_AI_AGGRO, cc) = 0
+				act = SKILL_SPACT_DO_NOTHING
+				if ( gdata(GDATA_FLAG_CHAOS_CHILD_FORGET) == 210 ) {
+					snd SOUNDLIST_CURSE2
+					animeload 8, cc
+					txtef COLOR_RED
+					txt lang(name(cc) + "は戦っている理由を忘れた。", name(tc) + " forgot what had been why fighting.")
+				}
+				if ( gdata(GDATA_FLAG_CHAOS_CHILD_FORGET) == 220 ) {
+					snd SOUNDLIST_CURSE2
+					animeload 8, cc
+					txtef COLOR_RED
+					txt lang(name(cc) + "は歩き方を忘れた。", name(tc) + " forgot how to walk.")
+				}
+				if ( gdata(GDATA_FLAG_CHAOS_CHILD_FORGET) == 230 ) {
+					snd SOUNDLIST_CURSE2
+					animeload 8, cc
+					txtef COLOR_RED
+					txt lang(name(cc) + "は呼吸の仕方を忘れた。", name(tc) + " forgot how to breath.")
+				}
+				if ( gdata(GDATA_FLAG_CHAOS_CHILD_FORGET) == 240 ) {
+					snd SOUNDLIST_CURSE2
+					animeload 8, cc
+					txtef COLOR_RED
+					txt lang(name(cc) + "は闘争本能を忘れた。", name(tc) + " forgot the struggle instinct.")
+				}
+				if ( gdata(GDATA_FLAG_CHAOS_CHILD_FORGET) == 250 ) {
+					snd SOUNDLIST_CURSE2
+					animeload 8, cc
+					txtef COLOR_RED
+					txt lang(name(cc) + "は全てを忘れ、完全に動きを止めた…。", name(tc) + " forgot everything and completely stopped moving....")
+					gdata(GDATA_FLAG_MAIN) = 755
+					evadd EVENT_NAGAREW
+					goto *turn_end
+				}
+			}
+			if ( gdata(GDATA_FLAG_MAIN) == 740 ) {
+				if ( gdata(GDATA_FLAG_CHAOS_CHILD_FORGET) >= 200 | cdata(CDATA_HP, cc) < cdata(CDATA_MAX_HP, cc) / 4 ) {
+					healhp cc, cdata(CDATA_MAX_HP, cc) / 4
+					gdata(GDATA_FLAG_CHAOS_CHILD_FORGET) = 200
+					gdata(GDATA_FLAG_MAIN) = 745
+					evadd EVENT_NAGAREW
+					goto *turn_end
+				}
+			}
+			if ( gdata(GDATA_FLAG_MAIN) == 730 ) {
+				if ( gdata(GDATA_FLAG_CHAOS_CHILD_FORGET) >= 150 | cdata(CDATA_HP, cc) < cdata(CDATA_MAX_HP, cc) / 2 ) {
+					healhp cc, cdata(CDATA_MAX_HP, cc) / 4
+					gdata(GDATA_FLAG_CHAOS_CHILD_FORGET) = 150
+					gdata(GDATA_FLAG_MAIN) = 735
+					animeid = ANIMATION_CHAOS_CHILD
+					anix = cdata(CDATA_X, cc)
+					aniy = cdata(CDATA_Y, cc)
+					gosub *anime
+					cdata(CDATA_CONDITION_BIND, cc) = 999
+					evadd EVENT_NAGAREW
+					goto *turn_end
+				}
+			}
+			if ( gdata(GDATA_FLAG_MAIN) == 720 ) {
+				if ( gdata(GDATA_FLAG_CHAOS_CHILD_FORGET) >= 100 | cdata(CDATA_HP, cc) < cdata(CDATA_MAX_HP, cc) * 3 / 4 ) {
+					healhp cc, cdata(CDATA_MAX_HP, cc) / 4
+					gdata(GDATA_FLAG_CHAOS_CHILD_FORGET) = 100
+					gdata(GDATA_FLAG_MAIN) = 725
+					evadd EVENT_NAGAREW
+					goto *turn_end
+				}
+			}
+		}
+	}
+	if ( cbit(CHARA_BIT_BRUSHED, cc) & cbit(CHARA_BIT_LIVESTOCK, cc) == TRUE ) {
+		goto *turn_end
+	}
+	if ( cdata(CDATA_ID, cc) == CREATURE_ID_RAIZEL_THE_OLD_WIZARD ) {
+		if ( cdata(CDATA_ALLIED, cc) == 0 ) {
+			if ( gdata(GDATA_FLAG_MAIN) >= 760 ) {
+				goto *turn_end
+			}
+		}
+	}
+	if ( cbit(CHARA_BIT_SANDBAG, cc) ) {
+		if ( synccheck(cc, -1) ) {
+			if ( rnd(30) == 0 ) {
+				tc = cc
+				txt lang("「もっとぶって" + _yo(2) + "」", cnvtalk("Release me now.")), lang("「こんなことして、許さない" + _yo() + "」", cnvtalk("I won't forget this.")), lang("「何をする" + _nda(2) + "」", cnvtalk("Hit me!"))
+			}
+		}
+		cdata(CDATA_AI_AGGRO, cc) = 0
+		goto *turn_end
+	}
+	if ( cbit(CHARA_BIT_LIVESTOCK, cc) ) {
+		goto *ai_calmMove
+	}
+	if ( cbit(CHARA_BIT_NECRO, cc) ) {
+		if ( synccheck(cc, -1) == 0 ) {
+			if ( rnd(2) == 0 ) {
+				if ( mdata(MDATA_TYPE) != MAP_TYPE_WORLD ) {
+					if ( gdata(GDATA_AREA) != AREA_PET_ARENA ) {
+						tc = CHARA_PLAYER
+						efid = SKILL_SPACT_SHADOW_STEP
+						gosub *effect
+						goto *turn_end
+					}
+				}
+			}
+		}
+	}
+	if ( synccheck(cc, -1) == 0 ) {
+		if ( cdata(CDATA_CONDITION_BLIND, CHARA_PLAYER) == 0 ) {
+			if ( rnd(4) == 0 ) {
+				if ( mdata(MDATA_TYPE) != MAP_TYPE_WORLD ) {
+					if ( cbit(CHARA_BIT_LEASHED, cc) ) {
+						if ( gdata(GDATA_AREA) != AREA_PET_ARENA ) {
+							if ( cc < MAX_CHARA_FOLLOWER | cbit(CHARA_BIT_LIVESTOCK, cc) == TRUE ) {
+								cdata(CDATA_AI_AGGRO, cc) = 0
+								cdata(CDATA_TARGET, cc) = 0
+							}
+							else {
+								if ( rnd(2) ) {
+									txt lang("「痛っ！」", cnvtalk("Ouch!")), lang("「やめて！」", cnvtalk("Stop it!"))
+									hostileaction CHARA_PLAYER, cc
+								}
+								if ( rnd(4) == 0 ) {
+									cbitmod CHARA_BIT_LEASHED, cc, FALSE
+									txtef COLOR_SKY_BLUE
+									txt lang(name(cc) + "は巻きついてたひもをほどいた。", name(cc) + " untangle" + _s(cc) + " the leash.")
+								}
+							}
+							tc = CHARA_PLAYER
+							efid = SKILL_SPACT_SHADOW_STEP
+							gosub *effect
+							goto *turn_end
+						}
+					}
+				}
+			}
+		}
+	}
+	if ( cbit(CHARA_BIT_SUICIDE_SWITCH, cc) ) {
+		tlocx = cdata(CDATA_X, cc)
+		tlocy = cdata(CDATA_Y, cc)
+		efid = SKILL_SPACT_SUICIDE_ATTACK
+		gosub *effect
+		goto *turn_end
+	}
+	if ( cc < MAX_CHARA_FOLLOWER ) {
+		if ( gdata(GDATA_FLAG_GAME_MODE) == 1 & cdata(CDATA_RELATION, cc) == RELATION_DISLIKE & cdata(CDATA_IMPRESSION, cc) > 0 ) {
+			cdata(CDATA_RELATION, cc) = RELATION_ALLY
+			cdata(CDATA_TARGET, cc) = 0
+			cdata(CDATA_AI_AGGRO, cc) = 0
+		}
+	}
+	if ( cdata(CDATA_RELATION, cc) >= RELATION_ALLY ) {
+		cdata(CDATA_AI_AGGRO, cc)--
+		if ( cdata(CDATA_TARGET, cc) == 0 | cdata(CDATA_AI_AGGRO, cc) <= 0 | (cdata(CDATA_RELATION, cdata(CDATA_TARGET, cc)) >= RELATION_HATE & cdata(CDATA_TARGET, cdata(CDATA_TARGET, cc)) != cc) ) {
+			cdata(CDATA_TARGET, cc) = 0
+			if ( pcattacker != 0 ) {
+				if ( cdata(CDATA_RELATION, pcattacker) <= RELATION_ENEMY ) {
+					if ( cdata(CDATA_EXIST, pcattacker) == CHAR_STATE_ALIVE ) {
+						if ( fov_los(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), cdata(CDATA_X, pcattacker), cdata(CDATA_Y, pcattacker)) ) {
+							cdata(CDATA_AI_AGGRO, cc) = 5
+							cdata(CDATA_TARGET, cc) = pcattacker
+						}
+					}
+				}
+			}
+			if ( cdata(CDATA_TARGET, CHARA_PLAYER) != 0 ) {
+				if ( cdata(CDATA_EXIST, cdata(CDATA_TARGET, CHARA_PLAYER)) == CHAR_STATE_ALIVE ) {
+					cdata(CDATA_TARGET, cc) = cdata(CDATA_TARGET, CHARA_PLAYER)
+				}
+			}
+			if ( cdata(CDATA_TARGET, cc) == 0 ) {
+				if ( cc < MAX_CHARA_FOLLOWER | cdata(CDATA_ALLIED, cc) == 100 ) {
+					if ( cdata(CDATA_DIRECTIVE_MODE, cc) != DIRECTIVE_MODE_DEFENSIVE & cdata(CDATA_DIRECTIVE_MODE, cc) != DIRECTIVE_MODE_TALKING ) {
+						gosub *findTarget
+					}
+				}
+			}
+			if ( cdata(CDATA_RELATION, cdata(CDATA_TARGET, cc)) > RELATION_ENEMY ) {
+				cdata(CDATA_TARGET, cc) = 0
+			}
+			if ( cdata(CDATA_TARGET, cc) == 0 ) {
+				if ( cdata(CDATA_TARGET, CHARA_PLAYER) != 0 & cdata(CDATA_RELATION, cdata(CDATA_TARGET, CHARA_PLAYER)) <= RELATION_ENEMY ) {
+					if ( cdata(CDATA_EXIST, cdata(CDATA_TARGET, CHARA_PLAYER)) == CHAR_STATE_ALIVE ) {
+						if ( fov_los(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), cdata(CDATA_X, cdata(CDATA_TARGET, CHARA_PLAYER)), cdata(CDATA_Y, cdata(CDATA_TARGET, CHARA_PLAYER))) ) {
+							cdata(CDATA_AI_AGGRO, cc) = 5
+							cdata(CDATA_TARGET, cc) = cdata(CDATA_TARGET, CHARA_PLAYER)
+						}
+					}
+				}
+			}
+		}
+		if ( cbit(CHARA_BIT_INVISIBLE, cdata(CDATA_TARGET, cc)) == TRUE ) {
+			if ( cbit(CHARA_BIT_SEE_INVISIBLE, cc) == FALSE ) {
+				if ( cdata(CDATA_CONDITION_WET, cdata(CDATA_TARGET, cc)) == 0 ) {
+					if ( rnd(5) ) {
+						cdata(CDATA_TARGET, cc) = 0
+					}
+				}
+			}
+		}
+		if ( gdata(GDATA_FLAG_GAME_MODE) == 1 & cdata(CDATA_IMPRESSION, cc) <= 0 & cc != CHARA_PLAYER ) {
+			cdata(CDATA_RELATION, cc) = RELATION_DISLIKE
+			cdata(CDATA_TARGET, cc) = 0
+			cdata(CDATA_AI_AGGRO, cc) = 5
+		}
+		if ( gdata(GDATA_AREA) != AREA_PET_ARENA & cdata(CDATA_CONDITION_BRAINWASH, cc) > 0 & cc != CHARA_PLAYER ) {
+			cdata(CDATA_RELATION, cc) = RELATION_DISLIKE
+			cdata(CDATA_TARGET, cc) = 0
+			cdata(CDATA_AI_AGGRO, cc) = 25
+		}
+	}
+	if ( cdata(CDATA_TARGET, cc) != 0 ) {
+		if ( cdata(CDATA_EXIST, cdata(CDATA_TARGET, cc)) != CHAR_STATE_ALIVE ) {
+			cdata(CDATA_TARGET, cc) = 0
+			cdata(CDATA_AI_AGGRO, cc) = 0
+		}
+	}
+	if ( gdata(GDATA_AREA) == AREA_PET_ARENA ) {
+		if ( cdata(CDATA_RELATION, cc) != RELATION_ENEMY ) {
+			if ( cdata(CDATA_RELATION, cc) != RELATION_ALLY ) {
+				if ( rnd(40) == 0 ) {
+					txtef COLOR_BLUE
+					txtmore
+					txt lang("「いいぞ！」", cnvtalk("Come on!")), lang("「もっとやれー」", cnvtalk("More blood!")), lang("「血をみせろー」", cnvtalk("Beat'em!")), lang("「頑張って！」", cnvtalk("Use your brain!")), lang("「うぉぉぉぉ！」", cnvtalk("Wooooo!")), lang("「行けぇ！」", cnvtalk("Go go!")), lang("「頭を使えよ」", cnvtalk("Good fighting.")), lang("「きゃー」", cnvtalk("Yeeee!"))
+				}
+				goto *ai_calmMove
+			}
+		}
+		if ( cbit(CHARA_BIT_SUMMONED, cc) == TRUE ) {
+			if ( cdata(CDATA_RELATION, cc) != RELATION_ALLY ) {
+				cdata(CDATA_RELATION, cc) = RELATION_DISLIKE
+				if ( rnd(40) == 0 ) {
+					txtef COLOR_BLUE
+					txtmore
+					txt lang("「面白そう！」", cnvtalk("Come on!")), lang("「どっちもがんばれー」", cnvtalk("More blood!"))
+				}
+				goto *turn_end
+			}
+		}
+		cdata(CDATA_AI_AGGRO, cc) = 100
+		if ( cdata(CDATA_RELATION, cc) == RELATION_ALLY ) {
+			p = -3, enemyteam, 15
+		}
+		else {
+			p = 10, 1, 16
+		}
+		i = cdata(CDATA_TARGET, cc)
+		if ( cdata(CDATA_RELATION, i) == p & cdata(CDATA_EXIST, i) == CHAR_STATE_ALIVE & i >= p(1) & i < p(1) + p(2) ) {
+			if ( rnd(10) != 0 ) {
+				tc = i
+				goto *ai_action
+			}
+		}
+		cdata(CDATA_TARGET, cc) = p(1)
+		repeat 100
+			i = rnd(p(2)) + p(1)
+			if ( cdata(CDATA_EXIST, i) == CHAR_STATE_ALIVE ) {
+				if ( cdata(CDATA_RELATION, i) == p ) {
+					cdata(CDATA_TARGET, cc) = i
+					break
+				}
+			}
+		loop
+		if ( cdata(CDATA_RELATION, cdata(CDATA_TARGET, cc)) != p | cdata(CDATA_EXIST, cdata(CDATA_TARGET, cc)) != CHAR_STATE_ALIVE ) {
+			f = 0
+			repeat p(2), p(1)
+				if ( cdata(CDATA_EXIST, cnt) == CHAR_STATE_ALIVE ) {
+					if ( cdata(CDATA_RELATION, cnt) == p ) {
+						cdata(CDATA_TARGET, cc) = cnt
+						f = 1
+						break
+					}
+				}
+			loop
+			if ( f == 0 ) {
+				if ( cdata(CDATA_RELATION, cc) == RELATION_ALLY ) {
+					petarenawin = 1
+				}
+				else {
+					petarenawin = 2
+				}
+				goto *turn_end
+			}
+		}
+	}
+	if ( gdata(GDATA_AREA) == AREA_NOYEL ) {
+		if ( cc != gdata(GDATA_FLAG_GIANT_ID) ) {
+			if ( cc > MAX_CHARA_FOLLOWER ) {
+				if ( gdata(GDATA_FLAG_FIRE_GIANT) != 0 ) {
+					if ( cdata(CDATA_EXIST, gdata(GDATA_FLAG_GIANT_ID)) == CHAR_STATE_ALIVE ) {
+						if ( cbit(CHARA_BIT_SANDBAG, gdata(GDATA_FLAG_GIANT_ID)) == FALSE ) {
+							cdata(CDATA_TARGET, cc) = gdata(GDATA_FLAG_GIANT_ID)
+							cdata(CDATA_AI_AGGRO, cc) = 500
+						}
+						if ( cbit(CHARA_BIT_SANDBAG, gdata(GDATA_FLAG_GIANT_ID)) ) {
+							if ( cdata(CDATA_TARGET, cc) == gdata(GDATA_FLAG_GIANT_ID) ) {
+								cdata(CDATA_TARGET, cc) = 0
+								cdata(CDATA_AI_AGGRO, cc) = 0
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	if ( gdata(GDATA_RIDER) != 0 ) {
+		if ( cdata(CDATA_TARGET, cc) == gdata(GDATA_RIDER) ) {
+			if ( rnd(3) ) {
+				cdata(CDATA_TARGET, cc) = 0
+			}
+		}
+		if ( cdata(CDATA_TARGET, cc) == 0 ) {
+			if ( cdata(CDATA_RELATION, cc) <= RELATION_HATE ) {
+				if ( rnd(3) == 0 ) {
+					cdata(CDATA_TARGET, cc) = gdata(GDATA_RIDER)
+				}
+			}
+		}
+	}
+	tc = cdata(CDATA_TARGET, cc)
+	if ( cdatan(CDATAN_MSG, cc) != "" ) {
+		if ( cbit(CHARA_BIT_MSG_FILE, cc) == FALSE ) {
+			if ( rnd(30) == 0 ) {
+				txtmore
+				txtef COLOR_SKY_BLUE
+				txt "" + cdatan(CDATAN_MSG, cc)
+				goto *ai_item
+			}
+		}
+	}
+	if ( cdata(CDATA_TXT, cc) != 0 | cbit(CHARA_BIT_MSG_FILE, cc) ) {
+		if ( cbit(CHARA_BIT_SHUT_UP, cc) == FALSE ) {
+			if ( cdata(CDATA_TURN, cc) \ 5 == 0 ) {
+				if ( rnd(4) == 0 ) {
+					if ( cdata(CDATA_X, CHARA_PLAYER) > cdata(CDATA_X, cc) - 10 & cdata(CDATA_X, CHARA_PLAYER) < cdata(CDATA_X, cc) + 10 ) {
+						if ( cdata(CDATA_Y, CHARA_PLAYER) > cdata(CDATA_Y, cc) - 10 & cdata(CDATA_Y, CHARA_PLAYER) < cdata(CDATA_Y, cc) + 10 ) {
+							if ( cdata(CDATA_ROW_ACT, CHARA_PLAYER) != ACTION_PERFORM ) {
+								if ( cdata(CDATA_AI_AGGRO, cc) <= 0 ) {
+									customtalk cc, DBMODE_FLAVOR_PASSIVE
+									gosub *convert_word
+								}
+								if ( findbuff(cc, BUFF_RUN_WILDLY) == (-1) ) {
+									if ( cdata(CDATA_AI_AGGRO, cc) > 0 ) {
+										customtalk cc, DBMODE_FLAVOR_ANGERED
+										gosub *convert_word
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	if ( gdata(GDATA_AREA) != AREA_PET_ARENA & cdata(CDATA_CONDITION_BRAINWASH, cc) > 0 & cc != CHARA_PLAYER ) {
+		cdata(CDATA_TARGET, cc) = 0
+	}
+	if ( cdata(CDATA_RELATION, cc) >= RELATION_NEUTRAL ) {
+		if ( cdata(CDATA_CONDITION_SUFFOCATION, CHARA_PLAYER) > 15 ) {
+			if ( dist(cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), cdata(CDATA_X, cc), cdata(CDATA_Y, cc)) == 1 ) {
+				x = cdata(CDATA_X, CHARA_PLAYER)
+				y = cdata(CDATA_Y, CHARA_PLAYER)
+				goto *act_bash
+			}
+		}
+	}
+
+*ai_item
+	if ( cdata(CDATA_HP, cc) < cdata(CDATA_MAX_HP, cc) / 4 ) {
+		inv_find ITEM_ID_FIRST_AID_KIT, cc
+		if ( stat != (-1) ) {
+			ci = stat
+			if ( inv(INV_ITEM_NUM, ci) > 0 ) {
+				txtef COLOR_BLUE
+				txt lang("キットを使い" + name(cc) + "は応急手当を行った。", name(cc) + " have first aid use the kit.")
+				inv(INV_ITEM_NUM, ci)--
+				tc = cc
+				animeid = ANIMATION_HEAL
+				gosub *anime
+				healhp cc, (sdata(SKILL_NORMAL_GENE_ENGINEER, cc) + sdata(SKILL_ATTR_DEX, cc)) / 4 * (sdata(SKILL_NORMAL_GENE_ENGINEER, cc) + sdata(SKILL_ATTR_DEX, cc)) / 10 + 10
+				if ( cdata(CDATA_CONDITION_POISON, cc) != 0 ) {
+					cdata(CDATA_CONDITION_POISON, cc) = cdata(CDATA_CONDITION_POISON, cc) / 8 + 1
+				}
+				if ( cdata(CDATA_CONDITION_BLIND, cc) != 0 ) {
+					cdata(CDATA_CONDITION_BLIND, cc) = cdata(CDATA_CONDITION_BLIND, cc) / 8 + 1
+				}
+				if ( cdata(CDATA_CONDITION_PARALYZE, cc) != 0 ) {
+					cdata(CDATA_CONDITION_PARALYZE, cc) = cdata(CDATA_CONDITION_PARALYZE, cc) / 8 + 1
+				}
+				if ( cdata(CDATA_CONDITION_DRUNK, cc) != 0 ) {
+					cdata(CDATA_CONDITION_DRUNK, cc) = cdata(CDATA_CONDITION_DRUNK, cc) / 8 + 1
+				}
+				if ( cdata(CDATA_CONDITION_BLEED, cc) != 0 ) {
+					cdata(CDATA_CONDITION_BLEED, cc) = cdata(CDATA_CONDITION_BLEED, cc) / 8 + 1
+				}
+				goto *turn_end
+			}
+		}
+	}
+	if ( cdata(CDATA_ACT_HEAL, cc) != 0 ) {
+		if ( cdata(CDATA_HP, cc) < cdata(CDATA_MAX_HP, cc) / 4 ) {
+			if ( cdata(CDATA_MP, cc) > 0 | rnd(5) == 0 ) {
+				efid = cdata(CDATA_ACT_HEAL, cc)
+				if ( efid == SKILL_SPACT_SHADOW_STEP | efid == SKILL_SPACT_UNCONTROL | efid == BUFF_GROW_PERCEPTION | efid == SKILL_SPACT_CLASH_RUSH ) {
+					if ( dist(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), cdata(CDATA_X, tc), cdata(CDATA_Y, tc)) > sdataref(SKILL_DATAREF_TG, SKILL_SPACT_CHEER) \ 1000 + 1 | fov_los(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), cdata(CDATA_X, tc), cdata(CDATA_Y, tc)) == 0 ) {
+						distance = dist(cdata(CDATA_X, tc), cdata(CDATA_Y, tc), cdata(CDATA_X, cc), cdata(CDATA_Y, cc))
+						goto *ai_followMove
+					}
+				}
+				if ( efid >= SKILL_SPELL_HEAL_LIGHT & efid < MAX_SPELL ) {
+					npccostmp = 1
+					gosub *cast
+					if ( stat == 1 ) {
+						goto *turn_end
+					}
+				}
+				else {
+					if ( efid >= (600 /*!!!@[MAX_SKILL_RANGE @@@ STARTING_SKILL_SPACT]@!!! */) ) {
+						gosub *action
+						if ( stat == 1 ) {
+							goto *turn_end
+						}
+					}
+				}
+			}
+		}
+	}
+	if ( cdata(CDATA_AI_ITEM, cc) <= 0 ) {
+		goto *ai_action
+	}
+	ci = cdata(CDATA_AI_ITEM, cc)
+	if ( inv(INV_ITEM_NUM, ci) == 0 | (refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_ITEM_ROD & inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) <= 0) ) {
+		cdata(CDATA_AI_ITEM, cc) = 0
+		goto *ai_action
+	}
+	a = refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE)
+	if ( a != 56000 ) {
+		if ( cdata(CDATA_RELATION, cc) != RELATION_NEUTRAL ) {
+			cdata(CDATA_AI_ITEM, cc) = 0
+		}
+	}
+	if ( a == 57000 ) {
+		if ( cdata(CDATA_RELATION, cc) == RELATION_ALLY & cdata(CDATA_HUNGER, cc) > 6000 ) {
+		}
+		else {
+			if ( cdata(CDATA_TAMER_WHIP_EAT, cc) == 1 ) {
+				txtef COLOR_BLUE
+				customtalk cc, DBMODE_FLAVOR_DISCIPLINE_EAT
+				gosub *convert_word
+				if ( gdata(GDATA_CUSTOM_TALK) == 100 ) {
+					txt lang(name(cc) + "はあなたの顔色をうかがいながら恐る恐る食べ物を手に取った。", name(cc) + " is drooling.")
+				}
+				goto *act_eat
+			}
+			if ( cdata(CDATA_TAMER_WHIP_EAT, cc) == 0 ) {
+				goto *act_eat
+			}
+		}
+	}
+	if ( a == 52000 ) {
+		goto *act_drink
+	}
+	if ( a == 53000 ) {
+		goto *act_read
+	}
+	if ( a == 56000 ) {
+		goto *act_zap
+	}
+	cdata(CDATA_AI_ITEM, cc) = 0
+
+*ai_action
+	retreat = 0
+	if ( cdata(CDATA_AI_AGGRO, cc) > 0 | cdata(CDATA_RELATION, cc) == RELATION_ALLY ) {
+		distance = dist(cdata(CDATA_X, tc), cdata(CDATA_Y, tc), cdata(CDATA_X, cc), cdata(CDATA_Y, cc))
+		if ( cdata(CDATA_CONDITION_BLIND, cc) != 0 ) {
+			if ( rnd(10) > 2 ) {
+				goto *ai_calmMove
+			}
+		}
+		if ( cdata(CDATA_CONDITION_CONFUSE, cc) != 0 ) {
+			if ( rnd(10) > 3 ) {
+				goto *ai_calmMove
+			}
+		}
+		if ( tc == CHARA_PLAYER ) {
+			if ( cdata(CDATA_ID, cc) == CREATURE_ID_ALCHEMIST_NAPLUS ) {
+				if ( map(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), MAP_ITEM_CHIPS) != 0 ) {
+					cell_itemoncell cdata(CDATA_X, cc), cdata(CDATA_Y, cc)
+					if ( stat == 1 ) {
+						ci = rtval(1)
+						p = refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE)
+						if ( inv(INV_ITEM_ID, ci) == ITEM_ID_PUFF_PUFF_BREAD ) {
+							txtef COLOR_BLUE
+							txt lang(name(cc) + "は足元のふかふかパンに怯えている…。", name(cc) + " is drooling.")
+							dmgcon cc, CONDITION_FEAR, 500
+						}
+					}
+				}
+			}
+		}
+		if ( cdata(CDATA_RELATION, cc) == RELATION_ALLY ) {
+			if ( tc == CHARA_PLAYER ) {
+				if ( cbit(CHARA_BIT_NECRO, cc) == TRUE ) {
+					goto *ai_followMove
+				}
+				if ( map(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), MAP_ITEM_CHIPS) != 0 ) {
+					cell_itemoncell cdata(CDATA_X, cc), cdata(CDATA_Y, cc)
+					if ( stat == 1 ) {
+						ci = rtval(1)
+						p = refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE)
+						if ( cdata(CDATA_HUNGER, cc) <= 6000 ) {
+							if ( p == 57000 ) {
+								if ( inv(INV_ITEM_PROPERTY, ci) <= PROPERTY_NONE ) {
+									if ( itemusingfind(ci) != (-1) & itemusingfind(ci) == cdata(CDATA_TAGTEAM_PARTNER, cc) ) {
+										if ( rnd(5) == 0 ) {
+											txtef COLOR_BLUE
+											txt lang(name(cc) + "はパートナーの食事を静かに見守っている…。", name(cc) + " is drooling.")
+										}
+									}
+									else {
+										if ( cdata(CDATA_TAMER_WHIP_EAT, cc) == 0 ) {
+											if ( cdata(CDATA_RIDING, cc) == 0 ) {
+												if ( inv(INV_ITEM_ID, ci) != ITEM_ID_PUFF_PUFF_BREAD | cdata(CDATA_ID, cc) != CREATURE_ID_ALCHEMIST_NAPLUS ) {
+													if ( inv(INV_ITEM_STATUS, ci) >= ITEM_STATUS_NORMAL ) {
+														if ( adata(ADATA_ID, gdata(GDATA_AREA)) != AREA_RANCH & adata(ADATA_ID, gdata(GDATA_AREA)) != AREA_SHOP & gdata(GDATA_QUEST) != QUEST_TYPE_PARTY ) {
+															if ( cdata(CDATA_TAMER_WHIP_PICKUP, cc) != 10 | cdata(CDATA_MASTER_SERVANT, cc) <= 0 ) {
+																goto *act_eat
+															}
+															if ( cdata(CDATA_TAMER_WHIP_PICKUP, cc) == 10 ) {
+																if ( cdata(CDATA_MASTER_SERVANT, cc) > 0 ) {
+																	if ( rnd(cdata(CDATA_MASTER_SERVANT, cc) + 1) == 0 ) {
+																		txtef COLOR_RED
+																		txt lang(name(cc) + "は我慢できず食べ物に近づいた。", name(cc) + " could not endure.")
+																		goto *act_eat
+																	}
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+									if ( cdata(CDATA_TAMER_WHIP_EAT, cc) == 1 ) {
+										if ( cdata(CDATA_RIDING, cc) == 0 ) {
+											if ( inv(INV_ITEM_ID, ci) != ITEM_ID_PUFF_PUFF_BREAD | cdata(CDATA_ID, cc) != CREATURE_ID_ALCHEMIST_NAPLUS ) {
+												if ( inv(INV_ITEM_STATUS, ci) >= ITEM_STATUS_NORMAL ) {
+													if ( rnd(5) == 0 ) {
+														txtef COLOR_BLUE
+														txt lang(name(cc) + "は切ない目で食べ物を見つめている…。", name(cc) + " is drooling.")
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+							if ( p == 60001 ) {
+								if ( cdata(CDATA_RIDING, cc) == 0 ) {
+									if ( inv(INV_ITEM_PROPERTY, ci) <= PROPERTY_NPC ) {
+										if ( inv(INV_ITEM_PARAM1, ci) >= (-5) ) {
+											if ( inv(INV_ITEM_PARAM3, ci) < 20 ) {
+												if ( inv(INV_ITEM_ID, ci) != ITEM_ID_HOLY_WELL ) {
+													if ( cdata(CDATA_TAMER_WHIP_EAT, cc) == 1 ) {
+														if ( rnd(5) == 0 ) {
+															txtef COLOR_BLUE
+															txt lang(name(cc) + "は喉を潤そうとしたが、何かを思い出してびくりと震えた。", name(cc) + " could not endure.")
+														}
+													}
+													if ( cdata(CDATA_TAMER_WHIP_EAT, cc) != 1 ) {
+														if ( cdata(CDATA_TAMER_WHIP_PICKUP, cc) != 10 | cdata(CDATA_MASTER_SERVANT, cc) <= 0 ) {
+															goto *act_drink
+														}
+														if ( cdata(CDATA_TAMER_WHIP_PICKUP, cc) == 10 ) {
+															if ( cdata(CDATA_MASTER_SERVANT, cc) > 0 ) {
+																if ( rnd(cdata(CDATA_MASTER_SERVANT, cc) * 2 + 1) == 0 ) {
+																	txtef COLOR_RED
+																	txt lang(name(cc) + "は我慢できず水に近づいた。", name(cc) + " is drooling.")
+																	goto *act_drink
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+						if ( p == 68000 | p == 77000 ) {
+							if ( inv(INV_ITEM_PROPERTY, ci) <= PROPERTY_NONE ) {
+								if ( ibit(ITEM_BIT_PRECIOUS, ci) == FALSE ) {
+									if ( mdata(MDATA_TYPE) != MAP_TYPE_HOME ) {
+										in = inv(INV_ITEM_NUM, ci)
+										if ( cdata(CDATA_TAMER_WHIP_PICKUP, cc) == 0 ) {
+											if ( gdata(GDATA_RIDER) != cc ) {
+												gosub *act_get
+												if ( stat == 1 ) {
+													goto *turn_end
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+				if ( cdata(CDATA_AREA, cc) == gdata(GDATA_AREA) ) {
+					if ( cbit(CHARA_BIT_HIRED, cc) == FALSE ) {
+						goto *ai_calmMove
+					}
+				}
+				if ( distance > 2 | rnd(3) ) {
+					retreat = 0
+					goto *ai_followMove
+				}
+				else {
+					goto *ai_calmMove
+				}
+			}
+		}
+		if ( cdata(CDATA_CONDITION_FEAR, cc) != 0 ) {
+			retreat = 1
+			goto *ai_followMove
+		}
+		else {
+			retreat = 0
+		}
+		if ( cdata(CDATA_CONDITION_BLIND, cc) != 0 ) {
+			if ( rnd(3) ) {
+				goto *ai_calmMove
+			}
+		}
+		if ( distance != cdata(CDATA_AI_DISTANCE, cc) ) {
+			if ( rnd(100) < cdata(CDATA_AI_MOVE_FREQ, cc) ) {
+				goto *ai_followMove
+			}
+		}
+		goto *ai_actMain
+	}
+	if ( cdata(CDATA_RELATION, cc) < RELATION_ALLY ) {
+		if ( cbit(CHARA_BIT_SANDBAG, tc) ) {
+			cdata(CDATA_TARGET, cc) = 0
+			caggro(cc) = 0
+		}
+	}
+	if ( cdata(CDATA_TURN, cc) \ 10 == 1 ) {
+		searchfov = 5
+		f = 0
+		repeat searchfov
+			y = cdata(CDATA_Y, cc) - 2 + cnt
+			if ( y < 0 | y >= mdata(MDATA_HEIGHT) ) {
+				continue
+			}
+			repeat searchfov
+				x = cdata(CDATA_X, cc) - 2 + cnt
+				if ( x < 0 | x >= mdata(MDATA_WIDTH) ) {
+					continue
+				}
+				c = map(x, y, MAP_CHARA_INDEX_PLUS_ONE) - 1
+				if ( c <= 0 ) {
+					continue
+				}
+				if ( cdata(CDATA_RELATION_ORG, cc) <= RELATION_ENEMY ) {
+					if ( cdata(CDATA_RELATION, c) > RELATION_ENEMY ) {
+						if ( cbit(CHARA_BIT_SANDBAG, c) == FALSE ) {
+							if ( cbit(CHARA_BIT_NO_TARGET, c) == FALSE ) {
+								f = 1
+								break
+							}
+						}
+					}
+				}
+				else {
+					if ( c >= 57 ) {
+						if ( cdata(CDATA_RELATION_ORG, c) <= RELATION_ENEMY ) {
+							if ( cbit(CHARA_BIT_SANDBAG, c) == FALSE ) {
+								if ( cbit(CHARA_BIT_NO_TARGET, c) == FALSE ) {
+									f = 1
+									break
+								}
+							}
+						}
+					}
+				}
+			loop
+			if ( f ) {
+				if ( cbit(CHARA_BIT_NO_TARGET, cc) == FALSE ) {
+					cdata(CDATA_TARGET, cc) = c
+					cdata(CDATA_AI_AGGRO, cc) = 30
+					cdata(CDATA_EMO_ICON, cc) = 18 + 100 * 2
+					break
+				}
+			}
+		loop
+	}
+	if ( tc == CHARA_PLAYER ) {
+		r1 = tc
+		r2 = cc
+		gosub *calcStealth
+		if ( stat == 1 ) {
+			if ( cdata(CDATA_RELATION, cc) == RELATION_ENEMY ) {
+				cdata(CDATA_AI_AGGRO, cc) = 30
+			}
+		}
+	}
+	goto *ai_calmMove
+
+*ai_calmMove
+	if ( cdata(CDATA_DIRECTIVE_MODE, cc) == DIRECTIVE_MODE_DEFENSIVE ) {
+		if ( cdata(CDATA_TARGET, cc) != 0 | cdata(CDATA_TARGET, cc) == 0 ) {
+			goto *turn_end
+		}
+	}
+	if ( cdata(CDATA_ID, cc) == CREATURE_ID_RAIZEL_THE_OLD_WIZARD ) {
+		if ( cdata(CDATA_ALLIED, cc) == 0 ) {
+			if ( gdata(GDATA_FLAG_MAIN) >= 760 ) {
+				goto *turn_end
+			}
+		}
+	}
+	if ( cdata(CDATA_AI_CALM, cc) == 4 | (cbit(CHARA_BIT_BRUSHED, cc) == FALSE & cdata(CDATA_BRUSH_LEVEL, cc) != 0 & cbit(CHARA_BIT_LIVESTOCK, cc) == TRUE) ) {
+		tc = CHARA_PLAYER
+		distance = dist(cdata(CDATA_X, tc), cdata(CDATA_Y, tc), cdata(CDATA_X, cc), cdata(CDATA_Y, cc))
+		goto *ai_followMove
+	}
+	if ( cc > MAX_CHARA_FOLLOWER ) {
+		if ( rnd(5) != 0 ) {
+			goto *turn_end
+		}
+	}
+	if ( adata(ADATA_TYPE, gdata(GDATA_AREA)) == MAP_TYPE_WORLD ) {
+		goto *turn_end
+	}
+
+	if ( cdata(CDATA_CONDITION_DRUNK, cc) != 0 ) {
+		if ( synccheck(cc, -1) ) {
+			if ( cdatan(CDATAN_RACE, cc) == "cat" ) {
+				if ( cdata(CDATA_CONDITION_DRUNK, cc) < 5 ) {
+					cdata(CDATA_CONDITION_DRUNK, cc) += 40
+				}
+*label_8406
+				if ( 1 == 0 ) {
+					goto *ai_calmMove_WEND1
+				}
+				if ( jp ) {
+					if ( rnd(3) == 0 ) {
+						txt "「米さ米種だろ♪」", "「飲ま飲まイェイ！！」", "「飲ま飲ま飲まイェイ！！」"
+						goto *ai_calmMove_WEND1
+					}
+					if ( rnd(4) == 0 ) {
+						txt "「字ベロ♪指♪ラマ♪ｸﾏｰ!!して♪パンチラ♪」", "「アロー♪アーロン♪スゲェ♪ピカソ♪算段ビーフ♪」", "「キスすごい肉♪脱線してんの♪さらに肉♪」"
+						goto *ai_calmMove_WEND1
+					}
+					if ( rnd(4) == 0 ) {
+						txt "「キープダルシム♪アゴスタディーイェイ♪並フェイスで大きい筆入れ♪」", "「ハロー♪猿ー♪すげー♪うん入る♪」"
+						goto *ai_calmMove_WEND1
+					}
+					if ( rnd(4) == 0 ) {
+						txtef COLOR_BLUE
+						txt " *ﾋﾟﾛﾘ～ﾋﾟﾛﾘ～* "
+						goto *ai_calmMove_WEND1
+					}
+					txt "「マイアヒー♪」", "「マイアフゥー♪」", "「マイアホー♪」"
+					goto *ai_calmMove_WEND1
+				}
+				else {
+					if ( rnd(2) == 0 ) {
+						txt cnvtalk("Vrei sa pleci dar♪"), cnvtalk("Numa numa yay!!"), cnvtalk("Numa numa numa yay!!")
+						goto *ai_calmMove_WEND1
+					}
+					txt cnvtalk("Mai-Ya-Hi♪"), cnvtalk("Mai-Ya-Hoo♪"), cnvtalk("Mai-Ya-Ha Ma Mi A♪")
+					goto *ai_calmMove_WEND1
+				}
+				goto *label_8406
+			}
+		}
+	}
+
+*ai_calmMove_WEND1
+	if ( cc > MAX_CHARA_FOLLOWER ) {
+		if ( cbit(CHARA_BIT_NECRO, cc) != TRUE ) {
+			if ( gdata(GDATA_AREA) != AREA_SEBI ) {
+				if ( mdata(MDATA_TYPE) == MAP_TYPE_TOWN | mdata(MDATA_TYPE) == MAP_TYPE_VILLAGE ) {
+					if ( gdata(GDATA_HOUR) >= 22 | gdata(GDATA_HOUR) < 7 ) {
+						if ( cdata(CDATA_ROW_ACT, cc) == ACTION_NONE ) {
+							if ( rnd(100) == 0 ) {
+								dmgcon cc, CONDITION_SLEEP, 4000
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	if ( cdata(CDATA_AI_ITEM, cc) == 0 ) {
+		if ( cdata(CDATA_RELATION, cc) != RELATION_ALLY ) {
+			if ( gdata(GDATA_AREA) == AREA_QUEST ) {
+				if ( gdata(GDATA_QUEST) == QUEST_TYPE_PARTY ) {
+					if ( rnd(30) == 0 ) {
+						flt 20
+						if ( rnd(4) == 0 ) {
+							flttypemajor = FILTER_ITEM_FOOD
+						}
+						else {
+							flttypemajor = FILTER_ITEM_POTION
+							if ( rnd(8) ) {
+								flttypeminor = FILTER_ITEM_POTION_ALE
+							}
+						}
+						itemcreate cc, ITEM_ID_DUMMY, -1, -1, 0
+						if ( stat == 1 ) {
+							cdata(CDATA_AI_ITEM, cc) = ci
+						}
+					}
+				}
+			}
+			if ( gdata(GDATA_AREA) == AREA_NOYEL | gdata(GDATA_AREA) == AREA_SISTER_MANSION ) {
+				if ( cdata(CDATA_ID, cc) == CREATURE_ID_TOWN_CHILD | cdata(CDATA_ID, cc) == CREATURE_ID_YOUNG_LADY ) {
+					if ( synccheck(cc, -1) ) {
+						if ( chipm(CHIPM_ROLE, map(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), MAP_TILE_ID)) == MAP_CHIP_ROLE_SNOW ) {
+							if ( rnd(4) == 0 ) {
+								if ( cdata(CDATA_EXIST, gdata(GDATA_FLAG_GIANT_ID)) == CHAR_STATE_ALIVE ) {
+									if ( synccheck(gdata(GDATA_FLAG_GIANT_ID), -1) ) {
+										flt
+										itemcreate cc, ITEM_ID_HANDFUL_SNOW, -1, -1, 0
+										if ( stat == 1 ) {
+											tlocx = cdata(CDATA_X, gdata(GDATA_FLAG_GIANT_ID))
+											tlocy = cdata(CDATA_Y, gdata(GDATA_FLAG_GIANT_ID))
+											txtef COLOR_SKY_BLUE
+											txt lang("「化け物め！」", cnvtalk("Filthy monster!")), lang("「くたばれっ」", cnvtalk("Go to hell!")), lang("「退治してやるぅ！」", cnvtalk("I'll get rid of you.")), lang("「くらえー！」", cnvtalk("Eat this!"))
+											goto *act_throw
+										}
+									}
+								}
+							}
+							if ( rnd(12) == 0 ) {
+								itemlist INV_GROUND, ITEM_ID_SNOW_MAN
+								f = 0
+								repeat listmax
+									ti = list(0, cnt)
+									if ( inv(INV_ITEM_X, ti) >= scx & inv(INV_ITEM_X, ti) < scx + inf_screenw & inv(INV_ITEM_Y, ti) >= scy & inv(INV_ITEM_Y, ti) < scy + inf_screenh ) {
+										f = 1
+										break
+									}
+								loop
+								tlocx = inv(INV_ITEM_X, ti)
+								tlocy = inv(INV_ITEM_Y, ti)
+								if ( f == 1 ) {
+									flt
+									itemcreate cc, ITEM_ID_HANDFUL_SNOW, -1, -1, 0
+									if ( stat == 1 ) {
+										goto *act_throw
+									}
+								}
+							}
+							if ( rnd(10) == 0 ) {
+								if ( map(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), MAP_ITEM_CHIPS) == 0 ) {
+									flt
+									itemcreate -1, ITEM_ID_SNOW_MAN, cdata(CDATA_X, cc), cdata(CDATA_Y, cc), 0
+									if ( stat == 1 ) {
+										snd SOUNDLIST_SNOW
+										txt lang(name(cc) + "は" + itemname(ci) + "を作った！", name(cc) + " make" + _s(cc) + " " + itemname(ci) + "!")
+										goto *turn_end
+									}
+								}
+							}
+							if ( rnd(12) == 0 ) {
+								flt
+								itemcreate cc, ITEM_ID_HANDFUL_SNOW, -1, -1, 0
+								if ( stat == 1 ) {
+									tlocx = cdata(CDATA_X, CHARA_PLAYER)
+									tlocy = cdata(CDATA_Y, CHARA_PLAYER)
+									txtef COLOR_SKY_BLUE
+									txt lang(" *クスクス* ", "*grin*"), lang("「えいっ」", cnvtalk("Fire in the hole!")), lang("「うりゃ」", cnvtalk("Tee-hee-hee!")), lang("「くらえー！」", cnvtalk("Eat this!")), lang("「危ないっ！」", cnvtalk("Watch out!")), lang("「避けてー」", cnvtalk("Scut!"))
+									txtmore
+									goto *act_throw
+								}
+							}
+						}
+					}
+				}
+			}
+			if ( cdata(CDATA_HUNGER, cc) <= 6000 ) {
+				if ( cdata(CDATA_SYNC, cc) != msync | rnd(5) ) {
+					if ( cbit(CHARA_BIT_ANOREXIA, cc) == FALSE ) {
+						cdata(CDATA_HUNGER, cc) += 5000
+					}
+					else {
+						cdata(CDATA_HUNGER, cc) -= 3000
+					}
+					if ( cdata(CDATA_THIRST, cc) <= 6000 ) {
+						cdata(CDATA_THIRST, cc) += 5000
+					}
+				}
+				else {
+					flt 20
+					p = rnd(4), 0
+					if ( p == 0 | cbit(CHARA_BIT_ANOREXIA, cc) ) {
+						flttypemajor = FILTER_ITEM_FOOD
+					}
+					if ( p == 1 ) {
+						flttypemajor = FILTER_ITEM_POTION
+					}
+					if ( p == 2 | p == 3 ) {
+						flttypeminor = FILTER_ITEM_POTION_ALE
+					}
+					itemcreate cc, p(1), -1, -1, 0
+					if ( stat == 1 ) {
+						if ( inv(INV_ITEM_ID, ci) == ITEM_ID_MOLOTOV ) {
+							if ( rnd(5) == 0 ) {
+								inv(INV_ITEM_NUM, ci) = 0
+							}
+						}
+						else {
+							cdata(CDATA_AI_ITEM, cc) = ci
+							if ( cbit(CHARA_BIT_ANOREXIA, cc) == FALSE ) {
+								cdata(CDATA_HUNGER, cc) += 5000
+							}
+							else {
+								cdata(CDATA_HUNGER, cc) -= 3000
+							}
+							if ( cdata(CDATA_THIRST, cc) <= 6000 ) {
+								cdata(CDATA_THIRST, cc) += 5000
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	if ( cdata(CDATA_AI_CALM, cc) == 5 ) {
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_BARD | cdata(CDATA_ID, cc) == CREATURE_ID_KARAVIKA ) {
+			cdata(CDATA_AI_CALM, cc) = 6
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_CLEANER | cdata(CDATA_ID, cc) == CREATURE_ID_BALZAK_THE_JANITOR ) {
+			cdata(CDATA_AI_CALM, cc) = 9
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_PROSTITUTE | cdata(CDATA_ID, cc) == CREATURE_ID_SILVIA_THE_PRINCESS ) {
+			cdata(CDATA_AI_CALM, cc) = 10
+		}
+	}
+	if ( cdata(CDATA_AI_CALM, cc) >= 5 & cdata(CDATA_AI_CALM, cc) < 11 ) {
+		if ( cdata(CDATA_AI_CALM, cc) == 6 ) {
+			if ( rnd(10) == 0 ) {
+				efid = SKILL_NORMAL_PERFORMER
+				gosub *effect
+				goto *turn_end
+			}
+		}
+		if ( cdata(CDATA_AI_CALM, cc) == 7 ) {
+			if ( rnd(10) == 0 ) {
+				efid = SKILL_SPACT_PREACHING
+				gosub *effect
+				goto *turn_end
+			}
+		}
+		if ( cdata(CDATA_AI_CALM, cc) == 8 ) {
+			if ( rnd(10) == 0 ) {
+				efid = SKILL_SPACT_FASCINATION_DANCE
+				gosub *effect
+				goto *turn_end
+			}
+		}
+		if ( cdata(CDATA_AI_CALM, cc) == 9 ) {
+			tc = cc
+			repeat 245
+				if ( cdata(CDATA_EXIST, cnt) != CHAR_STATE_ALIVE ) {
+					continue
+				}
+				if ( cdatan(CDATAN_RACE, cnt) != "snail" ) {
+					continue
+				}
+				if ( fov_los(cdata(CDATA_X, cnt), cdata(CDATA_Y, cnt), cdata(CDATA_X, cc), cdata(CDATA_Y, cc)) == 0 ) {
+					continue
+				}
+				if ( cdata(CDATA_ALLIED, cc) == 100 ) {
+					if ( cnt < 16 ) {
+						continue
+					}
+				}
+				if ( cdata(CDATA_ID, cc) != CREATURE_ID_CLEANER & cdata(CDATA_ID, cc) != CREATURE_ID_BALZAK_THE_JANITOR ) {
+					if ( dist(cdata(CDATA_X, cnt), cdata(CDATA_Y, cnt), cdata(CDATA_X, cc), cdata(CDATA_Y, cc)) > 4 ) {
+						continue
+					}
+				}
+				if ( cdata(CDATA_ID, cc) == CREATURE_ID_CLEANER | cdata(CDATA_ID, cc) == CREATURE_ID_BALZAK_THE_JANITOR ) {
+					if ( dist(cdata(CDATA_X, cnt), cdata(CDATA_Y, cnt), cdata(CDATA_X, cc), cdata(CDATA_Y, cc)) > 8 ) {
+						continue
+					}
+				}
+				if ( rnd(2) == 0 ) {
+					continue
+				}
+				tc = cnt
+			loop
+			if ( tc != cc ) {
+				tlocx = cdata(CDATA_X, tc)
+				tlocy = cdata(CDATA_Y, tc)
+				flt
+				itemcreate cc, ITEM_ID_POTION_SALT_SOLUTION, -1, -1, 0
+				if ( stat == 1 ) {
+					if ( synccheck(cc, -1) ) {
+						txtef COLOR_SKY_BLUE
+						txtmore
+						txt lang("「なめくじだ！」", cnvtalk("Snail!")), lang("「殺す！」", cnvtalk("Kill!"))
+					}
+					goto *act_throw
+				}
+			}
+		}
+		if ( cdata(CDATA_AI_CALM, cc) == 10 ) {
+			if ( cdata(CDATA_ALLIED, cc) == 100 & cdata(CDATA_TARGET, cc) == 0 | rnd(5) == 0 ) {
+				cdata(CDATA_TARGET, cc) = 0
+				tc = CHARA_PLAYER
+				repeat 40, 57
+					if ( cdata(CDATA_EXIST, cnt) != CHAR_STATE_ALIVE ) {
+						continue
+					}
+					if ( cnt == 0 ) {
+						continue
+					}
+					if ( rnd(2) == 0 ) {
+						continue
+					}
+					if ( dist(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), cdata(CDATA_X, cnt), cdata(CDATA_Y, cnt)) < 6 ) {
+						if ( fov_los(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), cdata(CDATA_X, cnt), cdata(CDATA_Y, cnt)) ) {
+							cdata(CDATA_TARGET, cc) = cnt
+							tc = cnt
+							break
+						}
+					}
+				loop
+			}
+			if ( cc < MAX_CHARA_FOLLOWER ) {
+				if ( cdata(CDATA_TARGET, cc) != 0 ) {
+					if ( synccheck(cc, -1) ) {
+						if ( synccheck(tc, -1) ) {
+							txt lang(cdatan(CDATAN_NAME, cc) + "は" + cdatan(CDATAN_NAME, tc) + "を狙っている…。", cdatan(CDATAN_NAME, cc) + " seems to be aiming at " + his(cc) + "...")
+						}
+					}
+				}
+			}
+			distance = dist(cdata(CDATA_X, tc), cdata(CDATA_Y, tc), cdata(CDATA_X, cc), cdata(CDATA_Y, cc))
+			if ( tc != CHARA_PLAYER ) {
+				if ( distance == 1 ) {
+					if ( cdata(CDATA_ROW_ACT, tc) == ACTION_NONE ) {
+						cdata(CDATA_TARGET, cc) = 0
+						gosub *sexsex
+						goto *turn_end
+					}
+				}
+				if ( distance < 6 ) {
+					goto *ai_followMove
+				}
+			}
+		}
+		cdata(CDATA_X_NEW, cc) = rnd(3) - 1 + cdata(CDATA_X, cc)
+		cdata(CDATA_Y_NEW, cc) = rnd(3) - 1 + cdata(CDATA_Y, cc)
+		cell_check cdata(CDATA_X_NEW, cc), cdata(CDATA_Y_NEW, cc)
+		if ( cellaccess == 1 ) {
+			goto *act_move
+		}
+	}
+	if ( cdata(CDATA_AI_CALM, cc) == 1 ) {
+		cdata(CDATA_X_NEW, cc) = rnd(3) - 1 + cdata(CDATA_X, cc)
+		cdata(CDATA_Y_NEW, cc) = rnd(3) - 1 + cdata(CDATA_Y, cc)
+		cell_check cdata(CDATA_X_NEW, cc), cdata(CDATA_Y_NEW, cc)
+		if ( cellaccess == 1 ) {
+			goto *act_move
+		}
+	}
+	if ( cdata(CDATA_AI_CALM, cc) == 2 ) {
+		if ( mdata(MDATA_RESTORE_POS) == 1 & dist(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), cdata(CDATA_X_ORG, cc), cdata(CDATA_Y_ORG, cc)) > 2 ) {
+			cdata(CDATA_X_NEW, cc) = cdata(CDATA_X, cc) + rnd(2) * ((cdata(CDATA_X, cc) > cdata(CDATA_X_ORG, cc)) * (-1) + (cdata(CDATA_X, cc) < cdata(CDATA_X_ORG, cc)))
+			cdata(CDATA_Y_NEW, cc) = cdata(CDATA_Y, cc) + rnd(2) * ((cdata(CDATA_Y, cc) > cdata(CDATA_Y_ORG, cc)) * (-1) + (cdata(CDATA_Y, cc) < cdata(CDATA_Y_ORG, cc)))
+		}
+		else {
+			cdata(CDATA_X_NEW, cc) = rnd(3) - 1 + cdata(CDATA_X, cc)
+			cdata(CDATA_Y_NEW, cc) = rnd(3) - 1 + cdata(CDATA_Y, cc)
+		}
+		cell_check cdata(CDATA_X_NEW, cc), cdata(CDATA_Y_NEW, cc)
+		if ( cellaccess == 1 ) {
+			goto *act_move
+		}
+	}
+	goto *turn_end
+
+*ai_followMove
+	if ( mdata(MDATA_TYPE) == MAP_TYPE_TOWN ) {
+		if ( cc < MAX_CHARA_FOLLOWER ) {
+			if ( rnd(10) == 0 ) {
+				tiep = 0
+				repeat 16 - 1, 1
+					if ( cdata(CDATA_EXIST, cnt) != CHAR_STATE_ALIVE ) {
+						continue
+					}
+					if ( cbit(CHARA_BIT_SHOP_STRONG_ALLY, cnt) ) {
+						tiep = 1
+						break
+					}
+				loop
+				inv_getheader cc
+				sell = 0, 0
+				repeat invrange, invhead
+					if ( inv(INV_ITEM_NUM, cnt) == 0 ) {
+						continue
+					}
+					a = refitem(inv(INV_ITEM_ID, cnt), DBSPEC_ITEM_TYPE)
+					if ( a == 77000 ) {
+						p = inv(INV_ITEM_VALUE, cnt) * inv(INV_ITEM_NUM, cnt) * (2 + tiep) / 2
+						sell += inv(INV_ITEM_NUM, cnt)
+						sell(1) += p
+						inv(INV_ITEM_NUM, cnt) = 0
+						cdata(CDATA_GOLD, cc) += p
+					}
+					if ( inv(INV_ITEM_ID, cnt) == ITEM_ID_WILD_FLOWER ) {
+						if ( inv(INV_ITEM_LEVEL, cnt) == 0 ) {
+							p = inv(INV_ITEM_VALUE, cnt) * inv(INV_ITEM_NUM, cnt) * (2 + tiep) / 2
+							sell += inv(INV_ITEM_NUM, cnt)
+							sell(1) += p
+							inv(INV_ITEM_NUM, cnt) = 0
+						}
+						if ( inv(INV_ITEM_LEVEL, cnt) > 0 ) {
+							p = (inv(INV_ITEM_VALUE, cnt) + (inv(INV_ITEM_LEVEL, cnt) + 5) * (inv(INV_ITEM_LEVEL, cnt) + 5) * 100) * inv(INV_ITEM_NUM, cnt) * (2 + tiep) / 2
+							sell += inv(INV_ITEM_NUM, cnt)
+							sell(1) += p
+							inv(INV_ITEM_NUM, cnt) = 0
+						}
+						cdata(CDATA_GOLD, cc) += p
+					}
+				loop
+				if ( sell != 0 ) {
+					txtef COLOR_SKY_BLUE
+					txt lang(name(cc) + "は" + sell + "個のアイテムを売りさばき" + sell(1) + "goldを稼いだ。", name(cc) + " sells " + sell + " items and earns " + sell(1) + " gold pieces.")
+				}
+				if ( sell != 0 ) {
+					if ( cdata(CDATA_ALLIED, cc) == 100 ) {
+						if ( cdata(CDATA_IN_TAGTEAM, cc) != 0 ) {
+							if ( cdata(CDATA_TAGTEAM_PARTNER, cc) != 0 ) {
+								txt lang(name(cc) + "はパートナーに稼ぎを分けてあげた。", name(cc) + " shared coins with partner.")
+								cdata(CDATA_GOLD, cdata(CDATA_TAGTEAM_PARTNER, cc)) += sell(1) / 2
+								cdata(CDATA_GOLD, cc) -= sell(1) / 2
+							}
+						}
+					}
+				}
+			}
+			if ( cdata(CDATA_AI_CALM, cc) != 11 ) {
+				if ( rnd(20) == 0 ) {
+					kiso = cdata(CDATA_INIT_ATTR, cc) * 8 + cdata(CDATA_INIT_SPEED, cc) * 10 + cdata(CDATA_INIT_LIFEMANA, cc) * 8
+					if ( kiso > 20000 ) {
+						kiso = 20000
+					}
+					hiyou = kiso - sdata(SKILL_ATTR_CHA, cc) * 5
+					if ( hiyou < 0 ) {
+						hiyou = 500
+					}
+					if ( hiyou < kiso * 50 / 100 ) {
+						hiyou = kiso * 50 / 100
+					}
+					if ( cdata(CDATA_GOLD, cc) >= hiyou ) {
+						cdata(CDATA_GOLD, cc) -= hiyou
+						snd SOUNDLIST_DING3
+						txtef COLOR_SKY_BLUE
+						txt lang(cdatan(CDATAN_NAME, cc) + "は" + hiyou + "gp使って訓練所に通い、潜在能力を伸ばした！", cdatan(CDATAN_NAME, cc) + " visits a trainer and develops " + his(cc) + " potential!")
+						modgrowth cc, SKILL_ATTR_STR, 15
+						modgrowth cc, SKILL_ATTR_CON, 15
+						modgrowth cc, SKILL_ATTR_DEX, 15
+						modgrowth cc, SKILL_ATTR_PER, 15
+						modgrowth cc, SKILL_ATTR_LER, 15
+						modgrowth cc, SKILL_ATTR_WIL, 15
+						modgrowth cc, SKILL_ATTR_MAG, 15
+						modgrowth cc, SKILL_ATTR_CHA, 15
+						repeat 112 - 100, 100
+							if ( sorg(cnt, cc) == 0 ) {
+								continue
+							}
+							modgrowth cc, cnt, 20
+						loop
+						repeat 191 - 150, 150
+							if ( sorg(cnt, cc) == 0 ) {
+								continue
+							}
+							modgrowth cc, cnt, 20
+						loop
+						repeat 302 - 300, 300
+							if ( sorg(cnt, cc) == 0 ) {
+								continue
+							}
+							modgrowth cc, cnt, 20
+						loop
+						r1 = cc
+						gosub *charaRefresh
+					}
+				}
+			}
+		}
+	}
+	if ( tc == cc ) {
+		cdata(CDATA_TARGET, cc) = 0
+		goto *turn_end
+	}
+	if ( cdata(CDATA_MOVE_AROUND, cc) <= 0 ) {
+		cdata(CDATA_X_DEST, cc) = cdata(CDATA_X, tc)
+		cdata(CDATA_Y_DEST, cc) = cdata(CDATA_Y, tc)
+		if ( retreat | cdata(CDATA_AI_DISTANCE, cc) > distance ) {
+			cdata(CDATA_X_DEST, cc) = cdata(CDATA_X, cc) + (cdata(CDATA_X, cc) - cdata(CDATA_X, tc))
+			cdata(CDATA_Y_DEST, cc) = cdata(CDATA_Y, cc) + (cdata(CDATA_Y, cc) - cdata(CDATA_Y, tc))
+		}
+		if ( cc < MAX_CHARA_FOLLOWER ) {
+			if ( cdata(CDATA_TARGET, cc) == 0 | (cdata(CDATA_DIRECTIVE_MODE, cc) == DIRECTIVE_MODE_INTERCEPT | cdata(CDATA_DIRECTIVE_MODE, cc) == DIRECTIVE_MODE_TALKING & dist(cdata(CDATA_X, tc), cdata(CDATA_Y, tc), cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER)) > sdataref(SKILL_DATAREF_TG, SKILL_SPACT_CHEER) \ 1000 + 1) ) {
+				cdata(CDATA_X_DEST, cc) = cdata(CDATA_X, CHARA_PLAYER)
+				cdata(CDATA_Y_DEST, cc) = cdata(CDATA_Y, CHARA_PLAYER)
+			}
+		}
+		if ( cbit(CHARA_BIT_NECRO, cc) ) {
+			if ( cdata(CDATA_RELATION, cc) == RELATION_ALLY ) {
+				if ( cdata(CDATA_TARGET, cc) == 0 | (cdata(CDATA_DIRECTIVE_MODE, cc) == DIRECTIVE_MODE_INTERCEPT | cdata(CDATA_DIRECTIVE_MODE, cc) == DIRECTIVE_MODE_TALKING & dist(cdata(CDATA_X, tc), cdata(CDATA_Y, tc), cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER)) > sdataref(SKILL_DATAREF_TG, SKILL_SPACT_CHEER) \ 1000 + 1) ) {
+					cdata(CDATA_X_DEST, cc) = cdata(CDATA_X, CHARA_PLAYER)
+					cdata(CDATA_Y_DEST, cc) = cdata(CDATA_Y, CHARA_PLAYER)
+				}
+			}
+		}
+	}
+	else {
+		cdata(CDATA_MOVE_AROUND, cc)--
+	}
+	blockedbychara = 0
+	cdata(CDATA_X_NEW, cc) = (cdata(CDATA_X_DEST, cc) > cdata(CDATA_X, cc)) - (cdata(CDATA_X_DEST, cc) < cdata(CDATA_X, cc)) + cdata(CDATA_X, cc)
+	cdata(CDATA_Y_NEW, cc) = (cdata(CDATA_Y_DEST, cc) > cdata(CDATA_Y, cc)) - (cdata(CDATA_Y_DEST, cc) < cdata(CDATA_Y, cc)) + cdata(CDATA_Y, cc)
+	x = cdata(CDATA_X_NEW, cc)
+	y = cdata(CDATA_Y_NEW, cc)
+	cell_check x, y
+	if ( cellaccess == 1 ) {
+		goto *act_move
+	}
+	ride = 0
+	if ( cellchara != (-1) ) {
+		tc = cellchara
+		if ( findbuff(cc, BUFF_HYPER_DASH) != (-1) ) {
+			ride = 1
+		}
+		if ( cdata(CDATA_IN_TAGTEAM, cc) != 0 ) {
+			if ( findbuff(cdata(CDATA_TAGTEAM_PARTNER, cc), BUFF_HYPER_DASH) != (-1) ) {
+				ride = 1
+			}
+		}
+		if ( cdata(CDATA_RELATION, cc) == RELATION_ALLY ) {
+			if ( cdata(CDATA_RELATION, tc) > RELATION_HATE | tc == CHARA_PLAYER ) {
+				ride = 0
+			}
+		}
+		if ( cdata(CDATA_RELATION, cc) != RELATION_ALLY ) {
+			if ( cdata(CDATA_RELATION, tc) == cdata(CDATA_RELATION, cc) ) {
+				ride = 0
+			}
+		}
+	}
+	if ( ride == 1 ) {
+		if ( cellchara != (-1) ) {
+			tc = cellchara
+			cell_swap cc, tc
+			snd SOUNDLIST_BASH1
+			txt lang(name(cc) + "は" + name(tc) + "を轢いた。", name(cc) + " blew " + name(tc) + ".")
+			dmghp tc, (sdata(SKILL_ACTIVE_RIDING, cc) / 4 + 4) * (sdata(SKILL_ATTR_WIL, cc) / 4 + 3) + rnd(sdata(SKILL_ATTR_SPD, cc) + 5), cc, SKILL_RESDMG_CRUSH, 1000
+			if ( cdata(CDATA_CONDITION_WINCE, tc) < 0 ) {
+				cdata(CDATA_CONDITION_WINCE, tc) = 1
+			}
+			if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) != TRUE & cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) != TRUE & cbit(CHARA_BIT_SUMMONED, tc) != TRUE & cbit(CHARA_BIT_LIVESTOCK, tc) != TRUE & cbit(CHARA_BIT_NECRO, tc) != TRUE & cbit(CHARA_BIT_SANDBAG, tc) != TRUE & tc != CHARA_PLAYER ) {
+				skillexp SKILL_ACTIVE_RIDING, cc, 30
+				if ( cdata(CDATA_IN_TAGTEAM, cc) != 0 ) {
+					skillexp SKILL_ACTIVE_RIDING, cdata(CDATA_TAGTEAM_PARTNER, cc), 30
+				}
+			}
+			ride = 0
+			goto *turn_end
+		}
+	}
+	ride = 0
+	if ( cellchara != (-1) ) {
+		tc = cellchara
+		if ( relationbetween(cc, tc) == (-3) ) {
+			cdata(CDATA_TARGET, cc) = tc
+			cdata(CDATA_AI_AGGRO, cc) += 4
+			goto *ai_actMain
+		}
+		else {
+			if ( cdata(CDATA_QUALITY, cc) > FIX_QUALITY_GREAT | cdata(CDATA_ID, cc) == CREATURE_ID_AILE_THE_ATTENDANT & cdata(CDATA_LEVEL, cc) > cdata(CDATA_LEVEL, tc) & cc >= MAX_CHARA_FOLLOWER | cbit(CHARA_BIT_SANDBAG, tc) | (cbit(CHARA_BIT_SUMMONED, tc) == TRUE & gdata(GDATA_AREA) == AREA_PET_ARENA) ) {
+				if ( cdata(CDATA_TARGET, cc) != tc & cdata(CDATA_CONDITION_BIND, cc) < 20 ) {
+					cell_swap cc, tc
+					if ( synccheck(cc, -1) ) {
+						txt lang(name(cc) + "は" + name(tc) + "を押しのけた。", name(cc) + " displace" + _s(cc) + " " + name(tc) + ".")
+					}
+					if ( cdata(CDATA_ROW_ACT, tc) == ACTION_EAT ) {
+						if ( cdata(CDATA_ACTION_PERIOD, tc) > 0 ) {
+							if ( cc != CHARA_PLAYER | cdata(CDATA_IMPRESSION, tc) + cdata(CDATA_MASTER_SERVANT, tc) < 200 ) {
+								if ( synccheck(cc, -1) ) {
+									txt lang(name(tc) + "は" + name(cc) + "を睨み付けた。", name(tc) + " glare" + _s(tc) + " " + name(cc) + ".")
+								}
+							}
+							if ( cc == CHARA_PLAYER ) {
+								if ( cdata(CDATA_IMPRESSION, tc) + cdata(CDATA_MASTER_SERVANT, tc) >= 200 & cdata(CDATA_IMPRESSION, tc) + cdata(CDATA_MASTER_SERVANT, tc) < 250 ) {
+									if ( synccheck(cc, -1) ) {
+										txt lang(name(tc) + "は" + name(cc) + "を不満げに見つめた。", name(tc) + " looked away " + name(cc) + " with dissatisfaction.")
+									}
+								}
+							}
+							if ( cc == CHARA_PLAYER ) {
+								if ( cdata(CDATA_IMPRESSION, tc) + cdata(CDATA_MASTER_SERVANT, tc) >= 250 & cdata(CDATA_IMPRESSION, tc) + cdata(CDATA_MASTER_SERVANT, tc) < 300 ) {
+									if ( synccheck(cc, -1) ) {
+										txt lang(name(tc) + "は残念そうにうなだれた。", name(tc) + " looked disappointing.")
+									}
+								}
+							}
+							if ( cc == CHARA_PLAYER ) {
+								if ( cdata(CDATA_IMPRESSION, tc) + cdata(CDATA_MASTER_SERVANT, tc) >= 300 & cdata(CDATA_IMPRESSION, tc) + cdata(CDATA_MASTER_SERVANT, tc) < 350 ) {
+									if ( synccheck(cc, -1) ) {
+										txt lang(name(tc) + "は小さく頷いた。", name(tc) + " nodded small.")
+									}
+								}
+							}
+							if ( cc == CHARA_PLAYER ) {
+								if ( cdata(CDATA_IMPRESSION, tc) + cdata(CDATA_MASTER_SERVANT, tc) >= 350 ) {
+									if ( synccheck(cc, -1) ) {
+										txt lang(name(tc) + "は何も言わず一歩下がった。", name(tc) + " went down one step without saying anything.")
+									}
+								}
+							}
+							rowactend tc
+						}
+					}
+					if ( cdata(CDATA_IN_TAGTEAM, tc) != 0 ) {
+						ttc = cdata(CDATA_TAGTEAM_PARTNER, tc)
+						if ( cdata(CDATA_ROW_ACT, ttc) == ACTION_EAT ) {
+							if ( cdata(CDATA_ACTION_PERIOD, ttc) > 0 ) {
+								if ( cc != CHARA_PLAYER | cdata(CDATA_IMPRESSION, ttc) + cdata(CDATA_MASTER_SERVANT, ttc) < 200 ) {
+									txt lang(cdatan(CDATAN_NAME, ttc) + "は" + name(cc) + "を睨み付けた。", cdatan(CDATAN_NAME, ttc) + " glare" + _s(ttc) + " " + name(cc) + ".")
+								}
+								if ( cc == CHARA_PLAYER ) {
+									if ( cdata(CDATA_IMPRESSION, ttc) + cdata(CDATA_MASTER_SERVANT, ttc) >= 200 & cdata(CDATA_IMPRESSION, ttc) + cdata(CDATA_MASTER_SERVANT, ttc) < 250 ) {
+										txt lang(cdatan(CDATAN_NAME, ttc) + "は" + name(cc) + "を不満げに見つめた。", cdatan(CDATAN_NAME, ttc) + " looked away " + name(cc) + " with dissatisfaction.")
+									}
+								}
+								if ( cc == CHARA_PLAYER ) {
+									if ( cdata(CDATA_IMPRESSION, ttc) + cdata(CDATA_MASTER_SERVANT, ttc) >= 250 & cdata(CDATA_IMPRESSION, ttc) + cdata(CDATA_MASTER_SERVANT, ttc) < 300 ) {
+										txt lang(cdatan(CDATAN_NAME, ttc) + "は残念そうにうなだれた。", cdatan(CDATAN_NAME, ttc) + " looked disappointing.")
+									}
+								}
+								if ( cc == CHARA_PLAYER ) {
+									if ( cdata(CDATA_IMPRESSION, ttc) + cdata(CDATA_MASTER_SERVANT, ttc) >= 300 & cdata(CDATA_IMPRESSION, ttc) + cdata(CDATA_MASTER_SERVANT, ttc) < 350 ) {
+										txt lang(cdatan(CDATAN_NAME, ttc) + "は小さく頷いた。", cdatan(CDATAN_NAME, ttc) + " nodded small.")
+									}
+								}
+								if ( cc == CHARA_PLAYER ) {
+									if ( cdata(CDATA_IMPRESSION, ttc) + cdata(CDATA_MASTER_SERVANT, ttc) >= 350 ) {
+										txt lang(cdatan(CDATAN_NAME, ttc) + "は何も言わず一歩下がった。", cdatan(CDATAN_NAME, ttc) + " went down one step without saying anything.")
+									}
+								}
+								rowactend ttc
+							}
+						}
+					}
+					goto *turn_end
+				}
+			}
+		}
+	}
+	if ( cc > MAX_CHARA_FOLLOWER & cdata(CDATA_QUALITY, cc) > FIX_QUALITY_GREAT & cdata(CDATA_RELATION, cc) <= RELATION_HATE | findbuff(cc, BUFF_HYPER_DASH) != (-1) | (cdata(CDATA_ID, cc) == CREATURE_ID_MEGA_MOLE | cdata(CDATA_ID, cc) == CREATURE_ID_TALPIDAE | cdata(CDATA_ID, cc) == CREATURE_ID_AILE_THE_ATTENDANT & cc > MAX_CHARA_FOLLOWER) ) {
+		if ( mdata(MDATA_TYPE) != MAP_TYPE_WORLD & cdata(CDATA_CONDITION_BIND, cc) < 20 ) {
+			if ( x >= 0 ) {
+				if ( x < mdata(MDATA_WIDTH) ) {
+					if ( y >= 0 ) {
+						if ( y < mdata(MDATA_HEIGHT) ) {
+							if ( map(x, y, MAP_FEATS_ON_TILE) != 0 ) {
+								cell_featread x, y
+								if ( feat(FEAT_CELL_FEATURE_ID) == CELL_FEATURE_DOOR_CLOSED ) {
+									snd SOUNDLIST_BASH1
+									cell_featset x, y, 0, CELL_FEATURE_NONE, 0, 0
+									spillfrag x, y, 2
+									if ( synccheck(cc, -1) ) {
+										txt lang(name(cc) + "は扉を破壊した！", name(cc) + " crush" + _s(cc) + " the door!")
+									}
+								}
+							}
+							if ( chipm(CHIPM_ATTRIB, map(x, y, MAP_TILE_ID)) & CHIPM_ATTRIB_CANT_PASS ) {
+								map(x, y, MAP_TILE_ID) = tile_tunnel
+								snd SOUNDLIST_CRUSH1
+								animeid = ANIMATION_CRUSH
+								gosub *anime
+								spillfrag x, y, 2
+								if ( synccheck(cc, -1) ) {
+									txt lang(name(cc) + "は壁を破壊した！", name(cc) + " crush" + _s(cc) + " the wall!")
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	if ( abs(cdata(CDATA_X_DEST, cc) - cdata(CDATA_X, cc)) >= abs(cdata(CDATA_Y_DEST, cc) - cdata(CDATA_Y, cc)) ) {
+		gosub *ai_moveH
+		if ( stat == 1 ) {
+			goto *act_move
+		}
+		gosub *ai_moveV
+		if ( stat == 1 ) {
+			goto *act_move
+		}
+	}
+	else {
+		gosub *ai_moveV
+		if ( stat == 1 ) {
+			goto *act_move
+		}
+		gosub *ai_moveH
+		if ( stat == 1 ) {
+			goto *act_move
+		}
+	}
+	if ( cdata(CDATA_MOVE_AROUND, cc) > 0 ) {
+		cdata(CDATA_X_NEW, cc) = rnd(3) - 1 + cdata(CDATA_X, cc)
+		cdata(CDATA_Y_NEW, cc) = rnd(3) - 1 + cdata(CDATA_Y, cc)
+		cell_check cdata(CDATA_X_NEW, cc), cdata(CDATA_Y_NEW, cc)
+		if ( cellaccess == 1 ) {
+			goto *act_move
+		}
+	}
+	else {
+		if ( blockedbychara == 1 ) {
+			cdata(CDATA_MOVE_AROUND, cc) = 3
+		}
+		else {
+			cdata(CDATA_MOVE_AROUND, cc) = 6
+		}
+		dir = dir(1 + rnd(2))
+		if ( dir == 1 ) {
+			cdata(CDATA_X_DEST, cc) = cdata(CDATA_X, cc) - 6
+			cdata(CDATA_Y_DEST, cc) = cdata(CDATA_Y, tc)
+		}
+		if ( dir == 2 ) {
+			cdata(CDATA_X_DEST, cc) = cdata(CDATA_X, cc) + 6
+			cdata(CDATA_Y_DEST, cc) = cdata(CDATA_Y, tc)
+		}
+		if ( dir == 3 ) {
+			cdata(CDATA_Y_DEST, cc) = cdata(CDATA_Y, cc) - 6
+			cdata(CDATA_X_DEST, cc) = cdata(CDATA_X, tc)
+		}
+		if ( dir == 0 ) {
+			cdata(CDATA_Y_DEST, cc) = cdata(CDATA_Y, cc) + 6
+			cdata(CDATA_X_DEST, cc) = cdata(CDATA_X, tc)
+		}
+	}
+	goto *turn_end
+
+*ai_moveH
+	if ( cdata(CDATA_X_DEST, cc) > cdata(CDATA_X, cc) ) {
+		if ( cdata(CDATA_Y_DEST, cc) > cdata(CDATA_Y, cc) ) {
+			p = 1
+		}
+		else {
+			p = 0
+		}
+		dir = 2, 0, 3
+		ai_check
+		if ( stat == 1 ) {
+			return 1
+		}
+	}
+	if ( cdata(CDATA_X_DEST, cc) < cdata(CDATA_X, cc) ) {
+		if ( cdata(CDATA_Y_DEST, cc) < cdata(CDATA_Y, cc) ) {
+			p = 0
+		}
+		else {
+			p = 1
+		}
+		dir = 1, 0, 3
+		ai_check
+		if ( stat == 1 ) {
+			return 1
+		}
+	}
+	return 0
+
+*ai_moveV
+	if ( cdata(CDATA_Y_DEST, cc) > cdata(CDATA_Y, cc) ) {
+		if ( cdata(CDATA_X_DEST, cc) > cdata(CDATA_X, cc) ) {
+			p = 1
+		}
+		else {
+			p = 0
+		}
+		dir = 0, 1, 2
+		ai_check
+		if ( stat == 1 ) {
+			return 1
+		}
+	}
+	if ( cdata(CDATA_Y_DEST, cc) < cdata(CDATA_Y, cc) ) {
+		if ( cdata(CDATA_X_DEST, cc) > cdata(CDATA_X, cc) ) {
+			p = 0
+		}
+		else {
+			p = 1
+		}
+		dir = 3, 1, 2
+		ai_check
+		if ( stat == 1 ) {
+			return 1
+		}
+	}
+	return 0
+
+*ai_actMain
+	if ( tc == CHARA_PLAYER ) {
+		pcattacker = cc
+	}
+	if ( cdata(CDATA_ID, cc) == CREATURE_ID_ALFRED_THE_CANGNAN_WIND ) {
+		if ( gdata(GDATA_FLAG_MAIN_CHAOS_CRADLE_34) < 2 ) {
+			if ( cdata(CDATA_ALLIED, cc) == 0 ) {
+				if ( rnd(4) == 0 ) {
+					cdata(CDATA_CONDITION_DIM, cc) = 1000
+					txtef COLOR_RED
+					txt lang(name(cc) + "は激痛に耐え切れず気絶した。", name(cc) + " fainted after failing to suffer from severe pain.")
+				}
+			}
+		}
+	}
+	if ( cdata(CDATA_TARGET, cc) != 0 ) {
+		if ( cdata(CDATA_NECRO_FORCE, cc) == 10 ) {
+			efid = SKILL_SPACT_CLOSE_SUICIDE
+			gosub *action
+			goto *turn_end
+		}
+	}
+	if ( cdata(CDATA_DIRECTIVE_MODE, cc) == DIRECTIVE_MODE_DEFENSIVE ) {
+		if ( cdata(CDATA_TARGET, cc) != 0 | cdata(CDATA_TARGET, cc) == 0 ) {
+			if ( cdata(CDATA_POWER_GAUGE, cc) < 2 | cdata(CDATA_POWER_GAUGE, tc) < 2 ) {
+				goto *turn_end
+			}
+		}
+	}
+	act = cdata(STARTING_CDATA_ACT_MAIN + rnd(cdata(CDATA_ACT_INDEX, cc) \ 10), cc)
+	if ( cdata(CDATA_ID, cc) == CREATURE_ID_DREAD_RABBIT ) {
+		if ( rnd(50) == 0 ) {
+			act = SKILL_SPACT_MULTIPLE_GATHER
+		}
+	}
+	if ( cc < MAX_CHARA_FOLLOWER | (cdata(CDATA_ALLIED, cc) == 100 & gdata(GDATA_AREA) != AREA_SHOW_HOUSE) ) {
+		if ( cdata(CDATA_TARGET, cc) == 0 | (cdata(CDATA_DIRECTIVE_MODE, cc) == DIRECTIVE_MODE_INTERCEPT | cdata(CDATA_DIRECTIVE_MODE, cc) == DIRECTIVE_MODE_TALKING & dist(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER)) > sdataref(SKILL_DATAREF_TG, SKILL_SPACT_CHEER) \ 1000 + 1) ) {
+			goto *ai_followMove
+		}
+	}
+	if ( cdata(CDATA_POWER_GAUGE, cc) >= 100 & cdata(CDATA_DIRECTIVE_MODE, cc) == DIRECTIVE_MODE_INTERCEPT & cdata(CDATA_SHIFT_FORM, cc) == SHIFT_FORM_NONE ) {
+		cic = -1
+		inv_find ITEM_ID_ALPHA_SHIFT_CORE, cc
+		if ( stat != (-1) ) {
+			if ( gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 >= inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), stat) ) {
+				cic = stat
+			}
+		}
+		inv_find ITEM_ID_BETA_SHIFT_CORE, cc
+		if ( stat != (-1) ) {
+			if ( gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 >= inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), stat) ) {
+				cic = stat
+			}
+		}
+		inv_find ITEM_ID_GAMMA_SHIFT_CORE, cc
+		if ( stat != (-1) ) {
+			if ( gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 >= inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), stat) ) {
+				cic = stat
+			}
+		}
+		inv_find ITEM_ID_DELTA_SHIFT_CORE, cc
+		if ( stat != (-1) ) {
+			if ( gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 >= inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), stat) ) {
+				cic = stat
+			}
+		}
+		inv_find ITEM_ID_OMEGA_SHIFT_CORE, cc
+		if ( stat != (-1) ) {
+			if ( gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 >= inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), stat) ) {
+				cic = stat
+			}
+		}
+		if ( cic != (-1) ) {
+			inv(INV_ITEM_NUM, cic) > 0
+			inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), cic) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 + inv(INV_ITEM_PARAM3, cic)
+			hikae = cdatan(CDATAN_NAME, cc)
+			cdatan(CDATAN_NAME, cc) = cdatan(CDATAN_FORM_SHIFT_NAME, cc)
+			cdatan(CDATAN_FORM_SHIFT_NAME, cc) = hikae
+			if ( cdatan(CDATAN_NAME, cc) == "" ) {
+				cdatan(CDATAN_NAME, cc) = cdatan(CDATAN_FORM_SHIFT_NAME, cc) + lang("／アルター", "-altered")
+			}
+			hikae = cdata(CDATA_PORTRAIT, cc)
+			cdata(CDATA_PORTRAIT, cc) = cdata(CDATA_FORM_SHIFT_PORTRAIT, cc)
+			cdata(CDATA_FORM_SHIFT_PORTRAIT, cc) = hikae
+			hikae = cdata(CDATA_FACE, cc)
+			cdata(CDATA_FACE, cc) = cdata(CDATA_FORM_SHIFT_FACE, cc)
+			cdata(CDATA_FORM_SHIFT_FACE, cc) = hikae
+			hikae = pcc(PCC_HAIR, cc)
+			pcc(PCC_HAIR, cc) = cdata(CDATA_FORM_SHIFT_PCC_HAIR, cc)
+			cdata(CDATA_FORM_SHIFT_PCC_HAIR, cc) = hikae
+			hikae = pcc(PCC_SUB_HAIR, cc)
+			pcc(PCC_SUB_HAIR, cc) = cdata(CDATA_FORM_SHIFT_PCC_SUB_HAIR, cc)
+			cdata(CDATA_FORM_SHIFT_PCC_SUB_HAIR, cc) = hikae
+			hikae = pcc(PCC_BODY, cc)
+			pcc(PCC_BODY, cc) = cdata(CDATA_FORM_SHIFT_PCC_BODY, cc)
+			cdata(CDATA_FORM_SHIFT_PCC_BODY, cc) = hikae
+			hikae = pcc(PCC_CLOTH, cc)
+			pcc(PCC_CLOTH, cc) = cdata(CDATA_FORM_SHIFT_PCC_CLOTH, cc)
+			cdata(CDATA_FORM_SHIFT_PCC_CLOTH, cc) = hikae
+			hikae = pcc(PCC_PANTS, cc)
+			pcc(PCC_PANTS, cc) = cdata(CDATA_FORM_SHIFT_PCC_PANTS, cc)
+			cdata(CDATA_FORM_SHIFT_PCC_PANTS, cc) = hikae
+			hikae = pcc(PCC_ETC1, cc)
+			pcc(PCC_ETC1, cc) = cdata(CDATA_FORM_SHIFT_PCC_ETC1, cc)
+			cdata(CDATA_FORM_SHIFT_PCC_ETC1, cc) = hikae
+			hikae = pcc(PCC_ETC2, cc)
+			pcc(PCC_ETC2, cc) = cdata(CDATA_FORM_SHIFT_PCC_ETC2, cc)
+			cdata(CDATA_FORM_SHIFT_PCC_ETC2, cc) = hikae
+			hikae = pcc(PCC_ETC3, cc)
+			pcc(PCC_ETC3, cc) = cdata(CDATA_FORM_SHIFT_PCC_ETC3, cc)
+			cdata(CDATA_FORM_SHIFT_PCC_ETC3, cc) = hikae
+			hikae = pcc(PCC_EYE, cc)
+			pcc(PCC_EYE, cc) = cdata(CDATA_FORM_SHIFT_PCC_EYE, cc)
+			cdata(CDATA_FORM_SHIFT_PCC_EYE, cc) = hikae
+			hikae = pcc(PCC_RIDE, cc)
+			pcc(PCC_RIDE, cc) = cdata(CDATA_FORM_SHIFT_PCC_RIDE, cc)
+			cdata(CDATA_FORM_SHIFT_PCC_RIDE, cc) = hikae
+			if ( pcc(PCC_BODY, cc) == 0 ) {
+				pcc(PCC_BODY, cc) = 1
+			}
+			hikae = cdata(CDATA_CHARA_PIC, cc)
+			cdata(CDATA_CHARA_PIC, cc) = cdata(CDATA_CHARA_PIC_ORG, cc)
+			cdata(CDATA_CHARA_PIC_ORG, cc) = hikae
+			hikae = cdata(CDATA_PIC, cc)
+			cdata(CDATA_PIC, cc) = cdata(CDATA_FORM_SHIFT_PIC, cc)
+			cdata(CDATA_FORM_SHIFT_PIC, cc) = hikae
+			if ( cdata(CDATA_PIC, cc) == xy2pic(0, 0) ) {
+				cdata(CDATA_PIC, cc) = xy2pic(1, 0)
+			}
+			create_pcpic cc, 0
+			customtalk cc, DBMODE_FLAVOR_SHIFT
+			gosub *convert_word
+			if ( gdata(GDATA_CUSTOM_TALK) == 100 ) {
+				if ( jp ) {
+					txt "「変身！」", "「フォームアップ！」", "「ドレスアップ！」", "「トランスフォーム！」"
+				}
+				if ( en ) {
+					txt cnvtalk("Transform!")
+				}
+			}
+			if ( inv(INV_ITEM_ID, cic) == ITEM_ID_ALPHA_SHIFT_CORE ) {
+				addbuff cc, BUFF_FORM_SHIFT_ALPHA, 200, 200
+			}
+			if ( inv(INV_ITEM_ID, cic) == ITEM_ID_BETA_SHIFT_CORE ) {
+				addbuff cc, BUFF_FORM_SHIFT_BETA, 200, 200
+			}
+			if ( inv(INV_ITEM_ID, cic) == ITEM_ID_GAMMA_SHIFT_CORE ) {
+				addbuff cc, BUFF_FORM_SHIFT_GAMMA, 200, 200
+			}
+			if ( inv(INV_ITEM_ID, cic) == ITEM_ID_DELTA_SHIFT_CORE ) {
+				addbuff cc, BUFF_FORM_SHIFT_DELTA, 200, 200
+			}
+			if ( inv(INV_ITEM_ID, cic) == ITEM_ID_OMEGA_SHIFT_CORE ) {
+				addbuff cc, BUFF_FORM_SHIFT_OMEGA, 150, 150
+			}
+			animeid = ANIMATION_GENE
+			anic = cc
+			gosub *anime
+			cdata(CDATA_POWER_GAUGE, cc) -= 100
+		}
+	}
+	powai = 0
+	if ( gdata(GDATA_FLAG_MAIN) < 350 ) {
+		if ( cdata(CDATA_LEVEL, tc) >= 130 ) {
+			powai = 100
+		}
+	}
+	if ( gdata(GDATA_FLAG_MAIN) >= 350 ) {
+		if ( cdata(CDATA_LEVEL, tc) >= 50 ) {
+			powai = 100
+		}
+	}
+	if ( tc < MAX_CHARA_FOLLOWER | cdata(CDATA_ALLIED, tc) == 100 | tc == CHARA_PLAYER ) {
+		powai = 100
+	}
+	if ( gdata(GDATA_FLAG_GAME_MODE) == 1 ) {
+		powai = 100
+	}
+	if ( cdata(CDATA_DIRECTIVE_MODE, tc) == DIRECTIVE_MODE_TEMPORARY ) {
+		if ( cdata(CDATA_DIRECTIVE_MODE_ORG, tc) != 0 ) {
+			powai = 0
+		}
+	}
+	if ( cdata(CDATA_DIRECTIVE_MODE, tc) == DIRECTIVE_MODE_DEFENSIVE | cdata(CDATA_DIRECTIVE_MODE, tc) == DIRECTIVE_MODE_INTERCEPT ) {
+		powai = 0
+	}
+	if ( cbit(CHARA_BIT_AWAKE_PROXIMITY_ATTACK, cc) ) {
+		act = AI_ACTION_MELEE
+	}
+	if ( cbit(CHARA_BIT_AWAKE_RANGED_ATTACK, cc) ) {
+		act = AI_ACTION_RANGE
+	}
+	if ( cbit(CHARA_BIT_AWAKE_RANGED_ATTACK, cc) ) {
+		if ( cbit(CHARA_BIT_AWAKE_PROXIMITY_ATTACK, cc) ) {
+			if ( rnd(10) > 4 ) {
+				act = AI_ACTION_MELEE
+			}
+		}
+	}
+	if ( cbit(CHARA_BIT_SHOP_BUSINESS_SMILE, cc) ) {
+		if ( cdata(CDATA_INTEREST, tc) > 0 ) {
+			if ( cdata(CDATA_CONDITION_PARALYZE, tc) == 0 ) {
+				act = SKILL_SPACT_BEWITCH
+			}
+		}
+	}
+	if ( cbit(CHARA_BIT_AWAKE_INSULT, cc) ) {
+		if ( rnd(10) == 0 ) {
+			act = SKILL_SPACT_INSULT
+		}
+	}
+	if ( cbit(CHARA_BIT_AWAKE_CRYSTAL_SPEAR, cc) ) {
+		if ( rnd(5) == 0 ) {
+			act = SKILL_SPELL_CRYSTAL_SPEAR
+		}
+	}
+	if ( cbit(CHARA_BIT_AWAKE_DIMENSIONAL_MOVE, cc) ) {
+		if ( dist(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), cdata(CDATA_X, tc), cdata(CDATA_Y, tc)) <= 2 ) {
+			if ( rnd(5) == 0 ) {
+				act = SKILL_SPACT_DIMENSIONAL_MOVE
+			}
+		}
+	}
+	if ( cbit(CHARA_BIT_AWAKE_TACTICAL_ATTACK, cc) ) {
+		if ( rnd(3) == 0 ) {
+			if ( dist(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), cdata(CDATA_X, tc), cdata(CDATA_Y, tc)) > 1 ) {
+				act = SKILL_SPACT_SHADOW_STEP
+			}
+			if ( cbit(CHARA_BIT_SUICIDE, tc) ) {
+				act = AI_ACTION_RANGE
+			}
+			if ( dist(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), cdata(CDATA_X, tc), cdata(CDATA_Y, tc)) == 1 ) {
+				if ( cdata(CDATA_HP, tc) < cdata(CDATA_MAX_HP, tc) / 10 ) {
+					attackskill = SKILL_WEAPON_LONGSWORD
+					act = SKILL_SPACT_DECAPITATION2
+				}
+			}
+		}
+	}
+	if ( cbit(CHARA_BIT_AWAKE_TACTICAL_HEAL, cc) ) {
+		if ( rnd(4) == 0 ) {
+			if ( findbuff(cc, BUFF_REGENERATION) == (-1) ) {
+				act = SKILL_SPELL_REGENERATION
+			}
+			repeat 245
+				if ( cdata(CDATA_EXIST, cnt) != CHAR_STATE_ALIVE ) {
+					continue
+				}
+				if ( cc == cnt ) {
+					continue
+				}
+				if ( cc < MAX_CHARA_FOLLOWER ) {
+					if ( cnt >= 16 ) {
+						continue
+					}
+				}
+				if ( cc >= MAX_CHARA_FOLLOWER ) {
+					if ( cdata(CDATA_RELATION, cc) != cdata(CDATA_RELATION, cnt) ) {
+						continue
+					}
+				}
+				dx = cdata(CDATA_X, cnt)
+				dy = cdata(CDATA_Y, cnt)
+				if ( dist(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), dx, dy) > sdataref(SKILL_DATAREF_TG, SKILL_SPACT_CHEER) \ 1000 + 1 ) {
+					continue
+				}
+				if ( fov_los(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), dx, dy) == 0 ) {
+					continue
+				}
+				if ( cdata(CDATA_HP, cnt) < cdata(CDATA_MAX_HP, cnt) / 2 ) {
+					act = SKILL_SPELL_HEALING_RAIN
+					break
+				}
+			loop
+			if ( cdata(CDATA_HP, cc) < cdata(CDATA_MAX_HP, cc) / 2 ) {
+				act = SKILL_SPELL_HEAL_CRITICAL
+			}
+			if ( cdata(CDATA_MP, cc) < cdata(CDATA_MAX_MP, cc) / 10 ) {
+				act = SKILL_SPACT_HARVEST_MANA
+			}
+		}
+	}
+	if ( cbit(CHARA_BIT_AWAKE_TACTICAL_MARTIAL_ARTS, cc) ) {
+		if ( rnd(3) == 0 ) {
+			if ( dist(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), cdata(CDATA_X, tc), cdata(CDATA_Y, tc)) == 1 ) {
+				if ( rnd(3) == 0 ) {
+					act = SKILL_SPACT_EXPLOSIVE_FIST
+				}
+				else {
+					act = SKILL_SPACT_BODY_BLOW
+				}
+			}
+			if ( findbuff(cc, BUFF_ATTRIBUTE) == (-1) ) {
+				act = SKILL_SPACT_ATTRIBUTE
+			}
+			if ( findbuff(cc, BUFF_CLEAR_MIND) == (-1) ) {
+				act = SKILL_SPACT_CLEAR_MIND
+			}
+		}
+	}
+	if ( cbit(CHARA_BIT_AWAKE_CHARGE_ATTACK, cc) ) {
+		if ( findbuff(cc, BUFF_CHARGE) == (-1) ) {
+			if ( rnd(15) == 0 ) {
+				act = SKILL_SPACT_CHARGE
+			}
+		}
+	}
+	if ( 0 ) {
+		if ( findbuff(cc, BUFF_CHARGE) == (-1) ) {
+			if ( rnd(2) == 0 ) {
+				act = SKILL_SPACT_CHARGE
+			}
+		}
+	}
+	if ( cbit(CHARA_BIT_AWAKE_PROVOKE, cc) ) {
+		if ( rnd(10) == 0 ) {
+			act = SKILL_SPACT_PROVOKE
+		}
+	}
+	if ( cbit(CHARA_BIT_AWAKE_ZERO_SHOOT, cc) ) {
+		if ( dist(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), cdata(CDATA_X, tc), cdata(CDATA_Y, tc)) == 1 ) {
+			if ( rnd(10) == 0 ) {
+				act = SKILL_SPACT_ZERO_SHOOT
+			}
+		}
+	}
+	if ( cbit(CHARA_BIT_AWAKE_STRUCK_OUT, cc) ) {
+		if ( rnd(10) == 0 ) {
+			act = SKILL_SPACT_STRUCK_OUT
+		}
+	}
+	if ( cbit(CHARA_BIT_AWAKE_TACTICAL_CURSE, cc) ) {
+		if ( findbuff(tc, BUFF_HOLY_VEIL) == (-1) ) {
+			if ( rnd(10) == 0 ) {
+				if ( findbuff(tc, BUFF_MIST_OF_FRAILNESS) == (-1) ) {
+					act = SKILL_SPELL_MIST_OF_FRAILNESS
+				}
+				if ( findbuff(tc, BUFF_NIGHTMARE) == (-1) ) {
+					act = SKILL_SPELL_NIGHTMARE
+				}
+				if ( findbuff(tc, BUFF_ELEMENT_SCAR) == (-1) ) {
+					act = SKILL_SPELL_ELEMENT_SCAR
+				}
+				if ( cdatan(CDATAN_CLASS, tc) == "wizard" | cdatan(CDATAN_CLASS, tc) == "warmage" | cdatan(CDATAN_CLASS, tc) == "priest" ) {
+					if ( findbuff(tc, BUFF_MIST_OF_SILENCE) == (-1) ) {
+						act = SKILL_SPELL_MIST_OF_SILENCE
+					}
+				}
+				if ( findbuff(tc, BUFF_SLOW) == (-1) ) {
+					act = SKILL_SPELL_SLOW
+				}
+			}
+		}
+	}
+	if ( cbit(CHARA_BIT_AWAKE_VARIABLE_BREATH, cc) ) {
+		if ( rnd(10) == 0 ) {
+			act = SKILL_SPACT_POWER_BREATH
+			bvar = sdata(SKILL_RES_MAGIC, cc)
+			if ( sdata(SKILL_RES_FIRE, cc) > bvar ) {
+				act = SKILL_SPACT_FIRE_BREATH
+				bvar = sdata(SKILL_RES_FIRE, cc)
+			}
+			if ( sdata(SKILL_RES_COLD, cc) > bvar ) {
+				act = SKILL_SPACT_COLD_BREATH
+				bvar = sdata(SKILL_RES_COLD, cc)
+			}
+			if ( sdata(SKILL_RES_LIGHTNING, cc) > bvar ) {
+				act = SKILL_SPACT_LIGHTNING_BREATH
+				bvar = sdata(SKILL_RES_LIGHTNING, cc)
+			}
+			if ( sdata(SKILL_RES_DARKNESS, cc) > bvar ) {
+				act = SKILL_SPACT_DARKNESS_BREATH
+				bvar = sdata(SKILL_RES_DARKNESS, cc)
+			}
+			if ( sdata(SKILL_RES_MIND, cc) > bvar ) {
+				act = SKILL_SPACT_MIND_BREATH
+				bvar = sdata(SKILL_RES_MIND, cc)
+			}
+			if ( sdata(SKILL_RES_POISON, cc) > bvar ) {
+				act = SKILL_SPACT_POISON_BREATH
+				bvar = sdata(SKILL_RES_POISON, cc)
+			}
+			if ( sdata(SKILL_RES_NETHER, cc) > bvar ) {
+				act = SKILL_SPACT_NETHER_BREATH
+				bvar = sdata(SKILL_RES_NETHER, cc)
+			}
+			if ( sdata(SKILL_RES_SOUND, cc) > bvar ) {
+				act = SKILL_SPACT_SOUND_BREATH
+				bvar = sdata(SKILL_RES_SOUND, cc)
+			}
+			if ( sdata(SKILL_RES_NERVE, cc) > bvar ) {
+				act = SKILL_SPACT_NERVE_BREATH
+				bvar = sdata(SKILL_RES_NERVE, cc)
+			}
+			if ( sdata(SKILL_RES_CHAOS, cc) > bvar ) {
+				act = SKILL_SPACT_CHAOS_BREATH
+				bvar = sdata(SKILL_RES_CHAOS, cc)
+			}
+			if ( sdata(SKILL_RES_MAGIC, cc) >= bvar ) {
+				act = SKILL_SPACT_POWER_BREATH
+			}
+			bvar = 0
+			if ( cdata(CDATA_ELEMENTS_EYES_ELE, cc) != 0 ) {
+				if ( cdata(CDATA_ELEMENTS_EYES_ELE, cc) == 1 ) {
+					act = SKILL_SPACT_FIRE_BREATH
+				}
+				if ( cdata(CDATA_ELEMENTS_EYES_ELE, cc) == 2 ) {
+					act = SKILL_SPACT_COLD_BREATH
+				}
+				if ( cdata(CDATA_ELEMENTS_EYES_ELE, cc) == 3 ) {
+					act = SKILL_SPACT_LIGHTNING_BREATH
+				}
+				if ( cdata(CDATA_ELEMENTS_EYES_ELE, cc) == 4 ) {
+					act = SKILL_SPACT_DARKNESS_BREATH
+				}
+				if ( cdata(CDATA_ELEMENTS_EYES_ELE, cc) == 5 ) {
+					act = SKILL_SPACT_MIND_BREATH
+				}
+				if ( cdata(CDATA_ELEMENTS_EYES_ELE, cc) == 6 ) {
+					act = SKILL_SPACT_POISON_BREATH
+				}
+				if ( cdata(CDATA_ELEMENTS_EYES_ELE, cc) == 7 ) {
+					act = SKILL_SPACT_NETHER_BREATH
+				}
+				if ( cdata(CDATA_ELEMENTS_EYES_ELE, cc) == 8 ) {
+					act = SKILL_SPACT_SOUND_BREATH
+				}
+				if ( cdata(CDATA_ELEMENTS_EYES_ELE, cc) == 9 ) {
+					act = SKILL_SPACT_NERVE_BREATH
+				}
+				if ( cdata(CDATA_ELEMENTS_EYES_ELE, cc) == 10 ) {
+					act = SKILL_SPACT_CHAOS_BREATH
+				}
+				if ( cdata(CDATA_ELEMENTS_EYES_ELE, cc) == 11 ) {
+					act = SKILL_SPACT_POWER_BREATH
+				}
+			}
+		}
+	}
+	if ( cbit(CHARA_BIT_AWAKE_VARIABLE_STORM, cc) ) {
+		if ( rnd(8) == 0 ) {
+			act = SKILL_SPELL_MAGIC_STORM
+			bvar = sdata(SKILL_RES_MAGIC, cc)
+			if ( sdata(SKILL_RES_FIRE, cc) > bvar ) {
+				act = SKILL_SPELL_FIRE_BALL
+				bvar = sdata(SKILL_RES_FIRE, cc)
+			}
+			if ( sdata(SKILL_RES_COLD, cc) > bvar ) {
+				act = SKILL_SPELL_ICE_BALL
+				bvar = sdata(SKILL_RES_COLD, cc)
+			}
+			if ( sdata(SKILL_RES_SOUND, cc) > bvar ) {
+				act = SKILL_SPELL_RAGING_ROAR
+				bvar = sdata(SKILL_RES_SOUND, cc)
+			}
+			if ( sdata(SKILL_RES_CHAOS, cc) > bvar ) {
+				act = SKILL_SPELL_CHAOS_BALL
+				bvar = sdata(SKILL_RES_CHAOS, cc)
+			}
+			if ( sdata(SKILL_RES_MAGIC, cc) >= bvar ) {
+				act = SKILL_SPELL_MAGIC_STORM
+			}
+			bvar = 0
+			if ( cdata(CDATA_ELEMENTS_EYES_ELE, cc) != 0 ) {
+				if ( cdata(CDATA_ELEMENTS_EYES_ELE, cc) == 1 ) {
+					act = SKILL_SPELL_FIRE_BALL
+				}
+				if ( cdata(CDATA_ELEMENTS_EYES_ELE, cc) == 2 ) {
+					act = SKILL_SPELL_ICE_BALL
+				}
+				if ( cdata(CDATA_ELEMENTS_EYES_ELE, cc) == 8 ) {
+					act = SKILL_SPELL_RAGING_ROAR
+				}
+				if ( cdata(CDATA_ELEMENTS_EYES_ELE, cc) == 10 ) {
+					act = SKILL_SPELL_CHAOS_BALL
+				}
+				if ( cdata(CDATA_ELEMENTS_EYES_ELE, cc) == 11 ) {
+					act = SKILL_SPELL_MAGIC_STORM
+				}
+			}
+		}
+	}
+	if ( cdata(CDATA_REMOTE_BLOW, cc) != 0 ) {
+		if ( cdata(CDATA_REMOTE_BLOW, cc) > rnd(600) ) {
+			act = SKILL_SPACT_DISTANT_ATTACK
+		}
+	}
+	if ( cdata(CDATA_EVOLUTION_STAGE, cc) != 0 ) {
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_BUTLER ) {
+			if ( cdata(CDATA_CONDITION_SLEEP, tc) == 0 & cdata(CDATA_CONDITION_BRAINWASH, tc) == 0 ) {
+				if ( rnd(10) == 0 ) {
+					act = SKILL_SPACT_GROUP_HYPNOSIS
+				}
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_NURSE ) {
+			if ( rnd(2) == 0 ) {
+				if ( cdata(CDATA_CONDITION_INSANE, CHARA_PLAYER) > 0 ) {
+					act = SKILL_SPACT_RAIN_OF_SANITY
+				}
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_PUPPET ) {
+			if ( rnd(8) == 0 ) {
+				act = SKILL_SPACT_CONTINUOUS_ATTACKS
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_THIEF | cdata(CDATA_ID, cc) == CREATURE_ID_ROBBER ) {
+			if ( rnd(10) == 0 ) {
+				if ( cdata(CDATA_HP, cc) <= cdata(CDATA_MAX_HP, cc) / 2 ) {
+					if ( cdata(CDATA_GOLD, cc) >= 2000 ) {
+						act = SKILL_SPACT_GOLDEN_STORM
+					}
+				}
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_ZOMBIE_GIRL ) {
+			if ( cdata(CDATA_EVOLUTION_STAGE, cc) == 1 ) {
+				if ( rnd(15) == 0 ) {
+					act = SKILL_SPACT_ABSOLUTE_PROTECT
+					if ( rnd(2) == 0 ) {
+						act = SKILL_SPELL_REGENERATION
+					}
+				}
+			}
+			if ( cdata(CDATA_EVOLUTION_STAGE, cc) == 2 ) {
+				if ( rnd(15) == 0 ) {
+					act = SKILL_SPACT_RUBBING
+				}
+				if ( rnd(15) == 0 ) {
+					if ( findbuff(cc, BUFF_EMERGENCY_EVASION) == (-1) ) {
+						act = SKILL_SPACT_EMERGENCY_EVASION
+					}
+				}
+				if ( rnd(15) == 0 ) {
+					if ( findbuff(cc, BUFF_KILLING_DANCE) == (-1) ) {
+						act = SKILL_SPACT_KILLING_DANCE
+					}
+				}
+			}
+			if ( cdata(CDATA_EVOLUTION_STAGE, cc) == 3 ) {
+				if ( rnd(5) == 0 ) {
+					act = SKILL_SPACT_SWARM
+					if ( rnd(3) == 0 ) {
+						act = SKILL_SPELL_NETHER_WAVE
+					}
+				}
+			}
+		}
+		if ( cdata(CDATA_EVOLUTION_STAGE, cc) >= 10 ) {
+			if ( cdata(CDATA_CONDITION_ANGRY, cc) > 0 ) {
+				if ( cdata(CDATA_ID, cc) == CREATURE_ID_DOG | cdata(CDATA_ID, cc) == CREATURE_ID_OLDER_SISTER | cdata(CDATA_ID, cc) == CREATURE_ID_YOUNGER_SISTER ) {
+					if ( rnd(3) == 0 ) {
+						act = SKILL_SPACT_FLAME_OF_RAGE
+					}
+				}
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_CATERPILLAR_SNIPER ) {
+			if ( dist(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), cdata(CDATA_X, tc), cdata(CDATA_Y, tc)) != 1 ) {
+				act = SKILL_SPACT_DRAW_SHADOW
+			}
+			if ( cdata(CDATA_QUALITY, tc) < FIX_QUALITY_MIRACLE ) {
+				if ( findbuff(tc, BUFF_PUNISHMENT) == (-1) ) {
+					if ( rnd(5) == 0 ) {
+						act = SKILL_SPACT_PUNISHMENT
+					}
+				}
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_LARGE_BIKE | cdata(CDATA_ID, cc) == CREATURE_ID_CATTLE | cdata(CDATA_ID, cc) == CREATURE_ID_LAME_HORSE | cdata(CDATA_ID, cc) == CREATURE_ID_WILD_HORSE | cdata(CDATA_ID, cc) == CREATURE_ID_NOYEL_HORSE | cdata(CDATA_ID, cc) == CREATURE_ID_YOWYN_HORSE | cdata(CDATA_ID, cc) == CREATURE_ID_THOROUGHBRED ) {
+			if ( rnd(10) == 0 ) {
+				if ( findbuff(cc, BUFF_HYPER_DASH) == (-1) ) {
+					act = SKILL_SPACT_HYPER_DASH
+				}
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_HARPY ) {
+			if ( cdata(CDATA_HP, cc) < cdata(CDATA_MAX_HP, cc) / 2 ) {
+				if ( rnd(2) == 0 ) {
+					act = SKILL_SPACT_SUPER_REGEN
+				}
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_LIZARD_MAN | cdata(CDATA_ID, cc) == CREATURE_ID_LIZARD_MAGE | cdata(CDATA_ID, cc) == CREATURE_ID_BISQUE_DOLL ) {
+			if ( cdata(CDATA_POWER_GAUGE, cc) < 95 ) {
+				if ( cdata(CDATA_POWER_GAUGE, cc) >= 75 ) {
+					if ( rnd(10) == 0 ) {
+						act = SKILL_SPACT_SHADOW_RUSH
+					}
+				}
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_KENTAURS ) {
+			if ( rnd(20) == 0 ) {
+				act = SKILL_SPACT_BOOST
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_PORC ) {
+			if ( rnd(20) == 0 ) {
+				act = SKILL_SPACT_HYPER_DASH
+			}
+			if ( findbuff(cc, BUFF_BOOST) == (-1) ) {
+				if ( rnd(2) == 0 ) {
+					act = SKILL_SPACT_BOOST
+				}
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_SPIDER | cdata(CDATA_ID, cc) == CREATURE_ID_BLACK_WIDOW | cdata(CDATA_ID, cc) == CREATURE_ID_PARALYZER | cdata(CDATA_ID, cc) == CREATURE_ID_TARANTULA | cdata(CDATA_ID, cc) == CREATURE_ID_BLOOD_SPIDER | cdata(CDATA_ID, cc) == CREATURE_ID_SCORPION | cdata(CDATA_ID, cc) == CREATURE_ID_KING_SCORPION | cdata(CDATA_ID, cc) == CREATURE_ID_WANDERING_PENGUIN ) {
+			if ( cdata(CDATA_CONDITION_ATROPHY, tc) == 0 ) {
+				if ( rnd(50) == 0 ) {
+					act = SKILL_SPACT_BROWBEAT
+				}
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_HAMSTER ) {
+			if ( rnd(8) == 0 ) {
+				act = SKILL_SPACT_SWARM
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_SLIME | cdata(CDATA_ID, cc) == CREATURE_ID_ACID_SLIME ) {
+			if ( rnd(5) == 0 ) {
+				act = SKILL_SPACT_MELT_CLINCH
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_BLUE_BUBBLE | cdata(CDATA_ID, cc) == CREATURE_ID_BUBBLE ) {
+			if ( rnd(6) == 0 ) {
+				act = SKILL_SPELL_BUBBLE_STORM
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_MAN_EATER_FLOWER | cdata(CDATA_ID, cc) == CREATURE_ID_CHAOS_FLOWER | cdata(CDATA_ID, cc) == CREATURE_ID_COBRA | cdata(CDATA_ID, cc) == CREATURE_ID_KING_COBRA ) {
+			if ( rnd(20) == 0 ) {
+				act = SKILL_SPACT_SQUEEZE
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_GIRAFFE | cdata(CDATA_ID, cc) == CREATURE_ID_CATTLE ) {
+			if ( rnd(30) == 0 ) {
+				act = SKILL_SPACT_PUNISHMENT
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_YOUNGER_CAT_SISTER ) {
+			if ( rnd(5) == 0 ) {
+				if ( findbuff(cc, BUFF_EMERGENCY_EVASION) == (-1) ) {
+					act = SKILL_SPACT_EMERGENCY_EVASION
+				}
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_BEETLE ) {
+			if ( rnd(2) == 0 ) {
+				if ( findbuff(cc, BUFF_SUPER_ARMOR) == (-1) ) {
+					act = SKILL_SPACT_SUPER_ARMOR
+				}
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_FALLEN_SOLDIER ) {
+			if ( rnd(8) == 0 ) {
+				if ( findbuff(cc, BUFF_SUPER_ARMOR) == (-1) ) {
+					act = SKILL_SPACT_SUPER_ARMOR
+				}
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_FAIRY | cdata(CDATA_ID, cc) == CREATURE_ID_IMP | cdata(CDATA_ID, cc) == CREATURE_ID_NETHER_IMP | cdata(CDATA_ID, cc) == CREATURE_ID_CHAOS_IMP ) {
+			if ( rnd(4) == 0 ) {
+				if ( findbuff(cc, BUFF_MAGIC_EQUIP) == (-1) ) {
+					act = SKILL_SPACT_MAGIC_EQUIP
+				}
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_WOODEN_GOLEM | cdata(CDATA_ID, cc) == CREATURE_ID_STONE_GOLEM | cdata(CDATA_ID, cc) == CREATURE_ID_STEEL_GOLEM | cdata(CDATA_ID, cc) == CREATURE_ID_SMALL_WOODEN_GOLEM | cdata(CDATA_ID, cc) == CREATURE_ID_SMALL_STONE_GOLEM ) {
+			if ( cdata(CDATA_EVOLUTION_STAGE, cc) == 2 ) {
+				if ( rnd(10) == 0 ) {
+					act = SKILL_SPACT_SHINING_WAVE
+				}
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_MOAI | cdata(CDATA_ID, cc) == CREATURE_ID_CUPID_OF_LOVE | cdata(CDATA_ID, cc) == CREATURE_ID_GUNFISH | cdata(CDATA_ID, cc) == CREATURE_ID_XEREN_AUTO_TANK ) {
+			if ( cdata(CDATA_POWER_GAUGE, cc) < 95 ) {
+				if ( cdata(CDATA_POWER_GAUGE, cc) >= 50 ) {
+					if ( rnd(20) == 0 ) {
+						act = SKILL_SPACT_FIRE_A_VOLLEY
+					}
+				}
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_WASP | cdata(CDATA_ID, cc) == CREATURE_ID_RED_WASP | cdata(CDATA_ID, cc) == CREATURE_ID_BLACK_HORNET ) {
+			if ( rnd(10) == 0 ) {
+				act = SKILL_SPACT_FASCINATION_DANCE
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_APPRENTICE_ANGEL ) {
+			if ( cdata(CDATA_POWER_GAUGE, cc) < 95 ) {
+				if ( cdata(CDATA_POWER_GAUGE, cc) >= 50 ) {
+					if ( rnd(4) == 0 ) {
+						act = SKILL_SPACT_OVERRAY
+					}
+				}
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_WILD_RABBIT ) {
+			if ( cdata(CDATA_EVOLUTION_STAGE, cc) == 1 ) {
+				if ( cdata(CDATA_POWER_GAUGE, cc) >= 100 ) {
+					if ( gdata(GDATA_TIME_STOP_TIME) == 0 ) {
+						if ( rnd(2) == 0 ) {
+							act = SKILL_SPACT_TIME_STOP
+						}
+					}
+				}
+			}
+			if ( cdata(CDATA_EVOLUTION_STAGE, cc) == 2 ) {
+				if ( rnd(30) == 0 ) {
+					act = SKILL_SPACT_CHEER
+				}
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_FIRE_CRAB ) {
+			if ( cdata(CDATA_HP, cc) < cdata(CDATA_MAX_HP, cc) / 8 ) {
+				if ( rnd(10) == 0 ) {
+					act = SKILL_SPACT_SYNCHRO_HEARTS
+				}
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_BLACK_CAT | cdata(CDATA_ID, cc) == CREATURE_ID_KOBOLD ) {
+			if ( cdata(CDATA_CONDITION_ATROPHY, tc) == 0 ) {
+				if ( rnd(30) == 0 ) {
+					act = SKILL_SPACT_BROWBEAT
+				}
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_CUTE_FAIRY ) {
+			if ( rnd(30) == 0 ) {
+				act = SKILL_SPACT_BIND
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_PUPPY | cdata(CDATA_ID, cc) == CREATURE_ID_PUMPKIN | cdata(CDATA_ID, cc) == CREATURE_ID_GREATER_PUMPKIN | cdata(CDATA_ID, cc) == CREATURE_ID_HALLOWEEN_NIGHTMARE ) {
+			if ( rnd(20) == 0 ) {
+				act = SKILL_SPACT_BIND
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_MANDRAKE ) {
+			if ( rnd(8) == 0 ) {
+				act = SKILL_SPACT_SHINING_WAVE
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_ANDROID ) {
+			if ( cdata(CDATA_POWER_GAUGE, cc) < 95 ) {
+				if ( cdata(CDATA_POWER_GAUGE, cc) >= 50 ) {
+					if ( rnd(15) == 0 ) {
+						act = SKILL_SPACT_FIRE_A_VOLLEY
+					}
+				}
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_BLACK_ANGEL ) {
+			if ( rnd(30) == 0 ) {
+				act = SKILL_SPACT_LULWYS_TRICK
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_EXILE ) {
+			if ( rnd(8) == 0 ) {
+				act = SKILL_SPELL_ECLIPSE
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_GOLDEN_KNIGHT ) {
+			if ( rnd(2) == 0 ) {
+				if ( findbuff(cc, BUFF_SUPER_ARMOR) == (-1) ) {
+					act = SKILL_SPACT_SUPER_ARMOR
+				}
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_DEFENDER ) {
+			if ( rnd(30) == 0 ) {
+				act = SKILL_SPACT_ABSOLUTE_PROTECT
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_GOOSE ) {
+			if ( rnd(30) == 0 ) {
+				act = SKILL_SPACT_PLATINUM_SONG
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_NYMPH | cdata(CDATA_ID, cc) == CREATURE_ID_FLYING_FROG | cdata(CDATA_ID, cc) == CREATURE_ID_POISON_ARROW_FROG ) {
+			if ( rnd(60) == 0 ) {
+				act = SKILL_SPACT_PLATINUM_SONG
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_PUTIT | cdata(CDATA_ID, cc) == CREATURE_ID_RED_PUTIT ) {
+			if ( rnd(30) == 0 ) {
+				act = SKILL_SPACT_CHEER
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_YEEK | cdata(CDATA_ID, cc) == CREATURE_ID_GHOST | cdata(CDATA_ID, cc) == CREATURE_ID_YEEK_WARRIOR | cdata(CDATA_ID, cc) == CREATURE_ID_YEEK_ARCHER | cdata(CDATA_ID, cc) == CREATURE_ID_MASTER_YEEK | cdata(CDATA_ID, cc) == CREATURE_ID_KAMIKAZE_YEEK ) {
+			if ( rnd(30) == 0 ) {
+				act = SKILL_SPACT_CHEER
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_OLDER_DOG_SISTER ) {
+			if ( findbuff(cc, BUFF_CHARGE) == (-1) ) {
+				if ( cdata(CDATA_TARGET, tc) != cc ) {
+					if ( rnd(25) == 0 ) {
+						act = SKILL_SPACT_CHARGE
+					}
+				}
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_LITTLE_GIRL | cdata(CDATA_ID, cc) == CREATURE_ID_ORC | cdata(CDATA_ID, cc) == CREATURE_ID_ORC_WARRIOR ) {
+			if ( rnd(50) == 0 ) {
+				act = SKILL_SPACT_CHEER
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_LIZARD_MAN ) {
+			if ( rnd(2) == 0 ) {
+				act = AI_ACTION_RANGE
+			}
+			if ( rnd(5) == 0 ) {
+				act = SKILL_SPACT_LIGHTNING_BREATH
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_GIANT_SQUIRREL | cdata(CDATA_ID, cc) == CREATURE_ID_KILLER_SQUIRREL ) {
+			if ( rnd(15) == 0 ) {
+				act = SKILL_SPACT_INSULT
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_CYCLOPS | cdata(CDATA_ID, cc) == CREATURE_ID_TITAN ) {
+			if ( rnd(10) == 0 ) {
+				act = SKILL_SPACT_COLD_BREATH
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_ELECTRIC_SHEEP ) {
+			if ( rnd(8) == 0 ) {
+				act = SKILL_SPELL_THUNDER_VORTEX
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_WILD_SHEEP ) {
+			if ( rnd(20) == 0 ) {
+				act = SKILL_SPACT_CURSE
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_BOMB_ROCK ) {
+			if ( rnd(5) == 0 ) {
+				act = SKILL_SPACT_SHADOW_STEP
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_LITTLE_SISTER ) {
+			if ( rnd(5) == 0 ) {
+				act = SKILL_SPACT_SHADOW_STEP
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_BLADE | cdata(CDATA_ID, cc) == CREATURE_ID_BLADE_ALPHA ) {
+			if ( rnd(5) == 0 ) {
+				act = SKILL_SPACT_SHADOW_STEP
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_ELECTRIC_CLOUD | cdata(CDATA_ID, cc) == CREATURE_ID_CHAOS_CLOUD | cdata(CDATA_ID, cc) == CREATURE_ID_WISP ) {
+			if ( rnd(5) == 0 ) {
+				act = SKILL_SPELL_DARKNESS_BOLT
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_WARRIOR_OF_ELEA ) {
+			if ( rnd(10) == 0 ) {
+				act = SKILL_SPACT_EMERGENCY_EVASION
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_WIZARD_OF_ELEA ) {
+			if ( rnd(6) == 0 ) {
+				act = SKILL_SPELL_MAGIC_STORM
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_GRUDGE | cdata(CDATA_ID, cc) == CREATURE_ID_HUNGRY_DEMON | cdata(CDATA_ID, cc) == CREATURE_ID_YOUNG_LADY ) {
+			if ( cdata(CDATA_DIRECTIVE_MODE, cc) != DIRECTIVE_MODE_DEFENSIVE & cdata(CDATA_DIRECTIVE_MODE, cc) != DIRECTIVE_MODE_TALKING ) {
+				if ( rnd(5) == 0 ) {
+					act = AI_ACTION_THROW_POTION_GREATER
+					if ( act >= AI_ACTION_THROW & act < MAX_AI_ACTION_THROW ) {
+						if ( distance < 8 ) {
+							if ( fov_los(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), cdata(CDATA_X, tc), cdata(CDATA_Y, tc)) ) {
+								tlocx = cdata(CDATA_X, tc)
+								tlocy = cdata(CDATA_Y, tc)
+								if ( act == AI_ACTION_THROW_POTION_GREATER ) {
+									flt
+									flttypemajor = FILTER_ITEM_POTION
+									itemcreate cc, isetthrowpotiongreater(rnd(length(isetthrowpotiongreater))), -1, -1, 0
+								}
+								if ( stat == 1 ) {
+									goto *act_throw
+								}
+								goto *turn_end
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	if ( cdata(CDATA_EVOLUTION_STAGE, cc) > 1 ) {
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_CHAOS_SEED ) {
+			if ( cdata(CDATA_POWER_GAUGE, cc) < 95 ) {
+				if ( cdata(CDATA_POWER_GAUGE, cc) >= 25 ) {
+					if ( rnd(15) == 0 ) {
+						act = SKILL_SPACT_EXTERMINATION_BREATH
+					}
+				}
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_ELECTRIC_CLOUD | cdata(CDATA_ID, cc) == CREATURE_ID_CHAOS_CLOUD ) {
+			if ( rnd(15) == 0 | cdata(CDATA_HP, cc) < cdata(CDATA_MAX_HP, cc) / 2 ) {
+				act = SKILL_SPELL_HEALING_RAIN
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_WISP ) {
+			if ( rnd(12) == 0 ) {
+				act = SKILL_SPELL_NETHER_WAVE
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_MINOTAUR | cdata(CDATA_ID, cc) == CREATURE_ID_MINOTAUR_MAGICIAN | cdata(CDATA_ID, cc) == CREATURE_ID_MINOTAUR_BOXER | cdata(CDATA_ID, cc) == CREATURE_ID_MINOTAUR_KING ) {
+			if ( rnd(20) == 0 ) {
+				act = SKILL_SPACT_BOOST
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_SNAIL ) {
+			if ( rnd(5) == 0 ) {
+				if ( findbuff(cc, BUFF_EMERGENCY_EVASION) == (-1) ) {
+					act = SKILL_SPACT_EMERGENCY_EVASION
+				}
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_LITTLE_BOY ) {
+			if ( rnd(5) == 0 ) {
+				if ( findbuff(cc, BUFF_KILLING_DANCE) == (-1) ) {
+					act = SKILL_SPACT_KILLING_DANCE
+				}
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_RAT ) {
+			if ( rnd(5) == 0 ) {
+				act = SKILL_SPACT_LIGHTNING_BREATH
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_FOX_BROTHER ) {
+			if ( rnd(70) == 0 ) {
+				act = SKILL_SPACT_MEGID_FLAME
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_FIRE_DRAGON_CHILD ) {
+			if ( rnd(20) == 0 ) {
+				act = SKILL_SPACT_BOOST
+			}
+		}
+		if ( cdata(CDATA_EVOLUTION_STAGE, cc) > 2 ) {
+			if ( cdata(CDATA_ID, cc) == CREATURE_ID_FIRE_DRAGON_CHILD ) {
+				if ( rnd(70) == 0 ) {
+					act = SKILL_SPACT_MEGID_FLAME
+				}
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_LESSER_PHANTOM ) {
+			if ( rnd(7) == 0 ) {
+				act = SKILL_SPACT_GRAVITY_SPHERE
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_LITTLE_GIRL ) {
+			if ( cdata(CDATA_EVOLUTION_STAGE, cc) == 2 ) {
+				if ( rnd(8) == 0 ) {
+					act = SKILL_SPELL_CRYSTAL_SPEAR
+				}
+				if ( cdata(CDATA_SANITY, CHARA_PLAYER) > 0 ) {
+					act = SKILL_SPACT_RAIN_OF_SANITY
+				}
+			}
+		}
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_YOUNG_LADY ) {
+			if ( rnd(10) == 0 ) {
+				act = SKILL_SPACT_DRAIN_BLOOD
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, cc) == CREATURE_ID_BUTLER ) {
+		if ( cdata(CDATA_MP, cc) > 0 ) {
+			if ( cdata(CDATA_TARGET, cc) > 0 ) {
+				if ( cdata(CDATA_POWER_GAUGE, cdata(CDATA_TARGET, cc)) >= 90 ) {
+					if ( powai == 100 ) {
+						act = SKILL_SPACT_PRESSURE
+					}
+				}
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, cc) == CREATURE_ID_FALLEN_ANGEL | cdata(CDATA_ID, cc) == CREATURE_ID_NIGHTMARE_SHEEP | cdata(CDATA_ID, cc) == CREATURE_ID_TITANIA | cdata(CDATA_ID, cc) == CREATURE_ID_CAMOUFLAGED_IMP | cdata(CDATA_ID, cc) == CREATURE_ID_EXOSSIL_THE_CHAOS_WING ) {
+		if ( cdata(CDATA_CONDITION_SLEEP, tc) == 0 & cdata(CDATA_CONDITION_BRAINWASH, tc) == 0 ) {
+			if ( rnd(10) == 0 ) {
+				act = SKILL_SPACT_GROUP_HYPNOSIS
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, cc) == CREATURE_ID_ALSAPIA_THE_MURDERER_MASK ) {
+		if ( rnd(15) == 0 ) {
+			if ( findbuff(cc, BUFF_EMERGENCY_EVASION) == (-1) ) {
+				act = SKILL_SPACT_EMERGENCY_EVASION
+			}
+		}
+		if ( rnd(15) == 0 ) {
+			if ( findbuff(cc, BUFF_KILLING_DANCE) == (-1) ) {
+				act = SKILL_SPACT_KILLING_DANCE
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, cc) == CREATURE_ID_LAST_DANCER | cdata(CDATA_ID, cc) == CREATURE_ID_GRIM_REAPER ) {
+		if ( rnd(20) == 0 ) {
+			if ( findbuff(cc, BUFF_KILLING_DANCE) == (-1) ) {
+				act = SKILL_SPACT_KILLING_DANCE
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, cc) == CREATURE_ID_PERFORMAID_BLOODRESS | cdata(CDATA_ID, cc) == CREATURE_ID_SICKFULL_OLDER_BROTHER ) {
+		if ( cdata(CDATA_CONDITION_BLEED, cc) > 0 ) {
+			if ( rnd(4) == 0 ) {
+				act = SKILL_SPACT_BLOOD_STREAM
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, cc) == CREATURE_ID_H_SISTER2 | cdata(CDATA_ID, cc) == CREATURE_ID_KALI | cdata(CDATA_ID, cc) == CREATURE_ID_BLOOD_GOLEM ) {
+		if ( rnd(40) == 0 ) {
+			act = SKILL_SPACT_BLOOD_STREAM
+		}
+	}
+	if ( cdata(CDATA_ID, cc) == CREATURE_ID_NEW_CITIZEN | cdata(CDATA_ID, cc) == CREATURE_ID_RED_NINJA | cdata(CDATA_ID, cc) == CREATURE_ID_EILA_THE_FUGITIVE_KUNOICHI ) {
+		if ( map(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), MAP_MEF_ID_PLUS_ONE) != 0 ) {
+			if ( mef(0, map(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), MAP_MEF_ID_PLUS_ONE) - 1) != 9 ) {
+				if ( dist(cdata(CDATA_X, tc), cdata(CDATA_Y, tc), cdata(CDATA_X, cc), cdata(CDATA_Y, cc)) >= 2 ) {
+					if ( rnd(3) == 0 ) {
+						act = SKILL_SPACT_CURTAIN_OF_SMOKE
+					}
+				}
+			}
+		}
+		else {
+			if ( dist(cdata(CDATA_X, tc), cdata(CDATA_Y, tc), cdata(CDATA_X, cc), cdata(CDATA_Y, cc)) >= 2 ) {
+				if ( rnd(5) == 0 ) {
+					act = SKILL_SPACT_CURTAIN_OF_SMOKE
+				}
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, cc) == CREATURE_ID_MARY_THE_INSECT_MASTER | cdata(CDATA_ID, cc) == CREATURE_ID_ULTIMATE_GOLEM | cdata(CDATA_ID, cc) == CREATURE_ID_ARMA_THE_TOUR_GUIDE | cdata(CDATA_ID, cc) == CREATURE_ID_AJETALIO_THE_SEMINAR_LECTURER ) {
+		if ( cdata(CDATA_TARGET, cc) != 0 | cdata(CDATA_TARGET, cc) == 0 ) {
+			if ( rnd(3) ) {
+				if ( cdata(CDATA_CONDITION_JIU_JITSU, cc) == 0 ) {
+					if ( cdata(CDATA_PV, tc) >= cdata(CDATA_DV, tc) + 100 ) {
+						act = SKILL_SPACT_VINDALIAN_JIUJITSU
+					}
+				}
+				else {
+					if ( cdata(CDATA_DV, tc) >= cdata(CDATA_PV, tc) + 100 ) {
+						act = SKILL_SPACT_VINDALIAN_JIUJITSU
+					}
+				}
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, cc) == CREATURE_ID_ALFRED_THE_CANGNAN_WIND ) {
+		if ( findbuff(cc, BUFF_SHIELD_PARRY) == (-1) ) {
+			if ( rnd(4) == 0 ) {
+				act = SKILL_SPACT_SHIELD_PARRY
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, cc) == CREATURE_ID_SILVER_FOX_BROTHER ) {
+		if ( findbuff(cc, BUFF_RESOLUTION_HAND) == (-1) ) {
+			if ( rnd(5) == 0 ) {
+				act = SKILL_SPACT_RESOLUTION_HAND
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, cc) == CREATURE_ID_RIANNA_THE_DAYDREAMER ) {
+		if ( cdata(CDATA_POWER_GAUGE, cc) >= 50 ) {
+			if ( rnd(30) == 0 ) {
+				act = SKILL_SPACT_TAG_FORCE
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, cc) == CREATURE_ID_ZANAN_OLD_SOLDIER ) {
+		if ( cdata(CDATA_MP, cc) > 0 ) {
+			if ( cdata(CDATA_POWER_GAUGE, tc) >= 50 ) {
+				if ( powai == 100 ) {
+					if ( rnd(3) == 0 ) {
+						act = SKILL_SPACT_PRESSURE
+					}
+				}
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, cc) == CREATURE_ID_SHURAIDA_THE_EXPERT_MERC | cdata(CDATA_ID, cc) == CREATURE_ID_ARIBEL_THE_WHITE_ARMS | cdata(CDATA_ID, cc) == CREATURE_ID_LANKATA_THE_LIGHTNING_OF_BLUE ) {
+		if ( dist(cdata(CDATA_X, tc), cdata(CDATA_Y, tc), cdata(CDATA_X, cc), cdata(CDATA_Y, cc)) == 1 ) {
+			if ( rnd(3) == 0 ) {
+				act = AI_ACTION_WAIT_MELEE
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, cc) == CREATURE_ID_LANKATA_THE_LIGHTNING_OF_BLUE ) {
+		if ( cdata(CDATA_POWER_GAUGE, cc) < 95 ) {
+			if ( cdata(CDATA_POWER_GAUGE, cc) >= 50 ) {
+				if ( rnd(20) == 0 ) {
+					act = SKILL_SPACT_FIRE_A_VOLLEY
+				}
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, cc) == CREATURE_ID_URCAGUARY ) {
+		if ( rnd(2) == 0 ) {
+			if ( findbuff(cc, BUFF_SUPER_ARMOR) == (-1) ) {
+				act = SKILL_SPACT_SUPER_ARMOR
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, cc) == CREATURE_ID_MARY_THE_INSECT_MASTER ) {
+		if ( findbuff(cc, BUFF_ATTRIBUTE) == (-1) ) {
+			act = SKILL_SPACT_ATTRIBUTE
+		}
+	}
+	if ( cdata(CDATA_ID, cc) == CREATURE_ID_CHAOS_SERPENT ) {
+		if ( findbuff(cc, BUFF_ABYSS_IN_THE_EYE) == (-1) ) {
+			if ( rnd(4) == 0 ) {
+				act = SKILL_SPACT_ABYSS_IN_THE_EYE
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, cc) == CREATURE_ID_BYSYMLHA_THE_AMBER_EYES ) {
+		if ( findbuff(cc, BUFF_ABYSS_IN_THE_EYE) == (-1) ) {
+			if ( rnd(6) == 0 ) {
+				act = SKILL_SPACT_ABYSS_IN_THE_EYE
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, cc) == CREATURE_ID_RAIZEL_THE_OLD_WIZARD ) {
+		if ( findbuff(cc, BUFF_HOLY_VEIL) == (-1) ) {
+			if ( findbuff(tc, BUFF_MIST_OF_SILENCE) == (-1) ) {
+				act = SKILL_SPELL_HOLY_VEIL
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, cc) == CREATURE_ID_DEATH_HAMSTER ) {
+		if ( findbuff(cc, BUFF_CONTINGENCY) == (-1) ) {
+			if ( cdata(CDATA_HP, cc) < cdata(CDATA_MAX_HP, cc) / 3 ) {
+				if ( findbuff(tc, BUFF_MIST_OF_SILENCE) == (-1) ) {
+					act = SKILL_SPELL_CONTINGENCY
+				}
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, cc) == CREATURE_ID_VANSESDA_THE_ANCIENT_FIRE | cdata(CDATA_ID, cc) == CREATURE_ID_YELLOW_FIRE_DRAGON ) {
+		if ( rnd(3) == 0 ) {
+			if ( findbuff(cc, BUFF_ATTRIBUTE) == (-1) ) {
+				act = SKILL_SPACT_ATTRIBUTE
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, cc) == CREATURE_ID_SMALL_STONE_GOLEM ) {
+		if ( findbuff(cc, BUFF_HOLY_SHIELD) == (-1) ) {
+			if ( findbuff(tc, BUFF_MIST_OF_SILENCE) == (-1) ) {
+				if ( rnd(3) == 0 ) {
+					act = SKILL_SPELL_HOLY_SHIELD
+				}
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, cc) == CREATURE_ID_SMALL_WOODEN_GOLEM ) {
+		if ( findbuff(cc, BUFF_REGENERATION) == (-1) ) {
+			if ( findbuff(tc, BUFF_MIST_OF_SILENCE) == (-1) ) {
+				if ( rnd(3) == 0 ) {
+					act = SKILL_SPELL_REGENERATION
+				}
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, cc) == CREATURE_ID_NERES_THE_AMNESIAC ) {
+		if ( dist(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), cdata(CDATA_X, tc), cdata(CDATA_Y, tc)) == 1 ) {
+			if ( rnd(4) == 0 ) {
+				act = SKILL_SPACT_SMASH_GROUND
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, cc) == CREATURE_ID_STORMBLING ) {
+		if ( cdata(CDATA_CONDITION_BLEED, tc) == 0 ) {
+			act = SKILL_SPACT_BLADE_TURBULENCE
+		}
+	}
+	if ( cdata(CDATA_ID, cc) == CREATURE_ID_HELLSTLING ) {
+		if ( dist(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), cdata(CDATA_X, tc), cdata(CDATA_Y, tc)) == 1 ) {
+			act = SKILL_SPACT_BLADE_STRINGS
+		}
+	}
+	if ( cdata(CDATA_ID, cc) == CREATURE_ID_GETUEI_THE_NINJA_MASTER | cdata(CDATA_ID, cc) == CREATURE_ID_CONDUCTOR_KOALA ) {
+		if ( cdata(CDATA_POWER_GAUGE, cc) < 95 ) {
+			if ( cdata(CDATA_POWER_GAUGE, cc) >= 75 ) {
+				if ( rnd(10) == 0 ) {
+					act = SKILL_SPACT_SHADOW_RUSH
+				}
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, cc) == CREATURE_ID_PERFORMAID_COCRUEL ) {
+		if ( cdata(CDATA_POWER_GAUGE, cc) < 95 ) {
+			if ( cdata(CDATA_POWER_GAUGE, cc) >= 75 ) {
+				if ( rnd(50) == 0 ) {
+					act = SKILL_SPACT_SHADOW_RUSH
+				}
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, cc) == CREATURE_ID_PERFORMAID_DESWEEPER ) {
+		if ( cdata(CDATA_POWER_GAUGE, cc) < 95 ) {
+			if ( cdata(CDATA_POWER_GAUGE, cc) >= 50 ) {
+				if ( rnd(50) == 0 ) {
+					act = SKILL_SPACT_OVERRAY
+				}
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, cc) == CREATURE_ID_UNITDEAD_JOKER ) {
+		if ( cdata(CDATA_POWER_GAUGE, cc) < 95 ) {
+			if ( cdata(CDATA_POWER_GAUGE, cc) >= 50 ) {
+				if ( rnd(10) == 0 ) {
+					act = SKILL_SPACT_OVERRAY
+				}
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, cc) == CREATURE_ID_PERFORMAID_BITCHIACK | cdata(CDATA_ID, cc) == CREATURE_ID_DHWTY | cdata(CDATA_ID, cc) == CREATURE_ID_PHANTOM_OF_END | cdata(CDATA_ID, cc) == CREATURE_ID_LAZASYE_THE_DESTROY ) {
+		if ( cdata(CDATA_MP, cc) >= cdata(CDATA_MAX_MP, cc) / 4 ) {
+			if ( rnd(6) == 0 ) {
+				act = SKILL_SPACT_MP_BREATH
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, cc) == CREATURE_ID_YACATECT | cdata(CDATA_ID, cc) == CREATURE_ID_HYPER_YACATECT ) {
+		if ( cdata(CDATA_HP, cc) <= cdata(CDATA_MAX_HP, cc) / 2 ) {
+			if ( rnd(cdata(CDATA_GOLD, cc) + 1) > 2000 ) {
+				if ( rnd(2) == 0 ) {
+					act = SKILL_SPACT_GOLDEN_STORM
+				}
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, cc) == CREATURE_ID_ITZPALT | cdata(CDATA_ID, cc) == CREATURE_ID_THE_ELEMENT | cdata(CDATA_ID, cc) == CREATURE_ID_YACATECT | cdata(CDATA_ID, cc) == CREATURE_ID_HYPER_YACATECT | cdata(CDATA_ID, cc) == CREATURE_ID_JURE | cdata(CDATA_ID, cc) == CREATURE_ID_BLESSED_JURE | cdata(CDATA_ID, cc) == CREATURE_ID_LULWY | cdata(CDATA_ID, cc) == CREATURE_ID_DEVASTATE_LULWY | cdata(CDATA_ID, cc) == CREATURE_ID_BUILDUP_OPATOS | cdata(CDATA_ID, cc) == CREATURE_ID_INSANE_KUMIROMI | cdata(CDATA_ID, cc) == CREATURE_ID_DEUS_EX_MANINA | cdata(CDATA_ID, cc) == CREATURE_ID_EHEKATL | cdata(CDATA_ID, cc) == CREATURE_ID_GOD_INSIDE_EHEKATL | cdata(CDATA_ID, cc) == CREATURE_ID_OPATOS | cdata(CDATA_ID, cc) == CREATURE_ID_KUMIROMI | cdata(CDATA_ID, cc) == CREATURE_ID_MANI ) {
+		if ( cc > MAX_CHARA_FOLLOWER ) {
+			if ( cdata(CDATA_ALLIED, cc) == 0 ) {
+				if ( rnd(20) == 0 ) {
+					if ( findbuff(cc, BUFF_RETENTION) == (-1) ) {
+						act = SKILL_SPACT_SPACE_RETENTION
+					}
+				}
+			}
+		}
+	}
+	if ( cdata(CDATA_POWER_GAUGE, cc) >= 98 ) {
+		if ( cdata(CDATA_EXIST, tc) == CHAR_STATE_ALIVE ) {
+			if ( cdata(CDATA_ID, cc) == CREATURE_ID_ITZPALT | cdata(CDATA_ID, cc) == CREATURE_ID_THE_ELEMENT ) {
+				if ( rnd(2) == 0 ) {
+					act = SKILL_SPACT_ELEMENTIA
+				}
+			}
+			if ( cdata(CDATA_ID, cc) == CREATURE_ID_YACATECT | cdata(CDATA_ID, cc) == CREATURE_ID_HYPER_YACATECT ) {
+				if ( rnd(2) == 0 ) {
+					act = SKILL_SPACT_GOLD_RUSH
+				}
+			}
+			if ( cdata(CDATA_ID, cc) == CREATURE_ID_JURE | cdata(CDATA_ID, cc) == CREATURE_ID_BLESSED_JURE ) {
+				if ( rnd(2) == 0 ) {
+					act = SKILL_SPACT_EXCESSIVE_HEAL
+				}
+			}
+			if ( cdata(CDATA_ID, cc) == CREATURE_ID_LULWY | cdata(CDATA_ID, cc) == CREATURE_ID_DEVASTATE_LULWY ) {
+				if ( rnd(2) == 0 ) {
+					act = SKILL_SPACT_TEMPEST_ARROW
+				}
+			}
+			if ( cdata(CDATA_ID, cc) == CREATURE_ID_OPATOS | cdata(CDATA_ID, cc) == CREATURE_ID_BUILDUP_OPATOS ) {
+				if ( rnd(2) == 0 ) {
+					act = SKILL_SPACT_SUPER_VIBRATING_FIST
+				}
+			}
+			if ( cdata(CDATA_ID, cc) == CREATURE_ID_KUMIROMI | cdata(CDATA_ID, cc) == CREATURE_ID_INSANE_KUMIROMI ) {
+				if ( rnd(2) == 0 ) {
+					act = SKILL_SPACT_INSANE_WAVE
+				}
+			}
+			if ( cdata(CDATA_ID, cc) == CREATURE_ID_MANI | cdata(CDATA_ID, cc) == CREATURE_ID_DEUS_EX_MANINA ) {
+				if ( rnd(2) == 0 ) {
+					act = SKILL_SPACT_MANIS_DISASSEMBLY
+				}
+			}
+			if ( cdata(CDATA_ID, cc) == CREATURE_ID_EHEKATL | cdata(CDATA_ID, cc) == CREATURE_ID_GOD_INSIDE_EHEKATL ) {
+				if ( rnd(2) == 0 ) {
+					act = SKILL_SPACT_MEWMEWMEW
+				}
+			}
+			if ( cdata(CDATA_ID, cc) == CREATURE_ID_SNAIL_THE_ANDROID_RIDER ) {
+				if ( rnd(2) == 0 ) {
+					act = SKILL_SPACT_SHINE_SNAIL
+				}
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, cc) == CREATURE_ID_TEZCATLIPOCA ) {
+		if ( cdata(CDATA_POWER_GAUGE, cc) >= 50 ) {
+			if ( cdata(CDATA_ALLIED, cc) == 0 ) {
+				if ( rnd(2) == 0 ) {
+					act = SKILL_SPACT_SMOKE_MIRROR
+				}
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, cc) == CREATURE_ID_GUARD | cdata(CDATA_ID, cc) == CREATURE_ID_GUARD2 ) {
+		if ( cdata(CDATA_ALLIED, cc) == 0 ) {
+			if ( tc == CHARA_PLAYER ) {
+				if ( cdata(CDATA_HP, CHARA_PLAYER) < cdata(CDATA_MAX_HP, CHARA_PLAYER) / 5 ) {
+					if ( gdata(GDATA_AREA) != AREA_SHOW_HOUSE ) {
+						if ( cdata(CDATA_KARMA, CHARA_PLAYER) < (-30) ) {
+							if ( cbit(CHARA_BIT_INCOGNITO, CHARA_PLAYER) != TRUE ) {
+								if ( gdata(GDATA_AREA) != AREA_JAIL ) {
+									if ( gdata(GDATA_AREA) != AREA_JAIL2 ) {
+										act = SKILL_SPACT_FORCED_DRAFT
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	if ( act == SKILL_SPACT_SWARM | act == SKILL_SPACT_SMASH_GROUND ) {
+		if ( dist(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), cdata(CDATA_X, tc), cdata(CDATA_Y, tc)) > 1 ) {
+			act = AI_ACTION_RANGE
+		}
+	}
+	if ( cdata(CDATA_DIRECTIVE_MODE, cc) != DIRECTIVE_MODE_DEFENSIVE & cdata(CDATA_DIRECTIVE_MODE, cc) != DIRECTIVE_MODE_TALKING ) {
+		if ( cdata(CDATA_AI_SUB, cc) != 0 ) {
+			if ( cdata(CDATA_AI_SUB, cc) > rnd(100) ) {
+				if ( cdata(CDATA_ACT_INDEX, cc) / 10 == 0 ) {
+				}
+				else {
+					act = cdata(STARTING_CDATA_ACT_SUB + rnd(cdata(CDATA_ACT_INDEX, cc) / 10), cc)
+				}
+				if ( act == SKILL_SPACT_SWARM | act == SKILL_SPACT_SMASH_GROUND ) {
+					if ( dist(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), cdata(CDATA_X, tc), cdata(CDATA_Y, tc)) > 1 ) {
+						act = AI_ACTION_RANGE
+					}
+				}
+				if ( cdata(CDATA_ID, cc) == CREATURE_ID_ALCHEMIST_NAPLUS & gdata(GDATA_FLAG_SUB_DOGS_TAIL) >= 1000 ) {
+					if ( rnd(5) == 0 ) {
+						act = AI_ACTION_THROW_POTION_GREATER
+					}
+				}
+				if ( act >= AI_ACTION_THROW & act < MAX_AI_ACTION_THROW ) {
+					if ( distance < 8 ) {
+						if ( fov_los(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), cdata(CDATA_X, tc), cdata(CDATA_Y, tc)) ) {
+							tlocx = cdata(CDATA_X, tc)
+							tlocy = cdata(CDATA_Y, tc)
+							if ( act == AI_ACTION_THROW_POTION_MINOR ) {
+								flt
+								flttypemajor = FILTER_ITEM_POTION
+								itemcreate cc, isetthrowpotionminor(rnd(length(isetthrowpotionminor))), -1, -1, 0
+							}
+							if ( act == AI_ACTION_THROW_POTION_MAJOR ) {
+								flt
+								flttypemajor = FILTER_ITEM_POTION
+								itemcreate cc, isetthrowpotionmajor(rnd(length(isetthrowpotionmajor))), -1, -1, 0
+							}
+							if ( act == AI_ACTION_THROW_POTION_GREATER ) {
+								flt
+								flttypemajor = FILTER_ITEM_POTION
+								itemcreate cc, isetthrowpotiongreater(rnd(length(isetthrowpotiongreater))), -1, -1, 0
+							}
+							if ( act == AI_ACTION_THROW_POTION_SALT ) {
+								flt
+								itemcreate cc, ITEM_ID_POTION_SALT_SOLUTION, -1, -1, 0
+							}
+							if ( stat == 1 ) {
+								goto *act_throw
+							}
+							goto *turn_end
+						}
+					}
+				}
+			}
+		}
+	}
+	if ( act == SKILL_SPACT_SHADOW_STEP ) {
+		if ( dist(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), cdata(CDATA_X, tc), cdata(CDATA_Y, tc)) == 1 ) {
+			act = AI_ACTION_MELEE
+		}
+	}
+	if ( act == SKILL_SPACT_SHADOW_STEP | act == SKILL_SPACT_UNCONTROL | act == BUFF_GROW_PERCEPTION | act == SKILL_SPACT_CLASH_RUSH ) {
+		if ( dist(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), cdata(CDATA_X, tc), cdata(CDATA_Y, tc)) > sdataref(SKILL_DATAREF_TG, SKILL_SPACT_CHEER) \ 1000 + 1 | fov_los(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), cdata(CDATA_X, tc), cdata(CDATA_Y, tc)) == 0 ) {
+			distance = dist(cdata(CDATA_X, tc), cdata(CDATA_Y, tc), cdata(CDATA_X, cc), cdata(CDATA_Y, cc))
+			goto *ai_followMove
+		}
+	}
+	if ( buffact < 2 ) {
+		if ( act == SKILL_SPELL_HERO ) {
+			if ( findbuff(cc, BUFF_HERO) != (-1) ) {
+				buffact++
+				goto *ai_actMain
+			}
+		}
+		if ( act == SKILL_SPELL_HOLY_SHIELD ) {
+			if ( findbuff(cc, BUFF_HOLY_SHIELD) != (-1) ) {
+				buffact++
+				goto *ai_actMain
+			}
+		}
+		if ( act == SKILL_SPELL_REGENERATION ) {
+			if ( findbuff(cc, BUFF_REGENERATION) != (-1) ) {
+				buffact++
+				goto *ai_actMain
+			}
+		}
+		if ( act == SKILL_SPELL_ATTRIBUTE_SHIELD ) {
+			if ( findbuff(cc, BUFF_ATTRIBUTE_SHIELD) != (-1) ) {
+				buffact++
+				goto *ai_actMain
+			}
+		}
+		if ( act == SKILL_SPELL_SPEED ) {
+			if ( findbuff(cc, BUFF_SPEED) != (-1) ) {
+				buffact++
+				goto *ai_actMain
+			}
+		}
+		if ( act == SKILL_SPELL_HOLY_VEIL ) {
+			if ( findbuff(cc, BUFF_HOLY_VEIL) != (-1) ) {
+				buffact++
+				goto *ai_actMain
+			}
+		}
+		if ( act == SKILL_SPELL_DIVINE_WISDOM ) {
+			if ( findbuff(cc, BUFF_DIVINE_WISDOM) != (-1) ) {
+				buffact++
+				goto *ai_actMain
+			}
+		}
+		if ( act == SKILL_SPACT_LULWYS_TRICK ) {
+			if ( findbuff(cc, BUFF_LULWYS_TRICK) != (-1) ) {
+				buffact++
+				goto *ai_actMain
+			}
+		}
+		if ( act == SKILL_SPACT_BOOST ) {
+			if ( findbuff(cc, BUFF_BOOST) != (-1) ) {
+				buffact++
+				goto *ai_actMain
+			}
+		}
+		if ( act == SKILL_SPELL_CONTINGENCY ) {
+			if ( findbuff(cc, BUFF_CONTINGENCY) != (-1) ) {
+				buffact++
+				goto *ai_actMain
+			}
+		}
+		if ( act == SKILL_SPACT_CLEAR_MIND ) {
+			if ( findbuff(cc, BUFF_CLEAR_MIND) != (-1) ) {
+				buffact++
+				goto *ai_actMain
+			}
+		}
+		if ( act == SKILL_SPELL_FEATHER ) {
+			if ( findbuff(cc, BUFF_FEATHER) != (-1) ) {
+				buffact++
+				goto *ai_actMain
+			}
+		}
+		if ( act == SKILL_SPACT_CHARGE ) {
+			if ( findbuff(cc, BUFF_CHARGE) != (-1) ) {
+				buffact++
+				goto *ai_actMain
+			}
+		}
+		if ( act == SKILL_SPACT_ATTRIBUTE ) {
+			if ( findbuff(cc, BUFF_ATTRIBUTE) != (-1) ) {
+				buffact++
+				goto *ai_actMain
+			}
+		}
+		if ( act == SKILL_SPACT_ABSOLUTE_PROTECT ) {
+			if ( findbuff(cc, BUFF_AUTO_GUARD) != (-1) ) {
+				buffact++
+				goto *ai_actMain
+			}
+		}
+		if ( act == SKILL_SPACT_SPACE_RETENTION ) {
+			if ( findbuff(cc, BUFF_RETENTION) != (-1) ) {
+				buffact++
+				goto *ai_actMain
+			}
+		}
+		if ( act == SKILL_SPELL_CONCENTRATION ) {
+			if ( findbuff(cc, BUFF_CONCENTRATION) != (-1) ) {
+				buffact++
+				goto *ai_actMain
+			}
+		}
+		if ( act == SKILL_SPELL_ELEMENT_SCAR ) {
+			if ( findbuff(tc, BUFF_ELEMENT_SCAR) != (-1) ) {
+				buffact++
+				goto *ai_actMain
+			}
+		}
+		if ( act == SKILL_SPELL_MIST_OF_SILENCE ) {
+			if ( findbuff(tc, BUFF_MIST_OF_SILENCE) != (-1) ) {
+				buffact++
+				goto *ai_actMain
+			}
+		}
+		if ( act == SKILL_SPELL_SLOW ) {
+			if ( findbuff(tc, BUFF_SLOW) != (-1) ) {
+				buffact++
+				goto *ai_actMain
+			}
+		}
+		if ( act == SKILL_SPELL_MIST_OF_FRAILNESS ) {
+			if ( findbuff(tc, BUFF_MIST_OF_FRAILNESS) != (-1) ) {
+				buffact++
+				goto *ai_actMain
+			}
+		}
+		if ( act == SKILL_SPELL_NIGHTMARE ) {
+			if ( findbuff(tc, BUFF_NIGHTMARE) != (-1) ) {
+				buffact++
+				goto *ai_actMain
+			}
+		}
+		if ( act == SKILL_SPACT_PUNISHMENT ) {
+			if ( findbuff(tc, BUFF_PUNISHMENT) != (-1) ) {
+				buffact++
+				goto *ai_actMain
+			}
+		}
+		if ( act == SKILL_SPACT_DEATH_WORD | act == SKILL_SPACT_DEATH_SONG ) {
+			if ( findbuff(tc, BUFF_DEATH_WORD) != (-1) | cdata(CDATA_QUALITY, tc) >= FIX_QUALITY_MIRACLE ) {
+				buffact++
+				goto *ai_actMain
+			}
+		}
+	}
+	buffact = 0
+	if ( cdata(CDATA_ID, cc) == CREATURE_ID_BLACK_GAUNTLET_LEOLD ) {
+		if ( cdata(CDATA_ALLIED, cc) == 0 ) {
+			if ( gdata(GDATA_FLAG_MAIN) >= 720 & gdata(GDATA_FLAG_MAIN) < 760 ) {
+				act = SKILL_SPACT_DISTANT_ATTACK7
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, cc) == CREATURE_ID_SPIRAL_KING ) {
+		if ( act == SKILL_SPELL_MUTATION ) {
+			act = SKILL_SPELL_DARK_EYE
+		}
+	}
+	if ( cdata(CDATA_ID, cc) == CREATURE_ID_LAST_DANCER ) {
+		if ( cdata(CDATA_ALLIED, cc) == 0 ) {
+			if ( gdata(GDATA_FLAG_CURTAIN_CALL) < 0 ) {
+				if ( cdata(CDATA_EXIST, CHARA_PLAYER) == CHAR_STATE_ALIVE ) {
+					act = SKILL_SPACT_GRAND_FINALE
+				}
+			}
+		}
+	}
+	if ( cdata(CDATA_ALLIED, cc) == 100 ) {
+		if ( act == SKILL_SPELL_SUMMON_MONSTERS | act == SKILL_SPELL_SUMMON_WILD | act == SKILL_SPACT_SUMMON_FIRE | act == SKILL_SPACT_SUMMON_PAWN | act == SKILL_SPACT_SUMMON_CATS | act == SKILL_SPACT_SUMMON_YEEK | act == SKILL_SPACT_SUMMON_SISTER | act == SKILL_SPELL_SUMMON_SPIRIT | act == SKILL_SPACT_SUMMON_CHAOS ) {
+			act = AI_ACTION_MELEE
+		}
+	}
+	if ( cdata(CDATA_DIRECTIVE_MODE, cc) == DIRECTIVE_MODE_TALKING ) {
+		if ( cdata(CDATA_ROW_ACT, cc) == ACTION_NONE ) {
+			if ( cdata(CDATA_TARGET, cc) != 0 | cdata(CDATA_TARGET, cc) == 0 ) {
+				bvar = sdata(SKILL_ATTR_WIL, cc)
+				act = SKILL_SPACT_PERSUASION
+				if ( sdata(SKILL_ATTR_PER, cc) > bvar ) {
+					act = SKILL_SPACT_PECULIAR_JOKE
+					bvar = sdata(SKILL_ATTR_PER, cc)
+				}
+				if ( sdata(SKILL_ATTR_DEX, cc) > bvar ) {
+					act = SKILL_SPACT_BLENDED_LIE
+					bvar = sdata(SKILL_ATTR_DEX, cc)
+				}
+				if ( sdata(SKILL_ATTR_STR, cc) > bvar ) {
+					act = SKILL_SPACT_INTIMIDATION
+					bvar = sdata(SKILL_ATTR_STR, cc)
+				}
+				if ( sdata(SKILL_ATTR_MAG, cc) > bvar ) {
+					act = SKILL_SPACT_MYSTERIOUS_SONG
+					bvar = sdata(SKILL_ATTR_MAG, cc)
+				}
+				if ( act == SKILL_SPACT_PERSUASION ) {
+					efid = SKILL_SPACT_PERSUASION
+					gosub *effect
+				}
+				if ( act == SKILL_SPACT_PECULIAR_JOKE ) {
+					efid = SKILL_SPACT_PECULIAR_JOKE
+					gosub *effect
+				}
+				if ( act == SKILL_SPACT_BLENDED_LIE ) {
+					efid = SKILL_SPACT_BLENDED_LIE
+					gosub *effect
+				}
+				if ( act == SKILL_SPACT_INTIMIDATION ) {
+					efid = SKILL_SPACT_INTIMIDATION
+					gosub *effect
+				}
+				if ( act == SKILL_SPACT_MYSTERIOUS_SONG ) {
+					efid = SKILL_SPACT_MYSTERIOUS_SONG
+					gosub *effect
+				}
+				goto *turn_end
+			}
+		}
+	}
+	if ( cdata(CDATA_DIRECTIVE_MODE, cc) == DIRECTIVE_MODE_DEFENSIVE ) {
+		if ( powai == 100 ) {
+			if ( cdata(CDATA_TARGET, cc) != 0 | cdata(CDATA_TARGET, cc) == 0 ) {
+				if ( cdata(CDATA_POWER_GAUGE, cc) >= 2 & cdata(CDATA_POWER_GAUGE, tc) >= 2 ) {
+					act = SKILL_SPACT_DISTURBANCE
+				}
+			}
+		}
+	}
+	if ( cdata(CDATA_DIRECTIVE_MODE, cc) == DIRECTIVE_MODE_DEFENSIVE ) {
+		if ( act != SKILL_SPACT_DISTURBANCE ) {
+			goto *turn_end
+		}
+	}
+	if ( cdata(CDATA_ID, cc) == CREATURE_ID_USER ) {
+		if ( act == SKILL_SPELL_WISH | act == SKILL_SPELL_WIZARDS_HARVEST | act == SKILL_SPACT_MEWMEWMEW | act == SKILL_SPACT_MANIS_DISASSEMBLY | act == SKILL_SPACT_INSANE_WAVE | act == SKILL_SPACT_SUPER_VIBRATING_FIST | act == SKILL_SPACT_TEMPEST_ARROW | act == SKILL_SPACT_EXCESSIVE_HEAL | act == SKILL_SPACT_SHINE_SNAIL | act == SKILL_SPACT_SMOKE_MIRROR | act == SKILL_SPACT_ELEMENTIA | act == SKILL_SPACT_GOLD_RUSH | (act >= SKILL_SPACT_CONVERGE_BREATH & act <= SKILL_SPACT_MANA_SLASH) | act == SKILL_SPACT_SPINNING_THROW ) {
+			act = AI_ACTION_RANGE
+		}
+	}
+	if ( act == AI_ACTION_RANDOM_MOVE ) {
+		cdata(CDATA_X_NEW, cc) = rnd(3) - 1 + cdata(CDATA_X, cc)
+		cdata(CDATA_Y_NEW, cc) = rnd(3) - 1 + cdata(CDATA_Y, cc)
+		cell_check cdata(CDATA_X_NEW, cc), cdata(CDATA_Y_NEW, cc)
+		if ( cellaccess == 1 ) {
+			goto *act_move
+		}
+		else {
+			goto *turn_end
+		}
+	}
+	if ( act >= SKILL_SPELL_HEAL_LIGHT ) {
+		if ( act < MAX_SPELL ) {
+			if ( cdata(CDATA_SEALED_MAGIC, cc) == 0 ) {
+				efid = act
+				if ( cdata(CDATA_MP, cc) < cdata(CDATA_MAX_MP, cc) / 7 ) {
+					if ( rnd(3) | cc < MAX_CHARA_FOLLOWER | cdata(CDATA_QUALITY, cc) >= FIX_QUALITY_MIRACLE | cbit(CHARA_BIT_AI_SAVE_MANA, cc) ) {
+						cdata(CDATA_MP, cc) += cdata(CDATA_LEVEL, cc) / 4 + 5
+						goto *turn_end
+					}
+				}
+				npccostmp = 1
+				gosub *cast
+				if ( stat == 1 ) {
+					goto *turn_end
+				}
+			}
+		}
+	}
+	if ( act >= (600 /*!!!@[MAX_SKILL_RANGE @@@ STARTING_SKILL_SPACT]@!!! */) ) {
+		if ( act == SKILL_SPACT_DISTURBANCE | cdata(CDATA_SEALED_ABILITY, cc) == 0 ) {
+			efid = act
+			gosub *action
+			if ( stat == 1 ) {
+				goto *turn_end
+			}
+		}
+	}
+	if ( act == AI_ACTION_WAIT_MELEE ) {
+		if ( distance == 1 ) {
+			gosub *act_melee
+		}
+		if ( rnd(3) == 0 | cc < MAX_CHARA_FOLLOWER | cdata(CDATA_ALLIED, cc) == 100 ) {
+			if ( distance < 6 ) {
+				if ( fov_los(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), cdata(CDATA_X, tc), cdata(CDATA_Y, tc)) ) {
+					gosub *label_5434
+					if ( stat == 1 ) {
+						gosub *act_fire
+						goto *turn_end
+					}
+				}
+			}
+		}
+		goto *turn_end
+	}
+	if ( cbit(CHARA_BIT_AWAKE_PROXIMITY_ATTACK, cc) ) {
+		act = AI_ACTION_MELEE
+	}
+	if ( cbit(CHARA_BIT_AWAKE_RANGED_ATTACK, cc) ) {
+		act = AI_ACTION_RANGE
+	}
+	if ( cbit(CHARA_BIT_AWAKE_RANGED_ATTACK, cc) ) {
+		if ( cbit(CHARA_BIT_AWAKE_PROXIMITY_ATTACK, cc) ) {
+			if ( rnd(10) > 4 ) {
+				act = AI_ACTION_MELEE
+			}
+		}
+	}
+	if ( cdata(CDATA_DIRECTIVE_MODE, cc) != DIRECTIVE_MODE_DEFENSIVE & cdata(CDATA_DIRECTIVE_MODE, cc) != DIRECTIVE_MODE_TALKING ) {
+		if ( act == AI_ACTION_RANGE ) {
+			if ( distance < 6 ) {
+				if ( fov_los(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), cdata(CDATA_X, tc), cdata(CDATA_Y, tc)) ) {
+					gosub *label_5434
+					if ( stat == 1 ) {
+						gosub *act_fire
+						goto *turn_end
+					}
+				}
+			}
+		}
+	}
+	if ( cdata(CDATA_DIRECTIVE_MODE, cc) != DIRECTIVE_MODE_DEFENSIVE & cdata(CDATA_DIRECTIVE_MODE, cc) != DIRECTIVE_MODE_TALKING ) {
+		if ( distance == 1 ) {
+			gosub *act_melee
+			goto *turn_end
+		}
+	}
+	if ( cdata(CDATA_DIRECTIVE_MODE, cc) != DIRECTIVE_MODE_DEFENSIVE & cdata(CDATA_DIRECTIVE_MODE, cc) != DIRECTIVE_MODE_TALKING ) {
+		if ( distance < 6 ) {
+			if ( fov_los(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), cdata(CDATA_X, tc), cdata(CDATA_Y, tc)) ) {
+				gosub *label_5434
+				if ( stat == 1 ) {
+					gosub *act_fire
+					goto *turn_end
+				}
+			}
+		}
+	}
+	if ( cdata(CDATA_AI_DISTANCE, cc) <= distance ) {
+		if ( distance < 6 ) {
+			if ( fov_los(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), cdata(CDATA_X, tc), cdata(CDATA_Y, tc)) ) {
+				if ( cdata(CDATA_SHIFT_FORM, cc) <= SHIFT_FORM_NONE & (cdata(CDATA_EVOLUTION_STAGE, cc) <= 0 | cc == CHARA_PLAYER) & (cdata(CDATA_QUALITY, cc) < FIX_QUALITY_MIRACLE | cc <= MAX_CHARA_FOLLOWER) ) {
+					if ( cdata(CDATA_POWER_GAUGE, cc) <= 70 ) {
+						cdata(CDATA_POWER_GAUGE, cc) += 16
+					}
+				}
+				else {
+					if ( cdata(CDATA_POWER_GAUGE, cc) <= 170 ) {
+						cdata(CDATA_POWER_GAUGE, cc) += 16
+					}
+				}
+				goto *turn_end
+			}
+		}
+	}
+	if ( rnd(5) == 0 ) {
+		cdata(CDATA_AI_AGGRO, cc)--
+	}
+	if ( cdata(CDATA_DIRECTIVE_MODE, cc) == DIRECTIVE_MODE_DEFENSIVE ) {
+		if ( cdata(CDATA_TARGET, cc) != 0 | cdata(CDATA_TARGET, cc) == 0 ) {
+			goto *turn_end
+		}
+	}
+	if ( rnd(100) < cdata(CDATA_AI_MOVE_FREQ, cc) ) {
+		goto *ai_followMove
+	}
+	else {
+		if ( cdata(CDATA_SHIFT_FORM, cc) <= SHIFT_FORM_NONE & (cdata(CDATA_EVOLUTION_STAGE, cc) <= 0 | cc == CHARA_PLAYER) & (cdata(CDATA_QUALITY, cc) < FIX_QUALITY_MIRACLE | cc <= MAX_CHARA_FOLLOWER) ) {
+			if ( cdata(CDATA_POWER_GAUGE, cc) <= 80 ) {
+				cdata(CDATA_POWER_GAUGE, cc) += 16
+			}
+		}
+		else {
+			if ( cdata(CDATA_POWER_GAUGE, cc) <= 180 ) {
+				cdata(CDATA_POWER_GAUGE, cc) += 16
+			}
+		}
+		goto *turn_end
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

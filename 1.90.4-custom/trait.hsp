@@ -1,0 +1,1171 @@
+*trait_init
+	dim traitref, 10
+	sdim traitrefn, 80, 9
+	sdim traitrefn2, 20, 6
+	return
+
+*trait_ref
+	if ( tid == TRAIT_NORMAL_STAT_STAMINA ) {
+		if ( traitmode == 0 ) {
+			traitref = 0, 0, 3, 1, 0, 100, -1
+			traitrefn2 = lang("短距離走者", "Short Distance Runner"), lang("中距離走者", "Middle Distance Runner"), lang("長距離走者", "Long Distance Runner")
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = lang("長年の特訓の成果がスタミナを高める", "Years of training strengthens your stamina."), lang("あなたは持久力がある[スタミナ+]", "You have good stamina. [Stamina+]"), lang("あなたはかなり持久力がある[スタミナ++]", "You have very good stamina. [Stamina++]"), lang("あなたの持久力は恐ろしい[スタミナ上昇]", "You have outstanding stamina. [Stamina+++]")
+			}
+			return 1
+		}
+		return 1
+	}
+	if ( tid == TRAIT_NORMAL_SPACT_DRAIN_BLOOD ) {
+		if ( traitmode == 0 ) {
+			traitref = 0, 0, 1, 1, 0, 100, -1
+			traitrefn2 = lang("吸血鬼", "Vampiric Ability")
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = lang("吸血鬼の友人から血の吸い方を学ぶ", "Your vampire friend teaches you how to suck blood."), lang("あなたは血を吸うことができる", "You can suck blood now.")
+			}
+			return 1
+		}
+		if ( spact(SKILL_SPACT_DRAIN_BLOOD - STARTING_SKILL_SPACT) == 0 ) {
+			spact(SKILL_SPACT_DRAIN_BLOOD - STARTING_SKILL_SPACT) = 1
+		}
+		return 1
+	}
+	if ( tid == TRAIT_NORMAL_SPACT_CHEER ) {
+		if ( traitmode == 0 ) {
+			traitref = 0, 0, 1, 1, 0, 100, -1
+			traitrefn2 = lang("指導者", "Natural Leader")
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = lang("指導を続けるうちに、仲間を一時的に強くする方法を見つける", "You find how to strengthen your allies for a short time."), lang("あなたは仲間を一時的に強くできる", "You can temporally strengthen your allies.")
+			}
+			return 1
+		}
+		if ( spact(SKILL_SPACT_CHEER - STARTING_SKILL_SPACT) == 0 ) {
+			spact(SKILL_SPACT_CHEER - STARTING_SKILL_SPACT) = 1
+		}
+		return 1
+	}
+	if ( tid == TRAIT_NORMAL_SPACT_KNOCKOUT ) {
+		if ( traitmode == 0 ) {
+			traitref = 0, 0, 1, 1, 0, 100, -1
+			traitrefn2 = lang("手加減", "Knockout")
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = lang("修行の中で、相手を殺さずに気絶させる攻撃を編み出す", "You find how to stun enemy without killing."), lang("あなたは敵に手加減して攻撃ができる", "You can attack it easy on the enemy.")
+			}
+			return 1
+		}
+		if ( spact(SKILL_SPACT_KNOCKOUT - STARTING_SKILL_SPACT) == 0 ) {
+			spact(SKILL_SPACT_KNOCKOUT - STARTING_SKILL_SPACT) = 1
+		}
+		return 1
+	}
+	if ( tid == TRAIT_NORMAL_SPACT_EYE_OF_MANA ) {
+		if ( traitmode == 0 ) {
+			traitref = 0, 0, 1, 1, 0, 100, -1
+			traitrefn2 = lang("魔眼", "Magic Eye")
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = lang("謎の儀式に巻き込まれ、眼に呪術を施される", "You are subjected to the magic in the eyes by the ritual."), lang("あなたの眼には得体のしれない魔力が宿っている", "Your eye is harboring the magic of mystery.")
+			}
+			return 1
+		}
+		if ( spact(SKILL_SPACT_EYE_OF_MANA - STARTING_SKILL_SPACT) == 0 ) {
+			spact(SKILL_SPACT_EYE_OF_MANA - STARTING_SKILL_SPACT) = 1
+		}
+		return 1
+	}
+	if ( tid == TRAIT_NORMAL_SPACT_MISTELTEIN ) {
+		if ( traitmode == 0 ) {
+			traitref = 0, 0, 1, 1, 0, 100, -1
+			traitrefn2 = lang("魔導植物の知識", "Magical plant knowledge")
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = lang("拾った手記の断片から特殊な植物の召喚法を知る", "You learned how to summon magical plants from this note."), lang("あなたは魔力を帯びた植物を呼び出し操れる", "You can summon and manipulate magical plants.")
+			}
+			return 1
+		}
+		if ( spact(SKILL_SPACT_MISTELTEIN - STARTING_SKILL_SPACT) == 0 ) {
+			spact(SKILL_SPACT_MISTELTEIN - STARTING_SKILL_SPACT) = 1
+		}
+		return 1
+	}
+	if ( tid == TRAIT_NORMAL_SPACT_DIMENSIONAL_MOVE ) {
+		if ( traitmode == 0 ) {
+			traitref = 0, 0, 1, 1, 0, 100, -1
+			traitrefn2 = lang("空間歪曲", "Dimensional Move")
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = lang("夢の中で近くへの瞬間移動を思いつく", "You hit upon an idea of insta-teleport from a dream."), lang("あなたは空間を曲げられる", "You can insta-teleport to nearby tiles.")
+			}
+			return 1
+		}
+		if ( spact(SKILL_SPACT_DIMENSIONAL_MOVE - STARTING_SKILL_SPACT) == 0 ) {
+			spact(SKILL_SPACT_DIMENSIONAL_MOVE - STARTING_SKILL_SPACT) = 1
+		}
+		return 1
+	}
+	if ( tid == TRAIT_NORMAL_SPACT_FIRE_BREATH ) {
+		if ( traitmode == 0 ) {
+			traitref = 0, 0, 1, 1, 0, 100, -1
+			traitrefn2 = lang("火炎芸", "Fire Breath")
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = lang("酒を飲んでいるうちに火を噴けるようになる", "Too much drinking makes you want to breath fire."), lang("あなたは口から火を噴ける", "You can breath fire.")
+			}
+			return 1
+		}
+		if ( spact(SKILL_SPACT_FIRE_BREATH - STARTING_SKILL_SPACT) == 0 ) {
+			spact(SKILL_SPACT_FIRE_BREATH - STARTING_SKILL_SPACT) = 1
+		}
+		return 1
+	}
+	if ( tid == TRAIT_NORMAL_SPACT_TOUCH_OF_SLEEP ) {
+		if ( traitmode == 0 ) {
+			traitref = 0, 0, 1, 1, 0, 100, -1
+			traitrefn2 = lang("催眠術師", "Hypnotism")
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = lang("突如として眠りの手を覚える", "Suddenly, you know how to make everyone sleep."), lang("あなたは催眠をかけることができる", "You can hypnotize single target.")
+			}
+			return 1
+		}
+		if ( spact(SKILL_SPACT_TOUCH_OF_SLEEP - STARTING_SKILL_SPACT) == 0 ) {
+			spact(SKILL_SPACT_TOUCH_OF_SLEEP - STARTING_SKILL_SPACT) = 1
+		}
+		return 1
+	}
+	if ( tid == TRAIT_NORMAL_SPACT_TOUCH_OF_POISON ) {
+		if ( traitmode == 0 ) {
+			traitref = 0, 0, 1, 1, 0, 100, -1
+			traitrefn2 = lang("毒の知恵", "Poison Nail")
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = lang("毒の研究の結果、毒の手を覚える", "Researching poisons leads you to a method to poison others."), lang("あなたは毒を盛ることができる", "You can poison a creature.")
+			}
+			return 1
+		}
+		if ( spact(SKILL_SPACT_TOUCH_OF_POISON - STARTING_SKILL_SPACT) == 0 ) {
+			spact(SKILL_SPACT_TOUCH_OF_POISON - STARTING_SKILL_SPACT) = 1
+		}
+		return 1
+	}
+	if ( tid == TRAIT_NORMAL_SPACT_FASCINATION_DANCE ) {
+		if ( traitmode == 0 ) {
+			traitref = 0, 0, 1, 1, 0, 100, -1
+			traitrefn2 = lang("舞踏", "Sexy Dance"), lang("舞踏", "Sexy Dance")
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = lang("見惚れるような踊りを身に着ける", "You learn a sexy dance."), lang("あなたの踊りはとても魅力的だ", "Your dance is very attractive."), lang("あなたの踊りはとても魅力的だ", "Your dance is very attractive.")
+			}
+			return 1
+		}
+		if ( spact(SKILL_SPACT_FASCINATION_DANCE - STARTING_SKILL_SPACT) == 0 ) {
+			spact(SKILL_SPACT_FASCINATION_DANCE - STARTING_SKILL_SPACT) = 1
+		}
+		return 1
+	}
+	if ( tid == TRAIT_NORMAL_SPACT_UNCONTROL ) {
+		if ( traitmode == 0 ) {
+			traitref = 0, 0, 1, 1, 0, 100, -1
+			traitrefn2 = lang("力の暴走", "Uncontrollable power"), lang("力の暴走", "Uncontrollable power"), lang("力の暴走", "Uncontrollable power")
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = lang("内に潜む謎の力に振り回される", "Swayed by the mystery power that lurks within."), lang("あなたは制御しきれない何かを秘めている", "You have hidden something that can not be controlled."), lang("あなたは制御しきれない何かを秘めている", "You have hidden something that can not be controlled."), lang("あなたは制御しきれない何かを秘めている", "You have hidden something that can not be controlled.")
+			}
+			return 1
+		}
+		if ( spact(SKILL_SPACT_UNCONTROL - STARTING_SKILL_SPACT) == 0 ) {
+			spact(SKILL_SPACT_UNCONTROL - STARTING_SKILL_SPACT) = 1
+		}
+		return 1
+	}
+	if ( tid == TRAIT_NORMAL_OTHER_ACCOUNTANT ) {
+		if ( traitmode == 0 ) {
+			traitref = 0, 0, 2, 1, 0, 100, -1
+			traitrefn2 = lang("見習い会計士", "Apprentice Accountant"), lang("熟練会計士", "Expert Accountant")
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = lang("会計の技能を磨き税金を減らす", "Working as an accountant reduces your tax payment."), lang("あなたは税金の計算に強い[税金7%減]", "You are good at calculating taxes. [TAX-7%]"), lang("あなたは税金の計算にとても強い[税金15%減]", "You are very good at calculating taxes. [TAX-15%]")
+			}
+			return 1
+		}
+		return 1
+	}
+	if ( tid == TRAIT_NORMAL_OTHER_QUARTERMASTER ) {
+		if ( traitmode == 0 ) {
+			traitref = 0, 0, 2, 1, 0, 100, -1
+			traitrefn2 = lang("見習い補給係", "Apprentice Quartermaster"), lang("熟練補給係", "Expert Quartermaster")
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = lang("補給係としての経験が、給料物資の品質を上げる", "Working as a quartermaster gives you better payoff."), lang("あなたはたまに質の高い補給品を受け取る", "You sometimes receive quality supplies."), lang("あなたは頻繁に質の高い補給品を受け取る", "You frequently receive quality supplies.")
+			}
+			return 1
+		}
+		return 1
+	}
+	if ( tid == TRAIT_NORMAL_OTHER_RES_CURSE ) {
+		if ( traitmode == 0 ) {
+			traitref = 0, 0, 1, 1, 0, 100, -1
+			traitrefn2 = lang("祈祷師", "Exorcist")
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = lang("祈祷を捧げることで、呪いの言葉の効力を弱める", "Your prayer weakens the power of cursed whisperings."), lang("あなたの祈りは呪いの言葉を掻き消す", "Your prayer nullifies cursed whisperings.")
+			}
+			return 1
+		}
+		return 1
+	}
+	if ( tid == TRAIT_NORMAL_OTHER_INDEPENDENT ) {
+		if ( traitmode == 0 ) {
+			traitref = 0, 0, 1, 1, 0, 100, -1
+			traitrefn2 = lang("孤高", "Independent")
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = lang("最後に信じられるのは、自分の力だけという考えに至る", "To the very end, you only believe in your own power."), lang("あなたは独りの方が行動しやすい[単独時に速度+20%]", "You prefer to work alone. [SPD+20% when alone]")
+			}
+			return 1
+		}
+		return 1
+	}
+	if ( tid == TRAIT_NORMAL_OTHER_MOUNT_BOND ) {
+		if ( traitmode == 0 ) {
+			traitref = 0, 0, 1, 1, 0, 100, -1
+			traitrefn2 = lang("迅馬一体", "Mount Bond")
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = lang("戦場を馬と共に駆け回り、乗馬相手との呼吸の合わせ方を知る", "By mounting horses, you learned to follow your mount's rhythm."), lang("あなたは馬上での武器の扱いが得意だ[乗馬時命中ペナルティ緩和]", "You know how to handle weapons while riding. [Lowers to-hit penalty while riding]")
+			}
+			return 1
+		}
+		return 1
+	}
+	if ( tid == TRAIT_NORMAL_SPACT_GRAVITY_ACCEL ) {
+		if ( traitmode == 0 ) {
+			traitref = 0, 0, 1, 1, 0, 100, -1
+			traitrefn2 = lang("重力制御", "Gravity Control"), lang("重力制御", "Gravity Control")
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = lang("改造を施され重力へ干渉できる体質になる", "Your genes allow you to manipulate gravity."), lang("あなたは重力を操る", "You manipulate gravity."), lang("あなたは重力を操る", "You manipulate gravity."), lang("あなたは重力を操る", "You manipulate gravity.")
+			}
+			return 1
+		}
+		if ( spact(SKILL_SPACT_GRAVITY_ACCEL - STARTING_SKILL_SPACT) == 0 ) {
+			spact(SKILL_SPACT_GRAVITY_ACCEL - STARTING_SKILL_SPACT) = 1
+		}
+		return 1
+	}
+	if ( tid == TRAIT_NORMAL_SPACT_VINDALIAN_JIUJITSU ) {
+		if ( traitmode == 0 ) {
+			traitref = 0, 0, 1, 1, 0, 100, -1
+			traitrefn2 = lang("柔術", "Jiu-jitsu"), lang("柔術", "Jiu-jitsu")
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = lang("山で会った謎の老人から古の武術を伝授される", "You have been taught martial arts by a mysterious old man."), lang("あなたは柔術を会得している", "You have mastered Jiu-jitsu."), lang("あなたは柔術を会得している", "You have mastered Jiu-jitsu.")
+			}
+			return 1
+		}
+		if ( spact(SKILL_SPACT_VINDALIAN_JIUJITSU - STARTING_SKILL_SPACT) == 0 ) {
+			spact(SKILL_SPACT_VINDALIAN_JIUJITSU - STARTING_SKILL_SPACT) = 1
+		}
+		return 1
+	}
+	if ( tid == TRAIT_NORMAL_SKILL_CASTING ) {
+		if ( traitmode == 0 ) {
+			traitref = 0, 0, 2, 1, 0, 100, -1
+			traitrefn2 = lang("集中", "Concentration"), lang("高い集中", "More Concentration")
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = lang("日々瞑想し詠唱技術を高める", "Daily meditation increases your casting skill."), lang("あなたの集中力は高い[詠唱+4]", "You concentrate while casting. [Casting+4]"), lang("あなたは極度に集中できる[詠唱+8]", "You concentrate more while casting. [Casting+8]")
+			}
+			if ( sorg(SKILL_NORMAL_CASTING, CHARA_PLAYER) == 0 ) {
+				return -1
+			}
+			return 1
+		}
+		sdata(SKILL_NORMAL_CASTING, CHARA_PLAYER) = limit(sdata(SKILL_NORMAL_CASTING, CHARA_PLAYER) + trait(tid) * 4, sdata(SKILL_NORMAL_CASTING, CHARA_PLAYER) > 0, 9999)
+		return 1
+	}
+	if ( tid == TRAIT_NORMAL_OTHER_SHIELD_BASH ) {
+		if ( traitmode == 0 ) {
+			traitref = 0, 0, 1, 1, 0, 100, -1
+			traitrefn2 = lang("盾殴り", "Shield Bash")
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = lang("盾の扱いを身につけ、盾での攻撃の効果を上げる", "Mastering shields increased the power of your shield bashing."), lang("あなたは盾での攻撃に追加効果を得る", "You can shield bash more effectively.")
+			}
+			if ( sorg(SKILL_NORMAL_SHIELD, CHARA_PLAYER) == 0 ) {
+				return -1
+			}
+			return 1
+		}
+		cbitmod CHARA_BIT_BREAK_WALLS, 0, 1
+		return 1
+	}
+	if ( tid == TRAIT_NORMAL_OTHER_GENTLE_FACE ) {
+		if ( traitmode == 0 ) {
+			traitref = 0, 0, 1, 1, 0, 100, -1
+			traitrefn2 = lang("優しい笑顔", "Gentle Face")
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = lang("優しい笑顔を習得し、敵が逃げ出すのを防ぐ", "Your gentle face prevents your enemies from escaping."), lang("あなたの笑顔は敵を油断させる", "Your attacks don't cause enemies to run.")
+			}
+			return 1
+		}
+		return 1
+	}
+	if ( tid == TRAIT_NORMAL_SKILL_DUAL_WIELD ) {
+		if ( traitmode == 0 ) {
+			traitref = 0, 0, 2, 1, 0, 100, -1
+			traitrefn2 = lang("二刀流の習熟", "Ambidextrous"), lang("二刀流の達人", "Improved Ambidextrous")
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = lang("長年の修行により二刀流の技術を磨く", "Years of training increases your two weapon fighting skill."), lang("あなたは複数の武器を巧みに操る[二刀流+4]", "You can handle multiple weapons. [Dual Wield+4]"), lang("あなたは二刀流を極めている[二刀流+8]", "You mastered multiple weapon style. [Two Wield+8]")
+			}
+			if ( sorg(SKILL_NORMAL_DUAL_WIELD, CHARA_PLAYER) == 0 ) {
+				return -1
+			}
+			return 1
+		}
+		sdata(SKILL_NORMAL_DUAL_WIELD, CHARA_PLAYER) = limit(sdata(SKILL_NORMAL_DUAL_WIELD, CHARA_PLAYER) + trait(tid) * 4, sdata(SKILL_NORMAL_DUAL_WIELD, CHARA_PLAYER) > 0, 9999)
+		return 1
+	}
+	if ( tid == TRAIT_NORMAL_RES_DARKNESS ) {
+		if ( traitmode == 0 ) {
+			traitref = 0, 0, 2, 1, 0, 100, -1
+			traitrefn2 = lang("暗闇への適正", "Conquer Darkness"), lang("暗闇への強い適正", "Conquer Deep Darkness")
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = lang("地底での生活が暗黒への耐性を高める", "Living in darkness makes you resistant to darkness."), lang("あなたは暗闇に慣れている[暗黒耐性強化]", "You don't fear darkness. [RES Darkness+]"), lang("あなたは闇の中で生活できる[暗黒耐性強化]", "You can dance in darkness. [RES Darkness++]")
+			}
+			return 1
+		}
+		sdata(SKILL_RES_DARKNESS, CHARA_PLAYER) = limit(sdata(SKILL_RES_DARKNESS, CHARA_PLAYER) + trait(tid) * 50 / 2, sdata(SKILL_RES_DARKNESS, CHARA_PLAYER) > 0, 9999)
+		return 1
+	}
+	if ( tid == TRAIT_NORMAL_RES_POISON ) {
+		if ( traitmode == 0 ) {
+			traitref = 0, 0, 2, 1, 0, 100, -1
+			traitrefn2 = lang("免疫", "Poison Tolerance"), lang("強い免疫", "More Poison Tolerance")
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = lang("貴族の毒見係のおかげで毒への耐性を得る", "Being a taster for a noble grants you resistance to poison."), lang("あなたは毒に免疫がある[毒耐性強化]", "You have a tolerance to poison. [RES Poison+]"), lang("あなたには毒に強い免疫がある[毒耐性強化]", "You have a strong tolerance to poison. [RES Poison++]")
+			}
+			return 1
+		}
+		sdata(SKILL_RES_POISON, CHARA_PLAYER) = limit(sdata(SKILL_RES_POISON, CHARA_PLAYER) + trait(tid) * 50 / 2, sdata(SKILL_RES_POISON, CHARA_PLAYER) > 0, 9999)
+		return 1
+	}
+	if ( tid == TRAIT_NORMAL_SKILL_NEGOTIATION ) {
+		if ( traitmode == 0 ) {
+			traitref = 0, 0, 1, 1, 0, 100, -1
+			traitrefn2 = lang("共感上手", "Empathy"), lang("共感上手", "Empathy")
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = lang("相手の考えを理解し対応する技術を学ぶ", "You learn the skill to understand and respond to enemy thoughts."), lang("あなたの言葉は心に響く", "Your words resonate within their hearts."), lang("あなたの言葉は心に響く", "Your words resonate within their hearts.")
+			}
+			return 1
+		}
+		if ( spact(SKILL_SPACT_PERSUASION - STARTING_SKILL_SPACT) == 0 ) {
+			spact(SKILL_SPACT_PERSUASION - STARTING_SKILL_SPACT) = 1
+		}
+		if ( spact(SKILL_SPACT_PECULIAR_JOKE - STARTING_SKILL_SPACT) == 0 ) {
+			spact(SKILL_SPACT_PECULIAR_JOKE - STARTING_SKILL_SPACT) = 1
+		}
+		return 1
+	}
+	if ( tid == TRAIT_NORMAL_SKILL_FAITH ) {
+		if ( traitmode == 0 ) {
+			traitref = 0, 0, 2, 1, 0, 100, -1
+			traitrefn2 = lang("信者", "Believer"), lang("狂信者", "Zealot")
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = lang("神官の下で修行し信仰を深める", "Training under a priest deepens your faith."), lang("あなたは信仰に篤い[信仰+4]", "You really believe in god. [Faith+4]"), lang("あなたは猛烈な信者だ[信仰+8]", "You are a zealot. [Faith+8]")
+			}
+			return 1
+		}
+		sdata(SKILL_NORMAL_FAITH, CHARA_PLAYER) = limit(sdata(SKILL_NORMAL_FAITH, CHARA_PLAYER) + trait(tid) * 4, sdata(SKILL_NORMAL_FAITH, CHARA_PLAYER) > 0, 9999)
+		return 1
+	}
+	if ( tid == TRAIT_NORMAL_STAT_LUC ) {
+		if ( traitmode == 0 ) {
+			traitref = 0, 0, 3, 1, 0, 100, -1
+			traitrefn2 = lang("幸運の持ち主", "Lucky"), lang("類稀な幸運", "Incredibly Lucky"), lang("幸運の女神の寵愛", "Goddess of Luck")
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = lang("流れ星を見て幸運を手にする", "Sighting a falling star brings you luck."), lang("あなたは幸運の持ち主だ", "You are lucky"), lang("あなたは類稀な幸運の持ち主だ", "You can rely on a good dose of luck."), lang("あなたは幸運の女神の寵愛を受けている", "The goddess of luck smiles upon you.")
+			}
+			return 1
+		}
+		sdata(SKILL_ATTR_LUC, CHARA_PLAYER) = limit(sdata(SKILL_ATTR_LUC, CHARA_PLAYER) + trait(tid) * 5, sdata(SKILL_ATTR_LUC, CHARA_PLAYER) > 0, 9999)
+		return 1
+	}
+	if ( tid == TRAIT_NORMAL_STAT_LIFE ) {
+		if ( traitmode == 0 ) {
+			traitref = 0, 0, 5, 1, 0, 100, -1
+			traitrefn2 = lang("苦行者見習い", "Apprentice Ascetic"), lang("苦行者", "Journeyman Ascetic"), lang("熟練の苦行者", "Expert Ascetic"), lang("苦行の達人", "Master Ascetic"), lang("伝説的苦行者", "Legendary Ascetic")
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = lang("苦行を通じてHPを増やす", "Being an ascetic increases your HP."), lang("あなたは苦行者の見習いだ[HP+5%]", "You are an apprentice ascetic. [HP+5%]"), lang("あなたは立派な苦行者だ[HP+10%]", "You are a journeyman ascetic. [HP+10%]"), lang("あなたは熟練した苦行者だ[HP+15%]", "You are an expert ascetic. [HP+15%]"), lang("あなたは苦行の達人だ[HP+20%]", "You are a master ascetic. [HP+20%]"), lang("あなたは伝説的名苦行者だ[HP+25%]", "You are a legendary ascetic. [HP+25%]")
+			}
+			return 1
+		}
+		sdata(SKILL_ATTR_LIFE, CHARA_PLAYER) = limit(sdata(SKILL_ATTR_LIFE, CHARA_PLAYER) + trait(tid) * 5, sdata(SKILL_ATTR_LIFE, CHARA_PLAYER) > 0, 9999)
+		return 1
+	}
+	if ( tid == TRAIT_NORMAL_STAT_MANA ) {
+		if ( traitmode == 0 ) {
+			traitref = 0, 0, 5, 1, 0, 100, -1
+			traitrefn2 = lang("魔力の遺伝子", "Magical Gene"), lang("魔力の細胞", "Magical Cell"), lang("魔力の血液", "Magical Blood"), lang("魔力の肉体", "Magic Body"), lang("魔力の支配", "Magic Being")
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = lang("遺伝子組み換えを行いMPを増やす", "You gain MP by using gene manipulation."), lang("あなたは魔力の遺伝子を持っている[MP+5%]", "Your genes contain magic. [MP+5%]"), lang("あなたは魔力の細胞を持っている[MP+10%]", "Your cells contain magic [MP+10%]"), lang("あなたには魔力の血液が流れている[MP+15%]", "Your blood contains magic [MP+15%]"), lang("あなたの肉体は魔力を帯びている[MP+20%]", "Your body is made of magic. [MP+20%]"), lang("あなたは魔力を支配している[MP+25%]", "Magic dominates your entire body. [MP+25%]")
+			}
+			return 1
+		}
+		sdata(SKILL_ATTR_MANA, CHARA_PLAYER) = limit(sdata(SKILL_ATTR_MANA, CHARA_PLAYER) + trait(tid) * 5, sdata(SKILL_ATTR_MANA, CHARA_PLAYER) > 0, 9999)
+		return 1
+	}
+	if ( tid == TRAIT_NORMAL_SPACT_BLADE_STRINGS ) {
+		if ( traitmode == 0 ) {
+			traitref = 0, 0, 1, 1, 0, 100, -1
+			traitrefn2 = lang("糸使い", "Strings Assassin"), lang("糸使い", "Strings Assassin")
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = lang("鋭く丈夫な糸を隠し持つ", "You concealed sharp durable strings."), lang("あなたは糸を自在に操る", "You manipulate strings freely."), lang("あなたは糸を自在に操る", "You manipulate strings freely.")
+			}
+			return 1
+		}
+		if ( spact(SKILL_SPACT_BLADE_STRINGS - STARTING_SKILL_SPACT) == 0 ) {
+			spact(SKILL_SPACT_BLADE_STRINGS - STARTING_SKILL_SPACT) = 1
+		}
+		return 1
+	}
+	if ( tid == TRAIT_NORMAL_STAT_SPD ) {
+		if ( traitmode == 0 ) {
+			traitref = 0, 0, 2, 1, 0, 100, -1
+			traitrefn2 = lang("俊足", "Agile"), lang("韋駄天", "Very Agile")
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = lang("猫を追いかけて速くなる", "Chasing cats increases your speed."), lang("あなたは速く走ることができる[速度+5]", "You can run fast. [SPD+5]"), lang("あなたは猫よりも速い[速度+10]", "You can run faster than a cat. [SPD+10]")
+			}
+			if ( trait(tid) == 1 ) {
+				if ( cdata(CDATA_LEVEL, CHARA_PLAYER) < 5 ) {
+					return -1
+				}
+			}
+			return 1
+		}
+		sdata(SKILL_ATTR_SPD, CHARA_PLAYER) = limit(sdata(SKILL_ATTR_SPD, CHARA_PLAYER) + trait(tid) * 5, sdata(SKILL_ATTR_SPD, CHARA_PLAYER) > 0, 9999)
+		return 1
+	}
+	if ( tid == TRAIT_NORMAL_STAT_PV ) {
+		if ( traitmode == 0 ) {
+			traitref = 0, 0, 3, 1, 0, 100, -1
+			traitrefn2 = lang("石の守備", "Stone Defense"), lang("鉄の守備", "Iron Defense"), lang("鋼の守備", "Steel Defense")
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = lang("受身を会得しPVを上昇させる", "You establish your own defensive style."), lang("あなたの防御は石のように硬い[PV+5]", "Your defense is as hard as stone. [PV+5]"), lang("あなたの守備は鉄壁だ[PV+10]", "Your defense is as hard as iron. [PV+10]"), lang("あなたの防御は鋼のように固い[PV+15]", "Your defense is as hard as steel. [PV+15]")
+			}
+			if ( trait(tid) == 1 ) {
+				if ( cdata(CDATA_LEVEL, CHARA_PLAYER) < 5 ) {
+					return -1
+				}
+			}
+			return 1
+		}
+		cdata(CDATA_PV, CHARA_PLAYER) = limit(cdata(CDATA_PV, CHARA_PLAYER) + trait(tid) * 5, cdata(CDATA_PV, CHARA_PLAYER) > 0, 9999)
+		return 1
+	}
+	if ( tid == TRAIT_NORMAL_STAT_DV ) {
+		if ( traitmode == 0 ) {
+			traitref = 0, 0, 3, 1, 0, 100, -1
+			traitrefn2 = lang("見極め", "Dodge"), lang("見極めの熟練者", "Improved Dodge"), lang("見極めの達人", "Greater Dodge")
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = lang("敵の動きを見極めDVを上昇させる", "You learn how to dodge attacks."), lang("あなたは見切れる[DV+4]", "You can somewhat dodge enemy attacks. [DV+4]"), lang("あなたはかなり見切れる[DV+8]", "You can dodge enemy attacks. [DV+8]"), lang("あなたの見切りは伝説的だ[DV+12]", "You can really dodge enemy attacks. [DV+12]")
+			}
+			return 1
+		}
+		cdata(CDATA_DV, CHARA_PLAYER) = limit(cdata(CDATA_DV, CHARA_PLAYER) + trait(tid) * 4, cdata(CDATA_DV, CHARA_PLAYER) > 0, 9999)
+		return 1
+	}
+	if ( tid == TRAIT_NORMAL_SKILL_EVASION ) {
+		if ( traitmode == 0 ) {
+			traitref = 0, 0, 3, 1, 0, 100, -1
+			traitrefn2 = lang("回避の修練者", "Evade"), lang("回避の熟練者", "Improved Evade"), lang("回避の達人", "Greater Evade")
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = lang("回避の技術に磨きをかける", "You improve your evasion skill."), lang("あなたは回避に長けている[回避+2]", "You can somewhat evade enemy attacks. [Evasion+2]"), lang("あなたは華麗に回避する[回避+4]", "You can evade enemy attacks. [Evasion+4]"), lang("あなたは回避の達人だ[回避+6]", "You can really evade enemy attacks. [Evasion+6]")
+			}
+			if ( sorg(SKILL_NORMAL_EVASION, CHARA_PLAYER) == 0 ) {
+				return -1
+			}
+			return 1
+		}
+		sdata(SKILL_NORMAL_EVASION, CHARA_PLAYER) = limit(sdata(SKILL_NORMAL_EVASION, CHARA_PLAYER) + trait(tid) * 2, sdata(SKILL_NORMAL_EVASION, CHARA_PLAYER) > 0, 9999)
+		return 1
+	}
+	if ( tid == TRAIT_NORMAL_OTHER_CANNIBALISM ) {
+		if ( traitmode == 0 ) {
+			traitref = 1, 0, 1, 1, 0, 100, -1
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = lang("カンニバリズム", "Cannibalism"), lang("あなたは人肉を食べることに抵抗がない", "You have no trouble eating human flesh.")
+			}
+			traitrefn = lang("あなたは人肉の味の虜になった。", "You are charmed by the flavor of human flesh."), lang("あなたは人肉の味に飽きた。", "You can no longer accept human flesh.")
+			return 1
+		}
+		return 1
+	}
+	if ( tid == TRAIT_MUTATION_STAT_PV ) {
+		if ( traitmode == 0 ) {
+			traitref = 1, -3, 3, 1, 0, 100, -1
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = lang("鉄の皮膚", "Iron Skin"), lang("あなたの皮膚は硬い[PV+3]", "Your skin is hard. [PV+3]"), lang("あなたの皮膚はとても硬い[PV+6]", "Your skin is very hard. [PV+6]"), lang("あなたは鉄のような皮膚を持っている[PV+9]", "Your skin is as hard as iron. [PV+9]")
+			}
+			if ( trait(tid) < 0 ) {
+				traitrefn(2) = lang("アルビノ", "Albino"), lang("あなたの皮膚は白い[PV-3]", "Your skin is white. [PV-3]"), lang("あなたの皮膚は脆い[PV-6]", "Your skin is fragile. [PV-6]"), lang("あなたの皮膚は崩れている[PV-9]", "Your skin is collapsing. [PV-9]")
+			}
+			traitrefn = lang("あなたの皮膚は硬くなった。", "Your skin becomes harder."), lang("あなたの皮膚は薄くなった。", "Your skin becomes pale.")
+			return 1
+		}
+		cdata(CDATA_PV, CHARA_PLAYER) += trait(tid) * 3
+		return 1
+	}
+	if ( tid == TRAIT_MUTATION_STAT_DEX ) {
+		if ( traitmode == 0 ) {
+			traitref = 1, -3, 3, 1, 0, 100, -1
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = lang("しなやかな関節", "Flexible Joint"), lang("あなたの関節はしなやかだ[器用+3]", "Your joints are flexible. [DEX+3]"), lang("あなたの関節はとてもしなやかだ[器用+6]", "Your joints are very flexible. [DEX+6]"), lang("あなたの関節は驚くほどしなやかだ[器用+9]", "Your joints are incredibly flexible. [DEX+9]")
+			}
+			if ( trait(tid) < 0 ) {
+				traitrefn(2) = lang("きしむ関節", "Creaking Joint"), lang("あなたの関節はきしむ[器用-3]", "Your joints creak. [DEX-3]"), lang("あなたは関節痛に悩んでいる[器用-6]", "You are worrying about your joint creakings. [DEX-6]"), lang("あなたはひどい関節痛を抱えている[器用-9]", "You have terrible joint creakings. [DEX-9]")
+			}
+			traitrefn = lang("あなたの関節はしなやかになった。", "Your joints become flexible."), lang("あなたの関節は痛み出した。", "Your joints creak.")
+			return 1
+		}
+		sdata(SKILL_ATTR_DEX, CHARA_PLAYER) = limit(sdata(SKILL_ATTR_DEX, CHARA_PLAYER) + trait(tid) * 3, sdata(SKILL_ATTR_DEX, CHARA_PLAYER) > 0, 9999)
+		return 1
+	}
+	if ( tid == TRAIT_MUTATION_SKILL_HEALING ) {
+		if ( traitmode == 0 ) {
+			traitref = 1, -2, 2, 1, 0, 100, -1
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = lang("トロールの血", "Troll Blood"), lang("あなたの傷跡は再生する[自然治癒強化]", "Your wounds regenerate rapidly. [Regeneration+]"), lang("あなたの傷は瞬く間にふさがる[自然治癒強化]", "Your wounds regenerate instantly. [Regeneration++]")
+			}
+			if ( trait(tid) < 0 ) {
+				traitrefn(2) = lang("貧血", "Anemia"), lang("あなたは血の気が少ない[自然治癒弱化]", "You suffer from anemia. [Regeneration-]"), lang("あなたの顔には血の気が全くない[自然治癒弱化]", "You constantly have attacks of anemia. [Regeneration--]")
+			}
+			traitrefn = lang("あなたの血液は緑っぽくなった。", "Suddenly your blood become greenish!"), lang("あなたの血液は薄れた。", "Your metabolism slows down.")
+			return 1
+		}
+		sdata(SKILL_NORMAL_HEALING, CHARA_PLAYER) = limit(sdata(SKILL_NORMAL_HEALING, CHARA_PLAYER) + trait(tid) * 4, sdata(SKILL_NORMAL_HEALING, CHARA_PLAYER) > 0, 9999)
+		return 1
+	}
+	if ( tid == TRAIT_MUTATION_STAT_SPD ) {
+		if ( traitmode == 0 ) {
+			traitref = 1, -3, 3, 1, 0, 100, -1
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = lang("しなやかな脚", "Lithe Leg"), lang("あなたの脚はしなやかだ[速度上昇]", "You have lithe legs. [SPD+5]"), lang("あなたの脚はとてもしなやかだ[速度上昇]", "You have very lithe legs. [SPD+10]"), lang("あなたの脚は理想的な形をしている[速度上昇]", "You have ideal legs. [SPD+15]")
+			}
+			if ( trait(tid) < 0 ) {
+				traitrefn(2) = lang("ねじれた脚", "Twisted Leg"), lang("あなたの脚はねじれている[速度下降]", "Your legs are twisted. [SPD-5]"), lang("あなたの脚はとてもねじれている[速度下降]", "Your legs are very twisted. [SPD-10]"), lang("あなたの脚は折れている[速度下降]", "Your legs are broken. [SPD-15]")
+			}
+			traitrefn = lang("あなたの脚はしなやかになった。", "Your legs become lithe."), lang("あなたの脚はねじれた。", "Your legs are twisted!")
+			return 1
+		}
+		sdata(SKILL_ATTR_SPD, CHARA_PLAYER) = limit(sdata(SKILL_ATTR_SPD, CHARA_PLAYER) + trait(tid) * 5, sdata(SKILL_ATTR_SPD, CHARA_PLAYER) > 0, 9999)
+		return 1
+	}
+	if ( tid == TRAIT_MUTATION_STAT_STR ) {
+		if ( traitmode == 0 ) {
+			traitref = 1, -3, 3, 1, 0, 100, -1
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = lang("強い腕", "Strong Arm"), lang("あなたの腕はひきしまっている[筋力+3]", "You have well-knit arms. [STR+3]"), lang("あなたの腕は強力だ[筋力+6]", "You have well-muscled arms. [STR+6]"), lang("あなたの腕は筋肉の塊だ[筋力+9]", "You have ideal arms. [STR+9]")
+			}
+			if ( trait(tid) < 0 ) {
+				traitrefn(2) = lang("弱い腕", "Weak Arm"), lang("あなたの腕はたるんでいる[筋力-3]", "Your arms are thin. [STR-3]"), lang("あなたの腕はとてもたるんでいる[筋力-6]", "Your arms are very thin. [STR-6]"), lang("あなたの腕には筋肉がない[筋力-9]", "Your arms are just decorative. [STR-9]")
+			}
+			traitrefn = lang("あなたの腕の筋肉が増えた。", "Your arms grow stronger."), lang("あなたの腕の贅肉が増えた。", "Your arms become thin.")
+			return 1
+		}
+		sdata(SKILL_ATTR_STR, CHARA_PLAYER) = limit(sdata(SKILL_ATTR_STR, CHARA_PLAYER) + trait(tid) * 3, sdata(SKILL_ATTR_STR, CHARA_PLAYER) > 0, 9999)
+		return 1
+	}
+	if ( tid == TRAIT_MUTATION_STAT_CHR ) {
+		if ( traitmode == 0 ) {
+			traitref = 1, -2, 2, 1, 0, 100, -1
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = lang("美声", "Sweet Voice"), lang("あなたは美声を持っている[魅力+5]", "Your voice is sweet. [CHR+5]"), lang("あなたの声は全てを魅了する[魅力+10]", "Your voice charms everyone. [CHR+10]")
+			}
+			if ( trait(tid) < 0 ) {
+				traitrefn(2) = lang("かれた声", "Husky Voice"), lang("あなたの声はかれている[魅力-5]", "Your voice is husky. [CHR-5]"), lang("あなたが喋ると皆逃げる[魅力-10]", "Everyone is frightened when you talk. [CHR-10]")
+			}
+			traitrefn = lang("あなたの声はよく通る。", "Your voice becomes lovely."), lang("あなたの声はかれた。", "Your voice becomes scary.")
+			return 1
+		}
+		sdata(SKILL_ATTR_CHA, CHARA_PLAYER) = limit(sdata(SKILL_ATTR_CHA, CHARA_PLAYER) + trait(tid) * 5, sdata(SKILL_ATTR_CHA, CHARA_PLAYER) > 0, 9999)
+		return 1
+	}
+	if ( tid == TRAIT_MUTATION_SKILL_MEMORIZATION ) {
+		if ( traitmode == 0 ) {
+			traitref = 1, -2, 2, 1, 0, 100, -1
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = lang("脳内コンピュータ", "Brain Computer"), lang("あなたの脳は機械化している[暗記+4]", "Your brain is mechanized. [Memorization+4]"), lang("あなたの脳は完璧な機械だ[暗記+8]", "Your brain is fully mechanized. [Memorization+8]")
+			}
+			if ( trait(tid) < 0 ) {
+				traitrefn(2) = lang("痴呆", "Stupid"), lang("あなたは少しぼけている[暗記-4]", "You are stupid. [Memorization-4]"), lang("あなたは痴呆だ[暗記-8]", "You are really stupid. [Memorization-8]")
+			}
+			traitrefn = lang("あなたの脳は機械化した。", "Your brain is mechanized!"), lang("あなたの脳は原始化した。", "Your brain degenerates.")
+			return 1
+		}
+		sdata(SKILL_NORMAL_MEMORIZATION, CHARA_PLAYER) = limit(sdata(SKILL_NORMAL_MEMORIZATION, CHARA_PLAYER) + trait(tid) * 4, sdata(SKILL_NORMAL_MEMORIZATION, CHARA_PLAYER) > 0, 9999)
+		return 1
+	}
+	if ( tid == TRAIT_MUTATION_RES_MAGIC ) {
+		if ( traitmode == 0 ) {
+			traitref = 1, -1, 1, 1, 0, 100, -1
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = lang("魔法への耐性", "Magic Res+"), lang("あなたは魔法に耐性がある[魔法耐性強化]", "You have resistance to magic. [RES Magic+]")
+			}
+			if ( trait(tid) < 0 ) {
+				traitrefn(2) = lang("魔法の弱点", "Magic Res-"), lang("あなたは魔法に弱い[魔法耐性弱化]", "You have weakness to magic. [RES Magic-]")
+			}
+			traitrefn = lang("あなたは魔法の耐性を得た。", "You gain resistance to magic."), lang("あなたは魔法の耐性を失った。", "You lose resistance to magic.")
+			return 1
+		}
+		sdata(SKILL_RES_MAGIC, CHARA_PLAYER) = limit(sdata(SKILL_RES_MAGIC, CHARA_PLAYER) + trait(tid) * 50, sdata(SKILL_RES_MAGIC, CHARA_PLAYER) > 0, 9999)
+		return 1
+	}
+	if ( tid == TRAIT_MUTATION_RES_SOUND ) {
+		if ( traitmode == 0 ) {
+			traitref = 1, -1, 1, 1, 0, 100, -1
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = lang("強い鼓膜", "Sound Res+"), lang("あなたの鼓膜は厚い[音耐性強化]", "Your eardrums are thick. [RES Sound+]")
+			}
+			if ( trait(tid) < 0 ) {
+				traitrefn(2) = lang("弱い鼓膜", "Sound Res-"), lang("あなたの鼓膜は薄い[音耐性弱化]", "Your eardrums are thin. [RES Sound-]")
+			}
+			traitrefn = lang("あなたの鼓膜は厚くなった。", "Your eardrums become thick."), lang("あなたの鼓膜は薄くなった。", "Your eardrums become thin.")
+			return 1
+		}
+		sdata(SKILL_RES_SOUND, CHARA_PLAYER) = limit(sdata(SKILL_RES_SOUND, CHARA_PLAYER) + trait(tid) * 50, sdata(SKILL_RES_SOUND, CHARA_PLAYER) > 0, 9999)
+		return 1
+	}
+	if ( tid == TRAIT_MUTATION_RES_FIRE ) {
+		if ( traitmode == 0 ) {
+			traitref = 1, -1, 1, 1, 0, 100, -1
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = lang("火炎耐性", "Fire Res+"), lang("あなたの血は滾っている[火炎耐性強化]", "Your blood is boiling. [RES Fire+]")
+			}
+			if ( trait(tid) < 0 ) {
+				traitrefn(2) = lang("火炎弱点", "Fire Res-"), lang("あなたの腕には鳥肌がたっている[火炎耐性弱化]", "Your skin gets gooseflesh. [RES Fire-]")
+			}
+			traitrefn = lang("あなたの血は滾りだした。", "Your blood starts to boil."), lang("あなたの腕に鳥肌がたった。", "Your skin gets gooseflesh.")
+			return 1
+		}
+		sdata(SKILL_RES_FIRE, CHARA_PLAYER) = limit(sdata(SKILL_RES_FIRE, CHARA_PLAYER) + trait(tid) * 50, sdata(SKILL_RES_FIRE, CHARA_PLAYER) > 0, 9999)
+		return 1
+	}
+	if ( tid == TRAIT_MUTATION_RES_COLD ) {
+		if ( traitmode == 0 ) {
+			traitref = 1, -1, 1, 1, 0, 100, -1
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = lang("冷気耐性", "Cold Res+"), lang("あなたの皮膚には霜が付いている[冷気耐性強化]", "Your skin is covered by frost. [RES Cold+]")
+			}
+			if ( trait(tid) < 0 ) {
+				traitrefn(2) = lang("冷気弱点", "Cold Res-"), lang("あなたの皮膚は寒さに弱い[冷気耐性弱化]", "Your skin is sheer. [RES Cold-]")
+			}
+			traitrefn = lang("あなたの皮膚は冷たくなった。", "You feel hot-headed."), lang("あなたは汗をかきはじめた。", "You shiver.")
+			return 1
+		}
+		sdata(SKILL_RES_COLD, CHARA_PLAYER) = limit(sdata(SKILL_RES_COLD, CHARA_PLAYER) + trait(tid) * 50, sdata(SKILL_RES_COLD, CHARA_PLAYER) > 0, 9999)
+		return 1
+	}
+	if ( tid == TRAIT_MUTATION_RES_LIGHTNING ) {
+		if ( traitmode == 0 ) {
+			traitref = 1, -1, 1, 1, 0, 100, -1
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = lang("電撃耐性", "Lightning Res+"), lang("あなたは非電導体だ[電撃耐性強化]", "You have resistance to lightning. [RES Lightning+]")
+			}
+			if ( trait(tid) < 0 ) {
+				traitrefn(2) = lang("電撃弱点", "Lightning Res-"), lang("あなたの身体は電気を良く通す[電撃耐性弱化]", "You have weakness to lightning. [RES Lightning-]")
+			}
+			traitrefn = lang("あなたは非電導体になった。", "You gain resistance to lightning."), lang("あなたの身体は電気を良く通す。", "You lose resistance to lightning.")
+			return 1
+		}
+		sdata(SKILL_RES_LIGHTNING, CHARA_PLAYER) = limit(sdata(SKILL_RES_LIGHTNING, CHARA_PLAYER) + trait(tid) * 50, sdata(SKILL_RES_LIGHTNING, CHARA_PLAYER) > 0, 9999)
+		return 1
+	}
+	if ( tid == TRAIT_MUTATION_STAT_PER ) {
+		if ( traitmode == 0 ) {
+			traitref = 1, -2, 2, 1, 0, 100, -1
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = lang("鷹の目", "Hawk Eye"), lang("あなたは猫の目をしている[感覚+5]", "You have the eyes of a cat. [PER+5]"), lang("あなたは鷹の目をしている[感覚+10]", "You have the eyes of a hawk. [PER+10]")
+			}
+			if ( trait(tid) < 0 ) {
+				traitrefn(2) = lang("色弱", "Color Blind"), lang("あなたは色弱だ[感覚-5]", "You are partially color-blind. [PER-5]"), lang("あなたは片目がない[感覚-10]", "You are blind in one eye. [PER-10]")
+			}
+			traitrefn = lang("あなたの目は細くなった。", "Your eyes glow."), lang("あなたの視力は低下した。", "Your sight is weakened.")
+			return 1
+		}
+		sdata(SKILL_ATTR_PER, CHARA_PLAYER) = limit(sdata(SKILL_ATTR_PER, CHARA_PLAYER) + trait(tid) * 5, sdata(SKILL_ATTR_PER, CHARA_PLAYER) > 0, 9999)
+		return 1
+	}
+	if ( tid == TRAIT_RACE_RES_FIRE ) {
+		if ( traitmode == 0 ) {
+			traitref = 2, -2, 2, 1, 0, 100, -1
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = "", lang("あなたは火炎に耐性がある", "You have resistance to fire."), lang("あなたは火炎にかなりの耐性がある", "You have strong resistance to fire.")
+			}
+			if ( trait(tid) < 0 ) {
+				traitrefn(2) = "", lang("あなたは火炎に弱い", "You have weakness to fire."), lang("あなたはかなり火炎に弱い", "You have strong weakness to fire.")
+			}
+			return 1
+		}
+		sdata(SKILL_RES_FIRE, CHARA_PLAYER) = limit(sdata(SKILL_RES_FIRE, CHARA_PLAYER) + trait(tid) * 50, sdata(SKILL_RES_FIRE, CHARA_PLAYER) > 0, 9999)
+		return 1
+	}
+	if ( tid == TRAIT_RACE_RES_COLD ) {
+		if ( traitmode == 0 ) {
+			traitref = 2, -2, 2, 1, 0, 100, -1
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = "", lang("あなたは冷気に耐性がある", "You have resistance to cold."), lang("あなたは冷気にかなりの耐性がある", "You have strong resistance to cold.")
+			}
+			if ( trait(tid) < 0 ) {
+				traitrefn(2) = "", lang("あなたは冷気に弱い", "You have weakness to cold."), lang("あなたはかなり冷気に弱い", "You have strong weakness to cold.")
+			}
+			return 1
+		}
+		sdata(SKILL_RES_COLD, CHARA_PLAYER) = limit(sdata(SKILL_RES_COLD, CHARA_PLAYER) + trait(tid) * 50, sdata(SKILL_RES_COLD, CHARA_PLAYER) > 0, 9999)
+		return 1
+	}
+	if ( tid == TRAIT_RACE_RES_POISON ) {
+		if ( traitmode == 0 ) {
+			traitref = 2, -2, 2, 1, 0, 100, -1
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = "", lang("あなたは毒に耐性がある", "You have resistance to poison."), lang("あなたは毒にかなりの耐性がある", "You have strong resistance to poison.")
+			}
+			if ( trait(tid) < 0 ) {
+				traitrefn(2) = "", lang("あなたは毒に弱い", "You have weakness to poison."), lang("あなたはかなり毒に弱い", "You have strong weakness to poison.")
+			}
+			return 1
+		}
+		sdata(SKILL_RES_POISON, CHARA_PLAYER) = limit(sdata(SKILL_RES_POISON, CHARA_PLAYER) + trait(tid) * 50, sdata(SKILL_RES_POISON, CHARA_PLAYER) > 0, 9999)
+		return 1
+	}
+	if ( tid == TRAIT_RACE_RES_DARKNESS ) {
+		if ( traitmode == 0 ) {
+			traitref = 2, -2, 2, 1, 0, 100, -1
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = "", lang("あなたは暗黒に耐性がある", "You have resistance to darkness."), lang("あなたは暗黒にかなりの耐性がある", "You have strong resistance to darkness.")
+			}
+			if ( trait(tid) < 0 ) {
+				traitrefn(2) = "", lang("あなたは暗黒に弱い", "You have weakness to darkness."), lang("あなたはかなり暗黒に弱い", "You have strong weakness to darkness.")
+			}
+			return 1
+		}
+		sdata(SKILL_RES_DARKNESS, CHARA_PLAYER) = limit(sdata(SKILL_RES_DARKNESS, CHARA_PLAYER) + trait(tid) * 50, sdata(SKILL_RES_DARKNESS, CHARA_PLAYER) > 0, 9999)
+		return 1
+	}
+	if ( tid == TRAIT_RACE_MAGIC_REACTION ) {
+		if ( traitmode == 0 ) {
+			traitref = 2, 0, 1, 1, 0, 100, -1
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = "", lang("あなたはマナの反動を軽減できる", "You take less damage from magic reaction.")
+			}
+			return 1
+		}
+		return 1
+	}
+	if ( tid == TRAIT_RACE_BONUS_RESISTANCE ) {
+		if ( traitmode == 0 ) {
+			traitref = 2, 0, 1, 1, 0, 100, -1
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = "", lang("あなたは高い耐性をもっている", "You have outstanding resistances.")
+			}
+			return 1
+		}
+		sdata(SKILL_RES_MAGIC, CHARA_PLAYER) = limit(sdata(SKILL_RES_MAGIC, CHARA_PLAYER) + 3 * 50, sdata(SKILL_RES_MAGIC, CHARA_PLAYER) > 0, 9999)
+		sdata(SKILL_RES_LIGHTNING, CHARA_PLAYER) = limit(sdata(SKILL_RES_LIGHTNING, CHARA_PLAYER) + 2 * 50, sdata(SKILL_RES_LIGHTNING, CHARA_PLAYER) > 0, 9999)
+		sdata(SKILL_RES_DARKNESS, CHARA_PLAYER) = limit(sdata(SKILL_RES_DARKNESS, CHARA_PLAYER) + 4 * 50, sdata(SKILL_RES_DARKNESS, CHARA_PLAYER) > 0, 9999)
+		sdata(SKILL_RES_SOUND, CHARA_PLAYER) = limit(sdata(SKILL_RES_SOUND, CHARA_PLAYER) + 1 * 50, sdata(SKILL_RES_SOUND, CHARA_PLAYER) > 0, 9999)
+		sdata(SKILL_RES_CHAOS, CHARA_PLAYER) = limit(sdata(SKILL_RES_CHAOS, CHARA_PLAYER) + 2 * 50, sdata(SKILL_RES_CHAOS, CHARA_PLAYER) > 0, 9999)
+		sdata(SKILL_RES_MIND, CHARA_PLAYER) = limit(sdata(SKILL_RES_MIND, CHARA_PLAYER) + 4 * 50, sdata(SKILL_RES_MIND, CHARA_PLAYER) > 0, 9999)
+		sdata(SKILL_RES_NERVE, CHARA_PLAYER) = limit(sdata(SKILL_RES_NERVE, CHARA_PLAYER) + 2 * 50, sdata(SKILL_RES_NERVE, CHARA_PLAYER) > 0, 9999)
+		sdata(SKILL_RES_COLD, CHARA_PLAYER) = limit(sdata(SKILL_RES_COLD, CHARA_PLAYER) + 2 * 50, sdata(SKILL_RES_COLD, CHARA_PLAYER) > 0, 9999)
+		return 1
+	}
+	if ( tid == TRAIT_RACE_WEAK ) {
+		if ( traitmode == 0 ) {
+			traitref = 2, 0, 1, 1, 0, 100, -1
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = "", lang("あなたは1s以上の物を装備できない[DV上昇]", "You can't wear equipment weighting more than 1s. [DV++]")
+			}
+			return 1
+		}
+		if ( cdata(CDATA_DV, CHARA_PLAYER) > 0 ) {
+			cdata(CDATA_DV, CHARA_PLAYER) = cdata(CDATA_DV, CHARA_PLAYER) * 125 / 100 + 50
+		}
+		return 1
+	}
+	if ( tid == TRAIT_OTHER_WICKED ) {
+		if ( traitmode == 0 ) {
+			traitref = 2, 0, 1, 1, 0, 100, -1
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = "", lang("あなたは罪悪感を感じない[カルマ上限-20]", "You don't feel guilty. [Karma limit -20]")
+			}
+			return 1
+		}
+		return 1
+	}
+	if ( tid == TRAIT_OTHER_SAINT ) {
+		if ( traitmode == 0 ) {
+			traitref = 2, 0, 1, 1, 0, 100, -1
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = "", lang("あなたは良い心を持っている[カルマ上限+20]", "You are a good man. [Karma limit +20]")
+			}
+			return 1
+		}
+		return 1
+	}
+	if ( tid == TRAIT_GOD_EHEKATL ) {
+		if ( traitmode == 0 ) {
+			traitref = 2, 0, 1, 1, 0, 100, -1
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = "", lang("あなたの周りでは質の高いエンチャントが生成されやすい", "Quality stuff is generated around you.")
+			}
+			return 1
+		}
+		return 1
+	}
+	if ( tid == TRAIT_GOD_OPATOS ) {
+		if ( traitmode == 0 ) {
+			traitref = 2, 0, 1, 1, 0, 100, -1
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = "", lang("あなたが受ける物理ダメージは軽減される", "You are given physical damage reduction.")
+			}
+			return 1
+		}
+		return 1
+	}
+	if ( tid == TRAIT_GOD_ITZPALT ) {
+		if ( traitmode == 0 ) {
+			traitref = 2, 0, 1, 1, 0, 100, -1
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = "", lang("あなたの元素魔法は強化されている", "Elemental spells you cast are empowered.")
+			}
+			return 1
+		}
+		return 1
+	}
+	if ( tid == TRAIT_GOD_JURE ) {
+		if ( traitmode == 0 ) {
+			traitref = 2, 0, 1, 1, 0, 100, -1
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = "", lang("あなたは周囲の狂気を緩和する", "You are surrounded by an aura that cures insanity.")
+			}
+			return 1
+		}
+		return 1
+	}
+	if ( tid == TRAIT_OTHER_MOE ) {
+		if ( traitmode == 0 ) {
+			traitref = 2, 0, 1, 1, 0, 100, -1
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = "", lang("あなたは萌える", "You moe.")
+			}
+			return 1
+		}
+		return 1
+	}
+	if ( tid == TRAIT_RACE_RES_DIM ) {
+		if ( traitmode == 0 ) {
+			traitref = 2, 0, 1, 1, 0, 100, -1
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = "", lang("あなたは朦朧状態にならない", "You won't be dimmed.")
+			}
+			return 1
+		}
+		return 1
+	}
+	if ( tid == TRAIT_RACE_SLOW_DIGESTION ) {
+		if ( traitmode == 0 ) {
+			traitref = 2, 0, 1, 1, 0, 100, -1
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = "", lang("あなたの食料の消化は遅い", "Your digestion is slow.")
+			}
+			return 1
+		}
+		return 1
+	}
+	if ( tid == TRAIT_RACE_BONUS_MATERIAL ) {
+		if ( traitmode == 0 ) {
+			traitref = 2, 0, 1, 1, 0, 100, -1
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = "", lang("あなたはより多く採取できる", "You can gather more materials.")
+			}
+			return 1
+		}
+		return 1
+	}
+	if ( tid == TRAIT_RACE_BONUS_SKILLPOINT ) {
+		if ( traitmode == 0 ) {
+			traitref = 2, 0, 1, 1, 0, 100, -1
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = "", lang("あなたには追加の成長ボーナスが与えられる", "You receive extra bonus points.")
+			}
+			return 1
+		}
+		return 1
+	}
+	if ( tid == TRAIT_RACE_RES_MAGIC ) {
+		if ( traitmode == 0 ) {
+			traitref = 2, -2, 2, 1, 0, 100, -1
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = "", lang("あなたは魔法に耐性がある", "You have resistance to magic."), lang("あなたは魔法にかなりの耐性がある", "You have strong resistance to magic.")
+			}
+			if ( trait(tid) < 0 ) {
+				traitrefn(2) = "", lang("あなたは魔法に弱い", "You have weakness to magic."), lang("あなたはかなり魔法に弱い", "You have strong weakness to magic.")
+			}
+			return 1
+		}
+		sdata(SKILL_RES_MAGIC, CHARA_PLAYER) = limit(sdata(SKILL_RES_MAGIC, CHARA_PLAYER) + trait(tid) * 50, sdata(SKILL_RES_MAGIC, CHARA_PLAYER) > 0, 9999)
+		return 1
+	}
+	if ( tid == TRAIT_NORMAL_OTHER_MUTANT ) {
+		if ( traitmode == 0 ) {
+			traitref = 2, 0, 1, 1, 0, 100, -1
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = "", lang("あなたの肉体は刻々と変化する", "Your body is changing every moment.")
+			}
+			return 1
+		}
+		return 1
+	}
+	if ( tid == TRAIT_RACE_RES_ETHER ) {
+		if ( traitmode == 0 ) {
+			traitref = 2, 0, 1, 1, 0, 100, -1
+			if ( trait(tid) >= 0 ) {
+				traitrefn(2) = "", lang("あなたのエーテル病の進行は遅い", "Your body slows the progress of the Ether Disease.")
+			}
+			return 1
+		}
+		return 1
+	}
+	if ( tid == TRAIT_ETHER_WEIGHT ) {
+		if ( traitmode == 0 ) {
+			traitref = 3, -3, 0, 1, 0, 100, -1
+			if ( trait(tid) < 0 ) {
+				traitrefn(2) = "", lang("あなたは重力を生み出している[重量+10%]", "You generate gravity. [Weight+10%]"), lang("あなたは大きな重力を生み出している[重量+20%]", "You generate heavy gravity. [Weight+20%]"), lang("あなたはとてつもない重力を生み出している[重量+30%]", "You generate massive gravity. [Weight+30%]")
+			}
+			traitrefn = lang("あなたの周りの重力は軽減した。", "You weight less."), lang("あなたは重力を発するようになった。", "You start to generate gravity.")
+			return 1
+		}
+		return 1
+	}
+	if ( tid == TRAIT_ETHER_SORE_FACE ) {
+		if ( traitmode == 0 ) {
+			traitref = 3, -3, 0, 1, 0, 100, -1
+			if ( trait(tid) < 0 ) {
+				traitrefn(2) = "", lang("あなたの顔はただれている[魅力" + (-1) * (4 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 5) + "]", "You have sores on your face. [CHR" + (-1) * (4 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 5) + "]"), lang("あなたの顔中に蕁麻疹が出ている[魅力" + (-2) * (4 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 5) + "]", "Your face is ulcerate. [CHR" + (-2) * (4 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 5) + "]"), lang("あなたの顔は崩れかけている[魅力" + (-3) * (4 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 5) + "]", "Your face is crumbling. [CHR" + (-3) * (4 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 5) + "]")
+			}
+			traitrefn = lang("あなたの顔のただれは軽くなった。", "The swelling in your face decreases."), lang("あなたの顔はただれた。", "Your face is festered.")
+			return 1
+		}
+		sdata(SKILL_ATTR_CHA, CHARA_PLAYER) = limit(sdata(SKILL_ATTR_CHA, CHARA_PLAYER) + trait(tid) * (4 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 5), sdata(SKILL_ATTR_CHA, CHARA_PLAYER) > 0, 9999)
+		return 1
+	}
+	if ( tid == TRAIT_ETHER_EQUIP_LEG ) {
+		if ( traitmode == 0 ) {
+			traitref = 3, -1, 0, 1, 0, 100, -1
+			if ( trait(tid) < 0 ) {
+				traitrefn(2) = "", lang("あなたの足の裏は蹄になっている[足装備不可 速度+" + limit(20 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 2, 0, 255) + "]", "Your feet transformed into hooves. [SPD+" + limit(20 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 2, 0, 255) + " Can't wear boots]")
+			}
+			traitrefn = lang("あなたの足は元に戻った。", "Your feet become normal."), lang("あなたの足の裏は蹄に変形した。", "Your feet change into hooves.")
+			return 1
+		}
+		sdata(SKILL_ATTR_SPD, CHARA_PLAYER) = limit(sdata(SKILL_ATTR_SPD, CHARA_PLAYER) + limit(20 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 2, 0, 255), sdata(SKILL_ATTR_SPD, CHARA_PLAYER) > 0, 9999)
+		return 1
+	}
+	if ( tid == TRAIT_ETHER_FOUR_EYES ) {
+		if ( traitmode == 0 ) {
+			traitref = 3, -1, 0, 1, 0, 100, -1
+			if ( trait(tid) < 0 ) {
+				traitrefn(2) = "", lang("あなたの目は4つある[感覚+" + limit(5 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 3, 0, 255) + " 魅力" + limit((5 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 3) * (-1), -255, 255) + "]", "You have 4 eyes. [PER+" + limit(5 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 3, 0, 255) + " CHR" + limit((5 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 3) * (-1), -255, 255) + "]")
+			}
+			traitrefn = lang("あなたの目は減った。", "Your eyes become normal."), lang("あなたの目は増殖した。", "Your eyes are multiplying.")
+			return 1
+		}
+		sdata(SKILL_ATTR_CHA, CHARA_PLAYER) = limit(sdata(SKILL_ATTR_CHA, CHARA_PLAYER) + limit((5 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 3) * (-1), -255, 255), sdata(SKILL_ATTR_CHA, CHARA_PLAYER) > 0, 9999)
+		sdata(SKILL_ATTR_PER, CHARA_PLAYER) = limit(sdata(SKILL_ATTR_PER, CHARA_PLAYER) + limit(5 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 3, 0, 255), sdata(SKILL_ATTR_PER, CHARA_PLAYER) > 0, 9999)
+		return 1
+	}
+	if ( tid == TRAIT_ETHER_EQUIP_BACK ) {
+		if ( traitmode == 0 ) {
+			traitref = 3, -1, 0, 1, 0, 100, -1
+			if ( trait(tid) < 0 ) {
+				traitrefn(2) = "", lang("あなたの背中には羽がある[背中装備不可 重量-20% 速度+" + limit(12 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 4, 0, 255) + "]", "You have grown feathers. [SPD+" + limit(12 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 4, 0, 255) + " Weight-20% Can't wear cloaks]")
+			}
+			traitrefn = lang("あなたの背中から羽が消えた。", "Your feathers wilt."), lang("あなたの背中に羽が生えた。", "Feathers come out from your back.")
+			return 1
+		}
+		cbitmod CHARA_BIT_FLOAT, 0, 1
+		sdata(SKILL_ATTR_SPD, CHARA_PLAYER) = limit(sdata(SKILL_ATTR_SPD, CHARA_PLAYER) + limit(12 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 4, 0, 255), sdata(SKILL_ATTR_SPD, CHARA_PLAYER) > 0, 9999)
+		return 1
+	}
+	if ( tid == TRAIT_ETHER_EQUIP_NECK ) {
+		if ( traitmode == 0 ) {
+			traitref = 3, -1, 0, 1, 0, 100, -1
+			if ( trait(tid) < 0 ) {
+				traitrefn(2) = "", lang("あなたの首はもの凄く太い[首装備不可 魅力" + limit((5 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 5) * (-1), -255, 255) + " PV+" + limit(12 + cdata(CDATA_LEVEL, CHARA_PLAYER), 0, 255) + "]", "Your neck is extremely thick. [CHR" + limit((5 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 5) * (-1), -255, 255) + " PV+" + limit(12 + cdata(CDATA_LEVEL, CHARA_PLAYER), 0, 255) + " Can't wear amulets]")
+			}
+			traitrefn = lang("あなたの首は細くなった。", "Your neck becomes thin."), lang("あなたの首は太くなった。", "Your neck becomes extremely thick.")
+			return 1
+		}
+		sdata(SKILL_ATTR_CHA, CHARA_PLAYER) = limit(sdata(SKILL_ATTR_CHA, CHARA_PLAYER) + limit((5 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 5) * (-1), -255, 255), sdata(SKILL_ATTR_CHA, CHARA_PLAYER) > 0, 9999)
+		cdata(CDATA_PV, CHARA_PLAYER) += limit(12 + cdata(CDATA_LEVEL, CHARA_PLAYER), 0, 255)
+		return 1
+	}
+	if ( tid == TRAIT_ETHER_VIOLENCE ) {
+		if ( traitmode == 0 ) {
+			traitref = 3, -1, 0, 1, 0, 100, -1
+			if ( trait(tid) < 0 ) {
+				traitrefn(2) = "", lang("あなたは殺戮に飢えている[被ダメージ修正+" + limit(5 + cdata(CDATA_LEVEL, CHARA_PLAYER) * 2 / 3, 0, 100) / 4 + " 与ダメージ修正+" + limit(5 + cdata(CDATA_LEVEL, CHARA_PLAYER) * 2 / 3, 0, 100) + "]", "Desire for violence arises within you. [Dmg taken+" + limit(5 + cdata(CDATA_LEVEL, CHARA_PLAYER) * 2 / 3, 0, 100) / 4 + ", Dmg dealt+" + limit(5 + cdata(CDATA_LEVEL, CHARA_PLAYER) * 2 / 3, 0, 100) + "] ")
+			}
+			traitrefn = lang("あなたの心は落ち着いた。", " A deep sense of peace fills your heart."), lang("あなたは憎しみに支配された。", "Hatred dominates your soul.")
+			return 1
+		}
+		return 1
+	}
+	if ( tid == TRAIT_ETHER_HUGE_HEAD ) {
+		if ( traitmode == 0 ) {
+			traitref = 3, -1, 0, 1, 0, 100, -1
+			if ( trait(tid) < 0 ) {
+				traitrefn(2) = "", lang("あなたの頭は巨大化している[耐久" + limit((5 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 3) * (-1), -255, 255) + " 器用" + limit((4 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 4) * (-1), -255, 255) + " 習得+" + limit(6 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 2, 0, 255) + " 意志+" + limit(2 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 6, 0, 255) + "]", "Your head has grown huge. [CON" + limit((5 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 3) * (-1), -255, 255) + " DEX" + limit((4 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 4) * (-1), -255, 255) + " LER+" + limit(6 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 2, 0, 255) + " WIL+" + limit(2 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 6, 0, 255) + "]")
+			}
+			traitrefn = lang("あなたの頭は元に戻った。", "Your head is normal size now."), lang("あなたの頭は巨大化した。", "Suddenly your head become giant size.")
+			return 1
+		}
+		sdata(SKILL_ATTR_CON, CHARA_PLAYER) = limit(sdata(SKILL_ATTR_CON, CHARA_PLAYER) + limit((5 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 3) * (-1), -255, 255), sdata(SKILL_ATTR_CON, CHARA_PLAYER) > 0, 9999)
+		sdata(SKILL_ATTR_DEX, CHARA_PLAYER) = limit(sdata(SKILL_ATTR_DEX, CHARA_PLAYER) + limit((4 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 4) * (-1), -255, 255), sdata(SKILL_ATTR_DEX, CHARA_PLAYER) > 0, 9999)
+		sdata(SKILL_ATTR_LER, CHARA_PLAYER) = limit(sdata(SKILL_ATTR_LER, CHARA_PLAYER) + limit(6 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 2, 0, 255), sdata(SKILL_ATTR_LER, CHARA_PLAYER) > 0, 9999)
+		sdata(SKILL_ATTR_WIL, CHARA_PLAYER) = limit(sdata(SKILL_ATTR_WIL, CHARA_PLAYER) + limit(2 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 6, 0, 255), sdata(SKILL_ATTR_WIL, CHARA_PLAYER) > 0, 9999)
+		return 1
+	}
+	if ( tid == TRAIT_ETHER_RAIN_CLOUD ) {
+		if ( traitmode == 0 ) {
+			traitref = 3, -1, 0, 1, 0, 100, -1
+			if ( trait(tid) < 0 ) {
+				traitrefn(2) = "", lang("あなたは雨を呼ぶ[雨天確率上昇]", "Clouds of rain follow you. [Chance of rain+]")
+			}
+			traitrefn = lang("あなたの頭上から雨雲が消えた。", "Clouds of rain stop following you."), lang("あなたの頭上に雨雲が現れた。", "Clouds of rain start to follow you.")
+			return 1
+		}
+		return 1
+	}
+	if ( tid == TRAIT_ETHER_ADDICTED_POTION ) {
+		if ( traitmode == 0 ) {
+			traitref = 3, -1, 0, 1, 0, 100, -1
+			if ( trait(tid) < 0 ) {
+				traitrefn(2) = "", lang("あなたはポーション中毒だ[定期的ポーション消費]", "You are addicted to potions. [Consume potions]")
+			}
+			traitrefn = lang("あなたのポーション中毒は消えた。", "You are no longer addicted to potions."), lang("あなたはポーション中毒になった。", "Potions! More potions!! Suddenly, you become addicted to potions.")
+			return 1
+		}
+		return 1
+	}
+	if ( tid == TRAIT_ETHER_DEBILITATION ) {
+		if ( traitmode == 0 ) {
+			traitref = 3, -1, 0, 1, 0, 100, -1
+			if ( trait(tid) < 0 ) {
+				traitrefn(2) = "", lang("あなたは衰弱している[HP-15% 筋力" + (4 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 2) * (-1) + "]", "You suffer debilitation. [HP-15% STR" + (4 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 2) * (-1) + "]")
+			}
+			traitrefn = lang("あなたは健康になった。", "You become healthy again."), lang("あなたは衰弱した。", "You become weak, very weak.")
+			return 1
+		}
+		sdata(SKILL_ATTR_STR, CHARA_PLAYER) = limit(sdata(SKILL_ATTR_STR, CHARA_PLAYER) + (4 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 2) * (-1), sdata(SKILL_ATTR_STR, CHARA_PLAYER) > 0, 9999)
+		sdata(SKILL_ATTR_LIFE, CHARA_PLAYER) = limit(sdata(SKILL_ATTR_LIFE, CHARA_PLAYER) + (-15), sdata(SKILL_ATTR_LIFE, CHARA_PLAYER) > 0, 9999)
+		return 1
+	}
+	if ( tid == TRAIT_ETHER_DEMENTIA ) {
+		if ( traitmode == 0 ) {
+			traitref = 3, -1, 0, 1, 0, 100, -1
+			if ( trait(tid) < 0 ) {
+				traitrefn(2) = "", lang("あなたは痴呆になっている[MP-15% 魔力" + (4 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 2) * (-1) + "]", "You have dementia. [MP-15% MAG" + (4 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 2) * (-1) + "]")
+			}
+			traitrefn = lang("あなたは明晰になった。", "You become confident again."), lang("あなたはぼけた。", "You become feebleminded.")
+			return 1
+		}
+		sdata(SKILL_ATTR_MAG, CHARA_PLAYER) = limit(sdata(SKILL_ATTR_MAG, CHARA_PLAYER) + (4 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 2) * (-1), sdata(SKILL_ATTR_MAG, CHARA_PLAYER) > 0, 9999)
+		sdata(SKILL_ATTR_MANA, CHARA_PLAYER) = limit(sdata(SKILL_ATTR_MANA, CHARA_PLAYER) + (-15), sdata(SKILL_ATTR_MANA, CHARA_PLAYER) > 0, 9999)
+		return 1
+	}
+	if ( tid == TRAIT_ETHER_CARAPACE ) {
+		if ( traitmode == 0 ) {
+			traitref = 3, -1, 0, 1, 0, 100, -1
+			if ( trait(tid) < 0 ) {
+				traitrefn(2) = "", lang("あなたは重い甲殻で覆われている[PV+" + limit(15 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 2, 0, 255) + " 速度" + limit((20 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 2) * (-1), -255, 255) + "]", "You are covered by a heavy carapace. [PV+" + limit(15 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 2, 0, 255) + " SPD" + limit((20 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 2) * (-1), -255, 255) + "]")
+			}
+			traitrefn = lang("あなたの皮膚から甲殻が消えた。", "Your carapace starts to break."), lang("あなたの皮膚は甲殻で覆われた。", "A heavy carapace starts to cover up your skin.")
+			return 1
+		}
+		sdata(SKILL_ATTR_SPD, CHARA_PLAYER) = limit(sdata(SKILL_ATTR_SPD, CHARA_PLAYER) + limit((20 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 2) * (-1), -255, 255), sdata(SKILL_ATTR_SPD, CHARA_PLAYER) > 0, 9999)
+		cdata(CDATA_PV, CHARA_PLAYER) += limit(15 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 2, 0, 255)
+		return 1
+	}
+	if ( tid == TRAIT_ETHER_RANDOM_TELEPORT ) {
+		if ( traitmode == 0 ) {
+			traitref = 3, -1, 0, 1, 0, 100, -1
+			if ( trait(tid) < 0 ) {
+				traitrefn(2) = "", lang("あなたの周囲の空間は捩れている[ランダムテレポート]", "You destabilize the space around you. [Random teleporation]")
+			}
+			traitrefn = lang("あなたの周囲の空間は元通りになった。", "You feel steady."), lang("あなたの周囲の空間は捩れた。", "You feel unstable.")
+			return 1
+		}
+		return 1
+	}
+	if ( tid == TRAIT_ETHER_ABSORB_ROD ) {
+		if ( traitmode == 0 ) {
+			traitref = 3, -1, 0, 1, 0, 100, -1
+			if ( trait(tid) < 0 ) {
+				traitrefn(2) = "", lang("あなたは生きたマナバッテリーだ[杖から魔力抽出]", "You are a living mana battery. [Absorb mana from rods]")
+			}
+			traitrefn = lang("あなたのマナは元通りになった。", "You are no longer a living mana battery."), lang("あなたのマナは杖から魔力を抽出する。", "You are a living mana battery.")
+			return 1
+		}
+		return 1
+	}
+	if ( tid == TRAIT_ETHER_POISON_HANDS ) {
+		if ( traitmode == 0 ) {
+			traitref = 3, -1, 0, 1, 0, 100, -1
+			if ( trait(tid) < 0 ) {
+				traitrefn(2) = "", lang("あなたの手から毒が滴っている[ポーション毒化 毒耐性強化]", "Poison drips from your hands. [Poison potions RES Poison+]")
+			}
+			traitrefn = lang("あなたの手は元通りになった。", "Your hands are clean now."), lang("あなたの手から毒が滴り出した。", "Poison starts to drip from your hands.")
+			return 1
+		}
+		sdata(SKILL_RES_POISON, CHARA_PLAYER) = limit(sdata(SKILL_RES_POISON, CHARA_PLAYER) + 100, sdata(SKILL_RES_POISON, CHARA_PLAYER) > 0, 9999)
+		return 1
+	}
+	if ( tid == TRAIT_ETHER_EQUIP_HEAD ) {
+		if ( traitmode == 0 ) {
+			traitref = 3, -1, 0, 1, 0, 100, -1
+			if ( trait(tid) < 0 ) {
+				traitrefn(2) = "", lang("あなたの頭には獣の耳が生えている[頭装備不可 感覚+" + limit(10 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 4, 0, 255) + "]", "Your head is growing ears of a beast. [PER+" + limit(10 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 4, 0, 255) + " Can't wear helms]")
+			}
+			traitrefn = lang("あなたの耳は元通りになった。", "Your ears are clean now."), lang("あなたに獣の耳が生えた。", "The ears of a beast grew on your head.")
+			return 1
+		}
+		sdata(SKILL_ATTR_PER, CHARA_PLAYER) = limit(sdata(SKILL_ATTR_PER, CHARA_PLAYER) + limit(10 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 4, 0, 255), sdata(SKILL_ATTR_PER, CHARA_PLAYER) > 0, 9999)
+		return 1
+	}
+	return 0
+
+*cm_putTrait
+	if ( cdatan(CDATAN_RACE, CHARA_PLAYER) == "dwarf" ) {
+		trait(TRAIT_RACE_RES_POISON) = 2
+		trait(TRAIT_RACE_RES_DARKNESS) = 1
+	}
+	if ( cdatan(CDATAN_RACE, CHARA_PLAYER) == "elea" ) {
+		trait(TRAIT_RACE_RES_ETHER) = 1
+		trait(TRAIT_RACE_MAGIC_REACTION) = 1
+	}
+	if ( cdatan(CDATAN_RACE, CHARA_PLAYER) == "eulderna" ) {
+		trait(TRAIT_RACE_RES_MAGIC) = 1
+	}
+	if ( cdatan(CDATAN_RACE, CHARA_PLAYER) == "lich" ) {
+		trait(TRAIT_RACE_RES_COLD) = 1
+		trait(TRAIT_RACE_RES_DARKNESS) = 2
+		trait(TRAIT_RACE_RES_POISON) = 1
+	}
+	if ( cdatan(CDATAN_RACE, CHARA_PLAYER) == "golem" ) {
+		trait(TRAIT_RACE_RES_DIM) = 1
+		trait(TRAIT_RACE_RES_POISON) = 2
+	}
+	if ( cdatan(CDATAN_RACE, CHARA_PLAYER) == "yerles" ) {
+		trait(TRAIT_RACE_BONUS_SKILLPOINT) = 1
+	}
+	if ( cdatan(CDATAN_RACE, CHARA_PLAYER) == "juere" ) {
+		trait(TRAIT_RACE_SLOW_DIGESTION) = 1
+		trait(TRAIT_RACE_BONUS_MATERIAL) = 1
+	}
+	if ( cdatan(CDATAN_RACE, CHARA_PLAYER) == "goblin" ) {
+		trait(TRAIT_RACE_RES_DARKNESS) = 1
+		trait(TRAIT_RACE_BONUS_MATERIAL) = 1
+	}
+	if ( cdatan(CDATAN_RACE, CHARA_PLAYER) == "mutant" ) {
+		trait(TRAIT_NORMAL_OTHER_MUTANT) = 1
+	}
+	if ( cdatan(CDATAN_RACE, CHARA_PLAYER) == "fairy" ) {
+		trait(TRAIT_RACE_BONUS_RESISTANCE) = 1
+		trait(TRAIT_RACE_WEAK) = 1
+	}
+	return

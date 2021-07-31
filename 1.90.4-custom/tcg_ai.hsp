@@ -1,0 +1,174 @@
+*ai_evaluate
+	emax@tcg = 0
+	repeat clistmax@tcg(ch@tcg)
+		if ( aiblock@tcg ) {
+			break
+		}
+		c@tcg = clist@tcg(cnt, ch@tcg)
+		p@tcg = 10
+		if ( card@tcg(9, c@tcg) == 10 ) {
+			p@tcg = 20
+			p@tcg -= abs(cpdata@tcg(6, cp@tcg) - card@tcg(10, c@tcg))
+		}
+		if ( card@tcg(13, c@tcg) == cddraw2card@tcg ) {
+			p@tcg = (5 - getholdersum(cp@tcg)) * 20
+		}
+		elist@tcg(0, emax@tcg) = p@tcg, c@tcg, -5
+		emax@tcg++
+	loop
+	if ( aiblock@tcg == 0 ) {
+		repeat clistmax@tcg(cl@tcg)
+			c@tcg = clist@tcg(cnt, cl@tcg)
+			p@tcg = 0
+			p@tcg = rnd(40)
+			if ( cardcandeclareattack(c@tcg) ) {
+				elist@tcg(0, emax@tcg) = p@tcg, c@tcg, -1
+				emax@tcg++
+			}
+		loop
+	}
+	else {
+		repeat clistmax@tcg(cl@tcg)
+			c@tcg = clist@tcg(cnt, cl@tcg)
+			p@tcg = 0
+			p@tcg = rnd(40)
+			if ( cardcanblock(c@tcg) ) {
+				elist@tcg(0, emax@tcg) = p@tcg, c@tcg, -2
+				emax@tcg++
+			}
+		loop
+	}
+	if ( emax@tcg == 0 ) {
+		return
+	}
+	repeat
+		f@tcg = 0
+		repeat emax@tcg - 1
+			if ( elist@tcg(0, cnt) < elist@tcg(0, cnt + 1) ) {
+				cnt2@tcg = cnt
+				repeat 3
+					p@tcg(cnt) = elist@tcg(cnt, cnt2@tcg + 1)
+					elist@tcg(cnt, cnt2@tcg + 1) = elist@tcg(cnt, cnt2@tcg)
+					elist@tcg(cnt, cnt2@tcg) = p@tcg(cnt)
+				loop
+				f@tcg = 1
+				break
+			}
+		loop
+		if ( f@tcg == 0 ) {
+			break
+		}
+	loop
+	return
+
+*ai_sac
+	if ( sac@tcg > 0 ) {
+		return 0
+	}
+	if ( getholdersum(cp@tcg) <= cpdata@tcg(6, cp@tcg) / 4 + 1 ) {
+		if ( rnd(4) ) {
+			return 0
+		}
+	}
+	f@tcg = 0
+	p@tcg(1) = 50
+	repeat emax@tcg
+		c@tcg = elist@tcg(1, cnt)
+		p@tcg = elist@tcg(0, cnt)
+		if ( card@tcg(0, c@tcg) != 2 ) {
+			continue
+		}
+		if ( card@tcg(13, c@tcg) == cddraw2card@tcg ) {
+			p@tcg = 40
+		}
+		if ( p@tcg < p@tcg(1) ) {
+			p@tcg(1) = p@tcg
+			cc@tcg = c@tcg
+			f@tcg = 1
+		}
+	loop
+	if ( f@tcg ) {
+		saccard cc@tcg, cp@tcg
+		tcgdraw
+		return 1
+	}
+	return 0
+
+*card_ai
+	spellused@tcg = 0
+	if ( debug ) {
+		await
+		getkey a@tcg, 32
+		if ( a@tcg ) {
+			await 500
+		}
+	}
+	else {
+		stick a@tcg
+		if ( a@tcg ) {
+			cpdata@tcg(4, 0) = 0
+		}
+	}
+	gosub *ai_evaluate
+	ec@tcg = 0
+*card_ai_WHILE1
+	if ( gameover() ) {
+		goto *card_ai_WEND1
+	}
+	if ( ec@tcg >= emax@tcg ) {
+		goto *card_ai_WEND1
+	}
+	if ( elist@tcg(0, ec@tcg) <= 0 ) {
+		goto *card_ai_WEND1
+	}
+	cc@tcg = elist@tcg(1, ec@tcg)
+	if ( elist@tcg(2, ec@tcg) == (-5) ) {
+		if ( card@tcg(10, cc@tcg) <= cpdata@tcg(5, cp@tcg) ) {
+			putcard cc@tcg, cp@tcg
+			if ( gameover() ) {
+				goto *card_ai_WEND1
+			}
+			if ( card@tcg(9, cc@tcg) == 20 ) {
+				cardstack@tcg(0, stack@tcg) = cc@tcg, -3, cp@tcg
+				stack@tcg++
+				if ( chainmode@tcg ) {
+					chaincontinue@tcg = 1
+					spellused@tcg = 1
+					goto *card_ai_WEND1
+				}
+				actionproc
+			}
+			goto *card_ai
+		}
+		else {
+			gosub *ai_sac
+			if ( stat == 1 ) {
+				goto *card_ai
+			}
+		}
+	}
+	if ( elist@tcg(2, ec@tcg) == (-1) ) {
+		cardstack@tcg(0, stack@tcg) = cc@tcg, -1, cp@tcg
+		stack@tcg++
+		actionproc
+	}
+	if ( elist@tcg(2, ec@tcg) == (-2) ) {
+		attacktarget@tcg = cc@tcg
+		goto *card_ai_WEND1
+	}
+	ec@tcg++
+	goto *card_ai_WHILE1
+*card_ai_WEND1
+	if ( aiblock@tcg == 0 ) {
+		if ( sac@tcg == 0 ) {
+			gosub *ai_sac
+			if ( stat == 1 ) {
+				goto *card_ai
+			}
+		}
+	}
+	if ( gameover() ) {
+		return
+	}
+	return
+

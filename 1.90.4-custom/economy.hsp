@@ -1,0 +1,715 @@
+*renew_economy
+	if ( initeco ) {
+		gdata(GDATA_CAPITAL) = 15
+	}
+	bkdata = gdata(GDATA_AREA), gdata(GDATA_LEVEL), cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER)
+	snd SOUNDLIST_WRITE1
+	gosub *game_save
+	mode = MODELIST_MAP
+	cdata(CDATA_X, CHARA_PLAYER) = 0
+	cdata(CDATA_Y, CHARA_PLAYER) = 0
+	scx = cdata(CDATA_X, CHARA_PLAYER)
+	scy = cdata(CDATA_Y, CHARA_PLAYER)
+	repeat 500
+		if ( adata(ADATA_ID, cnt) == AREA_NONE ) {
+			continue
+		}
+		if ( adata(ADATA_ECONOMY, cnt) == 0 ) {
+			continue
+		}
+		gdata(GDATA_AREA) = adata(ADATA_ID, cnt)
+		gdata(GDATA_LEVEL) = 1
+		if ( gdata(GDATA_AREA) != bkdata(0) | gdata(GDATA_LEVEL) != bkdata(1) ) {
+			gosub *map_init
+		}
+		p = adata(ADATA_ECONOMY, cnt)
+		gosub *map_save
+	loop
+	gdata(GDATA_AREA) = bkdata(0)
+	gdata(GDATA_LEVEL) = bkdata(1)
+	cdata(CDATA_X, CHARA_PLAYER) = bkdata(2)
+	cdata(CDATA_Y, CHARA_PLAYER) = bkdata(3)
+	gdata(GDATA_WORLD_RENEW) = 1
+	mode = MODELIST_CONTINUE
+	mapsubroutine = 1
+	gosub *map_init
+	initeco = 0
+	msgtemp = ""
+	return
+
+*com_politics_chart
+	listmax = 0
+	page = 0
+	pagesize = 16
+	cs = 0
+	cc = CHARA_PLAYER
+	cs_bk = -1
+	snd SOUNDLIST_CHAT
+	curmenu = 0
+	redraw 0
+	gsel 3
+	pos 960, 96
+	picload exedir + "graphic\\deco_politics.bmp", 1
+	gsel 0
+	fillbg 3, 960, 96, 128, 128
+	gosub *screen_drawStatus
+	drawmenu 3
+	windowshadow = 1
+	city = adata(ADATA_ECONOMY, gdata(GDATA_AREA))
+	lv = 0
+	redraw 0
+	page_check
+*com_politics_chart_loop
+	redraw 0
+	s = lang("ポストチャート", "City Chart"), strhint3b
+	display_window (windoww - 580) / 2 + inf_screenx, winposy(400), 580, 400
+	keyrange = 0
+	j = 0
+	n = 0
+	color 0, 0, 0
+	cs_listbk
+	if ( adata(ADATA_ECONOMY, gdata(GDATA_AREA)) == 0 | adata(ADATA_ECONOMY, gdata(GDATA_AREA)) == 9 | gdata(GDATA_LEVEL) != 1 ) {
+		font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
+		pos wx + 40, wy + 50
+		mes lang("この場所は情報がない。", "There's no information in this area.")
+	}
+	else {
+		if ( adata(ADATA_PARENT, gdata(GDATA_AREA)) == AREA_LOST_YLVA ) {
+			font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
+			pos wx + 40, wy + 50
+			mes lang("この場所は情報がない。", "There's no information in this area.")
+		}
+		else {
+			display_topic lang(mapname(adata(ADATA_ID, gdata(GDATA_AREA))) + "のチャート", "" + mapname(adata(ADATA_ID, gdata(GDATA_AREA))) + " City Chart"), wx + 40, wy + 34
+			repeat
+				if ( pochart(j, n, lv) == 0 | cnt == 0 ) {
+					if ( cnt != 0 ) {
+						n++
+					}
+					j = 0
+					i = 0
+					repeat 10
+						if ( pochart(cnt, n, lv) != 0 ) {
+							i++
+						}
+					loop
+					if ( i == 0 ) {
+						break
+					}
+					y = wy + 70 + n * 55
+				}
+				x = wx + (ww - 70) / (i + 1) * (j + 1)
+				pos x - 26, y - 3
+				gcopy 3, 960, 96 + 144 + 48, 144, 24
+				p = pochart(j, n, lv)
+				key_list(cnt) = key_select(cnt)
+				keyrange++
+				display_key x - 30, y + 21, cnt
+				font lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0
+				pos x - 2, y + jp * 2
+				color 0, 0, 0
+				bmes cnven(popostname(p)), 255, 255, 255
+				color 0, 0, 0
+				font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
+				podata(0 + cnt, city) = 0
+				if ( podata(0 + cnt, city) == 0 ) {
+					s = lang("不在", "Empty")
+				}
+				cs_list s, x - 2, y + 20, 19
+				j++
+			loop
+			if ( keyrange != 0 ) {
+				cs_bk = cs
+			}
+		}
+	}
+	redraw 1
+	await cfg_wait1
+	key_check
+	cursor_check
+	p = -1
+	repeat keyrange
+		if ( key == key_select(cnt) ) {
+			p = list(0, pagesize * page + cnt)
+			break
+		}
+	loop
+	if ( p != (-1) ) {
+		return
+	}
+	if ( menucycle == 1 ) {
+		if ( key == key_next | key == key_prev ) {
+			p = curmenu
+			if ( key == key_next ) {
+				curmenu++
+				if ( curmenu > 2 ) {
+					curmenu = 0
+				}
+			}
+			if ( key == key_prev ) {
+				curmenu--
+				if ( curmenu < 0 ) {
+					curmenu = 2
+				}
+			}
+			key = ""
+			if ( p != curmenu ) {
+				screenupdate = -1
+				gosub *screen_draw
+				if ( curmenu == 0 ) {
+					goto *com_politics_chart
+				}
+				if ( curmenu == 1 ) {
+					goto *com_politics_economy
+				}
+				if ( curmenu == 2 ) {
+					goto *com_politics_rule
+				}
+			}
+		}
+	}
+	page_change *com_politics_chart
+	if ( key == key_cancel ) {
+		gosub *screen_draw
+		return
+	}
+	goto *com_politics_chart_loop
+
+*com_politics_economy
+	curmenu = 1
+	key_list(0) = key_enter
+	keyrange = 0
+	pagesize = 1
+	listmax = 1
+	redraw 0
+	gsel 3
+	pos 960, 96
+	picload exedir + "graphic\\deco_politics.bmp", 1
+	gsel 0
+	fillbg 3, 960, 96, 128, 128
+	gosub *screen_drawStatus
+	gsel 7
+	pos 0, 0
+	picload exedir + "graphic\\ie_scroll.bmp"
+	gsel 0
+	windowshadow = 1
+	snd SOUNDLIST_SCROLL
+	drawmenu 3
+	city = 1
+	ww = 540
+	wh = 440
+	wx = (windoww - ww) / 2 + inf_screenx
+	wy = winposy(wh)
+*com_politics_economy_loop
+	redraw 0
+	s = strhint2 + strhint3b
+	showscroll wx, wy, ww, wh
+	font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
+	color 0, 0, 0
+	if ( adata(ADATA_ECONOMY, gdata(GDATA_AREA)) == 0 | adata(ADATA_ECONOMY, gdata(GDATA_AREA)) == 9 | gdata(GDATA_LEVEL) != 1 ) {
+		pos wx + 40, wy + 60
+		mes lang("この場所は情報がない。", "There's no information in this area.")
+	}
+	else {
+		if ( adata(ADATA_PARENT, gdata(GDATA_AREA)) == AREA_LOST_YLVA ) {
+			pos wx + 40, wy + 60
+			mes lang("この場所は情報がない。", "There's no information in this area.")
+		}
+		else {
+			city = adata(ADATA_ECONOMY, gdata(GDATA_AREA))
+			if ( mdata(MDATA_CITY_PROPERTY_VALUE) > 300 ) {
+				mdata(MDATA_CITY_PROPERTY_VALUE) = 300
+			}
+			if ( mdata(MDATA_CITY_PROPERTY_VALUE) < (-300) ) {
+				mdata(MDATA_CITY_PROPERTY_VALUE) = -300
+			}
+			if ( mdata(MDATA_CITY_APPROVAL_RATE) > 100 ) {
+				mdata(MDATA_CITY_APPROVAL_RATE) = 100
+			}
+			if ( mdata(MDATA_CITY_APPROVAL_RATE) < (-100) ) {
+				mdata(MDATA_CITY_APPROVAL_RATE) = -100
+			}
+			if ( mdata(MDATA_CITY_PROPERTY_VALUE) > (-50) & mdata(MDATA_CITY_PROPERTY_VALUE) < 50 ) {
+				s1 = "Neutral"
+			}
+			if ( mdata(MDATA_CITY_PROPERTY_VALUE) >= 50 ) {
+				s1 = "Law"
+			}
+			if ( mdata(MDATA_CITY_PROPERTY_VALUE) <= (-50) ) {
+				s1 = "Chaos"
+			}
+			if ( mdata(MDATA_CITY_APPROVAL_RATE) <= (-100) ) {
+				s2 = lang("腐れ暴君", "Tyrant")
+			}
+			if ( mdata(MDATA_CITY_APPROVAL_RATE) > (-100) & mdata(MDATA_CITY_APPROVAL_RATE) <= (-80) ) {
+				s2 = lang("悪政者", "Misrule")
+			}
+			if ( mdata(MDATA_CITY_APPROVAL_RATE) > (-80) & mdata(MDATA_CITY_APPROVAL_RATE) <= (-60) ) {
+				s2 = lang("税金泥棒", "Zeikin-Dorobou")
+			}
+			if ( mdata(MDATA_CITY_APPROVAL_RATE) > (-60) & mdata(MDATA_CITY_APPROVAL_RATE) <= (-40) ) {
+				s2 = lang("ただの無能", "Incompetence")
+			}
+			if ( mdata(MDATA_CITY_APPROVAL_RATE) > (-40) & mdata(MDATA_CITY_APPROVAL_RATE) <= (-20) ) {
+				s2 = lang("期待外れ", "Disappointing")
+			}
+			if ( mdata(MDATA_CITY_APPROVAL_RATE) > (-20) & mdata(MDATA_CITY_APPROVAL_RATE) < 0 ) {
+				s2 = lang("正直微妙", "Not good enough")
+			}
+			if ( mdata(MDATA_CITY_APPROVAL_RATE) >= 0 & mdata(MDATA_CITY_APPROVAL_RATE) < 20 ) {
+				s2 = lang("無益無害", "Useless and harmless")
+			}
+			if ( mdata(MDATA_CITY_APPROVAL_RATE) >= 20 & mdata(MDATA_CITY_APPROVAL_RATE) < 40 ) {
+				s2 = lang("割と普通", "Common")
+			}
+			if ( mdata(MDATA_CITY_APPROVAL_RATE) >= 40 & mdata(MDATA_CITY_APPROVAL_RATE) < 60 ) {
+				s2 = lang("これからに期待", "Promising")
+			}
+			if ( mdata(MDATA_CITY_APPROVAL_RATE) >= 60 & mdata(MDATA_CITY_APPROVAL_RATE) < 80 ) {
+				s2 = lang("希望の星", "Excellent")
+			}
+			if ( mdata(MDATA_CITY_APPROVAL_RATE) >= 80 & mdata(MDATA_CITY_APPROVAL_RATE) < 100 ) {
+				s2 = lang("まさに名君", "Role model")
+			}
+			if ( mdata(MDATA_CITY_APPROVAL_RATE) >= 100 ) {
+				s2 = lang("街の守護者", "Ruler of virtue")
+			}
+			taiki = mdata(MDATA_CITY_ETHER_CORRUPTION)
+			if ( gdata(GDATA_WEATHER) == WEATHER_ETHER ) {
+				taiki += 5000
+			}
+			display_topic lang("概要", "Town Information"), wx + 65, wy + 50
+			display_topic lang("財政", "Town Finance"), wx + 65, wy + 150
+			if ( mdata(MDATA_CITY_COMPLAINTS) > 0 ) {
+				display_topic lang("管理代行者評価", "Administrator"), wx + 65, wy + 250
+			}
+			font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
+			color 0, 0, 0
+			x = wx + 50
+			y = wy + 80
+			pos x, y
+			mes lang("街属性値　　 (" + mdata(MDATA_CITY_PROPERTY_VALUE) + ")　" + s1 + " ", "Security           (" + mdata(MDATA_CITY_PROPERTY_VALUE) + ") " + s1 + " ")
+			x = wx + 50
+			y = wy + 96
+			pos x, y
+			mes lang("人口指数　　　" + mdata(MDATA_MODERATE_CROWD) + "　", "Population          " + mdata(MDATA_MODERATE_CROWD) + " ")
+			x = wx + 50
+			y = wy + 112
+			pos x, y
+			mes lang("水質汚染度　　" + mdata(MDATA_CITY_WATER_POLLUTION) + " (今までの死者" + mdata(MDATA_CITY_DEAD_PEOPLE) + "人）", "Water pollution     " + mdata(MDATA_CITY_WATER_POLLUTION) + " (dead " + mdata(MDATA_CITY_DEAD_PEOPLE) + " people) ")
+			x = wx + 50
+			y = wy + 128
+			pos x, y
+			mes lang("エーテル指数　" + taiki + " ", "Ether concentration " + taiki + " ")
+			x = wx + 50
+			y = wy + 180
+			pos x, y
+			mes lang("消費税　　　　" + mdata(MDATA_CITY_TAXES) + "%　", "Tax                 " + mdata(MDATA_CITY_TAXES) + "% ")
+			x = wx + 50
+			y = wy + 196
+			pos x, y
+			mes lang("観光収入　　　" + mdata(MDATA_CITY_TOURISM_REVENUE) + "gp　", "Tourism revenue     " + mdata(MDATA_CITY_TOURISM_REVENUE) + "gp ")
+			x = wx + 50
+			y = wy + 212
+			pos x, y
+			mes lang("維持費　　　　" + mdata(MDATA_CITY_MAINTENANCE_COST) + "gp　", "Maintenance costs   " + mdata(MDATA_CITY_MAINTENANCE_COST) + "gp ")
+			x = wx + 50
+			y = wy + 228
+			pos x, y
+			mes lang("運営予算　　　" + mdata(MDATA_CITY_BUDGET) + "gp　", "Budget              " + mdata(MDATA_CITY_BUDGET) + "gp ")
+			if ( mdata(MDATA_CITY_COMPLAINTS) > 0 ) {
+				mdata(MDATA_CITY_COMPLAINTS) = limit(mdata(MDATA_CITY_WATER_POLLUTION) - 15 + mdata(MDATA_CITY_ETHER_CORRUPTION) - 15 + mdata(MDATA_CITY_TAXES), 1, 99)
+				x = wx + 50
+				y = wy + 280
+				pos x, y
+				mes lang("苦情数　　　　" + mdata(MDATA_CITY_COMPLAINTS) + "　", "Complaint           " + mdata(MDATA_CITY_COMPLAINTS) + " ")
+				x = wx + 50
+				y = wy + 296
+				pos x, y
+				mes lang("発言力　　　　" + mdata(MDATA_CITY_AUTHORITY) + "　", "Authority           " + mdata(MDATA_CITY_AUTHORITY) + " ")
+				x = wx + 50
+				y = wy + 312
+				pos x, y
+				mes lang("支持率　　　　" + mdata(MDATA_CITY_APPROVAL_RATE) + "%　", "Approval rate       " + mdata(MDATA_CITY_APPROVAL_RATE) + "% ")
+				x = wx + 50
+				y = wy + 328
+				pos x, y
+				mes lang("印象　　　　  " + s2 + " ", "Evaluation          " + s2 + " ")
+			}
+		}
+	}
+	redraw 1
+	await cfg_wait1
+	key_check
+	cursor_check
+	if ( menucycle == 1 ) {
+		if ( key == key_next | key == key_prev ) {
+			p = curmenu
+			if ( key == key_next ) {
+				curmenu++
+				if ( curmenu > 2 ) {
+					curmenu = 0
+				}
+			}
+			if ( key == key_prev ) {
+				curmenu--
+				if ( curmenu < 0 ) {
+					curmenu = 2
+				}
+			}
+			key = ""
+			if ( p != curmenu ) {
+				screenupdate = -1
+				gosub *screen_draw
+				if ( curmenu == 0 ) {
+					goto *com_politics_chart
+				}
+				if ( curmenu == 1 ) {
+					goto *com_politics_economy
+				}
+				if ( curmenu == 2 ) {
+					goto *com_politics_rule
+				}
+			}
+		}
+	}
+	if ( key == key_cancel ) {
+		gosub *screen_draw
+		return
+	}
+	goto *com_politics_economy_loop
+
+*com_politics_rule
+	listmax = 0
+	page = 0
+	pagesize = 13
+	cs = 0
+	cs_bk = -1
+	curmenu = 2
+	city = adata(ADATA_ECONOMY, gdata(GDATA_AREA))
+	if ( mdata(MDATA_TYPE) != MAP_TYPE_TOWN ) {
+		goto *skip_rule
+	}
+	if ( adata(ADATA_PARENT, gdata(GDATA_AREA)) == AREA_LOST_YLVA ) {
+		goto *skip_rule
+	}
+	chatList 0, lang("この街の消費税は" + mdata(MDATA_CITY_TAXES) + "%だ。", "The consumption tax of this town is " + mdata(MDATA_CITY_TAXES) + ".")
+	chatList 0, lang("この街では殺人が許される。", "Allow murder in this town.")
+*skip_rule
+	redraw 0
+	gsel 3
+	pos 960, 96
+	picload exedir + "graphic\\deco_politics.bmp", 1
+	gsel 0
+	fillbg 3, 960, 96, 128, 128
+	gosub *screen_drawStatus
+	gsel 7
+	pos 0, 0
+	picload exedir + "graphic\\ie_scroll.bmp"
+	gsel 0
+	windowshadow = 1
+	snd SOUNDLIST_SCROLL
+	drawmenu 3
+	city = 1
+	ww = 480
+	wh = 400
+	wx = (windoww - ww) / 2 + inf_screenx
+	wy = winposy(wh)
+*com_politics_rule_loop_pgchk
+	page_check
+*com_politics_rule_loop
+	redraw 0
+	s = strhint2 + strhint3b
+	showscroll wx, wy, ww, wh
+	display_topic lang("法律", "Law"), wx + 65, wy + 45
+	font lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0
+	color 0, 0, 0
+	pos wx + 185, wy + 52
+	mes lang("国法", "Global")
+	if ( mdata(MDATA_TYPE) == MAP_TYPE_TOWN ) {
+		pos wx + 285, wy + 52
+		mes lang("" + mapname(gdata(GDATA_AREA)) + "の法", "Law of " + mapname(gdata(GDATA_AREA)))
+	}
+	pos wx + 155, wy + 46
+	gmode 2
+	gcopy 3, 312, 360, 24, 24
+	pos wx + 255, wy + 46
+	gmode 2
+	gcopy 3, 288, 360, 24, 24
+	font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
+	color 0, 0, 0
+	keyrange = 0
+	repeat pagesize
+		p = pagesize * page + cnt
+		if ( p >= listmax ) {
+			break
+		}
+		key_list(cnt) = key_select(cnt)
+		keyrange++
+		if ( cnt \ 2 == 0 ) {
+			pos wx + 74, wy + 76 + cnt * 19
+			gfini 365, 18
+			gfdec2 12, 14, 16
+		}
+		display_key wx + 72, wy + 76 + cnt * 19 - 2, cnt
+	loop
+	font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
+	cs_listbk
+	repeat pagesize
+		p = pagesize * page + cnt
+		if ( p >= listmax ) {
+			break
+		}
+		i = list(0, p)
+		s = listn(0, p)
+		cs_list s, wx + 100, wy + 76 + cnt * 19 - 1, 19, 0, 0
+		pos wx + 42, wy + 68 + cnt * 19 + 2
+		gmode 2
+		gcopy 3, 288 + list(0, p) * 24, 360, 24, 24
+	loop
+	if ( keyrange != 0 ) {
+		cs_bk = cs
+	}
+	redraw 1
+	await cfg_wait1
+	key_check
+	cursor_check
+	p = -1
+	repeat keyrange
+		if ( key == key_select(cnt) ) {
+			p = list(0, pagesize * page + cnt)
+			break
+		}
+	loop
+	if ( menucycle == 1 ) {
+		if ( key == key_next | key == key_prev ) {
+			p = curmenu
+			if ( key == key_next ) {
+				curmenu++
+				if ( curmenu > 2 ) {
+					curmenu = 0
+				}
+			}
+			if ( key == key_prev ) {
+				curmenu--
+				if ( curmenu < 0 ) {
+					curmenu = 2
+				}
+			}
+			key = ""
+			if ( p != curmenu ) {
+				screenupdate = -1
+				gosub *screen_draw
+				if ( curmenu == 0 ) {
+					goto *com_politics_chart
+				}
+				if ( curmenu == 1 ) {
+					goto *com_politics_economy
+				}
+				if ( curmenu == 2 ) {
+					goto *com_politics_rule
+				}
+			}
+		}
+	}
+	page_change *com_politics_rule_loop_pgchk
+	if ( key == key_cancel ) {
+		gosub *screen_draw
+		return
+	}
+	goto *com_politics_rule_loop
+
+*com_build
+	area = bkdata2
+	city = adata(ADATA_ECONOMY, area)
+	tlocx = adata(ADATA_X, area)
+	tlocy = adata(ADATA_Y, area)
+	tlocinitx = tlocx
+	tlocinity = tlocy
+	scposval = 1
+	cityfov = 3
+	citybuilding = 3
+*com_build_WHILE1
+	redraw 0
+	sxfix = 0
+	syfix = 0
+	gosub *screen_setPos
+	val = cityfov
+	gosub *los_Loc
+	gosub *los_draw
+	gosub *screen_drawStatus
+	dx = (tlocx - scx) * inf_tiles + inf_screenx
+	dy = (tlocy - scy) * inf_tiles + inf_screeny
+	if ( dy + inf_tiles <= windowh - inf_verh ) {
+		pos dx, dy * (dy > 0)
+		gfini inf_tiles - (dx + inf_tiles > windoww) * (dx + inf_tiles - windoww), inf_tiles + (dy < 0) * inf_screeny - (dy + inf_tiles > windowh - inf_verh) * (dy + inf_tiles - windowh + inf_verh)
+		gfinc 50, 50, 100
+	}
+	txttargetnpc tlocx, tlocy, 1
+	gosub *draw_budget
+	redraw 1
+	key_direction
+	if ( stat == 1 ) {
+		x = tlocx + kdx
+		y = tlocy + kdy
+		if ( x >= 0 & y >= 0 & x < mdata(MDATA_WIDTH) & y < mdata(MDATA_HEIGHT) ) {
+			tlocx += kdx
+			tlocy += kdy
+		}
+	}
+	await cfg_wait1
+	key_check
+	if ( key == key_enter ) {
+		p = 0
+		repeat 10
+			if ( bddata(0, city, cnt) != 0 ) {
+				p++
+			}
+			else {
+				cbd = cnt
+				break
+			}
+		loop
+		if ( p >= citybuilding ) {
+			txtnew
+			snd SOUNDLIST_FAIL1
+			txt lang("この街はこれ以上の施設を所有できない。", "The city can't hold any more building.")
+			goto *com_build_WHILE1_CONTINUE
+		}
+		cell_featread tlocx, tlocy
+		if ( feat(0) != 0 ) {
+			txtnew
+			snd SOUNDLIST_FAIL1
+			txt lang("その場所には建てられない。", "You can't build here.")
+			goto *com_build_WHILE1_CONTINUE
+		}
+		if ( dist(tlocx, tlocy, tlocinitx, tlocinity) < cityfov ) {
+			gosub *com_select_building
+		}
+		else {
+			txtnew
+			snd SOUNDLIST_FAIL1
+			txt lang("その場所は街から離れすぎている。", "This location is too far from the town.")
+		}
+		goto *com_build_WHILE1_CONTINUE
+	}
+	if ( key == key_cancel ) {
+		goto *com_build_WEND1
+	}
+*com_build_WHILE1_CONTINUE
+	goto *com_build_WHILE1
+*com_build_WEND1
+	scposval = 0
+	return
+
+*com_select_building
+	snd SOUNDLIST_CHAT
+	listmax = 0
+	page = 0
+	pagesize = 4
+	cs = 0
+	cc = CHARA_PLAYER
+	cs_bk = -1
+	repeat 7
+		if ( cnt == 0 ) {
+			continue
+		}
+		list(0, listmax) = cnt, 1
+		listmax++
+	loop
+	gosub *sort_list
+	windowshadow = 1
+*com_select_building_loop
+	redraw 0
+	page_check
+	txtnew
+	txt lang("どの設備を建設する？", "What do you want to build?")
+*com_select_building_loop_WHILE1
+	redraw 0
+	s = lang("設備一覧", "Building List"), strhint2 + strhint3
+	display_window (windoww - 500) / 2 + inf_screenx, winposy(400), 500, 400
+	keyrange = 0
+	repeat pagesize
+		p = pagesize * page + cnt
+		if ( p >= listmax ) {
+			break
+		}
+		key_list(cnt) = key_select(cnt)
+		keyrange++
+		y = wy + 60 + cnt * 70
+		pos wx + 100, y
+		gfini 350, 18
+		gfdec2 12, 14, 16
+		display_key wx + 88, y, cnt
+	loop
+	font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
+	cs_listbk
+	repeat pagesize
+		p = pagesize * page + cnt
+		if ( p >= listmax ) {
+			break
+		}
+		p = list(0, p)
+		y = wy + 60 + cnt * 70
+		pos wx + 20, y
+		gmode 2
+		gcopy 2, bdref(0, p) * inf_tiles, 528, inf_tiles, inf_tiles
+		cs_list bdrefn(p), wx + 114, y, 19
+		color 0, 0, 0
+		pos wx + 360, y + 2
+		mes "" + bdref(1, p) + "k gp"
+	loop
+	if ( keyrange != 0 ) {
+		cs_bk = cs
+	}
+	gosub *draw_budget
+	redraw 1
+	await cfg_wait1
+	key_check
+	cursor_check
+	p = -1
+	repeat keyrange
+		if ( key == key_select(cnt) ) {
+			p = list(0, pagesize * page + cnt)
+			break
+		}
+	loop
+	if ( p != (-1) ) {
+		if ( mdata(MDATA_CITY_BUDGET) < bdref(1, p) ) {
+			snd SOUNDLIST_FAIL1
+			txtnew
+			txt lang("予算が足りない…", "Your city can't afford it...")
+			goto *com_select_building_loop_WHILE1_CONTINUE
+		}
+		mdata(MDATA_CITY_BUDGET) -= bdref(1, p)
+		snd SOUNDLIST_BUILD1
+		txtnew
+		txt lang(bdrefn(p) + "を建設した！", "You have built a " + bdrefn(p) + "!")
+		bddata(0, city, cbd) = p, tlocx, tlocy, bdref(0, p) + 363
+		gosub *world_refresh
+		return p
+	}
+	page_change *com_select_building_loop
+	if ( key == key_cancel ) {
+		return -1
+	}
+*com_select_building_loop_WHILE1_CONTINUE
+	goto *com_select_building_loop_WHILE1
+*com_select_building_loop_WEND1
+	tlocinitx = 0
+	tlocinity = 0
+	return
+
+*draw_budget
+	x = windoww - 200
+	y = 10
+	window2 x, y, 190, 26
+	font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
+	color 0, 0, 0
+	gmode 2
+	pos x - 28, y + 2
+	gcopy 3, 0, 392, 24, 24
+	pos x + 12, y + 7 - en * 2
+	mes lang("予算:", "Budget:") + " " + mdata(MDATA_CITY_BUDGET) + "k gp"
+	return
+

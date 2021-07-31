@@ -1,0 +1,4177 @@
+#deffunc convertartifact int convertartifact_arg1, int convertartifact_arg2
+	if ( refitem(inv(INV_ITEM_ID, convertartifact_arg1), DBSPEC_TYPE) >= FILTER_ITEM_MIN ) {
+		return convertartifact_arg1
+	}
+	if ( inv(INV_ITEM_QUALITY, convertartifact_arg1) != FIX_QUALITY_UNIQUE ) {
+		return convertartifact_arg1
+	}
+	if ( inv(INV_ITEM_EQUIP, convertartifact_arg1) != 0 ) {
+		return convertartifact_arg1
+	}
+	locvar_convertartifact_f = 0
+	repeat MAX_INV_DATA
+		if ( convertartifact_arg2 ) {
+			if ( cnt >= RANGE_INV2 ) {
+				break
+			}
+		}
+		if ( cnt >= SIZE_INV2 * MAX_CHARA_FOLLOWER + SIZE_INV1 & cnt < RANGE_INV2 - SIZE_INV2 ) {
+			continue
+		}
+		locvar_convertartifact_tc = inv_getowner(cnt)
+		if ( locvar_convertartifact_tc != (-1) ) {
+			if ( cdata(CDATA_EXIST, locvar_convertartifact_tc) == CHAR_STATE_DEAD | cdata(CDATA_ROLE, locvar_convertartifact_tc) == ROLE_ADVENTURER ) {
+				continue
+			}
+		}
+		if ( inv(INV_ITEM_NUM, cnt) > 0 ) {
+			if ( inv(INV_ITEM_ID, cnt) == inv(INV_ITEM_ID, convertartifact_arg1) ) {
+				if ( cnt != convertartifact_arg1 ) {
+					locvar_convertartifact_f = 1
+					break
+				}
+			}
+		}
+	loop
+	if ( locvar_convertartifact_f == 0 ) {
+		return convertartifact_arg1
+	}
+	locvar_convertartifact_n = "" + itemname(convertartifact_arg1)
+*convertartifact_WHILE1
+	inv(INV_ITEM_NUM, convertartifact_arg1) = 0
+	flt
+	itemcreate inv_getowner(convertartifact_arg1), ITEM_ID_STARDUST, inv(INV_ITEM_X, convertartifact_arg1), inv(INV_ITEM_Y, convertartifact_arg1), 0
+	if ( inv(INV_ITEM_QUALITY, ci) != FIX_QUALITY_UNIQUE ) {
+		goto *convertartifact_WEND1
+	}
+	goto *convertartifact_WHILE1
+*convertartifact_WEND1
+	txt lang(locvar_convertartifact_n + "はスターダストに形を変えた。", locvar_convertartifact_n + " turns its shape into stardust.")
+	return convertartifact_arg1
+
+*item_fltInit
+	fsetincome = FILTER_ITEM_POTION, FILTER_ITEM_SCROLL, FILTER_ITEM_SCROLL, FILTER_ITEM_ROD, FILTER_ITEM_SPELLBOOK, FILTER_ORE, FILTER_ITEM_FOOD, FILTER_ITEM_FOOD
+	fsetchest = FILTER_WEAPON, FILTER_RANGE, FILTER_HELM, FILTER_ARMOR, FILTER_CLOAK, FILTER_GIRDLE, FILTER_BOOTS, FILTER_GLOVES, FILTER_SHIELD, FILTER_ACCESSORY_RING, FILTER_ACCESSORY_AMULET, FILTER_ITEM_SPELLBOOK, FILTER_ITEM_TOOL
+	fsetwear = FILTER_WEAPON, FILTER_WEAPON, FILTER_RANGE, FILTER_RANGE, FILTER_AMMO, FILTER_HELM, FILTER_ARMOR, FILTER_CLOAK, FILTER_GIRDLE, FILTER_BOOTS, FILTER_GLOVES, FILTER_SHIELD, FILTER_ACCESSORY_RING, FILTER_ACCESSORY_AMULET
+	fsetitem = FILTER_ITEM_POTION, FILTER_ITEM_POTION, FILTER_ITEM_SCROLL, FILTER_ITEM_SCROLL, FILTER_ITEM_ROD, FILTER_GOLD, FILTER_ITEM_SPELLBOOK, FILTER_JUNK, FILTER_ITEM_TOOL, FILTER_ITEM_BOOK
+	fsetrewardsupply = FILTER_ITEM_POTION, FILTER_ITEM_SCROLL, FILTER_ITEM_ROD, FILTER_ITEM_SPELLBOOK, FILTER_ITEM_FOOD
+	fsetrare = FILTER_FURNITURE, FILTER_CONTAINER, FILTER_ORE, FILTER_ITEM_BOOK, FILTER_ITEM_FOOD
+	fsetperform = FILTER_ORE, FILTER_ITEM_FOOD, FILTER_ITEM_FOOD, FILTER_ITEM_FOOD, FILTER_FURNITURE, FILTER_BOOTS, FILTER_CLOAK, FILTER_ACCESSORY_RING, FILTER_ACCESSORY_AMULET, FILTER_ITEM_POTION
+	fsetdeliver = FILTER_FURNITURE, FILTER_ORE, FILTER_ITEM_SPELLBOOK, FILTER_JUNK
+	fsetsupply = FILTER_FURNITURE, FILTER_ORE, FILTER_ITEM_ROD, FILTER_ITEM_SPELLBOOK, FILTER_JUNK
+	fsetmagic = FILTER_ITEM_SCROLL, FILTER_ITEM_ROD, FILTER_ITEM_SPELLBOOK
+	fsetarmor = FILTER_HELM, FILTER_ARMOR, FILTER_CLOAK, FILTER_GIRDLE, FILTER_BOOTS, FILTER_GLOVES, FILTER_SHIELD
+	fsetweapon = FILTER_WEAPON, FILTER_RANGE, FILTER_AMMO
+	fsetplantartifact = FILTER_ACCESSORY_RING, FILTER_ACCESSORY_AMULET
+	fsetplantunknown = FILTER_ITEM_FOOD, FILTER_ITEM_FOOD, FILTER_ITEM_SPELLBOOK
+	isetplantunknownh = ITEM_ID_TEA_LEAF, ITEM_ID_BANNOU_MUGI, ITEM_ID_WILD_FLOWER
+	isetplantunknownn = ITEM_ID_TOBACCO, ITEM_ID_SOYBEAN, ITEM_ID_WILD_FLOWER
+	isetplantunknowna = ITEM_ID_RICE, ITEM_ID_SOYBEAN, ITEM_ID_WILD_FLOWER
+	isetplantunknownf = ITEM_ID_COFFEE_BEANS, ITEM_ID_BANNOU_MUGI, ITEM_ID_WILD_FLOWER
+	isetplantfruith = ITEM_ID_QUCCHE, ITEM_ID_RAINBOW_FRUIT, ITEM_ID_CHERRY
+	isetplantfruitn = ITEM_ID_PINEAPPLE, ITEM_ID_BANANA, ITEM_ID_TOMATO, ITEM_ID_TANGERINE
+	isetplantfruita = ITEM_ID_KAKI, ITEM_ID_APPLE_PEAR, ITEM_ID_GRAPE
+	isetplantfruitf = ITEM_ID_LEMON, ITEM_ID_KIWI, ITEM_ID_APPLE
+	isetplantvegeh = ITEM_ID_MUSKMELON, ITEM_ID_GREEN_PEA, ITEM_ID_LETTUCE, ITEM_ID_QUWAPANA
+	isetplantvegen = ITEM_ID_EGGPLANT, ITEM_ID_WATERMELON, ITEM_ID_LECCHO, ITEM_ID_MELON
+	isetplantvegea = ITEM_ID_CORN, ITEM_ID_SQUASH, ITEM_ID_SWEET_POTATO, ITEM_ID_ALOE
+	isetplantvegef = ITEM_ID_POTATO, ITEM_ID_IMO, ITEM_ID_RADISH, ITEM_ID_CARROT, ITEM_ID_GUAVA
+	isetdrinkinn = ITEM_ID_COFFEE, ITEM_ID_COLA, ITEM_ID_BARLEY_TEA, ITEM_ID_GREEN_TEA, ITEM_ID_BLACK_TEA, ITEM_ID_JUICE
+	fsetremain = FILTER_AMMO, FILTER_ITEM_FOOD, FILTER_ITEM_FOOD, FILTER_ORE, FILTER_ITEM_SCROLL, FILTER_ITEM_POTION, FILTER_ITEM_FOOD
+	fsetbarrel = FILTER_AMMO, FILTER_ITEM_FOOD, FILTER_ITEM_SCROLL, FILTER_ITEM_POTION, FILTER_ORE, FILTER_JUNK
+	fsetcollect = FILTER_JUNK, FILTER_FURNITURE, FILTER_ITEM_FOOD, FILTER_ORE
+	isetdeed = ITEM_ID_DEED, ITEM_ID_DEED_MUSEUM, ITEM_ID_DEED_SHOP, ITEM_ID_DEED_FARM, ITEM_ID_DEED_STORAGE_HOUSE, ITEM_ID_SHELTER, ITEM_ID_DEED_RANCH
+	isetfruit = ITEM_ID_APPLE, ITEM_ID_GRAPE, ITEM_ID_TANGERINE, ITEM_ID_LEMON, ITEM_ID_STRAWBERRY, ITEM_ID_CHERRY, ITEM_ID_KAKI
+	isetthrowpotionminor = ITEM_ID_POTION_BLINDNESS, ITEM_ID_POTION_CONFUSION, ITEM_ID_SLEEPING_DRUG, ITEM_ID_POTION_PARALYSIS, ITEM_ID_POISON, ITEM_ID_BOTTLE_BEER
+	isetthrowpotionmajor = ITEM_ID_POTION_SLOW, ITEM_ID_POTION_SILENCE, ITEM_ID_POTION_WEAKEN_RESISTANCE, ITEM_ID_ESSENTIAL_OIL, ITEM_ID_MOLOTOV, ITEM_ID_BOTTLE_WHISKY, ITEM_ID_POTION_WEAKNESS
+	isetthrowpotiongreater = ITEM_ID_BOTTLE_SULFURIC, ITEM_ID_BOTTLE_SULFURIC, ITEM_ID_BOTTLE_SULFURIC, ITEM_ID_POTION_DISASTER, ITEM_ID_POTION_AQUA_SANCTIO, ITEM_ID_BOTTLE_CRIM_ALE
+	isethire = CREATURE_ID_MAID, CREATURE_ID_BARTENDER, CREATURE_ID_HEALER, CREATURE_ID_WIZARD, CREATURE_ID_INFORMER, CREATURE_ID_GUARD, CREATURE_ID_SHOPKEEPER, CREATURE_ID_SHOPKEEPER, CREATURE_ID_SHOPKEEPER
+	isetgiftminor = ITEM_ID_KOTATSU, ITEM_ID_DARUMA, ITEM_ID_DARUMA, ITEM_ID_MOCHI, ITEM_ID_MOCHI, ITEM_ID_BLACK_CRYSTAL, ITEM_ID_SNOW_MAN, ITEM_ID_PAINTING_LANDSCAPE, ITEM_ID_PAINTING_SUNFLOWER, ITEM_ID_TREE_FRUIT, ITEM_ID_TREASURE_BALL, ITEM_ID_DEED_HEIRSHIP, ITEM_ID_RUNE, ITEM_ID_HEART, ITEM_ID_BLOOD, ITEM_ID_UPRIGHT_PIANO, ITEM_ID_DEAD_FISH, ITEM_ID_SHIT, ITEM_ID_SMALL_MEDAL, ITEM_ID_BRAND_NEW_GRAVE
+	isetgiftmajor = ITEM_ID_KAGAMI_MOCHI, ITEM_ID_KAGAMI_MOCHI, ITEM_ID_PANTY, ITEM_ID_BOTTLE_SPEED_UPPER, ITEM_ID_SCROLL_SUPERIOR_MATERIAL, ITEM_ID_FLYING_SCROLL, ITEM_ID_SISTERS_LOVE_FUELED_LUNCH, ITEM_ID_SHELTER, ITEM_ID_SUMMONING_CRYSTAL, ITEM_ID_UNICORN_HORN
+	isetgiftgrand = ITEM_ID_FIVE_HORNED_HELM, ITEM_ID_AURORA_RING, ITEM_ID_SPEED_RING, ITEM_ID_MAUSER_C96_CUSTOM, ITEM_ID_LIGHTSABRE, ITEM_ID_GOULDS_PIANO
+	isethirerole = ROLE_MAID, ROLE_BARTENDER, ROLE_HEALER, ROLE_IDENTIFIER, ROLE_INFORMER, ROLE_GUARD, ROLE_SHOP_GOODS, ROLE_SHOP_GOODS, ROLE_SHOP_GOODS, ROLE_BOUNTY_HUNTER
+	isetcrop = ITEM_ID_APPLE, ITEM_ID_GRAPE, ITEM_ID_LEMON, ITEM_ID_STRAWBERRY, ITEM_ID_CHERRY, ITEM_ID_LETTUCE, ITEM_ID_MELON
+	isetgod = GOD_EYTH, GOD_MANI, GOD_LULWY, GOD_ITZPALT, GOD_EHEKATL, GOD_OPATOS, GOD_JURE, GOD_KUMIROMI, GOD_YACATECT
+	asettownn = AREA_VERNIS, AREA_PORT_KAPUL, AREA_DERPHY, AREA_PALMIA, AREA_YOWYN, AREA_LUMIEST, AREA_NOYEL
+	asettowns = AREA_EIREL, AREA_MELKAWN, AREA_KURUALM, AREA_VALM, AREA_MELUGAS, AREA_ARCBELC, AREA_LUDUS
+	moneybox = 500, 2000, 10000, 50000, 500000, 5000000, 100000000
+	giftvalue = 10, 20, 30, 50, 75, 100
+	giftn = lang("つまらない", "cheap"), lang("普通の", "so-so"), lang("ちょっとドキドキする", "exciting"), lang("高価な", "expensive"), lang("気絶しそうなほど素晴らしい", "hot and gorgeous"), lang("王様が羨むほどの", "crazy epic"), "bug"
+	moneyboxn = lang("5百金貨", "500 GP"), lang("2千金貨", "2k GP"), lang("1万金貨", "10K GP"), lang("5万金貨", "50K GP"), lang("50万金貨", "500K GP"), lang("500万金貨", "5M GP"), lang("1億金貨", "500M GP")
+	biten = lang("ミジンコ", "water flea"), lang("バッタ", "grasshopper"), lang("テントウ", "ladybug"), lang("トンボ", "dragonfly"), lang("セミ", "locust"), lang("ヘラクレス", "beetle")
+	evitemn = lang("残りカス", "remnant"), lang("残りカス", "remnant"), lang("残りカス", "remnant"), lang("残りカス", "remnant"), lang("残りカス", "remnant"), lang("残りカス", "remnant"), lang("残りカス", "remnant"), lang("残りカス", "remnant"), lang("残りカス", "remnant"), lang("残りカス", "remnant"), lang("残りカス", "remnant"), lang("王の器", "king heart"), lang("マシンソウル", "machine heart"), lang("ヨロテオトル", "god heart"), lang("進化の側枝", "another heart"), lang("進化の導石", "evolution heart"), lang("魔族の角飾り", "magic heart")
+	notesel buff
+	noteload exedir + "data\\book.txt"
+	p = instr(buff, 0, "%DEFINE")
+	buff = strmid(buff, p, instr(buff, p, "%END"))
+	notedel 0
+	sdim booktitle, noteinfo(0), 25
+	p = 0
+	repeat noteinfo(0)
+		noteget msgtemp, cnt
+		csvsort s, msgtemp, 44
+		booktitle(int(s)) = lang(s(1), s(2))
+		if ( int(s(3)) == 1 ) {
+			isetbook(p) = int(s)
+			p++
+		}
+	loop
+	magebookn = lang("ヴォイニッチ写本", "Voynich Manuscript"), lang("ドール賛歌", "Dhol Chants"), lang("ポナペ教教典", "Ponape Scripture"), lang("グラーキ黙示録", "Revelations of Glaaki"), lang("グ＝ハーン断章", "G'harne Fragments"), lang("断罪の書", "Liber Damnatus"), lang("ドジアンの書", "Book of Dzyan"), lang("エイボンの書", "Book of Eibon"), lang("大いなる教書", "Grand Grimoire"), lang("セラエノ断章", "Celaeno Fragments"), lang("ネクロノミコン", "Necronomicon"), lang("ルルイエ異本", "The R'lyeh Text"), lang("エルトダウン・シャールズ", "Eltdown Shards"), lang("金枝篇", "The Golden Bough"), lang("終焉の書", "Apocalypse"), lang("真なる終焉の書", "True Apocalypse")
+	return
+
+*item_loot
+	items_lost_on_death = ""
+	if ( rc == CHARA_PLAYER ) {
+		if ( gdata(GDATA_QUEST) != QUEST_TYPE_NONE ) {
+			return
+		}
+		inv_getheader rc
+		repeat invrange, invhead
+			ci = cnt
+			if ( inv(INV_ITEM_NUM, cnt) == 0 ) {
+				continue
+			}
+			if ( mdata(MDATA_CAN_SAVE) == 0 ) {
+				if ( gdata(GDATA_FLAG_GAME_MODE) != GAMEMODE_ABNORMAL ) {
+					if ( inv(INV_ITEM_EQUIP, cnt) != 0 ) {
+						continue
+					}
+				}
+				if ( gdata(GDATA_FLAG_GAME_MODE) != GAMEMODE_ABNORMAL ) {
+					if ( ibit(ITEM_BIT_PRECIOUS, ci) ) {
+						continue
+					}
+				}
+				if ( gdata(GDATA_FLAG_GAME_MODE) != GAMEMODE_ABNORMAL ) {
+					if ( rnd(3) ) {
+						continue
+					}
+				}
+			}
+			else {
+				if ( gdata(GDATA_FLAG_GAME_MODE) != GAMEMODE_ABNORMAL ) {
+					if ( rnd(5) ) {
+						continue
+					}
+				}
+			}
+			if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_CARGO) == 1 ) {
+				if ( mdata(MDATA_TYPE) != MAP_TYPE_WORLD & mdata(MDATA_TYPE) != MAP_TYPE_HOME & mdata(MDATA_TYPE) != MAP_TYPE_TOWN & mdata(MDATA_TYPE) != MAP_TYPE_LOCAL & mdata(MDATA_TYPE) != MAP_TYPE_FIELD & mdata(MDATA_TYPE) != MAP_TYPE_VILLAGE ) {
+					continue
+				}
+				else {
+					if ( rnd(2) ) {
+						if ( gdata(GDATA_FLAG_GAME_MODE) != GAMEMODE_ABNORMAL ) {
+							continue
+						}
+					}
+				}
+			}
+			f = 0
+			if ( inv(INV_ITEM_EQUIP, ci) != 0 ) {
+				if ( rnd(10) ) {
+					f = 1
+				}
+				if ( inv(INV_ITEM_STATUS, ci) >= ITEM_STATUS_BLESSED ) {
+					if ( rnd(2) ) {
+						f = 1
+					}
+				}
+				if ( inv(INV_ITEM_STATUS, ci) <= ITEM_STATUS_CURSED ) {
+					if ( rnd(2) ) {
+						f = 0
+					}
+				}
+				if ( inv(INV_ITEM_STATUS, ci) <= ITEM_STATUS_DOOMED ) {
+					if ( rnd(2) ) {
+						f = 0
+					}
+				}
+			}
+			else {
+				if ( inv(INV_ITEM_KNOWN, ci) >= ITEM_KNOWN_FULL ) {
+					if ( rnd(4) ) {
+						f = 1
+					}
+				}
+			}
+			if ( gdata(GDATA_FLAG_GAME_MODE) != GAMEMODE_ABNORMAL ) {
+				if ( f ) {
+					continue
+				}
+			}
+			if ( inv(INV_ITEM_EQUIP, ci) != 0 ) {
+				cdata(inv(INV_ITEM_EQUIP, ci), rc) = cdata(inv(INV_ITEM_EQUIP, ci), rc) / 10000 * 10000
+				inv(INV_ITEM_EQUIP, ci) = 0
+			}
+			f = 0
+			if ( ibit(ITEM_BIT_PRECIOUS, ci) == 0 ) {
+				if ( rnd(4) == 0 ) {
+					f = 1
+				}
+				if ( inv(INV_ITEM_STATUS, ci) >= ITEM_STATUS_BLESSED ) {
+					if ( rnd(3) == 0 ) {
+						f = 0
+					}
+				}
+				if ( inv(INV_ITEM_STATUS, ci) <= ITEM_STATUS_CURSED ) {
+					if ( rnd(3) == 0 ) {
+						f = 1
+					}
+				}
+				if ( inv(INV_ITEM_STATUS, ci) <= ITEM_STATUS_DOOMED ) {
+					if ( rnd(3) == 0 ) {
+						f = 1
+					}
+				}
+			}
+
+			/********** BLOODYSHADE CUSTOM - BEGINNING **********/ // Show dropped items on death.
+
+			items_lost_on_death += "" + itemname(ci) + ". "
+
+			/********** BLOODYSHADE CUSTOM - ENDING **********/
+
+			if ( f ) {
+				inv(INV_ITEM_NUM, ci) = 0
+				continue
+			}
+			inv(INV_ITEM_X, ci) = cdata(CDATA_X, rc)
+			inv(INV_ITEM_Y, ci) = cdata(CDATA_Y, rc)
+			item_stack -1, ci
+			if ( stat == 0 ) {
+				ti = inv_getfreeid(-1)
+				if ( ti == (-1) ) {
+					break
+				}
+				item_copy ci, ti
+				inv(INV_ITEM_PROPERTY, ti) = -2
+			}
+			inv(INV_ITEM_NUM, ci) = 0
+		loop
+		cell_refresh cdata(CDATA_X, rc), cdata(CDATA_Y, rc)
+		create_pcpic 0, 1
+		return
+	}
+	else {
+		if ( rc < MAX_CHARA_FOLLOWER ) {
+			if ( cbit(CHARA_BIT_PCC, rc) == 1 ) {
+				create_pcpic rc, 1
+			}
+		}
+		if ( rc < MAX_CHARA_FOLLOWER ) {
+			return
+		}
+		if ( cdata(CDATA_ID, rc) == CREATURE_ID_CAT_ZOMBIE | cdata(CDATA_ID, rc) == CREATURE_ID_ZOMBIE | cdata(CDATA_ID, rc) == CREATURE_ID_MUMMY | cdata(CDATA_ID, rc) == CREATURE_ID_SKELETON_WARRIOR | cdata(CDATA_ID, rc) == CREATURE_ID_LICH | cdata(CDATA_ID, rc) == CREATURE_ID_NECRO_DOLL | cdata(CDATA_ID, rc) == CREATURE_ID_DRAGON_ZOMBIE | cdata(CDATA_ID, rc) == CREATURE_ID_DEAD_EYES_BLOOD_DRAGON ) {
+			if ( cbit(CHARA_BIT_LIVESTOCK, rc) != 1 ) {
+				if ( rc >= MAX_CHARA_FOLLOWER ) {
+					if ( cbit(CHARA_BIT_NECRO, rc) == 1 ) {
+						txt lang(cdatan(CDATAN_NAME, rc) + "は棺に戻った。", "You push " + name(rc) + " into the coffin.")
+						if ( cdata(CDATA_ID, rc) == CREATURE_ID_CAT_ZOMBIE ) {
+							necrop = 2
+						}
+						if ( cdata(CDATA_ID, rc) == CREATURE_ID_ZOMBIE ) {
+							necrop = 3
+						}
+						if ( cdata(CDATA_ID, rc) == CREATURE_ID_MUMMY ) {
+							necrop = 4
+						}
+						if ( cdata(CDATA_ID, rc) == CREATURE_ID_SKELETON_WARRIOR ) {
+							necrop = 5
+						}
+						if ( cdata(CDATA_ID, rc) == CREATURE_ID_LICH ) {
+							necrop = 6
+						}
+						if ( cdata(CDATA_ID, rc) == CREATURE_ID_NECRO_DOLL ) {
+							necrop = 7
+						}
+						if ( cdata(CDATA_ID, rc) == CREATURE_ID_DRAGON_ZOMBIE ) {
+							necrop = 8
+						}
+						if ( cdata(CDATA_ID, rc) == CREATURE_ID_DEAD_EYES_BLOOD_DRAGON ) {
+							necrop = 9
+						}
+						necrop3 = cdata(CDATA_CHARA_PIC, rc)
+						flt
+						itemcreate -1, ITEM_ID_COFFIN_OF_NECROMANCY, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+						inv(INV_ITEM_PARAM1, ci) = necrop
+						inv(INV_ITEM_PARAM2, ci) = cdata(CDATA_FORM_SHIFT_PIC, rc)
+						inv(INV_ITEM_WEIGHT, ci) += necrop * 1000
+						inv(INV_ITEM_CHARGE, ci) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 + inv(INV_ITEM_PARAM3, ci) * 24
+						inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+						inv(INV_ITEM_KNOWN, ci) = ITEM_KNOWN_NECRO
+						inv(INV_ITEM_CHARA_PIC, ci) = necrop3
+						return
+					}
+				}
+			}
+		}
+		if ( cdata(CDATA_RELATION, rc) == 10 ) {
+			return
+		}
+	}
+	if ( gdata(GDATA_AREA) == AREA_NOYEL ) {
+		if ( cdata(CDATA_ID, rc) == CREATURE_ID_TOURIST ) {
+			return
+		}
+		if ( cdata(CDATA_ID, rc) == CREATURE_ID_PALMIAN_ELITE_SOLDIER ) {
+			return
+		}
+	}
+	if ( cbit(CHARA_BIT_HIRED, rc) ) {
+		return
+	}
+	if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, rc) | cbit(CHARA_BIT_SPLIT_NO_EFFECT, rc) & cbit(CHARA_BIT_SUMMONED, rc) ) {
+		return
+	}
+	if ( cbit(CHARA_BIT_SUMMONED, rc) ) {
+		return
+	}
+	if ( cbit(CHARA_BIT_CRADLE_15TH, rc) ) {
+		return
+	}
+	if ( gdata(GDATA_FLAG_DUEL_TARGET) == (-2) ) {
+		if ( cdata(CDATA_ROLE, rc) == ROLE_ADVENTURER ) {
+			cdata(CDATA_RELATION, rc) = cdata(CDATA_RELATION_ORG, rc)
+			cdata(CDATA_AI_AGGRO, rc) = 0
+		}
+	}
+	inv_getheader rc
+	repeat invrange, invhead
+		if ( inv(INV_ITEM_NUM, cnt) == 0 ) {
+			continue
+		}
+		ci = cnt
+		f = 0
+		if ( cdata(CDATA_ROLE, rc) == ROLE_USER ) {
+			break
+		}
+		if ( inv(INV_ITEM_QUALITY, ci) > FIX_QUALITY_MIRACLE | inv(INV_ITEM_ID, ci) == ITEM_ID_PLATINUM_COIN ) {
+			f = 1
+		}
+		if ( rnd(30) == 0 ) {
+			f = 1
+		}
+		if ( cdata(CDATA_QUALITY, rc) >= FIX_QUALITY_MIRACLE ) {
+			if ( rnd(2) == 0 ) {
+				f = 1
+			}
+		}
+		if ( cdata(CDATA_QUALITY, rc) >= FIX_QUALITY_MIRACLE ) {
+			if ( inv(INV_ITEM_LEVEL, ci) > 0 ) {
+				f = 1
+			}
+		}
+		if ( cdata(CDATA_ROLE, rc) == ROLE_ADVENTURER ) {
+			if ( rnd(5) ) {
+				f = 0
+			}
+		}
+		if ( gdata(GDATA_AREA) == AREA_ARENA ) {
+			if ( rnd(4) ) {
+				f = 0
+			}
+		}
+		if ( inv(INV_ITEM_QUALITY, ci) == FIX_QUALITY_UNIQUE ) {
+			f = 1
+		}
+		if ( gdata(GDATA_FLAG_DUEL_TARGET) == (-2) ) {
+			if ( inv(INV_ITEM_QUALITY, ci) >= FIX_QUALITY_MIRACLE ) {
+				f = 1
+			}
+		}
+		if ( inv(INV_ITEM_ID, ci) == ITEM_ID_VICE_STAFF ) {
+			f = 0
+		}
+		if ( inv(INV_ITEM_ID, ci) == ITEM_ID_ASTRAL_SICKLE ) {
+			f = 0
+		}
+		if ( inv(INV_ITEM_ID, ci) == ITEM_ID_RAINBOW ) {
+			f = 0
+		}
+		if ( inv(INV_ITEM_ID, ci) == ITEM_ID_GUR_BAGH_NAKH ) {
+			f = 0
+		}
+		if ( inv(INV_ITEM_ID, ci) == ITEM_ID_TRISHULA ) {
+			f = 0
+		}
+		if ( inv(INV_ITEM_ID, ci) == ITEM_ID_N97_CANNON ) {
+			f = 0
+		}
+		if ( inv(INV_ITEM_ID, ci) == ITEM_ID_GRANDEL ) {
+			f = 0
+		}
+		if ( inv(INV_ITEM_ID, ci) == ITEM_ID_MELODYUS ) {
+			f = 0
+		}
+		if ( gdata(GDATA_AREA) != AREA_CHAOS_CRADLE ) {
+			if ( cdata(CDATA_ID, rc) == CREATURE_ID_AIKAGE_THE_SHINOBI_MASK ) {
+				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_OTOGIRI ) {
+					f = 0
+				}
+			}
+		}
+		if ( gdata(GDATA_AREA) == AREA_DOCK ) {
+			if ( gdata(GDATA_LEVEL) == 100 ) {
+				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_SPADILLE ) {
+					f = 0
+				}
+			}
+		}
+		if ( cdata(CDATA_ID, rc) == CREATURE_ID_ITZPALT ) {
+			if ( inv(INV_ITEM_ID, ci) == ITEM_ID_ELEMENTAL_STAFF ) {
+				f = 0
+			}
+		}
+		if ( cdata(CDATA_ID, rc) == CREATURE_ID_YACATECT ) {
+			if ( inv(INV_ITEM_ID, ci) == ITEM_ID_KANEITUUHOU ) {
+				f = 0
+			}
+		}
+		if ( cdata(CDATA_ID, rc) == CREATURE_ID_JURE ) {
+			if ( inv(INV_ITEM_ID, ci) == ITEM_ID_HOLY_LANCE ) {
+				f = 0
+			}
+		}
+		if ( cdata(CDATA_ID, rc) == CREATURE_ID_LULWY ) {
+			if ( inv(INV_ITEM_ID, ci) == ITEM_ID_WIND_BOW ) {
+				f = 0
+			}
+		}
+		if ( cdata(CDATA_ID, rc) == CREATURE_ID_EHEKATL ) {
+			if ( inv(INV_ITEM_ID, ci) == ITEM_ID_LUCKY_DAGGER ) {
+				f = 0
+			}
+		}
+		if ( cdata(CDATA_ID, rc) == CREATURE_ID_OPATOS ) {
+			if ( inv(INV_ITEM_ID, ci) == ITEM_ID_GAIA_HAMMER ) {
+				f = 0
+			}
+		}
+		if ( cdata(CDATA_ID, rc) == CREATURE_ID_KUMIROMI ) {
+			if ( inv(INV_ITEM_ID, ci) == ITEM_ID_KUMIROMI_SCYTHE ) {
+				f = 0
+			}
+		}
+		if ( cdata(CDATA_ID, rc) == CREATURE_ID_MANI ) {
+			if ( inv(INV_ITEM_ID, ci) == ITEM_ID_WINCHESTER_PREMIUM ) {
+				f = 0
+			}
+		}
+		if ( gdata(GDATA_AREA) == AREA_AMUR_CAGE ) {
+			if ( cdata(CDATA_ROLE, rc) == ROLE_CITIZEN ) {
+				if ( inv(INV_ITEM_QUALITY, ci) == FIX_QUALITY_UNIQUE ) {
+					f = 0
+				}
+			}
+		}
+		if ( ibit(ITEM_BIT_DROP, ci) ) {
+			f = 1
+		}
+		if ( f == 0 ) {
+			continue
+		}
+		if ( catitem > 0 ) {
+			if ( ibit(ITEM_BIT_REMAKE, ci) == 0 ) {
+				if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) < FILTER_ITEM_MIN ) {
+					if ( inv(INV_ITEM_QUALITY, ci) >= FIX_QUALITY_GREAT ) {
+						txtef COLOR_SKY_BLUE
+						txt lang(name(catitem) + "は" + itemname(ci) + "をぺろぺろと舐めた。", name(catitem) + " licks " + itemname(ci))
+						ibitmod ITEM_BIT_REMAKE, ci, 1
+						reftype = refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE)
+						if ( (sdata(SKILL_ATTR_MAG, rc) + sdata(SKILL_ATTR_MAG, catitem)) \ 2 == 0 ) {
+							if ( (sdata(SKILL_ATTR_MAG, rc) + sdata(SKILL_ATTR_LUC, CHARA_PLAYER)) \ 10 == 0 ) {
+								encadd ci, ENCHANT_RESISTANCE * EXT_ENCHANTMENT + SKILL_RES_FIRE, 101, 0, 1
+							}
+							if ( (sdata(SKILL_ATTR_MAG, rc) + sdata(SKILL_ATTR_LUC, CHARA_PLAYER)) \ 10 == 1 ) {
+								encadd ci, ENCHANT_RESISTANCE * EXT_ENCHANTMENT + SKILL_RES_COLD, 101, 0, 1
+							}
+							if ( (sdata(SKILL_ATTR_MAG, rc) + sdata(SKILL_ATTR_LUC, CHARA_PLAYER)) \ 10 == 2 ) {
+								encadd ci, ENCHANT_RESISTANCE * EXT_ENCHANTMENT + SKILL_RES_LIGHTNING, 101, 0, 1
+							}
+							if ( (sdata(SKILL_ATTR_MAG, rc) + sdata(SKILL_ATTR_LUC, CHARA_PLAYER)) \ 10 == 3 ) {
+								encadd ci, ENCHANT_RESISTANCE * EXT_ENCHANTMENT + SKILL_RES_DARKNESS, 101, 0, 1
+							}
+							if ( (sdata(SKILL_ATTR_MAG, rc) + sdata(SKILL_ATTR_LUC, CHARA_PLAYER)) \ 10 == 4 ) {
+								encadd ci, ENCHANT_RESISTANCE * EXT_ENCHANTMENT + SKILL_RES_MIND, 101, 0, 1
+							}
+							if ( (sdata(SKILL_ATTR_MAG, rc) + sdata(SKILL_ATTR_LUC, CHARA_PLAYER)) \ 10 == 5 ) {
+								encadd ci, ENCHANT_RESISTANCE * EXT_ENCHANTMENT + SKILL_RES_POISON, 101, 0, 1
+							}
+							if ( (sdata(SKILL_ATTR_MAG, rc) + sdata(SKILL_ATTR_LUC, CHARA_PLAYER)) \ 10 == 6 ) {
+								encadd ci, ENCHANT_RESISTANCE * EXT_ENCHANTMENT + SKILL_RES_NETHER, 101, 0, 1
+							}
+							if ( (sdata(SKILL_ATTR_MAG, rc) + sdata(SKILL_ATTR_LUC, CHARA_PLAYER)) \ 10 == 7 ) {
+								encadd ci, ENCHANT_RESISTANCE * EXT_ENCHANTMENT + SKILL_RES_SOUND, 101, 0, 1
+							}
+							if ( (sdata(SKILL_ATTR_MAG, rc) + sdata(SKILL_ATTR_LUC, CHARA_PLAYER)) \ 10 == 8 ) {
+								encadd ci, ENCHANT_RESISTANCE * EXT_ENCHANTMENT + SKILL_RES_NERVE, 101, 0, 1
+							}
+							if ( (sdata(SKILL_ATTR_MAG, rc) + sdata(SKILL_ATTR_LUC, CHARA_PLAYER)) \ 10 == 9 ) {
+								encadd ci, ENCHANT_RESISTANCE * EXT_ENCHANTMENT + SKILL_RES_CHAOS, 101, 0, 1
+							}
+						}
+						else {
+							if ( (sdata(SKILL_ATTR_MAG, rc) + sdata(SKILL_ATTR_LUC, CHARA_PLAYER)) \ 10 == 0 ) {
+								encadd ci, ENCHANT_RESISTANCE * EXT_ENCHANTMENT + SKILL_RES_MAGIC, 51, 0, 1
+							}
+							if ( (sdata(SKILL_ATTR_MAG, rc) + sdata(SKILL_ATTR_LUC, CHARA_PLAYER)) \ 10 == 1 ) {
+								encadd ci, ENCHANT_ATTRIBUTE * EXT_ENCHANTMENT + SKILL_ATTR_STR, 301, 0, 1
+							}
+							if ( (sdata(SKILL_ATTR_MAG, rc) + sdata(SKILL_ATTR_LUC, CHARA_PLAYER)) \ 10 == 2 ) {
+								encadd ci, ENCHANT_ATTRIBUTE * EXT_ENCHANTMENT + SKILL_ATTR_CON, 301, 0, 1
+							}
+							if ( (sdata(SKILL_ATTR_MAG, rc) + sdata(SKILL_ATTR_LUC, CHARA_PLAYER)) \ 10 == 3 ) {
+								encadd ci, ENCHANT_ATTRIBUTE * EXT_ENCHANTMENT + SKILL_ATTR_DEX, 301, 0, 1
+							}
+							if ( (sdata(SKILL_ATTR_MAG, rc) + sdata(SKILL_ATTR_LUC, CHARA_PLAYER)) \ 10 == 4 ) {
+								encadd ci, ENCHANT_ATTRIBUTE * EXT_ENCHANTMENT + SKILL_ATTR_PER, 301, 0, 1
+							}
+							if ( (sdata(SKILL_ATTR_MAG, rc) + sdata(SKILL_ATTR_LUC, CHARA_PLAYER)) \ 10 == 5 ) {
+								encadd ci, ENCHANT_ATTRIBUTE * EXT_ENCHANTMENT + SKILL_ATTR_LER, 301, 0, 1
+							}
+							if ( (sdata(SKILL_ATTR_MAG, rc) + sdata(SKILL_ATTR_LUC, CHARA_PLAYER)) \ 10 == 6 ) {
+								encadd ci, ENCHANT_ATTRIBUTE * EXT_ENCHANTMENT + SKILL_ATTR_WIL, 301, 0, 1
+							}
+							if ( (sdata(SKILL_ATTR_MAG, rc) + sdata(SKILL_ATTR_LUC, CHARA_PLAYER)) \ 10 == 7 ) {
+								encadd ci, ENCHANT_ATTRIBUTE * EXT_ENCHANTMENT + SKILL_ATTR_MAG, 301, 0, 1
+							}
+							if ( (sdata(SKILL_ATTR_MAG, rc) + sdata(SKILL_ATTR_LUC, CHARA_PLAYER)) \ 10 == 8 ) {
+								encadd ci, ENCHANT_ATTRIBUTE * EXT_ENCHANTMENT + SKILL_ATTR_CHA, 301, 0, 1
+							}
+							if ( (sdata(SKILL_ATTR_MAG, rc) + sdata(SKILL_ATTR_LUC, CHARA_PLAYER)) \ 10 == 9 ) {
+								encadd ci, ENCHANT_ATTRIBUTE * EXT_ENCHANTMENT + SKILL_ATTR_SPD, 201, 0, 1
+							}
+						}
+						animeload ANIMATION_FIZZLE, rc
+					}
+				}
+			}
+		}
+		if ( inv(INV_ITEM_EQUIP, ci) != 0 ) {
+			cdata(inv(INV_ITEM_EQUIP, ci), rc) = cdata(inv(INV_ITEM_EQUIP, ci), rc) / 10000 * 10000
+			inv(INV_ITEM_EQUIP, ci) = 0
+		}
+		inv(INV_ITEM_X, ci) = cdata(CDATA_X, rc)
+		inv(INV_ITEM_Y, ci) = cdata(CDATA_Y, rc)
+		itemturn ci
+		item_stack -1, ci
+		if ( stat == 0 ) {
+			ti = inv_getfreeid(-1)
+			if ( ti == (-1) ) {
+				break
+			}
+			item_copy ci, ti
+		}
+		inv(INV_ITEM_NUM, ci) = 0
+	loop
+	if ( (cdata(CDATA_ROLE, rc) >= ROLE_SHOP_MIN & cdata(CDATA_ROLE, rc) < ROLE_GUEST_MIN | cdata(CDATA_ROLE, rc) == ROLE_GUEST_MERCHANT) != 1 ) {
+		if ( cdata(CDATA_QUALITY, rc) >= FIX_QUALITY_MIRACLE | gdata(GDATA_FLAG_DUEL_TARGET) == (-2) | rnd(10) == 0 | rc < MAX_CHARA_FOLLOWER | cbit(CHARA_BIT_DROP_GOLD, rc) == 1 ) {
+			if ( cdata(CDATA_GOLD, rc) > 0 ) {
+				flt
+				itemcreate -1, ITEM_ID_GOLD_PIECE, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), cdata(CDATA_GOLD, rc) / 4
+				cdata(CDATA_GOLD, rc) -= cdata(CDATA_GOLD, rc) / (1 + 3 * (cbit(CHARA_BIT_DROP_GOLD, rc) == 0))
+			}
+		}
+	}
+	if ( cdata(CDATA_GOD, CHARA_PLAYER) == GOD_YACATECT ) {
+		if ( rnd(30) == 0 ) {
+			p = 0
+			flt calcobjlv(cdata(CDATA_LEVEL, tc)), calcfixlv(FIX_QUALITY_GOOD)
+			flttypemajor = FILTER_ITEM_POTION
+			flttypeminor = FILTER_NOTHING
+			itemcreate -1, ITEM_ID_DUMMY, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		}
+		if ( rnd(30) == 0 ) {
+			p = 0
+			flt calcobjlv(cdata(CDATA_LEVEL, tc)), calcfixlv(FIX_QUALITY_GOOD)
+			flttypemajor = FILTER_ITEM_SCROLL
+			flttypeminor = FILTER_NOTHING
+			itemcreate -1, ITEM_ID_DUMMY, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		}
+		if ( rnd(30) == 0 ) {
+			p = 0
+			flt calcobjlv(cdata(CDATA_LEVEL, tc)), calcfixlv(FIX_QUALITY_GOOD)
+			flttypemajor = FILTER_ITEM_SPELLBOOK
+			flttypeminor = FILTER_NOTHING
+			itemcreate -1, ITEM_ID_DUMMY, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		}
+		if ( rnd(30) == 0 ) {
+			p = 0
+			flt calcobjlv(cdata(CDATA_LEVEL, tc)), calcfixlv(FIX_QUALITY_GOOD)
+			flttypemajor = FILTER_GOLD
+			flttypeminor = FILTER_NOTHING
+			itemcreate -1, ITEM_ID_DUMMY, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		}
+		if ( rnd(30) == 0 ) {
+			p = 0
+			flt calcobjlv(cdata(CDATA_LEVEL, tc)), calcfixlv(FIX_QUALITY_GOOD)
+			flttypemajor = FILTER_ORE
+			flttypeminor = FILTER_NOTHING
+			itemcreate -1, ITEM_ID_DUMMY, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		}
+	}
+	_switch_val = refclass(rc, DBSPEC_CLASS_EQUIP_TYPE)
+	if ( _switch_val == EQUIP_TYPE_WARRIOR | _switch_sw ) {
+		_switch_sw = 0
+		if ( rnd(20) == 0 ) {
+			p = 0
+			flt calcobjlv(cdata(CDATA_LEVEL, tc)), calcfixlv(FIX_QUALITY_GOOD)
+			flttypemajor = FILTER_ITEM_POTION
+			flttypeminor = FILTER_NOTHING
+			itemcreate -1, ITEM_ID_DUMMY, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		}
+		goto *item_loot_SWEND1
+	}
+	if ( _switch_val == EQUIP_TYPE_THIEF | _switch_sw ) {
+		_switch_sw = 0
+		if ( rnd(20) == 0 ) {
+			p = 0
+			flt calcobjlv(cdata(CDATA_LEVEL, tc)), calcfixlv(FIX_QUALITY_GOOD)
+			flttypemajor = FILTER_ITEM_POTION
+			flttypeminor = FILTER_NOTHING
+			itemcreate -1, ITEM_ID_DUMMY, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		}
+		goto *item_loot_SWEND1
+	}
+	if ( _switch_val == EQUIP_TYPE_ARCHER | _switch_sw ) {
+		_switch_sw = 0
+		if ( rnd(20) == 0 ) {
+			p = 0
+			flt calcobjlv(cdata(CDATA_LEVEL, tc)), calcfixlv(FIX_QUALITY_GOOD)
+			flttypemajor = FILTER_ITEM_POTION
+			flttypeminor = FILTER_NOTHING
+			itemcreate -1, ITEM_ID_DUMMY, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		}
+		goto *item_loot_SWEND1
+	}
+	if ( _switch_val == EQUIP_TYPE_MAGE | _switch_sw ) {
+		_switch_sw = 0
+		if ( rnd(20) == 0 ) {
+			p = 0
+			flt calcobjlv(cdata(CDATA_LEVEL, tc)), calcfixlv(FIX_QUALITY_GOOD)
+			flttypemajor = FILTER_ITEM_SCROLL
+			flttypeminor = FILTER_NOTHING
+			itemcreate -1, ITEM_ID_DUMMY, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		}
+		if ( rnd(40) == 0 ) {
+			p = 0
+			flt calcobjlv(cdata(CDATA_LEVEL, tc)), calcfixlv(FIX_QUALITY_GOOD)
+			flttypemajor = FILTER_ITEM_SPELLBOOK
+			flttypeminor = FILTER_NOTHING
+			itemcreate -1, ITEM_ID_DUMMY, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		}
+		goto *item_loot_SWEND1
+	}
+	if ( _switch_val == EQUIP_TYPE_GUNNER | _switch_sw ) {
+		_switch_sw = 0
+		if ( rnd(20) == 0 ) {
+			p = 0
+			flt calcobjlv(cdata(CDATA_LEVEL, tc)), calcfixlv(FIX_QUALITY_GOOD)
+			flttypemajor = FILTER_ITEM_POTION
+			flttypeminor = FILTER_NOTHING
+			itemcreate -1, ITEM_ID_DUMMY, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		}
+		goto *item_loot_SWEND1
+	}
+	if ( _switch_val == EQUIP_TYPE_WARMAGE | _switch_sw ) {
+		_switch_sw = 0
+		if ( rnd(50) == 0 ) {
+			p = 0
+			flt calcobjlv(cdata(CDATA_LEVEL, tc)), calcfixlv(FIX_QUALITY_GOOD)
+			flttypemajor = FILTER_ITEM_SPELLBOOK
+			flttypeminor = FILTER_NOTHING
+			itemcreate -1, ITEM_ID_DUMMY, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		}
+		goto *item_loot_SWEND1
+	}
+*item_loot_SWEND1
+	_switch_val = refchara(cdata(CDATA_ID, rc), DBSPEC_CHARA_LOOT)
+	if ( _switch_val == LOOT_TYPE_HUMANOID | _switch_sw ) {
+		_switch_sw = 0
+		if ( rnd(40) == 0 ) {
+			p = 0
+			flt calcobjlv(cdata(CDATA_LEVEL, tc)), calcfixlv(FIX_QUALITY_GOOD)
+			flttypemajor = FILTER_ITEM_POTION
+			flttypeminor = FILTER_NOTHING
+			itemcreate -1, ITEM_ID_DUMMY, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		}
+		if ( rnd(40) == 0 ) {
+			p = 0
+			flt calcobjlv(cdata(CDATA_LEVEL, tc)), calcfixlv(FIX_QUALITY_GOOD)
+			flttypemajor = FILTER_ITEM_SCROLL
+			flttypeminor = FILTER_NOTHING
+			itemcreate -1, ITEM_ID_DUMMY, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		}
+		if ( rnd(40) == 0 ) {
+			p = 0
+			flt calcobjlv(cdata(CDATA_LEVEL, tc)), calcfixlv(FIX_QUALITY_GOOD)
+			flttypemajor = fsetwear(rnd(length(fsetwear)))
+			flttypeminor = FILTER_NOTHING
+			itemcreate -1, ITEM_ID_DUMMY, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		}
+		if ( rnd(40) == 0 ) {
+			p = 0
+			flt calcobjlv(cdata(CDATA_LEVEL, tc)), calcfixlv(FIX_QUALITY_GOOD)
+			flttypemajor = fsetweapon(rnd(length(fsetweapon)))
+			flttypeminor = FILTER_NOTHING
+			itemcreate -1, ITEM_ID_DUMMY, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		}
+		if ( rnd(20) == 0 ) {
+			p = 0
+			flt calcobjlv(cdata(CDATA_LEVEL, tc)), calcfixlv(FIX_QUALITY_GOOD)
+			flttypemajor = FILTER_GOLD
+			flttypeminor = FILTER_NOTHING
+			itemcreate -1, ITEM_ID_DUMMY, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		}
+		goto *item_loot_SWEND2
+	}
+	if ( _switch_val == LOOT_TYPE_ANIMAL | _switch_sw ) {
+		_switch_sw = 0
+		if ( gdata(STARTING_GDATA_FLAG + 372) == 0 & gdata(GDATA_FLAG_TALKING_USED) == 0 ) {
+			if ( rnd(20) == 0 ) {
+				p = 0
+				flt calcobjlv(cdata(CDATA_LEVEL, tc)), calcfixlv(FIX_QUALITY_GOOD)
+				flttypemajor = FILTER_REMAINS
+				flttypeminor = FILTER_NOTHING
+				itemcreate -1, ITEM_ID_DUMMY, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+				remain_make ci, rc
+			}
+		}
+		goto *item_loot_SWEND2
+	}
+	if ( _switch_val == LOOT_TYPE_INSECT | _switch_sw ) {
+		_switch_sw = 0
+		if ( gdata(STARTING_GDATA_FLAG + 372) == 0 & gdata(GDATA_FLAG_TALKING_USED) == 0 ) {
+			if ( rnd(20) == 0 ) {
+				p = 0
+				flt calcobjlv(cdata(CDATA_LEVEL, tc)), calcfixlv(FIX_QUALITY_GOOD)
+				flttypemajor = FILTER_REMAINS
+				flttypeminor = FILTER_NOTHING
+				itemcreate -1, ITEM_ID_DUMMY, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+				remain_make ci, rc
+			}
+		}
+		goto *item_loot_SWEND2
+	}
+	if ( _switch_val == LOOT_TYPE_LICH | _switch_sw ) {
+		_switch_sw = 0
+		if ( rnd(10) == 0 ) {
+			p = 0
+			flt calcobjlv(cdata(CDATA_LEVEL, tc)), calcfixlv(FIX_QUALITY_GOOD)
+			flttypemajor = FILTER_ACCESSORY_RING
+			flttypeminor = FILTER_NOTHING
+			itemcreate -1, ITEM_ID_DUMMY, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		}
+		if ( rnd(10) == 0 ) {
+			p = 0
+			flt calcobjlv(cdata(CDATA_LEVEL, tc)), calcfixlv(FIX_QUALITY_GOOD)
+			flttypemajor = FILTER_ACCESSORY_AMULET
+			flttypeminor = FILTER_NOTHING
+			itemcreate -1, ITEM_ID_DUMMY, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		}
+		if ( rnd(20) == 0 ) {
+			p = 0
+			flt calcobjlv(cdata(CDATA_LEVEL, tc)), calcfixlv(FIX_QUALITY_GOOD)
+			flttypemajor = FILTER_ITEM_SPELLBOOK
+			flttypeminor = FILTER_NOTHING
+			itemcreate -1, ITEM_ID_DUMMY, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		}
+		if ( rnd(10) == 0 ) {
+			p = 0
+			flt calcobjlv(cdata(CDATA_LEVEL, tc)), calcfixlv(FIX_QUALITY_GOOD)
+			flttypemajor = FILTER_ITEM_POTION
+			flttypeminor = FILTER_NOTHING
+			itemcreate -1, ITEM_ID_DUMMY, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		}
+		if ( rnd(10) == 0 ) {
+			p = 0
+			flt calcobjlv(cdata(CDATA_LEVEL, tc)), calcfixlv(FIX_QUALITY_GOOD)
+			flttypemajor = FILTER_ITEM_SCROLL
+			flttypeminor = FILTER_NOTHING
+			itemcreate -1, ITEM_ID_DUMMY, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		}
+		if ( rnd(20) == 0 ) {
+			p = 0
+			flt calcobjlv(cdata(CDATA_LEVEL, tc)), calcfixlv(FIX_QUALITY_GOOD)
+			flttypemajor = FILTER_CONTAINER
+			flttypeminor = FILTER_NOTHING
+			itemcreate -1, ITEM_ID_DUMMY, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		}
+		if ( rnd(10) == 0 ) {
+			p = 0
+			flt calcobjlv(cdata(CDATA_LEVEL, tc)), calcfixlv(FIX_QUALITY_GOOD)
+			flttypemajor = FILTER_GOLD
+			flttypeminor = FILTER_NOTHING
+			itemcreate -1, ITEM_ID_DUMMY, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		}
+		if ( rnd(10) == 0 ) {
+			p = 0
+			flt calcobjlv(cdata(CDATA_LEVEL, tc)), calcfixlv(FIX_QUALITY_GOOD)
+			flttypemajor = FILTER_ORE
+			flttypeminor = FILTER_NOTHING
+			itemcreate -1, ITEM_ID_DUMMY, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		}
+		goto *item_loot_SWEND2
+	}
+	if ( _switch_val == LOOT_TYPE_DRAKE | _switch_sw ) {
+		_switch_sw = 0
+		if ( rnd(5) == 0 ) {
+			p = 0
+			flt calcobjlv(cdata(CDATA_LEVEL, tc)), calcfixlv(FIX_QUALITY_GOOD)
+			flttypemajor = fsetwear(rnd(length(fsetwear)))
+			flttypeminor = FILTER_NOTHING
+			itemcreate -1, ITEM_ID_DUMMY, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		}
+		if ( rnd(5) == 0 ) {
+			p = 0
+			flt calcobjlv(cdata(CDATA_LEVEL, tc)), calcfixlv(FIX_QUALITY_GOOD)
+			flttypemajor = fsetweapon(rnd(length(fsetweapon)))
+			flttypeminor = FILTER_NOTHING
+			itemcreate -1, ITEM_ID_DUMMY, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		}
+		if ( rnd(20) == 0 ) {
+			p = 0
+			flt calcobjlv(cdata(CDATA_LEVEL, tc)), calcfixlv(FIX_QUALITY_GOOD)
+			flttypemajor = FILTER_CONTAINER
+			flttypeminor = FILTER_NOTHING
+			itemcreate -1, ITEM_ID_DUMMY, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		}
+		if ( rnd(4) == 0 ) {
+			p = 0
+			flt calcobjlv(cdata(CDATA_LEVEL, tc)), calcfixlv(FIX_QUALITY_GOOD)
+			flttypemajor = FILTER_GOLD
+			flttypeminor = FILTER_NOTHING
+			itemcreate -1, ITEM_ID_DUMMY, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		}
+		goto *item_loot_SWEND2
+	}
+	if ( _switch_val == LOOT_TYPE_DRAGON | _switch_sw ) {
+		_switch_sw = 0
+		if ( rnd(5) == 0 ) {
+			p = 0
+			flt calcobjlv(cdata(CDATA_LEVEL, tc)), calcfixlv(FIX_QUALITY_GOOD)
+			flttypemajor = fsetwear(rnd(length(fsetwear)))
+			flttypeminor = FILTER_NOTHING
+			itemcreate -1, ITEM_ID_DUMMY, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		}
+		if ( rnd(5) == 0 ) {
+			p = 0
+			flt calcobjlv(cdata(CDATA_LEVEL, tc)), calcfixlv(FIX_QUALITY_GOOD)
+			flttypemajor = fsetweapon(rnd(length(fsetweapon)))
+			flttypeminor = FILTER_NOTHING
+			itemcreate -1, ITEM_ID_DUMMY, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		}
+		if ( rnd(15) == 0 ) {
+			p = 0
+			flt calcobjlv(cdata(CDATA_LEVEL, tc)), calcfixlv(FIX_QUALITY_GOOD)
+			flttypemajor = FILTER_ITEM_SPELLBOOK
+			flttypeminor = FILTER_NOTHING
+			itemcreate -1, ITEM_ID_DUMMY, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		}
+		if ( rnd(5) == 0 ) {
+			p = 0
+			flt calcobjlv(cdata(CDATA_LEVEL, tc)), calcfixlv(FIX_QUALITY_GOOD)
+			flttypemajor = FILTER_ITEM_POTION
+			flttypeminor = FILTER_NOTHING
+			itemcreate -1, ITEM_ID_DUMMY, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		}
+		if ( rnd(5) == 0 ) {
+			p = 0
+			flt calcobjlv(cdata(CDATA_LEVEL, tc)), calcfixlv(FIX_QUALITY_GOOD)
+			flttypemajor = FILTER_ITEM_SCROLL
+			flttypeminor = FILTER_NOTHING
+			itemcreate -1, ITEM_ID_DUMMY, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		}
+		if ( rnd(10) == 0 ) {
+			p = 0
+			flt calcobjlv(cdata(CDATA_LEVEL, tc)), calcfixlv(FIX_QUALITY_GOOD)
+			flttypemajor = FILTER_CONTAINER
+			flttypeminor = FILTER_NOTHING
+			itemcreate -1, ITEM_ID_DUMMY, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		}
+		if ( rnd(4) == 0 ) {
+			p = 0
+			flt calcobjlv(cdata(CDATA_LEVEL, tc)), calcfixlv(FIX_QUALITY_GOOD)
+			flttypemajor = FILTER_GOLD
+			flttypeminor = FILTER_NOTHING
+			itemcreate -1, ITEM_ID_DUMMY, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		}
+		if ( rnd(4) == 0 ) {
+			p = 0
+			flt calcobjlv(cdata(CDATA_LEVEL, tc)), calcfixlv(FIX_QUALITY_GOOD)
+			flttypemajor = FILTER_ORE
+			flttypeminor = FILTER_NOTHING
+			itemcreate -1, ITEM_ID_DUMMY, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		}
+		goto *item_loot_SWEND2
+	}
+*item_loot_SWEND2
+	if ( gdata(STARTING_GDATA_FLAG + 372) == 0 & gdata(GDATA_FLAG_TALKING_USED) == 0 ) {
+		if ( rnd(40) == 0 ) {
+			p = 0
+			flt calcobjlv(cdata(CDATA_LEVEL, tc)), calcfixlv(FIX_QUALITY_GOOD)
+			flttypemajor = FILTER_REMAINS
+			flttypeminor = FILTER_NOTHING
+			itemcreate -1, ITEM_ID_DUMMY, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+			remain_make ci, rc
+		}
+	}
+	if ( gdata(GDATA_AREA) == AREA_SHOW_HOUSE ) {
+		cell_refresh cdata(CDATA_X, rc), cdata(CDATA_Y, rc)
+		return
+	}
+	if ( gdata(GDATA_AREA) != AREA_ARENA & cdata(CDATA_ROLE, rc) != ROLE_USER & rc >= MAX_CHARA_FOLLOWER ) {
+		if ( rnd(175) == 0 | gdata(GDATA_FLAG_DUEL_TARGET) == (-2) | cdata(CDATA_QUALITY, rc) == FIX_QUALITY_UNIQUE | cdata(CDATA_ID, rc) == CREATURE_ID_UNITDEAD_KING | cdata(CDATA_ID, rc) == CREATURE_ID_UNITDEAD_QUEEN | cdata(CDATA_ID, rc) == CREATURE_ID_UNITDEAD_JACK | cdata(CDATA_ID, rc) == CREATURE_ID_UNITDEAD_JOKER | cdata(CDATA_ID, rc) == CREATURE_ID_AILE_THE_ATTENDANT | (cdata(CDATA_QUALITY, rc) == FIX_QUALITY_MIRACLE & rnd(2) == 0) | (cdata(CDATA_QUALITY, rc) == FIX_QUALITY_GODLY & rnd(3) == 0) | (cdata(CDATA_GOD, CHARA_PLAYER) == GOD_YACATECT & rnd(35) == 0) ) {
+			flt
+			itemcreate -1, ITEM_ID_CARD, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+			inv(INV_ITEM_COL, ci) = cdata(CDATA_PIC, rc) \ COLOR_TINT_MULT + cdata(CDATA_CHARA_PIC, rc) * COLOR_TINT_MULT
+			inv(INV_ITEM_SUB_NAME, ci) = cdata(CDATA_ID, rc)
+			cell_refresh inv(INV_ITEM_X, ci), inv(INV_ITEM_Y, ci)
+		}
+		if ( gdata(STARTING_GDATA_FLAG + 372) == 0 & gdata(GDATA_FLAG_TALKING_USED) == 0 ) {
+			if ( rnd(175) == 0 | gdata(GDATA_FLAG_DUEL_TARGET) == (-2) | cdata(CDATA_QUALITY, rc) == FIX_QUALITY_UNIQUE | cdata(CDATA_ID, rc) == CREATURE_ID_UNITDEAD_KING | cdata(CDATA_ID, rc) == CREATURE_ID_UNITDEAD_QUEEN | cdata(CDATA_ID, rc) == CREATURE_ID_UNITDEAD_JACK | cdata(CDATA_ID, rc) == CREATURE_ID_UNITDEAD_JOKER | cdata(CDATA_ID, rc) == CREATURE_ID_AILE_THE_ATTENDANT | (cdata(CDATA_QUALITY, rc) == FIX_QUALITY_MIRACLE & rnd(2) == 0) | (cdata(CDATA_QUALITY, rc) == FIX_QUALITY_GODLY & rnd(3) == 0) | (cdata(CDATA_GOD, CHARA_PLAYER) == GOD_YACATECT & rnd(35) == 0) ) {
+				flt
+				itemcreate -1, ITEM_ID_FIGURINE, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+				inv(INV_ITEM_COL, ci) = cdata(CDATA_PIC, rc) \ COLOR_TINT_MULT + cdata(CDATA_CHARA_PIC, rc) * COLOR_TINT_MULT
+				inv(INV_ITEM_SUB_NAME, ci) = cdata(CDATA_ID, rc)
+				cell_refresh inv(INV_ITEM_X, ci), inv(INV_ITEM_Y, ci)
+			}
+		}
+	}
+	if ( gdata(GDATA_FLAG_DUEL_TARGET) == (-2) ) {
+		gdata(GDATA_FLAG_DUEL_TARGET) = -1
+	}
+	if ( cdata(CDATA_ROLE, rc) == ROLE_SHOP_WANDER ) {
+		flt
+		itemcreate -1, ITEM_ID_SHOPKEEPERS_TRUNK, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		inv(INV_ITEM_PARAM1, ci) = cdata(CDATA_ROLE_FILE_ID, rc)
+		inv(INV_ITEM_PROPERTY, ci) = PROP_SHOP
+	}
+	if ( rc >= MAX_CHARA_FOLLOWER ) {
+		if ( gdata(STARTING_GDATA_FLAG + 372) == 0 & gdata(GDATA_FLAG_TALKING_USED) == 0 ) {
+			if ( rollanatomy == 1 | cdata(CDATA_QUALITY, rc) >= FIX_QUALITY_MIRACLE | (adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_RANCH & cbit(CHARA_BIT_LIVESTOCK, rc) == 1 & cdata(CDATA_CONDITION_SICK, rc) == 0) ) {
+				situ = 0
+				ryou = 0
+				situ2 = 0
+				ryou2 = 0
+				if ( cdata(CDATA_LIVESTOCK_QUALITY, rc) >= 1 & cdata(CDATA_LIVESTOCK_QUALITY, rc) <= 3 ) {
+					situ = cdata(CDATA_LIVESTOCK_QUALITY, rc)
+				}
+				if ( cdata(CDATA_LIVESTOCK_QUALITY, rc) >= 7 & cdata(CDATA_LIVESTOCK_QUALITY, rc) <= 9 ) {
+					if ( rnd(cdata(CDATA_LIVESTOCK_QUALITY, rc) * cdata(CDATA_LIVESTOCK_QUALITY, rc)) > 30 ) {
+						ryou = 1
+					}
+				}
+				if ( cdata(CDATA_LIVESTOCK_QUALITY, rc) >= 4 & cdata(CDATA_LIVESTOCK_QUALITY, rc) <= 6 ) {
+					situ2 = cdata(CDATA_LIVESTOCK_QUALITY, rc)
+				}
+				if ( cdata(CDATA_LIVESTOCK_QUALITY, rc) >= 10 & cdata(CDATA_LIVESTOCK_QUALITY, rc) <= 12 ) {
+					if ( rnd(cdata(CDATA_LIVESTOCK_QUALITY, rc) * cdata(CDATA_LIVESTOCK_QUALITY, rc)) > 60 ) {
+						ryou2++
+					}
+					if ( rnd(cdata(CDATA_LIVESTOCK_QUALITY, rc) * cdata(CDATA_LIVESTOCK_QUALITY, rc)) > 60 ) {
+						ryou2++
+					}
+					if ( rnd(cdata(CDATA_LIVESTOCK_QUALITY, rc) * cdata(CDATA_LIVESTOCK_QUALITY, rc)) > 60 ) {
+						ryou2++
+					}
+				}
+				flt
+				itemcreate -1, ITEM_ID_CORPSE, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+				if ( adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_RANCH & cbit(CHARA_BIT_LIVESTOCK, rc) == 1 ) {
+					inv(INV_ITEM_LEVEL, ci) += limit(rnd((sdata(SKILL_NORMAL_ANATOMY, CHARA_PLAYER) + 1) / 40 + 2) + situ, 0, 5) + 5 + cdata(CDATA_SPRITE_SIZE_MILK, rc) + cdata(CDATA_BRUSH_LEVEL, rc)
+				}
+				else {
+					inv(INV_ITEM_LEVEL, ci) += cdata(CDATA_BRUSH_LEVEL, rc)
+				}
+				if ( adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_AMUR_CAGE ) {
+					inv(INV_ITEM_AMUR_CAGE, ci) = 1
+				}
+				remain_make ci, rc
+				if ( stat != 0 ) {
+					remain_make ci, rc
+					if ( adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_RANCH & cbit(CHARA_BIT_LIVESTOCK, rc) == 1 ) {
+						if ( sdata(SKILL_NORMAL_ANATOMY, CHARA_PLAYER) != 0 ) {
+							inv(INV_ITEM_NUM, ci) += rnd(1 + (sdata(SKILL_NORMAL_ANATOMY, CHARA_PLAYER) > cdata(CDATA_LEVEL, rc))) + ryou
+						}
+					}
+				}
+				if ( adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_RANCH & cbit(CHARA_BIT_LIVESTOCK, rc) == 1 ) {
+					flt
+					itemcreate -1, ITEM_ID_SKIN, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+					inv(INV_ITEM_LEVEL, ci) += limit(rnd((sdata(SKILL_NORMAL_ANATOMY, CHARA_PLAYER) + 1) / 40 + 2) + situ2, 0, 5) + 5 + cdata(CDATA_SPRITE_SIZE_MILK, rc) + cdata(CDATA_BRUSH_LEVEL, rc)
+					inv(INV_ITEM_NUM, ci) = 1 + rnd(1 + (sdata(SKILL_NORMAL_ANATOMY, CHARA_PLAYER) > cdata(CDATA_LEVEL, rc))) + ryou2
+				}
+				if ( stat != 0 ) {
+					remain_make ci, rc
+				}
+			}
+		}
+	}
+	if ( cdata(CDATA_GOD, CHARA_PLAYER) == GOD_YACATECT & rnd(6) == 0 ) {
+		if ( gdata(STARTING_GDATA_FLAG + 372) == 0 & gdata(GDATA_FLAG_TALKING_USED) == 0 ) {
+			flt
+			flttypemajor = FILTER_REMAINS
+			itemcreate -1, ITEM_ID_DUMMY, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+			remain_make ci, rc
+		}
+	}
+	lootrich = -1
+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_RICH_PERSON ) {
+		lootrich = 8
+	}
+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_NOBLE_CHILD ) {
+		lootrich = 4
+	}
+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_TOURIST ) {
+		lootrich = 2
+	}
+	if ( gdata(GDATA_FLAG_TALKING_USED) == 100 ) {
+		lootrich = -1
+	}
+	if ( lootrich != (-1) ) {
+		repeat lootrich
+			flt calcobjlv(cdata(CDATA_LEVEL, rc))
+			flttypeminor = FILTER_ORE_GEM
+			itemcreate -1, ITEM_ID_DUMMY, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		loop
+		if ( rnd(3) == 0 ) {
+			flt
+			itemcreate -1, ITEM_ID_WALLET, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		}
+	}
+	drop = -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_VESDA_THE_FIRE_DRAGON ) {
+		drop = ITEM_ID_GLOVES_OF_VESDA, -1
+	}
+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_FRISIA_THE_CAT_QUEEN | cdata(CDATA_ID, rc) == CREATURE_ID_UTIMA_THE_DESTROYER_OF_XEREN | cdata(CDATA_ID, rc) == CREATURE_ID_AZZRSSIL_THE_IMPURE ) {
+		drop = ITEM_ID_ARTIFACT_SEED, ITEM_ID_ARTIFACT_SEED, -1
+	}
+	if ( gdata(GDATA_AREA) == AREA_PYRAMID ) {
+		if ( cdata(CDATA_ID, rc) == CREATURE_ID_TUWEN_THE_MASTER_OF_THE_PYRAMID ) {
+			drop = ITEM_ID_STATUE_OPATOS, ITEM_ID_PLATINUM_COIN, ITEM_ID_PLATINUM_COIN, ITEM_ID_PLATINUM_COIN, ITEM_ID_PLATINUM_COIN, ITEM_ID_TREASURE_MAP, -1
+		}
+	}
+	repeat 10
+		if ( drop(cnt) == (-1) ) {
+			break
+		}
+		flt
+		itemcreate -1, drop(cnt), cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+	loop
+	if ( gdata(GDATA_AREA) != AREA_AMUR_CAGE ) {
+		if ( rnd(100) == 0 ) {
+			if ( gdata(GDATA_FLAG_RARE_DROP) == 100 ) {
+				if ( cdata(CDATA_ID, rc) == CREATURE_ID_VALIANT_WYVERN | cdata(CDATA_ID, rc) == CREATURE_ID_GAGU | cdata(CDATA_ID, rc) == CREATURE_ID_SKY_GOLEM | cdata(CDATA_ID, rc) == CREATURE_ID_DRAGON_BAT | cdata(CDATA_ID, rc) == CREATURE_ID_GIRAFFE ) {
+					flt
+					itemcreate -1, ITEM_ID_EVITEM, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+					if ( stat != 0 ) {
+						inv(INV_ITEM_PARAM1, ci) = EVITEM_HEART_ANOTHER
+					}
+				}
+				if ( cdata(CDATA_ID, rc) == CREATURE_ID_BLACK_BAPTIST ) {
+					flt
+					itemcreate -1, ITEM_ID_EVITEM, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+					if ( stat != 0 ) {
+						inv(INV_ITEM_PARAM1, ci) = EVITEM_HEART_MAGIC
+					}
+				}
+				if ( cdata(CDATA_ID, rc) == CREATURE_ID_KING ) {
+					flt
+					itemcreate -1, ITEM_ID_EVITEM, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+					if ( stat != 0 ) {
+						inv(INV_ITEM_PARAM1, ci) = EVITEM_HEART_KING
+					}
+				}
+				if ( cdata(CDATA_ID, rc) == CREATURE_ID_XEREN_ELECTRIC_TANK ) {
+					flt
+					itemcreate -1, ITEM_ID_EVITEM, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+					if ( stat != 0 ) {
+						inv(INV_ITEM_PARAM1, ci) = EVITEM_HEART_MACHINE
+					}
+				}
+				if ( cdata(CDATA_ID, rc) == CREATURE_ID_ELEMENT_DRAGON | cdata(CDATA_ID, rc) == CREATURE_ID_FIVE_HEAD_GOD | cdata(CDATA_ID, rc) == CREATURE_ID_ATLAS ) {
+					flt
+					itemcreate -1, ITEM_ID_EVITEM, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+					if ( stat != 0 ) {
+						inv(INV_ITEM_PARAM1, ci) = EVITEM_HEART_GOD
+					}
+				}
+			}
+		}
+		if ( rnd(70) == 0 ) {
+			if ( gdata(GDATA_FLAG_RARE_DROP) == 100 ) {
+				if ( cdata(CDATA_ID, rc) == CREATURE_ID_BIG_SISTER | cdata(CDATA_ID, rc) == CREATURE_ID_COCKATRICE | cdata(CDATA_ID, rc) == CREATURE_ID_CHUPACABURA | cdata(CDATA_ID, rc) == CREATURE_ID_CAMOUFLAGED_IMP ) {
+					flt
+					itemcreate -1, ITEM_ID_EVITEM, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+					if ( stat != 0 ) {
+						inv(INV_ITEM_PARAM1, ci) = EVITEM_HEART_ANOTHER
+					}
+				}
+				if ( cdata(CDATA_ID, rc) == CREATURE_ID_BLADE_KING ) {
+					flt
+					itemcreate -1, ITEM_ID_EVITEM, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+					if ( stat != 0 ) {
+						inv(INV_ITEM_PARAM1, ci) = EVITEM_HEART_KING
+					}
+				}
+				if ( cdata(CDATA_ID, rc) == CREATURE_ID_XEREN_ELECTRIC_TANK ) {
+					flt
+					itemcreate -1, ITEM_ID_EVITEM, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+					if ( stat != 0 ) {
+						inv(INV_ITEM_PARAM1, ci) = EVITEM_HEART_MACHINE
+					}
+				}
+			}
+		}
+		if ( rnd(50) == 0 ) {
+			if ( gdata(GDATA_FLAG_RARE_DROP) == 100 ) {
+				if ( cdata(CDATA_ID, rc) == CREATURE_ID_TYRANNOBREAKER | cdata(CDATA_ID, rc) == CREATURE_ID_SHADOW ) {
+					flt
+					itemcreate -1, ITEM_ID_EVITEM, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+					if ( stat != 0 ) {
+						inv(INV_ITEM_PARAM1, ci) = EVITEM_HEART_ANOTHER
+					}
+				}
+				if ( cdata(CDATA_ID, rc) == CREATURE_ID_KIRIN ) {
+					flt
+					itemcreate -1, ITEM_ID_EVITEM, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+					if ( stat != 0 ) {
+						inv(INV_ITEM_PARAM1, ci) = EVITEM_HEART_KING
+					}
+				}
+				if ( cdata(CDATA_ID, rc) == CREATURE_ID_DEMONS_RULER ) {
+					flt
+					itemcreate -1, ITEM_ID_EVITEM, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+					if ( stat != 0 ) {
+						inv(INV_ITEM_PARAM1, ci) = EVITEM_HEART_MAGIC
+					}
+				}
+			}
+		}
+		if ( cdata(CDATA_ID, rc) == CREATURE_ID_KING_COCKROACH ) {
+			flt
+			itemcreate -1, ITEM_ID_EVITEM, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+			if ( stat != 0 ) {
+				inv(INV_ITEM_PARAM1, ci) = EVITEM_HEART_KING
+			}
+		}
+		if ( cdata(CDATA_ID, rc) == CREATURE_ID_FRISIA_THE_CAT_QUEEN ) {
+			flt
+			itemcreate -1, ITEM_ID_EVITEM, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+			if ( stat != 0 ) {
+				inv(INV_ITEM_PARAM1, ci) = EVITEM_HEART_KING
+			}
+		}
+		if ( cdata(CDATA_ID, rc) == CREATURE_ID_UTIMA_THE_DESTROYER_OF_XEREN ) {
+			flt
+			itemcreate -1, ITEM_ID_EVITEM, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+			if ( stat != 0 ) {
+				inv(INV_ITEM_PARAM1, ci) = EVITEM_HEART_MACHINE
+			}
+		}
+		if ( cdata(CDATA_ID, rc) == CREATURE_ID_YERLESWOOD_THE_SAVAGE_MACHINE ) {
+			flt
+			itemcreate -1, ITEM_ID_EVITEM, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+			if ( stat != 0 ) {
+				inv(INV_ITEM_PARAM1, ci) = EVITEM_HEART_MACHINE
+			}
+		}
+		if ( cdata(CDATA_ID, rc) == CREATURE_ID_SIVA_THE_DESTRUCTION ) {
+			flt
+			itemcreate -1, ITEM_ID_EVITEM, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+			if ( stat != 0 ) {
+				inv(INV_ITEM_PARAM1, ci) = EVITEM_HEART_GOD
+			}
+			flt
+			itemcreate -1, ITEM_ID_DOG_WHISTLE, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		}
+		if ( cdata(CDATA_ID, rc) == CREATURE_ID_LULWY | cdata(CDATA_ID, rc) == CREATURE_ID_EHEKATL | cdata(CDATA_ID, rc) == CREATURE_ID_OPATOS | cdata(CDATA_ID, rc) == CREATURE_ID_KUMIROMI | cdata(CDATA_ID, rc) == CREATURE_ID_MANI | cdata(CDATA_ID, rc) == CREATURE_ID_JURE | cdata(CDATA_ID, rc) == CREATURE_ID_LULWY | cdata(CDATA_ID, rc) == CREATURE_ID_YACATECT | cdata(CDATA_ID, rc) == CREATURE_ID_ITZPALT | cdata(CDATA_ID, rc) == CREATURE_ID_ESTORK_THE_DOGGOD | cdata(CDATA_ID, rc) == CREATURE_ID_ENTHUMESIS ) {
+			flt
+			itemcreate -1, ITEM_ID_EVITEM, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+			if ( stat != 0 ) {
+				inv(INV_ITEM_PARAM1, ci) = EVITEM_HEART_GOD
+			}
+		}
+		if ( cdata(CDATA_ID, rc) == CREATURE_ID_AZZRSSIL_THE_IMPURE ) {
+			flt
+			itemcreate -1, ITEM_ID_EVITEM, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+			if ( stat != 0 ) {
+				inv(INV_ITEM_PARAM1, ci) = EVITEM_HEART_MAGIC
+			}
+		}
+		if ( cdata(CDATA_ID, rc) == CREATURE_ID_ULZASSIL_THE_DEAD_EMPEROR ) {
+			flt
+			itemcreate -1, ITEM_ID_EVITEM, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+			if ( stat != 0 ) {
+				inv(INV_ITEM_PARAM1, ci) = EVITEM_HEART_MAGIC
+			}
+		}
+		if ( cdata(CDATA_LEVEL, rc) > 29 ) {
+			if ( rnd(400) == 0 ) {
+				if ( gdata(GDATA_FLAG_RARE_DROP) == 100 ) {
+					flt
+					itemcreate -1, ITEM_ID_EVITEM, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+					if ( stat != 0 ) {
+						inv(INV_ITEM_PARAM1, ci) = EVITEM_HEART_EVOLUTION
+					}
+				}
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_WILD_RABBIT ) {
+		if ( rnd(30) == 0 ) {
+			if ( gdata(GDATA_FLAG_RARE_DROP) == 100 ) {
+				flt
+				itemcreate -1, ITEM_ID_RABBITS_TAIL, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_LOMIAS_THE_MESSENGER_FROM_VINDALE ) {
+		if ( rnd(4) == 0 ) {
+			flt
+			itemcreate -1, ITEM_ID_SECRET_EXP_LOMIAS, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		}
+	}
+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_GANGSTER ) {
+		if ( rnd(6) == 0 ) {
+			flt
+			itemcreate -1, ITEM_ID_CHEWING_GUM, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		}
+	}
+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_LESSER_MUMMY | cdata(CDATA_ID, rc) == CREATURE_ID_MUMMY | cdata(CDATA_ID, rc) == CREATURE_ID_GREATER_MUMMY ) {
+		if ( rnd(90) == 0 ) {
+			flt
+			itemcreate -1, ITEM_ID_BOOK_RESURRECTION, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		}
+	}
+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_CUPID_OF_LOVE ) {
+		if ( rnd(14) == 0 ) {
+			if ( gdata(GDATA_FLAG_RARE_DROP) == 100 ) {
+				flt
+				itemcreate -1, ITEM_ID_HAPPY_BED, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_HERMIT_CRAB ) {
+		if ( rnd(30) == 0 ) {
+			if ( gdata(GDATA_FLAG_RARE_DROP) == 100 ) {
+				flt
+				itemcreate -1, ITEM_ID_UNKNOWN_SHELL, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, rc) >= CREATURE_ID_ROGUE_BOSS & cdata(CDATA_ID, rc) <= CREATURE_ID_ROGUE_WIZARD ) {
+		if ( rnd(60) == 0 ) {
+			flt
+			itemcreate -1, ITEM_ID_BLUE_CAPSULE_DRAG, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		}
+	}
+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_EXECUTIONER | cdata(CDATA_ID, rc) == CREATURE_ID_MESSENGER_OF_DEATH ) {
+		if ( rnd(90) == 0 ) {
+			flt
+			itemcreate -1, ITEM_ID_SCROLL_CONTINGENCY, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		}
+	}
+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_DEFORMED_EYE | cdata(CDATA_ID, rc) == CREATURE_ID_IMPURE_EYE ) {
+		if ( rnd(30) == 0 ) {
+			if ( gdata(GDATA_FLAG_RARE_DROP) == 100 ) {
+				flt
+				itemcreate -1, ITEM_ID_POTION_EVOLUTION, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_GWEN_THE_INNOCENT | cdata(CDATA_ID, rc) == CREATURE_ID_GWEN_THE_PITILESS ) {
+		if ( rnd(50) == 0 ) {
+			flt
+			itemcreate -1, ITEM_ID_SECRET_TREASURE, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+			if ( stat != 0 ) {
+				inv(INV_ITEM_PARAM1, ci) = 169
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_FAIRY ) {
+		if ( rnd(20) == 0 ) {
+			if ( gdata(GDATA_FLAG_RARE_DROP) == 100 ) {
+				flt
+				itemcreate -1, ITEM_ID_SECRET_EXP_KUMIROMI, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_NOEL_THE_BOMBER ) {
+		if ( gdata(GDATA_FLAG_SUB_NUKE) == 1000 ) {
+			if ( rnd(25) == 0 ) {
+				flt
+				itemcreate -1, ITEM_ID_SECRET_TREASURE, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+				if ( stat != 0 ) {
+					inv(INV_ITEM_PARAM1, ci) = 162
+				}
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_MINE_DOG ) {
+		if ( rnd(3) == 0 ) {
+			flt
+			itemcreate -1, ITEM_ID_MINE, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		}
+	}
+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_IMP | cdata(CDATA_ID, rc) == CREATURE_ID_NETHER_IMP | cdata(CDATA_ID, rc) == CREATURE_ID_CHAOS_IMP ) {
+		if ( rnd(60) == 0 ) {
+			flt
+			itemcreate -1, ITEM_ID_SCROLL_NAME, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		}
+	}
+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_ROGUE_BOSS ) {
+		repeat 2 + rnd(4)
+			flt cdata(CDATA_LEVEL, rc), 2
+			flttypemajor = FILTER_CARGO_TRADE
+			itemcreate -1, ITEM_ID_DUMMY, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+			if ( inv(INV_ITEM_VALUE, ci) < 800 ) {
+				inv(INV_ITEM_NUM, ci) = rnd(5) + 1
+			}
+		loop
+	}
+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_PLATINA_BELL ) {
+		flt
+		itemcreate -1, ITEM_ID_PLATINUM_COIN, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 1 + rnd(3)
+		if ( rnd(2) ) {
+			flt
+			itemcreate -1, ITEM_ID_SMALL_MEDAL, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		}
+	}
+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_GOLD_BELL ) {
+		flt
+		itemcreate -1, ITEM_ID_GOLD_PIECE, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 2500 + rnd(cdata(CDATA_FAME, CHARA_PLAYER) + 1000)
+	}
+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_THE_LEOPARD_WARRIOR | cdata(CDATA_ID, rc) == CREATURE_ID_SILVIA_THE_PRINCESS ) {
+		repeat 12
+			flt
+			nostack = 1
+			itemcreate -1, ITEM_ID_TOMATO, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+			if ( rnd(2) ) {
+				if ( stat != 0 ) {
+					inv(INV_ITEM_ROT, ci) = -1
+					inv(INV_ITEM_PIC, ci) = xy2pic(6, 10)
+				}
+			}
+		loop
+	}
+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_CHESTNUT_GIANT ) {
+		repeat 10
+			flt
+			nostack = 1
+			itemcreate -1, ITEM_ID_CHESTNUT, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		loop
+	}
+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_METAMORPHOSE ) {
+		if ( rnd(20) == 0 ) {
+			if ( gdata(GDATA_FLAG_RARE_DROP) == 100 ) {
+				flt
+				itemcreate -1, ITEM_ID_ENERGY_CRYSTAL_MATRIX, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_QUANTUM_CREATURE ) {
+		if ( rnd(2) == 0 ) {
+			flt
+			itemcreate -1, ITEM_ID_SCHRODINGERS_CAT, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		}
+	}
+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_BELL_OF_TERMINATION ) {
+		if ( rnd(2) == 0 ) {
+			flt
+			itemcreate -1, ITEM_ID_CARAMEL_OF_TERMINATION, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		}
+	}
+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_EXOSSIL_THE_CHAOS_WING ) {
+		if ( gdata(GDATA_AREA) == AREA_CHAOS_SHRINE ) {
+			flt
+			itemcreate -1, ITEM_ID_STATUE_ITZPALT, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		}
+	}
+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_GRIEF_SHIELD ) {
+		if ( rnd(20) == 0 ) {
+			if ( gdata(GDATA_FLAG_RARE_DROP) == 100 ) {
+				flt
+				itemcreate -1, ITEM_ID_SEALED_SHIELD, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_FIRE_DRAKE | cdata(CDATA_ID, rc) == CREATURE_ID_ICE_DRAKE | cdata(CDATA_ID, rc) == CREATURE_ID_VIASHIVAN | cdata(CDATA_ID, rc) == CREATURE_ID_CURSE_DRAKE ) {
+		if ( rnd(40) == 0 ) {
+			if ( gdata(GDATA_FLAG_RARE_DROP) == 100 ) {
+				flt
+				itemcreate -1, ITEM_ID_DRAKE_ROD, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_WAR_SPIRIT | cdata(CDATA_ID, rc) == CREATURE_ID_MAGIC_SPIRIT | cdata(CDATA_ID, rc) == CREATURE_ID_PUDDING_SPIRIT | cdata(CDATA_ID, rc) == CREATURE_ID_GUN_SPIRIT ) {
+		if ( cbit(CHARA_BIT_SUMMONED, rc) != 1 ) {
+			if ( rnd(20) == 0 ) {
+				if ( gdata(GDATA_FLAG_RARE_DROP) == 100 ) {
+					flt
+					itemcreate -1, ITEM_ID_BLUE_SPIRIT, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+				}
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_WEREWOLF ) {
+		if ( rnd(2) == 0 ) {
+			if ( mdata(MDATA_TYPE) == MAP_TYPE_TOWN ) {
+				flt
+				itemcreate -1, ITEM_ID_DISGUISE_SET, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+				flt
+				itemcreate -1, ITEM_ID_PLATINUM_COIN, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_MANTICORE ) {
+		if ( rnd(2) == 0 ) {
+			flt
+			itemcreate -1, ITEM_ID_DUEL_GLOVE, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_CURSED
+		}
+	}
+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_LITTLE_GIRL ) {
+		if ( rnd(10) == 0 ) {
+			flt
+			itemcreate -1, ITEM_ID_SOUP_OF_WONDERLAND, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+		}
+	}
+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_THE_KING_IN_YELLOW ) {
+		if ( rnd(20) == 0 ) {
+			flt
+			itemcreate -1, ITEM_ID_B_JERKY, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+		}
+	}
+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_SUNBARARIAN ) {
+		if ( rnd(15) == 0 ) {
+			if ( gdata(GDATA_FLAG_RARE_DROP) == 100 ) {
+				flt
+				itemcreate -1, ITEM_ID_SUNBARARIA_HELM, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_URCAGUARY ) {
+		flt
+		itemcreate -1, ITEM_ID_DUMBBELL_OF_OPATOS, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+	}
+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_KARAVIKA ) {
+		flt
+		itemcreate -1, ITEM_ID_GLASSES_OF_YACATECT, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+	}
+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_GARZIEM ) {
+		flt
+		itemcreate -1, ITEM_ID_VERY_PISTOL_OF_MANI, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+	}
+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_ROVID ) {
+		flt
+		itemcreate -1, ITEM_ID_AMULET_OF_JURE, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+	}
+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_SINAHA ) {
+		flt
+		itemcreate -1, ITEM_ID_MUG_OF_EHEKATL, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+	}
+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_ARASIEL ) {
+		flt
+		itemcreate -1, ITEM_ID_CANDLE_OF_LULWY, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+	}
+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_AMURDAD ) {
+		flt
+		itemcreate -1, ITEM_ID_SCISSORS_OF_KUMIROMI, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+	}
+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_SOPHIA_THE_WISE ) {
+		flt
+		itemcreate -1, ITEM_ID_BOOKMARK_OF_ITZPALT, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+	}
+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_13TH_STEP_GHOST ) {
+		flt
+		itemcreate -1, ITEM_ID_UPSTAIRS, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+	}
+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_NINE_HEAD_DRAGON_THE_ABYSS ) {
+		flt
+		itemcreate -1, ITEM_ID_SCROLL_ESCAPE, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_BLESSED
+	}
+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_KUROYA_THE_LOOKING_UNIVERSE ) {
+		if ( gdata(GDATA_FLAG_SUB_SOCKS_THIEF) == 11 ) {
+			gdata(GDATA_FLAG_SUB_SOCKS_THIEF) = 12
+			flt
+			itemcreate -1, ITEM_ID_SOCKS, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 10
+		}
+	}
+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_ARKHAI ) {
+		if ( cdata(CDATA_ROLE, rc) != ROLE_CITIZEN & cdata(CDATA_ROLE, rc) != ROLE_SPECIAL ) {
+			if ( rnd(40) == 0 ) {
+				if ( gdata(GDATA_FLAG_RARE_DROP) == 100 ) {
+					flt
+					itemcreate -1, ITEM_ID_ASTRAL_LIGHT_PEN, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+				}
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_DOMINION ) {
+		if ( cdata(CDATA_ROLE, rc) != ROLE_CITIZEN & cdata(CDATA_ROLE, rc) != ROLE_SPECIAL ) {
+			if ( rnd(30) == 0 ) {
+				if ( gdata(GDATA_FLAG_RARE_DROP) == 100 ) {
+					flt
+					itemcreate -1, ITEM_ID_ASTRAL_LIGHT_PEN, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+				}
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_SERAPH ) {
+		if ( cdata(CDATA_ROLE, rc) != ROLE_CITIZEN & cdata(CDATA_ROLE, rc) != ROLE_SPECIAL ) {
+			if ( rnd(20) == 0 ) {
+				if ( gdata(GDATA_FLAG_RARE_DROP) == 100 ) {
+					flt
+					itemcreate -1, ITEM_ID_ASTRAL_LIGHT_PEN, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+				}
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_MAN_EATER_FLOWER | cdata(CDATA_ID, rc) == CREATURE_ID_CHAOS_FLOWER ) {
+		if ( rnd(30) == 0 ) {
+			if ( gdata(GDATA_FLAG_RARE_DROP) == 100 ) {
+				flt
+				itemcreate -1, ITEM_ID_IVY_SPINE, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_GIANT_EATER_FLOWER ) {
+		if ( rnd(20) == 0 ) {
+			if ( gdata(GDATA_FLAG_RARE_DROP) == 100 ) {
+				flt
+				itemcreate -1, ITEM_ID_IVY_SPINE, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_KAMIKAZE_SAMURAI ) {
+		if ( rnd(30) == 0 ) {
+			if ( gdata(GDATA_FLAG_RARE_DROP) == 100 ) {
+				flt
+				itemcreate -1, ITEM_ID_HARAKIRI, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_LION ) {
+		if ( rnd(80) == 0 ) {
+			if ( gdata(GDATA_FLAG_RARE_DROP) == 100 ) {
+				flt
+				itemcreate -1, ITEM_ID_NUCLEAR_DEAD_LION, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_BLAZE_LION ) {
+		if ( rnd(50) == 0 ) {
+			flt
+			itemcreate -1, ITEM_ID_NUCLEAR_DEAD_LION, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		}
+	}
+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_AROMA_LOCARIS ) {
+		if ( cdata(CDATA_SEX, rc) == 1 ) {
+			flt
+			itemcreate -1, ITEM_ID_ESSENTIAL_OIL, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		}
+	}
+	cell_refresh cdata(CDATA_X, rc), cdata(CDATA_Y, rc)
+	if ( cdata(CDATA_ROLE, rc) == ROLE_ADVENTURER ) {
+		gosub *supplyEquip
+	}
+	return
+
+*item_rot
+	i = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12
+	repeat MAX_CHARA_TOTAL + 1
+		if ( cnt == MAX_CHARA_TOTAL ) {
+			p = -1
+		}
+		else {
+			p = cnt
+			if ( cdata(CDATA_EXIST, p) == CHAR_STATE_DEAD ) {
+				continue
+			}
+		}
+		inv_getheader p
+		repeat invrange, invhead
+			if ( inv(INV_ITEM_NUM, cnt) == 0 ) {
+				continue
+			}
+
+			if ( p == (-1) ) {
+				if ( inv(INV_ITEM_MATERIAL, cnt) == ITEM_MATERIAL_RAW ) {
+					if ( inv(INV_ITEM_ROT, cnt) > 0 ) {
+						if ( inv(INV_ITEM_PROPERTY, cnt) <= PROP_NONE ) {
+							if ( inv(INV_ITEM_PARAM1, cnt) / 1000 == 6 & inv(INV_ITEM_PARAM2, cnt) == 0 ) {
+								if ( chipm(CHIPM_ROLE, map(inv(INV_ITEM_X, cnt), inv(INV_ITEM_Y, cnt), 0)) == MAP_CHIP_ROLE_WATER ) {
+									inv(INV_ITEM_ROT, cnt) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 + 72
+									continue
+								}
+							}
+						}
+					}
+				}
+			}
+			if ( inv(INV_ITEM_MATERIAL, cnt) == ITEM_MATERIAL_RAW ) {
+				if ( inv(INV_ITEM_ROT, cnt) > 0 ) {
+					if ( inv(INV_ITEM_ROT, cnt) <= i ) {
+						if ( inv(INV_ITEM_PROPERTY, cnt) <= PROP_NONE ) {
+							if ( ibit(ITEM_BIT_ANTISEPTIC, cnt) == 1 ) {
+								continue
+							}
+							if ( adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_SHOP & cnt >= RANGE_INV2 ) {
+								workerrot = getworker(gdata(GDATA_AREA))
+								if ( workerrot != (-1) ) {
+									workerrot = -1
+									continue
+								}
+							}
+							if ( inv(INV_ITEM_PIC, cnt) == xy2pic(30, 33) ) {
+								inv(INV_ITEM_COL, cnt) = COLOR_DEFAULT
+							}
+							if ( p == (-1) ) {
+								if ( inv(INV_ITEM_ID, cnt) == ITEM_ID_CORPSE | inv(INV_ITEM_PARAM1, cnt) / 1000 == 2 | inv(INV_ITEM_PARAM1, cnt) / 1000 == 3 | inv(INV_ITEM_PARAM1, cnt) / 1000 == 6 ) {
+									if ( chipm(CHIPM_ROLE, map(inv(INV_ITEM_X, cnt), inv(INV_ITEM_Y, cnt), 0)) == MAP_CHIP_ROLE_DRYROCK ) {
+										if ( gdata(GDATA_WEATHER) != WEATHER_CLEAR ) {
+											continue
+										}
+										txtmore
+										txt lang(itemname(cnt) + "は上手い具合に干された。", itemname(cnt) + is2(inv(INV_ITEM_NUM, cnt)) + " dried up in the sun.")
+										if ( inv(INV_ITEM_ID, cnt) == ITEM_ID_CORPSE ) {
+											inv(INV_ITEM_PARAM3, cnt) = 0
+											inv(INV_ITEM_PIC, cnt) = xy2pic(7, 10)
+											inv(INV_ITEM_ID, cnt) = ITEM_ID_JERKY
+											inv(INV_ITEM_PARAM1, cnt) = 0
+											inv(INV_ITEM_PARAM2, cnt) = 4
+											inv(INV_ITEM_WEIGHT, cnt) = 100
+											inv(INV_ITEM_LEVEL, cnt) = 0
+											inv(INV_ITEM_STATUS, cnt) = ITEM_STATUS_NORMAL
+											ibitmod ITEM_BIT_HERBED_IN, cnt, 0
+											inv(INV_ITEM_NUM, cnt) = inv(INV_ITEM_NUM, cnt) * 5
+											cell_refresh inv(INV_ITEM_X, cnt), inv(INV_ITEM_Y, cnt)
+										}
+										if ( inv(INV_ITEM_PARAM1, cnt) / 1000 == 2 ) {
+											inv(INV_ITEM_SUB_NAME, cnt) = 0
+											inv(INV_ITEM_PARAM3, cnt) = 0
+											inv(INV_ITEM_PIC, cnt) = xy2pic(7, 10)
+											inv(INV_ITEM_COL, cnt) = COLOR_GREEN
+											inv(INV_ITEM_ID, cnt) = ITEM_ID_DRIED_VEGETABLE
+											inv(INV_ITEM_PARAM1, cnt) = 0
+											inv(INV_ITEM_PARAM2, cnt) = 4
+											inv(INV_ITEM_WEIGHT, cnt) = 100
+											inv(INV_ITEM_LEVEL, cnt) = 0
+											inv(INV_ITEM_STATUS, cnt) = ITEM_STATUS_NORMAL
+											ibitmod ITEM_BIT_HERBED_IN, cnt, 0
+											inv(INV_ITEM_NUM, cnt) = inv(INV_ITEM_NUM, cnt) * 5
+											cell_refresh inv(INV_ITEM_X, cnt), inv(INV_ITEM_Y, cnt)
+										}
+										if ( inv(INV_ITEM_PARAM1, cnt) / 1000 == 3 ) {
+											inv(INV_ITEM_SUB_NAME, cnt) = 0
+											inv(INV_ITEM_PARAM3, cnt) = 0
+											inv(INV_ITEM_PIC, cnt) = xy2pic(4, 9)
+											inv(INV_ITEM_COL, cnt) = COLOR_YELLOW
+											inv(INV_ITEM_ID, cnt) = ITEM_ID_DRIED_FRUIT
+											inv(INV_ITEM_PARAM1, cnt) = 0
+											inv(INV_ITEM_PARAM2, cnt) = 4
+											inv(INV_ITEM_WEIGHT, cnt) = 100
+											inv(INV_ITEM_LEVEL, cnt) = 0
+											inv(INV_ITEM_STATUS, cnt) = ITEM_STATUS_NORMAL
+											ibitmod ITEM_BIT_HERBED_IN, cnt, 0
+											inv(INV_ITEM_NUM, cnt) = inv(INV_ITEM_NUM, cnt) * 5
+											cell_refresh inv(INV_ITEM_X, cnt), inv(INV_ITEM_Y, cnt)
+										}
+										if ( inv(INV_ITEM_PARAM1, cnt) / 1000 == 6 ) {
+											inv(INV_ITEM_SUB_NAME, cnt) = 0
+											inv(INV_ITEM_PARAM3, cnt) = 0
+											inv(INV_ITEM_PIC, cnt) = xy2pic(4, 9)
+											inv(INV_ITEM_COL, cnt) = COLOR_PINK
+											inv(INV_ITEM_ID, cnt) = ITEM_ID_DRIED_FISH
+											inv(INV_ITEM_PARAM1, cnt) = 0
+											inv(INV_ITEM_PARAM2, cnt) = 4
+											inv(INV_ITEM_WEIGHT, cnt) = 100
+											inv(INV_ITEM_LEVEL, cnt) = 0
+											inv(INV_ITEM_STATUS, cnt) = ITEM_STATUS_NORMAL
+											ibitmod ITEM_BIT_HERBED_IN, cnt, 0
+											inv(INV_ITEM_NUM, cnt) = inv(INV_ITEM_NUM, cnt) * 5
+											cell_refresh inv(INV_ITEM_X, cnt), inv(INV_ITEM_Y, cnt)
+										}
+										continue
+									}
+								}
+							}
+							if ( p != (-1) ) {
+								if ( p < MAX_CHARA_FOLLOWER ) {
+									txt lang(itemname(cnt) + "は腐った。", itemname(cnt) + " rot" + _s2(inv(INV_ITEM_NUM, cnt)) + ".")
+								}
+							}
+							inv(INV_ITEM_ROT, cnt) = -1
+							inv(INV_ITEM_PIC, cnt) = xy2pic(6, 10)
+							if ( p == (-1) ) {
+								cell_refresh inv(INV_ITEM_X, cnt), inv(INV_ITEM_Y, cnt)
+							}
+						}
+					}
+				}
+			}
+		loop
+	loop
+	return
+
+*curse
+	if ( rnd(4) == 0 ) {
+		if ( cdata(CDATA_QUALITY, cc) > FIX_QUALITY_GREAT ) {
+			return
+		}
+		dmghp cc, cdata(CDATA_HP, cc) * (5 + cdata(CDATA_CURSE, cc) / 5) / 100, DAMAGE_FROM_CURSE
+		return
+	}
+	if ( mdata(MDATA_TYPE) != MAP_TYPE_WORLD ) {
+		if ( rnd(10 - limit(cdata(CDATA_CURSE, cc) / 10, 0, 9)) == 0 ) {
+			if ( cdata(CDATA_ROLE, cc) == ROLE_NONE ) {
+				efid = SKILL_SPELL_TELEPORT
+				tc = cc
+				gosub *effect
+				return
+			}
+		}
+	}
+	if ( rnd(10) == 0 ) {
+		if ( cdata(CDATA_GOLD, cc) > 0 ) {
+			p = rnd(cdata(CDATA_GOLD, cc)) / 100 + rnd(10) + 1
+			if ( p > cdata(CDATA_GOLD, cc) ) {
+				p = cdata(CDATA_GOLD, cc)
+			}
+			cdata(CDATA_GOLD, cc) -= p
+			if ( synccheck(cc, -1) ) {
+				txtef COLOR_PURPLE
+				txt lang("悪意のある手が" + name(cc) + "の財布から金貨を抜き去った。", "A malicious hand filches some gold pieces from " + name(cc) + your(cc) + " wallet.")
+			}
+			return
+		}
+	}
+	return
+
+*pregnant
+	if ( rnd(15) == 0 ) {
+		if ( synccheck(cc, -1) ) {
+			txt lang(name(cc) + "は不安げに腹を押さえた。", name(cc) + " pat" + _s(cc) + " " + his(cc) + " stomach uneasily.")
+			txt lang("「なにかが産まれそうだよ！」", cnvtalk("I'm going to have a baby!")), lang("「腹になにかが…」", cnvtalk("Something is wrong with my stomach..."))
+		}
+	}
+	if ( mdata(MDATA_TYPE) != MAP_TYPE_WORLD ) {
+		if ( rnd(30) == 0 ) {
+			if ( synccheck(cc, -1) ) {
+				txt lang("何かが" + name(cc) + "の腹を破り飛び出した！", "Something splits " + name(cc) + your(cc) + " body and breaks out!")
+			}
+			cdata(CDATA_CONDITION_BLEED, cc) += 15
+			kodomo = cdata(CDATA_INFANT, cc)
+			if ( cdata(CDATA_INFANT, cc) == 0 ) {
+				kodomo = CREATURE_ID_ALIEN
+			}
+			flt
+			initlv = limit(cdata(CDATA_LEVEL, cc) / 2 + 1, 1, 200)
+			novoidlv = 1
+			characreate -1, kodomo, cdata(CDATA_X, cc), cdata(CDATA_Y, cc)
+			cbitmod CHARA_BIT_SUMMONED, rc, 1
+			cdata(CDATA_CHARACTER_TIER, rc) = CHARACTER_TIER_SUMMONED_NORMAL
+			if ( stat != 0 ) {
+				if ( strlen(cdatan(CDATAN_NAME, cc)) > 10 | instr(cdatan(CDATAN_NAME, cc), 0, lang("の子供", "child")) != (-1) ) {
+					cdatan(CDATAN_NAME, rc) = lang("寄生生物の子供", "parasite kid")
+				}
+				else {
+					cdatan(CDATAN_NAME, rc) = lang(cdatan(CDATAN_NAME, cc) + "の子供", "child of " + cdatan(CDATAN_NAME, cc))
+				}
+			}
+			kodomo = 0
+		}
+	}
+	return
+
+*curse_enc
+	repeat MAX_EQUIP_SLOT_TOTAL, CDATA_STARTING_EQUIP_SLOTS
+		if ( cdata(cnt, cc) \ EXT_EQUIP_SLOTS == 0 ) {
+			continue
+		}
+		ci = cdata(cnt, cc) \ EXT_EQUIP_SLOTS - 1
+		repeat RANGE_INV_ITEM_ENCHANT
+			if ( inv(STARTING_INV_ITEM_ENCHANT + cnt * 2, ci) == 0 ) {
+				break
+			}
+			if ( inv(STARTING_INV_ITEM_ENCHANT + cnt * 2, ci) == ENCHANT_RANDOM_TELEPORT ) {
+				if ( mdata(MDATA_TYPE) != MAP_TYPE_WORLD ) {
+					if ( rnd(25) < limit(abs(inv(STARTING_INV_ITEM_ENCHANT + cnt * 2 + 1, ci)) / 50, 1, 25) ) {
+						efid = SKILL_SPELL_TELEPORT
+						tc = cc
+						gosub *effect
+						continue
+					}
+				}
+			}
+			if ( inv(STARTING_INV_ITEM_ENCHANT + cnt * 2, ci) == ENCHANT_SUCK_BLOOD ) {
+				if ( rnd(4) == 0 ) {
+					if ( synccheck(cc, -1) ) {
+						txtef COLOR_PURPLE
+						txt lang("何かが" + name(cc) + "の血を吸った。", "Something sucks " + name(cc) + your(cc) + " blood.")
+					}
+					cdata(CDATA_CONDITION_BLEED, cc) += abs(inv(STARTING_INV_ITEM_ENCHANT + cnt * 2 + 1, ci)) / 25 + 3
+					continue
+				}
+			}
+			if ( inv(STARTING_INV_ITEM_ENCHANT + cnt * 2, ci) == ENCHANT_SUCK_MP ) {
+				if ( rnd(5) == 0 ) {
+					if ( synccheck(cc, -1) ) {
+						txtef COLOR_PURPLE
+						txt lang("何かが" + name(cc) + "のMPを吸った。", "Something sucks " + name(cc) + your(cc) + " MP.")
+					}
+					cdata(CDATA_CONDITION_MPOISON, cc) += abs(inv(STARTING_INV_ITEM_ENCHANT + cnt * 2 + 1, ci)) / 50 + 3
+					continue
+				}
+			}
+			if ( inv(STARTING_INV_ITEM_ENCHANT + cnt * 2, ci) == ENCHANT_DISTURB_GROWTH ) {
+				if ( rnd(20) == 0 ) {
+					if ( synccheck(cc, -1) ) {
+						txtef COLOR_PURPLE
+						txt lang(name(cc) + "は未熟になった。", name(cc) + " become" + _s(cc) + " inexperienced.")
+					}
+					cdata(CDATA_EXP, cc) -= cdata(CDATA_EXP_TO_NEXT_LVL, cc) / (300 - limit(abs(inv(STARTING_INV_ITEM_ENCHANT + cnt * 2 + 1, ci)) / 2, 0, 50)) + rnd(100)
+					if ( cdata(CDATA_EXP, cc) < 0 ) {
+						cdata(CDATA_EXP, cc) = 0
+					}
+					continue
+				}
+			}
+			if ( inv(STARTING_INV_ITEM_ENCHANT + cnt * 2, ci) == ENCHANT_ATTRACT_MONSTER ) {
+				if ( mdata(MDATA_TYPE) != MAP_TYPE_WORLD ) {
+					if ( mdata(MDATA_TYPE) != MAP_TYPE_HOME ) {
+						if ( rnd(50) < limit(abs(inv(STARTING_INV_ITEM_ENCHANT + cnt * 2 + 1, ci)) / 50, 1, 50) ) {
+							if ( synccheck(cc, -1) ) {
+								txtef COLOR_PURPLE
+								txt lang("魔力の渦が何かを召喚した！", "Several creatures are summoned from a magical vortex.")
+							}
+							repeat 1 + rnd(3)
+								flt calcobjlv(cdata(CDATA_LEVEL, CHARA_PLAYER) * 3 / 2 + 3), calcfixlv(FIX_QUALITY_GOOD)
+								characreate -1, CREATURE_ID_BUG, cdata(CDATA_X, cc), cdata(CDATA_Y, cc)
+								cbitmod CHARA_BIT_SUMMONED, rc, 1
+							loop
+							continue
+						}
+					}
+				}
+			}
+		loop
+	loop
+	return
+
+*item_senseQuality
+	if ( cdata(CDATA_CONDITION_CONFUSE, CHARA_PLAYER) != 0 | cdata(CDATA_CONDITION_SLEEP, CHARA_PLAYER) != 0 | cdata(CDATA_CONDITION_PARALYZE, CHARA_PLAYER) != 0 | cdata(CDATA_CONDITION_SUFFOCATION, CHARA_PLAYER) != 0 ) {
+		return
+	}
+	inv_getheader 0
+	sensep = 0
+	repeat invrange, invhead
+		if ( inv(INV_ITEM_NUM, cnt) == 0 | inv(INV_ITEM_KNOWN, cnt) >= ITEM_KNOWN_FULL ) {
+			continue
+		}
+		if ( sensep > 5 | cdata(CDATA_ROW_ACT, CHARA_PLAYER) == ACTION_NONE ) {
+			if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_TYPE) >= FILTER_ITEM_MIN ) {
+				continue
+			}
+		}
+		ci = cnt
+		p = sdata(SKILL_ATTR_PER, CHARA_PLAYER) + sdata(SKILL_NORMAL_SENSE_QUALITY, CHARA_PLAYER) * 5, 1500 + inv(INV_ITEM_IDENTIFY_LEVEL, ci) * 5
+		if ( p > rnd(p(1) * 5) ) {
+			s = itemname(ci)
+			item_identify ci, ITEM_KNOWN_FULL
+			itemmemory(0, inv(INV_ITEM_ID, ci)) = 1
+			if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_TYPE) < FILTER_ITEM_MIN ) {
+				if ( cfg_hideautoidentify <= 1 ) {
+					txt lang("バックパックの中の" + s + "は" + itemname(ci) + "だと判明した。", "You appraise " + s + " as " + itemname(ci) + ".")
+				}
+			}
+			if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_TYPE) >= FILTER_ITEM_MIN ) {
+				sensep++
+				item_stack CHARA_PLAYER, ci, 1
+			}
+			skillexp SKILL_NORMAL_SENSE_QUALITY, CHARA_PLAYER, 50
+		}
+		if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_TYPE) < FILTER_ITEM_MIN ) {
+			if ( inv(INV_ITEM_KNOWN, ci) < ITEM_KNOWN_QUALITY ) {
+				if ( p > rnd(p(1)) ) {
+					if ( cfg_hideautoidentify == 0 ) {
+						txt lang("バックパックの中の" + itemname(ci) + "は" + _quality(inv(INV_ITEM_QUALITY, ci)) + "だという感じがする。", "You sense the quality of " + itemname(ci) + " is " + _quality(inv(INV_ITEM_QUALITY, ci)) + ".")
+					}
+					item_identify ci, ITEM_KNOWN_QUALITY
+					skillexp SKILL_NORMAL_SENSE_QUALITY, CHARA_PLAYER, 50
+				}
+			}
+		}
+	loop
+	if ( sensep > 0 ) {
+		sensep = 0
+		txt lang("バックパックの中のいくつかのアイテムの詳細が判明した。", "You appraise some items in your backpack.")
+	}
+	return
+
+*item_fix
+	if ( reftype < FILTER_FURNITURE ) {
+		if ( rnd(12) == 0 ) {
+			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_BLESSED
+		}
+		if ( rnd(13) == 0 ) {
+			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_CURSED
+			if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) < FILTER_ITEM_MIN ) {
+				if ( rnd(4) == 0 ) {
+					inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_DOOMED
+				}
+			}
+		}
+	}
+	if ( cm | mode == MODELIST_CHARA_CREATION | inv(INV_ITEM_QUALITY, ci) == FIX_QUALITY_UNIQUE ) {
+		inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+	}
+	if ( reftype < FILTER_ITEM_MIN | (reftype == FILTER_FURNITURE & rnd(5) == 0) ) {
+		if ( inv(INV_ITEM_MATERIAL, ci) >= ITEM_MATERIAL_TYPE_METAL | reftype == FILTER_FURNITURE ) {
+			gosub *item_material
+		}
+		else {
+			gosub *apply_materialEnc
+		}
+	}
+	if ( fixeditemenc != 0 ) {
+		repeat 10
+			if ( fixeditemenc(cnt * 2) == 0 ) {
+				break
+			}
+			encadd ci, fixeditemenc(cnt * 2), fixeditemenc(cnt * 2 + 1), 0, 0, 0, 1
+		loop
+	}
+	if ( reftype < FILTER_ITEM_POTION ) {
+		gosub *item_enc
+	}
+	else {
+		if ( inv(INV_ITEM_QUALITY, ci) != FIX_QUALITY_UNIQUE ) {
+			inv(INV_ITEM_QUALITY, ci) = FIX_QUALITY_GOOD
+		}
+	}
+	return
+
+*item_init
+	if ( val == 0 | val == (-1) ) {
+		if ( sdata(SKILL_ATTR_LUC, CHARA_PLAYER) > rnd(5000) ) {
+			if ( fixlv < FIX_QUALITY_GODLY ) {
+				fixlv++
+			}
+		}
+		if ( fixlv == FIX_QUALITY_GODLY ) {
+			if ( rnd(2) == 0 ) {
+				fixlv--
+			}
+		}
+	}
+	ci = inv_getfreeid(val)
+	if ( ci == (-1) ) {
+		return 0
+	}
+	item_delete ci
+	if ( val == (-1) & mode != MODELIST_SHOP ) {
+		p = 0
+		repeat 100
+			if ( val(1) == (-1) ) {
+				sx = rnd(mdata(MDATA_WIDTH) - 2) + 2
+				sy = rnd(mdata(MDATA_HEIGHT) - 2) + 2
+				if ( map(sx, sy, 4) != 0 ) {
+					continue
+				}
+			}
+			else {
+				if ( cnt == 0 ) {
+					sx = val(1)
+					sy = val(2)
+				}
+				else {
+					sx = val(1) + rnd(cnt + 1) - rnd(cnt + 1)
+					sy = val(2) + rnd(cnt + 1) - rnd(cnt + 1)
+				}
+				if ( sx < 0 | sy < 0 | sx > mdata(MDATA_WIDTH) - 1 | sy > mdata(MDATA_HEIGHT) - 1 ) {
+					continue
+				}
+			}
+			if ( val(1) != (-1) ) {
+				if ( cnt == 0 ) {
+					p = 1
+					inv(INV_ITEM_X, ci) = sx
+					inv(INV_ITEM_Y, ci) = sy
+					break
+				}
+			}
+			if ( map(sx, sy, 6) != 0 ) {
+				if ( map(sx, sy, 6) / 1000 \ 100 == 22 | map(sx, sy, 6) / 1000 \ 100 == 20 | map(sx, sy, 6) / 1000 \ 100 == 21 ) {
+					continue
+				}
+			}
+			if ( (chipm(CHIPM_ATTRIB, map(sx, sy, 0)) & CHIPM_ATTRIB_CANT_PASS) == 0 ) {
+				p = 1
+				inv(INV_ITEM_X, ci) = sx
+				inv(INV_ITEM_Y, ci) = sy
+				break
+			}
+		loop
+		if ( p == 0 ) {
+			return 0
+		}
+	}
+	if ( dbid == (-1) ) {
+		if ( fltselect == 0 ) {
+			if ( mode != MODELIST_SHOP ) {
+				if ( fixlv == FIX_QUALITY_GREAT ) {
+					if ( rnd(1000) == 0 ) {
+						fltselect = 2
+					}
+				}
+				if ( fixlv == FIX_QUALITY_MIRACLE ) {
+					if ( rnd(100) == 0 ) {
+						fltselect = 2
+					}
+				}
+			}
+		}
+		dbmode = DBMODE_FIND
+		gosub *db_item
+		if ( dbid == ITEM_ID_BUGGED_BOOK ) {
+			if ( fltselect == 2 ) {
+				fixlv = FIX_QUALITY_MIRACLE
+			}
+			objlv += 10
+			fltselect = 0
+			dbmode = DBMODE_FIND
+			gosub *db_item
+		}
+	}
+	if ( dbid == ITEM_ID_BUGGED_BOOK ) {
+		if ( flttypemajor == FILTER_FURNITURE_ALTAR ) {
+			dbid = ITEM_ID_SCROLL_CHANGE_MATERIAL
+		}
+	}
+	itemcreatehack = dbid + 1
+	dbmode = DBMODE_SET
+	gosub *db_item
+	dbmode = DBMODE_REF
+	gosub *db_item
+	inv(INV_ITEM_COL, ci) = icolref(inv(INV_ITEM_ID, ci))
+	if ( inv(INV_ITEM_COL, ci) == COLOR_RANDOM ) {
+		inv(INV_ITEM_COL, ci) = randcolor(rnd(length(randcolor)))
+	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_BOTTLE_DYE ) {
+		inv(INV_ITEM_COL, ci) = rnd(MAX_COLOR)
+	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_RED_BOOK ) {
+		if ( inv(INV_ITEM_BOOK_ID, ci) == 0 ) {
+			inv(INV_ITEM_BOOK_ID, ci) = isetbook(rnd(length(isetbook)))
+		}
+	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_SKILLBOOK ) {
+		if ( inv(INV_ITEM_BOOK_ID, ci) == 0 ) {
+			inv(INV_ITEM_BOOK_ID, ci) = randskill()
+		}
+	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_RECIPE ) {
+		repeat
+			ii_p = rnd(length(rplistshop))
+			if ( rplistshop(ii_p) != 0 ) {
+				ii_p2 = rplistshop(ii_p) / EXT_RECIPES
+				if ( rnd(ii_p2) == 0 ) {
+					inv(INV_ITEM_VALUE, ci) = ii_p2 * 650
+					ii_p = rplistshop(ii_p) \ EXT_RECIPES
+					break
+				}
+			}
+		loop
+		inv(INV_ITEM_SUB_NAME, ci) = ii_p
+		inv(INV_ITEM_PARAM1, ci) = 1
+	}
+	itemmemory(1, dbid)++
+	inv(INV_ITEM_QUALITY, ci) = fixlv
+	if ( fixlv == FIX_QUALITY_UNIQUE ) {
+		if ( mode != MODELIST_SHOP ) {
+			if ( nooracle == 0 ) {
+				if ( gdata(GDATA_ADVENTURER_ORACLE) == 0 ) {
+					procid = (procid + 1) \ 4
+					proclist(procid) = "oracle" + " ct:" + ct
+					ii_p = inv_getowner(ci)
+					if ( ii_p != (-1) ) {
+						if ( cdata(CDATA_ROLE, ii_p) == ROLE_ADVENTURER ) {
+							artifactlocation += lang(iknownnameref(inv(INV_ITEM_ID, ci)) + "は" + gdata(GDATA_YEAR) + "年" + gdata(GDATA_MONTH) + "月に" + mapname(cdata(CDATA_AREA, ii_p)) + "の" + cdatan(CDATAN_NAME, ii_p) + "の手に渡った。\n", cnven(iknownnameref(inv(INV_ITEM_ID, ci))) + " was held by " + cdatan(CDATAN_NAME, ii_p) + " at " + mapname(cdata(CDATA_AREA, ii_p)) + " in " + gdata(GDATA_DAY) + "/" + gdata(GDATA_MONTH) + ", " + gdata(GDATA_YEAR) + ". ")
+						}
+						else {
+							ii_p = -1
+						}
+					}
+					if ( ii_p == (-1) ) {
+						artifactlocation += lang(iknownnameref(inv(INV_ITEM_ID, ci)) + "は" + gdata(GDATA_YEAR) + "年" + gdata(GDATA_MONTH) + "月に" + mdatan(MDATAN_NAME) + "で生成された。\n", cnven(iknownnameref(inv(INV_ITEM_ID, ci))) + " was created at " + mdatan(MDATAN_NAME) + " in " + gdata(GDATA_DAY) + "/" + gdata(GDATA_MONTH) + ", " + gdata(GDATA_YEAR) + ".")
+					}
+				}
+			}
+		}
+	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_WILD_FLOWER ) {
+		if ( gdata(GDATA_MONTH) == 4 | gdata(GDATA_MONTH) == 5 ) {
+			iro = COLOR_WHITE
+
+			if ( rnd(3) == 0 ) {
+				iro = COLOR_RED2
+			}
+		}
+		if ( gdata(GDATA_MONTH) == 4 ) {
+			if ( rnd(3) == 0 ) {
+				iro = COLOR_YELLOW2
+			}
+		}
+		if ( gdata(GDATA_MONTH) == 5 ) {
+			if ( rnd(3) == 0 ) {
+				iro = COLOR_LIGHT_BLUE2
+			}
+		}
+		if ( gdata(GDATA_MONTH) == 6 ) {
+			iro = COLOR_RED
+			if ( rnd(3) == 0 ) {
+				iro = COLOR_BLUE
+			}
+			if ( rnd(3) == 0 ) {
+				iro = COLOR_PURPLE
+			}
+		}
+		inv(INV_ITEM_PARAM2, ci) = gdata(GDATA_MONTH)
+		if ( gdata(GDATA_MONTH) == 2 ) {
+			inv(INV_ITEM_PIC, ci) = xy2pic(13, 31)
+		}
+		if ( gdata(GDATA_MONTH) == 3 ) {
+			inv(INV_ITEM_PIC, ci) = xy2pic(14, 31)
+		}
+		if ( gdata(GDATA_MONTH) == 4 ) {
+			inv(INV_ITEM_PIC, ci) = xy2pic(15, 31)
+			inv(INV_ITEM_COL, ci) = iro
+		}
+		if ( gdata(GDATA_MONTH) == 5 ) {
+			inv(INV_ITEM_PIC, ci) = xy2pic(16, 31)
+			inv(INV_ITEM_COL, ci) = iro
+		}
+		if ( gdata(GDATA_MONTH) == 6 ) {
+			inv(INV_ITEM_PIC, ci) = xy2pic(17, 31)
+			inv(INV_ITEM_COL, ci) = iro
+		}
+		if ( gdata(GDATA_MONTH) == 7 ) {
+			inv(INV_ITEM_PIC, ci) = xy2pic(18, 31)
+		}
+		if ( gdata(GDATA_MONTH) == 8 ) {
+			inv(INV_ITEM_PIC, ci) = xy2pic(19, 31)
+		}
+		if ( gdata(GDATA_MONTH) == 9 ) {
+			inv(INV_ITEM_PIC, ci) = xy2pic(20, 31)
+		}
+		if ( gdata(GDATA_MONTH) == 10 ) {
+			inv(INV_ITEM_PIC, ci) = xy2pic(21, 31)
+		}
+		if ( gdata(GDATA_MONTH) == 11 ) {
+			inv(INV_ITEM_PIC, ci) = xy2pic(22, 31)
+		}
+		if ( gdata(GDATA_MONTH) == 12 ) {
+			inv(INV_ITEM_PIC, ci) = xy2pic(23, 31)
+		}
+	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_BAIT ) {
+		inv(INV_ITEM_PARAM1, ci) = rnd(6)
+		inv(INV_ITEM_PIC, ci) = xy2pic(22, 11) + inv(INV_ITEM_PARAM1, ci)
+		inv(INV_ITEM_VALUE, ci) = inv(INV_ITEM_PARAM1, ci) * inv(INV_ITEM_PARAM1, ci) * 500 + 200
+	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_DEED ) {
+		inv(INV_ITEM_PARAM1, ci) = rnd(6) + 1
+		if ( mode != MODELIST_SHOP ) {
+			inv(INV_ITEM_PARAM1, ci) = 2
+		}
+		inv(INV_ITEM_SUB_NAME, ci) = inv(INV_ITEM_PARAM1, ci)
+		inv(INV_ITEM_VALUE, ci) = 5000 + 4500 * inv(INV_ITEM_PARAM1, ci) * inv(INV_ITEM_PARAM1, ci) * inv(INV_ITEM_PARAM1, ci) + inv(INV_ITEM_PARAM1, ci) * 20000
+		if ( inv(INV_ITEM_PARAM1, ci) >= 5 ) {
+			inv(INV_ITEM_VALUE, ci) *= 2
+		}
+	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_GOLD_PIECE ) {
+		inv(INV_ITEM_NUM, ci) = calcinitgold(val)
+		if ( inv(INV_ITEM_QUALITY, ci) == FIX_QUALITY_GREAT ) {
+			inv(INV_ITEM_NUM, ci) = inv(INV_ITEM_NUM, ci) * 2
+		}
+		if ( inv(INV_ITEM_QUALITY, ci) >= FIX_QUALITY_MIRACLE ) {
+			inv(INV_ITEM_NUM, ci) = inv(INV_ITEM_NUM, ci) * 4
+		}
+		if ( val >= 0 ) {
+			cdata(CDATA_GOLD, val) += inv(INV_ITEM_NUM, ci)
+			inv(INV_ITEM_NUM, ci) = 0
+			return 1
+		}
+	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_GIFT ) {
+		inv(INV_ITEM_PARAM4, ci) = rnd(rnd(rnd(length(giftvalue)) + 1) + 1)
+		inv(INV_ITEM_VALUE, ci) = inv(INV_ITEM_PARAM4, ci) * 2500 + 500
+	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_KITTY_BANK ) {
+		inv(INV_ITEM_PARAM2, ci) = rnd(rnd(length(moneybox)) + 1)
+		inv(INV_ITEM_VALUE, ci) = inv(INV_ITEM_PARAM2, ci) * inv(INV_ITEM_PARAM2, ci) * inv(INV_ITEM_PARAM2, ci) * 1000 + 1000
+	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_MONSTER_BALL ) {
+		inv(INV_ITEM_PARAM2, ci) = limit(rnd(objlv + 2) + 1, 1, 200)
+		if ( inv(INV_ITEM_PARAM2, ci) >= gdata(GDATA_DEEPEST_LEVEL) + 10 ) {
+			inv(INV_ITEM_PARAM2, ci) = rnd(gdata(GDATA_DEEPEST_LEVEL) + 2) + 10
+		}
+		inv(INV_ITEM_VALUE, ci) = 2000 + inv(INV_ITEM_PARAM2, ci) * inv(INV_ITEM_PARAM2, ci) + inv(INV_ITEM_PARAM2, ci) * 100
+	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_MATERIAL_KIT ) {
+		gosub *choose_material
+		gosub *apply_material
+	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_ANCIENT_BOOK ) {
+		inv(INV_ITEM_PARAM1, ci) = rnd(rnd(limit(objlv / 2, 0, 15) + 1) + 1)
+	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_SISTERS_LOVE_FUELED_LUNCH ) {
+		ibitmod ITEM_BIT_HANDMADE, ci, 1
+	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_EVITEM ) {
+		inv(INV_ITEM_PARAM1, ci) = EVITEM_HEART_EVOLUTION
+	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_CHEST ) {
+		inv(INV_ITEM_ATTACK, ci) = 1 + rnd(100)
+	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_M202_SPECIAL ) {
+		inv(INV_ITEM_CHARGE, ci) = 4
+	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_CORE_OF_NEFIA ) {
+		if ( adata(ADATA_NEFIA_GEM_CHANCE, gdata(GDATA_AREA)) <= 0 ) {
+			inv(INV_ITEM_PARAM1, ci) = rnd(50)
+		}
+		else {
+			inv(INV_ITEM_PARAM1, ci) = adata(ADATA_NEFIA_GEM_CHANCE, gdata(GDATA_AREA)) - 1
+		}
+		if ( inv(INV_ITEM_PARAM1, ci) == 0 ) {
+			encadd ci, ENCHANT_SKILL * EXT_ENCHANTMENT + SKILL_NORMAL_SHIELD, 500, 0, 1
+		}
+		if ( inv(INV_ITEM_PARAM1, ci) == 1 ) {
+			encadd ci, ENCHANT_SKILL * EXT_ENCHANTMENT + SKILL_NORMAL_EVASION, 500, 0, 1
+		}
+		if ( inv(INV_ITEM_PARAM1, ci) == 2 ) {
+			encadd ci, ENCHANT_SKILL * EXT_ENCHANTMENT + SKILL_NORMAL_DUAL_WIELD, 500, 0, 1
+		}
+		if ( inv(INV_ITEM_PARAM1, ci) == 3 ) {
+			encadd ci, ENCHANT_SKILL * EXT_ENCHANTMENT + SKILL_NORMAL_TWO_HAND, 500, 0, 1
+		}
+		if ( inv(INV_ITEM_PARAM1, ci) == 4 ) {
+			encadd ci, ENCHANT_SKILL * EXT_ENCHANTMENT + SKILL_NORMAL_TACTICS, 500, 0, 1
+		}
+		if ( inv(INV_ITEM_PARAM1, ci) == 5 ) {
+			encadd ci, ENCHANT_SKILL * EXT_ENCHANTMENT + SKILL_NORMAL_MARKSMAN, 500, 0, 1
+		}
+		if ( inv(INV_ITEM_PARAM1, ci) == 6 ) {
+			encadd ci, ENCHANT_SKILL * EXT_ENCHANTMENT + SKILL_NORMAL_HEALING, 500, 0, 1
+		}
+		if ( inv(INV_ITEM_PARAM1, ci) == 7 ) {
+			encadd ci, ENCHANT_SKILL * EXT_ENCHANTMENT + SKILL_NORMAL_DISARM_TRAP, 500, 0, 1
+		}
+		if ( inv(INV_ITEM_PARAM1, ci) == 8 ) {
+			encadd ci, ENCHANT_SKILL * EXT_ENCHANTMENT + SKILL_NORMAL_HEAVY_ARMOR, 500, 0, 1
+		}
+		if ( inv(INV_ITEM_PARAM1, ci) == 9 ) {
+			encadd ci, ENCHANT_SKILL * EXT_ENCHANTMENT + SKILL_NORMAL_MEDIUM_ARMOR, 500, 0, 1
+		}
+		if ( inv(INV_ITEM_PARAM1, ci) == 10 ) {
+			encadd ci, ENCHANT_SKILL * EXT_ENCHANTMENT + SKILL_NORMAL_LIGHT_ARMOR, 500, 0, 1
+		}
+		if ( inv(INV_ITEM_PARAM1, ci) == 11 ) {
+			encadd ci, ENCHANT_SKILL * EXT_ENCHANTMENT + SKILL_NORMAL_STEALTH, 500, 0, 1
+		}
+		if ( inv(INV_ITEM_PARAM1, ci) == 12 ) {
+			encadd ci, ENCHANT_SKILL * EXT_ENCHANTMENT + SKILL_NORMAL_GREATER_EVASION, 500, 0, 1
+		}
+		if ( inv(INV_ITEM_PARAM1, ci) == 13 ) {
+			encadd ci, ENCHANT_SKILL * EXT_ENCHANTMENT + SKILL_NORMAL_MEDITATION, 500, 0, 1
+		}
+		if ( inv(INV_ITEM_PARAM1, ci) == 14 ) {
+			encadd ci, ENCHANT_SKILL * EXT_ENCHANTMENT + SKILL_NORMAL_MAGIC_DEVICE, 500, 0, 1
+		}
+		if ( inv(INV_ITEM_PARAM1, ci) == 15 ) {
+			encadd ci, ENCHANT_SKILL * EXT_ENCHANTMENT + SKILL_NORMAL_CONTROL_MAGIC, 500, 0, 1
+		}
+		if ( inv(INV_ITEM_PARAM1, ci) == 16 ) {
+			encadd ci, ENCHANT_SKILL * EXT_ENCHANTMENT + SKILL_NORMAL_CASTING, 500, 0, 1
+		}
+		if ( inv(INV_ITEM_PARAM1, ci) == 17 ) {
+			encadd ci, ENCHANT_SKILL * EXT_ENCHANTMENT + SKILL_NORMAL_WEIGHT_LIFTING, 500, 0, 1
+		}
+		if ( inv(INV_ITEM_PARAM1, ci) == 18 ) {
+			encadd ci, ENCHANT_SKILL * EXT_ENCHANTMENT + SKILL_NORMAL_CARPENTRY, 500, 0, 1
+		}
+		if ( inv(INV_ITEM_PARAM1, ci) == 19 ) {
+			encadd ci, ENCHANT_SKILL * EXT_ENCHANTMENT + SKILL_NORMAL_TAILORING, 500, 0, 1
+		}
+		if ( inv(INV_ITEM_PARAM1, ci) == 20 ) {
+			encadd ci, ENCHANT_SKILL * EXT_ENCHANTMENT + SKILL_NORMAL_JEWELER, 500, 0, 1
+		}
+		if ( inv(INV_ITEM_PARAM1, ci) == 21 ) {
+			encadd ci, ENCHANT_SKILL * EXT_ENCHANTMENT + SKILL_ACTIVE_PICKPOCKET, 500, 0, 1
+		}
+		if ( inv(INV_ITEM_PARAM1, ci) == 22 ) {
+			encadd ci, ENCHANT_SKILL * EXT_ENCHANTMENT + SKILL_NORMAL_SWIMMING, 500, 0, 1
+		}
+		if ( inv(INV_ITEM_PARAM1, ci) == 23 ) {
+			encadd ci, ENCHANT_SKILL * EXT_ENCHANTMENT + SKILL_NORMAL_FISHING, 500, 0, 1
+		}
+		if ( inv(INV_ITEM_PARAM1, ci) == 24 ) {
+			encadd ci, ENCHANT_SKILL * EXT_ENCHANTMENT + SKILL_NORMAL_ANATOMY, 500, 0, 1
+		}
+		if ( inv(INV_ITEM_PARAM1, ci) == 25 ) {
+			encadd ci, ENCHANT_SKILL * EXT_ENCHANTMENT + SKILL_NORMAL_LITERACY, 500, 0, 1
+		}
+		if ( inv(INV_ITEM_PARAM1, ci) == 26 ) {
+			encadd ci, ENCHANT_SKILL * EXT_ENCHANTMENT + SKILL_NORMAL_GENE_ENGINEER, 500, 0, 1
+		}
+		if ( inv(INV_ITEM_PARAM1, ci) == 27 ) {
+			encadd ci, ENCHANT_SKILL * EXT_ENCHANTMENT + SKILL_NORMAL_MEMORIZATION, 500, 0, 1
+		}
+		if ( inv(INV_ITEM_PARAM1, ci) == 28 ) {
+			encadd ci, ENCHANT_SKILL * EXT_ENCHANTMENT + SKILL_NORMAL_FAITH, 500, 0, 1
+		}
+		if ( inv(INV_ITEM_PARAM1, ci) == 29 ) {
+			encadd ci, ENCHANT_SKILL * EXT_ENCHANTMENT + SKILL_NORMAL_NEGOTIATION, 500, 0, 1
+		}
+		if ( inv(INV_ITEM_PARAM1, ci) == 30 ) {
+			encadd ci, ENCHANT_SKILL * EXT_ENCHANTMENT + SKILL_NORMAL_INVESTING, 500, 0, 1
+		}
+		if ( inv(INV_ITEM_PARAM1, ci) == 31 ) {
+			encadd ci, ENCHANT_SKILL * EXT_ENCHANTMENT + SKILL_NORMAL_PERFORMER, 500, 0, 1
+		}
+		if ( inv(INV_ITEM_PARAM1, ci) == 32 ) {
+			encadd ci, ENCHANT_SKILL * EXT_ENCHANTMENT + SKILL_ACTIVE_RIDING, 500, 0, 1
+		}
+		if ( inv(INV_ITEM_PARAM1, ci) == 33 ) {
+			encadd ci, ENCHANT_ATTRIBUTE * EXT_ENCHANTMENT + SKILL_ATTR_STR, 500, 0, 1
+		}
+		if ( inv(INV_ITEM_PARAM1, ci) == 34 ) {
+			encadd ci, ENCHANT_ATTRIBUTE * EXT_ENCHANTMENT + SKILL_ATTR_CON, 500, 0, 1
+		}
+		if ( inv(INV_ITEM_PARAM1, ci) == 35 ) {
+			encadd ci, ENCHANT_ATTRIBUTE * EXT_ENCHANTMENT + SKILL_ATTR_DEX, 500, 0, 1
+		}
+		if ( inv(INV_ITEM_PARAM1, ci) == 36 ) {
+			encadd ci, ENCHANT_ATTRIBUTE * EXT_ENCHANTMENT + SKILL_ATTR_PER, 500, 0, 1
+		}
+		if ( inv(INV_ITEM_PARAM1, ci) == 37 ) {
+			encadd ci, ENCHANT_ATTRIBUTE * EXT_ENCHANTMENT + SKILL_ATTR_LER, 500, 0, 1
+		}
+		if ( inv(INV_ITEM_PARAM1, ci) == 38 ) {
+			encadd ci, ENCHANT_ATTRIBUTE * EXT_ENCHANTMENT + SKILL_ATTR_WIL, 500, 0, 1
+		}
+		if ( inv(INV_ITEM_PARAM1, ci) == 39 ) {
+			encadd ci, ENCHANT_ATTRIBUTE * EXT_ENCHANTMENT + SKILL_ATTR_MAG, 500, 0, 1
+		}
+		if ( inv(INV_ITEM_PARAM1, ci) == 40 ) {
+			encadd ci, ENCHANT_ATTRIBUTE * EXT_ENCHANTMENT + SKILL_ATTR_CHA, 500, 0, 1
+		}
+		if ( inv(INV_ITEM_PARAM1, ci) == 41 ) {
+			encadd ci, ENCHANT_ATTRIBUTE * EXT_ENCHANTMENT + SKILL_ATTR_SPD, 500, 0, 1
+		}
+		if ( inv(INV_ITEM_PARAM1, ci) == 42 ) {
+			encadd ci, ENCHANT_ATTRIBUTE * EXT_ENCHANTMENT + SKILL_ATTR_LUC, 400, 0, 1
+		}
+		if ( inv(INV_ITEM_PARAM1, ci) == 43 ) {
+			encadd ci, ENCHANT_RES_PARALYZE, 100, 0, 1
+		}
+		if ( inv(INV_ITEM_PARAM1, ci) == 44 ) {
+			encadd ci, ENCHANT_RES_CONFUSE, 100, 0, 1
+		}
+		if ( inv(INV_ITEM_PARAM1, ci) == 45 ) {
+			encadd ci, ENCHANT_RES_FEAR, 100, 0, 1
+		}
+		if ( inv(INV_ITEM_PARAM1, ci) == 46 ) {
+			encadd ci, ENCHANT_RES_SLEEP, 100, 0, 1
+		}
+		if ( inv(INV_ITEM_PARAM1, ci) == 47 ) {
+			encadd ci, ENCHANT_RES_POISON, 100, 0, 1
+		}
+		if ( inv(INV_ITEM_PARAM1, ci) == 48 ) {
+			encadd ci, ENCHANT_RES_BLIND, 100, 0, 1
+		}
+		if ( inv(INV_ITEM_PARAM1, ci) == 49 ) {
+			encadd ci, ENCHANT_SEE_INVISIBLE, 150, 0, 1, 0, 1
+		}
+	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_COOLER_BOX ) {
+		gdata(GDATA_COUNT_SHOP)++
+		inv(INV_ITEM_FILE, ci) = gdata(GDATA_COUNT_SHOP)
+	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_HEIR_TRUNK ) {
+		inv(INV_ITEM_FILE, ci) = ITEM_ROLE_FILE_HEIR_TRUNK
+	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_SHOP_STRONGBOX ) {
+		inv(INV_ITEM_FILE, ci) = ITEM_ROLE_FILE_SHOP_INCOME
+	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_SALARY_CHEST ) {
+		inv(INV_ITEM_FILE, ci) = ITEM_ROLE_FILE_INCOME
+	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_FREEZER ) {
+		inv(INV_ITEM_FILE, ci) = ITEM_ROLE_FILE_FREEZER
+	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_DD_CEMETERY_KEY ) {
+		inv(INV_ITEM_FILE, ci) = ITEM_ROLE_FILE_DD_CEMETERY_KEY
+	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_POTION_RACK ) {
+		inv(INV_ITEM_FILE, ci) = ITEM_ROLE_FILE_POTION_RACK
+	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_BREAD_DISPLAY ) {
+		inv(INV_ITEM_FILE, ci) = ITEM_ROLE_FILE_BREAD_DISPLAY
+	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_LARGE_BOOKSHELF | inv(INV_ITEM_ID, ci) == ITEM_ID_OLD_BOOKSHELF | inv(INV_ITEM_ID, ci) == ITEM_ID_CRAFT_BOOK_SHELF | inv(INV_ITEM_ID, ci) == ITEM_ID_BOOKSHELF ) {
+		inv(INV_ITEM_FILE, ci) = ITEM_ROLE_FILE_BOOKSHELF
+	}
+	if ( reftype == FILTER_CONTAINER ) {
+		inv(INV_ITEM_PARAM1, ci) = gdata(GDATA_LEVEL) * (gdata(GDATA_AREA) != AREA_SHELTER) + 5
+		if ( inv(INV_ITEM_ID, ci) == ITEM_ID_MYSTERIOUS_ENVELOPE ) {
+			inv(INV_ITEM_PARAM1, ci) = 0
+		}
+		if ( inv(INV_ITEM_ID, ci) == ITEM_ID_SUITCASE ) {
+			inv(INV_ITEM_PARAM1, ci) = (rnd(10) + 1) * (cdata(CDATA_LEVEL, CHARA_PLAYER) / 10 + 1)
+		}
+		if ( inv(INV_ITEM_ID, ci) == ITEM_ID_TREASURE_BALL | inv(INV_ITEM_ID, ci) == ITEM_ID_RARE_TREASURE_BALL ) {
+			inv(INV_ITEM_PARAM1, ci) = cdata(CDATA_LEVEL, CHARA_PLAYER)
+		}
+		inv(INV_ITEM_PARAM2, ci) = rnd(abs(gdata(GDATA_LEVEL)) * (gdata(GDATA_AREA) != AREA_SHELTER) + 1)
+		if ( inv(INV_ITEM_ID, ci) == ITEM_ID_WALLET | inv(INV_ITEM_ID, ci) == ITEM_ID_SUITCASE ) {
+			inv(INV_ITEM_PARAM2, ci) = rnd(15)
+		}
+		inv(INV_ITEM_PARAM3, ci) = rnd(30000)
+		if ( inv(INV_ITEM_ID, ci) == ITEM_ID_SMALL_GAMBLE_CHEST ) {
+			inv(INV_ITEM_PARAM2, ci) = limit(rnd(objlv + 2) + 1, 1, 200)
+			inv(INV_ITEM_VALUE, ci) = inv(INV_ITEM_PARAM2, ci) * 25 + 150
+			initnum = rnd(8)
+		}
+	}
+	if ( reftype == FILTER_ITEM_FOOD ) {
+		if ( inv(INV_ITEM_PARAM1, ci) != 0 ) {
+			if ( mode == MODELIST_SHOP ) {
+				if ( rnd(2) == 0 ) {
+					inv(INV_ITEM_PARAM2, ci) = 0
+				}
+				else {
+					inv(INV_ITEM_PARAM2, ci) = 3 + rnd(3)
+				}
+			}
+			if ( inv(INV_ITEM_PARAM2, ci) != 0 ) {
+				inv(INV_ITEM_PIC, ci) = picfood(inv(INV_ITEM_PARAM2, ci), inv(INV_ITEM_PARAM1, ci) / COLOR_TINT_MULT)
+			}
+			if ( inv(INV_ITEM_MATERIAL, ci) == ITEM_MATERIAL_RAW ) {
+				inv(INV_ITEM_ROT, ci) += gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12
+			}
+		}
+	}
+	gosub *item_fix
+	if ( reftype == FILTER_FURNITURE ) {
+		if ( rnd(3) == 0 ) {
+			inv(INV_ITEM_SUB_NAME, ci) = rnd(rnd(12) + 1)
+		}
+		else {
+			inv(INV_ITEM_SUB_NAME, ci) = 0
+		}
+	}
+	if ( mode == MODELIST_SHOP ) {
+		inv(INV_ITEM_KNOWN, ci) = ITEM_KNOWN_FULL
+	}
+	if ( reftype == FILTER_GOLD | reftype == FILTER_PLATINUM | inv(INV_ITEM_ID, ci) == ITEM_ID_SMALL_MEDAL | inv(INV_ITEM_ID, ci) == ITEM_ID_MUSIC_TICKET | inv(INV_ITEM_ID, ci) == ITEM_ID_TOKEN_FRIENDSHIP | inv(INV_ITEM_ID, ci) == ITEM_ID_BILL | inv(INV_ITEM_ID, ci) == ITEM_ID_BRONZE_COIN | inv(INV_ITEM_ID, ci) == ITEM_ID_SKILL_TICKET ) {
+		inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+		inv(INV_ITEM_KNOWN, ci) = ITEM_KNOWN_FULL
+	}
+	if ( reftype == FILTER_CARGO_TRADE ) {
+		inv(INV_ITEM_KNOWN, ci) = ITEM_KNOWN_FULL
+		inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+		itemmemory(0, inv(INV_ITEM_ID, ci)) = 1
+	}
+	if ( reftype == FILTER_REMAINS | reftype == FILTER_JUNK | reftype == FILTER_ORE ) {
+		inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+	}
+	if ( mode != MODELIST_SHOP ) {
+		if ( reftype < FILTER_ITEM_MIN ) {
+			if ( rnd(sdata(SKILL_NORMAL_SENSE_QUALITY, CHARA_PLAYER) + 1) > 5 | sdata(SKILL_NORMAL_SENSE_QUALITY, CHARA_PLAYER) >= 50 ) {
+				inv(INV_ITEM_KNOWN, ci) = ITEM_KNOWN_QUALITY
+			}
+		}
+	}
+	gosub *item_value
+	itemturn ci
+	if ( initnum != 0 ) {
+		inv(INV_ITEM_NUM, ci) = initnum
+	}
+	if ( nostack == 1 ) {
+		nostack = 0
+	}
+	else {
+		item_stack val, ci
+		if ( stat == 1 ) {
+			ci = ti
+			return 1
+		}
+	}
+	if ( val == (-1) ) {
+		cell_refresh inv(INV_ITEM_X, ci), inv(INV_ITEM_Y, ci)
+	}
+	return 1
+
+*item_value
+	if ( reftype == FILTER_FURNITURE ) {
+		if ( inv(INV_ITEM_SUB_NAME, ci) != 0 ) {
+			inv(INV_ITEM_VALUE, ci) = inv(INV_ITEM_VALUE, ci) * (80 + inv(INV_ITEM_SUB_NAME, ci) * 20) / 100
+		}
+	}
+	return
+
+#deffunc lovemiracle int lovemiracle_arg1
+	if ( rnd(2) | lovemiracle_arg1 == 0 ) {
+		return
+	}
+	cibk = ci
+	txtmore
+	txtef COLOR_SKY_BLUE
+	txt lang("「あ…！」", cnvtalk("Uh...!"))
+	flt
+	if ( rnd(2) ) {
+		itemcreate -1, ITEM_ID_EGG, cdata(CDATA_X, lovemiracle_arg1), cdata(CDATA_Y, lovemiracle_arg1), 0
+		if ( stat ) {
+			inv(INV_ITEM_SUB_NAME, ci) = cdata(CDATA_ID, lovemiracle_arg1)
+			inv(INV_ITEM_WEIGHT, ci) = limit(cdata(CDATA_WEIGHT, lovemiracle_arg1) / 10 * 40, 20, 10000)
+			inv(INV_ITEM_VALUE, ci) = limit((cdata(CDATA_WEIGHT, lovemiracle_arg1) + 2400) / 4, 600, 3000)
+		}
+	}
+	else {
+		itemcreate -1, ITEM_ID_BOTTLE_MILK, cdata(CDATA_X, lovemiracle_arg1), cdata(CDATA_Y, lovemiracle_arg1), 0
+		if ( stat ) {
+			inv(INV_ITEM_SUB_NAME, ci) = cdata(CDATA_ID, lovemiracle_arg1)
+		}
+	}
+	ci = cibk
+	snd SOUNDLIST_ATK_ELEC
+	animeload ANIMATION_THROW, lovemiracle_arg1
+	return
+
+#deffunc lovemiracle2 int lovemiracle2_arg1
+	cibk = ci
+	flt
+	itemcreate -1, ITEM_ID_HANDMADE_CHOCOLATE, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
+	if ( stat ) {
+		inv(INV_ITEM_SUB_NAME, ci) = cdata(CDATA_ID, lovemiracle2_arg1)
+		inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+	}
+	if ( sdata(SKILL_NORMAL_COOKING, lovemiracle2_arg1) < 10 & rnd(5) == 0 ) {
+		inv(INV_ITEM_PARAM3, ci) = 5
+	}
+	if ( cdata(CDATA_SANITY, lovemiracle2_arg1) > 0 ) {
+		inv(INV_ITEM_PARAM3, ci) = 1
+	}
+	ci = cibk
+	return
+
+*foodRotten
+	if ( cbit(CHARA_BIT_EAT_ROTTEN, cc) == 1 ) {
+		txtmore
+		txt lang("しかし、" + name(cc) + "は何ともなかった。", "But " + name(cc) + your(cc) + " stomach isn't affected.")
+		return
+	}
+	fdmax = 0
+	if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+		fdlist(0, fdmax) = SKILL_ATTR_STR, -100
+		fdmax++
+	}
+	if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+		fdlist(0, fdmax) = SKILL_ATTR_CON, -100
+		fdmax++
+	}
+	if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+		fdlist(0, fdmax) = SKILL_ATTR_CHA, -100
+		fdmax++
+	}
+	if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+		fdlist(0, fdmax) = SKILL_ATTR_MAG, -100
+		fdmax++
+	}
+	if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+		fdlist(0, fdmax) = SKILL_ATTR_DEX, -100
+		fdmax++
+	}
+	if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+		fdlist(0, fdmax) = SKILL_ATTR_PER, -100
+		fdmax++
+	}
+	if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+		fdlist(0, fdmax) = SKILL_ATTR_LER, -100
+		fdmax++
+	}
+	if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+		fdlist(0, fdmax) = SKILL_ATTR_WIL, -100
+		fdmax++
+	}
+	nutrition = 1000
+	dmgcon cc, CONDITION_PARALYZE, 100
+	dmgcon cc, CONDITION_CONFUSE, 200
+	return
+
+*item_cook
+	snd SOUNDLIST_COOK1
+	item_separate ci
+	item_find ITEM_ID_ITZPALTS_SCULPTURE, 3, 1
+	if ( stat != (-1) ) {
+		itzp = stat
+		if ( inv(INV_ITEM_NUM, itzp) >= 1 ) {
+			snd SOUNDLIST_ATK_FIRE
+			txt lang("胸像の炎も使った。「浄化せよ」", "Used the flame from the sculpture. \"Purify it.\"")
+			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+		}
+	}
+	s = itemname(ci)
+	p = rnd(sdata(SKILL_NORMAL_COOKING, cc) + 6) + rnd(inv(INV_ITEM_PARAM1, cooktool) / 50 + 1)
+	if ( p > sdata(SKILL_NORMAL_COOKING, cc) / 5 + 7 ) {
+		p = sdata(SKILL_NORMAL_COOKING, cc) / 5 + 7
+	}
+	p = rnd(p + 1)
+	if ( p > 3 ) {
+		p = rnd(p)
+	}
+	if ( sdata(SKILL_NORMAL_COOKING, cc) >= 5 ) {
+		if ( p < 3 ) {
+			if ( rnd(4) == 0 ) {
+				p = 3
+			}
+		}
+	}
+	if ( sdata(SKILL_NORMAL_COOKING, cc) >= 10 ) {
+		if ( p < 3 ) {
+			if ( rnd(3) == 0 ) {
+				p = 3
+			}
+		}
+	}
+	p += inv(INV_ITEM_PARAM1, cooktool) / 100
+	if ( p > 9 ) {
+		p = 9
+	}
+	if ( p < 1 ) {
+		p = 1
+	}
+	if ( inv(INV_ITEM_PARAM1, cooktool) == 200 ) {
+		if ( p >= 9 ) {
+			p = 8
+		}
+	}
+	if ( inv(INV_ITEM_PARAM1, cooktool) == 150 ) {
+		if ( p >= 8 ) {
+			p = 7
+		}
+	}
+	if ( inv(INV_ITEM_PARAM1, cooktool) == 100 ) {
+		if ( p >= 7 ) {
+			p = 6
+		}
+	}
+	if ( inv(INV_ITEM_PARAM1, cooktool) == 80 ) {
+		if ( p >= 6 ) {
+			p = 5
+		}
+	}
+	if ( inv(INV_ITEM_PARAM1, cooktool) == 60 ) {
+		if ( p >= 5 ) {
+			p = 4
+		}
+	}
+	if ( inv(INV_ITEM_PARAM1, cooktool) == 40 ) {
+		if ( p >= 4 ) {
+			p = 3
+		}
+	}
+	make_dish ci, p
+	txt lang(itemname(cooktool) + "で" + s + "を料理して、" + itemname(ci, 1) + "を作った。", "You cook " + s + " with " + itemname(cooktool, 1) + " and make " + itemname(ci, 1) + ".")
+	r1 = inv(INV_ITEM_PARAM2, ci)
+	ibitmod ITEM_BIT_HERBED_IN, ci, 0
+	if ( sdata(SKILL_NORMAL_COOKING, CHARA_PLAYER) >= 100 ) {
+		inv(INV_ITEM_NUM, ci)++
+	}
+	if ( sdata(SKILL_NORMAL_COOKING, CHARA_PLAYER) >= 200 ) {
+		inv(INV_ITEM_NUM, ci)++
+	}
+	if ( r1 > 2 ) {
+		skillexp SKILL_NORMAL_COOKING, cc, 30 + r1 * 5
+	}
+	item_stack CHARA_PLAYER, ci
+	gosub *calcBurdenPc
+	return
+
+*eatEffect
+	tc = cc
+	dim fdlist, 2, 10
+	repeat fdmax
+		fdlist(0, cnt) = 0, 0
+	loop
+	nutrition = 2500
+	if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_CARGO) == 1 ) {
+		nutrition += 2500
+	}
+	if ( ibit(ITEM_BIT_HERBED_IN, ci) == 1 ) {
+		if ( cc == CHARA_PLAYER ) {
+			skillexp SKILL_ATTR_STR, cc, 2000
+			skillexp SKILL_ATTR_CON, cc, 2000
+			skillexp SKILL_ATTR_DEX, cc, 2000
+			skillexp SKILL_ATTR_PER, cc, 2000
+			skillexp SKILL_ATTR_LER, cc, 2000
+			skillexp SKILL_ATTR_WIL, cc, 2000
+			skillexp SKILL_ATTR_MAG, cc, 2000
+			skillexp SKILL_ATTR_CHA, cc, 2000
+			skillexp SKILL_ATTR_SPD, cc, 2000
+		}
+		else {
+			skillexp SKILL_ATTR_STR, cc, 10000
+			skillexp SKILL_ATTR_CON, cc, 10000
+			skillexp SKILL_ATTR_DEX, cc, 10000
+			skillexp SKILL_ATTR_PER, cc, 10000
+			skillexp SKILL_ATTR_LER, cc, 10000
+			skillexp SKILL_ATTR_WIL, cc, 10000
+			skillexp SKILL_ATTR_MAG, cc, 10000
+			skillexp SKILL_ATTR_CHA, cc, 10000
+			skillexp SKILL_ATTR_SPD, cc, 10000
+		}
+	}
+	fdmax = 0
+	i = inv(INV_ITEM_PARAM1, ci) / 1000
+	if ( i == 1 | inv(INV_ITEM_ID, ci) == ITEM_ID_JERKY ) {
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_STR, 30 + inv(INV_ITEM_LEVEL, ci)
+			fdmax++
+		}
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_CON, 40 + inv(INV_ITEM_LEVEL, ci)
+			fdmax++
+		}
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_CHA, 10 + inv(INV_ITEM_LEVEL, ci)
+			fdmax++
+		}
+		nutrition = 2000
+	}
+	if ( i == 8 ) {
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_CHA, 20
+			fdmax++
+		}
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_PER, 20
+			fdmax++
+		}
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_WIL, 20
+			fdmax++
+		}
+		nutrition = 2000
+	}
+	if ( i == 2 | inv(INV_ITEM_ID, ci) == ITEM_ID_DRIED_VEGETABLE ) {
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_WIL, 50 + inv(INV_ITEM_LEVEL, ci)
+			fdmax++
+		}
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_LER, 50 + inv(INV_ITEM_LEVEL, ci)
+			fdmax++
+		}
+		nutrition = 2000
+	}
+	if ( i == 3 | inv(INV_ITEM_ID, ci) == ITEM_ID_DRIED_FRUIT ) {
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_MAG, 50 + inv(INV_ITEM_LEVEL, ci)
+			fdmax++
+		}
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_CHA, 20
+			fdmax++
+		}
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_PER, 30 + inv(INV_ITEM_LEVEL, ci)
+			fdmax++
+		}
+		nutrition = 1500
+	}
+	if ( i == 7 ) {
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_STR, 25
+			fdmax++
+		}
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_DEX, 25
+			fdmax++
+		}
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_LER, 25
+			fdmax++
+		}
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_CON, 25
+			fdmax++
+		}
+		nutrition = 2800
+	}
+	if ( i == 4 ) {
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_MAG, 40
+			fdmax++
+		}
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_DEX, 30
+			fdmax++
+		}
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_LER, 30
+			fdmax++
+		}
+		nutrition = 1500
+	}
+	if ( i == 6 | inv(INV_ITEM_ID, ci) == ITEM_ID_DRIED_FISH ) {
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_LER, 40 + inv(INV_ITEM_LEVEL, ci)
+			fdmax++
+		}
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_DEX, 40 + inv(INV_ITEM_LEVEL, ci)
+			fdmax++
+		}
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_PER, 20
+			fdmax++
+		}
+		nutrition = 3000
+	}
+	if ( i == 5 ) {
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_CON, 60
+			fdmax++
+		}
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_DEX, 40
+			fdmax++
+		}
+		nutrition = 3500
+	}
+	if ( inv(INV_ITEM_LEVEL, ci) > 0 & inv(INV_ITEM_LEVEL, ci) <= 15 ) {
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_SPD, 10 + inv(INV_ITEM_LEVEL, ci) * 2
+			fdmax++
+		}
+	}
+	nutrition = nutrition * (100 + inv(INV_ITEM_PARAM2, ci) * 15) / 100
+	repeat fdmax
+		if ( fdlist(1, cnt) > 0 ) {
+			if ( inv(INV_ITEM_PARAM2, ci) < 3 ) {
+				fdlist(1, cnt) = fdlist(1, cnt) / 2
+			}
+			else {
+				fdlist(1, cnt) = fdlist(1, cnt) * (50 + inv(INV_ITEM_PARAM2, ci) * 20) / 100
+			}
+		}
+		else {
+			if ( inv(INV_ITEM_PARAM2, ci) < 3 ) {
+				fdlist(1, cnt) = fdlist(1, cnt) * ((3 - inv(INV_ITEM_PARAM2, ci)) * 100 + 100) / 100
+			}
+			else {
+				fdlist(1, cnt) = fdlist(1, cnt) * 100 / (inv(INV_ITEM_PARAM2, ci) * 50)
+			}
+		}
+	loop
+	if ( cc == CHARA_PLAYER & ibit(ITEM_BIT_HAZARD, ci) != 1 ) {
+		p = inv(INV_ITEM_PARAM1, ci) / EXT_FOOD
+		repeat 1
+			if ( cc == CHARA_PLAYER ) {
+				if ( trait(TRAIT_NORMAL_OTHER_CANNIBALISM) ) {
+					if ( inv(INV_ITEM_ID, ci) == ITEM_ID_CORPSE ) {
+						s = refchara(inv(INV_ITEM_SUB_NAME, ci), DBSPEC_CHARA_FILTER, 1)
+						if ( instr(s, 0, "/man/") != (-1) ) {
+							txt lang("ウマイ！", "Delicious!")
+							break
+						}
+					}
+				}
+			}
+			if ( inv(INV_ITEM_MATERIAL, ci) == ITEM_MATERIAL_RAW ) {
+				if ( inv(INV_ITEM_ROT, ci) < 0 ) {
+					txt lang("うげっ！腐ったものを食べてしまった…うわ…", "Ugh! Rotten food!")
+					break
+				}
+			}
+			if ( inv(INV_ITEM_PARAM2, ci) == 0 ) {
+				if ( p == 1 ) {
+					txt lang("生肉だ…", "Ugh... Raw meat...")
+					break
+				}
+				if ( p == 7 ) {
+					txt lang("粉の味がする…", "It tastes like... powder...")
+					break
+				}
+				if ( p == 5 ) {
+					txt lang("生で食べるものじゃないな…", "Er... this needs to be cooked.")
+					break
+				}
+				txt lang("まずいわけではないが…", "It doesn't taste awful but..."), lang("平凡な味だ。", "Very boring food.")
+				break
+			}
+			if ( inv(INV_ITEM_PARAM2, ci) < 3 ) {
+				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_SHAVED_ICE ) {
+					txt lang("つめたい！", "Wow! Cool!"), lang("頭がキーンとする！", "Yummy!")
+					break
+				}
+				else {
+					if ( inv(INV_ITEM_ID, ci) == ITEM_ID_BOTTLE_SALT | inv(INV_ITEM_ID, ci) == ITEM_ID_SACK_SUGAR | inv(INV_ITEM_ID, ci) == ITEM_ID_BOTTLE_PEPPER | inv(INV_ITEM_ID, ci) == ITEM_ID_BOTTLE_SOY_SAUCE ) {
+						txt lang("舌がおかしくなりそうだ…", "Er... my tongue feels weird.")
+						break
+					}
+					if ( inv(INV_ITEM_ID, ci) == ITEM_ID_CHEWED_UP_GUM ) {
+						txt lang("まずい！", "Ugh! Yuk!"), lang("ゴムっぽい味だ！", "Awful taste!!")
+						break
+					}
+					txt lang("うぅ…腹を壊しそうだ。", "Boy, it gives your stomach trouble!"), lang("まずい！", "Ugh! Yuk!"), lang("ひどい味だ！", "Awful taste!!")
+					break
+				}
+			}
+			if ( inv(INV_ITEM_PARAM2, ci) < 5 ) {
+				txt lang("まあまあの味だ。", "Uh-uh, the taste is so-so."), lang("悪くない味だ。", "The taste is not bad.")
+				break
+			}
+			if ( inv(INV_ITEM_PARAM2, ci) < 7 ) {
+				txt lang("かなりいける。", "It tasted good."), lang("それなりに美味しかった。", "Decent meal.")
+				break
+			}
+			if ( inv(INV_ITEM_PARAM2, ci) < 9 ) {
+				txt lang("美味しい！", "Delicious!"), lang("これはいける！", "Gee what a good taste!"), lang("いい味だ！", "It tasted pretty good!")
+				break
+			}
+			txt lang("最高に美味しい！", "Wow! Terrific food!"), lang("まさに絶品だ！", "Yummy! Absolutely yummy!"), lang("天にも昇る味だ！", "It tasted like seventh heaven!")
+		loop
+	}
+	else {
+		if ( inv(INV_ITEM_MATERIAL, ci) == ITEM_MATERIAL_RAW ) {
+			if ( inv(INV_ITEM_ROT, ci) < 0 ) {
+				txt lang(name(cc) + "は渋い顔をした。", name(cc) + " looks glum.")
+			}
+		}
+	}
+	if ( ibit(ITEM_BIT_HAZARD, ci) == 1 ) {
+		snd SOUNDLIST_ATK_POISON
+		fatal = rnd(6)
+		if ( fatal == 0 ) {
+			txtef COLOR_RED
+			txt lang(name(cc) + "は頑張って飲み込んだが胃に拒絶された。", name(cc) + " tried hard to swallow, but " + his(cc, 1) + " stomach rejected it.")
+		}
+		if ( fatal == 1 ) {
+			txtef COLOR_RED
+			txt lang(name(cc) + "は生まれてきたことを後悔した。", name(cc) + " regretted being born.")
+		}
+		if ( fatal == 2 ) {
+			txtef COLOR_RED
+			txt lang(name(cc) + "は涙を流して悶絶した！", name(cc) + " cried in agony to the point of fainting!")
+		}
+		if ( fatal == 3 ) {
+			txtef COLOR_RED
+			txt lang(name(cc) + "は口から妙にカラフルな煙を吹き出した。", name(cc) + " lets out a strangely colorful smoke from " + his(cc, 1) + " mouth.")
+		}
+		if ( fatal == 4 ) {
+			txtef COLOR_RED
+			txt lang(name(cc) + "は痙攣しつつ口から泡を吹いた。", name(cc) + " foams from " + his(cc, 1) + " mouth while consulsing.")
+		}
+		if ( fatal == 5 ) {
+			txtef COLOR_RED
+			txt lang(name(cc) + "は白目を剥いてぶっ倒れた。", name(cc) + " rolls back " + his(cc, 1) + " eyes and collapses.")
+		}
+		dmg = (sdata(SKILL_NORMAL_GENE_ENGINEER, CHARA_PLAYER) + 2) / 2 * sqrt(sdata(SKILL_NORMAL_GENE_ENGINEER, CHARA_PLAYER) + 1) + rnd(sdata(SKILL_NORMAL_GENE_ENGINEER, CHARA_PLAYER) * 2 + 5)
+		dmghp cc, dmg, DAMAGE_FROM_CHARA
+		if ( cdata(CDATA_EXIST, cc) == CHAR_STATE_ALIVE ) {
+			if ( fatal == 0 ) {
+				chara_vomit cc
+				chara_vomit cc
+			}
+			if ( fatal == 1 ) {
+				cdata(CDATA_POWER_GAUGE, cc) -= 30
+				if ( cdata(CDATA_POWER_GAUGE, cc) < 0 ) {
+					cdata(CDATA_POWER_GAUGE, cc) = 0
+				}
+			}
+			if ( fatal == 2 ) {
+				dmghp cc, (dmg + 10) / 10 * (rnd(200) + limit(sdata(SKILL_NORMAL_GENE_ENGINEER, CHARA_PLAYER) * 2, 200, 2000)) / 100 + 1, cc, SKILL_RES_POISON, 1000
+			}
+			if ( fatal == 3 ) {
+				dmghp cc, (dmg + 10) / 10 * (rnd(200) + limit(sdata(SKILL_NORMAL_GENE_ENGINEER, CHARA_PLAYER) * 2, 200, 2000)) / 100 + 1, cc, SKILL_RES_CHAOS, 1000
+			}
+			if ( fatal == 4 ) {
+				dmgsan cc, rnd((sdata(SKILL_NORMAL_GENE_ENGINEER, CHARA_PLAYER) + 1) / 5 * 2)
+			}
+			if ( fatal == 5 ) {
+				dmgcon cc, CONDITION_DIM, 200
+				if ( cdata(CDATA_CONDITION_INVERT, cc) < 2 ) {
+					cdata(CDATA_CONDITION_INVERT, cc) = 2
+				}
+			}
+		}
+		return
+	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_CURARIA ) {
+		fdmax = 0
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_STR, 100
+			fdmax++
+		}
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_CON, 100
+			fdmax++
+		}
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_CHA, 100
+			fdmax++
+		}
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_MAG, 100
+			fdmax++
+		}
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_DEX, 100
+			fdmax++
+		}
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_PER, 100
+			fdmax++
+		}
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_LER, 100
+			fdmax++
+		}
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_WIL, 100
+			fdmax++
+		}
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_SPD, 100
+			fdmax++
+		}
+		nutrition = 2500
+		if ( cc == CHARA_PLAYER ) {
+			txtmore
+			txtef COLOR_GREEN
+			txt lang("このハーブは活力の源だ。", "This herb invigorates you.")
+		}
+	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_MORGIA ) {
+		fdmax = 0
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_STR, 900
+			fdmax++
+		}
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_CON, 700
+			fdmax++
+		}
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_CHA, 10
+			fdmax++
+		}
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_MAG, 10
+			fdmax++
+		}
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_DEX, 10
+			fdmax++
+		}
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_PER, 10
+			fdmax++
+		}
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_LER, 10
+			fdmax++
+		}
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_WIL, 10
+			fdmax++
+		}
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_SPD, 20
+			fdmax++
+		}
+		nutrition = 500
+		modgrowth cc, SKILL_ATTR_STR, 40
+		modgrowth cc, SKILL_ATTR_CON, 40
+		if ( cc == CHARA_PLAYER ) {
+			txtmore
+			txtef COLOR_GREEN
+			txt lang("新たな力が湧きあがってくる。", "You feel might flowing through your body.")
+		}
+	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_MAREILON ) {
+		fdmax = 0
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_STR, 10
+			fdmax++
+		}
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_CON, 10
+			fdmax++
+		}
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_CHA, 10
+			fdmax++
+		}
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_MAG, 800
+			fdmax++
+		}
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_DEX, 10
+			fdmax++
+		}
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_PER, 10
+			fdmax++
+		}
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_LER, 10
+			fdmax++
+		}
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_WIL, 800
+			fdmax++
+		}
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_SPD, 20
+			fdmax++
+		}
+		nutrition = 500
+		modgrowth cc, SKILL_ATTR_MAG, 40
+		modgrowth cc, SKILL_ATTR_WIL, 40
+		if ( cc == CHARA_PLAYER ) {
+			txtmore
+			txtef COLOR_GREEN
+			txt lang("魔力の向上を感じる。", "You feel magical power spring up inside you.")
+		}
+	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_SPENSEWEED ) {
+		fdmax = 0
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_STR, 10
+			fdmax++
+		}
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_CON, 10
+			fdmax++
+		}
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_CHA, 10
+			fdmax++
+		}
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_MAG, 10
+			fdmax++
+		}
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_DEX, 750
+			fdmax++
+		}
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_PER, 800
+			fdmax++
+		}
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_LER, 10
+			fdmax++
+		}
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_WIL, 10
+			fdmax++
+		}
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_SPD, 20
+			fdmax++
+		}
+		modgrowth cc, SKILL_ATTR_DEX, 40
+		modgrowth cc, SKILL_ATTR_PER, 40
+		nutrition = 500
+		if ( cc == CHARA_PLAYER ) {
+			txtmore
+			txtef COLOR_GREEN
+			txt lang("感覚が研ぎ澄まされるようだ。", "You feel your senses sharpen.")
+		}
+	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_ALRAUNIA ) {
+		fdmax = 0
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_STR, 10
+			fdmax++
+		}
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_CON, 10
+			fdmax++
+		}
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_CHA, 850
+			fdmax++
+		}
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_MAG, 10
+			fdmax++
+		}
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_DEX, 10
+			fdmax++
+		}
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_PER, 10
+			fdmax++
+		}
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_LER, 700
+			fdmax++
+		}
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_WIL, 10
+			fdmax++
+		}
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_SPD, 20
+			fdmax++
+		}
+		nutrition = 500
+		modgrowth cc, SKILL_ATTR_CHA, 40
+		modgrowth cc, SKILL_ATTR_LER, 40
+		if ( cc == CHARA_PLAYER ) {
+			txtmore
+			txtef COLOR_GREEN
+			txt lang("ホルモンが活発化した。", "Your hormones are activated.")
+		}
+	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_STOMAFILLIA ) {
+		fdmax = 0
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_STR, 50
+			fdmax++
+		}
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_CON, 50
+			fdmax++
+		}
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_CHA, 50
+			fdmax++
+		}
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_MAG, 50
+			fdmax++
+		}
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_DEX, 50
+			fdmax++
+		}
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_PER, 50
+			fdmax++
+		}
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_LER, 50
+			fdmax++
+		}
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_WIL, 50
+			fdmax++
+		}
+		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
+			fdlist(0, fdmax) = SKILL_ATTR_SPD, 50
+			fdmax++
+		}
+		nutrition = 20000
+	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_FORTUNE_COOKIE ) {
+		nutrition = 750
+	}
+	if ( cc == CHARA_PLAYER ) {
+		if ( inv(INV_ITEM_MATERIAL, ci) == ITEM_MATERIAL_RAW ) {
+			if ( inv(INV_ITEM_ROT, ci) < 0 ) {
+				gosub *foodRotten
+			}
+		}
+	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_CORPSE ) {
+		s = refchara(inv(INV_ITEM_SUB_NAME, ci), DBSPEC_CHARA_FILTER, 1)
+		if ( cc == CHARA_PLAYER ) {
+			if ( instr(s, 0, "/man/") != (-1) ) {
+				gdata(GDATA_FLAG_HUMANS_EATEN)++
+				if ( trait(TRAIT_NORMAL_OTHER_CANNIBALISM) ) {
+					txt lang("これはあなたの大好きな人肉だ！", "It's your favorite, human flesh!")
+				}
+				else {
+					txt lang("これは人肉だ…うぇぇ！", "Eeeek! It's human flesh!")
+					txtmore
+					dmgsan cc, 15
+					dmgcon cc, CONDITION_INSANE, 150
+					if ( trait(TRAIT_NORMAL_OTHER_CANNIBALISM) == 0 ) {
+						if ( rnd(5) == 0 ) {
+							tid = TRAIT_NORMAL_OTHER_CANNIBALISM
+							traitmode = 0
+							gosub *trait_ref
+							txtef COLOR_GREEN
+							txt traitrefn(0)
+							trait(TRAIT_NORMAL_OTHER_CANNIBALISM) = 1
+						}
+					}
+				}
+			}
+			else {
+				if ( trait(TRAIT_NORMAL_OTHER_CANNIBALISM) ) {
+					txt lang("人肉の方が好みだが…", "You would've rather eaten human flesh.")
+					nutrition = nutrition * 2 / 3
+				}
+			}
+		}
+	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_CORPSE & inv(INV_ITEM_AMUR_CAGE, ci) != 1 ) {
+		dbmode = DBMODE_ON_EAT
+		dbid = inv(INV_ITEM_SUB_NAME, ci)
+		gosub *db_creature
+	}
+	repeat fdmax
+		i = 100
+		if ( cc == CHARA_PLAYER ) {
+			i = 1500
+			if ( inv(INV_ITEM_MATERIAL, ci) == ITEM_MATERIAL_RAW ) {
+				if ( inv(INV_ITEM_ROT, ci) < 0 ) {
+					i = 500
+				}
+			}
+		}
+		if ( cc != CHARA_PLAYER ) {
+			i = 1500
+			if ( inv(INV_ITEM_MATERIAL, ci) == ITEM_MATERIAL_RAW ) {
+				if ( inv(INV_ITEM_ROT, ci) < 0 ) {
+					i = 500
+				}
+			}
+		}
+		if ( ibit(ITEM_BIT_ANTISEPTIC, ci) == 1 ) {
+			i = i / 2 + 1
+		}
+		if ( i > 0 ) {
+			skillexp fdlist(0, cnt), cc, fdlist(1, cnt) * i / 100
+		}
+	loop
+	if ( inv(INV_ITEM_STATUS, ci) >= ITEM_STATUS_BLESSED ) {
+		nutrition = nutrition * 150 / 100
+	}
+	if ( inv(INV_ITEM_STATUS, ci) <= ITEM_STATUS_CURSED ) {
+		nutrition = nutrition * 50 / 100
+	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_JERKY ) {
+		nutrition = limit((nutrition + 1) / 2, 600, 1800)
+	}
+	if ( meal == 100 ) {
+		if ( nutrition > 0 ) {
+			nutrition = nutrition / 2 + 1
+		}
+	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_CHEWING_GUM ) {
+		nutrition = nutrition / 20
+	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_CHEWED_UP_GUM ) {
+		nutrition = nutrition / 25
+	}
+	if ( nutrition >= 3000 ) {
+		if ( rnd(10) == 0 | cdata(CDATA_HUNGER, cc) >= 12000 ) {
+			modweight cc, rnd(3) + 1, cdata(CDATA_HUNGER, cc) >= 12000
+		}
+	}
+	cdata(CDATA_HUNGER, cc) += nutrition
+	if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_ITEM_FOOD ) {
+		if ( cc == CHARA_PLAYER ) {
+			if ( inv(INV_ITEM_PARAM2, ci) >= 3 ) {
+				healsp CHARA_PLAYER, limit(inv(INV_ITEM_LEVEL, ci) * 3 / 2 + inv(INV_ITEM_PARAM2, ci), 3, 31)
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, cc) == CREATURE_ID_CUTE_FAIRY ) {
+		if ( cdata(CDATA_RELATION, cc) == 10 ) {
+			if ( nutrition >= 4000 ) {
+				if ( cbit(CHARA_BIT_EXCLUSIVE_SKILL_CHARGE, cc) != 0 ) {
+					cibk = ci
+					flt
+					itemcreate -1, ITEM_ID_VEGETABLE_SEED, cdata(CDATA_X, cc), cdata(CDATA_Y, cc), 2
+					inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+					if ( gdata(GDATA_DAY) == 9 | gdata(GDATA_DAY) == 19 | gdata(GDATA_DAY) == 29 | gdata(GDATA_DAY) == 3 | gdata(GDATA_DAY) == 13 | gdata(GDATA_DAY) == 23 | gdata(GDATA_DAY) == 30 | gdata(GDATA_DAY) == 6 | gdata(GDATA_DAY) == 16 | gdata(GDATA_DAY) == 26 ) {
+						flt
+						itemcreate -1, ITEM_ID_MAGICAL_SEED, cdata(CDATA_X, cc), cdata(CDATA_Y, cc), 0
+						inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+					}
+					else {
+						flt
+						itemcreate -1, ITEM_ID_FRUIT_SEED, cdata(CDATA_X, cc), cdata(CDATA_Y, cc), 2
+						inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+					}
+					if ( gdata(GDATA_DAY) == 9 | gdata(GDATA_DAY) == 19 | gdata(GDATA_DAY) == 29 | gdata(GDATA_DAY) == 3 | gdata(GDATA_DAY) == 13 | gdata(GDATA_DAY) == 23 | gdata(GDATA_DAY) == 30 ) {
+						flt
+						itemcreate -1, ITEM_ID_HERB_SEED, cdata(CDATA_X, cc), cdata(CDATA_Y, cc), 0
+						inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+					}
+					else {
+						flt
+						itemcreate -1, ITEM_ID_GEM_SEED, cdata(CDATA_X, cc), cdata(CDATA_Y, cc), 2
+						inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+					}
+					cbitmod CHARA_BIT_EXCLUSIVE_SKILL_CHARGE, cc, 0
+					txtef COLOR_SKY_BLUE
+					txtmore
+					txt lang("「げふぅ」" + name(cc) + "は種を吐き出した。", "「Ugh-Ughu」 " + name(cc) + " spew" + _s(cc) + " up " + itemname(ci, 1) + ".")
+					ci = cibk
+				}
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, cc) == CREATURE_ID_GOOSE ) {
+		if ( cdata(CDATA_RELATION, cc) == 10 ) {
+			if ( nutrition >= 3000 ) {
+				if ( cbit(CHARA_BIT_EXCLUSIVE_SKILL_CHARGE, cc) != 0 ) {
+					snd SOUNDLIST_DING3
+					cibk = ci
+					flt
+					itemcreate -1, ITEM_ID_PLATINUM_COIN, cdata(CDATA_X, cc), cdata(CDATA_Y, cc), 2
+					cbitmod CHARA_BIT_EXCLUSIVE_SKILL_CHARGE, cc, 0
+					txtef COLOR_SKY_BLUE
+					txtmore
+					txt lang(name(cc) + "の産んだ卵が割れて中からプラチナが出てきた。", "「Ugh-Ughu」 " + name(cc) + " laid a platinum coin.")
+					ci = cibk
+				}
+			}
+		}
+	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_FRIED_TOFU ) {
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_SILVER_FOX_BROTHER | cdata(CDATA_ID, cc) == CREATURE_ID_FOX_SPIRIT | cdata(CDATA_ID, cc) == CREATURE_ID_FOX_BROTHER ) {
+			kaiwa = rnd(4)
+			txtef COLOR_GREEN
+			if ( kaiwa == 0 ) {
+				txt lang("「あぶらあげぇ…♪1」", name(cc) + " muttered " + cnvtalk("Abura-Age...!"))
+			}
+			if ( kaiwa == 1 ) {
+				txt lang("「おかわり！！」", name(cc) + " muttered " + cnvtalk("I want to eat more!"))
+			}
+			if ( kaiwa == 2 ) {
+				txt lang("「油揚げ最高っ…♪」", name(cc) + " muttered " + cnvtalk("Ah, fried tofu is the best... ♪"))
+			}
+			if ( kaiwa == 3 ) {
+				txt lang(name(cc) + "は心配になるくらい幸せそうな表情を浮かべている…。", name(cc) + " looks worrisomely happy...")
+			}
+			cdata(CDATA_EMO_ICON, cc) = 17 + 100 * 3
+			if ( cdata(CDATA_EVOCHAT_POINTS, cc) < 5 ) {
+				cdata(CDATA_EVOCHAT_POINTS, cc) += 5
+			}
+		}
+	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_CURE_CRYSTAL ) {
+		if ( cc == CHARA_PLAYER ) {
+			snd SOUNDLIST_PRAY1
+			txtef COLOR_GREEN
+			txt lang("エーテルの抗体があなたの体内に行き渡った。", "Your Ether Disease is cured greatly.")
+			modcorrupt 100 * (-10)
+		}
+	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_LIVESTOCK_FEED ) {
+		inv_find ITEM_ID_BIO_BATTERY, cc
+		if ( stat == (-1) ) {
+			if ( cc != CHARA_PLAYER ) {
+				txt lang("「パッサパサ！」", cnvtalk("This is hard!")), lang("「パッサパサ！」", cnvtalk("This is hard!")), lang("「口のなかパッサパサ！」", cnvtalk("This dries your mouth!")), lang("「口の中パッサパサだよ！」", cnvtalk("Ugh, this is so dry!")), lang("「パッサパサだよ！」", cnvtalk("Ugh, this is hard!")), lang("「パッサパサだよ」", cnvtalk("Ugh, this is hard."))
+			}
+			omosa = limit(cdata(CDATA_WEIGHT, cc), 1, 100000000)
+			cdata(CDATA_WEIGHT, cc) += omosa * (inv(INV_ITEM_LEVEL, ci) + 1) / 100 + inv(INV_ITEM_LEVEL, ci) + 1
+			txt lang(name(cc) + "は太って" + cdata(CDATA_WEIGHT, cc) + "kgになった。", name(cc) + " grew fatter and now weighs " + cdata(CDATA_WEIGHT, cc) + "kg.")
+		}
+	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_CORPSE ) {
+		if ( inv(INV_ITEM_SUB_NAME, ci) == CREATURE_ID_LITTLE_SISTER ) {
+			txtef COLOR_GREEN
+			txt lang(name(cc) + "は進化した。", name(cc) + " evolve" + _s(cc) + ".")
+			if ( gdata(GDATA_FLAG_RARE_DROP) == 100 ) {
+				if ( rnd(sorg(SKILL_ATTR_LIFE, cc) * sorg(SKILL_ATTR_LIFE, cc) + 1) < 4000 ) {
+					skillmod SKILL_ATTR_LIFE, cc, 1000
+				}
+				if ( rnd(sorg(SKILL_ATTR_MANA, cc) * sorg(SKILL_ATTR_MANA, cc) + 1) < 4000 ) {
+					skillmod SKILL_ATTR_MANA, cc, 1000
+				}
+			}
+			repeat STARTING_SKILL_SPELL - STARTING_SKILL_WEAPON, STARTING_SKILL_WEAPON
+				if ( sdataref(SKILL_DATAREF_USE, cnt) == 0 | sorg(cnt, cc) == 0 ) {
+					continue
+				}
+				modgrowth cc, cnt, rnd(10) + 1
+			loop
+		}
+	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_HANDMADE_CHOCOLATE ) {
+		if ( inv(INV_ITEM_PARAM3, ci) == 2 ) {
+			if ( cc != CHARA_PLAYER ) {
+				snd SOUNDLIST_CURSE3
+				animeload ANIMATION_CRUSH, cc
+				dmgcon cc, CONDITION_SICK, 200
+			}
+		}
+		else {
+			snd SOUNDLIST_ATK_MIND
+			animeload ANIMATION_GOLDENSTORM, cc
+		}
+		if ( inv(INV_ITEM_PARAM3, ci) == 5 ) {
+			aniref = 0
+			animeid = ANIMATION_BALL
+			anix = cdata(CDATA_X, cc)
+			aniy = cdata(CDATA_Y, cc)
+			gosub *anime
+			dmghp cc, cdata(CDATA_MAX_HP, cc) * 10 / 100
+			if ( cc == CHARA_PLAYER ) {
+				txt lang("ぐわぁぁぁぁぁっ！！！", "Arrrrg!")
+			}
+			else {
+				txt lang("まさに味の火薬箱だ！", "It tastes just like cocoa powder!")
+			}
+		}
+		if ( inv(INV_ITEM_PARAM3, ci) == 1 ) {
+			txt lang("チョコの中に髪の毛や爪が入っていた…。", "There were hair and nails in the chocolate...")
+			dmgcon cc, CONDITION_INSANE, 200
+			if ( rnd(5) == 0 ) {
+				dmgcon cc, CONDITION_BLEED, 200
+			}
+		}
+		if ( inv(INV_ITEM_PARAM3, ci) == 3 ) {
+			if ( cc != CHARA_PLAYER ) {
+				txt lang("味に違和感があったのか、" + name(cc) + "は首をかしげている。", "There was a sense of incompatibility in the taste... " + name(cc) + " tilts " + his(cc) + " head, pondering.")
+			}
+		}
+	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_CHEWING_GUM | inv(INV_ITEM_ID, ci) == ITEM_ID_CHEWED_UP_GUM ) {
+		if ( inv_getspace(cc) == 0 | (cc == CHARA_PLAYER & gdata(GDATA_FLAG_GAME_MODE) == GAMEMODE_ABNORMAL & inv_sum(CHARA_PLAYER) > 20) ) {
+			flt
+			itemcreate -1, ITEM_ID_CHEWED_UP_GUM, cdata(CDATA_X, cc), cdata(CDATA_Y, cc), 0
+			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+		}
+		else {
+			flt
+			itemcreate cc, ITEM_ID_CHEWED_UP_GUM, cdata(CDATA_X, cc), cdata(CDATA_Y, cc), 0
+			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+			item_stack cc, ci
+		}
+		txt lang("「んべっ」", name(cc) + " spew" + _s(cc) + " up " + itemname(ci, 1) + ".")
+	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_KAGAMI_MOCHI ) {
+		txt lang("これは縁起がいい！", "This is auspicious!")
+		skillmod SKILL_ATTR_LUC, cc, 3000
+	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_OZOUNI | inv(INV_ITEM_ID, ci) == ITEM_ID_OSIRUKO ) {
+		skillmod SKILL_ATTR_LUC, cc, 2000
+	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_RABBITS_TAIL ) {
+		skillmod SKILL_ATTR_LUC, cc, 1000
+	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_HAPPY_APPLE ) {
+		skillmod SKILL_ATTR_LUC, cc, 1000 * 20
+	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_HERO_CHEESE ) {
+		skillmod SKILL_ATTR_LIFE, cc, 1000 * 3
+	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_MAGIC_FRUIT ) {
+		skillmod SKILL_ATTR_MANA, cc, 1000 * 3
+	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_YITH_YAKI ) {
+		if ( synccheck(cc, -1) ) {
+			txtef COLOR_PURPLE
+			txt lang(name(cc) + "は頭がぼんやりしてきた。", "Sheer madness!")
+		}
+		resistmodh cc, SKILL_RES_MIND, 50
+		dmgcon cc, CONDITION_INSANE, 80
+		dmgsan cc, rnd(10) + 50
+	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_CRIMBERRY ) {
+		if ( synccheck(cc, -1) ) {
+			txtef COLOR_PURPLE
+			txt lang(name(cc) + "は頭がクラクラした。", "Sheer madness!")
+		}
+		dmgsan cc, rnd(10) + 1
+	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_FORTUNE_COOKIE ) {
+		if ( cc < MAX_CHARA_FOLLOWER ) {
+			txt lang(name(cc) + "はクッキーの中のおみくじを読んだ。", name(cc) + " read" + _s(cc) + " the paper fortune.")
+			valn = "%COOKIE2"
+			gosub *spec_talk
+			if ( inv(INV_ITEM_STATUS, ci) >= ITEM_STATUS_BLESSED | (inv(INV_ITEM_STATUS, ci) == ITEM_STATUS_NORMAL & rnd(2)) ) {
+				valn = "%COOKIE1"
+				gosub *spec_talk
+			}
+			txtef COLOR_YELLOW
+			txt "" + buff
+		}
+	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_SISTERS_LOVE_FUELED_LUNCH ) {
+		txtmore
+		txt lang(name(cc) + "の心はすこし癒された。", name(cc) + your(cc) + " heart is warmed.")
+		healsan cc, 30
+	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_ABYSS_LUNCH ) {
+		txtmore
+		txt lang(name(cc) + "の身体を魔力が優しく包み込んだ。", name(cc) + your(cc) + " heart is warmed.")
+		snd SOUNDLIST_FISH_GET
+		addbuff cc, BUFF_SUPER_REGEN, 2500, 15
+		addbuff cc, BUFF_REGENERATION, 500, 15
+		healhp cc, cdata(CDATA_MAX_HP, cc) / 8 + 1
+		cdata(CDATA_CONDITION_WET, cc) += 50
+	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_AGING_LUNCH ) {
+		animeload ANIMATION_FIZZLE, cc
+		if ( inv(INV_ITEM_STATUS, ci) <= ITEM_STATUS_CURSED ) {
+			cdata(CDATA_AGE, cc) -= rnd(20) + 10
+		}
+		if ( inv(INV_ITEM_STATUS, ci) == ITEM_STATUS_NORMAL ) {
+			cdata(CDATA_AGE, cc) -= rnd(200) + 100
+		}
+		if ( inv(INV_ITEM_STATUS, ci) == ITEM_STATUS_BLESSED ) {
+			cdata(CDATA_AGE, cc) -= rnd(2000) + 1000
+		}
+		if ( synccheck(cc, -1) ) {
+			txtef COLOR_GREEN
+			txt lang(name(cc) + "は一気に歳をとった。", name(cc) + your(cc) + " suddenly aged.")
+		}
+		r1 = cc
+		gosub *charaRefresh
+	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_AGE_RETURN_LUNCH ) {
+		animeload ANIMATION_FIZZLE, cc
+		if ( inv(INV_ITEM_STATUS, ci) <= ITEM_STATUS_CURSED ) {
+			cdata(CDATA_AGE, cc) += 9999999
+			if ( cdata(CDATA_AGE, cc) + 10 > gdata(GDATA_YEAR) ) {
+				cdata(CDATA_AGE, cc) = gdata(GDATA_YEAR) - 10
+			}
+		}
+		if ( inv(INV_ITEM_STATUS, ci) == ITEM_STATUS_NORMAL ) {
+			cdata(CDATA_AGE, cc) += 9999999
+			if ( cdata(CDATA_AGE, cc) + 6 > gdata(GDATA_YEAR) ) {
+				cdata(CDATA_AGE, cc) = gdata(GDATA_YEAR) - 6
+			}
+		}
+		if ( inv(INV_ITEM_STATUS, ci) == ITEM_STATUS_BLESSED ) {
+			cdata(CDATA_AGE, cc) += 9999999
+			if ( cdata(CDATA_AGE, cc) > gdata(GDATA_YEAR) ) {
+				cdata(CDATA_AGE, cc) = gdata(GDATA_YEAR)
+			}
+		}
+		if ( synccheck(cc, -1) ) {
+			txtef COLOR_GREEN
+			txt lang(name(cc) + "は子供になってしまった。", name(cc) + " became a child.")
+		}
+		r1 = cc
+		gosub *charaRefresh
+	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_SOUP_OF_WONDERLAND ) {
+		inv_find ITEM_ID_BIO_BATTERY, cc
+		if ( stat == (-1) ) {
+			cdata(CDATA_HEIGHT, cc) = (cdata(CDATA_HEIGHT, cc) + 150) / 2
+			cdata(CDATA_WEIGHT, cc) = (cdata(CDATA_WEIGHT, cc) + 40) / 2
+			animeload ANIMATION_FIZZLE, cc
+			if ( synccheck(cc, -1) ) {
+				txtef COLOR_BLUE
+				txt lang("食べ終えた瞬間、" + name(cc) + "の体が激しく伸び縮みした。", "After eating, " + name(cc) + "'s body violently expanded and contracted.")
+			}
+			r1 = cc
+			gosub *charaRefresh
+		}
+	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_FORBIDDEN_MEAT ) {
+		animeload ANIMATION_FIZZLE, cc
+		if ( inv(INV_ITEM_STATUS, ci) == ITEM_STATUS_BLESSED ) {
+			if ( cdatan(CDATAN_NEWSEX, cc) != "" ) {
+				if ( cdatan(CDATAN_NEWSEX, cc) == lang("男性", "male") ) {
+					cdatan(CDATAN_NEWSEX, cc) = lang("女性", "female")
+				}
+				else {
+					cdatan(CDATAN_NEWSEX, cc) = lang("男性", "male")
+				}
+			}
+			if ( cdatan(CDATAN_NEWSEX, cc) == "" ) {
+				if ( cdata(CDATA_SEX, cc) == 0 ) {
+					cdatan(CDATAN_NEWSEX, cc) = lang("女性", "female")
+				}
+				else {
+					cdatan(CDATAN_NEWSEX, cc) = lang("男性", "male")
+				}
+			}
+			txt lang(name(cc) + "は性転換した！", name(cc) + " became the opposite sex!")
+		}
+		if ( inv(INV_ITEM_STATUS, ci) == ITEM_STATUS_NORMAL ) {
+			if ( cdatan(CDATAN_NEWSEX, cc) != "" ) {
+				if ( cdatan(CDATAN_NEWSEX, cc) == lang("自称女性", "trans-female") ) {
+					cdatan(CDATAN_NEWSEX, cc) = lang("自称男性", "trans-male")
+				}
+				else {
+					cdatan(CDATAN_NEWSEX, cc) = lang("自称女性", "trans-female")
+				}
+			}
+			if ( cdatan(CDATAN_NEWSEX, cc) == "" ) {
+				if ( cdata(CDATA_SEX, cc) == 0 ) {
+					cdatan(CDATAN_NEWSEX, cc) = lang("自称男性", "trans-male")
+				}
+				else {
+					cdatan(CDATAN_NEWSEX, cc) = lang("自称女性", "trans-female")
+				}
+			}
+			txt lang(name(cc) + "は性転換した…？", name(cc) + " became the opposite sex...?")
+		}
+		if ( cc == CHARA_PLAYER ) {
+			if ( cdata(CDATA_SEX, cc) == 0 ) {
+				cdata(CDATA_SEX, cc) = 1
+			}
+			else {
+				cdata(CDATA_SEX, cc) = 0
+			}
+		}
+		if ( inv(INV_ITEM_STATUS, ci) <= ITEM_STATUS_CURSED ) {
+			if ( cdatan(CDATAN_NEWSEX, cc) != lang("両性具有", "hermaphrodite") ) {
+				cdatan(CDATAN_NEWSEX, cc) = lang("両性具有", "hermaphrodite")
+			}
+			else {
+				cdatan(CDATAN_NEWSEX, cc) = ""
+			}
+			if ( rnd(3) == 0 ) {
+				if ( cdatan(CDATAN_NEWSEX, cc) == lang("なし", "none") ) {
+					cdatan(CDATAN_NEWSEX, cc) = ""
+				}
+				else {
+					if ( cdatan(CDATAN_NEWSEX, cc) != lang("なし", "none") ) {
+						cdatan(CDATAN_NEWSEX, cc) = lang("なし", "none")
+					}
+				}
+			}
+			txt lang(name(cc) + "は性転換した！", name(cc) + " became the opposite sex!")
+		}
+	}
+	if ( ibit(ITEM_BIT_POISON_BLEND, ci) == 1 ) {
+		if ( synccheck(cc, -1) ) {
+			txt lang("これは毒されている！" + name(cc) + "はもがき苦しみのたうちまわった！", "It's poisoned! " + name(cc) + " writhe" + _s(cc) + " in agony!")
+			txt lang("「ギャァァ…！」", cnvtalk("Gyaaaaa...!")), lang("「ブッ！」", cnvtalk("Ugh!"))
+		}
+		dmghp cc, rnd(250) + 250, DAMAGE_FROM_POISON
+		if ( cdata(CDATA_EXIST, cc) != CHAR_STATE_ALIVE ) {
+			if ( cc != CHARA_PLAYER ) {
+				if ( cdata(CDATA_RELATION, cc) >= 0 ) {
+					modkarma CHARA_PLAYER, -1
+				}
+			}
+			return
+		}
+	}
+	if ( ibit(ITEM_BIT_HERBED_IN, ci) == 1 ) {
+		cdata(CDATA_HUNGER, cc) = 15000
+		modgrowth cc, SKILL_ATTR_STR, 1
+		modgrowth cc, SKILL_ATTR_CON, 1
+		modgrowth cc, SKILL_ATTR_DEX, 1
+		modgrowth cc, SKILL_ATTR_PER, 1
+		modgrowth cc, SKILL_ATTR_LER, 1
+		modgrowth cc, SKILL_ATTR_WIL, 1
+		modgrowth cc, SKILL_ATTR_MAG, 1
+		modgrowth cc, SKILL_ATTR_CHA, 1
+		modgrowth cc, SKILL_ATTR_SPD, 1
+	}
+	if ( ibit(ITEM_BIT_LOVE_BLEND, ci) == 1 ) {
+		if ( cc == CHARA_PLAYER ) {
+			txt lang("あなたは興奮した！", "You are excited!")
+		}
+		else {
+			txtef COLOR_SKY_BLUE
+			txt name(cc) + lang("「なんだか…変な気分なの…」", " gasps, " + cnvtalk("I f-feel...strange...")), name(cc) + lang("「あれ…なにこの感じは…」", "gasps " + cnvtalk("Uh.. uh.. What is this feeling..."))
+			cdata(CDATA_EMO_ICON, cc) = 17 + 100 * 3
+			if ( cdata(CDATA_IMPRESSION, cc) < 100 ) {
+				modimp cc, 30
+			}
+			modkarma CHARA_PLAYER, -10
+			lovemiracle cc
+		}
+		dmgcon cc, CONDITION_DIM, 500
+		cdata(CDATA_EMO_ICON, cc) = 17 + 100 * 3
+	}
+	if ( cc == CHARA_PLAYER ) {
+		if ( inv(INV_ITEM_ID, ci) == ITEM_ID_SACK_FLOUR & inv(INV_ITEM_PARAM2, ci) > 0 | inv(INV_ITEM_ID, ci) == ITEM_ID_STICK_BREAD | inv(INV_ITEM_ID, ci) == ITEM_ID_PUFF_PUFF_BREAD ) {
+			gdata(GDATA_FLAG_BREAD_EATEN)++
+		}
+		if ( inv(INV_ITEM_ID, ci) == ITEM_ID_PANTY ) {
+			gdata(GDATA_FLAG_PANTIES_EATEN)++
+		}
+	}
+	repeat RANGE_INV_ITEM_ENCHANT
+		if ( inv(STARTING_INV_ITEM_ENCHANT + cnt * 2, ci) == 0 ) {
+			break
+		}
+		enc = inv(STARTING_INV_ITEM_ENCHANT + cnt * 2, ci)
+		if ( enc == ENCHANT_ABSORB_STAMINA ) {
+			p = rnd(inv(STARTING_INV_ITEM_ENCHANT + cnt * 2 + 1, ci) / 50 + 1) + 1
+			healsp cc, p
+			continue
+		}
+		if ( enc == ENCHANT_ABSORB_MP ) {
+			p = rnd(inv(STARTING_INV_ITEM_ENCHANT + cnt * 2 + 1, ci) / 25 + 1) + 1
+			healmp cc, p / 5
+			continue
+		}
+		if ( enc == ENCHANT_RAGNAROK ) {
+			evadd EVENT_RAGNAROK, cc
+			continue
+		}
+		if ( enc == ENCHANT_TIME_STOP ) {
+			if ( gdata(GDATA_TIME_STOP_TIME) == 0 ) {
+				txtef COLOR_SKY_BLUE
+				txt lang(name(cc) + "は時を止めた。", name(cc) + " stop" + _s(cc) + " time.")
+				gdata(GDATA_TIME_STOP_TIME) = inv(STARTING_INV_ITEM_ENCHANT + cnt * 2 + 1, ci) / 100 + 1 + 1
+				continue
+			}
+		}
+		enc2 = enc / EXT_ENCHANTMENT
+		if ( enc2 != 0 ) {
+			enc = enc \ EXT_ENCHANTMENT
+			if ( enc2 == ENCHANT_SKILL ) {
+				skillexp enc, cc, (inv(STARTING_INV_ITEM_ENCHANT + cnt * 2 + 1, ci) / 50 + 1) * 100 * (1 + (cc != CHARA_PLAYER) * 5)
+				if ( inv(STARTING_INV_ITEM_ENCHANT + cnt * 2 + 1, ci) >= 0 ) {
+					txt lang(skillname(enc) + "の参考になる！", skillname(enc) + " develops.")
+				}
+				else {
+					txt lang(skillname(enc) + "がよくわからなくなった。", skillname(enc) + " deteriorates.")
+				}
+				continue
+			}
+			if ( enc2 == ENCHANT_ATTRIBUTE ) {
+
+				/********** ORIGINAL - BEGINNING **********
+
+				skillexp enc, cc, (inv(STARTING_INV_ITEM_ENCHANT + cnt * 2 + 1, ci) / 50 + 1) * 100 * (1 + (cc != CHARA_PLAYER) * 5)
+
+				 ********** ORIGINAL - ENDING **********/
+
+				/********** ANNA CUSTOM - BEGINNING **********/
+
+				skillexp enc, cc, (inv(STARTING_INV_ITEM_ENCHANT + cnt * 2 + 1, ci) / 50 + 1) * 100 * (1 + (cc != CHARA_PLAYER) * 2.5)
+
+				/********** ANNA CUSTOM - ENDING **********/
+
+				if ( inv(STARTING_INV_ITEM_ENCHANT + cnt * 2 + 1, ci) >= 0 ) {
+					txt lang(skillname(enc) + "が発達した。", his2(cc) + your2(cc) + " " + skillname(enc) + " develops.")
+				}
+				else {
+					txt lang(skillname(enc) + "が衰えた。", his2(cc) + your2(cc) + " " + skillname(enc) + " deteriorates.")
+				}
+				continue
+			}
+			if ( enc2 == ENCHANT_FOOD ) {
+				modgrowth cc, enc, limit((inv(STARTING_INV_ITEM_ENCHANT + cnt * 2 + 1, ci) / 50 + 1) * 5, -50, 50)
+				if ( inv(STARTING_INV_ITEM_ENCHANT + cnt * 2 + 1, ci) >= 0 ) {
+					txt lang(skillname(enc) + "が回復した。", skillname(enc) + " is restored.")
+				}
+				else {
+					txt lang(skillname(enc) + "が消耗した。", skillname(enc) + " is exhausted.")
+				}
+				continue
+			}
+			if ( enc2 == ENCHANT_SUSTAIN & enc != SKILL_ATTR_LUC ) {
+				addbuff cc, BUFF_GROW_STRENGTH + (enc - STARTING_SKILL_ATTR), (inv(STARTING_INV_ITEM_ENCHANT + cnt * 2 + 1, ci) / 50 + 1) * 5 * (1 + (cc != CHARA_PLAYER) * 2), 2000
+				continue
+			}
+		}
+	loop
+	eatstatus inv(INV_ITEM_STATUS, cieat), cc
+	return
+
+*eatHard
+	if ( synccheck(cc, -1) ) {
+		txtef COLOR_PURPLE
+		txt lang("まるで鉄のように硬い！" + name(cc) + "の胃は悲鳴をあげた。", "It's too hard! " + name(cc) + your(cc) + " stomach screams.")
+	}
+	dmgcon cc, CONDITION_DIM, 200
+	return
+
+*eatInsane
+	if ( synccheck(cc, -1) ) {
+		txtef COLOR_PURPLE
+		txt lang("気が変になりそうな味だ。", "It tastes really, really strange.")
+	}
+	dmgsan cc, 25
+	dmgcon cc, CONDITION_INSANE, 500
+	return
+
+*eatHorse
+	if ( synccheck(cc, -1) ) {
+		txtef COLOR_GREEN
+		txt lang("馬肉だ！これは精がつきそうだ。", "A horsemeat! It's nourishing")
+	}
+	skillexp SKILL_ATTR_CON, cc, 100
+	return
+
+*eatHoly
+	if ( synccheck(cc, -1) ) {
+		txtef COLOR_GREEN
+		txt lang(name(cc) + "は神聖なものを汚した気がした。", name(cc) + " feel" + _s(cc) + " as " + he(cc) + " " + have(cc) + " been corrupted.")
+	}
+	resistmodh cc, SKILL_RES_DARKNESS, 50
+	return
+
+*eatPlayer
+	if ( synccheck(cc, -1) ) {
+		txt lang("＠を食べるなんて…", "You dare to eat @...")
+	}
+	return
+
+*eatGuard
+	if ( cc != CHARA_PLAYER ) {
+		return
+	}
+	if ( synccheck(cc, -1) ) {
+		txtef COLOR_PURPLE
+		txt lang("ガード達はあなたを憎悪した。", "Guards hate you.")
+	}
+	modkarma cc, -15
+	return
+
+*eatVesda
+	if ( inv(INV_ITEM_AMUR_CAGE, ci) != 1 ) {
+		if ( synccheck(cc, -1) ) {
+			txtef COLOR_GREEN
+			txt lang(name(cc) + "の体は一瞬燃え上がった。", name(cc) + your(cc) + " body burns up for a second.")
+		}
+		resistmod cc, SKILL_RES_FIRE, 50 * 2
+	}
+	return
+
+*eatIssizzle
+	if ( inv(INV_ITEM_AMUR_CAGE, ci) != 1 ) {
+		if ( synccheck(cc, -1) ) {
+			txtef COLOR_PURPLE
+			txt lang(name(cc) + "の胃は狂気で満たされた。", "Sheer madness!")
+		}
+		resistmod cc, SKILL_RES_MIND, 50
+		dmgsan cc, 200
+		dmgcon cc, CONDITION_INSANE, 1000
+	}
+	return
+
+*eatPutit
+	if ( synccheck(cc, -1) ) {
+		txtef COLOR_GREEN
+		txt lang("肌がつるつるになりそうだ。", name(cc) + your(cc) + " skin becomes smooth.")
+	}
+	skillexp SKILL_ATTR_CHA, cc, 150
+	return
+
+*eatCupid
+	if ( synccheck(cc, -1) ) {
+		txtef COLOR_GREEN
+		txt lang(name(cc) + "は恋をしている気分になった！", name(cc) + " feel" + _s(cc) + " love!")
+	}
+	skillexp SKILL_ATTR_CHA, cc, 400
+	return
+
+*eatPoison
+	if ( synccheck(cc, -1) ) {
+		txtef COLOR_PURPLE
+		txt lang("これは有毒だ！", "Argh! It's poisonous!")
+	}
+	dmgcon cc, CONDITION_POISON, 100
+	return
+
+*eatTroll
+	if ( synccheck(cc, -1) ) {
+		txtef COLOR_GREEN
+		txt lang("血が沸き立つようだ。", "A troll meat. This must be good for your body.")
+	}
+	skillexp SKILL_NORMAL_HEALING, cc, 200
+	return
+
+*eatRotten
+	if ( synccheck(cc, -1) ) {
+		txtef COLOR_PURPLE
+		txt lang("腐ってるなんて分かりきっていたのに…うげぇ", "Of course, it's rotten! Urgh...")
+	}
+	gosub *foodRotten
+	return
+
+*eatBeetle
+	if ( synccheck(cc, -1) ) {
+		txtef COLOR_GREEN
+		txt lang("力が湧いてくるようだ。", "Mighty taste!")
+	}
+	skillexp SKILL_ATTR_STR, cc, 250
+	return
+
+*eatMandrake
+	if ( synccheck(cc, -1) ) {
+		txtef COLOR_GREEN
+		txt lang("微かな魔力の刺激を感じた。", name(cc) + " " + is(cc) + " magically stimulated.")
+	}
+	skillexp SKILL_NORMAL_MEDITATION, cc, 500
+	return
+
+*eatGhost
+	if ( synccheck(cc, -1) ) {
+		txtef COLOR_PURPLE
+		txt lang("胃の調子がおかしい…", "Something is wrong with " + name(cc) + your(cc) + " stomach...")
+	}
+	dmgcon cc, CONDITION_CONFUSE, 200
+	return
+
+*eatHealSan
+	if ( synccheck(cc, -1) ) {
+		txtef COLOR_GREEN
+		txt lang("この肉は心を落ち着かせる効果があるようだ。", "Eating this brings " + name(cc) + " inner peace.")
+	}
+	healsan cc, 20
+	return
+
+*eatYith
+	if ( synccheck(cc, -1) ) {
+		txtef COLOR_PURPLE
+		txt lang(name(cc) + "の胃は狂気で満たされた。", "Sheer madness!")
+	}
+	dmgsan cc, 50
+	resistmodh cc, SKILL_RES_MIND, 50
+	return
+
+*eatChaos
+	if ( synccheck(cc, -1) ) {
+		txtef COLOR_PURPLE
+		txt lang(name(cc) + "の胃は混沌で満たされた。", name(cc) + " " + is(cc) + " shaken by a chaotic power.")
+	}
+	dmgcon cc, CONDITION_CONFUSE, 300
+	return
+
+*eatEye
+	if ( synccheck(cc, -1) ) {
+		txtef COLOR_PURPLE
+		txt lang(name(cc) + "の神経に電流が走った。", name(cc) + your(cc) + " nerve is damaged.")
+	}
+	dmgcon cc, CONDITION_PARALYZE, 300
+	return
+
+*eatCat
+	if ( cc != CHARA_PLAYER ) {
+		return
+	}
+	if ( synccheck(cc, -1) ) {
+		txt lang("猫を食べるなんて！！", "How can you eat a cat!!")
+	}
+	modkarma CHARA_PLAYER, -5
+	return
+
+*eatEther
+	if ( cc != CHARA_PLAYER ) {
+		return
+	}
+	if ( synccheck(cc, -1) ) {
+		txtef COLOR_PURPLE
+		txt lang(name(cc) + "の体内はエーテルで満たされた。", "Ether corrupts your body.")
+	}
+	modcorrupt 1000
+	return
+
+*eatEND
+	if ( synccheck(cc, -1) ) {
+		txtef COLOR_GREEN
+		txt lang("体力がつきそうだ。", "This food is good for your endurance.")
+	}
+	return
+
+*eatMAG
+	if ( synccheck(cc, -1) ) {
+		txtef COLOR_GREEN
+		txt lang("魔力が鍛えられる。", "This food is good for your magic.")
+	}
+	return
+
+*eatSTR
+	if ( synccheck(cc, -1) ) {
+		txtef COLOR_GREEN
+		txt lang("力がつきそうだ。", "This food is good for your strength.")
+	}
+	return
+
+*eatWIL
+	if ( synccheck(cc, -1) ) {
+		txtef COLOR_GREEN
+		txt lang("精神が少しずぶとくなった。", "This food is good for your willpower.")
+	}
+	return
+
+*eatQuickling
+	if ( synccheck(cc, -1) ) {
+		txtef COLOR_GREEN
+		txt lang("ワアーォ、" + name(cc) + "は速くなった気がする！", "Wow, " + name(cc) + " speed" + _s(cc) + " up!")
+	}
+	if ( cc == CHARA_PLAYER ) {
+		skillexp SKILL_ATTR_SPD, cc, 2000
+	}
+	else {
+		skillexp SKILL_ATTR_SPD, cc, 8000
+	}
+	return
+
+*eatAlien
+	if ( synccheck(cc, -1) ) {
+		txt lang("何かが" + name(cc) + "の体内に入り込んだ。", "Something gets into " + name(cc) + your(cc) + " body.")
+	}
+	tc = cc
+	gosub *alien_effect
+	return
+
+*alien_effect
+	if ( encfind(tc, ENCHANT_RES_PREGNANCY) != (-1) ) {
+		if ( synccheck(tc, -1) ) {
+			txt lang("しかしすぐに吐き出した。", "But " + he(tc) + " puke" + _s(tc) + " it out quickly.")
+		}
+		ninsin = 0
+		return
+	}
+	if ( cbit(CHARA_BIT_PREGNANT, tc) == 0 ) {
+		txtef COLOR_YELLOW
+		txt lang(name(tc) + "は寄生された。", name(tc) + " get" + _s(tc) + " pregnant.")
+		if ( meal == 0 ) {
+			animeload ANIMATION_FIZZLE, tc
+		}
+		if ( ninsin != 0 ) {
+			if ( ninsin == CREATURE_ID_SUNBARARIAN ) {
+				cdata(CDATA_INFANT, tc) = CREATURE_ID_SUNBARARIAN
+			}
+			if ( ninsin == CREATURE_ID_GIANT_EATER_FLOWER ) {
+				cdata(CDATA_INFANT, tc) = CREATURE_ID_MAN_EATER_FLOWER
+			}
+			if ( ninsin == CREATURE_ID_HEQET ) {
+				cdata(CDATA_INFANT, tc) = CREATURE_ID_MUSICAL_NOTADPOLE
+			}
+			if ( ninsin == CREATURE_ID_CAMOUFLAGED_IMP ) {
+				cdata(CDATA_INFANT, tc) = CREATURE_ID_CAMOUFLAGED_IMP
+			}
+		}
+		else {
+			cdata(CDATA_INFANT, tc) = 0
+		}
+		ninsin = 0
+		cbitmod CHARA_BIT_PREGNANT, tc, 1
+		if ( tc == CHARA_PLAYER ) {
+			spact(SKILL_SPACT_PREGNANT - STARTING_SKILL_SPACT) = 1
+		}
+	}
+	return
+

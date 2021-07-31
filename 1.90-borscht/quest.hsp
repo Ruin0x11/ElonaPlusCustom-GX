@@ -1,0 +1,879 @@
+*client_update
+	repeat 245 - 57, 57
+		if ( cdata(CDATA_EXIST, cnt) == CHAR_STATE_DEAD ) {
+			continue
+		}
+		if ( cdata(CDATA_ROLE, cnt) == ROLE_NONE ) {
+			continue
+		}
+		if ( cdata(CDATA_QUALITY, cnt) == FIX_QUALITY_UNIQUE ) {
+			continue
+		}
+		if ( cdata(CDATA_ROLE, cnt) == ROLE_SPECIAL ) {
+			continue
+		}
+		if ( cdata(CDATA_RELATION, cnt) == RELATION_DISLIKE ) {
+			continue
+		}
+		if ( cnt == 0 ) {
+			continue
+		}
+		i = -1
+		repeat 500
+			if ( qdata(QDATA_CLIENT, cnt) == 0 ) {
+				i = cnt
+				break
+			}
+		loop
+		cnt2 = cnt
+		repeat 500
+			if ( qdata(QDATA_CLIENT, cnt) == cnt2 ) {
+				if ( qdata(QDATA_MAP, cnt) == gdata(GDATA_AREA) ) {
+					i = -1
+					break
+				}
+			}
+		loop
+		if ( i == (-1) ) {
+			break
+		}
+		qdata(QDATA_CLIENT, i) = cnt
+		qdata(QDATA_MAP, i) = gdata(GDATA_AREA)
+		qname(i) = cdatan(CDATAN_NAME, cnt)
+		cdata(CDATA_QUEST_NPC, cnt) = i + 1
+		if ( gdata(GDATA_CLIENT) <= i ) {
+			gdata(GDATA_CLIENT) = i + 1
+		}
+	loop
+	return
+
+*quest_reward
+	qdata(QDATA_REWARD, rq) = ((qdata(QDATA_LEVEL, rq) + 3) * 100 + rnd(qdata(QDATA_LEVEL, rq) * 30 + 200) + 400) * rewardfix / 100
+	qdata(QDATA_REWARD, rq) = qdata(QDATA_REWARD, rq) * 100 / (100 + qdata(QDATA_LEVEL, rq) * 2 / 3)
+	if ( qdata(QDATA_TYPE, rq) == QUEST_SUBTYPE_SUPPLY | qdata(QDATA_TYPE, rq) == QUEST_SUBTYPE_DELIVER ) {
+		return
+	}
+	if ( gdata(GDATA_DEEPEST_LEVEL) / 2 >= qdata(QDATA_LEVEL, rq) ) {
+	}
+	else {
+		qdata(QDATA_REWARD, rq) = qdata(QDATA_REWARD, rq) * (100 + limit((qdata(QDATA_LEVEL, rq) - gdata(GDATA_DEEPEST_LEVEL) / 2) / 5 * 25, 50, 200)) / 100
+	}
+	return
+
+*quest_update
+	repeat gdata(GDATA_CLIENT)
+		if ( qdata(QDATA_CLIENT, cnt) == (-1) ) {
+			continue
+		}
+		if ( qdata(QDATA_CLIENT, cnt) == 0 ) {
+			continue
+		}
+		if ( qdata(QDATA_MAP, cnt) != gdata(GDATA_AREA) ) {
+			continue
+		}
+		rc = qdata(QDATA_CLIENT, cnt)
+		if ( cdata(CDATA_RELATION_ORG, rc) != RELATION_NEUTRAL ) {
+			qdata(QDATA_CLIENT, cnt) = 0
+			rq = cnt
+			gosub *quest_create
+		}
+		if ( cdata(CDATA_ROLE, rc) == ROLE_NONE ) {
+			continue
+		}
+		if ( cdata(CDATA_QUALITY, rc) == FIX_QUALITY_UNIQUE ) {
+			continue
+		}
+		if ( cdata(CDATA_ROLE, rc) == ROLE_SPECIAL ) {
+			continue
+		}
+		if ( cdata(CDATA_ID, rc) == CREATURE_ID_ORPHE_THE_CHAOS_CHILD ) {
+			continue
+		}
+		if ( rc == CHARA_PLAYER ) {
+			continue
+		}
+		if ( qdata(QDATA_STATE, cnt) == QUEST_STATE_NONE ) {
+			if ( qdata(QDATA_RENEW, cnt) < gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 | adata(ADATA_QUEST_RENEW, gdata(GDATA_AREA)) != 4 ) {
+				rq = cnt
+				gosub *quest_create
+				gosub *quest_reward
+			}
+		}
+	loop
+	adata(ADATA_QUEST_RENEW, gdata(GDATA_AREA)) = 4
+	return
+	repeat gdata(GDATA_CLIENT)
+		if ( qdata(QDATA_CLIENT, cnt) == 0 ) {
+			continue
+		}
+		if ( qdata(QDATA_MAP, cnt) != gdata(GDATA_AREA) ) {
+			continue
+		}
+		rc = qdata(QDATA_CLIENT, cnt)
+		if ( qdata(QDATA_STATE, cnt) == QUEST_STATE_NONE ) {
+			rq = cnt
+			gosub *quest_create
+			gosub *quest_reward
+		}
+	loop
+	return
+
+*quest_create
+	qdata(QDATA_EXIST, rq) = QUEST_TYPE_NONE
+	qdata(QDATA_TYPE, rq) = QUEST_TYPE_NONE
+	qdata(QDATA_STATE, rq) = QUEST_STATE_NONE
+	qdata(QDATA_RENEW, rq) = rnd(3 + 1) * 24 + (gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12)
+	qdata(QDATA_REWARD_ITEM, rq) = (0 /*!!!@[QUEST_REWARD_NONE @@@ FILTER_NOTHING @@@ FILTER_NOTHING]@!!! */)
+	if ( rnd(3) == 0 ) {
+		return
+	}
+	if ( qdata(QDATA_CLIENT, rq) == 0 ) {
+		return
+	}
+	if ( rnd(14) == 0 & gdata(GDATA_AREA) != AREA_RUST_PLAZA ) {
+		i = -1
+		repeat 300
+			n = rnd(245 - 57) + 57
+			if ( n == qdata(QDATA_CLIENT, rq) ) {
+				continue
+			}
+			if ( cdata(CDATA_EXIST, n) != CHAR_STATE_ALIVE ) {
+				continue
+			}
+			if ( cdata(CDATA_RELATION, n) != RELATION_NEUTRAL | (cdata(CDATA_ROLE, n) != ROLE_CITIZEN & cdata(CDATA_ROLE, n) != ROLE_GUARD) ) {
+				continue
+			}
+			flt 40, FIX_QUALITY_GOOD
+			flttypemajor = fsetcollect(rnd(length(fsetcollect)))
+			itemcreate n, ITEM_ID_DUMMY, -1, -1, 0
+			if ( stat != 0 ) {
+				inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) = rq
+				i = n, inv(INV_ITEM_ID, ci)
+				ibitmod ITEM_BIT_DROP, ci, TRUE
+				break
+			}
+			else {
+				i = -1
+				break
+			}
+		loop
+		if ( i != (-1) ) {
+			qdata((10 /*!!!@[QDATA_ENCOUNTER @@@ QDATA_DEST_CLIENT]@!!! */), rq) = i
+			qdata(QDATA_DEST_ITEM, rq) = i(1)
+			qdata(QDATA_MAP, rq) = gdata(GDATA_AREA)
+			rewardfix = 60
+			qdata(QDATA_REWARD_ITEM, rq) = (5 /*!!!@[QUEST_REWARD_SUPPLY @@@ FILTER_RACE_KOBOLT]@!!! */)
+			qdata(QDATA_EXIST, rq) = QUEST_TYPE_COLLECT
+			qdata(QDATA_TYPE, rq) = QUEST_SUBTYPE_SUPPLY
+			qdata(QDATA_VAR, rq) = 0
+			qdata(QDATA_DEADLINE, rq) = rnd(3) + 2
+			qdata(QDATA_LEVEL, rq) = cdata(CDATA_LEVEL, i) / 3
+		}
+		return
+	}
+	if ( cdata(CDATA_FAME, CHARA_PLAYER) >= 30000 ) {
+		if ( rnd(13) == 0 ) {
+			qdata(QDATA_LEVEL, rq) = rnd(gdata(GDATA_DEEPEST_LEVEL) / 2 + 10) + rnd(cdata(CDATA_FAME, CHARA_PLAYER) / 2500 + 1)
+			qdata(QDATA_LEVEL, rq) = roundmargin(qdata(QDATA_LEVEL, rq), gdata(GDATA_DEEPEST_LEVEL) / 2)
+			minlevel = limit(qdata(QDATA_LEVEL, rq) / 7, 5, 30)
+			repeat 50
+				flt qdata(QDATA_LEVEL, rq), FIX_QUALITY_GOOD
+				characreate MAX_CHARA_NC, CREATURE_ID_BUG, -3, 0
+				if ( cmshade ) {
+					continue
+				}
+				if ( cdata(CDATA_LEVEL, rc) < minlevel ) {
+					continue
+				}
+				break
+			loop
+			qdata(QDATA_PARAM1, rq) = cdata(CDATA_ID, MAX_CHARA_NC)
+			qdata(QDATA_RENEW, rq) = (rnd(6) + 2) * 24 + (gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12)
+			qdata(QDATA_REWARD_ITEM, rq) = (0 /*!!!@[QUEST_REWARD_NONE @@@ FILTER_NOTHING @@@ FILTER_NOTHING]@!!! */)
+			qdata(QDATA_EXIST, rq) = QUEST_TYPE_HUNTEX
+			qdata(QDATA_TYPE, rq) = QUEST_SUBTYPE_ELIMINATE
+			qdata(QDATA_VAR, rq) = 0
+			qdata(QDATA_REWARD_ITEM, rq) = (5 /*!!!@[QUEST_REWARD_SUPPLY @@@ FILTER_RACE_KOBOLT]@!!! */)
+			qdata(QDATA_DEADLINE, rq) = -1
+			rewardfix = 140
+			return
+		}
+	}
+	if ( cdata(CDATA_FAME, CHARA_PLAYER) >= 50000 ) {
+		if ( rnd(20) == 0 ) {
+			qdata(QDATA_LEVEL, rq) = rnd(gdata(GDATA_DEEPEST_LEVEL) / 2 + 10) + rnd(cdata(CDATA_FAME, CHARA_PLAYER) / 2500 + 1)
+			qdata(QDATA_LEVEL, rq) = roundmargin(qdata(QDATA_LEVEL, rq), gdata(GDATA_DEEPEST_LEVEL) / 2)
+			minlevel = limit(qdata(QDATA_LEVEL, rq) / 4, 5, 30)
+			repeat 50
+				flt qdata(QDATA_LEVEL, rq), FIX_QUALITY_GOOD
+				characreate MAX_CHARA_NC, CREATURE_ID_BUG, -3, 0
+				if ( cmshade ) {
+					continue
+				}
+				if ( cdata(CDATA_LEVEL, rc) < minlevel ) {
+					continue
+				}
+				break
+			loop
+			qdata(QDATA_PARAM1, rq) = cdata(CDATA_ID, MAX_CHARA_NC)
+			qdata(QDATA_RENEW, rq) = (rnd(6) + 2) * 24 + (gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12)
+			qdata(QDATA_REWARD_ITEM, rq) = (0 /*!!!@[QUEST_REWARD_NONE @@@ FILTER_NOTHING @@@ FILTER_NOTHING]@!!! */)
+			qdata(QDATA_EXIST, rq) = QUEST_TYPE_CONQUER
+			qdata(QDATA_TYPE, rq) = QUEST_SUBTYPE_CONQUER
+			qdata(QDATA_VAR, rq) = 0
+			qdata(QDATA_REWARD_ITEM, rq) = (1 /*!!!@[QUEST_REWARD_WEAR @@@ FILTER_RACE_GOBLIN]@!!! */)
+			qdata(QDATA_DEADLINE, rq) = -1
+			rewardfix = 175
+			return
+		}
+	}
+	if ( rnd(11) == 0 & gdata(GDATA_AREA) != AREA_RUST_PLAZA & gdata(GDATA_AREA) != AREA_OL_DRAN ) {
+		qdata(QDATA_RENEW, rq) = (rnd(6) + 2) * 24 + (gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12)
+		qdata(QDATA_EXIST, rq) = QUEST_TYPE_ESCORT
+		qdata(QDATA_TYPE, rq) = QUEST_SUBTYPE_GUARD
+		qdata(QDATA_VAR, rq) = rnd(3)
+		qdata((10 /*!!!@[QDATA_ENCOUNTER @@@ QDATA_DEST_CLIENT]@!!! */), rq) = 0
+		qdata(QDATA_REWARD_ITEM, rq) = (5 /*!!!@[QUEST_REWARD_SUPPLY @@@ FILTER_RACE_KOBOLT]@!!! */)
+		if ( gdata(GDATA_AREA) == AREA_EIREL | gdata(GDATA_AREA) == AREA_MELKAWN | gdata(GDATA_AREA) == AREA_KURUALM | gdata(GDATA_AREA) == AREA_VALM | gdata(GDATA_AREA) == AREA_MELUGAS | gdata(GDATA_AREA) == AREA_ARCBELC | gdata(GDATA_AREA) == AREA_LUDUS ) {
+			repeat
+				qdata(QDATA_PARAM1, rq) = asettowns(rnd(length(asettowns)))
+				if ( qdata(QDATA_PARAM1, rq) != gdata(GDATA_AREA) ) {
+					break
+				}
+			loop
+		}
+		if ( gdata(GDATA_AREA) == AREA_VERNIS | gdata(GDATA_AREA) == AREA_YOWYN | gdata(GDATA_AREA) == AREA_PALMIA | gdata(GDATA_AREA) == AREA_DERPHY | gdata(GDATA_AREA) == AREA_PORT_KAPUL | gdata(GDATA_AREA) == AREA_LUMIEST | gdata(GDATA_AREA) == AREA_NOYEL ) {
+			repeat
+				qdata(QDATA_PARAM1, rq) = asettownn(rnd(length(asettownn)))
+				if ( qdata(QDATA_PARAM1, rq) != gdata(GDATA_AREA) ) {
+					break
+				}
+			loop
+		}
+		p = qdata(QDATA_PARAM1, rq)
+		if ( qdata(QDATA_VAR, rq) == 0 ) {
+			rewardfix = 140 + dist(adata(ADATA_X, gdata(GDATA_AREA)), adata(ADATA_Y, gdata(GDATA_AREA)), adata(ADATA_X, p), adata(ADATA_Y, p)) * 2
+			qdata(QDATA_DEADLINE, rq) = rnd(8) + 6
+			qdata(QDATA_LEVEL, rq) = limit(rnd(gdata(GDATA_DEEPEST_LEVEL) / 2 + 10) + rnd(cdata(CDATA_FAME, CHARA_PLAYER) / 500 + 1) + 1, 1, 80)
+		}
+		if ( qdata(QDATA_VAR, rq) == 1 ) {
+			rewardfix = 130 + dist(adata(ADATA_X, gdata(GDATA_AREA)), adata(ADATA_Y, gdata(GDATA_AREA)), adata(ADATA_X, p), adata(ADATA_Y, p)) * 2
+			qdata(QDATA_DEADLINE, rq) = rnd(5) + 2
+			qdata(QDATA_LEVEL, rq) = limit(rewardfix / 10 + 1, 1, 40)
+		}
+		if ( qdata(QDATA_VAR, rq) == 2 ) {
+			rewardfix = 80 + dist(adata(ADATA_X, gdata(GDATA_AREA)), adata(ADATA_Y, gdata(GDATA_AREA)), adata(ADATA_X, p), adata(ADATA_Y, p)) * 2
+			qdata(QDATA_DEADLINE, rq) = rnd(8) + 6
+			qdata(QDATA_LEVEL, rq) = limit(rewardfix / 20 + 1, 1, 40)
+		}
+		if ( qdata(QDATA_PARAM1, rq) == 33 | gdata(GDATA_AREA) == AREA_NOYEL ) {
+			rewardfix = rewardfix * 180 / 100
+		}
+		if ( qdata(QDATA_PARAM1, rq) == 57 | gdata(GDATA_AREA) == AREA_LUDUS ) {
+			rewardfix = rewardfix * 120 / 100
+		}
+		return
+	}
+	if ( rnd(35) == 0 | (gdata(GDATA_AREA) == AREA_DERPHY & rnd(8) == 0) | (gdata(GDATA_AREA) == AREA_LUDUS & rnd(12) == 0) ) {
+		if ( gdata(GDATA_AREA) != AREA_RUST_PLAZA & gdata(GDATA_AREA) != AREA_OL_DRAN ) {
+			qdata(QDATA_LEVEL, rq) = limit(rnd(sdata(SKILL_NORMAL_DETECTION, CHARA_PLAYER) + sdata(SKILL_ATTR_PER, CHARA_PLAYER) / 10 + 10), int(1.5 * sqrt(sdata(SKILL_NORMAL_DETECTION, CHARA_PLAYER))) + 10, cdata(CDATA_FAME, CHARA_PLAYER) / 1000 + 10)
+			if ( qdata(QDATA_LEVEL, rq) > 200 ) {
+				qdata(QDATA_LEVEL, rq) = 200
+			}
+			qdata(QDATA_RENEW, rq) = (rnd(6) + 2) * 24 + (gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12)
+			qdata(QDATA_REWARD_ITEM, rq) = (0 /*!!!@[QUEST_REWARD_NONE @@@ FILTER_NOTHING @@@ FILTER_NOTHING]@!!! */)
+			qdata(QDATA_EXIST, rq) = QUEST_TYPE_MINEFIELD
+			qdata(QDATA_TYPE, rq) = QUEST_SUBTYPE_TRAP
+			if ( cdata(CDATA_FAME, CHARA_PLAYER) >= 15000 ) {
+				qdata(QDATA_VAR, rq) = rnd(2)
+			}
+			else {
+				qdata(QDATA_VAR, rq) = 0
+			}
+			qdata(QDATA_REWARD_ITEM, rq) = (0 /*!!!@[QUEST_REWARD_NONE @@@ FILTER_NOTHING @@@ FILTER_NOTHING]@!!! */)
+			qdata(QDATA_PARAM1, rq) = qdata(QDATA_LEVEL, rq) + rnd(5)
+			qdata(QDATA_PARAM2, rq) = 0
+			qdata(QDATA_DEADLINE, rq) = -1
+			rewardfix = 0
+			return
+		}
+	}
+	if ( rnd(23) == 0 | (gdata(GDATA_AREA) == AREA_PALMIA & rnd(8) == 0) | (gdata(GDATA_AREA) == AREA_ARCBELC & rnd(2) == 0) ) {
+		if ( gdata(GDATA_AREA) != AREA_RUST_PLAZA & gdata(GDATA_AREA) != AREA_OL_DRAN ) {
+			qdata(QDATA_LEVEL, rq) = limit(rnd(sdata(SKILL_NORMAL_PERFORMER, CHARA_PLAYER) + sdata(SKILL_ATTR_CHA, CHARA_PLAYER) / 10 + 10), int(1.5 * sqrt(sdata(SKILL_NORMAL_PERFORMER, CHARA_PLAYER))) + 10, cdata(CDATA_FAME, CHARA_PLAYER) / 1000 + 10)
+			qdata(QDATA_RENEW, rq) = (rnd(6) + 2) * 24 + (gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12)
+			qdata(QDATA_REWARD_ITEM, rq) = (0 /*!!!@[QUEST_REWARD_NONE @@@ FILTER_NOTHING @@@ FILTER_NOTHING]@!!! */)
+			qdata(QDATA_EXIST, rq) = QUEST_TYPE_PARTY
+			qdata(QDATA_TYPE, rq) = QUEST_SUBTYPE_PERFORM
+			qdata(QDATA_VAR, rq) = 0
+			qdata(QDATA_REWARD_ITEM, rq) = (0 /*!!!@[QUEST_REWARD_NONE @@@ FILTER_NOTHING @@@ FILTER_NOTHING]@!!! */)
+			qdata(QDATA_PARAM1, rq) = qdata(QDATA_LEVEL, rq) * 10 + rnd(50)
+			qdata(QDATA_PARAM2, rq) = 0
+			qdata(QDATA_DEADLINE, rq) = -1
+			rewardfix = 0
+			return
+		}
+	}
+	if ( rnd(30) == 0 | (gdata(GDATA_AREA) == AREA_YOWYN & rnd(2) == 0) | (gdata(GDATA_AREA) == AREA_LUDUS & rnd(8) == 0) | (gdata(GDATA_AREA) == AREA_RUST_PLAZA & rnd(2) == 0) ) {
+		if ( gdata(GDATA_AREA) != AREA_OL_DRAN ) {
+			qdata(QDATA_LEVEL, rq) = limit(rnd(gdata(GDATA_DEEPEST_LEVEL) / 3 + 2), 2, 50)
+			qdata(QDATA_RENEW, rq) = (rnd(6) + 2) * 24 + (gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12)
+			qdata(QDATA_EXIST, rq) = QUEST_TYPE_HARVEST
+			qdata(QDATA_TYPE, rq) = QUEST_SUBTYPE_CARRY
+			qdata(QDATA_VAR, rq) = 0
+			qdata(QDATA_REWARD_ITEM, rq) = (5 /*!!!@[QUEST_REWARD_SUPPLY @@@ FILTER_RACE_KOBOLT]@!!! */)
+			qdata(QDATA_DEADLINE, rq) = -1
+			qdata(QDATA_PARAM1, rq) = 15000 + qdata(QDATA_LEVEL, rq) * 2500
+			qdata(QDATA_PARAM2, rq) = 0
+			rewardfix = 60 + qdata(QDATA_LEVEL, rq) * 2
+			return
+		}
+	}
+	if ( rnd(8) == 0 ) {
+		qdata(QDATA_LEVEL, rq) = limit(rnd(gdata(GDATA_DEEPEST_LEVEL) / 2 + 10) + rnd(cdata(CDATA_FAME, CHARA_PLAYER) / 500 + 1) + 1, 1, 80)
+		qdata(QDATA_LEVEL, rq) = roundmargin(qdata(QDATA_LEVEL, rq), gdata(GDATA_DEEPEST_LEVEL) / 2)
+		qdata(QDATA_RENEW, rq) = (rnd(6) + 2) * 24 + (gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12)
+		qdata(QDATA_REWARD_ITEM, rq) = (0 /*!!!@[QUEST_REWARD_NONE @@@ FILTER_NOTHING @@@ FILTER_NOTHING]@!!! */)
+		qdata(QDATA_EXIST, rq) = QUEST_TYPE_HUNT
+		qdata(QDATA_TYPE, rq) = QUEST_SUBTYPE_ELIMINATE
+		qdata(QDATA_VAR, rq) = 0
+		qdata(QDATA_REWARD_ITEM, rq) = (1 /*!!!@[QUEST_REWARD_WEAR @@@ FILTER_RACE_GOBLIN]@!!! */)
+		qdata(QDATA_DEADLINE, rq) = -1
+		rewardfix = 135
+		return
+	}
+	if ( rnd(6) == 0 | gdata(GDATA_AREA) == AREA_RUST_PLAZA ) {
+		if ( gdata(GDATA_AREA) != AREA_OL_DRAN ) {
+			qdata(QDATA_EXIST, rq) = QUEST_TYPE_COOK
+			qdata(QDATA_TYPE, rq) = QUEST_SUBTYPE_SUPPLY
+			qdata(QDATA_DEADLINE, rq) = rnd(6) + 2
+			qdata(QDATA_REWARD_ITEM, rq) = (5 /*!!!@[QUEST_REWARD_SUPPLY @@@ FILTER_RACE_KOBOLT]@!!! */)
+			qdata(QDATA_PARAM1, rq) = rnd(9 - 1) + 1
+			if ( qdata(QDATA_PARAM1, rq) == 4 ) {
+				qdata(QDATA_REWARD_ITEM, rq) = FILTER_ITEM_POTION
+			}
+			if ( qdata(QDATA_PARAM1, rq) == 6 ) {
+				qdata(QDATA_REWARD_ITEM, rq) = FILTER_AMMO
+			}
+			if ( qdata(QDATA_PARAM1, rq) == 1 ) {
+				qdata(QDATA_REWARD_ITEM, rq) = FILTER_AMMO
+			}
+			if ( qdata(QDATA_PARAM1, rq) == 5 ) {
+				qdata(QDATA_REWARD_ITEM, rq) = FILTER_ITEM_POTION
+			}
+			if ( qdata(QDATA_PARAM1, rq) == 7 ) {
+				qdata(QDATA_REWARD_ITEM, rq) = FILTER_ORE
+			}
+			if ( qdata(QDATA_PARAM1, rq) == 2 ) {
+				qdata(QDATA_REWARD_ITEM, rq) = FILTER_ITEM_ROD
+			}
+			if ( qdata(QDATA_PARAM1, rq) == 3 ) {
+				qdata(QDATA_REWARD_ITEM, rq) = FILTER_ITEM_SCROLL
+			}
+			qdata(QDATA_PARAM2, rq) = rnd(10 - 3) + 3
+			qdata(QDATA_LEVEL, rq) = qdata(QDATA_PARAM2, rq) * 3
+			rewardfix = 60 + qdata(QDATA_LEVEL, rq)
+			return
+		}
+	}
+	if ( rnd(5) == 0 | gdata(GDATA_AREA) == AREA_OL_DRAN ) {
+		qdata(QDATA_EXIST, rq) = QUEST_TYPE_SUPPLY
+		qdata(QDATA_TYPE, rq) = QUEST_SUBTYPE_SUPPLY
+		qdata(QDATA_DEADLINE, rq) = rnd(6) + 2
+		flt
+		dbmode = DBMODE_FIND
+		flttypemajor = fsetsupply(rnd(length(fsetsupply)))
+		gosub *db_item
+		qdata(QDATA_REWARD_ITEM, rq) = (5 /*!!!@[QUEST_REWARD_SUPPLY @@@ FILTER_RACE_KOBOLT]@!!! */)
+		qdata(QDATA_DEST_ITEM, rq) = dbid
+		qdata(QDATA_LEVEL, rq) = limit(rnd(gdata(GDATA_DEEPEST_LEVEL) / 2 + 5) + 1, 1, 30)
+		rewardfix = 65 + qdata(QDATA_LEVEL, rq)
+		return
+	}
+	if ( rnd(6) == 0 | (gdata(GDATA_AREA) == AREA_KURUALM & rnd(2) == 0) ) {
+		i = -1
+		repeat gdata(GDATA_CLIENT)
+			p = rnd(gdata(GDATA_CLIENT))
+			repeat gdata(GDATA_CLIENT)
+				if ( qdata(QDATA_EXIST, cnt) == QUEST_TYPE_DELIVER ) {
+					if ( qdata((10 /*!!!@[QDATA_ENCOUNTER @@@ QDATA_DEST_CLIENT]@!!! */), cnt) == p ) {
+						p = -1
+						break
+					}
+				}
+			loop
+			if ( p == (-1) ) {
+				continue
+			}
+			if ( gdata(GDATA_AREA) == AREA_EIREL | gdata(GDATA_AREA) == AREA_MELKAWN | gdata(GDATA_AREA) == AREA_KURUALM | gdata(GDATA_AREA) == AREA_VALM | gdata(GDATA_AREA) == AREA_MELUGAS | gdata(GDATA_AREA) == AREA_ARCBELC | gdata(GDATA_AREA) == AREA_LUDUS ) {
+				if ( qdata(QDATA_MAP, p) != 50 & qdata(QDATA_MAP, p) != 52 & qdata(QDATA_MAP, p) != 53 & qdata(QDATA_MAP, p) != 54 & qdata(QDATA_MAP, p) != 55 & qdata(QDATA_MAP, p) != 56 & qdata(QDATA_MAP, p) != 57 ) {
+					continue
+				}
+			}
+			if ( gdata(GDATA_AREA) == AREA_VERNIS | gdata(GDATA_AREA) == AREA_YOWYN | gdata(GDATA_AREA) == AREA_PALMIA | gdata(GDATA_AREA) == AREA_DERPHY | gdata(GDATA_AREA) == AREA_PORT_KAPUL | gdata(GDATA_AREA) == AREA_LUMIEST | gdata(GDATA_AREA) == AREA_NOYEL ) {
+				if ( qdata(QDATA_MAP, p) != 5 & qdata(QDATA_MAP, p) != 12 & qdata(QDATA_MAP, p) != 15 & qdata(QDATA_MAP, p) != 14 & qdata(QDATA_MAP, p) != 11 & qdata(QDATA_MAP, p) != 36 & qdata(QDATA_MAP, p) != 33 ) {
+					continue
+				}
+			}
+			if ( qdata(QDATA_CLIENT, p) != 0 ) {
+				if ( qdata(QDATA_MAP, p) != gdata(GDATA_AREA) ) {
+					i = p
+					break
+				}
+			}
+		loop
+		if ( i != (-1) ) {
+			p = qdata(QDATA_MAP, i)
+			rewardfix = 70 + dist(adata(ADATA_X, gdata(GDATA_AREA)), adata(ADATA_Y, gdata(GDATA_AREA)), adata(ADATA_X, p), adata(ADATA_Y, p)) * 2
+			if ( p == 33 | gdata(GDATA_AREA) == AREA_NOYEL ) {
+				rewardfix = rewardfix * 175 / 100
+			}
+			qdata((10 /*!!!@[QDATA_ENCOUNTER @@@ QDATA_DEST_CLIENT]@!!! */), rq) = i
+			flt
+			dbmode = DBMODE_FIND
+			flttypemajor = fsetdeliver(rnd(length(fsetdeliver)))
+			gosub *db_item
+			qdata(QDATA_PARAM1, rq) = flttypemajor
+			qdata(QDATA_REWARD_ITEM, rq) = (5 /*!!!@[QUEST_REWARD_SUPPLY @@@ FILTER_RACE_KOBOLT]@!!! */)
+			if ( flttypemajor == FILTER_ITEM_SPELLBOOK ) {
+				qdata(QDATA_REWARD_ITEM, rq) = (2 /*!!!@[QUEST_REWARD_MAGIC @@@ FILTER_RACE_ORC]@!!! */)
+			}
+			if ( flttypemajor == FILTER_ORE ) {
+				qdata(QDATA_REWARD_ITEM, rq) = (3 /*!!!@[QUEST_REWARD_ARMOR @@@ FILTER_RACE_SLIME]@!!! */)
+			}
+			if ( flttypemajor == FILTER_JUNK ) {
+				qdata(QDATA_REWARD_ITEM, rq) = FILTER_ORE
+			}
+			if ( flttypemajor == FILTER_FURNITURE ) {
+				qdata(QDATA_REWARD_ITEM, rq) = FILTER_FURNITURE
+			}
+			qdata(QDATA_DEST_ITEM, rq) = dbid
+			qdata(QDATA_EXIST, rq) = QUEST_TYPE_DELIVER
+			qdata(QDATA_TYPE, rq) = QUEST_SUBTYPE_DELIVER
+			qdata(QDATA_VAR, rq) = 0
+			qdata(QDATA_DEADLINE, rq) = rnd(12) + 3
+			qdata(QDATA_LEVEL, rq) = limit(rewardfix / 20 + 1, 1, 25)
+		}
+		return
+	}
+	return 1
+
+*quest_check
+	repeat gdata(GDATA_CLIENT)
+		if ( qdata(QDATA_EXIST, cnt) == QUEST_TYPE_NONE ) {
+			continue
+		}
+		if ( qdata(QDATA_STATE, cnt) != QUEST_STATE_ONGOING ) {
+			continue
+		}
+		if ( qdata(QDATA_DEADLINE, cnt) < 0 ) {
+			continue
+		}
+		rq = cnt
+		qdata(QDATA_DEADLINE, rq)--
+		if ( qdata(QDATA_DEADLINE, rq) == 0 ) {
+			val = qdata(QDATA_EXIST, rq)
+			gosub *quest_fail
+		}
+	loop
+	return
+
+*quest_exit
+	if ( gdata(GDATA_QUEST) == QUEST_TYPE_HARVEST ) {
+		inv_getheader 0
+		repeat invrange, invhead
+			if ( inv(INV_ITEM_PROPERTY, cnt) == PROPERTY_QUEST ) {
+				inv(INV_ITEM_NUM, cnt) = 0
+			}
+		loop
+		gosub *calcBurdenPc
+	}
+	if ( gdata(GDATA_QUEST_STATE) != QUEST_STATE_SUCCESS ) {
+		if ( gdata(GDATA_QUEST) >= STARTING_QUEST_TYPE ) {
+			rq = gdata(GDATA_QUEST_REF)
+		}
+		if ( gdata(GDATA_QUEST) == QUEST_TYPE_ESCORT ) {
+			if ( qdata(QDATA_STATE, rq) == QUEST_STATE_NONE ) {
+				gdata(GDATA_QUEST) = QUEST_TYPE_NONE, 0, 0, 0
+				return
+			}
+			else {
+				txtmore
+				txt lang("あなたはクライアントを置き去りにした。", "You left your client.")
+			}
+		}
+		val = gdata(GDATA_QUEST)
+		gosub *quest_fail
+		msg_halt
+	}
+	gdata(GDATA_QUEST) = QUEST_TYPE_NONE, 0, 0, 0
+	return
+
+*quest_death
+	rc = CHARA_PLAYER
+	gosub *chara_respawn
+	skillexp SKILL_ATTR_CHA, CHARA_PLAYER, -500
+	skillexp SKILL_ATTR_WIL, CHARA_PLAYER, -500
+	levelexitby = MAP_EXIT_NORMAL
+	gdata(GDATA_LEVEL) = 0
+	goto *map_exit
+
+*quest_fail
+	if ( val == 1 ) {
+		adata(ADATA_ARENA_WIN, gdata(GDATA_RETURN_AREA)) = 0
+		txt lang("あなたは敗北した。", "You were defeated.")
+		modrank 0, -100
+	}
+	if ( val >= 1000 ) {
+		txt lang(qname(rq) + "から受けた依頼は失敗に終わった。", "You have failed the quest taken from " + qname(rq) + ".")
+		gdata(GDATA_FLAG_JOBS_FAILED)++
+		if ( qdata(QDATA_EXIST, rq) == QUEST_TYPE_DELIVER ) {
+			qdata(QDATA_QUEST_TARGET, qdata((10 /*!!!@[QDATA_ENCOUNTER @@@ QDATA_DEST_CLIENT]@!!! */), rq))--
+			txtmore
+			txtef COLOR_PURPLE
+			txt lang("あなたは重大な罪を犯した!", "You comit a serious crime!")
+			modkarma 0, -20
+		}
+		if ( qdata(QDATA_EXIST, rq) == QUEST_TYPE_ESCORT ) {
+			txtmore
+			txtef COLOR_PURPLE
+			txt lang("あなたは護衛の任務を果たせなかった。", "You have failed to protect the client.")
+			repeat 16
+				if ( cnt != 0 ) {
+					if ( cbit(CHARA_BIT_BODYGUARD, cnt) == TRUE ) {
+						if ( qdata(QDATA_PARAM2, rq) == cdata(CDATA_ID, cnt) ) {
+							tc = cnt
+							cbitmod CHARA_BIT_BODYGUARD, cnt, FALSE
+							if ( cdata(CDATA_EXIST, tc) == CHAR_STATE_ALIVE ) {
+								if ( qdata(QDATA_VAR, rq) == 0 ) {
+									s = lang("「おい、暗殺者が私の後ろにいるぞ」", cnvtalk("Hey, the assassins are killing me."))
+									p = -11
+								}
+								if ( qdata(QDATA_VAR, rq) == 1 ) {
+									s = lang("「毒が、毒がー！」", cnvtalk("Poison! P-P-Poison in my vein!!"))
+									p = -4
+								}
+								if ( qdata(QDATA_VAR, rq) == 2 ) {
+									s = lang("「時間切れだ。こうなったら…」" + name(tc) + "は火をかぶった。", cnvtalk("I missed the deadline. I don't have a right to live anymore.") + " " + name(tc) + " pours a bottole of molotov cocktail over " + him(tc) + "self.")
+									addmef cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 5, 24, rnd(15) + 25, efp, 0
+									mapitem_fire cdata(CDATA_X, tc), cdata(CDATA_Y, tc)
+									p = -9
+								}
+								txtef COLOR_SKY_BLUE
+								txtmore
+								txt s
+								dmghp tc, 999999, p
+							}
+							cdata(CDATA_EXIST, tc) = CHAR_STATE_DEAD
+							break
+						}
+					}
+				}
+			loop
+			modkarma 0, -10
+		}
+		qdata(QDATA_EXIST, rq) = QUEST_TYPE_NONE
+		qdata(QDATA_STATE, rq) = QUEST_STATE_NONE
+	}
+	decfame CHARA_PLAYER, 40
+	p = stat
+	txtmore
+	txtef COLOR_RED
+	txt lang("名声値を" + p + "失った。", "You lose " + p + " fame.")
+	return
+
+*quest_petArenaWin
+	repeat 16
+		if ( cdata(CDATA_DIRECTIVE_MODE, cnt) == DIRECTIVE_MODE_TEMPORARY ) {
+			cdata(CDATA_DIRECTIVE_MODE, cnt) = cdata(CDATA_DIRECTIVE_MODE_ORG, cnt)
+		}
+		if ( followerin(cnt) == 0 ) {
+			continue
+		}
+		if ( cdata(CDATA_HP, cnt) < cdata(CDATA_MAX_HP, cnt) / 2 ) {
+			cdata(CDATA_HP, cnt) = cdata(CDATA_MAX_HP, cnt) / 2
+		}
+	loop
+	snd SOUNDLIST_CHEER
+	if ( petarenawin == 1 ) {
+		txtef COLOR_GREEN
+		txt lang("あなたのチームは勝利した！", "Your team is victorious!")
+		txtef COLOR_GREEN
+		txtmore
+		txt lang("" + gdata(GDATA_QUEST_FAME) + "の名声値を手に入れた。", "You gain " + gdata(GDATA_QUEST_FAME) + " fame.")
+		if ( arenaimport == 1 ) {
+			gdata(GDATA_EX_BATTLE_WIN)++
+			if ( enemylv > gdata(GDATA_EX_BATTLE_MAX_LVL) ) {
+				txt lang("EXバトルの撃破相手LVの記録を更新した(Lv" + gdata(GDATA_EX_BATTLE_MAX_LVL) + " → " + enemylv + " )", "You've made a new record. (Lv" + gdata(GDATA_EX_BATTLE_MAX_LVL) + " to " + enemylv + " )")
+				gdata(GDATA_EX_BATTLE_MAX_LVL) = enemylv
+			}
+		}
+		else {
+			cdata(CDATA_FAME, CHARA_PLAYER) += gdata(GDATA_QUEST_FAME)
+			modrank 1, 100, 2
+			adata(ADATA_PET_ARENA_WIN, gdata(GDATA_RETURN_AREA))++
+			if ( adata(ADATA_PET_ARENA_WIN, gdata(GDATA_RETURN_AREA)) > gdata(GDATA_FLAG_HIGHEST_PET_ARENA_STREAK) ) {
+				gdata(GDATA_FLAG_HIGHEST_PET_ARENA_STREAK) = adata(ADATA_PET_ARENA_WIN, gdata(GDATA_RETURN_AREA))
+			}
+			if ( gdata(GDATA_RANK_PET_ARENA) / 100 == 1 & adata(ADATA_PET_ARENA_WIN, gdata(GDATA_RETURN_AREA)) \ 100 == 0 ) {
+				snd SOUNDLIST_DING3
+				snd SOUNDLIST_DING1
+				syoukin = limit(adata(ADATA_PET_ARENA_WIN, gdata(GDATA_RETURN_AREA)) + 50, 150, 350) * 2000
+				txt lang("なんと…" + adata(ADATA_PET_ARENA_WIN, gdata(GDATA_RETURN_AREA)) + "連勝を達成した！追加で30000の名声値を手に入れた。さらに" + syoukin + "gpの賞金が全ペットに贈られた。", "You gain 30000 fame.In addition, prize has been awarded to all pets.")
+				await 2000
+				cdata(CDATA_FAME, CHARA_PLAYER) += 30000
+				repeat 16
+					if ( cnt == 0 ) {
+						continue
+					}
+					cdata(CDATA_GOLD, cnt) += syoukin
+				loop
+				syoukin = 0
+			}
+			else {
+				if ( adata(ADATA_PET_ARENA_WIN, gdata(GDATA_RETURN_AREA)) \ 20 == 0 ) {
+					matgetmain MATERIAL_500_YEN_COIN, 1
+				}
+				else {
+					if ( adata(ADATA_PET_ARENA_WIN, gdata(GDATA_RETURN_AREA)) \ 5 == 0 ) {
+						matgetmain MATERIAL_100_YEN_COIN, 1
+					}
+				}
+			}
+		}
+	}
+	else {
+		txtef COLOR_PURPLE
+		txt lang("あなたのチームは敗北した。", "Your team is defeated.")
+		adata(ADATA_PET_ARENA_WIN, gdata(GDATA_RETURN_AREA)) = 0
+		modrank 1, -100
+		decfame CHARA_PLAYER, 60
+		p = stat
+		if ( arenaop == 0 ) {
+			txtmore
+			txtef COLOR_RED
+			txt lang("名声値を" + p + "失った。", "You loose " + p + " fame.")
+		}
+	}
+	return
+
+*quest_eliminate
+	music = MUSICLIST_MCFANFARE
+	musicloop = 1
+	gosub *music_play
+	gdata(GDATA_QUEST_STATE) = QUEST_STATE_SUCCESS
+	if ( gdata(GDATA_QUEST) == QUEST_SUBTYPE_ELIMINATE ) {
+		snd SOUNDLIST_CHEER
+		txtef COLOR_GREEN
+		txt lang("あなたは勝利した！", "You are victorious!")
+		txtef COLOR_GREEN
+		txtmore
+		txt lang("" + gdata(GDATA_QUEST_FAME) + "の名声値を手に入れた。", "You gain " + gdata(GDATA_QUEST_FAME) + " fame.")
+		modrank 0, 100, 2
+		cdata(CDATA_FAME, CHARA_PLAYER) += gdata(GDATA_QUEST_FAME)
+		txt lang("外への階段が現れた。", "Stairs appear.")
+		map_placeupstairs mdata(MDATA_WIDTH) / 2, mdata(MDATA_HEIGHT) / 2
+		adata(ADATA_ARENA_WIN, gdata(GDATA_RETURN_AREA))++
+		if ( adata(ADATA_ARENA_WIN, gdata(GDATA_RETURN_AREA)) > gdata(GDATA_FLAG_HIGHEST_ARENA_STREAK) ) {
+			gdata(GDATA_FLAG_HIGHEST_ARENA_STREAK) = adata(ADATA_ARENA_WIN, gdata(GDATA_RETURN_AREA))
+		}
+		if ( gdata(GDATA_RANK_ARENA) / 100 == 1 & adata(ADATA_ARENA_WIN, gdata(GDATA_RETURN_AREA)) \ 100 == 0 ) {
+			snd SOUNDLIST_DING3
+			snd SOUNDLIST_DING1
+			txt lang("なんと…" + adata(ADATA_ARENA_WIN, gdata(GDATA_RETURN_AREA)) + "連勝を達成した！追加で30000の名声値を手に入れた。さらに足元に何かが転がってきた。", "You gain 30000 fame.")
+			cdata(CDATA_FAME, CHARA_PLAYER) += 30000
+			p = limit(adata(ADATA_ARENA_WIN, gdata(GDATA_RETURN_AREA)) / 100 + 1, 2, 4)
+			repeat p
+				flt
+				nostack = 1
+				itemcreate -1, ITEM_ID_POTION_EVOLUTION, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
+				flt
+				nostack = 1
+				itemcreate -1, ITEM_ID_MATERIAL_KIT, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
+				flt
+				nostack = 1
+				itemcreate -1, ITEM_ID_TREASURE_MAP, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
+			loop
+		}
+		else {
+			if ( adata(ADATA_ARENA_WIN, gdata(GDATA_RETURN_AREA)) \ 20 == 0 ) {
+				matgetmain MATERIAL_500_YEN_COIN, 1
+			}
+			else {
+				if ( adata(ADATA_ARENA_WIN, gdata(GDATA_RETURN_AREA)) \ 5 == 0 ) {
+					matgetmain MATERIAL_100_YEN_COIN, 1
+				}
+			}
+		}
+	}
+	if ( gdata(GDATA_QUEST) == QUEST_TYPE_HUNT | gdata(GDATA_QUEST) == QUEST_TYPE_HUNTEX ) {
+		qdata(QDATA_STATE, gdata(GDATA_QUEST_REF)) = QUEST_STATE_SUCCESS
+		txtef COLOR_GREEN
+		txt lang("エリアを制圧した！", "The area is secured!")
+	}
+	if ( gdata(GDATA_QUEST) == QUEST_TYPE_ESCORT ) {
+		txtef COLOR_GREEN
+		txt lang("エリアを制圧した！", "The area is secured!")
+	}
+	if ( gdata(GDATA_QUEST) == QUEST_TYPE_THIEVES ) {
+		txtef COLOR_GREEN
+		txt lang("盗賊団を返り討ちにした！", "The area is secured!")
+		gdata(GDATA_FLAG_BANDITS_KILLED)++
+	}
+	if ( gdata(GDATA_QUEST) == QUEST_TYPE_CONQUER ) {
+		gdata(GDATA_TIME_LIMIT) = 0
+		qdata(QDATA_STATE, gdata(GDATA_QUEST_REF)) = QUEST_STATE_SUCCESS
+		txtef COLOR_GREEN
+		txt lang("討伐に成功した！", "You successfully slay the target.")
+	}
+	return
+
+*quest_success
+	snd SOUNDLIST_COMPLETE1
+	p = qdata(QDATA_REWARD, rq)
+	if ( qdata(QDATA_EXIST, rq) == QUEST_TYPE_HARVEST ) {
+		if ( qdata(QDATA_PARAM1, rq) != 0 ) {
+			if ( qdata(QDATA_PARAM1, rq) * 125 / 100 < qdata(QDATA_PARAM2, rq) ) {
+				p = limit(p * qdata(QDATA_PARAM2, rq) / qdata(QDATA_PARAM1, rq), p, p * 3)
+			}
+		}
+	}
+	if ( p != 0 ) {
+		flt
+		itemcreate -1, ITEM_ID_GOLD_PIECE, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), p
+	}
+	if ( qdata(QDATA_EXIST, rq) == QUEST_TYPE_PARTY ) {
+		p = 1
+	}
+	else {
+		p = limit(rnd(1 + cdata(CDATA_FAME, CHARA_PLAYER) / EXT_EQUIP_SLOTS), 1, 3)
+	}
+	if ( qdata(QDATA_EXIST, rq) == QUEST_TYPE_CONQUER | qdata(QDATA_EXIST, rq) == QUEST_TYPE_HUNTEX ) {
+		p = limit(rnd(2 + cdata(CDATA_FAME, CHARA_PLAYER) / 20000), 2, 10)
+	}
+	flt
+	itemcreate -1, ITEM_ID_PLATINUM_COIN, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), p
+	if ( qdata(QDATA_EXIST, rq) == QUEST_TYPE_PARTY ) {
+		if ( qdata(QDATA_PARAM1, rq) * 150 / 100 < qdata(QDATA_PARAM2, rq) ) {
+			flt
+			itemcreate -1, ITEM_ID_MUSIC_TICKET, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 1 + qdata(QDATA_PARAM2, rq) / 10
+		}
+	}
+	if ( qdata(QDATA_EXIST, rq) == QUEST_TYPE_MINEFIELD ) {
+		flt
+		itemcreate -1, ITEM_ID_DEVIL_FRAGMENT, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), limit(1 + qdata(QDATA_PARAM2, rq) / 5, 1, 30)
+		inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+		if ( qdata(QDATA_PARAM1, rq) * 150 / 100 <= qdata(QDATA_PARAM2, rq) | qdata(QDATA_VAR, rq) == 1 ) {
+			flt
+			itemcreate -1, ITEM_ID_BRONZE_COIN, cdata(CDATA_X, cc), cdata(CDATA_Y, cc), 1
+		}
+	}
+	if ( qdata(QDATA_EXIST, rq) == QUEST_TYPE_HARVEST ) {
+		if ( qdata(QDATA_PARAM1, rq) * 125 / 100 < qdata(QDATA_PARAM2, rq) ) {
+			flt
+			itemcreate -1, ITEM_ID_BRONZE_COIN, cdata(CDATA_X, cc), cdata(CDATA_Y, cc), 1
+		}
+		seedp = rnd(limit(sdata(SKILL_NORMAL_GARDENING, CHARA_PLAYER) / 2, 0, 30) + 80)
+		if ( seedp >= 90 ) {
+			if ( rnd(2) == 0 ) {
+				itemcreate -1, ITEM_ID_HERB_SEED, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 3
+			}
+			else {
+				itemcreate -1, ITEM_ID_HERB_SEED, cdata(CDATA_X, cc), cdata(CDATA_Y, cc), 2
+			}
+		}
+		if ( seedp >= 70 & seedp < 90 ) {
+			if ( rnd(2) == 0 ) {
+				itemcreate -1, ITEM_ID_UNKNOWN_SEED, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 3
+			}
+			else {
+				itemcreate -1, ITEM_ID_MAGICAL_SEED, cdata(CDATA_X, cc), cdata(CDATA_Y, cc), 4
+			}
+		}
+		if ( seedp >= 50 & seedp < 70 ) {
+			itemcreate -1, ITEM_ID_GEM_SEED, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 4
+		}
+		if ( seedp >= 0 & seedp < 50 ) {
+			if ( rnd(2) == 0 ) {
+				itemcreate -1, ITEM_ID_FRUIT_SEED, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 5
+			}
+			else {
+				itemcreate -1, ITEM_ID_VEGETABLE_SEED, cdata(CDATA_X, cc), cdata(CDATA_Y, cc), 5
+			}
+		}
+	}
+	if ( qdata(QDATA_REWARD_ITEM, rq) != (0 /*!!!@[QUEST_REWARD_NONE @@@ FILTER_NOTHING @@@ FILTER_NOTHING]@!!! */) ) {
+		p = rnd(rnd(4) + 1) + 1
+		if ( qdata(QDATA_EXIST, rq) == QUEST_TYPE_CONQUER | qdata(QDATA_EXIST, rq) == QUEST_TYPE_HUNTEX ) {
+			p += 2
+		}
+		repeat p
+			fixlv = FIX_QUALITY_GOOD
+			if ( rnd(2) ) {
+				fixlv = FIX_QUALITY_GREAT
+				if ( rnd(12) == 0 ) {
+					fixlv = FIX_QUALITY_MIRACLE
+				}
+			}
+			flt (qdata(QDATA_LEVEL, rq) + gdata(GDATA_DEEPEST_LEVEL) / 2) / 2 + 1, calcfixlv(fixlv)
+			if ( qdata(QDATA_REWARD_ITEM, rq) < FILTER_WEAPON ) {
+				if ( qdata(QDATA_REWARD_ITEM, rq) == (1 /*!!!@[QUEST_REWARD_WEAR @@@ FILTER_RACE_GOBLIN]@!!! */) ) {
+					flttypemajor = fsetwear(rnd(length(fsetwear)))
+				}
+				if ( qdata(QDATA_REWARD_ITEM, rq) == (2 /*!!!@[QUEST_REWARD_MAGIC @@@ FILTER_RACE_ORC]@!!! */) ) {
+					flttypemajor = fsetmagic(rnd(length(fsetmagic)))
+				}
+				if ( qdata(QDATA_REWARD_ITEM, rq) == (3 /*!!!@[QUEST_REWARD_ARMOR @@@ FILTER_RACE_SLIME]@!!! */) ) {
+					flttypemajor = fsetarmor(rnd(length(fsetarmor)))
+				}
+				if ( qdata(QDATA_REWARD_ITEM, rq) == (4 /*!!!@[QUEST_REWARD_WEAPON @@@ FILTER_RACE_ELEA]@!!! */) ) {
+					flttypemajor = fsetweapon(rnd(length(fsetweapon)))
+				}
+				if ( qdata(QDATA_REWARD_ITEM, rq) == (5 /*!!!@[QUEST_REWARD_SUPPLY @@@ FILTER_RACE_KOBOLT]@!!! */) ) {
+					flttypemajor = fsetrewardsupply(rnd(length(fsetrewardsupply)))
+				}
+			}
+			else {
+				flttypemajor = qdata(QDATA_REWARD_ITEM, rq)
+			}
+			itemcreate -1, ITEM_ID_DUMMY, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
+		loop
+	}
+	modkarma 0, 1
+	gdata(GDATA_QUEST_FAME) = calcfame(CHARA_PLAYER, qdata(QDATA_LEVEL, rq) * 3 + 10)
+	txtef COLOR_GREEN
+	txt lang(qname(rq) + "から受けた依頼を完了した。", "You have completed the quest taken from " + qname(rq) + ".")
+	if ( gdata(GDATA_FLAG_ZISILION_SIDEQUEST) == 100 ) {
+		gdata(GDATA_FLAG_ZISILION_SIDEQUEST) = 300
+	}
+	hatugen = limit(sqrt(qdata(QDATA_LEVEL, rq) + 1), 3, 10) * 10
+	mdata(MDATA_CITY_AUTHORITY) += hatugen
+	if ( mdata(MDATA_CITY_ETHER_CORRUPTION) != 0 ) {
+		txtef COLOR_GREEN
+		txt lang("発言力を" + hatugen + "獲得（現在" + mdata(MDATA_CITY_AUTHORITY) + "）、", "You get " + hatugen + " praise.")
+	}
+	gdata(GDATA_FLAG_JOBS_COMPLETED)++
+	txtef COLOR_GREEN
+	txtmore
+	txt lang("" + gdata(GDATA_QUEST_FAME) + "の名声値を手に入れた。", "You gain " + gdata(GDATA_QUEST_FAME) + " fame.")
+	cdata(CDATA_FAME, CHARA_PLAYER) += gdata(GDATA_QUEST_FAME)
+	txt lang("何かが足元に転がってきた。", "Something is put on the ground.")
+	if ( qdata(QDATA_EXIST, rq) == QUEST_TYPE_DELIVER ) {
+		qdata(QDATA_QUEST_TARGET, qdata((10 /*!!!@[QDATA_ENCOUNTER @@@ QDATA_DEST_CLIENT]@!!! */), rq))--
+	}
+	qdata(QDATA_EXIST, rq) = QUEST_TYPE_NONE
+	qdata(QDATA_STATE, rq) = QUEST_STATE_NONE
+	autosave = 1 * (gdata(GDATA_AREA) != AREA_SHOW_HOUSE)
+	return
+
+
+
+
+
+
+
+
+
+
+
+
