@@ -2,15 +2,15 @@
 
 #module tcg
 #defcfunc cdbit int cdbit_bit, int cdbit_charid
-	HMMBITCHECK card@tcg(30 + cdbit_bit / 32, cdbit_charid), cdbit_bit \ 32
+	HMMBITCHECK@ card@tcg(30 + cdbit_bit / 32, cdbit_charid), cdbit_bit \ 32
 	return abs(stat)
 
 #deffunc cdbitmod int cdbitmod_bit, int cdbitmod_charid, int cdbitmod_seton
 	if ( cdbitmod_seton == 0 ) {
-		HMMBITOFF card@tcg(30 + cdbitmod_bit / 32, cdbitmod_charid), cdbitmod_bit \ 32
+		HMMBITOFF@ card@tcg(30 + cdbitmod_bit / 32, cdbitmod_charid), cdbitmod_bit \ 32
 		return
 	}
-	HMMBITON card@tcg(30 + cdbitmod_bit / 32, cdbitmod_charid), cdbitmod_bit \ 32
+	HMMBITON@ card@tcg(30 + cdbitmod_bit / 32, cdbitmod_charid), cdbitmod_bit \ 32
 	return
 
 #deffunc cpflip
@@ -103,7 +103,7 @@
 	cardrefdomain = 0
 	cardrefrare = 100
 	dbid = card_ref_arg1
-	gosub *db_card
+	gosub *db_card@
 	if ( cardreftype == 0 ) {
 		cardreftype = 10
 		cardrefdomain = 7
@@ -1003,7 +1003,7 @@
 	dim deck, 1000
 	repeat 1000
 		dbid = cnt
-		gosub *db_card
+		gosub *db_card@
 		if ( stat == 0 ) {
 			continue
 		}
@@ -1045,7 +1045,7 @@
 		promptAdd s@tcg(cnt)
 	loop
 	val = basex@tcg + 400, basey@tcg + 230, 300, 1
-	gosub *prompt_key
+	gosub *prompt_key@
 	if ( rtval != (-1) ) {
 		dim deck, 1000
 		curdeck = rtval
@@ -1055,7 +1055,7 @@
 			promptAdd lang("デッキの構築", "Edit Deck")
 			promptAdd lang("メインデッキに設定", "Set as Main Deck")
 			val = 400, basey@tcg + 230, 240, 1
-			gosub *prompt_key
+			gosub *prompt_key@
 			if ( rtval == (-1) ) {
 				goto *tcgDeck_loop
 			}
@@ -1065,7 +1065,7 @@
 			}
 			if ( rtval == 0 ) {
 				fmode = 24
-				gosub *game_ctrlFile
+				gosub *game_ctrlFile@
 			}
 		}
 		decksizebk@tcg = gdata(GDATA_DECK_SIZE + curdeck)
@@ -1708,11 +1708,11 @@
 			promptAdd lang("セーブして終了", "Save & Exit")
 			promptAdd lang("セーブしないで終了", "Just Exit")
 			val = basex@tcg + 420, basey@tcg + 230, 240, 1
-			gosub *prompt_key
+			gosub *prompt_key@
 			if ( rtval == 0 ) {
 				file = "" + exedir + "tmp\\deck_" + curdeck + ".s2"
 				fmode = 23
-				gosub *game_ctrlFile
+				gosub *game_ctrlFile@
 			}
 			else {
 				gdata(GDATA_DECK_SIZE + curdeck) = decksizebk@tcg
@@ -1936,7 +1936,7 @@
 	if ( key == "s" ) {
 		promptAdd lang("降参する", "Surrender")
 		val = basex@tcg + 420, basey@tcg + 230, 200, 1
-		gosub *prompt_key
+		gosub *prompt_key@
 		if ( rtval == 0 ) {
 			cpdata@tcg(4, 0) = 0
 			cursor@tcg = 0
