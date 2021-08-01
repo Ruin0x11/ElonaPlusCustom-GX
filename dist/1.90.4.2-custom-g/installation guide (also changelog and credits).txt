@@ -1,0 +1,98 @@
+Installation guide:
+Elona+ Custom-G is installed on top of Elona+ Custom (overwriting any files that already exist), which itself is installed on top of Elona+ (ditto). The version numbers need to align: for example, E+C-G 1.81.2.1 needs E+C 1.81.2, which needs E+ 1.81.
+(Note that Elona+ Custom by itself is only a few megabytes zipped. If your "Elona+ Custom" download is 50+ MB, then it's bundled with the base Elona+ installation.)
+
+For those who (wisely) prefer not to run EXE files obtained from random people online, you can use a diff tool to compare gsource.hsp against source.hsp to make sure it's safe before compiling it yourself. For your convenience, I've included a screenshot guide to compiling ElonaC.exe from source.hsp (which would also work for gsource.hsp/ElonaCG.exe), and I'll provide information here on downloading the compiler, Hot Soup Processor 3.4a:
+
+Compiler download site:
+http://hsp.tv/make/downlist.html
+Filename:
+hsp34a.zip
+Checksums of hsp34a.zip (for safe distribution on the off-chance that the site goes down):
+CRC32
+B473B09D
+CRC64
+1CD3C33216CD0613
+SHA256
+2B841C71BBE4EFAD0DCE1BED88BDD72BFD4EBE5E5671689B4A5833C105B278CF
+SHA1
+CC7D91CF0E6DF949951036108384DE89E02F6670
+BLAKE2sp
+B8BF38BA3BD375463D92FF3965D1EED970CE53B0FABFDCA95EA92AC3D6F200B7
+
+I've also included a screenshot guide to decompiling elonaplus.exe (or any other HSP executable). I'll reproduce the download information here for copypasting convenience:
+
+Deompiler download site:
+https://github.com/YSRKEN/HSP-Decompiler/releases
+Filename:
+HSPdecom110.zip
+Checksums of HSPdecom110.zip (for safe distribution on the off-chance that the site goes down):
+CRC32
+449EF2E5
+CRC64
+F44824E369E499C8
+SHA256
+7E707CE074B0FCD8645C4EC2F4D8DA8F870F30A635D5C15C58768E27C14F933A
+SHA1
+6EF518090A8B54D0B9C54CF8007469677DDF44CF
+BLAKE2sp
+98039C220557B11AC1D08222A663310D02C55F8429359F9259D7376477CA7912
+
+
+The following official changes have been undone:
+* Sufficiently powerful items being too "unfair" to equip. (version unknown)
+* Multi-attacking characters doing 40% less damage with attacks after the first two (compounded per additional attack) and having a reduced chance for critical hits (ditto). (v1.48, v1.74)
+* Crafting a monster ball no longer requiring an api nut. (v1.55)
+* The gold rewards for clearing Nefia being significantly reduced and scattered throughout the dungeon. (v1.64, v1.66)
+* Violent Garden inflicting 1 turn of Bind instead of 3, dealing less damage, and having a lower SP cost. (v1.65, v1.81)
+* Shadow Step's increased SP cost, and the halved accuracy of its melee attack. (v1.65, v1.67)
+* The combo system that reduced damage when rapidly attacking a single enemy. (v1.76)
+* Forts of Chaos having a boring danger level display. (v1.76)
+* The changes to/weakening of Gravity Sphere and Graviton Buster. (v1.77)
+* The thirst mechanic and everything related to it. (v1.78)
+* The Junk Make recipe requiring a fifth item, and very easily available items not qualifying as "any item" for recipes. (v1.78)
+* The "anti-AFK" Curtain Call mechanic. (v1.78)
+* Items with a cooldown of 24+ hours requiring the player to sleep before they can be used again. (v1.81)
+* "Protect your client from assassins" encounters suddenly dropping you into the battle instead of having a popup like ambushes. (v1.84)
+* The "maximum and minimum cap on the amount of time passed per turn". I honestly have no idea what it was supposed to do. (v1.86)
+* Coffee and tobacco being changed from reducing sleepiness to having an autonap-prevention effect. Unnecessary with the tweak that disables autonaps. (v1.87)
+* Herbed food being roughly 17% weaker for players but 25% stronger for pets. (v1.87)
+* The Oblivion Palace no longer reducing levels. (v1.88)
+* The micromanagement-related changes to ranch mechanics have been converted to an optional Gameplay tweak. (v1.89)
+* The reduced duration of Killing Dance. (v1.90)
+* The arbitrarily lowered Negotiation EXP gain from buying and selling items. (v1.90)
+
+The following unofficial changes have been added:
+* Every instance of "Sorry, this is untranslated sentence." (also "Huh.", "I think not.", "Okay. Wait here.", "Follow me.", and "Woah!") has been replaced with a machine translation, so you at least have a vague idea of what's going on. I put in extra effort where I could, so the Adventure Seminar should be at least somewhat helpful for new players now. (I tried to preserve the meaning of the advice, and I'm not sure everyone will agree with some of it... Except for the bit about material changing scrolls having random results; that isn't true anymore, so I completely rewrote it. I also dropped the bit about +10 being the maximum possible enhancement value since we've had stardust for ages now.)
+* Some typos/errors have been fixed, and a some lines have been adjusted to make them less Engrishy/more natural. (I had a bunch of examples here, but they got backported into Custom...)
+* The <Super Lure> can now be purchased from Stoke for 10,000 music tickets.
+* If you use Reading Party or Ensemble with only a single pet present, the message will now use their name instead of referring to "friends". The messages for gaining experience from Traveling have also been modified this way.
+* Custom's Pickpocket pickup dialog box is now an option that can be turned on and off under Tweaks->Interface. For those who know how to steal but generally prefer not to. (Items on the ground can still be stolen by using the Pickpocket action regardless.)
+* New option under Tweaks->Gameplay: allow deeds, red books, and furniture items to be sold in player shops. Now you can roleplay as a wood carver, sculptor, bookshop owner, or real estate agent! (Or just sell the rewards from Thieves Guild missions.) Shop strongboxes, registers, shelters, and precious items will still remain unsold.
+* New option under Tweaks->Gameplay: Prevent visiting the Deep-Sea Castle from having a lingering effect on items' cooldown timers. Normally you have to sleep before they stop being continuously reset to maximum duration, but with this enabled the duration reset only happens while actually inside the Deep-Sea Castle.
+* New option under Tweaks->Gameplay: Make sandbagged enemies give EXP.
+* Harvesting materials now only makes noise when the last item is collected instead of after each item. (v1.78 made all materials be collected simultaneously, which ended up being kind of loud.)
+* Squeeze and Magic Kiss can now be used by pets on the player in the same ways that the player was able to use them on pets. (This is probably only useful with Custom AI.) I also adjusted the effects of Magic Kiss slightly so that the MP transfer efficiency increases with relationship level instead of spiking and then decreasing. (You'd still probably be way better off with scrolls/rods of mana, of course.)
+* Zombies now have a 1% chance to drop a potion of descent. This respects the rare item drop flag, for what it's worth.
+* Wishing for "AnoInu" used to give you a grand piano instead of a dog whistle. The problem was fixed, but I left in "dog whistle" as an alternate way to wish for one, because why not?
+* Fishing and Cooking have had their SP costs reduced by 80%. (Why stop at the cost of accessing 4-dimensional storage? Skills that aren't used for time-sensitive things shouldn't be so draining.) Reading Party and Lock Break have had their SP costs reduced as well. Additionally, to make Lock Break not be completely worthless, it no longer breaks an item inside the target container, and it doesn't spend a couple seconds playing a fadeout animation each time it's used.
+* High potions of disaster now respect stat-sustaining enchantments.
+* Characters with the Gravity Accel buff are still able to evade traps while affected by Gravity.
+* Changed the barrel bomb recipe from sulfuric acid+clay+urine+barrel to gasoline+sulfuric acid+fertilizer+barrel. That should be a bit closer to proper TNT. (Also, it doesn't require the hydration system.)
+* Changed the Decapitation special action. Instead of doing DEX-based damage and inflicting ailments, it now simply checks whether or not the target can be decapitated, and if they can't it does a normal melee attack instead. I also lowered the SP cost to the original 10 SP. (I'm not sure when it was raised to 30 SP, but it was before v1.47.)
+* New option under Tweaks->Gameplay: Disable the chance to take a nap when you travel while sleepy.
+* The "use a potion as a [t]ool to throw it at yourself" system added in 1.86 has been converted to a tweak under Tweaks->Convenience. Now you can choose between making a snowman and dumping snow on your head.
+* New option under Tweaks->Miscellaneous: Fist of the North Star Mode. It's purely aesthetic, with no effect on gameplay.
+* Changed the Touch of Hunger special action. Before 1.90, it made you hungry immediately. After 1.90, it inflicted a hex that makes you get hungry twice as fast. My version inflicts the hex if it's not present, and makes you hungry immediately if it is.
+
+In addition, some replacement game files are included:
+* A version of scene2.hsp that replaces "the Fairy of Alteheit" with "the Angel of Alteheit", which is probably more accurate (and definitely sounds better), and also includes various other changes. (Glasses are "clinking" instead of "ringing", "Crim Ale" isn't capitalized like it was a proper noun, etc.)
+* The externalized NPC card and talk files which would otherwise override my edits. (Although there aren't nearly as many now as there used to be.)
+
+My own efforts are public domain. Anyone's welcome to use them without asking permission. (Everything else belongs to whoever did it, not me.)
+
+
+Special thanks to:
+-AnnaBannana (Custom AI is awesome)
+-BloodyShade (Thank you for all the hard work you put into this)
+-The other modder on /jp/ (The more the merrier)
