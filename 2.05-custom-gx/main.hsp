@@ -2,6 +2,7 @@
 #pack "scene2.hsp"
 #packopt type 0
 #packopt name "ElonaCGX"
+#cmpopt varname 1
 
 #uselib "exrand.dll"
 #func exrand_randomize "_exrand_randomize@16" int, int, int, int
@@ -117,6 +118,8 @@
 
 	sdim proclist, 50, 4
 
+	#define global proc(%1) procId@=(procId@+1)\50:procList@(procId@)=%1+" ct:"+ct@
+
 	; #include "exrand.as"
 
     ; If we're running under hsed3, dir_exe will be the HSP installation folder
@@ -155,6 +158,7 @@
 	; #include "hmm.as"
 	; #include "hspsock.as"
 	; #include "hspinet.as"
+	#include "hsplua.as"
 
 	#include "init.hsp"
 	#include "chips.hsp"
@@ -220,6 +224,8 @@
 	#include "ai.hsp"
 
 	#include "help.hsp"
+
+	#include "lua.hsp"
 
 *game_init
 	gdata(GDATA_YEAR) = 517, 8, 12, 16, 10
@@ -2706,6 +2712,10 @@
 	getkey a, 123
 	if ( a ) {
 		goto *game_debug
+	}
+	getkey a, 124
+	if ( a ) {
+		goto *game_debug_lua
 	}
 	if ( key == "" ) {
 		goto *pc_turn

@@ -3528,17 +3528,16 @@
 	pos 0, 0
 	mesbox buff, 800, 24, 1
 	objsel 2
-*game_debug_WHILE1
-	await 20
-	stick a
-	if ( a == 128 ) {
-		goto *game_debug_WEND1
-	}
-	if ( a == 32 ) {
-		gosub *dbg_GetInfo
-	}
-	goto *game_debug_WHILE1
-*game_debug_WEND1
+    while
+	    await 20
+	    stick a
+	    if ( a == 128 ) {
+	    	_break
+	    }
+	    if ( a == 32 ) {
+	    	gosub *dbg_GetInfo
+	    }
+    wend
 	clrobj 1
 	clrobj 2
 	if ( dbg_exitshowroom == 1 ) {
@@ -3927,6 +3926,60 @@
 		}
 	}
 	noteadd "Unknown command. Type \"?\" for help. Hit ESC to exit."
+	goto *console_write
+
+*game_debug_lua
+	notesel dbm
+	buff = ""
+	if ( dbm == "" ) {
+		noteadd "Elona+ Custom-GX " + " v" + "2.05.1" + " Lua Console    Type \"help()\" for help. Hit ESC to exit."
+		noteadd ""
+	}
+	font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
+	objmode 2
+	pos 0, 24
+	mesbox dbm, 800, 576, 0
+	pos 0, 0
+	mesbox buff, 800, 24, 1
+	objsel 2
+    while
+	    await 20
+	    stick a
+	    if ( a == 128 ) {
+	    	_break
+	    }
+	    if ( a == 32 ) {
+	    	gosub *dbg_lua_GetInfo
+	    }
+    wend
+	clrobj 1
+	clrobj 2
+	if ( dbg_exitshowroom == 1 ) {
+		dbg_exitshowroom = 0
+		levelexitby = 4
+		goto *map_exit
+	}
+	goto *pc_turn
+
+*dbg_lua_GetInfo
+    ret=hl_dostring(buff)
+    if ret = 1 {
+        s = "***Lua Error: " + hl_tostring(-1)
+    } else {
+        s = hl_tostring(-1)
+    }
+
+    notesel buff
+    p = noteinfo(0)
+
+    repeat p
+        s = noteget(cnt)
+        notesel dbm
+        noteadd s
+        notesel buff
+    loop
+
+    notesel dbm
 	goto *console_write
 
 *console_write
