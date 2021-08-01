@@ -417,8 +417,9 @@
 	}
 	font lang(cfg_font1, cfg_font2), 16 - en * 2, 0
 	x = 44
+    y3 = (windowh / 2) - ((noteinfo(0) * 20) / 2) - y1
 	repeat noteinfo(0)
-		y = y1 + 31 + (9 - noteinfo(0) / 2 + cnt) * 20
+		y = y3 + 31 + cnt * 20
 		noteget s, cnt
 		x = windoww / 2 - strlen(s) * 4
 		dx = 80 + strlen(s) * 8
@@ -432,7 +433,7 @@
 	loop
 	x = 40
 	repeat noteinfo(0)
-		y = y1 + 28 + (9 - noteinfo(0) / 2 + cnt) * 20
+		y = y3 + 28 + cnt * 20
 		noteget s, cnt
 		x = windoww / 2 - strlen(s) * 4
 		color 10, 10, 10
