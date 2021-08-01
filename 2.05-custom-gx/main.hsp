@@ -1,7 +1,7 @@
 #pack "scene1.hsp"
 #pack "scene2.hsp"
 #packopt type 0
-#packopt name "ElonaCG"
+#packopt name "ElonaCGX"
 
 #uselib "exrand.dll"
 #func exrand_randomize "_exrand_randomize@16" int, int, int, int
@@ -125,7 +125,12 @@
     ; If the editor is being used, then _DEBUG will be defined as true, so check 
     ; that when setting the executable directory.
 #ifdef _DEBUG
-	exedir = dir_cur + "\\..\\assets\\1.90.4.2-custom-g\\"
+	exedir = dir_cur + "\\..\\assets\\2.05-custom-gx\\"
+	exist exedir
+	if ( strsize == (-1) ) {
+        dialog "Could not find debug assets folder '" + exedir + "'. Please copy a full installation of Elona+ Custom-G to this folder first."
+        end
+	}
 #else
 	exedir = dir_exe + "\\"
 #endif
@@ -137,7 +142,7 @@
 	randomize randseed
 	exrand_randomize randseed
 
-	title "Elona+ Custom-G 1.90.4.2"
+	title "Elona+ Custom-GX 2.05.1"
 
 	goto *system_init
 
