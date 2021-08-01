@@ -169,10 +169,10 @@
 
 #defcfunc calcage int calcage_arg1
 	if ( gdata(GDATA_YEAR) - cdata(CDATA_AGE, calcage_arg1) < 0 ) {
-		return lang("•s–¾", "Unknown")
+		return lang("ä¸æ˜", "Unknown")
 	}
 	if ( cdata(CDATA_ID, calcage_arg1) == CREATURE_ID_SSIL_THE_UNDEAD_WITCH ) {
-		return lang("•s–¾", "Unknown")
+		return lang("ä¸æ˜", "Unknown")
 	}
 	return gdata(GDATA_YEAR) - cdata(CDATA_AGE, calcage_arg1)
 
@@ -511,13 +511,13 @@
 	locvar_modimp_p(1) = implevel(cdata(CDATA_IMPRESSION, modimp_charid))
 	if ( locvar_modimp_p > locvar_modimp_p(1) ) {
 		txtef COLOR_PURPLE
-		txt lang(cdatan(CDATAN_NAME, modimp_charid) + "‚Æ‚ÌŠÖŒW‚ª<" + _impression(locvar_modimp_p(1)) + ">‚É‚È‚Á‚½c", "Your relation with " + cdatan(CDATAN_NAME, modimp_charid) + " becomes <" + _impression(locvar_modimp_p(1)) + ">...")
+		txt lang(cdatan(CDATAN_NAME, modimp_charid) + "ã¨ã®é–¢ä¿‚ãŒ<" + _impression(locvar_modimp_p(1)) + ">ã«ãªã£ãŸâ€¦", "Your relation with " + cdatan(CDATAN_NAME, modimp_charid) + " becomes <" + _impression(locvar_modimp_p(1)) + ">...")
 		return
 	}
 	if ( locvar_modimp_p(1) > locvar_modimp_p ) {
 		if ( cdata(CDATA_RELATION, modimp_charid) != (-3) ) {
 			txtef COLOR_GREEN
-			txt lang(cdatan(CDATAN_NAME, modimp_charid) + "‚Æ‚ÌŠÖŒW‚ª<" + _impression(locvar_modimp_p(1)) + ">‚É‚È‚Á‚½I", "Your relation with " + cdatan(CDATAN_NAME, modimp_charid) + " becomes <" + _impression(locvar_modimp_p(1)) + ">!")
+			txt lang(cdatan(CDATAN_NAME, modimp_charid) + "ã¨ã®é–¢ä¿‚ãŒ<" + _impression(locvar_modimp_p(1)) + ">ã«ãªã£ãŸï¼", "Your relation with " + cdatan(CDATAN_NAME, modimp_charid) + " becomes <" + _impression(locvar_modimp_p(1)) + ">!")
 		}
 		return
 	}
@@ -574,7 +574,7 @@
 			if ( inv(INV_ITEM_NUM, stat) >= 1 ) {
 				snd SOUNDLIST_WATER2
 				txtef COLOR_RED
-				txt lang(cdatan(CDATAN_NAME, modimp2_charid) + "‚É›ZÔ˜XC‚ğ‚‚ç‚µ‚½Bu‚ ‚¿‚¿ôv", "You drip wax on " + cdatan(CDATAN_NAME, modimp2_charid) + " from the Candle of Lulwy. \"Hot hot hot~\"")
+				txt lang(cdatan(CDATAN_NAME, modimp2_charid) + "ã«åªšèµ¤è‹ç‡­ã‚’å‚ã‚‰ã—ãŸã€‚ã€Œã‚ã¡ã¡â™ªã€", "You drip wax on " + cdatan(CDATAN_NAME, modimp2_charid) + " from the Candle of Lulwy. \"Hot hot hot~\"")
 				if ( cdata(CDATA_IMPRESSION, modimp2_charid) < 150 ) {
 					modimp modimp2_charid, 4
 				}
@@ -584,13 +584,13 @@
 	}
 	if ( locvar_modimp2_p > locvar_modimp2_p(1) ) {
 		txtef COLOR_YELLOW
-		txt lang(cdatan(CDATAN_NAME, modimp2_charid) + "‚Æ‚Ìå]ŠÖŒW‚ª<" + _impression2(locvar_modimp2_p(1)) + ">‚É‚È‚Á‚½B", "Your master/servant relationship with " + cdatan(CDATAN_NAME, modimp2_charid) + " becomes <" + _impression2(locvar_modimp2_p(1)) + ">.")
+		txt lang(cdatan(CDATAN_NAME, modimp2_charid) + "ã¨ã®ä¸»å¾“é–¢ä¿‚ãŒ<" + _impression2(locvar_modimp2_p(1)) + ">ã«ãªã£ãŸã€‚", "Your master/servant relationship with " + cdatan(CDATAN_NAME, modimp2_charid) + " becomes <" + _impression2(locvar_modimp2_p(1)) + ">.")
 		return
 	}
 	if ( locvar_modimp2_p(1) > locvar_modimp2_p ) {
 		if ( cdata(CDATA_RELATION, modimp2_charid) != (-3) ) {
 			txtef COLOR_YELLOW
-			txt lang(cdatan(CDATAN_NAME, modimp2_charid) + "‚Æ‚Ìå]ŠÖŒW‚ª<" + _impression2(locvar_modimp2_p(1)) + ">‚É‚È‚Á‚½BI", "Your master/servant relationship with " + cdatan(CDATAN_NAME, modimp2_charid) + " becomes <" + _impression2(locvar_modimp2_p(1)) + ">.")
+			txt lang(cdatan(CDATAN_NAME, modimp2_charid) + "ã¨ã®ä¸»å¾“é–¢ä¿‚ãŒ<" + _impression2(locvar_modimp2_p(1)) + ">ã«ãªã£ãŸã€‚ï¼", "Your master/servant relationship with " + cdatan(CDATAN_NAME, modimp2_charid) + " becomes <" + _impression2(locvar_modimp2_p(1)) + ">.")
 		}
 		return
 	}
@@ -695,7 +695,7 @@
 				if ( gdata(GDATA_FLAG_SUB_THE_RESULT_OF_REVENGE) < 1002 ) {
 					gdata(GDATA_FLAG_SUB_THE_RESULT_OF_REVENGE) = 1002
 					snd SOUNDLIST_WRITE1
-					txt lang("ƒ}[ƒ`‚Í‰ó–Å‚µ‚½B", "March was destroyed.")
+					txt lang("ãƒãƒ¼ãƒã¯å£Šæ»…ã—ãŸã€‚", "March was destroyed.")
 				}
 			}
 		}
@@ -724,7 +724,7 @@
 				if ( gdata(GDATA_FLAG_SUB_LAW_OF_NINJAS) < 3 ) {
 					gdata(GDATA_FLAG_SUB_LAW_OF_NINJAS) = 3
 					txt_questupdate
-					txt lang("HHHu‚ ‚¢‚Âc‚±‚±‚Ü‚Å–{‹C‚Æ‚Í‚ÈB‘½­r‚Á‚Û‚¢è‚ğg‚í‚´‚é‚ğ“¾‚È‚¢‚©v", "??? says: \"You.. you really made it this far, huh. We're going to have to get serious.\"")
+					txt lang("ï¼Ÿï¼Ÿï¼Ÿã€Œã‚ã„ã¤â€¦ã“ã“ã¾ã§æœ¬æ°—ã¨ã¯ãªã€‚å¤šå°‘è’ã£ã½ã„æ‰‹ã‚’ä½¿ã‚ã–ã‚‹ã‚’å¾—ãªã„ã‹ã€", "??? says: \"You.. you really made it this far, huh. We're going to have to get serious.\"")
 				}
 			}
 		}
@@ -780,7 +780,7 @@
 				if ( gdata(GDATA_TIME_STOP_TIME) > 0 ) {
 					gdata(GDATA_TIME_STOP_TIME) = 0
 					txtef COLOR_SKY_BLUE
-					txt lang("‚ÍÄ‚Ñ“®‚«o‚µ‚½B", "Time starts to run again.")
+					txt lang("æ™‚ã¯å†ã³å‹•ãå‡ºã—ãŸã€‚", "Time starts to run again.")
 				}
 				gdata(GDATA_QUEST_STATUS) = QUEST_STATE_SUCCESS
 				evadd EVENT_QUEST_ELEMINATE
@@ -788,7 +788,7 @@
 			else {
 				txtmore
 				txtef COLOR_BLUE
-				txt lang("[Ÿr–ÅˆË—Š]c‚è" + locvar_check_quest_p + "‘Ì" + "] ", "" + locvar_check_quest_p + " more to go.")
+				txt lang("[æ®²æ»…ä¾é ¼]æ®‹ã‚Š" + locvar_check_quest_p + "ä½“" + "] ", "" + locvar_check_quest_p + " more to go.")
 			}
 		}
 		if ( gdata(GDATA_QUEST) == QUEST_TYPE_CONQUER ) {
@@ -796,7 +796,7 @@
 				if ( gdata(GDATA_TIME_STOP_TIME) > 0 ) {
 					gdata(GDATA_TIME_STOP_TIME) = 0
 					txtef COLOR_SKY_BLUE
-					txt lang("‚ÍÄ‚Ñ“®‚«o‚µ‚½B", "Time starts to run again.")
+					txt lang("æ™‚ã¯å†ã³å‹•ãå‡ºã—ãŸã€‚", "Time starts to run again.")
 				}
 				evadd EVENT_QUEST_ELEMINATE
 			}
@@ -986,7 +986,7 @@
 
 #deffunc tag_begin int tag_begin_arg1, int tag_begin_arg2
 	txtef COLOR_YELLOW
-	txt lang(cdatan(CDATAN_NAME, tag_begin_arg1) + "‚Í" + cdatan(CDATAN_NAME, tag_begin_arg2) + "‚Æƒ^ƒbƒO‚ğ‘g‚ñ‚¾B", cdatan(CDATAN_NAME, tag_begin_arg1) + " and " + cdatan(CDATAN_NAME, tag_begin_arg2) + " form a tag-team.")
+	txt lang(cdatan(CDATAN_NAME, tag_begin_arg1) + "ã¯" + cdatan(CDATAN_NAME, tag_begin_arg2) + "ã¨ã‚¿ãƒƒã‚°ã‚’çµ„ã‚“ã ã€‚", cdatan(CDATAN_NAME, tag_begin_arg1) + " and " + cdatan(CDATAN_NAME, tag_begin_arg2) + " form a tag-team.")
 	map(cdata(CDATA_X, tag_begin_arg2), cdata(CDATA_Y, tag_begin_arg2), 1) = 0
 	cdata(CDATA_TAGTEAM_PARTNER, tag_begin_arg2) = tag_begin_arg1
 	cdata(CDATA_IN_TAGTEAM, tag_begin_arg2) = 1
@@ -1000,7 +1000,7 @@
 
 #deffunc tag_end int tag_end_arg1
 	locvar_tag_end_ttc = cdata(CDATA_TAGTEAM_PARTNER, tag_end_arg1)
-	txt lang(cdatan(CDATAN_NAME, tag_end_arg1) + "‚Æ" + cdatan(CDATAN_NAME, locvar_tag_end_ttc) + "‚Í‰ğU‚µ‚½B", "You were disbanded " + cdatan(CDATAN_NAME, tag_end_arg1) + " with " + cdatan(CDATAN_NAME, locvar_tag_end_ttc) + ".")
+	txt lang(cdatan(CDATAN_NAME, tag_end_arg1) + "ã¨" + cdatan(CDATAN_NAME, locvar_tag_end_ttc) + "ã¯è§£æ•£ã—ãŸã€‚", "You were disbanded " + cdatan(CDATAN_NAME, tag_end_arg1) + " with " + cdatan(CDATAN_NAME, locvar_tag_end_ttc) + ".")
 	cdata(CDATA_TAGTEAM_PARTNER, locvar_tag_end_ttc) = -1
 	cdata(CDATA_IN_TAGTEAM, locvar_tag_end_ttc) = 0
 	cdata(CDATA_TAGTEAM_PARTNER, tag_end_arg1) = -1
@@ -1013,10 +1013,10 @@
 
 #deffunc ride_begin int ride_begin_arg1
 	if ( cdata(CDATA_RIDING, ride_begin_arg1) == 0 ) {
-		txt lang(name(ride_begin_arg1) + "‚É‹Ræ‚µ‚½(" + name(ride_begin_arg1) + "‚Ì‘¬“x: " + cdata(CDATA_SPEED, ride_begin_arg1) + "¨", "You ride " + name(ride_begin_arg1) + ". (" + name(ride_begin_arg1) + "'s speed: " + cdata(CDATA_SPEED, ride_begin_arg1) + "->")
+		txt lang(name(ride_begin_arg1) + "ã«é¨ä¹—ã—ãŸ(" + name(ride_begin_arg1) + "ã®é€Ÿåº¦: " + cdata(CDATA_SPEED, ride_begin_arg1) + "â†’", "You ride " + name(ride_begin_arg1) + ". (" + name(ride_begin_arg1) + "'s speed: " + cdata(CDATA_SPEED, ride_begin_arg1) + "->")
 	}
 	if ( cdata(CDATA_RIDING, ride_begin_arg1) == 1 ) {
-		txt lang(name(ride_begin_arg1) + "‚ğæ‚¹‚½(" + name(ride_begin_arg1) + "‚Ì‘¬“x: " + cdata(CDATA_SPEED, ride_begin_arg1) + "¨", name(ride_begin_arg1) + " rides you. (" + name(ride_begin_arg1) + "'s speed: " + cdata(CDATA_SPEED, ride_begin_arg1) + "->")
+		txt lang(name(ride_begin_arg1) + "ã‚’ä¹—ã›ãŸ(" + name(ride_begin_arg1) + "ã®é€Ÿåº¦: " + cdata(CDATA_SPEED, ride_begin_arg1) + "â†’", name(ride_begin_arg1) + " rides you. (" + name(ride_begin_arg1) + "'s speed: " + cdata(CDATA_SPEED, ride_begin_arg1) + "->")
 	}
 	cbitmod CHARA_BIT_RIDE, ride_begin_arg1, 1
 	map(cdata(CDATA_X, ride_begin_arg1), cdata(CDATA_Y, ride_begin_arg1), 1) = 0
@@ -1027,12 +1027,12 @@
 	txt "" + cdata(CDATA_SPEED, ride_begin_arg1) + ") "
 	if ( cdata(CDATA_RIDING, gdata(GDATA_RIDER)) == 0 ) {
 		if ( cbit(CHARA_BIT_SUPERIOR_RIDING, gdata(GDATA_RIDER)) ) {
-			txt lang("‚±‚Ì¶•¨‚Íæ”n—p‚É‚¿‚å‚¤‚Ç‚¢‚¢I", "You feel comfortable.")
+			txt lang("ã“ã®ç”Ÿç‰©ã¯ä¹—é¦¬ç”¨ã«ã¡ã‚‡ã†ã©ã„ã„ï¼", "You feel comfortable.")
 		}
 	}
 	if ( cdata(CDATA_RIDING, gdata(GDATA_RIDER)) == 0 ) {
 		if ( cbit(CHARA_BIT_INFERIOR_RIDING, gdata(GDATA_RIDER)) ) {
-			txt lang("‚±‚Ì¶•¨‚Í‚ ‚È‚½‚ğæ‚¹‚é‚É‚Í”ñ—Í‚·‚¬‚éB", "This creature is too weak to carry you.")
+			txt lang("ã“ã®ç”Ÿç‰©ã¯ã‚ãªãŸã‚’ä¹—ã›ã‚‹ã«ã¯éåŠ›ã™ãã‚‹ã€‚", "This creature is too weak to carry you.")
 		}
 	}
 	return
@@ -1091,7 +1091,7 @@
 				if ( cdata(CDATA_CONDITION_SLEEP, cnt) != 0 ) {
 					cdata(CDATA_CONDITION_SLEEP, cnt) = 0
 					if ( synccheck(cnt, -1) ) {
-						txt lang(name(cnt) + "‚Í•¨‰¹‚É‹C•t‚«–Ú‚ğŠo‚Ü‚µ‚½B", name(cnt) + " notice" + _s(cnt) + " the sound and wake" + _s(cnt) + " up.")
+						txt lang(name(cnt) + "ã¯ç‰©éŸ³ã«æ°—ä»˜ãç›®ã‚’è¦šã¾ã—ãŸã€‚", name(cnt) + " notice" + _s(cnt) + " the sound and wake" + _s(cnt) + " up.")
 					}
 					cdata(CDATA_EMO_ICON, cnt) = 21 + 100 * 2
 					if ( make_sound_arg5 ) {
@@ -1099,8 +1099,8 @@
 							if ( rnd(500) == 0 ) {
 								if ( synccheck(cnt, -1) ) {
 									txtef COLOR_SKY_BLUE
-									txt lang(name(cnt) + "‚ÍƒLƒŒ‚½B", name(cnt) + " can no longer put up with it.")
-									txt lang("u‚à‚¤‰ä–‚Å‚«‚È‚¢v", cnvtalk("That's it."))
+									txt lang(name(cnt) + "ã¯ã‚­ãƒ¬ãŸã€‚", name(cnt) + " can no longer put up with it.")
+									txt lang("ã€Œã‚‚ã†æˆ‘æ…¢ã§ããªã„ã€", cnvtalk("That's it."))
 								}
 								turn_aggro cnt, make_sound_arg6, 80
 							}
@@ -1351,7 +1351,7 @@
 	if ( cdata(CDATA_RELATION, hostileaction_source) == 10 ) {
 		txtmore
 		txtef COLOR_PURPLE
-		txt lang(name(hostileaction_source) + "‚ÍŒ™‚ÈŠç‚ğ‚µ‚½B", name(hostileaction_source) + " glares at you.")
+		txt lang(name(hostileaction_source) + "ã¯å«Œãªé¡”ã‚’ã—ãŸã€‚", name(hostileaction_source) + " glares at you.")
 	}
 	else {
 		if ( hostileaction_target <= MAX_CHARA_FOLLOWER ) {
@@ -1363,21 +1363,21 @@
 			if ( gdata(GDATA_FLAG_FIRE_GIANT) == 0 ) {
 				txtmore
 				txtef COLOR_PURPLE
-				txt lang(name(hostileaction_source) + "‚ÍŒ™‚ÈŠç‚ğ‚µ‚½B", name(hostileaction_source) + " glares at you.")
+				txt lang(name(hostileaction_source) + "ã¯å«Œãªé¡”ã‚’ã—ãŸã€‚", name(hostileaction_source) + " glares at you.")
 				return
 			}
 		}
 		if ( cdata(CDATA_RELATION, hostileaction_source) > (-2) ) {
 			txtmore
 			txtef COLOR_PURPLE
-			txt lang(name(hostileaction_source) + "‚ÍŒ™‚ÈŠç‚ğ‚µ‚½B", name(hostileaction_source) + " glares at you.")
+			txt lang(name(hostileaction_source) + "ã¯å«Œãªé¡”ã‚’ã—ãŸã€‚", name(hostileaction_source) + " glares at you.")
 			cdata(CDATA_RELATION, hostileaction_source) = -2
 		}
 		else {
 			if ( cdata(CDATA_RELATION, hostileaction_source) != (-3) ) {
 				txtef COLOR_PURPLE
 				txtmore
-				txt lang(name(hostileaction_source) + "‚ÍŒƒ“{‚µ‚½B", name(hostileaction_source) + " gets furious!")
+				txt lang(name(hostileaction_source) + "ã¯æ¿€æ€’ã—ãŸã€‚", name(hostileaction_source) + " gets furious!")
 			}
 			cdata(CDATA_RELATION, hostileaction_source) = -3
 			cdata(CDATA_AI_AGGRO, hostileaction_source) = 80
@@ -1393,7 +1393,7 @@
 	if ( cbit(CHARA_BIT_LIVESTOCK, hostileaction_source) == 1 & gdata(GDATA_AREA) != AREA_DOJO ) {
 		if ( rnd(50) == 0 ) {
 			txtef COLOR_RED
-			txt lang("‰Æ’{‚Í‹»•±‚µ‚½I", "The livestock got excited!")
+			txt lang("å®¶ç•œã¯èˆˆå¥®ã—ãŸï¼", "The livestock got excited!")
 			repeat MAX_CHARA_TOTAL
 				if ( cbit(CHARA_BIT_LIVESTOCK, cnt) == 1 ) {
 					cdata(CDATA_TARGET, cnt) = 0
@@ -1427,7 +1427,7 @@
 		if ( cdata(CDATA_ROW_ACT, cnt) == ACTION_EAT | cdata(CDATA_ROW_ACT, cnt) == ACTION_READ ) {
 			if ( cdata(CDATA_ITEM_USING, cnt) == rowact_item_arg1 ) {
 				rowactend cnt
-				txt lang(name(cnt) + "‚Ís“®‚ğ’†’f‚µ‚½B", name(cnt) + " cancel" + _s(cnt) + " " + his(cnt) + " action.")
+				txt lang(name(cnt) + "ã¯è¡Œå‹•ã‚’ä¸­æ–­ã—ãŸã€‚", name(cnt) + " cancel" + _s(cnt) + " " + his(cnt) + " action.")
 			}
 		}
 	loop
@@ -1448,7 +1448,7 @@
 #deffunc incognitobegin
 	if ( gdata(GDATA_FLAG_DUEL_TARGET) > 0 ) {
 		snd SOUNDLIST_FAIL1
-		txt lang("Œˆ“¬’†‚Í•Ï‘•‚ªŒø‚©‚È‚¢B", "Incognito does not work for the duel opponent.")
+		txt lang("æ±ºé—˜ä¸­ã¯å¤‰è£…ãŒåŠ¹ã‹ãªã„ã€‚", "Incognito does not work for the duel opponent.")
 		return
 	}
 	repeat MAX_CHARA_TOTAL - MAX_CHARA_FOLLOWER, MAX_CHARA_FOLLOWER
@@ -1574,7 +1574,7 @@
 	if ( locvar_addbuff_p == (-2) ) {
 		if ( synccheck(addbuff_charid, -1) ) {
 			txtmore
-			txt lang("‚µ‚©‚µAŒø‰Ê‚Í‚È‚©‚Á‚½B", "But it produces no effect.")
+			txt lang("ã—ã‹ã—ã€åŠ¹æœã¯ãªã‹ã£ãŸã€‚", "But it produces no effect.")
 			return 0
 		}
 	}
@@ -1607,14 +1607,14 @@
 		}
 		if ( findbuff(addbuff_charid, BUFF_HOLY_VEIL) != (-1) ) {
 			if ( cdata(STARTING_CDATA_BUFF + findbuff(addbuff_charid, BUFF_HOLY_VEIL) * ARRAY_CDATA_BUFF + 1, addbuff_charid) + 50 > addbuff_arg3 * 5 / 2 | rnd(cdata(STARTING_CDATA_BUFF + findbuff(addbuff_charid, BUFF_HOLY_VEIL) * ARRAY_CDATA_BUFF + 1, addbuff_charid) + 50) > rnd(addbuff_arg3 + 1) ) {
-				txt lang("ƒz[ƒŠ[ƒ”ƒFƒCƒ‹‚ªô‚¢‚ğ–h‚¢‚¾B", "The holy veil repels the hex.")
+				txt lang("ãƒ›ãƒ¼ãƒªãƒ¼ãƒ´ã‚§ã‚¤ãƒ«ãŒå‘ªã„ã‚’é˜²ã„ã ã€‚", "The holy veil repels the hex.")
 				return
 			}
 		}
 		if ( locvar_addbuff_f == 1 ) {
 			if ( synccheck(addbuff_charid, -1) ) {
 				txtmore
-				txt lang(name(addbuff_charid) + "‚Í’ïR‚µ‚½B", name(addbuff_charid) + " resist" + _s(addbuff_charid) + " the hex.")
+				txt lang(name(addbuff_charid) + "ã¯æŠµæŠ—ã—ãŸã€‚", name(addbuff_charid) + " resist" + _s(addbuff_charid) + " the hex.")
 			}
 			return
 		}
@@ -1711,7 +1711,7 @@
 #deffunc delbuff int delbuff_charid, int delbuff_buffid
 	if ( delbuff_charid == CHARA_PLAYER ) {
 		txtef COLOR_PURPLE
-		txt lang("" + buffname(cdata(STARTING_CDATA_BUFF + delbuff_buffid * ARRAY_CDATA_BUFF, delbuff_charid)) + "‚ÌŒø‰Ê‚ªØ‚ê‚½B", "The effect of " + buffname(cdata(STARTING_CDATA_BUFF + delbuff_buffid * ARRAY_CDATA_BUFF, delbuff_charid)) + " ends.")
+		txt lang("" + buffname(cdata(STARTING_CDATA_BUFF + delbuff_buffid * ARRAY_CDATA_BUFF, delbuff_charid)) + "ã®åŠ¹æœãŒåˆ‡ã‚ŒãŸã€‚", "The effect of " + buffname(cdata(STARTING_CDATA_BUFF + delbuff_buffid * ARRAY_CDATA_BUFF, delbuff_charid)) + " ends.")
 	}
 	if ( cdata(STARTING_CDATA_BUFF + delbuff_buffid * ARRAY_CDATA_BUFF, delbuff_charid) == BUFF_INCOGNITO ) {
 		if ( delbuff_charid == CHARA_PLAYER ) {
@@ -1938,73 +1938,73 @@
 		if ( resistmod_arg3 >= 50 ) {
 			txtef COLOR_GREEN
 			if ( resistmod_ele == SKILL_RES_FIRE ) {
-				txt lang(name(resistmod_charid) + "‚Ìg‘Ì‚Í‹}‚É‰ÎÆ‚è‚¾‚µ‚½B", "Suddenly, " + name(resistmod_charid) + " feel" + _s(resistmod_charid) + " very hot.")
+				txt lang(name(resistmod_charid) + "ã®èº«ä½“ã¯æ€¥ã«ç«ç…§ã‚Šã ã—ãŸã€‚", "Suddenly, " + name(resistmod_charid) + " feel" + _s(resistmod_charid) + " very hot.")
 			}
 			if ( resistmod_ele == SKILL_RES_COLD ) {
-				txt lang(name(resistmod_charid) + "‚Ìg‘Ì‚Í‹}‚É—â‚½‚­‚È‚Á‚½B", "Suddenly, " + name(resistmod_charid) + " feel" + _s(resistmod_charid) + " cool.")
+				txt lang(name(resistmod_charid) + "ã®èº«ä½“ã¯æ€¥ã«å†·ãŸããªã£ãŸã€‚", "Suddenly, " + name(resistmod_charid) + " feel" + _s(resistmod_charid) + " cool.")
 			}
 			if ( resistmod_ele == SKILL_RES_LIGHTNING ) {
-				txt lang(name(resistmod_charid) + "‚Ìg‘Ì‚É“d‹C‚ª‘–‚Á‚½B", name(resistmod_charid) + " " + is(resistmod_charid) + " struck by an electric shock.")
+				txt lang(name(resistmod_charid) + "ã®èº«ä½“ã«é›»æ°—ãŒèµ°ã£ãŸã€‚", name(resistmod_charid) + " " + is(resistmod_charid) + " struck by an electric shock.")
 			}
 			if ( resistmod_ele == SKILL_RES_MIND ) {
-				txt lang(name(resistmod_charid) + "‚Í‹}‚É–¾ğ‚É‚È‚Á‚½B", "Suddenly, " + name(resistmod_charid) + your(resistmod_charid) + " mind becomes very clear.")
+				txt lang(name(resistmod_charid) + "ã¯æ€¥ã«æ˜æ™°ã«ãªã£ãŸã€‚", "Suddenly, " + name(resistmod_charid) + your(resistmod_charid) + " mind becomes very clear.")
 			}
 			if ( resistmod_ele == SKILL_RES_NERVE ) {
-				txt lang(name(resistmod_charid) + "‚Í‹}‚É_Œo‚ª}‘¾‚­‚È‚Á‚½B", name(resistmod_charid) + your(resistmod_charid) + " nerve is sharpened.")
+				txt lang(name(resistmod_charid) + "ã¯æ€¥ã«ç¥çµŒãŒå›³å¤ªããªã£ãŸã€‚", name(resistmod_charid) + your(resistmod_charid) + " nerve is sharpened.")
 			}
 			if ( resistmod_ele == SKILL_RES_DARKNESS ) {
-				txt lang(name(resistmod_charid) + "‚Í‹}‚ÉˆÃˆÅ‚ª•|‚­‚È‚­‚È‚Á‚½B", name(resistmod_charid) + " no longer fear" + _s(resistmod_charid) + " darkness.")
+				txt lang(name(resistmod_charid) + "ã¯æ€¥ã«æš—é—‡ãŒæ€–ããªããªã£ãŸã€‚", name(resistmod_charid) + " no longer fear" + _s(resistmod_charid) + " darkness.")
 			}
 			if ( resistmod_ele == SKILL_RES_SOUND ) {
-				txt lang(name(resistmod_charid) + "‚Í‘›‰¹‚ğ‹C‚É‚µ‚È‚­‚È‚Á‚½B", name(resistmod_charid) + your(resistmod_charid) + " eardrums get thick.")
+				txt lang(name(resistmod_charid) + "ã¯é¨’éŸ³ã‚’æ°—ã«ã—ãªããªã£ãŸã€‚", name(resistmod_charid) + your(resistmod_charid) + " eardrums get thick.")
 			}
 			if ( resistmod_ele == SKILL_RES_CHAOS ) {
-				txt lang(name(resistmod_charid) + "‚Í‹}‚ÉƒJƒIƒX‚ğ—‰ğ‚µ‚½B", "Suddenly, " + name(resistmod_charid) + " understand" + _s(resistmod_charid) + " chaos.")
+				txt lang(name(resistmod_charid) + "ã¯æ€¥ã«ã‚«ã‚ªã‚¹ã‚’ç†è§£ã—ãŸã€‚", "Suddenly, " + name(resistmod_charid) + " understand" + _s(resistmod_charid) + " chaos.")
 			}
 			if ( resistmod_ele == SKILL_RES_POISON ) {
-				txt lang(name(resistmod_charid) + "‚Ì“Å‚Ö‚Ì‘Ï«‚Í‹­‚­‚È‚Á‚½B", name(resistmod_charid) + " now " + have(resistmod_charid) + " antibodies to poisons.")
+				txt lang(name(resistmod_charid) + "ã®æ¯’ã¸ã®è€æ€§ã¯å¼·ããªã£ãŸã€‚", name(resistmod_charid) + " now " + have(resistmod_charid) + " antibodies to poisons.")
 			}
 			if ( resistmod_ele == SKILL_RES_NETHER ) {
-				txt lang(name(resistmod_charid) + "‚Ì°‚Í’n–‚É‹ß‚Ã‚¢‚½B", name(resistmod_charid) + " " + is(resistmod_charid) + " no longer afraid of hell.")
+				txt lang(name(resistmod_charid) + "ã®é­‚ã¯åœ°ç„ã«è¿‘ã¥ã„ãŸã€‚", name(resistmod_charid) + " " + is(resistmod_charid) + " no longer afraid of hell.")
 			}
 			if ( resistmod_ele == SKILL_RES_MAGIC ) {
-				txt lang(name(resistmod_charid) + "‚Ì”ç•†‚Í–‚—Í‚ÌƒI[ƒ‰‚É•ï‚Ü‚ê‚½B", name(resistmod_charid) + your(resistmod_charid) + " body is covered by a magical aura.")
+				txt lang(name(resistmod_charid) + "ã®çš®è†šã¯é­”åŠ›ã®ã‚ªãƒ¼ãƒ©ã«åŒ…ã¾ã‚ŒãŸã€‚", name(resistmod_charid) + your(resistmod_charid) + " body is covered by a magical aura.")
 			}
 		}
 		if ( resistmod_arg3 <= -50 ) {
 			txtef COLOR_PURPLE
 			if ( resistmod_ele == SKILL_RES_FIRE ) {
-				txt lang(name(resistmod_charid) + "‚Í‹}‚ÉŠ¾‚ğ‚©‚«‚¾‚µ‚½B", name(resistmod_charid) + " sweat" + _s(resistmod_charid) + ".")
+				txt lang(name(resistmod_charid) + "ã¯æ€¥ã«æ±—ã‚’ã‹ãã ã—ãŸã€‚", name(resistmod_charid) + " sweat" + _s(resistmod_charid) + ".")
 			}
 			if ( resistmod_ele == SKILL_RES_COLD ) {
-				txt lang(name(resistmod_charid) + "‚Í‹}‚ÉŠ¦‹C‚ğŠ´‚¶‚½B", name(resistmod_charid) + " shiver" + _s(resistmod_charid) + ".")
+				txt lang(name(resistmod_charid) + "ã¯æ€¥ã«å¯’æ°—ã‚’æ„Ÿã˜ãŸã€‚", name(resistmod_charid) + " shiver" + _s(resistmod_charid) + ".")
 			}
 			if ( resistmod_ele == SKILL_RES_LIGHTNING ) {
-				txt lang(name(resistmod_charid) + "‚Í‹}‚É“d‹C‚É•qŠ´‚É‚È‚Á‚½B", name(resistmod_charid) + " " + is(resistmod_charid) + " shocked.")
+				txt lang(name(resistmod_charid) + "ã¯æ€¥ã«é›»æ°—ã«æ•æ„Ÿã«ãªã£ãŸã€‚", name(resistmod_charid) + " " + is(resistmod_charid) + " shocked.")
 			}
 			if ( resistmod_ele == SKILL_RES_MIND ) {
-				txt lang(name(resistmod_charid) + "‚ÍˆÈ‘O‚Ù‚Ç–¾ğ‚Å‚Í‚È‚­‚È‚Á‚½B", name(resistmod_charid) + your(resistmod_charid) + " mind becomes slippery.")
+				txt lang(name(resistmod_charid) + "ã¯ä»¥å‰ã»ã©æ˜æ™°ã§ã¯ãªããªã£ãŸã€‚", name(resistmod_charid) + your(resistmod_charid) + " mind becomes slippery.")
 			}
 			if ( resistmod_ele == SKILL_RES_NERVE ) {
-				txt lang(name(resistmod_charid) + "‚Ì_Œo‚Í‹}‚ÉˆŞk‚µ‚½B", name(resistmod_charid) + " become" + _s(resistmod_charid) + " dull.")
+				txt lang(name(resistmod_charid) + "ã®ç¥çµŒã¯æ€¥ã«èç¸®ã—ãŸã€‚", name(resistmod_charid) + " become" + _s(resistmod_charid) + " dull.")
 			}
 			if ( resistmod_ele == SKILL_RES_DARKNESS ) {
-				txt lang(name(resistmod_charid) + "‚Í‹}‚ÉˆÃˆÅ‚ª•|‚­‚È‚Á‚½B", "Suddenly, " + name(resistmod_charid) + " fear" + _s(resistmod_charid) + " darkness.")
+				txt lang(name(resistmod_charid) + "ã¯æ€¥ã«æš—é—‡ãŒæ€–ããªã£ãŸã€‚", "Suddenly, " + name(resistmod_charid) + " fear" + _s(resistmod_charid) + " darkness.")
 			}
 			if ( resistmod_ele == SKILL_RES_SOUND ) {
-				txt lang(name(resistmod_charid) + "‚Í‹}‚É•Ó‚è‚ğ‚¤‚é‚³‚­Š´‚¶‚½B", name(resistmod_charid) + " become" + _s(resistmod_charid) + " very sensitive to noises.")
+				txt lang(name(resistmod_charid) + "ã¯æ€¥ã«è¾ºã‚Šã‚’ã†ã‚‹ã•ãæ„Ÿã˜ãŸã€‚", name(resistmod_charid) + " become" + _s(resistmod_charid) + " very sensitive to noises.")
 			}
 			if ( resistmod_ele == SKILL_RES_CHAOS ) {
-				txt lang(name(resistmod_charid) + "‚ÍƒJƒIƒX‚Ö‚Ì—‰ğ‚ğ¸‚Á‚½B", name(resistmod_charid) + " no longer understand" + _s(resistmod_charid) + " chaos.")
+				txt lang(name(resistmod_charid) + "ã¯ã‚«ã‚ªã‚¹ã¸ã®ç†è§£ã‚’å¤±ã£ãŸã€‚", name(resistmod_charid) + " no longer understand" + _s(resistmod_charid) + " chaos.")
 			}
 			if ( resistmod_ele == SKILL_RES_POISON ) {
-				txt lang(name(resistmod_charid) + "‚Ì“Å‚Ö‚Ì‘Ï«‚Í”–‚ê‚½B", name(resistmod_charid) + " lose" + _s(resistmod_charid, 1) + " antibodies to poisons.")
+				txt lang(name(resistmod_charid) + "ã®æ¯’ã¸ã®è€æ€§ã¯è–„ã‚ŒãŸã€‚", name(resistmod_charid) + " lose" + _s(resistmod_charid, 1) + " antibodies to poisons.")
 			}
 			if ( resistmod_ele == SKILL_RES_NETHER ) {
-				txt lang(name(resistmod_charid) + "‚Ì°‚Í’n–‚©‚ç‰“‚´‚©‚Á‚½B", name(resistmod_charid) + " " + is(resistmod_charid) + " afraid of hell.")
+				txt lang(name(resistmod_charid) + "ã®é­‚ã¯åœ°ç„ã‹ã‚‰é ã–ã‹ã£ãŸã€‚", name(resistmod_charid) + " " + is(resistmod_charid) + " afraid of hell.")
 			}
 			if ( resistmod_ele == SKILL_RES_MAGIC ) {
-				txt lang(name(resistmod_charid) + "‚Ì”ç•†‚©‚ç–‚—Í‚ÌƒI[ƒ‰‚ªÁ‚¦‚½B", "The magical aura disappears from " + name(resistmod_charid) + your(resistmod_charid) + " body.")
+				txt lang(name(resistmod_charid) + "ã®çš®è†šã‹ã‚‰é­”åŠ›ã®ã‚ªãƒ¼ãƒ©ãŒæ¶ˆãˆãŸã€‚", "The magical aura disappears from " + name(resistmod_charid) + your(resistmod_charid) + " body.")
 			}
 		}
 		sdata(resistmod_ele + STARTING_SKILL_SPACT, resistmod_charid) = limit(locvar_resistmod_lv, 0, 2000) * 1000000 + sexp(resistmod_ele, resistmod_charid) * 1000 + sgrowth(resistmod_ele, resistmod_charid)
@@ -2032,73 +2032,73 @@
 		if ( resistmodh_arg3 >= 25 ) {
 			txtef COLOR_GREEN
 			if ( resistmodh_ele == SKILL_RES_FIRE ) {
-				txt lang(name(resistmodh_charid) + "‚Ìg‘Ì‚Í‹}‚É‰ÎÆ‚è‚¾‚µ‚½B", "Suddenly, " + name(resistmodh_charid) + " feel" + _s(resistmodh_charid) + " very hot.")
+				txt lang(name(resistmodh_charid) + "ã®èº«ä½“ã¯æ€¥ã«ç«ç…§ã‚Šã ã—ãŸã€‚", "Suddenly, " + name(resistmodh_charid) + " feel" + _s(resistmodh_charid) + " very hot.")
 			}
 			if ( resistmodh_ele == SKILL_RES_COLD ) {
-				txt lang(name(resistmodh_charid) + "‚Ìg‘Ì‚Í‹}‚É—â‚½‚­‚È‚Á‚½B", "Suddenly, " + name(resistmodh_charid) + " feel" + _s(resistmodh_charid) + " cool.")
+				txt lang(name(resistmodh_charid) + "ã®èº«ä½“ã¯æ€¥ã«å†·ãŸããªã£ãŸã€‚", "Suddenly, " + name(resistmodh_charid) + " feel" + _s(resistmodh_charid) + " cool.")
 			}
 			if ( resistmodh_ele == SKILL_RES_LIGHTNING ) {
-				txt lang(name(resistmodh_charid) + "‚Ìg‘Ì‚É“d‹C‚ª‘–‚Á‚½B", name(resistmodh_charid) + " " + is(resistmodh_charid) + " struck by an electric shock.")
+				txt lang(name(resistmodh_charid) + "ã®èº«ä½“ã«é›»æ°—ãŒèµ°ã£ãŸã€‚", name(resistmodh_charid) + " " + is(resistmodh_charid) + " struck by an electric shock.")
 			}
 			if ( resistmodh_ele == SKILL_RES_MIND ) {
-				txt lang(name(resistmodh_charid) + "‚Í‹}‚É–¾ğ‚É‚È‚Á‚½B", "Suddenly, " + name(resistmodh_charid) + your(resistmodh_charid) + " mind becomes very clear.")
+				txt lang(name(resistmodh_charid) + "ã¯æ€¥ã«æ˜æ™°ã«ãªã£ãŸã€‚", "Suddenly, " + name(resistmodh_charid) + your(resistmodh_charid) + " mind becomes very clear.")
 			}
 			if ( resistmodh_ele == SKILL_RES_NERVE ) {
-				txt lang(name(resistmodh_charid) + "‚Í‹}‚É_Œo‚ª}‘¾‚­‚È‚Á‚½B", name(resistmodh_charid) + your(resistmodh_charid) + " nerve is sharpened.")
+				txt lang(name(resistmodh_charid) + "ã¯æ€¥ã«ç¥çµŒãŒå›³å¤ªããªã£ãŸã€‚", name(resistmodh_charid) + your(resistmodh_charid) + " nerve is sharpened.")
 			}
 			if ( resistmodh_ele == SKILL_RES_DARKNESS ) {
-				txt lang(name(resistmodh_charid) + "‚Í‹}‚ÉˆÃˆÅ‚ª•|‚­‚È‚­‚È‚Á‚½B", name(resistmodh_charid) + " no longer fear" + _s(resistmodh_charid) + " darkness.")
+				txt lang(name(resistmodh_charid) + "ã¯æ€¥ã«æš—é—‡ãŒæ€–ããªããªã£ãŸã€‚", name(resistmodh_charid) + " no longer fear" + _s(resistmodh_charid) + " darkness.")
 			}
 			if ( resistmodh_ele == SKILL_RES_SOUND ) {
-				txt lang(name(resistmodh_charid) + "‚Í‘›‰¹‚ğ‹C‚É‚µ‚È‚­‚È‚Á‚½B", name(resistmodh_charid) + your(resistmodh_charid) + " eardrums get thick.")
+				txt lang(name(resistmodh_charid) + "ã¯é¨’éŸ³ã‚’æ°—ã«ã—ãªããªã£ãŸã€‚", name(resistmodh_charid) + your(resistmodh_charid) + " eardrums get thick.")
 			}
 			if ( resistmodh_ele == SKILL_RES_CHAOS ) {
-				txt lang(name(resistmodh_charid) + "‚Í‹}‚ÉƒJƒIƒX‚ğ—‰ğ‚µ‚½B", "Suddenly, " + name(resistmodh_charid) + " understand" + _s(resistmodh_charid) + " chaos.")
+				txt lang(name(resistmodh_charid) + "ã¯æ€¥ã«ã‚«ã‚ªã‚¹ã‚’ç†è§£ã—ãŸã€‚", "Suddenly, " + name(resistmodh_charid) + " understand" + _s(resistmodh_charid) + " chaos.")
 			}
 			if ( resistmodh_ele == SKILL_RES_POISON ) {
-				txt lang(name(resistmodh_charid) + "‚Ì“Å‚Ö‚Ì‘Ï«‚Í‹­‚­‚È‚Á‚½B", name(resistmodh_charid) + " now " + have(resistmodh_charid) + " antibodies to poisons.")
+				txt lang(name(resistmodh_charid) + "ã®æ¯’ã¸ã®è€æ€§ã¯å¼·ããªã£ãŸã€‚", name(resistmodh_charid) + " now " + have(resistmodh_charid) + " antibodies to poisons.")
 			}
 			if ( resistmodh_ele == SKILL_RES_NETHER ) {
-				txt lang(name(resistmodh_charid) + "‚Ì°‚Í’n–‚É‹ß‚Ã‚¢‚½B", name(resistmodh_charid) + " " + is(resistmodh_charid) + " no longer afraid of hell.")
+				txt lang(name(resistmodh_charid) + "ã®é­‚ã¯åœ°ç„ã«è¿‘ã¥ã„ãŸã€‚", name(resistmodh_charid) + " " + is(resistmodh_charid) + " no longer afraid of hell.")
 			}
 			if ( resistmodh_ele == SKILL_RES_MAGIC ) {
-				txt lang(name(resistmodh_charid) + "‚Ì”ç•†‚Í–‚—Í‚ÌƒI[ƒ‰‚É•ï‚Ü‚ê‚½B", name(resistmodh_charid) + your(resistmodh_charid) + " body is covered by a magical aura.")
+				txt lang(name(resistmodh_charid) + "ã®çš®è†šã¯é­”åŠ›ã®ã‚ªãƒ¼ãƒ©ã«åŒ…ã¾ã‚ŒãŸã€‚", name(resistmodh_charid) + your(resistmodh_charid) + " body is covered by a magical aura.")
 			}
 		}
 		if ( resistmodh_arg3 <= -50 ) {
 			txtef COLOR_PURPLE
 			if ( resistmodh_ele == SKILL_RES_FIRE ) {
-				txt lang(name(resistmodh_charid) + "‚Í‹}‚ÉŠ¾‚ğ‚©‚«‚¾‚µ‚½B", name(resistmodh_charid) + " sweat" + _s(resistmodh_charid) + ".")
+				txt lang(name(resistmodh_charid) + "ã¯æ€¥ã«æ±—ã‚’ã‹ãã ã—ãŸã€‚", name(resistmodh_charid) + " sweat" + _s(resistmodh_charid) + ".")
 			}
 			if ( resistmodh_ele == SKILL_RES_COLD ) {
-				txt lang(name(resistmodh_charid) + "‚Í‹}‚ÉŠ¦‹C‚ğŠ´‚¶‚½B", name(resistmodh_charid) + " shiver" + _s(resistmodh_charid) + ".")
+				txt lang(name(resistmodh_charid) + "ã¯æ€¥ã«å¯’æ°—ã‚’æ„Ÿã˜ãŸã€‚", name(resistmodh_charid) + " shiver" + _s(resistmodh_charid) + ".")
 			}
 			if ( resistmodh_ele == SKILL_RES_LIGHTNING ) {
-				txt lang(name(resistmodh_charid) + "‚Í‹}‚É“d‹C‚É•qŠ´‚É‚È‚Á‚½B", name(resistmodh_charid) + " " + is(resistmodh_charid) + " shocked.")
+				txt lang(name(resistmodh_charid) + "ã¯æ€¥ã«é›»æ°—ã«æ•æ„Ÿã«ãªã£ãŸã€‚", name(resistmodh_charid) + " " + is(resistmodh_charid) + " shocked.")
 			}
 			if ( resistmodh_ele == SKILL_RES_MIND ) {
-				txt lang(name(resistmodh_charid) + "‚ÍˆÈ‘O‚Ù‚Ç–¾ğ‚Å‚Í‚È‚­‚È‚Á‚½B", name(resistmodh_charid) + your(resistmodh_charid) + " mind becomes slippery.")
+				txt lang(name(resistmodh_charid) + "ã¯ä»¥å‰ã»ã©æ˜æ™°ã§ã¯ãªããªã£ãŸã€‚", name(resistmodh_charid) + your(resistmodh_charid) + " mind becomes slippery.")
 			}
 			if ( resistmodh_ele == SKILL_RES_NERVE ) {
-				txt lang(name(resistmodh_charid) + "‚Ì_Œo‚Í‹}‚ÉˆŞk‚µ‚½B", name(resistmodh_charid) + " become" + _s(resistmodh_charid) + " dull.")
+				txt lang(name(resistmodh_charid) + "ã®ç¥çµŒã¯æ€¥ã«èç¸®ã—ãŸã€‚", name(resistmodh_charid) + " become" + _s(resistmodh_charid) + " dull.")
 			}
 			if ( resistmodh_ele == SKILL_RES_DARKNESS ) {
-				txt lang(name(resistmodh_charid) + "‚Í‹}‚ÉˆÃˆÅ‚ª•|‚­‚È‚Á‚½B", "Suddenly, " + name(resistmodh_charid) + " fear" + _s(resistmodh_charid) + " darkness.")
+				txt lang(name(resistmodh_charid) + "ã¯æ€¥ã«æš—é—‡ãŒæ€–ããªã£ãŸã€‚", "Suddenly, " + name(resistmodh_charid) + " fear" + _s(resistmodh_charid) + " darkness.")
 			}
 			if ( resistmodh_ele == SKILL_RES_SOUND ) {
-				txt lang(name(resistmodh_charid) + "‚Í‹}‚É•Ó‚è‚ğ‚¤‚é‚³‚­Š´‚¶‚½B", name(resistmodh_charid) + " become" + _s(resistmodh_charid) + " very sensitive to noises.")
+				txt lang(name(resistmodh_charid) + "ã¯æ€¥ã«è¾ºã‚Šã‚’ã†ã‚‹ã•ãæ„Ÿã˜ãŸã€‚", name(resistmodh_charid) + " become" + _s(resistmodh_charid) + " very sensitive to noises.")
 			}
 			if ( resistmodh_ele == SKILL_RES_CHAOS ) {
-				txt lang(name(resistmodh_charid) + "‚ÍƒJƒIƒX‚Ö‚Ì—‰ğ‚ğ¸‚Á‚½B", name(resistmodh_charid) + " no longer understand" + _s(resistmodh_charid) + " chaos.")
+				txt lang(name(resistmodh_charid) + "ã¯ã‚«ã‚ªã‚¹ã¸ã®ç†è§£ã‚’å¤±ã£ãŸã€‚", name(resistmodh_charid) + " no longer understand" + _s(resistmodh_charid) + " chaos.")
 			}
 			if ( resistmodh_ele == SKILL_RES_POISON ) {
-				txt lang(name(resistmodh_charid) + "‚Ì“Å‚Ö‚Ì‘Ï«‚Í”–‚ê‚½B", name(resistmodh_charid) + " lose" + _s(resistmodh_charid, 1) + " antibodies to poisons.")
+				txt lang(name(resistmodh_charid) + "ã®æ¯’ã¸ã®è€æ€§ã¯è–„ã‚ŒãŸã€‚", name(resistmodh_charid) + " lose" + _s(resistmodh_charid, 1) + " antibodies to poisons.")
 			}
 			if ( resistmodh_ele == SKILL_RES_NETHER ) {
-				txt lang(name(resistmodh_charid) + "‚Ì°‚Í’n–‚©‚ç‰“‚´‚©‚Á‚½B", name(resistmodh_charid) + " " + is(resistmodh_charid) + " afraid of hell.")
+				txt lang(name(resistmodh_charid) + "ã®é­‚ã¯åœ°ç„ã‹ã‚‰é ã–ã‹ã£ãŸã€‚", name(resistmodh_charid) + " " + is(resistmodh_charid) + " afraid of hell.")
 			}
 			if ( resistmodh_ele == SKILL_RES_MAGIC ) {
-				txt lang(name(resistmodh_charid) + "‚Ì”ç•†‚©‚ç–‚—Í‚ÌƒI[ƒ‰‚ªÁ‚¦‚½B", "The magical aura disappears from " + name(resistmodh_charid) + your(resistmodh_charid) + " body.")
+				txt lang(name(resistmodh_charid) + "ã®çš®è†šã‹ã‚‰é­”åŠ›ã®ã‚ªãƒ¼ãƒ©ãŒæ¶ˆãˆãŸã€‚", "The magical aura disappears from " + name(resistmodh_charid) + your(resistmodh_charid) + " body.")
 			}
 		}
 		sdata(resistmodh_ele + STARTING_SKILL_SPACT, resistmodh_charid) = limit(locvar_resistmod_lv, 0, 2000) * 1000000 + sexp(resistmodh_ele, resistmodh_charid) * 1000 + sgrowth(resistmodh_ele, resistmodh_charid)
@@ -2127,7 +2127,7 @@
 	if ( locvar_modcorrupt_mod > 0 ) {
 		if ( locvar_modcorrupt_org == 0 ) {
 			txtef COLOR_PURPLE
-			txt lang("ƒG[ƒeƒ‹‚Ì•a‚ª”­Ç‚µ‚½B", "You show signs of Ether Disease.")
+			txt lang("ã‚¨ãƒ¼ãƒ†ãƒ«ã®ç—…ãŒç™ºç—‡ã—ãŸã€‚", "You show signs of Ether Disease.")
 			if ( cfg_extrahelp ) {
 				if ( gdata(STARTING_GDATA_HELP + 15) == 0 ) {
 					if ( mode == MODELIST_MAIN ) {
@@ -2166,7 +2166,7 @@
 				locvar_modcorrupt_i = 700 + locvar_modcorrupt_org + locvar_modcorrupt_cnt2
 				gdata(locvar_modcorrupt_i) = tid
 				txtef COLOR_PURPLE
-				txt lang("‚ ‚È‚½‚ÍƒG[ƒeƒ‹‚ÉNH‚³‚ê‚½B", "Your disease is getting worse.")
+				txt lang("ã‚ãªãŸã¯ã‚¨ãƒ¼ãƒ†ãƒ«ã«ä¾µé£Ÿã•ã‚ŒãŸã€‚", "Your disease is getting worse.")
 				txtmore
 				txtef COLOR_RED
 				txt traitrefn(1)
@@ -2229,7 +2229,7 @@
 				}
 				trait(tid)++
 				txtef COLOR_GREEN
-				txt lang("‚ ‚È‚½‚ÌƒG[ƒeƒ‹‚ÌNH‚Í‚â‚í‚ç‚¢‚¾B", "The symptoms of the Ether Disease seem to calm down.")
+				txt lang("ã‚ãªãŸã®ã‚¨ãƒ¼ãƒ†ãƒ«ã®ä¾µé£Ÿã¯ã‚„ã‚ã‚‰ã„ã ã€‚", "The symptoms of the Ether Disease seem to calm down.")
 				txtmore
 				txtef COLOR_GREEN
 				txt traitrefn(0)
@@ -2250,10 +2250,10 @@
 	cdata(CDATA_CONDITION_WET, wet_arg1) += wet_arg2
 	if ( synccheck(wet_arg1, -1) ) {
 		txtmore
-		txt lang(name(wet_arg1) + "‚Í”G‚ê‚½B", name(wet_arg1) + " get" + _s(wet_arg1) + " wet.")
+		txt lang(name(wet_arg1) + "ã¯æ¿¡ã‚ŒãŸã€‚", name(wet_arg1) + " get" + _s(wet_arg1) + " wet.")
 		if ( cbit(CHARA_BIT_INVISIBLE, wet_arg1) == 1 ) {
 			txtmore
-			txt lang(name(wet_arg1) + "‚Ìp‚ª‚ ‚ç‚í‚É‚È‚Á‚½B", name(wet_arg1) + " " + is(wet_arg1) + " revealed " + his(wet_arg1) + " shape.")
+			txt lang(name(wet_arg1) + "ã®å§¿ãŒã‚ã‚‰ã‚ã«ãªã£ãŸã€‚", name(wet_arg1) + " " + is(wet_arg1) + " revealed " + his(wet_arg1) + " shape.")
 			txtmore
 		}
 	}
@@ -2261,10 +2261,10 @@
 		ttc@con = cdata(CDATA_TAGTEAM_PARTNER, wet_arg1)
 		cdata(CDATA_CONDITION_WET, ttc@con) += wet_arg2
 		txtmore
-		txt lang(name(ttc@con) + "‚Í”G‚ê‚½B", name(ttc@con) + " get" + _s(ttc@con) + " wet.")
+		txt lang(name(ttc@con) + "ã¯æ¿¡ã‚ŒãŸã€‚", name(ttc@con) + " get" + _s(ttc@con) + " wet.")
 		if ( cbit(CHARA_BIT_INVISIBLE, ttc@con) == 1 ) {
 			txtmore
-			txt lang(name(ttc@con) + "‚Ìp‚ª‚ ‚ç‚í‚É‚È‚Á‚½B", name(ttc@con) + " " + is(ttc@con) + " revealed " + his(ttc@con) + " shape.")
+			txt lang(name(ttc@con) + "ã®å§¿ãŒã‚ã‚‰ã‚ã«ãªã£ãŸã€‚", name(ttc@con) + " " + is(ttc@con) + " revealed " + his(ttc@con) + " shape.")
 			txtmore
 		}
 	}
@@ -2272,10 +2272,10 @@
 		if ( gdata(GDATA_RIDER) != 0 ) {
 			cdata(CDATA_CONDITION_WET, gdata(GDATA_RIDER)) += wet_arg2
 			txtmore
-			txt lang(name(gdata(GDATA_RIDER)) + "‚Í”G‚ê‚½B", name(gdata(GDATA_RIDER)) + " get" + _s(gdata(GDATA_RIDER)) + " wet.")
+			txt lang(name(gdata(GDATA_RIDER)) + "ã¯æ¿¡ã‚ŒãŸã€‚", name(gdata(GDATA_RIDER)) + " get" + _s(gdata(GDATA_RIDER)) + " wet.")
 			if ( cbit(CHARA_BIT_INVISIBLE, gdata(GDATA_RIDER)) == 1 ) {
 				txtmore
-				txt lang(name(gdata(GDATA_RIDER)) + "‚Ìp‚ª‚ ‚ç‚í‚É‚È‚Á‚½B", name(ttc@con) + " " + is(gdata(GDATA_RIDER)) + " revealed " + his(gdata(GDATA_RIDER)) + " shape.")
+				txt lang(name(gdata(GDATA_RIDER)) + "ã®å§¿ãŒã‚ã‚‰ã‚ã«ãªã£ãŸã€‚", name(ttc@con) + " " + is(gdata(GDATA_RIDER)) + " revealed " + his(gdata(GDATA_RIDER)) + " shape.")
 				txtmore
 			}
 		}
@@ -2316,7 +2316,7 @@
 				if ( synccheck(dmgcon_charid, -1) ) {
 					txtmore
 					txtef COLOR_PURPLE
-					txt lang(name(dmgcon_charid) + "‚Í–Ó–Ú‚É‚È‚Á‚½B", name(dmgcon_charid) + " " + is(dmgcon_charid) + " blinded.")
+					txt lang(name(dmgcon_charid) + "ã¯ç›²ç›®ã«ãªã£ãŸã€‚", name(dmgcon_charid) + " " + is(dmgcon_charid) + " blinded.")
 				}
 			}
 			rowactend dmgcon_charid
@@ -2331,7 +2331,7 @@
 				if ( synccheck(dmgcon_charid, -1) ) {
 					txtmore
 					txtef COLOR_PURPLE
-					txt lang(name(dmgcon_charid) + "‚Í“]“|‚µ‚½B", name(dmgcon_charid) + " " + was(dmgcon_charid) + " knocked down.")
+					txt lang(name(dmgcon_charid) + "ã¯è»¢å€’ã—ãŸã€‚", name(dmgcon_charid) + " " + was(dmgcon_charid) + " knocked down.")
 				}
 			}
 			rowactend dmgcon_charid
@@ -2368,7 +2368,7 @@
 				if ( synccheck(dmgcon_charid, -1) ) {
 					txtmore
 					txtef COLOR_PURPLE
-					txt lang(name(dmgcon_charid) + "‚Í¬—‚µ‚½B", name(dmgcon_charid) + " " + is(dmgcon_charid) + " confused.")
+					txt lang(name(dmgcon_charid) + "ã¯æ··ä¹±ã—ãŸã€‚", name(dmgcon_charid) + " " + is(dmgcon_charid) + " confused.")
 				}
 			}
 			rowactend dmgcon_charid
@@ -2399,7 +2399,7 @@
 				if ( synccheck(dmgcon_charid, -1) ) {
 					txtmore
 					txtef COLOR_PURPLE
-					txt lang(name(dmgcon_charid) + "‚Í–ƒáƒ‚µ‚½B", name(dmgcon_charid) + " " + is(dmgcon_charid) + " paralyzed.")
+					txt lang(name(dmgcon_charid) + "ã¯éº»ç—ºã—ãŸã€‚", name(dmgcon_charid) + " " + is(dmgcon_charid) + " paralyzed.")
 				}
 			}
 			rowactend dmgcon_charid
@@ -2420,7 +2420,7 @@
 				if ( synccheck(dmgcon_charid, -1) ) {
 					txtmore
 					txtef COLOR_PURPLE
-					txt lang(name(dmgcon_charid) + "‚Í–‚—Í‚ğ˜R‚ç‚µn‚ß‚½B", name(dmgcon_charid) + " began to leak MP.")
+					txt lang(name(dmgcon_charid) + "ã¯é­”åŠ›ã‚’æ¼ã‚‰ã—å§‹ã‚ãŸã€‚", name(dmgcon_charid) + " began to leak MP.")
 				}
 			}
 			else {
@@ -2454,7 +2454,7 @@
 				if ( synccheck(dmgcon_charid, -1) ) {
 					txtmore
 					txtef COLOR_PURPLE
-					txt lang(name(dmgcon_charid) + "‚Í“Å‚É‚¨‚©‚³‚ê‚½B", name(dmgcon_charid) + " " + is(dmgcon_charid) + " poisoned.")
+					txt lang(name(dmgcon_charid) + "ã¯æ¯’ã«ãŠã‹ã•ã‚ŒãŸã€‚", name(dmgcon_charid) + " " + is(dmgcon_charid) + " poisoned.")
 				}
 			}
 			else {
@@ -2488,7 +2488,7 @@
 				if ( synccheck(dmgcon_charid, -1) ) {
 					txtmore
 					txtef COLOR_PURPLE
-					txt lang(name(dmgcon_charid) + "‚Í–°‚è‚É‚¨‚¿‚½B", name(dmgcon_charid) + " fall" + _s(dmgcon_charid) + " asleep.")
+					txt lang(name(dmgcon_charid) + "ã¯çœ ã‚Šã«ãŠã¡ãŸã€‚", name(dmgcon_charid) + " fall" + _s(dmgcon_charid) + " asleep.")
 				}
 			}
 			rowactend dmgcon_charid
@@ -2522,7 +2522,7 @@
 			}
 			if ( synccheck(dmgcon_charid, -1) ) {
 				txtmore
-				txt lang(name(dmgcon_charid) + "‚Í‹°•|‚ÉN‚³‚ê‚½B", name(dmgcon_charid) + " " + is(dmgcon_charid) + " frightened.")
+				txt lang(name(dmgcon_charid) + "ã¯ææ€–ã«ä¾µã•ã‚ŒãŸã€‚", name(dmgcon_charid) + " " + is(dmgcon_charid) + " frightened.")
 			}
 		}
 		return 1
@@ -2551,7 +2551,7 @@
 				if ( synccheck(dmgcon_charid, -1) ) {
 					txtmore
 					txtef COLOR_PURPLE
-					txt lang(name(dmgcon_charid) + "‚ÍNO‚Æ‚µ‚½B", name(dmgcon_charid) + " " + is(dmgcon_charid) + " dimmed.")
+					txt lang(name(dmgcon_charid) + "ã¯æœ¦æœ§ã¨ã—ãŸã€‚", name(dmgcon_charid) + " " + is(dmgcon_charid) + " dimmed.")
 				}
 			}
 			rowactend dmgcon_charid
@@ -2569,7 +2569,7 @@
 				if ( synccheck(dmgcon_charid, -1) ) {
 					txtmore
 					txtef COLOR_PURPLE
-					txt lang(name(dmgcon_charid) + "‚ÍŒŒ‚ğ—¬‚µn‚ß‚½B", name(dmgcon_charid) + " begin" + _s(dmgcon_charid) + " to bleed.")
+					txt lang(name(dmgcon_charid) + "ã¯è¡€ã‚’æµã—å§‹ã‚ãŸã€‚", name(dmgcon_charid) + " begin" + _s(dmgcon_charid) + " to bleed.")
 				}
 			}
 			else {
@@ -2587,7 +2587,7 @@
 				cdata(CDATA_CONDITION_DRUNK, dmgcon_charid) = p@con
 				if ( synccheck(dmgcon_charid, -1) ) {
 					txtmore
-					txt lang(name(dmgcon_charid) + "‚ÍŒ‚Á•¥‚Á‚½B", name(dmgcon_charid) + " get" + _s(dmgcon_charid) + " drunk.")
+					txt lang(name(dmgcon_charid) + "ã¯é…”ã£æ‰•ã£ãŸã€‚", name(dmgcon_charid) + " get" + _s(dmgcon_charid) + " drunk.")
 				}
 			}
 			else {
@@ -2613,7 +2613,7 @@
 				if ( synccheck(dmgcon_charid, -1) ) {
 					txtmore
 					txtef COLOR_PURPLE
-					txt lang(name(dmgcon_charid) + "‚Í‹C‚ª‹¶‚Á‚½B", name(dmgcon_charid) + " become" + _s(dmgcon_charid) + " insane.")
+					txt lang(name(dmgcon_charid) + "ã¯æ°—ãŒç‹‚ã£ãŸã€‚", name(dmgcon_charid) + " become" + _s(dmgcon_charid) + " insane.")
 				}
 			}
 			else {
@@ -2631,7 +2631,7 @@
 				if ( synccheck(dmgcon_charid, -1) ) {
 					txtmore
 					txtef COLOR_PURPLE
-					txt lang(name(dmgcon_charid) + "‚Í•a‹C‚É‚È‚Á‚½B", name(dmgcon_charid) + " get" + _s(dmgcon_charid) + " sick.")
+					txt lang(name(dmgcon_charid) + "ã¯ç—…æ°—ã«ãªã£ãŸã€‚", name(dmgcon_charid) + " get" + _s(dmgcon_charid) + " sick.")
 				}
 				if ( dmgcon_charid == CHARA_PLAYER ) {
 					item_find ITEM_ID_AMULET_OF_JURE, 3, 1
@@ -2640,7 +2640,7 @@
 							if ( rnd(64) >= 1 ) {
 								snd SOUNDLIST_PRAY2
 								txtef COLOR_GREEN
-								txt lang("‚µ‚©‚µŒ’N‚Ì‚¨ç‚è‚ª‹P‚«Au‚­ŠÔ‚É•a‹C‚ªŠ®¡‚µ‚½B", "But the Amulet of Jure shines brightly for a moment, instantly curing the sickness.")
+								txt lang("ã—ã‹ã—å¥åº·ã®ãŠå®ˆã‚ŠãŒè¼ãã€ç¬ãé–“ã«ç—…æ°—ãŒå®Œæ²»ã—ãŸã€‚", "But the Amulet of Jure shines brightly for a moment, instantly curing the sickness.")
 								cdata(CDATA_CONDITION_SICK, dmgcon_charid) = 0
 							}
 						}
@@ -2708,7 +2708,7 @@
 			if ( cdata(CDATA_CONDITION_FEAR, healcon_charid) <= 0 ) {
 				cdata(CDATA_CONDITION_FEAR, healcon_charid) = 0
 				if ( synccheck(healcon_charid, -1) ) {
-					txt lang(name(healcon_charid) + "‚Í‹°•|‚©‚ç—§‚¿’¼‚Á‚½B", name(healcon_charid) + " shake" + _s(healcon_charid) + " off " + his(healcon_charid) + " fear.")
+					txt lang(name(healcon_charid) + "ã¯ææ€–ã‹ã‚‰ç«‹ã¡ç›´ã£ãŸã€‚", name(healcon_charid) + " shake" + _s(healcon_charid) + " off " + his(healcon_charid) + " fear.")
 				}
 			}
 			return
@@ -2725,7 +2725,7 @@
 			if ( cdata(CDATA_CONDITION_BLIND, healcon_charid) <= 0 ) {
 				cdata(CDATA_CONDITION_BLIND, healcon_charid) = 0
 				if ( synccheck(healcon_charid, -1) ) {
-					txt lang(name(healcon_charid) + "‚Í–Ó–Ú‚©‚ç‰ñ•œ‚µ‚½B", name(healcon_charid) + " can see again.")
+					txt lang(name(healcon_charid) + "ã¯ç›²ç›®ã‹ã‚‰å›å¾©ã—ãŸã€‚", name(healcon_charid) + " can see again.")
 				}
 			}
 			return
@@ -2742,7 +2742,7 @@
 			if ( cdata(CDATA_CONDITION_CONFUSE, healcon_charid) <= 0 ) {
 				cdata(CDATA_CONDITION_CONFUSE, healcon_charid) = 0
 				if ( synccheck(healcon_charid, -1) ) {
-					txt lang(name(healcon_charid) + "‚Í¬—‚©‚ç‰ñ•œ‚µ‚½B", name(healcon_charid) + " recover" + _s(healcon_charid) + " from confusion.")
+					txt lang(name(healcon_charid) + "ã¯æ··ä¹±ã‹ã‚‰å›å¾©ã—ãŸã€‚", name(healcon_charid) + " recover" + _s(healcon_charid) + " from confusion.")
 				}
 			}
 			return
@@ -2759,7 +2759,7 @@
 			if ( cdata(CDATA_CONDITION_PARALYZE, healcon_charid) <= 0 ) {
 				cdata(CDATA_CONDITION_PARALYZE, healcon_charid) = 0
 				if ( synccheck(healcon_charid, -1) ) {
-					txt lang(name(healcon_charid) + "‚Í–ƒáƒ‚©‚ç‰ñ•œ‚µ‚½B", name(healcon_charid) + " recover" + _s(healcon_charid) + " from paralysis.")
+					txt lang(name(healcon_charid) + "ã¯éº»ç—ºã‹ã‚‰å›å¾©ã—ãŸã€‚", name(healcon_charid) + " recover" + _s(healcon_charid) + " from paralysis.")
 				}
 			}
 			cdata(CDATA_CONDITION_PARALYZE, healcon_charid) = -1
@@ -2777,7 +2777,7 @@
 			if ( cdata(CDATA_CONDITION_OIL, healcon_charid) <= 0 ) {
 				cdata(CDATA_CONDITION_OIL, healcon_charid) = 0
 				if ( synccheck(healcon_charid, -1) ) {
-					txt lang(name(healcon_charid) + "‚ÌƒIƒCƒ‹‚ª‘S‚Äö”­‚µ‚½B", name(healcon_charid) + " recover" + _s(healcon_charid) + " from oil.")
+					txt lang(name(healcon_charid) + "ã®ã‚ªã‚¤ãƒ«ãŒå…¨ã¦è’¸ç™ºã—ãŸã€‚", name(healcon_charid) + " recover" + _s(healcon_charid) + " from oil.")
 				}
 			}
 			return
@@ -2794,7 +2794,7 @@
 			if ( cdata(CDATA_CONDITION_MPOISON, healcon_charid) <= 0 ) {
 				cdata(CDATA_CONDITION_MPOISON, healcon_charid) = 0
 				if ( synccheck(healcon_charid, -1) ) {
-					txt lang(name(healcon_charid) + "‚Ì–‚—Í‚Ì˜R‚ê‚ªû‚Ü‚Á‚½B", name(healcon_charid) + " recover" + _s(healcon_charid) + " from MP leak.")
+					txt lang(name(healcon_charid) + "ã®é­”åŠ›ã®æ¼ã‚ŒãŒåã¾ã£ãŸã€‚", name(healcon_charid) + " recover" + _s(healcon_charid) + " from MP leak.")
 				}
 			}
 			return
@@ -2811,7 +2811,7 @@
 			if ( cdata(CDATA_CONDITION_POISON, healcon_charid) <= 0 ) {
 				cdata(CDATA_CONDITION_POISON, healcon_charid) = 0
 				if ( synccheck(healcon_charid, -1) ) {
-					txt lang(name(healcon_charid) + "‚Í“Å‚©‚ç‰ñ•œ‚µ‚½B", name(healcon_charid) + " recover" + _s(healcon_charid) + " from poison.")
+					txt lang(name(healcon_charid) + "ã¯æ¯’ã‹ã‚‰å›å¾©ã—ãŸã€‚", name(healcon_charid) + " recover" + _s(healcon_charid) + " from poison.")
 				}
 			}
 			return
@@ -2828,7 +2828,7 @@
 			if ( cdata(CDATA_CONDITION_SLEEP, healcon_charid) <= 0 ) {
 				cdata(CDATA_CONDITION_SLEEP, healcon_charid) = 0
 				if ( synccheck(healcon_charid, -1) ) {
-					txt lang(name(healcon_charid) + "‚ÍS’n‚æ‚¢–°‚è‚©‚çŠo‚ß‚½B", name(healcon_charid) + " awake" + _s(healcon_charid) + " from " + his(healcon_charid) + " sleep.")
+					txt lang(name(healcon_charid) + "ã¯å¿ƒåœ°ã‚ˆã„çœ ã‚Šã‹ã‚‰è¦šã‚ãŸã€‚", name(healcon_charid) + " awake" + _s(healcon_charid) + " from " + his(healcon_charid) + " sleep.")
 				}
 			}
 			return
@@ -2845,7 +2845,7 @@
 			if ( cdata(CDATA_CONDITION_DIM, healcon_charid) <= 0 ) {
 				cdata(CDATA_CONDITION_DIM, healcon_charid) = 0
 				if ( synccheck(healcon_charid, -1) ) {
-					txt lang(name(healcon_charid) + "‚ÌˆÓ¯‚Í‚Í‚Á‚«‚è‚µ‚½B", name(healcon_charid) + " recover" + _s(healcon_charid) + " from ambiguous.")
+					txt lang(name(healcon_charid) + "ã®æ„è­˜ã¯ã¯ã£ãã‚Šã—ãŸã€‚", name(healcon_charid) + " recover" + _s(healcon_charid) + " from ambiguous.")
 				}
 			}
 		}
@@ -2861,7 +2861,7 @@
 			if ( cdata(CDATA_CONDITION_BLEED, healcon_charid) <= 0 ) {
 				cdata(CDATA_CONDITION_BLEED, healcon_charid) = 0
 				if ( synccheck(healcon_charid, -1) ) {
-					txt lang(name(healcon_charid) + "‚ÌoŒŒ‚Í~‚Ü‚Á‚½B", name(healcon_charid) + your(healcon_charid) + " bleeding stops.")
+					txt lang(name(healcon_charid) + "ã®å‡ºè¡€ã¯æ­¢ã¾ã£ãŸã€‚", name(healcon_charid) + your(healcon_charid) + " bleeding stops.")
 				}
 			}
 		}
@@ -2877,7 +2877,7 @@
 			if ( cdata(CDATA_CONDITION_DRUNK, healcon_charid) <= 0 ) {
 				cdata(CDATA_CONDITION_DRUNK, healcon_charid) = 0
 				if ( synccheck(healcon_charid, -1) ) {
-					txt lang(name(healcon_charid) + "‚ÌŒ‚¢‚ÍŠo‚ß‚½B", name(healcon_charid) + " get" + _s(healcon_charid) + " sober.")
+					txt lang(name(healcon_charid) + "ã®é…”ã„ã¯è¦šã‚ãŸã€‚", name(healcon_charid) + " get" + _s(healcon_charid) + " sober.")
 				}
 			}
 		}
@@ -2893,7 +2893,7 @@
 			if ( cdata(CDATA_CONDITION_INSANE, healcon_charid) <= 0 ) {
 				cdata(CDATA_CONDITION_INSANE, healcon_charid) = 0
 				if ( synccheck(healcon_charid, -1) ) {
-					txt lang(name(healcon_charid) + "‚Í³‹C‚É–ß‚Á‚½B", name(healcon_charid) + " come" + _s(healcon_charid) + " to " + yourself(healcon_charid) + " again.")
+					txt lang(name(healcon_charid) + "ã¯æ­£æ°—ã«æˆ»ã£ãŸã€‚", name(healcon_charid) + " come" + _s(healcon_charid) + " to " + yourself(healcon_charid) + " again.")
 				}
 			}
 		}
@@ -2910,7 +2910,7 @@
 				snd SOUNDLIST_PRAY1
 				cdata(CDATA_CONDITION_SICK, healcon_charid) = 0
 				if ( synccheck(healcon_charid, -1) ) {
-					txt lang(name(healcon_charid) + "‚Ì•a‹C‚Í¡‚Á‚½B", name(healcon_charid) + " recover" + _s(healcon_charid) + " from " + his(healcon_charid) + " illness.")
+					txt lang(name(healcon_charid) + "ã®ç—…æ°—ã¯æ²»ã£ãŸã€‚", name(healcon_charid) + " recover" + _s(healcon_charid) + " from " + his(healcon_charid) + " illness.")
 				}
 			}
 		}
@@ -3515,7 +3515,7 @@
 	txtmore
 	if ( ibit(ITEM_BIT_ACIDPROOF, locvar_item_acid_ci) == 0 ) {
 		txtef COLOR_PURPLE
-		txt lang(name(item_acid_arg1) + "‚Ì" + itemname(locvar_item_acid_ci) + "‚Í_‚Å‚Â‚¢‚½B", name(item_acid_arg1) + your(item_acid_arg1) + " " + itemname(locvar_item_acid_ci, , 1) + " is damaged by acid.")
+		txt lang(name(item_acid_arg1) + "ã®" + itemname(locvar_item_acid_ci) + "ã¯é…¸ã§å‚·ã¤ã„ãŸã€‚", name(item_acid_arg1) + your(item_acid_arg1) + " " + itemname(locvar_item_acid_ci, , 1) + " is damaged by acid.")
 		inv(INV_ITEM_LEVEL, locvar_item_acid_ci)--
 		snd SOUNDLIST_CRACK
 		if ( gdata(GDATA_FLAG_GAME_MODE) == GAMEMODE_ABNORMAL ) {
@@ -3528,7 +3528,7 @@
 			if ( inv(INV_ITEM_LEVEL, locvar_item_acid_ci) < (-10) ) {
 				snd SOUNDLIST_ATK_POISON
 				txtef COLOR_RED
-				txt lang(name(item_acid_arg1) + "‚Ì" + itemname(locvar_item_acid_ci) + "‚Í_‚Åƒhƒƒhƒ‚É—n‚¯‚Ä‚µ‚Ü‚Á‚½B", name(item_acid_arg1) + your(item_acid_arg1) + " " + itemname(locvar_item_acid_ci, , 1) + " is melted by acid.")
+				txt lang(name(item_acid_arg1) + "ã®" + itemname(locvar_item_acid_ci) + "ã¯é…¸ã§ãƒ‰ãƒ­ãƒ‰ãƒ­ã«æº¶ã‘ã¦ã—ã¾ã£ãŸã€‚", name(item_acid_arg1) + your(item_acid_arg1) + " " + itemname(locvar_item_acid_ci, , 1) + " is melted by acid.")
 				inv(INV_ITEM_NUM, locvar_item_acid_ci)--
 				cdata(inv(INV_ITEM_EQUIP, locvar_item_acid_ci), item_acid_arg1) = cdata(inv(INV_ITEM_EQUIP, locvar_item_acid_ci), item_acid_arg1) / 10000 * 10000
 				inv(INV_ITEM_EQUIP, locvar_item_acid_ci) = 0
@@ -3538,7 +3538,7 @@
 		}
 	}
 	else {
-		txt lang(name(item_acid_arg1) + "‚Ì" + itemname(locvar_item_acid_ci) + "‚Í_‚Å‚Í‚Â‚©‚È‚¢B", name(item_acid_arg1) + your(item_acid_arg1) + " " + itemname(locvar_item_acid_ci, , 1) + " is immune to acid.")
+		txt lang(name(item_acid_arg1) + "ã®" + itemname(locvar_item_acid_ci) + "ã¯é…¸ã§ã¯å‚·ã¤ã‹ãªã„ã€‚", name(item_acid_arg1) + your(item_acid_arg1) + " " + itemname(locvar_item_acid_ci, , 1) + " is immune to acid.")
 	}
 	return
 
@@ -3589,13 +3589,13 @@
 						if ( item_fire_arg1 == (-1) ) {
 							if ( synccheck(inv(INV_ITEM_X, locvar_item_acid_ci), inv(INV_ITEM_Y, locvar_item_acid_ci)) ) {
 								txtef COLOR_ORANGE
-								txt lang("’n–Ê‚Ì" + itemname(locvar_item_acid_ci, inv(INV_ITEM_NUM, locvar_item_acid_ci)) + "‚Í‚±‚ñ‚ª‚è‚ÆÄ‚«ã‚ª‚Á‚½B", itemname(locvar_item_acid_ci, inv(INV_ITEM_NUM, locvar_item_acid_ci)) + " on the ground get" + _s2(inv(INV_ITEM_NUM, locvar_item_acid_ci)) + " perfectly broiled.")
+								txt lang("åœ°é¢ã®" + itemname(locvar_item_acid_ci, inv(INV_ITEM_NUM, locvar_item_acid_ci)) + "ã¯ã“ã‚“ãŒã‚Šã¨ç„¼ãä¸ŠãŒã£ãŸã€‚", itemname(locvar_item_acid_ci, inv(INV_ITEM_NUM, locvar_item_acid_ci)) + " on the ground get" + _s2(inv(INV_ITEM_NUM, locvar_item_acid_ci)) + " perfectly broiled.")
 							}
 						}
 						if ( item_fire_arg1 != (-1) ) {
 							if ( synccheck(item_fire_arg1, -1) ) {
 								txtef COLOR_ORANGE
-								txt lang(name(item_fire_arg1) + "‚Ì" + itemname(locvar_item_acid_ci, inv(INV_ITEM_NUM, locvar_item_acid_ci)) + "‚Í‚±‚ñ‚ª‚è‚ÆÄ‚«ã‚ª‚Á‚½B", name(item_fire_arg1) + your(item_fire_arg1) + " " + itemname(locvar_item_acid_ci, inv(INV_ITEM_NUM, locvar_item_acid_ci), 1) + " get" + _s2(inv(INV_ITEM_NUM, locvar_item_acid_ci)) + " perfectly broiled.")
+								txt lang(name(item_fire_arg1) + "ã®" + itemname(locvar_item_acid_ci, inv(INV_ITEM_NUM, locvar_item_acid_ci)) + "ã¯ã“ã‚“ãŒã‚Šã¨ç„¼ãä¸ŠãŒã£ãŸã€‚", name(item_fire_arg1) + your(item_fire_arg1) + " " + itemname(locvar_item_acid_ci, inv(INV_ITEM_NUM, locvar_item_acid_ci), 1) + " get" + _s2(inv(INV_ITEM_NUM, locvar_item_acid_ci)) + " perfectly broiled.")
 							}
 						}
 						make_dish locvar_item_acid_ci, rnd(5) + 1
@@ -3629,7 +3629,7 @@
 				if ( locvar_item_fire_ti != (-1) ) {
 					if ( inv(INV_ITEM_NUM, locvar_item_fire_ti) > 0 ) {
 						if ( synccheck(item_fire_arg1, -1) ) {
-							txt lang(itemname(locvar_item_fire_ti, 1) + "‚ª" + name(item_fire_arg1) + "‚Ì‚¿•¨‚ğ‰Š‚©‚çç‚Á‚½B", itemname(locvar_item_fire_ti, 1) + " protects " + name(item_fire_arg1) + your(item_fire_arg1) + " stuff from fire.")
+							txt lang(itemname(locvar_item_fire_ti, 1) + "ãŒ" + name(item_fire_arg1) + "ã®æŒã¡ç‰©ã‚’ç‚ã‹ã‚‰å®ˆã£ãŸã€‚", itemname(locvar_item_fire_ti, 1) + " protects " + name(item_fire_arg1) + your(item_fire_arg1) + " stuff from fire.")
 						}
 						if ( inv(INV_ITEM_CHARGE, locvar_item_fire_ti) > 0 ) {
 							inv(INV_ITEM_CHARGE, locvar_item_fire_ti)--
@@ -3637,7 +3637,7 @@
 						else {
 							inv(INV_ITEM_NUM, locvar_item_fire_ti)--
 							if ( synccheck(item_fire_arg1, -1) ) {
-								txt lang(itemname(locvar_item_fire_ti, 1) + "‚ÍŠD‚Æ‰»‚µ‚½B", itemname(locvar_item_fire_ti, 1) + " turns to dust.")
+								txt lang(itemname(locvar_item_fire_ti, 1) + "ã¯ç°ã¨åŒ–ã—ãŸã€‚", itemname(locvar_item_fire_ti, 1) + " turns to dust.")
 								break
 							}
 						}
@@ -3650,7 +3650,7 @@
 						locvar_item_acid_p = 1
 						gdata(STARTING_GDATA_FLAG + 381)++
 						txtef COLOR_RED
-						txt lang("ˆø‰Î‚µ‚½" + itemname(locvar_item_acid_ci, locvar_item_acid_p) + "‚ª”š”­‚µ‚½B", itemname(locvar_item_acid_ci, locvar_item_acid_p) + " exploded.")
+						txt lang("å¼•ç«ã—ãŸ" + itemname(locvar_item_acid_ci, locvar_item_acid_p) + "ãŒçˆ†ç™ºã—ãŸã€‚", itemname(locvar_item_acid_ci, locvar_item_acid_p) + " exploded.")
 						aniref = 0
 						animeid = ANIMATION_BALL_NUKE
 						anix = inv(INV_ITEM_X, locvar_item_acid_ci)
@@ -3674,7 +3674,7 @@
 					if ( inv(INV_ITEM_EQUIP, locvar_item_acid_ci) != 0 ) {
 						if ( synccheck(item_fire_arg1, -1) ) {
 							txtef COLOR_PURPLE
-							txt lang(name(item_fire_arg1) + "‚Ì‘•”õ‚µ‚Ä‚¢‚é" + itemname(locvar_item_acid_ci, locvar_item_acid_p) + "‚ÍŠD‚Æ‰»‚µ‚½B", itemname(locvar_item_acid_ci, locvar_item_acid_p) + " " + name(item_fire_arg1) + " equip" + _s(item_fire_arg1) + " turn" + _s2(locvar_item_acid_p) + " to dust.")
+							txt lang(name(item_fire_arg1) + "ã®è£…å‚™ã—ã¦ã„ã‚‹" + itemname(locvar_item_acid_ci, locvar_item_acid_p) + "ã¯ç°ã¨åŒ–ã—ãŸã€‚", itemname(locvar_item_acid_ci, locvar_item_acid_p) + " " + name(item_fire_arg1) + " equip" + _s(item_fire_arg1) + " turn" + _s2(locvar_item_acid_p) + " to dust.")
 						}
 						cdata(inv(INV_ITEM_EQUIP, locvar_item_acid_ci), item_fire_arg1) = cdata(inv(INV_ITEM_EQUIP, locvar_item_acid_ci), item_fire_arg1) / 10000 * 10000
 						inv(INV_ITEM_EQUIP, locvar_item_acid_ci) = 0
@@ -3684,14 +3684,14 @@
 					else {
 						if ( synccheck(item_fire_arg1, -1) ) {
 							txtef COLOR_PURPLE
-							txt lang(name(item_fire_arg1) + "‚Ì" + itemname(locvar_item_acid_ci, locvar_item_acid_p) + "‚ÍŠD‚Æ‰»‚µ‚½B", name(item_fire_arg1) + your(item_fire_arg1) + " " + itemname(locvar_item_acid_ci, locvar_item_acid_p, 1) + " turn" + _s2(locvar_item_acid_p) + " to dust.")
+							txt lang(name(item_fire_arg1) + "ã®" + itemname(locvar_item_acid_ci, locvar_item_acid_p) + "ã¯ç°ã¨åŒ–ã—ãŸã€‚", name(item_fire_arg1) + your(item_fire_arg1) + " " + itemname(locvar_item_acid_ci, locvar_item_acid_p, 1) + " turn" + _s2(locvar_item_acid_p) + " to dust.")
 						}
 					}
 				}
 				else {
 					if ( synccheck(inv(INV_ITEM_X, locvar_item_acid_ci), inv(INV_ITEM_Y, locvar_item_acid_ci)) ) {
 						txtef COLOR_PURPLE
-						txt lang("’n–Ê‚Ì" + itemname(locvar_item_acid_ci, locvar_item_acid_p) + "‚ÍŠD‚Æ‰»‚µ‚½B", itemname(locvar_item_acid_ci, locvar_item_acid_p) + " on the ground turn" + _s(locvar_item_acid_p) + " to dust.")
+						txt lang("åœ°é¢ã®" + itemname(locvar_item_acid_ci, locvar_item_acid_p) + "ã¯ç°ã¨åŒ–ã—ãŸã€‚", itemname(locvar_item_acid_ci, locvar_item_acid_p) + " on the ground turn" + _s(locvar_item_acid_p) + " to dust.")
 					}
 				}
 				inv(INV_ITEM_NUM, locvar_item_acid_ci) -= locvar_item_acid_p
@@ -3777,7 +3777,7 @@
 				locvar_item_cold_s = ""
 			}
 			else {
-				locvar_item_cold_s = name(item_cold_arg1) + lang("‚Ì", your(item_cold_arg1))
+				locvar_item_cold_s = name(item_cold_arg1) + lang("ã®", your(item_cold_arg1))
 			}
 			if ( locvar_item_fire_a == FILTER_CONTAINER | locvar_item_fire_a == FILTER_ITEM_TOOL | locvar_item_fire_a == FILTER_GOLD ) {
 				continue
@@ -3792,12 +3792,12 @@
 			}
 			if ( locvar_item_fire_ti != (-1) ) {
 				if ( inv(INV_ITEM_NUM, locvar_item_fire_ti) > 0 ) {
-					txt lang(itemname(locvar_item_fire_ti, 1) + "‚ª" + name(item_cold_arg1) + "‚Ì‚¿•¨‚ğ—â‹C‚©‚çç‚Á‚½B", itemname(locvar_item_fire_ti, 1) + " protects " + name(item_cold_arg1) + your(item_cold_arg1) + " stuff from cold.")
+					txt lang(itemname(locvar_item_fire_ti, 1) + "ãŒ" + name(item_cold_arg1) + "ã®æŒã¡ç‰©ã‚’å†·æ°—ã‹ã‚‰å®ˆã£ãŸã€‚", itemname(locvar_item_fire_ti, 1) + " protects " + name(item_cold_arg1) + your(item_cold_arg1) + " stuff from cold.")
 					if ( inv(INV_ITEM_CHARGE, locvar_item_fire_ti) > 0 ) {
 						inv(INV_ITEM_CHARGE, locvar_item_fire_ti)--
 					}
 					else {
-						txt lang(itemname(locvar_item_fire_ti, 1) + "‚Í•²X‚ÉÓ‚¯‚½B", itemname(locvar_item_fire_ti, 1) + " is broken to pieces.")
+						txt lang(itemname(locvar_item_fire_ti, 1) + "ã¯ç²‰ã€…ã«ç •ã‘ãŸã€‚", itemname(locvar_item_fire_ti, 1) + " is broken to pieces.")
 						inv(INV_ITEM_NUM, locvar_item_fire_ti)--
 						break
 					}
@@ -3806,7 +3806,7 @@
 			}
 			locvar_item_acid_p = rnd(inv(INV_ITEM_NUM, locvar_item_acid_ci)) / 2 + 1
 			txtef COLOR_PURPLE
-			txt lang(locvar_item_cold_s + itemname(locvar_item_acid_ci, locvar_item_acid_p) + "‚Í•²X‚ÉÓ‚¯‚½B", locvar_item_cold_s + itemname(locvar_item_acid_ci, locvar_item_acid_p) + " break" + _s2(locvar_item_acid_p) + " to pieces.")
+			txt lang(locvar_item_cold_s + itemname(locvar_item_acid_ci, locvar_item_acid_p) + "ã¯ç²‰ã€…ã«ç •ã‘ãŸã€‚", locvar_item_cold_s + itemname(locvar_item_acid_ci, locvar_item_acid_p) + " break" + _s2(locvar_item_acid_p) + " to pieces.")
 			inv(INV_ITEM_NUM, locvar_item_acid_ci) -= locvar_item_acid_p
 			locvar_item_fire_f = 1
 		}
@@ -3902,223 +3902,223 @@
 	if ( txteledmg_ele == SKILL_RES_FIRE ) {
 		if ( txteledmg_arg1 == 0 ) {
 			if ( synccheck(txteledmg_arg3, -1) ) {
-				txt lang(name(txteledmg_arg3) + "‚Í”R‚¦ã‚ª‚Á‚½B", name(txteledmg_arg3) + " " + is(txteledmg_arg3) + " burnt.")
+				txt lang(name(txteledmg_arg3) + "ã¯ç‡ƒãˆä¸ŠãŒã£ãŸã€‚", name(txteledmg_arg3) + " " + is(txteledmg_arg3) + " burnt.")
 			}
 		}
 		if ( txteledmg_arg1 == 1 ) {
-			txt lang("”R‚â‚µs‚­‚µ‚½B", "burn" + _s(txteledmg_arg2) + " " + him(txteledmg_arg3) + " to death.")
+			txt lang("ç‡ƒã‚„ã—å°½ãã—ãŸã€‚", "burn" + _s(txteledmg_arg2) + " " + him(txteledmg_arg3) + " to death.")
 		}
 		if ( txteledmg_arg1 == 2 ) {
-			txt lang(name(txteledmg_arg3) + "‚Í”R‚¦s‚«‚ÄŠD‚É‚È‚Á‚½B", name(txteledmg_arg3) + " " + is(txteledmg_arg3) + " burnt to ashes.")
+			txt lang(name(txteledmg_arg3) + "ã¯ç‡ƒãˆå°½ãã¦ç°ã«ãªã£ãŸã€‚", name(txteledmg_arg3) + " " + is(txteledmg_arg3) + " burnt to ashes.")
 		}
 		return
 	}
 	if ( txteledmg_ele == SKILL_RES_COLD ) {
 		if ( txteledmg_arg1 == 0 ) {
 			if ( synccheck(txteledmg_arg3, -1) ) {
-				txt lang(name(txteledmg_arg3) + "‚Í“€‚¦‚½B", name(txteledmg_arg3) + " " + is(txteledmg_arg3) + " frozen.")
+				txt lang(name(txteledmg_arg3) + "ã¯å‡ãˆãŸã€‚", name(txteledmg_arg3) + " " + is(txteledmg_arg3) + " frozen.")
 			}
 		}
 		if ( txteledmg_arg1 == 1 ) {
-			txt lang("•X‚Ì‰ò‚É•Ï‚¦‚½B", "transform" + _s(txteledmg_arg2) + " " + him(txteledmg_arg3) + " to an ice sculpture.")
+			txt lang("æ°·ã®å¡Šã«å¤‰ãˆãŸã€‚", "transform" + _s(txteledmg_arg2) + " " + him(txteledmg_arg3) + " to an ice sculpture.")
 		}
 		if ( txteledmg_arg1 == 2 ) {
-			txt lang(name(txteledmg_arg3) + "‚Í•X‚Ì’¤‘œ‚É‚È‚Á‚½B", name(txteledmg_arg3) + " " + is(txteledmg_arg3) + " frozen and turn" + _s(txteledmg_arg3) + " into an ice sculpture.")
+			txt lang(name(txteledmg_arg3) + "ã¯æ°·ã®å½«åƒã«ãªã£ãŸã€‚", name(txteledmg_arg3) + " " + is(txteledmg_arg3) + " frozen and turn" + _s(txteledmg_arg3) + " into an ice sculpture.")
 		}
 		return
 	}
 	if ( txteledmg_ele == SKILL_RES_LIGHTNING ) {
 		if ( txteledmg_arg1 == 0 ) {
 			if ( synccheck(txteledmg_arg3, -1) ) {
-				txt lang(name(txteledmg_arg3) + "‚É“d—¬‚ª‘–‚Á‚½B", name(txteledmg_arg3) + " " + is(txteledmg_arg3) + " shocked.")
+				txt lang(name(txteledmg_arg3) + "ã«é›»æµãŒèµ°ã£ãŸã€‚", name(txteledmg_arg3) + " " + is(txteledmg_arg3) + " shocked.")
 			}
 		}
 		if ( txteledmg_arg1 == 1 ) {
-			txt lang("Å‚°ƒJƒX‚É‚µ‚½B", "electrocute" + _s(txteledmg_arg2) + " " + him(txteledmg_arg3) + " to death.")
+			txt lang("ç„¦ã’ã‚«ã‚¹ã«ã—ãŸã€‚", "electrocute" + _s(txteledmg_arg2) + " " + him(txteledmg_arg3) + " to death.")
 		}
 		if ( txteledmg_arg1 == 2 ) {
-			txt lang(name(txteledmg_arg3) + "‚Í—‹‚É‘Å‚½‚ê€‚ñ‚¾B", name(txteledmg_arg3) + " " + is(txteledmg_arg3) + " struck by lightning and die" + _s(txteledmg_arg3) + ".")
+			txt lang(name(txteledmg_arg3) + "ã¯é›·ã«æ‰“ãŸã‚Œæ­»ã‚“ã ã€‚", name(txteledmg_arg3) + " " + is(txteledmg_arg3) + " struck by lightning and die" + _s(txteledmg_arg3) + ".")
 		}
 		return
 	}
 	if ( txteledmg_ele == SKILL_RES_DARKNESS ) {
 		if ( txteledmg_arg1 == 0 ) {
 			if ( synccheck(txteledmg_arg3, -1) ) {
-				txt lang(name(txteledmg_arg3) + "‚ÍˆÅ‚Ì—Í‚Å‚Â‚¢‚½B", name(txteledmg_arg3) + " " + is(txteledmg_arg3) + " struck by dark force.")
+				txt lang(name(txteledmg_arg3) + "ã¯é—‡ã®åŠ›ã§å‚·ã¤ã„ãŸã€‚", name(txteledmg_arg3) + " " + is(txteledmg_arg3) + " struck by dark force.")
 			}
 		}
 		if ( txteledmg_arg1 == 1 ) {
-			txt lang("ˆÅ‚Éˆù‚İ‚ñ‚¾B", "let" + _s(txteledmg_arg2) + " the depths swallow " + him(txteledmg_arg3) + ".")
+			txt lang("é—‡ã«é£²ã¿è¾¼ã‚“ã ã€‚", "let" + _s(txteledmg_arg2) + " the depths swallow " + him(txteledmg_arg3) + ".")
 		}
 		if ( txteledmg_arg1 == 2 ) {
-			txt lang(name(txteledmg_arg3) + "‚ÍˆÅ‚ÉI‚Ü‚ê‚Ä€‚ñ‚¾B", name(txteledmg_arg3) + " " + is(txteledmg_arg3) + " consumed by darkness.")
+			txt lang(name(txteledmg_arg3) + "ã¯é—‡ã«è•ã¾ã‚Œã¦æ­»ã‚“ã ã€‚", name(txteledmg_arg3) + " " + is(txteledmg_arg3) + " consumed by darkness.")
 		}
 		return
 	}
 	if ( txteledmg_ele == SKILL_RES_NERVE ) {
 		if ( txteledmg_arg1 == 0 ) {
 			if ( synccheck(txteledmg_arg3, -1) ) {
-				txt lang(name(txteledmg_arg3) + "‚Ì_Œo‚Í‚Â‚¢‚½B", name(txteledmg_arg3) + your(txteledmg_arg3) + " nerves are hurt.")
+				txt lang(name(txteledmg_arg3) + "ã®ç¥çµŒã¯å‚·ã¤ã„ãŸã€‚", name(txteledmg_arg3) + your(txteledmg_arg3) + " nerves are hurt.")
 			}
 		}
 		if ( txteledmg_arg1 == 1 ) {
-			txt lang("_Œo‚ğ”j‰ó‚µ‚½B", "destroy" + _s(txteledmg_arg2) + " " + his(txteledmg_arg3) + " nerves.")
+			txt lang("ç¥çµŒã‚’ç ´å£Šã—ãŸã€‚", "destroy" + _s(txteledmg_arg2) + " " + his(txteledmg_arg3) + " nerves.")
 		}
 		if ( txteledmg_arg1 == 2 ) {
-			txt lang(name(txteledmg_arg3) + "‚Í_Œo‚ğI‚Ü‚ê‚Ä€‚ñ‚¾B", name(txteledmg_arg3) + " die" + _s(txteledmg_arg3) + " from neurofibroma.")
+			txt lang(name(txteledmg_arg3) + "ã¯ç¥çµŒã‚’è•ã¾ã‚Œã¦æ­»ã‚“ã ã€‚", name(txteledmg_arg3) + " die" + _s(txteledmg_arg3) + " from neurofibroma.")
 		}
 		return
 	}
 	if ( txteledmg_ele == SKILL_RES_MIND ) {
 		if ( txteledmg_arg1 == 0 ) {
 			if ( synccheck(txteledmg_arg3, -1) ) {
-				txt lang(name(txteledmg_arg3) + "‚Í‹¶‹C‚ÉP‚í‚ê‚½B", name(txteledmg_arg3) + " suffer" + _s(txteledmg_arg3) + " a splitting headache.")
+				txt lang(name(txteledmg_arg3) + "ã¯ç‹‚æ°—ã«è¥²ã‚ã‚ŒãŸã€‚", name(txteledmg_arg3) + " suffer" + _s(txteledmg_arg3) + " a splitting headache.")
 			}
 		}
 		if ( txteledmg_arg1 == 1 ) {
-			txt lang("Ä‹N•s”\‚É‚µ‚½B", "completely disable" + _s(txteledmg_arg2) + " " + him(txteledmg_arg3) + ".")
+			txt lang("å†èµ·ä¸èƒ½ã«ã—ãŸã€‚", "completely disable" + _s(txteledmg_arg2) + " " + him(txteledmg_arg3) + ".")
 		}
 		if ( txteledmg_arg1 == 2 ) {
-			txt lang(name(txteledmg_arg3) + "‚Í”­‹¶‚µ‚Ä€‚ñ‚¾B", name(txteledmg_arg3) + " lose" + _s(txteledmg_arg3) + " " + his(txteledmg_arg3) + " mind and commit" + _s(txteledmg_arg3) + " suicide.")
+			txt lang(name(txteledmg_arg3) + "ã¯ç™ºç‹‚ã—ã¦æ­»ã‚“ã ã€‚", name(txteledmg_arg3) + " lose" + _s(txteledmg_arg3) + " " + his(txteledmg_arg3) + " mind and commit" + _s(txteledmg_arg3) + " suicide.")
 		}
 		return
 	}
 	if ( txteledmg_ele == SKILL_RES_CHAOS ) {
 		if ( txteledmg_arg1 == 0 ) {
 			if ( synccheck(txteledmg_arg3, -1) ) {
-				txt lang(name(txteledmg_arg3) + "‚Í¬“×‚Ì‰Q‚Å‚Â‚¢‚½B", name(txteledmg_arg3) + " " + is(txteledmg_arg3) + " hurt by chaotic force.")
+				txt lang(name(txteledmg_arg3) + "ã¯æ··æ²Œã®æ¸¦ã§å‚·ã¤ã„ãŸã€‚", name(txteledmg_arg3) + " " + is(txteledmg_arg3) + " hurt by chaotic force.")
 			}
 		}
 		if ( txteledmg_arg1 == 1 ) {
-			txt lang("¬“×‚Ì‰Q‚É‹z‚¢‚ñ‚¾B", "let" + _s(txteledmg_arg2) + " the chaos consume " + him(txteledmg_arg3) + ".")
+			txt lang("æ··æ²Œã®æ¸¦ã«å¸ã„è¾¼ã‚“ã ã€‚", "let" + _s(txteledmg_arg2) + " the chaos consume " + him(txteledmg_arg3) + ".")
 		}
 		if ( txteledmg_arg1 == 2 ) {
-			txt lang(name(txteledmg_arg3) + "‚Í¬“×‚Ì‰Q‚É‹zû‚³‚ê‚½B", name(txteledmg_arg3) + " " + is(txteledmg_arg3) + " drawn into a chaotic vortex.")
+			txt lang(name(txteledmg_arg3) + "ã¯æ··æ²Œã®æ¸¦ã«å¸åã•ã‚ŒãŸã€‚", name(txteledmg_arg3) + " " + is(txteledmg_arg3) + " drawn into a chaotic vortex.")
 		}
 		return
 	}
 	if ( txteledmg_ele == SKILL_RES_NETHER ) {
 		if ( txteledmg_arg1 == 0 ) {
 			if ( synccheck(txteledmg_arg3, -1) ) {
-				txt lang(name(txteledmg_arg3) + "‚Í–»ŠE‚Ì—â‹C‚Å‚Â‚¢‚½B", name(txteledmg_arg3) + " " + is(txteledmg_arg3) + " chilled by infernal squall.")
+				txt lang(name(txteledmg_arg3) + "ã¯å†¥ç•Œã®å†·æ°—ã§å‚·ã¤ã„ãŸã€‚", name(txteledmg_arg3) + " " + is(txteledmg_arg3) + " chilled by infernal squall.")
 			}
 		}
 		if ( txteledmg_arg1 == 1 ) {
-			txt lang("–»ŠE‚É’Ä‚Æ‚µ‚½B", "entrap" + _s(txteledmg_arg2) + " " + him(txteledmg_arg3) + " into the inferno.")
+			txt lang("å†¥ç•Œã«å¢œã¨ã—ãŸã€‚", "entrap" + _s(txteledmg_arg2) + " " + him(txteledmg_arg3) + " into the inferno.")
 		}
 		if ( txteledmg_arg1 == 2 ) {
-			txt lang(name(txteledmg_arg3) + "‚Í–»ŠE‚É’Ä‚¿‚½B", name(txteledmg_arg3) + " go" + _s(txteledmg_arg3, 1) + " to hell.")
+			txt lang(name(txteledmg_arg3) + "ã¯å†¥ç•Œã«å¢œã¡ãŸã€‚", name(txteledmg_arg3) + " go" + _s(txteledmg_arg3, 1) + " to hell.")
 		}
 		return
 	}
 	if ( txteledmg_ele == SKILL_RES_POISON ) {
 		if ( txteledmg_arg1 == 0 ) {
 			if ( synccheck(txteledmg_arg3, -1) ) {
-				txt lang(name(txteledmg_arg3) + "‚Í“f‚«‹C‚ğÃ‚µ‚½B", name(txteledmg_arg3) + " suffer" + _s(txteledmg_arg3) + " from venom.")
+				txt lang(name(txteledmg_arg3) + "ã¯åãæ°—ã‚’å‚¬ã—ãŸã€‚", name(txteledmg_arg3) + " suffer" + _s(txteledmg_arg3) + " from venom.")
 			}
 		}
 		if ( txteledmg_arg1 == 1 ) {
-			txt lang("“ÅE‚µ‚½B", "kill" + _s(txteledmg_arg2) + " " + him(txteledmg_arg3) + " with poison.")
+			txt lang("æ¯’æ®ºã—ãŸã€‚", "kill" + _s(txteledmg_arg2) + " " + him(txteledmg_arg3) + " with poison.")
 		}
 		if ( txteledmg_arg1 == 2 ) {
-			txt lang(name(txteledmg_arg3) + "‚Í“Å‚ÉI‚Ü‚ê‚Ä€‚ñ‚¾B", name(txteledmg_arg3) + " " + is(txteledmg_arg3) + " poisoned to death.")
+			txt lang(name(txteledmg_arg3) + "ã¯æ¯’ã«è•ã¾ã‚Œã¦æ­»ã‚“ã ã€‚", name(txteledmg_arg3) + " " + is(txteledmg_arg3) + " poisoned to death.")
 		}
 		return
 	}
 	if ( txteledmg_ele == SKILL_RES_SOUND ) {
 		if ( txteledmg_arg1 == 0 ) {
 			if ( synccheck(txteledmg_arg3, -1) ) {
-				txt lang(name(txteledmg_arg3) + "‚ÍŒ‰¹‚ÌÕŒ‚‚ğó‚¯‚½B", name(txteledmg_arg3) + " " + is(txteledmg_arg3) + " shocked by a shrill sound")
+				txt lang(name(txteledmg_arg3) + "ã¯è½ŸéŸ³ã®è¡æ’ƒã‚’å—ã‘ãŸã€‚", name(txteledmg_arg3) + " " + is(txteledmg_arg3) + " shocked by a shrill sound")
 			}
 		}
 		if ( txteledmg_arg1 == 1 ) {
-			txt lang("’®Šo‚ğ”j‰ó‚µE‚µ‚½B", "shatter" + _s(txteledmg_arg2) + " " + him(txteledmg_arg3) + " to atoms.")
+			txt lang("è´è¦šã‚’ç ´å£Šã—æ®ºã—ãŸã€‚", "shatter" + _s(txteledmg_arg2) + " " + him(txteledmg_arg3) + " to atoms.")
 		}
 		if ( txteledmg_arg1 == 2 ) {
-			txt lang(name(txteledmg_arg3) + "‚ÍNO‚Æ‚È‚Á‚Ä€‚ñ‚¾B", name(txteledmg_arg3) + " resonate" + _s(txteledmg_arg3) + " and break up.")
+			txt lang(name(txteledmg_arg3) + "ã¯æœ¦æœ§ã¨ãªã£ã¦æ­»ã‚“ã ã€‚", name(txteledmg_arg3) + " resonate" + _s(txteledmg_arg3) + " and break up.")
 		}
 		return
 	}
 	if ( txteledmg_ele == SKILL_RESDMG_ACID ) {
 		if ( txteledmg_arg1 == 0 ) {
 			if ( synccheck(txteledmg_arg3, -1) ) {
-				txt lang(name(txteledmg_arg3) + "‚Í_‚ÉÄ‚©‚ê‚½B", name(txteledmg_arg3) + " " + is(txteledmg_arg3) + " burnt by acid.")
+				txt lang(name(txteledmg_arg3) + "ã¯é…¸ã«ç„¼ã‹ã‚ŒãŸã€‚", name(txteledmg_arg3) + " " + is(txteledmg_arg3) + " burnt by acid.")
 			}
 		}
 		if ( txteledmg_arg1 == 1 ) {
-			txt lang("ƒhƒƒhƒ‚É—n‚©‚µ‚½B", "melt" + _s(txteledmg_arg2) + " " + him(txteledmg_arg3) + " away.")
+			txt lang("ãƒ‰ãƒ­ãƒ‰ãƒ­ã«æº¶ã‹ã—ãŸã€‚", "melt" + _s(txteledmg_arg2) + " " + him(txteledmg_arg3) + " away.")
 		}
 		if ( txteledmg_arg1 == 2 ) {
-			txt lang(name(txteledmg_arg3) + "‚Í_‚ÉÄ‚©‚ê—n‚¯‚½B", name(txteledmg_arg3) + " melt" + _s(txteledmg_arg3) + ".")
+			txt lang(name(txteledmg_arg3) + "ã¯é…¸ã«ç„¼ã‹ã‚Œæº¶ã‘ãŸã€‚", name(txteledmg_arg3) + " melt" + _s(txteledmg_arg3) + ".")
 		}
 		return
 	}
 	if ( txteledmg_ele == SKILL_RESDMG_CUT ) {
 		if ( txteledmg_arg1 == 0 ) {
 			if ( synccheck(txteledmg_arg3, -1) ) {
-				txt lang(name(txteledmg_arg3) + "‚ÍØ‚è‚ğ•‰‚Á‚½B", name(txteledmg_arg3) + " get" + _s(txteledmg_arg3) + " a cut.")
+				txt lang(name(txteledmg_arg3) + "ã¯åˆ‡ã‚Šå‚·ã‚’è² ã£ãŸã€‚", name(txteledmg_arg3) + " get" + _s(txteledmg_arg3) + " a cut.")
 			}
 		}
 		if ( txteledmg_arg1 == 1 ) {
-			txt lang("çØ‚è‚É‚µ‚½B", "cut" + _s(txteledmg_arg2) + " " + him(txteledmg_arg3) + " into thin strips.")
+			txt lang("åƒåˆ‡ã‚Šã«ã—ãŸã€‚", "cut" + _s(txteledmg_arg2) + " " + him(txteledmg_arg3) + " into thin strips.")
 		}
 		if ( txteledmg_arg1 == 2 ) {
-			txt lang(name(txteledmg_arg3) + "‚ÍçØ‚è‚É‚È‚Á‚½B", name(txteledmg_arg3) + " " + is(txteledmg_arg3) + " cut into thin strips.")
+			txt lang(name(txteledmg_arg3) + "ã¯åƒåˆ‡ã‚Šã«ãªã£ãŸã€‚", name(txteledmg_arg3) + " " + is(txteledmg_arg3) + " cut into thin strips.")
 		}
 		return
 	}
 	if ( txteledmg_ele == SKILL_RESDMG_CHESTNUT ) {
 		if ( txteledmg_arg1 == 0 ) {
 			if ( synccheck(txteledmg_arg3, -1) ) {
-				txt lang(name(txteledmg_arg3) + "‚ÍŒI‚ÅP‚ç‚ê‚½B", name(txteledmg_arg3) + " was beaten with chestnuts.")
+				txt lang(name(txteledmg_arg3) + "ã¯æ —ã§æŠ‰ã‚‰ã‚ŒãŸã€‚", name(txteledmg_arg3) + " was beaten with chestnuts.")
 			}
 		}
 		if ( txteledmg_arg1 == 1 ) {
-			txt lang("ŒI‚ÅP‚èE‚µ‚½B", name(txteledmg_arg3) + " " + is(txteledmg_arg3) + " gouged to death with chestnuts.")
+			txt lang("æ —ã§æŠ‰ã‚Šæ®ºã—ãŸã€‚", name(txteledmg_arg3) + " " + is(txteledmg_arg3) + " gouged to death with chestnuts.")
 		}
 		if ( txteledmg_arg1 == 2 ) {
-			txt lang(name(txteledmg_arg3) + "‚ÍŒI‚É‘Ì‚ğP‚ç‚ê‚Ä€‚ñ‚¾B", name(txteledmg_arg3) + " " + was(txteledmg_arg3) + " gouged by chestnuts and died.")
+			txt lang(name(txteledmg_arg3) + "ã¯æ —ã«ä½“ã‚’æŠ‰ã‚‰ã‚Œã¦æ­»ã‚“ã ã€‚", name(txteledmg_arg3) + " " + was(txteledmg_arg3) + " gouged by chestnuts and died.")
 		}
 		return
 	}
 	if ( txteledmg_ele == SKILL_RESDMG_BRAIN ) {
 		if ( txteledmg_arg1 == 0 ) {
 			if ( synccheck(txteledmg_arg3, -1) ) {
-				txt lang(name(txteledmg_arg3) + "‚Í”]‚ğ—h‚³‚Ô‚ç‚ê‚½B", name(txteledmg_arg3) + " received a shock to the brain.")
+				txt lang(name(txteledmg_arg3) + "ã¯è„³ã‚’æºã•ã¶ã‚‰ã‚ŒãŸã€‚", name(txteledmg_arg3) + " received a shock to the brain.")
 			}
 		}
 		if ( txteledmg_arg1 == 1 ) {
-			txt lang("”]”j—ô‚³‚¹‚½B", name(txteledmg_arg2) + " burst " + his(txteledmg_arg3) + " brain.")
+			txt lang("è„³ç ´è£‚ã•ã›ãŸã€‚", name(txteledmg_arg2) + " burst " + his(txteledmg_arg3) + " brain.")
 		}
 		if ( txteledmg_arg1 == 2 ) {
-			txt lang(name(txteledmg_arg3) + "‚Í”]‚ª”j—ô‚µ‚Ä€‚ñ‚¾B", name(txteledmg_arg3) + " die" + _s(txteledmg_arg3) + " from brain rupture.")
+			txt lang(name(txteledmg_arg3) + "ã¯è„³ãŒç ´è£‚ã—ã¦æ­»ã‚“ã ã€‚", name(txteledmg_arg3) + " die" + _s(txteledmg_arg3) + " from brain rupture.")
 		}
 		return
 	}
 	if ( txteledmg_ele == SKILL_RESDMG_TOFU ) {
 		if ( txteledmg_arg1 == 0 ) {
 			if ( synccheck(txteledmg_arg3, -1) ) {
-				txt lang(name(txteledmg_arg3) + "‚Ì“ª‚É“¤•…‚Ì‚©‚Ç‚ª‚Ô‚Â‚©‚Á‚½B", name(txteledmg_arg3) + your(txteledmg_arg3) + " head was hit with tofu.")
+				txt lang(name(txteledmg_arg3) + "ã®é ­ã«è±†è…ã®ã‹ã©ãŒã¶ã¤ã‹ã£ãŸã€‚", name(txteledmg_arg3) + your(txteledmg_arg3) + " head was hit with tofu.")
 			}
 		}
 		if ( txteledmg_arg1 == 1 ) {
-			txt lang("“¤•…‚Ì‚©‚Ç‚Å•²Ó‚µ‚½B", name(txteledmg_arg2) + " crush" + _s(txteledmg_arg2, 1) + " " + name(txteledmg_arg3) + your(txteledmg_arg3) + " head with tofu.")
+			txt lang("è±†è…ã®ã‹ã©ã§ç²‰ç •ã—ãŸã€‚", name(txteledmg_arg2) + " crush" + _s(txteledmg_arg2, 1) + " " + name(txteledmg_arg3) + your(txteledmg_arg3) + " head with tofu.")
 		}
 		if ( txteledmg_arg1 == 2 ) {
-			txt lang(name(txteledmg_arg3) + "‚Í“¤•…‚Ì‚©‚Ç‚ª“ª‚É‚Ô‚Â‚©‚Á‚Ä€‚ñ‚¾B", name(txteledmg_arg3) + " die" + _s(txteledmg_arg3) + " from being hit in the head with tofu.")
+			txt lang(name(txteledmg_arg3) + "ã¯è±†è…ã®ã‹ã©ãŒé ­ã«ã¶ã¤ã‹ã£ã¦æ­»ã‚“ã ã€‚", name(txteledmg_arg3) + " die" + _s(txteledmg_arg3) + " from being hit in the head with tofu.")
 		}
 		return
 	}
 	if ( txteledmg_arg1 == 0 ) {
 		if ( synccheck(txteledmg_arg3, -1) ) {
-			txt lang(name(txteledmg_arg3) + "‚Í‚Â‚¢‚½B", name(txteledmg_arg3) + " " + is(txteledmg_arg3) + " wounded.")
+			txt lang(name(txteledmg_arg3) + "ã¯å‚·ã¤ã„ãŸã€‚", name(txteledmg_arg3) + " " + is(txteledmg_arg3) + " wounded.")
 		}
 	}
 	if ( txteledmg_arg1 == 1 ) {
-		txt lang("E‚µ‚½B", "kill" + _s(txteledmg_arg2) + " " + him(txteledmg_arg3) + ".")
+		txt lang("æ®ºã—ãŸã€‚", "kill" + _s(txteledmg_arg2) + " " + him(txteledmg_arg3) + ".")
 	}
 	if ( txteledmg_arg1 == 2 ) {
-		txt lang(name(txteledmg_arg3) + "‚Í€‚ñ‚¾B", name(txteledmg_arg3) + " " + is(txteledmg_arg3) + " killed.")
+		txt lang(name(txteledmg_arg3) + "ã¯æ­»ã‚“ã ã€‚", name(txteledmg_arg3) + " " + is(txteledmg_arg3) + " killed.")
 	}
 	return
 
@@ -4279,7 +4279,7 @@
 					continue cnt
 				loop
 				txtef COLOR_PURPLE
-				txt lang(name(dmghp_charid) + "‚ÌŒ_–ñ‚ªØ‚ê‚½B", name(dmghp_charid) + " lost the effect of contingency.")
+				txt lang(name(dmghp_charid) + "ã®å¥‘ç´„ãŒåˆ‡ã‚ŒãŸã€‚", name(dmghp_charid) + " lost the effect of contingency.")
 			}
 		}
 	}
@@ -4322,7 +4322,7 @@
 				locvar_dmghp_dmgpro = locvar_dmghp_dmg / 2 + 1
 				locvar_dmghp_dmg = 0
 				snd SOUNDLIST_AMMO
-				txt lang("–â‘Î–h‰q–", "*Absolute protect*")
+				txt lang("ï¼Šçµ¶å¯¾é˜²è¡›ï¼Š", "*Absolute protect*")
 				cdata(CDATA_HP, cnt) -= locvar_dmghp_dmgpro
 				break
 			}
@@ -4510,7 +4510,7 @@
 	if ( cdata(CDATA_HP, dmghp_charid) < 0 ) {
 		if ( cdata(CDATA_ID, dmghp_charid) == CREATURE_ID_THE_CHAOS_CHILD ) {
 			if ( gdata(GDATA_FLAG_MAIN) < 800 ) {
-				txt lang(name(dmghp_charid) + "‚ÍÄ¶‚µ‚½B", name(dmghp_charid) + " " + is(dmghp_charid) + " healed.")
+				txt lang(name(dmghp_charid) + "ã¯å†ç”Ÿã—ãŸã€‚", name(dmghp_charid) + " " + is(dmghp_charid) + " healed.")
 				cdata(CDATA_HP, dmghp_charid) = cdata(CDATA_MAX_HP, dmghp_charid) / 4
 			}
 		}
@@ -4546,9 +4546,9 @@
 			}
 			cbitmod CHARA_BIT_EXCLUSIVE_SKILL_CHARGE, cnt, 0
 			txtef COLOR_SKY_BLUE
-			txt lang(name(cnt) + "‚Í‹©‚ñ‚¾Bu‚±‚ÌÒ‚ÉƒWƒ…ƒA‚Ì‰ÁŒì‚ğBƒŒƒCƒnƒ“ƒhIv", name(cnt) + " shout" + _s(cnt) + ", " + cnvtalk("Lay hand!"))
+			txt lang(name(cnt) + "ã¯å«ã‚“ã ã€‚ã€Œã“ã®è€…ã«ã‚¸ãƒ¥ã‚¢ã®åŠ è­·ã‚’ã€‚ãƒ¬ã‚¤ãƒãƒ³ãƒ‰ï¼ã€", name(cnt) + " shout" + _s(cnt) + ", " + cnvtalk("Lay hand!"))
 			txtmore
-			txt lang(name(dmghp_charid) + "‚Í‰ñ•œ‚µ‚½B", name(dmghp_charid) + " " + is(dmghp_charid) + " healed.")
+			txt lang(name(dmghp_charid) + "ã¯å›å¾©ã—ãŸã€‚", name(dmghp_charid) + " " + is(dmghp_charid) + " healed.")
 			cdata(CDATA_HP, dmghp_charid) = cdata(CDATA_MAX_HP, dmghp_charid) / 2
 			animeid = ANIMATION_HOLY
 			animode = 100 + dmghp_charid
@@ -4559,7 +4559,7 @@
 		if ( dmghp_charid == CHARA_PLAYER ) {
 			if ( gdata(GDATA_FLAG_GAME_MODE) == GAMEMODE_PURGE & gdata(GDATA_FLAG_REMAINING_LIVES) > 0 ) {
 				txtef COLOR_PURPLE
-				txt lang("<ƒRƒ“ƒeƒBƒjƒ…[> ", "<Continue> ")
+				txt lang("<ã‚³ãƒ³ãƒ†ã‚£ãƒ‹ãƒ¥ãƒ¼> ", "<Continue> ")
 				snd SOUNDLIST_PRAY2
 				cdata(CDATA_CONDITION_MPOISON, dmghp_charid) = 0
 				cdata(CDATA_CONDITION_POISON, dmghp_charid) = 0
@@ -4614,23 +4614,23 @@
 		if ( gdata(GDATA_DMG_TYPE) == 2 ) {
 			txtcontinue
 			if ( locvar_dmghp_dmglevel == (-1) ) {
-				txt lang("‚©‚·‚è‚ğ‚Â‚¯‚½B", "make" + _s(locvar_dmghp_c3) + " a scratch.")
+				txt lang("ã‹ã™ã‚Šå‚·ã‚’ã¤ã‘ãŸã€‚", "make" + _s(locvar_dmghp_c3) + " a scratch.")
 			}
 			if ( locvar_dmghp_dmglevel == 0 ) {
 				txtef COLOR_YELLOW
-				txt lang("Œy‚¢‚ğ•‰‚í‚¹‚½B", "slightly wound" + _s(locvar_dmghp_c3) + " " + him(dmghp_charid) + ".")
+				txt lang("è»½ã„å‚·ã‚’è² ã‚ã›ãŸã€‚", "slightly wound" + _s(locvar_dmghp_c3) + " " + him(dmghp_charid) + ".")
 			}
 			if ( locvar_dmghp_dmglevel == 1 ) {
 				txtef COLOR_ORANGE
-				txt lang("‚Â‚¯‚½B", "moderately wound" + _s(locvar_dmghp_c3) + " " + him(dmghp_charid) + ".")
+				txt lang("å‚·ã¤ã‘ãŸã€‚", "moderately wound" + _s(locvar_dmghp_c3) + " " + him(dmghp_charid) + ".")
 			}
 			if ( locvar_dmghp_dmglevel == 2 ) {
 				txtef COLOR_PINK
-				txt lang("[‚¢‚ğ•‰‚í‚¹‚½B", "severely wound" + _s(locvar_dmghp_c3) + " " + him(dmghp_charid) + ".")
+				txt lang("æ·±ã„å‚·ã‚’è² ã‚ã›ãŸã€‚", "severely wound" + _s(locvar_dmghp_c3) + " " + him(dmghp_charid) + ".")
 			}
 			if ( locvar_dmghp_dmglevel >= 3 ) {
 				txtef COLOR_RED
-				txt lang("’v–½‚ğ—^‚¦‚½B", "critically wound" + _s(locvar_dmghp_c3) + " " + him(dmghp_charid) + "!")
+				txt lang("è‡´å‘½å‚·ã‚’ä¸ãˆãŸã€‚", "critically wound" + _s(locvar_dmghp_c3) + " " + him(dmghp_charid) + "!")
 			}
 			rowact_check dmghp_charid
 			goto *skipDmgTxt
@@ -4639,21 +4639,21 @@
 			if ( synccheck(dmghp_charid, -1) ) {
 				txtmore
 				txtef COLOR_ORANGE
-				txt lang(name(dmghp_charid) + "‚Í’Éè‚ğ•‰‚Á‚½B", name(dmghp_charid) + " scream" + _s(dmghp_charid) + ".")
+				txt lang(name(dmghp_charid) + "ã¯ç—›æ‰‹ã‚’è² ã£ãŸã€‚", name(dmghp_charid) + " scream" + _s(dmghp_charid) + ".")
 			}
 		}
 		if ( locvar_dmghp_dmglevel == 2 ) {
 			if ( synccheck(dmghp_charid, -1) ) {
 				txtmore
 				txtef COLOR_PINK
-				txt lang(name(dmghp_charid) + "‚Í‹ê’É‚É‚à‚¾‚¦‚½B", name(dmghp_charid) + " writhe" + _s(dmghp_charid) + " in pain.")
+				txt lang(name(dmghp_charid) + "ã¯è‹¦ç—›ã«ã‚‚ã ãˆãŸã€‚", name(dmghp_charid) + " writhe" + _s(dmghp_charid) + " in pain.")
 			}
 		}
 		if ( locvar_dmghp_dmglevel >= 3 ) {
 			if ( synccheck(dmghp_charid, -1) ) {
 				txtmore
 				txtef COLOR_RED
-				txt lang(name(dmghp_charid) + "‚Í”ß’É‚È‹©‚Ñº‚ğ‚ ‚°‚½B", name(dmghp_charid) + " " + is(dmghp_charid) + " severely hurt!")
+				txt lang(name(dmghp_charid) + "ã¯æ‚²ç—›ãªå«ã³å£°ã‚’ã‚ã’ãŸã€‚", name(dmghp_charid) + " " + is(dmghp_charid) + " severely hurt!")
 			}
 		}
 		if ( locvar_dmghp_dmg < 0 ) {
@@ -4662,7 +4662,7 @@
 			}
 			if ( synccheck(dmghp_charid, -1) ) {
 				txtef COLOR_BLUE
-				txt lang(name(dmghp_charid) + "‚Í‰ñ•œ‚µ‚½B", name(dmghp_charid) + " " + is(dmghp_charid) + " healed.")
+				txt lang(name(dmghp_charid) + "ã¯å›å¾©ã—ãŸã€‚", name(dmghp_charid) + " " + is(dmghp_charid) + " healed.")
 			}
 		}
 *skipDmgTxt
@@ -4687,7 +4687,7 @@
 					if ( locvar_dmghp_ci != (-1) ) {
 						txtmore
 						txtef COLOR_PURPLE
-						txt lang(name(dmghp_charid) + "‚Ì" + itemname(locvar_dmghp_ci) + "‚Íƒ_ƒ[ƒW‚Å‚Â‚¢‚½B", name(dmghp_charid) + your(dmghp_charid) + " " + itemname(locvar_dmghp_ci, , 1) + " is damaged.")
+						txt lang(name(dmghp_charid) + "ã®" + itemname(locvar_dmghp_ci) + "ã¯ãƒ€ãƒ¡ãƒ¼ã‚¸ã§å‚·ã¤ã„ãŸã€‚", name(dmghp_charid) + your(dmghp_charid) + " " + itemname(locvar_dmghp_ci, , 1) + " is damaged.")
 						inv(INV_ITEM_LEVEL, locvar_dmghp_ci)--
 						snd SOUNDLIST_CRACK
 						if ( gdata(GDATA_FLAG_GAME_MODE) == GAMEMODE_ABNORMAL ) {
@@ -4699,7 +4699,7 @@
 						if ( inv(INV_ITEM_LEVEL, locvar_dmghp_ci) < (-10) ) {
 							snd SOUNDLIST_PUNISH1
 							txtef COLOR_RED
-							txt lang(name(dmghp_charid) + "‚Ì" + itemname(locvar_dmghp_ci) + "‚Íƒ{ƒƒ{ƒ‚É•ö‚êU‚Á‚½B", name(dmghp_charid) + your(dmghp_charid) + " " + itemname(locvar_dmghp_ci, , 1) + " is melted by acid.")
+							txt lang(name(dmghp_charid) + "ã®" + itemname(locvar_dmghp_ci) + "ã¯ãƒœãƒ­ãƒœãƒ­ã«å´©ã‚Œæ•£ã£ãŸã€‚", name(dmghp_charid) + your(dmghp_charid) + " " + itemname(locvar_dmghp_ci, , 1) + " is melted by acid.")
 							inv(INV_ITEM_NUM, locvar_dmghp_ci)--
 							cdata(inv(INV_ITEM_EQUIP, locvar_dmghp_ci), dmghp_charid) = cdata(inv(INV_ITEM_EQUIP, locvar_dmghp_ci), dmghp_charid) / 10000 * 10000
 							inv(INV_ITEM_EQUIP, locvar_dmghp_ci) = 0
@@ -4731,7 +4731,7 @@
 							if ( synccheck(dmghp_charid, -1) ) {
 								txtmore
 								txtef COLOR_BLUE
-								txt lang(name(dmghp_charid) + "‚Í‹°•|‚µ‚Ä“¦‚°o‚µ‚½B", name(dmghp_charid) + " run" + _s(dmghp_charid) + " away in terror.")
+								txt lang(name(dmghp_charid) + "ã¯ææ€–ã—ã¦é€ƒã’å‡ºã—ãŸã€‚", name(dmghp_charid) + " run" + _s(dmghp_charid) + " away in terror.")
 							}
 						}
 					}
@@ -4768,7 +4768,7 @@
 				if ( stat == (-1) ) {
 					if ( rnd(3 + (cdata(CDATA_QUALITY, dmghp_charid) >= FIX_QUALITY_MIRACLE) * 2) == 0 ) {
 						cdata(CDATA_CONDITION_WINCE, dmghp_charid) = 3
-						txt lang(name(dmghp_charid) + "‚Í‹¯‚ñ‚¾B", name(dmghp_charid) + " " + was(dmghp_charid) + " frightened.")
+						txt lang(name(dmghp_charid) + "ã¯æ€¯ã‚“ã ã€‚", name(dmghp_charid) + " " + was(dmghp_charid) + " frightened.")
 					}
 					item_fire dmghp_charid, -1
 					locvar_dmghp_maga = 0
@@ -4777,7 +4777,7 @@
 			if ( locvar_dmghp_ele == SKILL_RES_COLD ) {
 				if ( rnd(3 + (cdata(CDATA_QUALITY, dmghp_charid) >= FIX_QUALITY_MIRACLE) * 2) == 0 ) {
 					cdata(CDATA_CONDITION_CHILLS, dmghp_charid) = 3
-					txt lang(name(dmghp_charid) + "‚Ík‚±‚Ü‚Á‚½B", name(dmghp_charid) + " flinches.")
+					txt lang(name(dmghp_charid) + "ã¯ç¸®ã“ã¾ã£ãŸã€‚", name(dmghp_charid) + " flinches.")
 				}
 			}
 			if ( locvar_dmghp_ele == SKILL_RES_COLD ) {
@@ -4816,7 +4816,7 @@
 			if ( locvar_dmghp_ele != SKILL_RES_MIND & locvar_dmghp_ele != SKILL_RES_NERVE & locvar_dmghp_ele != SKILL_RES_CHAOS ) {
 				cdata(CDATA_CONDITION_SLEEP, dmghp_charid) = 0
 				txtmore
-				txt lang(name(dmghp_charid) + "‚Í–°‚è‚ğ–W‚°‚ç‚ê‚½B", name(dmghp_charid) + your(dmghp_charid) + " sleep " + is(dmghp_charid) + " disturbed.")
+				txt lang(name(dmghp_charid) + "ã¯çœ ã‚Šã‚’å¦¨ã’ã‚‰ã‚ŒãŸã€‚", name(dmghp_charid) + your(dmghp_charid) + " sleep " + is(dmghp_charid) + " disturbed.")
 			}
 		}
 		if ( dmghp_source == DAMAGE_FROM_CHARA ) {
@@ -4841,7 +4841,7 @@
 				cbitmod CHARA_BIT_SUICIDE_SWITCH, dmghp_charid, 1
 				txtef COLOR_SKY_BLUE
 				txtmore
-				txt lang(" *ƒJƒ`ƒb* ", " *click* ")
+				txt lang(" *ã‚«ãƒãƒƒ* ", " *click* ")
 			}
 		}
 		if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, dmghp_charid) ) {
@@ -4857,10 +4857,10 @@
 											if ( stat == 1 ) {
 												locvar_dmghp_s = refchara(cdata(CDATA_ID, dmghp_charid), DBSPEC_CHARA_FILTER, 1)
 												if ( instr(locvar_dmghp_s, 0, "/man/") != (-1) | cdata(CDATA_ID, dmghp_charid) == CREATURE_ID_DRAGONS_PET_HARPY | cdata(CDATA_ID, dmghp_charid) == CREATURE_ID_RED_NINJA ) {
-													txt lang(name(dmghp_charid) + "‚Í•ªg‚µ‚½I", name(dmghp_charid) + " split" + _s(dmghp_charid) + "!")
+													txt lang(name(dmghp_charid) + "ã¯åˆ†èº«ã—ãŸï¼", name(dmghp_charid) + " split" + _s(dmghp_charid) + "!")
 												}
 												else {
-													txt lang(name(dmghp_charid) + "‚Í•ª—ô‚µ‚½I", name(dmghp_charid) + " split" + _s(dmghp_charid) + "!")
+													txt lang(name(dmghp_charid) + "ã¯åˆ†è£‚ã—ãŸï¼", name(dmghp_charid) + " split" + _s(dmghp_charid) + "!")
 												}
 											}
 										}
@@ -4887,10 +4887,10 @@
 													if ( stat == 1 ) {
 														locvar_dmghp_s = refchara(cdata(CDATA_ID, dmghp_charid), DBSPEC_CHARA_FILTER, 1)
 														if ( instr(locvar_dmghp_s, 0, "/man/") != (-1) | cdata(CDATA_ID, dmghp_charid) == CREATURE_ID_DRAGONS_PET_HARPY | cdata(CDATA_ID, dmghp_charid) == CREATURE_ID_RED_NINJA ) {
-															txt lang(name(dmghp_charid) + "‚Í•ªg‚µ‚½I", name(dmghp_charid) + " split" + _s(dmghp_charid) + "!")
+															txt lang(name(dmghp_charid) + "ã¯åˆ†èº«ã—ãŸï¼", name(dmghp_charid) + " split" + _s(dmghp_charid) + "!")
 														}
 														else {
-															txt lang(name(dmghp_charid) + "‚Í•ª—ô‚µ‚½I", name(dmghp_charid) + " split" + _s(dmghp_charid) + "!")
+															txt lang(name(dmghp_charid) + "ã¯åˆ†è£‚ã—ãŸï¼", name(dmghp_charid) + " split" + _s(dmghp_charid) + "!")
 														}
 													}
 												}
@@ -4910,7 +4910,7 @@
 					if ( rnd(20) == 0 ) {
 						if ( synccheck(dmghp_charid, -1) ) {
 							txtef COLOR_BLUE
-							txt lang(name(dmghp_charid) + "‚Í“{‚è‚É‘Ì‚ğ•±‚í‚¹‚½I", name(dmghp_charid) + " " + is(dmghp_charid) + " engulfed in fury!")
+							txt lang(name(dmghp_charid) + "ã¯æ€’ã‚Šã«ä½“ã‚’å¥®ã‚ã›ãŸï¼", name(dmghp_charid) + " " + is(dmghp_charid) + " engulfed in fury!")
 						}
 						cdata(CDATA_CONDITION_ANGRY, dmghp_charid) += rnd(30) + 15
 					}
@@ -4966,7 +4966,7 @@
 			if ( cdata(CDATA_CONDITION_DIM, dmghp_charid) < 100 ) {
 				cdata(CDATA_CONDITION_DIM, dmghp_charid) = 100
 				txtef COLOR_YELLOW
-				txt lang("–ƒmƒbƒNƒAƒEƒg–", "*Knockout*")
+				txt lang("ï¼Šãƒãƒƒã‚¯ã‚¢ã‚¦ãƒˆï¼Š", "*Knockout*")
 				snd SOUNDLIST_GONG
 			}
 		}
@@ -5032,179 +5032,179 @@
 				if ( locvar_dmghp_p == 0 ) {
 					if ( dmghp_charid >= MAX_CHARA_FOLLOWER & gdata(GDATA_DMG_TYPE) == 2 ) {
 						txtcontinue
-						txt lang("•²X‚Ì“÷•Ğ‚É•Ï‚¦‚½B", "transform" + _s(locvar_dmghp_c3) + " " + him(dmghp_charid) + " into several pieces of meat.")
+						txt lang("ç²‰ã€…ã®è‚‰ç‰‡ã«å¤‰ãˆãŸã€‚", "transform" + _s(locvar_dmghp_c3) + " " + him(dmghp_charid) + " into several pieces of meat.")
 					}
 					else {
-						txt lang(name(dmghp_charid) + "‚Í•²X‚Ì“÷•Ğ‚É•Ï‚¦‚ç‚ê‚½B", name(dmghp_charid) + " " + is(dmghp_charid) + " transformed into several pieces of meat.")
+						txt lang(name(dmghp_charid) + "ã¯ç²‰ã€…ã®è‚‰ç‰‡ã«å¤‰ãˆã‚‰ã‚ŒãŸã€‚", name(dmghp_charid) + " " + is(dmghp_charid) + " transformed into several pieces of meat.")
 					}
 				}
 				if ( locvar_dmghp_p == 1 ) {
 					if ( dmghp_charid >= MAX_CHARA_FOLLOWER & gdata(GDATA_DMG_TYPE) == 2 ) {
 						txtcontinue
-						txt lang("”j‰ó‚µ‚½B", "destroy" + _s(locvar_dmghp_c3) + " " + him(dmghp_charid) + ".")
+						txt lang("ç ´å£Šã—ãŸã€‚", "destroy" + _s(locvar_dmghp_c3) + " " + him(dmghp_charid) + ".")
 					}
 					else {
-						txt lang(name(dmghp_charid) + "‚Í”j‰ó‚³‚ê‚½B", name(dmghp_charid) + " " + is(dmghp_charid) + " killed.")
+						txt lang(name(dmghp_charid) + "ã¯ç ´å£Šã•ã‚ŒãŸã€‚", name(dmghp_charid) + " " + is(dmghp_charid) + " killed.")
 					}
 				}
 				if ( locvar_dmghp_p == 2 ) {
 					if ( dmghp_charid >= MAX_CHARA_FOLLOWER & gdata(GDATA_DMG_TYPE) == 2 ) {
 						txtcontinue
-						txt lang("ƒ~ƒ“ƒ`‚É‚µ‚½B", "mince" + _s(locvar_dmghp_c3) + " " + him(dmghp_charid) + ".")
+						txt lang("ãƒŸãƒ³ãƒã«ã—ãŸã€‚", "mince" + _s(locvar_dmghp_c3) + " " + him(dmghp_charid) + ".")
 					}
 					else {
-						txt lang(name(dmghp_charid) + "‚Íƒ~ƒ“ƒ`‚É‚³‚ê‚½B", name(dmghp_charid) + " " + is(dmghp_charid) + " minced.")
+						txt lang(name(dmghp_charid) + "ã¯ãƒŸãƒ³ãƒã«ã•ã‚ŒãŸã€‚", name(dmghp_charid) + " " + is(dmghp_charid) + " minced.")
 					}
 				}
 				if ( locvar_dmghp_p == 3 ) {
 					if ( dmghp_charid >= MAX_CHARA_FOLLOWER & gdata(GDATA_DMG_TYPE) == 2 ) {
 						txtcontinue
-						txt lang("E‚µ‚½B", "kill" + _s(locvar_dmghp_c3) + " " + him(dmghp_charid) + ".")
+						txt lang("æ®ºã—ãŸã€‚", "kill" + _s(locvar_dmghp_c3) + " " + him(dmghp_charid) + ".")
 					}
 					else {
-						txt lang(name(dmghp_charid) + "‚ÍE‚³‚ê‚½B", name(dmghp_charid) + " " + is(dmghp_charid) + " slain.")
+						txt lang(name(dmghp_charid) + "ã¯æ®ºã•ã‚ŒãŸã€‚", name(dmghp_charid) + " " + is(dmghp_charid) + " slain.")
 					}
 				}
 			}
-			ndeathcause = lang(cdatan(CDATAN_NAME, cc) + "‚ÉE‚³‚ê‚½B", "was killed by " + cdatan(CDATAN_NAME, cc))
+			ndeathcause = lang(cdatan(CDATAN_NAME, cc) + "ã«æ®ºã•ã‚ŒãŸã€‚", "was killed by " + cdatan(CDATAN_NAME, cc))
 		}
 		else {
 			if ( dmghp_source == DAMAGE_FROM_WEREWOLF ) {
-				txt lang(name(dmghp_charid) + "‚Í_‰»‚µ‚½I", name(dmghp_charid) + " revealed the true appearance!!")
+				txt lang(name(dmghp_charid) + "ã¯ç¥åŒ–ã—ãŸï¼", name(dmghp_charid) + " revealed the true appearance!!")
 				if ( dmghp_charid == CHARA_PLAYER ) {
-					ndeathcause = lang("Œ©‚¦‚´‚éè‚É‘’‚ç‚ê‚½B", "got assassinated by the unseen hand")
+					ndeathcause = lang("è¦‹ãˆã–ã‚‹æ‰‹ã«è‘¬ã‚‰ã‚ŒãŸã€‚", "got assassinated by the unseen hand")
 				}
 			}
 			if ( dmghp_source == DAMAGE_FROM_UNSEEN ) {
-				txt lang(name(dmghp_charid) + "‚ÍŒ©‚¦‚´‚éè‚É‘’‚ç‚ê‚½B", name(dmghp_charid) + " " + is(dmghp_charid) + " assassinated by the unseen hand.")
+				txt lang(name(dmghp_charid) + "ã¯è¦‹ãˆã–ã‚‹æ‰‹ã«è‘¬ã‚‰ã‚ŒãŸã€‚", name(dmghp_charid) + " " + is(dmghp_charid) + " assassinated by the unseen hand.")
 				if ( dmghp_charid == CHARA_PLAYER ) {
-					ndeathcause = lang("Œ©‚¦‚´‚éè‚É‘’‚ç‚ê‚½B", "got assassinated by the unseen hand")
+					ndeathcause = lang("è¦‹ãˆã–ã‚‹æ‰‹ã«è‘¬ã‚‰ã‚ŒãŸã€‚", "got assassinated by the unseen hand")
 				}
 			}
 			if ( dmghp_source == DAMAGE_FROM_TRAP ) {
-				txt lang(name(dmghp_charid) + "‚Íã©‚É‚©‚©‚Á‚Ä€‚ñ‚¾B", name(dmghp_charid) + " " + is(dmghp_charid) + " caught in a trap and die" + _s(dmghp_charid) + ".")
+				txt lang(name(dmghp_charid) + "ã¯ç½ ã«ã‹ã‹ã£ã¦æ­»ã‚“ã ã€‚", name(dmghp_charid) + " " + is(dmghp_charid) + " caught in a trap and die" + _s(dmghp_charid) + ".")
 				if ( dmghp_charid == CHARA_PLAYER ) {
-					ndeathcause = lang("ã©‚É‚©‚©‚Á‚Ä€‚ñ‚¾B", "got caught in a trap and died")
+					ndeathcause = lang("ç½ ã«ã‹ã‹ã£ã¦æ­»ã‚“ã ã€‚", "got caught in a trap and died")
 				}
 			}
 			if ( dmghp_source == DAMAGE_FROM_OVERCAST ) {
-				txt lang(name(dmghp_charid) + "‚Íƒ}ƒi‚Ì”½“®‚Å€‚ñ‚¾B", name(dmghp_charid) + " die" + _s(dmghp_charid) + " from over-casting.")
+				txt lang(name(dmghp_charid) + "ã¯ãƒãƒŠã®åå‹•ã§æ­»ã‚“ã ã€‚", name(dmghp_charid) + " die" + _s(dmghp_charid) + " from over-casting.")
 				if ( dmghp_charid == CHARA_PLAYER ) {
-					ndeathcause = lang("ƒ}ƒi‚Ì”½“®‚ÅÁ–Å‚µ‚½B", "was completely wiped by magic reaction")
+					ndeathcause = lang("ãƒãƒŠã®åå‹•ã§æ¶ˆæ»…ã—ãŸã€‚", "was completely wiped by magic reaction")
 				}
 			}
 			if ( dmghp_source == DAMAGE_FROM_HUNGER ) {
-				txt lang(name(dmghp_charid) + "‚Í‰ì€‚µ‚½B", name(dmghp_charid) + " " + is(dmghp_charid) + " starved to death.")
+				txt lang(name(dmghp_charid) + "ã¯é¤“æ­»ã—ãŸã€‚", name(dmghp_charid) + " " + is(dmghp_charid) + " starved to death.")
 				if ( dmghp_charid == CHARA_PLAYER ) {
-					ndeathcause = lang("‹Q‚¦€‚É‚µ‚½B", "was starved to death")
+					ndeathcause = lang("é£¢ãˆæ­»ã«ã—ãŸã€‚", "was starved to death")
 				}
 			}
 			if ( dmghp_source == DAMAGE_FROM_POISON ) {
-				txt lang(name(dmghp_charid) + "‚Í“Å‚ÉI‚Ü‚ê€‚ñ‚¾B", name(dmghp_charid) + " " + is(dmghp_charid) + " killed with poison.")
+				txt lang(name(dmghp_charid) + "ã¯æ¯’ã«è•ã¾ã‚Œæ­»ã‚“ã ã€‚", name(dmghp_charid) + " " + is(dmghp_charid) + " killed with poison.")
 				if ( dmghp_charid == CHARA_PLAYER ) {
-					ndeathcause = lang("“Å‚É‚à‚ª‚«‹ê‚µ‚İ‚È‚ª‚ç€‚ñ‚¾B", "miserably died from poison")
+					ndeathcause = lang("æ¯’ã«ã‚‚ãŒãè‹¦ã—ã¿ãªãŒã‚‰æ­»ã‚“ã ã€‚", "miserably died from poison")
 				}
 			}
 			if ( dmghp_source == DAMAGE_FROM_BLEED ) {
-				txt lang(name(dmghp_charid) + "‚ÍoŒŒ‘½—Ê‚Å€‚ñ‚¾B", name(dmghp_charid) + " die" + _s(dmghp_charid) + " from loss of blood.")
+				txt lang(name(dmghp_charid) + "ã¯å‡ºè¡€å¤šé‡ã§æ­»ã‚“ã ã€‚", name(dmghp_charid) + " die" + _s(dmghp_charid) + " from loss of blood.")
 				if ( dmghp_charid == CHARA_PLAYER ) {
-					ndeathcause = lang("ŒŒ‚ğ—¬‚µ‚·‚¬‚Ä€‚ñ‚¾B", "died from loss of blood")
+					ndeathcause = lang("è¡€ã‚’æµã—ã™ãã¦æ­»ã‚“ã ã€‚", "died from loss of blood")
 				}
 			}
 			if ( dmghp_source == DAMAGE_FROM_DESERT ) {
-				txt lang(name(dmghp_charid) + "‚ÍŠ±‚©‚ç‚Ñ‚Ä€‚ñ‚¾B", name(dmghp_charid) + " dried up in the desert and die" + _s(dmghp_charid) + ".")
+				txt lang(name(dmghp_charid) + "ã¯å¹²ã‹ã‚‰ã³ã¦æ­»ã‚“ã ã€‚", name(dmghp_charid) + " dried up in the desert and die" + _s(dmghp_charid) + ".")
 				if ( dmghp_charid == CHARA_PLAYER ) {
-					ndeathcause = lang("Š±‚©‚ç‚Ñ‚Ä€‚ñ‚¾B", "dried up in the desert")
+					ndeathcause = lang("å¹²ã‹ã‚‰ã³ã¦æ­»ã‚“ã ã€‚", "dried up in the desert")
 				}
 			}
 			if ( dmghp_source == DAMAGE_FROM_CHOCO ) {
-				txt lang(name(dmghp_charid) + "‚Í”M‚µ‚½ƒ`ƒ‡ƒRƒŒ[ƒg‚Å‰Î‚µ‚Ä€‚ñ‚¾B", name(dmghp_charid) + " melt" + _s(dmghp_charid) + " down.")
+				txt lang(name(dmghp_charid) + "ã¯ç†±ã—ãŸãƒãƒ§ã‚³ãƒ¬ãƒ¼ãƒˆã§ç«å‚·ã—ã¦æ­»ã‚“ã ã€‚", name(dmghp_charid) + " melt" + _s(dmghp_charid) + " down.")
 				if ( dmghp_charid == CHARA_PLAYER ) {
-					ndeathcause = lang("”M‚µ‚½ƒ`ƒ‡ƒRƒŒ[ƒg‚Å‰Î‚µ‚Ä€‚ñ‚¾B", "melted down")
+					ndeathcause = lang("ç†±ã—ãŸãƒãƒ§ã‚³ãƒ¬ãƒ¼ãƒˆã§ç«å‚·ã—ã¦æ­»ã‚“ã ã€‚", "melted down")
 				}
 			}
 			if ( dmghp_source == DAMAGE_FROM_CURSE ) {
-				txt lang(name(dmghp_charid) + "‚Íô‚¢‚Ì—Í‚Å€‚ñ‚¾B", name(dmghp_charid) + " die" + _s(dmghp_charid) + " from a curse.")
+				txt lang(name(dmghp_charid) + "ã¯å‘ªã„ã®åŠ›ã§æ­»ã‚“ã ã€‚", name(dmghp_charid) + " die" + _s(dmghp_charid) + " from a curse.")
 				if ( dmghp_charid == CHARA_PLAYER ) {
-					ndeathcause = lang("ô‚¢E‚³‚ê‚½B", "died from a curse")
+					ndeathcause = lang("å‘ªã„æ®ºã•ã‚ŒãŸã€‚", "died from a curse")
 				}
 			}
 			if ( dmghp_source == DAMAGE_FROM_TUMBLE ) {
-				txt lang(name(dmghp_charid) + "‚ÍŠK’i‚©‚ç“]‚°—‚¿‚Ä€‚ñ‚¾B", name(dmghp_charid) + " tumble" + _s(dmghp_charid) + " down the stairs and die" + _s(dmghp_charid) + ".")
+				txt lang(name(dmghp_charid) + "ã¯éšæ®µã‹ã‚‰è»¢ã’è½ã¡ã¦æ­»ã‚“ã ã€‚", name(dmghp_charid) + " tumble" + _s(dmghp_charid) + " down the stairs and die" + _s(dmghp_charid) + ".")
 				if ( dmghp_charid == CHARA_PLAYER ) {
-					ndeathcause = lang("ŠK’i‚©‚ç“]‚°—‚¿‚Ä–S‚­‚È‚Á‚½B", "tumbled down the stairs and died")
+					ndeathcause = lang("éšæ®µã‹ã‚‰è»¢ã’è½ã¡ã¦äº¡ããªã£ãŸã€‚", "tumbled down the stairs and died")
 				}
 			}
 			if ( dmghp_source == DAMAGE_FROM_PERFORM ) {
-				txt lang(name(dmghp_charid) + "‚Í’®O‚ÉE‚³‚ê‚½B", name(dmghp_charid) + " " + is(dmghp_charid) + " killed by an audience.")
+				txt lang(name(dmghp_charid) + "ã¯è´è¡†ã«æ®ºã•ã‚ŒãŸã€‚", name(dmghp_charid) + " " + is(dmghp_charid) + " killed by an audience.")
 				if ( dmghp_charid == CHARA_PLAYER ) {
-					ndeathcause = lang("‰‰‘t’†‚ÉŒƒ“{‚µ‚½’®O‚ÉE‚³‚ê‚½B", "was killed by an audience")
+					ndeathcause = lang("æ¼”å¥ä¸­ã«æ¿€æ€’ã—ãŸè´è¡†ã«æ®ºã•ã‚ŒãŸã€‚", "was killed by an audience")
 				}
 			}
 			if ( dmghp_source == DAMAGE_FROM_FIRE ) {
-				txt lang(name(dmghp_charid) + "‚ÍÄ‚¯€‚ñ‚¾B", name(dmghp_charid) + " " + is(dmghp_charid) + " burnt and turned into ash.")
+				txt lang(name(dmghp_charid) + "ã¯ç„¼ã‘æ­»ã‚“ã ã€‚", name(dmghp_charid) + " " + is(dmghp_charid) + " burnt and turned into ash.")
 				if ( dmghp_charid == CHARA_PLAYER ) {
-					ndeathcause = lang("Ä‚¯‚ÄÁ–Å‚µ‚½B", "was burnt and turned into ash")
+					ndeathcause = lang("ç„¼ã‘ã¦æ¶ˆæ»…ã—ãŸã€‚", "was burnt and turned into ash")
 				}
 			}
 			if ( dmghp_source == DAMAGE_FROM_BAD_FOOD ) {
-				txt lang(name(dmghp_charid) + "‚ÍH’†“Å‚Å€‚ñ‚¾B", name(dmghp_charid) + " " + is(dmghp_charid) + " killed by food poisoning.")
+				txt lang(name(dmghp_charid) + "ã¯é£Ÿä¸­æ¯’ã§æ­»ã‚“ã ã€‚", name(dmghp_charid) + " " + is(dmghp_charid) + " killed by food poisoning.")
 				if ( dmghp_charid == CHARA_PLAYER ) {
-					ndeathcause = lang("H’†“Å‚Å“|‚ê‚½B", "got killed by food poisoning")
+					ndeathcause = lang("é£Ÿä¸­æ¯’ã§å€’ã‚ŒãŸã€‚", "got killed by food poisoning")
 				}
 			}
 			if ( dmghp_source == DAMAGE_FROM_CORRUPT ) {
-				txt lang(name(dmghp_charid) + "‚ÍƒG[ƒeƒ‹‚ÉNH‚³‚ê€‚ñ‚¾B", name(dmghp_charid) + " die" + _s(dmghp_charid) + " of Ether Disease.")
+				txt lang(name(dmghp_charid) + "ã¯ã‚¨ãƒ¼ãƒ†ãƒ«ã«ä¾µé£Ÿã•ã‚Œæ­»ã‚“ã ã€‚", name(dmghp_charid) + " die" + _s(dmghp_charid) + " of Ether Disease.")
 				if ( dmghp_charid == CHARA_PLAYER ) {
-					ndeathcause = lang("ƒG[ƒeƒ‹‚Ì•a‚É“|‚ê‚½B", "died of Ether Disease")
+					ndeathcause = lang("ã‚¨ãƒ¼ãƒ†ãƒ«ã®ç—…ã«å€’ã‚ŒãŸã€‚", "died of Ether Disease")
 				}
 			}
 			if ( dmghp_source == DAMAGE_FROM_ACID ) {
-				txt lang(name(dmghp_charid) + "‚Í—n‚¯‚Ä‰t‘Ì‚É‚È‚Á‚½B", name(dmghp_charid) + " melt" + _s(dmghp_charid) + " down.")
+				txt lang(name(dmghp_charid) + "ã¯æº¶ã‘ã¦æ¶²ä½“ã«ãªã£ãŸã€‚", name(dmghp_charid) + " melt" + _s(dmghp_charid) + " down.")
 				if ( dmghp_charid == CHARA_PLAYER ) {
-					ndeathcause = lang("—n‚¯‚Ä‰t‘Ì‚É‚È‚Á‚½B", "melted down")
+					ndeathcause = lang("æº¶ã‘ã¦æ¶²ä½“ã«ãªã£ãŸã€‚", "melted down")
 				}
 			}
 			if ( dmghp_source == DAMAGE_FROM_SUICIDE ) {
-				txt lang(name(dmghp_charid) + "‚Íƒoƒ‰ƒoƒ‰‚É‚È‚Á‚½B", name(dmghp_charid) + " shatter" + _s(dmghp_charid) + ".")
+				txt lang(name(dmghp_charid) + "ã¯ãƒãƒ©ãƒãƒ©ã«ãªã£ãŸã€‚", name(dmghp_charid) + " shatter" + _s(dmghp_charid) + ".")
 				if ( dmghp_charid == CHARA_PLAYER ) {
-					ndeathcause = lang("©E‚µ‚½B", "committed suicide")
+					ndeathcause = lang("è‡ªæ®ºã—ãŸã€‚", "committed suicide")
 				}
 			}
 			if ( dmghp_source == DAMAGE_FROM_NUKE ) {
-				txt lang(name(dmghp_charid) + "‚ÍŠj”š”­‚ÉŠª‚«‚Ü‚ê‚Äo‚Æ‚È‚Á‚½B", name(dmghp_charid) + " " + is(dmghp_charid) + " turned into atoms.")
+				txt lang(name(dmghp_charid) + "ã¯æ ¸çˆ†ç™ºã«å·»ãè¾¼ã¾ã‚Œã¦å¡µã¨ãªã£ãŸã€‚", name(dmghp_charid) + " " + is(dmghp_charid) + " turned into atoms.")
 				if ( dmghp_charid == CHARA_PLAYER ) {
-					ndeathcause = lang("Šj”š”­‚ÉŠª‚«‚Ü‚ê‚Ä€‚ñ‚¾B", "was killed by an atomic bomb")
+					ndeathcause = lang("æ ¸çˆ†ç™ºã«å·»ãè¾¼ã¾ã‚Œã¦æ­»ã‚“ã ã€‚", "was killed by an atomic bomb")
 				}
 			}
 			if ( dmghp_source == DAMAGE_FROM_MAIDEN ) {
-				txt lang(name(dmghp_charid) + "‚ÍƒAƒCƒAƒ“ƒƒCƒfƒ“‚Ì’†‚Å‹øh‚µ‚É‚È‚Á‚Ä‰Ê‚Ä‚½B", name(dmghp_charid) + " step" + _s(dmghp_charid) + " in an iron maiden and die" + _s(dmghp_charid) + ".")
+				txt lang(name(dmghp_charid) + "ã¯ã‚¢ã‚¤ã‚¢ãƒ³ãƒ¡ã‚¤ãƒ‡ãƒ³ã®ä¸­ã§ä¸²åˆºã—ã«ãªã£ã¦æœã¦ãŸã€‚", name(dmghp_charid) + " step" + _s(dmghp_charid) + " in an iron maiden and die" + _s(dmghp_charid) + ".")
 				if ( dmghp_charid == CHARA_PLAYER ) {
-					ndeathcause = lang("ƒAƒCƒAƒ“ƒƒCƒfƒ“‚É‚Í‚³‚Ü‚ê‚Ä€‚ñ‚¾B", "stepped in an iron maiden and died")
+					ndeathcause = lang("ã‚¢ã‚¤ã‚¢ãƒ³ãƒ¡ã‚¤ãƒ‡ãƒ³ã«ã¯ã•ã¾ã‚Œã¦æ­»ã‚“ã ã€‚", "stepped in an iron maiden and died")
 				}
 			}
 			if ( dmghp_source == DAMAGE_FROM_GUILLOTINE ) {
-				txt lang(name(dmghp_charid) + "‚ÍƒMƒƒ`ƒ“‚Åñ‚ğ‚¿‚å‚ñ‚¬‚ç‚ê‚Ä€‚ñ‚¾B", name(dmghp_charid) + " " + is(dmghp_charid) + " guillotined and die" + _s(dmghp_charid) + ".")
+				txt lang(name(dmghp_charid) + "ã¯ã‚®ãƒ­ãƒãƒ³ã§é¦–ã‚’ã¡ã‚‡ã‚“ãã‚‰ã‚Œã¦æ­»ã‚“ã ã€‚", name(dmghp_charid) + " " + is(dmghp_charid) + " guillotined and die" + _s(dmghp_charid) + ".")
 				if ( dmghp_charid == CHARA_PLAYER ) {
-					ndeathcause = lang("ƒMƒƒ`ƒ“‚Åñ‚ğ—‚Æ‚³‚ê‚Ä€‚ñ‚¾B", "was guillotined")
+					ndeathcause = lang("ã‚®ãƒ­ãƒãƒ³ã§é¦–ã‚’è½ã¨ã•ã‚Œã¦æ­»ã‚“ã ã€‚", "was guillotined")
 				}
 			}
 			if ( dmghp_source == DAMAGE_FROM_EXECUTION ) {
-				txt lang(name(dmghp_charid) + "‚ÍŒö³‚È“Š•[‚ÌŒ‹‰ÊˆŒY‚³‚ê‚½B", name(dmghp_charid) + " was executed by result of fair vote.")
+				txt lang(name(dmghp_charid) + "ã¯å…¬æ­£ãªæŠ•ç¥¨ã®çµæœå‡¦åˆ‘ã•ã‚ŒãŸã€‚", name(dmghp_charid) + " was executed by result of fair vote.")
 			}
 			if ( dmghp_source == DAMAGE_FROM_SCALP ) {
-				txt lang(name(dmghp_charid) + "‚ÍŠã‚µ‚Ä€‚ñ‚¾B", name(dmghp_charid) + " weakened and died.")
+				txt lang(name(dmghp_charid) + "ã¯è¡°å¼±ã—ã¦æ­»ã‚“ã ã€‚", name(dmghp_charid) + " weakened and died.")
 			}
 			if ( dmghp_source == DAMAGE_FROM_HANGING ) {
-				txt lang(name(dmghp_charid) + "‚Íñ‚ğ’İ‚Á‚½B", name(dmghp_charid) + " hang" + _s(dmghp_charid) + " " + his(dmghp_charid) + "self.")
+				txt lang(name(dmghp_charid) + "ã¯é¦–ã‚’åŠã£ãŸã€‚", name(dmghp_charid) + " hang" + _s(dmghp_charid) + " " + his(dmghp_charid) + "self.")
 				if ( dmghp_charid == CHARA_PLAYER ) {
-					ndeathcause = lang("ñ‚ğ’İ‚Á‚½B", "committed suicide by hanging")
+					ndeathcause = lang("é¦–ã‚’åŠã£ãŸã€‚", "committed suicide by hanging")
 				}
 			}
 			if ( dmghp_source == DAMAGE_FROM_SUFFOCATION ) {
-				txt lang(name(dmghp_charid) + "‚Í’‚‘§‚µ‚Ä€‚ñ‚¾", name(dmghp_charid) + " choke" + _s(dmghp_charid) + " to death.")
+				txt lang(name(dmghp_charid) + "ã¯çª’æ¯ã—ã¦æ­»ã‚“ã ", name(dmghp_charid) + " choke" + _s(dmghp_charid) + " to death.")
 				if ( dmghp_charid == CHARA_PLAYER ) {
-					ndeathcause = lang("’‚‘§‚µ‚Ä€‚ñ‚¾", "choked to death")
+					ndeathcause = lang("çª’æ¯ã—ã¦æ­»ã‚“ã ", "choked to death")
 				}
 			}
 			if ( dmghp_source == DAMAGE_FROM_BURDEN ) {
@@ -5219,14 +5219,14 @@
 					}
 				loop
 				if ( locvar_dmghp_p == (-1) ) {
-					rtvaln = lang("‰×•¨", "backpack")
+					rtvaln = lang("è·ç‰©", "backpack")
 				}
 				else {
 					rtvaln = itemname(locvar_dmghp_p)
 				}
-				txt lang(name(dmghp_charid) + "‚Í" + rtvaln + "‚Ìd‚³‚É‘Ï‚¦Ø‚ê‚¸€‚ñ‚¾B", name(dmghp_charid) + " " + is(dmghp_charid) + " squashed by " + rtvaln + ".")
+				txt lang(name(dmghp_charid) + "ã¯" + rtvaln + "ã®é‡ã•ã«è€ãˆåˆ‡ã‚Œãšæ­»ã‚“ã ã€‚", name(dmghp_charid) + " " + is(dmghp_charid) + " squashed by " + rtvaln + ".")
 				if ( dmghp_charid == CHARA_PLAYER ) {
-					ndeathcause = lang(rtvaln + "‚Ìd‚³‚É‘Ï‚¦Ø‚ê‚¸’×‚ê‚½B", "was squashed by " + rtvaln)
+					ndeathcause = lang(rtvaln + "ã®é‡ã•ã«è€ãˆåˆ‡ã‚Œãšæ½°ã‚ŒãŸã€‚", "was squashed by " + rtvaln)
 				}
 			}
 		}
@@ -5437,7 +5437,7 @@
 							}
 							if ( cdata(CDATA_ID, dmghp_charid) == CREATURE_ID_THE_ELEMENT | cdata(CDATA_ID, dmghp_charid) == CREATURE_ID_HYPER_YACATECT | cdata(CDATA_ID, dmghp_charid) == CREATURE_ID_BLESSED_JURE | cdata(CDATA_ID, dmghp_charid) == CREATURE_ID_DEVASTATE_LULWY | cdata(CDATA_ID, dmghp_charid) == CREATURE_ID_BUILDUP_OPATOS | cdata(CDATA_ID, dmghp_charid) == CREATURE_ID_INSANE_KUMIROMI | cdata(CDATA_ID, dmghp_charid) == CREATURE_ID_DEUS_EX_MANINA | cdata(CDATA_ID, dmghp_charid) == CREATURE_ID_GOD_INSIDE_EHEKATL ) {
 								txtef COLOR_GREEN
-								txt lang("‚ ‚È‚½‚Í¡‚â_E‚µ‚¾B", "You are the godslayer!")
+								txt lang("ã‚ãªãŸã¯ä»Šã‚„ç¥æ®ºã—ã ã€‚", "You are the godslayer!")
 							}
 						}
 					}
@@ -5447,7 +5447,7 @@
 		if ( gdata(GDATA_FLAG_DUEL_TARGET) > 0 ) {
 			if ( dmghp_charid == gdata(GDATA_FLAG_DUEL_TARGET) | dmghp_charid == CHARA_PLAYER ) {
 				txtef COLOR_GREEN
-				txt lang("–Œˆ“¬I—¹–", "*Duel-Over!*")
+				txt lang("ï¼Šæ±ºé—˜çµ‚äº†ï¼Š", "*Duel-Over!*")
 				snd SOUNDLIST_GONG
 				gdata(GDATA_FLAG_DUEL_TARGET) = -3
 			}
@@ -5464,19 +5464,19 @@
 						}
 						if ( cdata(CDATA_ID, dmghp_charid) == CREATURE_ID_ISSIZZLE_THE_DARK_ABOMINATION ) {
 							txtef COLOR_GREEN
-							txt lang("[‹ğÒ‚Ì–‚Î]‚ğè‚É“ü‚ê‚½I", "You obtain the [Fool's Magic Stone]!")
+							txt lang("[æ„šè€…ã®é­”çŸ³]ã‚’æ‰‹ã«å…¥ã‚ŒãŸï¼", "You obtain the [Fool's Magic Stone]!")
 							snd SOUNDLIST_COMPLETE1
 							gdata(GDATA_FLAG_MAIN_FOOL) = 1
 						}
 						if ( cdata(CDATA_ID, dmghp_charid) == CREATURE_ID_WYNAN_THE_LORD_OF_THE_ANCIENT_CASTLE ) {
 							txtef COLOR_GREEN
-							txt lang("[”eÒ‚Ì–‚Î]‚ğè‚É“ü‚ê‚½I", "You obtain the [King's Magic Stone]!")
+							txt lang("[è¦‡è€…ã®é­”çŸ³]ã‚’æ‰‹ã«å…¥ã‚ŒãŸï¼", "You obtain the [King's Magic Stone]!")
 							snd SOUNDLIST_COMPLETE1
 							gdata(GDATA_FLAG_MAIN_KING) = 1
 						}
 						if ( cdata(CDATA_ID, dmghp_charid) == CREATURE_ID_QURUIZA_THE_RED_EYED_DECEIVER ) {
 							txtef COLOR_GREEN
-							txt lang("[Œ«Ò‚Ì–‚Î]‚ğè‚É“ü‚ê‚½I", "You obtain the [Sage's Magic Stone]!")
+							txt lang("[è³¢è€…ã®é­”çŸ³]ã‚’æ‰‹ã«å…¥ã‚ŒãŸï¼", "You obtain the [Sage's Magic Stone]!")
 							snd SOUNDLIST_COMPLETE1
 							gdata(GDATA_FLAG_MAIN_SAGE) = 1
 						}
@@ -5540,14 +5540,14 @@
 								evadd EVENT_LITTLE_SISTER, cdata(CDATA_X, dmghp_charid), cdata(CDATA_Y, dmghp_charid)
 							}
 							else {
-								txt lang("ƒrƒbƒOƒ_ƒfƒB‚ÍŠù‚ÉƒŠƒgƒ‹ƒVƒXƒ^[‚ğ‰½ˆ‚©‚Ö“¦‚ª‚µ‚Ä‚¢‚½B", "The Big Daddy had already evacuated the Little Sister somewhere.")
+								txt lang("ãƒ“ãƒƒã‚°ãƒ€ãƒ‡ã‚£ã¯æ—¢ã«ãƒªãƒˆãƒ«ã‚·ã‚¹ã‚¿ãƒ¼ã‚’ä½•å‡¦ã‹ã¸é€ƒãŒã—ã¦ã„ãŸã€‚", "The Big Daddy had already evacuated the Little Sister somewhere.")
 							}
 						}
 						if ( cdata(CDATA_ID, dmghp_charid) == CREATURE_ID_LITTLE_SISTER ) {
 							if ( dmghp_charid > MAX_CHARA_FOLLOWER ) {
 								gdata(GDATA_SISTER_KILLED)++
 								txtef COLOR_RED
-								txt lang("ƒŠƒgƒ‹ƒVƒXƒ^[EŠQ" + gdata(GDATA_SISTER_KILLED) + "‰ñA‹~o" + gdata(GDATA_SISTER_SAVED) + "‰ñB", "You have saved Little Sisters " + gdata(GDATA_SISTER_SAVED) + " times and killed them " + gdata(GDATA_SISTER_KILLED) + " times.")
+								txt lang("ãƒªãƒˆãƒ«ã‚·ã‚¹ã‚¿ãƒ¼æ®ºå®³" + gdata(GDATA_SISTER_KILLED) + "å›ã€æ•‘å‡º" + gdata(GDATA_SISTER_SAVED) + "å›ã€‚", "You have saved Little Sisters " + gdata(GDATA_SISTER_SAVED) + " times and killed them " + gdata(GDATA_SISTER_KILLED) + " times.")
 							}
 						}
 						if ( cdata(CDATA_ID, dmghp_charid) == CREATURE_ID_H_SISTER ) {
@@ -5565,19 +5565,19 @@
 						}
 						if ( cdata(CDATA_ID, dmghp_charid) == CREATURE_ID_ANUBIS_THE_MASTER_OF_DEATH ) {
 							txtef COLOR_GREEN
-							txt lang("[‘¾—z‚ÌƒAƒ“ƒN]‚ğè‚É“ü‚ê‚½I", "You obtain the [Ankh of The Sun]!")
+							txt lang("[å¤ªé™½ã®ã‚¢ãƒ³ã‚¯]ã‚’æ‰‹ã«å…¥ã‚ŒãŸï¼", "You obtain the [Ankh of The Sun]!")
 							snd SOUNDLIST_COMPLETE1
 							gdata(GDATA_FLAG_MAIN_ANKH) = 1
 						}
 						if ( cdata(CDATA_ID, dmghp_charid) == CREATURE_ID_METAL_VESDA_THE_FIRE_MACHINE ) {
 							txtef COLOR_GREEN
-							txt lang("[ƒf[ƒ^ƒ`ƒbƒv]‚ğè‚É“ü‚ê‚½I", "You obtain the [Data Chip]!")
+							txt lang("[ãƒ‡ãƒ¼ã‚¿ãƒãƒƒãƒ—]ã‚’æ‰‹ã«å…¥ã‚ŒãŸï¼", "You obtain the [Data Chip]!")
 							snd SOUNDLIST_COMPLETE1
 							gdata(GDATA_FLAG_MAIN_DATA_CHIP) = 1
 						}
 						if ( cdata(CDATA_ID, dmghp_charid) == CREATURE_ID_EXOSSIL_THE_CHAOS_WING ) {
 							txtef COLOR_GREEN
-							txt lang("[¬“×‚Ì—ƒ]‚ğè‚É“ü‚ê‚½I", "You obtain the [Chaos Wings]!")
+							txt lang("[æ··æ²Œã®ç¿¼]ã‚’æ‰‹ã«å…¥ã‚ŒãŸï¼", "You obtain the [Chaos Wings]!")
 							snd SOUNDLIST_COMPLETE1
 							gdata(GDATA_FLAG_MAIN_CHAOS_WINGS) = 1
 						}
@@ -5590,7 +5590,7 @@
 						if ( cdata(CDATA_ID, dmghp_charid) == CREATURE_ID_MOBILE_COMMUNICATION_EQUIPMENT ) {
 							if ( gdata(GDATA_FLAG_MAIN) < 266 ) {
 								txtef COLOR_GREEN
-								txt lang("[ƒf[ƒ^ƒŒƒWƒXƒ^]‚ğè‚É“ü‚ê‚½I", "You obtain the [Data Register]!")
+								txt lang("[ãƒ‡ãƒ¼ã‚¿ãƒ¬ã‚¸ã‚¹ã‚¿]ã‚’æ‰‹ã«å…¥ã‚ŒãŸï¼", "You obtain the [Data Register]!")
 								snd SOUNDLIST_COMPLETE1
 								gdata(GDATA_FLAG_MAIN) = 266
 								txt_questupdate
@@ -5613,7 +5613,7 @@
 						if ( cdata(CDATA_ID, dmghp_charid) == CREATURE_ID_ETHER_GENERATOR ) {
 							if ( gdata(GDATA_FLAG_MAIN) >= 300 & gdata(GDATA_FLAG_MAIN) < 310 ) {
 								txtef COLOR_GREEN
-								txt lang("‰ñû—pƒJƒvƒZƒ‹‚É‚ƒ“x‚ÌƒG[ƒeƒ‹‰ò‚ğ“ü‚ê‚½B", "You place the lump of purified ether into the recovery capsule.")
+								txt lang("å›åç”¨ã‚«ãƒ—ã‚»ãƒ«ã«é«˜ç´”åº¦ã®ã‚¨ãƒ¼ãƒ†ãƒ«å¡Šã‚’å…¥ã‚ŒãŸã€‚", "You place the lump of purified ether into the recovery capsule.")
 								snd SOUNDLIST_COMPLETE1
 								gdata(GDATA_FLAG_MAIN) = 310
 							}
@@ -5629,7 +5629,7 @@
 							if ( gdata(GDATA_FLAG_SUB_MANSION_FOR_SALE) == 1002 ) {
 								gdata(GDATA_FLAG_SUB_MANSION_FOR_SALE) = 1003
 								txtef COLOR_GREEN
-								txt lang("´‘|Š®—¹I", "Cleaning completed!")
+								txt lang("æ¸…æƒå®Œäº†ï¼", "Cleaning completed!")
 								snd SOUNDLIST_COMPLETE1
 							}
 						}
@@ -5722,7 +5722,7 @@
 							if ( gdata(GDATA_AREA) == AREA_CHAOS_CRADLE ) {
 								if ( gdata(GDATA_LEVEL) == 164 ) {
 									txtef COLOR_GREEN
-									txt lang("[K‚Ñ‚Â‚¢‚½—é]‚ğè‚É“ü‚ê‚½I", "You obtain the [Rusted Bell]!")
+									txt lang("[éŒ†ã³ã¤ã„ãŸéˆ´]ã‚’æ‰‹ã«å…¥ã‚ŒãŸï¼", "You obtain the [Rusted Bell]!")
 									snd SOUNDLIST_COMPLETE1
 									gdata(GDATA_FLAG_MAIN_CHAOS_CRADLE_25) = 1000
 									snd SOUNDLIST_COMPLETE1
@@ -5747,7 +5747,7 @@
 						}
 						if ( cdata(CDATA_ID, dmghp_charid) == CREATURE_ID_BELL_OF_EMERGENCY ) {
 							txtef COLOR_RED
-							txt lang("‚¯‚½‚½‚Ü‚µ‚¢Œx•ñ‚ª–Â‚è‹¿‚¢‚½I", "*beeeeeep!* An alarm sounds loudly!")
+							txt lang("ã‘ãŸãŸã¾ã—ã„è­¦å ±ãŒé³´ã‚ŠéŸ¿ã„ãŸï¼", "*beeeeeep!* An alarm sounds loudly!")
 							repeat MAX_CHARA_TOTAL
 								if ( cdata(CDATA_EXIST, cnt) != CHAR_STATE_ALIVE ) {
 									continue
@@ -5868,7 +5868,7 @@
 				gosub *convert_word
 			}
 			if ( dmghp_charid < MAX_CHARA_FOLLOWER ) {
-				txt lang("‚ ‚È‚½‚Í”ß‚µ‚­‚È‚Á‚½B", "You feel sad for a moment.")
+				txt lang("ã‚ãªãŸã¯æ‚²ã—ããªã£ãŸã€‚", "You feel sad for a moment.")
 			}
 		}
 		gdata(GDATA_CROWD)--
@@ -5886,7 +5886,7 @@
 			if ( dmghp_charid == gdata(GDATA_RIDER) ) {
 				if ( cdata(CDATA_RIDING, dmghp_charid) == 0 ) {
 					txtmore
-					txt lang(name(CHARA_PLAYER) + "‚Í" + name(dmghp_charid) + "‚Ì€‘Ì‚©‚ç~‚è‚½B", name(CHARA_PLAYER) + " get off the corpse of " + name(dmghp_charid) + ".")
+					txt lang(name(CHARA_PLAYER) + "ã¯" + name(dmghp_charid) + "ã®æ­»ä½“ã‹ã‚‰é™ã‚ŠãŸã€‚", name(CHARA_PLAYER) + " get off the corpse of " + name(dmghp_charid) + ".")
 					ride_end
 				}
 			}
@@ -5895,7 +5895,7 @@
 			if ( dmghp_charid == gdata(GDATA_RIDER) ) {
 				if ( cdata(CDATA_RIDING, dmghp_charid) == 1 ) {
 					txtmore
-					txt lang(name(CHARA_PLAYER) + "‚Í" + name(dmghp_charid) + "‚Ì€‘Ì‚ğ‚»‚Á‚Æ~‚ë‚µ‚½B", name(CHARA_PLAYER) + " took down the corpse of " + name(dmghp_charid) + ".")
+					txt lang(name(CHARA_PLAYER) + "ã¯" + name(dmghp_charid) + "ã®æ­»ä½“ã‚’ãã£ã¨é™ã‚ã—ãŸã€‚", name(CHARA_PLAYER) + " took down the corpse of " + name(dmghp_charid) + ".")
 					cdata(CDATA_RIDING, dmghp_charid) = 0
 					ride_end
 				}
@@ -5934,7 +5934,7 @@
 		}
 		if ( cbit(CHARA_BIT_DEATH_MASTER, dmghp_charid) == 1 ) {
 			txtmore
-			txt lang("€‚Ìé‚Í–³Œø‚É‚È‚Á‚½B", "The death word breaks.")
+			txt lang("æ­»ã®å®£å‘Šã¯ç„¡åŠ¹ã«ãªã£ãŸã€‚", "The death word breaks.")
 			repeat MAX_CHARA_TOTAL
 				if ( cdata(CDATA_EXIST, cnt) != CHAR_STATE_ALIVE ) {
 					continue
@@ -6005,7 +6005,7 @@
 	if ( cbit(CHARA_BIT_SANDBAG, dmghp_charid) ) {
 		if ( synccheck(dmghp_charid, -1) ) {
 			if ( rnd(20) == 0 ) {
-				txt lang("u‚­‚ÁIv", cnvtalk("Kill me already!")), lang("u‚Ü‚¾‚Ü‚¾Iv", cnvtalk("No... not yet...!")), lang("u‚à‚¤ŒÀŠEcv", cnvtalk("I can't take it anymore...")), lang("u‚¤‚®‚®v", cnvtalk("Argh!")), lang("u‚ ‚¤v", cnvtalk("Uhhh")), lang("u‚ ‚ ‚ñ‚Áv", cnvtalk("Ugggg"))
+				txt lang("ã€Œãã£ï¼ã€", cnvtalk("Kill me already!")), lang("ã€Œã¾ã ã¾ã ï¼ã€", cnvtalk("No... not yet...!")), lang("ã€Œã‚‚ã†é™ç•Œâ€¦ã€", cnvtalk("I can't take it anymore...")), lang("ã€Œã†ããã€", cnvtalk("Argh!")), lang("ã€Œã‚ã†ã€", cnvtalk("Uhhh")), lang("ã€Œã‚ã‚ã‚“ã£ã€", cnvtalk("Ugggg"))
 			}
 		}
 	}
@@ -6033,7 +6033,7 @@
 				return 1
 			}
 		}
-		txt lang("ƒ}ƒi‚Ì”½“®‚ª" + name(dmgmp_charid) + "‚Ì¸_‚ğI‚ñ‚¾I", "Magic reaction hurts " + name(dmgmp_charid) + "!")
+		txt lang("ãƒãƒŠã®åå‹•ãŒ" + name(dmgmp_charid) + "ã®ç²¾ç¥ã‚’è•ã‚“ã ï¼", "Magic reaction hurts " + name(dmgmp_charid) + "!")
 		dmghp dmgmp_charid, locvar_dmgmp_d, DAMAGE_FROM_OVERCAST
 	}
 	return 1
@@ -6158,10 +6158,10 @@
 	}
 	if ( synccheck(modweight_charid, -1) ) {
 		if ( modweight_arg2 > 2 ) {
-			txt lang(name(modweight_charid) + "‚Í‘¾‚Á‚½B", name(modweight_charid) + " gain" + _s(modweight_charid) + " weight.")
+			txt lang(name(modweight_charid) + "ã¯å¤ªã£ãŸã€‚", name(modweight_charid) + " gain" + _s(modweight_charid) + " weight.")
 		}
 		if ( modweight_arg2 < (-2) ) {
-			txt lang(name(modweight_charid) + "‚Í‘‰‚¹‚½B", name(modweight_charid) + " lose" + _s(modweight_charid) + " weight.")
+			txt lang(name(modweight_charid) + "ã¯ç—©ã›ãŸã€‚", name(modweight_charid) + " lose" + _s(modweight_charid) + " weight.")
 		}
 	}
 	return
@@ -6177,10 +6177,10 @@
 	}
 	if ( synccheck(modheight_charid, -1) ) {
 		if ( modheight_arg2 > 0 ) {
-			txt lang(name(modheight_charid) + "‚Ìg’·‚Í­‚µL‚Ñ‚½B", name(modheight_charid) + " grow" + _s(modheight_charid) + " taller.")
+			txt lang(name(modheight_charid) + "ã®èº«é•·ã¯å°‘ã—ä¼¸ã³ãŸã€‚", name(modheight_charid) + " grow" + _s(modheight_charid) + " taller.")
 		}
 		if ( modheight_arg2 < 0 ) {
-			txt lang(name(modheight_charid) + "‚Ìg’·‚Í­‚µk‚ñ‚¾B", name(modheight_charid) + " grow" + _s(modheight_charid) + " smaller.")
+			txt lang(name(modheight_charid) + "ã®èº«é•·ã¯å°‘ã—ç¸®ã‚“ã ã€‚", name(modheight_charid) + " grow" + _s(modheight_charid) + " smaller.")
 		}
 	}
 	return
@@ -6191,7 +6191,7 @@
 	}
 	cbitmod CHARA_BIT_ANOREXIA, cure_anorexia_charid, 0
 	if ( synccheck(cure_anorexia_charid, -1) | cure_anorexia_charid < MAX_CHARA_FOLLOWER ) {
-		txt lang(name(cure_anorexia_charid) + "‚Ì‹‘HÇ‚Í¡‚Á‚½B", name(cure_anorexia_charid) + " manage" + _s(cure_anorexia_charid) + " to recover from anorexia.")
+		txt lang(name(cure_anorexia_charid) + "ã®æ‹’é£Ÿç—‡ã¯æ²»ã£ãŸã€‚", name(cure_anorexia_charid) + " manage" + _s(cure_anorexia_charid) + " to recover from anorexia.")
 		snd SOUNDLIST_OFFER1
 	}
 	return
@@ -6200,12 +6200,12 @@
 	cdata(CDATA_VOMIT, chara_vomit_charid)++
 	if ( synccheck(chara_vomit_charid, -1) ) {
 		snd SOUNDLIST_VOMIT
-		txt lang(name(chara_vomit_charid) + "‚Í“f‚¢‚½B", name(chara_vomit_charid) + " vomit" + _s(chara_vomit_charid) + ".")
+		txt lang(name(chara_vomit_charid) + "ã¯åã„ãŸã€‚", name(chara_vomit_charid) + " vomit" + _s(chara_vomit_charid) + ".")
 	}
 	if ( cbit(CHARA_BIT_PREGNANT, chara_vomit_charid) ) {
 		cbitmod CHARA_BIT_PREGNANT, chara_vomit_charid, 0
 		if ( synccheck(chara_vomit_charid, -1) ) {
-			txt lang(name(chara_vomit_charid) + "‚Í‘Ì“à‚ÌˆÙ•¨‚ğ“f‚«o‚µ‚½I", name(chara_vomit_charid) + " spit" + _s(chara_vomit_charid) + " children from " + his(chara_vomit_charid) + " body!")
+			txt lang(name(chara_vomit_charid) + "ã¯ä½“å†…ã®ç•°ç‰©ã‚’åãå‡ºã—ãŸï¼", name(chara_vomit_charid) + " spit" + _s(chara_vomit_charid) + " children from " + his(chara_vomit_charid) + " body!")
 		}
 		cdata(CDATA_INFANT, chara_vomit_charid) = 0
 		if ( chara_vomit_charid == CHARA_PLAYER ) {
@@ -6250,7 +6250,7 @@
 			if ( rnd(5) == 0 ) {
 				cbitmod CHARA_BIT_ANOREXIA, chara_vomit_charid, 1
 				if ( synccheck(chara_vomit_charid, -1) ) {
-					txt lang(name(chara_vomit_charid) + "‚Í‹‘HÇ‚É‚È‚Á‚½B", name(chara_vomit_charid) + " develop" + _s(chara_vomit_charid) + " anorexia.")
+					txt lang(name(chara_vomit_charid) + "ã¯æ‹’é£Ÿç—‡ã«ãªã£ãŸã€‚", name(chara_vomit_charid) + " develop" + _s(chara_vomit_charid) + " anorexia.")
 					snd SOUNDLIST_OFFER1
 				}
 				if ( chara_vomit_charid == CHARA_PLAYER ) {
@@ -6260,7 +6260,7 @@
 							if ( rnd(64) >= 1 ) {
 								snd SOUNDLIST_PRAY2
 								txtef COLOR_GREEN
-								txt lang("‚µ‚©‚µŒ’N‚Ì‚¨ç‚è‚ª‹P‚«Au‚­ŠÔ‚É‹‘HÇ‚ª¡‚Á‚½B", "But the Amulet of Jure shines brightly for a moment, instantly curing the anorexia.")
+								txt lang("ã—ã‹ã—å¥åº·ã®ãŠå®ˆã‚ŠãŒè¼ãã€ç¬ãé–“ã«æ‹’é£Ÿç—‡ãŒæ²»ã£ãŸã€‚", "But the Amulet of Jure shines brightly for a moment, instantly curing the anorexia.")
 								cbitmod CHARA_BIT_ANOREXIA, chara_vomit_charid, 0
 							}
 						}
@@ -6296,13 +6296,13 @@
 	if ( eatstatus_arg1 <= (-1) ) {
 		cdata(CDATA_HUNGER, eatstatus_arg2) -= 1500
 		if ( synccheck(eatstatus_arg2, -1) ) {
-			txt lang(name(eatstatus_arg2) + "‚ÍŒ™‚ÈŠ´‚¶‚ª‚µ‚½B", name(eatstatus_arg2) + " feel" + _s(eatstatus_arg2) + " bad.")
+			txt lang(name(eatstatus_arg2) + "ã¯å«Œãªæ„Ÿã˜ãŒã—ãŸã€‚", name(eatstatus_arg2) + " feel" + _s(eatstatus_arg2) + " bad.")
 		}
 		chara_vomit eatstatus_arg2
 	}
 	if ( eatstatus_arg1 >= 1 ) {
 		if ( synccheck(eatstatus_arg2, -1) ) {
-			txt lang(name(eatstatus_arg2) + "‚Í—Ç‚¢—\Š´‚ª‚µ‚½B", name(eatstatus_arg2) + " feel" + _s(eatstatus_arg2) + " good.")
+			txt lang(name(eatstatus_arg2) + "ã¯è‰¯ã„äºˆæ„ŸãŒã—ãŸã€‚", name(eatstatus_arg2) + " feel" + _s(eatstatus_arg2) + " good.")
 		}
 		if ( rnd(5) == 0 ) {
 			addbuff eatstatus_arg2, BUFF_LUCK, 100, 500 + rnd(500)
@@ -6322,7 +6322,7 @@
 	if ( sickifcursed_arg1 <= (-1) ) {
 		if ( rnd(sickifcursed_arg3 + (sickifcursed_arg3 == 0)) == 0 ) {
 			if ( synccheck(sickifcursed_arg2, -1) ) {
-				txt lang(name(sickifcursed_arg2) + "‚Í‹C•ª‚ªˆ«‚­‚È‚Á‚½B", name(sickifcursed_arg2) + " feel" + _s(sickifcursed_arg2) + " grumpy.")
+				txt lang(name(sickifcursed_arg2) + "ã¯æ°—åˆ†ãŒæ‚ªããªã£ãŸã€‚", name(sickifcursed_arg2) + " feel" + _s(sickifcursed_arg2) + " grumpy.")
 			}
 			dmgcon sickifcursed_arg2, CONDITION_SICK, 200
 		}

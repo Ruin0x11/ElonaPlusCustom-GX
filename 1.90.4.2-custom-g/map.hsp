@@ -629,18 +629,18 @@
 		if ( gdata(GDATA_LEVEL) == 5 ) {
 			if ( gdata(GDATA_FLAG_SUB_KARAVIKA_OF_SONG_AND_DANCE) \ 3 == 0 ) {
 				txtef COLOR_GREEN
-				txt lang("ƒRƒ“ƒT[ƒg‚ğç‚è”²‚¢‚½I", "A Legendary stage!")
+				txt lang("ã‚³ãƒ³ã‚µãƒ¼ãƒˆã‚’å®ˆã‚ŠæŠœã„ãŸï¼", "A Legendary stage!")
 			}
 			else {
 				txtef COLOR_PURPLE
-				txt lang("ƒRƒ“ƒT[ƒg‚ğç‚ê‚È‚©‚Á‚½c", "The party turned out to be a big flop...")
+				txt lang("ã‚³ãƒ³ã‚µãƒ¼ãƒˆã‚’å®ˆã‚Œãªã‹ã£ãŸâ€¦", "The party turned out to be a big flop...")
 			}
 		}
 	}
 	if ( gdata(GDATA_AREA_PREV) == AREA_DOCK ) {
 		if ( gdata(GDATA_LEVEL) == 100 ) {
 			snd SOUNDLIST_BOLT1
-			txt lang("‚ ‚È‚½’B‚Í¬Œ^’ø‚ÅÁ“Å‚ğs‚Á‚Ä‚©‚ç‹AŠÒ‚µ‚½B", "You return via a small boat after disinfecting it.")
+			txt lang("ã‚ãªãŸé”ã¯å°å‹è‰‡ã§æ¶ˆæ¯’ã‚’è¡Œã£ã¦ã‹ã‚‰å¸°é‚„ã—ãŸã€‚", "You return via a small boat after disinfecting it.")
 			repeat MAX_CHARA_TOTAL
 				if ( cdata(CDATA_EXIST, cnt) != CHAR_STATE_ALIVE ) {
 					continue
@@ -655,7 +655,7 @@
 	if ( gdata(GDATA_AREA_PREV) == AREA_BLIMP ) {
 		if ( gdata(GDATA_LEVEL) == 100 ) {
 			snd SOUNDLIST_BOLT1
-			txt lang("‚ ‚È‚½’B‚ÍƒGƒEƒ_[ƒi‰¤“s‚©‚ç‹AŠÒ‚µ‚½B", "You return from the Eulderna capital.")
+			txt lang("ã‚ãªãŸé”ã¯ã‚¨ã‚¦ãƒ€ãƒ¼ãƒŠç‹éƒ½ã‹ã‚‰å¸°é‚„ã—ãŸã€‚", "You return from the Eulderna capital.")
 			gdata(GDATA_HOUR) += 2
 			gosub *advance_hour
 		}
@@ -686,7 +686,7 @@
 					cdata(CDATA_HP, cnt) = 1
 				}
 			loop
-			txt lang("‚ ‚È‚½’B‚Í‚Ç‚¤‚É‚©ƒmƒCƒGƒ‹‚É–ß‚Á‚Ä‚±‚ç‚ê‚½B", "You somehow make it back to Noyel.")
+			txt lang("ã‚ãªãŸé”ã¯ã©ã†ã«ã‹ãƒã‚¤ã‚¨ãƒ«ã«æˆ»ã£ã¦ã“ã‚‰ã‚ŒãŸã€‚", "You somehow make it back to Noyel.")
 			gdata(GDATA_HOUR) += 2
 			gosub *advance_hour
 		}
@@ -716,7 +716,7 @@
 					cdata(CDATA_HP, cnt) = 1
 				}
 			loop
-			txt lang("‚ ‚È‚½’B‚Í‚Ç‚¤‚É‚©ŠÖŠ‚É–ß‚Á‚Ä‚±‚ç‚ê‚½B", "You return to the border station.")
+			txt lang("ã‚ãªãŸé”ã¯ã©ã†ã«ã‹é–¢æ‰€ã«æˆ»ã£ã¦ã“ã‚‰ã‚ŒãŸã€‚", "You return to the border station.")
 			gdata(GDATA_HOUR) += 2
 			gosub *advance_hour
 		}
@@ -744,7 +744,7 @@
 		}
 		f = 0
 		if ( feat(1) == CELL_FEATURE_DOWNSTAIRS ) {
-			msgtemp += lang("ŠK’i‚ğ~‚è‚½B", "You walk down the stairs.")
+			msgtemp += lang("éšæ®µã‚’é™ã‚ŠãŸã€‚", "You walk down the stairs.")
 			f = 1
 			gdata(GDATA_LEVEL_START_ON) = 1
 			mdata(MDATA_DOWNSTAIRS_POS) = cdata(CDATA_Y, CHARA_PLAYER) * 1000 + cdata(CDATA_X, CHARA_PLAYER)
@@ -758,7 +758,7 @@
 		}
 		if ( feat(1) == CELL_FEATURE_UPSTAIRS ) {
 			if ( gdata(GDATA_AREA_PREV) != AREA_NT_SOUTH_BORDER & gdata(GDATA_LEVEL) != 100 ) {
-				msgtemp += lang("ŠK’i‚ğ¸‚Á‚½B", "You walk up the stairs.")
+				msgtemp += lang("éšæ®µã‚’æ˜‡ã£ãŸã€‚", "You walk up the stairs.")
 			}
 			f = 1
 			gdata(GDATA_LEVEL_START_ON) = 2
@@ -784,59 +784,59 @@
 					gdata(GDATA_AREA) = feat(2) + feat(3) * 100
 					if ( adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_VOID ) {
 						if ( itemfind(CHARA_PLAYER, ITEM_ID_LICENCE_THE_VOID_EXPLORER) == (-1) ) {
-							txt lang("‚ ‚È‚½‚Í‚±‚Ì“´ŒA‚Ì’Tõ‚ğ‹–‰Â‚³‚ê‚Ä‚¢‚È‚¢B", "You are not permitted to explore this dungeon.")
+							txt lang("ã‚ãªãŸã¯ã“ã®æ´çªŸã®æ¢ç´¢ã‚’è¨±å¯ã•ã‚Œã¦ã„ãªã„ã€‚", "You are not permitted to explore this dungeon.")
 							msg_halt
 							gdata(GDATA_AREA) = AREA_WILDERNESS
 						}
 					}
 					if ( adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_PYRAMID ) {
 						if ( gdata(GDATA_FLAG_SUB_PYRAMID) == 0 ) {
-							txt lang("‚ ‚È‚½‚Íƒsƒ‰ƒ~ƒbƒh‚Ö‚Ìµ‘Òó‚ğ‚Á‚Ä‚¢‚È‚¢B", "You don't have an invitation.")
+							txt lang("ã‚ãªãŸã¯ãƒ”ãƒ©ãƒŸãƒƒãƒ‰ã¸ã®æ‹›å¾…çŠ¶ã‚’æŒã£ã¦ã„ãªã„ã€‚", "You don't have an invitation.")
 							msg_halt
 							gdata(GDATA_AREA) = AREA_WILDERNESS
 						}
 					}
 					if ( adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_JAIL ) {
-						txt lang("‚ ‚È‚½‚ÍƒK[ƒh‚É’Ç‚¢•Ô‚³‚ê‚½B", "The guards turn you away from the jail.")
+						txt lang("ã‚ãªãŸã¯ã‚¬ãƒ¼ãƒ‰ã«è¿½ã„è¿”ã•ã‚ŒãŸã€‚", "The guards turn you away from the jail.")
 						msg_halt
 						gdata(GDATA_AREA) = AREA_WILDERNESS
 					}
 					if ( adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_JAIL2 ) {
-						txt lang("‚ ‚È‚½‚ÍƒK[ƒh‚É’Ç‚¢•Ô‚³‚ê‚½B", "The guards turn you away from the jail.")
+						txt lang("ã‚ãªãŸã¯ã‚¬ãƒ¼ãƒ‰ã«è¿½ã„è¿”ã•ã‚ŒãŸã€‚", "The guards turn you away from the jail.")
 						msg_halt
 						gdata(GDATA_AREA) = AREA_WILDERNESS
 					}
 					if ( adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_MOUNTAIN_PASS_WINDY ) {
 						if ( gdata(GDATA_FLAG_MAIN) < 300 ) {
-							txt lang("‚”Z“x‚ÌƒG[ƒeƒ‹‚ª•Ó‚è‚É[–‚µ‚Ä‚¢‚éB‹ßŠñ‚ç‚È‚¢•û‚ª‚¢‚¢‚¾‚ë‚¤B", "A high concentration of ether fills the area. You'd better stay away.")
+							txt lang("é«˜æ¿ƒåº¦ã®ã‚¨ãƒ¼ãƒ†ãƒ«ãŒè¾ºã‚Šã«å……æº€ã—ã¦ã„ã‚‹ã€‚è¿‘å¯„ã‚‰ãªã„æ–¹ãŒã„ã„ã ã‚ã†ã€‚", "A high concentration of ether fills the area. You'd better stay away.")
 							msg_halt
 							gdata(GDATA_AREA) = AREA_WILDERNESS
 						}
 					}
 					if ( adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_REMIDO ) {
 						if ( gdata(GDATA_FLAG_MAIN) < 260 ) {
-							txt lang("ƒCƒFƒ‹ƒXŒR‚ª{‚µ‚½“dqƒƒbƒN‚É‚æ‚Á‚Ä“üŒû‚ÍŒÅ‚­•Â‚´‚³‚ê‚Ä‚¢‚½BƒƒbƒN‚ğ‰ğœ‚·‚é•û–@‚ğ’T‚»‚¤B", "The Yerles army has closed the entrance via an electronic lock. I should look for a way through.")
+							txt lang("ã‚¤ã‚§ãƒ«ã‚¹è»ãŒæ–½ã—ãŸé›»å­ãƒ­ãƒƒã‚¯ã«ã‚ˆã£ã¦å…¥å£ã¯å›ºãé–‰ã–ã•ã‚Œã¦ã„ãŸã€‚ãƒ­ãƒƒã‚¯ã‚’è§£é™¤ã™ã‚‹æ–¹æ³•ã‚’æ¢ãã†ã€‚", "The Yerles army has closed the entrance via an electronic lock. I should look for a way through.")
 							msg_halt
 							gdata(GDATA_AREA) = AREA_WILDERNESS
 						}
 					}
 					if ( adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_ST_NORTH_BORDER ) {
 						if ( gdata(GDATA_FLAG_MAIN) == 366 ) {
-							txt lang("æ‚Éƒƒ‹ƒKƒX‚ÌƒKƒxƒ‰‚Ì‚Æ‚±‚ë‚É˜b‚ğ•·‚«‚És‚±‚¤B", "I should hear what Gavela in Melugas has to say.")
+							txt lang("å…ˆã«ãƒ¡ãƒ«ã‚¬ã‚¹ã®ã‚¬ãƒ™ãƒ©ã®ã¨ã“ã‚ã«è©±ã‚’èãã«è¡Œã“ã†ã€‚", "I should hear what Gavela in Melugas has to say.")
 							msg_halt
 							gdata(GDATA_AREA) = AREA_WILDERNESS
 						}
 					}
 					if ( adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_MAID_MANSION ) {
 						if ( gdata(GDATA_FLAG_SUB_MANSION_FOR_SALE) < 1000 ) {
-							txt lang("‚Ç‚¤‚â‚ç‰®•~‚Í”„‚è‚Éo‚³‚ê‚Ä‚¢‚é‚ç‚µ‚­A”`‚¢‚Ä‚à’N‚à‚¢‚È‚©‚Á‚½B", "No one answered the door. There's a For Sale sign in front of the mansion.")
+							txt lang("ã©ã†ã‚„ã‚‰å±‹æ•·ã¯å£²ã‚Šã«å‡ºã•ã‚Œã¦ã„ã‚‹ã‚‰ã—ãã€è¦—ã„ã¦ã‚‚èª°ã‚‚ã„ãªã‹ã£ãŸã€‚", "No one answered the door. There's a For Sale sign in front of the mansion.")
 							msg_halt
 							gdata(GDATA_AREA) = AREA_WILDERNESS
 						}
 					}
 					if ( adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_HARVEST_SHIP ) {
 						if ( gdata(GDATA_FLAG_SUB_THE_DISTANT_SEA_OF_STARS) < 2 ) {
-							txt lang("³–Ê‚Ì“ü‚èŒû‚ÍŒÅ‚­•Â‚´‚³‚ê‚Ä‚¢‚éB‚Ç‚±‚©‚ç“ü‚ê‚Î‚æ‚¢‚Ì‚¾‚ë‚¤B", "The front entrance is shut tight. You have no idea how to get inside.")
+							txt lang("æ­£é¢ã®å…¥ã‚Šå£ã¯å›ºãé–‰ã–ã•ã‚Œã¦ã„ã‚‹ã€‚ã©ã“ã‹ã‚‰å…¥ã‚Œã°ã‚ˆã„ã®ã ã‚ã†ã€‚", "The front entrance is shut tight. You have no idea how to get inside.")
 							msg_halt
 							gdata(GDATA_AREA) = AREA_WILDERNESS
 						}
@@ -848,21 +848,21 @@
 					}
 					if ( adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_YLVA_LIBRARY | adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_BLIMP | adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_AMUR_CAGE | adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_MIRAGE_TOWER | adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_RUST_PLAZA | adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_DOCK | adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_OL_DRAN | adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_WAR_GROUND ) {
 						if ( gdata(GDATA_FLAG_MAIN) < 368 ) {
-							txt lang("æ‚Éƒmƒ‹ƒ“‚ÉŒ¾‚í‚ê‚½X‚ÌˆâÕ‚És‚±‚¤B", "I should go to the ruin of forest ahead.")
+							txt lang("å…ˆã«ãƒãƒ«ãƒ³ã«è¨€ã‚ã‚ŒãŸæ£®ã®éºè·¡ã«è¡Œã“ã†ã€‚", "I should go to the ruin of forest ahead.")
 							msg_halt
 							gdata(GDATA_AREA) = AREA_WILDERNESS
 						}
 					}
 					if ( adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_CHAOS_CRADLE ) {
 						if ( gdata(GDATA_FLAG_MAIN) < 370 ) {
-							txt lang("‚½‚¾‚È‚ç‚Ê‹C”z‚ğŠ´‚¶‚éB‚à‚¤­‚µ‚±‚ÌƒlƒtƒBƒA‚É‚Â‚¢‚Ä’²‚×‚Ä‚©‚ç’Tõ‚µ‚½‚Ù‚¤‚ª‚æ‚¢‚¾‚ë‚¤B", "You sense an extraordinary presence. It would be better to learn more information about this Nefia before exploring it.")
+							txt lang("ãŸã ãªã‚‰ã¬æ°—é…ã‚’æ„Ÿã˜ã‚‹ã€‚ã‚‚ã†å°‘ã—ã“ã®ãƒãƒ•ã‚£ã‚¢ã«ã¤ã„ã¦èª¿ã¹ã¦ã‹ã‚‰æ¢ç´¢ã—ãŸã»ã†ãŒã‚ˆã„ã ã‚ã†ã€‚", "You sense an extraordinary presence. It would be better to learn more information about this Nefia before exploring it.")
 							msg_halt
 							gdata(GDATA_AREA) = AREA_WILDERNESS
 						}
 					}
 					if ( adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_GUARDIAN_SHRINE ) {
 						if ( gdata(GDATA_FLAG_MAIN) < 390 ) {
-							txt lang("–å‚ªŒÅ‚­•Â‚¶‚ç‚ê‚Ä‚¢‚écB", "The gate is firmly closed...")
+							txt lang("é–€ãŒå›ºãé–‰ã˜ã‚‰ã‚Œã¦ã„ã‚‹â€¦ã€‚", "The gate is firmly closed...")
 							msg_halt
 							gdata(GDATA_AREA) = AREA_WILDERNESS
 						}
@@ -870,7 +870,7 @@
 				}
 				else {
 					if ( gdata(GDATA_WORLD_X) == 51 & gdata(GDATA_WORLD_Y) == 39 & gdata(GDATA_WORLD) == AREA_LOST_YLVA ) {
-						txt lang("’†‚É“ü‚ë‚¤‚Æ‚·‚é‚ÆA“ƒ‚ÍŒ¶‚Ì‚æ‚¤‚É–¶U‚µ‚Ä‚µ‚Ü‚Á‚½cB", "When you try to enter it, the tower dissipates as a mirage...")
+						txt lang("ä¸­ã«å…¥ã‚ã†ã¨ã™ã‚‹ã¨ã€å¡”ã¯å¹»ã®ã‚ˆã†ã«éœ§æ•£ã—ã¦ã—ã¾ã£ãŸâ€¦ã€‚", "When you try to enter it, the tower dissipates as a mirage...")
 						msg_halt
 					}
 					gdata(GDATA_AREA) = AREA_WILDERNESS
@@ -891,10 +891,10 @@
 		if ( adata(ADATA_TYPE, gdata(GDATA_AREA)) == MAP_TYPE_TOWN ) {
 			if ( gdata(GDATA_AREA) == gdata(GDATA_AREA_PREV) ) {
 				if ( gdata(GDATA_LEVEL) == 1 ) {
-					msgtemp += lang(mapname(gdata(GDATA_AREA)) + "‚Ì•\‘w‚É–ß‚Á‚½B", "You returned to the surface of " + mapname(gdata(GDATA_AREA)) + ".")
+					msgtemp += lang(mapname(gdata(GDATA_AREA)) + "ã®è¡¨å±¤ã«æˆ»ã£ãŸã€‚", "You returned to the surface of " + mapname(gdata(GDATA_AREA)) + ".")
 				}
 				else {
-					msgtemp += lang(mapname(gdata(GDATA_AREA)) + "‚Ì•\‘w‚ğŒã‚É‚µ‚½B", "You left the surface of " + mapname(gdata(GDATA_AREA)) + ".")
+					msgtemp += lang(mapname(gdata(GDATA_AREA)) + "ã®è¡¨å±¤ã‚’å¾Œã«ã—ãŸã€‚", "You left the surface of " + mapname(gdata(GDATA_AREA)) + ".")
 				}
 			}
 		}
@@ -977,7 +977,7 @@
 		}
 	}
 	if ( rdtry > 1 ) {
-		msgtemp += "(Ä¶¬" + rdtry + "‰ñ)"
+		msgtemp += "(å†ç”Ÿæˆ" + rdtry + "å›)"
 	}
 	if ( gdata(GDATA_AREA) != gdata(GDATA_AREA_PREV) ) {
 		if ( mdata(MDATA_TYPE) == MAP_TYPE_TOWN | gdata(GDATA_TRAVEL_TIME) == 0 | gdata(GDATA_AREA_PREV) == AREA_HOME | mdata(MDATA_TYPE) == MAP_TYPE_VILLAGE ) {
@@ -999,25 +999,25 @@
 			gdata(GDATA_LEVEL_START_ON) = adata(ADATA_START_ON, gdata(GDATA_AREA))
 		}
 		if ( evfind(EVENT_DEAD) ) {
-			msgtemp += lang("‚ ‚È‚½‚Í•œ‹Aƒ|ƒCƒ“ƒg‚Ü‚Å‰^‚Î‚ê‚½B", "You were delivered to your home.")
+			msgtemp += lang("ã‚ãªãŸã¯å¾©å¸°ãƒã‚¤ãƒ³ãƒˆã¾ã§é‹ã°ã‚ŒãŸã€‚", "You were delivered to your home.")
 			gosub *weather_change
 		}
 		else {
 			if ( adata(ADATA_TYPE, gdata(GDATA_AREA_PREV)) == MAP_TYPE_WORLD ) {
-				msgtemp += lang(mapname(gdata(GDATA_AREA)) + "‚É“ü‚Á‚½B", "You entered " + mapname(gdata(GDATA_AREA)) + ".")
+				msgtemp += lang(mapname(gdata(GDATA_AREA)) + "ã«å…¥ã£ãŸã€‚", "You entered " + mapname(gdata(GDATA_AREA)) + ".")
 			}
 			else {
 				if ( mdata(MDATA_TYPE) == MAP_TYPE_QUEST ) {
-					msgtemp += lang(mapname(gdata(GDATA_AREA)) + "‚É–ß‚Á‚½B", " You returned to " + mapname(gdata(GDATA_AREA)) + ".")
+					msgtemp += lang(mapname(gdata(GDATA_AREA)) + "ã«æˆ»ã£ãŸã€‚", " You returned to " + mapname(gdata(GDATA_AREA)) + ".")
 				}
 				else {
-					msgtemp += lang(mapname(gdata(GDATA_AREA_PREV)) + "‚ğŒã‚É‚µ‚½B", "You left " + mapname(gdata(GDATA_AREA_PREV)) + ".")
+					msgtemp += lang(mapname(gdata(GDATA_AREA_PREV)) + "ã‚’å¾Œã«ã—ãŸã€‚", "You left " + mapname(gdata(GDATA_AREA_PREV)) + ".")
 				}
 			}
 		}
 		if ( gdata(GDATA_CARGO_WEIGHT) > gdata(GDATA_CARGO_LIMIT) ) {
 			if ( adata(ADATA_TYPE, gdata(GDATA_AREA)) == MAP_TYPE_WORLD | adata(ADATA_TYPE, gdata(GDATA_AREA)) == MAP_TYPE_LOCAL ) {
-				msgtemp += lang("‰×Ô‚Ìd—Ê’´‰ß‚Å‚©‚È‚è“İ‘«‚É‚È‚Á‚Ä‚¢‚éI ", "The weight of your cargo burdens your traveling speed.")
+				msgtemp += lang("è·è»Šã®é‡é‡è¶…éã§ã‹ãªã‚Šéˆè¶³ã«ãªã£ã¦ã„ã‚‹ï¼ ", "The weight of your cargo burdens your traveling speed.")
 			}
 		}
 	}
@@ -1061,7 +1061,7 @@
 			gdata(GDATA_AREA) = AREA_MOUNTAIN_PASS
 			gdata(GDATA_LEVEL) = adata(ADATA_MAX_LEVEL, gdata(GDATA_AREA)) - 1
 			gdata(GDATA_LEVEL_START_ON) = 1
-			msgtemp += lang("ƒ}ƒEƒ“ƒeƒ“ƒpƒX‚É~‚è‚½B", "You entered the Mountain Pass.")
+			msgtemp += lang("ãƒã‚¦ãƒ³ãƒ†ãƒ³ãƒ‘ã‚¹ã«é™ã‚ŠãŸã€‚", "You entered the Mountain Pass.")
 		}
 	}
 	if ( gdata(GDATA_AREA) == AREA_MOUNTAIN_PASS ) {
@@ -1069,7 +1069,7 @@
 			gdata(GDATA_AREA) = AREA_LARNA
 			gdata(GDATA_LEVEL) = 1
 			gdata(GDATA_LEVEL_START_ON) = 2
-			msgtemp += lang("ƒ‰[ƒi‚Ì‘º‚É’H‚è‚Â‚¢‚½B", "You reached the town of Larna.")
+			msgtemp += lang("ãƒ©ãƒ¼ãƒŠã®æ‘ã«è¾¿ã‚Šã¤ã„ãŸã€‚", "You reached the town of Larna.")
 		}
 	}
 	if ( gdata(GDATA_AREA) == AREA_ANCIENT_GARDEN ) {
@@ -1077,7 +1077,7 @@
 			gdata(GDATA_AREA) = AREA_MOUNTAIN_PASS_WINDY
 			gdata(GDATA_LEVEL) = adata(ADATA_MAX_LEVEL, gdata(GDATA_AREA)) - 1
 			gdata(GDATA_LEVEL_START_ON) = 1
-			msgtemp += lang("•—‚ÌR“¹‚É~‚è‚½B", "You entered the Mountain Pass.")
+			msgtemp += lang("é¢¨ã®å±±é“ã«é™ã‚ŠãŸã€‚", "You entered the Mountain Pass.")
 		}
 	}
 	if ( gdata(GDATA_AREA) == AREA_MOUNTAIN_PASS_WINDY ) {
@@ -1085,7 +1085,7 @@
 			gdata(GDATA_AREA) = AREA_ANCIENT_GARDEN
 			gdata(GDATA_LEVEL) = 1
 			gdata(GDATA_LEVEL_START_ON) = 2
-			msgtemp += lang("ŒÃ‚Ì’ë‰€‚É’H‚è‚Â‚¢‚½B", "You reached the ancient garden.")
+			msgtemp += lang("å¤ã®åº­åœ’ã«è¾¿ã‚Šã¤ã„ãŸã€‚", "You reached the ancient garden.")
 		}
 	}
 	repeat MAX_CHARA_FOLLOWER
@@ -1207,7 +1207,7 @@
 	if ( a ) {
 		existwrapper exedir + "tmp\\mdata_" + mid + ".s2"
 		if ( strsize != (-1) ) {
-			dialog lang("ƒ}ƒbƒv‚ğ‰Šú‰»‚µ‚Ü‚·‚©Hi’FƒQ[ƒ€‚É‰e‹¿‚ªo‚é‰Â”\«‚ª‚ ‚è‚Ü‚·BƒGƒ‰[‚ªo‚Äƒ}ƒbƒv‚ª“Ç‚İ‚ß‚È‚¢ê‡‚Ì‚İA•K‚¸Œ³‚ÌƒZ[ƒu‚ÌƒoƒbƒNƒAƒbƒv‚ğ‚Æ‚Á‚½ã‚ÅÀs‚µ‚Ä‚­‚¾‚³‚¢Bj", "Reinitialize this map? (Warning, only do this if an error occurs when loading this map. Make sure you have a backup of the current save folder before doing this.)"), 3
+			dialog lang("ãƒãƒƒãƒ—ã‚’åˆæœŸåŒ–ã—ã¾ã™ã‹ï¼Ÿï¼ˆæ³¨ï¼šã‚²ãƒ¼ãƒ ã«å½±éŸ¿ãŒå‡ºã‚‹å¯èƒ½æ€§ãŒã‚ã‚Šã¾ã™ã€‚ã‚¨ãƒ©ãƒ¼ãŒå‡ºã¦ãƒãƒƒãƒ—ãŒèª­ã¿è¾¼ã‚ãªã„å ´åˆã®ã¿ã€å¿…ãšå…ƒã®ã‚»ãƒ¼ãƒ–ã®ãƒãƒƒã‚¯ã‚¢ãƒƒãƒ—ã‚’ã¨ã£ãŸä¸Šã§å®Ÿè¡Œã—ã¦ãã ã•ã„ã€‚ï¼‰", "Reinitialize this map? (Warning, only do this if an error occurs when loading this map. Make sure you have a backup of the current save folder before doing this.)"), 3
 			if ( stat == 6 ) {
 				fmode = 11
 				gosub *game_ctrlFile
@@ -1292,8 +1292,8 @@
 		randomize gdata(GDATA_RAND_SEED_A) + gdata(GDATA_AREA) * 1000 + gdata(GDATA_LEVEL)
 	}
 	if ( gdata(GDATA_AREA) == AREA_HOME ) {
-		if ( mdatan(MDATAN_NAME) == "" | mdatan(MDATAN_NAME) == lang("ƒm[ƒXƒeƒBƒŠƒX", "North Tyris") ) {
-			mdatan(MDATAN_NAME) = lang("‚í‚ª‰Æ", "Your Home")
+		if ( mdatan(MDATAN_NAME) == "" | mdatan(MDATAN_NAME) == lang("ãƒãƒ¼ã‚¹ãƒ†ã‚£ãƒªã‚¹", "North Tyris") ) {
+			mdatan(MDATAN_NAME) = lang("ã‚ãŒå®¶", "Your Home")
 		}
 	}
 	else {
@@ -1690,52 +1690,52 @@
 				mdata(MDATA_MODERATE_CROWD) = 0
 				mdata(MDATA_MUSIC) = MUSICLIST_MCCHAOS
 				mdata(MDATA_NO_RENEW) = 1
-				mdatan(MDATAN_NAME) = lang("V¶‘Ì•ºŠíÀŒ±ê", "New Test Site")
+				mdatan(MDATAN_NAME) = lang("æ–°ç”Ÿä½“å…µå™¨å®Ÿé¨“å ´", "New Test Site")
 				gdata(GDATA_LEVEL_START_ON) = 7
 				mapstartx = 4
 				mapstarty = 4
 				flt
 				characreate -1, CREATURE_ID_TESTER, 35, 1
-				cdatan(CDATAN_NAME, rc) = lang("ƒƒVƒF[ƒ‰EƒLƒKƒc", "tester")
+				cdatan(CDATAN_NAME, rc) = lang("ãƒ¡ã‚·ã‚§ãƒ¼ãƒ©ãƒ»ã‚­ã‚¬ãƒ„", "tester")
 				flt
 				characreate -1, CREATURE_ID_TESTER, 35, 7
-				cdatan(CDATAN_NAME, rc) = lang("ƒƒVƒF[ƒ‰EƒNƒgƒ", "tester")
+				cdatan(CDATAN_NAME, rc) = lang("ãƒ¡ã‚·ã‚§ãƒ¼ãƒ©ãƒ»ã‚¯ãƒˆãƒ¯", "tester")
 				flt
 				characreate -1, CREATURE_ID_TESTER, 39, 1
-				cdatan(CDATAN_NAME, rc) = lang("ƒƒVƒF[ƒ‰Eƒ^ƒVƒn", "tester")
+				cdatan(CDATAN_NAME, rc) = lang("ãƒ¡ã‚·ã‚§ãƒ¼ãƒ©ãƒ»ã‚¿ã‚·ãƒ", "tester")
 				flt
 				characreate -1, CREATURE_ID_TESTER, 39, 7
-				cdatan(CDATAN_NAME, rc) = lang("ƒƒVƒF[ƒ‰EƒƒVƒG", "tester")
+				cdatan(CDATAN_NAME, rc) = lang("ãƒ¡ã‚·ã‚§ãƒ¼ãƒ©ãƒ»ãƒ¡ã‚·ã‚¨", "tester")
 				flt
 				characreate -1, CREATURE_ID_TESTER, 43, 1
-				cdatan(CDATAN_NAME, rc) = lang("ƒƒVƒF[ƒ‰Eƒ‰ƒjƒT", "tester")
+				cdatan(CDATAN_NAME, rc) = lang("ãƒ¡ã‚·ã‚§ãƒ¼ãƒ©ãƒ»ãƒ©ãƒ‹ã‚µ", "tester")
 				flt
 				characreate -1, CREATURE_ID_TESTER, 43, 7
-				cdatan(CDATAN_NAME, rc) = lang("ƒƒVƒF[ƒ‰EƒŒƒeƒC", "tester")
+				cdatan(CDATAN_NAME, rc) = lang("ãƒ¡ã‚·ã‚§ãƒ¼ãƒ©ãƒ»ãƒ¬ãƒ†ã‚¤", "tester")
 				flt
 				characreate -1, CREATURE_ID_TESTER, 47, 1
-				cdatan(CDATAN_NAME, rc) = lang("ƒƒVƒF[ƒ‰Eƒ^ƒ_ƒP", "tester")
+				cdatan(CDATAN_NAME, rc) = lang("ãƒ¡ã‚·ã‚§ãƒ¼ãƒ©ãƒ»ã‚¿ãƒ€ã‚±", "tester")
 				flt
 				characreate -1, CREATURE_ID_TESTER, 47, 7
-				cdatan(CDATAN_NAME, rc) = lang("ƒƒVƒF[ƒ‰Eƒhƒgƒ}", "tester")
+				cdatan(CDATAN_NAME, rc) = lang("ãƒ¡ã‚·ã‚§ãƒ¼ãƒ©ãƒ»ãƒ‰ãƒˆãƒ", "tester")
 				flt
 				characreate -1, CREATURE_ID_TESTER, 47, 10
-				cdatan(CDATAN_NAME, rc) = lang("ƒƒVƒF[ƒ‰Eƒ‰ƒiƒC", "tester")
+				cdatan(CDATAN_NAME, rc) = lang("ãƒ¡ã‚·ã‚§ãƒ¼ãƒ©ãƒ»ãƒ©ãƒŠã‚¤", "tester")
 				flt
 				characreate -1, CREATURE_ID_TESTER, 47, 16
-				cdatan(CDATAN_NAME, rc) = lang("ƒƒVƒF[ƒ‰EƒQƒLƒc", "tester")
+				cdatan(CDATAN_NAME, rc) = lang("ãƒ¡ã‚·ã‚§ãƒ¼ãƒ©ãƒ»ã‚²ã‚­ãƒ„", "tester")
 				flt
 				characreate -1, CREATURE_ID_TESTER, 43, 10
-				cdatan(CDATAN_NAME, rc) = lang("ƒƒVƒF[ƒ‰EƒEƒnƒJ", "tester")
+				cdatan(CDATAN_NAME, rc) = lang("ãƒ¡ã‚·ã‚§ãƒ¼ãƒ©ãƒ»ã‚¦ãƒã‚«", "tester")
 				flt
 				characreate -1, CREATURE_ID_TESTER, 43, 16
-				cdatan(CDATAN_NAME, rc) = lang("ƒƒVƒF[ƒ‰EƒiƒVƒ€", "tester")
+				cdatan(CDATAN_NAME, rc) = lang("ãƒ¡ã‚·ã‚§ãƒ¼ãƒ©ãƒ»ãƒŠã‚·ãƒ ", "tester")
 				flt
 				characreate -1, CREATURE_ID_TESTER, 38, 10
-				cdatan(CDATAN_NAME, rc) = lang("ƒƒVƒF[ƒ‰EƒRƒgƒT", "tester")
+				cdatan(CDATAN_NAME, rc) = lang("ãƒ¡ã‚·ã‚§ãƒ¼ãƒ©ãƒ»ã‚³ãƒˆã‚µ", "tester")
 				flt
 				characreate -1, CREATURE_ID_TESTER, 35, 10
-				cdatan(CDATAN_NAME, rc) = lang("ƒƒVƒF[ƒ‰EƒVƒeƒN", "tester")
+				cdatan(CDATAN_NAME, rc) = lang("ãƒ¡ã‚·ã‚§ãƒ¼ãƒ©ãƒ»ã‚·ãƒ†ã‚¯", "tester")
 				put_questtarget
 				flt
 				characreate -1, CREATURE_ID_REGULUS_THE_ALTERED, 6, 4
@@ -1934,11 +1934,11 @@
 		flt
 		characreate -1, CREATURE_ID_SHOPKEEPER, 9, 44
 		cdata(CDATA_ROLE, rc) = ROLE_SHOP_MOUNTAIN1, 5
-		cdatan(CDATAN_NAME, rc) = lang("õF“X‚Ì" + cdatan(CDATAN_NAME, rc), sncnv(cdatan(CDATAN_NAME, rc)) + "the dye vendor")
+		cdatan(CDATAN_NAME, rc) = lang("æŸ“è‰²åº—ã®" + cdatan(CDATAN_NAME, rc), sncnv(cdatan(CDATAN_NAME, rc)) + "the dye vendor")
 		flt
 		characreate -1, CREATURE_ID_SHOPKEEPER, 13, 37
 		cdata(CDATA_ROLE, rc) = ROLE_SHOP_MOUNTAIN2, 30
-		cdatan(CDATAN_NAME, rc) = lang("‚¨‚İ‚â‚°‰®‚Ì" + cdatan(CDATAN_NAME, rc), sncnv(cdatan(CDATAN_NAME, rc)) + "the souvenir vendor")
+		cdatan(CDATAN_NAME, rc) = lang("ãŠã¿ã‚„ã’å±‹ã®" + cdatan(CDATAN_NAME, rc), sncnv(cdatan(CDATAN_NAME, rc)) + "the souvenir vendor")
 		flt
 		characreate -1, CREATURE_ID_BARTENDER, 24, 48
 		cdata(CDATA_ROLE, rc) = ROLE_BARTENDER
@@ -2267,7 +2267,7 @@
 			flt
 			characreate -1, CREATURE_ID_SHOPKEEPER, 29, 4
 			cdata(CDATA_ROLE, rc) = ROLE_SLAVER
-			cdatan(CDATAN_NAME, rc) = lang("“ä‚Ì“z—ê¤l", "The slave master")
+			cdatan(CDATAN_NAME, rc) = lang("è¬ã®å¥´éš·å•†äºº", "The slave master")
 			flt
 			characreate -1, CREATURE_ID_SHOPKEEPER, 10, 6
 			cdata(CDATA_ROLE, rc) = ROLE_SHOP_ARMOR, 12
@@ -2278,7 +2278,7 @@
 			flt
 			characreate -1, CREATURE_ID_ELDER, 9, 18
 			cdata(CDATA_ROLE, rc) = ROLE_MAYOR
-			cdatan(CDATAN_NAME, rc) = lang("ƒ_ƒ‹ƒtƒB" + cdatan(CDATAN_NAME, rc), cdatan(CDATAN_NAME, rc) + " of Derphy")
+			cdatan(CDATAN_NAME, rc) = lang("ãƒ€ãƒ«ãƒ•ã‚£" + cdatan(CDATAN_NAME, rc), cdatan(CDATAN_NAME, rc) + " of Derphy")
 			flt
 			characreate -1, CREATURE_ID_TRAINER, 13, 18
 			cdata(CDATA_ROLE, rc) = ROLE_TRAINER
@@ -2312,7 +2312,7 @@
 			mdata(MDATA_MODERATE_CROWD) = 25
 			mdata(MDATA_MUSIC) = MUSICLIST_MCRUIN
 			mdata(MDATA_NO_RENEW) = 0
-			mdatan(MDATAN_NAME) = lang("“‘¯ƒMƒ‹ƒh", "Thieves Guild")
+			mdatan(MDATAN_NAME) = lang("ç›—è³Šã‚®ãƒ«ãƒ‰", "Thieves Guild")
 			map_placeplayer
 			flt
 			characreate -1, CREATURE_ID_SIN_THE_THIEF_GUILDMASTER, 21, 9
@@ -2335,7 +2335,7 @@
 			flt
 			characreate -1, CREATURE_ID_SHOPKEEPER, 21, 19
 			cdata(CDATA_ROLE, rc) = ROLE_SHOP_THIEF, 10
-			cdatan(CDATAN_NAME, rc) = lang("“‘¯“X‚Ì" + cdatan(CDATAN_NAME, rc), sncnv(cdatan(CDATAN_NAME, rc)) + "the fence")
+			cdatan(CDATAN_NAME, rc) = lang("ç›—è³Šåº—ã®" + cdatan(CDATAN_NAME, rc), sncnv(cdatan(CDATAN_NAME, rc)) + "the fence")
 			repeat 16
 				flt
 				characreate -1, CREATURE_ID_THIEF_GUILD_MEMBER, -3, 0
@@ -2424,7 +2424,7 @@
 		flt
 		characreate -1, CREATURE_ID_ELDER, 49, 11
 		cdata(CDATA_ROLE, rc) = ROLE_MAYOR
-		cdatan(CDATAN_NAME, rc) = lang("ƒpƒ‹ƒ~ƒAsŠX’n‚Ì" + cdatan(CDATAN_NAME, rc), cdatan(CDATAN_NAME, rc) + " of Palmia city")
+		cdatan(CDATAN_NAME, rc) = lang("ãƒ‘ãƒ«ãƒŸã‚¢å¸‚è¡—åœ°ã®" + cdatan(CDATAN_NAME, rc), cdatan(CDATAN_NAME, rc) + " of Palmia city")
 		flt
 		characreate -1, CREATURE_ID_TRAINER, 30, 27
 		cdata(CDATA_ROLE, rc) = ROLE_TRAINER
@@ -2565,7 +2565,7 @@
 			flt
 			characreate -1, CREATURE_ID_ELDER, 3, 38
 			cdata(CDATA_ROLE, rc) = ROLE_MAYOR
-			cdatan(CDATAN_NAME, rc) = lang("ƒ‹ƒ~ƒGƒXƒg‚Ì" + cdatan(CDATAN_NAME, rc), cdatan(CDATAN_NAME, rc) + " of Lumiest")
+			cdatan(CDATAN_NAME, rc) = lang("ãƒ«ãƒŸã‚¨ã‚¹ãƒˆã®" + cdatan(CDATAN_NAME, rc), cdatan(CDATAN_NAME, rc) + " of Lumiest")
 			flt
 			characreate -1, CREATURE_ID_TRAINER, 21, 28
 			cdata(CDATA_ROLE, rc) = ROLE_TRAINER
@@ -2604,7 +2604,7 @@
 			mdata(MDATA_MODERATE_CROWD) = 25
 			mdata(MDATA_MUSIC) = MUSICLIST_MCTOWN2
 			mdata(MDATA_NO_RENEW) = 0
-			mdatan(MDATAN_NAME) = lang("–‚pmƒMƒ‹ƒh", "Mages Guild")
+			mdatan(MDATAN_NAME) = lang("é­”è¡“å£«ã‚®ãƒ«ãƒ‰", "Mages Guild")
 			map_placeplayer
 			flt
 			characreate -1, CREATURE_ID_REVLUS_THE_MAGE_GUILDMASTER, 24, 3
@@ -2612,7 +2612,7 @@
 			flt
 			characreate -1, CREATURE_ID_WIZARD, 27, 8
 			cdata(CDATA_ROLE, rc) = ROLE_SHOP_BOOK_RESERVE
-			cdatan(CDATAN_NAME, rc) = lang("–‚–@‘ì‰Æ‚Ì" + cdatan(CDATAN_NAME, rc), sncnv(cdatan(CDATAN_NAME, rc)) + "the spell writer")
+			cdatan(CDATAN_NAME, rc) = lang("é­”æ³•æ›¸ä½œå®¶ã®" + cdatan(CDATAN_NAME, rc), sncnv(cdatan(CDATAN_NAME, rc)) + "the spell writer")
 			flt
 			characreate -1, CREATURE_ID_WIZARD, 22, 8
 			cdata(CDATA_ROLE, rc) = ROLE_SHOP_MAGIC, 11
@@ -2640,7 +2640,7 @@
 			mdata(MDATA_MODERATE_CROWD) = 0
 			mdata(MDATA_MUSIC) = MUSICLIST_MCPUTI
 			mdata(MDATA_NO_RENEW) = 1
-			mdatan(MDATAN_NAME) = lang("ƒ‹ƒ~ƒGƒXƒg‰º…“¹", "The Sewer")
+			mdatan(MDATAN_NAME) = lang("ãƒ«ãƒŸã‚¨ã‚¹ãƒˆä¸‹æ°´é“", "The Sewer")
 			put_questtarget
 			gdata(GDATA_LEVEL_START_ON) = 1
 			map_placeplayer
@@ -2698,7 +2698,7 @@
 			mdata(MDATA_MUSIC) = MUSICLIST_MCCASINO
 			mdata(MDATA_CAN_SAVE) = 0
 			mdata(MDATA_NO_RENEW) = 0
-			mdatan(MDATAN_NAME) = lang("‹³º", "Classroom")
+			mdatan(MDATAN_NAME) = lang("æ•™å®¤", "Classroom")
 			gdata(GDATA_LEVEL_START_ON) = 7
 			mapstartx = 11
 			mapstarty = 10
@@ -2795,7 +2795,7 @@
 			flt
 			characreate -1, CREATURE_ID_SHOPKEEPER, 35, 18
 			cdata(CDATA_ROLE, rc) = ROLE_HORSE_MASTER
-			cdatan(CDATAN_NAME, rc) = lang("”n‰®‚Ì" + cdatan(CDATAN_NAME, rc), sncnv(cdatan(CDATAN_NAME, rc)) + "the horse master")
+			cdatan(CDATAN_NAME, rc) = lang("é¦¬å±‹ã®" + cdatan(CDATAN_NAME, rc), sncnv(cdatan(CDATAN_NAME, rc)) + "the horse master")
 			flt
 			characreate -1, CREATURE_ID_LAME_HORSE, 33, 16
 			cdata(CDATA_ROLE, rc) = ROLE_SPECIAL
@@ -2811,7 +2811,7 @@
 			flt
 			characreate -1, CREATURE_ID_ELDER, 3, 4
 			cdata(CDATA_ROLE, rc) = ROLE_MAYOR
-			cdatan(CDATAN_NAME, rc) = lang("ƒˆƒEƒBƒ“‚Ì" + cdatan(CDATAN_NAME, rc), cdatan(CDATAN_NAME, rc) + " of Yowyn")
+			cdatan(CDATAN_NAME, rc) = lang("ãƒ¨ã‚¦ã‚£ãƒ³ã®" + cdatan(CDATAN_NAME, rc), cdatan(CDATAN_NAME, rc) + " of Yowyn")
 			flt
 			characreate -1, CREATURE_ID_TRAINER, 20, 14
 			cdata(CDATA_ROLE, rc) = ROLE_TRAINER
@@ -2850,7 +2850,7 @@
 			mdata(MDATA_MODERATE_CROWD) = 0
 			mdata(MDATA_MUSIC) = MUSICLIST_MCPUTI
 			mdata(MDATA_NO_RENEW) = 1
-			mdatan(MDATAN_NAME) = lang("ƒ^ƒ€‚Ì”L‰®•~", "Cat Mansion")
+			mdatan(MDATAN_NAME) = lang("ã‚¿ãƒ ã®çŒ«å±‹æ•·", "Cat Mansion")
 			put_questtarget
 			map_placeplayer
 		}
@@ -2863,7 +2863,7 @@
 			mdata(MDATA_MUSIC) = MUSICLIST_MCPUTI
 			mdata(MDATA_NO_RENEW) = 1
 			mdata(MDATA_CAN_SAVE) = 0
-			mdatan(MDATAN_NAME) = lang("–h‰qü", "Battle Field")
+			mdatan(MDATAN_NAME) = lang("é˜²è¡›ç·š", "Battle Field")
 			put_questtarget
 			gdata(GDATA_LEVEL_START_ON) = 8
 			map_placeplayer
@@ -2968,7 +2968,7 @@
 			flt
 			characreate -1, CREATURE_ID_ELDER, 5, 18
 			cdata(CDATA_ROLE, rc) = ROLE_MAYOR
-			cdatan(CDATAN_NAME, rc) = lang("ƒmƒCƒGƒ‹‚Ì" + cdatan(CDATAN_NAME, rc), cdatan(CDATAN_NAME, rc) + " of Noyel")
+			cdatan(CDATAN_NAME, rc) = lang("ãƒã‚¤ã‚¨ãƒ«ã®" + cdatan(CDATAN_NAME, rc), cdatan(CDATAN_NAME, rc) + " of Noyel")
 			flt
 			characreate -1, CREATURE_ID_TRAINER, 18, 20
 			cdata(CDATA_ROLE, rc) = ROLE_TRAINER
@@ -3012,7 +3012,7 @@
 			mdata(MDATA_MODERATE_CROWD) = 0
 			mdata(MDATA_MUSIC) = MUSICLIST_MCBOSS5
 			mdata(MDATA_NO_RENEW) = 1
-			mdatan(MDATAN_NAME) = lang("•X‚Ìé", "Castle of Ice")
+			mdatan(MDATAN_NAME) = lang("æ°·ã®åŸ", "Castle of Ice")
 			gdata(GDATA_LEVEL_START_ON) = 7
 			mapstartx = 20
 			mapstarty = 55
@@ -3102,7 +3102,7 @@
 			flt
 			characreate -1, CREATURE_ID_ELDER, 8, 12
 			cdata(CDATA_ROLE, rc) = ROLE_MAYOR
-			cdatan(CDATAN_NAME, rc) = lang("ƒ|[ƒgEƒJƒv[ƒ‹‚Ì" + cdatan(CDATAN_NAME, rc), cdatan(CDATAN_NAME, rc) + " of Port Kapul")
+			cdatan(CDATAN_NAME, rc) = lang("ãƒãƒ¼ãƒˆãƒ»ã‚«ãƒ—ãƒ¼ãƒ«ã®" + cdatan(CDATAN_NAME, rc), cdatan(CDATAN_NAME, rc) + " of Port Kapul")
 			flt
 			characreate -1, CREATURE_ID_TRAINER, 16, 4
 			cdata(CDATA_ROLE, rc) = ROLE_TRAINER
@@ -3151,7 +3151,7 @@
 			mdata(MDATA_MODERATE_CROWD) = 25
 			mdata(MDATA_MUSIC) = MUSICLIST_MCTOWN2
 			mdata(MDATA_NO_RENEW) = 0
-			mdatan(MDATAN_NAME) = lang("ímƒMƒ‹ƒh", "Fighters Guild")
+			mdatan(MDATAN_NAME) = lang("æˆ¦å£«ã‚®ãƒ«ãƒ‰", "Fighters Guild")
 			map_placeplayer
 			flt
 			characreate -1, CREATURE_ID_FRAY_THE_FIGHTER_GUILDMASTER, 27, 4
@@ -3184,7 +3184,7 @@
 			mdata(MDATA_MUSIC) = MUSICLIST_MCBATTLE1
 			mdata(MDATA_NO_RENEW) = 1
 			mdata(MDATA_CAN_SAVE) = 0
-			mdatan(MDATAN_NAME) = lang("íê", "Doom Ground")
+			mdatan(MDATAN_NAME) = lang("æˆ¦å ´", "Doom Ground")
 			gdata(GDATA_LEVEL_START_ON) = 4
 			gdata(GDATA_FLAG_KAMIKAZE) = 0
 			map_placeplayer
@@ -3272,7 +3272,7 @@
 			flt
 			characreate -1, CREATURE_ID_ELDER, 10, 7
 			cdata(CDATA_ROLE, rc) = ROLE_MAYOR
-			cdatan(CDATAN_NAME, rc) = lang("ƒ”ƒFƒ‹ƒj[ƒX‚Ì" + cdatan(CDATAN_NAME, rc), cdatan(CDATAN_NAME, rc) + " of Vernis")
+			cdatan(CDATAN_NAME, rc) = lang("ãƒ´ã‚§ãƒ«ãƒ‹ãƒ¼ã‚¹ã®" + cdatan(CDATAN_NAME, rc), cdatan(CDATAN_NAME, rc) + " of Vernis")
 			flt
 			characreate -1, CREATURE_ID_TRAINER, 27, 16
 			cdata(CDATA_ROLE, rc) = ROLE_TRAINER
@@ -3308,7 +3308,7 @@
 			mdata(MDATA_MODERATE_CROWD) = 0
 			mdata(MDATA_MUSIC) = MUSICLIST_MCPUTI
 			mdata(MDATA_NO_RENEW) = 1
-			mdatan(MDATAN_NAME) = lang("ƒXƒ‰ƒCƒ€‚ÌB“¹", "The Mine")
+			mdatan(MDATAN_NAME) = lang("ã‚¹ãƒ©ã‚¤ãƒ ã®å‘é“", "The Mine")
 			put_questtarget
 			map_placeplayer
 		}
@@ -3320,7 +3320,7 @@
 			mdata(MDATA_MODERATE_CROWD) = 0
 			mdata(MDATA_MUSIC) = MUSICLIST_MCPUTI
 			mdata(MDATA_NO_RENEW) = 1
-			mdatan(MDATAN_NAME) = lang("“‘¯‚Ì‰B‚ê‰Æ", "Robber's Hideout")
+			mdatan(MDATAN_NAME) = lang("ç›—è³Šã®éš ã‚Œå®¶", "Robber's Hideout")
 			put_questtarget
 			map_placeplayer
 		}
@@ -3332,7 +3332,7 @@
 			mdata(MDATA_MODERATE_CROWD) = 0
 			mdata(MDATA_MUSIC) = MUSICLIST_MCCHAOS
 			mdata(MDATA_NO_RENEW) = 1
-			mdatan(MDATAN_NAME) = lang("¶‘Ì•ºŠíÀŒ±ê", "Test Site")
+			mdatan(MDATAN_NAME) = lang("ç”Ÿä½“å…µå™¨å®Ÿé¨“å ´", "Test Site")
 			put_questtarget
 			gdata(GDATA_LEVEL_START_ON) = 7
 			mapstartx = 6
@@ -3359,7 +3359,7 @@
 		loop
 		mdatan(MDATAN_NAME) = ""
 		if ( 4 <= gdata(GDATA_WORLD_TILE) & gdata(GDATA_WORLD_TILE) < 9 ) {
-			mdatan(MDATAN_NAME) = lang("X", "Forest")
+			mdatan(MDATAN_NAME) = lang("æ£®", "Forest")
 			map_randomtile 8, 25
 			map_randomtile 0, 10
 			map_randomtile 1, 4
@@ -3373,10 +3373,10 @@
 			loop
 		}
 		if ( 264 <= gdata(GDATA_WORLD_TILE) & gdata(GDATA_WORLD_TILE) < 363 ) {
-			mdatan(MDATAN_NAME) = lang("…ã", "Sea")
+			mdatan(MDATAN_NAME) = lang("æ°´ä¸Š", "Sea")
 		}
 		if ( 9 <= gdata(GDATA_WORLD_TILE) & gdata(GDATA_WORLD_TILE) < 13 ) {
-			mdatan(MDATAN_NAME) = lang("‘Œ´", "Grassland")
+			mdatan(MDATAN_NAME) = lang("è‰åŸ", "Grassland")
 			map_randomtile 9, 10
 			map_randomtile 10, 10
 			map_randomtile 0, 30
@@ -3393,7 +3393,7 @@
 			loop
 		}
 		if ( 13 <= gdata(GDATA_WORLD_TILE) & gdata(GDATA_WORLD_TILE) < 17 ) {
-			mdatan(MDATAN_NAME) = lang("r–ì", "Wasteland")
+			mdatan(MDATAN_NAME) = lang("è’é‡", "Wasteland")
 			map_randomtile 18, 25
 			map_randomtile 17, 10
 			map_randomtile 19, 2
@@ -3406,7 +3406,7 @@
 			loop
 		}
 		if ( chipm(CHIPM_ROLE, gdata(GDATA_WORLD_TILE)) == MAP_CHIP_ROLE_SAND | chipm(CHIPM_ROLE, gdata(GDATA_WORLD_TILE)) == MAP_CHIP_ROLE_SAND_HARD ) {
-			mdatan(MDATAN_NAME) = lang("»‹u", "Sand")
+			mdatan(MDATAN_NAME) = lang("ç ‚ä¸˜", "Sand")
 			map_randomtile 24, 25
 			map_randomtile 25, 1
 			map_randomtile 28, 1
@@ -3428,10 +3428,10 @@
 		}
 		if ( chipm(CHIPM_ROLE, gdata(GDATA_WORLD_TILE)) == MAP_CHIP_ROLE_WATER ) {
 			if ( gdata(GDATA_WORLD) == AREA_SOUTH_TYRIS ) {
-				mdatan(MDATAN_NAME) = lang("ƒƒ‹ƒJ‘å¼Œ´", "moor")
+				mdatan(MDATAN_NAME) = lang("ãƒ¡ãƒ«ã‚«å¤§æ¹¿åŸ", "moor")
 			}
 			else {
-				mdatan(MDATAN_NAME) = lang("¼Œ´", "moor")
+				mdatan(MDATAN_NAME) = lang("æ¹¿åŸ", "moor")
 			}
 			map_randomtile 314, 20
 			map_randomtile 315, 45
@@ -3448,7 +3448,7 @@
 			loop
 		}
 		if ( gdata(GDATA_WORLD) == AREA_AIMWELL ) {
-			mdatan(MDATAN_NAME) = lang("•½’n", "Plain Field")
+			mdatan(MDATAN_NAME) = lang("å¹³åœ°", "Plain Field")
 			map_randomtile 1, 10
 			map_randomtile 2, 2
 			map_randomtile 3, 2
@@ -3503,7 +3503,7 @@
 			loop
 		}
 		if ( chipm(CHIPM_ROLE, gdata(GDATA_WORLD_TILE)) == MAP_CHIP_ROLE_SNOW ) {
-			mdatan(MDATAN_NAME) = lang("áŒ´", "Snow Field")
+			mdatan(MDATAN_NAME) = lang("é›ªåŸ", "Snow Field")
 			map_randomtile 57, 4
 			map_randomtile 56, 4
 			map_randomtile 49, 2
@@ -3520,7 +3520,7 @@
 			loop
 		}
 		if ( mdatan(MDATAN_NAME) == "" ) {
-			mdatan(MDATAN_NAME) = lang("•½’n", "Plain Field")
+			mdatan(MDATAN_NAME) = lang("å¹³åœ°", "Plain Field")
 			map_randomtile 1, 10
 			map_randomtile 2, 2
 			map_randomtile 3, 2
@@ -3610,7 +3610,7 @@
 			flt
 			characreate -1, CREATURE_ID_SHOPKEEPER, 10, 11
 			cdata(CDATA_ROLE, rc) = ROLE_SHOP_WANDER, encounterlv
-			cdatan(CDATAN_NAME, rc) = lang("s¤l‚Ì" + cdatan(CDATAN_NAME, rc), sncnv(cdatan(CDATAN_NAME, rc)) + "the wandering vendor")
+			cdatan(CDATAN_NAME, rc) = lang("è¡Œå•†äººã®" + cdatan(CDATAN_NAME, rc), sncnv(cdatan(CDATAN_NAME, rc)) + "the wandering vendor")
 			generatemoney rc
 			repeat encounterlv / 2 + 1
 				r1 = rc
@@ -3672,7 +3672,7 @@
 				mdata(MDATA_MODERATE_CROWD) = 0
 				mdata(MDATA_CAN_SAVE) = 0
 				mdata(MDATA_MUSIC) = MUSICLIST_MCLASTBOSS
-				mdatan(MDATAN_NAME) = lang("ƒŒƒVƒ}ƒXÅ[‘w", "The Depth")
+				mdatan(MDATAN_NAME) = lang("ãƒ¬ã‚·ãƒã‚¹æœ€æ·±å±¤", "The Depth")
 				if ( gdata(GDATA_FLAG_MAIN) < 170 ) {
 					evadd EVENT_BOSS_LESIMAS
 				}
@@ -3721,7 +3721,7 @@
 				mdata(MDATA_MODERATE_CROWD) = 0
 				mdata(MDATA_CAN_SAVE) = 1
 				mdata(MDATA_MUSIC) = MUSICLIST_MCLASTBOSS
-				mdatan(MDATAN_NAME) = lang("15ŠK‘åLŠÔ", "Hall")
+				mdatan(MDATAN_NAME) = lang("15éšå¤§åºƒé–“", "Hall")
 				if ( gdata(GDATA_FLAG_MAIN) < 269 ) {
 					evadd EVENT_ORPHE
 					gdata(GDATA_FLAG_MAIN) = 269
@@ -3736,7 +3736,7 @@
 				mdata(MDATA_MODERATE_CROWD) = 0
 				mdata(MDATA_CAN_SAVE) = 0
 				mdata(MDATA_MUSIC) = MUSICLIST_MCLASTBOSS
-				mdatan(MDATAN_NAME) = lang("ŒÃ‚ÌŒ¤‹†{İ", "Ancient Research Facility")
+				mdatan(MDATAN_NAME) = lang("å¤ã®ç ”ç©¶æ–½è¨­", "Ancient Research Facility")
 				if ( gdata(GDATA_FLAG_MAIN) < 340 ) {
 					evadd EVENT_MESHERA_PLANT
 					flt
@@ -3813,7 +3813,7 @@
 				mdata(MDATA_MODERATE_CROWD) = 3
 				mdata(MDATA_CAN_SAVE) = 1
 				mdata(MDATA_MUSIC) = MUSICLIST_MCLASTBOSS
-				mdatan(MDATAN_NAME) = lang("áÅ‘®‚ÌŠÔ", "Hall of evil")
+				mdatan(MDATAN_NAME) = lang("çœ·å±ã®é–“", "Hall of evil")
 				if ( gdata(GDATA_FLAG_MAIN) < 390 ) {
 					flt
 					novoidlv = 1
@@ -3900,7 +3900,7 @@
 				map_initcustom "chaos4"
 				mdata(MDATA_MODERATE_CROWD) = 0
 				mdata(MDATA_CAN_SAVE) = 0
-				mdatan(MDATAN_NAME) = lang("15ŠK‘åLŠÔ", "Hall")
+				mdatan(MDATAN_NAME) = lang("15éšå¤§åºƒé–“", "Hall")
 				if ( gdata(GDATA_FLAG_SUB_BELPHAT_THE_COSMIC_SWORD) < 1000 ) {
 					if ( findally(CREATURE_ID_BELPHAT_THE_COSMIC_SWORD) == (-1) ) {
 						flt
@@ -3922,7 +3922,7 @@
 				map_initcustom "chaos4"
 				mdata(MDATA_MODERATE_CROWD) = 0
 				mdata(MDATA_CAN_SAVE) = 1
-				mdatan(MDATAN_NAME) = lang("20ŠK‘åLŠÔ", "Hall")
+				mdatan(MDATAN_NAME) = lang("20éšå¤§åºƒé–“", "Hall")
 				flt
 				novoidlv = 1
 				characreate -1, CREATURE_ID_MANYTIA_THE_ADVENTURE_MERCHANT, 10, 11
@@ -3939,7 +3939,7 @@
 				mdata(MDATA_MODERATE_CROWD) = 0
 				mdata(MDATA_CAN_SAVE) = 1
 				mdata(MDATA_MUSIC) = MUSICLIST_MCBOSS5
-				mdatan(MDATAN_NAME) = lang("25ŠK‘åLŠÔ", "Hall")
+				mdatan(MDATAN_NAME) = lang("25éšå¤§åºƒé–“", "Hall")
 				flt
 				novoidlv = 1
 				characreate -1, CREATURE_ID_LANKATA_THE_LIGHTNING_OF_BLUE, 8, 12
@@ -3962,7 +3962,7 @@
 				mdata(MDATA_MODERATE_CROWD) = 0
 				mdata(MDATA_CAN_SAVE) = 1
 				mdata(MDATA_MUSIC) = MUSICLIST_MCLASTBOSS
-				mdatan(MDATAN_NAME) = lang("30ŠK‘åLŠÔ", "Hall")
+				mdatan(MDATAN_NAME) = lang("30éšå¤§åºƒé–“", "Hall")
 				flt , 4
 				novoidlv = 1
 				initlv = 140
@@ -4016,7 +4016,7 @@
 				map_initcustom "chaos7"
 				mdata(MDATA_MODERATE_CROWD) = 0
 				mdata(MDATA_CAN_SAVE) = 1
-				mdatan(MDATAN_NAME) = lang("39ŠKLŠÔ", "Hall")
+				mdatan(MDATAN_NAME) = lang("39éšåºƒé–“", "Hall")
 				flt
 				initlv = 200
 				novoidlv = 1
@@ -4032,7 +4032,7 @@
 				mdata(MDATA_MODERATE_CROWD) = 0
 				mdata(MDATA_CAN_SAVE) = 0
 				mdata(MDATA_MUSIC) = MUSICLIST_MCLASTBOSS
-				mdatan(MDATAN_NAME) = lang("_‚ÌŠÔ", "God's Prison")
+				mdatan(MDATAN_NAME) = lang("ç¥ã®é–“", "God's Prison")
 				flt
 				initlv = 200
 				novoidlv = 1
@@ -4424,7 +4424,7 @@
 		cdata(CDATA_TONE_SEX, rc) = 1
 		cdata(CDATA_PIC, rc) = xy2pic(1, 32)
 		cdata(CDATA_ROLE, rc) = ROLE_SHOP_INN, 5
-		cdatan(CDATAN_NAME, rc) = lang("—·—Æ”„‚è", "the traveler's food vendor")
+		cdatan(CDATAN_NAME, rc) = lang("æ—…ç³§å£²ã‚Š", "the traveler's food vendor")
 		flt
 		characreate -1, CREATURE_ID_CLERK, 17, 27
 		cdata(CDATA_AI_CALM, rc) = 3
@@ -4434,7 +4434,7 @@
 		cdata(CDATA_PIC, rc) = xy2pic(4, 31)
 		cdata(CDATA_PORTRAIT, tc) = 18
 		cdata(CDATA_ROLE, rc) = ROLE_SHOP_OFFICE, 10
-		cdatan(CDATAN_NAME, rc) = lang("‘•ü•i”„‚è", "the interior goods vendor")
+		cdatan(CDATAN_NAME, rc) = lang("è£…é£¾å“å£²ã‚Š", "the interior goods vendor")
 		flt
 		characreate -1, CREATURE_ID_CLERK, 18, 42
 		cdata(CDATA_AI_CALM, rc) = 3
@@ -4443,7 +4443,7 @@
 		cdata(CDATA_TONE_SEX, rc) = 1
 		cdata(CDATA_PIC, rc) = xy2pic(1, 32)
 		cdata(CDATA_ROLE, rc) = ROLE_SHOP_TRADE, 30
-		cdatan(CDATAN_NAME, rc) = lang("ŒğˆÕ¤l", "the trader")
+		cdatan(CDATAN_NAME, rc) = lang("äº¤æ˜“å•†äºº", "the trader")
 		flt
 		characreate -1, CREATURE_ID_CLERK, 59, 35
 		cdata(CDATA_AI_CALM, rc) = 3
@@ -4453,7 +4453,7 @@
 		cdata(CDATA_PIC, rc) = xy2pic(3, 31)
 		cdata(CDATA_PORTRAIT, tc) = 6
 		cdata(CDATA_ROLE, rc) = ROLE_SHOP_BAKERY, 5
-		cdatan(CDATAN_NAME, rc) = lang("ƒpƒ“‰®‚Ì“Xˆõ", "the bakery clerk")
+		cdatan(CDATAN_NAME, rc) = lang("ãƒ‘ãƒ³å±‹ã®åº—å“¡", "the bakery clerk")
 	}
 	if ( gdata(GDATA_AREA) == AREA_RASKILIS ) {
 		map_initcustom "ras_south"
@@ -4823,30 +4823,30 @@
 			characreate -1, CREATURE_ID_SHOPKEEPER_CROW, 26, 17
 			cdata(CDATA_AI_CALM, rc) = 3
 			cdata(CDATA_ROLE, rc) = ROLE_SHOP_MOUNTAIN1, 50
-			cdatan(CDATAN_NAME, rc) = lang("õF“X‚Ì" + cdatan(CDATAN_NAME, rc), sncnv(cdatan(CDATAN_NAME, rc)) + "the dye vendor")
+			cdatan(CDATAN_NAME, rc) = lang("æŸ“è‰²åº—ã®" + cdatan(CDATAN_NAME, rc), sncnv(cdatan(CDATAN_NAME, rc)) + "the dye vendor")
 			flt
 			characreate -1, CREATURE_ID_SHOPKEEPER_CROW, 39, 32
 			cdata(CDATA_AI_CALM, rc) = 3
 			cdata(CDATA_ROLE, rc) = ROLE_SHOP_MOUNTAIN2, 50
-			cdatan(CDATAN_NAME, rc) = lang("‚¨‚İ‚â‚°‰®‚Ì" + cdatan(CDATAN_NAME, rc), sncnv(cdatan(CDATAN_NAME, rc)) + "the souvenir vendor")
+			cdatan(CDATAN_NAME, rc) = lang("ãŠã¿ã‚„ã’å±‹ã®" + cdatan(CDATAN_NAME, rc), sncnv(cdatan(CDATAN_NAME, rc)) + "the souvenir vendor")
 			flt
 			characreate -1, CREATURE_ID_GOOSE, 13, 32
 			cdata(CDATA_RELATION, rc) = 0
 			cdata(CDATA_RELATION_ORG, rc) = 0
 			cdata(CDATA_ROLE, rc) = ROLE_BARTENDER
-			cdatan(CDATAN_NAME, rc) = lang("‹i’ƒ“X‚Ì" + cdatan(CDATAN_NAME, rc), sncnv(cdatan(CDATAN_NAME, rc)) + "the barten")
+			cdatan(CDATAN_NAME, rc) = lang("å–«èŒ¶åº—ã®" + cdatan(CDATAN_NAME, rc), sncnv(cdatan(CDATAN_NAME, rc)) + "the barten")
 			flt
 			characreate -1, CREATURE_ID_GOOSE, 42, 10
 			cdata(CDATA_RELATION, rc) = 0
 			cdata(CDATA_RELATION_ORG, rc) = 0
 			cdata(CDATA_ROLE, rc) = ROLE_ARENA_MASTER
-			cdatan(CDATAN_NAME, rc) = lang("ƒAƒŠ[ƒi‚Ì" + cdatan(CDATAN_NAME, rc), sncnv(cdatan(CDATAN_NAME, rc)) + "of arena")
+			cdatan(CDATAN_NAME, rc) = lang("ã‚¢ãƒªãƒ¼ãƒŠã®" + cdatan(CDATAN_NAME, rc), sncnv(cdatan(CDATAN_NAME, rc)) + "of arena")
 			flt
 			characreate -1, CREATURE_ID_GOOSE, 42, 15
 			cdata(CDATA_RELATION, rc) = 0
 			cdata(CDATA_RELATION_ORG, rc) = 0
 			cdata(CDATA_ROLE, rc) = ROLE_PET_ARENA_MASTER
-			cdatan(CDATAN_NAME, rc) = lang("ƒyƒbƒgƒAƒŠ[ƒi‚Ì" + cdatan(CDATAN_NAME, rc), sncnv(cdatan(CDATAN_NAME, rc)) + "of pet arena")
+			cdatan(CDATAN_NAME, rc) = lang("ãƒšãƒƒãƒˆã‚¢ãƒªãƒ¼ãƒŠã®" + cdatan(CDATAN_NAME, rc), sncnv(cdatan(CDATAN_NAME, rc)) + "of pet arena")
 			flt
 			initlv = 125
 			characreate -1, CREATURE_ID_GOLDEN_KNIGHT, 4, 3
@@ -5207,7 +5207,7 @@
 			mdata(MDATA_MODERATE_CROWD) = 0
 			mdata(MDATA_MUSIC) = MUSICLIST_MCDUNGEON9
 			mdata(MDATA_NO_RENEW) = 1
-			mdatan(MDATAN_NAME) = lang("‰¼", "Underground passage")
+			mdatan(MDATAN_NAME) = lang("ä»®", "Underground passage")
 			put_questtarget
 			map_placeplayer
 		}
@@ -5218,7 +5218,7 @@
 			mdata(MDATA_MODERATE_CROWD) = 0
 			mdata(MDATA_CAN_SAVE) = 0
 			mdata(MDATA_NO_RENEW) = 0
-			mdatan(MDATAN_NAME) = lang("ƒRƒ“ƒT[ƒg‰ïê", "Concert hall")
+			mdatan(MDATAN_NAME) = lang("ã‚³ãƒ³ã‚µãƒ¼ãƒˆä¼šå ´", "Concert hall")
 			gdata(GDATA_LEVEL_START_ON) = 7
 			mapstartx = 14
 			mapstarty = 9
@@ -5250,7 +5250,7 @@
 				cdata(CDATA_RELATION, rc) = 0
 				cdata(CDATA_RELATION_ORG, rc) = 0
 				cdata(CDATA_ROLE, rc) = ROLE_SHOP_MAGIC, 30
-				cdatan(CDATAN_NAME, rc) = lang("–‚–@“X‚Ìg‚¢–‚", "magic shop slave")
+				cdatan(CDATAN_NAME, rc) = lang("é­”æ³•åº—ã®ä½¿ã„é­”", "magic shop slave")
 			}
 			flt
 			characreate -1, CREATURE_ID_IMP, 22, 20
@@ -5259,7 +5259,7 @@
 				cdata(CDATA_RELATION, rc) = 0
 				cdata(CDATA_RELATION_ORG, rc) = 0
 				cdata(CDATA_ROLE, rc) = ROLE_SHOP_GENERAL, 20
-				cdatan(CDATAN_NAME, rc) = lang("G‰İ‰®‚Ìg‚¢–‚", "general shop slave")
+				cdatan(CDATAN_NAME, rc) = lang("é›‘è²¨å±‹ã®ä½¿ã„é­”", "general shop slave")
 			}
 			flt
 			characreate -1, CREATURE_ID_IMP, 16, 28
@@ -5268,7 +5268,7 @@
 				cdata(CDATA_RELATION, rc) = 0
 				cdata(CDATA_RELATION_ORG, rc) = 0
 				cdata(CDATA_ROLE, rc) = ROLE_SHOP_OFFICE, 20
-				cdatan(CDATAN_NAME, rc) = lang("‰Æ‹ï‰®‚Ìg‚¢–‚", "furniture shop slave")
+				cdatan(CDATAN_NAME, rc) = lang("å®¶å…·å±‹ã®ä½¿ã„é­”", "furniture shop slave")
 			}
 			flt
 			characreate -1, CREATURE_ID_BARTENDER, 36, 24
@@ -5328,7 +5328,7 @@
 			mdata(MDATA_MODERATE_CROWD) = 0
 			mdata(MDATA_MUSIC) = MUSICLIST_MCDUNGEON9
 			mdata(MDATA_NO_RENEW) = 1
-			mdatan(MDATAN_NAME) = lang("‰¼", "Underground passage")
+			mdatan(MDATAN_NAME) = lang("ä»®", "Underground passage")
 			put_questtarget
 			map_placeplayer
 		}
@@ -5340,7 +5340,7 @@
 			mdata(MDATA_MODERATE_CROWD) = 0
 			mdata(MDATA_MUSIC) = MUSICLIST_MCBOSS5
 			mdata(MDATA_NO_RENEW) = 1
-			mdatan(MDATAN_NAME) = lang("‰¤‹{‹ß—×", "Eulderna city")
+			mdatan(MDATAN_NAME) = lang("ç‹å®®è¿‘éš£", "Eulderna city")
 			gdata(GDATA_LEVEL_START_ON) = 7
 			mapstartx = 5
 			mapstarty = 13
@@ -5781,7 +5781,7 @@
 			mdata(MDATA_MODERATE_CROWD) = 0
 			mdata(MDATA_MUSIC) = MUSICLIST_MCDUNGEON9
 			mdata(MDATA_NO_RENEW) = 1
-			mdatan(MDATAN_NAME) = lang("‰¼", "Underground passage")
+			mdatan(MDATAN_NAME) = lang("ä»®", "Underground passage")
 			put_questtarget
 			map_placeplayer
 		}
@@ -5833,7 +5833,7 @@
 			flt
 			characreate -1, CREATURE_ID_SHOPKEEPER_CROW, 1, 22
 			cdata(CDATA_ROLE, rc) = ROLE_SHOP_BOOK_RESERVE
-			cdatan(CDATAN_NAME, rc) = lang("–‚–@‘ì‰Æ‚Ì" + cdatan(CDATAN_NAME, rc), sncnv(cdatan(CDATAN_NAME, rc)) + "the spell writer")
+			cdatan(CDATAN_NAME, rc) = lang("é­”æ³•æ›¸ä½œå®¶ã®" + cdatan(CDATAN_NAME, rc), sncnv(cdatan(CDATAN_NAME, rc)) + "the spell writer")
 			flt
 			characreate -1, CREATURE_ID_SHOPKEEPER_CROW, 22, 23
 			cdata(CDATA_AI_CALM, rc) = 3
@@ -5978,7 +5978,7 @@
 			mdata(MDATA_MODERATE_CROWD) = 0
 			mdata(MDATA_MUSIC) = MUSICLIST_MCCASINO
 			mdata(MDATA_NO_RENEW) = 0
-			mdatan(MDATAN_NAME) = lang("ƒIƒAƒVƒXƒŠƒ][ƒg", "Oasis in tower")
+			mdatan(MDATAN_NAME) = lang("ã‚ªã‚¢ã‚·ã‚¹ãƒªã‚¾ãƒ¼ãƒˆ", "Oasis in tower")
 			gdata(GDATA_LEVEL_START_ON) = 7
 			mapstartx = 32
 			mapstarty = 12
@@ -6068,7 +6068,7 @@
 			mdata(MDATA_MODERATE_CROWD) = 0
 			mdata(MDATA_MUSIC) = MUSICLIST_MCHUGE
 			mdata(MDATA_NO_RENEW) = 0
-			mdatan(MDATAN_NAME) = lang("–°‚ê‚é_ŠÍEã‘w", "Albedrion")
+			mdatan(MDATAN_NAME) = lang("çœ ã‚Œã‚‹ç¥è‰¦ãƒ»ä¸Šå±¤", "Albedrion")
 			gdata(GDATA_LEVEL_START_ON) = 7
 			mapstartx = 4
 			mapstarty = 48
@@ -6127,7 +6127,7 @@
 			mdata(MDATA_MODERATE_CROWD) = 0
 			mdata(MDATA_MUSIC) = MUSICLIST_MCBOSS5
 			mdata(MDATA_NO_RENEW) = 1
-			mdatan(MDATAN_NAME) = lang("€‚ÌŠX", "Ruined city")
+			mdatan(MDATAN_NAME) = lang("æ­»ã®è¡—", "Ruined city")
 			gdata(GDATA_LEVEL_START_ON) = 7
 			mapstartx = 5
 			mapstarty = 52
@@ -6493,7 +6493,7 @@
 			flt
 			characreate -1, CREATURE_ID_ELDER, 29, 4
 			cdata(CDATA_ROLE, rc) = ROLE_MAYOR
-			cdatan(CDATAN_NAME, rc) = lang("ƒGƒCƒŒƒ‹‚Ì" + cdatan(CDATAN_NAME, rc), cdatan(CDATAN_NAME, rc) + " of Eirel")
+			cdatan(CDATAN_NAME, rc) = lang("ã‚¨ã‚¤ãƒ¬ãƒ«ã®" + cdatan(CDATAN_NAME, rc), cdatan(CDATAN_NAME, rc) + " of Eirel")
 			flt
 			characreate -1, CREATURE_ID_TRAINER, 25, 13
 			cdata(CDATA_ROLE, rc) = ROLE_TRAINER
@@ -6529,7 +6529,7 @@
 			mdata(MDATA_MODERATE_CROWD) = 0
 			mdata(MDATA_MUSIC) = MUSICLIST_MCBATTLE1
 			mdata(MDATA_NO_RENEW) = 1
-			mdatan(MDATAN_NAME) = lang("ƒGƒEƒ_[ƒi’““Ô’n", "The Mine")
+			mdatan(MDATAN_NAME) = lang("ã‚¨ã‚¦ãƒ€ãƒ¼ãƒŠé§å±¯åœ°", "The Mine")
 			put_questtarget
 			gdata(GDATA_LEVEL_START_ON) = 7
 			mapstartx = 9
@@ -6632,7 +6632,7 @@
 			mdata(MDATA_MODERATE_CROWD) = 0
 			mdata(MDATA_MUSIC) = MUSICLIST_MCPUTI
 			mdata(MDATA_NO_RENEW) = 0
-			mdatan(MDATAN_NAME) = lang("‚«‚Ì‚±’B‚ÌR", "Hill of mushroom")
+			mdatan(MDATAN_NAME) = lang("ãã®ã“é”ã®å±±", "Hill of mushroom")
 			put_questtarget
 			gdata(GDATA_LEVEL_START_ON) = 1
 			map_placeplayer
@@ -6645,7 +6645,7 @@
 			mdata(MDATA_MODERATE_CROWD) = 0
 			mdata(MDATA_MUSIC) = MUSICLIST_MCBOSS4
 			mdata(MDATA_NO_RENEW) = 0
-			mdatan(MDATAN_NAME) = lang("‚·‚¬‚Ì‚±”p‘º‹ß•Ó", "Near the ruins")
+			mdatan(MDATAN_NAME) = lang("ã™ãã®ã“å»ƒæ‘è¿‘è¾º", "Near the ruins")
 			put_questtarget
 			gdata(GDATA_LEVEL_START_ON) = 1
 			map_placeplayer
@@ -6713,7 +6713,7 @@
 			flt
 			characreate -1, CREATURE_ID_ELDER, 21, 29
 			cdata(CDATA_ROLE, rc) = ROLE_MAYOR
-			cdatan(CDATAN_NAME, rc) = lang("ƒƒ‹ƒJ[ƒ“‚Ì" + cdatan(CDATAN_NAME, rc), cdatan(CDATAN_NAME, rc) + " of Melkawn")
+			cdatan(CDATAN_NAME, rc) = lang("ãƒ¡ãƒ«ã‚«ãƒ¼ãƒ³ã®" + cdatan(CDATAN_NAME, rc), cdatan(CDATAN_NAME, rc) + " of Melkawn")
 			flt
 			characreate -1, CREATURE_ID_TRAINER, 31, 13
 			cdata(CDATA_ROLE, rc) = ROLE_TRAINER
@@ -6761,7 +6761,7 @@
 			mdata(MDATA_MODERATE_CROWD) = 40
 			mdata(MDATA_MUSIC) = MUSICLIST_MCTOWN3
 			mdata(MDATA_NO_RENEW) = 0
-			mdatan(MDATAN_NAME) = lang("’n‰º“q”ê", "Gambling hall")
+			mdatan(MDATAN_NAME) = lang("åœ°ä¸‹è³­åšå ´", "Gambling hall")
 			map_placeplayer
 			flt
 			itemcreate -1, ITEM_ID_ALTAR, 15, 17, 0
@@ -6770,7 +6770,7 @@
 			flt
 			characreate -1, CREATURE_ID_ROGUE, 29, 20
 			cbitmod CHARA_BIT_SANDBAG, rc, 1
-			cdatan(CDATAN_NAME, rc) = lang("•‰‚¯Œ¢", "loser")
+			cdatan(CDATAN_NAME, rc) = lang("è² ã‘çŠ¬", "loser")
 			flt
 			characreate -1, CREATURE_ID_LEND_THE_TAKER, 3, 3
 			cdata(CDATA_ROLE, rc) = ROLE_SHOP_MOYER, 10
@@ -6785,7 +6785,7 @@
 			flt
 			characreate -1, CREATURE_ID_SHOPKEEPER, 22, 20
 			cdata(CDATA_ROLE, rc) = ROLE_SLAVER
-			cdatan(CDATAN_NAME, rc) = lang("“ä‚Ì“z—ê¤l", "The slave master")
+			cdatan(CDATAN_NAME, rc) = lang("è¬ã®å¥´éš·å•†äºº", "The slave master")
 			flt
 			characreate -1, CREATURE_ID_ARENA_MASTER, 29, 11
 			cdata(CDATA_ROLE, rc) = ROLE_ARENA_MASTER
@@ -6864,7 +6864,7 @@
 			flt
 			characreate -1, CREATURE_ID_ELDER, 42, 17
 			cdata(CDATA_ROLE, rc) = ROLE_MAYOR
-			cdatan(CDATAN_NAME, rc) = lang("ƒNƒ‹ƒAƒ‹ƒ€‚Ì" + cdatan(CDATAN_NAME, rc), cdatan(CDATAN_NAME, rc) + " of Kurualm")
+			cdatan(CDATAN_NAME, rc) = lang("ã‚¯ãƒ«ã‚¢ãƒ«ãƒ ã®" + cdatan(CDATAN_NAME, rc), cdatan(CDATAN_NAME, rc) + " of Kurualm")
 			flt
 			characreate -1, CREATURE_ID_TRAINER, 53, 5
 			cdata(CDATA_ROLE, rc) = ROLE_TRAINER
@@ -6878,7 +6878,7 @@
 			flt
 			characreate -1, CREATURE_ID_SHOPKEEPER, 67, 3
 			cdata(CDATA_ROLE, rc) = ROLE_HORSE_MASTER
-			cdatan(CDATAN_NAME, rc) = lang("”n‰®‚Ì" + cdatan(CDATAN_NAME, rc), sncnv(cdatan(CDATAN_NAME, rc)) + "the horse master")
+			cdatan(CDATAN_NAME, rc) = lang("é¦¬å±‹ã®" + cdatan(CDATAN_NAME, rc), sncnv(cdatan(CDATAN_NAME, rc)) + "the horse master")
 			flt
 			characreate -1, CREATURE_ID_SHOPKEEPER, 45, 28
 			cdata(CDATA_ROLE, rc) = ROLE_SHOP_BAKERY, 20
@@ -6919,7 +6919,7 @@
 			mdata(MDATA_MODERATE_CROWD) = 0
 			mdata(MDATA_MUSIC) = MUSICLIST_MCBOSS3
 			mdata(MDATA_NO_RENEW) = 1
-			mdatan(MDATAN_NAME) = lang("ŠC‘¯‘D“à•”", "Pirate ship")
+			mdatan(MDATAN_NAME) = lang("æµ·è³Šèˆ¹å†…éƒ¨", "Pirate ship")
 			put_questtarget
 			gdata(GDATA_LEVEL_START_ON) = 7
 			mapstartx = 4
@@ -6934,7 +6934,7 @@
 			mdata(MDATA_MODERATE_CROWD) = 0
 			mdata(MDATA_MUSIC) = MUSICLIST_MCBOSS3
 			mdata(MDATA_NO_RENEW) = 1
-			mdatan(MDATAN_NAME) = lang("”EÒ‰®•~", "Ninja House")
+			mdatan(MDATAN_NAME) = lang("å¿è€…å±‹æ•·", "Ninja House")
 			put_questtarget
 			gdata(GDATA_LEVEL_START_ON) = 7
 			mapstartx = 23
@@ -6989,7 +6989,7 @@
 			flt
 			characreate -1, CREATURE_ID_ELDER, 24, 14
 			cdata(CDATA_ROLE, rc) = ROLE_MAYOR
-			cdatan(CDATAN_NAME, rc) = lang("ƒ”ƒ@ƒ‹ƒ€‚Ì" + cdatan(CDATAN_NAME, rc), cdatan(CDATAN_NAME, rc) + " of Valm")
+			cdatan(CDATAN_NAME, rc) = lang("ãƒ´ã‚¡ãƒ«ãƒ ã®" + cdatan(CDATAN_NAME, rc), cdatan(CDATAN_NAME, rc) + " of Valm")
 			flt
 			characreate -1, CREATURE_ID_TRAINER, 32, 23
 			cdata(CDATA_ROLE, rc) = ROLE_TRAINER
@@ -7036,7 +7036,7 @@
 			mdata(MDATA_MUSIC) = MUSICLIST_MCRUIN
 			mdata(MDATA_CAN_SAVE) = 0
 			mdata(MDATA_NO_RENEW) = 0
-			mdatan(MDATAN_NAME) = lang("‹ã“ª—³‚Ìé", "Deep-Sea Castle")
+			mdatan(MDATAN_NAME) = lang("ä¹é ­ç«œã®åŸ", "Deep-Sea Castle")
 			gdata(GDATA_LEVEL_START_ON) = 7
 			mapstartx = 17
 			mapstarty = 24
@@ -7071,7 +7071,7 @@
 			mdata(MDATA_MODERATE_CROWD) = 14
 			mdata(MDATA_MUSIC) = MUSICLIST_MCRUIN
 			mdata(MDATA_NO_RENEW) = 1
-			mdatan(MDATAN_NAME) = lang("‹¶‹C—ñ“‡", "Island in madness")
+			mdatan(MDATAN_NAME) = lang("ç‹‚æ°—åˆ—å³¶", "Island in madness")
 			gdata(GDATA_LEVEL_START_ON) = 7
 			mapstartx = 18
 			mapstarty = 65
@@ -7224,7 +7224,7 @@
 			mdata(MDATA_MODERATE_CROWD) = 0
 			mdata(MDATA_MUSIC) = MUSICLIST_MCDUNGEON9
 			mdata(MDATA_NO_RENEW) = 1
-			mdatan(MDATAN_NAME) = lang("’n‰º’Ê˜H", "Underground passage")
+			mdatan(MDATAN_NAME) = lang("åœ°ä¸‹é€šè·¯", "Underground passage")
 			put_questtarget
 			map_placeplayer
 		}
@@ -7299,7 +7299,7 @@
 			flt
 			characreate -1, CREATURE_ID_ELDER, 25, 4
 			cdata(CDATA_ROLE, rc) = ROLE_MAYOR
-			cdatan(CDATAN_NAME, rc) = lang("ƒA[ƒNEƒxƒ‹ƒN‚Ì" + cdatan(CDATAN_NAME, rc), cdatan(CDATAN_NAME, rc) + " of Arcbelc")
+			cdatan(CDATAN_NAME, rc) = lang("ã‚¢ãƒ¼ã‚¯ãƒ»ãƒ™ãƒ«ã‚¯ã®" + cdatan(CDATAN_NAME, rc), cdatan(CDATAN_NAME, rc) + " of Arcbelc")
 			flt
 			characreate -1, CREATURE_ID_TRAINER, 36, 5
 			cdata(CDATA_ROLE, rc) = ROLE_TRAINER
@@ -7313,7 +7313,7 @@
 			flt
 			characreate -1, CREATURE_ID_SHOPKEEPER, 20, 4
 			cdata(CDATA_ROLE, rc) = ROLE_SHOP_MOUNTAIN2, 50
-			cdatan(CDATAN_NAME, rc) = lang("‚¨‚İ‚â‚°‰®‚Ì" + cdatan(CDATAN_NAME, rc), sncnv(cdatan(CDATAN_NAME, rc)) + "the souvenir vendor")
+			cdatan(CDATAN_NAME, rc) = lang("ãŠã¿ã‚„ã’å±‹ã®" + cdatan(CDATAN_NAME, rc), sncnv(cdatan(CDATAN_NAME, rc)) + "the souvenir vendor")
 			flt
 			characreate -1, CREATURE_ID_TOURIST, 8, 8
 			flt
@@ -7386,7 +7386,7 @@
 			flt
 			characreate -1, CREATURE_ID_ELDER, 40, 11
 			cdata(CDATA_ROLE, rc) = ROLE_MAYOR
-			cdatan(CDATAN_NAME, rc) = lang("ƒ‹[ƒhƒDƒX‚Ì" + cdatan(CDATAN_NAME, rc), cdatan(CDATAN_NAME, rc) + " of Ludus")
+			cdatan(CDATAN_NAME, rc) = lang("ãƒ«ãƒ¼ãƒ‰ã‚¥ã‚¹ã®" + cdatan(CDATAN_NAME, rc), cdatan(CDATAN_NAME, rc) + " of Ludus")
 			flt
 			characreate -1, CREATURE_ID_TRAINER, 31, 11
 			cdata(CDATA_ROLE, rc) = ROLE_TRAINER
@@ -7425,7 +7425,7 @@
 			mdata(MDATA_MODERATE_CROWD) = 0
 			mdata(MDATA_MUSIC) = MUSICLIST_MCBATTLE2
 			mdata(MDATA_NO_RENEW) = 1
-			mdatan(MDATAN_NAME) = lang("’n‰ºº", "basement")
+			mdatan(MDATAN_NAME) = lang("åœ°ä¸‹å®¤", "basement")
 			put_questtarget
 			map_placeplayer
 		}
@@ -7488,7 +7488,7 @@
 			mdata(MDATA_MODERATE_CROWD) = 0
 			mdata(MDATA_MUSIC) = MUSICLIST_MCBOSS4
 			mdata(MDATA_NO_RENEW) = 0
-			mdatan(MDATAN_NAME) = lang("ˆ«–‚‚Ì‘ƒ", "basement")
+			mdatan(MDATAN_NAME) = lang("æ‚ªé­”ã®å·£", "basement")
 			put_questtarget
 			gdata(GDATA_LEVEL_START_ON) = 7
 			mapstartx = 16
@@ -7673,7 +7673,7 @@
 								if ( i == 0 ) {
 									continue
 								}
-								dialog lang("ƒGƒŠƒA" + adata(ADATA_PARENT, p) + "‚ªÄ”z’u" + gdata(GDATA_WORLD) + "‚³‚ê" + prevworld + "‚Ü‚·B" + mapname(p) + "‚ÌˆÊ’u‚ÍAx" + adata(ADATA_X, p) + ":y" + adata(ADATA_Y, p) + "‚©‚çx" + x + ":y" + y + "‚É•ÏX‚³‚ê‚Ü‚·B", "The location of " + mapname(p) + " has been changed from x" + adata(ADATA_X, p) + ":y" + adata(ADATA_Y, p) + " to x" + x + ":y" + y + ".")
+								dialog lang("ã‚¨ãƒªã‚¢" + adata(ADATA_PARENT, p) + "ãŒå†é…ç½®" + gdata(GDATA_WORLD) + "ã•ã‚Œ" + prevworld + "ã¾ã™ã€‚" + mapname(p) + "ã®ä½ç½®ã¯ã€x" + adata(ADATA_X, p) + ":y" + adata(ADATA_Y, p) + "ã‹ã‚‰x" + x + ":y" + y + "ã«å¤‰æ›´ã•ã‚Œã¾ã™ã€‚", "The location of " + mapname(p) + " has been changed from x" + adata(ADATA_X, p) + ":y" + adata(ADATA_Y, p) + " to x" + x + ":y" + y + ".")
 								adata(ADATA_X, p) = x
 								adata(ADATA_Y, p) = y
 								f++
@@ -7736,7 +7736,7 @@
 			gdata(GDATA_RUN_DIR) = 1
 			gdata(GDATA_LAST_EDGE_X) = -1
 			msg_newline
-			msgtemp = lang("  O”N‚ÌŒ“ú‚ªŒo‚¿A‚ ‚È‚½‚ÍÄ‚Ñƒm[ƒXƒeƒBƒŠƒX‚É~‚è—§‚Á‚½B", "  Three years have passed. You set foot onto the cool soil of North Tyris once more.")
+			msgtemp = lang("  ä¸‰å¹´ã®æœˆæ—¥ãŒçµŒã¡ã€ã‚ãªãŸã¯å†ã³ãƒãƒ¼ã‚¹ãƒ†ã‚£ãƒªã‚¹ã«é™ã‚Šç«‹ã£ãŸã€‚", "  Three years have passed. You set foot onto the cool soil of North Tyris once more.")
 		}
 	}
 	if ( gdata(GDATA_AREA) == AREA_SOUTH_TYRIS ) {
@@ -7746,7 +7746,7 @@
 			gdata(GDATA_RUN_DIR) = 1
 			gdata(GDATA_LAST_EDGE_X) = -1
 			msg_newline
-			msgtemp = lang("  O”N‚ÌŒ“ú‚ªŒo‚¿A‚ ‚È‚½‚ÍÄ‚Ñ–`Œ¯‚Ì—·‚Éo‚½B", "  Three years have passed. You set out on adventure once more.")
+			msgtemp = lang("  ä¸‰å¹´ã®æœˆæ—¥ãŒçµŒã¡ã€ã‚ãªãŸã¯å†ã³å†’é™ºã®æ—…ã«å‡ºãŸã€‚", "  Three years have passed. You set out on adventure once more.")
 		}
 	}
 	repeat MAX_CHARA_ADVENTURER, MAX_CHARA_FOLLOWER
@@ -8096,7 +8096,7 @@
 	dim efmap, 4, mdata(MDATA_WIDTH), mdata(MDATA_HEIGHT)
 	if ( mdata(MDATA_WIDTH) == 0 | mdata(MDATA_HEIGHT) == 0 ) {
 		if ( medit == 0 ) {
-			dialog lang("ƒ}ƒbƒv‚Ìƒ[ƒh‚É¸”s‚µ‚Ü‚µ‚½B", "Map loading failed.")
+			dialog lang("ãƒãƒƒãƒ—ã®ãƒ­ãƒ¼ãƒ‰ã«å¤±æ•—ã—ã¾ã—ãŸã€‚", "Map loading failed.")
 			mode = MODELIST_NEW
 			gdata(GDATA_AREA) = AREA_HOME
 			gdata(GDATA_LEVEL) = 1
@@ -8351,12 +8351,12 @@
 				spact(SKILL_SPACT_WIN - STARTING_SKILL_SPACT) = 1
 				txtmore
 				txtef COLOR_YELLOW
-				txt lang("‚ ‚È‚½‚Íu" + skillname(SKILL_SPACT_WIN) + "v‚Ì”\—Í‚ğ“¾‚½B", "You have learned a new ability, " + skillname(SKILL_SPACT_WIN) + ".")
+				txt lang("ã‚ãªãŸã¯ã€Œ" + skillname(SKILL_SPACT_WIN) + "ã€ã®èƒ½åŠ›ã‚’å¾—ãŸã€‚", "You have learned a new ability, " + skillname(SKILL_SPACT_WIN) + ".")
 				if ( spact(SKILL_SPACT_PURGE - STARTING_SKILL_SPACT) == 0 ) {
 					spact(SKILL_SPACT_PURGE - STARTING_SKILL_SPACT) = 1
 					txtmore
 					txtef COLOR_YELLOW
-					txt lang("‚ ‚È‚½‚Íu" + skillname(SKILL_SPACT_PURGE) + "v‚Ì”\—Í‚ğ“¾‚½B", "You have learned a new ability, " + skillname(SKILL_SPACT_PURGE) + ".")
+					txt lang("ã‚ãªãŸã¯ã€Œ" + skillname(SKILL_SPACT_PURGE) + "ã€ã®èƒ½åŠ›ã‚’å¾—ãŸã€‚", "You have learned a new ability, " + skillname(SKILL_SPACT_PURGE) + ".")
 				}
 			}
 			kamen4 = 0
@@ -8808,7 +8808,7 @@
 		snd SOUNDLIST_BEAST02
 		snd SOUNDLIST_BEAST02
 		txtef COLOR_BLUE
-		msgtemp += lang("ƒrƒbƒOƒ_ƒfƒB‚ÌšX‚èº‚ª•·‚±‚¦‚écB", " You heard a growl of Big Daddy...")
+		msgtemp += lang("ãƒ“ãƒƒã‚°ãƒ€ãƒ‡ã‚£ã®å”¸ã‚Šå£°ãŒèã“ãˆã‚‹â€¦ã€‚", " You heard a growl of Big Daddy...")
 	}
 	if ( gdata(GDATA_AREA) == AREA_CHAOS_CRADLE ) {
 		tc = findchara(CREATURE_ID_GETUEI_THE_NINJA_MASTER)
@@ -8861,7 +8861,7 @@
 					if ( gdata(GDATA_DAY) == 1 | gdata(GDATA_DAY) == 3 | (gdata(GDATA_DAY) >= 11 & gdata(GDATA_DAY) <= 19) | gdata(GDATA_DAY) == 21 | gdata(GDATA_DAY) == 23 | gdata(GDATA_DAY) == 30 ) {
 						snd SOUNDLIST_CURSE2
 						txtef COLOR_RED
-						msgtemp += lang("‰½‚©‚ªŠK’i‚©‚ç”‡‚¢o‚µ‚Ä‚«‚½I", "Something has been crawled from the stairs!")
+						msgtemp += lang("ä½•ã‹ãŒéšæ®µã‹ã‚‰é€™ã„å‡ºã—ã¦ããŸï¼", "Something has been crawled from the stairs!")
 						evadd EVENT_SPECIAL_SPAWN_COND
 					}
 					zyuusann = 0
@@ -9028,7 +9028,7 @@
 				if ( inv(INV_ITEM_ID, cnt) == ITEM_ID_ANCIENT_BOOK & inv(INV_ITEM_PARAM1, cnt) >= 16 ) {
 					f = 1
 					txtef COLOR_YELLOW
-					msgtemp += lang("ˆÙí‚È•¨¿‚ğŠ´’mB" + inv(INV_ITEM_ID, cnt) + "”ÔÁ‹ƒvƒƒOƒ‰ƒ€‚Ì" + inv(INV_ITEM_PARAM1, cnt) + "†‚ğì“®cB", "Detect the abnormal material. ... Erase operation is complete.")
+					msgtemp += lang("ç•°å¸¸ãªç‰©è³ªã‚’æ„ŸçŸ¥ã€‚" + inv(INV_ITEM_ID, cnt) + "ç•ªæ¶ˆå»ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã®" + inv(INV_ITEM_PARAM1, cnt) + "å·ã‚’ä½œå‹•â€¦ã€‚", "Detect the abnormal material. ... Erase operation is complete.")
 					inv(INV_ITEM_NUM, cnt) = 0
 				}
 			}
@@ -9036,7 +9036,7 @@
 				if ( inv(INV_ITEM_ID, cnt) == ITEM_ID_DEED & inv(INV_ITEM_PARAM1, cnt) >= 7 ) {
 					f = 1
 					txtef COLOR_YELLOW
-					msgtemp += lang("ˆÙí‚È•¨¿‚ğŠ´’mB" + inv(INV_ITEM_ID, cnt) + "”ÔÁ‹ƒvƒƒOƒ‰ƒ€‚Ì" + inv(INV_ITEM_PARAM1, cnt) + "†‚ğì“®cB", "Detect the abnormal material. ... Erase operation is complete.")
+					msgtemp += lang("ç•°å¸¸ãªç‰©è³ªã‚’æ„ŸçŸ¥ã€‚" + inv(INV_ITEM_ID, cnt) + "ç•ªæ¶ˆå»ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã®" + inv(INV_ITEM_PARAM1, cnt) + "å·ã‚’ä½œå‹•â€¦ã€‚", "Detect the abnormal material. ... Erase operation is complete.")
 					inv(INV_ITEM_NUM, cnt) = 0
 				}
 			}
@@ -9044,7 +9044,7 @@
 				if ( inv(INV_ITEM_ID, cnt) == ITEM_ID_BAIT & inv(INV_ITEM_PARAM1, cnt) >= 6 ) {
 					f = 1
 					txtef COLOR_YELLOW
-					msgtemp += lang("ˆÙí‚È•¨¿‚ğŠ´’mB" + inv(INV_ITEM_ID, cnt) + "”ÔÁ‹ƒvƒƒOƒ‰ƒ€‚Ì" + inv(INV_ITEM_PARAM1, cnt) + "†‚ğì“®cB", "Detect the abnormal material. ... Erase operation is complete.")
+					msgtemp += lang("ç•°å¸¸ãªç‰©è³ªã‚’æ„ŸçŸ¥ã€‚" + inv(INV_ITEM_ID, cnt) + "ç•ªæ¶ˆå»ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã®" + inv(INV_ITEM_PARAM1, cnt) + "å·ã‚’ä½œå‹•â€¦ã€‚", "Detect the abnormal material. ... Erase operation is complete.")
 					inv(INV_ITEM_NUM, cnt) = 0
 				}
 			}
@@ -9054,7 +9054,7 @@
 						inv(INV_ITEM_PARAM1, cnt) = EVITEM_HEART_EVOLUTION
 						f = 1
 						txtef COLOR_YELLOW
-						msgtemp += lang("i‰»ƒvƒƒOƒ‰ƒ€‚ÌÄ\¬‚ğŠ®—¹cB", "Detect the abnormal material. ... Erase operation is complete.")
+						msgtemp += lang("é€²åŒ–ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã®å†æ§‹æˆã‚’å®Œäº†â€¦ã€‚", "Detect the abnormal material. ... Erase operation is complete.")
 					}
 				}
 			}
@@ -9079,16 +9079,16 @@
 		evadd EVENT_NEFIA_EFFECT
 		adata(ADATA_WAKEUP_NEFIA, gdata(GDATA_AREA)) = WAKEUP_NEFIA_NORMAL + gdata(GDATA_LEVEL) - gdata(GDATA_LEVEL) / 10 * 10
 		if ( adata(ADATA_WAKEUP_NEFIA, gdata(GDATA_AREA)) == WAKEUP_NEFIA_NORMAL ) {
-			msgtemp += lang("‚±‚ÌŠK‘w‚Í‘Ñ“d‚µ‚Ä‚¢‚é‚æ‚¤‚¾B", "The floor seems to be charged.")
+			msgtemp += lang("ã“ã®éšå±¤ã¯å¸¯é›»ã—ã¦ã„ã‚‹ã‚ˆã†ã ã€‚", "The floor seems to be charged.")
 		}
 		if ( adata(ADATA_WAKEUP_NEFIA, gdata(GDATA_AREA)) == WAKEUP_NEFIA_TIME ) {
-			msgtemp += lang("‚±‚ÌŠK‘w‚Í‚Ì—¬‚ê‚ª•sˆÀ’è‚¾B", "Passage of time is unstable on this floor.")
+			msgtemp += lang("ã“ã®éšå±¤ã¯æ™‚ã®æµã‚ŒãŒä¸å®‰å®šã ã€‚", "Passage of time is unstable on this floor.")
 		}
 		if ( adata(ADATA_WAKEUP_NEFIA, gdata(GDATA_AREA)) == WAKEUP_NEFIA_POISON ) {
-			msgtemp += lang("‚±‚ÌŠK‘w‚É‚Í“Å‚ª[–‚µ‚Ä‚¢‚é‚æ‚¤‚¾B", "Poison seems to fill this floor.")
+			msgtemp += lang("ã“ã®éšå±¤ã«ã¯æ¯’ãŒå……æº€ã—ã¦ã„ã‚‹ã‚ˆã†ã ã€‚", "Poison seems to fill this floor.")
 		}
 		if ( adata(ADATA_WAKEUP_NEFIA, gdata(GDATA_AREA)) == WAKEUP_NEFIA_GRAVITY ) {
-			msgtemp += lang("‚±‚ÌŠK‘w‚Ìd—Í‚Í‹­‚¢B", "Gravity is strong on this floor.")
+			msgtemp += lang("ã“ã®éšå±¤ã®é‡åŠ›ã¯å¼·ã„ã€‚", "Gravity is strong on this floor.")
 		}
 	}
 	if ( gdata(GDATA_WORLD) == AREA_NORTH_TYRIS | gdata(GDATA_WORLD) == AREA_SOUTH_TYRIS ) {
@@ -9547,7 +9547,7 @@
 			gosub *scene
 			gdata(GDATA_FLAG_MAIN) = 355
 			msg_newline
-			msgtemp = lang("  ‚ ‚È‚½‚ÍƒˆƒEƒBƒ“‚Å‰×”nÔ‚©‚ç”²‚¯o‚µ‚½B", "  You disembark from the wagon in Yowyn.")
+			msgtemp = lang("  ã‚ãªãŸã¯ãƒ¨ã‚¦ã‚£ãƒ³ã§è·é¦¬è»Šã‹ã‚‰æŠœã‘å‡ºã—ãŸã€‚", "  You disembark from the wagon in Yowyn.")
 		}
 		if ( gdata(GDATA_FLAG_MAIN) == 400 ) {
 			sceneid = 131
@@ -9793,7 +9793,7 @@
 	if ( adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_MAID_MANSION ) {
 		if ( gdata(GDATA_LEVEL) == 3 ) {
 			if ( gdata(GDATA_FLAG_SUB_MANSION_FOR_SALE) == 1001 ) {
-				txt lang("‚±‚Ì‰®•~‚Ì’n‰ºº‚Ív‚Á‚½‚æ‚èL‚¢c‚Æ‚ ‚È‚½‚ÍŠ´‚¶‚½B", "...The basement is larger than you thought.")
+				txt lang("ã“ã®å±‹æ•·ã®åœ°ä¸‹å®¤ã¯æ€ã£ãŸã‚ˆã‚Šåºƒã„â€¦ã¨ã‚ãªãŸã¯æ„Ÿã˜ãŸã€‚", "...The basement is larger than you thought.")
 			}
 		}
 	}
@@ -9809,7 +9809,7 @@
 	if ( adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_RANDOM_DUNGEON ) {
 		if ( gdata(GDATA_LEVEL) == adata(ADATA_MAX_LEVEL, gdata(GDATA_AREA)) ) {
 			if ( adata(ADATA_BOSS, gdata(GDATA_AREA)) == (-1) ) {
-				msgtemp += lang("•Ó‚è‚©‚ç‚Í‰½‚Ì‹Ù’£Š´‚àŠ´‚¶‚ç‚ê‚È‚¢B" + mapname(gdata(GDATA_AREA)) + "‚Ìå‚Í‚à‚¤‚¢‚È‚¢‚æ‚¤‚¾B", "This place is pretty dull. The dungeon master is no longer sighted here.")
+				msgtemp += lang("è¾ºã‚Šã‹ã‚‰ã¯ä½•ã®ç·Šå¼µæ„Ÿã‚‚æ„Ÿã˜ã‚‰ã‚Œãªã„ã€‚" + mapname(gdata(GDATA_AREA)) + "ã®ä¸»ã¯ã‚‚ã†ã„ãªã„ã‚ˆã†ã ã€‚", "This place is pretty dull. The dungeon master is no longer sighted here.")
 			}
 		}
 	}
@@ -10036,7 +10036,7 @@
 		if ( gdata(GDATA_TRAVEL_DISTANCE) >= 300 ) {
 			p = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 - gdata(GDATA_TRAVEL_TIME)
 			txtmore
-			txt lang(cnvdate(gdata(GDATA_TRAVEL_TIME)) + "‚É" + mapname(gdata(GDATA_LAST_TOWN)) + "‚ğ”­‚Á‚Ä‚©‚çA" + p / 24 + "“ú‚Æ" + p \ 24 + "ŠÔ‚Ì—·‚ğI‚¦‚½B", "" + p / 24 + " days and " + p \ 24 + " hours have passed since you left " + mapname(gdata(GDATA_LAST_TOWN)) + ".")
+			txt lang(cnvdate(gdata(GDATA_TRAVEL_TIME)) + "ã«" + mapname(gdata(GDATA_LAST_TOWN)) + "ã‚’ç™ºã£ã¦ã‹ã‚‰ã€" + p / 24 + "æ—¥ã¨" + p \ 24 + "æ™‚é–“ã®æ—…ã‚’çµ‚ãˆãŸã€‚", "" + p / 24 + " days and " + p \ 24 + " hours have passed since you left " + mapname(gdata(GDATA_LAST_TOWN)) + ".")
 			p = 0
 			repeat MAX_CHARA_FOLLOWER
 				if ( cdata(CDATA_EXIST, cnt) != CHAR_STATE_ALIVE ) {
@@ -10148,7 +10148,7 @@
 				ens2 += limit((sdata(SKILL_NORMAL_LITERACY, tc) + sdata(SKILL_NORMAL_MEMORIZATION, tc) + 1) / 2, 3, 3 + sdata(SKILL_NORMAL_LITERACY, cc) / 5)
 			loop
 			txtmore
-			txt lang(s + "‚Í" + gdata(GDATA_TRAVEL_DISTANCE) + "ƒ}ƒCƒ‹‚Ì‹——£‚ğ•à‚«AŒoŒ±‚ğÏ‚ñ‚¾B", s + " walked about " + gdata(GDATA_TRAVEL_DISTANCE) + " miles and have gained experience.")
+			txt lang(s + "ã¯" + gdata(GDATA_TRAVEL_DISTANCE) + "ãƒã‚¤ãƒ«ã®è·é›¢ã‚’æ­©ãã€çµŒé¨“ã‚’ç©ã‚“ã ã€‚", s + " walked about " + gdata(GDATA_TRAVEL_DISTANCE) + " miles and have gained experience.")
 			gdata(GDATA_TRAVEL_DISTANCE) = 0
 		}
 	}
@@ -10185,7 +10185,7 @@
 		loop
 		txtef COLOR_YELLOW
 		txtmore
-		txt lang("–å‰º¶‚ÍCs‚Å­‚µ¬’·‚µ‚Ä‚¢‚é‚æ‚¤‚¾B", "The students seem to have improved a bit through training.")
+		txt lang("é–€ä¸‹ç”Ÿã¯ä¿®è¡Œã§å°‘ã—æˆé•·ã—ã¦ã„ã‚‹ã‚ˆã†ã ã€‚", "The students seem to have improved a bit through training.")
 		gdata(GDATA_DOJO_TURNS) = 0
 	}
 	procid = (procid + 1) \ 4
@@ -10193,7 +10193,7 @@
 	if ( gdata(GDATA_AREA) == AREA_QUEST ) {
 		if ( gdata(GDATA_QUEST) == QUEST_TYPE_PARTY ) {
 			txtef COLOR_SKY_BLUE
-			txt lang("" + gdata(GDATA_TIME_LIMIT) + "•ªŠÔ‚ÌŠÔ‚Éƒp[ƒeƒB[‚ğ·‚èã‚°‚æ‚¤B–Ú•W‚Í" + qdata(QDATA_PARAM1, gdata(GDATA_QUEST_REF)) + "ƒ|ƒCƒ“ƒgB", "You have to warm up the party within " + gdata(GDATA_TIME_LIMIT) + " minutes. Your target score is " + qdata(QDATA_PARAM1, gdata(GDATA_QUEST_REF)) + " points.")
+			txt lang("" + gdata(GDATA_TIME_LIMIT) + "åˆ†é–“ã®é–“ã«ãƒ‘ãƒ¼ãƒ†ã‚£ãƒ¼ã‚’ç››ã‚Šä¸Šã’ã‚ˆã†ã€‚ç›®æ¨™ã¯" + qdata(QDATA_PARAM1, gdata(GDATA_QUEST_REF)) + "ãƒã‚¤ãƒ³ãƒˆã€‚", "You have to warm up the party within " + gdata(GDATA_TIME_LIMIT) + " minutes. Your target score is " + qdata(QDATA_PARAM1, gdata(GDATA_QUEST_REF)) + " points.")
 		}
 		if ( gdata(GDATA_QUEST) == QUEST_TYPE_HARVEST ) {
 			if ( qdata(QDATA_PARAM1, gdata(GDATA_QUEST_REF)) <= 0 ) {
@@ -10201,15 +10201,15 @@
 				qdata(QDATA_REWARD, gdata(GDATA_QUEST_REF)) = 400
 			}
 			txtef COLOR_SKY_BLUE
-			txt lang("" + gdata(GDATA_TIME_LIMIT) + "•ªˆÈ“à‚ÉA”[“ü” ‚É" + cnvweight(qdata(QDATA_PARAM1, gdata(GDATA_QUEST_REF))) + "‚Ìì•¨‚ğ”[“ü‚µ‚æ‚¤B", "To complete the quest, you have to harvest " + cnvweight(qdata(QDATA_PARAM1, gdata(GDATA_QUEST_REF))) + " worth farm products and put them into the delivery chest within " + gdata(GDATA_TIME_LIMIT) + " minutes.")
+			txt lang("" + gdata(GDATA_TIME_LIMIT) + "åˆ†ä»¥å†…ã«ã€ç´å…¥ç®±ã«" + cnvweight(qdata(QDATA_PARAM1, gdata(GDATA_QUEST_REF))) + "ã®ä½œç‰©ã‚’ç´å…¥ã—ã‚ˆã†ã€‚", "To complete the quest, you have to harvest " + cnvweight(qdata(QDATA_PARAM1, gdata(GDATA_QUEST_REF))) + " worth farm products and put them into the delivery chest within " + gdata(GDATA_TIME_LIMIT) + " minutes.")
 		}
 		if ( gdata(GDATA_QUEST) == QUEST_TYPE_MINEFIELD ) {
 			txtef COLOR_SKY_BLUE
-			txt lang("" + gdata(GDATA_TIME_LIMIT) + "•ªˆÈ“à‚ÉAã©‚ğ‰Â”\‚ÈŒÀ‚è“P‹‚µ‚æ‚¤B–Ú•W‚Í" + qdata(QDATA_PARAM1, gdata(GDATA_QUEST_REF)) + "ƒ|ƒCƒ“ƒgB", "To complete the quest, you have to remove " + qdata(QDATA_PARAM1, gdata(GDATA_QUEST_REF)) + " traps within " + gdata(GDATA_TIME_LIMIT) + " minutes.")
+			txt lang("" + gdata(GDATA_TIME_LIMIT) + "åˆ†ä»¥å†…ã«ã€ç½ ã‚’å¯èƒ½ãªé™ã‚Šæ’¤å»ã—ã‚ˆã†ã€‚ç›®æ¨™ã¯" + qdata(QDATA_PARAM1, gdata(GDATA_QUEST_REF)) + "ãƒã‚¤ãƒ³ãƒˆã€‚", "To complete the quest, you have to remove " + qdata(QDATA_PARAM1, gdata(GDATA_QUEST_REF)) + " traps within " + gdata(GDATA_TIME_LIMIT) + " minutes.")
 		}
 		if ( gdata(GDATA_QUEST) == QUEST_TYPE_CONQUER ) {
 			txtef COLOR_SKY_BLUE
-			txt lang("" + gdata(GDATA_TIME_LIMIT) + "•ªˆÈ“à‚ÉA" + refchara(qdata(QDATA_PARAM1, gdata(GDATA_QUEST_REF)), DBSPEC_CHARA_NAME_ORG, 1) + "‚ğ“¢”°‚µ‚È‚¯‚ê‚Î‚È‚ç‚È‚¢B", "You have to slay " + refchara(qdata(QDATA_PARAM1, gdata(GDATA_QUEST_REF)), DBSPEC_CHARA_NAME_ORG, 1) + " within " + gdata(GDATA_TIME_LIMIT) + " minutes.")
+			txt lang("" + gdata(GDATA_TIME_LIMIT) + "åˆ†ä»¥å†…ã«ã€" + refchara(qdata(QDATA_PARAM1, gdata(GDATA_QUEST_REF)), DBSPEC_CHARA_NAME_ORG, 1) + "ã‚’è¨ä¼ã—ãªã‘ã‚Œã°ãªã‚‰ãªã„ã€‚", "You have to slay " + refchara(qdata(QDATA_PARAM1, gdata(GDATA_QUEST_REF)), DBSPEC_CHARA_NAME_ORG, 1) + " within " + gdata(GDATA_TIME_LIMIT) + " minutes.")
 		}
 	}
 	goto *main_init
@@ -10655,7 +10655,7 @@
 		procid = (procid + 1) \ 4
 		proclist(procid) = "world_update_rand_dungeon" + " ct:" + ct
 		gdata(GDATA_FLAG_RENEW_DUNGEON) = 0
-		msgtemp += lang("‚±‚Ì‘å—¤‚É‘å‚«‚È’nŠk•Ï“®‚ª‹N‚±‚Á‚½B", " A sudden diastrophism hits the continent.")
+		msgtemp += lang("ã“ã®å¤§é™¸ã«å¤§ããªåœ°æ®»å¤‰å‹•ãŒèµ·ã“ã£ãŸã€‚", " A sudden diastrophism hits the continent.")
 		repeat MAX_AREA_COUNT - STARTING_RANDOM_AREA, STARTING_RANDOM_AREA
 			if ( adata(ADATA_ID, cnt) == AREA_RANDOM_DUNGEON ) {
 				if ( gdata(GDATA_FLAG_STATUE_OPATOS) == 1 | rnd(5) == 0 | adata(ADATA_BOSS, cnt) == (-1) ) {
@@ -12452,7 +12452,7 @@
 				dmg = (4 - r) * (4 - r) * 2
 				txtef COLOR_RED
 				txtmore
-				txt lang("”M‚¢I", "It's hot!")
+				txt lang("ç†±ã„ï¼", "It's hot!")
 				dmghp cc, dmg, DAMAGE_FROM_FIRE
 			}
 		}
@@ -12463,7 +12463,7 @@
 			if ( rnd(20) == 0 ) {
 				txtef COLOR_RED
 				txtmore
-				txt lang("_ŒoƒKƒX‚ª•Y‚Á‚Ä‚«‚½I", "Nerve gas was released!")
+				txt lang("ç¥çµŒã‚¬ã‚¹ãŒæ¼‚ã£ã¦ããŸï¼", "Nerve gas was released!")
 				snd SOUNDLIST_ATK_NERVE
 				repeat MAX_CHARA_TOTAL
 					if ( cdata(CDATA_EXIST, cnt) != CHAR_STATE_ALIVE ) {
@@ -12531,7 +12531,7 @@
 					loop
 					if ( reve == 100 ) {
 						txtef COLOR_RED
-						txt lang("“G‚Ì–‚–@g‚¢‚½‚¿‚Í•œQS‚ğø‚ç‚ê‚½B", "Rebel magicians were fueled by revenge.")
+						txt lang("æ•µã®é­”æ³•ä½¿ã„ãŸã¡ã¯å¾©è®å¿ƒã‚’ç…½ã‚‰ã‚ŒãŸã€‚", "Rebel magicians were fueled by revenge.")
 					}
 					reve = 0
 				}
@@ -12545,7 +12545,7 @@
 				if ( rnd(15) == 0 ) {
 					snd SOUNDLIST_CURSE2
 					txtef COLOR_RED
-					txt lang("ˆ«–‚‚É‚æ‚é‹óŠÔŠ±Â‚ªn‚Ü‚Á‚½B", "Distortion jammers")
+					txt lang("æ‚ªé­”ã«ã‚ˆã‚‹ç©ºé–“å¹²æ¸‰ãŒå§‹ã¾ã£ãŸã€‚", "Distortion jammers")
 					tc = findcharala(CREATURE_ID_MELUGAST_TYPEM)
 					if ( rnd(100) >= 94 ) {
 						tc = CHARA_PLAYER
@@ -12563,7 +12563,7 @@
 					}
 					else {
 						txtef COLOR_BLUE
-						txt lang("c‚cƒWƒƒƒ}[‚ÅŒyŒ¸‚³‚ê‚½‚æ‚¤‚¾B", "Distortion jammer was activated.")
+						txt lang("â€¦ï¼¤ã‚¸ãƒ£ãƒãƒ¼ã§è»½æ¸›ã•ã‚ŒãŸã‚ˆã†ã ã€‚", "Distortion jammer was activated.")
 						repeat MAX_CHARA_TOTAL
 							if ( cdata(CDATA_EXIST, cnt) != CHAR_STATE_ALIVE ) {
 								continue
@@ -12583,7 +12583,7 @@
 					if ( rnd(20) == 0 ) {
 						snd SOUNDLIST_CHEER
 						txtef COLOR_RED
-						txt lang("u•±‚¢—§‚ÄIƒƒXƒŠƒA‚Ì—‘z‚Ì‚½‚ß‚É–½‚ğ“q‚¯‚æIv", "Soldiers morale went up.")
+						txt lang("ã€Œå¥®ã„ç«‹ã¦ï¼ãƒ­ã‚¹ãƒªã‚¢ã®ç†æƒ³ã®ãŸã‚ã«å‘½ã‚’è³­ã‘ã‚ˆï¼ã€", "Soldiers morale went up.")
 						repeat MAX_CHARA_TOTAL
 							if ( cdata(CDATA_EXIST, cnt) != CHAR_STATE_ALIVE ) {
 								continue
@@ -12606,7 +12606,7 @@
 		if ( rnd(10) == 0 ) {
 			txtef COLOR_RED
 			txtmore
-			txt lang("”M•—‚ª‚«”²‚¯‚½I", "It's hot!")
+			txt lang("ç†±é¢¨ãŒå¹ãæŠœã‘ãŸï¼", "It's hot!")
 			repeat MAX_CHARA_TOTAL
 				if ( sdata(SKILL_RES_FIRE, cnt) / 50 < 6 ) {
 					dmghp cnt, gdata(GDATA_LEVEL) * 2 + 50, DAMAGE_FROM_TRAP, SKILL_RES_FIRE, 1000
@@ -12619,7 +12619,7 @@
 		if ( rnd(10) == 0 ) {
 			txtef COLOR_RED
 			txtmore
-			txt lang("ƒlƒtƒBƒA‚ª•ú“d‚ğs‚Á‚½I", "Nefia released an electrical discharge!")
+			txt lang("ãƒãƒ•ã‚£ã‚¢ãŒæ”¾é›»ã‚’è¡Œã£ãŸï¼", "Nefia released an electrical discharge!")
 			snd SOUNDLIST_PUNISH1
 			repeat MAX_CHARA_TOTAL
 				if ( cdata(CDATA_EXIST, cnt) != CHAR_STATE_ALIVE ) {
@@ -12634,7 +12634,7 @@
 		if ( rnd(20) == 0 ) {
 			txtef COLOR_RED
 			txtmore
-			txt lang("ƒlƒtƒBƒA‚ª–Ò“Å‚ğ•¬‚«‚¾‚µ‚½I", "Nefia released deadly poison!")
+			txt lang("ãƒãƒ•ã‚£ã‚¢ãŒçŒ›æ¯’ã‚’å™´ãã ã—ãŸï¼", "Nefia released deadly poison!")
 			snd SOUNDLIST_ATK_POISON
 			repeat MAX_CHARA_TOTAL
 				if ( cdata(CDATA_EXIST, cnt) != CHAR_STATE_ALIVE ) {
@@ -12649,7 +12649,7 @@
 		if ( rnd(5) == 0 ) {
 			txtef COLOR_RED
 			txtmore
-			txt lang("ƒlƒtƒBƒA‚ªd—Í‚ğ”­‚µ‚½I", "Nefia generated gravity!")
+			txt lang("ãƒãƒ•ã‚£ã‚¢ãŒé‡åŠ›ã‚’ç™ºã—ãŸï¼", "Nefia generated gravity!")
 			snd SOUNDLIST_POP3
 			snd SOUNDLIST_POP3
 			repeat MAX_CHARA_TOTAL
@@ -12669,7 +12669,7 @@
 				if ( rnd(10) == 0 ) {
 					txtef COLOR_RED
 					txtmore
-					txt lang("“ª‚Ì’†‚É‚¨‚¼‚Ü‚µ‚¢ŒÄ‚Ñº‚ª‹¿‚¢‚½cB", "A horrifying call rings in your head...")
+					txt lang("é ­ã®ä¸­ã«ãŠãã¾ã—ã„å‘¼ã³å£°ãŒéŸ¿ã„ãŸâ€¦ã€‚", "A horrifying call rings in your head...")
 					snd SOUNDLIST_CURSE2
 					repeat MAX_CHARA_TOTAL
 						if ( cdata(CDATA_EXIST, cnt) != CHAR_STATE_ALIVE ) {
@@ -12697,7 +12697,7 @@
 						}
 					loop
 					if ( cdata(CDATA_SANITY, CHARA_PLAYER) >= 100 ) {
-						txt lang("ƒŒƒCƒLu‚±‚êˆÈã‚Í¸_‚ª‰ó‚ê‚Ä‚µ‚Ü‚¢‚Ü‚·Iv", "Leiki says: \"If you go any further your mind will break! I'm getting you out!\"")
+						txt lang("ãƒ¬ã‚¤ã‚­ã€Œã“ã‚Œä»¥ä¸Šã¯ç²¾ç¥ãŒå£Šã‚Œã¦ã—ã¾ã„ã¾ã™ï¼ã€", "Leiki says: \"If you go any further your mind will break! I'm getting you out!\"")
 						msg_halt
 						evadd EVENT_QUEST_TIMEOUT
 					}
@@ -12713,7 +12713,7 @@
 			}
 			if ( synccheck(cc, -1) ) {
 				txtef COLOR_PURPLE
-				txt lang("ƒG[ƒeƒ‹‚ª‚ ‚È‚½‚Ì‘Ì‚ğI‚ŞcB", "Ether corrupts your body...")
+				txt lang("ã‚¨ãƒ¼ãƒ†ãƒ«ãŒã‚ãªãŸã®ä½“ã‚’è•ã‚€â€¦ã€‚", "Ether corrupts your body...")
 			}
 			modcorrupt 100
 			return
@@ -12839,7 +12839,7 @@
 				cdata(CDATA_AI_AGGRO, rc) = 3000
 				cbitmod CHARA_BIT_SUMMONED, rc, 1
 				cdata(CDATA_TARGET, rc) = qtc
-				cdatan(CDATAN_NAME, rc) = lang("ƒJƒ‰ƒ”ƒBƒJ‚ÌƒXƒg[ƒJ[", "Stalker of Karavika")
+				cdatan(CDATAN_NAME, rc) = lang("ã‚«ãƒ©ãƒ´ã‚£ã‚«ã®ã‚¹ãƒˆãƒ¼ã‚«ãƒ¼", "Stalker of Karavika")
 			}
 			if ( gdata(GDATA_FLAG_KAMIKAZE) > 400 ) {
 				flt , 4
@@ -12847,7 +12847,7 @@
 				cdata(CDATA_AI_AGGRO, rc) = 3000
 				cbitmod CHARA_BIT_SUMMONED, rc, 1
 				cdata(CDATA_TARGET, rc) = qtc
-				cdatan(CDATAN_NAME, rc) = lang("wƒJƒ‰ƒ”ƒBƒJ‚ÌƒXƒg[ƒJ[x", "<Stalker of Karavika>")
+				cdatan(CDATAN_NAME, rc) = lang("ã€ã‚«ãƒ©ãƒ´ã‚£ã‚«ã®ã‚¹ãƒˆãƒ¼ã‚«ãƒ¼ã€", "<Stalker of Karavika>")
 			}
 			return
 		}
@@ -12889,9 +12889,9 @@
 				txt_questupdate
 				gdata(GDATA_FLAG_SUB_KAMIKAZE) = 3
 				txtef COLOR_SKY_BLUE
-				txt lang("“`—ßuƒpƒ‹ƒ~ƒAŒR‚Ì“P‘Ş‚ªŠ®—¹‚µ‚Ü‚µ‚½I‚±‚êˆÈã‚±‚±‚É—¯‚Ü‚é•K—v‚Í‚ ‚è‚Ü‚¹‚ñB‹@‚ğŒ©‚Ä’n‰º‚©‚ç‘Ş‹p‚µ‚Ä‚­‚¾‚³‚¢Iv", "The messenger says: \"The retreat of our army is over now. You don't need to fight them any more. Please leave at once!\"")
+				txt lang("ä¼ä»¤ã€Œãƒ‘ãƒ«ãƒŸã‚¢è»ã®æ’¤é€€ãŒå®Œäº†ã—ã¾ã—ãŸï¼ã“ã‚Œä»¥ä¸Šã“ã“ã«ç•™ã¾ã‚‹å¿…è¦ã¯ã‚ã‚Šã¾ã›ã‚“ã€‚æ©Ÿã‚’è¦‹ã¦åœ°ä¸‹ã‹ã‚‰é€€å´ã—ã¦ãã ã•ã„ï¼ã€", "The messenger says: \"The retreat of our army is over now. You don't need to fight them any more. Please leave at once!\"")
 				txtmore
-				txt lang("ŠK’i‚ªŒ»‚ê‚½B", "Suddenly, stairs appear.")
+				txt lang("éšæ®µãŒç¾ã‚ŒãŸã€‚", "Suddenly, stairs appear.")
 				cell_featset 18, 9, tile_downstairs, CELL_FEATURE_DOWNSTAIRS, 1
 			}
 			flt
@@ -12927,7 +12927,7 @@
 	if ( gdata(GDATA_AREA) == AREA_JAIL ) {
 		if ( rnd(50) == 0 ) {
 			if ( cdata(CDATA_KARMA, CHARA_PLAYER) < (-30) ) {
-				txt lang("‚ ‚È‚½‚Íß‚ğ‰÷‚¢‚½B", "You repent of your sin.")
+				txt lang("ã‚ãªãŸã¯ç½ªã‚’æ‚”ã„ãŸã€‚", "You repent of your sin.")
 				modkarma CHARA_PLAYER, 1
 				p = rnd(MAX_SKILL_ATTR_BASIC) + STARTING_SKILL_ATTR
 				if ( sorg(p, CHARA_PLAYER) >= STARTING_SKILL_ATTR ) {
@@ -12939,9 +12939,9 @@
 			if ( rnd(10) == 0 ) {
 				cell_featread 29, 6
 				if ( feat(1) == CELL_FEATURE_DOOR_CLOSED ) {
-					txt lang("‚ ‚È‚½‚ÍƒK[ƒh‚Ì‘«‰¹‚ª‹ß‚Ã‚¢‚Ä‚­‚é‚Ì‚É‹C•t‚¢‚½B", "You hear footsteps coming towards your cell.")
-					txt lang("u‚»‚±‚Ì‚¨‘OAo‚Ä‚à‚¢‚¢‚¼v", cnvtalk("Hey punk, our boss says you can leave the jail now. Do not come back, okay?"))
-					txt lang("ƒK[ƒh‚Í–Ê“|‚­‚³‚»‚¤‚É‚ ‚È‚½‚Ì˜S‚Ì”à‚ğŠJ‚¯‚½B", "A guard unenthusiastically unlocks your cell.")
+					txt lang("ã‚ãªãŸã¯ã‚¬ãƒ¼ãƒ‰ã®è¶³éŸ³ãŒè¿‘ã¥ã„ã¦ãã‚‹ã®ã«æ°—ä»˜ã„ãŸã€‚", "You hear footsteps coming towards your cell.")
+					txt lang("ã€Œãã“ã®ãŠå‰ã€å‡ºã¦ã‚‚ã„ã„ãã€", cnvtalk("Hey punk, our boss says you can leave the jail now. Do not come back, okay?"))
+					txt lang("ã‚¬ãƒ¼ãƒ‰ã¯é¢å€’ãã•ãã†ã«ã‚ãªãŸã®ç‰¢ã®æ‰‰ã‚’é–‹ã‘ãŸã€‚", "A guard unenthusiastically unlocks your cell.")
 					cell_featset 29, 6, tile_dooropen, CELL_FEATURE_DOOR_OPENED, 0, -1
 					snd SOUNDLIST_DOOR1
 				}
@@ -12953,7 +12953,7 @@
 			if ( cdata(CDATA_HUNGER, CHARA_PLAYER) < 5000 ) {
 				if ( cbit(CHARA_BIT_ANOREXIA, CHARA_PLAYER) == 0 ) {
 					snd SOUNDLIST_EAT1
-					txt lang("ƒVƒFƒ‹ƒ^[‚Ì’™‘ H•i‚ğH‚×‚½B", "You eat stored food.")
+					txt lang("ã‚·ã‚§ãƒ«ã‚¿ãƒ¼ã®è²¯è”µé£Ÿå“ã‚’é£Ÿã¹ãŸã€‚", "You eat stored food.")
 					cdata(CDATA_HUNGER, CHARA_PLAYER) += 5000
 					gosub *eat_finish
 				}
@@ -12969,7 +12969,7 @@
 				repeat MAX_CHARA_TOTAL
 					cdata(CDATA_SPEED_SUM, cnt) = 0
 				loop
-				txt lang("‚à‚¤ƒVƒFƒ‹ƒ^[‚Ì’†‚É‚¢‚é•K—v‚Í–³‚¢B", "You don't need to stay in the shelter any longer.")
+				txt lang("ã‚‚ã†ã‚·ã‚§ãƒ«ã‚¿ãƒ¼ã®ä¸­ã«ã„ã‚‹å¿…è¦ã¯ç„¡ã„ã€‚", "You don't need to stay in the shelter any longer.")
 			}
 		}
 	}
@@ -12978,12 +12978,12 @@
 			if ( rnd(25) == 0 ) {
 				txtef COLOR_SKY_BLUE
 				txtmore
-				txt lang(" *‚´‚í‚´‚í* ", "*noise*"), lang("u‚Ó‚Şcˆ«‚­‚È‚¢‚Èv", cnvtalk("Hmm. Not bad.")), lang("u‰½‚¾‚ë‚¤A‚±‚ê‚Ív", cnvtalk("What's this?")), lang("u‚Ù‚Ù‚¤cv", cnvtalk("Ohh...")), lang("u„‚à€‚ñ‚¾‚ç‚Í‚­»‚Écv", cnvtalk("I want to be stuffed...")), lang("u‚±‚±‚ª‰\‚Ìcv", cnvtalk("So this is the famous..."))
+				txt lang(" *ã–ã‚ã–ã‚* ", "*noise*"), lang("ã€Œãµã‚€â€¦æ‚ªããªã„ãªã€", cnvtalk("Hmm. Not bad.")), lang("ã€Œä½•ã ã‚ã†ã€ã“ã‚Œã¯ã€", cnvtalk("What's this?")), lang("ã€Œã»ã»ã†â€¦ã€", cnvtalk("Ohh...")), lang("ã€Œç§ã‚‚æ­»ã‚“ã ã‚‰ã¯ãè£½ã«â€¦ã€", cnvtalk("I want to be stuffed...")), lang("ã€Œã“ã“ãŒå™‚ã®â€¦ã€", cnvtalk("So this is the famous..."))
 			}
 			if ( rnd(25) == 0 ) {
 				txtef COLOR_SKY_BLUE
 				txtmore
-				txt lang(" *‚ª‚â‚ª‚â* ", "*murmur*"), lang("u‚â‚¾‚Á‹C‚¿ˆ«‚¢v", cnvtalk("Gross! Disgusting.")), lang("u‚Ë[‚Ë[‚±‚ê€‚ñ‚Å‚é‚ñ‚Å‚µ‚åHv", cnvtalk("Hey. Is it really dead?")), lang("u‚©‚íA‚¢[ôv", cnvtalk("Scut!")), lang("u¡“ú‚Í‚Æ‚±‚Æ‚ñŒ©‚é‚ºv", cnvtalk("Absolutely amazing.")), lang("uG‚Á‚Ä‚à‚¢‚¢‚ÌHv", cnvtalk("Can I touch?"))
+				txt lang(" *ãŒã‚„ãŒã‚„* ", "*murmur*"), lang("ã€Œã‚„ã ã£æ°—æŒã¡æ‚ªã„ã€", cnvtalk("Gross! Disgusting.")), lang("ã€Œã­ãƒ¼ã­ãƒ¼ã“ã‚Œæ­»ã‚“ã§ã‚‹ã‚“ã§ã—ã‚‡ï¼Ÿã€", cnvtalk("Hey. Is it really dead?")), lang("ã€Œã‹ã‚ã€ã„ãƒ¼â™ªã€", cnvtalk("Scut!")), lang("ã€Œä»Šæ—¥ã¯ã¨ã“ã¨ã‚“è¦‹ã‚‹ãœã€", cnvtalk("Absolutely amazing.")), lang("ã€Œè§¦ã£ã¦ã‚‚ã„ã„ã®ï¼Ÿã€", cnvtalk("Can I touch?"))
 			}
 			if ( rnd(15) == 0 ) {
 				txtef COLOR_SKY_BLUE
@@ -12993,22 +12993,22 @@
 						break
 					}
 					if ( gdata(GDATA_RANK_MUSEUM) > 8000 ) {
-						txt "u‘Ş‹ü‚£[v", "u‚ ‚Ü‚èŒ©‚é‚à‚Ì‚ª‚È‚¢‚Èv", "u‚±‚ñ‚È‚Ì‚ÅŒ©•¨—¿‚Æ‚é‚ÌHv", "ŠÙ“à‚Í­‚µâ‚µ‚¢c"
+						txt "ã€Œé€€å±ˆã…ãƒ¼ã€", "ã€Œã‚ã¾ã‚Šè¦‹ã‚‹ã‚‚ã®ãŒãªã„ãªã€", "ã€Œã“ã‚“ãªã®ã§è¦‹ç‰©æ–™ã¨ã‚‹ã®ï¼Ÿã€", "é¤¨å†…ã¯å°‘ã—å¯‚ã—ã„â€¦"
 						break
 					}
 					if ( gdata(GDATA_RANK_MUSEUM) > 5000 ) {
-						txt "u‚¢‚¢‚ñ‚¶‚á‚È‚¢`v", "u‚Ü‚ A•’Ê‚Ì”•¨ŠÙ‚¾v", "u—öl‚ğ˜A‚ê‚Ä‚­‚ê‚Î‚æ‚©‚Á‚½‚©‚àv", "‚Ü‚ ‚Ü‚ ‚Ì‹q‘«‚¾B"
+						txt "ã€Œã„ã„ã‚“ã˜ã‚ƒãªã„ï½ã€", "ã€Œã¾ã‚ã€æ™®é€šã®åšç‰©é¤¨ã ã€", "ã€Œæ‹äººã‚’é€£ã‚Œã¦ãã‚Œã°ã‚ˆã‹ã£ãŸã‹ã‚‚ã€", "ã¾ã‚ã¾ã‚ã®å®¢è¶³ã ã€‚"
 						break
 					}
 					if ( gdata(GDATA_RANK_MUSEUM) > 2500 ) {
-						txt "u‚±‚Ì•µˆÍ‹CD‚«‚¾‚È‚Ÿv", "u‚à‚¤ˆê“x—ˆ‚æ‚¤‚æv", "uŠÔ‚ªŒo‚Â‚Ì‚ğ–Y‚ê‚é‚ËIv", "ŠÙ“à‚Í‚È‚©‚È‚©“ö‚í‚Á‚Ä‚¢‚éB"
+						txt "ã€Œã“ã®é›°å›²æ°—å¥½ãã ãªãã€", "ã€Œã‚‚ã†ä¸€åº¦æ¥ã‚ˆã†ã‚ˆã€", "ã€Œæ™‚é–“ãŒçµŒã¤ã®ã‚’å¿˜ã‚Œã‚‹ã­ï¼ã€", "é¤¨å†…ã¯ãªã‹ãªã‹è³‘ã‚ã£ã¦ã„ã‚‹ã€‚"
 						break
 					}
 					if ( gdata(GDATA_RANK_MUSEUM) > 500 ) {
-						txt "u—ˆ‚Ä—Ç‚©‚Á‚½ôv", "u‚æ‚­‚±‚ñ‚È‚ÉW‚ß‚½‚È‚ v", "u‚Ş‚£c‹»–¡[‚¢v", "‹q‘«‚ª‘S‚­â‚¦‚È‚¢·‹µ‚Ô‚è‚¾B"
+						txt "ã€Œæ¥ã¦è‰¯ã‹ã£ãŸâ™ªã€", "ã€Œã‚ˆãã“ã‚“ãªã«é›†ã‚ãŸãªã‚ã€", "ã€Œã‚€ã…â€¦èˆˆå‘³æ·±ã„ã€", "å®¢è¶³ãŒå…¨ãçµ¶ãˆãªã„ç››æ³ã¶ã‚Šã ã€‚"
 						break
 					}
-					txt "u‘f°‚ç‚µ‚¢ƒRƒŒƒNƒVƒ‡ƒ“‚¾Iv", "uŠ´“®‚µ‚½v", "u‹A‚è‚½‚­‚È‚¢‚íôv", "—ˆ‹q‚ÍH‚¢“ü‚é‚æ‚¤‚É“W¦•¨‚ğ’­‚ß‚Ä‚¢‚éB"
+					txt "ã€Œç´ æ™´ã‚‰ã—ã„ã‚³ãƒ¬ã‚¯ã‚·ãƒ§ãƒ³ã ï¼ã€", "ã€Œæ„Ÿå‹•ã—ãŸã€", "ã€Œå¸°ã‚ŠãŸããªã„ã‚â™ªã€", "æ¥å®¢ã¯é£Ÿã„å…¥ã‚‹ã‚ˆã†ã«å±•ç¤ºç‰©ã‚’çœºã‚ã¦ã„ã‚‹ã€‚"
 				loop
 			}
 			return
@@ -13019,7 +13019,7 @@
 			if ( rnd(25) == 0 ) {
 				txtef COLOR_SKY_BLUE
 				txtmore
-				txt lang(" *‚´‚í‚´‚í* ", " *murmur* "), lang("u‚±‚ê—~‚µ‚¢`v", cnvtalk("I want this! I want this!")), lang("u‰½‚¾‚ë‚¤A‚±‚ê‚Ív", cnvtalk("Oh what's this?")), lang("u‚¨”ƒ‚¢•¨ôv", cnvtalk("I'm just watching")), lang("u‹à‚ª‘«‚è‚ñcv", cnvtalk("My wallet is empty...")), lang("u‚±‚±‚ª‰\‚Ìcv", cnvtalk("So this is the famous..."))
+				txt lang(" *ã–ã‚ã–ã‚* ", " *murmur* "), lang("ã€Œã“ã‚Œæ¬²ã—ã„ï½ã€", cnvtalk("I want this! I want this!")), lang("ã€Œä½•ã ã‚ã†ã€ã“ã‚Œã¯ã€", cnvtalk("Oh what's this?")), lang("ã€ŒãŠè²·ã„ç‰©â™ªã€", cnvtalk("I'm just watching")), lang("ã€Œé‡‘ãŒè¶³ã‚Šã‚“â€¦ã€", cnvtalk("My wallet is empty...")), lang("ã€Œã“ã“ãŒå™‚ã®â€¦ã€", cnvtalk("So this is the famous..."))
 			}
 			return
 		}
@@ -13059,7 +13059,7 @@
 			cbitmod CHARA_BIT_FESTIVAL, rc, 1
 			cdata(CDATA_ROLE, rc) = ROLE_SHOP_MOUNTAIN2, 30
 			cdatan(CDATAN_NAME, rc) = randomname()
-			cdatan(CDATAN_NAME, rc) = lang("‚¨‚İ‚â‚°‰®‚Ì" + cdatan(CDATAN_NAME, rc), sncnv(cdatan(CDATAN_NAME, rc)) + "the souvenir vendor")
+			cdatan(CDATAN_NAME, rc) = lang("ãŠã¿ã‚„ã’å±‹ã®" + cdatan(CDATAN_NAME, rc), sncnv(cdatan(CDATAN_NAME, rc)) + "the souvenir vendor")
 		}
 		flt
 		characreate -1, CREATURE_ID_ROGUE, 35, 33
@@ -13070,7 +13070,7 @@
 			cbitmod CHARA_BIT_FESTIVAL, rc, 1
 			cdata(CDATA_ROLE, rc) = ROLE_SHOP_MOUNTAIN2, 30
 			cdatan(CDATAN_NAME, rc) = randomname()
-			cdatan(CDATAN_NAME, rc) = lang("‚¨‚İ‚â‚°‰®‚Ì" + cdatan(CDATAN_NAME, rc), sncnv(cdatan(CDATAN_NAME, rc)) + "the souvenir vendor")
+			cdatan(CDATAN_NAME, rc) = lang("ãŠã¿ã‚„ã’å±‹ã®" + cdatan(CDATAN_NAME, rc), sncnv(cdatan(CDATAN_NAME, rc)) + "the souvenir vendor")
 		}
 		flt
 		characreate -1, CREATURE_ID_ROGUE, 13, 42
@@ -13081,7 +13081,7 @@
 			cbitmod CHARA_BIT_FESTIVAL, rc, 1
 			cdata(CDATA_ROLE, rc) = ROLE_SHOP_FESTIVAL, 30
 			cdatan(CDATAN_NAME, rc) = randomname()
-			cdatan(CDATAN_NAME, rc) = lang("‰®‘ä¤l‚Ì" + cdatan(CDATAN_NAME, rc), sncnv(cdatan(CDATAN_NAME, rc)) + "the street vendor")
+			cdatan(CDATAN_NAME, rc) = lang("å±‹å°å•†äººã®" + cdatan(CDATAN_NAME, rc), sncnv(cdatan(CDATAN_NAME, rc)) + "the street vendor")
 		}
 		flt
 		characreate -1, CREATURE_ID_ROGUE, 21, 20
@@ -13092,7 +13092,7 @@
 			cbitmod CHARA_BIT_FESTIVAL, rc, 1
 			cdata(CDATA_ROLE, rc) = ROLE_SHOP_FESTIVAL, 30
 			cdatan(CDATAN_NAME, rc) = randomname()
-			cdatan(CDATAN_NAME, rc) = lang("‰®‘ä¤l‚Ì" + cdatan(CDATAN_NAME, rc), sncnv(cdatan(CDATAN_NAME, rc)) + "the street vendor")
+			cdatan(CDATAN_NAME, rc) = lang("å±‹å°å•†äººã®" + cdatan(CDATAN_NAME, rc), sncnv(cdatan(CDATAN_NAME, rc)) + "the street vendor")
 		}
 		flt
 		characreate -1, CREATURE_ID_ROGUE, 34, 45
@@ -13103,7 +13103,7 @@
 			cbitmod CHARA_BIT_FESTIVAL, rc, 1
 			cdata(CDATA_ROLE, rc) = ROLE_SHOP_FESTIVAL, 30
 			cdatan(CDATAN_NAME, rc) = randomname()
-			cdatan(CDATAN_NAME, rc) = lang("‰®‘ä¤l‚Ì" + cdatan(CDATAN_NAME, rc), sncnv(cdatan(CDATAN_NAME, rc)) + "the street vendor")
+			cdatan(CDATAN_NAME, rc) = lang("å±‹å°å•†äººã®" + cdatan(CDATAN_NAME, rc), sncnv(cdatan(CDATAN_NAME, rc)) + "the street vendor")
 		}
 		repeat 10
 			flt
@@ -13201,12 +13201,12 @@
 		if ( stat != 0 ) {
 			cbitmod CHARA_BIT_FESTIVAL, rc, 1
 			cbitmod CHARA_BIT_SANDBAG, rc, 1
-			cdatan(CDATAN_NAME, rc) = lang("ƒIƒp[ƒgƒX‚ÌMÒ", "Opatos Fanatic")
+			cdatan(CDATAN_NAME, rc) = lang("ã‚ªãƒ‘ãƒ¼ãƒˆã‚¹ã®ä¿¡è€…", "Opatos Fanatic")
 			if ( rnd(2) ) {
-				cdatan(CDATAN_NAME, rc) = lang("ƒ}ƒj‚ÌMÒ", "Mani Fanatic")
+				cdatan(CDATAN_NAME, rc) = lang("ãƒãƒ‹ã®ä¿¡è€…", "Mani Fanatic")
 			}
 			else {
-				cdatan(CDATAN_NAME, rc) = lang("ƒGƒwƒJƒgƒ‹‚ÌMÒ", "Ehekatl Fanatic")
+				cdatan(CDATAN_NAME, rc) = lang("ã‚¨ãƒ˜ã‚«ãƒˆãƒ«ã®ä¿¡è€…", "Ehekatl Fanatic")
 			}
 		}
 		flt
@@ -13251,7 +13251,7 @@
 			cbitmod CHARA_BIT_FESTIVAL, rc, 1
 			cdata(CDATA_ROLE, rc) = ROLE_SHOP_MOUNTAIN2, 30
 			cdatan(CDATAN_NAME, rc) = randomname()
-			cdatan(CDATAN_NAME, rc) = lang("‚¨‚İ‚â‚°‰®‚Ì" + cdatan(CDATAN_NAME, rc), sncnv(cdatan(CDATAN_NAME, rc)) + "the souvenir vendor")
+			cdatan(CDATAN_NAME, rc) = lang("ãŠã¿ã‚„ã’å±‹ã®" + cdatan(CDATAN_NAME, rc), sncnv(cdatan(CDATAN_NAME, rc)) + "the souvenir vendor")
 		}
 		flt
 		characreate -1, CREATURE_ID_ROGUE, 24, 22
@@ -13262,7 +13262,7 @@
 			cbitmod CHARA_BIT_FESTIVAL, rc, 1
 			cdata(CDATA_ROLE, rc) = ROLE_SHOP_MOUNTAIN2, 30
 			cdatan(CDATAN_NAME, rc) = randomname()
-			cdatan(CDATAN_NAME, rc) = lang("‚¨‚İ‚â‚°‰®‚Ì" + cdatan(CDATAN_NAME, rc), sncnv(cdatan(CDATAN_NAME, rc)) + "the souvenir vendor")
+			cdatan(CDATAN_NAME, rc) = lang("ãŠã¿ã‚„ã’å±‹ã®" + cdatan(CDATAN_NAME, rc), sncnv(cdatan(CDATAN_NAME, rc)) + "the souvenir vendor")
 		}
 		flt
 		characreate -1, CREATURE_ID_SHOPKEEPER, 38, 12
@@ -13281,7 +13281,7 @@
 			cbitmod CHARA_BIT_FESTIVAL, rc, 1
 			cdata(CDATA_ROLE, rc) = ROLE_SHOP_FESTIVAL, 30
 			cdatan(CDATAN_NAME, rc) = randomname()
-			cdatan(CDATAN_NAME, rc) = lang("‰®‘ä¤l‚Ì" + cdatan(CDATAN_NAME, rc), sncnv(cdatan(CDATAN_NAME, rc)) + "the street vendor")
+			cdatan(CDATAN_NAME, rc) = lang("å±‹å°å•†äººã®" + cdatan(CDATAN_NAME, rc), sncnv(cdatan(CDATAN_NAME, rc)) + "the street vendor")
 		}
 		flt
 		characreate -1, CREATURE_ID_ROGUE, 29, 24
@@ -13292,7 +13292,7 @@
 			cbitmod CHARA_BIT_FESTIVAL, rc, 1
 			cdata(CDATA_ROLE, rc) = ROLE_SHOP_FESTIVAL, 30
 			cdatan(CDATAN_NAME, rc) = randomname()
-			cdatan(CDATAN_NAME, rc) = lang("‰®‘ä¤l‰®‚Ì" + cdatan(CDATAN_NAME, rc), sncnv(cdatan(CDATAN_NAME, rc)) + "the street vendor")
+			cdatan(CDATAN_NAME, rc) = lang("å±‹å°å•†äººå±‹ã®" + cdatan(CDATAN_NAME, rc), sncnv(cdatan(CDATAN_NAME, rc)) + "the street vendor")
 		}
 		repeat 20
 			flt
