@@ -4437,6 +4437,9 @@
 		if ( dmghp_source == DAMAGE_FROM_CHARA ) {
 			lasttc = dmghp_charid
 		}
+        if ( dbg_hpAlwaysFull ) {
+            cdata(CDATA_HP, dmghp_charid) = cdata(CDATA_MAX_HP, dmghp_charid)
+        }
 		gdata(GDATA_RUN) = 0
 		if ( cdata(CDATA_HP, dmghp_charid) < 0 ) {
 			if ( evid() != (-1) ) {
