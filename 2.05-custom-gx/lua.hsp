@@ -1,17 +1,30 @@
-#define pushEnum(%1)    hl_pushinteger %1 : hl_setfield -2, "%1"
-#define pushDim(%1)    hl_pushdim %1 : hl_setfield -2, "%1"
+#define ctype pushEnum(%1)    hl_pushinteger %1 : hl_setfield -2, "%1"
+#define ctype pushDim(%1)    hl_pushdim %1 : hl_setfield -2, "%1"
 
 *lua_init
     proc "Lua init"
     luafile=""
+
     hl_newstate 0
     hl_switchstate 0
+
+    hl_getglobal "package"
+    hl_pushstring exedir + "lua\\?.lua"
+    hl_setfield -2, "path"
+    hl_pop
+
     gosub *lua_push_hsp
-    ret=hl_dofile(exeDir+"init.lua")
-    if ret = 1 {
-        s = hl_tostring(-1)
-        dialog s
+
+    initfile@lua = exeDir + "lua\\init.lua"
+    exist initfile@lua
+    if ( strsize != (-1) ) {
+    	ret=hl_dofile(initfile@lua)
+    	if ret = 1 {
+    	    s = hl_tostring(-1)
+    	    dialog s
+    	}
     }
+
     proc "Lua init:dofile"
     return
 
@@ -93,7 +106,7 @@
     return rnd(p(0))
 
 *lua_hsp_getvar
-    s(0)=hl_tostring(1)
+    s(0)=hl_tolstring(1)
 	return hl_seekvar(s(0))
     if var = "__nil__" {
         return
@@ -116,148 +129,148 @@
     hl_pushfunction *lua_elona_itemname
     hl_setfield -2, "itemname"
 
-    pushDim cdata
-    pushDim mdata
-    pushDim cdataN
-    pushDim mdataN
-    pushDim sdata
-    pushDim spAct
-    pushDim inv
-    pushDim mat
-    pushDim gdata
-    pushDim adata
-    pushDim qdata
-    pushDim qname
-    pushDim gdataN
-    pushDim spell
+    pushDim(cdata)
+    pushDim(mdata)
+    pushDim(cdataN)
+    pushDim(mdataN)
+    pushDim(sdata)
+    pushDim(spAct)
+    pushDim(inv)
+    pushDim(mat)
+    pushDim(gdata)
+    pushDim(adata)
+    pushDim(qdata)
+    pushDim(qname)
+    pushDim(gdataN)
+    pushDim(spell)
 
     hl_pop
     return
 
 *lua_elona_push_enums
-	pushEnum CHAR_STATE_DEAD
-	pushEnum CHAR_STATE_ALIVE
-	pushEnum CHAR_STATE_SPIRIT
-	pushEnum CHAR_STATE_ADV
-	pushEnum CHAR_STATE_ADV_HOSPITAL
-	pushEnum CHAR_STATE_ADV_DEAD
-	pushEnum CHAR_STATE_ALLY_DEAD
-	pushEnum CHAR_STATE_ALLY_WAIT
-	pushEnum CHAR_STATE_SUSPEND
-	pushEnum CHAR_STATE_ALLY_WORK
-	pushEnum CHAR_STATE_TEMP
+	pushEnum(CHAR_STATE_DEAD)
+	pushEnum(CHAR_STATE_ALIVE)
+	pushEnum(CHAR_STATE_SPIRIT)
+	pushEnum(CHAR_STATE_ADV)
+	pushEnum(CHAR_STATE_ADV_HOSPITAL)
+	pushEnum(CHAR_STATE_ADV_DEAD)
+	pushEnum(CHAR_STATE_ALLY_DEAD)
+	pushEnum(CHAR_STATE_ALLY_WAIT)
+	pushEnum(CHAR_STATE_SUSPEND)
+	pushEnum(CHAR_STATE_ALLY_WORK)
+	pushEnum(CHAR_STATE_TEMP)
 
-	pushEnum RELATION_ALLY
-	pushEnum RELATION_NEUTRAL
-	pushEnum RELATION_DISLIKE
-	pushEnum RELATION_HATE
-	pushEnum RELATION_ENEMY
+	pushEnum(RELATION_ALLY)
+	pushEnum(RELATION_NEUTRAL)
+	pushEnum(RELATION_DISLIKE)
+	pushEnum(RELATION_HATE)
+	pushEnum(RELATION_ENEMY)
 
-	pushEnum COLOR_DEFAULT
-	pushEnum COLOR_RANDOM
-	pushEnum COLOR_GREEN
-	pushEnum COLOR_RED
-	pushEnum COLOR_BLUE
-	pushEnum COLOR_YELLOW
-	pushEnum COLOR_BROWN
-	pushEnum COLOR_BLACK
-	pushEnum COLOR_PURPLE
-	pushEnum COLOR_SKY_BLUE
-	pushEnum COLOR_PINK
-	pushEnum COLOR_ORANGE
-	pushEnum COLOR_WHITE
-	pushEnum COLOR_FRESH
-	pushEnum COLOR_DARK_GREEN
-	pushEnum COLOR_GRAY
-	pushEnum COLOR_LIGHT_RED
-	pushEnum COLOR_LIGHT_BLUE
-	pushEnum COLOR_LIGHT_PURPLE
-	pushEnum COLOR_LIGHT_GREEN
-	pushEnum COLOR_TALK
-	pushEnum COLOR_LIGHT_BLUE2
-	pushEnum COLOR_RED2
-	pushEnum COLOR_LIME
-	pushEnum COLOR_DARK_GRAY
-	pushEnum COLOR_YELLOW2
-	pushEnum COLOR_LIGHT_BROWN
-	pushEnum COLOR_PURPLE2
-	pushEnum COLOR_DARK_GRAY2
-	pushEnum COLOR_DARK_GRAY3
+	pushEnum(COLOR_DEFAULT)
+	pushEnum(COLOR_RANDOM)
+	pushEnum(COLOR_GREEN)
+	pushEnum(COLOR_RED)
+	pushEnum(COLOR_BLUE)
+	pushEnum(COLOR_YELLOW)
+	pushEnum(COLOR_BROWN)
+	pushEnum(COLOR_BLACK)
+	pushEnum(COLOR_PURPLE)
+	pushEnum(COLOR_SKY_BLUE)
+	pushEnum(COLOR_PINK)
+	pushEnum(COLOR_ORANGE)
+	pushEnum(COLOR_WHITE)
+	pushEnum(COLOR_FRESH)
+	pushEnum(COLOR_DARK_GREEN)
+	pushEnum(COLOR_GRAY)
+	pushEnum(COLOR_LIGHT_RED)
+	pushEnum(COLOR_LIGHT_BLUE)
+	pushEnum(COLOR_LIGHT_PURPLE)
+	pushEnum(COLOR_LIGHT_GREEN)
+	pushEnum(COLOR_TALK)
+	pushEnum(COLOR_LIGHT_BLUE2)
+	pushEnum(COLOR_RED2)
+	pushEnum(COLOR_LIME)
+	pushEnum(COLOR_DARK_GRAY)
+	pushEnum(COLOR_YELLOW2)
+	pushEnum(COLOR_LIGHT_BROWN)
+	pushEnum(COLOR_PURPLE2)
+	pushEnum(COLOR_DARK_GRAY2)
+	pushEnum(COLOR_DARK_GRAY3)
 
-	pushEnum CONDITION_POISON
-	pushEnum CONDITION_SLEEP
-	pushEnum CONDITION_PARALYZE
-	pushEnum CONDITION_BLIND
-	pushEnum CONDITION_CONFUSE
-	pushEnum CONDITION_FEAR
-	pushEnum CONDITION_DIM
-	pushEnum CONDITION_DRUNK
-	pushEnum CONDITION_BLEED
-	pushEnum CONDITION_WET
-	pushEnum CONDITION_INSANE
-	pushEnum CONDITION_SICK
+	pushEnum(CONDITION_POISON)
+	pushEnum(CONDITION_SLEEP)
+	pushEnum(CONDITION_PARALYZE)
+	pushEnum(CONDITION_BLIND)
+	pushEnum(CONDITION_CONFUSE)
+	pushEnum(CONDITION_FEAR)
+	pushEnum(CONDITION_DIM)
+	pushEnum(CONDITION_DRUNK)
+	pushEnum(CONDITION_BLEED)
+	pushEnum(CONDITION_WET)
+	pushEnum(CONDITION_INSANE)
+	pushEnum(CONDITION_SICK)
 
-	pushEnum ROLE_NONE
-	pushEnum ROLE_SHOPKEEPER
-	pushEnum ROLE_CHEF
-	pushEnum ROLE_SPECIAL
-	pushEnum ROLE_CITIZEN
-	pushEnum ROLE_IDENTIFIER
-	pushEnum ROLE_MAYOR
-	pushEnum ROLE_TRAINER
-	pushEnum ROLE_INFORMER
-	pushEnum ROLE_BARTENDER
-	pushEnum ROLE_ARENA_MASTER
-	pushEnum ROLE_PET_ARENA_MASTER
-	pushEnum ROLE_HEALER
-	pushEnum ROLE_ADVENTURER
-	pushEnum ROLE_GUARD
-	pushEnum ROLE_KING
-	pushEnum ROLE_SHOP_GUARD
-	pushEnum ROLE_SLAVER
-	pushEnum ROLE_MAID
-	pushEnum ROLE_SISTER
-	pushEnum ROLE_USER
-	pushEnum ROLE_RETURNER
-	pushEnum ROLE_HORSE_MASTER
-	pushEnum ROLE_CARAVAN_MASTER
-	pushEnum ROLE_BOUNTY_HUNTER
+	pushEnum(ROLE_NONE)
+	pushEnum(ROLE_SHOPKEEPER)
+	pushEnum(ROLE_CHEF)
+	pushEnum(ROLE_SPECIAL)
+	pushEnum(ROLE_CITIZEN)
+	pushEnum(ROLE_IDENTIFIER)
+	pushEnum(ROLE_MAYOR)
+	pushEnum(ROLE_TRAINER)
+	pushEnum(ROLE_INFORMER)
+	pushEnum(ROLE_BARTENDER)
+	pushEnum(ROLE_ARENA_MASTER)
+	pushEnum(ROLE_PET_ARENA_MASTER)
+	pushEnum(ROLE_HEALER)
+	pushEnum(ROLE_ADVENTURER)
+	pushEnum(ROLE_GUARD)
+	pushEnum(ROLE_KING)
+	pushEnum(ROLE_SHOP_GUARD)
+	pushEnum(ROLE_SLAVER)
+	pushEnum(ROLE_MAID)
+	pushEnum(ROLE_SISTER)
+	pushEnum(ROLE_USER)
+	pushEnum(ROLE_RETURNER)
+	pushEnum(ROLE_HORSE_MASTER)
+	pushEnum(ROLE_CARAVAN_MASTER)
+	pushEnum(ROLE_BOUNTY_HUNTER)
 
-	pushEnum ROLE_SHOP_WEAPON
-	pushEnum ROLE_SHOP_ARMOR
-	pushEnum ROLE_SHOP_FOOD
-	pushEnum ROLE_SHOP_BAKERY
-	pushEnum ROLE_SHOP_MAGIC
-	pushEnum ROLE_SHOP_INN
-	pushEnum ROLE_SHOP_GENERAL
-	pushEnum ROLE_SHOP_BLACKMARKET
-	pushEnum ROLE_SHOP_GOODS
-	pushEnum ROLE_SHOP_TRADE
-	pushEnum ROLE_SHOP_WANDER
-	pushEnum ROLE_SHOP_SALESPERSON
-	pushEnum ROLE_SHOP_OFFICE
-	pushEnum ROLE_SHOP_DEED
-	pushEnum ROLE_SHOP_FISH
-	pushEnum ROLE_SHOP_NOYEL
-	pushEnum ROLE_SHOP_MIROK
-	pushEnum ROLE_SHOP_MOUNTAIN1
-	pushEnum ROLE_SHOP_MOUNTAIN2
-	pushEnum ROLE_SHOP_SISTER
-	pushEnum ROLE_SHOP_BOOK_RESERVE
-	pushEnum ROLE_SHOP_THIEF
-	pushEnum ROLE_SHOP_FESTIVAL
-	pushEnum ROLE_SHOP_STOKE
-	pushEnum ROLE_SHOP_MOYER
-	pushEnum ROLE_GUEST_HALLOWEEN
+	pushEnum(ROLE_SHOP_WEAPON)
+	pushEnum(ROLE_SHOP_ARMOR)
+	pushEnum(ROLE_SHOP_FOOD)
+	pushEnum(ROLE_SHOP_BAKERY)
+	pushEnum(ROLE_SHOP_MAGIC)
+	pushEnum(ROLE_SHOP_INN)
+	pushEnum(ROLE_SHOP_GENERAL)
+	pushEnum(ROLE_SHOP_BLACKMARKET)
+	pushEnum(ROLE_SHOP_GOODS)
+	pushEnum(ROLE_SHOP_TRADE)
+	pushEnum(ROLE_SHOP_WANDER)
+	pushEnum(ROLE_SHOP_SALESPERSON)
+	pushEnum(ROLE_SHOP_OFFICE)
+	pushEnum(ROLE_SHOP_DEED)
+	pushEnum(ROLE_SHOP_FISH)
+	pushEnum(ROLE_SHOP_NOYEL)
+	pushEnum(ROLE_SHOP_MIROK)
+	pushEnum(ROLE_SHOP_MOUNTAIN1)
+	pushEnum(ROLE_SHOP_MOUNTAIN2)
+	pushEnum(ROLE_SHOP_SISTER)
+	pushEnum(ROLE_SHOP_BOOK_RESERVE)
+	pushEnum(ROLE_SHOP_THIEF)
+	pushEnum(ROLE_SHOP_FESTIVAL)
+	pushEnum(ROLE_SHOP_STOKE)
+	pushEnum(ROLE_SHOP_MOYER)
+	pushEnum(ROLE_GUEST_HALLOWEEN)
 
-	pushEnum ROLE_GUEST_BEGGAR
-	pushEnum ROLE_GUEST_SEX
-	pushEnum ROLE_GUEST_CITIZEN
-	pushEnum ROLE_GUEST_MERCHANT
-	pushEnum ROLE_GUEST_CRITIC
-	pushEnum ROLE_GUEST_TRAINER
-	pushEnum ROLE_GUEST_PRODUCER
-	pushEnum MAX_ROLE_GUEST
+	pushEnum(ROLE_GUEST_BEGGAR)
+	pushEnum(ROLE_GUEST_SEX)
+	pushEnum(ROLE_GUEST_CITIZEN)
+	pushEnum(ROLE_GUEST_MERCHANT)
+	pushEnum(ROLE_GUEST_CRITIC)
+	pushEnum(ROLE_GUEST_TRAINER)
+	pushEnum(ROLE_GUEST_PRODUCER)
+	pushEnum(MAX_ROLE_GUEST)
 
     return
 

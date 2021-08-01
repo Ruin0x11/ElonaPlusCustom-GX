@@ -3535,7 +3535,11 @@
 	    	_break
 	    }
 	    if ( a == 32 ) {
-	    	gosub *dbg_GetInfo
+            if ( dbg_luaConsole ) {
+                gosub *dbg_lua_GetInfo
+            } else {
+                gosub *dbg_GetInfo
+            }
 	    }
     wend
 	clrobj 1
@@ -3549,33 +3553,12 @@
 
 *dbg_GetInfo
 	if ( instr(buff, 0, "?") != (-1) ) {
-		noteadd "\t1\t\tShows charainfo."
-		noteadd "\t2\t\tShows pc equipment."
-		noteadd "\t3\t\tShows pc inventory."
-		noteadd "\t4\t\tBegin/end var-comparison."
-		noteadd "\t5\t\tShows core game data."
-		noteadd "\tdel\t\tDeletes current log."
-		noteadd "\tquest\t\tLists all the quests."
-		noteadd "\tclient\t\tLists all the clients."
-		noteadd "\texitroom\tLeaves current show-room."
-		noteadd "\twizard\t\tEnables wizard mode."
-		noteadd ""
-		noteadd "\tThe commands below can be used in the Wizard mode."
-		noteadd "\tgain_spell\tPC gains all spells."
-		noteadd "\tgain_spact\tPC gains all special actions."
-		noteadd "\tgain_exp\tPC gains a billion of exp."
-		noteadd "\tgain_fame\tPC gains fame."
-		noteadd "\tallinv\t\tDisplays all the items in the map."
-		noteadd ""
-		noteadd "\tThe commands below should be only used to deal with certain problems."
-		noteadd "\t108fix\t\tTurns all the NPCs in the map hostile."
-		noteadd "\tadvreset\tRemoves all items from adventureres."
-		noteadd "\tfixcorrupt1\tTries to fix corrputed save files."
-		noteadd "\tfreemove\tEnables freemove."
-		noteadd "\tresetmap\tResets towns and some areas."
-		noteadd "\tfixmap\t\tFixes possible bugs for current map."
-		noteadd "\tmapinfo\t\tShows map info."
-		goto *console_write
+        goto *dbg_ShowHelp
+	}
+	if ( buff == "lua\n" ) {
+        noteadd "Lua mode activated."
+        dbg_luaConsole = 1
+        goto *console_write
 	}
 	if ( int(buff) == 1 ) {
 		repeat MAX_CHARA_TOTAL
@@ -3928,59 +3911,78 @@
 	noteadd "Unknown command. Type \"?\" for help. Hit ESC to exit."
 	goto *console_write
 
-*game_debug_lua
-	notesel dbm
-	buff = ""
-	if ( dbm == "" ) {
-		noteadd "Elona+ Custom-GX " + " v" + "2.05.1" + " Lua Console    Type \"help()\" for help. Hit ESC to exit."
-		noteadd ""
-	}
-	font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
-	objmode 2
-	pos 0, 24
-	mesbox dbm, 800, 576, 0
-	pos 0, 0
-	mesbox buff, 800, 24, 1
-	objsel 2
-    while
-	    await 20
-	    stick a
-	    if ( a == 128 ) {
-	    	_break
-	    }
-	    if ( a == 32 ) {
-	    	gosub *dbg_lua_GetInfo
-	    }
-    wend
-	clrobj 1
-	clrobj 2
-	if ( dbg_exitshowroom == 1 ) {
-		dbg_exitshowroom = 0
-		levelexitby = 4
-		goto *map_exit
-	}
-	goto *pc_turn
-
 *dbg_lua_GetInfo
-    ret=hl_dostring(buff)
-    if ret = 1 {
-        s = "***Lua Error: " + hl_tostring(-1)
-    } else {
-        s = hl_tostring(-1)
+	if ( buff == "?\n" ) {
+        goto *dbg_ShowHelp
+	}
+	if ( buff == "lua\n" ) {
+        noteadd "Lua mode deactivated."
+        dbg_luaConsole = 0
+        goto *console_write
+	}
+
+    buff = strmid(buff, 0, strlen(buff) - 2)
+
+    ret = hl_dostring("return " + buff)
+    if ( ret == 1 ) {
+        e = hl_tostring(-1)
+        if ( instr(e, 0, "<eof>") ) {
+            hl_pop
+            ret = hl_dostring(buff)
+        }
     }
 
-    notesel buff
+    if ( ret == 1 ) {
+        s = "*** Lua Error: " + hl_tostring(-1)
+    } else {
+        s = "> " + hl_tolstring(-1)
+    }
+
+    hl_pop
+
+    notesel s
     p = noteinfo(0)
 
+    l = ""
     repeat p
-        s = noteget(cnt)
+        noteget l, cnt
         notesel dbm
-        noteadd s
-        notesel buff
+        noteadd l
+        notesel s
     loop
 
     notesel dbm
 	goto *console_write
+
+*dbg_ShowHelp
+    noteadd "\t1\t\tShows charainfo."
+    noteadd "\t2\t\tShows pc equipment."
+    noteadd "\t3\t\tShows pc inventory."
+    noteadd "\t4\t\tBegin/end var-comparison."
+    noteadd "\t5\t\tShows core game data."
+    noteadd "\tdel\t\tDeletes current log."
+    noteadd "\tquest\t\tLists all the quests."
+    noteadd "\tclient\t\tLists all the clients."
+    noteadd "\texitroom\tLeaves current show-room."
+    noteadd "\twizard\t\tEnables wizard mode."
+    noteadd "\tlua\t\tToggles Lua console mode."
+    noteadd ""
+    noteadd "\tThe commands below can be used in the Wizard mode."
+    noteadd "\tgain_spell\tPC gains all spells."
+    noteadd "\tgain_spact\tPC gains all special actions."
+    noteadd "\tgain_exp\tPC gains a billion of exp."
+    noteadd "\tgain_fame\tPC gains fame."
+    noteadd "\tallinv\t\tDisplays all the items in the map."
+    noteadd ""
+    noteadd "\tThe commands below should be only used to deal with certain problems."
+    noteadd "\t108fix\t\tTurns all the NPCs in the map hostile."
+    noteadd "\tadvreset\tRemoves all items from adventureres."
+    noteadd "\tfixcorrupt1\tTries to fix corrputed save files."
+    noteadd "\tfreemove\tEnables freemove."
+    noteadd "\tresetmap\tResets towns and some areas."
+    noteadd "\tfixmap\t\tFixes possible bugs for current map."
+    noteadd "\tmapinfo\t\tShows map info."
+    goto *console_write
 
 *console_write
 	noteadd ""

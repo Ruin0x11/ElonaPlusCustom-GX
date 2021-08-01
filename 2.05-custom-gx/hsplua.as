@@ -52,7 +52,8 @@
 #cmd hl_tonumber                0x93
 #cmd hl_topointer               0x94
 #cmd hl_tostring                0x95
-#cmd hl_touserdata              0x96
+#cmd hl_tolstring               0x96
+#cmd hl_touserdata              0x97
 #cmd hl_gccount                 0x98
 #cmd hl_gcisrunning             0x99
 #cmd hl_gettop                  0x9A
