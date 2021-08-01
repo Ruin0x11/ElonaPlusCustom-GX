@@ -1,0 +1,644 @@
+#define pushEnum(%1)    hl_pushinteger %1 : hl_setfield -2, "%1"
+#define pushDim(%1)    hl_pushdim %1 : hl_setfield -2, "%1"
+
+*lua_init
+    proc "Lua init"
+    luafile=""
+    hl_newstate 0
+    hl_switchstate 0
+    gosub *lua_push_hsp
+    ret=hl_dofile(exeDir+"init.lua")
+    if ret = 1 {
+        s = hl_tostring(-1)
+        dialog s
+    }
+    proc "Lua init:dofile"
+    return
+
+*lua_run
+    proc "Lua run"
+    ret=hl_dofile(exeDir+luafile)
+    if ret = 1 {
+        s = hl_tostring(-1)
+        dialog s
+    }
+    goto *exit
+
+*lua_push_hsp
+    proc "Lua push"
+
+    gosub *lua_make_hsp
+    gosub *lua_make_elona
+    gosub *lua_make_cmd
+
+    proc "Lua push:done"
+    return
+
+*lua_make_hsp
+    hl_newtable
+    hl_pushvalue -1
+    hl_setglobal "hsp"
+
+    hl_pushfunction *lua_hsp_logmes
+    hl_setfield -2, "logmes"
+
+    hl_pushfunction *lua_hsp_dialog
+    hl_setfield -2, "dialog"
+
+    hl_pushfunction *lua_hsp_noteadd
+    hl_setfield -2, "noteadd"
+
+    hl_pushfunction *lua_hsp_assert
+    hl_setfield -2, "assert"
+
+    hl_pushfunction *lua_hsp_randomize
+    hl_setfield -2, "randomize"
+
+    hl_pushfunction *lua_hsp_rnd
+    hl_setfield -2, "rnd"
+
+    hl_pushfunction *lua_hsp_getvar
+    hl_setfield -2, "getvar"
+
+    hl_pop
+    return
+
+*lua_hsp_logmes
+	logmes hl_tostring(1)
+    return
+
+*lua_hsp_dialog
+	dialog hl_tostring(1)
+    return
+
+*lua_hsp_noteadd
+	noteadd hl_tostring(1)
+    return
+
+*lua_hsp_assert
+	p(0)=hl_toboolean(1)
+    assert p(0)
+    return
+
+*lua_hsp_randomize
+    if hl_gettop = 0 {
+        randomize
+    } else {
+        p=hl_tointeger(1)
+        randomize p(0)
+    }
+    return
+
+*lua_hsp_rnd
+    p(0)=hl_tointeger(1)
+    return rnd(p(0))
+
+*lua_hsp_getvar
+    s(0)=hl_tostring(1)
+	return hl_seekvar(s(0))
+    if var = "__nil__" {
+        return
+    }
+    return var
+
+*lua_make_elona
+    hl_newtable
+    hl_pushvalue -1
+    hl_setglobal "elona"
+
+    gosub *lua_elona_push_enums
+
+    hl_pushfunction *lua_elona_txt
+    hl_setfield -2, "txt"
+
+    hl_pushfunction *lua_elona_txtEf
+    hl_setfield -2, "txtEf"
+
+    hl_pushfunction *lua_elona_itemname
+    hl_setfield -2, "itemname"
+
+    pushDim cdata
+    pushDim mdata
+    pushDim cdataN
+    pushDim mdataN
+    pushDim sdata
+    pushDim spAct
+    pushDim inv
+    pushDim mat
+    pushDim gdata
+    pushDim adata
+    pushDim qdata
+    pushDim qname
+    pushDim gdataN
+    pushDim spell
+
+    hl_pop
+    return
+
+*lua_elona_push_enums
+	pushEnum CHAR_STATE_DEAD
+	pushEnum CHAR_STATE_ALIVE
+	pushEnum CHAR_STATE_SPIRIT
+	pushEnum CHAR_STATE_ADV
+	pushEnum CHAR_STATE_ADV_HOSPITAL
+	pushEnum CHAR_STATE_ADV_DEAD
+	pushEnum CHAR_STATE_ALLY_DEAD
+	pushEnum CHAR_STATE_ALLY_WAIT
+	pushEnum CHAR_STATE_SUSPEND
+	pushEnum CHAR_STATE_ALLY_WORK
+	pushEnum CHAR_STATE_TEMP
+
+	pushEnum RELATION_ALLY
+	pushEnum RELATION_NEUTRAL
+	pushEnum RELATION_DISLIKE
+	pushEnum RELATION_HATE
+	pushEnum RELATION_ENEMY
+
+	pushEnum COLOR_DEFAULT
+	pushEnum COLOR_RANDOM
+	pushEnum COLOR_GREEN
+	pushEnum COLOR_RED
+	pushEnum COLOR_BLUE
+	pushEnum COLOR_YELLOW
+	pushEnum COLOR_BROWN
+	pushEnum COLOR_BLACK
+	pushEnum COLOR_PURPLE
+	pushEnum COLOR_SKY_BLUE
+	pushEnum COLOR_PINK
+	pushEnum COLOR_ORANGE
+	pushEnum COLOR_WHITE
+	pushEnum COLOR_FRESH
+	pushEnum COLOR_DARK_GREEN
+	pushEnum COLOR_GRAY
+	pushEnum COLOR_LIGHT_RED
+	pushEnum COLOR_LIGHT_BLUE
+	pushEnum COLOR_LIGHT_PURPLE
+	pushEnum COLOR_LIGHT_GREEN
+	pushEnum COLOR_TALK
+	pushEnum COLOR_LIGHT_BLUE2
+	pushEnum COLOR_RED2
+	pushEnum COLOR_LIME
+	pushEnum COLOR_DARK_GRAY
+	pushEnum COLOR_YELLOW2
+	pushEnum COLOR_LIGHT_BROWN
+	pushEnum COLOR_PURPLE2
+	pushEnum COLOR_DARK_GRAY2
+	pushEnum COLOR_DARK_GRAY3
+
+	pushEnum CONDITION_POISON
+	pushEnum CONDITION_SLEEP
+	pushEnum CONDITION_PARALYZE
+	pushEnum CONDITION_BLIND
+	pushEnum CONDITION_CONFUSE
+	pushEnum CONDITION_FEAR
+	pushEnum CONDITION_DIM
+	pushEnum CONDITION_DRUNK
+	pushEnum CONDITION_BLEED
+	pushEnum CONDITION_WET
+	pushEnum CONDITION_INSANE
+	pushEnum CONDITION_SICK
+
+	pushEnum ROLE_NONE
+	pushEnum ROLE_SHOPKEEPER
+	pushEnum ROLE_CHEF
+	pushEnum ROLE_SPECIAL
+	pushEnum ROLE_CITIZEN
+	pushEnum ROLE_IDENTIFIER
+	pushEnum ROLE_MAYOR
+	pushEnum ROLE_TRAINER
+	pushEnum ROLE_INFORMER
+	pushEnum ROLE_BARTENDER
+	pushEnum ROLE_ARENA_MASTER
+	pushEnum ROLE_PET_ARENA_MASTER
+	pushEnum ROLE_HEALER
+	pushEnum ROLE_ADVENTURER
+	pushEnum ROLE_GUARD
+	pushEnum ROLE_KING
+	pushEnum ROLE_SHOP_GUARD
+	pushEnum ROLE_SLAVER
+	pushEnum ROLE_MAID
+	pushEnum ROLE_SISTER
+	pushEnum ROLE_USER
+	pushEnum ROLE_RETURNER
+	pushEnum ROLE_HORSE_MASTER
+	pushEnum ROLE_CARAVAN_MASTER
+	pushEnum ROLE_BOUNTY_HUNTER
+
+	pushEnum ROLE_SHOP_WEAPON
+	pushEnum ROLE_SHOP_ARMOR
+	pushEnum ROLE_SHOP_FOOD
+	pushEnum ROLE_SHOP_BAKERY
+	pushEnum ROLE_SHOP_MAGIC
+	pushEnum ROLE_SHOP_INN
+	pushEnum ROLE_SHOP_GENERAL
+	pushEnum ROLE_SHOP_BLACKMARKET
+	pushEnum ROLE_SHOP_GOODS
+	pushEnum ROLE_SHOP_TRADE
+	pushEnum ROLE_SHOP_WANDER
+	pushEnum ROLE_SHOP_SALESPERSON
+	pushEnum ROLE_SHOP_OFFICE
+	pushEnum ROLE_SHOP_DEED
+	pushEnum ROLE_SHOP_FISH
+	pushEnum ROLE_SHOP_NOYEL
+	pushEnum ROLE_SHOP_MIROK
+	pushEnum ROLE_SHOP_MOUNTAIN1
+	pushEnum ROLE_SHOP_MOUNTAIN2
+	pushEnum ROLE_SHOP_SISTER
+	pushEnum ROLE_SHOP_BOOK_RESERVE
+	pushEnum ROLE_SHOP_THIEF
+	pushEnum ROLE_SHOP_FESTIVAL
+	pushEnum ROLE_SHOP_STOKE
+	pushEnum ROLE_SHOP_MOYER
+	pushEnum ROLE_GUEST_HALLOWEEN
+
+	pushEnum ROLE_GUEST_BEGGAR
+	pushEnum ROLE_GUEST_SEX
+	pushEnum ROLE_GUEST_CITIZEN
+	pushEnum ROLE_GUEST_MERCHANT
+	pushEnum ROLE_GUEST_CRITIC
+	pushEnum ROLE_GUEST_TRAINER
+	pushEnum ROLE_GUEST_PRODUCER
+	pushEnum MAX_ROLE_GUEST
+
+    return
+
+*lua_elona_txt
+    txt hl_tostring(1)
+    return
+
+*lua_elona_txtEf
+    txtEf hl_tointeger(1)
+    return
+
+*lua_elona_itemname
+    ci=hl_tointeger(1)
+    return itemname(ci)
+
+*lua_make_cmd
+    hl_newtable
+    hl_pushvalue -1
+    hl_setglobal "cmd"
+
+    hl_pushfunction *lua_cmd_help
+	hl_setfield -2, "help"
+
+    hl_pushfunction *lua_cmd_1
+	hl_setfield -2, "1"
+
+    hl_pushfunction *lua_cmd_2
+	hl_setfield -2, "2"
+
+    hl_pushfunction *lua_cmd_3
+	hl_setfield -2, "3"
+
+    hl_pushfunction *lua_cmd_4
+	hl_setfield -2, "4"
+
+    hl_pushfunction *lua_cmd_5
+	hl_setfield -2, "5"
+
+    hl_pushfunction *lua_cmd_del
+	hl_setfield -2, "del"
+
+    hl_pushfunction *lua_cmd_quest
+	hl_setfield -2, "quest"
+
+    hl_pushfunction *lua_cmd_client
+	hl_setfield -2, "client"
+
+    hl_pushfunction *lua_cmd_exitroom
+	hl_setfield -2, "exitroom"
+
+    hl_pushfunction *lua_cmd_removequest
+	hl_setfield -2, "removequest"
+
+    hl_pushfunction *lua_cmd_wizard
+	hl_setfield -2, "wizard"
+
+    hl_pushfunction *lua_cmd_gain_spell
+	hl_setfield -2, "gain_spell"
+
+    hl_pushfunction *lua_cmd_gain_spact
+	hl_setfield -2, "gain_spact"
+
+    hl_pushfunction *lua_cmd_gain_exp
+	hl_setfield -2, "gain_exp"
+
+    hl_pushfunction *lua_cmd_gain_fame
+	hl_setfield -2, "gain_fame"
+
+    hl_pushfunction *lua_cmd_allinv
+	hl_setfield -2, "allinv"
+
+    hl_pushfunction *lua_cmd_108fix
+	hl_setfield -2, "108fix"
+
+    hl_pushfunction *lua_cmd_advreset
+	hl_setfield -2, "advreset"
+
+    hl_pushfunction *lua_cmd_fixcorrupt1
+	hl_setfield -2, "fixcorrupt1"
+
+    hl_pushfunction *lua_cmd_freemove
+	hl_setfield -2, "freemove"
+
+    hl_pushfunction *lua_cmd_resetmap
+	hl_setfield -2, "resetmap"
+
+    hl_pushfunction *lua_cmd_fixmap
+	hl_setfield -2, "fixmap"
+
+    hl_pushfunction *lua_cmd_mapinv
+	hl_setfield -2, "mapinv"
+
+    hl_pushfunction *lua_cmd_mapinfo
+	hl_setfield -2, "mapinfo"
+
+    hl_pushfunction *lua_cmd_test
+	hl_setfield -2, "test"
+
+    hl_pop
+    return
+
+*lua_cmd_help
+	noteadd "	1		Shows charainfo."
+	noteadd "	2		Shows pc equipment."
+	noteadd "	3		Shows pc inventory."
+	noteadd "	4		Begin/end var-comparison."
+	noteadd "	5		Shows core game data."
+	noteadd "	del		Deletes current log."
+	noteadd "	quest		Lists all the quests."
+	noteadd "	client		Lists all the clients."
+	noteadd "	exitroom	Leaves current show-room."
+	noteadd "	wizard		Enables wizard mode."
+	noteadd ""
+	noteadd "	The commands below can be used in the Wizard mode."
+	noteadd "	gain_spell	PC gains all spells."
+	noteadd "	gain_spact	PC gains all special actions."
+	noteadd "	gain_exp	PC gains a billion of exp."
+	noteadd "	gain_fame	PC gains fame."
+	noteadd "	allinv		Displays all the items in the map."
+	noteadd ""
+	noteadd "	The commands below should be only used to deal with certain problems."
+	noteadd "	108fix		Turns all the NPCs in the map hostile."
+	noteadd "	advreset	Removes all items from adventureres."
+	noteadd "	fixcorrupt1	Tries to fix corrputed save files."
+	noteadd "	freemove	Enables freemove."
+	noteadd "	resetmap	Resets towns and some areas."
+	noteadd "	fixmap		Fixes possible bugs for current map."
+	noteadd "	mapinfo		Shows map info."
+    return
+
+*lua_cmd_1
+	repeat maxChara
+	noteadd ""+cnt+"\t"+cnName(cnt)+"\tExist:"+cExist(cnt)+"\tRespawn:"+cRespawn(cnt)+"\tRole:"+cRole(cnt)
+	loop
+    return
+
+*lua_cmd_2
+	repeat 30
+	p=100+cnt:if cdata(p,pc)!0{
+		p(1)=cdata(p,pc)
+		s=""+p+"\t"+p(1)+"\t":if p(1)\10000>0:s+=itemName(p(1)\10000-1)
+		noteadd s
+	}
+	loop
+    return
+
+*lua_cmd_3
+	inv_getHeader pc
+	repeat invRange,invHead
+	noteadd ""+cnt+"\t"+itemName(cnt)+"\t"
+	loop
+    return
+
+*lua_cmd_4
+	if dbg_compare=0{
+		sdim cDatan2,sizeCdataN,maxCdataN,maxChara
+		dim cData2,maxCdata,maxChara
+		dim sdata2,rangeSdata*2,maxChara
+		dim inv2,maxItem,maxInv
+		}
+	noteadd "cdata"
+	repeat maxChara:cnt2=cnt
+	repeat maxCdata:s=""
+	if (cnt=6)or(cnt=10):s="*"
+	if dbg_compare=0:cdata2(cnt,cnt2)=cdata(cnt,cnt2)
+	if dbg_compare=1:if cdata2(cnt,cnt2)!cdata(cnt,cnt2):noteadd s+""+cnt2+"\t"+cnt+"\t"+cdata2(cnt,cnt2)+"\t->"+cdata(cnt,cnt2)
+	loop
+	loop
+	noteadd "cdatan"
+	repeat maxChara:cnt2=cnt
+	repeat maxCdataN:s=""
+	if dbg_compare=0:cdatan2(cnt,cnt2)=cdatan(cnt,cnt2)
+	if dbg_compare=1:if cdatan2(cnt,cnt2)!cdatan(cnt,cnt2)::noteadd s+""+cnt2+"\t"+cnt+"\t"+cdatan2(cnt,cnt2)+"\t->"+cdatan(cnt,cnt2)
+	loop
+	loop
+
+	noteadd "skill"
+	repeat maxChara:cnt2=cnt
+	repeat rangeSdata*2:s=""
+	if dbg_compare=0:sdata2(cnt,cnt2)=sdata(cnt,cnt2)
+	if dbg_compare=1:if sdata2(cnt,cnt2)!sdata(cnt,cnt2)::noteadd s+""+cnt2+"\t"+cnt+"\t"+sdata2(cnt,cnt2)+"\t->"+sdata(cnt,cnt2)
+	loop
+	loop
+
+	noteadd "inv"
+	repeat maxInv:cnt2=cnt
+	repeat maxItem:s=""
+	if dbg_compare=0:inv2(cnt,cnt2)=inv(cnt,cnt2)
+	if dbg_compare=1:if inv2(cnt,cnt2)!inv(cnt,cnt2)::noteadd s+""+cnt2+"\t"+cnt+"\t"+inv2(cnt,cnt2)+"\t->"+inv(cnt,cnt2)
+	loop
+	loop
+
+	if dbg_compare=0:dbg_compare=1:noteadd "Var_comparison begins.":else:dbg_compare=0
+    return
+
+*lua_cmd_5
+	repeat maxGdata
+	noteadd ""+cnt+"\t"+gdata(cnt)
+	loop
+    return
+
+*lua_cmd_del
+    dbm=""
+    return
+
+*lua_cmd_quest
+	noteadd "gQuest:"+gQuest+" gQuestRef:"+gQuestRef+" gQuestStatus:"+gQuestStatus+" rq:"+rq
+	repeat maxQuestNum
+	p=gQuestPool(cnt)
+	noteadd "quest"+cnt+" "+p+" exist"+qExist(p)+" status"+qStatus(p)+" var"+qVar(p)+" encount"+qEncount(p)
+	loop
+
+	repeat gClient
+	noteadd ""+cnt+" "+qClient(cnt)+"/"+qMap(cnt)
+	loop
+    return
+
+*lua_cmd_client
+	dim mapClient,1000
+	repeat maxClient
+	if qClient(cnt)=0:i=cnt:continue
+	noteadd "id:"+cnt+" name:"+qName(cnt)+" map:"+mapName(qMap(cnt))
+	mapClient(qMap(cnt))++
+	loop
+
+	repeat 1000
+	if mapClient(cnt)!0:noteadd ""+mapName(cnt)+":"+mapClient(cnt),1
+	loop
+    return
+
+*lua_cmd_exitroom
+	if gArea=areaShowHouse{
+		dbg_exitShowRoom=true:noteadd "Done."
+		}else{
+		noteadd "Wrong map."
+	}
+    return
+
+*lua_cmd_removequest
+	repeat gClient
+	if qStatus(cnt)!false:if qDeadLine(cnt)=-1:qStatus(cnt)=false
+	loop
+	noteadd "Done."
+    return
+
+*lua_cmd_wizard
+	gWizard=true
+	cnAka(pc)=strDebug
+	noteadd "Wizard mode activated."
+    return
+
+*lua_cmd_gain_spell
+	repeat tailSpell-headSpell,headSpell
+	skillGain pc,cnt,cLevel(r1),defSpellStock*100
+	loop
+	noteadd "Done."
+    return
+
+*lua_cmd_gain_spact
+	repeat tailSpact-headSpAct
+	spGain(cnt+headSpAct)
+	loop
+	noteadd "Done."
+    return
+
+*lua_cmd_gain_exp
+	cExp(pc)+=1000000000
+	call *calcLevelUp ,(r1=pc,r2=0)
+	noteadd "Done."
+    return
+
+*lua_cmd_gain_fame
+    cFame(pc)+=10000
+    noteadd "Done."
+    return
+
+*lua_cmd_allinv
+	repeat maxInv
+	if cnt<rangeInv2{
+		if cnt>=sizeInv1:if (cnt-sizeInv1)\sizeInv2=0:noteadd "-----------"+cnName((cnt-sizeInv1)/sizeInv2+1)
+		}
+	if cnt=rangeInv2:noteadd "-----------------------MAP INV"
+	noteadd ""+cnt+"\t"+iNum(cnt)+"\t"+itemName(cnt)+" it:"+iTurn(cnt)
+	loop
+    return
+
+*lua_cmd_108fix
+	repeat maxChara
+	if cnt<maxSaveChara:continue
+	if cExist(cnt)=cAlive:relation cnt,cEnemy
+	loop
+	noteadd "Done."
+    return
+
+*lua_cmd_advreset
+	repeat maxAdv,maxFollower
+	rc=cnt
+	inv_getHeader rc
+	repeat invRange,invHead
+	cnt2=cnt
+	repeat maxItem
+	inv(cnt,cnt2)=0
+	loop
+
+	loop
+	repeat sizeBody,headBody
+	cdata(cnt,rc)=0
+	loop
+	loop
+	noteadd "Done."
+    return
+
+*lua_cmd_fixcorrupt1
+	repeat maxSaveChara
+	rc=cnt
+	inv_getHeader rc
+	repeat invRange,invHead
+	cnt2=cnt
+	if (iId(cnt)>=maxDb)or(iId(cnt)<=0)or(iNum(cnt)<=0){
+		repeat maxItem
+		inv(cnt,cnt2)=0
+		loop
+		}
+	if iEquip(cnt)!0:iEquip(cnt)=0
+	loop
+	repeat sizeBody,headBody
+	cdata(cnt,rc)=cdata(cnt,rc)/extBody*extBody
+	loop
+	if cnt>=maxFollower:cExist(cnt)=cAdvDead:gosub *adv_generate
+	loop
+	noteadd "Done."
+    return
+
+*lua_cmd_freemove
+	dbg_freeMove=true
+	noteadd "Done."
+    return
+
+*lua_cmd_resetmap
+	gosub *mapReset
+	noteadd "Done."
+    return
+
+*lua_cmd_fixmap
+	repeat maxChara
+	if cExist(cnt)!cAlive:continue
+	if (cX(cnt)<0)or(cX(cnt)>=mWidth)or(cY(cnt)<0)or(cY(cnt)>=mHeight){
+	cX(cnt)=0:cY(cnt)=0
+	}
+	loop
+
+	repeat maxMapInv,rangeInv2
+	if iNum(cnt)<=0:continue
+	if (iX(cnt)<0)or(iX(cnt)>=mWidth)or(iY(cnt)<0)or(iY(cnt)>=mHeight){
+		iX(cnt)=0:iY(cnt)=0
+	}
+	loop
+	cell_refresh 0,0
+	noteadd "Done."
+    return
+
+*lua_cmd_mapinv
+	repeat maxInv-rangeInv2
+	if cnt=rangeInv2:noteadd "-----------------------MAP INV"
+	if iNum(cnt)!0:noteadd ""+cnt+"\t"+iNum(cnt)+"\t"+itemName(cnt)+" it:"+iTurn(cnt)
+	loop
+    return
+
+*lua_cmd_mapinfo
+	noteadd "gArea		:"+gArea
+	noteadd "gLevel		:"+gLevel
+	noteadd "file		:"+"mdata_"+mID+".s2"
+	noteadd "pc x/y		:"+cX(pc)+"/"+cY(pc)
+	noteadd "map max w/h	:"+mWidth+"/"+mHeight
+	noteadd "Done."
+    return
+
+*lua_cmd_test
+	repeat maxArea
+	noteadd ""+cnt+":"+mapName(cnt)+"/"+areaId(cnt)
+	loop
+	noteadd "Done."
+    return
