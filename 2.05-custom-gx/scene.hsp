@@ -1,0 +1,485 @@
+*scene
+	procid = (procid + 1) \ 4
+	proclist(procid) = "Scene:Init" + " ct:" + ct
+	if ( gdata(GDATA_STORY_BOOKMARK) < sceneid ) {
+		gdata(GDATA_STORY_BOOKMARK) = sceneid
+	}
+
+	/********** ORIGINAL - BEGINNING **********
+
+	if ( cfg_story == 0 | (en == 1 & sceneid != 0) ) {
+		return
+	}
+
+	 ********** ORIGINAL - ENDING **********/
+
+	/********** ANNA CUSTOM - BEGINNING **********/ // enable cutscenes for en as well
+
+	if ( cfg_story == 0 ) {
+		return
+	}
+
+	/********** ANNA CUSTOM - ENDING **********/
+
+	scene_cut = 0
+	msgtempprev = msgtemp
+	scenemode = 1
+	sdim actor, 20, 3, 10
+	file = "void"
+	y1 = 60
+	y2 = windowh - 60
+	notesel buff
+	noteload lang("scene1.hsp", "scene2.hsp")
+	s = "{" + sceneid + "}"
+	scidx = instr(buff, 0, s)
+	if ( scidx == (-1) ) {
+		goto *scene_end
+	}
+	scidx += strlen(s)
+*scene_loop
+	procid = (procid + 1) \ 4
+	proclist(procid) = "Scene:Loop" + " ct:" + ct
+	await
+	stick a, 128
+	if ( a == 128 ) {
+		scene_cut = 1
+	}
+	if ( scene_cut == 1 ) {
+		goto *scene_end
+	}
+	notesel buff
+	noteload lang("scene1.hsp", "scene2.hsp")
+	cs = 0
+	key_list = key_enter
+	scidxtop = scidx
+	scidxtop = 0
+	val = 0
+*scene_loop_WHILE1
+	p(1) = instr(buff, scidx, "{") + scidx
+	if ( p(1) == (-1) ) {
+		goto *scene_end
+	}
+	p(2) = instr(buff, scidx, "}") + scidx + 1
+	if ( p(2) == (-1) ) {
+		goto *scene_end
+	}
+	if ( scidxtop != 0 ) {
+		scidx = p(1)
+		goto *scene_loop_WEND1
+	}
+	s = strmid(buff, p(1), p(2) - p(1))
+	scidx = p(2) + 1
+	if ( s == "{txt}" ) {
+		scidxtop = scidx
+		val = 0
+		goto *scene_loop_WHILE1_CONTINUE
+	}
+	if ( instr(s, 0, "{chat_") != (-1) ) {
+		rc = int(strmid(s, 6, 1))
+		scidxtop = scidx
+		val = 1
+		goto *scene_loop_WHILE1_CONTINUE
+	}
+	if ( s == "{fade}" ) {
+		gsel 4
+		color 0, 0, 0
+		boxf
+		gsel 0
+		gosub *screen_fadeOut
+		goto *scene_loop_WHILE1_CONTINUE
+	}
+	if ( s == "{fadein}" ) {
+		repeat 25
+			redraw 1
+			pos 0, 0
+			gmode 4, , , cnt * 15
+			pos 0, 0
+			gcopy 4, 0, 0, windoww, windowh
+			gmode 2
+			await 10
+		loop
+		goto *scene_loop_WHILE1_CONTINUE
+	}
+	if ( s == "{wait}" ) {
+		scidxtop = scidx
+		val = 2
+		goto *scene_loop_WHILE1_CONTINUE
+	}
+	if ( s == "{end}" ) {
+		await 1000
+		goto *scene_end
+	}
+	p(3) = instr(buff, scidx, "\"") + scidx + 1
+	p(4) = instr(buff, p(3), "\"") + p(3)
+	s(1) = strmid(buff, p(3), p(4) - p(3))
+	scidx = p(4) + 1
+	if ( s == "{pic}" ) {
+		file = s(1)
+		goto *scene_loop_WHILE1_CONTINUE
+	}
+	if ( s == "{mc}" ) {
+		music = -1
+		if ( s(1) == "mcTown1" ) {
+			music = MUSICLIST_MCTOWN1
+		}
+		if ( s(1) == "mcTown2" ) {
+			music = MUSICLIST_MCTOWN2
+		}
+		if ( s(1) == "mcTown3" ) {
+			music = MUSICLIST_MCTOWN3
+		}
+		if ( s(1) == "mcTown4" ) {
+			music = MUSICLIST_MCTOWN4
+		}
+		if ( s(1) == "mcDungeon1" ) {
+			music = MUSICLIST_MCDUNGEON1
+		}
+		if ( s(1) == "mcDungeon2" ) {
+			music = MUSICLIST_MCDUNGEON2
+		}
+		if ( s(1) == "mcDungeon3" ) {
+			music = MUSICLIST_MCDUNGEON3
+		}
+		if ( s(1) == "mcDungeon4" ) {
+			music = MUSICLIST_MCDUNGEON4
+		}
+		if ( s(1) == "mcDungeon5" ) {
+			music = MUSICLIST_MCDUNGEON5
+		}
+		if ( s(1) == "mcDungeon6" ) {
+			music = MUSICLIST_MCDUNGEON6
+		}
+		if ( s(1) == "mcPuti" ) {
+			music = MUSICLIST_MCPUTI
+		}
+		if ( s(1) == "mcBoss" ) {
+			music = MUSICLIST_MCBOSS
+		}
+		if ( s(1) == "mcBoss2" ) {
+			music = MUSICLIST_MCBOSS2
+		}
+		if ( s(1) == "mcVictory" ) {
+			music = MUSICLIST_MCVICTORY
+		}
+		if ( s(1) == "mcOpening" ) {
+			music = MUSICLIST_MCOPENING
+		}
+		if ( s(1) == "mcLastBoss" ) {
+			music = MUSICLIST_MCLASTBOSS
+		}
+		if ( s(1) == "mcHome" ) {
+			music = MUSICLIST_MCHOME
+		}
+		if ( s(1) == "mcHome0" ) {
+			music = MUSICLIST_MCHOME0
+		}
+		if ( s(1) == "mcLonely" ) {
+			music = MUSICLIST_MCLONELY
+		}
+		if ( s(1) == "mcChaos" ) {
+			music = MUSICLIST_MCCHAOS
+		}
+		if ( s(1) == "mcMarch1" ) {
+			music = MUSICLIST_MCMARCH1
+		}
+		if ( s(1) == "mcMarch2" ) {
+			music = MUSICLIST_MCMARCH2
+		}
+		if ( s(1) == "mcMarch3" ) {
+			music = MUSICLIST_MCMARCH3
+		}
+		if ( s(1) == "mcArena" ) {
+			music = MUSICLIST_MCARENA
+		}
+		if ( s(1) == "mcFanfare" ) {
+			music = MUSICLIST_MCFANFARE
+		}
+		if ( s(1) == "mcVillage1" ) {
+			music = MUSICLIST_MCVILLAGE1
+		}
+		if ( s(1) == "mcBattle1" ) {
+			music = MUSICLIST_MCBATTLE1
+		}
+		if ( s(1) == "mcCasino" ) {
+			music = MUSICLIST_MCCASINO
+		}
+		if ( s(1) == "mcCoda" ) {
+			music = MUSICLIST_MCCODA
+		}
+		if ( s(1) == "mcRuin" ) {
+			music = MUSICLIST_MCRUIN
+		}
+		if ( s(1) == "mcWedding" ) {
+			music = MUSICLIST_MCWEDDING
+		}
+		if ( s(1) == "mcPetArena" ) {
+			music = MUSICLIST_MCPETARENA
+		}
+		if ( s(1) == "mcUnrest" ) {
+			music = MUSICLIST_MCUNREST
+		}
+		if ( s(1) == "mcTown5" ) {
+			music = MUSICLIST_MCTOWN5
+		}
+		if ( s(1) == "mcUnrest2" ) {
+			music = MUSICLIST_MCUNREST2
+		}
+		if ( s(1) == "mcTown6" ) {
+			music = MUSICLIST_MCTOWN6
+		}
+		if ( s(1) == "mcField1" ) {
+			music = MUSICLIST_MCFIELD1
+		}
+		if ( s(1) == "mcField2" ) {
+			music = MUSICLIST_MCFIELD2
+		}
+		if ( s(1) == "mcField3" ) {
+			music = MUSICLIST_MCFIELD3
+		}
+		if ( s(1) == "mcMemory" ) {
+			music = MUSICLIST_MCMEMORY
+		}
+		if ( s(1) == "mcIntro" ) {
+			music = MUSICLIST_MCINTRO
+		}
+		if ( s(1) == "mcBattle2" ) {
+			music = MUSICLIST_MCBATTLE2
+		}
+		if ( s(1) == "mcBoss3" ) {
+			music = MUSICLIST_MCBOSS3
+		}
+		if ( s(1) == "mcTown7" ) {
+			music = MUSICLIST_MCTOWN7
+		}
+		if ( s(1) == "mcTown8" ) {
+			music = MUSICLIST_MCTOWN8
+		}
+		if ( s(1) == "mcTown9" ) {
+			music = MUSICLIST_MCTOWN9
+		}
+		if ( s(1) == "mcDungeon7" ) {
+			music = MUSICLIST_MCDUNGEON7
+		}
+		if ( s(1) == "mcDungeon8" ) {
+			music = MUSICLIST_MCDUNGEON8
+		}
+		if ( s(1) == "mcDungeon9" ) {
+			music = MUSICLIST_MCDUNGEON9
+		}
+		if ( s(1) == "mcLog" ) {
+			music = MUSICLIST_MCLOG
+		}
+		if ( s(1) == "mcVoyage" ) {
+			music = MUSICLIST_MCVOYAGE
+		}
+		if ( s(1) == "mcOpening2" ) {
+			music = MUSICLIST_MCOPENING2
+		}
+		if ( s(1) == "mcMaid" ) {
+			music = MUSICLIST_MCMAID
+		}
+		if ( s(1) == "mcLonely2" ) {
+			music = MUSICLIST_MCLONELY2
+		}
+		if ( s(1) == "mcMemory2" ) {
+			music = MUSICLIST_MCMEMORY2
+		}
+		if ( s(1) == "mcOpening3" ) {
+			music = MUSICLIST_MCOPENING3
+		}
+		if ( s(1) == "mcLastBoss3" ) {
+			music = MUSICLIST_MCLASTBOSS3
+		}
+		if ( s(1) == "mcBoss4" ) {
+			music = MUSICLIST_MCBOSS4
+		}
+		if ( s(1) == "mcUnrest3" ) {
+			music = MUSICLIST_MCUNREST3
+		}
+		if ( s(1) == "mcDungeon10" ) {
+			music = MUSICLIST_MCDUNGEON10
+		}
+		if ( s(1) == "mcFest" ) {
+			music = MUSICLIST_MCFEST
+		}
+		if ( s(1) == "mcJapan" ) {
+			music = MUSICLIST_MCJAPAN
+		}
+		if ( s(1) == "mcSand" ) {
+			music = MUSICLIST_MCSAND
+		}
+		if ( s(1) == "mcBoss5" ) {
+			music = MUSICLIST_MCBOSS5
+		}
+		if ( s(1) == "mcTown10" ) {
+			music = MUSICLIST_MCTOWN10
+		}
+		if ( s(1) == "mcDungeon11" ) {
+			music = MUSICLIST_MCDUNGEON11
+		}
+		if ( s(1) == "mcLost1" ) {
+			music = MUSICLIST_MCLOST1
+		}
+		if ( s(1) == "mcLost2" ) {
+			music = MUSICLIST_MCLOST2
+		}
+		if ( s(1) == "mcLost3" ) {
+			music = MUSICLIST_MCLOST3
+		}
+		if ( s(1) == "mcTown11" ) {
+			music = MUSICLIST_MCTOWN11
+		}
+		if ( s(1) == "mcTown12" ) {
+			music = MUSICLIST_MCTOWN12
+		}
+		if ( s(1) == "mcSad" ) {
+			music = MUSICLIST_MCSAD
+		}
+		if ( s(1) == "mcEND" ) {
+			music = MUSICLIST_MCEND
+		}
+		if ( s(1) == "mcEND2" ) {
+			music = MUSICLIST_MCEND2
+		}
+		if ( s(1) == "mcHuge" ) {
+			music = MUSICLIST_MCHUGE
+		}
+		if ( s(1) == "mcLastBoss4" ) {
+			music = MUSICLIST_MCLASTBOSS4
+		}
+		if ( s(1) == "mcLastBoss5" ) {
+			music = MUSICLIST_MCLASTBOSS5
+		}
+		if ( music == (-1) ) {
+			musicfile(MUSICLIST_SCENE_MUSIC) = s(1)
+			music = MUSICLIST_SCENE_MUSIC
+			gosub *music_play
+		}
+		else {
+			gosub *music_play
+		}
+		goto *scene_loop_WHILE1_CONTINUE
+	}
+	if ( s == "{se}" ) {
+		folder = exedir + "sound\\"
+		sndload folder + s(1), SOUNDLIST_SCENE_SOUND
+		snd SOUNDLIST_SCENE_SOUND
+		goto *scene_loop_WHILE1_CONTINUE
+	}
+	if ( instr(s, 0, "{actor_") != (-1) ) {
+		rc = int(strmid(s, 7, 1))
+		csvsort s, s(1), 44
+		actor(0, rc) = s, s(1), s(2)
+	}
+*scene_loop_WHILE1_CONTINUE
+	goto *scene_loop_WHILE1
+*scene_loop_WEND1
+	buff = strmid(buff, scidxtop, scidx - scidxtop)
+	p = noteinfo(0)
+	repeat noteinfo(0)
+		noteget s, p - cnt - 1
+		if ( s == "" ) {
+			notedel p - cnt - 1
+		}
+	loop
+	redraw 0
+	gsel 4
+	gmode 0
+	pos 0, 0
+	picload exedir + "\\graphic\\" + file + devfile + ".bmp", 1
+	pos 0, y1
+	gzoom windoww, y2 - y1, 4, 0, 0, 640, 480
+	gmode 2
+	color 5, 5, 5
+	boxf 0, 0, windoww, y1
+	boxf 0, y2, windoww, windowh
+	if ( val == 1 ) {
+		gsel 0
+		redraw 0
+		gmode 0
+		pos 0, 0
+		gcopy 4, 0, 0, windoww, windowh
+		gmode 2
+		tc = CHARA_PLAYER
+		gosub *chat
+		goto *scene_loop
+	}
+	if ( val == 2 ) {
+		gsel 0
+		redraw 0
+		gmode 0
+		pos 0, 0
+		gcopy 4, 0, 0, windoww, windowh
+		gmode 2
+		redraw 1
+		await 1000
+		goto *scene_loop
+	}
+	font lang(cfg_font1, cfg_font2), 16 - en * 2, 0
+	x = 44
+    y3 = (windowh / 2) - ((noteinfo(0) * 20) / 2) - y1
+	repeat noteinfo(0)
+		y = y3 + 31 + cnt * 20
+		noteget s, cnt
+		x = windoww / 2 - strlen(s) * 4
+		dx = 80 + strlen(s) * 8
+		if ( dx < 180 ) {
+			dx = 0
+		}
+		pos windoww / 2, y + 4
+		gmode 6, 344, 72, 70
+		grotate 3, 456, 144, 0, dx, 72
+		color 20, 20, 20
+	loop
+	x = 40
+	repeat noteinfo(0)
+		y = y3 + 28 + cnt * 20
+		noteget s, cnt
+		x = windoww / 2 - strlen(s) * 4
+		color 10, 10, 10
+		pos x, y
+		bmes s, 240, 240, 240
+	loop
+	gsel 0
+	color 500, 500, 500
+	repeat 15, 1
+		redraw 0
+		await 30
+		stick a, 128
+		if ( a == 128 ) {
+			scene_cut = 1
+		}
+		gmode 4, , , cnt * 16
+		pos 0, 0
+		gcopy 4, 0, 0, windoww, windowh
+		redraw 1
+	loop
+	gmode 2
+	redraw 0
+	gmode 0
+	pos 0, 0
+	gcopy 4, 0, 0, windoww, windowh
+	gmode 2
+	redraw 0
+	x@txtfunc = windoww - 120
+	y@txtfunc = windowh - 60
+	anime_halt
+	redraw 0
+	color 5, 5, 5
+	boxf 0, 0, windoww, y1
+	boxf 0, y2, windoww, windowh
+	goto *scene_loop
+
+*scene_end
+	procid = (procid + 1) \ 4
+	proclist(procid) = "Scene:Exit" + " ct:" + ct
+	gsel 4
+	color 0, 0, 0
+	boxf
+	gsel 0
+	gosub *screen_fadeOut
+	scenemode = 0
+	msgtemp = msgtempprev
+	msgtempprev = ""
+	return
+
