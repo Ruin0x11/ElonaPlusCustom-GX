@@ -36,7 +36,7 @@
 			if ( adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_CROP | adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_MUSEUM | adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_SHOP | adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_STORAGE_HOUSE | adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_RANCH | adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_DISCARDED_RANCH ) {
 				item_separate ci
 				inv(INV_ITEM_PARAM2, ci) = gdata(GDATA_AREA)
-				txt lang("ç‰©ä»¶No" + inv(INV_ITEM_PARAM2, ci) + "ã‚’ç™»éŒ²ã—ãŸã€‚", "Property No. " + inv(INV_ITEM_PARAM2, ci) + " has been registered.")
+				txt lang("•¨ŒNo" + inv(INV_ITEM_PARAM2, ci) + "‚ğ“o˜^‚µ‚½B", "Property No. " + inv(INV_ITEM_PARAM2, ci) + " has been registered.")
 				snd SOUNDLIST_ENC
 				gosub *screen_draw
 				goto *pc_turn
@@ -44,19 +44,19 @@
 		}
 		if ( inv(INV_ITEM_PARAM2, ci) == 0 ) {
 			snd SOUNDLIST_FAIL1
-			txt lang("ç§»è¨­ã—ãŸã„ç‰©ä»¶å†…ã§èª­ã‚€ã¨Noã‚’ç™»éŒ²ã§ãã‚‹ã€‚", "You must read it inside a building to register your property.")
+			txt lang("ˆÚİ‚µ‚½‚¢•¨Œ“à‚Å“Ç‚Ş‚ÆNo‚ğ“o˜^‚Å‚«‚éB", "You must read it inside a building to register your property.")
 			gosub *screen_draw
 			goto *pc_turn
 		}
 	}
 	if ( mdata(MDATA_TYPE) != MAP_TYPE_WORLD ) {
-		txt lang("ãã‚Œã¯ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒãƒƒãƒ—ã§ã—ã‹ä½¿ãˆãªã„ã€‚", "You can only use it in the world map.")
+		txt lang("‚»‚ê‚Íƒ[ƒ‹ƒhƒ}ƒbƒv‚Å‚µ‚©g‚¦‚È‚¢B", "You can only use it in the world map.")
 		gosub *screen_draw
 		goto *pc_turn
 	}
 	cell_featread cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER)
 	if ( feat(0) != 0 ) {
-		txt lang("ãã®å ´æ‰€ã«ã¯å»ºã¦ã‚‰ã‚Œãªã„ã€‚", "You can't build it here.")
+		txt lang("‚»‚ÌêŠ‚É‚ÍŒš‚Ä‚ç‚ê‚È‚¢B", "You can't build it here.")
 		gosub *screen_draw
 		goto *pc_turn
 	}
@@ -68,15 +68,15 @@
 		}
 	loop
 	if ( area == (-1) ) {
-		txt lang("ã‚‚ã†ã“ã‚Œä»¥ä¸Šå»ºç‰©ã¯å»ºã¦ã‚‰ã‚Œãªã„ã€‚", "You can't build a building anymore.")
+		txt lang("‚à‚¤‚±‚êˆÈãŒš•¨‚ÍŒš‚Ä‚ç‚ê‚È‚¢B", "You can't build a building anymore.")
 		gosub *screen_draw
 		goto *pc_turn
 	}
 	if ( inv(INV_ITEM_ID, ci) != ITEM_ID_DEED_PROPERTY_TRANSFER ) {
-		txt lang("æœ¬å½“ã«ã“ã®å ´æ‰€ã«å»ºè¨­ã™ã‚‹ï¼Ÿ ", "Really build it here? ")
+		txt lang("–{“–‚É‚±‚ÌêŠ‚ÉŒšİ‚·‚éH ", "Really build it here? ")
 	}
 	else {
-		txt lang("æœ¬å½“ã«ã“ã®å ´æ‰€ã«ç§»è¨­ã™ã‚‹ï¼Ÿ ", "Really move it here? ")
+		txt lang("–{“–‚É‚±‚ÌêŠ‚ÉˆÚİ‚·‚éH ", "Really move it here? ")
 	}
 	promptYesNo
 	if ( rtval != 0 ) {
@@ -101,7 +101,7 @@
 		gdata(GDATA_WORLD_Y) = adata(ADATA_Y, AREA_HOME)
 		snd SOUNDLIST_BUILD1
 		txtef COLOR_GREEN
-		txt lang("æ–°ã—ã„å®¶ã‚’å»ºã¦ãŸï¼ ", "You've built a new house!")
+		txt lang("V‚µ‚¢‰Æ‚ğŒš‚Ä‚½I ", "You've built a new house!")
 		msg_halt
 		snd SOUNDLIST_EXITMAP1
 		exgauge = 10
@@ -120,7 +120,7 @@
 		gdata(GDATA_WORLD_Y) = adata(ADATA_Y, AREA_HOME)
 		snd SOUNDLIST_BUILD1
 		txtef COLOR_GREEN
-		txt lang("å¼•ã£è¶Šã—ãŒå®Œäº†ã—ãŸï¼ ", "You've moved your house!")
+		txt lang("ˆø‚Á‰z‚µ‚ªŠ®—¹‚µ‚½I ", "You've moved your house!")
 		msg_halt
 		snd SOUNDLIST_EXITMAP1
 		if ( gdata(GDATA_HOME_LEVEL) == 0 ) {
@@ -143,7 +143,7 @@
 		gdata(GDATA_WORLD_Y) = adata(ADATA_Y, bukken)
 		snd SOUNDLIST_BUILD1
 		txtef COLOR_GREEN
-		txt lang("ç§»è¨­ãŒå®Œäº†ã—ãŸï¼ ", "Property relocation finished!")
+		txt lang("ˆÚİ‚ªŠ®—¹‚µ‚½I ", "Property relocation finished!")
 		msg_halt
 		snd SOUNDLIST_EXITMAP1
 		goto *map_exit
@@ -167,50 +167,50 @@
 		adata(ADATA_ID, p) = AREA_MUSEUM
 		adata(ADATA_ICON, p) = xy2pic(19, 4)
 		adata(ADATA_FIELD, p) = 1
-		s = lang("åšç‰©é¤¨", "museum")
+		s = lang("”•¨ŠÙ", "museum")
 	}
 	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_DEED_SHOP ) {
 		adata(ADATA_ID, p) = AREA_SHOP
 		adata(ADATA_ICON, p) = xy2pic(18, 4)
 		adata(ADATA_FIELD, p) = 1
-		s = lang("åº—", "shop")
+		s = lang("“X", "shop")
 	}
 	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_DEED_FARM ) {
 		adata(ADATA_ID, p) = AREA_CROP
 		adata(ADATA_ICON, p) = xy2pic(20, 4)
 		adata(ADATA_FIELD, p) = 2
-		s = lang("ç•‘", "crop")
+		s = lang("”¨", "crop")
 	}
 	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_DEED_STORAGE_HOUSE ) {
 		adata(ADATA_ID, p) = AREA_STORAGE_HOUSE
 		adata(ADATA_ICON, p) = xy2pic(21, 4)
 		adata(ADATA_FIELD, p) = 1
-		s = lang("å€‰åº«", "storage")
+		s = lang("‘qŒÉ", "storage")
 	}
 	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_DEED_RANCH ) {
 		adata(ADATA_ID, p) = AREA_RANCH
 		adata(ADATA_ICON, p) = xy2pic(22, 4)
 		adata(ADATA_FIELD, p) = 2
 		adata(ADATA_RESTORE_POS, p) = 1
-		s = lang("ç‰§å ´", "ranch")
+		s = lang("–qê", "ranch")
 	}
 	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_DEED_DUNGEON ) {
 		adata(ADATA_ID, p) = AREA_DUNGEON
 		adata(ADATA_ICON, p) = xy2pic(6, 4)
 		adata(ADATA_FIELD, p) = 1
 		adata(ADATA_RESTORE_POS, p) = 1
-		s = lang("ãƒ€ãƒ³ã‚¸ãƒ§ãƒ³", "dungeon")
+		s = lang("ƒ_ƒ“ƒWƒ‡ƒ“", "dungeon")
 	}
 	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_DEED_DISCARDED_RANCH ) {
 		adata(ADATA_ID, p) = AREA_DISCARDED_RANCH
 		adata(ADATA_ICON, p) = xy2pic(10, 4)
 		adata(ADATA_FIELD, p) = 2
 		adata(ADATA_RESTORE_POS, p) = 1
-		s = lang("å»ƒãƒ¢ãƒ³ã‚¹ã‚¿ãƒ¼ç‰§å ´", "discarded ranch")
+		s = lang("”pƒ‚ƒ“ƒXƒ^[–qê", "discarded ranch")
 	}
 	snd SOUNDLIST_BUILD1
 	txtef COLOR_YELLOW
-	txt lang("ã‚ãªãŸã¯" + s + "ã‚’å»ºè¨­ã—ãŸï¼ ", "You've built a " + s + "!")
+	txt lang("‚ ‚È‚½‚Í" + s + "‚ğŒšİ‚µ‚½I ", "You've built a " + s + "!")
 	gosub *world_refresh
 	inv(INV_ITEM_NUM, ci)--
 	cell_refresh inv(INV_ITEM_X, ci), inv(INV_ITEM_Y, ci)
@@ -236,7 +236,7 @@
 	adata(ADATA_ICON, p) = xy2pic(6, 4)
 	adata(ADATA_FIELD, p) = 1
 	adata(ADATA_RESTORE_POS, p) = 1
-	s = lang("ãƒ€ãƒ³ã‚¸ãƒ§ãƒ³", "dungeon")
+	s = lang("ƒ_ƒ“ƒWƒ‡ƒ“", "dungeon")
 	gdata(GDATA_AREA) = area
 	gdata(GDATA_LEVEL) = 1
 	gdata(GDATA_LEVEL_START_ON) = 8
@@ -269,7 +269,7 @@
 	txtnew
 	if ( mdata(MDATA_TYPE) != MAP_TYPE_HOME ) {
 		msgdup++
-		txt lang("ã“ã“ã¯ã‚ãªãŸã®å®¶ã§ã¯ãªã„ã€‚", "You can only use it in your home.")
+		txt lang("‚±‚±‚Í‚ ‚È‚½‚Ì‰Æ‚Å‚Í‚È‚¢B", "You can only use it in your home.")
 		gosub *screen_draw
 		goto *pc_turn
 	}
@@ -289,83 +289,83 @@
 	if ( mdata(MDATA_MAX_INV) != 0 ) {
 		p(2) = mdata(MDATA_MAX_INV)
 	}
-	txt lang(mapname(gdata(GDATA_AREA)) + "ã«ã¯" + p + "å€‹ã®ã‚¢ã‚¤ãƒ†ãƒ ã¨" + p(1) + "å€‹ã®å®¶å…·ãŒã‚ã‚‹(ã‚¢ã‚¤ãƒ†ãƒ æœ€å¤§" + p(2) + "å€‹) ", "There are " + p + " items and " + p(1) + " furniture in " + mapname(gdata(GDATA_AREA)) + ".(Max: " + p(2) + ") ")
+	txt lang(mapname(gdata(GDATA_AREA)) + "‚É‚Í" + p + "ŒÂ‚ÌƒAƒCƒeƒ€‚Æ" + p(1) + "ŒÂ‚Ì‰Æ‹ï‚ª‚ ‚é(ƒAƒCƒeƒ€Å‘å" + p(2) + "ŒÂ) ", "There are " + p + " items and " + p(1) + " furniture in " + mapname(gdata(GDATA_AREA)) + ".(Max: " + p(2) + ") ")
 	txtmore
 	if ( adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_SHOP ) {
 		if ( adata(ADATA_SHOP_TYPE, gdata(GDATA_AREA)) == SHOP_TYPE_GOODS ) {
-			shops = lang("ä½•ã§ã‚‚å±‹", "the goods shop")
+			shops = lang("‰½‚Å‚à‰®", "the goods shop")
 		}
 		if ( adata(ADATA_SHOP_TYPE, gdata(GDATA_AREA)) == SHOP_TYPE_FOOD ) {
-			shops = lang("é£Ÿå“åº—", "the food shop")
+			shops = lang("H•i“X", "the food shop")
 		}
 		if ( adata(ADATA_SHOP_TYPE, gdata(GDATA_AREA)) == SHOP_TYPE_MAGIC ) {
-			shops = lang("é­”æ³•åº—", "the magic shop")
+			shops = lang("–‚–@“X", "the magic shop")
 		}
 		if ( adata(ADATA_SHOP_TYPE, gdata(GDATA_AREA)) == SHOP_TYPE_BLACKSMITH ) {
-			shops = lang("æ­¦å…·åº—", "the blacksmith")
+			shops = lang("•‹ï“X", "the blacksmith")
 		}
 		if ( adata(ADATA_SHOP_TYPE, gdata(GDATA_AREA)) == SHOP_TYPE_INN ) {
-			shops = lang("å®¿å±‹", "the inn")
+			shops = lang("h‰®", "the inn")
 		}
-		txt lang("åº—ã‚¿ã‚¤ãƒ—ï¼š" + shops + "ã€‚", "Shop type: " + shops + ".")
+		txt lang("“Xƒ^ƒCƒvF" + shops + "B", "Shop type: " + shops + ".")
 		if ( adata(ADATA_SHOP_SALE_RESTRICTION, gdata(GDATA_AREA)) == SHOP_SALE_NONE ) {
-			txt lang("è²©å£²åˆ¶é™ãªã—ã€‚", "No sale restrictions.")
+			txt lang("”Ì”„§ŒÀ‚È‚µB", "No sale restrictions.")
 		}
 		if ( adata(ADATA_SHOP_SALE_RESTRICTION, gdata(GDATA_AREA)) == SHOP_SALE_15_ITEMS ) {
-			txt lang("1æ—¥15å“é™å®šè²©å£²ã€‚", "Sales limited to 15 items.")
+			txt lang("1“ú15•iŒÀ’è”Ì”„B", "Sales limited to 15 items.")
 		}
 		if ( adata(ADATA_SHOP_SALE_RESTRICTION, gdata(GDATA_AREA)) == SHOP_SALE_5_ITEMS ) {
-			txt lang("1æ—¥5å“é™å®šè²©å£²ã€‚", "Sales limited to 5 items.")
+			txt lang("1“ú5•iŒÀ’è”Ì”„B", "Sales limited to 5 items.")
 		}
 		if ( getworker(gdata(GDATA_AREA)) != (-1) ) {
-			txt lang("ç¾åœ¨ã®åº—ä¸»ï¼š" + cdatan(CDATAN_NAME, getworker(gdata(GDATA_AREA))) + " ", "Current shopkeeper is " + cdatan(CDATAN_NAME, getworker(gdata(GDATA_AREA))) + ".")
+			txt lang("Œ»İ‚Ì“XåF" + cdatan(CDATAN_NAME, getworker(gdata(GDATA_AREA))) + " ", "Current shopkeeper is " + cdatan(CDATAN_NAME, getworker(gdata(GDATA_AREA))) + ".")
 		}
 		else {
-			txt lang("ç¾åœ¨åº—ä¸»ã¯ã„ãªã„ã€‚", "You haven't assigned a shopkeeper yet.")
+			txt lang("Œ»İ“Xå‚Í‚¢‚È‚¢B", "You haven't assigned a shopkeeper yet.")
 		}
 		if ( getworker(gdata(GDATA_AREA)) != (-1) ) {
 			sc = getworker(gdata(GDATA_AREA))
 			p = sdata(SKILL_NORMAL_NEGOTIATION + STARTING_SKILL_SPACT, sc) \ 1000
 			if ( p >= 200 ) {
-				txt lang("[äº¤æ¸‰æ½œåœ¨ï¼šSuperb]", "[Trade potential: Superb]")
+				txt lang("[ŒğÂöİFSuperb]", "[Trade potential: Superb]")
 			}
 			if ( p >= 150 & p < 200 ) {
-				txt lang("[äº¤æ¸‰æ½œåœ¨ï¼šGreat]", "[Trade potential: Great]")
+				txt lang("[ŒğÂöİFGreat]", "[Trade potential: Great]")
 			}
 			if ( p >= 100 & p < 150 ) {
-				txt lang("[äº¤æ¸‰æ½œåœ¨ï¼šGood]", "[Trade potential: Good]")
+				txt lang("[ŒğÂöİFGood]", "[Trade potential: Good]")
 			}
 			if ( p >= 50 & p < 100 ) {
-				txt lang("[äº¤æ¸‰æ½œåœ¨ï¼šBad]", "[Trade potential: Bad]")
+				txt lang("[ŒğÂöİFBad]", "[Trade potential: Bad]")
 			}
 			if ( p < 50 ) {
-				txt lang("[äº¤æ¸‰æ½œåœ¨ï¼šHopeless]", "[Trade potential: Hopeless]")
+				txt lang("[ŒğÂöİFHopeless]", "[Trade potential: Hopeless]")
 			}
 			p = sdata(SKILL_ATTR_CHA + STARTING_SKILL_SPACT, sc) \ 1000
 			if ( p >= 200 ) {
-				txt lang("[é­…åŠ›æ½œåœ¨ï¼šSuperb]", "[Charisma potential: Superb]")
+				txt lang("[–£—ÍöİFSuperb]", "[Charisma potential: Superb]")
 			}
 			if ( p >= 150 & p < 200 ) {
-				txt lang("[é­…åŠ›æ½œåœ¨ï¼šGreat]", "[Charisma potential: Great]")
+				txt lang("[–£—ÍöİFGreat]", "[Charisma potential: Great]")
 			}
 			if ( p >= 100 & p < 150 ) {
-				txt lang("[é­…åŠ›æ½œåœ¨ï¼šGood]", "[Charisma potential: Good]")
+				txt lang("[–£—ÍöİFGood]", "[Charisma potential: Good]")
 			}
 			if ( p >= 50 & p < 100 ) {
-				txt lang("[é­…åŠ›æ½œåœ¨ï¼šBad]", "[Charisma potential: Bad]")
+				txt lang("[–£—ÍöİFBad]", "[Charisma potential: Bad]")
 			}
 			if ( p < 50 ) {
-				txt lang("[é­…åŠ›æ½œåœ¨ï¼šHopeless]", "[Charisma potential: Hopeless]")
+				txt lang("[–£—ÍöİFHopeless]", "[Charisma potential: Hopeless]")
 			}
-			txt lang("[å–¶æ¥­å®Ÿç¸¾ï¼š" + cdata(CDATA_SALES_EXP, sc) + "]", "[Sales exp: " + cdata(CDATA_SALES_EXP, sc) + "]")
+			txt lang("[‰c‹ÆÀÑF" + cdata(CDATA_SALES_EXP, sc) + "]", "[Sales exp: " + cdata(CDATA_SALES_EXP, sc) + "]")
 		}
 	}
 	if ( adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_RANCH ) {
 		if ( getworker(gdata(GDATA_AREA)) != (-1) ) {
-			txt lang("ç¾åœ¨ã®ãƒ–ãƒªãƒ¼ãƒ€ãƒ¼ã¯" + cdatan(CDATAN_NAME, getworker(gdata(GDATA_AREA))) + "ã ã€‚", "Current breeder is " + cdatan(CDATAN_NAME, getworker(gdata(GDATA_AREA))) + ".")
+			txt lang("Œ»İ‚ÌƒuƒŠ[ƒ_[‚Í" + cdatan(CDATAN_NAME, getworker(gdata(GDATA_AREA))) + "‚¾B", "Current breeder is " + cdatan(CDATAN_NAME, getworker(gdata(GDATA_AREA))) + ".")
 		}
 		else {
-			txt lang("ç¾åœ¨ãƒ–ãƒªãƒ¼ãƒ€ãƒ¼ã¯ã„ãªã„ã€‚", "You haven't assigned a breeder yet.")
+			txt lang("Œ»İƒuƒŠ[ƒ_[‚Í‚¢‚È‚¢B", "You haven't assigned a breeder yet.")
 		}
 	}
 	if ( gdata(GDATA_AREA) == AREA_HOME ) {
@@ -378,10 +378,10 @@
 			}
 		loop
 		txtmore
-		txt lang("ç¾åœ¨" + p + "äººã®æ»åœ¨è€…ãŒã„ã‚‹(æœ€å¤§" + (gdata(GDATA_HOME_LEVEL) + 2) + "äºº) ", "" + p + " members are staying at your home. (Max: " + (gdata(GDATA_HOME_LEVEL) + 2) + ").")
+		txt lang("Œ»İ" + p + "l‚Ì‘ØİÒ‚ª‚¢‚é(Å‘å" + (gdata(GDATA_HOME_LEVEL) + 2) + "l) ", "" + p + " members are staying at your home. (Max: " + (gdata(GDATA_HOME_LEVEL) + 2) + ").")
 	}
 	txtnew
-	txt lang("ä½•ã‚’ã™ã‚‹ï¼Ÿ", "What do you want to do?")
+	txt lang("‰½‚ğ‚·‚éH", "What do you want to do?")
 	p = 0
 	if ( adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_SHOP ) {
 		if ( getworker(gdata(GDATA_AREA)) != (-1) ) {
@@ -392,62 +392,62 @@
 				kunren = 1000000
 			}
 		}
-		promptAdd lang("ä»²é–“ã«åº—ä¸»ã‚’é ¼ã‚€", "Assign a shopkeeper"), "null", 4
+		promptAdd lang("’‡ŠÔ‚É“Xå‚ğ—Š‚Ş", "Assign a shopkeeper"), "null", 4
 		if ( mdata(MDATA_MAX_INV) < 400 ) {
-			promptAdd lang("åº—ã‚’æ‹¡å¼µ", "Extend") + " (" + calcshopreform() + " GP)", "null", 5
+			promptAdd lang("“X‚ğŠg’£", "Extend") + " (" + calcshopreform() + " GP)", "null", 5
 		}
-		promptAdd lang("åº—ã®ç¨®é¡å¤‰æ›´", "Change shop type"), "null", 11
+		promptAdd lang("“X‚Ìí—Ş•ÏX", "Change shop type"), "null", 11
 		if ( getworker(gdata(GDATA_AREA)) != (-1) ) {
 			if ( kunren != 1000000 ) {
-				promptAdd lang("åº—ä¸»è¨“ç·´ (ãƒ–ãƒ­ãƒ³ã‚ºç¡¬è²¨" + kunren + "æš)", "Train shopkeeper for " + kunren + " bronze coins"), "null", 12
+				promptAdd lang("“XåŒP—û (ƒuƒƒ“ƒYd‰İ" + kunren + "–‡)", "Train shopkeeper for " + kunren + " bronze coins"), "null", 12
 			}
 		}
 		if ( getworker(gdata(GDATA_AREA)) != (-1) ) {
-			promptAdd lang("å–¶æ¥­ãƒ•ã‚£ãƒ¼ãƒˆç²å¾—", "Get shopkeeper feat"), "null", 13
+			promptAdd lang("‰c‹ÆƒtƒB[ƒgŠl“¾", "Get shopkeeper feat"), "null", 13
 		}
-		promptAdd lang("1æ—¥ã®è²©å£²æ•°ã‚’åˆ¶é™", "Limit sales per day"), "null", 14
-		promptAdd lang("ãƒã‚¤ãƒˆã‚’é›‡ã†ï¼ˆæœªå®Ÿè£…ï¼‰", "Hire part time worker (Unimplemented)"), "null", 15
+		promptAdd lang("1“ú‚Ì”Ì”„”‚ğ§ŒÀ", "Limit sales per day"), "null", 14
+		promptAdd lang("ƒoƒCƒg‚ğŒÙ‚¤i–¢À‘•j", "Hire part time worker (Unimplemented)"), "null", 15
 	}
 	if ( adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_RANCH ) {
-		promptAdd lang("ãƒ–ãƒªãƒ¼ãƒ€ãƒ¼ã‚’ä»»å‘½ã™ã‚‹", "Assign a breeder"), "null", 4
-		promptAdd lang("å®¶ç•œãƒ»ãƒ–ãƒªãƒ¼ãƒ€ãƒ¼ç§»å‹•", "Move a livestock"), "null", 3
-		promptAdd lang("é¤Œã‚’æ’’ãï¼ˆå®¶ç•œã®é¤Œæ¶ˆè²»ï¼‰", "Consume livestock feed"), "null", 17
-		promptAdd lang("å ´å†…æ¶ˆæ¯’ï¼ˆæµ„åŒ–æ¶ˆæ¯’è–¬æ¶ˆè²»ï¼‰", "Consume disinfectant"), "null", 18
+		promptAdd lang("ƒuƒŠ[ƒ_[‚ğ”C–½‚·‚é", "Assign a breeder"), "null", 4
+		promptAdd lang("‰Æ’{EƒuƒŠ[ƒ_[ˆÚ“®", "Move a livestock"), "null", 3
+		promptAdd lang("‰a‚ğT‚­i‰Æ’{‚Ì‰aÁ”ïj", "Consume livestock feed"), "null", 17
+		promptAdd lang("ê“àÁ“Åiò‰»Á“Å–òÁ”ïj", "Consume disinfectant"), "null", 18
 		if ( adata(ADATA_RANCH_BREED_RESTRICTION, gdata(GDATA_AREA)) == 0 ) {
-			promptAdd lang("ç¹æ®–é˜²æ­¢ã‚³ãƒ¼ãƒ‰ç™ºå‹•", "Activate breeding-prevent code"), "null", 19
+			promptAdd lang("”ÉB–h~ƒR[ƒh”­“®", "Activate breeding-prevent code"), "null", 19
 		}
 		else {
-			promptAdd lang("ç¹æ®–é˜²æ­¢ã‚³ãƒ¼ãƒ‰è§£é™¤", "Cancel breeding-prevent code"), "null", 21
+			promptAdd lang("”ÉB–h~ƒR[ƒh‰ğœ", "Cancel breeding-prevent code"), "null", 21
 		}
 		if ( adata(ADATA_RANCH_PRODUCE_RESTRICTION, gdata(GDATA_AREA)) == 0 ) {
-			promptAdd lang("ç”Ÿç”£é˜²æ­¢ã‚³ãƒ¼ãƒ‰ç™ºå‹•", "Activate production-prevent code"), "null", 20
+			promptAdd lang("¶Y–h~ƒR[ƒh”­“®", "Activate production-prevent code"), "null", 20
 		}
 		else {
-			promptAdd lang("ç”Ÿç”£é˜²æ­¢ã‚³ãƒ¼ãƒ‰è§£é™¤", "Cancel production-prevent code"), "null", 22
+			promptAdd lang("¶Y–h~ƒR[ƒh‰ğœ", "Cancel production-prevent code"), "null", 22
 		}
 	}
 	if ( adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_DISCARDED_RANCH ) {
-		promptAdd lang("ãƒšãƒƒãƒˆã‚’æ”¾ã™", "Release ally"), "null", 8
-		promptAdd lang("æ»åœ¨è€…ã®ç§»å‹•", "Move a stayer"), "null", 3
+		promptAdd lang("ƒyƒbƒg‚ğ•ú‚·", "Release ally"), "null", 8
+		promptAdd lang("‘ØİÒ‚ÌˆÚ“®", "Move a stayer"), "null", 3
 	}
-	promptAdd lang("å®¶ã®æ¨¡æ§˜æ›¿ãˆ", "Design"), "null", 0
+	promptAdd lang("‰Æ‚Ì–Í—l‘Ö‚¦", "Design"), "null", 0
 	if ( gdata(GDATA_AREA) == AREA_HOME ) {
-		promptAdd lang("å®¶ã®æƒ…å ±", "Home rank"), "null", 2
-		promptAdd lang("ä»²é–“ã®æ»åœ¨", "Allies in your home"), "null", 4
+		promptAdd lang("‰Æ‚Ìî•ñ", "Home rank"), "null", 2
+		promptAdd lang("’‡ŠÔ‚Ì‘Øİ", "Allies in your home"), "null", 4
 		if ( gdata(GDATA_LEVEL) == 1 ) {
-			promptAdd lang("ä½¿ç”¨äººã‚’å‹Ÿé›†ã™ã‚‹", "Recruit a servant"), "null", 6
+			promptAdd lang("g—pl‚ğ•åW‚·‚é", "Recruit a servant"), "null", 6
 		}
-		promptAdd lang("æ»åœ¨è€…ã®ç§»å‹•", "Move a stayer"), "null", 3
+		promptAdd lang("‘ØİÒ‚ÌˆÚ“®", "Move a stayer"), "null", 3
 	}
 	if ( gdata(GDATA_AREA) == AREA_MAID_MANSION ) {
-		promptAdd lang("æ»åœ¨è€…ã®ç§»å‹•", "Move a stayer"), "null", 3
+		promptAdd lang("‘ØİÒ‚ÌˆÚ“®", "Move a stayer"), "null", 3
 	}
-	promptAdd lang("ç”Ÿæˆã•ã‚Œã‚‹æ‰‰å¤‰æ›´", "Change door type"), "null", 7
-	promptAdd lang("ã‚¿ã‚¤ãƒ«ã‚°ãƒ«ãƒ¼ãƒ—å¤‰æ›´", "Change tile group"), "null", 16
-	promptAdd lang("å¤–è£…å¤‰æ›´", "Change Map Icon"), "null", 9
+	promptAdd lang("¶¬‚³‚ê‚é”à•ÏX", "Change door type"), "null", 7
+	promptAdd lang("ƒ^ƒCƒ‹ƒOƒ‹[ƒv•ÏX", "Change tile group"), "null", 16
+	promptAdd lang("ŠO‘••ÏX", "Change Map Icon"), "null", 9
 	if ( gdata(GDATA_AREA) != AREA_HOME ) {
 		if ( gdata(GDATA_AREA) != AREA_MAID_MANSION ) {
-			promptAdd lang("æ–½è¨­åç§°å¤‰æ›´", "Change Map Name"), "null", 10
+			promptAdd lang("{İ–¼Ì•ÏX", "Change Map Name"), "null", 10
 		}
 	}
 	homemakewall = 0
@@ -455,8 +455,8 @@
 	/********** BLOODYSHADE CUSTOM - BEGINNING **********/ // House Board - Plant seeds/Collect yield
 
 	if ( adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_CROP ) {
-		promptAdd lang("ç¨®ã‚’æ¤ãˆã‚‹", "Plant seeds"), "null", 666
-		promptAdd lang("åé‡ã‚’åé›†ã™ã‚‹", "Collect yield"), "null", 667
+		promptAdd lang("í‚ğA‚¦‚é", "Plant seeds"), "null", 666
+		promptAdd lang("û—Ê‚ğûW‚·‚é", "Collect yield"), "null", 667
 	}
 
 	/********** BLOODYSHADE CUSTOM - ENDING **********/
@@ -543,7 +543,7 @@
 		cell_refresh x, y
 
 		txtef COLOR_GREEN
-		txt lang("ã™ã¹ã¦ã®æœç‰©ã¨æ ½åŸ¹ä½œç‰©ã‚’åç©«ã—ã¾ã—ãŸ", "You harvested all grown crops and fruits.")
+		txt lang("‚·‚×‚Ä‚Ì‰Ê•¨‚ÆÍ”|ì•¨‚ğûŠn‚µ‚Ü‚µ‚½", "You harvested all grown crops and fruits.")
 
 		gosub *calcBurdenPc
 		goto *turn_end
@@ -561,7 +561,7 @@
 		gosub *home_setWallTile
 		n = 0
 		txtnew
-		txt lang("ãƒã‚¦ã‚¹ã®å·¦ã‚¯ãƒªãƒƒã‚¯ã§ã‚¿ã‚¤ãƒ«ã®æ•·è¨­ã€å³ã‚¯ãƒªãƒƒã‚¯ã§ã‚¿ã‚¤ãƒ«ã®å–å¾—ã€ç§»å‹•ã‚­ãƒ¼ã§ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ç§»å‹•ã€æ±ºå®šã‚­ãƒ¼ã§ã‚¿ã‚¤ãƒ«ä¸€è¦§ã€ã‚­ãƒ£ãƒ³ã‚»ãƒ«ã‚­ãƒ¼ã§çµ‚äº†ã€‚", "Left click to place the tile, right click to pick the tile under your mouse cursor, movement keys to move current position, hit the enter key to show the list of tiles, hit the cancel key to exit.")
+		txt lang("ƒ}ƒEƒX‚Ì¶ƒNƒŠƒbƒN‚Åƒ^ƒCƒ‹‚Ì•~İA‰EƒNƒŠƒbƒN‚Åƒ^ƒCƒ‹‚Ìæ“¾AˆÚ“®ƒL[‚ÅƒXƒNƒŠ[ƒ“ˆÚ“®AŒˆ’èƒL[‚Åƒ^ƒCƒ‹ˆê——AƒLƒƒƒ“ƒZƒ‹ƒL[‚ÅI—¹B", "Left click to place the tile, right click to pick the tile under your mouse cursor, movement keys to move current position, hit the enter key to show the list of tiles, hit the cancel key to exit.")
 		tlocinitx = cdata(CDATA_X, CHARA_PLAYER)
 		tlocinity = cdata(CDATA_Y, CHARA_PLAYER)
 		tile = 0
@@ -606,19 +606,19 @@
 	}
 	if ( _switch_val == 10 | _switch_sw ) {
 		_switch_sw = 0
-		txt lang(mdatan(MDATAN_NAME) + "ã‚’ä½•ã¨å‘¼ã¶ï¼Ÿ ", "What do you want to call " + mdatan(MDATAN_NAME) + "? ")
+		txt lang(mdatan(MDATAN_NAME) + "‚ğ‰½‚ÆŒÄ‚ÔH ", "What do you want to call " + mdatan(MDATAN_NAME) + "? ")
 		val = (windoww - 290) / 2 + inf_screenx, winposy(90), 16, 1, 0
 		inputlog = ""
 		input_mode = 1
 		gosub *prompt_word
 		if ( inputlog == "" ) {
-			txt lang("åå‰ã‚’ã¤ã‘ã‚‹ã®ã¯ã‚„ã‚ãŸã€‚", "You changed your mind.")
+			txt lang("–¼‘O‚ğ‚Â‚¯‚é‚Ì‚Í‚â‚ß‚½B", "You changed your mind.")
 			adata(ADATA_FESTIVAL, gdata(GDATA_AREA)) = 0
 		}
 		else {
 			mdatan(MDATAN_NAME) = "" + inputlog
 			adata(ADATA_FESTIVAL, gdata(GDATA_AREA)) = 9999
-			txt lang("" + mdatan(MDATAN_NAME) + "ã¨ã„ã†åå‰ã§å‘¼ã¶ã“ã¨ã«ã—ãŸã€‚", "You named " + him(tc) + " " + cdatan(CDATAN_NAME, tc) + ".")
+			txt lang("" + mdatan(MDATAN_NAME) + "‚Æ‚¢‚¤–¼‘O‚ÅŒÄ‚Ô‚±‚Æ‚É‚µ‚½B", "You named " + him(tc) + " " + cdatan(CDATAN_NAME, tc) + ".")
 			gosub *screen_refreshFull
 		}
 		gosub *screen_refresh
@@ -637,11 +637,11 @@
 		pagesize = 0
 		keyrange = 0
 		key_list = key_cancel
-		s = lang("å®¶ã®æƒ…å ±", "Home Value"), lang("æ±ºå®šï½·ï½°,", "Enter key,") + strhint3
+		s = lang("‰Æ‚Ìî•ñ", "Home Value"), lang("Œˆ’è·°,", "Enter key,") + strhint3
 		windowshadow = 1
 		display_window (windoww - 440) / 2 + inf_screenx, winposy(360), 440, 360
-		display_topic lang("ä¾¡å€¤", "Value"), wx + 28, wy + 36
-		display_topic lang("å®¶å®ãƒ©ãƒ³ã‚¯", "Heirloom Rank"), wx + 28, wy + 106
+		display_topic lang("‰¿’l", "Value"), wx + 28, wy + 36
+		display_topic lang("‰Æ•óƒ‰ƒ“ƒN", "Heirloom Rank"), wx + 28, wy + 106
 		cmbg++
 		x = ww / 5 * 2
 		y = wh - 80
@@ -650,7 +650,7 @@
 		grotate 4, cmbg / 4 \ 4 * 180, cmbg / 4 / 4 \ 2 * 300, 0, x, y
 		gmode 2
 		gosub *house_update
-		s = lang("åŸºæœ¬.", "Base"), lang("å®¶å…·.", "Deco"), lang("å®¶å®.", "Heir"), lang("ç·åˆ.", "Total")
+		s = lang("Šî–{.", "Base"), lang("‰Æ‹ï.", "Deco"), lang("‰Æ•ó.", "Heir"), lang("‘‡.", "Total")
 		p = gdata(GDATA_HOME_BASE), gdata(GDATA_HOME_FURNITURE), gdata(GDATA_HOME_VALUE)
 		p(3) = (p + p(1) + p(2)) / 3
 		repeat 4
@@ -664,7 +664,7 @@
 			repeat limit(p(cnt) / 1000, 1, 10)
 				color 0, 0, 0
 				pos x + 35 + cnt * 13 + en * 8, y - 2
-				bmes lang("â˜…", "*"), 255, 255, 50
+				bmes lang("š", "*"), 255, 255, 50
 			loop
 		loop
 		font lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0
@@ -726,7 +726,7 @@
 			gmode 2, chipi(CHIPI_WIDTH, p(1)), chipi(CHIPI_HEIGHT, p(1))
 			grotate 1, 0, 960, 0, chipi(CHIPI_WIDTH, p(1)) * inf_tiles / chipi(CHIPI_HEIGHT, p(1)), inf_tiles
 			pos wx + 68, cnt * 16 + wy + 138
-			mes "" + cnvrank(10 - cnt) + lang("ä½.", "")
+			mes "" + cnvrank(10 - cnt) + lang("ˆÊ.", "")
 			pos wx + 110, cnt * 16 + wy + 138
 			mes itemname(p)
 		loop
@@ -744,7 +744,7 @@
 		_switch_sw = 0
 *com_home_WHILE2
 		txtnew
-		txt lang("èª°ã‚’ç§»å‹•ã•ã›ã‚‹ï¼Ÿ", "Move who?")
+		txt lang("’N‚ğˆÚ“®‚³‚¹‚éH", "Move who?")
 		allyctrl = 0
 		gosub *com_listNpc
 		if ( stat == (-1) ) {
@@ -753,7 +753,7 @@
 		if ( cdata(CDATA_RELATION, stat) <= (-3) ) {
 			txtnew
 			txtef COLOR_SKY_BLUE
-			txt cdatan(CDATAN_NAME, stat) + lang("ã€Œè§¦ã‚‹ãªï¼ã€", " " + cnvtalk("Don't touch me!"))
+			txt cdatan(CDATAN_NAME, stat) + lang("uG‚é‚ÈIv", " " + cnvtalk("Don't touch me!"))
 			goto *turn_end
 		}
 		tchome = stat
@@ -761,13 +761,13 @@
 		snd SOUNDLIST_OK1
 *com_home_WHILE3
 		txtnew
-		txt lang(cdatan(CDATAN_NAME, tc) + "ã‚’ã©ã“ã«ç§»å‹•ã•ã›ã‚‹ï¼Ÿ", "Where do you want to move " + cdatan(CDATAN_NAME, tc) + "?")
+		txt lang(cdatan(CDATAN_NAME, tc) + "‚ğ‚Ç‚±‚ÉˆÚ“®‚³‚¹‚éH", "Where do you want to move " + cdatan(CDATAN_NAME, tc) + "?")
 		gosub *findLocation
 		if ( stat == (-1) ) {
 			goto *com_home_WHILE2
 		}
 		if ( chipm(CHIPM_ATTRIB, map(tlocx, tlocy, 0)) & CHIPM_ATTRIB_CANT_PASS | map(tlocx, tlocy, 1) != 0 ) {
-			txt lang("ãã®å ´æ‰€ã«ã¯ç§»å‹•ã•ã›ã‚‹ã“ã¨ãŒã§ããªã„ã€‚", "The location is invalid.")
+			txt lang("‚»‚ÌêŠ‚É‚ÍˆÚ“®‚³‚¹‚é‚±‚Æ‚ª‚Å‚«‚È‚¢B", "The location is invalid.")
 			tc = tchome
 			tlochomex = tlocx
 			tlochomey = tlocy
@@ -782,7 +782,7 @@
 		cdata(CDATA_Y_ORG, tc) = tlocy
 		rowactend tc
 		txtnew
-		txt lang(cdatan(CDATAN_NAME, tc) + "ã‚’ç§»å‹•ã•ã›ãŸã€‚", cdatan(CDATAN_NAME, tc) + " " + is(tc) + " moved to the location.")
+		txt lang(cdatan(CDATAN_NAME, tc) + "‚ğˆÚ“®‚³‚¹‚½B", cdatan(CDATAN_NAME, tc) + " " + is(tc) + " moved to the location.")
 		snd SOUNDLIST_FOOT
 		goto *com_home_WHILE2
 	}
@@ -797,24 +797,24 @@
 			if ( cdata(CDATA_IN_TAGTEAM, c) != 0 ) {
 				snd SOUNDLIST_FAIL1
 				txtef COLOR_RED
-				txt lang("ã‚¿ãƒƒã‚°ã‚’è§£æ•£ã™ã‚‹å¿…è¦ãŒã‚ã‚‹ã€‚", "You need to dissolve the tag-team.")
+				txt lang("ƒ^ƒbƒO‚ğ‰ğU‚·‚é•K—v‚ª‚ ‚éB", "You need to dissolve the tag-team.")
 				goto *com_home_SWEND1
 			}
 			if ( getworker(gdata(GDATA_AREA), c) == c ) {
 				f = get_freeallyne()
 				if ( f == 0 ) {
 					snd SOUNDLIST_FAIL1
-					txt lang("ä»²é–“ã®æœ€å¤§æ•°ã«é”ã—ã¦ã„ã‚‹ãŸã‚ã€é€£ã‚Œã¦ã„ã‘ãªã„ã€‚", "Your party is already full. You can't invite someone anymore.")
+					txt lang("’‡ŠÔ‚ÌÅ‘å”‚É’B‚µ‚Ä‚¢‚é‚½‚ßA˜A‚ê‚Ä‚¢‚¯‚È‚¢B", "Your party is already full. You can't invite someone anymore.")
 					goto *com_home_SWEND1
 				}
 				if ( gdata(GDATA_AREA) == AREA_HOME ) {
 					cdata(CDATA_AREA, c) = AREA_NONE
-					txt lang(cdatan(CDATAN_NAME, c) + "ã®æ»åœ¨ã‚’å–ã‚Šæ¶ˆã—ãŸã€‚", cdatan(CDATAN_NAME, c) + " " + is(c) + " no longer staying at your home.")
+					txt lang(cdatan(CDATAN_NAME, c) + "‚Ì‘Øİ‚ğæ‚èÁ‚µ‚½B", cdatan(CDATAN_NAME, c) + " " + is(c) + " no longer staying at your home.")
 					cdata(CDATA_HOME, c) = 0
 				}
 				else {
 					removeworker gdata(GDATA_AREA)
-					txt lang(cdatan(CDATAN_NAME, c) + "ã‚’å½¹ç›®ã‹ã‚‰å¤–ã—ãŸã€‚", "You remove " + cdatan(CDATAN_NAME, c) + " from " + his(c) + " job.")
+					txt lang(cdatan(CDATAN_NAME, c) + "‚ğ–ğ–Ú‚©‚çŠO‚µ‚½B", "You remove " + cdatan(CDATAN_NAME, c) + " from " + his(c) + " job.")
 				}
 			}
 			else {
@@ -822,11 +822,11 @@
 					cdata(CDATA_X_ORG, c) = cdata(CDATA_X, c)
 					cdata(CDATA_Y_ORG, c) = cdata(CDATA_Y, c)
 					cdata(CDATA_HOME, c) = gdata(GDATA_LEVEL)
-					txt lang(cdatan(CDATAN_NAME, c) + "ã‚’æ»åœ¨ã•ã›ãŸã€‚", cdatan(CDATAN_NAME, c) + " stay" + _s(c) + " at your home now.")
+					txt lang(cdatan(CDATAN_NAME, c) + "‚ğ‘Øİ‚³‚¹‚½B", cdatan(CDATAN_NAME, c) + " stay" + _s(c) + " at your home now.")
 				}
 				else {
 					removeworker gdata(GDATA_AREA)
-					txt lang(cdatan(CDATAN_NAME, c) + "ã‚’ä»»å‘½ã—ãŸã€‚", cdatan(CDATAN_NAME, c) + " take" + _s(c) + " charge of the job now.")
+					txt lang(cdatan(CDATAN_NAME, c) + "‚ğ”C–½‚µ‚½B", cdatan(CDATAN_NAME, c) + " take" + _s(c) + " charge of the job now.")
 				}
 				cdata(CDATA_AREA, c) = gdata(GDATA_AREA)
 			}
@@ -843,7 +843,7 @@
 		loop
 		if ( pet >= 150 ) {
 			snd SOUNDLIST_FAIL1
-			txt lang("150ä½“ã¾ã§ã—ã‹æ”¾ã›ãªã„ã€‚", "You can only leave 150 allies in this ranch.")
+			txt lang("150‘Ì‚Ü‚Å‚µ‚©•ú‚¹‚È‚¢B", "You can only leave 150 allies in this ranch.")
 			goto *com_home_SWEND1
 		}
 		allyctrl = 3
@@ -856,7 +856,7 @@
 			cdata(CDATA_Y_ORG, c) = cdata(CDATA_Y, c)
 			if ( cbit(CHARA_BIT_BODYGUARD, c) != 0 | cbit(CHARA_BIT_GUARD_TEMP, c) != 0 ) {
 				snd SOUNDLIST_FAIL1
-				txt lang("è­·è¡›å¯¾è±¡ã¯æ”¾ã›ãªã„ã€‚", "You can't release escort targets.")
+				txt lang("Œì‰q‘ÎÛ‚Í•ú‚¹‚È‚¢B", "You can't release escort targets.")
 				goto *com_home_SWEND1
 			}
 			cbitmod CHARA_BIT_LIVESTOCK, c, 1
@@ -868,11 +868,11 @@
 
 			/********** ANNA CUSTOM - ENDING **********/
 
-			txt lang(cdatan(CDATAN_NAME, c) + "ã‚’æ”¾ã—ã¦ã‚„ã£ãŸã€‚", cdatan(CDATAN_NAME, c) + " stay" + _s(c) + " at this ranch.")
+			txt lang(cdatan(CDATAN_NAME, c) + "‚ğ•ú‚µ‚Ä‚â‚Á‚½B", cdatan(CDATAN_NAME, c) + " stay" + _s(c) + " at this ranch.")
 			if ( cbit(CHARA_BIT_PCC, c) == 1 ) {
 				txtef COLOR_YELLOW
 				txtmore
-				txt lang(cdatan(CDATAN_NAME, c) + "ã¯å…ƒã€…ã®å§¿ã«ç€æ›¿ãˆãŸã€‚", cdatan(CDATAN_NAME, c) + " changed original cloth.")
+				txt lang(cdatan(CDATAN_NAME, c) + "‚ÍŒ³X‚Ìp‚É’…‘Ö‚¦‚½B", cdatan(CDATAN_NAME, c) + " changed original cloth.")
 				cbitmod CHARA_BIT_PCC, c, 0
 			}
 			if ( cdata(CDATA_EXIST, c) != CHAR_STATE_DEAD ) {
@@ -898,18 +898,18 @@
 		if ( stat == (-1) ) {
 			snd SOUNDLIST_FAIL1
 			txtef COLOR_RED
-			txt lang("å®¶ç•œã®é¤Œã‚’æŒã£ã¦ã„ãªã„ã€‚", "You need a livestock feed.")
+			txt lang("‰Æ’{‚Ì‰a‚ğ‚Á‚Ä‚¢‚È‚¢B", "You need a livestock feed.")
 			goto *com_home_SWEND1
 		}
 		else {
 			ci = stat
-			txt lang(itemname(ci, 1) + "ã‚’ä½¿ã†ï¼Ÿ", "Really use " + itemname(ci, 1) + "?")
+			txt lang(itemname(ci, 1) + "‚ğg‚¤H", "Really use " + itemname(ci, 1) + "?")
 			promptYesNo
 			if ( rtval != 0 ) {
 				gosub *screen_draw
 				goto *pc_turn
 			}
-			txt lang("è¾ºã‚Šã«é¤Œã‚’æ’’ã„ãŸã€‚", name(CHARA_PLAYER) + " sprinkled " + itemname(ci, 1) + ".")
+			txt lang("•Ó‚è‚É‰a‚ğT‚¢‚½B", name(CHARA_PLAYER) + " sprinkled " + itemname(ci, 1) + ".")
 			inv(INV_ITEM_NUM, ci) -= 1
 			gosub *calcBurdenPc
 			snd SOUNDLIST_BUSH1
@@ -947,18 +947,18 @@
 		if ( stat == (-1) ) {
 			snd SOUNDLIST_FAIL1
 			txtef COLOR_RED
-			txt lang("æµ„åŒ–æ¶ˆæ¯’è–¬ã‚’æŒã£ã¦ã„ãªã„ã€‚", "You need a disinfectant.")
+			txt lang("ò‰»Á“Å–ò‚ğ‚Á‚Ä‚¢‚È‚¢B", "You need a disinfectant.")
 			goto *com_home_SWEND1
 		}
 		else {
 			ci = stat
-			txt lang(itemname(ci, 1) + "ã‚’ä½¿ã†ï¼Ÿ", "Really use " + itemname(ci, 1) + "?")
+			txt lang(itemname(ci, 1) + "‚ğg‚¤H", "Really use " + itemname(ci, 1) + "?")
 			promptYesNo
 			if ( rtval != 0 ) {
 				gosub *screen_draw
 				goto *pc_turn
 			}
-			txt lang("å ´å†…ã‚’æ¶ˆæ¯’ã—ãŸã€‚", name(CHARA_PLAYER) + " sprinkled " + itemname(ci, 1) + ".")
+			txt lang("ê“à‚ğÁ“Å‚µ‚½B", name(CHARA_PLAYER) + " sprinkled " + itemname(ci, 1) + ".")
 			disip = 40
 			if ( inv(INV_ITEM_STATUS, ci) == ITEM_STATUS_NORMAL ) {
 				disip = 20
@@ -995,7 +995,7 @@
 		txtnew
 		snd SOUNDLIST_AMMO
 		txtef COLOR_RED
-		txt lang("ã“ã®ç‰§å ´ã§ã¯ç¹æ®–ãŒè¡Œã‚ã‚Œãªã„ã€‚", "Breeding will be prevented in this area.")
+		txt lang("‚±‚Ì–qê‚Å‚Í”ÉB‚ªs‚í‚ê‚È‚¢B", "Breeding will be prevented in this area.")
 		adata(ADATA_RANCH_BREED_RESTRICTION, gdata(GDATA_AREA)) = 10
 		goto *com_home_SWEND1
 	}
@@ -1004,7 +1004,7 @@
 		txtnew
 		snd SOUNDLIST_AMMO
 		txtef COLOR_RED
-		txt lang("ã“ã®ç‰§å ´ã§ã¯ç”Ÿç”£ãŒè¡Œã‚ã‚Œãªã„ã€‚", "Production will be prevented in this area.")
+		txt lang("‚±‚Ì–qê‚Å‚Í¶Y‚ªs‚í‚ê‚È‚¢B", "Production will be prevented in this area.")
 		adata(ADATA_RANCH_PRODUCE_RESTRICTION, gdata(GDATA_AREA)) = 10
 		goto *com_home_SWEND1
 	}
@@ -1013,7 +1013,7 @@
 		txtnew
 		snd SOUNDLIST_ENC
 		txtef COLOR_GREEN
-		txt lang("ç¹æ®–ãŒé€šå¸¸é€šã‚Šè¡Œã‚ã‚Œã‚‹ã‚ˆã†ã«ãªã£ãŸã€‚", "Breeding is no longer prevented in this area.")
+		txt lang("”ÉB‚ª’Êí’Ê‚ès‚í‚ê‚é‚æ‚¤‚É‚È‚Á‚½B", "Breeding is no longer prevented in this area.")
 		adata(ADATA_RANCH_BREED_RESTRICTION, gdata(GDATA_AREA)) = 0
 		goto *com_home_SWEND1
 	}
@@ -1022,7 +1022,7 @@
 		txtnew
 		snd SOUNDLIST_ENC
 		txtef COLOR_GREEN
-		txt lang("ç”Ÿç”£ãŒé€šå¸¸é€šã‚Šè¡Œã‚ã‚Œã‚‹ã‚ˆã†ã«ãªã£ãŸã€‚", "Production is no longer prevented in this area.")
+		txt lang("¶Y‚ª’Êí’Ê‚ès‚í‚ê‚é‚æ‚¤‚É‚È‚Á‚½B", "Production is no longer prevented in this area.")
 		adata(ADATA_RANCH_PRODUCE_RESTRICTION, gdata(GDATA_AREA)) = 0
 		goto *com_home_SWEND1
 	}
@@ -1030,14 +1030,14 @@
 		_switch_sw = 0
 		txtnew
 		if ( cdata(CDATA_GOLD, CHARA_PLAYER) < calcshopreform() ) {
-			txt lang("ãŠé‡‘ãŒè¶³ã‚Šãªã„â€¦", "You don't have enough money...")
+			txt lang("‚¨‹à‚ª‘«‚è‚È‚¢c", "You don't have enough money...")
 		}
 		else {
 			snd SOUNDLIST_PAYGOLD1
 			cdata(CDATA_GOLD, CHARA_PLAYER) -= calcshopreform()
 			mdata(MDATA_MAX_INV) = limit(mdata(MDATA_MAX_INV) + 10, 1, 400)
 			txtef COLOR_GREEN
-			txt lang("åº—ã‚’æ‹¡å¼µã—ãŸï¼ã“ã‚Œã‹ã‚‰ã¯" + mdata(MDATA_MAX_INV) + "å€‹ã®ã‚¢ã‚¤ãƒ†ãƒ ã‚’é™³åˆ—ã§ãã‚‹ã€‚", "You extend your shop! You can display a total of " + mdata(MDATA_MAX_INV) + " items now!")
+			txt lang("“X‚ğŠg’£‚µ‚½I‚±‚ê‚©‚ç‚Í" + mdata(MDATA_MAX_INV) + "ŒÂ‚ÌƒAƒCƒeƒ€‚ğ’Â—ñ‚Å‚«‚éB", "You extend your shop! You can display a total of " + mdata(MDATA_MAX_INV) + " items now!")
 		}
 		goto *com_home_SWEND1
 	}
@@ -1045,7 +1045,7 @@
 		_switch_sw = 0
 		txtnew
 		if ( adata(ADATA_SHOP_TYPE_CHANGE_COOLDOWN, gdata(GDATA_AREA)) > gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 ) {
-			txt lang("æ¬¡ã«å¤‰æ›´ã§ãã‚‹ã®ã¯" + cnvdate(adata(ADATA_SHOP_TYPE_CHANGE_COOLDOWN, gdata(GDATA_AREA)), 1) + "ã ã€‚", "This Shop will be changeable again at " + cnvdate(adata(ADATA_SHOP_TYPE_CHANGE_COOLDOWN, gdata(GDATA_AREA)), 1) + ".")
+			txt lang("Ÿ‚É•ÏX‚Å‚«‚é‚Ì‚Í" + cnvdate(adata(ADATA_SHOP_TYPE_CHANGE_COOLDOWN, gdata(GDATA_AREA)), 1) + "‚¾B", "This Shop will be changeable again at " + cnvdate(adata(ADATA_SHOP_TYPE_CHANGE_COOLDOWN, gdata(GDATA_AREA)), 1) + ".")
 			snd SOUNDLIST_FAIL1
 			goto *com_home_SWEND1
 		}
@@ -1061,22 +1061,22 @@
 		adata(ADATA_SHOP_TYPE_CHANGE_COOLDOWN, gdata(GDATA_AREA)) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 + 24 * 15
 		adata(ADATA_SHOP_TYPE, gdata(GDATA_AREA)) = rtval - 1
 		if ( adata(ADATA_SHOP_TYPE, gdata(GDATA_AREA)) == SHOP_TYPE_GOODS ) {
-			shops = lang("ä½•ã§ã‚‚å±‹", "the goods shop")
+			shops = lang("‰½‚Å‚à‰®", "the goods shop")
 		}
 		if ( adata(ADATA_SHOP_TYPE, gdata(GDATA_AREA)) == SHOP_TYPE_FOOD ) {
-			shops = lang("é£Ÿå“åº—", "the food shop")
+			shops = lang("H•i“X", "the food shop")
 		}
 		if ( adata(ADATA_SHOP_TYPE, gdata(GDATA_AREA)) == SHOP_TYPE_MAGIC ) {
-			shops = lang("é­”æ³•åº—", "the magic shop")
+			shops = lang("–‚–@“X", "the magic shop")
 		}
 		if ( adata(ADATA_SHOP_TYPE, gdata(GDATA_AREA)) == SHOP_TYPE_BLACKSMITH ) {
-			shops = lang("æ­¦å…·åº—", "the blacksmith")
+			shops = lang("•‹ï“X", "the blacksmith")
 		}
 		if ( adata(ADATA_SHOP_TYPE, gdata(GDATA_AREA)) == SHOP_TYPE_INN ) {
-			shops = lang("å®¿å±‹", "the inn")
+			shops = lang("h‰®", "the inn")
 		}
 		txtef COLOR_GREEN
-		txt lang("åº—ç¨®é¡å¤‰æ›´ï¼š" + shops + "ã€‚", "Shop type changed: " + shops + ".")
+		txt lang("“Xí—Ş•ÏXF" + shops + "B", "Shop type changed: " + shops + ".")
 		snd SOUNDLIST_BUILD1
 		goto *com_home_SWEND1
 	}
@@ -1094,11 +1094,11 @@
 				modgrowth sc, SKILL_ATTR_CHA, 150
 				snd SOUNDLIST_DING3
 				txtef COLOR_SKY_BLUE
-				txt lang(cdatan(CDATAN_NAME, sc) + "ã¯è¬›å¸«ã‚’å‘¼ã³ã€æ½œåœ¨èƒ½åŠ›ã‚’ä¼¸ã°ã—ãŸï¼", cdatan(CDATAN_NAME, sc) + " calls a trainer and develops " + his(sc) + " potential!")
+				txt lang(cdatan(CDATAN_NAME, sc) + "‚Íut‚ğŒÄ‚ÑAöİ”\—Í‚ğL‚Î‚µ‚½I", cdatan(CDATAN_NAME, sc) + " calls a trainer and develops " + his(sc) + " potential!")
 				goto *turn_end
 			}
 		}
-		txt lang("ãƒ–ãƒ­ãƒ³ã‚ºç¡¬è²¨ãŒè¶³ã‚Šãªã„â€¦", "You don't have enough bronze coins...")
+		txt lang("ƒuƒƒ“ƒYd‰İ‚ª‘«‚è‚È‚¢c", "You don't have enough bronze coins...")
 		snd SOUNDLIST_FAIL1
 		goto *com_home_SWEND1
 	}
@@ -1108,25 +1108,25 @@
 		sc = getworker(gdata(GDATA_AREA))
 		if ( cdata(CDATA_SALES_FEATS, sc) == 0 ) {
 			if ( cdata(CDATA_SALES_EXP, sc) < 120 ) {
-				txt lang("å–¶æ¥­å®Ÿç¸¾ãŒ120ã¯å¿…è¦ã â€¦ã€‚", "120 sales exp is needed...")
+				txt lang("‰c‹ÆÀÑ‚ª120‚Í•K—v‚¾cB", "120 sales exp is needed...")
 				snd SOUNDLIST_FAIL1
 				goto *com_home_SWEND1
 			}
 		}
 		if ( cdata(CDATA_SALES_FEATS, sc) == 1 ) {
 			if ( cdata(CDATA_SALES_EXP, sc) < 360 ) {
-				txt lang("å–¶æ¥­å®Ÿç¸¾ãŒ360ã¯å¿…è¦ã â€¦ã€‚", "360 sales exp is needed...")
+				txt lang("‰c‹ÆÀÑ‚ª360‚Í•K—v‚¾cB", "360 sales exp is needed...")
 				snd SOUNDLIST_FAIL1
 				goto *com_home_SWEND1
 			}
 		}
 		if ( cdata(CDATA_SALES_FEATS, sc) >= 2 ) {
-			txt lang("ã“ã‚Œä»¥ä¸Šã¯ç²å¾—ã§ããªã„ã€‚", cdatan(CDATAN_NAME, sc) + " can't earn any more feats.")
+			txt lang("‚±‚êˆÈã‚ÍŠl“¾‚Å‚«‚È‚¢B", cdatan(CDATAN_NAME, sc) + " can't earn any more feats.")
 			snd SOUNDLIST_FAIL1
 			goto *com_home_SWEND1
 		}
 		txtef COLOR_GREEN
-		txt lang(cdatan(CDATAN_NAME, sc) + "ã¯å–¶æ¥­ã§å¾—ãŸçµŒé¨“ã‚’ã‚‚ã¨ã«ãƒ•ã‚£ãƒ¼ãƒˆã‚’ç²å¾—ã§ãã‚‹ï¼ãã‚Œã¯â€¦", cdatan(CDATAN_NAME, sc) + " has earned enough sales exp to learn a new feat! Which is...")
+		txt lang(cdatan(CDATAN_NAME, sc) + "‚Í‰c‹Æ‚Å“¾‚½ŒoŒ±‚ğ‚à‚Æ‚ÉƒtƒB[ƒg‚ğŠl“¾‚Å‚«‚éI‚»‚ê‚Íc", cdatan(CDATAN_NAME, sc) + " has earned enough sales exp to learn a new feat! Which is...")
 		txtsetshopfeat 6
 		repeat 6
 			promptAdd s(cnt), key_select(cnt)
@@ -1149,7 +1149,7 @@
 		txtnew
 		if ( shopval == 0 ) {
 			txtef COLOR_GREEN
-			txt lang(cdatan(CDATAN_NAME, sc) + "ã¯ãšã£ã“ã‘ãŸã€‚", cdatan(CDATAN_NAME, sc) + " smiled.")
+			txt lang(cdatan(CDATAN_NAME, sc) + "‚Í‚¸‚Á‚±‚¯‚½B", cdatan(CDATAN_NAME, sc) + " smiled.")
 			goto *com_home_SWEND1
 		}
 		if ( shopval > 0 & shopval <= 5 ) {
@@ -1170,7 +1170,7 @@
 			}
 			if ( cbit(bitp, sc) ) {
 				txtef COLOR_RED
-				txt lang(cdatan(CDATAN_NAME, sc) + "ã¯ãã®ãƒ•ã‚£ãƒ¼ãƒˆã‚’æ—¢ã«æŒã£ã¦ã„ã‚‹ã€‚", cdatan(CDATAN_NAME, sc) + " already has that feat.")
+				txt lang(cdatan(CDATAN_NAME, sc) + "‚Í‚»‚ÌƒtƒB[ƒg‚ğŠù‚É‚Á‚Ä‚¢‚éB", cdatan(CDATAN_NAME, sc) + " already has that feat.")
 				snd SOUNDLIST_FAIL1
 				goto *com_home_SWEND1
 			}
@@ -1181,7 +1181,7 @@
 			cdata(CDATA_SALES_FEATS, sc)++
 			snd SOUNDLIST_PRAY1
 			txtef COLOR_GREEN
-			txt lang(cdatan(CDATAN_NAME, sc) + "ã¯ãƒ•ã‚£ãƒ¼ãƒˆã‚’ç²å¾—ã—ãŸã€‚", cdatan(CDATAN_NAME, sc) + " got a new feat.")
+			txt lang(cdatan(CDATAN_NAME, sc) + "‚ÍƒtƒB[ƒg‚ğŠl“¾‚µ‚½B", cdatan(CDATAN_NAME, sc) + " got a new feat.")
 		}
 		goto *com_home_SWEND1
 	}
@@ -1238,22 +1238,22 @@
 		adata(ADATA_TILESET, gdata(GDATA_AREA)) = tilep
 		if ( tilep == 9 ) {
 			txtef COLOR_GREEN
-			txt lang("å’Œé¢¨ãªæ‰‰ãŒç”Ÿæˆã•ã‚Œã‚‹ã‚ˆã†ã«ãªã£ãŸã€‚", "You changed door to Japan type.")
+			txt lang("˜a•—‚È”à‚ª¶¬‚³‚ê‚é‚æ‚¤‚É‚È‚Á‚½B", "You changed door to Japan type.")
 		}
 		if ( tilep == 3 ) {
 			txtef COLOR_GREEN
-			txt lang("æ™®é€šã®æ‰‰ãŒç”Ÿæˆã•ã‚Œã‚‹ã‚ˆã†ã«ãªã£ãŸã€‚", "You changed door to normal type.")
+			txt lang("•’Ê‚Ì”à‚ª¶¬‚³‚ê‚é‚æ‚¤‚É‚È‚Á‚½B", "You changed door to normal type.")
 		}
 		if ( tilep == 8 ) {
 			txtef COLOR_GREEN
-			txt lang("æ©Ÿæ¢°ä»•æ›ã‘ã®æ‰‰ãŒç”Ÿæˆã•ã‚Œã‚‹ã‚ˆã†ã«ãªã£ãŸã€‚", "You changed door to SF type.")
+			txt lang("‹@ŠBdŠ|‚¯‚Ì”à‚ª¶¬‚³‚ê‚é‚æ‚¤‚É‚È‚Á‚½B", "You changed door to SF type.")
 		}
 		if ( tilep == 14 ) {
 			txtef COLOR_GREEN
-			txt lang("ç‰‡é–‹ãã®æ‰‰ãŒç”Ÿæˆã•ã‚Œã‚‹ã‚ˆã†ã«ãªã£ãŸ", "You changed door to EW type.")
+			txt lang("•ĞŠJ‚«‚Ì”à‚ª¶¬‚³‚ê‚é‚æ‚¤‚É‚È‚Á‚½", "You changed door to EW type.")
 		}
 		txtef COLOR_GREEN
-		txt lang("å¤‰æ›´ã‚’å®Œå…¨ã«é©ç”¨ã™ã‚‹ã«ã¯ãƒãƒƒãƒ—ã«å…¥ã‚ŠãªãŠã™å¿…è¦ãŒã‚ã‚‹ã€‚", "You have to enter the map again to apply the changes.")
+		txt lang("•ÏX‚ğŠ®‘S‚É“K—p‚·‚é‚É‚Íƒ}ƒbƒv‚É“ü‚è‚È‚¨‚·•K—v‚ª‚ ‚éB", "You have to enter the map again to apply the changes.")
 		goto *com_home_SWEND1
 	}
 	if ( _switch_val == 16 | _switch_sw ) {
@@ -1276,22 +1276,22 @@
 		adata(ADATA_TILE_FILE, gdata(GDATA_AREA)) = tilep
 		if ( mdata(MDATA_TILE_FILE) == 0 ) {
 			txtef COLOR_GREEN
-			txt lang("ã‚¿ã‚¤ãƒ«ã‚°ãƒ«ãƒ¼ãƒ—ã‚’map0ã«å¤‰æ›´ã—ãŸã€‚", "You changed tile group to map0.")
+			txt lang("ƒ^ƒCƒ‹ƒOƒ‹[ƒv‚ğmap0‚É•ÏX‚µ‚½B", "You changed tile group to map0.")
 		}
 		if ( mdata(MDATA_TILE_FILE) == 1 ) {
 			txtef COLOR_GREEN
-			txt lang("ã‚¿ã‚¤ãƒ«ã‚°ãƒ«ãƒ¼ãƒ—ã‚’map1ã«å¤‰æ›´ã—ãŸã€‚", "You changed tile group to map1.")
+			txt lang("ƒ^ƒCƒ‹ƒOƒ‹[ƒv‚ğmap1‚É•ÏX‚µ‚½B", "You changed tile group to map1.")
 		}
 		if ( mdata(MDATA_TILE_FILE) == 2 ) {
 			txtef COLOR_GREEN
-			txt lang("ã‚¿ã‚¤ãƒ«ã‚°ãƒ«ãƒ¼ãƒ—ã‚’map2ã«å¤‰æ›´ã—ãŸã€‚", "You changed tile group to map2.")
+			txt lang("ƒ^ƒCƒ‹ƒOƒ‹[ƒv‚ğmap2‚É•ÏX‚µ‚½B", "You changed tile group to map2.")
 		}
 		if ( mdata(MDATA_TILE_FILE) == 3 ) {
 			txtef COLOR_GREEN
-			txt lang("ã‚¿ã‚¤ãƒ«ã‚°ãƒ«ãƒ¼ãƒ—ã‚’map3ã«å¤‰æ›´ã—ãŸã€‚", "You changed tile group to map3.")
+			txt lang("ƒ^ƒCƒ‹ƒOƒ‹[ƒv‚ğmap3‚É•ÏX‚µ‚½B", "You changed tile group to map3.")
 		}
 		txtef COLOR_GREEN
-		txt lang("å¤‰æ›´ã‚’å®Œå…¨ã«é©ç”¨ã™ã‚‹ã«ã¯ãƒãƒƒãƒ—ã«å…¥ã‚ŠãªãŠã™å¿…è¦ãŒã‚ã‚‹ã€‚", "You have to enter the map again to apply the changes.")
+		txt lang("•ÏX‚ğŠ®‘S‚É“K—p‚·‚é‚É‚Íƒ}ƒbƒv‚É“ü‚è‚È‚¨‚·•K—v‚ª‚ ‚éB", "You have to enter the map again to apply the changes.")
 		goto *com_home_SWEND1
 	}
 	if ( _switch_val == 9 | _switch_sw ) {
@@ -1300,7 +1300,7 @@
 			adata(ADATA_ICON_ORG, gdata(GDATA_AREA)) = adata(ADATA_ICON, gdata(GDATA_AREA))
 		}
 		txtef COLOR_YELLOW
-		txt lang("å¯¾å¿œã™ã‚‹ç”»åƒã®ç•ªå·ã¯ï¼Ÿï¼ˆ1ï½32ã§å…¥åŠ›ã€‚0ã‚’å…¥åŠ›ã™ã‚‹ã¨ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã«ã€‚ï¼‰", "Input the number of map_ . (1-32)")
+		txt lang("‘Î‰‚·‚é‰æ‘œ‚Ì”Ô†‚ÍHi1`32‚Å“ü—ÍB0‚ğ“ü—Í‚·‚é‚ÆƒfƒtƒHƒ‹ƒg‚ÉBj", "Input the number of map_ . (1-32)")
 		val = (windoww - 100) / 2 + inf_screenx, winposy(90), 5, 0, 0
 		inputlog = ""
 		gosub *prompt_word
@@ -1308,7 +1308,7 @@
 			if ( adata(ADATA_ICON_ORG, gdata(GDATA_AREA)) != xy2pic(0, 0) ) {
 				adata(ADATA_ICON, gdata(GDATA_AREA)) = adata(ADATA_ICON_ORG, gdata(GDATA_AREA))
 				txtef COLOR_GREEN
-				txt lang("å…ƒã®å¤–è£…ã«æˆ»ã—ãŸã€‚", "You put back the original graphic.")
+				txt lang("Œ³‚ÌŠO‘•‚É–ß‚µ‚½B", "You put back the original graphic.")
 			}
 			sekaikousin = 100
 		}
@@ -1428,7 +1428,7 @@
 			}
 		loop
 		if ( p >= gdata(GDATA_HOME_LEVEL) + 2 ) {
-			txt lang("å®¶ã¯ã™ã§ã«äººã§ã‚ãµã‚Œã‹ãˆã£ã¦ã„ã‚‹ã€‚", "You already have too many guests in your home.")
+			txt lang("‰Æ‚Í‚·‚Å‚Él‚Å‚ ‚Ó‚ê‚©‚¦‚Á‚Ä‚¢‚éB", "You already have too many guests in your home.")
 			goto *com_home_SWEND1
 		}
 		repeat 10
@@ -1456,27 +1456,27 @@
 				p = rnd(6)
 				if ( p == 0 ) {
 					cdata(CDATA_ROLE, rc) = ROLE_SHOP_ARMOR
-					cdatan(CDATAN_NAME, rc) = lang("æ­¦å…·åº—ã®" + cdatan(CDATAN_NAME, rc), cdatan(CDATAN_NAME, rc) + " of armory")
+					cdatan(CDATAN_NAME, rc) = lang("•‹ï“X‚Ì" + cdatan(CDATAN_NAME, rc), cdatan(CDATAN_NAME, rc) + " of armory")
 				}
 				if ( p == 1 ) {
 					cdata(CDATA_ROLE, rc) = ROLE_SHOP_GENERAL
-					cdatan(CDATAN_NAME, rc) = lang("é›‘è²¨å±‹ã®" + cdatan(CDATAN_NAME, rc), cdatan(CDATAN_NAME, rc) + " of general store")
+					cdatan(CDATAN_NAME, rc) = lang("G‰İ‰®‚Ì" + cdatan(CDATAN_NAME, rc), cdatan(CDATAN_NAME, rc) + " of general store")
 				}
 				if ( p == 2 ) {
 					cdata(CDATA_ROLE, rc) = ROLE_SHOP_MAGIC
-					cdatan(CDATAN_NAME, rc) = lang("é­”æ³•åº—ã®" + cdatan(CDATAN_NAME, rc), cdatan(CDATAN_NAME, rc) + " of magic store")
+					cdatan(CDATAN_NAME, rc) = lang("–‚–@“X‚Ì" + cdatan(CDATAN_NAME, rc), cdatan(CDATAN_NAME, rc) + " of magic store")
 				}
 				if ( p == 3 ) {
 					cdata(CDATA_ROLE, rc) = ROLE_SHOP_GOODS
-					cdatan(CDATAN_NAME, rc) = lang("ä½•ã§ã‚‚å±‹ã®" + cdatan(CDATAN_NAME, rc), cdatan(CDATAN_NAME, rc) + " of goods store")
+					cdatan(CDATAN_NAME, rc) = lang("‰½‚Å‚à‰®‚Ì" + cdatan(CDATAN_NAME, rc), cdatan(CDATAN_NAME, rc) + " of goods store")
 				}
 				if ( p == 4 ) {
 					cdata(CDATA_ROLE, rc) = ROLE_SHOP_ARMOR
-					cdatan(CDATAN_NAME, rc) = lang("æ­¦å…·åº—ã®" + cdatan(CDATAN_NAME, rc), cdatan(CDATAN_NAME, rc) + " of armory")
+					cdatan(CDATAN_NAME, rc) = lang("•‹ï“X‚Ì" + cdatan(CDATAN_NAME, rc), cdatan(CDATAN_NAME, rc) + " of armory")
 				}
 				if ( p == 5 ) {
 					cdata(CDATA_ROLE, rc) = ROLE_SHOP_BLACKMARKET
-					cdatan(CDATAN_NAME, rc) = lang("ãƒ–ãƒ©ãƒƒã‚¯ãƒãƒ¼ã‚±ãƒƒãƒˆã®" + cdatan(CDATAN_NAME, rc), cdatan(CDATAN_NAME, rc) + " of blackmarket")
+					cdatan(CDATAN_NAME, rc) = lang("ƒuƒ‰ƒbƒNƒ}[ƒPƒbƒg‚Ì" + cdatan(CDATAN_NAME, rc), cdatan(CDATAN_NAME, rc) + " of blackmarket")
 				}
 				randomize
 				cdata(CDATA_ROLE_SHOP_LEVEL, rc) = rnd(15) + 1
@@ -1495,14 +1495,14 @@
 		loop
 		randomize
 		txtnew
-		txt lang("èª°ã‚’é›‡ç”¨ã™ã‚‹ï¼Ÿ", "Who do you want to hire?")
+		txt lang("’N‚ğŒÙ—p‚·‚éH", "Who do you want to hire?")
 		allyctrl = 1
 		gosub *com_listNpc
 		if ( stat != (-1) ) {
 			tc = stat
 			txtnew
 			if ( cdata(CDATA_GOLD, CHARA_PLAYER) < calchirecost(tc) * 20 ) {
-				txt lang("ãŠé‡‘ãŒè¶³ã‚Šãªã„â€¦", "You don't have enough money...")
+				txt lang("‚¨‹à‚ª‘«‚è‚È‚¢c", "You don't have enough money...")
 			}
 			else {
 				snd SOUNDLIST_PAYGOLD1
@@ -1510,7 +1510,7 @@
 				await 250
 				cdata(CDATA_EXIST, tc) = CHAR_STATE_ALIVE
 				txtef COLOR_GREEN
-				txt lang(cdatan(CDATAN_NAME, tc) + "ã‚’å®¶ã«è¿ãˆãŸã€‚", "You hire " + cdatan(CDATAN_NAME, tc) + ".")
+				txt lang(cdatan(CDATAN_NAME, tc) + "‚ğ‰Æ‚ÉŒ}‚¦‚½B", "You hire " + cdatan(CDATAN_NAME, tc) + ".")
 				snd SOUNDLIST_PRAY1
 			}
 		}
@@ -1596,7 +1596,7 @@
 *shop_turn_main
 	worker = getworker(area)
 	if ( worker == (-1) ) {
-		txt lang("[åº—]åº—ã«ã¯åº—ç•ªãŒã„ãªã„ã€‚", "[Shop] Your shop doesn't have a shopkeeper.")
+		txt lang("[“X]“X‚É‚Í“X”Ô‚ª‚¢‚È‚¢B", "[Shop] Your shop doesn't have a shopkeeper.")
 		return
 	}
 	sold = 0
@@ -1866,19 +1866,19 @@
 	}
 	if ( sold == 0 ) {
 		if ( cfg_hideshopresult == 0 ) {
-			txt lang("[åº—]" + customer + "äººãŒæ¥å®¢ã—ãŸãŒã€" + cdatan(CDATAN_NAME, worker) + "ã¯ã‚¢ã‚¤ãƒ†ãƒ ã‚’ä¸€ã¤ã‚‚å£²ã‚Œãªã‹ã£ãŸã€‚", "[Shop]" + customer + " customers visited your shop but " + cdatan(CDATAN_NAME, worker) + " couldn't sell any item.")
+			txt lang("[“X]" + customer + "l‚ª—ˆ‹q‚µ‚½‚ªA" + cdatan(CDATAN_NAME, worker) + "‚ÍƒAƒCƒeƒ€‚ğˆê‚Â‚à”„‚ê‚È‚©‚Á‚½B", "[Shop]" + customer + " customers visited your shop but " + cdatan(CDATAN_NAME, worker) + " couldn't sell any item.")
 		}
 	}
 	else {
 		if ( cfg_hideshopresult <= 1 ) {
 			s = "" + income + lang("gold", " gold pieces")
 			if ( income(1) != 0 ) {
-				s += lang("ã¨" + income(1) + "å€‹ã®ã‚¢ã‚¤ãƒ†ãƒ ", " and " + income(1) + " items")
+				s += lang("‚Æ" + income(1) + "ŒÂ‚ÌƒAƒCƒeƒ€", " and " + income(1) + " items")
 			}
 			snd SOUNDLIST_DING2
 			txtmore
 			txtef COLOR_YELLOW
-			txt lang("[åº—]" + customer + "äººã®æ¥å®¢ãŒã‚ã‚Šã€" + cdatan(CDATAN_NAME, worker) + "ã¯" + sold + "å€‹ã®ã‚¢ã‚¤ãƒ†ãƒ ã‚’å£²å´ã—ãŸã€‚" + s + "ãŒå£²ã‚Šä¸Šã’ã¨ã—ã¦é‡‘åº«ã«ä¿ç®¡ã•ã‚ŒãŸã€‚", "[Shop] " + customer + " customers visited your shop and " + cdatan(CDATAN_NAME, worker) + " sold " + sold + " items. " + cdatan(CDATAN_NAME, worker) + " put " + s + " in the shop strong box.")
+			txt lang("[“X]" + customer + "l‚Ì—ˆ‹q‚ª‚ ‚èA" + cdatan(CDATAN_NAME, worker) + "‚Í" + sold + "ŒÂ‚ÌƒAƒCƒeƒ€‚ğ”„‹p‚µ‚½B" + s + "‚ª”„‚èã‚°‚Æ‚µ‚Ä‹àŒÉ‚É•ÛŠÇ‚³‚ê‚½B", "[Shop] " + customer + " customers visited your shop and " + cdatan(CDATAN_NAME, worker) + " sold " + sold + " items. " + cdatan(CDATAN_NAME, worker) + " put " + s + " in the shop strong box.")
 		}
 
 		/********** ORIGINAL - BEGINNING **********
@@ -1966,7 +1966,7 @@
 		flt
 		itemcreate -1, ITEM_ID_GOLD_PIECE, -1, -1, dokuzi
 		txtef COLOR_YELLOW
-		txt lang("[åº—]" + cdatan(CDATAN_NAME, worker) + "ã¯ç‹¬è‡ªã«" + dokuzi + "goldç¨¼ãã€é‡‘åº«ã«ä¿ç®¡ã—ãŸã€‚", "[Shop] " + cdatan(CDATAN_NAME, worker) + " earned " + dokuzi + " gold on " + his(worker, 1) + " own and put it in the shop strong box.")
+		txt lang("[“X]" + cdatan(CDATAN_NAME, worker) + "‚Í“Æ©‚É" + dokuzi + "gold‰Ò‚¬A‹àŒÉ‚É•ÛŠÇ‚µ‚½B", "[Shop] " + cdatan(CDATAN_NAME, worker) + " earned " + dokuzi + " gold on " + his(worker, 1) + " own and put it in the shop strong box.")
 		dokuzi = 0
 	}
 	mode = MODELIST_MAIN
@@ -2140,7 +2140,7 @@
 			txtef COLOR_PURPLE
 		}
 		txtnew
-		txt lang("ãƒ©ãƒ³ã‚¯å¤‰å‹•(" + rankn(10, 3) + " " + rankorg / 100 + "ä½ â†’ " + rankcur / 100 + "ä½ )ã€Š" + ranktitle(3) + "ã€‹", "Museum Rank:" + cnvrank(rankorg / 100) + "->" + cnvrank(rankcur / 100) + " Your museum is now known as <" + ranktitle(3) + ">.")
+		txt lang("ƒ‰ƒ“ƒN•Ï“®(" + rankn(10, 3) + " " + rankorg / 100 + "ˆÊ ¨ " + rankcur / 100 + "ˆÊ )s" + ranktitle(3) + "t", "Museum Rank:" + cnvrank(rankorg / 100) + "->" + cnvrank(rankcur / 100) + " Your museum is now known as <" + ranktitle(3) + ">.")
 	}
 	mdata(MDATA_MODERATE_CROWD) = (100 - gdata(GDATA_RANK_MUSEUM) / 100) / 2 + 1
 	rankorg = gdata(STARTING_GDATA_FLAG + 365)
@@ -2238,8 +2238,8 @@
 			txtef COLOR_PURPLE
 		}
 		txtnew
-		txt lang("ãƒ¦ãƒ‹ãƒ¼ã‚¯ãƒ¬ãƒ™ãƒ«å¤‰å‹•(" + rankorg + " â†’ " + gdata(STARTING_GDATA_FLAG + 365) + ") ", "Unique Level:" + rankorg + "->" + gdata(STARTING_GDATA_FLAG + 365) + " ")
-		txt lang("[æ¬¡ã®ç›®æ¨™ã¾ã§ã‚ã¨" + nokori + "] ", "/ Next stage:" + nokori + " ")
+		txt lang("ƒ†ƒj[ƒNƒŒƒxƒ‹•Ï“®(" + rankorg + " ¨ " + gdata(STARTING_GDATA_FLAG + 365) + ") ", "Unique Level:" + rankorg + "->" + gdata(STARTING_GDATA_FLAG + 365) + " ")
+		txt lang("[Ÿ‚Ì–Ú•W‚Ü‚Å‚ ‚Æ" + nokori + "] ", "/ Next stage:" + nokori + " ")
 	}
 	return
 
@@ -2321,7 +2321,7 @@
 			txtef COLOR_PURPLE
 		}
 		txtnew
-		txt lang("å®¶å…·(" + gdata(GDATA_HOME_FURNITURE) / 100 + "ç‚¹) å®¶å®(" + gdata(GDATA_HOME_VALUE) / 100 + "ç‚¹) ãƒ©ãƒ³ã‚¯å¤‰å‹•(" + rankn(10, 4) + " " + rankorg / 100 + "ä½ â†’ " + rankcur / 100 + "ä½ )ã€Š" + ranktitle(4) + "ã€‹", "Furniture Value:" + gdata(GDATA_HOME_FURNITURE) / 100 + " Heirloom Value:" + gdata(GDATA_HOME_VALUE) / 100 + " Home Rank:" + cnvrank(rankorg / 100) + "->" + cnvrank(rankcur / 100) + " Your home is now known as <" + ranktitle(4) + ">.")
+		txt lang("‰Æ‹ï(" + gdata(GDATA_HOME_FURNITURE) / 100 + "“_) ‰Æ•ó(" + gdata(GDATA_HOME_VALUE) / 100 + "“_) ƒ‰ƒ“ƒN•Ï“®(" + rankn(10, 4) + " " + rankorg / 100 + "ˆÊ ¨ " + rankcur / 100 + "ˆÊ )s" + ranktitle(4) + "t", "Furniture Value:" + gdata(GDATA_HOME_FURNITURE) / 100 + " Heirloom Value:" + gdata(GDATA_HOME_VALUE) / 100 + " Home Rank:" + cnvrank(rankorg / 100) + "->" + cnvrank(rankcur / 100) + " Your home is now known as <" + ranktitle(4) + ">.")
 	}
 	return
 

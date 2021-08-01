@@ -61,7 +61,7 @@
 	page_check
 *com_politics_chart_loop
 	redraw 0
-	s = lang("ãƒã‚¹ãƒˆãƒãƒ£ãƒ¼ãƒˆ", "City Chart"), strhint3b
+	s = lang("ƒ|ƒXƒgƒ`ƒƒ[ƒg", "City Chart"), strhint3b
 	display_window (windoww - 580) / 2 + inf_screenx, winposy(400), 580, 400
 	keyrange = 0
 	j = 0
@@ -71,16 +71,16 @@
 	if ( adata(ADATA_ECONOMY, gdata(GDATA_AREA)) == 0 | adata(ADATA_ECONOMY, gdata(GDATA_AREA)) == 9 | gdata(GDATA_LEVEL) != 1 ) {
 		font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
 		pos wx + 40, wy + 50
-		mes lang("ã“ã®å ´æ‰€ã¯æƒ…å ±ãŒãªã„ã€‚", "There's no information in this area.")
+		mes lang("‚±‚ÌêŠ‚Íî•ñ‚ª‚È‚¢B", "There's no information in this area.")
 	}
 	else {
 		if ( adata(ADATA_PARENT, gdata(GDATA_AREA)) == AREA_LOST_YLVA ) {
 			font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
 			pos wx + 40, wy + 50
-			mes lang("ã“ã®å ´æ‰€ã¯æƒ…å ±ãŒãªã„ã€‚", "There's no information in this area.")
+			mes lang("‚±‚ÌêŠ‚Íî•ñ‚ª‚È‚¢B", "There's no information in this area.")
 		}
 		else {
-			display_topic lang(mapname(adata(ADATA_ID, gdata(GDATA_AREA))) + "ã®ãƒãƒ£ãƒ¼ãƒˆ", "" + mapname(adata(ADATA_ID, gdata(GDATA_AREA))) + " City Chart"), wx + 40, wy + 34
+			display_topic lang(mapname(adata(ADATA_ID, gdata(GDATA_AREA))) + "‚Ìƒ`ƒƒ[ƒg", "" + mapname(adata(ADATA_ID, gdata(GDATA_AREA))) + " City Chart"), wx + 40, wy + 34
 			repeat
 				if ( pochart(j, n, lv) == 0 | cnt == 0 ) {
 					if ( cnt != 0 ) {
@@ -113,7 +113,7 @@
 				font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
 				podata(0 + cnt, city) = 0
 				if ( podata(0 + cnt, city) == 0 ) {
-					s = lang("ä¸åœ¨", "Empty")
+					s = lang("•sİ", "Empty")
 				}
 				cs_list s, x - 2, y + 20, 19
 				j++
@@ -208,12 +208,12 @@
 	color 0, 0, 0
 	if ( adata(ADATA_ECONOMY, gdata(GDATA_AREA)) == 0 | adata(ADATA_ECONOMY, gdata(GDATA_AREA)) == 9 | gdata(GDATA_LEVEL) != 1 ) {
 		pos wx + 40, wy + 60
-		mes lang("ã“ã®å ´æ‰€ã¯æƒ…å ±ãŒãªã„ã€‚", "There's no information in this area.")
+		mes lang("‚±‚ÌêŠ‚Íî•ñ‚ª‚È‚¢B", "There's no information in this area.")
 	}
 	else {
 		if ( adata(ADATA_PARENT, gdata(GDATA_AREA)) == AREA_LOST_YLVA ) {
 			pos wx + 40, wy + 60
-			mes lang("ã“ã®å ´æ‰€ã¯æƒ…å ±ãŒãªã„ã€‚", "There's no information in this area.")
+			mes lang("‚±‚ÌêŠ‚Íî•ñ‚ª‚È‚¢B", "There's no information in this area.")
 		}
 		else {
 			city = adata(ADATA_ECONOMY, gdata(GDATA_AREA))
@@ -239,102 +239,102 @@
 				s1 = "Chaos"
 			}
 			if ( mdata(MDATA_CITY_APPROVAL_RATE) <= (-100) ) {
-				s2 = lang("è…ã‚Œæš´å›", "Tyrant")
+				s2 = lang("•…‚ê–\ŒN", "Tyrant")
 			}
 			if ( mdata(MDATA_CITY_APPROVAL_RATE) > (-100) & mdata(MDATA_CITY_APPROVAL_RATE) <= (-80) ) {
-				s2 = lang("æ‚ªæ”¿è€…", "Misrule")
+				s2 = lang("ˆ«­Ò", "Misrule")
 			}
 			if ( mdata(MDATA_CITY_APPROVAL_RATE) > (-80) & mdata(MDATA_CITY_APPROVAL_RATE) <= (-60) ) {
-				s2 = lang("ç¨é‡‘æ³¥æ£’", "Zeikin-Dorobou")
+				s2 = lang("Å‹à“D–_", "Zeikin-Dorobou")
 			}
 			if ( mdata(MDATA_CITY_APPROVAL_RATE) > (-60) & mdata(MDATA_CITY_APPROVAL_RATE) <= (-40) ) {
-				s2 = lang("ãŸã ã®ç„¡èƒ½", "Incompetence")
+				s2 = lang("‚½‚¾‚Ì–³”\", "Incompetence")
 			}
 			if ( mdata(MDATA_CITY_APPROVAL_RATE) > (-40) & mdata(MDATA_CITY_APPROVAL_RATE) <= (-20) ) {
-				s2 = lang("æœŸå¾…å¤–ã‚Œ", "Disappointing")
+				s2 = lang("Šú‘ÒŠO‚ê", "Disappointing")
 			}
 			if ( mdata(MDATA_CITY_APPROVAL_RATE) > (-20) & mdata(MDATA_CITY_APPROVAL_RATE) < 0 ) {
-				s2 = lang("æ­£ç›´å¾®å¦™", "Not good enough")
+				s2 = lang("³’¼”÷–­", "Not good enough")
 			}
 			if ( mdata(MDATA_CITY_APPROVAL_RATE) >= 0 & mdata(MDATA_CITY_APPROVAL_RATE) < 20 ) {
-				s2 = lang("ç„¡ç›Šç„¡å®³", "Useless and harmless")
+				s2 = lang("–³‰v–³ŠQ", "Useless and harmless")
 			}
 			if ( mdata(MDATA_CITY_APPROVAL_RATE) >= 20 & mdata(MDATA_CITY_APPROVAL_RATE) < 40 ) {
-				s2 = lang("å‰²ã¨æ™®é€š", "Common")
+				s2 = lang("Š„‚Æ•’Ê", "Common")
 			}
 			if ( mdata(MDATA_CITY_APPROVAL_RATE) >= 40 & mdata(MDATA_CITY_APPROVAL_RATE) < 60 ) {
-				s2 = lang("ã“ã‚Œã‹ã‚‰ã«æœŸå¾…", "Promising")
+				s2 = lang("‚±‚ê‚©‚ç‚ÉŠú‘Ò", "Promising")
 			}
 			if ( mdata(MDATA_CITY_APPROVAL_RATE) >= 60 & mdata(MDATA_CITY_APPROVAL_RATE) < 80 ) {
-				s2 = lang("å¸Œæœ›ã®æ˜Ÿ", "Excellent")
+				s2 = lang("Šó–]‚Ì¯", "Excellent")
 			}
 			if ( mdata(MDATA_CITY_APPROVAL_RATE) >= 80 & mdata(MDATA_CITY_APPROVAL_RATE) < 100 ) {
-				s2 = lang("ã¾ã•ã«åå›", "Role model")
+				s2 = lang("‚Ü‚³‚É–¼ŒN", "Role model")
 			}
 			if ( mdata(MDATA_CITY_APPROVAL_RATE) >= 100 ) {
-				s2 = lang("è¡—ã®å®ˆè­·è€…", "Ruler of virtue")
+				s2 = lang("ŠX‚ÌçŒìÒ", "Ruler of virtue")
 			}
 			taiki = mdata(MDATA_CITY_ETHER_CORRUPTION)
 			if ( gdata(GDATA_WEATHER) == WEATHER_ETHER ) {
 				taiki += 5000
 			}
-			display_topic lang("æ¦‚è¦", "Town Information"), wx + 65, wy + 50
-			display_topic lang("è²¡æ”¿", "Town Finance"), wx + 65, wy + 150
+			display_topic lang("ŠT—v", "Town Information"), wx + 65, wy + 50
+			display_topic lang("à­", "Town Finance"), wx + 65, wy + 150
 			if ( mdata(MDATA_CITY_COMPLAINTS) > 0 ) {
-				display_topic lang("ç®¡ç†ä»£è¡Œè€…è©•ä¾¡", "Administrator"), wx + 65, wy + 250
+				display_topic lang("ŠÇ—‘ãsÒ•]‰¿", "Administrator"), wx + 65, wy + 250
 			}
 			font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
 			color 0, 0, 0
 			x = wx + 50
 			y = wy + 80
 			pos x, y
-			mes lang("è¡—å±æ€§å€¤ã€€ã€€ (" + mdata(MDATA_CITY_PROPERTY_VALUE) + ")ã€€" + s1 + " ", "Security           (" + mdata(MDATA_CITY_PROPERTY_VALUE) + ") " + s1 + " ")
+			mes lang("ŠX‘®«’l@@ (" + mdata(MDATA_CITY_PROPERTY_VALUE) + ")@" + s1 + " ", "Security           (" + mdata(MDATA_CITY_PROPERTY_VALUE) + ") " + s1 + " ")
 			x = wx + 50
 			y = wy + 96
 			pos x, y
-			mes lang("äººå£æŒ‡æ•°ã€€ã€€ã€€" + mdata(MDATA_MODERATE_CROWD) + "ã€€", "Population          " + mdata(MDATA_MODERATE_CROWD) + " ")
+			mes lang("lŒûw”@@@" + mdata(MDATA_MODERATE_CROWD) + "@", "Population          " + mdata(MDATA_MODERATE_CROWD) + " ")
 			x = wx + 50
 			y = wy + 112
 			pos x, y
-			mes lang("æ°´è³ªæ±šæŸ“åº¦ã€€ã€€" + mdata(MDATA_CITY_WATER_POLLUTION) + " (ä»Šã¾ã§ã®æ­»è€…" + mdata(MDATA_CITY_DEAD_PEOPLE) + "äººï¼‰", "Water pollution     " + mdata(MDATA_CITY_WATER_POLLUTION) + " (dead " + mdata(MDATA_CITY_DEAD_PEOPLE) + " people) ")
+			mes lang("…¿‰˜õ“x@@" + mdata(MDATA_CITY_WATER_POLLUTION) + " (¡‚Ü‚Å‚Ì€Ò" + mdata(MDATA_CITY_DEAD_PEOPLE) + "lj", "Water pollution     " + mdata(MDATA_CITY_WATER_POLLUTION) + " (dead " + mdata(MDATA_CITY_DEAD_PEOPLE) + " people) ")
 			x = wx + 50
 			y = wy + 128
 			pos x, y
-			mes lang("ã‚¨ãƒ¼ãƒ†ãƒ«æŒ‡æ•°ã€€" + taiki + " ", "Ether concentration " + taiki + " ")
+			mes lang("ƒG[ƒeƒ‹w”@" + taiki + " ", "Ether concentration " + taiki + " ")
 			x = wx + 50
 			y = wy + 180
 			pos x, y
-			mes lang("æ¶ˆè²»ç¨ã€€ã€€ã€€ã€€" + mdata(MDATA_CITY_TAXES) + "%ã€€", "Tax                 " + mdata(MDATA_CITY_TAXES) + "% ")
+			mes lang("Á”ïÅ@@@@" + mdata(MDATA_CITY_TAXES) + "%@", "Tax                 " + mdata(MDATA_CITY_TAXES) + "% ")
 			x = wx + 50
 			y = wy + 196
 			pos x, y
-			mes lang("è¦³å…‰åå…¥ã€€ã€€ã€€" + mdata(MDATA_CITY_TOURISM_REVENUE) + "gpã€€", "Tourism revenue     " + mdata(MDATA_CITY_TOURISM_REVENUE) + "gp ")
+			mes lang("ŠÏŒõû“ü@@@" + mdata(MDATA_CITY_TOURISM_REVENUE) + "gp@", "Tourism revenue     " + mdata(MDATA_CITY_TOURISM_REVENUE) + "gp ")
 			x = wx + 50
 			y = wy + 212
 			pos x, y
-			mes lang("ç¶­æŒè²»ã€€ã€€ã€€ã€€" + mdata(MDATA_CITY_MAINTENANCE_COST) + "gpã€€", "Maintenance costs   " + mdata(MDATA_CITY_MAINTENANCE_COST) + "gp ")
+			mes lang("ˆÛ”ï@@@@" + mdata(MDATA_CITY_MAINTENANCE_COST) + "gp@", "Maintenance costs   " + mdata(MDATA_CITY_MAINTENANCE_COST) + "gp ")
 			x = wx + 50
 			y = wy + 228
 			pos x, y
-			mes lang("é‹å–¶äºˆç®—ã€€ã€€ã€€" + mdata(MDATA_CITY_BUDGET) + "gpã€€", "Budget              " + mdata(MDATA_CITY_BUDGET) + "gp ")
+			mes lang("‰^‰c—\Z@@@" + mdata(MDATA_CITY_BUDGET) + "gp@", "Budget              " + mdata(MDATA_CITY_BUDGET) + "gp ")
 			if ( mdata(MDATA_CITY_COMPLAINTS) > 0 ) {
 				mdata(MDATA_CITY_COMPLAINTS) = limit(mdata(MDATA_CITY_WATER_POLLUTION) - 15 + mdata(MDATA_CITY_ETHER_CORRUPTION) - 15 + mdata(MDATA_CITY_TAXES), 1, 99)
 				x = wx + 50
 				y = wy + 280
 				pos x, y
-				mes lang("è‹¦æƒ…æ•°ã€€ã€€ã€€ã€€" + mdata(MDATA_CITY_COMPLAINTS) + "ã€€", "Complaint           " + mdata(MDATA_CITY_COMPLAINTS) + " ")
+				mes lang("‹êî”@@@@" + mdata(MDATA_CITY_COMPLAINTS) + "@", "Complaint           " + mdata(MDATA_CITY_COMPLAINTS) + " ")
 				x = wx + 50
 				y = wy + 296
 				pos x, y
-				mes lang("ç™ºè¨€åŠ›ã€€ã€€ã€€ã€€" + mdata(MDATA_CITY_AUTHORITY) + "ã€€", "Authority           " + mdata(MDATA_CITY_AUTHORITY) + " ")
+				mes lang("”­Œ¾—Í@@@@" + mdata(MDATA_CITY_AUTHORITY) + "@", "Authority           " + mdata(MDATA_CITY_AUTHORITY) + " ")
 				x = wx + 50
 				y = wy + 312
 				pos x, y
-				mes lang("æ”¯æŒç‡ã€€ã€€ã€€ã€€" + mdata(MDATA_CITY_APPROVAL_RATE) + "%ã€€", "Approval rate       " + mdata(MDATA_CITY_APPROVAL_RATE) + "% ")
+				mes lang("x—¦@@@@" + mdata(MDATA_CITY_APPROVAL_RATE) + "%@", "Approval rate       " + mdata(MDATA_CITY_APPROVAL_RATE) + "% ")
 				x = wx + 50
 				y = wy + 328
 				pos x, y
-				mes lang("å°è±¡ã€€ã€€ã€€ã€€  " + s2 + " ", "Evaluation          " + s2 + " ")
+				mes lang("ˆóÛ@@@@  " + s2 + " ", "Evaluation          " + s2 + " ")
 			}
 		}
 	}
@@ -393,8 +393,8 @@
 	if ( adata(ADATA_PARENT, gdata(GDATA_AREA)) == AREA_LOST_YLVA ) {
 		goto *skip_rule
 	}
-	chatList 0, lang("ã“ã®è¡—ã®æ¶ˆè²»ç¨ã¯" + mdata(MDATA_CITY_TAXES) + "%ã ã€‚", "The consumption tax of this town is " + mdata(MDATA_CITY_TAXES) + ".")
-	chatList 0, lang("ã“ã®è¡—ã§ã¯æ®ºäººãŒè¨±ã•ã‚Œã‚‹ã€‚", "Allow murder in this town.")
+	chatList 0, lang("‚±‚ÌŠX‚ÌÁ”ïÅ‚Í" + mdata(MDATA_CITY_TAXES) + "%‚¾B", "The consumption tax of this town is " + mdata(MDATA_CITY_TAXES) + ".")
+	chatList 0, lang("‚±‚ÌŠX‚Å‚ÍEl‚ª‹–‚³‚ê‚éB", "Allow murder in this town.")
 *skip_rule
 	redraw 0
 	gsel 3
@@ -421,14 +421,14 @@
 	redraw 0
 	s = strhint2 + strhint3b
 	showscroll wx, wy, ww, wh
-	display_topic lang("æ³•å¾‹", "Law"), wx + 65, wy + 45
+	display_topic lang("–@—¥", "Law"), wx + 65, wy + 45
 	font lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0
 	color 0, 0, 0
 	pos wx + 185, wy + 52
-	mes lang("å›½æ³•", "Global")
+	mes lang("‘–@", "Global")
 	if ( mdata(MDATA_TYPE) == MAP_TYPE_TOWN ) {
 		pos wx + 285, wy + 52
-		mes lang("" + mapname(gdata(GDATA_AREA)) + "ã®æ³•", "Law of " + mapname(gdata(GDATA_AREA)))
+		mes lang("" + mapname(gdata(GDATA_AREA)) + "‚Ì–@", "Law of " + mapname(gdata(GDATA_AREA)))
 	}
 	pos wx + 155, wy + 46
 	gmode 2
@@ -573,14 +573,14 @@
 		if ( p >= citybuilding ) {
 			txtnew
 			snd SOUNDLIST_FAIL1
-			txt lang("ã“ã®è¡—ã¯ã“ã‚Œä»¥ä¸Šã®æ–½è¨­ã‚’æ‰€æœ‰ã§ããªã„ã€‚", "The city can't hold any more building.")
+			txt lang("‚±‚ÌŠX‚Í‚±‚êˆÈã‚Ì{İ‚ğŠ—L‚Å‚«‚È‚¢B", "The city can't hold any more building.")
 			goto *com_build_WHILE1_CONTINUE
 		}
 		cell_featread tlocx, tlocy
 		if ( feat(0) != 0 ) {
 			txtnew
 			snd SOUNDLIST_FAIL1
-			txt lang("ãã®å ´æ‰€ã«ã¯å»ºã¦ã‚‰ã‚Œãªã„ã€‚", "You can't build here.")
+			txt lang("‚»‚ÌêŠ‚É‚ÍŒš‚Ä‚ç‚ê‚È‚¢B", "You can't build here.")
 			goto *com_build_WHILE1_CONTINUE
 		}
 		if ( dist(tlocx, tlocy, tlocinitx, tlocinity) < cityfov ) {
@@ -589,7 +589,7 @@
 		else {
 			txtnew
 			snd SOUNDLIST_FAIL1
-			txt lang("ãã®å ´æ‰€ã¯è¡—ã‹ã‚‰é›¢ã‚Œã™ãã¦ã„ã‚‹ã€‚", "This location is too far from the town.")
+			txt lang("‚»‚ÌêŠ‚ÍŠX‚©‚ç—£‚ê‚·‚¬‚Ä‚¢‚éB", "This location is too far from the town.")
 		}
 		goto *com_build_WHILE1_CONTINUE
 	}
@@ -623,10 +623,10 @@
 	redraw 0
 	page_check
 	txtnew
-	txt lang("ã©ã®è¨­å‚™ã‚’å»ºè¨­ã™ã‚‹ï¼Ÿ", "What do you want to build?")
+	txt lang("‚Ç‚Ìİ”õ‚ğŒšİ‚·‚éH", "What do you want to build?")
 *com_select_building_loop_WHILE1
 	redraw 0
-	s = lang("è¨­å‚™ä¸€è¦§", "Building List"), strhint2 + strhint3
+	s = lang("İ”õˆê——", "Building List"), strhint2 + strhint3
 	display_window (windoww - 500) / 2 + inf_screenx, winposy(400), 500, 400
 	keyrange = 0
 	repeat pagesize
@@ -678,13 +678,13 @@
 		if ( mdata(MDATA_CITY_BUDGET) < bdref(1, p) ) {
 			snd SOUNDLIST_FAIL1
 			txtnew
-			txt lang("äºˆç®—ãŒè¶³ã‚Šãªã„â€¦", "Your city can't afford it...")
+			txt lang("—\Z‚ª‘«‚è‚È‚¢c", "Your city can't afford it...")
 			goto *com_select_building_loop_WHILE1_CONTINUE
 		}
 		mdata(MDATA_CITY_BUDGET) -= bdref(1, p)
 		snd SOUNDLIST_BUILD1
 		txtnew
-		txt lang(bdrefn(p) + "ã‚’å»ºè¨­ã—ãŸï¼", "You have built a " + bdrefn(p) + "!")
+		txt lang(bdrefn(p) + "‚ğŒšİ‚µ‚½I", "You have built a " + bdrefn(p) + "!")
 		bddata(0, city, cbd) = p, tlocx, tlocy, bdref(0, p) + 363
 		gosub *world_refresh
 		return p
@@ -710,6 +710,6 @@
 	pos x - 28, y + 2
 	gcopy 3, 0, 392, 24, 24
 	pos x + 12, y + 7 - en * 2
-	mes lang("äºˆç®—:", "Budget:") + " " + mdata(MDATA_CITY_BUDGET) + "k gp"
+	mes lang("—\Z:", "Budget:") + " " + mdata(MDATA_CITY_BUDGET) + "k gp"
 	return
 

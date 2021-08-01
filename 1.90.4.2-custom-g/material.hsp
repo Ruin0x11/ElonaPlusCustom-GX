@@ -123,28 +123,28 @@
 
 	}
 	else {
-		locvar_matgetmain_s = "ãƒãƒ†ãƒªã‚¢ãƒ«:" + matname(matgetmain_arg1) + "ã‚’" + locvar_matgetmain_n + "å€‹"
+		locvar_matgetmain_s = "ƒ}ƒeƒŠƒAƒ‹:" + matname(matgetmain_arg1) + "‚ğ" + locvar_matgetmain_n + "ŒÂ"
 		snd SOUNDLIST_ALERT1
 		if ( matgetmain_arg3 == 1 ) {
-			locvar_matgetmain_s += "æ˜ã‚Šå½“ã¦ãŸã€‚"
+			locvar_matgetmain_s += "Œ@‚è“–‚Ä‚½B"
 		}
 		if ( matgetmain_arg3 == 2 ) {
-			locvar_matgetmain_s += "é‡£ã‚Šä¸Šã’ãŸã€‚"
+			locvar_matgetmain_s += "’Ş‚èã‚°‚½B"
 		}
 		if ( matgetmain_arg3 == 3 ) {
-			locvar_matgetmain_s += "æ¡å–ã—ãŸã€‚"
+			locvar_matgetmain_s += "Ìæ‚µ‚½B"
 		}
 		if ( matgetmain_arg3 == 4 ) {
-			locvar_matgetmain_s += "å›åã—ãŸã€‚"
+			locvar_matgetmain_s += "‰ñû‚µ‚½B"
 		}
 		if ( matgetmain_arg3 == 5 ) {
-			locvar_matgetmain_s += "è¦‹ã¤ã‘ãŸã€‚"
+			locvar_matgetmain_s += "Œ©‚Â‚¯‚½B"
 		}
 		if ( matgetmain_arg3 == 6 ) {
-			locvar_matgetmain_s += "å—ã‘å–ã£ãŸã€‚"
+			locvar_matgetmain_s += "ó‚¯æ‚Á‚½B"
 		}
 		if ( matgetmain_arg3 == 0 ) {
-			locvar_matgetmain_s += "å…¥æ‰‹ã—ãŸã€‚"
+			locvar_matgetmain_s += "“üè‚µ‚½B"
 		}
 	}
 	txtef COLOR_BLUE
@@ -157,9 +157,9 @@
 		locvar_matgetmain_n = 1
 	}
 	mat(matdelmain_arg1) -= locvar_matgetmain_n
-	locvar_matgetmain_s = lang("ãƒãƒ†ãƒªã‚¢ãƒ«:" + matname(matdelmain_arg1) + "ã‚’" + locvar_matgetmain_n + "å€‹å¤±ã£ãŸ", "" + locvar_matgetmain_n + " " + matname(matdelmain_arg1) + " was consumed.")
+	locvar_matgetmain_s = lang("ƒ}ƒeƒŠƒAƒ‹:" + matname(matdelmain_arg1) + "‚ğ" + locvar_matgetmain_n + "ŒÂ¸‚Á‚½", "" + locvar_matgetmain_n + " " + matname(matdelmain_arg1) + " was consumed.")
 	txtef COLOR_BLUE
-	txt lang(locvar_matgetmain_s + "(æ®‹ã‚Š " + mat(matdelmain_arg1) + "å€‹) ", locvar_matgetmain_s + " (" + mat(matdelmain_arg1) + " remaining.)")
+	txt lang(locvar_matgetmain_s + "(c‚è " + mat(matdelmain_arg1) + "ŒÂ) ", locvar_matgetmain_s + " (" + mat(matdelmain_arg1) + " remaining.)")
 	return
 
 *com_product
@@ -216,12 +216,12 @@
 *com_product_loop
 	redraw 0
 	page_check
-	s = lang("ç”Ÿç”£å“ã®é¸æŠ", "Production"), strhint2 + strhint3b
+	s = lang("¶Y•i‚Ì‘I‘ğ", "Production"), strhint2 + strhint3b
 	display_window (windoww - 640) / 2 + inf_screenx, winposy(448), 640, 448
-	display_topic lang("ç”Ÿç”£å“", "Product"), wx + 28, wy + 36
-	display_topic lang("èª¬æ˜", "Detail"), wx + 296, wy + 36
-	display_topic lang("è©³ç´°", "Requirement"), wx + 28, wy + 258
-	display_topic lang("å¿…è¦ç´ æ", "Material"), wx + 28, wy + 304
+	display_topic lang("¶Y•i", "Product"), wx + 28, wy + 36
+	display_topic lang("à–¾", "Detail"), wx + 296, wy + 36
+	display_topic lang("Ú×", "Requirement"), wx + 28, wy + 258
+	display_topic lang("•K—v‘fŞ", "Material"), wx + 28, wy + 304
 	keyrange = 0
 	repeat pagesize
 		p = pagesize * page + cnt
@@ -250,18 +250,18 @@
 			if ( invctrl == 0 ) {
 				gosub *recipe_ref
 				font lang(cfg_font1, cfg_font2), 13 - en * 2, 0
-				s = lang("å¿…è¦ã‚¹ã‚­ãƒ«: ", "Skill needed: ")
+				s = lang("•K—vƒXƒLƒ‹: ", "Skill needed: ")
 				if ( matval == SKILL_NORMAL_ALCHEMY ) {
-					s += lang("éŒ¬é‡‘è¡“", "Alchemy")
+					s += lang("˜B‹àp", "Alchemy")
 				}
 				if ( matval == SKILL_NORMAL_CARPENTRY ) {
-					s += lang("å·¥ä½œ", "Carpentry")
+					s += lang("Hì", "Carpentry")
 				}
 				if ( matval == SKILL_NORMAL_JEWELER ) {
-					s += lang("å®çŸ³ç´°å·¥", "Jeweler")
+					s += lang("•óÎ×H", "Jeweler")
 				}
 				if ( matval == SKILL_NORMAL_TAILORING ) {
-					s += lang("è£ç¸«", "Tailoring")
+					s += lang("Ù–D", "Tailoring")
 				}
 				s += " " + matval(1) + "(" + sdata(matval, CHARA_PLAYER) + ")"
 				if ( matval(1) <= sdata(matval, CHARA_PLAYER) ) {
@@ -278,7 +278,7 @@
 				if ( j == (-1) ) {
 					break
 				}
-				s = matname(j) + lang(" Ã— ", " x ") + j(1) + "(" + mat(j) + ")"
+				s = matname(j) + lang(" ~ ", " x ") + j(1) + "(" + mat(j) + ")"
 				if ( mat(j) >= j(1) ) {
 					color 30, 30, 200
 				}
@@ -332,7 +332,7 @@
 				}
 			}
 		}
-		s(1) = lang("ã‚¢ã‚¤ãƒ†ãƒ [" + s + "]", "Make [" + s + "]")
+		s(1) = lang("ƒAƒCƒeƒ€[" + s + "]", "Make [" + s + "]")
 		font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
 		if ( int(listn(0, p)) == (-1) ) {
 			p(2) = 3
@@ -369,7 +369,7 @@
 		s = ioriginalnameref(matid)
 		if ( prodcheck() == (-1) ) {
 			snd SOUNDLIST_FAIL1
-			txt lang("ç”Ÿç”£ã®æ¡ä»¶ã‚’æº€ãŸã—ã¦ãªã„ã€‚", "You don't meet the requirements to create the item.")
+			txt lang("¶Y‚ÌğŒ‚ğ–‚½‚µ‚Ä‚È‚¢B", "You don't meet the requirements to create the item.")
 			goto *com_product_loop
 		}
 		if ( inv_getspace() == 0 ) {
@@ -398,7 +398,7 @@
 		itemcreate 0, p, -1, -1, 0
 		inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
 		item_identify ci, ITEM_KNOWN_FULL
-		txt lang(itemname(ci, 1) + "ã‚’è£½é€ ã—ãŸã€‚", "You produced " + itemname(ci, 1) + ".")
+		txt lang(itemname(ci, 1) + "‚ğ»‘¢‚µ‚½B", "You produced " + itemname(ci, 1) + ".")
 		item_stack CHARA_PLAYER, ci, 1
 		if ( matval == SKILL_NORMAL_ALCHEMY ) {
 			gdata(GDATA_FLAG_CREATED_BY_ALCHEMY)++
@@ -462,8 +462,8 @@
 	redraw 0
 	s = strhint2 + strhint3b
 	showscroll wx, wy, ww, wh
-	display_topic lang("æ‰€æŒãƒãƒ†ãƒªã‚¢ãƒ«", "Name"), wx + 38, wy + 36
-	display_topic lang("èª¬æ˜", "Detail"), wx + 296, wy + 36
+	display_topic lang("Šƒ}ƒeƒŠƒAƒ‹", "Name"), wx + 38, wy + 36
+	display_topic lang("à–¾", "Detail"), wx + 296, wy + 36
 	keyrange = 0
 	repeat pagesize
 		p = pagesize * page + cnt
@@ -487,7 +487,7 @@
 			break
 		}
 		i = list(0, p)
-		s = "" + matname(i) + lang(" Ã— ", " x ") + mat(i)
+		s = "" + matname(i) + lang(" ~ ", " x ") + mat(i)
 		cs_list s, wx + 96, wy + 66 + cnt * 19 - 1, 19, 0, 0
 		s = matdesc(i)
 		pos wx + 308, wy + 66 + cnt * 19 + 2

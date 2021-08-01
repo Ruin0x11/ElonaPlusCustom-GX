@@ -362,7 +362,7 @@
 	}
 	if ( jp ) {
 		if ( rnd(8) == 0 ) {
-			locvar_randomname_s += "ãƒ¼"
+			locvar_randomname_s += "["
 		}
 	}
 	if ( rnd(5) ) {
@@ -383,10 +383,10 @@
 		}
 	}
 	if ( jp ) {
-		if ( strmid(locvar_randomname_s, 0, 2) == "ãƒ¼" ) {
+		if ( strmid(locvar_randomname_s, 0, 2) == "[" ) {
 			goto *randomname_WHILE1_CONTINUE
 		}
-		if ( instr(locvar_randomname_s, 0, "ãƒ¼ãƒƒ") != (-1) ) {
+		if ( instr(locvar_randomname_s, 0, "[ƒb") != (-1) ) {
 			goto *randomname_WHILE1_CONTINUE
 		}
 	}
@@ -406,7 +406,7 @@
 		}
 	loop
 	if ( random_title_arg1 == 1 | random_title_arg1 == 3 ) {
-		if ( rnlist(14, locvar_randomname_p(2)) == "å…·" ) {
+		if ( rnlist(14, locvar_randomname_p(2)) == "‹ï" ) {
 			goto *random_title_loop
 		}
 	}
@@ -419,25 +419,25 @@
 					locvar_randomname_p(1) = 0
 					locvar_randomname_p(3) = rnd(2)
 					if ( locvar_randomname_p(3) == 0 ) {
-						locvar_random_title_randn2 += "ã®"
+						locvar_random_title_randn2 += "‚Ì"
 					}
 					break
 				}
 				locvar_randomname_p = rnd(5)
 				if ( locvar_randomname_p == 0 ) {
-					locvar_random_title_randn2 += "ãƒ»ã‚ªãƒ–ãƒ»"
+					locvar_random_title_randn2 += "EƒIƒuE"
 				}
 				if ( locvar_randomname_p == 1 ) {
-					locvar_random_title_randn2 = "ã‚¶ãƒ»" + locvar_random_title_randn2
+					locvar_random_title_randn2 = "ƒUE" + locvar_random_title_randn2
 					locvar_random_title_rtval = 1
 					break
 				}
 				if ( locvar_randomname_p == 2 ) {
-					locvar_random_title_randn2 += "ãƒ»"
+					locvar_random_title_randn2 += "E"
 				}
 			}
 			if ( locvar_randomname_p(1) == 0 | locvar_randomname_p(1) == 1 ) {
-				locvar_random_title_randn2 += "ã®"
+				locvar_random_title_randn2 += "‚Ì"
 				locvar_randomname_p(3) = rnd(10)
 				if ( locvar_randomname_p(3) == 0 ) {
 					locvar_randomname_p(1) = 10
@@ -474,8 +474,8 @@
 			continue
 		}
 		if ( rnlist(14, locvar_randomname_p(4)) == locvar_random_title_randn2(1) ) {
-			if ( rnlist(14, locvar_randomname_p(4)) != "ä¸‡èƒ½" ) {
-				if ( locvar_random_title_randn2(1) != "ä¸‡èƒ½" ) {
+			if ( rnlist(14, locvar_randomname_p(4)) != "–œ”\" ) {
+				if ( locvar_random_title_randn2(1) != "–œ”\" ) {
 					continue
 				}
 			}
@@ -507,7 +507,7 @@
 *end_name
 	if ( random_title_arg1 == 2 ) {
 		if ( jp ) {
-			locvar_random_title_s2 = "å›£", "ãƒãƒ¼ãƒ ", "ãƒ‘ãƒ¼ãƒ†ã‚£ãƒ¼", "ã®é›†ã„", "ã®è»", "ã‚¢ãƒ¼ãƒŸãƒ¼", "éšŠ", "ã®ä¸€å®¶", "è»", "ã®éšŠ", "ã®å›£"
+			locvar_random_title_s2 = "’c", "ƒ`[ƒ€", "ƒp[ƒeƒB[", "‚ÌW‚¢", "‚ÌŒR", "ƒA[ƒ~[", "‘à", "‚Ìˆê‰Æ", "ŒR", "‚Ì‘à", "‚Ì’c"
 			if ( rnd(5) ) {
 				locvar_randomname_s += locvar_random_title_s2(rnd(10))
 			}
@@ -527,37 +527,37 @@
 
 *time_warn_talk
 	if ( hour_played == 1 ) {
-		s += lang("ãƒ©ãƒ¼ãƒã‚¤ãƒ¬ã€ŒãŒã‚“ã°ã‚Œï½ã€", "Larnneire cheers, " + cnvtalk("Way to go!"))
+		s += lang("ƒ‰[ƒlƒCƒŒu‚ª‚ñ‚Î‚ê`v", "Larnneire cheers, " + cnvtalk("Way to go!"))
 	}
 	if ( hour_played == 2 ) {
-		s += lang("ãƒ­ãƒŸã‚¢ã‚¹ã€Œé™°ãªãŒã‚‰å¿œæ´ã—ã¦ã„ã‚‹ã‚ˆï¼ˆãƒ‹ãƒ¤ãƒªï¼‰ã€", "Lomias grins, " + cnvtalk("Go for it."))
+		s += lang("ƒƒ~ƒAƒXu‰A‚È‚ª‚ç‰‰‡‚µ‚Ä‚¢‚é‚æiƒjƒ„ƒŠjv", "Lomias grins, " + cnvtalk("Go for it."))
 	}
 	if ( hour_played == 3 ) {
-		s += lang("ã‚¯ãƒŸãƒ­ãƒŸã€Œâ€¦å¤§ä¸ˆå¤«â€¦ã ã‚ˆã­ï¼Ÿã€", "Kumiromi worries, " + cnvtalk("Are you... okay...?"))
+		s += lang("ƒNƒ~ƒƒ~uc‘åä•vc‚¾‚æ‚ËHv", "Kumiromi worries, " + cnvtalk("Are you... okay...?"))
 	}
 	if ( hour_played == 4 ) {
-		s += lang("ãƒ«ãƒ«ã‚¦ã‚£ã€Œã‚ã‚‰ã€æ€ã„ã®ä»–ãŒã‚“ã°ã‚‹ã®ã­ã€", "Lulwy sneers, " + cnvtalk("You're tougher than I thought, little kitty."))
+		s += lang("ƒ‹ƒ‹ƒEƒBu‚ ‚çAv‚¢‚Ì‘¼‚ª‚ñ‚Î‚é‚Ì‚Ëv", "Lulwy sneers, " + cnvtalk("You're tougher than I thought, little kitty."))
 	}
 	if ( hour_played == 5 ) {
-		s += lang("ãƒ©ãƒ¼ãƒã‚¤ãƒ¬ã€Œã„ã‘ãªã„ã€‚ã“ã®ã¾ã¾ã§ã¯â€¦æ‰‹é…ã‚Œã«ãªã£ã¦ã—ã¾ã†ã‚â€¦ã€", "Larnneire cries, " + cnvtalk("No... before it's too late..."))
+		s += lang("ƒ‰[ƒlƒCƒŒu‚¢‚¯‚È‚¢B‚±‚Ì‚Ü‚Ü‚Å‚Ícè’x‚ê‚É‚È‚Á‚Ä‚µ‚Ü‚¤‚ícv", "Larnneire cries, " + cnvtalk("No... before it's too late..."))
 	}
 	if ( hour_played == 6 ) {
-		s += lang("ãƒ­ãƒŸã‚¢ã‚¹ã€Œã¾ã ã¾ã ã€ã“ã‚Œã‹ã‚‰ã ã‚ã†ï¼ˆãƒ‹ãƒ¤ãƒªï¼‰ã€", "Lomias grins, " + cnvtalk("It hasn't even started yet... hasn't it?"))
+		s += lang("ƒƒ~ƒAƒXu‚Ü‚¾‚Ü‚¾A‚±‚ê‚©‚ç‚¾‚ë‚¤iƒjƒ„ƒŠjv", "Lomias grins, " + cnvtalk("It hasn't even started yet... hasn't it?"))
 	}
 	if ( hour_played == 7 ) {
-		s += lang("ãƒ«ãƒ«ã‚¦ã‚£ã€Œä¼‘æ†©ã—ãªã•ã„ã€‚å£Šã‚Œã¡ã‚ƒã£ãŸã‚‰ã€ç§ã®å½¹ã«ãŸã¦ãªã„ã˜ã‚ƒãªã„ã€", "Lulwy warns you, " + cnvtalk("Have a rest, kitty. If you are broken, you're no use to me."))
+		s += lang("ƒ‹ƒ‹ƒEƒBu‹xŒe‚µ‚È‚³‚¢B‰ó‚ê‚¿‚á‚Á‚½‚çA„‚Ì–ğ‚É‚½‚Ä‚È‚¢‚¶‚á‚È‚¢v", "Lulwy warns you, " + cnvtalk("Have a rest, kitty. If you are broken, you're no use to me."))
 	}
 	if ( hour_played == 8 ) {
-		s += lang("ãƒ«ãƒ«ã‚¦ã‚£ã€Œä½•ã‚’è¨€ã£ã¦ã‚‚ç„¡é§„ã®ã‚ˆã†ã­ã€‚å¥½ãã«ã™ã‚‹ã¨ã„ã„ã‚ã€", "Lulwy laughs, " + cnvtalk("I guess there's no use warning you. Alright. Do as you please, kitty."))
+		s += lang("ƒ‹ƒ‹ƒEƒBu‰½‚ğŒ¾‚Á‚Ä‚à–³‘Ê‚Ì‚æ‚¤‚ËBD‚«‚É‚·‚é‚Æ‚¢‚¢‚ív", "Lulwy laughs, " + cnvtalk("I guess there's no use warning you. Alright. Do as you please, kitty."))
 	}
 	if ( hour_played == 9 ) {
-		s += lang("ãƒ¤ã‚«ãƒ†ã‚¯ãƒˆã€Œä½“ã‚’å£Šã—ãŸã‚‰å…ƒã‚‚å­ã‚‚ãªã„ã‚“ã‚„ã§ï¼Ÿã€", "Yacatect wonders, " + cnvtalk("Don't you lose everything if you break your body?"))
+		s += lang("ƒ„ƒJƒeƒNƒgu‘Ì‚ğ‰ó‚µ‚½‚çŒ³‚àq‚à‚È‚¢‚ñ‚â‚ÅHv", "Yacatect wonders, " + cnvtalk("Don't you lose everything if you break your body?"))
 	}
 	if ( hour_played == 12 ) {
-		s += lang("ã‚ªãƒ‘ãƒ¼ãƒˆã‚¹ã€Œãƒ•ãƒãƒãƒãƒãƒƒãƒ•ãƒãƒ¼ã€", "Opatos laughs, " + cnvtalk("Muwahahahahahaha!"))
+		s += lang("ƒIƒp[ƒgƒXuƒtƒnƒnƒnƒnƒbƒtƒn[v", "Opatos laughs, " + cnvtalk("Muwahahahahahaha!"))
 	}
 	if ( hour_played == 24 ) {
-		s += lang("ã‚¨ãƒ˜ã‚«ãƒˆãƒ«ã€Œæ­»ãªã«ã‚ƒã„ã§ï¼æ­»ãªã«ã‚ƒã„ã£ã¦ç´„æŸã—ã¦ï¼ã—ã¦ï¼ã€", "Ehekatl hugs you, " + cnvtalk("Don't die! Promise you won't die!"))
+		s += lang("ƒGƒwƒJƒgƒ‹u€‚È‚É‚á‚¢‚ÅI€‚È‚É‚á‚¢‚Á‚Ä–ñ‘©‚µ‚ÄI‚µ‚ÄIv", "Ehekatl hugs you, " + cnvtalk("Don't die! Promise you won't die!"))
 	}
 	return
 

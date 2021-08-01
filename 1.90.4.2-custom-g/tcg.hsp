@@ -3,15 +3,15 @@
 #module tcg
 
 #defcfunc cdbit int cdbit_bit, int cdbit_charid
-	HMMBITCHECK card@tcg(30 + cdbit_bit / 32, cdbit_charid), cdbit_bit \ 32
+	HMMBITCHECK@ card@tcg(30 + cdbit_bit / 32, cdbit_charid), cdbit_bit \ 32
 	return abs(stat)
 
 #deffunc cdbitmod int cdbitmod_bit, int cdbitmod_charid, int cdbitmod_seton
 	if ( cdbitmod_seton == 0 ) {
-		HMMBITOFF card@tcg(30 + cdbitmod_bit / 32, cdbitmod_charid), cdbitmod_bit \ 32
+		HMMBITOFF@ card@tcg(30 + cdbitmod_bit / 32, cdbitmod_charid), cdbitmod_bit \ 32
 		return
 	}
-	HMMBITON card@tcg(30 + cdbitmod_bit / 32, cdbitmod_charid), cdbitmod_bit \ 32
+	HMMBITON@ card@tcg(30 + cdbitmod_bit / 32, cdbitmod_charid), cdbitmod_bit \ 32
 	return
 
 #deffunc cpflip
@@ -104,7 +104,7 @@
 	cardrefdomain = 0
 	cardrefrare = 100
 	dbid = card_ref_arg1
-	gosub *db_card
+	gosub *db_card@
 	if ( cardreftype == 0 ) {
 		cardreftype = 10
 		cardrefdomain = 7
@@ -116,16 +116,16 @@
 	}
 	if ( cardreftype == 30 ) {
 		cardrefbg = 6
-		rtvaln += lang(" <åœŸåœ°>", " <Land>")
+		rtvaln += lang(" <“y’n>", " <Land>")
 	}
 	if ( cardreftype == 20 ) {
 		cardrefbg = 5
-		rtvaln += lang(" <ã‚¹ãƒšãƒ«>", " <Spell>")
+		rtvaln += lang(" <ƒXƒyƒ‹>", " <Spell>")
 	}
-	rtvaln += lang("  ãƒ©ãƒ³ã‚¯:", "  Rank:") + cardrefcost
-	rtvaln += lang("  ãƒ¬ã‚¢åº¦:", "  Rare:") + cnvrare(cardrefrare)
+	rtvaln += lang("  ƒ‰ƒ“ƒN:", "  Rank:") + cardrefcost
+	rtvaln += lang("  ƒŒƒA“x:", "  Rare:") + cnvrare(cardrefrare)
 	s@tcg = ""
-	s@tcg += lang("æƒ…å ±:", "data:") + cardrefskill
+	s@tcg += lang("î•ñ:", "data:") + cardrefskill
 	talk_conv s@tcg, 89
 	rtvaln += "\n" + s@tcg
 	return dbid
@@ -402,10 +402,10 @@
 		if ( cs@tcg == (-1) ) {
 			if ( phase@tcg == 2 ) {
 				if ( selectmode@tcg == 0 ) {
-					cardhelp lang("ãƒ¡ã‚¤ãƒ³ãƒ•ã‚§ã‚¤ã‚ºã‚’çµ‚äº†ã™ã‚‹ã€‚", "End your main phase.")
+					cardhelp lang("ƒƒCƒ“ƒtƒFƒCƒY‚ğI—¹‚·‚éB", "End your main phase.")
 				}
 				else {
-					cardhelp lang("ãƒ–ãƒ­ãƒƒã‚¯ã—ãªã„ã€‚", "No blocker.")
+					cardhelp lang("ƒuƒƒbƒN‚µ‚È‚¢B", "No blocker.")
 				}
 			}
 			pos holderix@tcg - holderspace@tcg - 5, holderiy@tcg - 5
@@ -760,10 +760,10 @@
 	snd SOUNDLIST_FEAT
 	sac@tcg++
 	if ( saccard_arg2 == 0 ) {
-		cardhelp lang("ã‚«ãƒ¼ãƒ‰ã‚’æ§ã’ãŸã€‚", "You sacrifice the card."), 40
+		cardhelp lang("ƒJ[ƒh‚ğ•ù‚°‚½B", "You sacrifice the card."), 40
 	}
 	else {
-		cardhelp lang("ç›¸æ‰‹ã¯ã‚«ãƒ¼ãƒ‰ã‚’æ§ã’ãŸã€‚", "The opponent sacrifices the card."), 40
+		cardhelp lang("‘Šè‚ÍƒJ[ƒh‚ğ•ù‚°‚½B", "The opponent sacrifices the card."), 40
 	}
 	repeat maxcard@tcg
 		if ( card@tcg(1, cnt) != saccard_arg2 ) {
@@ -808,14 +808,14 @@
 	if ( getspotsum(putcard_arg2) >= 8 ) {
 		if ( putcard_arg2 == player@tcg ) {
 			snd SOUNDLIST_FAIL1
-			cardhelp lang("ã“ã‚Œä»¥ä¸Šã¯å ´ã«å‡ºã›ãªã„ã€‚", "Your field is full."), 40
+			cardhelp lang("‚±‚êˆÈã‚Íê‚Éo‚¹‚È‚¢B", "Your field is full."), 40
 		}
 		return -1
 	}
 	if ( card@tcg(10, putcard_arg1) > cpdata@tcg(5, putcard_arg2) ) {
 		if ( putcard_arg2 == player@tcg ) {
 			snd SOUNDLIST_FAIL1
-			cardhelp lang("ãƒãƒŠãŒè¶³ã‚Šãªã„ã€‚", "You don't have enough mana."), 40
+			cardhelp lang("ƒ}ƒi‚ª‘«‚è‚È‚¢B", "You don't have enough mana."), 40
 		}
 		if ( debug == 0 ) {
 			return -3
@@ -1004,7 +1004,7 @@
 	dim deck, 1000
 	repeat 1000
 		dbid = cnt
-		gosub *db_card
+		gosub *db_card@
 		if ( stat == 0 ) {
 			continue
 		}
@@ -1027,13 +1027,13 @@
 	loop
 *tcgDeck_loop
 	tcgdrawbg
-	s@tcg = lang("ç™½", "White"), lang("é’", "Blue"), lang("éŠ€", "Silver"), lang("èµ¤", "Red"), lang("é»’", "Black")
+	s@tcg = lang("”’", "White"), lang("Â", "Blue"), lang("‹â", "Silver"), lang("Ô", "Red"), lang("•", "Black")
 	repeat 5
-		s@tcg(cnt) += lang("ã®ãƒ‡ãƒƒã‚­", " Deck")
+		s@tcg(cnt) += lang("‚ÌƒfƒbƒL", " Deck")
 		file@tcg = "" + exedir + "tmp\\deck_" + cnt + ".s2"
 		existwrapper file@tcg
 		if ( strsize == (-1) ) {
-			s@tcg(cnt) += lang(" (æ–°è¦ä½œæˆ)", " (New)")
+			s@tcg(cnt) += lang(" (V‹Kì¬)", " (New)")
 		}
 		else {
 			if ( gdata(GDATA_DECK_SIZE + cnt) != 30 ) {
@@ -1046,17 +1046,17 @@
 		promptAdd s@tcg(cnt)
 	loop
 	val = basex@tcg + 400, basey@tcg + 230, 300, 1
-	gosub *prompt_key
+	gosub *prompt_key@
 	if ( rtval != (-1) ) {
 		dim deck, 1000
 		curdeck = rtval
 		file = "" + exedir + "tmp\\deck_" + curdeck + ".s2"
 		existwrapper file
 		if ( strsize != (-1) ) {
-			promptAdd lang("ãƒ‡ãƒƒã‚­ã®æ§‹ç¯‰", "Edit Deck")
-			promptAdd lang("ãƒ¡ã‚¤ãƒ³ãƒ‡ãƒƒã‚­ã«è¨­å®š", "Set as Main Deck")
+			promptAdd lang("ƒfƒbƒL‚Ì\’z", "Edit Deck")
+			promptAdd lang("ƒƒCƒ“ƒfƒbƒL‚Éİ’è", "Set as Main Deck")
 			val = 400, basey@tcg + 230, 240, 1
-			gosub *prompt_key
+			gosub *prompt_key@
 			if ( rtval == (-1) ) {
 				goto *tcgDeck_loop
 			}
@@ -1066,7 +1066,7 @@
 			}
 			if ( rtval == 0 ) {
 				fmode = 24
-				gosub *game_ctrlFile
+				gosub *game_ctrlFile@
 			}
 		}
 		decksizebk@tcg = gdata(GDATA_DECK_SIZE + curdeck)
@@ -1400,7 +1400,7 @@
 	font lang(cfg_font1, cfg_font2), 13 - en * 2, 0
 	color 255, 255, 255
 	pos basex@tcg + 160, basey@tcg + 510
-	mes lang("" + key_next + "," + key_prev + ",Tab [ãƒ•ã‚£ãƒ«ã‚¿ãƒ¼åˆ‡æ›¿]  æ±ºå®šï½·ï½° [ã‚«ãƒ¼ãƒ‰é¸æŠ]  ï½·ï½¬ï¾ï½¾ï¾™ï½·ï½° [çµ‚äº†]", "" + key_next + "," + key_prev + " [Change Filter]  Enter [Select]  Cancel [Exit]")
+	mes lang("" + key_next + "," + key_prev + ",Tab [ƒtƒBƒ‹ƒ^[Ø‘Ö]  Œˆ’è·° [ƒJ[ƒh‘I‘ğ]  ·¬İ¾Ù·° [I—¹]", "" + key_next + "," + key_prev + " [Change Filter]  Enter [Select]  Cancel [Exit]")
 	pos basex@tcg + 700, basey@tcg + 510
 	mes "Page " + dsc@tcg / 8 / 3 + "/" + (dlistmax@tcg - 1) / 8 / 3
 	return
@@ -1535,7 +1535,7 @@
 	dim dlist@tcg, 2, 400
 	dim cflist@tcg, 10
 	sdim cfname@tcg, 16, 10
-	cfname@tcg = lang("å€™è£œ", "List"), lang("ãƒ‡ãƒƒã‚­", "Deck"), domname@tcg(0), domname@tcg(1), domname@tcg(2), domname@tcg(3), domname@tcg(4), domname@tcg(5), domname@tcg(6), domname@tcg(7), domname@tcg(8), domname@tcg(9)
+	cfname@tcg = lang("Œó•â", "List"), lang("ƒfƒbƒL", "Deck"), domname@tcg(0), domname@tcg(1), domname@tcg(2), domname@tcg(3), domname@tcg(4), domname@tcg(5), domname@tcg(6), domname@tcg(7), domname@tcg(8), domname@tcg(9)
 	cflist@tcg = 0
 	cfmax@tcg = 1
 	ccf@tcg = 0
@@ -1655,7 +1655,7 @@
 			if ( card@tcg(9, dlist@tcg(0, dsc@tcg)) == 10 ) {
 				if ( card@tcg(10, dlist@tcg(0, dsc@tcg)) == 0 ) {
 					snd SOUNDLIST_FAIL1
-					cardhelp lang("æœªå®Ÿè£…ã®ã‚«ãƒ¼ãƒ‰", "The card isn't available in this version."), 40
+					cardhelp lang("–¢À‘•‚ÌƒJ[ƒh", "The card isn't available in this version."), 40
 					goto *select_deck_loop_WHILE1_CONTINUE
 				}
 			}
@@ -1706,14 +1706,14 @@
 	}
 	if ( key == key_cancel ) {
 		if ( deckmode@tcg == 0 ) {
-			promptAdd lang("ã‚»ãƒ¼ãƒ–ã—ã¦çµ‚äº†", "Save & Exit")
-			promptAdd lang("ã‚»ãƒ¼ãƒ–ã—ãªã„ã§çµ‚äº†", "Just Exit")
+			promptAdd lang("ƒZ[ƒu‚µ‚ÄI—¹", "Save & Exit")
+			promptAdd lang("ƒZ[ƒu‚µ‚È‚¢‚ÅI—¹", "Just Exit")
 			val = basex@tcg + 420, basey@tcg + 230, 240, 1
-			gosub *prompt_key
+			gosub *prompt_key@
 			if ( rtval == 0 ) {
 				file = "" + exedir + "tmp\\deck_" + curdeck + ".s2"
 				fmode = 23
-				gosub *game_ctrlFile
+				gosub *game_ctrlFile@
 			}
 			else {
 				gdata(GDATA_DECK_SIZE + curdeck) = decksizebk@tcg
@@ -1799,13 +1799,13 @@
 			if ( card@tcg(10, cc@tcg) <= cpdata@tcg(5, cp@tcg) ) {
 				if ( card@tcg(9, cc@tcg) == 20 | selectmode@tcg == 0 ) {
 					act@tcg(0) = 1
-					s@tcg += lang("â†‘   ã‚«ãƒ¼ãƒ‰ã‚’å‡ºã™ã€‚\n", "UP: Put the card.\n")
+					s@tcg += lang("ª   ƒJ[ƒh‚ğo‚·B\n", "UP: Put the card.\n")
 				}
 			}
 			if ( sac@tcg == 0 ) {
 				if ( selectmode@tcg == 0 ) {
 					act@tcg(1) = 1
-					s@tcg += lang("â†“   ã‚«ãƒ¼ãƒ‰ã‚’æ§ã’ã¦ãƒãƒŠã‚’å¾—ã‚‹(1ã‚¿ãƒ¼ãƒ³ã«1å›)ã€‚\n", "Down: Sacrifice the card.\n")
+					s@tcg += lang("«   ƒJ[ƒh‚ğ•ù‚°‚Äƒ}ƒi‚ğ“¾‚é(1ƒ^[ƒ“‚É1‰ñ)B\n", "Down: Sacrifice the card.\n")
 				}
 			}
 		}
@@ -1814,19 +1814,19 @@
 				if ( card@tcg(14, cc@tcg) != (-1) ) {
 					if ( cardcandeclareattack(cc@tcg) ) {
 						act@tcg(0) = 1
-						s@tcg += lang("â†‘   æ”»æ’ƒã‚’å®£è¨€ã™ã‚‹ã€‚\n", "UP: Declare an attack.\n")
+						s@tcg += lang("ª   UŒ‚‚ğéŒ¾‚·‚éB\n", "UP: Declare an attack.\n")
 					}
 				}
 			}
 			if ( selectmode@tcg == 1 ) {
 				if ( cardcanblock(cc@tcg) ) {
 					act@tcg(0) = 1
-					s@tcg += lang("â†‘   ãƒ–ãƒ­ãƒƒã‚¯ã™ã‚‹ã€‚\n", "UP: Block.\n")
+					s@tcg += lang("ª   ƒuƒƒbƒN‚·‚éB\n", "UP: Block.\n")
 				}
 			}
 			if ( cardcanuseskill(cc@tcg) ) {
 				act@tcg(2) = 1
-				s@tcg += lang("æ±ºå®š ã‚¹ã‚­ãƒ«ã‚’ä½¿ç”¨ã™ã‚‹ã€‚\n", "ENTER: Use the skill.\n")
+				s@tcg += lang("Œˆ’è ƒXƒLƒ‹‚ğg—p‚·‚éB\n", "ENTER: Use the skill.\n")
 			}
 		}
 		f@tcg = 0
@@ -1839,7 +1839,7 @@
 		if ( f@tcg == 0 ) {
 			if ( debug == 0 ) {
 				snd SOUNDLIST_FAIL1
-				cardhelp lang("å¯èƒ½ãªè¡Œå‹•ã¯ãªã„ã€‚", "There is no action available."), 40
+				cardhelp lang("‰Â”\‚Ès“®‚Í‚È‚¢B", "There is no action available."), 40
 				goto *card_player_WHILE1_CONTINUE
 			}
 		}
@@ -1935,9 +1935,9 @@
 		goto *card_player_WEND1
 	}
 	if ( key == "s" ) {
-		promptAdd lang("é™å‚ã™ã‚‹", "Surrender")
+		promptAdd lang("~Q‚·‚é", "Surrender")
 		val = basex@tcg + 420, basey@tcg + 230, 200, 1
-		gosub *prompt_key
+		gosub *prompt_key@
 		if ( rtval == 0 ) {
 			cpdata@tcg(4, 0) = 0
 			cursor@tcg = 0

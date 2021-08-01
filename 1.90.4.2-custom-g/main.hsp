@@ -125,7 +125,7 @@
 
 	goto *system_init
 
-	; #include "hspda.as"
+	#include "hspda.as"
 	; #include "hspext_ext.as"
 	; #include "elonadll.as"
 	; #include "z.as"	
@@ -134,6 +134,7 @@
 	; #include "hmm.as"
 	; #include "hspsock.as"
 	; #include "hspinet.as"
+	; #include "user32.as"
 
 	#include "init.hsp"
 	#include "chips.hsp"
@@ -177,7 +178,6 @@
 	#include "blend.hsp"
 	#include "command.hsp"
 	#include "system.hsp"
-	#include "skill.hsp"
 	#include "proc.hsp"
 	#include "action.hsp"
 	#include "chat.hsp"
@@ -991,7 +991,7 @@
 			gdata(GDATA_TIME_LIMIT) -= gdata(GDATA_SEC) / 60
 			if ( gdata(GDATA_COUNT_NOTICE) > gdata(GDATA_TIME_LIMIT) / 10 ) {
 				txtef COLOR_SKY_BLUE
-				txt lang("クエスト[残り" + (gdata(GDATA_TIME_LIMIT) + 1) + "分]", "" + (gdata(GDATA_TIME_LIMIT) + 1) + " min left for the quest.")
+				txt lang("?N?G?X?g[?c??" + (gdata(GDATA_TIME_LIMIT) + 1) + "??]", "" + (gdata(GDATA_TIME_LIMIT) + 1) + " min left for the quest.")
 				gdata(GDATA_COUNT_NOTICE) = gdata(GDATA_TIME_LIMIT) / 10
 			}
 			if ( gdata(GDATA_TIME_LIMIT) <= 0 ) {
@@ -1066,7 +1066,7 @@
 	if ( gdata(STARTING_GDATA_FLAG + 353) == 100 ) {
 		if ( gdata(STARTING_GDATA_FLAG + 355) <= 0 | gdata(STARTING_GDATA_FLAG + 354) != gdata(GDATA_MONTH) ) {
 			gdata(STARTING_GDATA_FLAG + 353) = 0
-			txt lang("ネフィアは静まった。", "Nefia got quiet.")
+			txt lang("?l?t?B?A?͐Â܂��??B", "Nefia got quiet.")
 		}
 	}
 	if ( gdata(GDATA_MONTH) \ 3 != 0 ) {
@@ -1079,7 +1079,7 @@
 					snd SOUNDLIST_FIRE1
 					snd SOUNDLIST_ATK_FIRE
 					txtef COLOR_GREEN
-					txt lang("ランダムネフィアが熱狂状態に突入した！", "Nefia have entered fever!")
+					txt lang("?????_???l?t?B?A???M?????Ԃɓ˓������I", "Nefia have entered fever!")
 					if ( cfg_extrahelp ) {
 						if ( gdata(STARTING_GDATA_HELP + 18) == 0 ) {
 							if ( mode == MODELIST_MAIN ) {
@@ -1107,7 +1107,7 @@
 						if ( gdata(GDATA_LAST_ETHER) != gdata(GDATA_MONTH) ) {
 							gdata(GDATA_WEATHER) = WEATHER_ETHER
 							txtef COLOR_RED
-							txt lang("エーテルの風が吹き始めた。すぐに避難しなくては。", "Etherwind starts to blow. You need to find a shelter!")
+							txt lang("?G?[?e???̕????????n?߂??B?????ɔ???Ȃ??ẮB", "Etherwind starts to blow. You need to find a shelter!")
 							gdata(GDATA_LAST_ETHER) = gdata(GDATA_MONTH)
 							gdata(GDATA_NEXT_WEATHER) = rnd(24) + limit(24 - gdata(GDATA_YEARS_AFTER_VICTORY) * 2, 1, 24)
 							break
@@ -1120,31 +1120,31 @@
 				if ( trait(TRAIT_ETHER_RAIN_CLOUD) != 0 ) {
 					if ( rnd(4) == 0 ) {
 						gdata(GDATA_WEATHER) = WEATHER_RAIN
-						txt lang("あなたは雨雲を引き寄せた。", "You draw a rain cloud.")
+						txt lang("???Ȃ??͉J?_???????񂹂??B", "You draw a rain cloud.")
 						break
 					}
 				}
 				if ( gdata(GDATA_WORLD_X) > 65 | gdata(GDATA_WORLD_Y) < 10 ) {
 					if ( rnd(2) == 0 ) {
 						gdata(GDATA_WEATHER) = WEATHER_SNOW
-						txt lang("雪が降ってきた。", "It starts to snow.")
+						txt lang("?Ⴊ?~?��Ă????B", "It starts to snow.")
 						break
 					}
 				}
 				else {
 					if ( rnd(10) == 0 ) {
 						gdata(GDATA_WEATHER) = WEATHER_RAIN
-						txt lang("雨が降り出した。", "It starts to rain.")
+						txt lang("?J???~???o?????B", "It starts to rain.")
 						break
 					}
 					if ( rnd(40) == 0 ) {
 						gdata(GDATA_WEATHER) = WEATHER_HARD_RAIN
-						txt lang("突然どしゃぶりになった。", "Suddenly, rain begins to pour down from the sky.")
+						txt lang("?ˑR?ǂ????Ԃ??ɂȂ��??B", "Suddenly, rain begins to pour down from the sky.")
 						break
 					}
 					if ( rnd(60) == 0 ) {
 						gdata(GDATA_WEATHER) = WEATHER_SNOW
-						txt lang("雪が降ってきた。", "It starts to snow.")
+						txt lang("?Ⴊ?~?��Ă????B", "It starts to snow.")
 						break
 					}
 				}
@@ -1152,33 +1152,33 @@
 			if ( p == WEATHER_RAIN ) {
 				if ( rnd(4) == 0 ) {
 					gdata(GDATA_WEATHER) = WEATHER_CLEAR
-					txt lang("雨は止んだ。", "It stops raining.")
+					txt lang("?J?͎~?񂾁B", "It stops raining.")
 					break
 				}
 				if ( rnd(15) == 0 ) {
 					gdata(GDATA_WEATHER) = WEATHER_HARD_RAIN
-					txt lang("雨が本格的に降り出した。", "The rain becomes heavier.")
+					txt lang("?J???{?i?I?ɍ~???o?????B", "The rain becomes heavier.")
 					break
 				}
 			}
 			if ( p == WEATHER_HARD_RAIN ) {
 				if ( rnd(3) == 0 ) {
 					gdata(GDATA_WEATHER) = WEATHER_RAIN
-					txt lang("雨は小降りになった。", "The rain becomes lighter.")
+					txt lang("?J?͏??~???ɂȂ��??B", "The rain becomes lighter.")
 					break
 				}
 			}
 			if ( p == WEATHER_ETHER ) {
 				if ( rnd(2) == 0 ) {
 					gdata(GDATA_WEATHER) = WEATHER_CLEAR
-					txt lang("エーテルの風は止んだ。", "The Etherwind dissipates.")
+					txt lang("?G?[?e???̕??͎~?񂾁B", "The Etherwind dissipates.")
 					break
 				}
 			}
 			if ( p == WEATHER_SNOW ) {
 				if ( rnd(3) == 0 ) {
 					gdata(GDATA_WEATHER) = WEATHER_CLEAR
-					txt lang("雪は止んだ。", "It stops raining.")
+					txt lang("???͎~?񂾁B", "It stops raining.")
 					break
 				}
 			}
@@ -1236,7 +1236,7 @@
 		}
 		if ( TweakData(53, 2) == 0 & rnd(15) == 0 ) {
 			if ( mode == MODELIST_MAIN ) {
-				txt lang("仮眠をとった。", "You take a nap.")
+				txt lang("???????Ƃ��??B", "You take a nap.")
 				gdata(GDATA_SLEEP) -= 3
 				if ( gdata(GDATA_SLEEP) < 0 ) {
 					gdata(GDATA_SLEEP) = 0
@@ -1251,7 +1251,7 @@
 	}
 	if ( gdata(GDATA_HOUR) == 6 ) {
 		txtef COLOR_YELLOW
-		txt lang("夜が明けた。", "Day breaks.")
+		txt lang("?邪???????B", "Day breaks.")
 	}
 	if ( gdata(GDATA_SLEEP) >= 15 ) {
 		if ( cfg_extrahelp ) {
@@ -1305,7 +1305,7 @@
 			}
 		}
 		txtef COLOR_YELLOW
-		txt lang("一日が終わり、日付が変わった。", "A day passes and a new day begins.")
+		txt lang("???????I?????A???t???ς??��??B", "A day passes and a new day begins.")
 		if ( rnd(10) == 0 ) {
 			gdata(GDATA_FLAG_NEGATE_SPAWN_FRON) = 0
 		}
@@ -1344,7 +1344,7 @@
 				if ( detect < 2 ) {
 					if ( rnd(2) == 0 ) {
 						txtef COLOR_YELLOW
-						txt lang("探偵がやってきたようだ。「クン…こ、これは事件の匂い！！！」", "A detective seems to have come." + cnvtalk("*Sniff*... I smell a case!!"))
+						txt lang("?T?オ???��Ă????悤???B?u?N???c???A?????͎????̓����I?I?I?v", "A detective seems to have come." + cnvtalk("*Sniff*... I smell a case!!"))
 						if ( rnd(3) == 0 ) {
 							flt
 							characreate -1, CREATURE_ID_WEREWOLF_DETECTIVE, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER)
@@ -1440,7 +1440,7 @@
 				chara_vanquish MAX_CHARA_NC
 				txt_questupdate
 				txtef COLOR_PURPLE
-				txt lang("ラシエルの気が変わったようだ。", "It seems that the mind of <Arasiel> has changed.")
+				txt lang("???V?G???̋C???ς??��??悤???B", "It seems that the mind of <Arasiel> has changed.")
 			}
 		}
 		if ( gdata(GDATA_FLAG_SUB_MOTHER) == 1 | gdata(GDATA_FLAG_SUB_MOTHER) == 3 | gdata(GDATA_FLAG_SUB_MOTHER) == 5 | gdata(GDATA_FLAG_SUB_MOTHER) == 7 | gdata(GDATA_FLAG_SUB_MOTHER) == 9 ) {
@@ -1561,7 +1561,7 @@
 			gdata(GDATA_RETURN)--
 			if ( mdata(MDATA_TYPE) == MAP_TYPE_QUEST | gdata(GDATA_AREA) == AREA_SHELTER | gdata(GDATA_AREA) == AREA_JAIL ) {
 				gdata(GDATA_RETURN) = 0
-				txt lang("不思議な力が帰還を阻止した。", "A mysterious power prevents you from returning.")
+				txt lang("?s?v?c?ȗ͂??A?҂??j?~?????B", "A mysterious power prevents you from returning.")
 				goto *game_main_redo_WEND1
 			}
 			if ( gdata(GDATA_RETURN) <= 0 & evnum == 0 ) {
@@ -1577,11 +1577,11 @@
 					}
 				loop
 				if ( f ) {
-					txt lang("今は帰還できない仲間を連れている。", "One of your allies prevents you from returning.")
+					txt lang("???͋A?҂ł??Ȃ????Ԃ??A???Ă????B", "One of your allies prevents you from returning.")
 					goto *game_main_redo_WEND1
 				}
 				if ( cdata(CDATA_BURDEN, CHARA_PLAYER) >= 4 ) {
-					txt lang("どこからか声が聞こえた。「悪いが重量オーバーだ」", "Someone shouts, \"Sorry, overweight.\"")
+					txt lang("?ǂ????炩?????????????B?u???????d?ʃI?[?o?[???v", "Someone shouts, \"Sorry, overweight.\"")
 					goto *game_main_redo_WEND1
 				}
 				if ( gdata(GDATA_TELEPORT_AREA) == gdata(GDATA_WORLD) ) {
@@ -1593,22 +1593,22 @@
 				gosub *check_return
 				if ( stat == 1 ) {
 					txtmore
-					txt lang("あなたは法を犯した。", "You commit a crime.")
+					txt lang("???Ȃ??͖@???Ƃ????B", "You commit a crime.")
 					modkarma CHARA_PLAYER, -10
 				}
 				snd SOUNDLIST_TELEPORT1
-				txt lang("あなたは次元の扉を開けた。", "A dimensional door opens in front of you.")
+				txt lang("???Ȃ??͎????̔????J?????B", "A dimensional door opens in front of you.")
 				if ( gdata(GDATA_FLAG_DUEL_TARGET) > 0 ) {
 					snd SOUNDLIST_FAIL1
 					txt_duel2
 					goto *game_main_redo_WEND1
 				}
 				if ( gdata(GDATA_CARGO_WEIGHT) > gdata(GDATA_CARGO_LIMIT) ) {
-					txt lang("だが荷車が重すぎて帰還できなかった。", "Return failed because your cargo is too heavy.")
+					txt lang("?????׎Ԃ??d?????ċA?҂ł??Ȃ??��??B", "Return failed because your cargo is too heavy.")
 					goto *game_main_redo_WEND1
 				}
 				if ( gdata(GDATA_TELEPORT_AREA) == AREA_JAIL ) {
-					txt lang("気まぐれな時の管理者により次元は歪められた！", "The capricious controller of time has changed your destination!")
+					txt lang("?C?܂????Ȏ??̊Ǘ??҂ɂ??莟???͘c?߂??ꂽ?I", "The capricious controller of time has changed your destination!")
 				}
 				msg_halt
 				gosub *screen_draw
@@ -1661,7 +1661,7 @@
 					if ( sdata(SKILL_RESDMG_ACID, tc) / 50 < 7 ) {
 						if ( synccheck(tc, -1) ) {
 							snd SOUNDLIST_WATER2
-							txt lang(name(tc) + "は酸に焼かれた。", name(tc) + " melt" + _s(tc) + ".")
+							txt lang(name(tc) + "?͎_?ɏĂ??ꂽ?B", name(tc) + " melt" + _s(tc) + ".")
 						}
 						if ( mef(6, ef) == 0 ) {
 							if ( tc != CHARA_PLAYER ) {
@@ -1679,7 +1679,7 @@
 		if ( mef(0, ef) == 5 ) {
 			if ( synccheck(tc, -1) ) {
 				snd SOUNDLIST_FIRE1
-				txt lang(name(tc) + "は燃えた。", name(tc) + " " + is(tc) + " burnt.")
+				txt lang(name(tc) + "?͔R?????B", name(tc) + " " + is(tc) + " burnt.")
 			}
 			if ( mef(6, ef) == 0 ) {
 				if ( tc != CHARA_PLAYER ) {
@@ -1696,7 +1696,7 @@
 				if ( findbuff(tc, BUFF_GRAVITY_ACCEL) == (-1) ) {
 					if ( synccheck(tc, -1) ) {
 						snd SOUNDLIST_WATER2
-						txt lang(name(tc) + "は地面の液体を浴びた。", name(tc) + " step" + _s(tc) + " in the pool.")
+						txt lang(name(tc) + "?͒n?ʂ̉t?̂𗁂т??B", name(tc) + " step" + _s(tc) + " in the pool.")
 						txtmore
 					}
 					wet tc, 25
@@ -1752,29 +1752,29 @@
 					cdata(CDATA_EMO_ICON, cc) = 20 + 100
 					kaiwa = rnd(3)
 					if ( kaiwa == 0 ) {
-						txt lang("「うわ…これ大丈夫なの" + _kana(3) + "？」", cnvtalk("Wow... Is this really okay?"))
+						txt lang("?u?????c?????????v?Ȃ?" + _kana(3) + "?H?v", cnvtalk("Wow... Is this really okay?"))
 					}
 					if ( kaiwa == 1 ) {
-						txt lang("「過激" + _dana(3) + "…」", cnvtalk("Too extreme..."))
+						txt lang("?u?ߌ?" + _dana(3) + "?c?v", cnvtalk("Too extreme..."))
 					}
 					if ( kaiwa == 2 ) {
-						txt lang("「こ、これは！？」", cnvtalk("C-could this be!?"))
+						txt lang("?u???A?????́I?H?v", cnvtalk("C-could this be!?"))
 					}
 					txtef COLOR_PURPLE
-					txt lang(name(cc) + "はページをめくっている…。", name(cc) + " turn" + _s(cc) + " the page...")
+					txt lang(name(cc) + "?̓y?[?W???߂??��Ă????c?B", name(cc) + " turn" + _s(cc) + " the page...")
 					snd SOUNDLIST_BOOK1
 					goto *turn_end
 				}
 				if ( rnd(10) == 0 ) {
 					kaiwa = rnd(3)
 					if ( kaiwa == 0 ) {
-						txt lang("「わけがわからない" + _yo(3) + "」", cnvtalk("I don't get it!"))
+						txt lang("?u?킯???킩???Ȃ?" + _yo(3) + "?v", cnvtalk("I don't get it!"))
 					}
 					if ( kaiwa == 1 ) {
-						txt lang("「全裸が些細なことに思えるレベル" + _dana(3) + "…」", cnvtalk("This seems like a trivial level of nudity..."))
+						txt lang("?u?S???????ׂȂ??ƂɎv???郌?x??" + _dana(3) + "?c?v", cnvtalk("This seems like a trivial level of nudity..."))
 					}
 					if ( kaiwa == 2 ) {
-						txt lang("「なぁにこれぇ…」", cnvtalk("What's this?"))
+						txt lang("?u?Ȃ??ɂ??ꂥ?c?v", cnvtalk("What's this?"))
 					}
 					dmgcon cc, CONDITION_CONFUSE, 100 + gdata(GDATA_LEVEL) * 2
 				}
@@ -1800,15 +1800,15 @@
 					tc = cnt
 					if ( synccheck(cc, -1) | synccheck(tc, -1) ) {
 						txtef COLOR_SKY_BLUE
-						txt lang(name(cc) + "は酔っ払って" + name(tc) + "にからんだ。", name(cc) + " gets the worse for drink and catches " + name(tc) + ".")
-						txt lang("「一杯どうだい？」", cnvtalk("Have a drink baby.")), lang("「飲んでないよ」", cnvtalk("What are you looking at?")), lang("「何見てるのさ」", cnvtalk("I ain't drunk.")), lang("「遊ぼうぜ」", cnvtalk("Let's have fun."))
+						txt lang(name(cc) + "?͐??��??��?" + name(tc) + "?ɂ????񂾁B", name(cc) + " gets the worse for drink and catches " + name(tc) + ".")
+						txt lang("?u???t?ǂ??????H?v", cnvtalk("Have a drink baby.")), lang("?u?????łȂ????v", cnvtalk("What are you looking at?")), lang("?u?????Ă??̂??v", cnvtalk("I ain't drunk.")), lang("?u?V?ڂ????v", cnvtalk("Let's have fun."))
 					}
 					if ( rnd(4) == 0 ) {
 						if ( tc != CHARA_PLAYER ) {
 							if ( synccheck(cc, -1) | synccheck(tc, -1) ) {
 								txtef COLOR_SKY_BLUE
-								txt lang(name(tc) + "はカチンときた。", name(tc) + " is pretty annoyed with the drunkard.")
-								txt lang("「酔っ払いにはうんざり！」", cnvtalk("Your time is over, drunk!"))
+								txt lang(name(tc) + "?̓J?`???Ƃ????B", name(tc) + " is pretty annoyed with the drunkard.")
+								txt lang("?u???��????ɂ͂??񂴂??I?v", cnvtalk("Your time is over, drunk!"))
 							}
 							cdata(CDATA_AI_AGGRO, tc) = 20
 							cdata(CDATA_TARGET, tc) = cc
@@ -1840,7 +1840,7 @@
 		if ( cdata(CDATA_ROW_ACT, cc) != ACTION_CHARGE & cdata(CDATA_ROW_ACT, cc) != ACTION_MEAL & cdata(CDATA_ROW_ACT, cc) != ACTION_XMAS_CAKE ) {
 			if ( cc != CHARA_PLAYER | rtval == 0 ) {
 				if ( synccheck(cc, -1) ) {
-					txt lang(name(cc) + "は" + actlistn(cdata(CDATA_ROW_ACT, cc)) + "を中断した。", name(cc) + " stop" + _s(cc) + " " + actlistn(cdata(CDATA_ROW_ACT, cc)) + ".")
+					txt lang(name(cc) + "??" + actlistn(cdata(CDATA_ROW_ACT, cc)) + "?𒆒f?????B", name(cc) + " stop" + _s(cc) + " " + actlistn(cdata(CDATA_ROW_ACT, cc)) + ".")
 				}
 				if ( cdata(CDATA_ID, cc) == CREATURE_ID_KARAVIKA ) {
 					if ( cc >= MAX_CHARA_FOLLOWER ) {
@@ -2070,7 +2070,7 @@
 		}
 		if ( cdata(CDATA_BURDEN, CHARA_PLAYER) >= 3 ) {
 			if ( rnd(20) == 0 ) {
-				txt lang(name(CHARA_PLAYER) + "は荷物に圧迫されもがいた。", "Your backpack is squashing you!")
+				txt lang(name(CHARA_PLAYER) + "?͉ו??Ɉ????????���?????B", "Your backpack is squashing you!")
 				dmghp cc, cdata(CDATA_MAX_HP, cc) * (cdata(CDATA_INV_WEIGHT, CHARA_PLAYER) * 10 / cdata(CDATA_CARRY_LIMIT, CHARA_PLAYER) + 10) / 200 + 1, DAMAGE_FROM_BURDEN
 			}
 		}
@@ -2095,7 +2095,7 @@
 			snd SOUNDLIST_ATK_DARK
 			animeload ANIMATION_UNISON_IMPACT4, cc
 			txtef COLOR_SKY_BLUE
-			txt lang("時は再び動き出した。", "Time starts to run again.")
+			txt lang("???͍Ăѓ????o?????B", "Time starts to run again.")
 		}
 		else {
 			if ( cc != CHARA_PLAYER ) {
@@ -2410,14 +2410,14 @@
 		if ( gdata(STARTING_GDATA_FLAG + 373) > 999 ) {
 			snd SOUNDLIST_GONG
 			txtef COLOR_RED2
-			txt lang("*判定負け*", "*Loss on points*")
+			txt lang("*???蕉??*", "*Loss on points*")
 			gdata(STARTING_GDATA_FLAG + 373) = 0
 			await 1000
 			petarenawin = 2
 			goto *turn_end
 		}
 		if ( key == key_goup | key_escape == 1 ) {
-			txt lang("試合を放棄する？", "Do you want to give up the game?")
+			txt lang("???????????????H", "Do you want to give up the game?")
 			promptYesNo
 			if ( rtval == 0 ) {
 				petarenawin = 2
@@ -2476,7 +2476,7 @@
 	}
 	if ( gdata(GDATA_EQUIP_CHANGE) ) {
 		if ( cdata(CDATA_CONDITION_BRAINWASH, CHARA_PLAYER) == 0 ) {
-			txt lang("装備を変更した。", "You change your equipment.")
+			txt lang("???????ύX?????B", "You change your equipment.")
 		}
 		goto *turn_end
 	}
@@ -2514,7 +2514,7 @@
 		time_warn = timeGetTime() / 1000
 		wishfilter = 0
 		hour_played++
-		s = lang("ElonaPlusをはじめてから" + hour_played + "時間が経過しています。", "You have been playing ElonaPlus for " + hour_played + " hour" + _s3(hour_played) + ". ")
+		s = lang("ElonaPlus???͂??߂Ă???" + hour_played + "???Ԃ??o?߂??Ă??܂??B", "You have been playing ElonaPlus for " + hour_played + " hour" + _s3(hour_played) + ". ")
 		gosub *time_warn_talk
 		txtmore
 		txtef COLOR_YELLOW
@@ -3194,7 +3194,7 @@
 		if ( key != key_cancel ) {
 			if ( key != key_alter ) {
 				msgdup++
-				txt lang("?キーを押すと、コマンドの一覧が見られる。", "Hit ? key to display help.")
+				txt lang("??L?[?����??ƁA?R?}???h?̈ꗗ???????????B", "Hit ? key to display help.")
 				gosub *screen_draw
 			}
 		}
@@ -3206,7 +3206,7 @@
 		if ( mdata(MDATA_TYPE) != MAP_TYPE_WORLD ) {
 			if ( gdata(GDATA_QUIT_Y) == 0 ) {
 				if ( key == "Q" ) {
-					txt lang("え…", "What...")
+					txt lang("???c", "What...")
 					gdata(GDATA_QUIT_Y)++
 					gosub *screen_draw
 					goto *pc_turn
@@ -3215,7 +3215,7 @@
 			else {
 				if ( gdata(GDATA_QUIT_Y) == 1 ) {
 					if ( key == "y" ) {
-						txt lang("まさか…", "No... no...")
+						txt lang("?܂????c", "No... no...")
 						gdata(GDATA_QUIT_Y)++
 						gosub *screen_draw
 						goto *pc_turn
@@ -3233,7 +3233,7 @@
 					else {
 						if ( gdata(GDATA_QUIT_Y) == 3 ) {
 							if ( key == "sc" ) {
-								txt lang("うわぁぁぁ！！", "Ahhhhh!!")
+								txt lang("???킟?????I?I", "Ahhhhh!!")
 								repeat 10
 									flt
 									characreate -1, CREATURE_ID_AT_SIGN, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER)
@@ -3255,7 +3255,7 @@
 	snd SOUNDLIST_COMPLETE1
 	music = -1
 	gosub *music_play
-	txt lang("信じられない！あなたはネフィアの迷宮「レシマス」を制覇した！", "Unbelievable! You conquered Lesimas!")
+	txt lang("?M???????Ȃ??I???Ȃ??̓l?t?B?A?̖��{?u???V?}?X?v?𐧔e?????I", "Unbelievable! You conquered Lesimas!")
 	gosub *screen_draw
 	txtsetwinword 3
 	repeat 3
@@ -3268,39 +3268,39 @@
 	screenupdate = -1
 	gosub *screen_draw
 	msg_clear
-	txt lang("お前がここに辿り着くことは」台座から、何かの声が聞こえる。", "From the pedestal, you can hear a voice.")
+	txt lang("???O???????ɒH?蒅?????Ƃ́v???��????A?????̐????????????B", "From the pedestal, you can hear a voice.")
 	flt
 	characreate -1, CREATURE_ID_ORPHE_THE_CHAOS_CHILD, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER)
 	music = MUSICLIST_MCCHAOS
 	gosub *music_play
 	msg_halt
 	msg_clear
-	txt lang("「決まっていたことなのだ…遅かれ早かれな」", cnvtalk("Your arrival here was inevitable... sooner or later."))
-	txt lang("部屋の空気が突然緊張し、あなたの前に端麗な青年が現れた。", "Space within the room distorts, and an elegant young man appears before you.")
-	txt lang("「我々からすれば、複雑性の一面に過ぎないが、人間は運命とでも呼ぶのだろう？」", cnvtalk("For us, it's merely one facet of a vast, complex system, but I believe you humans know it as 'fate'?"))
+	txt lang("?u???܂��Ă??????ƂȂ̂??c?x???ꑁ?????ȁv", cnvtalk("Your arrival here was inevitable... sooner or later."))
+	txt lang("?????̋??C???ˑR?ْ????A???Ȃ??̑O?ɒ[???ȐN?????ꂽ?B", "Space within the room distorts, and an elegant young man appears before you.")
+	txt lang("?u???X???炷???΁A???G???̈??ʂɉ߂??Ȃ????A?l?Ԃ͉^???Ƃł??ĂԂ̂??낤?H?v", cnvtalk("For us, it's merely one facet of a vast, complex system, but I believe you humans know it as 'fate'?"))
 	msg_halt
 	msg_clear
-	txt lang("あなたは懸命に脚の震えを抑えようとしたが、難しかった。", "You earnestly attempt to suppress the shaking in your legs, but it proves difficult.")
-	txt lang("華奢に見える幼顔の男の影は、人のものではない。", "The shadow of the young man with an elegant face is not a man's shadow.")
-	txt lang("あどけない瞳の奥に、あなたは底知れない力と闇を感じた。", "From the depths of his innocent eyes, you feel immeasurable strength and darkness.")
+	txt lang("???Ȃ??͌????ɋr?̐k?????}???悤?Ƃ??????A????��??B", "You earnestly attempt to suppress the shaking in your legs, but it proves difficult.")
+	txt lang("?ؚ??Ɍ??????c???̒j?̉e?́A?l?̂??̂ł͂Ȃ??B", "The shadow of the young man with an elegant face is not a man's shadow.")
+	txt lang("???ǂ??Ȃ????̉??ɁA???Ȃ??͒??m???Ȃ??͂ƈł����????B", "From the depths of his innocent eyes, you feel immeasurable strength and darkness.")
 	msg_halt
 	msg_clear
-	txt lang("「ネフィアの永遠の盟約に基づき」青年は台座の横の死体を指し、皮肉な微笑を送った。", "The young man gestures at the corpse of Zeome with an ironic smile.")
-	txt lang("「この哀れな老人が守っていたものは、今からお前のものだ」", cnvtalk("In accordance with the oath of the Eternal League of Nefia, the item that was guarded by this pathetic old man is now yours."))
+	txt lang("?u?l?t?B?A?̉i???̖????Ɋ??Â??v?N?͑??��̉??̎??̂??w???A?????Ȕ??΂𑗂��??B", "The young man gestures at the corpse of Zeome with an ironic smile.")
+	txt lang("?u???̈????ȘV?l?????��Ă??????̂́A?????炨?O?̂??̂??v", cnvtalk("In accordance with the oath of the Eternal League of Nefia, the item that was guarded by this pathetic old man is now yours."))
 	msg_halt
 	msg_clear
-	txt lang("あなたは、台座の上に置かれている絢爛な装飾の本を、いぶかしげに眺めた。", "You cast a suspicious gaze at the gorgeously adorned book resting on the pedestal as the man begins to speak to it...")
+	txt lang("???Ȃ??́A???��̏??ɒu?????Ă??鈺ࣂȑ????̖{???A???Ԃ??????ɒ??߂??B", "You cast a suspicious gaze at the gorgeously adorned book resting on the pedestal as the man begins to speak to it...")
 	msg_halt
 	tc = findchara(CREATURE_ID_ORPHE_THE_CHAOS_CHILD)
 	gosub *chat
 	msg_clear
-	txt lang("青年は悪戯っぽくニヤリと笑い、壁に寄りかかった。", "The young man laughs and leans against the wall, wearing a mischievous smile.")
+	txt lang("?N?͈??Y?��ۂ??j?????Ə΂??A?ǂɊ??肩???��??B", "The young man laughs and leans against the wall, wearing a mischievous smile.")
 	msg_halt
 	msg_clear
 	chara_vanquish findchara(CREATURE_ID_ORPHE_THE_CHAOS_CHILD)
 	screenupdate = -1
 	gosub *screen_draw
-	txt lang("…どれくらい時間がたっただろう。氷の瞳の男は、いつの間にか姿を消していた。あなたは不安を振り払い、ゆっくりと本に手を伸ばした…。", "...An unknown amount of time passes. The man with the terrifying eyes vanished while you weren't looking. You shake off your uncertainty, slowly reaching your hand out to the book...")
+	txt lang("?c?ǂꂭ?炢???Ԃ????��????낤?B?X?̓??̒j?́A???̊Ԃɂ??p???��??Ă????B???Ȃ??͕s?��??U?蕥???A???��????Ɩ{?Ɏ????L?΂????c?B", "...An unknown amount of time passes. The man with the terrifying eyes vanished while you weren't looking. You shake off your uncertainty, slowly reaching your hand out to the book...")
 	msg_halt
 	mode = MODELIST_MAIN
 	music = MUSICLIST_MCMARCH2
@@ -3317,9 +3317,9 @@
 	pos 0, 0
 	picload exedir + "\\graphic\\g1.bmp", 1
 	gsel 0
-	s = lang("" + cdatan(CDATAN_AKA, CHARA_PLAYER) + cdatan(CDATAN_NAME, CHARA_PLAYER) + "に祝福あれ！あなたは遂にレシマスの秘宝を手にいれた！", "Blessing to " + cdatan(CDATAN_NAME, CHARA_PLAYER) + ", " + cdatan(CDATAN_AKA, CHARA_PLAYER) + "! You've finally acquired the codex!")
+	s = lang("" + cdatan(CDATAN_AKA, CHARA_PLAYER) + cdatan(CDATAN_NAME, CHARA_PLAYER) + "?ɏj???????I???Ȃ??͐??Ƀ??V?}?X?̔????????ɂ??ꂽ?I", "Blessing to " + cdatan(CDATAN_NAME, CHARA_PLAYER) + ", " + cdatan(CDATAN_AKA, CHARA_PLAYER) + "! You've finally acquired the codex!")
 	gosub *screen_drawMsg2
-	s = lang("*勝利*", "*Win*"), "" + strhint3
+	s = lang("*????*", "*Win*"), "" + strhint3
 	windowshadow = 1
 	display_window 60, 70, 680, 488
 	cmbg = 0
@@ -3329,20 +3329,20 @@
 	pos wx + ww - 120, wy + wh / 2
 	grotate 4, cmbg / 4 \ 4 * 180, cmbg / 4 / 4 \ 2 * 300, 0, x, y
 	gmode 2
-	display_topic lang("制覇までの軌跡", "Trace"), wx + 28, wy + 40
+	display_topic lang("???e?܂ł̋O??", "Trace"), wx + 28, wy + 40
 	font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
 	color 0, 0, 0
 	color 0, 0
 	pos wx + 40, wy + 76
-	mes lang("" + 517 + "年" + 8 + "月" + 12 + "日に、あなたはノースティリスに到着した。", "In the year " + 517 + ", " + 12 + "/" + 8 + ", you arrived at North Tyris.")
+	mes lang("" + 517 + "?N" + 8 + "??" + 12 + "???ɁA???Ȃ??̓m?[?X?e?B???X?ɓ????????B", "In the year " + 517 + ", " + 12 + "/" + 8 + ", you arrived at North Tyris.")
 	mes ""
-	mes lang("最深で" + gdata(GDATA_DEEPEST) + "階相当まで到達し、" + gdata(GDATA_KILLED) + "匹の敵を殺して、", "You've killed " + gdata(GDATA_KILLED) + " creatures and reached\nmaximum of " + cnvrank(gdata(GDATA_DEEPEST)) + " level of dungeons.")
-	mes lang("現在" + calcscore() + "点のスコアを叩き出している。", "Your score is " + calcscore() + " points now.")
+	mes lang("?Ő[??" + gdata(GDATA_DEEPEST) + "?K?????܂œ??B???A" + gdata(GDATA_KILLED) + "?C?̓G???E???āA", "You've killed " + gdata(GDATA_KILLED) + " creatures and reached\nmaximum of " + cnvrank(gdata(GDATA_DEEPEST)) + " level of dungeons.")
+	mes lang("????" + calcscore() + "?_?̃X?R?A???@???o???Ă????B", "Your score is " + calcscore() + " points now.")
 	mes ""
-	mes lang("" + gdata(GDATA_YEAR) + "年" + gdata(GDATA_MONTH) + "月" + gdata(GDATA_DAY) + "日にレシマスを制覇して、", "In the year " + gdata(GDATA_YEAR) + ", " + gdata(GDATA_DAY) + "/" + gdata(GDATA_MONTH) + ", you conquered Lesimas.")
-	mes lang("あなたは「" + wincomment + "」とコメントした。", "Upon killing Zeome, you said, " + cnvtalk("" + wincomment))
+	mes lang("" + gdata(GDATA_YEAR) + "?N" + gdata(GDATA_MONTH) + "??" + gdata(GDATA_DAY) + "???Ƀ??V?}?X?𐧔e???āA", "In the year " + gdata(GDATA_YEAR) + ", " + gdata(GDATA_DAY) + "/" + gdata(GDATA_MONTH) + ", you conquered Lesimas.")
+	mes lang("???Ȃ??́u" + wincomment + "?v?ƃR?????g?????B", "Upon killing Zeome, you said, " + cnvtalk("" + wincomment))
 	mes ""
-	mes lang("…あなたの旅はまだ終わらない。", "Your journey continues...")
+	mes lang("?c???Ȃ??̗??͂܂??I?????Ȃ??B", "Your journey continues...")
 	redraw 1
 	key_list = key_enter
 	keyrange = 0
@@ -3356,7 +3356,7 @@
 	goto *game_win_WHILE1
 *game_win_WEND1
 	gosub *screen_refreshFull
-	txt lang("達成のシーンをもう一度再現する？", "Do you want to watch this event again?")
+	txt lang("?B???̃V?[?????���???x?Č??????H", "Do you want to watch this event again?")
 	promptYesNo
 	if ( rtval == 0 ) {
 		goto *game_win
@@ -3369,7 +3369,7 @@
 	snd SOUNDLIST_COMPLETE1
 	music = -1
 	gosub *music_play
-	txt lang("信じられない！あなたは古代遺跡「レミード」を制圧した！", "Unbelievable! You conquered Remido!")
+	txt lang("?M???????Ȃ??I???Ȃ??͌Ñ????Ձu???~?[?h?v?𐧈??????I", "Unbelievable! You conquered Remido!")
 	gosub *screen_draw
 	txtsetwinword 3
 	repeat 3
@@ -3392,9 +3392,9 @@
 	pos 0, 0
 	picload exedir + "\\graphic\\g1.bmp", 1
 	gsel 0
-	s = lang("" + cdatan(CDATAN_AKA, CHARA_PLAYER) + cdatan(CDATAN_NAME, CHARA_PLAYER) + "に祝福あれ！あなたは遂に災厄の根源を滅ぼした！", "Blessing to " + cdatan(CDATAN_NAME, CHARA_PLAYER) + ", " + cdatan(CDATAN_AKA, CHARA_PLAYER) + "! You've finally destroyed the source of disaster!")
+	s = lang("" + cdatan(CDATAN_AKA, CHARA_PLAYER) + cdatan(CDATAN_NAME, CHARA_PLAYER) + "?ɏj???????I???Ȃ??͐??ɍЖ??̍??????łڂ????I", "Blessing to " + cdatan(CDATAN_NAME, CHARA_PLAYER) + ", " + cdatan(CDATAN_AKA, CHARA_PLAYER) + "! You've finally destroyed the source of disaster!")
 	gosub *screen_drawMsg2
-	s = lang("*勝利*", "*Win*"), "" + strhint3
+	s = lang("*????*", "*Win*"), "" + strhint3
 	windowshadow = 1
 	display_window 60, 70, 680, 488
 	cmbg = 0
@@ -3404,20 +3404,20 @@
 	pos wx + ww - 120, wy + wh / 2
 	grotate 4, cmbg / 4 \ 4 * 180, cmbg / 4 / 4 \ 2 * 300, 0, x, y
 	gmode 2
-	display_topic lang("制覇までの軌跡", "Trace"), wx + 28, wy + 40
+	display_topic lang("???e?܂ł̋O??", "Trace"), wx + 28, wy + 40
 	font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
 	color 0, 0, 0
 	color 0, 0
 	pos wx + 40, wy + 76
-	mes lang("" + 517 + "年" + 8 + "月" + 12 + "日に、あなたはノースティリスに到着した。", "In the year " + 517 + ", " + 12 + "/" + 8 + ", you arrived at North Tyris.")
+	mes lang("" + 517 + "?N" + 8 + "??" + 12 + "???ɁA???Ȃ??̓m?[?X?e?B???X?ɓ????????B", "In the year " + 517 + ", " + 12 + "/" + 8 + ", you arrived at North Tyris.")
 	mes ""
-	mes lang("最深で" + gdata(GDATA_DEEPEST) + "階相当まで到達し、" + gdata(GDATA_KILLED) + "匹の敵を殺して、", "You've killed " + gdata(GDATA_KILLED) + " creatures and reached\nmaximum of " + cnvrank(gdata(GDATA_DEEPEST)) + " level of dungeons.")
-	mes lang("現在" + calcscore() + "点のスコアを叩き出している。", "Your score is " + calcscore() + " points now.")
+	mes lang("?Ő[??" + gdata(GDATA_DEEPEST) + "?K?????܂œ??B???A" + gdata(GDATA_KILLED) + "?C?̓G???E???āA", "You've killed " + gdata(GDATA_KILLED) + " creatures and reached\nmaximum of " + cnvrank(gdata(GDATA_DEEPEST)) + " level of dungeons.")
+	mes lang("????" + calcscore() + "?_?̃X?R?A???@???o???Ă????B", "Your score is " + calcscore() + " points now.")
 	mes ""
-	mes lang("" + gdata(GDATA_YEAR) + "年" + gdata(GDATA_MONTH) + "月" + gdata(GDATA_DAY) + "日にレミードを制覇して、", "In the year " + gdata(GDATA_YEAR) + ", " + gdata(GDATA_DAY) + "/" + gdata(GDATA_MONTH) + ", you conquered Remido.")
-	mes lang("あなたは「" + wincomment + "」とコメントした。", "Upon killing Meshera Alpha, you said, " + cnvtalk("" + wincomment))
+	mes lang("" + gdata(GDATA_YEAR) + "?N" + gdata(GDATA_MONTH) + "??" + gdata(GDATA_DAY) + "???Ƀ??~?[?h?𐧔e???āA", "In the year " + gdata(GDATA_YEAR) + ", " + gdata(GDATA_DAY) + "/" + gdata(GDATA_MONTH) + ", you conquered Remido.")
+	mes lang("???Ȃ??́u" + wincomment + "?v?ƃR?????g?????B", "Upon killing Meshera Alpha, you said, " + cnvtalk("" + wincomment))
 	mes ""
-	mes lang("…あなたの旅はまだ終わらない。", "Your journey continues...")
+	mes lang("?c???Ȃ??̗??͂܂??I?????Ȃ??B", "Your journey continues...")
 	redraw 1
 	key_list = key_enter
 	keyrange = 0
@@ -3431,7 +3431,7 @@
 	goto *game_win2_WHILE1
 *game_win2_WEND1
 	gosub *screen_refreshFull
-	txt lang("達成のシーンをもう一度再現する？", "Do you want to watch this event again?")
+	txt lang("?B???̃V?[?????���???x?Č??????H", "Do you want to watch this event again?")
 	promptYesNo
 	if ( rtval == 0 ) {
 		goto *game_win2
@@ -3445,7 +3445,7 @@
 	snd SOUNDLIST_COMPLETE1
 	music = -1
 	gosub *music_play
-	txt lang("信じられない！あなたは神の間を制圧した！", "Unbelievable! You conquered God's Prison!")
+	txt lang("?M???????Ȃ??I???Ȃ??͐_?̊Ԃ𐧈??????I", "Unbelievable! You conquered God's Prison!")
 	gosub *screen_draw
 	txtsetwinwordc 3
 	repeat 3
@@ -3468,9 +3468,9 @@
 	pos 0, 0
 	picload exedir + "\\graphic\\g1.bmp", 1
 	gsel 0
-	s = lang("" + cdatan(CDATAN_AKA, CHARA_PLAYER) + cdatan(CDATAN_NAME, CHARA_PLAYER) + "に祝福あれ！あなたは遂に混沌の神を討伐した！", "Blessing to " + cdatan(CDATAN_NAME, CHARA_PLAYER) + ", " + cdatan(CDATAN_AKA, CHARA_PLAYER) + "! You've finally beat the god of chaos!")
+	s = lang("" + cdatan(CDATAN_AKA, CHARA_PLAYER) + cdatan(CDATAN_NAME, CHARA_PLAYER) + "?ɏj???????I???Ȃ??͐??ɍ??ׂ̐_?𓢔??????I", "Blessing to " + cdatan(CDATAN_NAME, CHARA_PLAYER) + ", " + cdatan(CDATAN_AKA, CHARA_PLAYER) + "! You've finally beat the god of chaos!")
 	gosub *screen_drawMsg2
-	s = lang("*勝利*", "*Win*"), "" + strhint3
+	s = lang("*????*", "*Win*"), "" + strhint3
 	windowshadow = 1
 	display_window 60, 70, 680, 488
 	cmbg = 0
@@ -3480,20 +3480,20 @@
 	pos wx + ww - 120, wy + wh / 2
 	grotate 4, cmbg / 4 \ 4 * 180, cmbg / 4 / 4 \ 2 * 300, 0, x, y
 	gmode 2
-	display_topic lang("制覇までの軌跡", "Trace"), wx + 28, wy + 40
+	display_topic lang("???e?܂ł̋O??", "Trace"), wx + 28, wy + 40
 	font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
 	color 0, 0, 0
 	color 0, 0
 	pos wx + 40, wy + 76
-	mes lang("" + 517 + "年" + 8 + "月" + 12 + "日に、あなたはノースティリスに到着した。", "In the year " + 517 + ", " + 12 + "/" + 8 + ", you arrived at North Tyris.")
+	mes lang("" + 517 + "?N" + 8 + "??" + 12 + "???ɁA???Ȃ??̓m?[?X?e?B???X?ɓ????????B", "In the year " + 517 + ", " + 12 + "/" + 8 + ", you arrived at North Tyris.")
 	mes ""
-	mes lang("最深で" + gdata(GDATA_DEEPEST) + "階相当まで到達し、" + gdata(GDATA_KILLED) + "匹の敵を殺して、", "You've killed " + gdata(GDATA_KILLED) + " creatures and reached\nmaximum of " + cnvrank(gdata(GDATA_DEEPEST)) + " level of dungeons.")
-	mes lang("現在" + calcscore() + "点のスコアを叩き出している。", "Your score is " + calcscore() + " points now.")
+	mes lang("?Ő[??" + gdata(GDATA_DEEPEST) + "?K?????܂œ??B???A" + gdata(GDATA_KILLED) + "?C?̓G???E???āA", "You've killed " + gdata(GDATA_KILLED) + " creatures and reached\nmaximum of " + cnvrank(gdata(GDATA_DEEPEST)) + " level of dungeons.")
+	mes lang("????" + calcscore() + "?_?̃X?R?A???@???o???Ă????B", "Your score is " + calcscore() + " points now.")
 	mes ""
-	mes lang("" + gdata(GDATA_YEAR) + "年" + gdata(GDATA_MONTH) + "月" + gdata(GDATA_DAY) + "日に神の間を制覇して、", "In the year " + gdata(GDATA_YEAR) + ", " + gdata(GDATA_DAY) + "/" + gdata(GDATA_MONTH) + ", you conquered God's Prison.")
-	mes lang("あなたは「" + wincomment + "」とコメントした。", "Upon killing Enthumesis, you said, " + cnvtalk("" + wincomment))
+	mes lang("" + gdata(GDATA_YEAR) + "?N" + gdata(GDATA_MONTH) + "??" + gdata(GDATA_DAY) + "???ɐ_?̊Ԃ𐧔e???āA", "In the year " + gdata(GDATA_YEAR) + ", " + gdata(GDATA_DAY) + "/" + gdata(GDATA_MONTH) + ", you conquered God's Prison.")
+	mes lang("???Ȃ??́u" + wincomment + "?v?ƃR?????g?????B", "Upon killing Enthumesis, you said, " + cnvtalk("" + wincomment))
 	mes ""
-	mes lang("…あなたの旅はまだ終わらない。", "Your journey continues...")
+	mes lang("?c???Ȃ??̗??͂܂??I?????Ȃ??B", "Your journey continues...")
 	redraw 1
 	key_list = key_enter
 	keyrange = 0
@@ -3507,7 +3507,7 @@
 	goto *game_win3_WHILE1
 *game_win3_WEND1
 	gosub *screen_refreshFull
-	txt lang("達成のシーンをもう一度再現する？", "Do you want to watch this event again?")
+	txt lang("?B???̃V?[?????���???x?Č??????H", "Do you want to watch this event again?")
 	promptYesNo
 	if ( rtval == 0 ) {
 		goto *game_win3
@@ -3526,9 +3526,9 @@
 	if ( gdata(GDATA_QUEST) ) {
 		goto *quest_death
 	}
-	txt lang("さようなら… ", "Good bye... ")
+	txt lang("???悤?Ȃ??c ", "Good bye... ")
 	txtmore
-	txt lang("遺言は？", "You leave a dying message.")
+	txt lang("?⌾?́H", "You leave a dying message.")
 	val = (windoww - 310) / 2 + inf_screenx, winposy(90), 16, 1, 0
 	inputlog = ""
 	gosub *prompt_word
@@ -3536,7 +3536,7 @@
 		txtsetlastword
 	}
 	else {
-		lastword = lang("「", "\"") + inputlog + lang("」", "\"")
+		lastword = lang("?u", "\"") + inputlog + lang("?v", "\"")
 	}
 	buff = ""
 	notesel buff
@@ -3547,10 +3547,10 @@
 	}
 	s = cdatan(CDATAN_AKA, cc) + " " + cdatan(CDATAN_NAME, cc) + lang("", " ") + lastword
 	lenfix s, 60
-	s += lang("" + gdata(GDATA_YEAR) + "年" + gdata(GDATA_MONTH) + "月" + gdata(GDATA_DAY) + "日", "" + gdata(GDATA_YEAR) + "/" + gdata(GDATA_MONTH) + "/" + gdata(GDATA_DAY))
+	s += lang("" + gdata(GDATA_YEAR) + "?N" + gdata(GDATA_MONTH) + "??" + gdata(GDATA_DAY) + "??", "" + gdata(GDATA_YEAR) + "/" + gdata(GDATA_MONTH) + "/" + gdata(GDATA_DAY))
 	noteadd "", 0
 	noteadd s, 1
-	s = lang(mdatan(MDATAN_NAME) + "で" + ndeathcause, cnven(ndeathcause) + " in " + mdatan(MDATAN_NAME) + ".")
+	s = lang(mdatan(MDATAN_NAME) + "??" + ndeathcause, cnven(ndeathcause) + " in " + mdatan(MDATAN_NAME) + ".")
 	noteadd s, 2
 	s = "" + calcscore() + "," + cdata(CDATA_PIC, cc)
 	noteadd s, 3
@@ -3593,7 +3593,7 @@
 		}
 	loop
 	repeat noteinfo(0) / 4
-		noteadd "" + cnvrank(cnt + 1) + lang("位", ""), cnt * 4, 1
+		noteadd "" + cnvrank(cnt + 1) + lang("??", ""), cnt * 4, 1
 	loop
 	notesave file + ".txt"
 	redraw 0
@@ -3602,31 +3602,31 @@
 	picload exedir + "graphic\\void.bmp", 1
 	gsel 0
 	gosub *dead_draw
-	s = lang("あともう少しで埋葬される…", "You are about to be buried...")
+	s = lang("???Ƃ���?????Ŗ??????????c", "You are about to be buried...")
 	gosub *screen_drawMsg2
 	if ( gdata(GDATA_FLAG_GAME_MODE) == GAMEMODE_LOSS | (gdata(GDATA_FLAG_MAIN) >= 715 & gdata(GDATA_FLAG_MAIN) < 760 & gdata(GDATA_AREA) == AREA_CHAOS_CRADLE) ) {
 		gosub *dead_draw
-		s = lang("あなたは埋められた。さようなら…（キーを押すと終了します）", "You have been buried. Bye...(Hit any key to exit)")
+		s = lang("???Ȃ??͖??߂??ꂽ?B???悤?Ȃ??c?i?L?[?����??ƏI?????܂??j", "You have been buried. Bye...(Hit any key to exit)")
 		gosub *screen_drawMsg2
 		redraw 1
 		press
 		goto *exit_game
 	}
-	promptAdd lang("這い上がる(ﾍﾟﾅﾙﾃｨあり復活)", "Crawl up"), "a"
+	promptAdd lang("?????オ??(????è???蕜??)", "Crawl up"), "a"
 	if ( gdata(GDATA_FLAG_GAME_MODE) != GAMEMODE_ABNORMAL ) {
-		promptAdd lang("埋まる(保存したところから)", "Lie on your back"), "b"
+		promptAdd lang("???܂?(?ۑ??????Ƃ??납??)", "Lie on your back"), "b"
 	}
 	val = promptx, 100, 300, 1
 	gosub *prompt_key
 	if ( rtval == 1 ) {
 		gosub *dead_draw
-		s = lang("あなたは埋められた。さようなら…（キーを押すと終了します）", "You have been buried. Bye...(Hit any key to exit)")
+		s = lang("???Ȃ??͖??߂??ꂽ?B???悤?Ȃ??c?i?L?[?����??ƏI?????܂??j", "You have been buried. Bye...(Hit any key to exit)")
 		gosub *screen_drawMsg2
 		redraw 1
 		press
 		goto *exit_game
 	}
-	s = "dead" + lang(cdatan(CDATAN_AKA, CHARA_PLAYER) + cdatan(CDATAN_NAME, CHARA_PLAYER) + "は" + mdatan(MDATAN_NAME) + "で" + ndeathcause + lastword, cdatan(CDATAN_AKA, CHARA_PLAYER) + " " + cdatan(CDATAN_NAME, CHARA_PLAYER) + " " + ndeathcause + " in " + mdatan(MDATAN_NAME) + " " + lastword)
+	s = "dead" + lang(cdatan(CDATAN_AKA, CHARA_PLAYER) + cdatan(CDATAN_NAME, CHARA_PLAYER) + "??" + mdatan(MDATAN_NAME) + "??" + ndeathcause + lastword, cdatan(CDATAN_AKA, CHARA_PLAYER) + " " + cdatan(CDATAN_NAME, CHARA_PLAYER) + " " + ndeathcause + " in " + mdatan(MDATAN_NAME) + " " + lastword)
 	screenupdate = -1
 	gosub *screen_refreshFull
 	levelexitby = 3
@@ -3657,7 +3657,7 @@
 			s = "New!"
 		}
 		else {
-			s = " " + cnvrank(cnt + 1) + lang("位", "")
+			s = " " + cnvrank(cnt + 1) + lang("??", "")
 		}
 		pos x - 80, y + 10
 		color 10, 10, 10
@@ -3682,7 +3682,7 @@
 		csvsort s, s(10), 44
 		pos x + 480, y + 20
 		color 10, 10, 10
-		mes "" + s + lang("点", "")
+		mes "" + s + lang("?_", "")
 		p = int(s(1)) \ 1000
 		chara_preparepic p
 		pos x - 22, y + 12
@@ -3719,7 +3719,7 @@
 		if ( gdata(GDATA_QUEST) == QUEST_TYPE_PARTY ) {
 			calcpartyscore
 			calcpartyscore2
-			txt lang("最終得点は" + qdata(QDATA_PARAM2, gdata(GDATA_QUEST_REF)) + "ポイントだった！", "Your final score is " + qdata(QDATA_PARAM2, gdata(GDATA_QUEST_REF)) + " points!")
+			txt lang("?ŏI???_??" + qdata(QDATA_PARAM2, gdata(GDATA_QUEST_REF)) + "?|?C???g???��??I", "Your final score is " + qdata(QDATA_PARAM2, gdata(GDATA_QUEST_REF)) + " points!")
 
 			/********** ANNA CUSTOM - BEGINNING **********/ // Gather Items At End Of Party Time.
 
@@ -3735,12 +3735,12 @@
 				gdata(GDATA_QUEST_STATUS) = QUEST_STATE_SUCCESS
 				qdata(QDATA_STATUS, gdata(GDATA_QUEST_REF)) = QUEST_STATE_SUCCESS
 				txtef COLOR_GREEN
-				txt lang("パーティーは大盛況だった！", "People had a hell of a good time!")
+				txt lang("?p?[?e?B?[?͑吷?????��??I", "People had a hell of a good time!")
 				msg_halt
 			}
 			else {
 				txtef COLOR_PURPLE
-				txt lang("パーティーはぐだぐだになった…", "The party turned out to be a big flop...")
+				txt lang("?p?[?e?B?[?͂????????ɂȂ��??c", "The party turned out to be a big flop...")
 			}
 		}
 		if ( gdata(GDATA_QUEST) == QUEST_TYPE_HARVEST ) {
@@ -3748,12 +3748,12 @@
 				gdata(GDATA_QUEST_STATUS) = QUEST_STATE_SUCCESS
 				qdata(QDATA_STATUS, gdata(GDATA_QUEST_REF)) = QUEST_STATE_SUCCESS
 				txtef COLOR_GREEN
-				txt lang("無事に納入を終えた！", "You complete the task!")
+				txt lang("?????ɔ[?????I?????I", "You complete the task!")
 				msg_halt
 			}
 			else {
 				txtef COLOR_PURPLE
-				txt lang("納入は間に合わなかった…", "You fail to fulfill your task...")
+				txt lang("?[???͊Ԃɍ????Ȃ??��??c", "You fail to fulfill your task...")
 			}
 		}
 		if ( gdata(GDATA_QUEST) == QUEST_TYPE_MINEFIELD ) {
@@ -3761,17 +3761,17 @@
 				gdata(GDATA_QUEST_STATUS) = QUEST_STATE_SUCCESS
 				qdata(QDATA_STATUS, gdata(GDATA_QUEST_REF)) = QUEST_STATE_SUCCESS
 				txtef COLOR_GREEN
-				txt lang("無事に撤去を終えた！", "You complete the task!")
+				txt lang("?????ɓP?????I?????I", "You complete the task!")
 				msg_halt
 			}
 			else {
 				txtef COLOR_PURPLE
-				txt lang("撤去は間に合わなかった…", "You fail to fulfill your task...")
+				txt lang("?P???͊Ԃɍ????Ȃ??��??c", "You fail to fulfill your task...")
 			}
 		}
 		if ( gdata(GDATA_QUEST) == QUEST_TYPE_CONQUER ) {
 			txtef COLOR_PURPLE
-			txt lang("討伐に失敗した…", "You failed to slay the target...")
+			txt lang("?????Ɏ??s?????c", "You failed to slay the target...")
 		}
 		qexit = 0
 		levelexitby = 4
@@ -3815,13 +3815,13 @@
 		novoidlv = 1
 		characreate -1, CREATURE_ID_LITTLE_SISTER, evdata1(evnum - (evnum != 0) * 1), evdata2(evnum - (evnum != 0) * 1)
 		txtef COLOR_BLUE
-		txt lang("ビッグダディの肩から、リトルシスターが滑り落ちた。「Mr Bubbles！！」", "The Little Sister slips from the Big Daddy's shoulder. \"Mr. Bubbles!\"")
+		txt lang("?r?b?O?_?f?B?̌??????A???g???V?X?^?[?????藎?????B?uMr Bubbles?I?I?v", "The Little Sister slips from the Big Daddy's shoulder. \"Mr. Bubbles!\"")
 		goto *event_SWEND1
 	}
 	if ( _switch_val == EVENT_GOD_INSIDE_LULWY | _switch_sw ) {
 		_switch_sw = 0
 		txtef COLOR_YELLOW
-		txt lang("愚かね…死ぬ準備をしなさい！！！", "Fool... Prepare to die!!!")
+		txt lang("?����ˁc???ʏ????����Ȃ????I?I?I", "Fool... Prepare to die!!!")
 		msg_halt
 		animeid = ANIMATION_RAGNA
 		gosub *anime
@@ -3851,7 +3851,7 @@
 	if ( _switch_val == EVENT_GOD_INSIDE_EHEKATL | _switch_sw ) {
 		_switch_sw = 0
 		txtef COLOR_YELLOW
-		txt lang("…ぅっぅぅ…っぅぅっぅううううみみゃぁ！！！", "memememw...MEMEMEM...MEWWWWWW!")
+		txt lang("?c???��????c?��????��??????????݂݂႟?I?I?I", "memememw...MEMEMEM...MEWWWWWW!")
 		msg_halt
 		animeid = ANIMATION_RAGNA
 		gosub *anime
@@ -3863,7 +3863,7 @@
 	if ( _switch_val == EVENT_GOD_INSIDE_OPATOS | _switch_sw ) {
 		_switch_sw = 0
 		txtef COLOR_YELLOW
-		txt lang("…ッハハハ…フハハハッツッハハハハー！！！", "...Muwahahaha...wahahahaha!")
+		txt lang("?c?b?n?n?n?c?t?n?n?n?b?c?b?n?n?n?n?[?I?I?I", "...Muwahahaha...wahahahaha!")
 		msg_halt
 		animeid = ANIMATION_RAGNA
 		gosub *anime
@@ -3875,7 +3875,7 @@
 	if ( _switch_val == EVENT_GOD_INSIDE_KUMIROMI | _switch_sw ) {
 		_switch_sw = 0
 		txtef COLOR_YELLOW
-		txt lang("許さない…絶対に…！！！", "I absolutely... can't forgive...!!!")
+		txt lang("?????Ȃ??c???΂Ɂc?I?I?I", "I absolutely... can't forgive...!!!")
 		msg_halt
 		animeid = ANIMATION_RAGNA
 		gosub *anime
@@ -3887,7 +3887,7 @@
 	if ( _switch_val == EVENT_GOD_INSIDE_MANI | _switch_sw ) {
 		_switch_sw = 0
 		txtef COLOR_YELLOW
-		txt lang("さぁ、終幕といこうか！！！", "Come, let us bring this farce to a close!!!")
+		txt lang("?????A?I???Ƃ????????I?I?I", "Come, let us bring this farce to a close!!!")
 		msg_halt
 		animeid = ANIMATION_RAGNA
 		gosub *anime
@@ -3899,7 +3899,7 @@
 	if ( _switch_val == EVENT_GOD_INSIDE_JURE | _switch_sw ) {
 		_switch_sw = 0
 		txtef COLOR_YELLOW
-		txt lang("バ、バカは死ななきゃ治らないんだから！！！", "I-if you won't die, then my only choice is to heal your foolishness!!!")
+		txt lang("?o?A?o?J?͎??ȂȂ??Ꭱ???Ȃ??񂾂????I?I?I", "I-if you won't die, then my only choice is to heal your foolishness!!!")
 		msg_halt
 		animeid = ANIMATION_RAGNA
 		gosub *anime
@@ -3911,7 +3911,7 @@
 	if ( _switch_val == EVENT_GOD_INSIDE_ITZPALT | _switch_sw ) {
 		_switch_sw = 0
 		txtef COLOR_YELLOW
-		txt lang("渦巻け炎よ！取巻け冷気よ！そして瞬け電光よ！今こそ、あるべき姿へと還るのだ！", "Roaring flames! Biting cold! Savage lightning! Return this fool to the dust from whence " + he(cc) + " came!")
+		txt lang("?Q?????????I?抪?????C???I?????ďu???d?????I???????A?????ׂ??p?ւƊ҂??̂??I", "Roaring flames! Biting cold! Savage lightning! Return this fool to the dust from whence " + he(cc) + " came!")
 		msg_halt
 		animeid = ANIMATION_RAGNA
 		gosub *anime
@@ -3923,7 +3923,7 @@
 	if ( _switch_val == EVENT_GOD_INSIDE_YACATECT | _switch_sw ) {
 		_switch_sw = 0
 		txtef COLOR_YELLOW
-		txt lang("許さへん…今のは高くつくで！！！", "Unacceptable... Now you shall pay!")
+		txt lang("?????ւ??c???͍̂??????ŁI?I?I", "Unacceptable... Now you shall pay!")
 		msg_halt
 		animeid = ANIMATION_RAGNA
 		gosub *anime
@@ -3936,9 +3936,9 @@
 		_switch_sw = 0
 		if ( gdata(GDATA_FLAG_MAIN) >= 325 ) {
 			txtef COLOR_YELLOW
-			txt lang("あなたが肉塊に向けてエーテルブラスターを放つと、肉塊の再生が止まり崩壊を始めた。", "You fire the ether blaster into the mass of flesh. Its regeneration stops and it begins to collapse.")
+			txt lang("???Ȃ????????Ɍ????ăG?[?e???u???X?^?[?????ƁA?????̍Đ????~?܂????????n?߂??B", "You fire the ether blaster into the mass of flesh. Its regeneration stops and it begins to collapse.")
 			txtef COLOR_RED
-			txt lang("崩壊していく肉塊の中から何かが飛び出してきた！", "Something suddenly emerges from the mass of flesh as it collapses!")
+			txt lang("???󂵂Ă????????̒????牽???????яo???Ă????I", "Something suddenly emerges from the mass of flesh as it collapses!")
 			msg_halt
 			flt
 			characreate -1, CREATURE_ID_MESHERA_ALPHA_THE_DEFORMED_ANGEL, evdata1(evnum - (evnum != 0) * 1), evdata2(evnum - (evnum != 0) * 1)
@@ -3958,14 +3958,14 @@
 				if ( cdata(CDATA_ID, tc) == CREATURE_ID_INFECTED_YERLES_SOLDIER ) {
 					if ( tc != CHARA_PLAYER ) {
 						cdata(CDATA_RELATION, tc) = 10
-						txt lang(name(tc) + "は束の間の自我を取り戻した！", name(tc) + " momentarily regained consciousness!")
+						txt lang(name(tc) + "?͑??̊Ԃ̎??????????߂????I", name(tc) + " momentarily regained consciousness!")
 					}
 				}
 			loop
 		}
 		if ( gdata(GDATA_FLAG_MAIN) < 325 ) {
 			txtef COLOR_RED
-			txt lang("倒したはずの怪物がみるみる再生していく！これではキリがない！一時撤退し、対策を練った方がいいだろう。", "The enemy you thought you had struck down revives instantly before your eyes! There's no way to defeat it! You should withdraw for now and develop countermeasures to its regeneration.")
+			txt lang("?|?????͂??̉����??݂??݂??Đ????Ă????I?????ł̓L?????Ȃ??I?ꎞ?P?ނ??A?΍??????��??�����?????낤?B", "The enemy you thought you had struck down revives instantly before your eyes! There's no way to defeat it! You should withdraw for now and develop countermeasures to its regeneration.")
 			msg_halt
 			flt
 			characreate -1, CREATURE_ID_MESHERA_PLANT, evdata1(evnum - (evnum != 0) * 1), evdata2(evnum - (evnum != 0) * 1)
@@ -4019,12 +4019,12 @@
 			ci = stat
 			if ( inv(INV_ITEM_NUM, ci) >= 1 ) {
 				inv(INV_ITEM_NUM, ci) = 0
-				txt lang("突然、手持ちの栗をひったくられた！", "Suddenly, a chestnut was snatched from the stores.")
+				txt lang("?ˑR?A?莝???̌I???Ђ��??????ꂽ?I", "Suddenly, a chestnut was snatched from the stores.")
 			}
 		}
 		txtef COLOR_RED
 		txtmore
-		txt lang("「栗を粗末にしたのは…お前だなああっ！！」", "Chestnut giant yells, " + cnvtalk("You idiot!"))
+		txt lang("?u?I???e???ɂ????̂́c???O???Ȃ????��I?I?v", "Chestnut giant yells, " + cnvtalk("You idiot!"))
 		goto *event_SWEND1
 	}
 	if ( _switch_val == EVENT_H_SISTER | _switch_sw ) {
@@ -4151,7 +4151,7 @@
 			}
 			snd SOUNDLIST_TELEPORT1
 			txtef COLOR_YELLOW
-			txt lang("「どうやら間に合ったようだな！」", cnvtalk("Apparently that went well!"))
+			txt lang("?u?ǂ??????Ԃɍ??��??悤???ȁI?v", cnvtalk("Apparently that went well!"))
 			msg_halt
 			tc = findchara(CREATURE_ID_THE_CHAOS_CHILD)
 			if ( tc != CHARA_PLAYER ) {
@@ -4182,7 +4182,7 @@
 				await 50
 			loop
 			txtef COLOR_YELLOW
-			txt lang("「ここが神の間か！？」", cnvtalk("Is this God's Prison!?"))
+			txt lang("?u???????_?̊Ԃ??I?H?v", cnvtalk("Is this God's Prison!?"))
 			msg_halt
 			tc = findchara(CREATURE_ID_THE_CHAOS_CHILD)
 			if ( tc != CHARA_PLAYER ) {
@@ -4207,10 +4207,10 @@
 		gdata(STARTING_GDATA_FLAG + 360) = 100
 		if ( gdata(GDATA_FLAG_MAIN) == 715 ) {
 			txtef COLOR_YELLOW
-			txt lang("来光の牙がアストラル光を放ち始めた…。", "The Origin of Light began to release astral light...")
+			txt lang("?????̉傪?A?X?g?????????????n?߂??c?B", "The Origin of Light began to release astral light...")
 			msg_halt
 			txtef COLOR_YELLOW
-			txt lang("放たれた光が神の間を包み込む！", "The light emitted enveloped God's Prison!!")
+			txt lang("?????ꂽ?����_?̊Ԃ????ݍ??ށI", "The light emitted enveloped God's Prison!!")
 			animeid = ANIMATION_GAMEWIN3
 			gosub *anime
 			gosub *game_win3
@@ -4227,7 +4227,7 @@
 			tc = findchara(CREATURE_ID_BLACK_GAUNTLET_LEOLD)
 			gosub *chat
 			txtef COLOR_RED
-			txt lang("何かがエンテュメイシスの腹から飛び出してきた！獣の咆哮が辺りに響く…。", "Something splits <Enthumesis> body and breaks out!")
+			txt lang("???????G???e?????C?V?X?̕????????яo???Ă????I?b?̙??K???ӂ??ɋ????c?B", "Something splits <Enthumesis> body and breaks out!")
 			snd SOUNDLIST_BEAST02
 			snd SOUNDLIST_BEAST02
 			snd SOUNDLIST_BEAST02
@@ -4305,7 +4305,7 @@
 		if ( gdata(GDATA_LEVEL) == 20 ) {
 			snd SOUNDLIST_BASH1
 			txtef COLOR_YELLOW
-			txt lang("「レシマスの真実の書に近づく者は殺す」", cnvtalk("You can not reach the bottom of Lesimas."))
+			txt lang("?u???V?}?X?̐^?��̏??ɋ߂Â??҂͎E???v", cnvtalk("You can not reach the bottom of Lesimas."))
 			repeat 3
 				flt
 				characreate -1, CREATURE_ID_ZANAN_ASSASSIN, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER)
@@ -4318,7 +4318,7 @@
 		if ( gdata(GDATA_LEVEL) == 25 ) {
 			snd SOUNDLIST_BASH1
 			txtef COLOR_YELLOW
-			txt lang("「《常闇の眼》を狙う冒険者だな？死んでもらおうか！」", cnvtalk("An adventurer seeking the <Origin of Vice>? You seek your own death?!"))
+			txt lang("?u?s???ł̊??t???_???`???҂??ȁH?????ł??炨?????I?v", cnvtalk("An adventurer seeking the <Origin of Vice>? You seek your own death?!"))
 			repeat 6
 				flt
 				characreate -1, CREATURE_ID_ZANAN_ASSASSIN, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER)
@@ -4348,7 +4348,7 @@
 		if ( gdata(GDATA_LEVEL) == 34 ) {
 			snd SOUNDLIST_CURSE2
 			txtef COLOR_PURPLE
-			txt lang("足を踏み入れた瞬間、周囲の屍が一斉に起き上がった！", "The moment you set foot on this floor, a dozen corpses rise up and attack!")
+			txt lang("???𓥂ݓ??ꂽ?u?ԁA???͂̎r?????ĂɋN???オ?��??I", "The moment you set foot on this floor, a dozen corpses rise up and attack!")
 			repeat 12
 				flt
 				characreate -1, CREATURE_ID_SKELETON_MAGICIAN, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER)
@@ -4473,7 +4473,7 @@
 		flt
 		itemcreate -1, ITEM_ID_PRESENT, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
 		inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_BLESSED
-		txt lang("へぇ、今日誕生日なんだ？おめでとう！", "Happy birthday!")
+		txt lang("?ւ??A?????a?????Ȃ񂾁H???߂łƂ??I", "Happy birthday!")
 		txtmore
 		await 2000
 		txtsetbirth 2
@@ -4513,7 +4513,7 @@
 		characreate -1, CREATURE_ID_MARKA_THE_SILVER_BEAR, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER)
 		snd SOUNDLIST_BASH1
 		snd SOUNDLIST_BASH1
-		txt lang("階段を下りた瞬間、あなたは銀髪の冒険者とぶつかった。", "So you are also of the same genus as the others...")
+		txt lang("?K?i?����肽?u?ԁA???Ȃ??͋┯?̖`???҂ƂԂ??��??B", "So you are also of the same genus as the others...")
 		tc = findchara(CREATURE_ID_MARKA_THE_SILVER_BEAR)
 		gosub *chat
 		if ( tc > MAX_CHARA_FOLLOWER ) {
@@ -4585,7 +4585,7 @@
 				}
 			}
 		loop
-		txt lang("あなた達は目的地まで辿り着いた…。", "You arrive at your destination...")
+		txt lang("???Ȃ??B?͖ړI?n?܂ŒH?蒅?????c?B", "You arrive at your destination...")
 		if ( gdata(GDATA_AREA) == AREA_NT_SOUTH_BORDER ) {
 			if ( gdata(GDATA_FLAG_SUB_REGULUS_ZANAN) < 5 ) {
 				tc = findchara(CREATURE_ID_REGULUS_THE_ALTERED)
@@ -4667,18 +4667,18 @@
 	if ( _switch_val == EVENT_SECRET_CHAR | _switch_sw ) {
 		_switch_sw = 0
 		gosub *screen_draw
-		s = lang("隠れていたもの", "Reunion with your pet")
+		s = lang("?B???Ă???????", "Reunion with your pet")
 		file = "bg_re13"
-		buff = lang("あなたは背後の気配に気付いて、ふと歩みを止めた。振り向いた先にいたのは…", "As you approach the mining town, you notice a familiar call and stop walking. Your old pet who got separated from you during the shipwreck is now running towards you joyfully! Your pet is...")
+		buff = lang("???Ȃ??͔w???̋C?z?ɋC?t???āA?ӂƕ??݂??~?߂??B?U???������??ɂ????̂́c", "As you approach the mining town, you notice a familiar call and stop walking. Your old pet who got separated from you during the shipwreck is now running towards you joyfully! Your pet is...")
 		listmax = 0
-		chatList 1, lang("妹だ！", "a sister!")
-		chatList 2, lang("お嬢様だ！", "a young lady!")
-		chatList 3, lang("姉だ！", "an older sister!")
-		chatList 4, lang("少女だ！", "a little girl!")
-		chatList 5, lang("少年だ！", "a little boy!")
-		chatList 6, lang("弟だ！", "a brother!")
-		chatList 7, lang("執事だ！", "a butler!")
-		chatList 8, lang("兄だ！", "an older brother!")
+		chatList 1, lang("?????I", "a sister!")
+		chatList 2, lang("?????l???I", "a young lady!")
+		chatList 3, lang("?o???I", "an older sister!")
+		chatList 4, lang("???????I", "a little girl!")
+		chatList 5, lang("???N???I", "a little boy!")
+		chatList 6, lang("?킾?I", "a brother!")
+		chatList 7, lang("???????I", "a butler!")
+		chatList 8, lang("?Z???I", "an older brother!")
 		gosub *re_select
 		p = 3
 		if ( rtval == 1 ) {
@@ -4716,14 +4716,14 @@
 	if ( _switch_val == EVENT_FIRST_ALLY | _switch_sw ) {
 		_switch_sw = 0
 		gosub *screen_draw
-		s = lang("ペットとの再会", "Reunion with your pet")
+		s = lang("?y?b?g?Ƃ̍ĉ?", "Reunion with your pet")
 		file = "bg_re13"
-		buff = lang("あなたは懐かしい鳴き声に気付いて、ふと歩みを止めた。なんと、船が難破した時に居なくなったあなたのペットが、嬉しそうに走ってくる！あなたのペットは…", "As you approach the mining town, you notice a familiar call and stop walking. Your old pet who got separated from you during the shipwreck is now running towards you joyfully! Your pet is...")
+		buff = lang("???Ȃ??͉�����???????ɋC?t???āA?ӂƕ??݂??~?߂??B?Ȃ??ƁA?D?????j???????ɋ??Ȃ??Ȃ��????Ȃ??̃y?b?g???A?����????ɑ??��Ă????I???Ȃ??̃y?b?g?́c", "As you approach the mining town, you notice a familiar call and stop walking. Your old pet who got separated from you during the shipwreck is now running towards you joyfully! Your pet is...")
 		listmax = 0
-		chatList 1, lang("犬だ！", "a dog!")
-		chatList 2, lang("猫だ！", "a cat!")
-		chatList 3, lang("クマだ！", "a bear!")
-		chatList 4, lang("少女だ！", "a little girl!")
+		chatList 1, lang("?????I", "a dog!")
+		chatList 2, lang("?L???I", "a cat!")
+		chatList 3, lang("?N?}???I", "a bear!")
+		chatList 4, lang("???????I", "a little girl!")
 		gosub *re_select
 		p = 3
 		if ( rtval == 1 ) {
@@ -4759,10 +4759,10 @@
 	if ( _switch_val == EVENT_JOIN_GODA | _switch_sw ) {
 		_switch_sw = 0
 		rc = tc
-		txt lang("倒したオークが起き上がり仲間になりたそうにこちらを見ている。仲間にしますか？", "This monster seems to want to be friends. Do you want to befriend them?")
+		txt lang("?|?????I?[?N???N???オ?蒇?ԂɂȂ肽?????ɂ??????����Ă????B???Ԃɂ??܂????H", "This monster seems to want to be friends. Do you want to befriend them?")
 		promptYesNo
 		if ( rtval != 0 ) {
-			txt lang("あなたはオークにトドメを刺した。", "You stabbed the monster in the coffin.")
+			txt lang("???Ȃ??̓I?[?N?Ƀg?h?????h?????B", "You stabbed the monster in the coffin.")
 			goto *event_SWEND1
 		}
 		if ( rtval == 0 ) {
@@ -4776,10 +4776,10 @@
 	if ( _switch_val == EVENT_JOIN_MAD_SCIENTIST | _switch_sw ) {
 		_switch_sw = 0
 		rc = tc
-		txt lang("倒した科学者が起き上がり仲間になりたそうにこちらを見ている。仲間にしますか？", "This monster seems to want to be friends. Do you want to befriend them?")
+		txt lang("?|?????Ȋw?҂??N???オ?蒇?ԂɂȂ肽?????ɂ??????����Ă????B???Ԃɂ??܂????H", "This monster seems to want to be friends. Do you want to befriend them?")
 		promptYesNo
 		if ( rtval != 0 ) {
-			txt lang("あなたは科学者にトドメを刺した。", "You stabbed the monster in the coffin.")
+			txt lang("???Ȃ??͉Ȋw?҂Ƀg?h?????h?????B", "You stabbed the monster in the coffin.")
 			goto *event_SWEND1
 		}
 		if ( rtval == 0 ) {
@@ -4793,10 +4793,10 @@
 	if ( _switch_val == EVENT_JOIN_ISCA | _switch_sw ) {
 		_switch_sw = 0
 		rc = tc
-		txt lang("倒した堕天使が起き上がり仲間になりたそうにこちらを見ている。仲間にしますか？", "This monster seems to want to be friends. Do you want to befriend them?")
+		txt lang("?|?????V?g???N???オ?蒇?ԂɂȂ肽?????ɂ??????����Ă????B???Ԃɂ??܂????H", "This monster seems to want to be friends. Do you want to befriend them?")
 		promptYesNo
 		if ( rtval != 0 ) {
-			txt lang("あなたは堕天使にトドメを刺した。", "You stabbed the monster in the coffin.")
+			txt lang("???Ȃ??͑V?g?Ƀg?h?????h?????B", "You stabbed the monster in the coffin.")
 			goto *event_SWEND1
 		}
 		if ( rtval == 0 ) {
@@ -4810,10 +4810,10 @@
 	if ( _switch_val == EVENT_JOIN_DUNGEON_CLEANER | _switch_sw ) {
 		_switch_sw = 0
 		rc = tc
-		txt lang("倒したダンジョンクリーナーが起き上がり仲間になりたそうにこちらを見ている。仲間にしますか？", "This monster seems to want to be friends. Do you want to befriend them?")
+		txt lang("?|?????_???W?????N???[?i?[???N???オ?蒇?ԂɂȂ肽?????ɂ??????����Ă????B???Ԃɂ??܂????H", "This monster seems to want to be friends. Do you want to befriend them?")
 		promptYesNo
 		if ( rtval != 0 ) {
-			txt lang("あなたはダンジョンクリーナーにトドメを刺した。", "You stabbed the monster in the coffin.")
+			txt lang("???Ȃ??̓_???W?????N???[?i?[?Ƀg?h?????h?????B", "You stabbed the monster in the coffin.")
 			goto *event_SWEND1
 		}
 		if ( rtval == 0 ) {
@@ -4827,10 +4827,10 @@
 	if ( _switch_val == EVENT_JOIN_LITYOU | _switch_sw ) {
 		_switch_sw = 0
 		rc = tc
-		txt lang("倒した白虎が起き上がり仲間になりたそうにこちらを見ている。仲間にしますか？", "This monster seems to want to be friends. Do you want to befriend them?")
+		txt lang("?|???????Ղ??N???オ?蒇?ԂɂȂ肽?????ɂ??????����Ă????B???Ԃɂ??܂????H", "This monster seems to want to be friends. Do you want to befriend them?")
 		promptYesNo
 		if ( rtval != 0 ) {
-			txt lang("あなたは白虎にトドメを刺した。", "You stabbed the monster in the coffin.")
+			txt lang("???Ȃ??͔??ՂɃg?h?????h?????B", "You stabbed the monster in the coffin.")
 			goto *event_SWEND1
 		}
 		if ( rtval == 0 ) {
@@ -4844,10 +4844,10 @@
 	if ( _switch_val == EVENT_JOIN_MUDER_KNIGHT | _switch_sw ) {
 		_switch_sw = 0
 		rc = tc
-		txt lang("倒した騎士が起き上がり仲間になりたそうにこちらを見ている。仲間にしますか？", "This monster seems to want to be friends. Do you want to befriend them?")
+		txt lang("?|?????R?m???N???オ?蒇?ԂɂȂ肽?????ɂ??????����Ă????B???Ԃɂ??܂????H", "This monster seems to want to be friends. Do you want to befriend them?")
 		promptYesNo
 		if ( rtval != 0 ) {
-			txt lang("あなたは騎士にトドメを刺した。", "You stabbed the monster in the coffin.")
+			txt lang("???Ȃ??͋R?m?Ƀg?h?????h?????B", "You stabbed the monster in the coffin.")
 			goto *event_SWEND1
 		}
 		if ( rtval == 0 ) {
@@ -4861,10 +4861,10 @@
 	if ( _switch_val == EVENT_JOIN_SUNRISE | _switch_sw ) {
 		_switch_sw = 0
 		rc = tc
-		txt lang("倒した龍が起き上がり仲間になりたそうにこちらを見ている。仲間にしますか？", "This monster seems to want to be friends. Do you want to befriend them?")
+		txt lang("?|?????????N???オ?蒇?ԂɂȂ肽?????ɂ??????����Ă????B???Ԃɂ??܂????H", "This monster seems to want to be friends. Do you want to befriend them?")
 		promptYesNo
 		if ( rtval != 0 ) {
-			txt lang("あなたは龍にトドメを刺した。", "You stabbed the monster in the coffin.")
+			txt lang("???Ȃ??͗??Ƀg?h?????h?????B", "You stabbed the monster in the coffin.")
 			goto *event_SWEND1
 		}
 		if ( rtval == 0 ) {
@@ -4878,10 +4878,10 @@
 	if ( _switch_val == EVENT_JOIN_WING_SNAIL | _switch_sw ) {
 		_switch_sw = 0
 		rc = tc
-		txt lang("倒したかたつむりが起き上がり仲間になりたそうにこちらを見ている。仲間にしますか？", "This monster seems to want to be friends. Do you want to befriend them?")
+		txt lang("?|?????????ނ肪?N???オ?蒇?ԂɂȂ肽?????ɂ??????����Ă????B???Ԃɂ??܂????H", "This monster seems to want to be friends. Do you want to befriend them?")
 		promptYesNo
 		if ( rtval != 0 ) {
-			txt lang("あなたはかたつむりにトドメを刺した。", "You stabbed the monster in the coffin.")
+			txt lang("???Ȃ??͂????ނ??Ƀg?h?????h?????B", "You stabbed the monster in the coffin.")
 			goto *event_SWEND1
 		}
 		if ( rtval == 0 ) {
@@ -4895,14 +4895,14 @@
 	if ( _switch_val == EVENT_JOIN_PASCAL | _switch_sw ) {
 		_switch_sw = 0
 		rc = tc
-		txt lang("倒したイヌが起き上がり仲間になりたそうにこちらを見ている。仲間にしますか？", "This monster seems to want to be friends. Do you want to befriend them?")
+		txt lang("?|?????C?k???N???オ?蒇?ԂɂȂ肽?????ɂ??????����Ă????B???Ԃɂ??܂????H", "This monster seems to want to be friends. Do you want to befriend them?")
 		promptYesNo
 		if ( rtval != 0 ) {
-			txt lang("あなたはイヌにトドメを刺した。", "You stabbed the monster in the coffin.")
+			txt lang("???Ȃ??̓C?k?Ƀg?h?????h?????B", "You stabbed the monster in the coffin.")
 			goto *event_SWEND1
 		}
 		if ( rtval == 0 ) {
-			txt lang("こんごともよろしく…。", "Thanks in advance.")
+			txt lang("???񂲂Ƃ????낵???c?B", "Thanks in advance.")
 			flt
 			novoidlv = 1
 			characreate -1, CREATURE_ID_PASCAL, evdata1(evnum - (evnum != 0) * 1), evdata2(evnum - (evnum != 0) * 1)
@@ -4914,11 +4914,11 @@
 		_switch_sw = 0
 		music = MUSICLIST_MCWEDDING
 		gosub *music_play
-		s = lang("結婚", "Marriage")
+		s = lang("????", "Marriage")
 		file = "bg_re14"
-		buff = lang("長い交際の末、遂にあなたと" + name(marry) + "は固い絆で結ばれた。婚儀の後、あなたの元に幾つか祝儀品が届けられた。", "At last, you and " + name(marry) + " are united in marriage! After the wedding ceremony, you receive some gifts.")
+		buff = lang("???????ۂ̖??A???ɂ??Ȃ???" + name(marry) + "?͌ł??J?Ō??΂ꂽ?B???V?̌??A???Ȃ??̌??Ɋ????j?V?i???͂????ꂽ?B", "At last, you and " + name(marry) + " are united in marriage! After the wedding ceremony, you receive some gifts.")
 		listmax = 0
-		chatList 1, lang("生涯をあなたに捧げる", "Without you, life has no meaning.")
+		chatList 1, lang("???U?����Ȃ??ɕ?????", "Without you, life has no meaning.")
 		gosub *re_select
 		repeat 3
 			flt calcobjlv(cdata(CDATA_LEVEL, marry) + 5), calcfixlv(FIX_QUALITY_GREAT)
@@ -4960,7 +4960,7 @@
 		adata(ADATA_BOSS, gdata(GDATA_AREA)) = tc
 		txtef COLOR_RED
 		txtmore
-		txt lang("気をつけろ！この階は" + mapname(gdata(GDATA_AREA)) + "の守護者、" + cdatan(CDATAN_NAME, tc) + "によって守られている。", "Be aware! This level is guarded by the lord of " + mapname(gdata(GDATA_AREA)) + ", " + cdatan(CDATAN_NAME, tc) + ".")
+		txt lang("?C???????I???̊K??" + mapname(gdata(GDATA_AREA)) + "?̎????ҁA" + cdatan(CDATAN_NAME, tc) + "?ɂ??��Ď??????Ă????B", "Be aware! This level is guarded by the lord of " + mapname(gdata(GDATA_AREA)) + ", " + cdatan(CDATAN_NAME, tc) + ".")
 		goto *event_SWEND1
 	}
 	if ( _switch_val == EVENT_BOSS_RANDOM | _switch_sw ) {
@@ -4998,10 +4998,10 @@
 		tc = rc
 		adata(ADATA_BOSS, gdata(GDATA_AREA)) = tc
 		cdatan(CDATAN_NAME, rc) += " Lv" + cdata(CDATA_LEVEL, rc)
-		txt lang("どうやら最深層まで辿り着いたらしい…", "It seems you have reached the deepest level of this dungeon.")
+		txt lang("?ǂ??????Ő[?w?܂ŒH?蒅?????炵???c", "It seems you have reached the deepest level of this dungeon.")
 		txtef COLOR_RED
 		txtmore
-		txt lang("気をつけろ！この階は" + mapname(gdata(GDATA_AREA)) + "の守護者、" + cdatan(CDATAN_NAME, tc) + "によって守られている。", "Be aware! This level is guarded by the lord of " + mapname(gdata(GDATA_AREA)) + ", " + cdatan(CDATAN_NAME, tc) + ".")
+		txt lang("?C???????I???̊K??" + mapname(gdata(GDATA_AREA)) + "?̎????ҁA" + cdatan(CDATAN_NAME, tc) + "?ɂ??��Ď??????Ă????B", "Be aware! This level is guarded by the lord of " + mapname(gdata(GDATA_AREA)) + ", " + cdatan(CDATAN_NAME, tc) + ".")
 		goto *event_SWEND1
 	}
 	if ( _switch_val == EVENT_WIN_BOSS_RANDOM | _switch_sw ) {
@@ -5058,12 +5058,12 @@
 		gdata(GDATA_QUEST_FAME) = calcfame(0, gdata(GDATA_LEVEL) * 30 + 200)
 		txtef COLOR_GREEN
 		txtmore
-		txt lang("" + gdata(GDATA_QUEST_FAME) + "の名声値を手に入れた。", "You gain " + gdata(GDATA_QUEST_FAME) + " fame.")
+		txt lang("" + gdata(GDATA_QUEST_FAME) + "?̖????l?????ɓ??ꂽ?B", "You gain " + gdata(GDATA_QUEST_FAME) + " fame.")
 		cdata(CDATA_FAME, CHARA_PLAYER) += gdata(GDATA_QUEST_FAME)
 		if ( gdata(GDATA_AREA) == AREA_VOID ) {
 			adata(ADATA_BOSS, gdata(GDATA_AREA)) = 0
 			gdata(GDATA_VOID_BOSS) = gdata(GDATA_VOID_BOSS) + 5
-			txt lang("この階の封印が解けたようだ！", "The seal of this level is now broken!")
+			txt lang("???̊K?̕??󂪉����??悤???I", "The seal of this level is now broken!")
 		}
 		else {
 			gdata(GDATA_FLAG_NEFIA_CONQUERED)++
@@ -5073,7 +5073,7 @@
 	}
 	if ( _switch_val == EVENT_CLIENT_REACHED | _switch_sw ) {
 		_switch_sw = 0
-		txt lang("あなたは無事に護衛の任務を終えた。", "You complete the escort.")
+		txt lang("???Ȃ??͖????Ɍ??q?̔C?????I?????B", "You complete the escort.")
 		tc = evdata2(evnum - (evnum != 0) * 1)
 		gosub *chat
 		rq = evdata1(evnum - (evnum != 0) * 1)
@@ -5115,7 +5115,7 @@
 			}
 		}
 		else {
-			txt lang("レベル10に達していないので能力値の減少はない。", "Death penalty won't be applied until you hit Lv 10.")
+			txt lang("???x??10?ɒB???Ă??Ȃ??̂Ŕ\?͒l?̌????͂Ȃ??B", "Death penalty won't be applied until you hit Lv 10.")
 		}
 		if ( gdata(GDATA_CORRUPTION) >= 20000 ) {
 			modcorrupt -2000
@@ -5125,7 +5125,7 @@
 
 		/********** ORIGINAL - BEGINNING **********
 
-		txt lang("金貨を幾らか失った…", "You lost some money.")
+		txt lang("???݂????炩???��??c", "You lost some money.")
 		cdata(CDATA_GOLD, CHARA_PLAYER) -= cdata(CDATA_GOLD, CHARA_PLAYER) / 3
 
 		 ********** ORIGINAL - ENDING **********/
@@ -5135,7 +5135,7 @@
 		msg_newline
 		if ( items_lost_on_death != "" ) {
 			txtef COLOR_RED
-			txt lang("落としたアイテム: ", "Dropped items: ") + items_lost_on_death
+			txt lang("???Ƃ????A?C?e??: ", "Dropped items: ") + items_lost_on_death
 			msg_newline
 		}
 
@@ -5144,7 +5144,7 @@
 			cdata(CDATA_GOLD, CHARA_PLAYER) -= gold_lost_on_death
 
 			txtef COLOR_RED
-			txt lang("落とした金貨: ", "Dropped gold: ") + gold_lost_on_death + "gp."
+			txt lang("???Ƃ???????: ", "Dropped gold: ") + gold_lost_on_death + "gp."
 		}
 
 		/********** BLOODYSHADE CUSTOM - ENDING **********/
@@ -5167,7 +5167,7 @@
 		if ( tc != CHARA_PLAYER ) {
 			if ( cdata(CDATA_EXIST, tc) == CHAR_STATE_ALIVE ) {
 				txtef COLOR_BLUE
-				txt lang("パエル「おかあさんーー！！」", cnvtalk("M-mom...!!"))
+				txt lang("?p?G???u???????????[?[?I?I?v", cnvtalk("M-mom...!!"))
 				cdata(CDATA_RELATION, tc) = -3
 				cdata(CDATA_AI_AGGRO, tc) = 1000
 				cdata(CDATA_TARGET, tc) = 0
@@ -5194,13 +5194,13 @@
 		msg_halt
 		msg_clear
 		txtef COLOR_YELLOW
-		txt lang("「合格だ！」", cnvtalk("You passed!"))
+		txt lang("?u???i???I?v", cnvtalk("You passed!"))
 		msg_halt
 		txtef COLOR_YELLOW
-		txt lang("「お前は決戦因子としてふさわしい力を示した」", cnvtalk("You've shown you have suitable strength to be considered a deciding factor in a decisive battle."))
+		txt lang("?u???O?͌??????q?Ƃ??Ăӂ??킵???͂����????v", cnvtalk("You've shown you have suitable strength to be considered a deciding factor in a decisive battle."))
 		msg_halt
 		txtef COLOR_YELLOW
-		txt lang("「これなら混沌の神も倒せるかもしれん…いや、きっと倒せる！」", cnvtalk("As you are now, you might even be able to defeat the God of Chaos... No, I'm certain you can!"))
+		txt lang("?u?????Ȃ獬?ׂ̐_???|???邩?���?????c?????A???��Ɠ|?????I?v", cnvtalk("As you are now, you might even be able to defeat the God of Chaos... No, I'm certain you can!"))
 		msg_halt
 		repeat 2
 			tc = findchara(CREATURE_ID_TALON_SOLDIER)
@@ -5214,7 +5214,7 @@
 		_switch_sw = 0
 		chara_vanquish findchara(CREATURE_ID_BLACK_GAUNTLET_LEOLD)
 		txtef COLOR_YELLOW
-		txt lang("「望み通り戦ってやろう！」", cnvtalk("Let's fight as you wish!!"))
+		txt lang("?u?]?ݒʂ????��Ă??낤?I?v", cnvtalk("Let's fight as you wish!!"))
 		flt
 		novoidlv = 1
 		characreate -1, CREATURE_ID_TEZCATLIPOCA, cdata(CDATA_X, tc), cdata(CDATA_Y, tc)
@@ -5248,7 +5248,7 @@
 		val = promptx, prompty, 250, 0
 		gosub *prompt_key
 		txtef COLOR_YELLOW
-		txt lang("「これが返事だ」", cnvtalk("This is my reply!!"))
+		txt lang("?u???ꂪ?Ԏ????v", cnvtalk("This is my reply!!"))
 		snd SOUNDLIST_PUNISH1
 		if ( cfg_attackanime ) {
 			animeload ANIMATION_UNISON_IMPACT1, CHARA_PLAYER
@@ -5285,7 +5285,7 @@
 		flt
 		itemcreate -1, ITEM_ID_GERBERA_CROSS, cdata(CDATA_X, evdata1(evnum - (evnum != 0) * 1)), cdata(CDATA_Y, evdata1(evnum - (evnum != 0) * 1)), 0
 		txtef COLOR_BLUE
-		txt lang("？？？「本当に忍をやめたければ死ぬしかない。これが忍の掟だ」", "??? says: \"If you truly wish to no longer be a ninja, then you must die. This is the law of ninjas.\"")
+		txt lang("?H?H?H?u?{???ɔE?????߂??????Ύ??ʂ????Ȃ??B???ꂪ?E?̝|???v", "??? says: \"If you truly wish to no longer be a ninja, then you must die. This is the law of ninjas.\"")
 		goto *event_SWEND1
 	}
 	if ( _switch_val == EVENT_SPECIAL_SPAWN_COND | _switch_sw ) {
@@ -5313,35 +5313,35 @@
 				gdata(GDATA_TEMPORARY_FLAGS2) = 10
 				if ( gdata(GDATA_FLAG_INVITED_GOD) == CREATURE_ID_MANI ) {
 					dbid = CREATURE_ID_MANI
-					txt lang("機械のマニ「これが定命の住居か。記録しておこう」", cnvtalk("Well done. After all, you might be useful than I thought."))
+					txt lang("?@?B?̃}?j?u???ꂪ?薽?̏Z?????B?L?^???Ă??????v", cnvtalk("Well done. After all, you might be useful than I thought."))
 				}
 				if ( gdata(GDATA_FLAG_INVITED_GOD) == CREATURE_ID_LULWY ) {
 					dbid = CREATURE_ID_LULWY
-					txt lang("風のルルウィ「この中で嵐を起こしたらさぞかし爽快でしょうね…冗談よ」", cnvtalk("Oh my little puppet, you serve me well."))
+					txt lang("???̃????E?B?u???̒??ŗ????N???????炳???????u???ł??傤?ˁc???k???v", cnvtalk("Oh my little puppet, you serve me well."))
 				}
 				if ( gdata(GDATA_FLAG_INVITED_GOD) == CREATURE_ID_ITZPALT ) {
 					dbid = CREATURE_ID_ITZPALT
-					txt lang("元素のイツパロトル「楽園か…懐かしい響きだ」", cnvtalk("Impressive. Your action shall be remembered."))
+					txt lang("???f?̃C?c?p???g???u?y?????c?�����?????????v", cnvtalk("Impressive. Your action shall be remembered."))
 				}
 				if ( gdata(GDATA_FLAG_INVITED_GOD) == CREATURE_ID_EHEKATL ) {
 					dbid = CREATURE_ID_EHEKATL
-					txt lang("幸運のエヘカトル「うみみゃ！たらばがに！たらばがにどこ？」", cnvtalk("Wheeee! I'm so happy. I like you! I like you!"))
+					txt lang("?K?^?̃G?w?J?g???u???݂݂??I?????΂??ɁI?????΂??ɂǂ??H?v", cnvtalk("Wheeee! I'm so happy. I like you! I like you!"))
 				}
 				if ( gdata(GDATA_FLAG_INVITED_GOD) == CREATURE_ID_OPATOS ) {
 					dbid = CREATURE_ID_OPATOS
-					txt lang("地のオパートス「フッハハハハー！フハハハー！お邪魔するぞ！」", cnvtalk("Muwahaha muwaha. Good. Good!"))
+					txt lang("?n?̃I?p?[?g?X?u?t?b?n?n?n?n?[?I?t?n?n?n?[?I???ז????邼?I?v", cnvtalk("Muwahaha muwaha. Good. Good!"))
 				}
 				if ( gdata(GDATA_FLAG_INVITED_GOD) == CREATURE_ID_JURE ) {
 					dbid = CREATURE_ID_JURE
-					txt lang("癒しのジュア「お、お邪魔します…うっ！私の部屋より片付いてる…」", cnvtalk("W-What? I-I'm not gonna praise you. I'm not!"))
+					txt lang("?????̃W???A?u???A???ז????܂??c???��I???̕????????Еt???Ă??c?v", cnvtalk("W-What? I-I'm not gonna praise you. I'm not!"))
 				}
 				if ( gdata(GDATA_FLAG_INVITED_GOD) == CREATURE_ID_KUMIROMI ) {
 					dbid = CREATURE_ID_KUMIROMI
-					txt lang("収穫のクミロミ「ここが君の家なんだね…。隅々まで見ても…いいかな…？」", cnvtalk("Good work... truly..."))
+					txt lang("???n?̃N?~???~?u???????N?̉ƂȂ񂾂ˁc?B???X?܂Ō??Ă??c???????ȁc?H?v", cnvtalk("Good work... truly..."))
 				}
 				if ( gdata(GDATA_FLAG_INVITED_GOD) == CREATURE_ID_YACATECT ) {
 					dbid = CREATURE_ID_YACATECT
-					txt lang("富のヤカテクト「へぇぇ、これで入場料タダなん？もったいないわぁ…」", cnvtalk("Good job, just like that! Keep it up!"))
+					txt lang("?x?̃??J?e?N?g?u?ւ????A?????œ??ꗿ?^?_?Ȃ??H???��????Ȃ??킟?c?v", cnvtalk("Good job, just like that! Keep it up!"))
 				}
 				flt
 				novoidlv = 1
@@ -5783,16 +5783,16 @@
 				inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_CURSED
 				kaiwa = rnd(4)
 				if ( kaiwa == 0 ) {
-					txt lang("「害獣…許さない」", cnvtalk("A vermin... I can't... tolerate..."))
+					txt lang("?u?Q?b?c?????Ȃ??v", cnvtalk("A vermin... I can't... tolerate..."))
 				}
 				if ( kaiwa == 1 ) {
-					txt lang("「悪い虫は…殺さなきゃ…」", cnvtalk("I... will have no mercy... for vermin..."))
+					txt lang("?u???????́c?E???Ȃ????c?v", cnvtalk("I... will have no mercy... for vermin..."))
 				}
 				if ( kaiwa == 2 ) {
-					txt lang("「早く…駆除…しないと…」", cnvtalk("I have to... get rid of it..."))
+					txt lang("?u?????c?쏜?c???Ȃ??Ɓc?v", cnvtalk("I have to... get rid of it..."))
 				}
 				if ( kaiwa == 3 ) {
-					txt lang("「ずっと…見守ってあげるからね…？」", cnvtalk("I always... watch over you..."))
+					txt lang("?u???��Ɓc?????��Ă????邩???ˁc?H?v", cnvtalk("I always... watch over you..."))
 				}
 				if ( rc > MAX_CHARA_FOLLOWER ) {
 					dmghp rc, 99999, DAMAGE_FROM_UNSEEN
@@ -5901,23 +5901,23 @@
 	if ( _switch_val == EVENT_VISITOR | _switch_sw ) {
 		_switch_sw = 0
 		if ( get_freechara() == (-1) | gdata(GDATA_GUEST) <= 0 ) {
-			txt lang("ゲストは行方不明になった。", "The guest lost his way.")
+			txt lang("?Q?X?g?͍s???s???ɂȂ��??B", "The guest lost his way.")
 			goto *event_SWEND1
 		}
 		ehemeka = 0
 		if ( allitemfind(ITEM_ID_PAINTING_OF_EHEKATL_AND_SWORDFISH) != (-1) ) {
 			kaiwa = rnd(4)
 			if ( kaiwa == 0 ) {
-				txt lang("「うみゅ～!」", cnvtalk("Meow!"))
+				txt lang("?u???݂??`!?v", cnvtalk("Meow!"))
 			}
 			if ( kaiwa == 1 ) {
-				txt lang("「うっみゅ!」", cnvtalk("Mew mew!"))
+				txt lang("?u???��݂?!?v", cnvtalk("Mew mew!"))
 			}
 			if ( kaiwa == 2 ) {
-				txt lang("「招くよ!よ！」", cnvtalk("I invite guests! guests!"))
+				txt lang("?u??????!???I?v", cnvtalk("I invite guests! guests!"))
 			}
 			if ( kaiwa == 3 ) {
-				txt lang("「めかじき!」", cnvtalk("Swordfish!"))
+				txt lang("?u?߂?????!?v", cnvtalk("Swordfish!"))
 			}
 			ehemeka = 100
 		}
@@ -5957,7 +5957,7 @@
 				}
 			loop
 			if ( tc == CHARA_PLAYER ) {
-				txt lang("ゲストはすでに居なくなっていた。", "It seems the guest has already left your house.")
+				txt lang("?Q?X?g?͂??łɋ??Ȃ??Ȃ��Ă????B", "It seems the guest has already left your house.")
 				goto *event_SWEND1
 			}
 			cdata(CDATA_EXIST, tc) = CHAR_STATE_ALIVE
@@ -6110,7 +6110,7 @@
 			if ( cdata(CDATA_ROLE, cnt) != ROLE_ADVENTURER ) {
 				if ( cdata(CDATA_ROLE, cnt) != ROLE_SPECIAL ) {
 					cdata(CDATA_EMO_ICON, cnt) = 10 + 100 * 20
-					txt lang(name(cnt) + "「目が！目がー！！」", name(cnt) + " shout" + _s(cnt) + " " + cnvtalk("Eyes! My eyes!"))
+					txt lang(name(cnt) + "?u?ڂ??I?ڂ??[?I?I?v", name(cnt) + " shout" + _s(cnt) + " " + cnvtalk("Eyes! My eyes!"))
 				}
 			}
 		loop
@@ -6144,7 +6144,7 @@
 		loop
 		repeat limit(i, 0, 3)
 			txtef COLOR_SKY_BLUE
-			txt lang("「おかえり」", cnvtalk("Welcome home!")), lang("「よう戻ったか」", cnvtalk("Hey, dear.")), lang("「無事で何よりです」", cnvtalk("You're back safely!")), lang("「おかか♪」", cnvtalk("Welcome back♪")), lang("「待ってたよ」", cnvtalk("I was waiting for you.")), lang("「おかえりなさい！」", cnvtalk("Nice to see you again."))
+			txt lang("?u?????????v", cnvtalk("Welcome home!")), lang("?u?悤?߂��????v", cnvtalk("Hey, dear.")), lang("?u?????ŉ??????ł??v", cnvtalk("You're back safely!")), lang("?u?????????v", cnvtalk("Welcome back??")), lang("?u?҂��Ă????v", cnvtalk("I was waiting for you.")), lang("?u?????????Ȃ????I?v", cnvtalk("Nice to see you again."))
 		loop
 		if ( gdata(GDATA_GUEST) > 0 ) {
 			tc = CHARA_PLAYER
@@ -6170,7 +6170,7 @@
 		}
 		gdata(GDATA_FLAG_NUCLEAR_EXPLOSIONS)++
 		txtef COLOR_RED
-		txt lang(" *ゴゴゴゴゴゴ* ", " *RRROOM-KABOOOOM* ")
+		txt lang(" *?S?S?S?S?S?S* ", " *RRROOM-KABOOOOM* ")
 		msg_halt
 		gsel 7
 		pos 0, 0
@@ -6322,7 +6322,7 @@
 		gdata(GDATA_WEATHER) = WEATHER_ETHER
 		envonly = 1
 		gosub *music_play
-		txt lang("終末の日が訪れた。", "Let's Ragnarok!")
+		txt lang("?I???̓????K?ꂽ?B", "Let's Ragnarok!")
 		msg_halt
 		animeid = ANIMATION_RAGNA
 		gosub *anime
@@ -6393,7 +6393,7 @@
 		_switch_sw = 0
 		if ( evdata1(evnum - (evnum != 0) * 1) == 0 ) {
 			txtef COLOR_RED
-			txt lang("けたたましい警報が鳴り響いた！", "*beeeeeep* An alarm sounds loudly!")
+			txt lang("???????܂????x?񂪖苿?????I", "*beeeeeep* An alarm sounds loudly!")
 			repeat MAX_CHARA_TOTAL - MAX_CHARA_SAVE, MAX_CHARA_SAVE
 				if ( cdata(CDATA_ID, cnt) == CREATURE_ID_MELUGAST_TYPE0_THE_DIMENSION_DRIVER ) {
 					continue
@@ -6430,7 +6430,7 @@
 	if ( _switch_val == EVENT_SLEEP_AMBUSH | _switch_sw ) {
 		_switch_sw = 0
 		if ( mdata(MDATA_TYPE) != MAP_TYPE_WORLD ) {
-			txt lang("強盗があなたに目をつけた！", "The robber turns their attention to you!")
+			txt lang("?????????Ȃ??ɖڂ??????I", "The robber turns their attention to you!")
 			repeat 3
 				flt
 				initlv = limit(cdata(CDATA_LEVEL, CHARA_PLAYER), 1, 50)
@@ -6440,5 +6440,6 @@
 		}
 		goto *event_SWEND1
 	}
+
 *event_SWEND1
 	return

@@ -170,13 +170,13 @@
 	else {
 		txtef COLOR_PURPLE
 	}
-	txt lang("ã‚«ãƒ«ãƒå¤‰å‹•(" + locvar_modkarma_a + ") ", "Karma(" + locvar_modkarma_a + ")")
+	txt lang("ƒJƒ‹ƒ}•Ï“®(" + locvar_modkarma_a + ") ", "Karma(" + locvar_modkarma_a + ")")
 	if ( locvar_modkarma_a > 0 ) {
 		if ( cdata(CDATA_KARMA, modkarma_arg1) < (-30) ) {
 			if ( cdata(CDATA_KARMA, modkarma_arg1) + locvar_modkarma_a >= (-30) ) {
 				txtmore
 				txtef COLOR_GREEN
-				txt lang("ã‚ãªãŸã®ç½ªã¯è»½ããªã£ãŸã€‚", "You are no longer a criminal.")
+				txt lang("‚ ‚È‚½‚Ìß‚ÍŒy‚­‚È‚Á‚½B", "You are no longer a criminal.")
 			}
 		}
 	}
@@ -185,7 +185,7 @@
 			if ( cdata(CDATA_KARMA, modkarma_arg1) + locvar_modkarma_a < (-30) ) {
 				txtmore
 				txtef COLOR_PURPLE
-				txt lang("ã‚ãªãŸã¯ä»Šã‚„ç½ªäººã ã€‚", "You are a criminal now.")
+				txt lang("‚ ‚È‚½‚Í¡‚âßl‚¾B", "You are a criminal now.")
 				gohostile
 			}
 		}
@@ -239,14 +239,14 @@
 		else {
 			txtef COLOR_PURPLE
 		}
-		locvar_modrank_s = " " + locvar_modrank_orgrank / 100 + lang("ä½ â†’ ", " -> ") + gdata(locvar_modrank_p) / 100 + lang("ä½ ", "")
-		txt lang("ãƒ©ãƒ³ã‚¯å¤‰å‹•", "Ranking Change ") + "(" + rankn(10, modrank_arg1) + locvar_modrank_s + ") " + lang("ã€Š", "<") + ranktitle(modrank_arg1) + lang("ã€‹", ">")
+		locvar_modrank_s = " " + locvar_modrank_orgrank / 100 + lang("ˆÊ ¨ ", " -> ") + gdata(locvar_modrank_p) / 100 + lang("ˆÊ ", "")
+		txt lang("ƒ‰ƒ“ƒN•Ï“®", "Ranking Change ") + "(" + rankn(10, modrank_arg1) + locvar_modrank_s + ") " + lang("s", "<") + ranktitle(modrank_arg1) + lang("t", ">")
 	}
 	else {
 		if ( locvar_modrank_i > 0 ) {
 			txtef COLOR_GREEN
 			txtmore
-			txt lang("ç€å®Ÿã«æ¬¡ã®ãƒ©ãƒ³ã‚¯ã«è¿‘ã¥ã„ã¦ã„ã‚‹ã€‚", "You are one step closer to the next rank.")
+			txt lang("’…À‚ÉŸ‚Ìƒ‰ƒ“ƒN‚É‹ß‚Ã‚¢‚Ä‚¢‚éB", "You are one step closer to the next rank.")
 		}
 	}
 	return
@@ -4974,12 +4974,12 @@
 	return cnv_str_arg1
 
 #deffunc fix_wish var fix_wish_arg1
-	cnv_str fix_wish_arg1, "ã®å‰¥è£½", ""
-	cnv_str fix_wish_arg1, "å‰¥è£½", ""
-	cnv_str fix_wish_arg1, "ã®ã¯ãè£½", ""
-	cnv_str fix_wish_arg1, "ã¯ãè£½", ""
-	cnv_str fix_wish_arg1, "ã®ã‚«ãƒ¼ãƒ‰", ""
-	cnv_str fix_wish_arg1, "ã‚«ãƒ¼ãƒ‰", ""
+	cnv_str fix_wish_arg1, "‚Ì”»", ""
+	cnv_str fix_wish_arg1, "”»", ""
+	cnv_str fix_wish_arg1, "‚Ì‚Í‚­»", ""
+	cnv_str fix_wish_arg1, "‚Í‚­»", ""
+	cnv_str fix_wish_arg1, "‚ÌƒJ[ƒh", ""
+	cnv_str fix_wish_arg1, "ƒJ[ƒh", ""
 	cnv_str fix_wish_arg1, "card ", ""
 	cnv_str fix_wish_arg1, "figure ", ""
 	cnv_str fix_wish_arg1, "card", ""
@@ -5104,7 +5104,7 @@
 			continue
 		}
 		else {
-			if ( locvar_gmes_m == "ã€‚" | locvar_gmes_m == "ã€" | locvar_gmes_m == "ã€" | locvar_gmes_m == "ã€" | locvar_gmes_m == "ï¼" | locvar_gmes_m == "ï¼Ÿ" | locvar_gmes_m == "â€¦" ) {
+			if ( locvar_gmes_m == "B" | locvar_gmes_m == "A" | locvar_gmes_m == "v" | locvar_gmes_m == "x" | locvar_gmes_m == "I" | locvar_gmes_m == "H" | locvar_gmes_m == "c" ) {
 				locvar_gmes_brwait = 1
 			}
 		}
@@ -5303,22 +5303,22 @@
 	if ( drawmenu_arg1 == 0 ) {
 		locvar_drawmenu_x = windoww - 260, 240
 		p = 9, 10, 11, 12
-		s = lang("æƒ…å ±", "Chara"), lang("è£…å‚™", "Wear"), lang("ç‰¹å¾´", "Feat"), lang("ï¾ï¾ƒï¾˜ï½±ï¾™", "Material"), ""
+		s = lang("î•ñ", "Chara"), lang("‘•”õ", "Wear"), lang("“Á’¥", "Feat"), lang("ÏÃØ±Ù", "Material"), ""
 	}
 	if ( drawmenu_arg1 == 1 ) {
 		locvar_drawmenu_x = windoww - 210, 190
 		p = 13, 14, 22
-		s = lang("é­”æ³•", "Spell"), lang("æŠ€èƒ½", "Skill"), lang("åºƒåŸŸæŠ€èƒ½", "Wide Skill"), ""
+		s = lang("–‚–@", "Spell"), lang("‹Z”\", "Skill"), lang("Lˆæ‹Z”\", "Wide Skill"), ""
 	}
 	if ( drawmenu_arg1 == 2 ) {
 		locvar_drawmenu_x = windoww - 210, 190
 		p = 15, 3, 16
-		s = lang("ãƒ­ã‚°", "Log"), lang("æ—¥èªŒ", "Journal"), lang("ãƒãƒ£ãƒƒãƒˆ", "Chat"), ""
+		s = lang("ƒƒO", "Log"), lang("“ú", "Journal"), lang("ƒ`ƒƒƒbƒg", "Chat"), ""
 	}
 	if ( drawmenu_arg1 == 3 ) {
 		locvar_drawmenu_x = windoww - 210, 190
 		p = 19, 20, 21
-		s = lang("ãƒãƒ£ãƒ¼ãƒˆ", "Chart"), lang("è¡—æƒ…å ±", "City"), lang("æ³•å¾‹", "Law"), ""
+		s = lang("ƒ`ƒƒ[ƒg", "Chart"), lang("ŠXî•ñ", "City"), lang("–@—¥", "Law"), ""
 	}
 	if ( menucycle == 0 ) {
 		return
@@ -5350,7 +5350,7 @@
 	loop
 	color 0, 0, 0
 	pos locvar_drawmenu_x + locvar_drawmenu_x(1) - 150, locvar_drawmenu_y + 28
-	bmes "" + key_prev + "," + key_next + ",Tab " + lang("[ãƒ¡ãƒ‹ãƒ¥ãƒ¼åˆ‡æ›¿]", "[Change]"), 255, 255, 255
+	bmes "" + key_prev + "," + key_next + ",Tab " + lang("[ƒƒjƒ…[Ø‘Ö]", "[Change]"), 255, 255, 255
 	return
 
 #deffunc fillbg int fillbg_arg1, int fillbg_arg2, int fillbg_arg3, int fillbg_arg4, int fillbg_arg5

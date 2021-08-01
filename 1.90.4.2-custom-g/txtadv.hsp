@@ -72,7 +72,7 @@
 		goto *atx_RE
 	}
 	if ( atxid == 1 ) {
-		txt lang("ãƒ‡ã‚£ãƒ¼ãƒ©ãƒ¼ã«è©±ã—ã‹ã‘ãŸã€‚", "You talk to the dealer.")
+		txt lang("ƒfƒB[ƒ‰[‚É˜b‚µ‚©‚¯‚½B", "You talk to the dealer.")
 		music = MUSICLIST_MCCASINO
 		gosub *music_play
 		goto *adv_casinoCard
@@ -302,7 +302,7 @@
 	loop
 	if ( f == 1 ) {
 		if ( cdata(CDATA_HP, CHARA_PLAYER) >= 0 ) {
-			txt lang("å¹¾ã¤ã‹ã®æˆ¦åˆ©å“ãŒã‚ã‚‹ã€‚", "There're some items you can acquire.")
+			txt lang("Šô‚Â‚©‚Ìí—˜•i‚ª‚ ‚éB", "There're some items you can acquire.")
 			screenupdate = -1
 			gosub *screen_draw
 			invsubroutine = 1
@@ -321,7 +321,7 @@
 *atx_RE
 	atxap = 10
 	atxspot = ATX_GENERAL1
-	atxinfon(0) = lang("ãƒ©ãƒ³ãƒ€ãƒ ã‚µã‚¤ãƒˆ", "Random Site")
+	atxinfon(0) = lang("ƒ‰ƒ“ƒ_ƒ€ƒTƒCƒg", "Random Site")
 	atxinit
 	atxthrough = 1
 	if ( atxid(1) == ATX_RANDOM ) {
@@ -359,25 +359,25 @@
 		atxbg = "bg21"
 		mattile = 0, 495, 3
 		atxspot = ATX_REMAIN1
-		noteadd lang("ã“ã®è¾ºã‚Šã¯æ®‹éª¸ã‚„ã‚‰éºå“ã‚„ã‚‰ã§ã”ã¡ã‚ƒã”ã¡ã‚ƒã ã€‚", "You see a jumble of debris and articles left by the dead.")
+		noteadd lang("‚±‚Ì•Ó‚è‚ÍcŠ[‚â‚çˆâ•i‚â‚ç‚Å‚²‚¿‚á‚²‚¿‚á‚¾B", "You see a jumble of debris and articles left by the dead.")
 	}
 	if ( atxid(1) == ATX_BUSH ) {
 		atxbg = "bg20"
 		mattile = 0, 495, 3
 		atxspot = ATX_BUSH1
-		noteadd lang("ã“ã®è¾ºã‚Šã«ã¯è¦‹ãŸã“ã¨ã‚‚ãªã„æ¤ç‰©ãŒãŸãã•ã‚“ã‚ã‚‹ã€‚", "You see many plants you have never seen before.")
+		noteadd lang("‚±‚Ì•Ó‚è‚É‚ÍŒ©‚½‚±‚Æ‚à‚È‚¢A•¨‚ª‚½‚­‚³‚ñ‚ ‚éB", "You see many plants you have never seen before.")
 	}
 	if ( atxid(1) == ATX_MINE ) {
 		atxbg = "bg19"
 		mattile = 0, 495, 3
 		atxspot = ATX_MINE1
-		noteadd lang("å¤©ç„¶ã®é‰±çŸ³ã®å®åº«ã ã€‚", "You see an abundance of natural ores.")
+		noteadd lang("“V‘R‚ÌzÎ‚Ì•óŒÉ‚¾B", "You see an abundance of natural ores.")
 	}
 	if ( atxid(1) == ATX_WATER ) {
 		atxbg = "bg18"
 		mattile = 0, 495, 3
 		atxspot = ATX_WATER1
-		noteadd lang("ç¶ºéº—ãªæ³‰ãŒã‚ã‚‹ã€‚", "You see a beautiful spring.")
+		noteadd lang("ãY—í‚Èò‚ª‚ ‚éB", "You see a beautiful spring.")
 	}
 	if ( atxid(1) == ATX_DUNGEON ) {
 		atxbg = "bg13"
@@ -404,10 +404,10 @@
 		goto *atx_RE_end
 	}
 	atxinit
-	noteadd "ä½•ã‚’ã—ã‚ˆã†ï¼Ÿ"
-	chatList 1, "æ¢ç´¢"
-	chatList 3, "å»ã‚‹"
-	atxinfon(1) = "è¡Œå‹•å›æ•°æ®‹ã‚Š " + atxap + "å›\n"
+	noteadd "‰½‚ğ‚µ‚æ‚¤H"
+	chatList 1, "’Tõ"
+	chatList 3, "‹‚é"
+	atxinfon(1) = "s“®‰ñ”c‚è " + atxap + "‰ñ\n"
 	chatesc = 3
 	txtadvmsgfix = 0
 	txtadvscreenupdate = 1
@@ -430,38 +430,38 @@
 		atxrefval1 = -1
 		if ( atxid(1) == ATX_BUSH ) {
 			atxpic = 1, 171, 96, 96
-			noteadd "èŒ‚ã¿ã‚’è¦‹ã¤ã‘ãŸã€‚"
-			chatList 1, "èª¿ã¹ã‚‹"
-			chatList 2, "æ¡å–ã™ã‚‹" + "(" + skillname(SKILL_NORMAL_GARDENING) + ": " + sdata(SKILL_NORMAL_GARDENING, CHARA_PLAYER) + ")"
+			noteadd "–Î‚İ‚ğŒ©‚Â‚¯‚½B"
+			chatList 1, "’²‚×‚é"
+			chatList 2, "Ìæ‚·‚é" + "(" + skillname(SKILL_NORMAL_GARDENING) + ": " + sdata(SKILL_NORMAL_GARDENING, CHARA_PLAYER) + ")"
 			atxrefval1 = 7
 		}
 		if ( atxid(1) == ATX_MINE ) {
 			atxpic = 1, 219, 96, 96
-			noteadd "é‰±çŸ³ã®å²©ãŒã‚ã‚‹ã€‚"
-			chatList 1, "èª¿ã¹ã‚‹"
-			chatList 2, "æ˜ã‚‹" + "(" + skillname(SKILL_NORMAL_MINING) + ": " + sdata(SKILL_NORMAL_MINING, CHARA_PLAYER) + ")"
+			noteadd "zÎ‚ÌŠâ‚ª‚ ‚éB"
+			chatList 1, "’²‚×‚é"
+			chatList 2, "Œ@‚é" + "(" + skillname(SKILL_NORMAL_MINING) + ": " + sdata(SKILL_NORMAL_MINING, CHARA_PLAYER) + ")"
 			atxrefval1 = 7
 		}
 		if ( atxid(1) == ATX_WATER ) {
 			atxpic = 1, 439, 96, 96
-			noteadd "æ³‰ãŒã‚ã‚‹ã€‚"
-			chatList 1, "é£²ã‚€"
-			chatList 2, "é‡£ã‚‹" + "(" + skillname(SKILL_NORMAL_FISHING) + ": " + sdata(SKILL_NORMAL_FISHING, CHARA_PLAYER) + ")"
+			noteadd "ò‚ª‚ ‚éB"
+			chatList 1, "ˆù‚Ş"
+			chatList 2, "’Ş‚é" + "(" + skillname(SKILL_NORMAL_FISHING) + ": " + sdata(SKILL_NORMAL_FISHING, CHARA_PLAYER) + ")"
 			atxrefval1 = 7
 		}
 		if ( atxid(1) == ATX_REMAIN ) {
 			atxpic = 1, 199, 96, 96
-			noteadd "æ®‹éª¸ã‚’è¦‹ã¤ã‘ãŸã€‚"
-			chatList 1, "ã‚ã•ã‚‹"
-			chatList 2, "è§£å‰–ã™ã‚‹" + "(" + skillname(SKILL_NORMAL_ANATOMY) + ": " + sdata(SKILL_NORMAL_ANATOMY, CHARA_PLAYER) + ")"
+			noteadd "cŠ[‚ğŒ©‚Â‚¯‚½B"
+			chatList 1, "‚ ‚³‚é"
+			chatList 2, "‰ğ–U‚·‚é" + "(" + skillname(SKILL_NORMAL_ANATOMY) + ": " + sdata(SKILL_NORMAL_ANATOMY, CHARA_PLAYER) + ")"
 			atxrefval1 = 7
 		}
 		if ( atxrefval1 == (-1) ) {
-			noteadd "å£ã«ä½•ã‚„ã‚‰æ€ªã—ã„ã²ã³å‰²ã‚ŒãŒã‚ã‚‹â€¦"
-			chatList 1, "å©ã(ç­‹åŠ›)"
-			chatList 2, "èª¿ã¹ã‚‹(æ„ŸçŸ¥)"
+			noteadd "•Ç‚É‰½‚â‚ç‰ö‚µ‚¢‚Ğ‚ÑŠ„‚ê‚ª‚ ‚éc"
+			chatList 1, "’@‚­(‹Ø—Í)"
+			chatList 2, "’²‚×‚é(Š´’m)"
 		}
-		atxinfon(1) = "è¡Œå‹•å›æ•°æ®‹ã‚Š " + atxap + "å›\n"
+		atxinfon(1) = "s“®‰ñ”c‚è " + atxap + "‰ñ\n"
 		chatesc = 1
 		txtadvmsgfix = 0
 		txtadvscreenupdate = 1
@@ -473,7 +473,7 @@
 				atxpic = 1, matref(MATREF_PIC, p), 96, 96
 				snd SOUNDLIST_GET3
 				mat(p) += 1
-				noteadd lang("@BL" + matname(p) + "ã‚’" + 1 + "å€‹æ‰‹ã«å…¥ã‚ŒãŸï¼(æ‰€æŒæ•°:" + mat(p) + "å€‹)", "@BLYou get " + 1 + " " + matname(p) + "(s)! (Total:" + mat(p) + ")")
+				noteadd lang("@BL" + matname(p) + "‚ğ" + 1 + "ŒÂè‚É“ü‚ê‚½I(Š”:" + mat(p) + "ŒÂ)", "@BLYou get " + 1 + " " + matname(p) + "(s)! (Total:" + mat(p) + ")")
 			loop
 			atxthrough = 1
 			goto *atx_RE_main
@@ -485,15 +485,15 @@
 	}
 	if ( rnd(8) == 0 ) {
 		if ( rnd(4) == 0 ) {
-			noteadd "ã‚ã‚Œâ€¦ï¼Ÿ"
-			noteadd "é“ã«è¿·ã£ãŸï¼ (è¡Œå‹•å›æ•°-2)"
+			noteadd "‚ ‚êcH"
+			noteadd "“¹‚É–À‚Á‚½I (s“®‰ñ”-2)"
 			atxap -= 2
 			atxthrough = 1
 			goto *atx_RE_main
 		}
 		if ( rnd(2) == 0 ) {
 			atxpic = 2, 205, 96, 96
-			noteadd "å¹½éœŠã«è„…ã‹ã•ã‚ŒãŸï¼ (è¡Œå‹•å›æ•°-1)"
+			noteadd "—H—ì‚É‹º‚©‚³‚ê‚½I (s“®‰ñ”-1)"
 			snd SOUNDLIST_TRAP1
 			atxap -= 1
 			atxthrough = 1
@@ -501,7 +501,7 @@
 		}
 		if ( rnd(2) == 0 ) {
 			atxpic = 1, 424, 96, 96
-			noteadd "å°çŸ³ã«ã¤ã¾ã¥ã„ã¦ã“ã‚ã‚“ã§ã—ã¾ã£ãŸï¼ (è¡Œå‹•å›æ•°-1)"
+			noteadd "¬Î‚É‚Â‚Ü‚Ã‚¢‚Ä‚±‚ë‚ñ‚Å‚µ‚Ü‚Á‚½I (s“®‰ñ”-1)"
 			snd SOUNDLIST_TRAP1
 			atxap -= 1
 			atxthrough = 1
@@ -511,24 +511,24 @@
 	if ( rnd(8) == 0 ) {
 		if ( rnd(4) == 0 ) {
 			atxpic = 1, 200, 96, 96
-			noteadd "ãµã‹ãµã‹ã®è—ã‚’è¦‹ã¤ã‘ãŸã€‚"
-			noteadd "ãµã‹ãµã‹ã—ã¦æ°—æŒã¡ã„ã„ã€‚ï¼ˆè¡Œå‹•å›æ•°+3)"
+			noteadd "‚Ó‚©‚Ó‚©‚Ì˜m‚ğŒ©‚Â‚¯‚½B"
+			noteadd "‚Ó‚©‚Ó‚©‚µ‚Ä‹C‚¿‚¢‚¢Bis“®‰ñ”+3)"
 			atxap += 2
 			atxthrough = 1
 			goto *atx_RE_main
 		}
 		if ( rnd(2) == 0 ) {
 			atxpic = 1, 294, 96, 96
-			noteadd "åˆ‡ã‚Šæ ªãŒã‚ã‚‹ã€‚"
-			noteadd "è…°ã‚’ä¸‹ã‚ã—ã¦ç–²ã‚Œã‚’ç™’ã—ãŸã€‚ï¼ˆè¡Œå‹•å›æ•°+2)"
+			noteadd "Ø‚èŠ”‚ª‚ ‚éB"
+			noteadd "˜‚ğ‰º‚ë‚µ‚Ä”æ‚ê‚ğ–ü‚µ‚½Bis“®‰ñ”+2)"
 			atxap += 2
 			atxthrough = 1
 			goto *atx_RE_main
 		}
 		if ( rnd(2) == 0 ) {
 			atxpic = 1, 127, 96, 96
-			noteadd "ç¶ºéº—ãªèŠ±ã‚’è¦‹ã¤ã‘ãŸã€‚"
-			noteadd "å¿ƒãŒãªã”ã‚“ã â€¦ï¼ˆè¡Œå‹•å›æ•°+2)"
+			noteadd "ãY—í‚È‰Ô‚ğŒ©‚Â‚¯‚½B"
+			noteadd "S‚ª‚È‚²‚ñ‚¾cis“®‰ñ”+2)"
 			atxap += 2
 			atxthrough = 1
 			goto *atx_RE_main
@@ -537,13 +537,13 @@
 	if ( rnd(7) == 0 ) {
 		if ( rnd(3) ) {
 			atxpic = 2, 210, 96, 96
-			noteadd "ç—›ã£ï¼èšŠã«åˆºã•ã‚ŒãŸã€‚"
+			noteadd "’É‚ÁI‰á‚Éh‚³‚ê‚½B"
 			snd SOUNDLIST_ATK1
 			dmghp CHARA_PLAYER, cdata(CDATA_MAX_HP, CHARA_PLAYER) * 5 / 100, DAMAGE_FROM_ATX
 		}
 		else {
 			atxpic = 2, 216, 96, 96
-			noteadd "ã†ã£ï¼ãƒ˜ãƒ“ã«å™›ã¾ã‚ŒãŸã€‚"
+			noteadd "‚¤‚ÁIƒwƒr‚ÉŠš‚Ü‚ê‚½B"
 			snd SOUNDLIST_ATK1
 			dmghp CHARA_PLAYER, cdata(CDATA_MAX_HP, CHARA_PLAYER) * 10 / 100, DAMAGE_FROM_ATX
 		}
@@ -553,13 +553,13 @@
 	if ( rnd(3) == 0 ) {
 		if ( rnd(3) ) {
 			atxpic = 2, 210, 96, 96
-			noteadd "ç—›ã£ï¼èšŠã«åˆºã•ã‚ŒãŸã€‚"
+			noteadd "’É‚ÁI‰á‚Éh‚³‚ê‚½B"
 			snd SOUNDLIST_ATK1
 			dmghp CHARA_PLAYER, cdata(CDATA_MAX_HP, CHARA_PLAYER) * 5 / 100, DAMAGE_FROM_ATX
 		}
 		else {
 			atxpic = 2, 216, 96, 96
-			noteadd "ã†ã£ï¼ãƒ˜ãƒ“ã«å™›ã¾ã‚ŒãŸã€‚"
+			noteadd "‚¤‚ÁIƒwƒr‚ÉŠš‚Ü‚ê‚½B"
 			snd SOUNDLIST_ATK1
 			dmghp CHARA_PLAYER, cdata(CDATA_MAX_HP, CHARA_PLAYER) * 10 / 100, DAMAGE_FROM_ATX
 		}
@@ -568,10 +568,10 @@
 	}
 	if ( rnd(2) == 0 ) {
 		atxpic = 1, 220, 96, 96
-		noteadd "å®ç®±ãŒã‚ã‚‹ã€‚"
-		chatList 1, "éŒ ã‚’è§£ä½“ã™ã‚‹" + "(" + skillname(SKILL_NORMAL_LOCK_PICKING) + ": " + sdata(SKILL_NORMAL_LOCK_PICKING, CHARA_PLAYER) + ")"
-		chatList 3, "å©ãå‰²ã‚‹" + "(ç­‹åŠ›: " + sdata(SKILL_ATTR_STR, CHARA_PLAYER) + ")"
-		atxinfon(1) = "è¡Œå‹•å›æ•°æ®‹ã‚Š " + atxap + "å›\n"
+		noteadd "•ó” ‚ª‚ ‚éB"
+		chatList 1, "ù‚ğ‰ğ‘Ì‚·‚é" + "(" + skillname(SKILL_NORMAL_LOCK_PICKING) + ": " + sdata(SKILL_NORMAL_LOCK_PICKING, CHARA_PLAYER) + ")"
+		chatList 3, "’@‚«Š„‚é" + "(‹Ø—Í: " + sdata(SKILL_ATTR_STR, CHARA_PLAYER) + ")"
+		atxinfon(1) = "s“®‰ñ”c‚è " + atxap + "‰ñ\n"
 		chatesc = 1
 		txtadvmsgfix = 0
 		txtadvscreenupdate = 1
@@ -584,30 +584,30 @@
 		atxpic = 1, matref(MATREF_PIC, p), 96, 96
 		snd SOUNDLIST_GET3
 		mat(p) += 1
-		noteadd lang("@BL" + matname(p) + "ã‚’" + 1 + "å€‹æ‰‹ã«å…¥ã‚ŒãŸï¼(æ‰€æŒæ•°:" + mat(p) + "å€‹)", "@BLYou get " + 1 + " " + matname(p) + "(s)! (Total:" + mat(p) + ")")
+		noteadd lang("@BL" + matname(p) + "‚ğ" + 1 + "ŒÂè‚É“ü‚ê‚½I(Š”:" + mat(p) + "ŒÂ)", "@BLYou get " + 1 + " " + matname(p) + "(s)! (Total:" + mat(p) + ")")
 		atxthrough = 1
 		goto *atx_RE_main
 	}
 	if ( rnd(3) == 0 ) {
-		noteadd "ä½•ã‚‚è¦‹ã¤ã‹ã‚‰ãªã‹ã£ãŸâ€¦"
+		noteadd "‰½‚àŒ©‚Â‚©‚ç‚È‚©‚Á‚½c"
 		atxthrough = 1
 		goto *atx_RE_main
 	}
-	noteadd "ä½•ã‚‚è¦‹ã¤ã‹ã‚‰ãªã‹ã£ãŸâ€¦"
+	noteadd "‰½‚àŒ©‚Â‚©‚ç‚È‚©‚Á‚½c"
 	atxthrough = 1
 	goto *atx_RE_main
 
 *atx_RE_end
 	atxinit
 	if ( cdata(CDATA_HP, CHARA_PLAYER) >= 0 ) {
-		noteadd lang("æ¢ç´¢ã‚’çµ‚ãˆãŸã€‚", "Finished searching.")
-		chatList 0, lang("æˆ»ã‚‹", "Return")
+		noteadd lang("’Tõ‚ğI‚¦‚½B", "Finished searching.")
+		chatList 0, lang("–ß‚é", "Return")
 	}
 	else {
-		noteadd lang("ããµâ€¦", "Ugh...")
-		chatList 0, lang("(æ–­æœ«é­”ã®å«ã³)", "(Death Cry)")
+		noteadd lang("‚®‚Óc", "Ugh...")
+		chatList 0, lang("(’f–––‚‚Ì‹©‚Ñ)", "(Death Cry)")
 	}
-	atxinfon(1) = lang("è¡Œå‹•å›æ•°æ®‹ã‚Š " + atxap + "å›\n", "Remaining actions: " + atxap + "\n")
+	atxinfon(1) = lang("s“®‰ñ”c‚è " + atxap + "‰ñ\n", "Remaining actions: " + atxap + "\n")
 	chatesc = 0
 	txtadvmsgfix = 0
 	txtadvscreenupdate = 1
@@ -617,24 +617,24 @@
 *adv_casinoCard
 	atxbg = "bg14"
 	mattile = -1
-	atxinfon(0) = lang("ã‚«ã‚¸ãƒã€Šãƒ•ã‚©ãƒ¼ãƒãƒ¥ãƒ³ã‚¯ãƒƒã‚­ãƒ¼ã€‹", "Casino <<Fortune Cookie>>")
+	atxinfon(0) = lang("ƒJƒWƒmsƒtƒH[ƒ`ƒ…ƒ“ƒNƒbƒL[t", "Casino <<Fortune Cookie>>")
 	atxinit
-	noteadd lang("ã‚«ã‚¸ãƒã€Šãƒ•ã‚©ãƒ¼ãƒãƒ¥ãƒ³ã‚¯ãƒƒã‚­ãƒ¼ã€‹ã¸ã‚ˆã†ã“ãã€‚", "Welcome to the casino, Fortune cookie!")
-	noteadd lang("ãƒãƒƒãƒ—ãƒãƒ†ãƒªã‚¢ãƒ«ã¨å¼•ãæ›ãˆã«ã‚²ãƒ¼ãƒ ã‚’ã™ã‚‹ã“ã¨ãŒã§ãã¾ã™ã€‚", "You can bet the casino chips you have and play some games.")
-	noteadd lang("ã”ã‚†ã£ãã‚ŠãŠæ¥½ã—ã¿ä¸‹ã•ã„ã€‚", "Enjoy your stay.")
+	noteadd lang("ƒJƒWƒmsƒtƒH[ƒ`ƒ…ƒ“ƒNƒbƒL[t‚Ö‚æ‚¤‚±‚»B", "Welcome to the casino, Fortune cookie!")
+	noteadd lang("ƒ`ƒbƒvƒ}ƒeƒŠƒAƒ‹‚Æˆø‚«Š·‚¦‚ÉƒQ[ƒ€‚ğ‚·‚é‚±‚Æ‚ª‚Å‚«‚Ü‚·B", "You can bet the casino chips you have and play some games.")
+	noteadd lang("‚²‚ä‚Á‚­‚è‚¨Šy‚µ‚İ‰º‚³‚¢B", "Enjoy your stay.")
 	if ( gdata(GDATA_FLAG_CASINO) == 0 ) {
 		noteadd ""
-		noteadd lang("ãŠå®¢æ§˜ã¯åˆã‚ã¦ã®ã”åˆ©ç”¨ã®ã‚ˆã†ã§ã™ã­ã€‚", "Looks like you play for the first time, sir.")
-		noteadd lang("å½“åº—ã‹ã‚‰ãƒãƒƒãƒ—ãƒãƒ†ãƒªã‚¢ãƒ«ã‚’10æšé€²å‘ˆã—ã¾ã™ã€‚", "We're offering you 10 free casino chips to try our games.")
+		noteadd lang("‚¨‹q—l‚Í‰‚ß‚Ä‚Ì‚²—˜—p‚Ì‚æ‚¤‚Å‚·‚ËB", "Looks like you play for the first time, sir.")
+		noteadd lang("“–“X‚©‚çƒ`ƒbƒvƒ}ƒeƒŠƒAƒ‹‚ğ10–‡i’æ‚µ‚Ü‚·B", "We're offering you 10 free casino chips to try our games.")
 		gdata(GDATA_FLAG_CASINO) = 1
 		snd SOUNDLIST_GET3
 		mat(1) += 10
-		noteadd lang("@BL" + matname(1) + "ã‚’" + 10 + "å€‹æ‰‹ã«å…¥ã‚ŒãŸï¼(æ‰€æŒæ•°:" + mat(1) + "å€‹)", "@BLYou get " + 10 + " " + matname(1) + "(s)! (Total:" + mat(1) + ")")
+		noteadd lang("@BL" + matname(1) + "‚ğ" + 10 + "ŒÂè‚É“ü‚ê‚½I(Š”:" + mat(1) + "ŒÂ)", "@BLYou get " + 10 + " " + matname(1) + "(s)! (Total:" + mat(1) + ")")
 	}
-	atxinfon(1) = lang("ã‚«ã‚¸ãƒãƒãƒƒãƒ—æ®‹ã‚Š " + mat(1) + "æš\n", "Casino chips left: " + mat(1) + "\n")
+	atxinfon(1) = lang("ƒJƒWƒmƒ`ƒbƒvc‚è " + mat(1) + "–‡\n", "Casino chips left: " + mat(1) + "\n")
 	atxinfon(2) = ""
-	chatList 0, lang("åº—ã‚’å‡ºã‚‹", "Later.")
-	chatList 1, lang("ãƒ–ãƒ©ãƒƒã‚¯ã‚¸ãƒ£ãƒƒã‚¯", "I want to play Blackjack.")
+	chatList 0, lang("“X‚ğo‚é", "Later.")
+	chatList 1, lang("ƒuƒ‰ƒbƒNƒWƒƒƒbƒN", "I want to play Blackjack.")
 	chatesc = 0
 	txtadvmsgfix = 0
 	txtadvscreenupdate = 1
@@ -649,28 +649,28 @@
 
 *adv_casinoBlackJack
 	atxinit
-	noteadd lang("ãƒ–ãƒ©ãƒƒã‚¯ã‚¸ãƒ£ãƒƒã‚¯ã¯ã€ã‚«ãƒ¼ãƒ‰ã®åˆè¨ˆã‚’21ã«è¿‘ã¥ã‘ã‚‹ã‚²ãƒ¼ãƒ ã§ã™ã€‚", "In Blackjack, the hand with the highest total wins as long as it")
-	noteadd lang("J,Q,Kã¯10ã«ã€Aã¯1ã¾ãŸã¯11ã«æ•°ãˆã‚‰ã‚Œã¾ã™ã€‚21ã‚’è¶Šãˆã‚‹ã¨è² ã‘ã§ã™ã€‚", "doesn't exceed 21. J,Q,K are counted as 10 and A is counted as 1 or 11.")
-	noteadd lang("ã§ã¯ã€è³­ã‘ã‚‹ãƒãƒƒãƒ—ã‚’å®£è¨€ã—ã¦ãã ã•ã„ã€‚", "More bets means better rewards.")
-	noteadd lang("ãƒãƒƒãƒ—ãŒå¤šã„ã»ã©ã€æ™¯å“ã®è³ªãŒã‚ãŒã‚Šã¾ã™ã€‚", "How many tips would you like to bet?")
-	atxinfon(1) = lang("ã‚«ã‚¸ãƒãƒãƒƒãƒ—æ®‹ã‚Š " + mat(1) + "æš\n", "Casino chips left: " + mat(1) + "\n")
+	noteadd lang("ƒuƒ‰ƒbƒNƒWƒƒƒbƒN‚ÍAƒJ[ƒh‚Ì‡Œv‚ğ21‚É‹ß‚Ã‚¯‚éƒQ[ƒ€‚Å‚·B", "In Blackjack, the hand with the highest total wins as long as it")
+	noteadd lang("J,Q,K‚Í10‚ÉAA‚Í1‚Ü‚½‚Í11‚É”‚¦‚ç‚ê‚Ü‚·B21‚ğ‰z‚¦‚é‚Æ•‰‚¯‚Å‚·B", "doesn't exceed 21. J,Q,K are counted as 10 and A is counted as 1 or 11.")
+	noteadd lang("‚Å‚ÍA“q‚¯‚éƒ`ƒbƒv‚ğéŒ¾‚µ‚Ä‚­‚¾‚³‚¢B", "More bets means better rewards.")
+	noteadd lang("ƒ`ƒbƒv‚ª‘½‚¢‚Ù‚ÇAŒi•i‚Ì¿‚ª‚ ‚ª‚è‚Ü‚·B", "How many tips would you like to bet?")
+	atxinfon(1) = lang("ƒJƒWƒmƒ`ƒbƒvc‚è " + mat(1) + "–‡\n", "Casino chips left: " + mat(1) + "\n")
 	atxinfon(2) = ""
 	if ( mat(1) <= 0 ) {
 		noteadd ""
-		noteadd lang("ãŠå®¢æ§˜ã¯ãƒãƒƒãƒ—ã‚’ã‚‚ã£ã¦ã„ã¾ã›ã‚“ã€‚", "Sorry sir, you don't seem to have casino chips.")
+		noteadd lang("‚¨‹q—l‚Íƒ`ƒbƒv‚ğ‚à‚Á‚Ä‚¢‚Ü‚¹‚ñB", "Sorry sir, you don't seem to have casino chips.")
 	}
-	chatList 0, lang("ã‚„ã‚ã‚‹", "I quit.")
+	chatList 0, lang("‚â‚ß‚é", "I quit.")
 	if ( mat(1) >= 1 ) {
-		chatList 1, lang("" + 1 + "æšè³­ã‘ã‚‹", "Bet " + 1 + " chips.")
+		chatList 1, lang("" + 1 + "–‡“q‚¯‚é", "Bet " + 1 + " chips.")
 	}
 	if ( mat(1) >= 5 ) {
-		chatList 5, lang("" + 5 + "æšè³­ã‘ã‚‹", "Bet " + 5 + " chips.")
+		chatList 5, lang("" + 5 + "–‡“q‚¯‚é", "Bet " + 5 + " chips.")
 	}
 	if ( mat(1) >= 10 ) {
-		chatList 10, lang("" + 10 + "æšè³­ã‘ã‚‹", "Bet " + 10 + " chips.")
+		chatList 10, lang("" + 10 + "–‡“q‚¯‚é", "Bet " + 10 + " chips.")
 	}
 	if ( mat(1) >= 20 ) {
-		chatList 20, lang("" + 20 + "æšè³­ã‘ã‚‹", "Bet " + 20 + " chips.")
+		chatList 20, lang("" + 20 + "–‡“q‚¯‚é", "Bet " + 20 + " chips.")
 	}
 	chatesc = 0
 	txtadvmsgfix = 0
@@ -689,7 +689,7 @@
 		atxinit
 		if ( cnt == 0 ) {
 			mat(1) -= stake
-			txt lang(matname(1) + "ã‚’" + stake + "å€‹å¤±ã£ãŸ(æ®‹ã‚Š:" + mat(1) + "å€‹)", "You lose " + stake + " " + matname(1) + "(s). (Total:" + mat(1) + ")")
+			txt lang(matname(1) + "‚ğ" + stake + "ŒÂ¸‚Á‚½(c‚è:" + mat(1) + "ŒÂ)", "You lose " + stake + " " + matname(1) + "(s). (Total:" + mat(1) + ")")
 		}
 		if ( cardround == 0 ) {
 			nojoker = 1
@@ -701,9 +701,9 @@
 		font lang(cfg_font1, cfg_font2), 14 - en * 2, 1
 		color 255, 255, 255
 		pos 152, 154
-		mes lang("ã€€è¦ª", "Dealer")
+		mes lang("@e", "Dealer")
 		pos 152, 270
-		mes lang("ã‚ãªãŸ", "   You")
+		mes lang("‚ ‚È‚½", "   You")
 		showcardpile
 		showcardholder
 		showcard
@@ -725,9 +725,9 @@
 				}
 			loop
 		}
-		noteadd lang("ã‚ãªãŸã®åˆè¨ˆã¯" + cpscore(1) + "ã§ã™ã€‚", "Your hand is " + cpscore(1) + ".")
+		noteadd lang("‚ ‚È‚½‚Ì‡Œv‚Í" + cpscore(1) + "‚Å‚·B", "Your hand is " + cpscore(1) + ".")
 		if ( cardround == (-1) ) {
-			noteadd lang("è¦ªã®åˆè¨ˆã¯" + cpscore(0) + "ã§ã™ã€‚", "The dealer's hand is " + cpscore(0) + ".")
+			noteadd lang("e‚Ì‡Œv‚Í" + cpscore(0) + "‚Å‚·B", "The dealer's hand is " + cpscore(0) + ".")
 			winner = -1
 			if ( cpscore(0) <= 21 ) {
 				if ( cpscore(1) > 21 | cpscore(0) > cpscore(1) ) {
@@ -740,26 +740,26 @@
 				}
 			}
 			if ( winner == (-1) ) {
-				noteadd lang("å‹è² ã¯å¼•ãåˆ†ã‘ã§ã™ã€‚", "The match is a draw.")
+				noteadd lang("Ÿ•‰‚Íˆø‚«•ª‚¯‚Å‚·B", "The match is a draw.")
 			}
 			if ( winner == 0 ) {
-				noteadd lang("ã‚ãªãŸã®è² ã‘ã§ã™ã€‚", "You lose.")
+				noteadd lang("‚ ‚È‚½‚Ì•‰‚¯‚Å‚·B", "You lose.")
 			}
 			if ( winner == 1 ) {
-				noteadd lang("ãŠã‚ã§ã¨ã†ã”ã–ã„ã¾ã™ã€‚ã‚ãªãŸã®å‹ã¡ã§ã™ã€‚", "Congratulations, you win.")
+				noteadd lang("‚¨‚ß‚Å‚Æ‚¤‚²‚´‚¢‚Ü‚·B‚ ‚È‚½‚ÌŸ‚¿‚Å‚·B", "Congratulations, you win.")
 			}
 		}
-		atxinfon(1) = lang("ã‚«ã‚¸ãƒãƒãƒƒãƒ—æ®‹ã‚Š " + mat(1) + "æš\n", "Casino chips left: " + mat(1) + "\n")
-		atxinfon(2) = lang("è³­ã‘ãƒãƒƒãƒ— " + stake + "æš ç¾åœ¨" + winrow + "é€£å‹ä¸­", "Bets: " + stake + " Wins: " + winrow + "")
+		atxinfon(1) = lang("ƒJƒWƒmƒ`ƒbƒvc‚è " + mat(1) + "–‡\n", "Casino chips left: " + mat(1) + "\n")
+		atxinfon(2) = lang("“q‚¯ƒ`ƒbƒv " + stake + "–‡ Œ»İ" + winrow + "˜AŸ’†", "Bets: " + stake + " Wins: " + winrow + "")
 		if ( cardround == (-1) ) {
 			if ( winner == 1 ) {
 				winrow++
 			}
 			if ( winner != 0 ) {
-				chatList 0, lang("æ¬¡ã®å‹è² ã¸", "To the next round.")
+				chatList 0, lang("Ÿ‚ÌŸ•‰‚Ö", "To the next round.")
 			}
 			if ( winner == 0 ) {
-				chatList 0, lang("æˆ»ã‚‹", "Bah...!")
+				chatList 0, lang("–ß‚é", "Bah...!")
 			}
 			chatesc = -1
 			txtadvmsgfix = 240
@@ -771,14 +771,14 @@
 			cardround = 0
 			continue
 		}
-		chatList 0, lang("ã“ã‚Œã«æ±ºã‚ã‚‹", "Stay.")
+		chatList 0, lang("‚±‚ê‚ÉŒˆ‚ß‚é", "Stay.")
 		if ( pileremain() > 10 ) {
 			if ( cpcardnum(1) < 5 ) {
-				chatList 1, lang("ã‚‚ã†ä¸€æšå¼•ã(é‹)", "Hit me. (Luck)")
+				chatList 1, lang("‚à‚¤ˆê–‡ˆø‚­(‰^)", "Hit me. (Luck)")
 			}
-			chatList 2, lang("ã‚¤ã‚«ã‚µãƒ(å™¨ç”¨", "Cheat. (Dex:") + sdata(SKILL_ATTR_DEX, CHARA_PLAYER) + ")"
+			chatList 2, lang("ƒCƒJƒTƒ}(Ší—p", "Cheat. (Dex:") + sdata(SKILL_ATTR_DEX, CHARA_PLAYER) + ")"
 			if ( stake >= 2 ) {
-				chatList 3, lang("é™ã‚Šã‚‹(è³­ã‘ãƒãƒƒãƒ—1æšæ¸›å°‘)", "I'm out. (costs 1 chip)")
+				chatList 3, lang("~‚è‚é(“q‚¯ƒ`ƒbƒv1–‡Œ¸­)", "I'm out. (costs 1 chip)")
 			}
 		}
 		chatesc = -1
@@ -797,7 +797,7 @@
 				if ( cpscore(1) >= 22 ) {
 					if ( pileremain() > 10 ) {
 						if ( rnd(sdata(SKILL_ATTR_LUC, CHARA_PLAYER)) > 40 ) {
-							txt lang("ã“ã®ã‚«ãƒ¼ãƒ‰ã¯æ‚ªã„äºˆæ„ŸãŒã™ã‚‹â€¦", "I have a bad feeling about this card...")
+							txt lang("‚±‚ÌƒJ[ƒh‚Íˆ«‚¢—\Š´‚ª‚·‚éc", "I have a bad feeling about this card...")
 							trashcard p
 							servecard 1
 							p = stat
@@ -823,13 +823,13 @@
 			}
 			if ( rnd(sdata(SKILL_ATTR_DEX, CHARA_PLAYER)) < rnd(p) ) {
 				atxinit
-				noteadd lang("ã‚¤ã‚«ã‚µãƒã ï¼", "Cheater!")
-				atxinfon(1) = lang("ã‚«ã‚¸ãƒãƒãƒƒãƒ—æ®‹ã‚Š " + mat(1) + "æš\n", "Casino chips left: " + mat(1) + "\n")
-				atxinfon(2) = lang("è³­ã‘ãƒãƒƒãƒ— " + stake + "æš ç¾åœ¨" + winrow + "é€£å‹ä¸­", "Bets: " + stake + " Wins: " + winrow + "")
+				noteadd lang("ƒCƒJƒTƒ}‚¾I", "Cheater!")
+				atxinfon(1) = lang("ƒJƒWƒmƒ`ƒbƒvc‚è " + mat(1) + "–‡\n", "Casino chips left: " + mat(1) + "\n")
+				atxinfon(2) = lang("“q‚¯ƒ`ƒbƒv " + stake + "–‡ Œ»İ" + winrow + "˜AŸ’†", "Bets: " + stake + " Wins: " + winrow + "")
 				winrow = 0
-				txt lang("ã‚¤ã‚«ã‚µãƒãŒè¦‹ã¤ã‹ã£ã¦ã—ã¾ã£ãŸâ€¦", "You are caught cheating...")
+				txt lang("ƒCƒJƒTƒ}‚ªŒ©‚Â‚©‚Á‚Ä‚µ‚Ü‚Á‚½c", "You are caught cheating...")
 				modkarma CHARA_PLAYER, -5
-				chatList 0, lang("æ¿¡ã‚Œè¡£ã ï¼", "I didn't do it!")
+				chatList 0, lang("”G‚êˆß‚¾I", "I didn't do it!")
 				chatesc = -1
 				txtadvmsgfix = 0
 				txtadvscreenupdate = 1
@@ -846,7 +846,7 @@
 	loop
 	if ( winrow > 0 ) {
 		atxinit
-		noteadd lang("ãŠã‚ã§ã¨ã†ã”ã–ã„ã¾ã™ã€‚ã‚ãªãŸã¯" + winrow + "é€£å‹ã—ã¾ã—ãŸã€‚", "Congratulations! You've won " + winrow + " times in a row.")
+		noteadd lang("‚¨‚ß‚Å‚Æ‚¤‚²‚´‚¢‚Ü‚·B‚ ‚È‚½‚Í" + winrow + "˜AŸ‚µ‚Ü‚µ‚½B", "Congratulations! You've won " + winrow + " times in a row.")
 		repeat 1
 			i = 2
 			if ( winrow > 2 ) {
@@ -880,34 +880,34 @@
 			}
 		loop
 		snd SOUNDLIST_GET3
-		noteadd lang("@GRã‚¢ã‚¤ãƒ†ãƒ ï¼š" + itemname(ci, inv(INV_ITEM_NUM, ci)) + "ã‚’æˆ¦åˆ©å“ã«åŠ ãˆãŸï¼", "@GR" + itemname(ci, inv(INV_ITEM_NUM, ci)) + " has been added to your loot list!")
+		noteadd lang("@GRƒAƒCƒeƒ€F" + itemname(ci, inv(INV_ITEM_NUM, ci)) + "‚ğí—˜•i‚É‰Á‚¦‚½I", "@GR" + itemname(ci, inv(INV_ITEM_NUM, ci)) + " has been added to your loot list!")
 		if ( stake + winrow * 3 >= 25 ) {
 			flt
 			itemcreate -1, ITEM_ID_SCROLL_FAITH, -1, -1, 0
 			snd SOUNDLIST_GET3
-			noteadd lang("@GRã‚¢ã‚¤ãƒ†ãƒ ï¼š" + itemname(ci, inv(INV_ITEM_NUM, ci)) + "ã‚’æˆ¦åˆ©å“ã«åŠ ãˆãŸï¼", "@GR" + itemname(ci, inv(INV_ITEM_NUM, ci)) + " has been added to your loot list!")
+			noteadd lang("@GRƒAƒCƒeƒ€F" + itemname(ci, inv(INV_ITEM_NUM, ci)) + "‚ğí—˜•i‚É‰Á‚¦‚½I", "@GR" + itemname(ci, inv(INV_ITEM_NUM, ci)) + " has been added to your loot list!")
 		}
 		if ( stake + winrow * 3 >= 35 ) {
 			flt
 			itemcreate -1, ITEM_ID_BLANK_BUSINESS_CARD, -1, -1, 0
 			snd SOUNDLIST_GET3
-			noteadd lang("@GRã‚¢ã‚¤ãƒ†ãƒ ï¼š" + itemname(ci, inv(INV_ITEM_NUM, ci)) + "ã‚’æˆ¦åˆ©å“ã«åŠ ãˆãŸï¼", "@GR" + itemname(ci, inv(INV_ITEM_NUM, ci)) + " has been added to your loot list!")
+			noteadd lang("@GRƒAƒCƒeƒ€F" + itemname(ci, inv(INV_ITEM_NUM, ci)) + "‚ğí—˜•i‚É‰Á‚¦‚½I", "@GR" + itemname(ci, inv(INV_ITEM_NUM, ci)) + " has been added to your loot list!")
 		}
 		if ( stake + winrow * 3 >= 40 ) {
 			flt
 			itemcreate -1, ITEM_ID_POTION_POTENTIAL, -1, -1, 0
 			snd SOUNDLIST_GET3
-			noteadd lang("@GRã‚¢ã‚¤ãƒ†ãƒ ï¼š" + itemname(ci, inv(INV_ITEM_NUM, ci)) + "ã‚’æˆ¦åˆ©å“ã«åŠ ãˆãŸï¼", "@GR" + itemname(ci, inv(INV_ITEM_NUM, ci)) + " has been added to your loot list!")
+			noteadd lang("@GRƒAƒCƒeƒ€F" + itemname(ci, inv(INV_ITEM_NUM, ci)) + "‚ğí—˜•i‚É‰Á‚¦‚½I", "@GR" + itemname(ci, inv(INV_ITEM_NUM, ci)) + " has been added to your loot list!")
 		}
 		if ( winrow > 3 ) {
 			if ( rnd(50) < winrow * 5 + 20 ) {
 				flt
 				itemcreate -1, ITEM_ID_POTION_CURE_CORRUPTION, -1, -1, 0
 				snd SOUNDLIST_GET3
-				noteadd lang("@GRã‚¢ã‚¤ãƒ†ãƒ ï¼š" + itemname(ci, inv(INV_ITEM_NUM, ci)) + "ã‚’æˆ¦åˆ©å“ã«åŠ ãˆãŸï¼", "@GR" + itemname(ci, inv(INV_ITEM_NUM, ci)) + " has been added to your loot list!")
+				noteadd lang("@GRƒAƒCƒeƒ€F" + itemname(ci, inv(INV_ITEM_NUM, ci)) + "‚ğí—˜•i‚É‰Á‚¦‚½I", "@GR" + itemname(ci, inv(INV_ITEM_NUM, ci)) + " has been added to your loot list!")
 			}
 		}
-		chatList 0, lang("æˆ»ã‚‹", "Great.")
+		chatList 0, lang("–ß‚é", "Great.")
 		chatesc = 0
 		txtadvmsgfix = 0
 		txtadvscreenupdate = 1
