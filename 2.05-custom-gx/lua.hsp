@@ -47,9 +47,7 @@
     return
 
 *lua_make_hsp
-    hl_newtable
-    hl_pushvalue -1
-    hl_setglobal "hsp"
+    hl_getglobal "_G"
 
     hl_pushfunction *lua_hsp_logmes
     hl_setfield -2, "logmes"
@@ -114,9 +112,7 @@
     return var
 
 *lua_make_elona
-    hl_newtable
-    hl_pushvalue -1
-    hl_setglobal "elona"
+    hl_getglobal "_G"
 
     gosub *lua_elona_push_enums
 

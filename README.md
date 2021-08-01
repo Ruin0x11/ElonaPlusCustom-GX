@@ -13,7 +13,7 @@ Elona+ Custom-GX is a new variant of Elona+ based on Elona+ Custom-G, to be upda
 3. Download the HSP3.4 SDK (`hsp34a.zip`) from [here](http://hsp.tv/make/downlist.html) and extract it somewhere.
 4. Open `main.hsp` with `hsed3.exe` from the HSP3.4 SDK folder. Press <kbd>F5</kbd> to compile and run under debug mode.
 5. Press <kbd>Ctrl+F9</kbd> to create the executable, `elonacgx.exe`.
-6. Copy `elonacgx.exe` to your Elona+ Custom-G install from earlier and run it.
+6. Copy `elonacgx.exe` and `hsplua.dll` from the source directory to your Elona+ Custom-G install from earlier and run it.
 
 **Warning**: If you make any changes to the code, *always make sure the file encoding is set to SHIFT_JIS!* Otherwise, you'll get a lot of cryptic compiler errors.
 
