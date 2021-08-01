@@ -2592,6 +2592,23 @@
 	if ( geneuse != "" ) {
 		gosub *load_gene
 	}
+	if ( dbg_skipCm ) = 1 {
+		cmRace	="elea"
+		cmClass	="warrior"
+		cmName	="Noa"
+		cmAka	="デベロッパー"
+		repeat 8
+		cmStats(cnt)=18*1000000
+		loop
+		ohanasi1 = 0
+		ohanasi2 = 0
+		ohanasi3 = 0
+		ohanasi4 = 0
+		ohanasi5 = 0
+		gdata(GDATA_FLAG_GAME_MODE) = GAMEMODE_OVERDOSE
+		playerID="sav_"+cmName
+		goto *cm_birth
+	}
 	redraw 0
 	rc = CHARA_PLAYER
 	mode = MODELIST_CHARA_CREATION
