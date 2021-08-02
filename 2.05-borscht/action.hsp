@@ -11085,7 +11085,7 @@
 		_switch_sw = 0
 		snd SOUNDLIST_PRAY1
 		txtef COLOR_GREEN
-		txt lang(godname(cdata(CDATA_GOD, CHARA_PLAYER)) + "への信仰の深さ：" + cdata(CDATA_PIETY, CHARA_PLAYER) + "/" + sdata(SKILL_NORMAL_FAITH, CHARA_PLAYER) * 100 + "、祈りチャージ：" + limit((cdata(CDATA_PRECIOUS_ALLY, CHARA_PLAYER) + 1) / 10, 0, 100) + "％ ", "Piety : " + cdata(CDATA_PIETY, CHARA_PLAYER) + "/" + sdata(SKILL_NORMAL_FAITH, CHARA_PLAYER) * 100 + " PrayCharge : " + limit((cdata(CDATA_PRECIOUS_ALLY, CHARA_PLAYER) + 1) / 10, 0, 100) + "percent ")
+		txt lang(godname(cdata(CDATA_GOD, CHARA_PLAYER)) + "への信仰の深さ：" + cdata(CDATA_PIETY, CHARA_PLAYER) + "/" + sdata(SKILL_NORMAL_FAITH, CHARA_PLAYER) * 100 + "、祈りチャージ：" + limit((cdata(CDATA_PRAY, CHARA_PLAYER) + 1) / 10, 0, 100) + "％ ", "Piety : " + cdata(CDATA_PIETY, CHARA_PLAYER) + "/" + sdata(SKILL_NORMAL_FAITH, CHARA_PLAYER) * 100 + " PrayCharge : " + limit((cdata(CDATA_PRAY, CHARA_PLAYER) + 1) / 10, 0, 100) + "percent ")
 		goto *act_use_SWEND1
 		_switch_sw++
 	}
@@ -16588,7 +16588,7 @@
 			goto *turn_end
 		}
 		tc = stat
-		if ( cdata(CDATA_PRECIOUS_ALLY, tc) != 0 ) {
+		if ( cdata(CDATA_PRAY, tc) != 0 ) {
 			snd SOUNDLIST_FAIL1
 			txt lang(cdatan(CDATAN_NAME, tc) + "はあなたの大事な仲間だ。", "It's precious your ally.")
 			goto *turn_end

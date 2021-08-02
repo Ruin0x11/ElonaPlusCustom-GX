@@ -939,6 +939,60 @@
 	gsel selcur
 	return
 
+#deffunc preparePicItem int ich, int cch
+    gsel BUF_ITEM
+
+    color 0 
+    boxf 0,960,chipi(CHIPI_WIDTH, ich),chipi(CHIPI_HEIGHT, ich)+960
+
+	if ich=528 { ; Cards
+        gmode 2
+        pos 0,960
+        gcopy BUF_ITEM,0,768,tileS,tileS
+        pos 0,1008
+        gzoom 22,20,BUF_CHR,chipc(CHIPC_X, cch)+8,chipc(CHIPC_Y, cch)+4+(chipc(CHIPC_HEIGHT, cch)>tileS)*8,chipc(CHIPC_WIDTH, cch)-16,chipc(CHIPC_HEIGHT, cch)-8-(chipc(CHIPC_HEIGHT, cch)>tileS)*10,1
+        pos 6,974
+        gcopy BUF_ITEM,0,1008,22,20
+        gsel BUF_CUR
+        return
+    }
+
+    if ich=531 { ; Figures
+        pos 8,1058-chipc(CHIPC_HEIGHT, cch)
+        gcopy BUF_CHR,chipc(CHIPC_X, cch)+8,chipc(CHIPC_Y, cch)+2,chipc(CHIPC_WIDTH, cch)-16,chipc(CHIPC_HEIGHT, cch)-8
+        gmode 4,,,150
+        color 0,0,0
+        pos 0,960+(chipc(CHIPC_HEIGHT, cch)=tileS)*48
+        gcopy BUF_ITEM,144,768+(chipc(CHIPC_HEIGHT, cch)>tileS)*48,tileS,chipc(CHIPC_HEIGHT, cch)+(chipc(CHIPC_HEIGHT, cch)>tileS)*48
+        gmode 2
+        gsel BUF_CUR
+        return
+    }
+
+	if ich=1119 { ; Meat Filling (30, 33)
+	    pos 8, 1058 - chipc(CHIPC_HEIGHT, cch)
+	    gcopy BUFFER_CHR, chipc(CHIPC_X, cch) + 8, chipc(CHIPC_Y, cch) + 2, chipc(CHIPC_WIDTH, cch), chipc(CHIPC_HEIGHT, cch)
+        gmode 2
+        gsel BUF_CUR
+        return
+    }
+
+	if ich=1208 { ; Golden Doll (18, 36)
+		pos 8, 1058 - chipc(CHIPC_HEIGHT, cch)
+		gcopy BUFFER_CHR, chipc(CHIPC_X, cch) + 8, chipc(CHIPC_Y, cch) + 2, chipc(CHIPC_WIDTH, cch), chipc(CHIPC_HEIGHT, cch)
+		gfini chipi(CHIPI_WIDTH, cch), chipi(CHIPI_HEIGHT, cch)
+		gfdec2 0, 0, 255
+        return
+    }
+
+    pos 0,960
+    gcopy BUF_ITEM,chipi(CHIPI_X, ich),chipi(CHIPI_Y, ich),chipi(CHIPI_WIDTH, ich),chipi(CHIPI_HEIGHT, ich)
+    gfini@ chipi(CHIPI_WIDTH, ich),chipi(CHIPI_HEIGHT, ich)
+    gfdec2@ c_col@(0,cch),c_col@(1,cch),c_col@(2,cch)
+    gsel BUF_CUR
+
+    return
+
 #deffunc cell_shownull int cell_shownull_x, int cell_shownull_y
 	locvar_cell_shownull_dx = (cell_shownull_x - scx) * inf_tiles + inf_screenx
 	if ( locvar_cell_shownull_dx <= -inf_tiles | locvar_cell_shownull_dx >= windoww ) {

@@ -6645,7 +6645,7 @@
 				}
 				goto *chat_end
 			}
-			if ( cdata(CDATA_PRECIOUS_ALLY, rc) == 1 ) {
+			if ( cdata(CDATA_PRAY, rc) == 1 ) {
 				snd SOUNDLIST_FAIL1
 				txt lang("それはあなたの大事な仲間だ。会話メニューから解除できる。", "It's set as no-drop ally.")
 				goto *chat_end
@@ -7560,7 +7560,7 @@
 				goto *chat_end
 			}
 			rc = findally(CREATURE_ID_SILVER_CAT)
-			if ( cdata(CDATA_PRECIOUS_ALLY, rc) == 1 ) {
+			if ( cdata(CDATA_PRAY, rc) == 1 ) {
 				snd SOUNDLIST_FAIL1
 				txt lang("それはあなたの大事な仲間だ。会話メニューから解除できる。", "It's set as no-drop ally.")
 				goto *chat_end
@@ -10879,7 +10879,7 @@
 				goto *chat_end
 			}
 			if ( chatval == 3 ) {
-				if ( cdata(CDATA_PRECIOUS_ALLY, rc) == 1 ) {
+				if ( cdata(CDATA_PRAY, rc) == 1 ) {
 					snd SOUNDLIST_FAIL1
 					txt lang("それはあなたの大事な仲間だ。会話メニューから解除できる。", "It's set as no-drop ally.")
 					goto *chat_end
@@ -11589,7 +11589,7 @@
 				}
 				goto *chat_end
 			}
-			if ( cdata(CDATA_PRECIOUS_ALLY, rc) == 1 ) {
+			if ( cdata(CDATA_PRAY, rc) == 1 ) {
 				snd SOUNDLIST_FAIL1
 				txt lang("それはあなたの大事な仲間だ。会話メニューから解除できる。", "It's set as no-drop ally.")
 				goto *chat_end
@@ -11677,7 +11677,7 @@
 				}
 				goto *chat_end
 			}
-			if ( cdata(CDATA_PRECIOUS_ALLY, rc) == 1 ) {
+			if ( cdata(CDATA_PRAY, rc) == 1 ) {
 				snd SOUNDLIST_FAIL1
 				txt lang("それはあなたの大事な仲間だ。会話メニューから解除できる。", "It's set as no-drop ally.")
 				goto *chat_end
@@ -12368,7 +12368,7 @@
 			}
 			if ( chatval == 1 ) {
 				rc = findally(CREATURE_ID_STRAY_CAT)
-				if ( cdata(CDATA_PRECIOUS_ALLY, rc) == 1 ) {
+				if ( cdata(CDATA_PRAY, rc) == 1 ) {
 					snd SOUNDLIST_FAIL1
 					txt lang("それはあなたの大事な仲間だ。会話メニューから解除できる。", "It's set as no-drop ally.")
 					goto *chat_end
@@ -12866,7 +12866,7 @@
 			buff = lang("どんどんさらってきてくれ。私を馬鹿にしたことを世間に後悔させてやる。", "On me getting kidnapped. I let the public regret that they have to fool me.")
 			gosub *chat_select
 			if ( chatval == 2 ) {
-				if ( cdata(CDATA_PRECIOUS_ALLY, rc) == 1 ) {
+				if ( cdata(CDATA_PRAY, rc) == 1 ) {
 					snd SOUNDLIST_FAIL1
 					txt lang("それはあなたの大事な仲間だ。会話メニューから解除できる。", "It's set as no-drop ally.")
 					goto *chat_end
@@ -23587,7 +23587,7 @@
 			}
 		}
 		rc = findally(gdata(GDATA_FLAG_SUB_ARASIEL_OF_THE_SANDSTORM_CREATURE))
-		if ( cdata(CDATA_PRECIOUS_ALLY, rc) == 1 ) {
+		if ( cdata(CDATA_PRAY, rc) == 1 ) {
 			snd SOUNDLIST_FAIL1
 			txt lang("それはあなたの大事な仲間だ。会話メニューから解除できる。", "It's set as no-drop ally.")
 			goto *chat_end
@@ -43445,12 +43445,12 @@
 									listmax++
 								}
 							}
-							if ( cdata(CDATA_PRECIOUS_ALLY, tc) == 0 ) {
+							if ( cdata(CDATA_PRAY, tc) == 0 ) {
 								list(0, listmax) = 67
 								listn(0, listmax) = lang("大事な仲間に指定", "Designated as precious ally.")
 								listmax++
 							}
-							if ( cdata(CDATA_PRECIOUS_ALLY, tc) == 1 ) {
+							if ( cdata(CDATA_PRAY, tc) == 1 ) {
 								list(0, listmax) = 68
 								listn(0, listmax) = lang("大事な仲間指定を解除", "Cancel precious ally specified.")
 								listmax++
@@ -43482,7 +43482,7 @@
 									listmax++
 								}
 							}
-							if ( cdata(CDATA_PRECIOUS_ALLY, tc) == 0 ) {
+							if ( cdata(CDATA_PRAY, tc) == 0 ) {
 								list(0, listmax) = 35
 								listn(0, listmax) = lang("縁を切る", "I'm going to abandon you.")
 								listmax++
@@ -45733,7 +45733,7 @@
 				}
 			}
 		}
-		cdata(CDATA_PRECIOUS_ALLY, tc) = 1
+		cdata(CDATA_PRAY, tc) = 1
 		goto *chat_end
 	}
 	if ( chatval == 68 ) {
@@ -45797,7 +45797,7 @@
 				}
 			}
 		}
-		cdata(CDATA_PRECIOUS_ALLY, tc) = 0
+		cdata(CDATA_PRAY, tc) = 0
 		goto *chat_end
 	}
 	if ( chatval == 71 ) {
