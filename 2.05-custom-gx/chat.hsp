@@ -17517,15 +17517,19 @@
 		}
 		if ( cdata(CDATA_ROLE, tc) == ROLE_SHOP_DEED ) {
 			chatList 99, lang("乗り物を破棄したい", "I want to discard my world-vehicle.")
-		}
+        }
+		if ( cdata(CDATA_ROLE, tc) == ROLE_INFORMER ) {
 			chatList 18, lang("冒険者の情報(100Gold)", "Show me the list of adventurers.(100Gold)")
 			chatList 105, lang("冒険者への伝言(2000Gold)", "Convey my message to other adventurers.(2000Gold)")
 			chatList 98, lang("クエストの攻略情報(300Gold)", "Tell me the quest strategy information.(300Gold)")
 			chatList 82, lang("【誕生日を教える】", "[ I will inform my birthday.]")
+
+			/********** RUIN0X11 CUSTOM - BEGINNING **********/ // Removed in stock 2.05.
+
 			chatList 47, lang("仲間の調査", "I want you to investigate one of my allies.")
-			if ( gdata(STARTING_GDATA_FLAG + 322) == 0 & gdata(STARTING_GDATA_FLAG + 323) == 0 ) {
-				chatList 82, lang("【誕生日を教える】", "[ I will inform my birthday.]")
-			}
+
+			/********** RUIN0X11 CUSTOM - ENDING **********/
+
 			clientguide
 			if ( stat != 0 ) {
 				repeat stat
