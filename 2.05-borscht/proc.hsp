@@ -4127,7 +4127,7 @@
 					x = rnd(mdata(MDATA_WIDTH))
 					y = rnd(mdata(MDATA_HEIGHT))
 				}
-				addmef x, y, 5, 24, rnd(15) + 20, 50, evdata1(evnum - (evnum != 0) * 1)
+				addmef x, y, MEF_TYPE_FIRE, xy2pic(24, 0), rnd(15) + 20, 50, evdata1(evnum - (evnum != 0) * 1)
 				mapitem_fire x, y
 				if ( cnt \ 4 == 0 ) {
 					if ( gdata(GDATA_FLAG_PET_ANNIVERSARY_ACTIVE) == 0 ) {
@@ -5524,9 +5524,9 @@
 				}
 			}
 		}
-		if ( map(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), MAP_MEF_ID_PLUS_ONE) != 0 ) {
-			i = map(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), MAP_MEF_ID_PLUS_ONE) - 1
-			if ( mef(0, i) == 8 ) {
+		if ( map(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), MAP_MEF_INDEX_PLUS_ONE) != 0 ) {
+			i = map(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), MAP_MEF_INDEX_PLUS_ONE) - 1
+			if ( mef(MEF_TYPE, i) == MEF_TYPE_MIST_OF_DAZZLING ) {
 				if ( rnd(4) == 0 ) {
 					if ( synccheck(cc, -1) ) {
 						txtmore
@@ -6604,14 +6604,14 @@
 						}
 					}
 					maga = 0
-					if ( map(dx, dy, MAP_MEF_ID_PLUS_ONE) != 0 ) {
+					if ( map(dx, dy, MAP_MEF_INDEX_PLUS_ONE) != 0 ) {
 						if ( efid == SKILL_SPELL_WATER_BOLT ) {
-							delmef map(dx, dy, MAP_MEF_ID_PLUS_ONE) - 1
+							delmef map(dx, dy, MAP_MEF_INDEX_PLUS_ONE) - 1
 						}
 					}
-					if ( map(dx, dy, MAP_MEF_ID_PLUS_ONE) != 0 ) {
-						if ( mef(0, map(dx, dy, MAP_MEF_ID_PLUS_ONE) - 1) == 9 ) {
-							delmef map(dx, dy, MAP_MEF_ID_PLUS_ONE) - 1
+					if ( map(dx, dy, MAP_MEF_INDEX_PLUS_ONE) != 0 ) {
+						if ( mef(MEF_TYPE, map(dx, dy, MAP_MEF_INDEX_PLUS_ONE) - 1) == MEF_TYPE_KEMURIDAMA ) {
+							delmef map(dx, dy, MAP_MEF_INDEX_PLUS_ONE) - 1
 						}
 					}
 					if ( map(dx, dy, MAP_CHARA_INDEX_PLUS_ONE) != 0 ) {
@@ -6832,14 +6832,14 @@
 						if ( fov_los(tlocx, tlocy, dx, dy) == 0 ) {
 							continue
 						}
-						if ( map(dx, dy, MAP_MEF_ID_PLUS_ONE) != 0 ) {
+						if ( map(dx, dy, MAP_MEF_INDEX_PLUS_ONE) != 0 ) {
 							if ( efid == SKILL_SPELL_BUBBLE_STORM ) {
-								delmef map(dx, dy, MAP_MEF_ID_PLUS_ONE) - 1
+								delmef map(dx, dy, MAP_MEF_INDEX_PLUS_ONE) - 1
 							}
 						}
-						if ( map(dx, dy, MAP_MEF_ID_PLUS_ONE) != 0 ) {
-							if ( mef(0, map(dx, dy, MAP_MEF_ID_PLUS_ONE) - 1) == 9 ) {
-								delmef map(dx, dy, MAP_MEF_ID_PLUS_ONE) - 1
+						if ( map(dx, dy, MAP_MEF_INDEX_PLUS_ONE) != 0 ) {
+							if ( mef(MEF_TYPE, map(dx, dy, MAP_MEF_INDEX_PLUS_ONE) - 1) == MEF_TYPE_KEMURIDAMA ) {
+								delmef map(dx, dy, MAP_MEF_INDEX_PLUS_ONE) - 1
 							}
 						}
 						if ( map(dx, dy, MAP_CHARA_INDEX_PLUS_ONE) == 0 ) {
@@ -8328,9 +8328,9 @@
 						}
 					}
 					maga = 0
-					if ( map(dx, dy, MAP_MEF_ID_PLUS_ONE) != 0 ) {
-						if ( mef(0, map(dx, dy, MAP_MEF_ID_PLUS_ONE) - 1) == 9 ) {
-							delmef map(dx, dy, MAP_MEF_ID_PLUS_ONE) - 1
+					if ( map(dx, dy, MAP_MEF_INDEX_PLUS_ONE) != 0 ) {
+						if ( mef(MEF_TYPE, map(dx, dy, MAP_MEF_INDEX_PLUS_ONE) - 1) == MEF_TYPE_KEMURIDAMA ) {
+							delmef map(dx, dy, MAP_MEF_INDEX_PLUS_ONE) - 1
 						}
 					}
 					if ( map(dx, dy, MAP_CHARA_INDEX_PLUS_ONE) != 0 ) {
@@ -13080,26 +13080,26 @@
 				tc = tcbk
 			}
 			if ( efid == SKILL_SPACT_ETHER_GROUND ) {
-				addmef x, y, 4, 20, rnd(4) + 2, efp, cc
+				addmef x, y, MEF_TYPE_ETHER, xy2pic(20, 0), rnd(4) + 2, efp, cc
 			}
 			if ( efid == SKILL_SPELL_ACID_GROUND ) {
-				addmef x, y, 3, 19, rnd(10) + 5, efp, cc
+				addmef x, y, MEF_TYPE_ACID, xy2pic(19, 0), rnd(10) + 5, efp, cc
 			}
 			if ( efid == SKILL_SPELL_FIRE_WALL ) {
-				addmef x, y, 5, 24, rnd(10) + 5, efp, cc
+				addmef x, y, MEF_TYPE_FIRE, xy2pic(24, 0), rnd(10) + 5, efp, cc
 				mapitem_fire x, y
 			}
 			if ( efid == SKILL_SPELL_WEB ) {
-				addmef x, y, 1, 11, -1, efp * 2
+				addmef x, y, MEF_TYPE_WEB, xy2pic(11, 0), -1, efp * 2
 			}
 			if ( efid == SKILL_SPELL_MIST_OF_DARKNESS ) {
-				addmef x, y, 2, 30, 8 + rnd(15 + efp / 25), efp
+				addmef x, y, MEF_TYPE_MIST, xy2pic(30, 0), 8 + rnd(15 + efp / 25), efp
 			}
 			if ( efid == SKILL_SPELL_MIST_OF_DAZZLING ) {
-				addmef x, y, 8, 4, 8 + rnd(15 + efp / 25), efp
+				addmef x, y, MEF_TYPE_MIST_OF_DAZZLING, xy2pic(4, 0), 8 + rnd(15 + efp / 25), efp
 			}
 			if ( efid == SKILL_SPACT_CURTAIN_OF_SMOKE ) {
-				addmef x, y, 9, 963, 15, efp
+				addmef x, y, MEF_TYPE_KEMURIDAMA, xy2pic(6, 29), 15, efp
 			}
 		loop
 		repeat 245
@@ -14546,7 +14546,7 @@
 					map(dx, dy, MAP_TILE_ID) = 12 + rnd(2)
 				}
 				if ( rnd(40) == 0 ) {
-					addmef dx, dy, 5, 24, rnd(4) + 3, 50
+					addmef dx, dy, MEF_TYPE_FIRE, xy2pic(24, 0), rnd(4) + 3, 50
 				}
 				if ( map(dx, dy, MAP_CHARA_INDEX_PLUS_ONE) != 0 ) {
 					tc = map(dx, dy, MAP_CHARA_INDEX_PLUS_ONE) - 1
@@ -15766,7 +15766,7 @@
 				if ( chipm(CHIPM_ATTRIB, map(dx, dy, MAP_TILE_ID)) & CHIPM_ATTRIB_CANT_PASS ) {
 					continue
 				}
-				addmef dx, dy, 9, 963, 300, 300
+				addmef dx, dy, MEF_TYPE_KEMURIDAMA, xy2pic(6, 29), 300, 300
 			loop
 		loop
 		goto *effect_end
@@ -16854,8 +16854,8 @@
 			if ( map(x, y, MAP_TILE_ID) < xy2pic(0, 11) ) {
 				map(x, y, MAP_TILE_ID) = xy2pic(3, 5)
 			}
-			if ( map(x, y, MAP_MEF_ID_PLUS_ONE) != 0 ) {
-				delmef map(x, y, MAP_MEF_ID_PLUS_ONE) - 1
+			if ( map(x, y, MAP_MEF_INDEX_PLUS_ONE) != 0 ) {
+				delmef map(x, y, MAP_MEF_INDEX_PLUS_ONE) - 1
 			}
 		loop
 		repeat 245
@@ -18230,31 +18230,31 @@
 			if ( fov_los(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), dx, dy) == 0 ) {
 				continue
 			}
-			if ( map(cdata(CDATA_X, tc), cdata(CDATA_Y, tc), MAP_MEF_ID_PLUS_ONE) != 0 ) {
-				i = map(cdata(CDATA_X, tc), cdata(CDATA_Y, tc), MAP_MEF_ID_PLUS_ONE) - 1
+			if ( map(cdata(CDATA_X, tc), cdata(CDATA_Y, tc), MAP_MEF_INDEX_PLUS_ONE) != 0 ) {
+				i = map(cdata(CDATA_X, tc), cdata(CDATA_Y, tc), MAP_MEF_INDEX_PLUS_ONE) - 1
 				s = ""
-				if ( mef(0, i) == 1 ) {
+				if ( mef(MEF_TYPE, i) == MEF_TYPE_WEB ) {
 					s = lang("糸", "web")
 				}
-				if ( mef(0, i) == 2 ) {
+				if ( mef(MEF_TYPE, i) == MEF_TYPE_MIST ) {
 					s = lang("闇", "darkness")
 				}
-				if ( mef(0, i) == 3 ) {
+				if ( mef(MEF_TYPE, i) == MEF_TYPE_ACID ) {
 					s = lang("酸", "acid")
 				}
-				if ( mef(0, i) == 4 ) {
+				if ( mef(MEF_TYPE, i) == MEF_TYPE_ETHER ) {
 					s = lang("エーテル", "ether")
 				}
-				if ( mef(0, i) == 5 ) {
+				if ( mef(MEF_TYPE, i) == MEF_TYPE_FIRE ) {
 					s = lang("炎", "fire")
 				}
-				if ( mef(0, i) == 6 ) {
+				if ( mef(MEF_TYPE, i) == MEF_TYPE_POTION ) {
 					s = lang("液体", "potion")
 				}
-				if ( mef(0, i) == 8 ) {
+				if ( mef(MEF_TYPE, i) == MEF_TYPE_MIST_OF_DAZZLING ) {
 					s = lang("光", "light")
 				}
-				if ( mef(0, i) == 9 ) {
+				if ( mef(MEF_TYPE, i) == MEF_TYPE_KEMURIDAMA ) {
 					s = lang("煙", "smoke")
 				}
 				if ( s == "" ) {
@@ -21791,7 +21791,7 @@
 			txt lang(name(tc) + "は炎に包まれた。", name(tc) + " " + is(tc) + " surrounded by flames.")
 		}
 		dmghp tc, (rnd(efp / 3 + 5) + efp / 3) * efstatusfix(50, 100, 200, 300) / 100 + 1, DAMAGE_FROM_FIRE, SKILL_RES_FIRE, efp
-		addmef cdata(CDATA_X, tc), cdata(CDATA_Y, tc), 5, 24, rnd(15) + 25, efp, cc
+		addmef cdata(CDATA_X, tc), cdata(CDATA_Y, tc), MEF_TYPE_FIRE, xy2pic(24, 0), rnd(15) + 25, efp, cc
 		mapitem_fire cdata(CDATA_X, tc), cdata(CDATA_Y, tc)
 		return
 		goto *effect_end

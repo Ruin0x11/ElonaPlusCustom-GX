@@ -716,50 +716,50 @@
 	goto *label_0756
 
 #deffunc delmef int delmef_arg1
-	if ( mef(0, delmef_arg1) == 7 ) {
-		evadd EVENT_NUKE, mef(2, delmef_arg1), mef(3, delmef_arg1)
+	if ( mef(MEF_TYPE, delmef_arg1) == MEF_TYPE_NUKE ) {
+		evadd EVENT_NUKE, mef(MEF_X, delmef_arg1), mef(MEF_Y, delmef_arg1)
 	}
-	map(mef(2, delmef_arg1), mef(3, delmef_arg1), MAP_MEF_ID_PLUS_ONE) = 0
-	mef(0, delmef_arg1) = 0
+	map(mef(MEF_X, delmef_arg1), mef(MEF_Y, delmef_arg1), MAP_MEF_INDEX_PLUS_ONE) = 0
+	mef(MEF_TYPE, delmef_arg1) = MEF_TYPE_NONE
 	locvar_delmef_i = 200 - 1
 	repeat 200 - delmef_arg1
-		if ( mef(0, locvar_delmef_i) != 0 ) {
+		if ( mef(MEF_TYPE, locvar_delmef_i) != MEF_TYPE_NONE ) {
 			repeat 9
 				mef(cnt, delmef_arg1) = mef(cnt, locvar_delmef_i)
 			loop
-			map(mef(2, locvar_delmef_i), mef(3, locvar_delmef_i), MAP_MEF_ID_PLUS_ONE) = delmef_arg1 + 1
-			mef(0, locvar_delmef_i) = 0
+			map(mef(MEF_X, locvar_delmef_i), mef(MEF_Y, locvar_delmef_i), MAP_MEF_INDEX_PLUS_ONE) = delmef_arg1 + 1
+			mef(MEF_TYPE, locvar_delmef_i) = MEF_TYPE_NONE
 			break
 		}
 		locvar_delmef_i--
 	loop
 	return
 
-#deffunc addmef int addmef_arg1, int addmef_arg2, int addmef_arg3, int addmef_arg4, int addmef_arg5, int addmef_arg6, int addmef_arg7, int addmef_arg8, int addmef_arg9, int addmef_arg10
-	locvar_addmef_p = map(addmef_arg1, addmef_arg2, MAP_TILE_ID)
-	if ( addmef_arg3 == 5 ) {
+#deffunc addmef int addmef_x, int addmef_y, int addmef_mefid, int addmef_chip, int addmef_duration, int addmef_power, int addmef_source, int addmef_itemid, int addmef_cursestate, int addmef_color
+	locvar_addmef_p = map(addmef_x, addmef_y, MAP_TILE_ID)
+	if ( addmef_mefid == MEF_TYPE_FIRE ) {
 		if ( chipm(CHIPM_ROLE, locvar_addmef_p) == MAP_CHIP_ROLE_WATER ) {
 			return
 		}
 	}
-	if ( map(addmef_arg1, addmef_arg2, MAP_MEF_ID_PLUS_ONE) != 0 ) {
-		locvar_delmef_i = map(addmef_arg1, addmef_arg2, MAP_MEF_ID_PLUS_ONE) - 1
+	if ( map(addmef_x, addmef_y, MAP_MEF_INDEX_PLUS_ONE) != 0 ) {
+		locvar_delmef_i = map(addmef_x, addmef_y, MAP_MEF_INDEX_PLUS_ONE) - 1
 	}
 	else {
 		locvar_delmef_i = -1
 		repeat 200
-			if ( mef(0, cnt) == 0 ) {
+			if ( mef(MEF_TYPE, cnt) == MEF_TYPE_NONE ) {
 				locvar_delmef_i = cnt
 				break
 			}
 		loop
 		if ( locvar_delmef_i == (-1) ) {
 			locvar_delmef_i = rnd(200)
-			map(mef(2, locvar_delmef_i), mef(3, locvar_delmef_i), MAP_MEF_ID_PLUS_ONE) = 0
+			map(mef(MEF_X, locvar_delmef_i), mef(MEF_Y, locvar_delmef_i), MAP_MEF_INDEX_PLUS_ONE) = 0
 		}
 	}
-	mef(0, locvar_delmef_i) = addmef_arg3, addmef_arg4 + addmef_arg10 * 10000, addmef_arg1, addmef_arg2, addmef_arg5, addmef_arg6, addmef_arg7, addmef_arg8, addmef_arg9
-	map(addmef_arg1, addmef_arg2, MAP_MEF_ID_PLUS_ONE) = locvar_delmef_i + 1
+	mef(MEF_TYPE, locvar_delmef_i) = addmef_mefid, addmef_chip + addmef_color * 10000, addmef_x, addmef_y, addmef_duration, addmef_power, addmef_source, addmef_itemid, addmef_cursestate
+	map(addmef_x, addmef_y, MAP_MEF_INDEX_PLUS_ONE) = locvar_delmef_i + 1
 	return
 
 *label_0756
@@ -929,8 +929,8 @@
 				return 0
 			}
 		}
-		if ( map(route_info_arg1, route_info_arg2, MAP_MEF_ID_PLUS_ONE) != 0 ) {
-			if ( mef(0, map(route_info_arg1, route_info_arg2, MAP_MEF_ID_PLUS_ONE) - 1) == 9 ) {
+		if ( map(route_info_arg1, route_info_arg2, MAP_MEF_INDEX_PLUS_ONE) != 0 ) {
+			if ( mef(MEF_TYPE, map(route_info_arg1, route_info_arg2, MAP_MEF_INDEX_PLUS_ONE) - 1) == MEF_TYPE_KEMURIDAMA ) {
 				if ( gdata(GDATA_FLAG_ACTION_TALON_SOLDIER) == 0 ) {
 					return 0
 				}
@@ -1163,54 +1163,54 @@
 		}
 	}
 	if ( cell_show_see ) {
-		if ( map(cell_show_x, cell_show_y, MAP_MEF_ID_PLUS_ONE) != 0 ) {
-			locvar_cell_shownull_p = map(cell_show_x, cell_show_y, MAP_MEF_ID_PLUS_ONE) - 1
+		if ( map(cell_show_x, cell_show_y, MAP_MEF_INDEX_PLUS_ONE) != 0 ) {
+			locvar_cell_shownull_p = map(cell_show_x, cell_show_y, MAP_MEF_INDEX_PLUS_ONE) - 1
 			pos locvar_cell_shownull_dx, locvar_cell_shownull_dy
-			if ( mef(1, locvar_cell_shownull_p) > 10000 ) {
+			if ( mef(MEF_CHIP, locvar_cell_shownull_p) > 10000 ) {
 				gsel BUFFER_ITEM
 				color 0
-				boxf 0, 960, chipi(CHIPI_WIDTH, mef(1, locvar_cell_shownull_p) \ 10000), chipi(CHIPI_HEIGHT, mef(1, locvar_cell_shownull_p) \ 10000) + 960
-				if ( mef(1, locvar_cell_shownull_p) \ 10000 == 528 ) {
+				boxf 0, 960, chipi(CHIPI_WIDTH, mef(MEF_CHIP, locvar_cell_shownull_p) \ 10000), chipi(CHIPI_HEIGHT, mef(MEF_CHIP, locvar_cell_shownull_p) \ 10000) + 960
+				if ( mef(MEF_CHIP, locvar_cell_shownull_p) \ 10000 == 528 ) {
 					gmode 2
 					pos 0, 960
 					gcopy BUFFER_ITEM, 0, 768, inf_tiles, inf_tiles
 					pos 0, 1008
-					gzoom 22, 20, 5, chipc(CHIPC_X, mef(1, locvar_cell_shownull_p) / 10000) + 8, chipc(CHIPC_Y, mef(1, locvar_cell_shownull_p) / 10000) + 4 + (chipc(CHIPC_HEIGHT, mef(1, locvar_cell_shownull_p) / 10000) > inf_tiles) * 8, chipc(CHIPC_WIDTH, mef(1, locvar_cell_shownull_p) / 10000) - 16, chipc(CHIPC_HEIGHT, mef(1, locvar_cell_shownull_p) / 10000) - 8 - (chipc(CHIPC_HEIGHT, mef(1, locvar_cell_shownull_p) / 10000) > inf_tiles) * 10, 1
+					gzoom 22, 20, 5, chipc(CHIPC_X, mef(MEF_CHIP, locvar_cell_shownull_p) / 10000) + 8, chipc(CHIPC_Y, mef(MEF_CHIP, locvar_cell_shownull_p) / 10000) + 4 + (chipc(CHIPC_HEIGHT, mef(MEF_CHIP, locvar_cell_shownull_p) / 10000) > inf_tiles) * 8, chipc(CHIPC_WIDTH, mef(MEF_CHIP, locvar_cell_shownull_p) / 10000) - 16, chipc(CHIPC_HEIGHT, mef(MEF_CHIP, locvar_cell_shownull_p) / 10000) - 8 - (chipc(CHIPC_HEIGHT, mef(MEF_CHIP, locvar_cell_shownull_p) / 10000) > inf_tiles) * 10, 1
 					pos 6, 974
 					gcopy BUFFER_ITEM, 0, 1008, 22, 20
 					gsel selcur
 				}
 				else {
-					if ( mef(1, locvar_cell_shownull_p) \ 10000 == 1119 ) {
-						pos 0, 1055 - chipc(CHIPC_HEIGHT, mef(1, locvar_cell_shownull_p) / 10000)
-						gcopy BUFFER_CHR, chipc(CHIPC_X, mef(1, locvar_cell_shownull_p) / 10000), chipc(CHIPC_Y, mef(1, locvar_cell_shownull_p) / 10000), chipc(CHIPC_WIDTH, mef(1, locvar_cell_shownull_p) / 10000), chipc(CHIPC_HEIGHT, mef(1, locvar_cell_shownull_p) / 10000)
+					if ( mef(MEF_CHIP, locvar_cell_shownull_p) \ 10000 == 1119 ) {
+						pos 0, 1055 - chipc(CHIPC_HEIGHT, mef(MEF_CHIP, locvar_cell_shownull_p) / 10000)
+						gcopy BUFFER_CHR, chipc(CHIPC_X, mef(MEF_CHIP, locvar_cell_shownull_p) / 10000), chipc(CHIPC_Y, mef(MEF_CHIP, locvar_cell_shownull_p) / 10000), chipc(CHIPC_WIDTH, mef(MEF_CHIP, locvar_cell_shownull_p) / 10000), chipc(CHIPC_HEIGHT, mef(MEF_CHIP, locvar_cell_shownull_p) / 10000)
 						gmode 2
 						gsel selcur
 					}
 					else {
-						if ( mef(1, locvar_cell_shownull_p) \ 10000 == 1206 ) {
-							pos 0, 1055 - chipc(CHIPC_HEIGHT, mef(1, locvar_cell_shownull_p) / 10000)
-							gcopy BUFFER_CHR, chipc(CHIPC_X, mef(1, locvar_cell_shownull_p) / 10000), chipc(CHIPC_Y, mef(1, locvar_cell_shownull_p) / 10000), chipc(CHIPC_WIDTH, mef(1, locvar_cell_shownull_p) / 10000), chipc(CHIPC_HEIGHT, mef(1, locvar_cell_shownull_p) / 10000)
-							gfini chipi(CHIPI_WIDTH, mef(1, locvar_cell_shownull_p) \ 10000), chipi(CHIPI_HEIGHT, mef(1, locvar_cell_shownull_p) \ 10000)
+						if ( mef(MEF_CHIP, locvar_cell_shownull_p) \ 10000 == 1206 ) {
+							pos 0, 1055 - chipc(CHIPC_HEIGHT, mef(MEF_CHIP, locvar_cell_shownull_p) / 10000)
+							gcopy BUFFER_CHR, chipc(CHIPC_X, mef(MEF_CHIP, locvar_cell_shownull_p) / 10000), chipc(CHIPC_Y, mef(MEF_CHIP, locvar_cell_shownull_p) / 10000), chipc(CHIPC_WIDTH, mef(MEF_CHIP, locvar_cell_shownull_p) / 10000), chipc(CHIPC_HEIGHT, mef(MEF_CHIP, locvar_cell_shownull_p) / 10000)
+							gfini chipi(CHIPI_WIDTH, mef(MEF_CHIP, locvar_cell_shownull_p) \ 10000), chipi(CHIPI_HEIGHT, mef(MEF_CHIP, locvar_cell_shownull_p) \ 10000)
 							gfdec2 0, 0, 255
 							gsel selcur
 						}
 						else {
-							if ( mef(1, locvar_cell_shownull_p) \ 10000 == 531 ) {
-								pos 8, 1058 - chipc(CHIPC_HEIGHT, mef(1, locvar_cell_shownull_p) / 10000)
-								gcopy BUFFER_CHR, chipc(CHIPC_X, mef(1, locvar_cell_shownull_p) / 10000) + 8, chipc(CHIPC_Y, mef(1, locvar_cell_shownull_p) / 10000) + 2, chipc(CHIPC_WIDTH, mef(1, locvar_cell_shownull_p) / 10000) - 16, chipc(CHIPC_HEIGHT, mef(1, locvar_cell_shownull_p) / 10000) - 8
+							if ( mef(MEF_CHIP, locvar_cell_shownull_p) \ 10000 == 531 ) {
+								pos 8, 1058 - chipc(CHIPC_HEIGHT, mef(MEF_CHIP, locvar_cell_shownull_p) / 10000)
+								gcopy BUFFER_CHR, chipc(CHIPC_X, mef(MEF_CHIP, locvar_cell_shownull_p) / 10000) + 8, chipc(CHIPC_Y, mef(MEF_CHIP, locvar_cell_shownull_p) / 10000) + 2, chipc(CHIPC_WIDTH, mef(MEF_CHIP, locvar_cell_shownull_p) / 10000) - 16, chipc(CHIPC_HEIGHT, mef(MEF_CHIP, locvar_cell_shownull_p) / 10000) - 8
 								gmode 4, , , 150
 								color 0, 0, 0
-								pos 0, 960 + (chipc(CHIPC_HEIGHT, mef(1, locvar_cell_shownull_p) / 10000) == inf_tiles) * 48
-								gcopy BUFFER_ITEM, 144, 768 + (chipc(CHIPC_HEIGHT, mef(1, locvar_cell_shownull_p) / 10000) > inf_tiles) * 48, inf_tiles, chipc(CHIPC_HEIGHT, mef(1, locvar_cell_shownull_p) / 10000) + (chipc(CHIPC_HEIGHT, mef(1, locvar_cell_shownull_p) / 10000) > inf_tiles) * 48 * 0
+								pos 0, 960 + (chipc(CHIPC_HEIGHT, mef(MEF_CHIP, locvar_cell_shownull_p) / 10000) == inf_tiles) * 48
+								gcopy BUFFER_ITEM, 144, 768 + (chipc(CHIPC_HEIGHT, mef(MEF_CHIP, locvar_cell_shownull_p) / 10000) > inf_tiles) * 48, inf_tiles, chipc(CHIPC_HEIGHT, mef(MEF_CHIP, locvar_cell_shownull_p) / 10000) + (chipc(CHIPC_HEIGHT, mef(MEF_CHIP, locvar_cell_shownull_p) / 10000) > inf_tiles) * 48 * 0
 								gmode 2
 								gsel selcur
 							}
 							else {
 								pos 0, 960
-								gcopy BUFFER_ITEM, chipi(CHIPI_X, mef(1, locvar_cell_shownull_p) \ 10000), chipi(CHIPI_Y, mef(1, locvar_cell_shownull_p) \ 10000), chipi(CHIPI_WIDTH, mef(1, locvar_cell_shownull_p) \ 10000), chipi(CHIPI_HEIGHT, mef(1, locvar_cell_shownull_p) \ 10000)
-								gfini chipi(CHIPI_WIDTH, mef(1, locvar_cell_shownull_p) \ 10000), chipi(CHIPI_HEIGHT, mef(1, locvar_cell_shownull_p) \ 10000)
-								gfdec2 c_col(0, mef(1, locvar_cell_shownull_p) / 10000), c_col(1, mef(1, locvar_cell_shownull_p) / 10000), c_col(2, mef(1, locvar_cell_shownull_p) / 10000)
+								gcopy BUFFER_ITEM, chipi(CHIPI_X, mef(MEF_CHIP, locvar_cell_shownull_p) \ 10000), chipi(CHIPI_Y, mef(MEF_CHIP, locvar_cell_shownull_p) \ 10000), chipi(CHIPI_WIDTH, mef(MEF_CHIP, locvar_cell_shownull_p) \ 10000), chipi(CHIPI_HEIGHT, mef(MEF_CHIP, locvar_cell_shownull_p) \ 10000)
+								gfini chipi(CHIPI_WIDTH, mef(MEF_CHIP, locvar_cell_shownull_p) \ 10000), chipi(CHIPI_HEIGHT, mef(MEF_CHIP, locvar_cell_shownull_p) \ 10000)
+								gfdec2 c_col(0, mef(MEF_CHIP, locvar_cell_shownull_p) / 10000), c_col(1, mef(MEF_CHIP, locvar_cell_shownull_p) / 10000), c_col(2, mef(MEF_CHIP, locvar_cell_shownull_p) / 10000)
 								gsel selcur
 							}
 						}
@@ -1219,7 +1219,7 @@
 				gcopy BUFFER_ITEM, 0, 960, inf_tiles, inf_tiles
 			}
 			else {
-				gcopy BUFFER_ITEM, mef(1, locvar_cell_shownull_p) \ 33 * inf_tiles, mef(1, locvar_cell_shownull_p) / 33 * inf_tiles
+				gcopy BUFFER_ITEM, mef(MEF_CHIP, locvar_cell_shownull_p) \ 33 * inf_tiles, mef(MEF_CHIP, locvar_cell_shownull_p) / 33 * inf_tiles
 			}
 		}
 	}
@@ -2016,15 +2016,15 @@
 					}
 				}
 			}
-			if ( map(locvar_cell_draw_x, locvar_cell_draw_y, MAP_MEF_ID_PLUS_ONE) != 0 ) {
+			if ( map(locvar_cell_draw_x, locvar_cell_draw_y, MAP_MEF_INDEX_PLUS_ONE) != 0 ) {
 				if ( mapsync(locvar_cell_draw_x, locvar_cell_draw_y) == msync ) {
-					locvar_cell_draw_p2 = map(locvar_cell_draw_x, locvar_cell_draw_y, MAP_MEF_ID_PLUS_ONE) - 1
-					locvar_cell_draw_p = mef(1, locvar_cell_draw_p2) \ 10000, mef(1, locvar_cell_draw_p2) / 10000
+					locvar_cell_draw_p2 = map(locvar_cell_draw_x, locvar_cell_draw_y, MAP_MEF_INDEX_PLUS_ONE) - 1
+					locvar_cell_draw_p = mef(MEF_CHIP, locvar_cell_draw_p2) \ 10000, mef(MEF_CHIP, locvar_cell_draw_p2) / 10000
 					pos locvar_cell_draw_dx, locvar_cell_draw_dy - chipi(CHIPI_F, locvar_cell_draw_p)
 					if ( chipi(CHIPI_ANIM, locvar_cell_draw_p) ) {
 						locvar_cell_draw_p += (locvar_cell_draw_scrturn + locvar_cell_draw_p2) \ (chipi(CHIPI_ANIM, locvar_cell_draw_p) + 1) - ((locvar_cell_draw_scrturn + locvar_cell_draw_p2) \ (chipi(CHIPI_ANIM, locvar_cell_draw_p) + 1) == chipi(CHIPI_ANIM, locvar_cell_draw_p)) * 2 * (chipi(CHIPI_ANIM, locvar_cell_draw_p) != 0)
 					}
-					if ( mef(1, locvar_cell_draw_p2) > 10000 ) {
+					if ( mef(MEF_CHIP, locvar_cell_draw_p2) > 10000 ) {
 						gsel BUFFER_ITEM
 						color 0
 						boxf 0, 960, chipi(CHIPI_WIDTH, locvar_cell_draw_p), chipi(CHIPI_HEIGHT, locvar_cell_draw_p) + 960
@@ -4239,8 +4239,8 @@
 				goto *fov_los_WEND1
 			}
 			if ( gdata(GDATA_SENSE_OBJECT) != 10 ) {
-				if ( map(fov_los_arg1, locvar_fov_los_ty, MAP_MEF_ID_PLUS_ONE) != 0 ) {
-					if ( mef(0, map(fov_los_arg1, locvar_fov_los_ty, MAP_MEF_ID_PLUS_ONE) - 1) == 9 ) {
+				if ( map(fov_los_arg1, locvar_fov_los_ty, MAP_MEF_INDEX_PLUS_ONE) != 0 ) {
+					if ( mef(MEF_TYPE, map(fov_los_arg1, locvar_fov_los_ty, MAP_MEF_INDEX_PLUS_ONE) - 1) == MEF_TYPE_KEMURIDAMA ) {
 						if ( gdata(GDATA_FLAG_ACTION_TALON_SOLDIER) == 0 ) {
 							return 0
 						}
@@ -4257,8 +4257,8 @@
 				goto *fov_los_WEND2
 			}
 			if ( gdata(GDATA_SENSE_OBJECT) != 10 ) {
-				if ( map(fov_los_arg1, locvar_fov_los_ty, MAP_MEF_ID_PLUS_ONE) != 0 ) {
-					if ( mef(0, map(fov_los_arg1, locvar_fov_los_ty, MAP_MEF_ID_PLUS_ONE) - 1) == 9 ) {
+				if ( map(fov_los_arg1, locvar_fov_los_ty, MAP_MEF_INDEX_PLUS_ONE) != 0 ) {
+					if ( mef(MEF_TYPE, map(fov_los_arg1, locvar_fov_los_ty, MAP_MEF_INDEX_PLUS_ONE) - 1) == MEF_TYPE_KEMURIDAMA ) {
 						if ( gdata(GDATA_FLAG_ACTION_TALON_SOLDIER) == 0 ) {
 							return 0
 						}
@@ -4281,8 +4281,8 @@
 				goto *fov_los_WEND3
 			}
 			if ( gdata(GDATA_SENSE_OBJECT) != 10 ) {
-				if ( map(locvar_fov_los_tx, fov_los_arg2, MAP_MEF_ID_PLUS_ONE) != 0 ) {
-					if ( mef(0, map(locvar_fov_los_tx, fov_los_arg2, MAP_MEF_ID_PLUS_ONE) - 1) == 9 ) {
+				if ( map(locvar_fov_los_tx, fov_los_arg2, MAP_MEF_INDEX_PLUS_ONE) != 0 ) {
+					if ( mef(MEF_TYPE, map(locvar_fov_los_tx, fov_los_arg2, MAP_MEF_INDEX_PLUS_ONE) - 1) == MEF_TYPE_KEMURIDAMA ) {
 						if ( gdata(GDATA_FLAG_ACTION_TALON_SOLDIER) == 0 ) {
 							return 0
 						}
@@ -4299,8 +4299,8 @@
 				goto *fov_los_WEND4
 			}
 			if ( gdata(GDATA_SENSE_OBJECT) != 10 ) {
-				if ( map(locvar_fov_los_tx, fov_los_arg2, MAP_MEF_ID_PLUS_ONE) != 0 ) {
-					if ( mef(0, map(locvar_fov_los_tx, fov_los_arg2, MAP_MEF_ID_PLUS_ONE) - 1) == 9 ) {
+				if ( map(locvar_fov_los_tx, fov_los_arg2, MAP_MEF_INDEX_PLUS_ONE) != 0 ) {
+					if ( mef(MEF_TYPE, map(locvar_fov_los_tx, fov_los_arg2, MAP_MEF_INDEX_PLUS_ONE) - 1) == MEF_TYPE_KEMURIDAMA ) {
 						if ( gdata(GDATA_FLAG_ACTION_TALON_SOLDIER) == 0 ) {
 							return 0
 						}
@@ -4418,8 +4418,8 @@
 	if ( locvar_fov_los_ax == 1 ) {
 		if ( locvar_fov_los_ay == 2 ) {
 			if ( gdata(GDATA_SENSE_OBJECT) != 10 ) {
-				if ( map(fov_los_arg1, fov_los_arg2 + locvar_fov_los_sy, MAP_MEF_ID_PLUS_ONE) != 0 ) {
-					if ( mef(0, map(fov_los_arg1, fov_los_arg2 + locvar_fov_los_sy, MAP_MEF_ID_PLUS_ONE) - 1) == 9 ) {
+				if ( map(fov_los_arg1, fov_los_arg2 + locvar_fov_los_sy, MAP_MEF_INDEX_PLUS_ONE) != 0 ) {
+					if ( mef(MEF_TYPE, map(fov_los_arg1, fov_los_arg2 + locvar_fov_los_sy, MAP_MEF_INDEX_PLUS_ONE) - 1) == MEF_TYPE_KEMURIDAMA ) {
 						if ( gdata(GDATA_FLAG_ACTION_TALON_SOLDIER) == 0 ) {
 							return 0
 						}
@@ -4439,8 +4439,8 @@
 		if ( locvar_fov_los_ay == 1 ) {
 			if ( locvar_fov_los_ax == 2 ) {
 				if ( gdata(GDATA_SENSE_OBJECT) != 10 ) {
-					if ( map(fov_los_arg1 + locvar_fov_los_sx, fov_los_arg2, MAP_MEF_ID_PLUS_ONE) != 0 ) {
-						if ( mef(0, map(fov_los_arg1 + locvar_fov_los_sx, fov_los_arg2, MAP_MEF_ID_PLUS_ONE) - 1) == 9 ) {
+					if ( map(fov_los_arg1 + locvar_fov_los_sx, fov_los_arg2, MAP_MEF_INDEX_PLUS_ONE) != 0 ) {
+						if ( mef(MEF_TYPE, map(fov_los_arg1 + locvar_fov_los_sx, fov_los_arg2, MAP_MEF_INDEX_PLUS_ONE) - 1) == MEF_TYPE_KEMURIDAMA ) {
 							if ( gdata(GDATA_FLAG_ACTION_TALON_SOLDIER) == 0 ) {
 								return 0
 							}
@@ -4487,8 +4487,8 @@
 			}
 		}
 		if ( gdata(GDATA_SENSE_OBJECT) != 10 ) {
-			if ( map(locvar_fov_los_tx, locvar_fov_los_ty, MAP_MEF_ID_PLUS_ONE) != 0 ) {
-				if ( mef(0, map(locvar_fov_los_tx, locvar_fov_los_ty, MAP_MEF_ID_PLUS_ONE) - 1) == 9 ) {
+			if ( map(locvar_fov_los_tx, locvar_fov_los_ty, MAP_MEF_INDEX_PLUS_ONE) != 0 ) {
+				if ( mef(MEF_TYPE, map(locvar_fov_los_tx, locvar_fov_los_ty, MAP_MEF_INDEX_PLUS_ONE) - 1) == MEF_TYPE_KEMURIDAMA ) {
 					if ( gdata(GDATA_FLAG_ACTION_TALON_SOLDIER) == 0 ) {
 						return 0
 					}
@@ -4513,8 +4513,8 @@
 					}
 				}
 				if ( gdata(GDATA_SENSE_OBJECT) != 10 ) {
-					if ( map(locvar_fov_los_tx, locvar_fov_los_ty, MAP_MEF_ID_PLUS_ONE) != 0 ) {
-						if ( mef(0, map(locvar_fov_los_tx, locvar_fov_los_ty, MAP_MEF_ID_PLUS_ONE) - 1) == 9 ) {
+					if ( map(locvar_fov_los_tx, locvar_fov_los_ty, MAP_MEF_INDEX_PLUS_ONE) != 0 ) {
+						if ( mef(MEF_TYPE, map(locvar_fov_los_tx, locvar_fov_los_ty, MAP_MEF_INDEX_PLUS_ONE) - 1) == MEF_TYPE_KEMURIDAMA ) {
 							if ( gdata(GDATA_FLAG_ACTION_TALON_SOLDIER) == 0 ) {
 								return 0
 							}
@@ -4558,8 +4558,8 @@
 			}
 		}
 		if ( gdata(GDATA_SENSE_OBJECT) != 10 ) {
-			if ( map(locvar_fov_los_tx, locvar_fov_los_ty, MAP_MEF_ID_PLUS_ONE) != 0 ) {
-				if ( mef(0, map(locvar_fov_los_tx, locvar_fov_los_ty, MAP_MEF_ID_PLUS_ONE) - 1) == 9 ) {
+			if ( map(locvar_fov_los_tx, locvar_fov_los_ty, MAP_MEF_INDEX_PLUS_ONE) != 0 ) {
+				if ( mef(MEF_TYPE, map(locvar_fov_los_tx, locvar_fov_los_ty, MAP_MEF_INDEX_PLUS_ONE) - 1) == MEF_TYPE_KEMURIDAMA ) {
 					if ( gdata(GDATA_FLAG_ACTION_TALON_SOLDIER) == 0 ) {
 						return 0
 					}
@@ -4584,8 +4584,8 @@
 					}
 				}
 				if ( gdata(GDATA_SENSE_OBJECT) != 10 ) {
-					if ( map(locvar_fov_los_tx, locvar_fov_los_ty, MAP_MEF_ID_PLUS_ONE) != 0 ) {
-						if ( mef(0, map(locvar_fov_los_tx, locvar_fov_los_ty, MAP_MEF_ID_PLUS_ONE) - 1) == 9 ) {
+					if ( map(locvar_fov_los_tx, locvar_fov_los_ty, MAP_MEF_INDEX_PLUS_ONE) != 0 ) {
+						if ( mef(MEF_TYPE, map(locvar_fov_los_tx, locvar_fov_los_ty, MAP_MEF_INDEX_PLUS_ONE) - 1) == MEF_TYPE_KEMURIDAMA ) {
 							if ( gdata(GDATA_FLAG_ACTION_TALON_SOLDIER) == 0 ) {
 								return 0
 							}

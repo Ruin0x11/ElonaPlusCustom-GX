@@ -5990,10 +5990,10 @@
 	sound = SOUNDLIST_NONE
 	ct = 0
 	repeat 200
-		if ( mef(0, cnt) == 0 ) {
+		if ( mef(MEF_TYPE, cnt) == MEF_TYPE_NONE ) {
 			break
 		}
-		if ( mef(0, cnt) == 5 ) {
+		if ( mef(MEF_TYPE, cnt) == MEF_TYPE_FIRE ) {
 			if ( mdata(MDATA_FIELD) == MAP_FIELD_OUTDOOR ) {
 				if ( mdata(MDATA_TYPE) != MAP_TYPE_WORLD ) {
 					if ( gdata(GDATA_WEATHER) == WEATHER_RAIN | gdata(GDATA_WEATHER) == WEATHER_HARD_RAIN ) {
@@ -6008,11 +6008,11 @@
 						delmef cnt
 						continue
 					}
-					dx = mef(2, cnt)
-					dy = mef(3, cnt)
-					i = mef(6, cnt)
+					dx = mef(MEF_X, cnt)
+					dy = mef(MEF_Y, cnt)
+					i = mef(MEF_SOURCE, cnt)
 					p = 0
-					p2 = mef(5, cnt)
+					p2 = mef(MEF_POWER, cnt)
 					if ( rnd(35) == 0 ) {
 						p = 3
 						if ( dist(dx, dy, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER)) < 6 ) {
@@ -6030,19 +6030,19 @@
 							map(x, y, MAP_TILE_ID) = xy2pic(4, 1)
 							continue 0
 						}
-						addmef x, y, 5, 24, rnd(15) + 20, p2, i
+						addmef x, y, MEF_TYPE_FIRE, xy2pic(24, 0), rnd(15) + 20, p2, i
 						mapitem_fire x, y
 					loop
 				}
 			}
 		}
-		if ( mef(0, cnt) == 7 ) {
+		if ( mef(MEF_TYPE, cnt) == MEF_TYPE_NUKE ) {
 			txtef COLOR_RED
-			txt lang(" *", "*") + mef(4, cnt) + lang("* ", "*")
+			txt lang(" *", "*") + mef(MEF_TURNS_REMAINING, cnt) + lang("* ", "*")
 		}
-		if ( mef(4, cnt) != (-1) ) {
-			mef(4, cnt)--
-			if ( mef(4, cnt) == 0 ) {
+		if ( mef(MEF_TURNS_REMAINING, cnt) != (-1) ) {
+			mef(MEF_TURNS_REMAINING, cnt)--
+			if ( mef(MEF_TURNS_REMAINING, cnt) == 0 ) {
 				delmef cnt
 			}
 		}
@@ -6928,9 +6928,9 @@
 		}
 	}
 	tc = cc
-	if ( map(cdata(CDATA_X, tc), cdata(CDATA_Y, tc), MAP_MEF_ID_PLUS_ONE) != 0 ) {
-		ef = map(cdata(CDATA_X, tc), cdata(CDATA_Y, tc), MAP_MEF_ID_PLUS_ONE) - 1
-		if ( mef(0, ef) == 3 ) {
+	if ( map(cdata(CDATA_X, tc), cdata(CDATA_Y, tc), MAP_MEF_INDEX_PLUS_ONE) != 0 ) {
+		ef = map(cdata(CDATA_X, tc), cdata(CDATA_Y, tc), MAP_MEF_INDEX_PLUS_ONE) - 1
+		if ( mef(MEF_TYPE, ef) == MEF_TYPE_ACID ) {
 			if ( cbit(CHARA_BIT_FLOAT, tc) == FALSE | cdata(CDATA_CONDITION_GRAVITY, tc) > 0 ) {
 				if ( findbuff(tc, BUFF_GRAVITY_ACCEL) == (-1) ) {
 					if ( sdata(SKILL_RESDMG_ACID, tc) / 50 < 7 ) {
@@ -6938,40 +6938,40 @@
 							snd SOUNDLIST_WATER2
 							txt lang(name(tc) + "は酸に焼かれた。", name(tc) + " melt" + _s(tc) + ".")
 						}
-						if ( mef(6, ef) == 0 ) {
+						if ( mef(MEF_SOURCE, ef) == CHARA_PLAYER ) {
 							if ( tc != CHARA_PLAYER ) {
 								hostileaction CHARA_PLAYER, tc
 							}
 						}
-						dmghp tc, rnd(mef(5, ef) / 25 + 5) + 1, DAMAGE_FROM_ACID, SKILL_RESDMG_ACID, mef(5, ef)
+						dmghp tc, rnd(mef(MEF_POWER, ef) / 25 + 5) + 1, DAMAGE_FROM_ACID, SKILL_RESDMG_ACID, mef(MEF_POWER, ef)
 						if ( stat == 0 ) {
-							check_kill mef(6, ef), tc
+							check_kill mef(MEF_SOURCE, ef), tc
 						}
 					}
 				}
 			}
 		}
-		if ( mef(0, ef) == 5 ) {
+		if ( mef(MEF_TYPE, ef) == MEF_TYPE_FIRE ) {
 			if ( synccheck(tc, -1) ) {
 				snd SOUNDLIST_FIRE1
 				txt lang(name(tc) + "は燃えた。", name(tc) + " " + is(tc) + " burnt.")
 			}
-			if ( mef(6, ef) == 0 ) {
+			if ( mef(MEF_SOURCE, ef) == CHARA_PLAYER ) {
 				if ( tc != CHARA_PLAYER ) {
 					hostileaction CHARA_PLAYER, tc
 				}
 			}
-			if ( mef(5, ef) >= 0 ) {
-				dmghp tc, mef(5, ef) / 12 + rnd(mef(5, ef) / 12 + 5), DAMAGE_FROM_FIRE, SKILL_RES_FIRE, mef(5, ef)
+			if ( mef(MEF_POWER, ef) >= 0 ) {
+				dmghp tc, mef(MEF_POWER, ef) / 12 + rnd(mef(MEF_POWER, ef) / 12 + 5), DAMAGE_FROM_FIRE, SKILL_RES_FIRE, mef(MEF_POWER, ef)
 			}
-			if ( mef(5, ef) < 0 ) {
-				dmgmp tc, rnd(10) - mef(5, ef) / 100
+			if ( mef(MEF_POWER, ef) < 0 ) {
+				dmgmp tc, rnd(10) - mef(MEF_POWER, ef) / 100
 			}
 			if ( stat == 0 ) {
-				check_kill mef(6, ef), tc
+				check_kill mef(MEF_SOURCE, ef), tc
 			}
 		}
-		if ( mef(0, ef) == 6 ) {
+		if ( mef(MEF_TYPE, ef) == MEF_TYPE_POTION ) {
 			if ( cbit(CHARA_BIT_FLOAT, tc) == FALSE | cdata(CDATA_CONDITION_GRAVITY, tc) > 0 ) {
 				if ( findbuff(tc, BUFF_GRAVITY_ACCEL) == (-1) ) {
 					if ( synccheck(tc, -1) ) {
@@ -6980,18 +6980,18 @@
 						txtmore
 					}
 					wet tc, 25
-					if ( mef(6, ef) == 0 ) {
+					if ( mef(MEF_SOURCE, ef) == CHARA_PLAYER ) {
 						if ( tc != CHARA_PLAYER ) {
 							hostileaction CHARA_PLAYER, tc
 						}
 					}
 					potionspill = 1
-					efstatus = mef(8, ef)
+					efstatus = mef(MEF_ITEM_STATUS, ef)
 					dbmode = DBMODE_ON_DRINK
-					dbid = mef(7, ef)
+					dbid = mef(MEF_ITEM_ID, ef)
 					gosub *db_item
 					if ( cdata(CDATA_EXIST, tc) == CHAR_STATE_DEAD ) {
-						check_kill mef(6, ef), tc
+						check_kill mef(MEF_SOURCE, ef), tc
 					}
 					delmef ef
 				}
@@ -12990,7 +12990,7 @@
 					map(dx, dy, MAP_TILE_ID) = xy2pic(4, 1)
 				}
 				if ( rnd(10) == 0 | f == 1 ) {
-					addmef dx, dy, 5, 24, rnd(15) + 20, 50
+					addmef dx, dy, MEF_TYPE_FIRE, xy2pic(24, 0), rnd(15) + 20, 50
 				}
 				if ( map(dx, dy, MAP_CHARA_INDEX_PLUS_ONE) != 0 ) {
 					tc = map(dx, dy, MAP_CHARA_INDEX_PLUS_ONE) - 1
@@ -13064,7 +13064,7 @@
 				x = rnd(mdata(MDATA_WIDTH))
 				y = rnd(mdata(MDATA_HEIGHT))
 			}
-			addmef x, y, 5, 24, rnd(15) + 20, 50, evdata1(evnum - (evnum != 0) * 1)
+			addmef x, y, MEF_TYPE_FIRE, xy2pic(24, 0), rnd(15) + 20, 50, evdata1(evnum - (evnum != 0) * 1)
 			mapitem_fire x, y
 			if ( cnt \ 4 == 0 ) {
 				if ( gdata(GDATA_FLAG_PET_ANNIVERSARY_ACTIVE) == 0 ) {

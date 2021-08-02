@@ -402,12 +402,12 @@
 	repeat mdata(MDATA_HEIGHT)
 		locvar_map_reload_y = cnt
 		repeat mdata(MDATA_WIDTH)
-			map(cnt, locvar_map_reload_y, MAP_MEF_ID_PLUS_ONE) = 0
+			map(cnt, locvar_map_reload_y, MAP_MEF_INDEX_PLUS_ONE) = 0
 			map(cnt, locvar_map_reload_y, MAP_LIGHT_TYPE) = 0
 		loop
 	loop
 	repeat 200
-		mef(0, cnt) = 0
+		mef(MEF_TYPE, cnt) = MEF_TYPE_NONE
 	loop
 	inv_getheader -1
 	repeat invrange, invhead
@@ -1715,7 +1715,7 @@
 	}
 	if ( (chipm(CHIPM_ATTRIB, map(locvar_map_trap_dx, locvar_map_trap_dy, MAP_TILE_ID)) & CHIPM_ATTRIB_CANT_PASS) == 0 ) {
 		if ( map(locvar_map_trap_dx, locvar_map_trap_dy, MAP_FEATS_ON_TILE) == 0 ) {
-			addmef locvar_map_trap_dx, locvar_map_trap_dy, 1, 11, -1, map_web_difficulty
+			addmef locvar_map_trap_dx, locvar_map_trap_dy, MEF_TYPE_WEB, xy2pic(11, 0), -1, map_web_difficulty
 			return 1
 		}
 	}

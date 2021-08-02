@@ -327,15 +327,15 @@
 			}
 			efp = 50 + sdata(SKILL_WEAPON_THROWING, cc) * 10
 			if ( inv(INV_ITEM_ID, ci) == ITEM_ID_BOTTLE_SULFURIC ) {
-				addmef tlocx, tlocy, 3, 19, rnd(15) + 5, efp, cc
+				addmef tlocx, tlocy, MEF_TYPE_ACID, xy2pic(19, 0), rnd(15) + 5, efp, cc
 				goto *turn_end
 			}
 			if ( inv(INV_ITEM_ID, ci) == ITEM_ID_MOLOTOV ) {
-				addmef tlocx, tlocy, 5, 24, rnd(15) + 25, efp, cc
+				addmef tlocx, tlocy, MEF_TYPE_FIRE, xy2pic(24, 0), rnd(15) + 25, efp, cc
 				mapitem_fire tlocx, tlocy
 				goto *turn_end
 			}
-			addmef tlocx, tlocy, 6, 27, -1, efp, cc, inv(INV_ITEM_ID, ci), inv(INV_ITEM_STATUS, ci), inv(INV_ITEM_COL, ci)
+			addmef tlocx, tlocy, MEF_TYPE_POTION, xy2pic(27, 0), -1, efp, cc, inv(INV_ITEM_ID, ci), inv(INV_ITEM_STATUS, ci), inv(INV_ITEM_COL, ci)
 			if ( gdata(GDATA_QUICK_USE) == 1 & cc == CHARA_PLAYER ) {
 				snd SOUNDLIST_THROW2
 				gdata(GDATA_QUICK_USE) = 0
@@ -363,7 +363,7 @@
 			gosub *effect
 		}
 		else {
-			addmef tlocx, tlocy, 5, 24, 0, 40, cc
+			addmef tlocx, tlocy, MEF_TYPE_FIRE, xy2pic(24, 0), 0, 40, cc
 			mapitem_fire tlocx, tlocy
 		}
 		goto *turn_end
@@ -1834,19 +1834,19 @@
 			goto *act_bash
 		}
 	}
-	if ( map(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), MAP_MEF_ID_PLUS_ONE) != 0 ) {
-		i = map(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), MAP_MEF_ID_PLUS_ONE) - 1
-		if ( mef(0, i) == 1 ) {
+	if ( map(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), MAP_MEF_INDEX_PLUS_ONE) != 0 ) {
+		i = map(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), MAP_MEF_INDEX_PLUS_ONE) - 1
+		if ( mef(MEF_TYPE, i) == MEF_TYPE_WEB ) {
 			if ( cdatan(CDATAN_RACE, cc) != "spider" ) {
 				txtmore
-				if ( rnd(mef(5, i) + 25) < rnd(sdata(SKILL_ATTR_STR, cc) + sdata(SKILL_ATTR_DEX, cc) + 1) ) {
+				if ( rnd(mef(MEF_POWER, i) + 25) < rnd(sdata(SKILL_ATTR_STR, cc) + sdata(SKILL_ATTR_DEX, cc) + 1) ) {
 					if ( synccheck(cc, -1) ) {
 						txt lang(name(cc) + "は蜘蛛の巣を振り払った。", name(cc) + " destroy" + _s(cc) + " the cobweb.")
 					}
 					delmef i
 				}
 				else {
-					mef(5, i) = mef(5, i) * 3 / 4
+					mef(MEF_POWER, i) = mef(MEF_POWER, i) * 3 / 4
 					if ( synccheck(cc, -1) ) {
 						txt lang(name(cc) + "は蜘蛛の巣にひっかかった。", name(cc) + " " + is(cc) + " caught in a cobweb.")
 					}
@@ -3098,7 +3098,7 @@
 				if ( tlocx < 0 | tlocx >= mdata(MDATA_WIDTH) | tlocy < 0 | tlocy >= mdata(MDATA_HEIGHT) ) {
 					continue
 				}
-				addmef tlocx, tlocy, 5, 24, rnd(15) + 20, 50, 0
+				addmef tlocx, tlocy, MEF_TYPE_FIRE, xy2pic(24, 0), rnd(15) + 20, 50, CHARA_PLAYER
 				mapitem_fire tlocx, tlocy
 			loop
 			return
@@ -3692,9 +3692,9 @@
 	if ( cdata(CDATA_EXIST, cc) != CHAR_STATE_ALIVE ) {
 		return
 	}
-	if ( map(cdata(CDATA_X, tc), cdata(CDATA_Y, tc), MAP_MEF_ID_PLUS_ONE) != 0 ) {
-		i = map(cdata(CDATA_X, tc), cdata(CDATA_Y, tc), MAP_MEF_ID_PLUS_ONE) - 1
-		if ( mef(0, i) == 2 ) {
+	if ( map(cdata(CDATA_X, tc), cdata(CDATA_Y, tc), MAP_MEF_INDEX_PLUS_ONE) != 0 ) {
+		i = map(cdata(CDATA_X, tc), cdata(CDATA_Y, tc), MAP_MEF_INDEX_PLUS_ONE) - 1
+		if ( mef(MEF_TYPE, i) == MEF_TYPE_MIST ) {
 			if ( rnd(4) == 0 ) {
 				if ( synccheck(cc, -1) ) {
 					txtmore
@@ -7454,7 +7454,7 @@
 				}
 			}
 			tc = tcbk
-			addmef x, y, 5, 24, rnd(30) + 30, efp, cc
+			addmef x, y, MEF_TYPE_FIRE, xy2pic(24, 0), rnd(30) + 30, efp, cc
 			mapitem_fire x, y
 		loop
 		repeat 245
@@ -10772,7 +10772,7 @@
 		cell_refresh inv(INV_ITEM_X, ci), inv(INV_ITEM_Y, ci)
 		txt lang("原子爆弾を設置した。逃げろォー！", "You set up the nuke...now run!!")
 		snd SOUNDLIST_BUILD1
-		addmef cdata(CDATA_X, cc), cdata(CDATA_Y, cc), 7, 632, 10, 100, cc
+		addmef cdata(CDATA_X, cc), cdata(CDATA_Y, cc), MEF_TYPE_NUKE, xy2pic(5, 19), 10, 100, cc
 		goto *act_use_SWEND1
 		_switch_sw++
 	}
