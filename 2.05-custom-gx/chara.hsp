@@ -135,6 +135,14 @@
 			txt lang("あなたは「" + skillname(SKILL_SPACT_MYSTERIOUS_SONG) + "」の能力を得た。", "You have learned a new ability, " + skillname(SKILL_SPACT_MYSTERIOUS_SONG) + ".")
 		}
 	}
+	if ( sorg(SKILL_NORMAL_NEGOTIATION, CHARA_PLAYER) > 49 & sorg(SKILL_NORMAL_SENSE_QUALITY, CHARA_PLAYER) > 29 & trait(TRAIT_NORMAL_SKILL_NEGOTIATION) != 0 ) {
+		if ( spact(SKILL_SPACT_HARMONIC_ASSAULT - STARTING_SKILL_SPACT) == 0 ) {
+			spact(SKILL_SPACT_HARMONIC_ASSAULT - STARTING_SKILL_SPACT) = 1
+			txtmore
+			txtef COLOR_YELLOW
+			txt lang("あなたは「" + skillname(SKILL_SPACT_HARMONIC_ASSAULT) + "」の能力を得た。", "You have learned new ability, " + skillname(SKILL_SPACT_HARMONIC_ASSAULT) + ".")
+		}
+	}
 	if ( sorg(SKILL_NORMAL_TACTICS, CHARA_PLAYER) > 39 & trait(TRAIT_NORMAL_SPACT_BLADE_STRINGS) != 0 ) {
 		if ( spact(SKILL_SPACT_DANCING_WIRE - STARTING_SKILL_SPACT) == 0 ) {
 			spact(SKILL_SPACT_DANCING_WIRE - STARTING_SKILL_SPACT) = 1
