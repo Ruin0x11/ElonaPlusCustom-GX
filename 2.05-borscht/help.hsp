@@ -6886,7 +6886,7 @@
 				}
 				msg_halt
 				gosub *screen_draw
-				levelexitby = MAP_EXIT_TELEPORT
+				levelexitby = MAP_EXIT_KIND_TELEPORT
 				goto *map_exit
 			}
 			goto *game_main_redo_WEND1
@@ -7664,7 +7664,7 @@
 		if ( petarenawin != 0 ) {
 			gosub *quest_petArenaWin
 			msg_halt
-			levelexitby = MAP_EXIT_NORMAL
+			levelexitby = MAP_EXIT_KIND_NORMAL
 			snd SOUNDLIST_EXITMAP1
 			repeat 16
 				if ( arenaop == 0 ) {
@@ -7934,7 +7934,7 @@
 				fmode = 11
 				gosub *game_ctrlFile
 				mode = MODELIST_NEW
-				levelexitby = MAP_EXIT_NORMAL
+				levelexitby = MAP_EXIT_KIND_NORMAL
 				goto *map_init
 			}
 		}
@@ -8954,7 +8954,7 @@
 	s = "dead" + lang(cdatan(CDATAN_AKA, CHARA_PLAYER) + cdatan(CDATAN_NAME, CHARA_PLAYER) + "は" + mdatan(0) + "で" + ndeathcause + lastword, cdatan(CDATAN_AKA, CHARA_PLAYER) + " " + cdatan(CDATAN_NAME, CHARA_PLAYER) + " " + ndeathcause + " in " + mdatan(0) + " " + lastword)
 	screenupdate = -1
 	gosub *screen_refreshFull
-	levelexitby = MAP_EXIT_DEAD
+	levelexitby = MAP_EXIT_KIND_DEAD
 	goto *map_exit
 	goto *map_exit
 
@@ -9036,7 +9036,7 @@
 		mdata(MDATA_DOWNSTAIRS_POS) = cdata(CDATA_Y, CHARA_PLAYER) * 1000 + cdata(CDATA_X, CHARA_PLAYER)
 		gdata(GDATA_TELEPORT_AREA) = AREA_OL_DRAN
 		gdata(GDATA_TELEPORT_LEVEL) = 1
-		levelexitby = MAP_EXIT_TELEPORT
+		levelexitby = MAP_EXIT_KIND_TELEPORT
 		gdata(GDATA_LEVEL_START_ON) = 7
 		mapstartx = 40
 		mapstarty = 12
@@ -9052,7 +9052,7 @@
 		mdata(MDATA_DOWNSTAIRS_POS) = cdata(CDATA_Y, CHARA_PLAYER) * 1000 + cdata(CDATA_X, CHARA_PLAYER)
 		gdata(GDATA_TELEPORT_AREA) = AREA_AMUR_CAGE
 		gdata(GDATA_TELEPORT_LEVEL) = 1
-		levelexitby = MAP_EXIT_TELEPORT
+		levelexitby = MAP_EXIT_KIND_TELEPORT
 		gdata(GDATA_LEVEL_START_ON) = 7
 		mapstartx = 27
 		mapstarty = 19
@@ -9111,7 +9111,7 @@
 			txt lang("討伐に失敗した…", "You failed to slay the target...")
 		}
 		qexit = 0
-		levelexitby = MAP_EXIT_NORMAL
+		levelexitby = MAP_EXIT_KIND_NORMAL
 		snd SOUNDLIST_EXITMAP1
 		chatteleport = 1
 		return
