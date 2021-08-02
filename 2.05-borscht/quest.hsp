@@ -123,7 +123,7 @@
 	qdata(QDATA_TYPE, rq) = QUEST_TYPE_NONE
 	qdata(QDATA_STATE, rq) = QUEST_STATE_NONE
 	qdata(QDATA_RENEW, rq) = rnd(3 + 1) * 24 + (gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12)
-	qdata(QDATA_REWARD_ITEM, rq) = (0 /*!!!@[QUEST_REWARD_NONE @@@ FILTER_NOTHING @@@ FILTER_NOTHING]@!!! */)
+	qdata(QDATA_REWARD_ITEM, rq) = (0 /*!!!@[FILTER_NOTHING @@@ FILTER_NOTHING @@@ QUEST_REWARD_NONE]@!!! */)
 	if ( rnd(3) == 0 ) {
 		return
 	}
@@ -162,7 +162,7 @@
 			qdata(QDATA_DEST_ITEM, rq) = i(1)
 			qdata(QDATA_MAP, rq) = gdata(GDATA_AREA)
 			rewardfix = 60
-			qdata(QDATA_REWARD_ITEM, rq) = (5 /*!!!@[QUEST_REWARD_SUPPLY @@@ FILTER_RACE_KOBOLT]@!!! */)
+			qdata(QDATA_REWARD_ITEM, rq) = (5 /*!!!@[FILTER_RACE_KOBOLT @@@ QUEST_REWARD_SUPPLY]@!!! */)
 			qdata(QDATA_EXIST, rq) = QUEST_TYPE_COLLECT
 			qdata(QDATA_TYPE, rq) = QUEST_SUBTYPE_SUPPLY
 			qdata(QDATA_VAR, rq) = 0
@@ -189,11 +189,11 @@
 			loop
 			qdata(QDATA_PARAM1, rq) = cdata(CDATA_ID, MAX_CHARA_NC)
 			qdata(QDATA_RENEW, rq) = (rnd(6) + 2) * 24 + (gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12)
-			qdata(QDATA_REWARD_ITEM, rq) = (0 /*!!!@[QUEST_REWARD_NONE @@@ FILTER_NOTHING @@@ FILTER_NOTHING]@!!! */)
+			qdata(QDATA_REWARD_ITEM, rq) = (0 /*!!!@[FILTER_NOTHING @@@ FILTER_NOTHING @@@ QUEST_REWARD_NONE]@!!! */)
 			qdata(QDATA_EXIST, rq) = QUEST_TYPE_HUNTEX
 			qdata(QDATA_TYPE, rq) = QUEST_SUBTYPE_ELIMINATE
 			qdata(QDATA_VAR, rq) = 0
-			qdata(QDATA_REWARD_ITEM, rq) = (5 /*!!!@[QUEST_REWARD_SUPPLY @@@ FILTER_RACE_KOBOLT]@!!! */)
+			qdata(QDATA_REWARD_ITEM, rq) = (5 /*!!!@[FILTER_RACE_KOBOLT @@@ QUEST_REWARD_SUPPLY]@!!! */)
 			qdata(QDATA_DEADLINE, rq) = -1
 			rewardfix = 140
 			return
@@ -217,11 +217,11 @@
 			loop
 			qdata(QDATA_PARAM1, rq) = cdata(CDATA_ID, MAX_CHARA_NC)
 			qdata(QDATA_RENEW, rq) = (rnd(6) + 2) * 24 + (gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12)
-			qdata(QDATA_REWARD_ITEM, rq) = (0 /*!!!@[QUEST_REWARD_NONE @@@ FILTER_NOTHING @@@ FILTER_NOTHING]@!!! */)
+			qdata(QDATA_REWARD_ITEM, rq) = (0 /*!!!@[FILTER_NOTHING @@@ FILTER_NOTHING @@@ QUEST_REWARD_NONE]@!!! */)
 			qdata(QDATA_EXIST, rq) = QUEST_TYPE_CONQUER
 			qdata(QDATA_TYPE, rq) = QUEST_SUBTYPE_CONQUER
 			qdata(QDATA_VAR, rq) = 0
-			qdata(QDATA_REWARD_ITEM, rq) = (1 /*!!!@[QUEST_REWARD_WEAR @@@ FILTER_RACE_GOBLIN]@!!! */)
+			qdata(QDATA_REWARD_ITEM, rq) = (1 /*!!!@[FILTER_RACE_GOBLIN @@@ QUEST_REWARD_WEAR]@!!! */)
 			qdata(QDATA_DEADLINE, rq) = -1
 			rewardfix = 175
 			return
@@ -233,7 +233,7 @@
 		qdata(QDATA_TYPE, rq) = QUEST_SUBTYPE_GUARD
 		qdata(QDATA_VAR, rq) = rnd(3)
 		qdata((10 /*!!!@[QDATA_ENCOUNTER @@@ QDATA_DEST_CLIENT]@!!! */), rq) = 0
-		qdata(QDATA_REWARD_ITEM, rq) = (5 /*!!!@[QUEST_REWARD_SUPPLY @@@ FILTER_RACE_KOBOLT]@!!! */)
+		qdata(QDATA_REWARD_ITEM, rq) = (5 /*!!!@[FILTER_RACE_KOBOLT @@@ QUEST_REWARD_SUPPLY]@!!! */)
 		if ( gdata(GDATA_AREA) == AREA_EIREL | gdata(GDATA_AREA) == AREA_MELKAWN | gdata(GDATA_AREA) == AREA_KURUALM | gdata(GDATA_AREA) == AREA_VALM | gdata(GDATA_AREA) == AREA_MELUGAS | gdata(GDATA_AREA) == AREA_ARCBELC | gdata(GDATA_AREA) == AREA_LUDUS ) {
 			repeat
 				qdata(QDATA_PARAM1, rq) = asettowns(rnd(length(asettowns)))
@@ -281,7 +281,7 @@
 				qdata(QDATA_LEVEL, rq) = 66
 			}
 			qdata(QDATA_RENEW, rq) = (rnd(6) + 2) * 24 + (gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12)
-			qdata(QDATA_REWARD_ITEM, rq) = (0 /*!!!@[QUEST_REWARD_NONE @@@ FILTER_NOTHING @@@ FILTER_NOTHING]@!!! */)
+			qdata(QDATA_REWARD_ITEM, rq) = (0 /*!!!@[FILTER_NOTHING @@@ FILTER_NOTHING @@@ QUEST_REWARD_NONE]@!!! */)
 			qdata(QDATA_EXIST, rq) = QUEST_TYPE_MINEFIELD
 			qdata(QDATA_TYPE, rq) = QUEST_SUBTYPE_TRAP
 			if ( cdata(CDATA_FAME, CHARA_PLAYER) >= 15000 ) {
@@ -290,7 +290,7 @@
 			else {
 				qdata(QDATA_VAR, rq) = 0
 			}
-			qdata(QDATA_REWARD_ITEM, rq) = (0 /*!!!@[QUEST_REWARD_NONE @@@ FILTER_NOTHING @@@ FILTER_NOTHING]@!!! */)
+			qdata(QDATA_REWARD_ITEM, rq) = (0 /*!!!@[FILTER_NOTHING @@@ FILTER_NOTHING @@@ QUEST_REWARD_NONE]@!!! */)
 			qdata(QDATA_PARAM1, rq) = qdata(QDATA_LEVEL, rq) + rnd(5)
 			qdata(QDATA_PARAM2, rq) = 0
 			qdata(QDATA_DEADLINE, rq) = -1
@@ -302,11 +302,11 @@
 		if ( gdata(GDATA_AREA) != AREA_RUST_PLAZA & gdata(GDATA_AREA) != AREA_OL_DRAN ) {
 			qdata(QDATA_LEVEL, rq) = limit(rnd(sdata(SKILL_NORMAL_PERFORMER, CHARA_PLAYER) + sdata(SKILL_ATTR_CHA, CHARA_PLAYER) / 10 + 10), int(1.5 * sqrt(sdata(SKILL_NORMAL_PERFORMER, CHARA_PLAYER))) + 10, cdata(CDATA_FAME, CHARA_PLAYER) / 1000 + 10)
 			qdata(QDATA_RENEW, rq) = (rnd(6) + 2) * 24 + (gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12)
-			qdata(QDATA_REWARD_ITEM, rq) = (0 /*!!!@[QUEST_REWARD_NONE @@@ FILTER_NOTHING @@@ FILTER_NOTHING]@!!! */)
+			qdata(QDATA_REWARD_ITEM, rq) = (0 /*!!!@[FILTER_NOTHING @@@ FILTER_NOTHING @@@ QUEST_REWARD_NONE]@!!! */)
 			qdata(QDATA_EXIST, rq) = QUEST_TYPE_PARTY
 			qdata(QDATA_TYPE, rq) = QUEST_SUBTYPE_PERFORM
 			qdata(QDATA_VAR, rq) = 0
-			qdata(QDATA_REWARD_ITEM, rq) = (0 /*!!!@[QUEST_REWARD_NONE @@@ FILTER_NOTHING @@@ FILTER_NOTHING]@!!! */)
+			qdata(QDATA_REWARD_ITEM, rq) = (0 /*!!!@[FILTER_NOTHING @@@ FILTER_NOTHING @@@ QUEST_REWARD_NONE]@!!! */)
 			qdata(QDATA_PARAM1, rq) = qdata(QDATA_LEVEL, rq) * 10 + rnd(50)
 			qdata(QDATA_PARAM2, rq) = 0
 			qdata(QDATA_DEADLINE, rq) = -1
@@ -321,7 +321,7 @@
 			qdata(QDATA_EXIST, rq) = QUEST_TYPE_HARVEST
 			qdata(QDATA_TYPE, rq) = QUEST_SUBTYPE_CARRY
 			qdata(QDATA_VAR, rq) = 0
-			qdata(QDATA_REWARD_ITEM, rq) = (5 /*!!!@[QUEST_REWARD_SUPPLY @@@ FILTER_RACE_KOBOLT]@!!! */)
+			qdata(QDATA_REWARD_ITEM, rq) = (5 /*!!!@[FILTER_RACE_KOBOLT @@@ QUEST_REWARD_SUPPLY]@!!! */)
 			qdata(QDATA_DEADLINE, rq) = -1
 			qdata(QDATA_PARAM1, rq) = 15000 + qdata(QDATA_LEVEL, rq) * 2500
 			qdata(QDATA_PARAM2, rq) = 0
@@ -333,11 +333,11 @@
 		qdata(QDATA_LEVEL, rq) = limit(rnd(gdata(GDATA_DEEPEST_LEVEL) / 2 + 10) + rnd(cdata(CDATA_FAME, CHARA_PLAYER) / 500 + 1) + 1, 1, 80)
 		qdata(QDATA_LEVEL, rq) = roundmargin(qdata(QDATA_LEVEL, rq), gdata(GDATA_DEEPEST_LEVEL) / 2)
 		qdata(QDATA_RENEW, rq) = (rnd(6) + 2) * 24 + (gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12)
-		qdata(QDATA_REWARD_ITEM, rq) = (0 /*!!!@[QUEST_REWARD_NONE @@@ FILTER_NOTHING @@@ FILTER_NOTHING]@!!! */)
+		qdata(QDATA_REWARD_ITEM, rq) = (0 /*!!!@[FILTER_NOTHING @@@ FILTER_NOTHING @@@ QUEST_REWARD_NONE]@!!! */)
 		qdata(QDATA_EXIST, rq) = QUEST_TYPE_HUNT
 		qdata(QDATA_TYPE, rq) = QUEST_SUBTYPE_ELIMINATE
 		qdata(QDATA_VAR, rq) = 0
-		qdata(QDATA_REWARD_ITEM, rq) = (1 /*!!!@[QUEST_REWARD_WEAR @@@ FILTER_RACE_GOBLIN]@!!! */)
+		qdata(QDATA_REWARD_ITEM, rq) = (1 /*!!!@[FILTER_RACE_GOBLIN @@@ QUEST_REWARD_WEAR]@!!! */)
 		qdata(QDATA_DEADLINE, rq) = -1
 		rewardfix = 135
 		return
@@ -347,7 +347,7 @@
 			qdata(QDATA_EXIST, rq) = QUEST_TYPE_COOK
 			qdata(QDATA_TYPE, rq) = QUEST_SUBTYPE_SUPPLY
 			qdata(QDATA_DEADLINE, rq) = rnd(6) + 2
-			qdata(QDATA_REWARD_ITEM, rq) = (5 /*!!!@[QUEST_REWARD_SUPPLY @@@ FILTER_RACE_KOBOLT]@!!! */)
+			qdata(QDATA_REWARD_ITEM, rq) = (5 /*!!!@[FILTER_RACE_KOBOLT @@@ QUEST_REWARD_SUPPLY]@!!! */)
 			qdata(QDATA_PARAM1, rq) = rnd(9 - 1) + 1
 			if ( qdata(QDATA_PARAM1, rq) == 4 ) {
 				qdata(QDATA_REWARD_ITEM, rq) = FILTER_ITEM_POTION
@@ -384,7 +384,7 @@
 		dbmode = DBMODE_FIND
 		flttypemajor = fsetsupply(rnd(length(fsetsupply)))
 		gosub *db_item
-		qdata(QDATA_REWARD_ITEM, rq) = (5 /*!!!@[QUEST_REWARD_SUPPLY @@@ FILTER_RACE_KOBOLT]@!!! */)
+		qdata(QDATA_REWARD_ITEM, rq) = (5 /*!!!@[FILTER_RACE_KOBOLT @@@ QUEST_REWARD_SUPPLY]@!!! */)
 		qdata(QDATA_DEST_ITEM, rq) = dbid
 		qdata(QDATA_LEVEL, rq) = limit(rnd(gdata(GDATA_DEEPEST_LEVEL) / 2 + 5) + 1, 1, 30)
 		rewardfix = 65 + qdata(QDATA_LEVEL, rq)
@@ -434,12 +434,12 @@
 			flttypemajor = fsetdeliver(rnd(length(fsetdeliver)))
 			gosub *db_item
 			qdata(QDATA_PARAM1, rq) = flttypemajor
-			qdata(QDATA_REWARD_ITEM, rq) = (5 /*!!!@[QUEST_REWARD_SUPPLY @@@ FILTER_RACE_KOBOLT]@!!! */)
+			qdata(QDATA_REWARD_ITEM, rq) = (5 /*!!!@[FILTER_RACE_KOBOLT @@@ QUEST_REWARD_SUPPLY]@!!! */)
 			if ( flttypemajor == FILTER_ITEM_SPELLBOOK ) {
-				qdata(QDATA_REWARD_ITEM, rq) = (2 /*!!!@[QUEST_REWARD_MAGIC @@@ FILTER_RACE_ORC]@!!! */)
+				qdata(QDATA_REWARD_ITEM, rq) = (2 /*!!!@[FILTER_RACE_ORC @@@ QUEST_REWARD_MAGIC]@!!! */)
 			}
 			if ( flttypemajor == FILTER_ORE ) {
-				qdata(QDATA_REWARD_ITEM, rq) = (3 /*!!!@[QUEST_REWARD_ARMOR @@@ FILTER_RACE_SLIME]@!!! */)
+				qdata(QDATA_REWARD_ITEM, rq) = (3 /*!!!@[FILTER_RACE_SLIME @@@ QUEST_REWARD_ARMOR]@!!! */)
 			}
 			if ( flttypemajor == FILTER_JUNK ) {
 				qdata(QDATA_REWARD_ITEM, rq) = FILTER_ORE
@@ -514,7 +514,7 @@
 	gosub *chara_respawn
 	skillexp SKILL_ATTR_CHA, CHARA_PLAYER, -500
 	skillexp SKILL_ATTR_WIL, CHARA_PLAYER, -500
-	levelexitby = MAP_EXIT_KIND_NORMAL
+	levelexitby = MAP_EXIT_NORMAL
 	gdata(GDATA_LEVEL) = 0
 	goto *map_exit
 
@@ -802,7 +802,7 @@
 			}
 		}
 	}
-	if ( qdata(QDATA_REWARD_ITEM, rq) != (0 /*!!!@[QUEST_REWARD_NONE @@@ FILTER_NOTHING @@@ FILTER_NOTHING]@!!! */) ) {
+	if ( qdata(QDATA_REWARD_ITEM, rq) != (0 /*!!!@[FILTER_NOTHING @@@ FILTER_NOTHING @@@ QUEST_REWARD_NONE]@!!! */) ) {
 		p = rnd(rnd(4) + 1) + 1
 		if ( qdata(QDATA_EXIST, rq) == QUEST_TYPE_CONQUER | qdata(QDATA_EXIST, rq) == QUEST_TYPE_HUNTEX ) {
 			p += 2
@@ -817,19 +817,19 @@
 			}
 			flt (qdata(QDATA_LEVEL, rq) + gdata(GDATA_DEEPEST_LEVEL) / 2) / 2 + 1, calcfixlv(fixlv)
 			if ( qdata(QDATA_REWARD_ITEM, rq) < FILTER_WEAPON ) {
-				if ( qdata(QDATA_REWARD_ITEM, rq) == (1 /*!!!@[QUEST_REWARD_WEAR @@@ FILTER_RACE_GOBLIN]@!!! */) ) {
+				if ( qdata(QDATA_REWARD_ITEM, rq) == (1 /*!!!@[FILTER_RACE_GOBLIN @@@ QUEST_REWARD_WEAR]@!!! */) ) {
 					flttypemajor = fsetwear(rnd(length(fsetwear)))
 				}
-				if ( qdata(QDATA_REWARD_ITEM, rq) == (2 /*!!!@[QUEST_REWARD_MAGIC @@@ FILTER_RACE_ORC]@!!! */) ) {
+				if ( qdata(QDATA_REWARD_ITEM, rq) == (2 /*!!!@[FILTER_RACE_ORC @@@ QUEST_REWARD_MAGIC]@!!! */) ) {
 					flttypemajor = fsetmagic(rnd(length(fsetmagic)))
 				}
-				if ( qdata(QDATA_REWARD_ITEM, rq) == (3 /*!!!@[QUEST_REWARD_ARMOR @@@ FILTER_RACE_SLIME]@!!! */) ) {
+				if ( qdata(QDATA_REWARD_ITEM, rq) == (3 /*!!!@[FILTER_RACE_SLIME @@@ QUEST_REWARD_ARMOR]@!!! */) ) {
 					flttypemajor = fsetarmor(rnd(length(fsetarmor)))
 				}
-				if ( qdata(QDATA_REWARD_ITEM, rq) == (4 /*!!!@[QUEST_REWARD_WEAPON @@@ FILTER_RACE_ELEA]@!!! */) ) {
+				if ( qdata(QDATA_REWARD_ITEM, rq) == (4 /*!!!@[FILTER_RACE_ELEA @@@ QUEST_REWARD_WEAPON]@!!! */) ) {
 					flttypemajor = fsetweapon(rnd(length(fsetweapon)))
 				}
-				if ( qdata(QDATA_REWARD_ITEM, rq) == (5 /*!!!@[QUEST_REWARD_SUPPLY @@@ FILTER_RACE_KOBOLT]@!!! */) ) {
+				if ( qdata(QDATA_REWARD_ITEM, rq) == (5 /*!!!@[FILTER_RACE_KOBOLT @@@ QUEST_REWARD_SUPPLY]@!!! */) ) {
 					flttypemajor = fsetrewardsupply(rnd(length(fsetrewardsupply)))
 				}
 			}

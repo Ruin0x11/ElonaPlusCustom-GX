@@ -738,9 +738,9 @@
 		mapstarty = gdata(GDATA_RETURN_Y)
 		gdata(GDATA_LEVEL_START_ON) = 7
 		fixstart = 1
-		levelexitby = MAP_EXIT_KIND_NONE
+		levelexitby = MAP_EXIT_NONE
 	}
-	if ( levelexitby == MAP_EXIT_KIND_NORMAL ) {
+	if ( levelexitby == MAP_EXIT_NORMAL ) {
 		cell_featread cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER)
 		if ( gdata(GDATA_AREA) == AREA_HOME ) {
 			if ( cdata(CDATA_X_NEW, cc) >= 0 & cdata(CDATA_X_NEW, cc) <= mdata(MDATA_WIDTH) - 1 & cdata(CDATA_Y_NEW, cc) >= 0 & cdata(CDATA_Y_NEW, cc) <= mdata(MDATA_HEIGHT) - 1 | gdata(GDATA_LEVEL) == 1 ) {
@@ -923,7 +923,7 @@
 		gdata(GDATA_LEVEL_START_ON) = 7
 		fixstart = 1
 	}
-	if ( levelexitby == MAP_EXIT_KIND_TELEPORT ) {
+	if ( levelexitby == MAP_EXIT_TELEPORT ) {
 		gdata(GDATA_AREA) = gdata(GDATA_TELEPORT_AREA)
 		gdata(GDATA_LEVEL) = gdata(GDATA_TELEPORT_LEVEL)
 		if ( gdata(GDATA_QUEST) == QUEST_TYPE_NONE ) {
@@ -8132,7 +8132,7 @@
 			gdata(GDATA_WORLD_X) = adata(ADATA_X, 7)
 			gdata(GDATA_WORLD_Y) = adata(ADATA_Y, 7)
 			gdata(GDATA_AREA_PREV) = 2
-			levelexitby = MAP_EXIT_KIND_NORMAL
+			levelexitby = MAP_EXIT_NORMAL
 			goto *map_init
 		}
 	}

@@ -1158,7 +1158,7 @@
 			goto *turn_end
 		}
 	}
-	efid = (0 /*!!!@[BUFF_NONE @@@ SKILL_NONE]@!!! */)
+	efid = (0 /*!!!@[SKILL_NONE @@@ BUFF_NONE]@!!! */)
 	dbmode = DBMODE_ON_READ
 	dbid = inv(INV_ITEM_ID, ci)
 	gosub *db_item
@@ -1805,7 +1805,7 @@
 							}
 							if ( qexit == 0 ) {
 								gdata(GDATA_LEVEL)--
-								levelexitby = MAP_EXIT_KIND_NORMAL
+								levelexitby = MAP_EXIT_NORMAL
 								goto *map_exit
 							}
 							if ( qexit == 100 ) {
@@ -2045,22 +2045,22 @@
 				}
 				if ( encounter == 4 ) {
 					encounterlv = cdata(CDATA_FAME, CHARA_PLAYER) / 1000
-					levelexitby = MAP_EXIT_KIND_NORMAL
+					levelexitby = MAP_EXIT_NORMAL
 					goto *map_exit
 				}
 				if ( encounter == 3 ) {
 					gdata(GDATA_RETURN_AREA) = gdata(GDATA_AREA), gdata(GDATA_LEVEL), cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER)
-					levelexitby = MAP_EXIT_KIND_NORMAL
+					levelexitby = MAP_EXIT_NORMAL
 					goto *map_exit
 				}
 				if ( encounter == 2 ) {
 					encounterlv = 10 + rnd(100)
-					levelexitby = MAP_EXIT_KIND_NORMAL
+					levelexitby = MAP_EXIT_NORMAL
 					goto *map_exit
 				}
 				if ( encounter == 5 ) {
 					encounterlv = 111 + sdata(SKILL_WEAPON_THROWING, CHARA_PLAYER)
-					levelexitby = MAP_EXIT_KIND_NORMAL
+					levelexitby = MAP_EXIT_NORMAL
 					goto *map_exit
 				}
 				if ( dbg_freetravel == 0 & gdata(GDATA_FLAG_ENCOUNTER_CANCELLER_DISTANCE_REMAINING) <= 0 ) {
@@ -2127,7 +2127,7 @@
 						valn += ")"
 						txt lang("襲撃だ！", "Ambush!") + valn
 						msg_halt
-						levelexitby = MAP_EXIT_KIND_NORMAL
+						levelexitby = MAP_EXIT_NORMAL
 						goto *map_exit
 					}
 				}
@@ -2705,7 +2705,7 @@
 		}
 	}
 	snd SOUNDLIST_EXITMAP1
-	levelexitby = MAP_EXIT_KIND_NORMAL
+	levelexitby = MAP_EXIT_NORMAL
 	goto *map_exit
 
 *lockpick_val
@@ -7244,7 +7244,7 @@
 		if ( rtval == 3 ) {
 			efid = -1
 			gosub *com_spell
-			if ( efid > (0 /*!!!@[BUFF_NONE @@@ SKILL_NONE]@!!! */) ) {
+			if ( efid > (0 /*!!!@[SKILL_NONE @@@ BUFF_NONE]@!!! */) ) {
 				num = spell(efid - 400) / 2000
 				spell(efid - 400) /= 2
 				if ( efid == SKILL_SPELL_GEM_POWER ) {
