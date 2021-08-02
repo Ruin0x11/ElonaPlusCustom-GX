@@ -953,12 +953,12 @@
 			continue
 		}
 		if ( allyctrl == 1 ) {
-			if ( cdata(CDATA_EXIST, cnt) == CHAR_STATE_ALLY_DEAD | cdata(CDATA_PRAY, cnt) != 0 ) {
+			if ( cdata(CDATA_EXIST, cnt) == CHAR_STATE_ALLY_DEAD | cdata(CDATA_PRECIOUS_ALLY, cnt) != 0 ) {
 				continue
 			}
 		}
 		if ( allyctrl == 7 ) {
-			if ( cdata(CDATA_PRAY, cnt) != 0 ) {
+			if ( cdata(CDATA_PRECIOUS_ALLY, cnt) != 0 ) {
 				continue
 			}
 		}
@@ -9486,8 +9486,8 @@
 	return
 
 *com_item_mark_adjust
-	bkiteml = cdata(CDATA_PRECIOUS_ALLY, tc)
-	bkitemw = cdata(CDATA_MARK_ITEM_ADJUST_Z, tc)
+	bkiteml = cdata(CDATA_MARK_ITEM_ADJUST_L, tc)
+	bkitemw = cdata(CDATA_MARK_ITEM_ADJUST_W, tc)
 	bkitemr = cdata(CDATA_MARK_ITEM_ADJUST_R, tc)
 	n = 0
 	txtnew
@@ -9514,8 +9514,8 @@
 	}
 	if ( key == key_cancel ) {
 		snd SOUNDLIST_EQUIP1
-		cdata(CDATA_PRECIOUS_ALLY, tc) = bkiteml
-		cdata(CDATA_MARK_ITEM_ADJUST_Z, tc) = bkitemw
+		cdata(CDATA_MARK_ITEM_ADJUST_L, tc) = bkiteml
+		cdata(CDATA_MARK_ITEM_ADJUST_W, tc) = bkitemw
 		cdata(CDATA_MARK_ITEM_ADJUST_R, tc) = bkitemr
 		gosub *screen_draw
 		n = 0
@@ -9524,26 +9524,26 @@
 		return
 	}
 	if ( key == key_north ) {
-		if ( cdata(CDATA_PRECIOUS_ALLY, tc) < 36 ) {
-			cdata(CDATA_PRECIOUS_ALLY, tc)++
+		if ( cdata(CDATA_MARK_ITEM_ADJUST_L, tc) < 36 ) {
+			cdata(CDATA_MARK_ITEM_ADJUST_L, tc)++
 		}
 		snd SOUNDLIST_CURSOR1
 	}
 	if ( key == key_south ) {
-		if ( cdata(CDATA_PRECIOUS_ALLY, tc) >= (-9) ) {
-			cdata(CDATA_PRECIOUS_ALLY, tc)--
+		if ( cdata(CDATA_MARK_ITEM_ADJUST_L, tc) >= (-9) ) {
+			cdata(CDATA_MARK_ITEM_ADJUST_L, tc)--
 		}
 		snd SOUNDLIST_CURSOR1
 	}
 	if ( key == key_pageup ) {
-		if ( cdata(CDATA_MARK_ITEM_ADJUST_Z, tc) < 36 ) {
-			cdata(CDATA_MARK_ITEM_ADJUST_Z, tc)++
+		if ( cdata(CDATA_MARK_ITEM_ADJUST_W, tc) < 36 ) {
+			cdata(CDATA_MARK_ITEM_ADJUST_W, tc)++
 		}
 		snd SOUNDLIST_CURSOR1
 	}
 	if ( key == key_pagedown ) {
-		if ( cdata(CDATA_MARK_ITEM_ADJUST_Z, tc) >= (-9) ) {
-			cdata(CDATA_MARK_ITEM_ADJUST_Z, tc)--
+		if ( cdata(CDATA_MARK_ITEM_ADJUST_W, tc) >= (-9) ) {
+			cdata(CDATA_MARK_ITEM_ADJUST_W, tc)--
 		}
 		snd SOUNDLIST_CURSOR1
 	}

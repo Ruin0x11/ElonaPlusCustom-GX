@@ -458,7 +458,7 @@
 *change_god
 	gdata(GDATA_FLAG_TIMES_CONVERTED)++
 	cdata(CDATA_PIETY, CHARA_PLAYER) = 0
-	cdata(CDATA_PRAY, CHARA_PLAYER) = 500
+	cdata(CDATA_PRECIOUS_ALLY, CHARA_PLAYER) = 500
 	gdata(GDATA_GOD_RANK) = 0
 	spact(SKILL_SPACT_PRAYER_OF_JURE - STARTING_SKILL_SPACT) = 0
 	spact(SKILL_SPACT_ABSORB_MAGIC - STARTING_SKILL_SPACT) = 0
@@ -508,7 +508,7 @@
 	}
 	txt lang(godname(cdata(CDATA_GOD, CHARA_PLAYER)) + "に祈った。", "You pray to " + godname(cdata(CDATA_GOD, CHARA_PLAYER)) + ".")
 	if ( 0 == 0 ) {
-		if ( cdata(CDATA_PIETY, CHARA_PLAYER) < 200 | cdata(CDATA_PRAY, CHARA_PLAYER) < 1000 ) {
+		if ( cdata(CDATA_PIETY, CHARA_PLAYER) < 200 | cdata(CDATA_PRECIOUS_ALLY, CHARA_PLAYER) < 1000 ) {
 			txtmore
 			txt lang(godname(cdata(CDATA_GOD, CHARA_PLAYER)) + "はあなたに無関心だ。", godname(cdata(CDATA_GOD, CHARA_PLAYER)) + " is indifferent to you.")
 			goto *turn_end
@@ -539,7 +539,7 @@
 	efp = 200
 	tc = CHARA_PLAYER
 	gosub *effect
-	cdata(CDATA_PRAY, CHARA_PLAYER) = 0
+	cdata(CDATA_PRECIOUS_ALLY, CHARA_PLAYER) = 0
 	cdata(CDATA_PIETY, CHARA_PLAYER) = cdata(CDATA_PIETY, CHARA_PLAYER) * 85 / 100
 	if ( gdata(GDATA_GOD_RANK) \ 2 == 1 ) {
 		txtgod cdata(CDATA_GOD, CHARA_PLAYER), GOD_TEXT_GIFT
@@ -835,7 +835,7 @@
 		}
 		if ( f == 1 ) {
 			modpiety i * 5
-			cdata(CDATA_PRAY, CHARA_PLAYER) += i * 30
+			cdata(CDATA_PRECIOUS_ALLY, CHARA_PLAYER) += i * 30
 			animeid = ANIMATION_HOLY
 			animode = 100
 			gosub *anime
@@ -884,7 +884,7 @@
 			}
 		loop
 		modpiety i
-		cdata(CDATA_PRAY, CHARA_PLAYER) += i * 7
+		cdata(CDATA_PRECIOUS_ALLY, CHARA_PLAYER) += i * 7
 	}
 	removeitem ci, inv(INV_ITEM_NUM, ci)
 	goto *turn_end

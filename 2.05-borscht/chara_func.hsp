@@ -2534,7 +2534,7 @@
 		}
 		return 1
 	}
-	if ( dmgcon_cond == CONDITION_FALTERING ) {
+	if ( dmgcon_cond == CONDITION_ASH_BODY ) {
 		if ( findbuff(dmgcon_charid, BUFF_HOLY_VEIL) != (-1) ) {
 			locvar_dmgcon_f = 0
 		}
@@ -2562,7 +2562,7 @@
 		}
 		return 1
 	}
-	if ( dmgcon_cond == CONDITION_TREMBLING ) {
+	if ( dmgcon_cond == CONDITION_OVERGODS ) {
 		if ( findbuff(dmgcon_charid, BUFF_REGENERATION) != (-1) ) {
 			locvar_dmgcon_f = 0
 		}
@@ -2993,7 +2993,7 @@
 	return
 
 #deffunc healcon int healcon_charid, int healcon_cond, int healcon_arg3
-	if ( healcon_cond == CONDITION_FALTERING ) {
+	if ( healcon_cond == CONDITION_ASH_BODY ) {
 		if ( cdata(CDATA_CONDITION_WINCE, healcon_charid) > 0 ) {
 			if ( healcon_arg3 == 0 ) {
 				cdata(CDATA_CONDITION_WINCE, healcon_charid) = 0
@@ -3010,7 +3010,7 @@
 			return
 		}
 	}
-	if ( healcon_cond == CONDITION_TREMBLING ) {
+	if ( healcon_cond == CONDITION_OVERGODS ) {
 		if ( cdata(CDATA_CONDITION_CHILLS, healcon_charid) > 0 ) {
 			if ( healcon_arg3 == 0 ) {
 				cdata(CDATA_CONDITION_CHILLS, healcon_charid) = 0
@@ -5949,10 +5949,10 @@
 				}
 			}
 			if ( locvar_dmghp_ele == 50 ) {
-				dmgcon dmghp_charid, CONDITION_FALTERING, rnd(dmghp_element_power + 1)
+				dmgcon dmghp_charid, CONDITION_ASH_BODY, rnd(dmghp_element_power + 1)
 			}
 			if ( locvar_dmghp_ele == 51 ) {
-				dmgcon dmghp_charid, CONDITION_TREMBLING, rnd(dmghp_element_power + 1)
+				dmgcon dmghp_charid, CONDITION_OVERGODS, rnd(dmghp_element_power + 1)
 			}
 			if ( locvar_dmghp_ele == 53 ) {
 				dmgcon dmghp_charid, CONDITION_BLIND, rnd(dmghp_element_power + 1)
