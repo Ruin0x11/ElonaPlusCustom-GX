@@ -110,16 +110,18 @@
 #cfunc ImmGetOpenStatus "ImmGetOpenStatus" sptr
 
 #define global VARIANT_NAME "ElonaPlus Custom-GX 2.05.1"
-#define global VERSION "3.21"
+#define global VERSION_STRING "3.21"
+#define global VERSION_NUMBER int(double(VERSION_STRING) * 1000)
 #define global develop 1
 
 	if ( develop ) {
 		dbg_hpAlwaysFull = 1
 		dbg_skipCm = 1
         dbg_figure = 1
-        dbg_luaConsole = 1
+        dbg_extraSkills = 1
         dbg_evolution = 0
         dbg_advTalkLine = 0
+        dbg_luaConsole = 1
 	}
 
 	sdim proclist, 50, 4
@@ -241,6 +243,11 @@
 		goto *mapEditor_init
 	}
 
+    if ( develop == 1 & dbg_skipCm != 1 ) {
+	    mode = MODELIST_QUICK_START
+	    goto *world_init
+    }
+
 	if ( defload != "" ) {
 		exist exedir + "save\\" + defload + "\\header.txt"
 		if ( strsize == (-1) ) {
@@ -262,10 +269,8 @@
 			goto *world_init
 		}
 	}
-	goto *game_title
 
-	mode = MODELIST_QUICK_START
-	goto *world_init
+	goto *game_title
 
 *world_init
 	mtilefilecur = -1
@@ -278,7 +283,7 @@
 		repeat 9
 			gdata(STARTING_GDATA_RANK + cnt) = 5000
 		loop
-		gdata(GDATA_VERSION) = int(double(VERSION) * 1000)
+		gdata(GDATA_VERSION) = VERSION_NUMBER
 		gdata(STARTING_GDATA_SHORTCUT + 1) = 424
 		gdata(STARTING_GDATA_SHORTCUT + 2) = 300
 		gdata(STARTING_GDATA_SHORTCUT + 3) = 631
@@ -880,7 +885,7 @@
 		gosub *setArea
 		gdata(GDATA_LEVEL) = 1
 		gdata(GDATA_LEVEL_START_ON) = 4
-		gdata(GDATA_VERSION) = int(double(VERSION) * 1000)
+		gdata(GDATA_VERSION) = VERSION_NUMBER
 		gdata(GDATA_WEATHER) = WEATHER_RAIN, 6
 		repeat 20
 			gdata(STARTING_GDATA_RANK + cnt) = 10000

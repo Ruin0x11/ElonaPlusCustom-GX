@@ -40,7 +40,8 @@
 	return
 
 *fixSave
-	if ( gdata(GDATA_VERSION) != int(double(VERSION) * 1000) ) {
+	if ( gdata(GDATA_VERSION) != VERSION_NUMBER ) {
+        dialog "" + "OLD: " + gdata(GDATA_VERSION) + " NEW: " + VERSION_NUMBER
 		dialog lang("Ver." + gdata(GDATA_VERSION) + "のセーブデータをアップデートします。", "Updating your save data from Ver." + gdata(GDATA_VERSION) + " now.")
 	}
 	if ( gdata(GDATA_HEIR_DEED) < 0 ) {
@@ -659,11 +660,11 @@
 	if ( gdata(GDATA_VERSION) < 3180 ) {
 		kamen6 = 100
 	}
-	if ( gdata(GDATA_VERSION) != int(double(VERSION) * 1000) ) {
+	if ( gdata(GDATA_VERSION) != VERSION_NUMBER ) {
 		gdata(GDATA_WORLD_RENEW) = 1
 	}
 	del_chara MAX_CHARA_NC
-	if ( gdata(GDATA_VERSION) > int(double(VERSION) * 1000) ) {
+	if ( gdata(GDATA_VERSION) > VERSION_NUMBER ) {
 		dialog "invalid version"
 		goto *exit_game
 	}
@@ -733,7 +734,7 @@
 			snd SOUNDLIST_ENC
 		}
 	}
-	gdata(GDATA_VERSION) = int(double(VERSION) * 1000)
+	gdata(GDATA_VERSION) = VERSION_NUMBER
 	cbitmod CHARA_BIT_PCC, 0, 1
 	gdata(GDATA_SPEEDSUM_RESET) = 1
 	gosub *initial_recipe
@@ -3518,7 +3519,7 @@
 	notesel dbm
 	buff = ""
 	if ( dbm == "" ) {
-		noteadd VARIANT_NAME + " v" + VERSION + " Debug Console    Type \"?\" for help. Hit ESC to exit."
+		noteadd VARIANT_NAME + " v" + VERSION_STRING + " Debug Console    Type \"?\" for help. Hit ESC to exit."
 		noteadd ""
 	}
 	font lang(cfg_font1, cfg_font2), 14 - en * 2, 0

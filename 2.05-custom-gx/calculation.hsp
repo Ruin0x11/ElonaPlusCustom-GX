@@ -44,8 +44,14 @@
 	if ( inv(INV_ITEM_ID, calcmedalvalue_itemid) == ITEM_ID_BOTTLE_HERMES_BLOOD ) {
 		return 60
 	}
+	if ( inv(INV_ITEM_ID, calcmedalvalue_itemid) == ITEM_ID_INJECT_BUNKER ) {
+		return 30
+	}
 	if ( inv(INV_ITEM_ID, calcmedalvalue_itemid) == ITEM_ID_ELEMENTS_EYES ) {
 		return 35
+	}
+	if ( inv(INV_ITEM_ID, calcmedalvalue_itemid) == ITEM_ID_CLOTHWORLD ) {
+		return 40
 	}
 	if ( inv(INV_ITEM_ID, calcmedalvalue_itemid) == ITEM_ID_SHIELD_TONFA ) {
 		return 50
@@ -91,6 +97,9 @@
 	}
 	if ( inv(INV_ITEM_ID, calcmusicticketvalue_itemid) == ITEM_ID_BUTLERS_DIARY ) {
 		return 4500
+	}
+	if ( inv(INV_ITEM_ID, calcmusicticketvalue_itemid) == ITEM_ID_BAMAGICAR ) {
+		return 5000
 	}
 	if ( inv(INV_ITEM_ID, calcmusicticketvalue_itemid) == ITEM_ID_DOG_SISTERS_DIARY ) {
 		return 6000
@@ -167,10 +176,13 @@
 			}
 		}
 		if ( inv(INV_ITEM_PARAM1, calcitemvalue_itemid) == 6000 ) {
-			locvar_calcitemvalue_value += inv(INV_ITEM_LEVEL, calcitemvalue_itemid) * 90
-		}
-		if ( inv(INV_ITEM_LEVEL, calcitemvalue_itemid) != 0 ) {
-			if ( inv(INV_ITEM_PARAM1, calcitemvalue_itemid) == 6000 ) {
+			if ( inv(INV_ITEM_ID, calcitemvalue_itemid) == ITEM_ID_FISH ) {
+				if ( inv(INV_ITEM_LEVEL, calcitemvalue_itemid) < 1 ) {
+					locvar_calcitemvalue_value /= 2
+				}
+			}
+			if ( inv(INV_ITEM_LEVEL, calcitemvalue_itemid) > 0 ) {
+				locvar_calcitemvalue_value += inv(INV_ITEM_LEVEL, calcitemvalue_itemid) * 300 + 1000
 				locvar_calcitemvalue_value = limit(locvar_calcitemvalue_value / 15 * (inv(INV_ITEM_LEVEL, calcitemvalue_itemid) + 15), 1, 60000)
 			}
 		}
@@ -423,7 +435,7 @@
 	if ( cdata(CDATA_IMPRESSION, calchireadv_arg1) > 350 ) {
 		cdata(CDATA_IMPRESSION, calchireadv_arg1) = 350
 	}
-	return limit(250 + (400 - cdata(CDATA_IMPRESSION, calchireadv_arg1)) / 10 * locvar_calchireadv_hire * sqrt(locvar_calchireadv_hire + 1), 3000, 99999)
+	return limit(250 + (400 - cdata(CDATA_IMPRESSION, calchireadv_arg1)) / 10 * locvar_calchireadv_hire * sqrt(locvar_calchireadv_hire + 1), 3000, 50000)
 
 #defcfunc calchirecost int calchirecost_charid
 	locvar_calcitemvalue_value = 0
@@ -524,6 +536,18 @@
 			locvar_calccosthire_cost += 750
 		}
 	loop
+	if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) == VEHICLE_CARRIAGE ) {
+		locvar_calccosthire_cost += 500
+	}
+	if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) == VEHICLE_TRUCK ) {
+		locvar_calccosthire_cost += 2000
+	}
+	if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) == VEHICLE_LOCOMOTIVE ) {
+		locvar_calccosthire_cost += 10000
+	}
+	if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) == VEHICLE_LAND_BATTLESHIP ) {
+		locvar_calccosthire_cost += 200000
+	}
 	if ( locvar_calccostbuilding_hantei == 0 ) {
 		gdata(GDATA_RANK_MUSEUM) = 10000
 	}
@@ -547,6 +571,10 @@
 
 #defcfunc calcmealvalue
 	locvar_calcitemvalue_value = 140
+	return locvar_calcitemvalue_value
+
+#defcfunc calcmealvalued
+	locvar_calcitemvalue_value = 70
 	return locvar_calcitemvalue_value
 
 #defcfunc calccostreload int calccostreload_arg1, int calccostreload_arg2
@@ -623,7 +651,21 @@
 	return 10000
 
 #defcfunc calccargoupdatecost
-	return (gdata(GDATA_CARGO_LIMIT) - gdata(GDATA_CARGO_LIMIT_ORG)) / 10000 + 1
+	locvar_calccargoupdatecost_cargo = gdata(GDATA_CARGO_LIMIT)
+	if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) == 1 ) {
+		locvar_calccargoupdatecost_cargo -= 10 * 1000
+	}
+	if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) == 2 ) {
+		locvar_calccargoupdatecost_cargo -= 20 * 1000
+	}
+	if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) == 3 ) {
+		locvar_calccargoupdatecost_cargo -= 30 * 1000
+	}
+	if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) == 4 ) {
+		locvar_calccargoupdatecost_cargo -= 100 * 1000
+	}
+	locvar_calccosthire_cost = (locvar_calccargoupdatecost_cargo - gdata(GDATA_CARGO_LIMIT_ORG)) / 10000 + 1
+	return locvar_calccosthire_cost
 
 #defcfunc calcidentifyvalue int calcidentifyvalue_arg1
 	locvar_calcitemvalue_value = 100
@@ -657,7 +699,7 @@
 	return locvar_calcitemvalue_value
 
 #defcfunc calctraincost int calctraincost_arg1, int calctraincost_arg2, int calctraincost_arg3
-	locvar_calcitemvalue_value = limit(sorg(calctraincost_arg1, calctraincost_arg2) / 20 + 1, 2, 10)
+	locvar_calcitemvalue_value = limit(sorg(calctraincost_arg1, calctraincost_arg2) / 40 + 1, 2, 5)
 	if ( calctraincost_arg3 ) {
 		locvar_calcitemvalue_value /= 2
 	}
@@ -752,13 +794,13 @@
 	if ( calcspellfail_charid != CHARA_PLAYER ) {
 		if ( findbuff(calcspellfail_charid, BUFF_DISTRACTED) != (-1) ) {
 			if ( gdata(GDATA_RIDER) == calcspellfail_charid ) {
-				return 90 - limit(30 - sdata(SKILL_ACTIVE_RIDING, CHARA_PLAYER) / 2, 0, 30)
+				return 92 - limit(30 - sdata(SKILL_ACTIVE_RIDING, CHARA_PLAYER) / 2, 0, 30)
 			}
 			if ( cdatan(CDATAN_CLASS, calcspellfail_charid) == "warmage" ) {
-				return 95
+				return 97
 			}
 			else {
-				return 90
+				return 92
 			}
 		}
 		else {
@@ -793,6 +835,9 @@
 	if ( calcspellfail_skillid == SKILL_SPELL_WIZARDS_HARVEST ) {
 		locvar_calcspellfail_i += sdata(calcspellfail_skillid, calcspellfail_charid) / 3
 	}
+	if ( cdata(CDATA_CUSTOM_TALK_LINE, CHARA_PLAYER) == 1 ) {
+		locvar_calcspellfail_i = locvar_calcspellfail_i * 3
+	}
 	locvar_calcspellfail_p = 90 + sdata(calcspellfail_skillid, calcspellfail_charid) - sdataref(SKILL_DATAREF_DIFF, calcspellfail_skillid) * locvar_calcspellfail_i / (5 + sdata(SKILL_NORMAL_CASTING, calcspellfail_charid) * 4)
 	if ( locvar_calcspellfail_f == 169 ) {
 		if ( locvar_calcspellfail_p > 80 ) {
@@ -823,7 +868,7 @@
 		locvar_calcspellfail_p += 5
 	}
 	if ( findbuff(calcspellfail_charid, BUFF_DISTRACTED) != (-1) ) {
-		locvar_calcspellfail_p -= 5
+		locvar_calcspellfail_p -= 3
 	}
 	if ( locvar_calcspellfail_p > 100 ) {
 		locvar_calcspellfail_p = 100
@@ -1181,6 +1226,39 @@
 	if ( cdata(CDATA_ID, r1) == CREATURE_ID_FALLEN_BIRD ) {
 		skillinit SKILL_ACTIVE_RIDING, r1, 7
 	}
+	if ( cdata(CDATA_ID, r1) == CREATURE_ID_STRANGE_OLD_PERSON ) {
+		skillinit SKILL_NORMAL_CONTROL_MAGIC, r1, 10
+	}
+	if ( cdata(CDATA_ID, r1) == CREATURE_ID_DESKTOP_NAVY ) {
+		skillinit SKILL_NORMAL_SWIMMING, r1, 10
+	}
+	if ( cdata(CDATA_ID, r1) == CREATURE_ID_OLD_BELL ) {
+		skillinit SKILL_NORMAL_INVESTING, r1, 5
+	}
+	if ( cdata(CDATA_ID, r1) == CREATURE_ID_SILVER_SKULL_MAJESTY ) {
+		skillinit SKILL_NORMAL_CONTROL_MAGIC, r1, 7
+	}
+	if ( cdata(CDATA_ID, r1) == CREATURE_ID_LIAR_POISON_FUNGUS ) {
+		skillinit SKILL_NORMAL_GENE_ENGINEER, r1, 7
+	}
+	if ( cdata(CDATA_ID, r1) == CREATURE_ID_MATANGODDESS ) {
+		skillinit SKILL_NORMAL_GENE_ENGINEER, r1, 5
+	}
+	if ( cdata(CDATA_ID, r1) == CREATURE_ID_BONYAC_THE_GENERAL_VENDOR ) {
+		skillinit SKILL_NORMAL_COOKING, r1, 10
+	}
+	if ( cdata(CDATA_ID, r1) == CREATURE_ID_MONOEYE_GIRL ) {
+		skillinit SKILL_NORMAL_GENE_ENGINEER, r1, 4
+	}
+	if ( cdata(CDATA_ID, r1) == CREATURE_ID_IRIS ) {
+		skillinit SKILL_NORMAL_ALCHEMY, r1, 3
+	}
+	if ( cdata(CDATA_ID, r1) == CREATURE_ID_PROFANITY_PRIEST ) {
+		skillinit SKILL_NORMAL_ALCHEMY, r1, 3
+	}
+	if ( cdata(CDATA_ID, r1) == CREATURE_ID_HEQET ) {
+		skillinit SKILL_NORMAL_ALCHEMY, r1, 3
+	}
 	if ( necrop2 > 0 ) {
 		if ( necrop2 == ITEM_ID_BONE ) {
 			skillinit SKILL_NORMAL_TACTICS, r1, 2
@@ -1201,6 +1279,53 @@
 	if ( cdata(CDATA_ID, r1) == CREATURE_ID_UNITDEAD_KING ) {
 		skillinit SKILL_ATTR_STR, r1, 8
 	}
+
+    if ( dbg_extraSkills & r1 == CHARA_PLAYER ) {
+		spact(SKILL_SPACT_DRAIN_BLOOD - STARTING_SKILL_SPACT) = 1
+		spact(SKILL_SPACT_FIRE_BREATH - STARTING_SKILL_SPACT) = 1
+		spact(SKILL_SPACT_TOUCH_OF_WEAKNESS - STARTING_SKILL_SPACT) = 1
+		spact(SKILL_SPACT_PSYCHOANALYSIS - STARTING_SKILL_SPACT) = 1
+		repeat MAX_SKILL - STARTING_SKILL_SPACT
+			spact(cnt + STARTING_SKILL_SPACT - STARTING_SKILL_SPACT) = 1
+		loop
+		skillinit SKILL_NORMAL_CASTING, r1, 6
+		skillinit SKILL_NORMAL_SHIELD, r1, 2
+		skillinit SKILL_WEAPON_FIREARM, r1, 2
+		skillinit SKILL_NORMAL_TWO_HAND, r1, 5
+		skillinit SKILL_NORMAL_DUAL_WIELD, r1, 5
+		skillinit SKILL_NORMAL_NEGOTIATION, r1, 5
+		skillinit SKILL_NORMAL_INVESTING, r1, 5
+		skillinit SKILL_NORMAL_ANATOMY, r1, 5
+		skillinit SKILL_NORMAL_SENSE_QUALITY, r1, 5
+		skillinit SKILL_NORMAL_MINING, r1, 5
+		skillinit SKILL_NORMAL_LITERACY, r1, 6
+		skillinit SKILL_NORMAL_MAGIC_CAPACITY, r1, 6
+		skillinit SKILL_NORMAL_COOKING, r1, 8
+		skillinit SKILL_NORMAL_WEIGHT_LIFTING, r1, 1
+		skillinit SKILL_NORMAL_LOCK_PICKING, r1, 5
+		skillinit SKILL_NORMAL_PERFORMER, r1, 5
+		skillinit SKILL_NORMAL_FISHING, r1, 8
+		skillinit SKILL_NORMAL_DETECTION, r1, 1
+		skillinit SKILL_NORMAL_MAGIC_DEVICE, r1, 6
+		skillinit SKILL_NORMAL_DISARM_TRAP, r1, 6
+		skillinit SKILL_NORMAL_CARPENTRY, r1, 6
+		skillinit SKILL_NORMAL_TAILORING, r1, 6
+		skillinit SKILL_NORMAL_ALCHEMY, r1, 6
+		skillinit SKILL_NORMAL_JEWELER, r1, 6
+		skillinit SKILL_NORMAL_GARDENING, r1, 6
+		skillinit SKILL_NORMAL_GREATER_EVASION, r1, 6
+		skillinit SKILL_NORMAL_EYE_OF_MIND, r1, 6
+		skillinit SKILL_NORMAL_SWIMMING, r1, 8
+		skillinit SKILL_ACTIVE_PICKPOCKET, r1, 6
+		skillinit SKILL_NORMAL_TRAVELING, r1, 6
+		skillinit SKILL_NORMAL_GENE_ENGINEER, r1, 6
+		skillinit SKILL_ACTIVE_RIDING, r1, 6
+		repeat MAX_SPELL - STARTING_SKILL_SPELL, STARTING_SKILL_SPELL
+			skillgain r1, cnt, cdata(CDATA_LEVEL, r1), 100 * 2
+		loop
+		return
+    }
+
 	return
 
 *calcReadCheck
@@ -1380,12 +1505,24 @@
 
 *calcHunger
 	if ( trait(TRAIT_RACE_SLOW_DIGESTION) ) {
-		if ( rnd(3) == 0 ) {
+		if ( cdata(CDATA_HUNGER, r1) <= 5000 ) {
+			if ( rnd(3) == 0 ) {
+				return
+			}
+		}
+	}
+	if ( gdata(GDATA_FLAG_GAME_MODE) == GAMEMODE_PURGE ) {
+		if ( cdata(CDATA_HUNGER, r1) < 5000 ) {
+			cdata(CDATA_HUNGER, r1) = 5000
+		}
+		if ( cdata(CDATA_HUNGER, r1) <= 5000 ) {
 			return
 		}
 	}
 	p = cdata(CDATA_HUNGER, r1) / 1000
-	cdata(CDATA_HUNGER, r1) -= 8
+	if ( gdata(GDATA_FLAG_MAIN) != 900 ) {
+		cdata(CDATA_HUNGER, r1) -= 8
+	}
 	if ( findbuff(r1, BUFF_CURSE_OF_HUNGER) != (-1) ) {
 		cdata(CDATA_HUNGER, r1) -= 8
 	}
@@ -1497,6 +1634,14 @@
 			}
 		}
 	}
+	if ( findbuff(r1, BUFF_DATA_SCAN) != (-1) ) {
+		if ( r1 == 0 ) {
+			dmgsp CHARA_PLAYER, 2
+		}
+		if ( r1 != 0 ) {
+			dmgspt r1, 2
+		}
+	}
 	if ( cdata(CDATA_CONDITION_SEPPUKU, r1) > 0 ) {
 		cdata(CDATA_CONDITION_SEPPUKU, r1)--
 	}
@@ -1604,15 +1749,35 @@
 		regen = 0
 		spillblood cdata(CDATA_X, r1), cdata(CDATA_Y, r1)
 	}
+	if ( gdata(GDATA_FLAG_MAIN) >= 875 & gdata(GDATA_FLAG_MAIN) < 900 ) {
+		if ( r1 == 0 ) {
+			if ( cdata(CDATA_HP, CHARA_PLAYER) > 0 ) {
+				dmghp CHARA_PLAYER, cdata(CDATA_HP, CHARA_PLAYER) / 5 + 1, DAMAGE_FROM_JALDABAOTH
+			}
+			else {
+				dmghp CHARA_PLAYER, 1, DAMAGE_FROM_JALDABAOTH
+			}
+			txt lang("身体が少しずつ崩れていく…。", "Your body gradually collapses...")
+			regen = 0
+		}
+	}
 	if ( cdata(CDATA_CONDITION_WET, r1) > 0 ) {
-		cdata(CDATA_CONDITION_WET, r1)--
+		if ( chipm(CHIPM_ROLE, map(cdata(CDATA_X, r1), cdata(CDATA_Y, r1), MAP_TILE_ID)) == MAP_CHIP_ROLE_WATER ) {
+			cdata(CDATA_CONDITION_WET, r1)++
+		}
 		refreshspeed r1
 	}
 	if ( cdata(CDATA_CONDITION_WINCE, r1) > 0 ) {
-		cdata(CDATA_CONDITION_WINCE, r1)--
+		healcon r1, CONDITION_ASH_BODY, 1
+		if ( cdata(CDATA_CONDITION_WINCE, r1) > 0 ) {
+			cdata(CDATA_EMO_ICON, r1) = 28 + 100
+		}
 	}
 	if ( cdata(CDATA_CONDITION_CHILLS, r1) > 0 ) {
-		cdata(CDATA_CONDITION_CHILLS, r1)--
+		healcon r1, CONDITION_OVERGODS, 1
+		if ( cdata(CDATA_CONDITION_CHILLS, r1) > 0 ) {
+			cdata(CDATA_EMO_ICON, r1) = 29 + 100
+		}
 	}
 	if ( cdata(CDATA_GAUGE_COOLDOWN, r1) > 0 ) {
 		cdata(CDATA_GAUGE_COOLDOWN, r1) = 0
@@ -1658,8 +1823,8 @@
 	}
 	if ( cdata(CDATA_DRUG_DEPENDENCE, r1) > 0 ) {
 		if ( mdata(MDATA_TYPE) != MAP_TYPE_WORLD & rnd(50) == 0 ) {
-			if ( findbuff(r1, BUFF_MELANCHOLY) == (-1) & cdata(CDATA_POWER_GAUGE, r1) < 100 ) {
-				addbuff r1, BUFF_MELANCHOLY, cdata(CDATA_DRUG_DEPENDENCE, r1) * 5000, 200
+			if ( findbuff(r1, BUFF_MELANCHOLY) == (-1) & cdata(CDATA_POWER_GAUGE, r1) < 100 & cdata(CDATA_CONDITION_DRUNK, r1) == 0 ) {
+				addbuff r1, BUFF_MELANCHOLY, cdata(CDATA_DRUG_DEPENDENCE, r1) * 5000, 50
 				if ( synccheck(r1, -1) ) {
 					snd SOUNDLIST_FIZZLE
 				}
@@ -1679,7 +1844,7 @@
 	if ( cdata(CDATA_TOBACCO_DEPENDENCE, r1) > 0 ) {
 		if ( mdata(MDATA_TYPE) != MAP_TYPE_WORLD & rnd(50) == 0 ) {
 			if ( findbuff(r1, BUFF_DISTRACTED) == (-1) & findbuff(r1, BUFF_CONCENTRATION) == (-1) ) {
-				addbuff r1, BUFF_DISTRACTED, cdata(CDATA_TOBACCO_DEPENDENCE, r1) * 5000, 200
+				addbuff r1, BUFF_DISTRACTED, cdata(CDATA_TOBACCO_DEPENDENCE, r1) * 5000, 20
 				if ( synccheck(r1, -1) ) {
 					snd SOUNDLIST_FIZZLE
 				}
@@ -1773,18 +1938,7 @@
 			cdata(CDATA_PIC, r1) = cdata(CDATA_FORM_SHIFT_PIC, r1)
 			cdata(CDATA_FORM_SHIFT_PIC, r1) = hikae
 
-			hikae = cdata(CDATA_CHARA_PIC, r1)
-			cdata(CDATA_CHARA_PIC, r1) = cdata(CDATA_CHARA_PIC_ORG, r1)
-			cdata(CDATA_CHARA_PIC_ORG, r1) = hikae
 			cdata(CDATA_SHIFT_FORM, r1) = SHIFT_FORM_NONE
-		}
-	}
-	if ( r1 == CHARA_PLAYER ) {
-		if ( findbuff(r1, BUFF_POWER_ITEM) == (-1) ) {
-			gdata(GDATA_QUICK_USE) = 0
-		}
-		else {
-			gdata(GDATA_QUICK_USE) = 1
 		}
 	}
 	if ( cdata(CDATA_CONDITION_INSANE, r1) > 0 ) {
@@ -1833,6 +1987,27 @@
 		if ( rnd(5) == 0 ) {
 			cdata(CDATA_CONDITION_FEAR, r1) += rnd(10)
 		}
+		if ( cdata(CDATA_CONDITION_FEAR, r1) > 0 ) {
+			if ( cdata(CDATA_THIRST, r1) > 12000 ) {
+				if ( synccheck(r1, -1) ) {
+					snd SOUNDLIST_WATERM
+					txt lang(name(r1) + "は漏らした。", name(r1) + " is incontinent.")
+				}
+				if ( mdata(MDATA_TYPE) != MAP_TYPE_WORLD ) {
+					if ( cfg_dust_select == 0 ) {
+						flt
+						itemcreate -1, ITEM_ID_URINE, cdata(CDATA_X, r1), cdata(CDATA_Y, r1), 0
+						if ( stat != 0 ) {
+							if ( r1 != 0 ) {
+								inv(INV_ITEM_SUB_NAME, ci) = cdata(CDATA_ID, r1)
+								item_stack -1, ci
+							}
+						}
+					}
+				}
+				cdata(CDATA_THIRST, r1) = 5000
+			}
+		}
 		healcon r1, CONDITION_INSANE, 1
 		if ( cdata(CDATA_CONDITION_INSANE, r1) > 0 ) {
 			cdata(CDATA_EMO_ICON, r1) = 24 + 100
@@ -1840,19 +2015,21 @@
 	}
 	if ( r1 == CHARA_PLAYER ) {
 		if ( cdata(CDATA_HUNGER, r1) < 2000 ) {
-			if ( cdata(CDATA_HUNGER, r1) < 1000 ) {
-				if ( cdata(CDATA_ROW_ACT, r1) != ACTION_EAT & cdata(CDATA_ROW_ACT, r1) != ACTION_MEAL ) {
-					dmghp r1, rnd(2) + cdata(CDATA_MAX_HP, CHARA_PLAYER) / 50 + 1, DAMAGE_FROM_HUNGER
-					snd SOUNDLIST_FIZZLE
-					if ( gdata(GDATA_TURN) \ 10 == 0 ) {
-						rowact_check r1
-						if ( rnd(50) == 0 ) {
-							modweight r1, -1
+			if ( gdata(GDATA_FLAG_GAME_MODE) != GAMEMODE_PURGE ) {
+				if ( cdata(CDATA_HUNGER, r1) < 1000 ) {
+					if ( cdata(CDATA_ROW_ACT, r1) != ACTION_EAT & cdata(CDATA_ROW_ACT, r1) != ACTION_MEAL ) {
+						dmghp r1, rnd(2) + cdata(CDATA_MAX_HP, CHARA_PLAYER) / 50 + 1, DAMAGE_FROM_HUNGER
+						snd SOUNDLIST_FIZZLE
+						if ( gdata(GDATA_TURN) \ 10 == 0 ) {
+							rowact_check r1
+							if ( rnd(50) == 0 ) {
+								modweight r1, -1
+							}
 						}
 					}
 				}
-			}
-			regen = 0
+				regen = 0
+ 			}
 		}
 		if ( gdata(GDATA_SLEEP) >= 30 ) {
 			if ( gdata(GDATA_TURN) \ 100 == 0 ) {
