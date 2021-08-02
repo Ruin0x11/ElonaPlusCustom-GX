@@ -151,9 +151,9 @@
 	buffname(BUFF_AUTO_GUARD) = lang("絶対防衛", "Auto Guard")
 	bufftxt(0, BUFF_AUTO_GUARD) = lang("は仲間を庇う体勢に入った。", " take"), " a posture to better protect allies."
 
-	bdataref(0, BUFF_QUICK_USE) = BUFF_TYPE_BUFF, 1, 0
-	buffname(BUFF_QUICK_USE) = lang("モーメント", "Quick Use")
-	bufftxt(0, BUFF_QUICK_USE) = lang("は魔道具を瞬間的に使用する体勢に入った。", " take"), " a posture to quickly use devices."
+	bdataref(0, BUFF_POWER_ITEM) = BUFF_TYPE_BUFF, 1, 0
+	buffname(BUFF_POWER_ITEM) = lang("パワーアイテム", "Power Item")
+	bufftxt(0, BUFF_POWER_ITEM) = lang("はアイテムの力を引き出した。", "bring out"), " the power of Items."
 
 	bdataref(0, BUFF_UNLUCKY) = BUFF_TYPE_HEX, 1, 0
 	buffname(BUFF_UNLUCKY) = lang("不幸", "Unlucky")
@@ -1094,18 +1094,22 @@
 		}
 		return
 	}
-	if ( calcbuff_buffid == BUFF_QUICK_USE ) {
+	if ( calcbuff_buffid == BUFF_POWER_ITEM ) {
 		dur = 30
 		locvar_calcbuff_p = calcbuff_power
 		if ( calcbuff_charid < CHARA_PLAYER ) {
-			if ( calcbuff_charid == (-1) ) {
+			if ( calcbuff_charid == CALCBUFF_DURATION ) {
 				return
 			}
 			else {
-				buffdesc = lang("1ターンに1度、魔道具をターン消費無しで使用できる", "Once per turn you can use magical devices without using a turn")
+				buffdesc = lang("特定スキル上昇/一部アイテム使用時ゲージ増加", "Increases MagicDevice,Throw,Alchemy")
 				return
 			}
 		}
+		sdata(SKILL_NORMAL_MAGIC_DEVICE, calcbuff_charid) = (sdata(SKILL_NORMAL_MAGIC_DEVICE, calcbuff_charid) + 1) * 110 / 100 + 10
+		sdata(SKILL_WEAPON_THROWING, calcbuff_charid) = (sdata(SKILL_WEAPON_THROWING, calcbuff_charid) + 1) * 110 / 100 + 10
+		sdata(SKILL_NORMAL_ALCHEMY, calcbuff_charid) = (sdata(SKILL_NORMAL_ALCHEMY, calcbuff_charid) + 1) * 110 / 100 + 10
+		sdata(SKILL_NORMAL_LITERACY, calcbuff_charid) = (sdata(SKILL_NORMAL_LITERACY, calcbuff_charid) + 1) * 110 / 100 + 10
 		return
 	}
 	if ( calcbuff_buffid == BUFF_AUTO_GUARD ) {
