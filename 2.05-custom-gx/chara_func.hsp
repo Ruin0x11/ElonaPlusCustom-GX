@@ -174,6 +174,9 @@
 	if ( cdata(CDATA_ID, calcage_arg1) == CREATURE_ID_SSIL_THE_UNDEAD_WITCH ) {
 		return lang("不明", "Unknown")
 	}
+	if ( cbit(CHARA_BIT_LITERAL_BIRTH_YEAR, calcage_arg1) ) {
+		return cdata(CDATA_AGE, calcage_arg1)
+	}
 	return gdata(GDATA_YEAR) - cdata(CDATA_AGE, calcage_arg1)
 
 #deffunc rowactend int rowactend_arg1
@@ -337,6 +340,18 @@
 		if ( customtalk_dbmode == DBMODE_FLAVOR_BTALK ) {
 			locvar_customtalk_s = "%txtBtalk"
 		}
+		if ( customtalk_dbmode == DBMODE_FLAVOR_MIZU_ASOBI ) {
+			locvar_customtalk_s = "%txtMizuAsobi"
+		}
+		if ( customtalk_dbmode == DBMODE_FLAVOR_MIZU_ASOBI_END ) {
+			locvar_customtalk_s = "%txtMizuAsobiEnd"
+		}
+		if ( customtalk_dbmode == DBMODE_FLAVOR_TAG ) {
+			locvar_customtalk_s = "%txtTag"
+		}
+		if ( customtalk_dbmode == DBMODE_FLAVOR_TAG_EVO ) {
+			locvar_customtalk_s = "%txtTagEvo"
+		}
 		locvar_customtalk_p = instr(locvar_customtalk_buff, 0, locvar_customtalk_s + "," + lang("JP", "EN"))
 		locvar_customtalk_buff = strmid(locvar_customtalk_buff, locvar_customtalk_p, instr(locvar_customtalk_buff, locvar_customtalk_p + 1, "%"))
 		if ( noteinfo(0) > 1 ) {
@@ -361,7 +376,7 @@
 				if ( locvar_customtalk_s != "" ) {
 					buff = locvar_customtalk_s
 					gdata(GDATA_CUSTOM_TEXT_DIALOG) = 0
-					if ( customtalk_dbmode != DBMODE_FLAVOR_DIALOG & customtalk_dbmode != DBMODE_FLAVOR_EX_ACT & customtalk_dbmode != DBMODE_FLAVOR_DIALOG_B & customtalk_dbmode != DBMODE_FLAVOR_DIALOG_E & customtalk_dbmode != DBMODE_FLAVOR_DIALOG_F & customtalk_dbmode != DBMODE_FLAVOR_DIALOG_H & customtalk_dbmode != DBMODE_FLAVOR_MEAL ) {
+					if ( customtalk_dbmode != DBMODE_FLAVOR_DIALOG & customtalk_dbmode != DBMODE_FLAVOR_EX_ACT & customtalk_dbmode != DBMODE_FLAVOR_DIALOG_B & customtalk_dbmode != DBMODE_FLAVOR_DIALOG_E & customtalk_dbmode != DBMODE_FLAVOR_DIALOG_F & customtalk_dbmode != DBMODE_FLAVOR_DIALOG_H & customtalk_dbmode != DBMODE_FLAVOR_MEAL & customtalk_dbmode != DBMODE_FLAVOR_TAG & customtalk_dbmode != DBMODE_FLAVOR_TAG_EVO ) {
 						txtef COLOR_SKY_BLUE
 						gdata(GDATA_CUSTOM_TEXT_DIALOG) = 1
 					}
@@ -375,7 +390,7 @@
 		noteunsel
 		return 1
 	}
-	if ( customtalk_dbmode == DBMODE_FLAVOR_DIALOG | customtalk_dbmode == DBMODE_FLAVOR_DIALOG_B | customtalk_dbmode == DBMODE_FLAVOR_DIALOG_E | customtalk_dbmode == DBMODE_FLAVOR_DIALOG_F | customtalk_dbmode == DBMODE_FLAVOR_DIALOG_H | customtalk_dbmode == DBMODE_FLAVOR_MEAL ) {
+	if ( customtalk_dbmode == DBMODE_FLAVOR_DIALOG | customtalk_dbmode == DBMODE_FLAVOR_DIALOG_B | customtalk_dbmode == DBMODE_FLAVOR_DIALOG_E | customtalk_dbmode == DBMODE_FLAVOR_DIALOG_F | customtalk_dbmode == DBMODE_FLAVOR_DIALOG_H | customtalk_dbmode == DBMODE_FLAVOR_MEAL | customtalk_dbmode == DBMODE_FLAVOR_TAG | customtalk_dbmode == DBMODE_FLAVOR_TAG_EVO ) {
 		return 0
 	}
 	if ( cdata(CDATA_TXT, customtalk_charid) != 0 ) {
@@ -396,6 +411,23 @@
 		}
 		if ( cdata(CDATA_ID, cnt) == findchara_charid ) {
 			locvar_findchara_p = cnt
+			break
+		}
+	loop
+	return locvar_findchara_p
+
+#defcfunc findcharawork int findcharawork_charaid
+	locvar_findchara_p = 0
+	repeat 245 - 57, 57
+		if ( cdata(CDATA_EXIST, cnt) != CHAR_STATE_ALIVE ) {
+			continue
+		}
+		if ( cdata(CDATA_ROLE, cnt) != ROLE_CARAVAN_MASTER ) {
+			continue
+		}
+		if ( cdata(CDATA_ID, cnt) == findcharawork_charaid ) {
+			locvar_findchara_p = cnt
+			cbitmod CHARA_BIT_EVENT_TALK, cnt, TRUE
 			break
 		}
 	loop
@@ -429,6 +461,22 @@
 			continue
 		}
 		if ( cdata(CDATA_ID, cnt) == findcharala_charid ) {
+			locvar_findchara_p = cnt
+			break
+		}
+	loop
+	return locvar_findchara_p
+
+#defcfunc findunique int findunique_arg1
+	locvar_findchara_p = 0
+	repeat 245
+		if ( cdata(CDATA_QUALITY, cnt) != FIX_QUALITY_UNIQUE ) {
+			continue
+		}
+		if ( cdata(CDATA_EXIST, cnt) != CHAR_STATE_ALIVE ) {
+			continue
+		}
+		if ( cdata(CDATA_ID, cnt) == findunique_arg1 ) {
 			locvar_findchara_p = cnt
 			break
 		}
@@ -782,6 +830,9 @@
 					txtef COLOR_SKY_BLUE
 					txt lang("時は再び動き出した。", "Time starts to run again.")
 				}
+				if ( gdata(GDATA_FLAG_STOP_TIME_OTHER) > 0 ) {
+					gdata(GDATA_FLAG_STOP_TIME_OTHER) = 0
+				}
 				gdata(GDATA_QUEST_STATUS) = QUEST_STATE_SUCCESS
 				evadd EVENT_QUEST_ELEMINATE
 			}
@@ -797,6 +848,9 @@
 					gdata(GDATA_TIME_STOP_TIME) = 0
 					txtef COLOR_SKY_BLUE
 					txt lang("時は再び動き出した。", "Time starts to run again.")
+				}
+				if ( gdata(GDATA_FLAG_STOP_TIME_OTHER) > 0 ) {
+					gdata(GDATA_FLAG_STOP_TIME_OTHER) = 0
 				}
 				evadd EVENT_QUEST_ELEMINATE
 			}
@@ -828,10 +882,10 @@
 	}
 	if ( cdata(CDATA_CONDITION_WET, refreshspeed_arg1) > 0 ) {
 		if ( cdata(CDATA_ID, refreshspeed_arg1) == CREATURE_ID_FIN_CROCODILE ) {
-			cdata(CDATA_SPEED, refreshspeed_arg1) += sdata(SKILL_NORMAL_SWIMMING, refreshspeed_arg1) * 3 / 4
+			cdata(CDATA_SPEED, refreshspeed_arg1) += sdata(SKILL_NORMAL_SWIMMING, refreshspeed_arg1) * 3 / 5
 		}
 		else {
-			cdata(CDATA_SPEED, refreshspeed_arg1) += sdata(SKILL_NORMAL_SWIMMING, refreshspeed_arg1) * 1 / 2
+			cdata(CDATA_SPEED, refreshspeed_arg1) += sdata(SKILL_NORMAL_SWIMMING, refreshspeed_arg1) * 2 / 5
 		}
 	}
 	if ( refreshspeed_arg1 != 0 ) {
@@ -973,9 +1027,25 @@
 	if ( cdata(CDATA_BURDEN, CHARA_PLAYER) == 1 ) {
 		cdata(CDATA_SPEED_FIX, CHARA_PLAYER) -= 10
 	}
-	if ( mdata(MDATA_TYPE) == MAP_TYPE_WORLD | mdata(MDATA_TYPE) == MAP_TYPE_LOCAL ) {
-		if ( gdata(GDATA_CARGO_WEIGHT) > gdata(GDATA_CARGO_LIMIT) ) {
-			cdata(CDATA_SPEED_FIX, CHARA_PLAYER) -= 25 + 25 * (gdata(GDATA_CARGO_WEIGHT) / (gdata(GDATA_CARGO_LIMIT) + 1))
+	if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) == VEHICLE_NONE ) {
+		if ( mdata(MDATA_TYPE) == MAP_TYPE_WORLD | mdata(MDATA_TYPE) == MAP_TYPE_LOCAL ) {
+			if ( gdata(GDATA_CARGO_WEIGHT) > gdata(GDATA_CARGO_LIMIT) ) {
+				cdata(CDATA_SPEED_FIX, CHARA_PLAYER) -= 25 + 25 * (gdata(GDATA_CARGO_WEIGHT) / (gdata(GDATA_CARGO_LIMIT) + 1))
+			}
+		}
+	}
+	if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) >= VEHICLE_CARRIAGE & gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) <= VEHICLE_TRUCK ) {
+		if ( mdata(MDATA_TYPE) == MAP_TYPE_WORLD ) {
+			if ( gdata(GDATA_CARGO_WEIGHT) > gdata(GDATA_CARGO_LIMIT) ) {
+				cdata(CDATA_SPEED_FIX, CHARA_PLAYER) -= 25 + 25 * (gdata(GDATA_CARGO_WEIGHT) / (gdata(GDATA_CARGO_LIMIT) + 1))
+			}
+		}
+	}
+	if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) >= VEHICLE_LOCOMOTIVE & gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) <= VEHICLE_LAND_BATTLESHIP ) {
+		if ( mdata(MDATA_TYPE) == MAP_TYPE_WORLD ) {
+			if ( gdata(GDATA_CARGO_WEIGHT) > gdata(GDATA_CARGO_LIMIT) ) {
+				cdata(CDATA_SPEED_FIX, CHARA_PLAYER) -= (25 + 25 * (gdata(GDATA_CARGO_WEIGHT) / (gdata(GDATA_CARGO_LIMIT) + 1))) / 2
+			}
 		}
 	}
 	gspd = cdata(CDATA_SPEED, CHARA_PLAYER) * (100 + cdata(CDATA_TIME_SCALE, CHARA_PLAYER)) / 100
@@ -1727,8 +1797,8 @@
 	if ( cdata(STARTING_CDATA_BUFF + delbuff_buffid * ARRAY_CDATA_BUFF, delbuff_charid) == BUFF_ATTRIBUTE ) {
 		cdata(CDATA_ATTRIBUTE_ELE, delbuff_charid) = 0
 	}
-	if ( cdata(STARTING_CDATA_BUFF + delbuff_buffid * ARRAY_CDATA_BUFF, delbuff_charid) == BUFF_POWER_ITEM ) {
-		gdata(GDATA_QUICK_USE) = 0
+	if ( cdata(STARTING_CDATA_BUFF + delbuff_buffid * ARRAY_CDATA_BUFF, delbuff_charid) == BUFF_DATA_SCAN ) {
+		gdata(GDATA_FLAG_DATA_SCAN_CHARA_INDEX) = 0
 	}
 	cdata(STARTING_CDATA_BUFF + delbuff_buffid * ARRAY_CDATA_BUFF, delbuff_charid) = 0
 	repeat MAX_BLESSINGS + MAX_HEXES - delbuff_buffid - 1, delbuff_buffid
@@ -1810,24 +1880,10 @@
 	screenupdate = -1
 	gosub *screen_draw
 	if ( animeblood_arg2 == 0 ) {
-		gsel 1
-		color 0
-		boxf 0, 960, chipi(CHIPI_WIDTH, xy2pic(16, 0)), chipi(CHIPI_HEIGHT, xy2pic(16, 0)) + 960
-		pos 0, 960
-		gcopy 1, chipi(CHIPI_X, xy2pic(16, 0)), chipi(CHIPI_Y, xy2pic(16, 0)), chipi(CHIPI_WIDTH, xy2pic(16, 0)), chipi(CHIPI_HEIGHT, xy2pic(16, 0))
-		gfini chipi(CHIPI_WIDTH, xy2pic(16, 0)), chipi(CHIPI_HEIGHT, xy2pic(16, 0))
-		gfdec2 c_col(0, 0), c_col(1, 0), c_col(2, 0)
-		gsel selcur
+        preparePicItem xy2pic(16, 0), 0
 	}
 	if ( animeblood_arg2 == 1 ) {
-		gsel 1
-		color 0
-		boxf 0, 960, chipi(CHIPI_WIDTH, xy2pic(18, 0)), chipi(CHIPI_HEIGHT, xy2pic(18, 0)) + 960
-		pos 0, 960
-		gcopy 1, chipi(CHIPI_X, xy2pic(18, 0)), chipi(CHIPI_Y, xy2pic(18, 0)), chipi(CHIPI_WIDTH, xy2pic(18, 0)), chipi(CHIPI_HEIGHT, xy2pic(18, 0))
-		gfini chipi(CHIPI_WIDTH, xy2pic(18, 0)), chipi(CHIPI_HEIGHT, xy2pic(18, 0))
-		gfdec2 c_col(0, 0), c_col(1, 0), c_col(2, 0)
-		gsel selcur
+        preparePicItem xy2pic(18, 0), 0
 	}
 	locvar_animeload_dx = (cdata(CDATA_X, animeblood_arg1) - scx) * inf_tiles + inf_screenx
 	locvar_animeload_dy = (cdata(CDATA_Y, animeblood_arg1) - scy) * inf_tiles + inf_screeny, 0
@@ -2190,6 +2246,31 @@
 					r1 = CHARA_PLAYER
 					gosub *act_unequip_part
 				}
+				if ( tid == TRAIT_ETHER_BONES ) {
+					body = EQUIP_SLOT_BODY
+					r1 = CHARA_PLAYER
+					gosub *act_unequip_part
+				}
+				if ( tid == TRAIT_ETHER_BLADE_HANDS ) {
+					body = EQUIP_SLOT_HAND
+					r1 = CHARA_PLAYER
+					gosub *act_unequip_part
+				}
+				if ( tid == TRAIT_ETHER_WEBBED ) {
+					body = EQUIP_SLOT_RING
+					r1 = CHARA_PLAYER
+					gosub *act_unequip_part
+				}
+				if ( tid == TRAIT_ETHER_THICK_ARMS ) {
+					body = EQUIP_SLOT_ARM
+					r1 = CHARA_PLAYER
+					gosub *act_unequip_part
+				}
+				if ( tid == TRAIT_ETHER_TAIL ) {
+					body = EQUIP_SLOT_WAIST
+					r1 = CHARA_PLAYER
+					gosub *act_unequip_part
+				}
 				break
 			loop
 		loop
@@ -2323,6 +2404,62 @@
 		}
 		return 1
 	}
+	if ( dmgcon_cond == CONDITION_ASH_BODY ) {
+		if ( findbuff(dmgcon_charid, BUFF_HOLY_VEIL) != (-1) ) {
+			f@con = 0
+		}
+		if ( cdata(CDATA_QUALITY, dmgcon_charid) > FIX_QUALITY_GREAT | cdata(CDATA_ID, dmgcon_charid) == CREATURE_ID_AILE_THE_ATTENDANT ) {
+			if ( rnd(cdata(CDATA_LEVEL, dmgcon_charid) / 2 + 1) ) {
+				f@con = 0
+			}
+		}
+		res@con = SKILL_RES_FIRE
+		gosub *conCalc
+		if ( f@con == 0 ) {
+			return 0
+		}
+		p@con = p@con / 6
+		if ( p@con > 0 ) {
+			if ( cdata(CDATA_CONDITION_WINCE, dmgcon_charid) == 0 ) {
+				cdata(CDATA_CONDITION_WINCE, dmgcon_charid) = p@con
+				if ( synccheck(dmgcon_charid, -1) ) {
+					txtmore
+					txtef COLOR_PURPLE
+					txt lang(name(dmgcon_charid) + "は怯んだ。", name(dmgcon_charid) + " " + is(dmgcon_charid) + " faltered.")
+				}
+			}
+			rowactend dmgcon_charid
+		}
+		return 1
+	}
+	if ( dmgcon_cond == CONDITION_OVERGODS ) {
+		if ( findbuff(dmgcon_charid, BUFF_REGENERATION) != (-1) ) {
+			f@con = 0
+		}
+		if ( cdata(CDATA_QUALITY, dmgcon_charid) > FIX_QUALITY_GREAT | cdata(CDATA_ID, dmgcon_charid) == CREATURE_ID_AILE_THE_ATTENDANT ) {
+			if ( rnd(cdata(CDATA_LEVEL, dmgcon_charid) / 2 + 1) ) {
+				f@con = 0
+			}
+		}
+		res@con = SKILL_RES_COLD
+		gosub *conCalc
+		if ( f@con == 0 ) {
+			return 0
+		}
+		p@con = p@con / 6
+		if ( p@con > 0 ) {
+			if ( cdata(CDATA_CONDITION_CHILLS, dmgcon_charid) == 0 ) {
+				cdata(CDATA_CONDITION_CHILLS, dmgcon_charid) = p@con
+				if ( synccheck(dmgcon_charid, -1) ) {
+					txtmore
+					txtef COLOR_PURPLE
+					txt lang(name(dmgcon_charid) + "は震え始めた。", name(dmgcon_charid) + " began trembling.")
+				}
+			}
+			rowactend dmgcon_charid
+		}
+		return 1
+	}
 	if ( dmgcon_cond == CONDITION_INVERT ) {
 		p@con = rnd(dmgcon_arg3 / 2 + 1) + 1
 		if ( p@con > 0 ) {
@@ -2343,6 +2480,9 @@
 			f@con = 0
 		}
 		if ( findbuff(dmgcon_charid, BUFF_HERO) != (-1) ) {
+			f@con = 0
+		}
+		if ( findbuff(dmgcon_charid, BUFF_JYUSOU_GOUSHIN) != (-1) ) {
 			f@con = 0
 		}
 		if ( findbuff(dmgcon_charid, BUFF_CONCENTRATION) != (-1) ) {
@@ -2413,7 +2553,8 @@
 			}
 		}
 		p@con = rnd(dmgcon_arg3 / 2 + 1) + dmgcon_arg3 / 2
-		p@con = p@con / 10
+		p@con = p@con * 100 / (50 + sdata(SKILL_NORMAL_MAGIC_CAPACITY, dmgcon_charid))
+		p@con = p@con / 5
 		if ( p@con > 0 ) {
 			if ( cdata(CDATA_CONDITION_MPOISON, dmgcon_charid) == 0 ) {
 				cdata(CDATA_CONDITION_MPOISON, dmgcon_charid) = p@con
@@ -2697,6 +2838,40 @@
 	return
 
 #deffunc healcon int healcon_charid, int healcon_cond, int healcon_arg3
+	if ( healcon_cond == CONDITION_ASH_BODY ) {
+		if ( cdata(CDATA_CONDITION_WINCE, healcon_charid) > 0 ) {
+			if ( healcon_arg3 == 0 ) {
+				cdata(CDATA_CONDITION_WINCE, healcon_charid) = 0
+			}
+			else {
+				cdata(CDATA_CONDITION_WINCE, healcon_charid) -= healcon_arg3
+			}
+			if ( cdata(CDATA_CONDITION_WINCE, healcon_charid) <= 0 ) {
+				cdata(CDATA_CONDITION_WINCE, healcon_charid) = 0
+				if ( synccheck(healcon_charid, -1) ) {
+					txt lang(name(healcon_charid) + "は怯みから回復した。", name(healcon_charid) + " recover" + _s(healcon_charid) + " from wince.")
+				}
+			}
+			return
+		}
+	}
+	if ( healcon_cond == CONDITION_OVERGODS ) {
+		if ( cdata(CDATA_CONDITION_CHILLS, healcon_charid) > 0 ) {
+			if ( healcon_arg3 == 0 ) {
+				cdata(CDATA_CONDITION_CHILLS, healcon_charid) = 0
+			}
+			else {
+				cdata(CDATA_CONDITION_CHILLS, healcon_charid) -= healcon_arg3
+			}
+			if ( cdata(CDATA_CONDITION_CHILLS, healcon_charid) <= 0 ) {
+				cdata(CDATA_CONDITION_CHILLS, healcon_charid) = 0
+				if ( synccheck(healcon_charid, -1) ) {
+					txt lang(name(healcon_charid) + "の震えが止まった。", name(healcon_charid) + " suppressed " + his(healcon_charid) + " trembling.")
+				}
+			}
+			return
+		}
+	}
 	if ( healcon_cond == CONDITION_FEAR ) {
 		if ( cdata(CDATA_CONDITION_FEAR, healcon_charid) > 0 ) {
 			if ( healcon_arg3 == 0 ) {
@@ -2757,12 +2932,11 @@
 				cdata(CDATA_CONDITION_PARALYZE, healcon_charid) -= healcon_arg3
 			}
 			if ( cdata(CDATA_CONDITION_PARALYZE, healcon_charid) <= 0 ) {
-				cdata(CDATA_CONDITION_PARALYZE, healcon_charid) = 0
+				cdata(CDATA_CONDITION_PARALYZE, healcon_charid) = -1
 				if ( synccheck(healcon_charid, -1) ) {
 					txt lang(name(healcon_charid) + "は麻痺から回復した。", name(healcon_charid) + " recover" + _s(healcon_charid) + " from paralysis.")
 				}
 			}
-			cdata(CDATA_CONDITION_PARALYZE, healcon_charid) = -1
 			return
 		}
 	}
@@ -2967,7 +3141,7 @@
 	}
 	if ( check_talk_arg1 >= 0 ) {
 		if ( check_talk_arg1 == 0 | cdata(CDATA_RELATION, check_talk_arg1) >= 10 ) {
-			if ( cbit(CHARA_BIT_NECRO, check_talk_arg2) != 1 & cdata(CDATA_RELATION, check_talk_arg2) != 10 ) {
+			if ( cbit(CHARA_BIT_NECRO, check_talk_arg2) != TRUE & cdata(CDATA_RELATION, check_talk_arg2) != RELATION_ALLY & gdata(GDATA_FLAG_MAIN) != 900 ) {
 				if ( gdata(GDATA_FLAG_LEOLD_JOB_STAGE) == 1 ) {
 					if ( cdata(CDATA_LEVEL, check_talk_arg2) >= gdata(GDATA_FLAG_LEOLD_JOB_TIER) ) {
 						if ( cdata(CDATA_RELATION_ORG, check_talk_arg2) == (-3) ) {
@@ -3005,6 +3179,11 @@
 		cdata(CDATA_INIT_LIFEMANA, check_talk_arg1) = limit(sorg(SKILL_ATTR_LIFE, check_talk_arg1), 50, 200) * 2 + limit(sorg(SKILL_ATTR_MANA, check_talk_arg1), 50, 200) / 2
 	}
 	if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, check_talk_arg2) != 1 & cbit(CHARA_BIT_SPLIT_NO_EFFECT, check_talk_arg2) != 1 & cbit(CHARA_BIT_SUMMONED, check_talk_arg2) != 1 & cbit(CHARA_BIT_NECRO, check_talk_arg2) != 1 & cbit(CHARA_BIT_LIVESTOCK, check_talk_arg2) != 1 & cdata(CDATA_ROLE, check_talk_arg2) != ROLE_BOUNTY_HUNTER & cdata(CDATA_ROLE, check_talk_arg2) != ROLE_GUARD & cbit(CHARA_BIT_CRADLE_15TH, check_talk_arg2) != 1 ) {
+		if ( gdata(GDATA_AREA) != AREA_VOID ) {
+			if ( sorg(SKILL_ATTR_SPD, check_talk_arg2) > sorg(SKILL_ATTR_SPD, check_talk_arg1) ) {
+				skillexp SKILL_ATTR_SPD, check_talk_arg1, limit(sorg(SKILL_ATTR_SPD, check_talk_arg2), 10, 2000) / 5
+			}
+		}
 		if ( cdata(CDATA_AP_CURRENT, check_talk_arg1) < 2000 ) {
 			locvar_check_talk_aspd = cdata(CDATA_INIT_SPEED, check_talk_arg1)
 			if ( gdata(GDATA_RIDER) != 0 ) {
@@ -3073,6 +3252,11 @@
 		}
 		if ( cdata(CDATA_IN_TAGTEAM, check_talk_arg1) != 0 ) {
 			locvar_check_talk_cct = cdata(CDATA_TAGTEAM_PARTNER, check_talk_arg1)
+			if ( gdata(GDATA_AREA) != AREA_VOID ) {
+				if ( sorg(SKILL_ATTR_SPD, check_talk_arg2) > sorg(SKILL_ATTR_SPD, locvar_check_talk_cct) ) {
+					skillexp SKILL_ATTR_SPD, locvar_check_talk_cct, limit(sorg(SKILL_ATTR_SPD, check_talk_arg2), 10, 2000) / 5
+				}
+			}
 			if ( cdata(CDATA_AP_CURRENT, locvar_check_talk_cct) < 2000 ) {
 				locvar_check_talk_aspd = cdata(CDATA_INIT_SPEED, locvar_check_talk_cct)
 				if ( gdata(GDATA_RIDER) != 0 ) {
@@ -3142,7 +3326,7 @@
 #deffunc check_kill int check_kill_arg1, int check_kill_arg2
 	if ( check_kill_arg1 >= 0 ) {
 		if ( check_kill_arg1 == 0 | cdata(CDATA_RELATION, check_kill_arg1) >= 10 ) {
-			if ( cbit(CHARA_BIT_NECRO, check_kill_arg2) != 1 & cdata(CDATA_RELATION, check_kill_arg2) != 10 ) {
+			if ( cbit(CHARA_BIT_NECRO, check_kill_arg2) != TRUE & cdata(CDATA_RELATION, check_kill_arg2) != RELATION_ALLY & gdata(GDATA_FLAG_MAIN) != 900 ) {
 				if ( gdata(GDATA_FLAG_LEOLD_JOB_STAGE) == 1 ) {
 					if ( cdata(CDATA_LEVEL, check_kill_arg2) >= gdata(GDATA_FLAG_LEOLD_JOB_TIER) ) {
 						if ( cdata(CDATA_RELATION_ORG, check_kill_arg2) == (-3) ) {
@@ -3229,6 +3413,11 @@
 						}
 					}
 					if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, check_kill_arg2) != 1 & cbit(CHARA_BIT_SPLIT_NO_EFFECT, check_kill_arg2) != 1 & cbit(CHARA_BIT_SUMMONED, check_kill_arg2) != 1 & cbit(CHARA_BIT_NECRO, check_kill_arg2) != 1 & cbit(CHARA_BIT_LIVESTOCK, check_kill_arg2) != 1 & cdata(CDATA_ROLE, check_kill_arg2) != ROLE_BOUNTY_HUNTER & cdata(CDATA_ROLE, check_kill_arg2) != ROLE_GUARD & cbit(CHARA_BIT_CRADLE_15TH, check_kill_arg2) != 1 ) {
+						if ( gdata(GDATA_AREA) != AREA_VOID ) {
+							if ( sorg(SKILL_ATTR_SPD, check_kill_arg2) > sorg(SKILL_ATTR_SPD, check_kill_arg1) ) {
+								skillexp SKILL_ATTR_SPD, check_kill_arg1, limit(sorg(SKILL_ATTR_SPD, check_kill_arg2), 10, 2000) / 5
+							}
+						}
 						if ( cdata(CDATA_AP_CURRENT, check_kill_arg1) < 2000 ) {
 							locvar_check_kill_aspd = cdata(CDATA_INIT_SPEED, check_kill_arg1)
 							if ( gdata(GDATA_RIDER) != 0 ) {
@@ -3296,6 +3485,11 @@
 							}
 						}
 						if ( cbit(CHARA_BIT_NECRO, check_kill_arg1) == 1 ) {
+							if ( gdata(GDATA_AREA) != AREA_VOID ) {
+								if ( sorg(SKILL_ATTR_SPD, check_kill_arg2) > sorg(SKILL_ATTR_SPD, CHARA_PLAYER) ) {
+									skillexp SKILL_ATTR_SPD, CHARA_PLAYER, limit(sorg(SKILL_ATTR_SPD, check_kill_arg2), 10, 2000) / 5
+								}
+							}
 							if ( cdata(CDATA_AP_CURRENT, CHARA_PLAYER) < 2000 ) {
 								locvar_check_kill_aspd = cdata(CDATA_INIT_SPEED, CHARA_PLAYER)
 								if ( gdata(GDATA_RIDER) != 0 ) {
@@ -3388,6 +3582,11 @@
 						}
 						if ( cdata(CDATA_IN_TAGTEAM, check_kill_arg1) != 0 ) {
 							locvar_check_kill_cct = cdata(CDATA_TAGTEAM_PARTNER, check_kill_arg1)
+							if ( gdata(GDATA_AREA) != AREA_VOID ) {
+								if ( sorg(SKILL_ATTR_SPD, check_kill_arg2) > sorg(SKILL_ATTR_SPD, locvar_check_kill_cct) ) {
+									skillexp SKILL_ATTR_SPD, locvar_check_kill_cct, limit(sorg(SKILL_ATTR_SPD, check_kill_arg2), 10, 2000) / 5
+								}
+							}
 							if ( cdata(CDATA_AP_CURRENT, locvar_check_kill_cct) < 2000 ) {
 								locvar_check_kill_aspd = cdata(CDATA_INIT_SPEED, locvar_check_kill_cct)
 								if ( gdata(GDATA_RIDER) != 0 ) {
@@ -4207,11 +4406,11 @@
 		}
 	}
 	if ( cdata(CDATA_CONDITION_WINCE, dmghp_charid) != 0 ) {
-		locvar_dmghp_dmg = locvar_dmghp_dmg * 11 / 10
+		locvar_dmghp_dmg = locvar_dmghp_dmg * 12 / 10
 	}
 	if ( dmghp_source >= DAMAGE_FROM_CHARA ) {
 		if ( cdata(CDATA_CONDITION_CHILLS, dmghp_source) != 0 ) {
-			locvar_dmghp_dmg = locvar_dmghp_dmg * 9 / 10
+			locvar_dmghp_dmg = locvar_dmghp_dmg * 8 / 10
 		}
 	}
 	if ( dmghp_source >= DAMAGE_FROM_CHARA ) {
@@ -4231,15 +4430,361 @@
 			}
 		}
 	}
-	if ( dmghp_source != DAMAGE_FROM_UNSEEN & dmghp_source != DAMAGE_FROM_BLEED & dmghp_source != DAMAGE_FROM_POISON ) {
-		if ( locvar_dmghp_ele ) {
-			if ( locvar_dmghp_ele != SKILL_RES_MAGIC ) {
-				if ( cbit(CHARA_BIT_RES_ELEMENTAL, dmghp_charid) ) {
-					if ( locvar_dmghp_ele != SKILL_SPACT_DANCE_OF_BLOW ) {
-						if ( locvar_dmghp_ele != SKILL_SPACT_FLASH_OF_SWIFTNESS ) {
-							locvar_dmghp_dmg = 0
+	if ( gdata(GDATA_FLAG_MAIN) == 900 ) {
+		if ( cdata(CDATA_ID, dmghp_charid) == CREATURE_ID_JALDABAOTH_THE_CHAOS_CHILD & cdata(CDATA_ALLIED, dmghp_charid) == 0 ) {
+			if ( gdata(GDATA_FLAG_COLLECTED_WISHES) > 0 ) {
+				if ( dmghp_source == CHARA_PLAYER ) {
+					repeat 2
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 100 ) {
+							gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 100
+							break
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 200 ) {
+							gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 200
+							break
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 300 ) {
+							gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 300
+							break
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 400 ) {
+							gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 400
+							break
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 500 ) {
+							gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 500
+							break
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 600 ) {
+							gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 600
+							break
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 700 ) {
+							gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 700
+							break
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 2000 ) {
+							if ( gdata(GDATA_FLAG_SUB_SLIME) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 2000
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 2100 ) {
+							if ( gdata(GDATA_FLAG_SUB_ROGUE) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 2100
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 2200 ) {
+							if ( gdata(GDATA_FLAG_SUB_NIGHTMARE) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 2200
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 2300 ) {
+							if ( gdata(GDATA_FLAG_SUB_MOTHER) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 2300
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 2400 ) {
+							if ( gdata(GDATA_FLAG_SUB_WIFE) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 2400
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 2500 ) {
+							if ( gdata(GDATA_FLAG_SUB_DOG) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 2500
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 2600 ) {
+							if ( gdata(GDATA_FLAG_SUB_CAT) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 2600
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 2700 ) {
+							if ( gdata(GDATA_FLAG_SUB_WAR) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 2700
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 2800 ) {
+							if ( gdata(GDATA_FLAG_SUB_YEEK) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 2800
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 2900 ) {
+							if ( gdata(GDATA_FLAG_SUB_KAMIKAZE) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 2900
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 3000 ) {
+							if ( gdata(GDATA_FLAG_SUB_MIAS_DREAM) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 3000
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 3100 ) {
+							if ( gdata(GDATA_FLAG_SUB_VEIN) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 3100
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 3200 ) {
+							if ( gdata(GDATA_FLAG_SUB_PYRAMID) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 3200
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 3300 ) {
+							if ( gdata(GDATA_FLAG_SUB_NUKE) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 3300
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 3400 ) {
+							if ( gdata(GDATA_FLAG_SUB_BIOLOGIST) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 3400
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 3500 ) {
+							if ( gdata(GDATA_FLAG_SUB_SEWER) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 3500
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 3600 ) {
+							if ( gdata(GDATA_FLAG_SUB_GUILD_WARS1) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 3600
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 3700 ) {
+							if ( gdata(GDATA_FLAG_SUB_GUILD_WARS3) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 3700
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 3800 ) {
+							if ( gdata(GDATA_FLAG_SUB_GUILD_WARS2) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 3800
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 4200 ) {
+							if ( gdata(GDATA_FLAG_SUB_MINOTAUR) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 4200
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 4300 ) {
+							if ( gdata(GDATA_FLAG_SUB_DADDY) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 4300
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 4500 ) {
+							if ( gdata(GDATA_FLAG_SUB_LOST_KITTY) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 4500
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 4600 ) {
+							if ( gdata(GDATA_FLAG_SUB_DIVERSIONARY_TACTICS) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 4600
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 4700 ) {
+							if ( gdata(GDATA_FLAG_SUB_JUERES_IMPERTINENCE) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 4700
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 4800 ) {
+							if ( gdata(GDATA_FLAG_SUB_PIRATE_HUNTING) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 4800
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 4900 ) {
+							if ( gdata(GDATA_FLAG_SUB_FALLEN_PRINCESS) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 4900
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 5000 ) {
+							if ( gdata(GDATA_FLAG_SUB_UNPAID_COMPENSATION) >= 1 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 5000
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 5100 ) {
+							if ( gdata(GDATA_FLAG_SUB_MANSION_FOR_SALE) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 5100
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 5200 ) {
+							if ( gdata(GDATA_FLAG_SUB_THE_RESULT_OF_REVENGE) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 5200
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 5300 ) {
+							if ( gdata(GDATA_FLAG_SUB_STRUGGLE_AGAINST_INSANITY) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 5300
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 5400 ) {
+							if ( gdata(GDATA_FLAG_SUB_H_SISTER) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 5400
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 6400 ) {
+							if ( gdata(GDATA_FLAG_SUB_LAW_OF_NINJAS) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 6400
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 6600 ) {
+							if ( gdata(GDATA_FLAG_SUB_MONOCHROME_DELIVERY_SERVICE_LETTER) >= 1 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 6600
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 7100 ) {
+							if ( gdata(GDATA_FLAG_SUB_DOGS_TAIL) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 7100
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 7300 ) {
+							if ( gdata(GDATA_FLAG_DIALOG_NAZUNA) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 7300
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 7600 ) {
+							if ( gdata(GDATA_FLAG_SUB_THE_TRUE_APPEARANCE) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 7600
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 7700 ) {
+							if ( gdata(GDATA_FLAG_SUB_THE_ABYSS_OF_MAGIC) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 7700
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 7900 ) {
+							if ( gdata(GDATA_FLAG_SUB_THE_DISTANT_SEA_OF_STARS) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 7900
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 8000 ) {
+							if ( gdata(GDATA_FLAG_SUB_BEYOND_THE_GENERATIONS) >= 9 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 8000
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 8100 ) {
+							if ( gdata(GDATA_FLAG_SUB_WHEN_THE_FLAME_BURNS_OUT) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 8100
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 8400 ) {
+							if ( gdata(GDATA_FLAG_SUB_NINE_HEAD_DRAGON) >= 3 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 8400
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 9100 ) {
+							if ( gdata(GDATA_FLAG_SUB_REGULUS_ZANAN) >= 1003 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 9100
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 9200 ) {
+							if ( gdata(GDATA_FLAG_SUB_REGULUS_EULDERNA) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 9200
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 9300 ) {
+							if ( gdata(GDATA_FLAG_SUB_REGULUS_KIKKASU) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 9300
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 9400 ) {
+							if ( gdata(GDATA_FLAG_SUB_REGULUS_MAYROON) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 9400
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 10500 ) {
+							if ( gdata(GDATA_FLAG_SUB_THE_LIFE_IN_THIS_WORLD) >= 2 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 10500
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 10900 ) {
+							if ( gdata(GDATA_FLAG_SUB_BELPHAT_THE_COSMIC_SWORD) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 10900
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 11500 ) {
+							if ( gdata(GDATA_FLAG_MAIN_CHAOS_CRADLE_34) >= 100 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 11500
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 12600 ) {
+							if ( gdata(GDATA_FLAG_TRAINING_COURSE_COMBAT_4) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 12600
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 13500 ) {
+							if ( gdata(GDATA_FLAG_SUB_KARURA) >= 1 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 13500
+								break
+							}
+						}
+					loop
+					if ( gdata(GDATA_TEMPORARY_FLAGS2) == 1200 | gdata(GDATA_TEMPORARY_FLAGS2) == 1000 ) {
+						if ( rnd(17) == 0 ) {
+							gdata(GDATA_FLAG_COLLECTED_WISHES)--
+						}
+						if ( gdata(GDATA_FLAG_COLLECTED_WISHES) < 0 ) {
+							gdata(GDATA_FLAG_COLLECTED_WISHES) = 0
 						}
 					}
+					else {
+						gdata(GDATA_FLAG_COLLECTED_WISHES)--
+					}
+					locvar_dmghp_dmg += cdata(CDATA_MAX_HP, dmghp_charid) / 20
+				}
+			}
+		}
+	}
+	if ( dmghp_source != DAMAGE_FROM_UNSEEN & dmghp_source != DAMAGE_FROM_BLEED & dmghp_source != DAMAGE_FROM_POISON ) {
+		if ( locvar_dmghp_ele ) {
+			if ( locvar_dmghp_ele != SKILL_RES_MAGIC & locvar_dmghp_ele != SKILL_SPACT_DANCE_OF_BLOW & locvar_dmghp_ele != SKILL_SPACT_FLASH_OF_SWIFTNESS & locvar_dmghp_ele != SKILL_RESDMG_CRUSH ) {
+				if ( cbit(CHARA_BIT_RES_ELEMENTAL, dmghp_charid) ) {
+					locvar_dmghp_dmg = 0
 				}
 			}
 		}
@@ -4257,6 +4802,16 @@
 	}
 	if ( gdata(GDATA_TEMPORARY_FLAGS2) == 1200 ) {
 		locvar_dmghp_dmg = locvar_dmghp_dmg * 1 / 6 + 1
+	}
+	if ( dmghp_source >= DAMAGE_FROM_CHARA ) {
+		if ( locvar_dmghp_dmg > 0 ) {
+			if ( cdata(CDATA_QUALITY, dmghp_charid) >= FIX_QUALITY_MIRACLE ) {
+				locvar_dmghp_dmg = locvar_dmghp_dmg * 10 / limit(sdata(SKILL_ATTR_SPD, dmghp_source) * 10 / sdata(SKILL_ATTR_SPD, dmghp_charid), 10, 50)
+			}
+			if ( cdata(CDATA_QUALITY, dmghp_source) >= FIX_QUALITY_MIRACLE ) {
+				locvar_dmghp_dmg = locvar_dmghp_dmg * limit(sdata(SKILL_ATTR_SPD, dmghp_charid) * 10 / sdata(SKILL_ATTR_SPD, dmghp_source), 10, 50) / 10
+			}
+		}
 	}
 	if ( cbit(CHARA_BIT_CONTINGENCY, dmghp_charid) ) {
 		if ( cdata(CDATA_HP, dmghp_charid) - locvar_dmghp_dmg <= 0 ) {
@@ -4295,6 +4850,347 @@
 		if ( locvar_dmghp_dmg > cdata(CDATA_HP, dmghp_charid) ) {
 			locvar_dmghp_dmg = 0
 			cdata(CDATA_HP, dmghp_charid) = 0
+		}
+	}
+ 	if ( locvar_dmghp_dmg > cdata(CDATA_HP, dmghp_charid) ) {
+		if ( gdata(GDATA_FLAG_MAIN) >= 875 & gdata(GDATA_FLAG_MAIN) < 1000 ) {
+			if ( dmghp_charid == CHARA_PLAYER ) {
+				if ( gdata(GDATA_FLAG_COLLECTED_WISHES) > 0 ) {
+					repeat 2
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 100 ) {
+							gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 100
+							break
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 200 ) {
+							gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 200
+							break
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 300 ) {
+							gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 300
+							break
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 400 ) {
+							gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 400
+							break
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 500 ) {
+							gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 500
+							break
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 600 ) {
+							gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 600
+							break
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 700 ) {
+							gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 700
+							break
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 2000 ) {
+							if ( gdata(GDATA_FLAG_SUB_SLIME) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 2000
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 2100 ) {
+							if ( gdata(GDATA_FLAG_SUB_ROGUE) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 2100
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 2200 ) {
+							if ( gdata(GDATA_FLAG_SUB_NIGHTMARE) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 2200
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 2300 ) {
+							if ( gdata(GDATA_FLAG_SUB_MOTHER) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 2300
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 2400 ) {
+							if ( gdata(GDATA_FLAG_SUB_WIFE) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 2400
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 2500 ) {
+							if ( gdata(GDATA_FLAG_SUB_DOG) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 2500
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 2600 ) {
+							if ( gdata(GDATA_FLAG_SUB_CAT) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 2600
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 2700 ) {
+							if ( gdata(GDATA_FLAG_SUB_WAR) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 2700
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 2800 ) {
+							if ( gdata(GDATA_FLAG_SUB_YEEK) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 2800
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 2900 ) {
+							if ( gdata(GDATA_FLAG_SUB_KAMIKAZE) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 2900
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 3000 ) {
+							if ( gdata(GDATA_FLAG_SUB_MIAS_DREAM) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 3000
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 3100 ) {
+							if ( gdata(GDATA_FLAG_SUB_VEIN) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 3100
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 3200 ) {
+							if ( gdata(GDATA_FLAG_SUB_PYRAMID) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 3200
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 3300 ) {
+							if ( gdata(GDATA_FLAG_SUB_NUKE) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 3300
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 3400 ) {
+							if ( gdata(GDATA_FLAG_SUB_BIOLOGIST) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 3400
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 3500 ) {
+							if ( gdata(GDATA_FLAG_SUB_SEWER) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 3500
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 3600 ) {
+							if ( gdata(GDATA_FLAG_SUB_GUILD_WARS1) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 3600
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 3700 ) {
+							if ( gdata(GDATA_FLAG_SUB_GUILD_WARS3) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 3700
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 3800 ) {
+							if ( gdata(GDATA_FLAG_SUB_GUILD_WARS2) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 3800
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 4200 ) {
+							if ( gdata(GDATA_FLAG_SUB_MINOTAUR) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 4200
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 4300 ) {
+							if ( gdata(GDATA_FLAG_SUB_DADDY) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 4300
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 4500 ) {
+							if ( gdata(GDATA_FLAG_SUB_LOST_KITTY) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 4500
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 4600 ) {
+							if ( gdata(GDATA_FLAG_SUB_DIVERSIONARY_TACTICS) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 4600
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 4700 ) {
+							if ( gdata(GDATA_FLAG_SUB_JUERES_IMPERTINENCE) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 4700
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 4800 ) {
+							if ( gdata(GDATA_FLAG_SUB_PIRATE_HUNTING) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 4800
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 4900 ) {
+							if ( gdata(GDATA_FLAG_SUB_FALLEN_PRINCESS) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 4900
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 5000 ) {
+							if ( gdata(GDATA_FLAG_SUB_UNPAID_COMPENSATION) >= 1 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 5000
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 5100 ) {
+							if ( gdata(GDATA_FLAG_SUB_MANSION_FOR_SALE) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 5100
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 5200 ) {
+							if ( gdata(GDATA_FLAG_SUB_THE_RESULT_OF_REVENGE) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 5200
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 5300 ) {
+							if ( gdata(GDATA_FLAG_SUB_STRUGGLE_AGAINST_INSANITY) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 5300
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 5400 ) {
+							if ( gdata(GDATA_FLAG_SUB_H_SISTER) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 5400
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 6400 ) {
+							if ( gdata(GDATA_FLAG_SUB_LAW_OF_NINJAS) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 6400
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 6600 ) {
+							if ( gdata(GDATA_FLAG_SUB_MONOCHROME_DELIVERY_SERVICE_LETTER) >= 1 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 6600
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 7100 ) {
+							if ( gdata(GDATA_FLAG_SUB_DOGS_TAIL) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 7100
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 7300 ) {
+							if ( gdata(GDATA_FLAG_DIALOG_NAZUNA) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 7300
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 7600 ) {
+							if ( gdata(GDATA_FLAG_SUB_THE_TRUE_APPEARANCE) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 7600
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 7700 ) {
+							if ( gdata(GDATA_FLAG_SUB_THE_ABYSS_OF_MAGIC) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 7700
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 7900 ) {
+							if ( gdata(GDATA_FLAG_SUB_THE_DISTANT_SEA_OF_STARS) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 7900
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 8000 ) {
+							if ( gdata(GDATA_FLAG_SUB_BEYOND_THE_GENERATIONS) >= 9 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 8000
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 8100 ) {
+							if ( gdata(GDATA_FLAG_SUB_WHEN_THE_FLAME_BURNS_OUT) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 8100
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 8400 ) {
+							if ( gdata(GDATA_FLAG_SUB_NINE_HEAD_DRAGON) >= 3 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 8400
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 9100 ) {
+							if ( gdata(GDATA_FLAG_SUB_REGULUS_ZANAN) >= 1003 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 9100
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 9200 ) {
+							if ( gdata(GDATA_FLAG_SUB_REGULUS_EULDERNA) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 9200
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 9300 ) {
+							if ( gdata(GDATA_FLAG_SUB_REGULUS_KIKKASU) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 9300
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 9400 ) {
+							if ( gdata(GDATA_FLAG_SUB_REGULUS_MAYROON) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 9400
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 10500 ) {
+							if ( gdata(GDATA_FLAG_SUB_THE_LIFE_IN_THIS_WORLD) >= 2 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 10500
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 10900 ) {
+							if ( gdata(GDATA_FLAG_SUB_BELPHAT_THE_COSMIC_SWORD) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 10900
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 11500 ) {
+							if ( gdata(GDATA_FLAG_MAIN_CHAOS_CRADLE_34) >= 100 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 11500
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 12600 ) {
+							if ( gdata(GDATA_FLAG_TRAINING_COURSE_COMBAT_4) >= 1000 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 12600
+								break
+							}
+						}
+						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 13500 ) {
+							if ( gdata(GDATA_FLAG_SUB_KARURA) >= 1 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 13500
+								break
+							}
+						}
+					loop
+					locvar_dmghp_dmg = 0
+					gdata(GDATA_FLAG_COLLECTED_WISHES)--
+					cdata(CDATA_HP, CHARA_PLAYER) = gdata(GDATA_FLAG_COLLECTED_WISHES)
+				}
+			}
 		}
 	}
 	if ( locvar_dmghp_dmg > cdata(CDATA_HP, dmghp_charid) ) {
@@ -4338,7 +5234,7 @@
 			cdata(CDATA_PIC, dmghp_charid) = xy2pic(26, 7) + COLOR_PURPLE * COLOR_TINT_MULT
 		}
 	}
-	if ( dmghp_source != DAMAGE_FROM_SUICIDE & locvar_dmghp_ele != SKILL_SPACT_DECAPITATION ) {
+	if ( dmghp_source != DAMAGE_FROM_SUICIDE & locvar_dmghp_ele != SKILL_SPACT_DECAPITATION & gdata(GDATA_FLAG_MAIN) != 900 ) {
 		if ( dmghp_charid > MAX_CHARA_FOLLOWER ) {
 			if ( dmghp_source >= DAMAGE_FROM_TRAP ) {
 				if ( dmghp_source <= MAX_CHARA_FOLLOWER ) {
@@ -4405,8 +5301,10 @@
 	}
 	rtdmg = locvar_dmghp_dmg
 	if ( dmghp_charid == CHARA_PLAYER ) {
-		if ( cdata(CDATA_GOD, CHARA_PLAYER) == GOD_OPATOS ) {
-			locvar_dmghp_dmg = locvar_dmghp_dmg * 9 / 10
+		if ( dmghp_source != DAMAGE_FROM_JALDABAOTH ) {
+			if ( cdata(CDATA_GOD, CHARA_PLAYER) == GOD_OPATOS ) {
+				locvar_dmghp_dmg = locvar_dmghp_dmg * 9 / 10
+			}
 		}
 	}
 	cdata(CDATA_HP, dmghp_charid) -= locvar_dmghp_dmg
@@ -4490,6 +5388,11 @@
 			if ( cdata(CDATA_GAUGE_COOLDOWN2, dmghp_charid) == 0 ) {
 				cdata(CDATA_GAUGE_COOLDOWN2, dmghp_charid) = 1
 				cdata(CDATA_POWER_GAUGE, dmghp_charid) += locvar_dmghp_dmg * 150 / cdata(CDATA_MAX_HP, dmghp_charid) + 2
+				if ( cdata(CDATA_ID, dmghp_charid) == CREATURE_ID_TALON_SOLDIER ) {
+					if ( cdata(CDATA_EVOLUTION_STAGE, dmghp_charid) != 0 ) {
+						locvar_dmghp_pgauge(dmghp_charid) += 2
+					}
+				}
 				if ( cdata(CDATA_POWER_GAUGE, dmghp_charid) >= 96 ) {
 					cdata(CDATA_POWER_GAUGE, dmghp_charid) = 96
 				}
@@ -4501,6 +5404,11 @@
 			if ( cdata(CDATA_GAUGE_COOLDOWN2, dmghp_charid) == 0 ) {
 				cdata(CDATA_GAUGE_COOLDOWN2, dmghp_charid) = 1
 				cdata(CDATA_POWER_GAUGE, dmghp_charid) += locvar_dmghp_dmg * 150 / cdata(CDATA_MAX_HP, dmghp_charid) + 2
+				if ( cdata(CDATA_ID, dmghp_charid) == CREATURE_ID_TALON_SOLDIER ) {
+					if ( cdata(CDATA_EVOLUTION_STAGE, dmghp_charid) != 0 ) {
+						locvar_dmghp_pgauge(dmghp_charid) += 2
+					}
+				}
 				if ( cdata(CDATA_POWER_GAUGE, dmghp_charid) >= 196 ) {
 					cdata(CDATA_POWER_GAUGE, dmghp_charid) = 196
 				}
@@ -4512,7 +5420,13 @@
 	}
 	if ( cdata(CDATA_HP, dmghp_charid) < 0 ) {
 		if ( cdata(CDATA_ID, dmghp_charid) == CREATURE_ID_THE_CHAOS_CHILD ) {
-			if ( gdata(GDATA_FLAG_MAIN) < 800 ) {
+			if ( cdata(CDATA_ALLIED, dmghp_charid) == 0 & gdata(GDATA_AREA) == AREA_CHAOS_CRADLE ) {
+				txt lang(name(dmghp_charid) + "は再生した。", name(dmghp_charid) + " " + is(dmghp_charid) + " healed.")
+				cdata(CDATA_HP, dmghp_charid) = cdata(CDATA_MAX_HP, dmghp_charid) / 4
+			}
+		}
+		if ( cdata(CDATA_ID, dmghp_charid) == CREATURE_ID_JALDABAOTH_THE_CHAOS_CHILD ) {
+			if ( cdata(CDATA_ALLIED, dmghp_charid) == 0 & gdata(GDATA_AREA) == AREA_CHAOS_CRADLE & gdata(GDATA_FLAG_MAIN) < 900 ) {
 				txt lang(name(dmghp_charid) + "は再生した。", name(dmghp_charid) + " " + is(dmghp_charid) + " healed.")
 				cdata(CDATA_HP, dmghp_charid) = cdata(CDATA_MAX_HP, dmghp_charid) / 4
 			}
@@ -4769,22 +5683,21 @@
 			if ( locvar_dmghp_ele == SKILL_RES_FIRE | dmghp_source == DAMAGE_FROM_FIRE ) {
 				inv_find ITEM_ID_MAGATAMA, dmghp_source
 				if ( stat == (-1) ) {
-					if ( rnd(3 + (cdata(CDATA_QUALITY, dmghp_charid) >= FIX_QUALITY_MIRACLE) * 2) == 0 ) {
-						cdata(CDATA_CONDITION_WINCE, dmghp_charid) = 3
-						txt lang(name(dmghp_charid) + "は怯んだ。", name(dmghp_charid) + " " + was(dmghp_charid) + " frightened.")
-					}
 					item_fire dmghp_charid, -1
 					locvar_dmghp_maga = 0
 				}
 			}
 			if ( locvar_dmghp_ele == SKILL_RES_COLD ) {
-				if ( rnd(3 + (cdata(CDATA_QUALITY, dmghp_charid) >= FIX_QUALITY_MIRACLE) * 2) == 0 ) {
-					cdata(CDATA_CONDITION_CHILLS, dmghp_charid) = 3
-					txt lang(name(dmghp_charid) + "は縮こまった。", name(dmghp_charid) + " flinches.")
-				}
+				inv_find ITEM_ID_MAGAICE, dmghp_source
+				if ( stat == (-1) ) {
+					item_cold dmghp_charid, -1
+ 				}
+			}
+			if ( locvar_dmghp_ele == SKILL_RES_FIRE ) {
+				dmgcon dmghp_charid, CONDITION_ASH_BODY, rnd(dmghp_power + 1)
 			}
 			if ( locvar_dmghp_ele == SKILL_RES_COLD ) {
-				item_cold dmghp_charid, -1
+				dmgcon dmghp_charid, CONDITION_OVERGODS, rnd(dmghp_power + 1)
 			}
 			if ( locvar_dmghp_ele == SKILL_RES_DARKNESS ) {
 				dmgcon dmghp_charid, CONDITION_BLIND, rnd(dmghp_power + 1)
@@ -4965,7 +5878,7 @@
 		}
 	}
 	if ( gdata(GDATA_TEMPORARY_FLAGS2) == 888 ) {
-		if ( cdata(CDATA_HP, dmghp_charid) - locvar_dmghp_dmg < cdata(CDATA_MAX_HP, dmghp_charid) / 20 | cdata(CDATA_HP, dmghp_charid) == 0 ) {
+		if ( cdata(CDATA_HP, dmghp_charid) <= cdata(CDATA_MAX_HP, dmghp_charid) / 20 | cdata(CDATA_HP, dmghp_charid) == 0 ) {
 			if ( cdata(CDATA_CONDITION_DIM, dmghp_charid) < 100 ) {
 				cdata(CDATA_CONDITION_DIM, dmghp_charid) = 100
 				txtef COLOR_YELLOW
@@ -5088,6 +6001,18 @@
 				txt lang(name(dmghp_charid) + "は罠にかかって死んだ。", name(dmghp_charid) + " " + is(dmghp_charid) + " caught in a trap and die" + _s(dmghp_charid) + ".")
 				if ( dmghp_charid == CHARA_PLAYER ) {
 					ndeathcause = lang("罠にかかって死んだ。", "got caught in a trap and died")
+				}
+			}
+			if ( dmghp_source == DAMAGE_FROM_JALDABAOTH_SHIELDED ) {
+				txt lang(cdatan(CDATAN_NAME, dmghp_charid) + "はあなたを庇って灰になった。", cdatan(CDATAN_NAME, dmghp_charid) + " shielded you and turned to ashes.")
+				if ( dmghp_charid == CHARA_PLAYER ) {
+					ndeathcause = lang("灰になって崩れ落ちた。", "turned to ashes and collapsed")
+				}
+			}
+			if ( dmghp_source == DAMAGE_FROM_JALDABAOTH ) {
+				txt lang(name(dmghp_charid) + "は灰になって崩れ落ちた。", name(dmghp_charid) + " turned to ashes and collapsed.")
+				if ( dmghp_charid == CHARA_PLAYER ) {
+					ndeathcause = lang("灰になって崩れ落ちた。", "turned to ashes and collapsed")
 				}
 			}
 			if ( dmghp_source == DAMAGE_FROM_OVERCAST ) {
@@ -5316,6 +6241,21 @@
 				}
 			}
 		}
+		if ( dmghp_charid == CHARA_PLAYER | (cdata(CDATA_ID, dmghp_charid) == CREATURE_ID_STRAY_SOUL & cdata(CDATA_QUALITY, dmghp_charid) == FIX_QUALITY_UNIQUE) ) {
+			if ( gdata(GDATA_AREA) == AREA_AMUR_CAGE & gdata(GDATA_LEVEL) >= 10 ) {
+				soullimit = 0
+				if ( dmghp_charid == CHARA_PLAYER ) {
+					if ( soulstage >= 2 ) {
+						soulstage = 0
+						chara_vanquish findallyguard(CREATURE_ID_STRAY_SOUL)
+					}
+				}
+				gdata(GDATA_FLAG_SUB_AMURDAD) += 9
+				txt lang("ネヘルタード「もう駄目…残念…」", "You failed the quest.")
+				msg_halt
+				evadd EVENT_AMURDEAD_SUB_CREATE_STAIRS, 0
+			}
+		}
 		if ( dmghp_charid == CHARA_PLAYER ) {
 			gdata(GDATA_DEATH)++
 		}
@@ -5329,8 +6269,7 @@
 			locvar_dmghp_exp = limit(cdata(CDATA_LEVEL, dmghp_charid), 1, 400) * limit(cdata(CDATA_LEVEL, dmghp_charid) + 1, 1, 400) * limit(cdata(CDATA_LEVEL, dmghp_charid) + 2, 1, 400) / 10 + 8
 			if ( dmghp_source == DAMAGE_FROM_CHARA ) {
 				if ( cdata(CDATA_LEVEL, dmghp_charid) < cdata(CDATA_LEVEL, dmghp_source) ) {
-					locvar_dmghp_exp *= 1 / 100
-					locvar_dmghp_exp += 10
+					locvar_dmghp_exp = locvar_dmghp_exp / 100 + 10
 				}
 			}
 			if ( dmghp_source == DAMAGE_FROM_CHARA ) {
@@ -5748,6 +6687,20 @@
 								gdata(GDATA_FLAG_MAIN_CHAOS_CRADLE_30)++
 							}
 						}
+						if ( cdata(CDATA_ID, dmghp_charid) == CREATURE_ID_ORPHE_THE_CHAOS_DISCPLE ) {
+							if ( gdata(GDATA_FLAG_MAIN) == 855 ) {
+								if ( gdata(GDATA_AREA) == AREA_CHAOS_CRADLE ) {
+									evadd EVENT_CHAOS_CRADLE_NUKE_2
+								}
+							}
+						}
+						if ( cdata(CDATA_ID, dmghp_charid) == CREATURE_ID_JALDABAOTH_THE_CHAOS_CHILD ) {
+							if ( gdata(GDATA_FLAG_MAIN) == 900 ) {
+								if ( gdata(GDATA_AREA) == AREA_CHAOS_CRADLE ) {
+									evadd EVENT_CHAOS_CRADLE_SPAWN_JALDABAOTH
+								}
+							}
+						}
 						if ( cdata(CDATA_ID, dmghp_charid) == CREATURE_ID_BELL_OF_EMERGENCY ) {
 							txtef COLOR_RED
 							txt lang("けたたましい警報が鳴り響いた！", "*beeeeeep!* An alarm sounds loudly!")
@@ -6018,8 +6971,8 @@
 
 #deffunc dmgmp int dmgmp_charid, int dmgmp_arg2
 	cdata(CDATA_MP, dmgmp_charid) -= dmgmp_arg2
-	if ( cdata(CDATA_MP, dmgmp_charid) < (-999999) ) {
-		cdata(CDATA_MP, dmgmp_charid) = -999999
+	if ( cdata(CDATA_MP, dmgmp_charid) < (-99999) ) {
+		cdata(CDATA_MP, dmgmp_charid) = -99999
 	}
 	if ( cdata(CDATA_MP, dmgmp_charid) < 0 ) {
 		r1 = dmgmp_charid
@@ -6311,6 +7264,28 @@
 			addbuff eatstatus_arg2, BUFF_LUCK, 100, 500 + rnd(500)
 		}
 		healsan eatstatus_arg2, 2
+	}
+	return
+
+#deffunc eatstatusfood int eatstatusfood_itemidx, int eatstatusfood_charaidx
+	if ( cdata(CDATA_EXIST, eatstatusfood_charaidx) != CHAR_STATE_ALIVE ) {
+		return
+	}
+	if ( eatstatusfood_itemidx <= (-1) ) {
+		cdata(CDATA_HUNGER, eatstatusfood_charaidx) -= 1500
+		if ( synccheck(eatstatusfood_charaidx, -1) ) {
+			txt lang(name(eatstatusfood_charaidx) + "は嫌な感じがした。", name(eatstatusfood_charaidx) + " feel" + _s(eatstatusfood_charaidx) + " bad.")
+		}
+		chara_vomit eatstatusfood_charaidx
+	}
+	if ( eatstatusfood_itemidx >= 1 ) {
+		if ( synccheck(eatstatusfood_charaidx, -1) ) {
+			txt lang(name(eatstatusfood_charaidx) + "は良い予感がした。", name(eatstatusfood_charaidx) + " feel" + _s(eatstatusfood_charaidx) + " good.")
+		}
+		if ( rnd(5) == 0 ) {
+			addbuff eatstatusfood_charaidx, BUFF_LUCK, 200, 700 + rnd(300)
+		}
+		healsan eatstatusfood_charaidx, 3
 	}
 	return
 
