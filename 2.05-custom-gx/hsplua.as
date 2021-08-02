@@ -34,6 +34,8 @@
 #cmd hl_newmetatable            0x25
 #cmd hl_error                   0x28
 #cmd hl_pushdim                 0x29
+#cmd hl_pushhspvalue            0x2A
+#cmd hl_settop                  0x2B
 #cmd hl_isboolean               0x80
 #cmd hl_iscfunction             0x81
 #cmd hl_isfunction              0x82
@@ -61,3 +63,8 @@
 #cmd hl_dofile                  0x9C
 #cmd hl_dostring                0x9D
 #cmd hl_seekvar                 0x9E
+#cmd hl_checknumber             0x9F
+#cmd hl_checkinteger            0xA0
+#cmd hl_checkstring             0xA1
+#cmd hl_checklstring            0xA2
+#cmd hl_isinteger               0xA3

@@ -3923,6 +3923,8 @@
 
     buff = strmid(buff, 0, strlen(buff) - 2)
 
+    noteadd "> " + buff
+
     ret = hl_dostring("return " + buff)
     if ( ret == 1 ) {
         e = hl_tostring(-1)
@@ -3935,23 +3937,21 @@
     if ( ret == 1 ) {
         s = "*** Lua Error: " + hl_tostring(-1)
     } else {
-        s = "> " + hl_tolstring(-1)
+        retvals = hl_gettop()
+        s = ""
+        repeat retvals
+            s += "" + (cnt + 1) + ") " + hl_tolstring(cnt + 1) + "\n"
+        loop
     }
 
-    hl_pop
+    hl_settop 0
 
-    notesel s
-    p = noteinfo(0)
+    sdim lines
+	split s, "\n", lines
+	repeat stat
+		noteadd lines(cnt)
+	loop
 
-    l = ""
-    repeat p
-        noteget l, cnt
-        notesel dbm
-        noteadd l
-        notesel s
-    loop
-
-    notesel dbm
 	goto *console_write
 
 *dbg_ShowHelp
@@ -3984,10 +3984,20 @@
     noteadd "\tmapinfo\t\tShows map info."
     goto *console_write
 
+#define EM_LINESCROLL $B6	//任意の方向にスクロール
+#define EM_GETLINECOUNT $BA	//行数の取得
+
 *console_write
 	noteadd ""
 	objprm 1, dbm
 	objprm 2, ""
+
+    // Scroll to the bottom
+	hMesbox = objinfo(1, 2)
+	sendmsg hMesbox,EM_GETLINECOUNT, 0, 0
+	line_end = stat
+	sendmsg hMesbox,EM_LINESCROLL, 0, line_end
+
 	return
 
 *mutexobj
