@@ -875,7 +875,7 @@
 	ensci = 0
 	return
 
-*label_5854
+*start_writing
 	if ( cdata(CDATA_ROW_ACT, cc) == ACTION_NONE ) {
 		if ( synccheck(cc, -1) ) {
 			txt lang(name(cc) + "は執筆を始めた。", name(cc) + " start" + _s(cc) + " writing.")
@@ -1821,7 +1821,7 @@
 		}
 		return
 	}
-	if ( cdata(CDATA_ACTION_PERIOD, cc) > 0 & gdata(GDATA_TIME_STOP_TIME) == 0 & gdata((663 /*!!!@[GDATA_FLAG_STOP_TIME_2 @@@ GDATA_FLAG_STOP_TIME_OTHER]@!!! */)) == 0 ) {
+	if ( cdata(CDATA_ACTION_PERIOD, cc) > 0 & gdata(GDATA_TIME_STOP_TIME) == 0 & gdata(GDATA_FLAG_STOP_TIME_OTHER) == 0 ) {
 		repeat 245
 			if ( cdata(CDATA_EXIST, cnt) != CHAR_STATE_ALIVE ) {
 				continue
@@ -2034,7 +2034,7 @@
 		}
 		return
 	}
-	if ( cdata(CDATA_ACTION_PERIOD, cc) > 0 & gdata(GDATA_TIME_STOP_TIME) == 0 & gdata((663 /*!!!@[GDATA_FLAG_STOP_TIME_2 @@@ GDATA_FLAG_STOP_TIME_OTHER]@!!! */)) == 0 ) {
+	if ( cdata(CDATA_ACTION_PERIOD, cc) > 0 & gdata(GDATA_TIME_STOP_TIME) == 0 & gdata(GDATA_FLAG_STOP_TIME_OTHER) == 0 ) {
 		repeat 245
 			if ( cdata(CDATA_EXIST, cnt) != CHAR_STATE_ALIVE ) {
 				continue
@@ -2238,7 +2238,7 @@
 		}
 		return
 	}
-	if ( cdata(CDATA_ACTION_PERIOD, cc) > 0 & gdata(GDATA_TIME_STOP_TIME) == 0 & gdata((663 /*!!!@[GDATA_FLAG_STOP_TIME_2 @@@ GDATA_FLAG_STOP_TIME_OTHER]@!!! */)) == 0 ) {
+	if ( cdata(CDATA_ACTION_PERIOD, cc) > 0 & gdata(GDATA_TIME_STOP_TIME) == 0 & gdata(GDATA_FLAG_STOP_TIME_OTHER) == 0 ) {
 		repeat 245
 			if ( cdata(CDATA_EXIST, cnt) != CHAR_STATE_ALIVE ) {
 				continue
@@ -2466,7 +2466,7 @@
 		}
 		return
 	}
-	if ( cdata(CDATA_ACTION_PERIOD, cc) > 0 & gdata(GDATA_TIME_STOP_TIME) == 0 & gdata((663 /*!!!@[GDATA_FLAG_STOP_TIME_2 @@@ GDATA_FLAG_STOP_TIME_OTHER]@!!! */)) == 0 ) {
+	if ( cdata(CDATA_ACTION_PERIOD, cc) > 0 & gdata(GDATA_TIME_STOP_TIME) == 0 & gdata(GDATA_FLAG_STOP_TIME_OTHER) == 0 ) {
 		repeat 245
 			if ( cdata(CDATA_EXIST, cnt) != CHAR_STATE_ALIVE ) {
 				continue
@@ -2694,7 +2694,7 @@
 		}
 		return
 	}
-	if ( cdata(CDATA_ACTION_PERIOD, cc) > 0 & gdata(GDATA_TIME_STOP_TIME) == 0 & gdata((663 /*!!!@[GDATA_FLAG_STOP_TIME_2 @@@ GDATA_FLAG_STOP_TIME_OTHER]@!!! */)) == 0 ) {
+	if ( cdata(CDATA_ACTION_PERIOD, cc) > 0 & gdata(GDATA_TIME_STOP_TIME) == 0 & gdata(GDATA_FLAG_STOP_TIME_OTHER) == 0 ) {
 		repeat 245
 			if ( cdata(CDATA_EXIST, cnt) != CHAR_STATE_ALIVE ) {
 				continue
@@ -10488,7 +10488,7 @@
 	}
 	if ( _switch_val == 716 | _switch_sw ) {
 		_switch_sw = 0
-		if ( gdata(GDATA_TIME_STOP_TIME) > 0 | gdata((663 /*!!!@[GDATA_FLAG_STOP_TIME_2 @@@ GDATA_FLAG_STOP_TIME_OTHER]@!!! */)) > 0 ) {
+		if ( gdata(GDATA_TIME_STOP_TIME) > 0 | gdata(GDATA_FLAG_STOP_TIME_OTHER) > 0 ) {
 			txtef COLOR_SKY_BLUE
 			txt lang("時は既に止まっている。", "Time is already stopped.")
 			goto *effect_end
@@ -14816,7 +14816,7 @@
 						}
 						redraw 0
 						gosub *screen_draw
-						gosub *label_3827
+						gosub *screen_fade
 						gsel BUFFER_BUF
 						pos 0, 0
 						picload exedir + "graphic\\face1" + devfile + ".bmp", 1
@@ -15145,7 +15145,7 @@
 			snd SOUNDLIST_CARD1
 			redraw 0
 			gosub *screen_draw
-			gosub *label_3827
+			gosub *screen_fade
 			gsel BUFFER_BUF
 			pos 0, 0
 			picload exedir + "graphic\\face1" + devfile + ".bmp", 1

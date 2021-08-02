@@ -10004,10 +10004,10 @@
 				continue
 			}
 			if ( inv(INV_ITEM_ID, cnt) == ITEM_ID_TRAINING_MACHINE ) {
-				inv(INV_ITEM_EFFECT, cnt) = 9
+				inv(INV_ITEM_EFFECT, cnt) = EFFECT_TRAIN
 			}
 			if ( inv(INV_ITEM_ID, cnt) == ITEM_ID_CARD ) {
-				inv(INV_ITEM_EFFECT, cnt) = 38
+				inv(INV_ITEM_EFFECT, cnt) = EFFECT_CARD
 			}
 			if ( inv(INV_ITEM_ID, cnt) >= MAX_ITEM_DBID | inv(INV_ITEM_ID, cnt) < ITEM_ID_DUMMY ) {
 				dialog "Invalid Item Id found. Item No:" + cnt + ", Id:" + inv(INV_ITEM_ID, cnt) + " has been removed from your inventory."
@@ -10127,7 +10127,7 @@
 				}
 			}
 			if ( invctrl == INVCTRL_USE ) {
-				if ( inv(INV_ITEM_EFFECT, cnt) == 0 & refitem(inv(INV_ITEM_ID, cnt), DBSPEC_ITEM_CAN_USE) == FALSE & ibit(ITEM_BIT_ALIVE, cnt) == FALSE & ibit(ITEM_BIT_ULTIMATE, cnt) == FALSE & refitem(inv(INV_ITEM_ID, cnt), DBSPEC_ITEM_TYPE) != FILTER_ITEM_POTION ) {
+				if ( inv(INV_ITEM_EFFECT, cnt) == EFFECT_NONE & refitem(inv(INV_ITEM_ID, cnt), DBSPEC_ITEM_CAN_USE) == FALSE & ibit(ITEM_BIT_ALIVE, cnt) == FALSE & ibit(ITEM_BIT_ULTIMATE, cnt) == FALSE & refitem(inv(INV_ITEM_ID, cnt), DBSPEC_ITEM_TYPE) != FILTER_ITEM_POTION ) {
 					continue
 				}
 			}

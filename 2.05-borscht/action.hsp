@@ -3874,7 +3874,7 @@
 				if ( gdata(GDATA_TEMPORARY_FLAGS3) == 0 ) {
 					if ( gdata(GDATA_TEMPORARY_FLAGS2) == 0 ) {
 						if ( attackrange != 0 ) {
-							if ( cdata(CDATA_CONDITION_DIM, tc) < 60 & cdata(CDATA_CONDITION_SLEEP, tc) == 0 & cdata(CDATA_CONDITION_PARALYZE, tc) == 0 & cdata(CDATA_CONDITION_BLIND, tc) == 0 & gdata(GDATA_TIME_STOP_TIME) == 0 & gdata((663 /*!!!@[GDATA_FLAG_STOP_TIME_2 @@@ GDATA_FLAG_STOP_TIME_OTHER]@!!! */)) == 0 ) {
+							if ( cdata(CDATA_CONDITION_DIM, tc) < 60 & cdata(CDATA_CONDITION_SLEEP, tc) == 0 & cdata(CDATA_CONDITION_PARALYZE, tc) == 0 & cdata(CDATA_CONDITION_BLIND, tc) == 0 & gdata(GDATA_TIME_STOP_TIME) == 0 & gdata(GDATA_FLAG_STOP_TIME_OTHER) == 0 ) {
 								if ( synccheck(cc, -1) ) {
 									txtef COLOR_PURPLE
 									txt lang(name(tc) + "は反射的に先制射撃を行った。" + name(cc) + "は怯んだ。", name(cc) + " " + is(cc) + " stuck by several thorns.")
@@ -5279,7 +5279,7 @@
 		}
 	}
 	if ( adata(ADATA_WAKEUP_NEFIA, gdata(GDATA_AREA)) == 103 ) {
-		if ( gdata(GDATA_TIME_STOP_TIME) == 0 & gdata((663 /*!!!@[GDATA_FLAG_STOP_TIME_2 @@@ GDATA_FLAG_STOP_TIME_OTHER]@!!! */)) == 0 ) {
+		if ( gdata(GDATA_TIME_STOP_TIME) == 0 & gdata(GDATA_FLAG_STOP_TIME_OTHER) == 0 ) {
 			if ( rnd(50) == 0 ) {
 				txtef COLOR_SKY_BLUE
 				txt lang(name(cc) + "以外の時が止まった。", name(cc) + " stop" + _s(cc) + " time.")
@@ -5340,7 +5340,7 @@
 			continue
 		}
 		if ( enc == 40 ) {
-			if ( gdata(GDATA_TIME_STOP_TIME) == 0 & gdata((663 /*!!!@[GDATA_FLAG_STOP_TIME_2 @@@ GDATA_FLAG_STOP_TIME_OTHER]@!!! */)) == 0 ) {
+			if ( gdata(GDATA_TIME_STOP_TIME) == 0 & gdata(GDATA_FLAG_STOP_TIME_OTHER) == 0 ) {
 				if ( rnd(25) == 0 ) {
 					snd SOUNDLIST_CHEST1
 					animeload 42, cc
@@ -5354,7 +5354,7 @@
 			}
 		}
 		if ( enc == 77 ) {
-			if ( gdata(GDATA_TIME_STOP_TIME) == 0 & gdata((663 /*!!!@[GDATA_FLAG_STOP_TIME_2 @@@ GDATA_FLAG_STOP_TIME_OTHER]@!!! */)) == 0 ) {
+			if ( gdata(GDATA_TIME_STOP_TIME) == 0 & gdata(GDATA_FLAG_STOP_TIME_OTHER) == 0 ) {
 				if ( rnd(30) == 0 ) {
 					snd SOUNDLIST_CHEST1
 					animeload 42, cc
@@ -5456,7 +5456,7 @@
 		}
 	loop
 	if ( ammoproc == ENCHANT_AMMO_TIME_STOP ) {
-		if ( gdata(GDATA_TIME_STOP_TIME) == 0 & gdata((663 /*!!!@[GDATA_FLAG_STOP_TIME_2 @@@ GDATA_FLAG_STOP_TIME_OTHER]@!!! */)) == 0 ) {
+		if ( gdata(GDATA_TIME_STOP_TIME) == 0 & gdata(GDATA_FLAG_STOP_TIME_OTHER) == 0 ) {
 			snd SOUNDLIST_CHEST1
 			animeload 42, cc
 			txtef COLOR_SKY_BLUE
@@ -6061,7 +6061,7 @@
 		gosub *com_txtadv
 		goto *turn_end
 	}
-	if ( inv(INV_ITEM_EFFECT, ci) == 1 | inv(INV_ITEM_EFFECT, ci) == 2 | inv(INV_ITEM_EFFECT, ci) == 3 | inv(INV_ITEM_EFFECT, ci) == 4 ) {
+	if ( inv(INV_ITEM_EFFECT, ci) == EFFECT_CARPENTRY | inv(INV_ITEM_EFFECT, ci) == EFFECT_ALCHEMY | inv(INV_ITEM_EFFECT, ci) == EFFECT_JEWELER | inv(INV_ITEM_EFFECT, ci) == EFFECT_TAILOR ) {
 		prodtype = inv(INV_ITEM_EFFECT, ci)
 		snd SOUNDLIST_POP2
 		invctrl = 0
@@ -7191,7 +7191,7 @@
 			}
 			snd SOUNDLIST_ATK_FIRE
 			animeload 20, 0
-			gosub *label_5854
+			gosub *start_writing
 			txt lang("何かが足元に転がってきた。", "Something is put on the ground.")
 			goto *act_use_SWEND1
 		}
@@ -7219,7 +7219,7 @@
 				gosub *calcBurdenPc
 				redraw 0
 				gosub *screen_draw
-				gosub *label_3827
+				gosub *screen_fade
 				gsel BUFFER_BUF
 				pos 0, 0
 				picload exedir + "graphic\\face1" + devfile + ".bmp", 1

@@ -7311,7 +7311,7 @@
 		}
 		if ( cdata(CDATA_ROW_ACT, cc) == ACTION_WRITING ) {
 			at 40
-			gosub *label_5854
+			gosub *start_writing
 		}
 		if ( cdata(CDATA_ROW_ACT, cc) == ACTION_TRAVEL ) {
 			gosub *travel
@@ -7428,7 +7428,7 @@
 	if ( gdata(GDATA_TIME_STOP_TIME) > 0 ) {
 		gdata(GDATA_TIME_STOP_TIME)--
 		if ( cdata(CDATA_EXIST, cc) != CHAR_STATE_ALIVE | gdata(GDATA_TIME_STOP_TIME) == 0 ) {
-			if ( gdata((663 /*!!!@[GDATA_FLAG_STOP_TIME_2 @@@ GDATA_FLAG_STOP_TIME_OTHER]@!!! */)) == 0 ) {
+			if ( gdata(GDATA_FLAG_STOP_TIME_OTHER) == 0 ) {
 				snd SOUNDLIST_ATK_DARK
 				animeload 42, cc
 				txtef COLOR_SKY_BLUE
@@ -7466,17 +7466,17 @@
 				}
 			loop
 			if ( gdata(GDATA_FLAG_STOP_TIME_OTHER_CHARA_INDEX) != 0 ) {
-				if ( gdata((663 /*!!!@[GDATA_FLAG_STOP_TIME_2 @@@ GDATA_FLAG_STOP_TIME_OTHER]@!!! */)) == 0 ) {
-					gdata((663 /*!!!@[GDATA_FLAG_STOP_TIME_2 @@@ GDATA_FLAG_STOP_TIME_OTHER]@!!! */)) = gdata(GDATA_TIME_STOP_TIME) + 1
+				if ( gdata(GDATA_FLAG_STOP_TIME_OTHER) == 0 ) {
+					gdata(GDATA_FLAG_STOP_TIME_OTHER) = gdata(GDATA_TIME_STOP_TIME) + 1
 				}
 			}
 			goto *game_main_redo
 		}
 	}
-	if ( gdata((663 /*!!!@[GDATA_FLAG_STOP_TIME_2 @@@ GDATA_FLAG_STOP_TIME_OTHER]@!!! */)) > 0 ) {
+	if ( gdata(GDATA_FLAG_STOP_TIME_OTHER) > 0 ) {
 		if ( cc == gdata(GDATA_FLAG_STOP_TIME_OTHER_CHARA_INDEX) & cc != CHARA_PLAYER ) {
-			gdata((663 /*!!!@[GDATA_FLAG_STOP_TIME_2 @@@ GDATA_FLAG_STOP_TIME_OTHER]@!!! */))--
-			if ( cdata(CDATA_EXIST, cc) != CHAR_STATE_ALIVE | gdata((663 /*!!!@[GDATA_FLAG_STOP_TIME_2 @@@ GDATA_FLAG_STOP_TIME_OTHER]@!!! */)) == 0 ) {
+			gdata(GDATA_FLAG_STOP_TIME_OTHER)--
+			if ( cdata(CDATA_EXIST, cc) != CHAR_STATE_ALIVE | gdata(GDATA_FLAG_STOP_TIME_OTHER) == 0 ) {
 				snd SOUNDLIST_ATK_DARK
 				animeload 42, cc
 				txtef COLOR_SKY_BLUE
@@ -8028,7 +8028,7 @@
 			if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_ITEM_TYPE) == FILTER_FURNITURE_ALTAR ) {
 				p = 3, cnt
 			}
-			if ( inv(INV_ITEM_EFFECT, cnt) != 0 | refitem(inv(INV_ITEM_ID, cnt), DBSPEC_ITEM_CAN_USE) != FALSE ) {
+			if ( inv(INV_ITEM_EFFECT, cnt) != EFFECT_NONE | refitem(inv(INV_ITEM_ID, cnt), DBSPEC_ITEM_CAN_USE) != FALSE ) {
 				p = 4
 			}
 			if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_ITEM_CAN_READ) != FALSE ) {
@@ -10892,7 +10892,7 @@
 		gosub *re_select
 		redraw 0
 		gosub *screen_draw
-		gosub *label_3827
+		gosub *screen_fade
 		gsel BUFFER_BUF
 		pos 0, 0
 		picload exedir + "graphic\\face1" + devfile + ".bmp", 1
@@ -12699,7 +12699,7 @@
 				if ( inv(INV_ITEM_NUM, cnt) == 0 ) {
 					continue
 				}
-				if ( inv(INV_ITEM_EFFECT, cnt) != 44 ) {
+				if ( inv(INV_ITEM_EFFECT, cnt) != EFFECT_CHAIR ) {
 					continue
 				}
 				if ( c == tc ) {

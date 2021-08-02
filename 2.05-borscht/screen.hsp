@@ -7023,7 +7023,7 @@
 	gcopy BUFFER_INF, 688 + sx(1), 528 + sy(1), raderw, raderh
 	return
 
-*screen_fade
+*screen_fadeIn2
 	gsel BUFFER_BUF
 	gmode 0
 	pos 0, 0
@@ -7051,7 +7051,7 @@
 	gmode 2
 	return
 
-*label_3824
+*screen_fadeIn3
 	gsel BUFFER_BUF
 	gmode 0
 	pos 0, 0
@@ -7079,7 +7079,7 @@
 	gmode 2
 	return
 
-*label_3827
+*screen_fade
 	gsel BUFFER_BUF
 	gmode 0
 	pos 0, 0
@@ -7911,7 +7911,7 @@
 	if ( calcattackhit_arg1 == 2 ) {
 		return evade
 	}
-	if ( gdata(GDATA_TIME_STOP_TIME) > 0 | gdata((663 /*!!!@[GDATA_FLAG_STOP_TIME_2 @@@ GDATA_FLAG_STOP_TIME_OTHER]@!!! */)) > 0 ) {
+	if ( gdata(GDATA_TIME_STOP_TIME) > 0 | gdata(GDATA_FLAG_STOP_TIME_OTHER) > 0 ) {
 		if ( inv(INV_ITEM_ID, cw) == ITEM_ID_KALPA_HAND ) {
 			critical = 1
 		}
