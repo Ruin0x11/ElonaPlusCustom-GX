@@ -40,7 +40,7 @@
 	return
 
 *fixSave
-	if ( gdata(GDATA_VERSION) != int(double("3.21") * 1000) ) {
+	if ( gdata(GDATA_VERSION) != int(double(VERSION) * 1000) ) {
 		dialog lang("Ver." + gdata(GDATA_VERSION) + "のセーブデータをアップデートします。", "Updating your save data from Ver." + gdata(GDATA_VERSION) + " now.")
 	}
 	if ( gdata(GDATA_HEIR_DEED) < 0 ) {
@@ -659,11 +659,11 @@
 	if ( gdata(GDATA_VERSION) < 3180 ) {
 		kamen6 = 100
 	}
-	if ( gdata(GDATA_VERSION) != int(double("3.21") * 1000) ) {
+	if ( gdata(GDATA_VERSION) != int(double(VERSION) * 1000) ) {
 		gdata(GDATA_WORLD_RENEW) = 1
 	}
 	del_chara MAX_CHARA_NC
-	if ( gdata(GDATA_VERSION) > int(double("3.21") * 1000) ) {
+	if ( gdata(GDATA_VERSION) > int(double(VERSION) * 1000) ) {
 		dialog "invalid version"
 		goto *exit_game
 	}
@@ -733,7 +733,7 @@
 			snd SOUNDLIST_ENC
 		}
 	}
-	gdata(GDATA_VERSION) = int(double("3.21") * 1000)
+	gdata(GDATA_VERSION) = int(double(VERSION) * 1000)
 	cbitmod CHARA_BIT_PCC, 0, 1
 	gdata(GDATA_SPEEDSUM_RESET) = 1
 	gosub *initial_recipe
@@ -1404,11 +1404,11 @@
 			}
 			if ( cnt == 5 ) {
 				file += "kitem.s1"
-				fsize = 14388
+				fsize = 17988
 			}
 			if ( cnt == 6 ) {
 				file += "knpc.s1"
-				fsize = 9592
+				fsize = 11992
 			}
 			if ( cnt == 7 ) {
 				file += "adata.s1"
@@ -1436,7 +1436,7 @@
 			}
 			if ( cnt == 13 ) {
 				file += "card.s1"
-				fsize = 16000
+				fsize = 24000
 			}
 			if ( cnt == 14 ) {
 				file += "krecipe.s1"
@@ -1784,7 +1784,7 @@
 			}
 			if ( cnt == 7 ) {
 				file += "g_card.s1"
-				fsize = 16000
+				fsize = 24000
 			}
 			if ( cnt == 8 ) {
 				file += "g_genetemp.s1"
@@ -2337,7 +2337,7 @@
 		if ( fmode == 24 ) {
 			fread = 1
 		}
-		fsize = 4000
+		fsize = 6000
 		if ( fread == 0 ) {
 			zOpen hgz, file, 1, 3
 			fileadd "" + file
@@ -3164,7 +3164,7 @@
 		pos x + 4, y + 4
 		gfini dx - 1, 35
 		gfdec 60, 60, 60
-		aplsel "ElonaPlus Custom-GX 2.05.1"
+		aplsel VARIANT_NAME
 		if ( stat == 1 ) {
 			dialog "Failed to get WINDOW ID", 1
 			clrobj 1
@@ -3518,7 +3518,7 @@
 	notesel dbm
 	buff = ""
 	if ( dbm == "" ) {
-		noteadd "ElonaPlus Custom-GX 2.05.1" + " v" + "3.21" + " Debug Console    Type \"?\" for help. Hit ESC to exit."
+		noteadd VARIANT_NAME + " v" + VERSION + " Debug Console    Type \"?\" for help. Hit ESC to exit."
 		noteadd ""
 	}
 	font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
@@ -4002,7 +4002,7 @@
 	return
 
 *mutexobj
-	CreateMutexA 0, 0, "ElonaPlus Custom-GX 2.05.1"
+	CreateMutexA 0, 0, VARIANT_NAME
 	mutex_handle = stat
 	_GetLastError
 	if ( stat == 183 ) {
