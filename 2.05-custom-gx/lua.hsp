@@ -382,18 +382,23 @@
     if hl_gettop() >= 2 & hl_isinteger(2) {
         x = hl_tointeger(2)
     } else {
-        x = -1
+        x = cdata(CDATA_X, CHARA_PLAYER)
     }
     if hl_gettop() >= 3 & hl_isinteger(3) {
         y = hl_tointeger(3)
     } else {
-        y = -1
+        y = cdata(CDATA_Y, CHARA_PLAYER)
     }
     if hl_gettop() >= 4 & hl_isinteger(4) {
         amount = hl_tointeger(4)
     } else {
-        amount = -1
+        amount = 0
     }
-    itemcreate -1, dbid, x, y, amount
+    if hl_gettop() >= 5 & hl_isinteger(5) {
+        rc = hl_tointeger(5)
+    } else {
+        rc = -1
+    }
+    itemcreate rc, dbid, x, y, amount
     hl_pushinteger(ci)
     return 1

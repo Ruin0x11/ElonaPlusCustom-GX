@@ -562,106 +562,123 @@
 	return
 
 *recipe_init
-	dim rpdata, 100, 1599
+	dim rpdata, 100, MAX_RPDATA
 	sdim rfnameorg, 20, 2, MAX_RF - EXT_RF
-	sdim rpdatan, 40, 1599
+	sdim rpdatan, 40, MAX_RPDATA
 	dim rpref, 100
+
 	rpid = STARTING_RPID
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("がらくた錬成", "junk make")
+	rpdatan(rpid) = lang("がらくた錬成", "create junk")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_WORTHLESS_FAKE_GOLD_BAR, 1
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 1
 	rpdata(RPDATA_MAT + 0, rpid) = RF_ANY, RF_ANY, RF_ANY, RF_ANY
+
 	rpid++
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("不等価交換", "Inexpensive exchange")
+	rpdatan(rpid) = lang("不等価交換", "inequivalent exchange")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_GOLD_PIECE, 10
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 18, SKILL_NORMAL_NEGOTIATION, 10
 	rpdata(RPDATA_MAT + 0, rpid) = RF_ANY, RF_ANY, RF_ANY, RF_ANY, RF_ANY
+
 	rpid++
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("蒸留", "distillation")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_BOTTLE_WATER, 30 + 1 * 10000
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_MAGIC_DEVICE, 6
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_WOOD_CHIP, ITEM_ID_ROD_FIRE_WALL, ITEM_ID_POTION_SALT_SOLUTION
+
 	rpid++
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("瞬間発酵", "instant ale")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_BOTTLE_CRIM_ALE, 5
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 2
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_CRIMBERRY
+
 	rpid++
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("抗体結晶", "cure crystal")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_CURE_CRYSTAL, 15
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 10
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_POTION_CURE_CORRUPTION, ITEM_ID_EARTH_CRYSTAL
+
 	rpid++
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("有害ポーション", "harmful potion")
+	rpdatan(rpid) = lang("有害ポーション", "antidote")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_POISON, 20
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_GENE_ENGINEER, 3, SKILL_NORMAL_ALCHEMY, 12
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_SCROLL_CURSE, ITEM_ID_BOTTLE_DIRTY_WATER
+
 	rpid++
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("消毒薬", "disinfectant")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_DISINFECTANT, 1
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_GENE_ENGINEER, 8, SKILL_NORMAL_MAGIC_DEVICE, 4
 	rpdata(RPDATA_MAT + 0, rpid) = RF_ALE, RF_DISINFECTANT
+
 	rpid++
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("精油抽出", "essential oil")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_ESSENTIAL_OIL, 30
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 15
 	rpdata(RPDATA_MAT + 0, rpid) = RF_FRUIT, RF_ALE
+
 	rpid++
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("古の薬", "ancient medicine")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_POTION_WISDOM, 50 + 1 * 10000
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 35, SKILL_ATTR_LER, 50
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_SCROLL_KNOWLEDGE, ITEM_ID_POTION_HERO, ITEM_ID_POTION_CONCENTRATION, ITEM_ID_POTION_GEM
+
 	rpid++
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("手作りボール", "ball making")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_MONSTER_BALL, 50
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_CARPENTRY, 20
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_API_NUT, ITEM_ID_4D_MIRROR, FILTER_CONTAINER
+
 	rpid++
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("誰かの日記", "mysterious diary")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_MYSTERIOUS_DIARY, 10
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_LITERACY, 10
 	rpdata(RPDATA_MAT + 0, rpid) = RF_DIARY, FILTER_ITEM_BOOK
+
 	rpid++
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("生体復元（未実装）", "biological restoration (unimplemented)")
 	rpdata(RPDATA_ITEM, rpid) = RECIPE_BLEND_ACTION_BIOLOGICAL_RESTORATION, 50 + 4 * 10000
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 35, SKILL_NORMAL_GENE_ENGINEER, 30
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_MYSTERIOUS_FOSSIL, ITEM_ID_BOOK_RESURRECTION
+
 	rpid++
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("錆取り", "rust removal")
 	rpdata(RPDATA_ITEM, rpid) = RECIPE_BLEND_ACTION_ACID_PROOF, 60, 1
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 10
 	rpdata(RPDATA_MAT + 0, rpid) = RF_ANY, ITEM_ID_LEMON, ITEM_ID_ACIDPROOF_LIQUID
+
 	rpid++
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("硫酸", "sulfuric")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_BOTTLE_SULFURIC, 10
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 5
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_SULFUR, ITEM_ID_BOTTLE_DIRTY_WATER
+
 	rpid++
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("自家製火炎瓶", "homemade molotov")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_MOLOTOV, 5
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_CARPENTRY, 5
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_GASOLINE, ITEM_ID_LOT_EMPTY_BOTTLES
+
 	rpid++
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("撒き餌", "ground bait")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_GROUND_BAIT, 10
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_FISHING, 6
 	rpdata(RPDATA_MAT + 0, rpid) = FILTER_ITEM_FOOD, ITEM_ID_DEAD_FISH, RF_BAIT
+
 	rpid++
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("にぎりプチ", "putitoro")
@@ -669,12 +686,14 @@
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_COOKING, 20, SKILL_NORMAL_GENE_ENGINEER, 5
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_CORPSE, RF_FISH
 	rpdata(RPDATA_MAT_EXT + 0, rpid) = 10000 + 3
+
 	rpid++
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("パンつくり", "puff puff bread")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_PUFF_PUFF_BREAD, 30
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_COOKING, 20, SKILL_NORMAL_ALCHEMY, 5
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_PANTY, ITEM_ID_SACK_FLOUR
+
 	rpid++
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("マンドラサラダ", "mandrake salad")
@@ -682,6 +701,7 @@
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_COOKING, 20, SKILL_NORMAL_GARDENING, 5
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_CORPSE, RF_VEGE
 	rpdata(RPDATA_MAT_EXT + 0, rpid) = 10000 + 19
+
 	rpid++
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("特製の肉まん", "steamed meat bun")
@@ -689,270 +709,321 @@
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_COOKING, 20, SKILL_NORMAL_ANATOMY, 5
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_CORPSE, ITEM_ID_SACK_FLOUR
 	rpdata(RPDATA_MAT_EXT + 0, rpid) = 10000 + 251
+
 	rpid++
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("性転換の儀", "sex change")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_FORBIDDEN_MEAT, 30
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_GENE_ENGINEER, 15, SKILL_NORMAL_ALCHEMY, 15
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_SPELLBOOK_MUTATION, ITEM_ID_CORPSE, ITEM_ID_BOOK_RESURRECTION
+
 	rpid++
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("謎の種", "unknown seed")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_UNKNOWN_SEED, 10
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_GARDENING, 20
 	rpdata(RPDATA_MAT + 0, rpid) = FILTER_ITEM_FOOD, FILTER_ITEM_FOOD, RF_SEED, RF_SEED
+
 	rpid++
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("ハーブ調合", "herb in")
+	rpdatan(rpid) = lang("ハーブ調合", "herb infusion")
 	rpdata(RPDATA_ITEM, rpid) = RECIPE_BLEND_ACTION_HERBED_FOOD, 60, 1
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_GARDENING, 20, SKILL_NORMAL_COOKING, 30
 	rpdata(RPDATA_MAT + 0, rpid) = FILTER_ITEM_FOOD, ITEM_ID_STOMAFILLIA, ITEM_ID_CURARIA, RF_HERB
+
 	rpid++
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("進化の側枝", "another evolution")
 	rpdata(RPDATA_ITEM, rpid) = RECIPE_BLEND_ACTION_ANOTHER_HEART, 30, 1
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 30
 	rpdata(RPDATA_MAT + 0, rpid) = RF_EVITEM, ITEM_ID_SPELLBOOK_MUTATION
+
 	rpid++
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("友情の証", "friendship token")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_TOKEN_FRIENDSHIP, 30
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_TAILORING, 20, SKILL_NORMAL_JEWELER, 20, SKILL_NORMAL_CARPENTRY, 20, SKILL_NORMAL_ALCHEMY, 20
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_SMALL_MEDAL, ITEM_ID_MATERIAL_BOX, ITEM_ID_SCROLL_GAIN_MATERIAL
+
 	rpid++
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("ネクロマンシー", "necromancy")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_COFFIN_OF_NECROMANCY, 20 + 1 * 10000
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ANATOMY, 10, SKILL_NORMAL_ALCHEMY, 10
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_MANA_CRYSTAL, FILTER_REMAINS, RF_COFFIN
+
 	rpid++
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("ネクロチューニング", "necro remodel")
 	rpdata(RPDATA_ITEM, rpid) = RECIPE_BLEND_ACTION_NECRO_REMODEL, 20, 1
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ANATOMY, 20, SKILL_NORMAL_ALCHEMY, 20
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_COFFIN_OF_NECROMANCY, FILTER_REMAINS
+
+	rpid++
+	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
+	rpdatan(rpid) = lang("魔統合", "dark fusion")
+	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_CRIMSON_DARK_ORB, 15
+	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_DISARM_TRAP, 10, SKILL_NORMAL_JEWELER, 5
+	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_DEVIL_FRAGMENT, ITEM_ID_DEVIL_FRAGMENT, ITEM_ID_DEVIL_FRAGMENT, ITEM_ID_DEVIL_FRAGMENT, ITEM_ID_DEVIL_FRAGMENT
+
 	rpid++
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("ルビナス細工", "brilliant rubynus")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_BRILLIANT_RUBYNUS, 10
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 10, SKILL_NORMAL_JEWELER, 10
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_RAW_RUBYNUS_ORE, ITEM_ID_RAW_RUBYNUS_ORE, ITEM_ID_RAW_RUBYNUS_ORE, ITEM_ID_RAW_RUBYNUS_ORE, ITEM_ID_RAW_RUBYNUS_ORE
+
 	rpid++
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("エメラルド細工", "emerald tablet")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_TABLET_EMERALD, 10
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 15, SKILL_NORMAL_JEWELER, 20
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_RAW_EMERALD_ORE, ITEM_ID_RAW_EMERALD_ORE, ITEM_ID_RAW_EMERALD_ORE, ITEM_ID_RAW_EMERALD_ORE, ITEM_ID_RAW_EMERALD_ORE
+
 	rpid++
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("ダイヤモンド細工", "brilliant diamond")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_BRILLIANT_DIAMOND, 10
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 20, SKILL_NORMAL_JEWELER, 30
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_RAW_DIAMOND_ORE, ITEM_ID_RAW_DIAMOND_ORE, ITEM_ID_RAW_DIAMOND_ORE, ITEM_ID_RAW_DIAMOND_ORE, ITEM_ID_RAW_DIAMOND_ORE
+
 	rpid++
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("木の加工", "wood craft")
 	rpdata(RPDATA_ITEM, rpid) = RECIPE_BLEND_ACTION_WOODCRAFT, 100
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 2, SKILL_NORMAL_CARPENTRY, 2
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_CARPENTERS_TOOL, ITEM_ID_WOOD_MATERIAL, ITEM_ID_WOOD_CHIP
+
 	rpid++
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("石の加工", "stone craft")
 	rpdata(RPDATA_ITEM, rpid) = RECIPE_BLEND_ACTION_STONECRAFT, 100
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 2, SKILL_NORMAL_JEWELER, 2
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_GEM_CUTTER, ITEM_ID_STONE_MATERIAL, ITEM_ID_STONE
+
 	rpid++
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("焼き物", "clay craft")
 	rpdata(RPDATA_ITEM, rpid) = RECIPE_BLEND_ACTION_POTTERY, 100
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 2, SKILL_NORMAL_SENSE_QUALITY, 2, SKILL_ATTR_DEX, 40
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_STOVE, ITEM_ID_CLAY, ITEM_ID_BROKEN_VASE
+
 	rpid++
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("クラフトマイン", "craft mine")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_MINE, 25
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_CARPENTRY, 10, SKILL_NORMAL_DISARM_TRAP, 15
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_SULFUR, ITEM_ID_EARTH_CRYSTAL, FILTER_CONTAINER
+
 	rpid++
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("たる爆弾", "barrel bomb")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_BOMB_BARREL, 25 + 1 * 10000
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_DISARM_TRAP, 20, SKILL_NORMAL_GENE_ENGINEER, 20
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_GASOLINE, ITEM_ID_BOTTLE_SULFURIC, ITEM_ID_ORGANIC_FERTILIZER, RF_BARREL
+
 	rpid++
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("魔力爆弾", "crystal bomb")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_MAGISTUS, 10
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 4, SKILL_NORMAL_CONTROL_MAGIC, 4
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_MANA_CRYSTAL, ITEM_ID_GARBAGE
+
 	rpid++
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("すごい魔力爆弾", "big crystal bomb")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_TRISMAGISTUS, 50
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 60, SKILL_NORMAL_CONTROL_MAGIC, 30
 	rpdata(RPDATA_MAT + 0, rpid) = RF_MAGI, RF_MAGI, RF_MAGI, ITEM_ID_MAGATAMA
+
 	rpid++
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("魔剣転生", "evil sword")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_SKULL_SWORD, 20 + 1 * 10000
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ANATOMY, 2, SKILL_NORMAL_ALCHEMY, 6
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_BROKEN_SWORD, ITEM_ID_BONE_FRAGMENT
+
 	rpid++
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("真・魔剣転生", "true evil sword")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_VIOLENT_SKULL_SWORD, 30 + 1 * 10000
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ANATOMY, 30, SKILL_NORMAL_ALCHEMY, 45
 	rpdata(RPDATA_MAT + 0, rpid) = RF_MAKENN, RF_MAKENN, ITEM_ID_ORE_PIECE
+
 	rpid++
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("空の大型バスケット", "large empty basket")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_LARGE_EMPTY_BASKET, 30 + 1 * 10000
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_TAILORING, 30
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_EMPTY_BASKET, ITEM_ID_EMPTY_BASKET, ITEM_ID_EMPTY_BASKET
+
 	rpid++
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("ピクニックバスケット", "large picnic basket")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_LARGE_PICNIC_BASKET, 30
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_COOKING, 30
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_CORPSE, RF_FISH, RF_BREAD, ITEM_ID_EGG, RF_VEGE, RF_FRUIT, ITEM_ID_LARGE_EMPTY_BASKET
+
 	rpid++
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("ファーストエイド", "first aid kit")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_FIRST_AID_KIT, 20
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_TAILORING, 1
 	rpdata(RPDATA_MAT + 0, rpid) = RF_LEAF, ITEM_ID_BOTTLE_WHISKY, ITEM_ID_WASHINGS
+
 	rpid++
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("特殊矢弾箱", "special ammo box")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_SPECIAL_AMMO_BOX, 40 + 2 * 10000
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_CARPENTRY, 10, SKILL_NORMAL_JEWELER, 20
 	rpdata(RPDATA_MAT + 0, rpid) = FILTER_AMMO, FILTER_AMMO, FILTER_AMMO, ITEM_ID_BLACK_CRYSTAL, FILTER_CONTAINER
+
 	rpid++
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("戦術核", "tactical nuke")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_ATOMIC_LAUNCHER, 60 + 3 * 10000
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_DISARM_TRAP, 10, SKILL_NORMAL_CARPENTRY, 40, SKILL_NORMAL_ALCHEMY, 20
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_PANZERFAUST_X, ITEM_ID_NUCLEAR_BOMB
+
 	rpid++
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("煙草加工", "tobacco processing")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_CIGARETTE, 30
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_CARPENTRY, 7, SKILL_NORMAL_GARDENING, 12
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_TOBACCO, ITEM_ID_HEALTHY_LEAF, ITEM_ID_WOOD_CHIP
+
 	rpid++
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("にぎりめし", "onigiri")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_RICE_BALL, 10
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_COOKING, 1, SKILL_NORMAL_ALCHEMY, 1
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_RICE
+
 	rpid++
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("こだわりコーヒー", "coffee")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_COFFEE, 20
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_COOKING, 5, SKILL_NORMAL_ALCHEMY, 5
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_COFFEE_BEANS
+
 	rpid++
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("喫茶", "tea")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_GREEN_TEA, 30
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_GARDENING, 10, SKILL_NORMAL_ALCHEMY, 5
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_TEA_LEAF
+
 	rpid++
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("麦加工", "barley and wheat")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_SACK_FLOUR, 30
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_COOKING, 10, SKILL_NORMAL_ALCHEMY, 10
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_BANNOU_MUGI
+
 	rpid++
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("乳製品", "dairy products")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_CHEESE, 20 + 2 * 10000
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_GENE_ENGINEER, 10, SKILL_NORMAL_COOKING, 15
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_BOTTLE_MILK, ITEM_ID_BROKEN_VASE
+
 	rpid++
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("発酵凝固", "fermentation coagulation")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_TOFU, 30 + 1 * 10000
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_GARDENING, 18, SKILL_NORMAL_COOKING, 18
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_SOYBEAN
+
 	rpid++
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("配合飼料", "mix feed")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_LIVESTOCK_FEED, 15
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_GENE_ENGINEER, 7, SKILL_NORMAL_ANATOMY, 7
 	rpdata(RPDATA_MAT + 0, rpid) = FILTER_ITEM_FOOD, FILTER_REMAINS
+
 	rpid++
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("ジャンクフード", "junk food")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_CYBER_SNACK, 20 + 1 * 10000
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_GENE_ENGINEER, 20
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_CORN, ITEM_ID_POTATO
+
 	rpid++
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("ハンバーガー", "hamburger")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_HAMBURGER, 5
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_COOKING, 35
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_SACK_FLOUR, ITEM_ID_CORPSE, ITEM_ID_CHEESE
+
 	rpid++
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("鏡開き", "kagami biraki")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_OZOUNI, 10
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_COOKING, 25
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_KAGAMI_MOCHI
+
 	rpid++
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("肉詰め蘇生", "Meat-filling resuscitation")
 	rpdata(RPDATA_ITEM, rpid) = RECIPE_BLEND_ACTION_MEAT_FILLING, 50, 1
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_GENE_ENGINEER, 25, SKILL_NORMAL_MAGIC_DEVICE, 30
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_CORPSE, ITEM_ID_FIGURINE, ITEM_ID_ROD_LIFE
+
 	rpid++
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("素敵な花束", "lovely bouquet")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_LOVELY_BOUQUET, 20
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_ATTR_WIL, 40, SKILL_NORMAL_GARDENING, 10
 	rpdata(RPDATA_MAT + 0, rpid) = RF_FLOWER, RF_FLOWER, RF_FLOWER, RF_FLOWER, RF_FLOWER
+
 	rpid++
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("ログハウス", "log house")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_DEED, 50 + 12 * 10000
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_ATTR_CON, 50, SKILL_NORMAL_CARPENTRY, 50
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_WOOD_MATERIAL, ITEM_ID_WOOD_MATERIAL, ITEM_ID_WOOD_MATERIAL, ITEM_ID_WOOD_MATERIAL, ITEM_ID_WOOD_MATERIAL
+
 	rpid++
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("柔武具改修", "Soft equip update")
 	rpdata(RPDATA_ITEM, rpid) = RECIPE_BLEND_ACTION_SOFT_EQUIP_UPDATE, 50, 1
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 25, SKILL_NORMAL_TAILORING, 35
 	rpdata(RPDATA_MAT + 0, rpid) = RF_SOFT, ITEM_ID_SOFT_MATERIUM, RF_EVITEM
+
 	rpid++
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("剛武具改修", "Hard equip update")
 	rpdata(RPDATA_ITEM, rpid) = RECIPE_BLEND_ACTION_HARD_EQUIP_UPDATE, 50, 1
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 25, SKILL_NORMAL_JEWELER, 35
 	rpdata(RPDATA_MAT + 0, rpid) = RF_METAL, ITEM_ID_HARD_MATERIUM, RF_EVITEM
+
 	rpid++
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("鋭武具改修", "Sharp equip update")
 	rpdata(RPDATA_ITEM, rpid) = RECIPE_BLEND_ACTION_SHARP_EQUIP_UPDATE, 50, 1
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 25, SKILL_NORMAL_CARPENTRY, 35
 	rpdata(RPDATA_MAT + 0, rpid) = RF_SHARP, ITEM_ID_SHARP_MATERIUM, RF_EVITEM
+
 	rpid++
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("柔武具の作成", "Soft equip making")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_SOFT_HIGH_MATERIUM, 80 + 3 * 10000
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 55, SKILL_NORMAL_TAILORING, 60
-	rpdata(RPDATA_MAT + 0, rpid) = RF_SOFT, ITEM_ID_SOFT_MATERIUM, ITEM_ID_SOFT_HIGH_MATERIUM, ITEM_ID_STARDUST
+	rpdata(RPDATA_MAT + 0, rpid) = RF_SOFT, ITEM_ID_SOFT_MATERIUM, ITEM_ID_SOFT_HIGH_MATERIUM, RF_STAR
+
 	rpid++
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("剛武具の作成", "Hard equip making")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_HARD_HIGH_MATERIUM, 80 + 3 * 10000
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 55, SKILL_NORMAL_JEWELER, 60
-	rpdata(RPDATA_MAT + 0, rpid) = RF_METAL, ITEM_ID_HARD_MATERIUM, ITEM_ID_HARD_HIGH_MATERIUM, ITEM_ID_STARDUST
+	rpdata(RPDATA_MAT + 0, rpid) = RF_METAL, ITEM_ID_HARD_MATERIUM, ITEM_ID_HARD_HIGH_MATERIUM, RF_STAR
+
 	rpid++
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("鋭武具の作成", "Sharp equip making")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_SHARP_HIGH_MATERIUM, 80 + 3 * 10000
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 55, SKILL_NORMAL_CARPENTRY, 60
-	rpdata(RPDATA_MAT + 0, rpid) = RF_SHARP, ITEM_ID_SHARP_MATERIUM, ITEM_ID_SHARP_HIGH_MATERIUM, ITEM_ID_STARDUST
+	rpdata(RPDATA_MAT + 0, rpid) = RF_SHARP, ITEM_ID_SHARP_MATERIUM, ITEM_ID_SHARP_HIGH_MATERIUM, RF_STAR
 
 	rpid = ITEM_ID_POTION_DISASTER + EXT_RP
 	rplistshop(length(rplistshop)) = 30 * EXT_RECIPES + rpid
@@ -960,36 +1031,42 @@
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 20, SKILL_NORMAL_MAGIC_DEVICE, 50
 	rpdata(RPDATA_EQ + 0, rpid) = 0
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_CARAMEL_OF_TERMINATION, RF_POISON
+
 	rpid = ITEM_ID_POTION_AQUA_SANCTIO + EXT_RP
 	rplistshop(length(rplistshop)) = 30 * EXT_RECIPES + rpid
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_POTION_AQUA_SANCTIO, 90 + 6 * 10000
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 30, SKILL_WEAPON_THROWING, 50
 	rpdata(RPDATA_EQ + 0, rpid) = 0
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_BOTTLE_SULFURIC, ITEM_ID_MAGISTUS
+
 	rpid = ITEM_ID_POTION_SOMA + EXT_RP
 	rplistshop(length(rplistshop)) = 30 * EXT_RECIPES + rpid
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_POTION_SOMA, 120 + 10 * 10000
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 40, SKILL_NORMAL_GARDENING, 50
 	rpdata(RPDATA_EQ + 0, rpid) = 0
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_POTION_HEALER, ITEM_ID_BOTTLE_CRIM_ALE, ITEM_ID_RAINBOW_FRUIT
+
 	rpid = ITEM_ID_POTION_NEKTAR + EXT_RP
 	rplistshop(length(rplistshop)) = 30 * EXT_RECIPES + rpid
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_POTION_NEKTAR, 240 + 12 * 10000
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 50, SKILL_NORMAL_COOKING, 40
 	rpdata(RPDATA_EQ + 0, rpid) = 0
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_POTION_VITALITY, ITEM_ID_BOTTLE_WHISKY, ITEM_ID_TREE_FRUIT
+
 	rpid = ITEM_ID_PHILOSOPHERS_STONE_MASK + EXT_RP
 	rplistshop(length(rplistshop)) = 30 * EXT_RECIPES + rpid
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_PHILOSOPHERS_STONE_MASK, 30 + 10 * 10000
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 50, SKILL_ATTR_MAG, 150
 	rpdata(RPDATA_EQ + 0, rpid) = 0
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_POTION_MUTATION, RF_EVITEM
+
 	rpid = ITEM_ID_DRUG_KISERU + EXT_RP
 	rplistshop(length(rplistshop)) = 30 * EXT_RECIPES + rpid
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_DRUG_KISERU, 20 + 1 * 10000
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 22, SKILL_NORMAL_JEWELER, 40
 	rpdata(RPDATA_EQ + 0, rpid) = 0
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_CRIMBERRY, ITEM_ID_KISERU, ITEM_ID_EARTH_CRYSTAL
+
 	rfnameorg(RFNAMEORG_ID, RF_FLAVOR - EXT_RF) = "flavor", lang("適当な調味料", "suitable flavoring")
 	rfnameorg(RFNAMEORG_ID, RF_ORE - EXT_RF) = "ore", lang("適当な鉱石", "any ore")
 	rfnameorg(RFNAMEORG_ID, RF_WOOD - EXT_RF) = "wood", lang("木材を含む何か", "something made of wood")
@@ -1006,6 +1083,7 @@
 	rfnameorg(RFNAMEORG_ID, RF_ALE - EXT_RF) = "ale", lang("適当なアルコール", "any alcohol")
 	rfnameorg(RFNAMEORG_ID, RF_MAGI - EXT_RF) = "magi", lang("魔力爆弾", "any crystal bomb")
 	rfnameorg(RFNAMEORG_ID, RF_MAKENN - EXT_RF) = "makenn", lang("暴魔剣", "any evil sword")
+	rfnameorg(RFNAMEORG_ID, RF_STAR - EXT_RF) = "star", lang("スターダストなど", "stardust etc.")
 	rfnameorg(RFNAMEORG_ID, RF_FLOWER - EXT_RF) = "hana", lang("適当な花", "any flower")
 	rfnameorg(RFNAMEORG_ID, RF_BONE - EXT_RF) = "bone", lang("適当な頭の骨", "any head bone")
 	rfnameorg(RFNAMEORG_ID, RF_METAL - EXT_RF) = "metal", lang("適当な剛武具", "any hard equip")
@@ -1016,6 +1094,7 @@
 	rfnameorg(RFNAMEORG_ID, RF_BARREL - EXT_RF) = "taru", lang("適当なタル", "any barrel")
 	rfnameorg(RFNAMEORG_ID, RF_LEAF - EXT_RF) = "kusuri", lang("薬草類", "any healthy leaf")
 	rfnameorg(RFNAMEORG_ID, RF_DISINFECTANT - EXT_RF) = "holy", lang("適当な浄化アイテム", "any holy item")
+
 	return
 
 *com_blend
@@ -1080,7 +1159,7 @@
 	if ( step == (-1) ) {
 		rppage = 0, 0
 		listmax = 0
-		repeat 1599
+		repeat MAX_RPDATA
 			if ( rpdata(RPDATA_ITEM, cnt) == 0 ) {
 				continue
 			}
@@ -1128,10 +1207,9 @@
 	color 0
 	boxf 0, 960, chipi(CHIPI_WIDTH, xy2pic(22, 16)), chipi(CHIPI_HEIGHT, xy2pic(22, 16)) + 960
 	pos 0, 960
-	gcopy 1, chipi(CHIPI_X, xy2pic(22, 16)), chipi(CHIPI_Y, xy2pic(22, 16)), chipi(CHIPI_WIDTH, xy2pic(22, 16)), chipi(CHIPI_HEIGHT, xy2pic(22, 16))
-	gfini chipi(CHIPI_WIDTH, xy2pic(22, 16)), chipi(CHIPI_HEIGHT, xy2pic(22, 16))
-	gfdec2 c_col(0, 0), c_col(1, 0), c_col(2, 0)
-	gsel selcur
+
+    preparePicItem 550, 0
+
 	repeat pagesize
 		p = pagesize * page + cnt
 		if ( p >= listmax ) {
@@ -1278,46 +1356,9 @@
 		if ( inv(INV_ITEM_PIC, p) >= COLOR_TINT_MULT ) {
 			p(1) = inv(INV_ITEM_PIC, p)
 		}
-		gsel 1
-		color 0
-		boxf 0, 960, chipi(CHIPI_WIDTH, p(1)), chipi(CHIPI_HEIGHT, p(1)) + 960
-		if ( p(1) == xy2pic(0, 16) ) {
-			gmode 2
-			pos 0, 960
-			gcopy 1, 0, 768, inf_tiles, inf_tiles
-			pos 0, 1008
-			gzoom 22, 20, 5, chipc(CHIPC_X, inv(INV_ITEM_COL, p)) + 8, chipc(CHIPC_Y, inv(INV_ITEM_COL, p)) + 4 + (chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, p)) > inf_tiles) * 8, chipc(CHIPC_WIDTH, inv(INV_ITEM_COL, p)) - 16, chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, p)) - 8 - (chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, p)) > inf_tiles) * 10, 1
-			pos 6, 974
-			gcopy 1, 0, 1008, 22, 20
-			gsel selcur
-		}
-		else {
-			if ( p(1) == xy2pic(30, 33) ) {
-				pos 8, 1058 - chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, p))
-				gcopy 5, chipc(CHIPC_X, inv(INV_ITEM_COL, p)) + 8, chipc(CHIPC_Y, inv(INV_ITEM_COL, p)) + 2, chipc(CHIPC_WIDTH, inv(INV_ITEM_COL, p)), chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, p))
-				gmode 2
-				gsel selcur
-			}
-			else {
-				if ( p(1) == xy2pic(3, 16) ) {
-					pos 8, 1058 - chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, p))
-					gcopy 5, chipc(CHIPC_X, inv(INV_ITEM_COL, p)) + 8, chipc(CHIPC_Y, inv(INV_ITEM_COL, p)) + 2, chipc(CHIPC_WIDTH, inv(INV_ITEM_COL, p)) - 16, chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, p)) - 8
-					gmode 4, , , 150
-					color 0, 0, 0
-					pos 0, 960 + (chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, p)) == inf_tiles) * 48
-					gcopy 1, 144, 768 + (chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, p)) > inf_tiles) * 48, inf_tiles, chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, p)) + (chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, p)) > inf_tiles) * 48
-					gmode 2
-					gsel selcur
-				}
-				else {
-					pos 0, 960
-					gcopy 1, chipi(CHIPI_X, p(1)), chipi(CHIPI_Y, p(1)), chipi(CHIPI_WIDTH, p(1)), chipi(CHIPI_HEIGHT, p(1))
-					gfini chipi(CHIPI_WIDTH, p(1)), chipi(CHIPI_HEIGHT, p(1))
-					gfdec2 c_col(0, inv(INV_ITEM_COL, p)), c_col(1, inv(INV_ITEM_COL, p)), c_col(2, inv(INV_ITEM_COL, p))
-					gsel selcur
-				}
-			}
-		}
+
+        preparePicItem p(1), inv(INV_ITEM_COL, p)
+
 		pos wx + 37, wy + 69 + cnt * 19
 		gmode 2, chipi(CHIPI_WIDTH, p(1)), chipi(CHIPI_HEIGHT, p(1))
 		grotate 1, 0, 960, 0, chipi(CHIPI_WIDTH, p(1)) * inf_tiles / chipi(CHIPI_HEIGHT, p(1)), inf_tiles
@@ -1666,6 +1707,19 @@
 				}
 			}
 			autosave = 1 * (gdata(GDATA_AREA) != AREA_SHOW_HOUSE)
+		}
+		if ( rpdata(RPDATA_ITEM, rpid) == ITEM_ID_GROUND_BAIT ) {
+			flt
+			itemcreate -1, ITEM_ID_GROUND_BAIT, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 5
+			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+			item_identify ci, ITEM_KNOWN_FULL
+
+			/********** RUIN0X11 CUSTOM - BEGINNING **********/
+
+			item_stack -1, ci
+
+			/********** RUIN0X11 CUSTOM - ENDING **********/
+
 		}
 		if ( rpdata(RPDATA_ITEM, rpid) == ITEM_ID_BOTTLE_SULFURIC ) {
 			flt
@@ -2058,12 +2112,38 @@
 			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
 			skillexp SKILL_NORMAL_ALCHEMY, CHARA_PLAYER, 600
 		}
+		if ( rpdata(RPDATA_ITEM, rpid) == ITEM_ID_CRIMSON_DARK_ORB ) {
+			necrop = rnd(5)
+			if ( sdata(SKILL_NORMAL_DISARM_TRAP, CHARA_PLAYER) < 40 ) {
+				necrop = rnd(4)
+			}
+			if ( sdata(SKILL_NORMAL_DISARM_TRAP, CHARA_PLAYER) < 30 ) {
+				necrop = rnd(3)
+			}
+			if ( sdata(SKILL_NORMAL_DISARM_TRAP, CHARA_PLAYER) < 20 ) {
+				necrop = rnd(2)
+			}
+			item_stack CHARA_PLAYER, ci
+			flt
+			itemcreate -1, 1194 + rnd(3), cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
+			inv(INV_ITEM_PARAM1, ci) = necrop
+			item_identify ci, ITEM_KNOWN_FULL
+			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+
+			/********** RUIN0X11 CUSTOM - BEGINNING **********/
+
+			item_stack -1, ci
+
+			/********** RUIN0X11 CUSTOM - ENDING **********/
+
+		}
 		if ( rpdata(RPDATA_ITEM, rpid) == ITEM_ID_MONSTER_BALL ) {
-			picp = limit((gdata(GDATA_DEEPEST_LEVEL) + 10) * 2 / 3, 1, 140)
+			picp = (gdata(GDATA_DEEPEST_LEVEL) + 10) * 2 / 3
+			katis = limit(picp, 1, 200)
 			flt
 			itemcreate -1, ITEM_ID_MONSTER_BALL, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
 			inv(INV_ITEM_PARAM2, ci) = picp
-			inv(INV_ITEM_VALUE, ci) = 2000 + inv(INV_ITEM_PARAM2, ci) * inv(INV_ITEM_PARAM2, ci) + inv(INV_ITEM_PARAM2, ci) * 10
+			inv(INV_ITEM_VALUE, ci) = 2000 + katis * katis + katis * 100
 			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
 			item_identify ci, ITEM_KNOWN_FULL
 
@@ -2239,7 +2319,7 @@
 			/********** BLOODYSHADE CUSTOM - ENDING **********/
 
 		}
-		if ( rpdata(RPDATA_ITEM, rpid) != ITEM_ID_BOTTLE_CRIM_ALE & rpdata(RPDATA_ITEM, rpid) != ITEM_ID_COFFIN_OF_NECROMANCY & rpdata(RPDATA_ITEM, rpid) != ITEM_ID_SKULL_SWORD & rpdata(RPDATA_ITEM, rpid) != ITEM_ID_VIOLENT_SKULL_SWORD & rpdata(RPDATA_ITEM, rpid) != ITEM_ID_MAGISTUS & rpdata(RPDATA_ITEM, rpid) != ITEM_ID_TRISMAGISTUS & rpdata(RPDATA_ITEM, rpid) != ITEM_ID_BOMB_BARREL & rpdata(RPDATA_ITEM, rpid) != ITEM_ID_LARGE_PICNIC_BASKET & rpdata(RPDATA_ITEM, rpid) != ITEM_ID_MONSTER_BALL & rpdata(RPDATA_ITEM, rpid) != ITEM_ID_CIGARETTE & rpdata(RPDATA_ITEM, rpid) != ITEM_ID_CURE_CRYSTAL & rpdata(RPDATA_ITEM, rpid) != ITEM_ID_SACK_FLOUR & rpdata(RPDATA_ITEM, rpid) != ITEM_ID_RICE_BALL & rpdata(RPDATA_ITEM, rpid) != ITEM_ID_COFFEE & rpdata(RPDATA_ITEM, rpid) != ITEM_ID_GREEN_TEA & rpdata(RPDATA_ITEM, rpid) != ITEM_ID_LIVESTOCK_FEED & rpdata(RPDATA_ITEM, rpid) != ITEM_ID_CHEESE & rpdata(RPDATA_ITEM, rpid) != ITEM_ID_TOFU & rpdata(RPDATA_ITEM, rpid) != ITEM_ID_WORTHLESS_FAKE_GOLD_BAR & rpdata(RPDATA_ITEM, rpid) != ITEM_ID_CYBER_SNACK & rpdata(RPDATA_ITEM, rpid) != ITEM_ID_OZOUNI & rpdata(RPDATA_ITEM, rpid) != ITEM_ID_HAMBURGER & rpdata(RPDATA_ITEM, rpid) != ITEM_ID_SOFT_HIGH_MATERIUM & rpdata(RPDATA_ITEM, rpid) != ITEM_ID_HARD_HIGH_MATERIUM & rpdata(RPDATA_ITEM, rpid) != ITEM_ID_SHARP_HIGH_MATERIUM & rpdata(RPDATA_ITEM, rpid) != ITEM_ID_GOLD_PIECE & rpdata(RPDATA_ITEM, rpid) != ITEM_ID_POISON & rpdata(RPDATA_ITEM, rpid) != ITEM_ID_DEED & rpdata(RPDATA_ITEM, rpid) != ITEM_ID_MOLOTOV & rpdata(RPDATA_ITEM, rpid) != ITEM_ID_BOTTLE_SULFURIC ) {
+		if ( rpdata(RPDATA_ITEM, rpid) != ITEM_ID_BOTTLE_CRIM_ALE & rpdata(RPDATA_ITEM, rpid) != ITEM_ID_COFFIN_OF_NECROMANCY & rpdata(RPDATA_ITEM, rpid) != ITEM_ID_SKULL_SWORD & rpdata(RPDATA_ITEM, rpid) != ITEM_ID_VIOLENT_SKULL_SWORD & rpdata(RPDATA_ITEM, rpid) != ITEM_ID_MAGISTUS & rpdata(RPDATA_ITEM, rpid) != ITEM_ID_TRISMAGISTUS & rpdata(RPDATA_ITEM, rpid) != ITEM_ID_BOMB_BARREL & rpdata(RPDATA_ITEM, rpid) != ITEM_ID_LARGE_PICNIC_BASKET & rpdata(RPDATA_ITEM, rpid) != ITEM_ID_MONSTER_BALL & rpdata(RPDATA_ITEM, rpid) != ITEM_ID_CIGARETTE & rpdata(RPDATA_ITEM, rpid) != ITEM_ID_CURE_CRYSTAL & rpdata(RPDATA_ITEM, rpid) != ITEM_ID_SACK_FLOUR & rpdata(RPDATA_ITEM, rpid) != ITEM_ID_RICE_BALL & rpdata(RPDATA_ITEM, rpid) != ITEM_ID_COFFEE & rpdata(RPDATA_ITEM, rpid) != ITEM_ID_GREEN_TEA & rpdata(RPDATA_ITEM, rpid) != ITEM_ID_LIVESTOCK_FEED & rpdata(RPDATA_ITEM, rpid) != ITEM_ID_CHEESE & rpdata(RPDATA_ITEM, rpid) != ITEM_ID_TOFU & rpdata(RPDATA_ITEM, rpid) != ITEM_ID_WORTHLESS_FAKE_GOLD_BAR & rpdata(RPDATA_ITEM, rpid) != ITEM_ID_CYBER_SNACK & rpdata(RPDATA_ITEM, rpid) != ITEM_ID_OZOUNI & rpdata(RPDATA_ITEM, rpid) != ITEM_ID_HAMBURGER & rpdata(RPDATA_ITEM, rpid) != ITEM_ID_SOFT_HIGH_MATERIUM & rpdata(RPDATA_ITEM, rpid) != ITEM_ID_HARD_HIGH_MATERIUM & rpdata(RPDATA_ITEM, rpid) != ITEM_ID_SHARP_HIGH_MATERIUM & rpdata(RPDATA_ITEM, rpid) != ITEM_ID_GOLD_PIECE & rpdata(RPDATA_ITEM, rpid) != ITEM_ID_POISON & rpdata(RPDATA_ITEM, rpid) != ITEM_ID_DEED & rpdata(RPDATA_ITEM, rpid) != ITEM_ID_MOLOTOV & rpdata(RPDATA_ITEM, rpid) != ITEM_ID_BOTTLE_SULFURIC & rpdata(RPDATA_ITEM, rpid) != ITEM_ID_GROUND_BAIT ) {
 			flt
 			nostack = 1
 			itemcreate -1, rpdata(RPDATA_ITEM, rpid), cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0

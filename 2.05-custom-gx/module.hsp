@@ -940,56 +940,56 @@
 	return
 
 #deffunc preparePicItem int ich, int cch
-    gsel BUF_ITEM
-
+    gsel BUFFER_ITEM
     color 0 
     boxf 0,960,chipi(CHIPI_WIDTH, ich),chipi(CHIPI_HEIGHT, ich)+960
 
 	if ich=528 { ; Cards
         gmode 2
         pos 0,960
-        gcopy BUF_ITEM,0,768,tileS,tileS
+        gcopy BUFFER_ITEM,0,768,inf_tiles,inf_tiles
         pos 0,1008
-        gzoom 22,20,BUF_CHR,chipc(CHIPC_X, cch)+8,chipc(CHIPC_Y, cch)+4+(chipc(CHIPC_HEIGHT, cch)>tileS)*8,chipc(CHIPC_WIDTH, cch)-16,chipc(CHIPC_HEIGHT, cch)-8-(chipc(CHIPC_HEIGHT, cch)>tileS)*10,1
+        gzoom 22,20,BUFFER_CHR,chipc(CHIPC_X, cch)+8,chipc(CHIPC_Y, cch)+4+(chipc(CHIPC_HEIGHT, cch)>inf_tiles)*8,chipc(CHIPC_WIDTH, cch)-16,chipc(CHIPC_HEIGHT, cch)-8-(chipc(CHIPC_HEIGHT, cch)>inf_tiles)*10,1
         pos 6,974
-        gcopy BUF_ITEM,0,1008,22,20
-        gsel BUF_CUR
+        gcopy BUFFER_ITEM,0,1008,22,20
+        gsel BUFFER_CUR
         return
     }
 
-    if ich=531 { ; Figures
+    if ich=531 { ; Figurines
         pos 8,1058-chipc(CHIPC_HEIGHT, cch)
-        gcopy BUF_CHR,chipc(CHIPC_X, cch)+8,chipc(CHIPC_Y, cch)+2,chipc(CHIPC_WIDTH, cch)-16,chipc(CHIPC_HEIGHT, cch)-8
+        gcopy BUFFER_CHR,chipc(CHIPC_X, cch)+8,chipc(CHIPC_Y, cch)+2,chipc(CHIPC_WIDTH, cch)-16,chipc(CHIPC_HEIGHT, cch)-8
         gmode 4,,,150
         color 0,0,0
-        pos 0,960+(chipc(CHIPC_HEIGHT, cch)=tileS)*48
-        gcopy BUF_ITEM,144,768+(chipc(CHIPC_HEIGHT, cch)>tileS)*48,tileS,chipc(CHIPC_HEIGHT, cch)+(chipc(CHIPC_HEIGHT, cch)>tileS)*48
+        pos 0,960+(chipc(CHIPC_HEIGHT, cch)=inf_tiles)*48
+        gcopy BUFFER_ITEM,144,768+(chipc(CHIPC_HEIGHT, cch)>inf_tiles)*48,inf_tiles,chipc(CHIPC_HEIGHT, cch)+(chipc(CHIPC_HEIGHT, cch)>inf_tiles)*48 // * 0
         gmode 2
-        gsel BUF_CUR
+        gsel BUFFER_CUR
         return
     }
 
 	if ich=1119 { ; Meat Filling (30, 33)
-	    pos 8, 1058 - chipc(CHIPC_HEIGHT, cch)
-	    gcopy BUFFER_CHR, chipc(CHIPC_X, cch) + 8, chipc(CHIPC_Y, cch) + 2, chipc(CHIPC_WIDTH, cch), chipc(CHIPC_HEIGHT, cch)
+	    pos 0, 1055 - chipc(CHIPC_HEIGHT, cch)
+	    gcopy BUFFER_CHR, chipc(CHIPC_X, cch), chipc(CHIPC_Y, cch), chipc(CHIPC_WIDTH, cch), chipc(CHIPC_HEIGHT, cch)
         gmode 2
-        gsel BUF_CUR
+        gsel BUFFER_CUR
         return
     }
 
-	if ich=1208 { ; Golden Doll (18, 36)
-		pos 8, 1058 - chipc(CHIPC_HEIGHT, cch)
-		gcopy BUFFER_CHR, chipc(CHIPC_X, cch) + 8, chipc(CHIPC_Y, cch) + 2, chipc(CHIPC_WIDTH, cch), chipc(CHIPC_HEIGHT, cch)
-		gfini chipi(CHIPI_WIDTH, cch), chipi(CHIPI_HEIGHT, cch)
+	if ich=1206 { ; Golden Doll (18, 36)
+		pos 0, 1055 - chipc(CHIPC_HEIGHT, cch)
+		gcopy BUFFER_CHR, chipc(CHIPC_X, cch), chipc(CHIPC_Y, cch), chipc(CHIPC_WIDTH, cch), chipc(CHIPC_HEIGHT, cch)
+		gfini chipi(CHIPI_WIDTH, ich), chipi(CHIPI_HEIGHT, ich)
 		gfdec2 0, 0, 255
+        gsel BUFFER_CUR
         return
     }
 
     pos 0,960
-    gcopy BUF_ITEM,chipi(CHIPI_X, ich),chipi(CHIPI_Y, ich),chipi(CHIPI_WIDTH, ich),chipi(CHIPI_HEIGHT, ich)
+    gcopy BUFFER_ITEM,chipi(CHIPI_X, ich),chipi(CHIPI_Y, ich),chipi(CHIPI_WIDTH, ich),chipi(CHIPI_HEIGHT, ich)
     gfini@ chipi(CHIPI_WIDTH, ich),chipi(CHIPI_HEIGHT, ich)
     gfdec2@ c_col@(0,cch),c_col@(1,cch),c_col@(2,cch)
-    gsel BUF_CUR
+    gsel BUFFER_CUR
 
     return
 
