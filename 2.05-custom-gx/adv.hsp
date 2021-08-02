@@ -133,6 +133,8 @@
 		cbitmod CHARA_BIT_UNKNOWN_1010, rc, 0
 		cbitmod CHARA_BIT_AWAKE_ZERO_SHOOT, rc, 0
 		cbitmod CHARA_BIT_AWAKE_STRUCK_OUT, rc, 0
+		cdata(CDATA_CUSTOM_TALK_LINE, rc) = 0
+		cdata(CDATA_PLATINUM, rc) = 0
 		cdata(CDATA_AP_CURRENT, rc) = 0
 		if ( cdata(CDATA_LEVEL, rc) >= 10 ) {
 			cdata(CDATA_LEVEL, rc) = 10
@@ -167,6 +169,9 @@
 	cbitmod CHARA_BIT_FESTIVAL, rc, 0
 	cbitmod CHARA_BIT_BRUSHED, rc, 0
 	cbitmod CHARA_BIT_LIVESTOCK, rc, 0
+	if ( cdata(CDATA_ALLIED, rc) == 0 ) {
+		cdata(CDATA_FAME, rc) = (cdata(CDATA_FAME, rc) + 1) / 1000 + 1
+	}
 	cdata(CDATA_ALLIED, rc) = 100
 	if ( cdata(CDATA_JOIN_DATE_MONTH, rc) == 0 ) {
 		cdata(CDATA_JOIN_DATE_MONTH, rc) = gdata(GDATA_MONTH)
@@ -258,12 +263,20 @@
 		}
 		if ( cdata(CDATA_EXIST, rc) == CHAR_STATE_ADV_HOSPITAL ) {
 			if ( gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 >= cdata(CDATA_RESPAWN, rc) ) {
-				if ( rnd(3) == 0 ) {
+				if ( rnd(3) == 0 | cdata(CDATA_CUSTOM_TALK_LINE, rc) == 5 & cdata(CDATA_CUSTOM_TALK_LINE, rc) != 4 ) {
+					if ( cdata(CDATA_CUSTOM_TALK_LINE, rc) == 5 ) {
+						cdata(CDATA_CUSTOM_TALK_LINE, rc) = 0
+						txt lang(cdatan(CDATAN_AKA, rc) + "はあなたからのメッセージを思い出した…。", cdatan(CDATAN_AKA, rc) + " recalled your message...")
+					}
 					addnews 5, rc
 					cdata(CDATA_EXIST, rc) = CHAR_STATE_DEAD
 					gosub *adv_generate
 				}
 				else {
+					if ( cdata(CDATA_CUSTOM_TALK_LINE, rc) == 4 ) {
+						cdata(CDATA_CUSTOM_TALK_LINE, rc) = 0
+						txt lang(cdatan(CDATAN_AKA, rc) + "はあなたからのメッセージを思い出した…。", cdatan(CDATAN_AKA, rc) + " recalled your message...")
+					}
 					addnews 3, rc
 					cdata(CDATA_EXIST, rc) = CHAR_STATE_ADV
 				}
@@ -329,6 +342,19 @@
 				break
 			loop
 			cdata(CDATA_AREA, rc) = p, 1
+		}
+		if ( dbg_advTalkLine ) {
+			cdata(CDATA_CUSTOM_TALK_LINE, rc) = 1
+		}
+		if ( cdata(CDATA_AREA, rc) == gdata(GDATA_AREA) ) {
+			if ( cdata(CDATA_CUSTOM_TALK_LINE, rc) == 1 ) {
+				if ( cdata(CDATA_RELATION, rc) < RELATION_NEUTRAL ) {
+					cdata(CDATA_RELATION, rc) = RELATION_NEUTRAL
+					cdata(CDATA_AI_AGGRO, rc) = 0
+					cdata(CDATA_CUSTOM_TALK_LINE, rc) = 0
+					addnews2 lang(cdatan(CDATAN_AKA, rc) + "はあなたからのメッセージを思い出した…。", cdatan(CDATAN_AKA, rc) + " recalled your message...")
+				}
+			}
 		}
 		if ( rnd(200) == 0 ) {
 			if ( adata(ADATA_TYPE, cdata(CDATA_AREA, rc)) != MAP_TYPE_TOWN ) {
