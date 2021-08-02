@@ -3795,6 +3795,62 @@
 	gcopy 3, 688 + sx(1), 528 + sy(1), raderw, raderh
 	return
 
+*screen_fadeIn2
+	gsel BUFFER_BUF
+	gmode 0
+	pos 0, 0
+	gcopy BUFFER_SCREEN, 0, 0, windoww, windowh
+	gsel BUFFER_SCREEN
+	gmode 0
+	repeat 50
+		await 20
+		redraw 0
+		pos 0, 0
+		gfini windoww, windowh - 88
+		gfdec2 5, 105, 105
+		redraw 1
+	loop
+	color 250, 0, 0
+	repeat 30
+		gmode 4, 0, 0, 10 + cnt * 5
+		await 20
+		redraw 0
+		pos 0, 0
+		gcopy BUFFER_BUF, 0, 0, windoww, windowh
+		redraw 1
+	loop
+	redraw 0
+	gmode 2
+	return
+
+*screen_fadeIn3
+	gsel BUFFER_BUF
+	gmode 0
+	pos 0, 0
+	gcopy BUFFER_SCREEN, 0, 0, windoww, windowh
+	gsel BUFFER_SCREEN
+	gmode 0
+	repeat 50
+		await 20
+		redraw 0
+		pos 0, 0
+		gfini windoww, windowh - 88
+		gfinc 5, 5, 5
+		redraw 1
+	loop
+	color 5, 5, 5
+	repeat 30
+		gmode 4, 0, 0, 256 - cnt * 5
+		await 20
+		redraw 0
+		pos 0, 0
+		gcopy BUFFER_BUF, 0, 0, windoww, windowh
+		redraw 1
+	loop
+	redraw 0
+	gmode 2
+	return
+
 *screen_fade
 	gsel 4
 	gmode 0

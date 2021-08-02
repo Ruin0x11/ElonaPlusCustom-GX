@@ -905,6 +905,30 @@
 	ensci = 0
 	return
 
+*start_writing
+	if ( cdata(CDATA_ROW_ACT, cc) == ACTION_NONE ) {
+		if ( synccheck(cc, -1) ) {
+			txt lang(name(cc) + "は執筆を始めた。", name(cc) + " start" + _s(cc) + " writing.")
+		}
+		cdata(CDATA_ROW_ACT, cc) = ACTION_WRITING
+		cdata(CDATA_ACTION_PERIOD, cc) = gdata(GDATA_FLAG_MANUSCRIPT_IDEAS) + 1
+		return
+	}
+	if ( cdata(CDATA_ACTION_PERIOD, cc) > 0 ) {
+		if ( cdata(CDATA_ACTION_PERIOD, cc) \ 3 == 1 ) {
+			snd SOUNDLIST_WRITE1
+		}
+		gdata(GDATA_FLAG_MANUSCRIPT_IDEAS)--
+		booksitu = limit((rnd(sdata(SKILL_NORMAL_LITERACY, CHARA_PLAYER) + sdata(SKILL_ATTR_PER, CHARA_PLAYER) + sdata(SKILL_ATTR_LER, CHARA_PLAYER) + 200) + 1) / 200, 0, 6)
+		flt
+		itemcreate -1, ITEM_ID_MANUSCRIPT, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
+		inv(INV_ITEM_PARAM3, ci) = booksitu
+		item_stack -1, ci, 0
+		return
+	}
+	rowactend cc
+	return
+
 *perform_dance
 	if ( cdata(CDATA_ROW_ACT, cc) == ACTION_NONE ) {
 		if ( synccheck(cc, -1) ) {

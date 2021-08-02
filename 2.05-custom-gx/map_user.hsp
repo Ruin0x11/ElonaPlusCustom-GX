@@ -505,9 +505,11 @@
 					if ( map(x, y, 6) != 0 ) { // is occupied
 						cell_featread x, y
 						if ( feat(1) == CELL_FEATURE_PLANTED_SEED & (feat >= tile_plant + 2 & feat != tile_plant + 3) ) {
-							gosub *item_seedPick_custom
+                            usecustom = 1
+							gosub *item_seedPick
 							val = 1
-							gosub *item_seedRegrowth_custom
+							gosub *item_seedRegrowth
+                            usecustom = 0
 							if ( feat(2) == CELL_SUB_FEATURE_SEED_ARTIFACT ) {
 								autosave = 1 * (gdata(GDATA_AREA) != AREA_SHOW_HOUSE)
 							}
