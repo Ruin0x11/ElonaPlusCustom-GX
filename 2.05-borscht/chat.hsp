@@ -229,13 +229,13 @@
 		goto *chat_end
 	}
 	if ( cdata(CDATA_ID, tc) == CREATURE_ID_ORPHE_THE_CHAOS_DISCPLE & gdata(GDATA_FLAG_MAIN) == 850 & gdata(GDATA_AREA) == AREA_CHAOS_CRADLE ) {
-		goto *label_6451
+		goto *chat_unique_orphe
 	}
 	if ( cdata(CDATA_ID, tc) == CREATURE_ID_YAYAUHQUI_TEZCATLIPOCA & gdata(GDATA_FLAG_MAIN) == 860 & gdata(GDATA_AREA) == AREA_CHAOS_CRADLE ) {
-		goto *label_6450
+		goto *chat_unique_yayauhqui
 	}
 	if ( cdata(CDATA_ID, tc) == CREATURE_ID_JALDABAOTH_THE_CHAOS_CHILD & gdata(GDATA_FLAG_MAIN) == 870 & gdata(GDATA_AREA) == AREA_CHAOS_CRADLE ) {
-		goto *label_6440
+		goto *chat_unique_jaldabaoth
 	}
 	if ( cdata(CDATA_CONDITION_DIM, tc) > 60 ) {
 		if ( cdata(CDATA_ID, tc) == CREATURE_ID_ALFRED_THE_CANGNAN_WIND & gdata(GDATA_FLAG_MAIN_CHAOS_CRADLE_25) >= 1000 & gdata(GDATA_AREA) == AREA_CHAOS_CRADLE & cdata(CDATA_ALLIED, tc) == 0 ) {
@@ -399,7 +399,7 @@
 				goto *chat_end
 			}
 		}
-		goto *label_6438
+		goto *chat_unique_mikraanesis
 	}
 	if ( tc == CHARA_PLAYER ) {
 		goto *chat_end
@@ -41115,7 +41115,7 @@
 	txt lang("ジャーナルが更新された。", "Your journal has been updated.")
 	goto *chat_end
 
-*label_6438
+*chat_unique_mikraanesis
 	snd SOUNDLIST_CHIME
 	flt
 	novoidlv = 1
@@ -41530,7 +41530,7 @@
 	gosub *music_play
 	goto *chat_end
 
-*label_6440
+*chat_unique_jaldabaoth
 	listmax = 0
 	buff = lang("飽きた。", "Sorry, this is untranslated sentence.")
 	tc = tc * (findchara(CREATURE_ID_JALDABAOTH_THE_CHAOS_CHILD) == 0) + (findchara(CREATURE_ID_JALDABAOTH_THE_CHAOS_CHILD) != 0) * findchara(CREATURE_ID_JALDABAOTH_THE_CHAOS_CHILD)
@@ -41871,7 +41871,7 @@
 	gosub *anime
 	goto *chat_end
 
-*label_6450
+*chat_unique_yayauhqui
 	flt
 	initlv = 350
 	novoidlv = 1
@@ -42197,7 +42197,7 @@
 	gosub *anime
 	goto *chat_end
 
-*label_6451
+*chat_unique_orphe
 	music = MUSICLIST_MCLASTBOSS3
 	gosub *music_play
 	listmax = 0
