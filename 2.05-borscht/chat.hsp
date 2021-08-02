@@ -40191,7 +40191,7 @@
 	}
 	goto *chat_unique
 
-*label_6432
+*chat_unique_leold_bonus_limit
 	snd SOUNDLIST_FAIL1
 	listmax = 0
 	buff = lang("スキルボーナスは100以上あると新たに獲得できない。腐らせていては成長の遅れに繋がるぞ。", "If there are 100 or more skill bonuses, I cannot give new. No matter how much skill bonus you accumulate, growth will be delayed if you do not use it.")
@@ -40242,7 +40242,7 @@
 		if ( leoval == (-1) ) {
 			if ( gdata(GDATA_FLAG_GAME_MODE) != 2 & gdata(GDATA_FLAG_GAME_MODE) != 5 ) {
 				if ( cdata(CDATA_SKILLPOINT, c) >= 100 ) {
-					goto *label_6432
+					goto *chat_unique_leold_bonus_limit
 				}
 			}
 			if ( cdata(CDATA_AP_CURRENT, c) < leoap ) {
@@ -40600,7 +40600,7 @@
 	if ( chatval == 3 ) {
 		if ( gdata(GDATA_FLAG_GAME_MODE) != 2 & gdata(GDATA_FLAG_GAME_MODE) != 5 ) {
 			if ( cdata(CDATA_SKILLPOINT, c) >= 100 ) {
-				goto *label_6432
+				goto *chat_unique_leold_bonus_limit
 			}
 		}
 		if ( cdata(CDATA_AP_CURRENT, c) < 1500 ) {
