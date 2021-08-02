@@ -13424,21 +13424,16 @@
 	/********** ANNA/BLOODYSHADE CUSTOM - BEGINNING **********/
 
 	promptAdd lang("ゲームをやめる", "Exit"), "a"
-	promptAdd lang("ゲーム設定", "Game Setting"), "b"
-	promptAdd lang("微調整", "Tweaks"), "c"
-	promptAdd lang("キャンセル", "Cancel"), "d"
+	promptAdd lang("タイトルに戻る", "Return to Title"), "b"
+	promptAdd lang("ゲーム設定", "Game Setting"), "c"
+	promptAdd lang("微調整", "Tweaks"), "d"
+	promptAdd lang("キャンセル", "Cancel"), "e"
 
 	val = promptx, prompty, 190, 1
 	gosub *prompt_key
 	if ( rtval == 0 ) {
 		if ( gdata(GDATA_AREA) != AREA_SHOW_HOUSE ) {
-			snd SOUNDLIST_WRITE1
-			if ( gdata(GDATA_FLAG_GAME_MODE) == GAMEMODE_ABNORMAL | gdata(GDATA_FLAG_GAME_MODE) == GAMEMODE_LOSS | gdata(GDATA_FLAG_GAME_MODE) == GAMEMODE_NATURAL ) {
-				gdata(GDATA_GAMEMODE_PENALTY) = 1
-				snd SOUNDLIST_AMMO
-			}
-			gosub *game_save
-			txt lang("無事に記録された。", "Your game has been saved successfully.")
+            gosub *game_do_save
 			txt lang(name(cc) + "は静かに目を閉じた... (キーを押すと自動終了します)", "You close your eyes and peacefully fade away. (Hit any key to exit)")
 			msg_halt
 			gosub *screen_draw
@@ -13447,16 +13442,34 @@
 		goto *exit_game
 	}
 	if ( rtval == 1 ) {
+		if ( gdata(GDATA_AREA) != AREA_SHOW_HOUSE ) {
+            gosub *game_do_save
+			msg_halt
+			gosub *screen_draw
+		}
+		goto *system_init
+	}
+	if ( rtval == 2 ) {
 		snd SOUNDLIST_OK1
 		goto *com_config
 	}
-	if ( rtval == 2 ) {
+	if ( rtval == 3 ) {
 		goto *TweakMenu
 	}
 	gosub *screen_draw
 	goto *pc_turn
 
 	/********** ANNA/BLOODYSHADE CUSTOM - ENDING **********/
+
+*game_do_save
+	snd SOUNDLIST_WRITE1
+	if ( gdata(GDATA_FLAG_GAME_MODE) == GAMEMODE_ABNORMAL | gdata(GDATA_FLAG_GAME_MODE) == GAMEMODE_LOSS | gdata(GDATA_FLAG_GAME_MODE) == GAMEMODE_NATURAL ) {
+		gdata(GDATA_GAMEMODE_PENALTY) = 1
+		snd SOUNDLIST_AMMO
+	}
+	gosub *game_save
+	txt lang("無事に記録された。", "Your game has been saved successfully.")
+    return
 
 *check_return
 	f = 0

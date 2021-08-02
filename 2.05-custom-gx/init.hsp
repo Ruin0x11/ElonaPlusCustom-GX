@@ -1738,7 +1738,9 @@ if instr(s,0,%1)!-1{	%c\
 	if ( strsize == (-1) ) {
 		bcopy exedir + "original\\" + "face1.bmp", exedir + "user\\graphic\\face1.bmp"
 	}
-	gosub *mutexobj
+	if ( firstinit == 1 ) {
+		gosub *mutexobj
+	}
 	sdim s, 160, 40
 	dim p, 100
 	dim rtval, 10
@@ -1866,11 +1868,19 @@ if instr(s,0,%1)!-1{	%c\
 	dim mat, MAX_MATERIAL_COUNT
 	dim inv, INV_ITEM_MAX, MAX_INV_DATA
 	dim trait, 500
-	dim itemmemory, 3, MAX_DB
-	dim npcmemory, 2, MAX_DB
-	dim recipememory, 1599
-	dim invmark, 35
-	dim commark, 3
+    if ( firstinit == 1 ) {
+        dim itemmemory, 3, MAX_DB
+        dim npcmemory, 2, MAX_DB
+	    dim recipememory, MAX_RPDATA
+	    dim invmark, 35
+	    dim commark, 3
+    } else {
+        memset itemmemory, 0, 3, MAX_DB
+        memset npcmemory, 0, 2, MAX_DB
+	    memset recipememory, 0, MAX_RPDATA
+	    memset invmark, 0, 35
+	    memset commark, 0, 3
+    }
 	dim feat, 5
 	sdim iname, 40
 	dim val, 10
@@ -1886,8 +1896,13 @@ if instr(s,0,%1)!-1{	%c\
 	dim rainx, maxrain * 2
 	dim rainy, maxrain * 2
 	sdim fltnrace
-	dim card, 4, 1000
-	dim deck, 1000
+    if ( firstinit == 1 ) {
+        dim card, 4, 1000
+        dim deck, 1000
+    } else {
+        memset card, 0, 4, 1000
+        memset deck, 0, 1000
+    }
 	gosub *sRefDefine
 	gosub *bRefDefine
 	gosub *mRefDefine
@@ -2067,7 +2082,14 @@ if instr(s,0,%1)!-1{	%c\
 			keybd_event 144, 0, 2
 		}
 	}
-	gosub *lua_init
+	if ( firstinit == 1 ) {
+		gosub *lua_init
+	}
+
+	if ( firstinit == 1 ) {
+        firstinit = 0
+	}
+
 	goto *game_init
 
 *ErrorMsgInit
