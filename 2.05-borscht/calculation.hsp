@@ -1467,13 +1467,13 @@
 		return 1
 	}
 	if ( ens2 != 0 ) {
-		txt lang("ÅuäÎÇ»Ç¢ÅIÅvñÇóÕÇÃâQÇÃî≠ê∂Ç…ãCÇ™Ç¬Ç¢ÇΩíáä‘Ç™ÅAì«èëÇíÜífÇ≥ÇπÇΩÅB", "Ally who noticed the occurrence of vortex of magic, was interrupted reading.")
+		txt lang("„ÄåÂç±„Å™„ÅÑÔºÅ„ÄçÈ≠îÂäõ„ÅÆÊ∏¶„ÅÆÁô∫Áîü„Å´Ê∞ó„Åå„Å§„ÅÑ„Åü‰ª≤Èñì„Åå„ÄÅË™≠Êõ∏„Çí‰∏≠Êñ≠„Åï„Åõ„Åü„ÄÇ", "Ally who noticed the occurrence of vortex of magic, was interrupted reading.")
 		ens2 = 0
 		return 0
 	}
 	if ( rnd(4) == 0 ) {
 		if ( synccheck(cc, -1) ) {
-			txt lang(name(cc) + "ÇÕÉ}ÉiÇãzÇ¢éÊÇÁÇÍÇΩÅI", name(cc) + your(cc) + " mana is absored.")
+			txt lang(name(cc) + "„ÅØ„Éû„Éä„ÇíÂê∏„ÅÑÂèñ„Çâ„Çå„ÅüÔºÅ", name(cc) + your(cc) + " mana is absored.")
 		}
 		if ( cc == CHARA_PLAYER ) {
 			dmgmp cc, cdata(CDATA_MAX_MP, cc)
@@ -1486,10 +1486,10 @@
 	if ( rnd(4) == 0 ) {
 		if ( synccheck(cc, -1) ) {
 			if ( cdata(CDATA_CONDITION_CONFUSE, cc) != 0 ) {
-				txt lang(name(cc) + "ÇÕó]åvÇ…ç¨óêÇµÇΩÅB", name(cc) + " " + is(cc) + " confused more.")
+				txt lang(name(cc) + "„ÅØ‰ΩôË®à„Å´Ê∑∑‰π±„Åó„Åü„ÄÇ", name(cc) + " " + is(cc) + " confused more.")
 			}
 			else {
-				txt lang("ìÔâÇæÅI", "It's too difficult!")
+				txt lang("Èõ£Ëß£„Å†ÔºÅ", "It's too difficult!")
 			}
 		}
 		dmgcon cc, CONDITION_CONFUSE, 100
@@ -1498,7 +1498,7 @@
 	if ( rnd(4) == 0 ) {
 		if ( cc == CHARA_PLAYER ) {
 			if ( synccheck(cc, -1) ) {
-				txt lang("ñÇóÕÇÃâQÇ™âΩÇ©Çè¢ä´ÇµÇΩÅI", "Several creatures are summoned from a vortex of magic.")
+				txt lang("È≠îÂäõ„ÅÆÊ∏¶„Åå‰Ωï„Åã„ÇíÂè¨Âñö„Åó„ÅüÔºÅ", "Several creatures are summoned from a vortex of magic.")
 			}
 			repeat 2 + rnd(3)
 				flt calcobjlv(cdata(CDATA_LEVEL, CHARA_PLAYER) * 3 / 2 + 3), calcfixlv(FIX_QUALITY_GOOD)
@@ -1518,7 +1518,7 @@
 		return 0
 	}
 	if ( synccheck(cc, -1) ) {
-		txt lang(name(cc) + "ÇÕäÔñ≠Ç»óÕÇ…îPÇ∂ã»Ç∞ÇÁÇÍÇΩÅI", "A dimension door opens in front of you.")
+		txt lang(name(cc) + "„ÅØÂ•áÂ¶ô„Å™Âäõ„Å´Êçª„ÅòÊõ≤„Åí„Çâ„Çå„ÅüÔºÅ", "A dimension door opens in front of you.")
 	}
 	tc = cc
 	efid = SKILL_SPELL_TELEPORT
@@ -1618,15 +1618,15 @@
 	if ( cdata(CDATA_HUNGER, r1) / 1000 != p ) {
 		if ( p == 1000 / 1000 ) {
 			msgalert = 1
-			txt lang("Ç±ÇÃÇ‹Ç‹ÇæÇ∆âÏéÄÇµÇƒÇµÇ‹Ç§ÅI", "You are starving!"), lang("ï†Ç™å∏Ç¡ÇƒÇŸÇ∆ÇÒÇ«éÄÇ…Ç©ÇØÇƒÇ¢ÇÈÅB", "You are almost dead from hunger.")
+			txt lang("„Åì„ÅÆ„Åæ„Åæ„Å†„Å®È§ìÊ≠ª„Åó„Å¶„Åó„Åæ„ÅÜÔºÅ", "You are starving!"), lang("ËÖπ„ÅåÊ∏õ„Å£„Å¶„Åª„Å®„Çì„Å©Ê≠ª„Å´„Åã„Åë„Å¶„ÅÑ„Çã„ÄÇ", "You are almost dead from hunger.")
 		}
 		if ( p == 2000 / 1000 ) {
 			msgalert = 1
-			txt lang("ãÛï†Ç≈ñ⁄Ç™âÒÇËÇæÇµÇΩÅc", "Your hunger makes you dizzy."), lang("Ç∑ÇÆÇ…âΩÇ©ÇêHÇ◊Ç»Ç≠ÇƒÇÕÅc", "You have to eat something NOW.")
+			txt lang("Á©∫ËÖπ„ÅßÁõÆ„ÅåÂõû„Çä„Å†„Åó„Åü‚Ä¶", "Your hunger makes you dizzy."), lang("„Åô„Åê„Å´‰Ωï„Åã„ÇíÈ£ü„Åπ„Å™„Åè„Å¶„ÅØ‚Ä¶", "You have to eat something NOW.")
 		}
 		if ( p == 5000 / 1000 ) {
 			msgalert = 1
-			txt lang("ï†Ç™Ç∑Ç¢ÇƒÇ´ÇΩÅB", "You are getting hungry."), lang("ãÛï†Ç…Ç»Ç¡ÇΩÅB", "You feel hungry."), lang("Ç≥ÇƒâΩÇêHÇ◊ÇÊÇ§Ç©ÅB", "Now what shall I eat?")
+			txt lang("ËÖπ„Åå„Åô„ÅÑ„Å¶„Åç„Åü„ÄÇ", "You are getting hungry."), lang("Á©∫ËÖπ„Å´„Å™„Å£„Åü„ÄÇ", "You feel hungry."), lang("„Åï„Å¶‰Ωï„ÇíÈ£ü„Åπ„Çà„ÅÜ„Åã„ÄÇ", "Now what shall I eat?")
 		}
 		refreshspeed r1
 	}
@@ -1661,15 +1661,15 @@
 	if ( cdata(CDATA_THIRST, r1) / 1000 != p ) {
 		if ( p == 1000 / 1000 ) {
 			msgalert = 1
-			txt lang("Ç±ÇÃÇ‹Ç‹ÇæÇ∆íEêÖè«èÛÇ≈ì|ÇÍÇƒÇµÇ‹Ç§ÅI", "You are drying!"), lang("êÖï™ïsë´Ç≈ä±ï®Ç…Ç»ÇËÇªÇ§ÇæÅB", "You are almost mummy.")
+			txt lang("„Åì„ÅÆ„Åæ„Åæ„Å†„Å®ËÑ±Ê∞¥ÁóáÁä∂„ÅßÂÄí„Çå„Å¶„Åó„Åæ„ÅÜÔºÅ", "You are drying!"), lang("Ê∞¥ÂàÜ‰∏çË∂≥„ÅßÂπ≤Áâ©„Å´„Å™„Çä„Åù„ÅÜ„Å†„ÄÇ", "You are almost mummy.")
 		}
 		if ( p == 2000 / 1000 ) {
 			msgalert = 1
-			txt lang("êÖï™ïsë´Ç≈ñ⁄Ç™âÒÇËÇæÇµÇΩÅc", "Your thirsty makes you dizzy."), lang("Ç∑ÇÆÇ…âΩÇ©Çà˘Ç‹Ç»Ç≠ÇƒÇÕÅc", "You have to drink something NOW.")
+			txt lang("Ê∞¥ÂàÜ‰∏çË∂≥„ÅßÁõÆ„ÅåÂõû„Çä„Å†„Åó„Åü‚Ä¶", "Your thirsty makes you dizzy."), lang("„Åô„Åê„Å´‰Ωï„Åã„ÇíÈ£≤„Åæ„Å™„Åè„Å¶„ÅØ‚Ä¶", "You have to drink something NOW.")
 		}
 		if ( p == 5000 / 1000 ) {
 			msgalert = 1
-			txt lang("çAÇ™ÉJÉâÉJÉâÇæÅB", "You are getting thirsty."), lang("çAÇ™äâÇ¢ÇΩÅB", "You feel thirsty."), lang("Ç≥ÇƒâΩÇà˘Ç‡Ç§Ç©ÅB", "Now what shall I drink?")
+			txt lang("Âñâ„Åå„Ç´„É©„Ç´„É©„Å†„ÄÇ", "You are getting thirsty."), lang("Âñâ„ÅåÊ∏á„ÅÑ„Åü„ÄÇ", "You feel thirsty."), lang("„Åï„Å¶‰Ωï„ÇíÈ£≤„ÇÇ„ÅÜ„Åã„ÄÇ", "Now what shall I drink?")
 		}
 		refreshspeed r1
 	}
@@ -1685,7 +1685,7 @@
 			if ( cdata(CDATA_CONDITION_SLEEP, cnt) >= 0 ) {
 				continue
 			}
-			txt lang(name(cnt) + "ÇÕîöïóÇ…ä™Ç´çûÇ‹ÇÍÇΩÅB", name(cnt) + " was hurt by the blast.")
+			txt lang(name(cnt) + "„ÅØÁàÜÈ¢®„Å´Â∑ª„ÅçËæº„Åæ„Çå„Åü„ÄÇ", name(cnt) + " was hurt by the blast.")
 			dmghp cnt, -cdata(CDATA_CONDITION_SLEEP, cnt), DAMAGE_FROM_TRAP
 			cdata(CDATA_CONDITION_SLEEP, cnt) = 0
 		loop
@@ -1719,13 +1719,13 @@
 	if ( cdata(CDATA_CONDITION_SUFFOCATION, r1) > 0 ) {
 		if ( cdata(CDATA_CONDITION_SUFFOCATION, r1) \ 3 == 0 ) {
 			if ( synccheck(r1, -1) ) {
-				txt lang("ÅuÇ§ÇÆÇÆÅcÅIÅv", cnvtalk("Ughh...!"))
+				txt lang("„Äå„ÅÜ„Åê„Åê‚Ä¶ÔºÅ„Äç", cnvtalk("Ughh...!"))
 			}
 		}
 		cdata(CDATA_CONDITION_SUFFOCATION, r1) -= rnd(3)
 		if ( cdata(CDATA_CONDITION_SUFFOCATION, r1) <= 0 ) {
 			if ( synccheck(r1, -1) ) {
-				txt lang(name(r1) + "ÇÕãCìπÇämï€ÇµÇΩÅBÅuÇ∞ÇŸÇ¡Ç∞ÇŸÇ¡ÅIÅv", name(cc) + " released from suffocation.")
+				txt lang(name(r1) + "„ÅØÊ∞óÈÅì„ÇíÁ¢∫‰øù„Åó„Åü„ÄÇ„Äå„Åí„Åª„Å£„Åí„Åª„Å£ÔºÅ„Äç", name(cc) + " released from suffocation.")
 			}
 			cdata(CDATA_CONDITION_SUFFOCATION, r1) = 0
 		}
@@ -1738,7 +1738,7 @@
 		cdata(CDATA_CONDITION_GRAVITY, r1)--
 		if ( cdata(CDATA_CONDITION_GRAVITY, r1) == 0 ) {
 			if ( synccheck(r1, -1) ) {
-				txt lang(name(r1) + "ÇÕèdóÕÇ©ÇÁî≤ÇØèoÇµÇΩÅB", name(r1) + " break" + _s(r1) + " away from gravity.")
+				txt lang(name(r1) + "„ÅØÈáçÂäõ„Åã„ÇâÊäú„ÅëÂá∫„Åó„Åü„ÄÇ", name(r1) + " break" + _s(r1) + " away from gravity.")
 			}
 		}
 	}
@@ -1746,7 +1746,7 @@
 		cdata(CDATA_CONDITION_ANGRY, r1)--
 		if ( cdata(CDATA_CONDITION_ANGRY, r1) == 0 ) {
 			if ( synccheck(r1, -1) ) {
-				txt lang(name(r1) + "ÇÕÇ‚Ç‚óéÇøíÖÇ¢ÇΩÅB", name(r1) + " calm" + _s(r1) + " down.")
+				txt lang(name(r1) + "„ÅØ„ÇÑ„ÇÑËêΩ„Å°ÁùÄ„ÅÑ„Åü„ÄÇ", name(r1) + " calm" + _s(r1) + " down.")
 			}
 		}
 	}
@@ -1754,7 +1754,7 @@
 		cdata(CDATA_CONDITION_INVERT, r1)--
 		if ( cdata(CDATA_CONDITION_INVERT, r1) == 0 ) {
 			if ( synccheck(r1, -1) ) {
-				txt lang(name(r1) + "ÇÕëÃê®ÇóßÇƒíºÇµÇΩÅB", name(r1) + " stand" + _s(r1) + " up.")
+				txt lang(name(r1) + "„ÅØ‰ΩìÂã¢„ÇíÁ´ã„Å¶Áõ¥„Åó„Åü„ÄÇ", name(r1) + " stand" + _s(r1) + " up.")
 			}
 		}
 	}
@@ -1763,7 +1763,7 @@
 		dmgsp r1, 1
 		if ( cdata(CDATA_CONDITION_BIND, r1) == 0 ) {
 			if ( synccheck(r1, -1) ) {
-				txt lang(name(r1) + "ÇÕë©îõÇ©ÇÁâï˙Ç≥ÇÍÇΩÅB", name(cc) + " released from bind.")
+				txt lang(name(r1) + "„ÅØÊùüÁ∏õ„Åã„ÇâËß£Êîæ„Åï„Çå„Åü„ÄÇ", name(cc) + " released from bind.")
 			}
 		}
 	}
@@ -1782,7 +1782,7 @@
 		cdata(CDATA_CONDITION_BRAINWASH, r1)--
 		if ( cdata(CDATA_CONDITION_BRAINWASH, r1) == 0 ) {
 			if ( synccheck(r1, -1) ) {
-				txt lang(name(r1) + "ÇÕê≥ãCÇ…ñﬂÇ¡ÇΩÅB", name(cc) + " recovered from brainwash.")
+				txt lang(name(r1) + "„ÅØÊ≠£Ê∞ó„Å´Êàª„Å£„Åü„ÄÇ", name(cc) + " recovered from brainwash.")
 			}
 			cdata(CDATA_TARGET, r1) = 0
 			cdata(CDATA_AI_AGGRO, r1) = 0
@@ -1795,7 +1795,7 @@
 		cdata(CDATA_CONDITION_ATROPHY, r1)--
 		if ( cdata(CDATA_CONDITION_ATROPHY, r1) == 0 ) {
 			if ( synccheck(r1, -1) ) {
-				txt lang(name(r1) + "ÇÕêÌà”ÇéÊÇËñﬂÇµÇΩÅB", name(r1) + "'s recovered from atrophy.")
+				txt lang(name(r1) + "„ÅØÊà¶ÊÑè„ÇíÂèñ„ÇäÊàª„Åó„Åü„ÄÇ", name(r1) + "'s recovered from atrophy.")
 			}
 		}
 	}
@@ -1803,7 +1803,7 @@
 		cdata(CDATA_CONDITION_METAL, r1)--
 		if ( cdata(CDATA_CONDITION_METAL, r1) == 0 ) {
 			if ( synccheck(r1, -1) ) {
-				txt lang(name(r1) + "ÇÃñhå‰ÇÕä…ÇÒÇæÅB", name(r1) + "'s protection vanish.")
+				txt lang(name(r1) + "„ÅÆÈò≤Âæ°„ÅØÁ∑©„Çì„Å†„ÄÇ", name(r1) + "'s protection vanish.")
 			}
 		}
 	}
@@ -1890,7 +1890,7 @@
 			else {
 				dmghp CHARA_PLAYER, 1, DAMAGE_FROM_JALDABAOTH
 			}
-			txt lang("êgëÃÇ™è≠ÇµÇ∏Ç¬ïˆÇÍÇƒÇ¢Ç≠ÅcÅB", "Your body gradually collapses...")
+			txt lang("Ë∫´‰Ωì„ÅåÂ∞ë„Åó„Åö„Å§Â¥©„Çå„Å¶„ÅÑ„Åè‚Ä¶„ÄÇ", "Your body gradually collapses...")
 			regen = 0
 		}
 	}
@@ -2013,7 +2013,7 @@
 	if ( cdata(CDATA_SHIFT_FORM, r1) > SHIFT_FORM_NONE ) {
 		if ( findbuff(r1, BUFF_FORM_SHIFT_ALPHA) == (-1) & findbuff(r1, BUFF_FORM_SHIFT_BETA) == (-1) & findbuff(r1, BUFF_FORM_SHIFT_GAMMA) == (-1) & findbuff(r1, BUFF_FORM_SHIFT_DELTA) == (-1) & findbuff(r1, BUFF_FORM_SHIFT_OMEGA) == (-1) ) {
 			txtef COLOR_SKY_BLUE
-			txt lang(name(r1) + "ÇÕå≥ÇÃépÇ…ñﬂÇ¡ÇΩÅB", name(r1) + "'returned to the original form.")
+			txt lang(name(r1) + "„ÅØÂÖÉ„ÅÆÂßø„Å´Êàª„Å£„Åü„ÄÇ", name(r1) + "'returned to the original form.")
 			hikae = cdatan(CDATAN_NAME, r1)
 			cdatan(CDATAN_NAME, r1) = cdatan(CDATAN_FORM_SHIFT_NAME, r1)
 			cdatan(CDATAN_FORM_SHIFT_NAME, r1) = hikae
@@ -2068,19 +2068,19 @@
 				if ( jp ) {
 					r2 = rnd(5)
 					if ( r2 == 0 ) {
-						txt name(r1) + "ÅuÉLÉáÉLÉáÉLÉáÅv", name(r1) + "ÅuÉNÉèÉbÅv", name(r1) + "ÅuÉVÉÉÉAÉ@É@Åv", name(r1) + "ÅuÇŒÇ‘Ç¡Ç”ÅIÅv", name(r1) + "ÅuéœéEÇπÅIÅv", name(r1) + "ÅuãñÇµÇ»Ç≥Ç¢ãñÇµÇ»Ç≥Ç¢ÅIÅIÅv"
+						txt name(r1) + "„Äå„Ç≠„Éß„Ç≠„Éß„Ç≠„Éß„Äç", name(r1) + "„Äå„ÇØ„ÉØ„ÉÉ„Äç", name(r1) + "„Äå„Ç∑„É£„Ç¢„Ç°„Ç°„Äç", name(r1) + "„Äå„Å∞„Å∂„Å£„ÅµÔºÅ„Äç", name(r1) + "„ÄåÁÖÆÊÆ∫„ÅõÔºÅ„Äç", name(r1) + "„ÄåË®±„Åó„Å™„Åï„ÅÑË®±„Åó„Å™„Åï„ÅÑÔºÅÔºÅ„Äç"
 					}
 					if ( r2 == 1 ) {
-						txt name(r1) + "ÅuÉtÉDÉnÉnÉnÅ[ÅIÅv", name(r1) + "ÅuÇ†ÅAÇ†ÅAÇ†ÅAÇ†Åv", name(r1) + "ÅuÇ“ÅcÇ“ÅcÇ“Ç©ÅcÅv", name(r1) + "ÅuÇ®åZÇøÇ·ÇÒÅIÅv", name(r1) + "ÅuÇ§Ç›Ç›Ç‚ÇüÅv"
+						txt name(r1) + "„Äå„Éï„Ç•„Éè„Éè„Éè„ÉºÔºÅ„Äç", name(r1) + "„Äå„ÅÇ„ÄÅ„ÅÇ„ÄÅ„ÅÇ„ÄÅ„ÅÇ„Äç", name(r1) + "„Äå„Å¥‚Ä¶„Å¥‚Ä¶„Å¥„Åã‚Ä¶„Äç", name(r1) + "„Äå„ÅäÂÖÑ„Å°„ÇÉ„ÇìÔºÅ„Äç", name(r1) + "„Äå„ÅÜ„Åø„Åø„ÇÑ„ÅÅ„Äç"
 					}
 					if ( r2 == 2 ) {
-						txt name(r1) + "ÇÕìÀëRóxÇËÇæÇµÇΩÅB", name(r1) + "ÇÕíÖÇƒÇ¢ÇΩÇ‡ÇÃÇíEÇ¨ÇæÇµÇΩÅB", name(r1) + "ÇÕÇÆÇÈÇÆÇÈâÒÇËÇæÇµÇΩÅB", name(r1) + "ÇÕäÔê∫Çî≠ÇµÇΩÅB", name(r1) + "ÅuÇÀÇ§ÇÀÇ§ÅÙÇÀÇ§ÇÀÇ§ÅÙÅv"
+						txt name(r1) + "„ÅØÁ™ÅÁÑ∂Ë∏ä„Çä„Å†„Åó„Åü„ÄÇ", name(r1) + "„ÅØÁùÄ„Å¶„ÅÑ„Åü„ÇÇ„ÅÆ„ÇíËÑ±„Åé„Å†„Åó„Åü„ÄÇ", name(r1) + "„ÅØ„Åê„Çã„Åê„ÇãÂõû„Çä„Å†„Åó„Åü„ÄÇ", name(r1) + "„ÅØÂ•áÂ£∞„ÇíÁô∫„Åó„Åü„ÄÇ", name(r1) + "„Äå„Å≠„ÅÜ„Å≠„ÅÜ‚ô™„Å≠„ÅÜ„Å≠„ÅÜ‚ô™„Äç"
 					}
 					if ( r2 == 3 ) {
-						txt name(r1) + "ÅuÉEÅ[ÉWÉbÉÄÉVÅÙÉEÅ[ÉWÉbÉÄÉVÅÙÅv", name(r1) + "ÅuÇ∂Ç·Ç†éEÇ≥Ç»Ç´Ç·ÅBÇ§ÇÒÅÙÅv", name(r1) + "ÅuÇ±ÇÃÉiÉÅÉNÉWÇ™Ç¡Åv", name(r1) + "ÅuÇ®Ç∑ÇÌÇËÅIÅv", name(r1) + "ÅuÉtÅ[Å[Å[Å[Éì ÉtÅ[Å[Å[Å[Éì••• ÉtÅ[Å[Å[ÉìÉtÅv"
+						txt name(r1) + "„Äå„Ç¶„Éº„Ç∏„ÉÉ„É†„Ç∑‚ô™„Ç¶„Éº„Ç∏„ÉÉ„É†„Ç∑‚ô™„Äç", name(r1) + "„Äå„Åò„ÇÉ„ÅÇÊÆ∫„Åï„Å™„Åç„ÇÉ„ÄÇ„ÅÜ„Çì‚ô™„Äç", name(r1) + "„Äå„Åì„ÅÆ„Éä„É°„ÇØ„Ç∏„Åå„Å£„Äç", name(r1) + "„Äå„Åä„Åô„Çè„ÇäÔºÅ„Äç", name(r1) + "„Äå„Éï„Éº„Éº„Éº„Éº„É≥ „Éï„Éº„Éº„Éº„Éº„É≥ÔΩ•ÔΩ•ÔΩ• „Éï„Éº„Éº„Éº„É≥„Éï„Äç"
 					}
 					if ( r2 == 4 ) {
-						txt name(r1) + "ÅuÇ±ÇÃÇ©ÇΩÇ¬ÇﬁÇËñÏòYÇ™Ç¡Åv", name(r1) + "ÅuÇ§Ç…Ç„Ç›Ç„Ç†ÅIÅv", name(r1) + "ÅuÇ≤ÇﬂÇÒÇ»Ç≥Ç¢Ç≤ÇﬂÇÒÇ»Ç≥Ç¢ÅIÅv", name(r1) + "ÅuÇ‡Ç§Ç∑ÇÆê∂Ç‹ÇÍÇÈÇÊÅÙÅv", name(r1) + "ÅuÉtÅ[Å[Å[Å[Éì ÉtÅ[ÅcÉNÉèÉbÅIÅv"
+						txt name(r1) + "„Äå„Åì„ÅÆ„Åã„Åü„Å§„ÇÄ„ÇäÈáéÈÉé„Åå„Å£„Äç", name(r1) + "„Äå„ÅÜ„Å´„ÇÖ„Åø„ÇÖ„ÅÇÔºÅ„Äç", name(r1) + "„Äå„Åî„ÇÅ„Çì„Å™„Åï„ÅÑ„Åî„ÇÅ„Çì„Å™„Åï„ÅÑÔºÅ„Äç", name(r1) + "„Äå„ÇÇ„ÅÜ„Åô„ÅêÁîü„Åæ„Çå„Çã„Çà‚ô™„Äç", name(r1) + "„Äå„Éï„Éº„Éº„Éº„Éº„É≥ „Éï„Éº‚Ä¶„ÇØ„ÉØ„ÉÉÔºÅ„Äç"
 					}
 				}
 				else {
@@ -2110,7 +2110,7 @@
 			if ( cdata(CDATA_THIRST, r1) > 12000 ) {
 				if ( synccheck(r1, -1) ) {
 					snd SOUNDLIST_WATERM
-					txt lang(name(r1) + "ÇÕòRÇÁÇµÇΩÅB", name(r1) + " is incontinent.")
+					txt lang(name(r1) + "„ÅØÊºè„Çâ„Åó„Åü„ÄÇ", name(r1) + " is incontinent.")
 				}
 				if ( mdata(MDATA_TYPE) != MAP_TYPE_WORLD ) {
 					if ( cfg_dust_select == 0 ) {
@@ -2167,7 +2167,7 @@
 		}
 		if ( gdata(GDATA_SLEEP) >= 30 ) {
 			if ( gdata(GDATA_TURN) \ 100 == 0 ) {
-				txt lang("Ç†Ç»ÇΩÇÕñ∞ÇËÇïKóvÇ∆ÇµÇƒÇ¢ÇÈÅB", "You need to sleep.")
+				txt lang("„ÅÇ„Å™„Åü„ÅØÁú†„Çä„ÇíÂøÖË¶Å„Å®„Åó„Å¶„ÅÑ„Çã„ÄÇ", "You need to sleep.")
 			}
 			if ( rnd(2) ) {
 				regen = 0
@@ -2340,12 +2340,12 @@
 		if ( cdata(CDATA_IMPRESSION, cnt) >= 53 ) {
 			if ( cdata(CDATA_QUALITY, cnt) >= FIX_QUALITY_MIRACLE ) {
 				ptp += 20 + cdata(CDATA_LEVEL, cnt) / 3
-				txt lang(cdatan(CDATAN_NAME, cnt) + "ÇÕñûë´ÇµÇΩÅB", cdatan(CDATAN_NAME, cnt) + " " + is(cnt) + " satisfied.")
+				txt lang(cdatan(CDATAN_NAME, cnt) + "„ÅØÊ∫ÄË∂≥„Åó„Åü„ÄÇ", cdatan(CDATAN_NAME, cnt) + " " + is(cnt) + " satisfied.")
 			}
 		}
 	loop
 	if ( ptp != 0 ) {
-		txt lang("(çáåvÉ{Å[ÉiÉX:" + ptp + "%) ", "(Total Bonus:" + ptp + "%)")
+		txt lang("(ÂêàË®à„Éú„Éº„Éä„Çπ:" + ptp + "%) ", "(Total Bonus:" + ptp + "%)")
 	}
 	qdata(QDATA_PARAM2, gdata(GDATA_QUEST_REF)) = qdata(QDATA_PARAM2, gdata(GDATA_QUEST_REF)) * (100 + ptp) / 100
 	return

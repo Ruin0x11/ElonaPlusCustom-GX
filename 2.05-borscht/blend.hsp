@@ -20,7 +20,7 @@
 			locvar_rpmatname_s += "/bugged/"
 			return locvar_rpmatname_s
 		}
-		locvar_rpmatname_s = refchara(locvar_rpmatname_p, DBSPEC_CHARA_NAME_ORG, 1) + lang("‚Ì€‘Ì", " corpse")
+		locvar_rpmatname_s = refchara(locvar_rpmatname_p, DBSPEC_CHARA_NAME_ORG, 1) + lang("ã®æ­»ä½“", " corpse")
 		return locvar_rpmatname_s
 	}
 	return locvar_rpmatname_s
@@ -48,33 +48,33 @@
 
 #defcfunc rpsuccessrate int rpsuccessrate_rate
 	if ( rpsuccessrate_rate == 100 ) {
-		return lang("‚à‚¤Š®àøI", "Perfect!")
+		return lang("ã‚‚ã†å®Œç’§ï¼", "Perfect!")
 	}
 	if ( rpsuccessrate_rate >= 90 ) {
-		return lang("’©”Ñ‘OI", "A piece of cake!")
+		return lang("æœé£¯å‰ï¼", "A piece of cake!")
 	}
 	if ( rpsuccessrate_rate >= 80 ) {
-		return lang("‚©‚ñ‚½‚ñ‚Ë", "Very likely")
+		return lang("ã‹ã‚“ãŸã‚“ã­", "Very likely")
 	}
 	if ( rpsuccessrate_rate >= 70 ) {
-		return lang("‚Ü‚¸‘åä•v", "No problem")
+		return lang("ã¾ãšå¤§ä¸ˆå¤«", "No problem")
 	}
 	if ( rpsuccessrate_rate >= 60 ) {
-		return lang("‚½‚Ô‚ñ‚¢‚¯‚é", "Probably OK")
+		return lang("ãŸã¶ã‚“ã„ã‘ã‚‹", "Probably OK")
 	}
 	if ( rpsuccessrate_rate >= 50 ) {
-		return lang("‚¿‚å‚Á‚Æ•sˆÀ", "Maybe")
+		return lang("ã¡ã‚‡ã£ã¨ä¸å®‰", "Maybe")
 	}
 	if ( rpsuccessrate_rate >= 40 ) {
-		return lang("‚¾‚ß‚©‚à", "Bad")
+		return lang("ã ã‚ã‹ã‚‚", "Bad")
 	}
 	if ( rpsuccessrate_rate >= 30 ) {
-		return lang("‚â‚Î‚¢", "Very bad")
+		return lang("ã‚„ã°ã„", "Very bad")
 	}
 	if ( rpsuccessrate_rate >= 20 ) {
-		return lang("‚Ü‚¸–³—", "Almost impossible")
+		return lang("ã¾ãšç„¡ç†", "Almost impossible")
 	}
-	return lang("â‘Îƒ€ƒŠI", "Impossible!")
+	return lang("çµ¶å¯¾ãƒ ãƒªï¼", "Impossible!")
 
 *label_5138
 	goto *label_5143
@@ -100,12 +100,12 @@
 				repeat
 					if ( locvar_rpdiff_f2 < 0 ) {
 						txtef COLOR_GREEN
-						txt lang("’²‡‚Ì¬Œ÷—¦‚ªã‚ª‚Á‚½B", "The success rate goes up.")
+						txt lang("èª¿åˆã®æˆåŠŸç‡ãŒä¸ŠãŒã£ãŸã€‚", "The success rate goes up.")
 						break
 					}
 					if ( locvar_rpdiff_f2 > 0 ) {
 						txtef COLOR_RED
-						txt lang("’²‡‚Ì¬Œ÷—¦‚ª‰º‚ª‚Á‚½B", "The success rate goes down.")
+						txt lang("èª¿åˆã®æˆåŠŸç‡ãŒä¸‹ãŒã£ãŸã€‚", "The success rate goes down.")
 						break
 					}
 					break
@@ -404,7 +404,7 @@
 	}
 	pos locvar_window_recipe2_dx + 140, locvar_window_recipe2_dy
 	color 30, 30, 30
-	bmes lang("¬Œ÷—¦: ", "Success Rate: ") + locvar_window_recipe2_s, 235, 235, 235
+	bmes lang("æˆåŠŸç‡: ", "Success Rate: ") + locvar_window_recipe2_s, 235, 235, 235
 	locvar_window_recipe2_p = rpdata(RPDATA_TIME, rpid)
 	if ( rpmode ) {
 		if ( locvar_window_recipe2_p < 10000 ) {
@@ -415,13 +415,13 @@
 		}
 		locvar_window_recipe2_p += rpdata(RPDATA_TIME, rpid) / 10000 * val * 10000
 	}
-	locvar_window_recipe2_s = "" + locvar_window_recipe2_p \ 10000 + lang("ƒ^[ƒ“", " turns")
+	locvar_window_recipe2_s = "" + locvar_window_recipe2_p \ 10000 + lang("ã‚¿ãƒ¼ãƒ³", " turns")
 	if ( locvar_window_recipe2_p >= 10000 ) {
-		locvar_window_recipe2_s += lang("‚Æ", " and ") + locvar_window_recipe2_p / 10000 + lang("ŠÔ", " hours")
+		locvar_window_recipe2_s += lang("ã¨", " and ") + locvar_window_recipe2_p / 10000 + lang("æ™‚é–“", " hours")
 	}
 	pos locvar_window_recipe2_dx + 140, locvar_window_recipe2_dy + 20
 	color 40, 40, 40
-	bmes lang("•K—vŠÔ: ", "Time: ") + locvar_window_recipe2_s, 235, 235, 235
+	bmes lang("å¿…è¦æ™‚é–“: ", "Time: ") + locvar_window_recipe2_s, 235, 235, 235
 	return
 
 *label_5158
@@ -443,7 +443,7 @@
 	line window_recipe_arg2 + 50 + locvar_window_recipe_xfix, window_recipe_arg3 + window_recipe_arg5 - 48 - window_recipe_arg5 \ 8, window_recipe_arg2 + window_recipe_arg4 - 40, window_recipe_arg3 + window_recipe_arg5 - 48 - window_recipe_arg5 \ 8
 	color 234, 220, 188
 	line window_recipe_arg2 + 50 + locvar_window_recipe_xfix, window_recipe_arg3 + window_recipe_arg5 - 49 - window_recipe_arg5 \ 8, window_recipe_arg2 + window_recipe_arg4 - 40, window_recipe_arg3 + window_recipe_arg5 - 49 - window_recipe_arg5 \ 8
-	locvar_window_recipe_s = "Page." + (rppage + 1) + "/" + (rppage(1) + 1), "" + key_prev + "," + key_next + "" + lang("[ƒy[ƒWØ‘Ö]  ", "[Page]  ")
+	locvar_window_recipe_s = "Page." + (rppage + 1) + "/" + (rppage(1) + 1), "" + key_prev + "," + key_next + "" + lang("[ãƒšãƒ¼ã‚¸åˆ‡æ›¿]  ", "[Page]  ")
 	if ( step == (-1) ) {
 		locvar_window_recipe_s(1) += strhint3
 	}
@@ -463,7 +463,7 @@
 	font lang(cfg_font1, cfg_font2), 12 - en * 2, 1
 	color 0, 0, 0
 	pos locvar_window_recipe_dx - 10, locvar_window_recipe_dy
-	mes lang("’²‡‚Ìè‡", "Blending Procedure")
+	mes lang("èª¿åˆã®æ‰‹é †", "Blending Procedure")
 	locvar_window_recipe_dy = locvar_window_recipe_dy + 18
 	font lang(cfg_font1, cfg_font2), 13 - en * 2, 0
 	color 0, 0, 0
@@ -480,11 +480,11 @@
 	}
 	if ( step == (-1) ) {
 		pos locvar_window_recipe_dx, locvar_window_recipe_dy
-		mes "" + locvar_window_recipe_i + "." + lang("ƒŒƒVƒs‚ğ‘I‚Ô", "Choose a recipe")
+		mes "" + locvar_window_recipe_i + "." + lang("ãƒ¬ã‚·ãƒ”ã‚’é¸ã¶", "Choose a recipe")
 	}
 	else {
 		pos locvar_window_recipe_dx, locvar_window_recipe_dy
-		mes "" + locvar_window_recipe_i + "." + lang(rpname(rpid) + "‚ÌƒŒƒVƒs‚ğ‘I‚ñ‚¾", "Chose the recipe of " + rpname(rpid))
+		mes "" + locvar_window_recipe_i + "." + lang(rpname(rpid) + "ã®ãƒ¬ã‚·ãƒ”ã‚’é¸ã‚“ã ", "Chose the recipe of " + rpname(rpid))
 	}
 	locvar_window_recipe_dy += 17
 	locvar_window_recipe_i++
@@ -505,10 +505,10 @@
 		if ( step <= cnt ) {
 			blendmatnum rpdata(RPDATA_MAT + cnt, rpid), cnt
 			locvar_window_recipe_p = stat
-			locvar_window_recipe_s = lang(rpmatname(cnt) + "‚ğ‰Á‚¦‚é", "Add " + rpmatname(cnt) + "") + "(" + lang("Š:", "Stock:") + locvar_window_recipe_p + ")"
+			locvar_window_recipe_s = lang(rpmatname(cnt) + "ã‚’åŠ ãˆã‚‹", "Add " + rpmatname(cnt) + "") + "(" + lang("æ‰€æŒ:", "Stock:") + locvar_window_recipe_p + ")"
 		}
 		else {
-			locvar_window_recipe_s = lang("", "Selected ") + itemname(rpref(10 + cnt * 2)) + lang("‚ğ‘I‚ñ‚¾", "")
+			locvar_window_recipe_s = lang("", "Selected ") + itemname(rpref(10 + cnt * 2)) + lang("ã‚’é¸ã‚“ã ", "")
 			locvar_window_recipe_s = strmid(locvar_window_recipe_s, 0, 44)
 		}
 		pos locvar_window_recipe_dx, locvar_window_recipe_dy
@@ -529,16 +529,16 @@
 		}
 	}
 	pos locvar_window_recipe_dx, locvar_window_recipe_dy
-	mes "" + locvar_window_recipe_i + "." + lang("’²‡‚ğn‚ß‚éI", "Start blending!")
+	mes "" + locvar_window_recipe_i + "." + lang("èª¿åˆã‚’å§‹ã‚ã‚‹ï¼", "Start blending!")
 	locvar_window_recipe_dy += 30
 	if ( rppage == 0 ) {
 		font lang(cfg_font1, cfg_font2), 12 - en * 2, 1
 		color 0, 0, 0
 		pos locvar_window_recipe_dx - 10, locvar_window_recipe_dy
-		mes lang(rpname(rpid) + "‚ÌƒŒƒVƒs", "The recipe of " + rpname(rpid))
+		mes lang(rpname(rpid) + "ã®ãƒ¬ã‚·ãƒ”", "The recipe of " + rpname(rpid))
 		locvar_window_recipe_dy += 20
 		pos locvar_window_recipe_dx - 10, locvar_window_recipe_dy
-		mes lang("•K—v‚ÈƒXƒLƒ‹:", "Required Skills:")
+		mes lang("å¿…è¦ãªã‚¹ã‚­ãƒ«:", "Required Skills:")
 		locvar_window_recipe_dy = locvar_window_recipe_dy + 18
 		font lang(cfg_font1, cfg_font2), 13 - en * 2, 0
 		color 0, 0, 0
@@ -559,7 +559,7 @@
 		font lang(cfg_font1, cfg_font2), 12 - en * 2, 1
 		color 0, 0, 0
 		pos locvar_window_recipe_dx - 10, locvar_window_recipe_dy
-		mes lang("•K—v‚È‹@Ş:", "Required equipment:")
+		mes lang("å¿…è¦ãªæ©Ÿæ:", "Required equipment:")
 		return
 	}
 	if ( window_recipe_itemid == (-1) ) {
@@ -574,15 +574,15 @@
 	color 0, 0, 0
 	if ( rpdata(RPDATA_ITEM, rpid) == ITEM_ID_GOLD_PIECE ) {
 		pos locvar_window_recipe_dx, locvar_window_recipe_dy
-		mes lang("ŒğŠ·‹à‰İ{" + calcitemvalue(window_recipe_itemid, 3) + "–‡B", "Add " + calcitemvalue(window_recipe_itemid, 3) + " gold.")
+		mes lang("äº¤æ›é‡‘è²¨ï¼‹" + calcitemvalue(window_recipe_itemid, 3) + "æšã€‚", "Add " + calcitemvalue(window_recipe_itemid, 3) + " gold.")
 		locvar_window_recipe_dy += 16
 		pos locvar_window_recipe_dx, locvar_window_recipe_dy
-		mes lang("’ˆÓFˆê“x‚ÉŒğŠ·‚Å‚«‚é‹à‰İ‚Í‡Œv9999–‡‚Ü‚Å‚¾B", "Attention: Up to 9999 gold coins can be exchanged at a time.")
+		mes lang("æ³¨æ„ï¼šä¸€åº¦ã«äº¤æ›ã§ãã‚‹é‡‘è²¨ã¯åˆè¨ˆ9999æšã¾ã§ã ã€‚", "Attention: Up to 9999 gold coins can be exchanged at a time.")
 		locvar_window_recipe_dy += 16
 	}
 	if ( inv(INV_ITEM_KNOWN, window_recipe_itemid) < ITEM_KNOWN_QUALITY ) {
 		pos locvar_window_recipe_dx, locvar_window_recipe_dy
-		mes lang("‚±‚ÌƒAƒCƒeƒ€‚ÍŠÓ’è‚³‚ê‚Ä‚¢‚È‚¢B", "You haven't identified it yet.")
+		mes lang("ã“ã®ã‚¢ã‚¤ãƒ†ãƒ ã¯é‘‘å®šã•ã‚Œã¦ã„ãªã„ã€‚", "You haven't identified it yet.")
 		locvar_window_recipe_dy += 16
 		return
 	}
@@ -607,7 +607,7 @@
 	}
 	else {
 		pos locvar_window_recipe_dx, locvar_window_recipe_dy
-		mes lang("Œp³Œø‰Ê‚È‚µ", "No inheritance effects")
+		mes lang("ç¶™æ‰¿åŠ¹æœãªã—", "No inheritance effects")
 		locvar_window_recipe_dy += 16
 		locvar_window_recipe_p++
 	}
@@ -637,400 +637,400 @@
 	rpid = 200
 	rpid = 200
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("‚ª‚ç‚­‚½˜B¬", "create junk")
+	rpdatan(rpid) = lang("ãŒã‚‰ããŸéŒ¬æˆ", "create junk")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_WORTHLESS_FAKE_GOLD_BAR, 1
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 1
 	rpdata(RPDATA_MAT + 0, rpid) = RF_ANY, RF_ANY, RF_ANY, RF_ANY, RF_ANY
 	rpid = STARTING_RPID + 1
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("•s“™‰¿ŒğŠ·", "inequivalent exchange")
+	rpdatan(rpid) = lang("ä¸ç­‰ä¾¡äº¤æ›", "inequivalent exchange")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_GOLD_PIECE, 10
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 18, SKILL_NORMAL_NEGOTIATION, 10
 	rpdata(RPDATA_MAT + 0, rpid) = RF_ANY, RF_ANY, RF_ANY, RF_ANY, RF_ANY
 	rpid = STARTING_RPID + 2
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("ö—¯", "distillation")
+	rpdatan(rpid) = lang("è’¸ç•™", "distillation")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_BOTTLE_WATER, 30 + 1 * 10000
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_MAGIC_DEVICE, 6
 	rpdata(RPDATA_MAT + 0, rpid) = (43 /*!!!@[ITEM_ID_WOOD_CHIP @@@ FILTER_RACE_RAT2]@!!! */), ITEM_ID_ROD_FIRE_WALL, ITEM_ID_POTION_SALT_SOLUTION
 	rpid = STARTING_RPID + 3
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("uŠÔ”­y", "instant ale")
+	rpdatan(rpid) = lang("ç¬é–“ç™ºé…µ", "instant ale")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_BOTTLE_CRIM_ALE, 5
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 2
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_CRIMBERRY
 	rpid = STARTING_RPID + 4
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("R‘ÌŒ‹»", "cure crystal")
+	rpdatan(rpid) = lang("æŠ—ä½“çµæ™¶", "cure crystal")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_CURE_CRYSTAL, 15
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 10
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_POTION_CURE_CORRUPTION, (35 /*!!!@[ITEM_ID_EARTH_CRYSTAL @@@ FILTER_RACE_BAT]@!!! */)
 	rpid = STARTING_RPID + 5
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("—LŠQƒ|[ƒVƒ‡ƒ“", "harmful potion")
+	rpdatan(rpid) = lang("æœ‰å®³ãƒãƒ¼ã‚·ãƒ§ãƒ³", "harmful potion")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_POISON, 20
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_GENE_ENGINEER, 3, SKILL_NORMAL_ALCHEMY, 12
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_SCROLL_CURSE, (26 /*!!!@[ITEM_ID_BOTTLE_DIRTY_WATER @@@ FILTER_RACE_ROCK]@!!! */)
 	rpid = STARTING_RPID + 6
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("Á“Å–ò", "antidote")
+	rpdatan(rpid) = lang("æ¶ˆæ¯’è–¬", "antidote")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_DISINFECTANT, 5
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_GENE_ENGINEER, 8, SKILL_NORMAL_MAGIC_DEVICE, 4
 	rpdata(RPDATA_MAT + 0, rpid) = RF_ALE, RF_DISINFECTANT
 	rpid = STARTING_RPID + 7
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("–‚•¨‚æ‚¯", "encount canceller")
+	rpdatan(rpid) = lang("é­”ç‰©ã‚ˆã‘", "encount canceller")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_ENCOUNTER_CANCELLER, 15
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_GENE_ENGINEER, 13, SKILL_NORMAL_ALCHEMY, 13
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_URINE, RF_POISON
 	rpid = STARTING_RPID + 8
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("¸–û’Šo", "extract essential oil")
+	rpdatan(rpid) = lang("ç²¾æ²¹æŠ½å‡º", "extract essential oil")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_ESSENTIAL_OIL, 30
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 15
 	rpdata(RPDATA_MAT + 0, rpid) = RF_FRUIT, RF_ALE
 	rpid = STARTING_RPID + 9
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("ŒÃ‚Ì–ò", "ancient medicine")
+	rpdatan(rpid) = lang("å¤ã®è–¬", "ancient medicine")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_POTION_WISDOM, 50 + 1 * 10000
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 35, SKILL_ATTR_LER, 50
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_SCROLL_KNOWLEDGE, ITEM_ID_POTION_HERO, ITEM_ID_POTION_CONCENTRATION, ITEM_ID_POTION_GEM
 	rpid = STARTING_RPID + 10
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("èì‚èƒ{[ƒ‹", "ball making")
+	rpdatan(rpid) = lang("æ‰‹ä½œã‚Šãƒœãƒ¼ãƒ«", "ball making")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_MONSTER_BALL, 50
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_CARPENTRY, 20
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_4D_MIRROR, FILTER_CONTAINER
 	rpid = STARTING_RPID + 11
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("’N‚©‚Ì“ú‹L", "mysterious diary")
+	rpdatan(rpid) = lang("èª°ã‹ã®æ—¥è¨˜", "mysterious diary")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_MYSTERIOUS_DIARY, 10
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_LITERACY, 10
 	rpdata(RPDATA_MAT + 0, rpid) = RF_DIARY, FILTER_ITEM_BOOK
 	rpid = STARTING_RPID + 12
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("¶‘Ì•œŒ³i–¢À‘•j", "Under development")
+	rpdatan(rpid) = lang("ç”Ÿä½“å¾©å…ƒï¼ˆæœªå®Ÿè£…ï¼‰", "Under development")
 	rpdata(RPDATA_ITEM, rpid) = RECIPE_BLEND_ACTION_BIOLOGICAL_RESTORATION, 50 + 4 * 10000
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 35, SKILL_NORMAL_GENE_ENGINEER, 30
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_MYSTERIOUS_FOSSIL, ITEM_ID_BOOK_RESURRECTION
 	rpid = STARTING_RPID + 13
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("Kæ‚è", "rust removal")
+	rpdatan(rpid) = lang("éŒ†å–ã‚Š", "rust removal")
 	rpdata(RPDATA_ITEM, rpid) = RECIPE_BLEND_ACTION_ACID_PROOF, 60, 1
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 10
 	rpdata(RPDATA_MAT + 0, rpid) = RF_ANY, ITEM_ID_LEMON, ITEM_ID_ACIDPROOF_LIQUID
 	rpid = STARTING_RPID + 14
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("—°_", "sulfuric")
+	rpdatan(rpid) = lang("ç¡«é…¸", "sulfuric")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_BOTTLE_SULFURIC, 10
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 5
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_SULFUR, (26 /*!!!@[ITEM_ID_BOTTLE_DIRTY_WATER @@@ FILTER_RACE_ROCK]@!!! */)
 	rpid = STARTING_RPID + 15
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("©‰Æ»‰Î‰Š•r", "homemade molotov")
+	rpdatan(rpid) = lang("è‡ªå®¶è£½ç«ç‚ç“¶", "homemade molotov")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_MOLOTOV, 5
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_CARPENTRY, 5
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_GASOLINE, ITEM_ID_LOT_EMPTY_BOTTLES
 	rpid = STARTING_RPID + 16
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("T‚«‰a", "ground bait")
+	rpdatan(rpid) = lang("æ’’ãé¤Œ", "ground bait")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_GROUND_BAIT, 10
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_FISHING, 6
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_DEAD_FISH, RF_BAIT
 	rpid = STARTING_RPID + 17
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("‚É‚¬‚èƒvƒ`", "putitoro")
+	rpdatan(rpid) = lang("ã«ãã‚Šãƒ—ãƒ", "putitoro")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_PUTITORO, 24
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_COOKING, 20, SKILL_NORMAL_GENE_ENGINEER, 5
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_CORPSE, RF_FISH
 	rpdata(RPDATA_MAT_EXT + 0, rpid) = 10000 + 3
 	rpid = STARTING_RPID + 18
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("ƒpƒ“‚Â‚­‚è", "puff puff bread")
+	rpdatan(rpid) = lang("ãƒ‘ãƒ³ã¤ãã‚Š", "puff puff bread")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_PUFF_PUFF_BREAD, 30
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_COOKING, 20, SKILL_NORMAL_ALCHEMY, 5
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_PANTY, ITEM_ID_SACK_FLOUR
 	rpid = STARTING_RPID + 19
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("ƒ}ƒ“ƒhƒ‰ƒTƒ‰ƒ_", "mandrake salad")
+	rpdatan(rpid) = lang("ãƒãƒ³ãƒ‰ãƒ©ã‚µãƒ©ãƒ€", "mandrake salad")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_MANDRAKE_SALAD, 24
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_COOKING, 20, SKILL_NORMAL_GARDENING, 5
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_CORPSE, RF_VEGE
 	rpdata(RPDATA_MAT_EXT + 0, rpid) = 10000 + 19
 	rpid = STARTING_RPID + 20
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("“Á»‚Ì“÷‚Ü‚ñ", "meat bun")
+	rpdatan(rpid) = lang("ç‰¹è£½ã®è‚‰ã¾ã‚“", "meat bun")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_SPECIAL_STEAMED_MEAT_BUN, 30
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_COOKING, 20, SKILL_NORMAL_ANATOMY, 5
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_CORPSE, ITEM_ID_SACK_FLOUR
 	rpdata(RPDATA_MAT_EXT + 0, rpid) = 10000 + 251
 	rpid = STARTING_RPID + 21
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("«“]Š·‚Ì‹V", "sex change")
+	rpdatan(rpid) = lang("æ€§è»¢æ›ã®å„€", "sex change")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_FORBIDDEN_MEAT, 30
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_GENE_ENGINEER, 15, SKILL_NORMAL_ALCHEMY, 15
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_SPELLBOOK_MUTATION, ITEM_ID_CORPSE, ITEM_ID_BOOK_RESURRECTION
 	rpid = STARTING_RPID + 22
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("“ä‚Ìí", "unknown seed")
+	rpdatan(rpid) = lang("è¬ã®ç¨®", "unknown seed")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_UNKNOWN_SEED, 10
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_GARDENING, 20
 	rpdata(RPDATA_MAT + 0, rpid) = FILTER_ITEM_FOOD, FILTER_ITEM_FOOD, RF_SEED, RF_SEED
 	rpid = STARTING_RPID + 23
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("ƒn[ƒu’²‡", "herb infusion")
+	rpdatan(rpid) = lang("ãƒãƒ¼ãƒ–èª¿åˆ", "herb infusion")
 	rpdata(RPDATA_ITEM, rpid) = (10000 /*!!!@[STARTING_RECIPE_BLEND_ACTION @@@ RECIPE_BLEND_ACTION_HERBED_FOOD]@!!! */), 60, 1
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_GARDENING, 20, SKILL_NORMAL_COOKING, 30
 	rpdata(RPDATA_MAT + 0, rpid) = FILTER_ITEM_FOOD, ITEM_ID_STOMAFILLIA, ITEM_ID_CURARIA, RF_HERB
 	rpid = STARTING_RPID + 24
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("i‰»‚Ì‘¤}", "another evolution")
+	rpdatan(rpid) = lang("é€²åŒ–ã®å´æ", "another evolution")
 	rpdata(RPDATA_ITEM, rpid) = RECIPE_BLEND_ACTION_ANOTHER_HEART, 30, 1
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 30
 	rpdata(RPDATA_MAT + 0, rpid) = RF_EVITEM, ITEM_ID_SPELLBOOK_MUTATION
 	rpid = STARTING_RPID + 25
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("—Fî‚ÌØ", "friendship token")
+	rpdatan(rpid) = lang("å‹æƒ…ã®è¨¼", "friendship token")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_TOKEN_FRIENDSHIP, 30
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_TAILORING, 20, SKILL_NORMAL_JEWELER, 20, SKILL_NORMAL_CARPENTRY, 20, SKILL_NORMAL_ALCHEMY, 20
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_SMALL_MEDAL, ITEM_ID_MATERIAL_BOX, ITEM_ID_SCROLL_GAIN_MATERIAL
 	rpid = STARTING_RPID + 26
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("ƒlƒNƒƒ}ƒ“ƒV[", "necromancy")
+	rpdatan(rpid) = lang("ãƒã‚¯ãƒ­ãƒãƒ³ã‚·ãƒ¼", "necromancy")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_COFFIN_OF_NECROMANCY, 20 + 1 * 10000
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ANATOMY, 10, SKILL_NORMAL_ALCHEMY, 10
 	rpdata(RPDATA_MAT + 0, rpid) = (36 /*!!!@[ITEM_ID_MANA_CRYSTAL @@@ FILTER_RACE_BAT2]@!!! */), FILTER_REMAINS, RF_COFFIN
 	rpid = STARTING_RPID + 27
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("ƒlƒNƒƒ`ƒ…[ƒjƒ“ƒO", "necro remodel")
+	rpdatan(rpid) = lang("ãƒã‚¯ãƒ­ãƒãƒ¥ãƒ¼ãƒ‹ãƒ³ã‚°", "necro remodel")
 	rpdata(RPDATA_ITEM, rpid) = RECIPE_BLEND_ACTION_NECRO_REMODEL, 20, 1
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ANATOMY, 20, SKILL_NORMAL_ALCHEMY, 20
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_COFFIN_OF_NECROMANCY, FILTER_REMAINS
 	rpid = STARTING_RPID + 28
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("–‚“‡", "dark fusion")
+	rpdatan(rpid) = lang("é­”çµ±åˆ", "dark fusion")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_CRIMSON_DARK_ORB, 15
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_DISARM_TRAP, 10, SKILL_NORMAL_JEWELER, 5
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_DEVIL_FRAGMENT, ITEM_ID_DEVIL_FRAGMENT, ITEM_ID_DEVIL_FRAGMENT, ITEM_ID_DEVIL_FRAGMENT, ITEM_ID_DEVIL_FRAGMENT
 	rpid = STARTING_RPID + 29
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("ƒ‹ƒrƒiƒX×H", "brilliant rubynus")
+	rpdatan(rpid) = lang("ãƒ«ãƒ“ãƒŠã‚¹ç´°å·¥", "brilliant rubynus")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_BRILLIANT_RUBYNUS, 10
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 10, SKILL_NORMAL_JEWELER, 10
 	rpdata(RPDATA_MAT + 0, rpid) = (39 /*!!!@[ITEM_ID_RAW_RUBYNUS_ORE @@@ FILTER_RACE_WASP2]@!!! */), (39 /*!!!@[ITEM_ID_RAW_RUBYNUS_ORE @@@ FILTER_RACE_WASP2]@!!! */), (39 /*!!!@[ITEM_ID_RAW_RUBYNUS_ORE @@@ FILTER_RACE_WASP2]@!!! */), (39 /*!!!@[ITEM_ID_RAW_RUBYNUS_ORE @@@ FILTER_RACE_WASP2]@!!! */), (39 /*!!!@[ITEM_ID_RAW_RUBYNUS_ORE @@@ FILTER_RACE_WASP2]@!!! */)
 	rpid = STARTING_RPID + 30
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("ƒGƒƒ‰ƒ‹ƒh×H", "emerald tablet")
+	rpdatan(rpid) = lang("ã‚¨ãƒ¡ãƒ©ãƒ«ãƒ‰ç´°å·¥", "emerald tablet")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_TABLET_EMERALD, 10
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 15, SKILL_NORMAL_JEWELER, 20
 	rpdata(RPDATA_MAT + 0, rpid) = (41 /*!!!@[ITEM_ID_RAW_EMERALD_ORE @@@ FILTER_RACE_SPIDER3]@!!! */), (41 /*!!!@[ITEM_ID_RAW_EMERALD_ORE @@@ FILTER_RACE_SPIDER3]@!!! */), (41 /*!!!@[ITEM_ID_RAW_EMERALD_ORE @@@ FILTER_RACE_SPIDER3]@!!! */), (41 /*!!!@[ITEM_ID_RAW_EMERALD_ORE @@@ FILTER_RACE_SPIDER3]@!!! */), (41 /*!!!@[ITEM_ID_RAW_EMERALD_ORE @@@ FILTER_RACE_SPIDER3]@!!! */)
 	rpid = STARTING_RPID + 31
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("ƒ_ƒCƒ„ƒ‚ƒ“ƒh×H", "brilliant diamond")
+	rpdatan(rpid) = lang("ãƒ€ã‚¤ãƒ¤ãƒ¢ãƒ³ãƒ‰ç´°å·¥", "brilliant diamond")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_BRILLIANT_DIAMOND, 10
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 20, SKILL_NORMAL_JEWELER, 30
 	rpdata(RPDATA_MAT + 0, rpid) = (42 /*!!!@[ITEM_ID_RAW_DIAMOND_ORE @@@ FILTER_RACE_GHOST]@!!! */), (42 /*!!!@[ITEM_ID_RAW_DIAMOND_ORE @@@ FILTER_RACE_GHOST]@!!! */), (42 /*!!!@[ITEM_ID_RAW_DIAMOND_ORE @@@ FILTER_RACE_GHOST]@!!! */), (42 /*!!!@[ITEM_ID_RAW_DIAMOND_ORE @@@ FILTER_RACE_GHOST]@!!! */), (42 /*!!!@[ITEM_ID_RAW_DIAMOND_ORE @@@ FILTER_RACE_GHOST]@!!! */)
 	rpid = STARTING_RPID + 32
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("–Ø‚Ì‰ÁH", "wood craft")
+	rpdatan(rpid) = lang("æœ¨ã®åŠ å·¥", "wood craft")
 	rpdata(RPDATA_ITEM, rpid) = RECIPE_BLEND_ACTION_WOODCRAFT, 100
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 2, SKILL_NORMAL_CARPENTRY, 2
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_CARPENTERS_TOOL, ITEM_ID_WOOD_MATERIAL, (43 /*!!!@[ITEM_ID_WOOD_CHIP @@@ FILTER_RACE_RAT2]@!!! */)
 	rpid = STARTING_RPID + 33
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("Î‚Ì‰ÁH", "stone craft")
+	rpdatan(rpid) = lang("çŸ³ã®åŠ å·¥", "stone craft")
 	rpdata(RPDATA_ITEM, rpid) = RECIPE_BLEND_ACTION_STONECRAFT, 100
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 2, SKILL_NORMAL_JEWELER, 2
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_GEM_CUTTER, ITEM_ID_STONE_MATERIAL, ITEM_ID_STONE
 	rpid = STARTING_RPID + 34
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("Ä‚«•¨", "clay craft")
+	rpdatan(rpid) = lang("ç„¼ãç‰©", "clay craft")
 	rpdata(RPDATA_ITEM, rpid) = RECIPE_BLEND_ACTION_POTTERY, 100
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 2, SKILL_NORMAL_SENSE_QUALITY, 2, SKILL_ATTR_DEX, 40
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_STOVE, ITEM_ID_CLAY, (46 /*!!!@[ITEM_ID_BROKEN_VASE @@@ FILTER_RACE_BEETLE2]@!!! */)
 	rpid = STARTING_RPID + 35
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("ƒNƒ‰ƒtƒgƒ}ƒCƒ“", "craft mine")
+	rpdatan(rpid) = lang("ã‚¯ãƒ©ãƒ•ãƒˆãƒã‚¤ãƒ³", "craft mine")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_MINE, 25
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_CARPENTRY, 10, SKILL_NORMAL_DISARM_TRAP, 15
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_SULFUR, (35 /*!!!@[ITEM_ID_EARTH_CRYSTAL @@@ FILTER_RACE_BAT]@!!! */), FILTER_CONTAINER
 	rpid = STARTING_RPID + 36
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("‚½‚é”š’e", "barrel bomb")
+	rpdatan(rpid) = lang("ãŸã‚‹çˆ†å¼¾", "barrel bomb")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_BOMB_BARREL, 25 + 1 * 10000
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_DISARM_TRAP, 20, SKILL_NORMAL_GENE_ENGINEER, 20
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_BOTTLE_SULFURIC, ITEM_ID_CLAY, ITEM_ID_URINE, RF_BARREL
 	rpid = STARTING_RPID + 37
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("–‚—Í”š’e", "crystal bomb")
+	rpdatan(rpid) = lang("é­”åŠ›çˆ†å¼¾", "crystal bomb")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_MAGISTUS, 10
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 4, SKILL_NORMAL_CONTROL_MAGIC, 4
 	rpdata(RPDATA_MAT + 0, rpid) = (36 /*!!!@[ITEM_ID_MANA_CRYSTAL @@@ FILTER_RACE_BAT2]@!!! */), (45 /*!!!@[ITEM_ID_GARBAGE @@@ FILTER_RACE_BEETLE]@!!! */)
 	rpid = STARTING_RPID + 38
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("‚·‚²‚¢–‚—Í”š’e", "big crystal bomb")
+	rpdatan(rpid) = lang("ã™ã”ã„é­”åŠ›çˆ†å¼¾", "big crystal bomb")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_TRISMAGISTUS, 50
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 60, SKILL_NORMAL_CONTROL_MAGIC, 30
 	rpdata(RPDATA_MAT + 0, rpid) = RF_MAGI, RF_MAGI, RF_MAGI, ITEM_ID_MAGATAMA
 	rpid = STARTING_RPID + 39
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("–‚Œ•“]¶", "makenn tensei")
+	rpdatan(rpid) = lang("é­”å‰£è»¢ç”Ÿ", "makenn tensei")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_SKULL_SWORD, 20 + 1 * 10000
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ANATOMY, 2, SKILL_NORMAL_ALCHEMY, 6
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_BROKEN_SWORD, ITEM_ID_BONE_FRAGMENT
 	rpid = STARTING_RPID + 40
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("^E–‚Œ•“]¶", "shin makenn tensei")
+	rpdatan(rpid) = lang("çœŸãƒ»é­”å‰£è»¢ç”Ÿ", "shin makenn tensei")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_VIOLENT_SKULL_SWORD, 30 + 1 * 10000
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ANATOMY, 30, SKILL_NORMAL_ALCHEMY, 45
 	rpdata(RPDATA_MAT + 0, rpid) = RF_MAKENN, RF_MAKENN, ITEM_ID_ORE_PIECE
 	rpid = STARTING_RPID + 41
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("‹ó‚Ì‘åŒ^ƒoƒXƒPƒbƒg", "large empty basket")
+	rpdatan(rpid) = lang("ç©ºã®å¤§å‹ãƒã‚¹ã‚±ãƒƒãƒˆ", "large empty basket")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_LARGE_EMPTY_BASKET, 30 + 1 * 10000
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_TAILORING, 30
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_EMPTY_BASKET, ITEM_ID_EMPTY_BASKET, ITEM_ID_EMPTY_BASKET
 	rpid = STARTING_RPID + 42
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("ƒsƒNƒjƒbƒNƒoƒXƒPƒbƒg", "large picnic basket")
+	rpdatan(rpid) = lang("ãƒ”ã‚¯ãƒ‹ãƒƒã‚¯ãƒã‚¹ã‚±ãƒƒãƒˆ", "large picnic basket")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_LARGE_PICNIC_BASKET, 30
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_COOKING, 30
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_CORPSE, RF_FISH, RF_BREAD, ITEM_ID_EGG, RF_VEGE, RF_FRUIT, ITEM_ID_LARGE_EMPTY_BASKET
 	rpid = STARTING_RPID + 43
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("ƒtƒ@[ƒXƒgƒGƒCƒh", "first aid kit")
+	rpdatan(rpid) = lang("ãƒ•ã‚¡ãƒ¼ã‚¹ãƒˆã‚¨ã‚¤ãƒ‰", "first aid kit")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_FIRST_AID_KIT, 20
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_TAILORING, 1
 	rpdata(RPDATA_MAT + 0, rpid) = RF_LEAF, ITEM_ID_BOTTLE_WHISKY, (47 /*!!!@[ITEM_ID_WASHINGS @@@ FILTER_RACE_KOBOLT4]@!!! */)
 	rpid = STARTING_RPID + 44
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("“Áê–î’e” ", "special ammos box")
+	rpdatan(rpid) = lang("ç‰¹æ®ŠçŸ¢å¼¾ç®±", "special ammos box")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_SPECIAL_AMMO_BOX, 40 + 2 * 10000
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_CARPENTRY, 10, SKILL_NORMAL_JEWELER, 20
 	rpdata(RPDATA_MAT + 0, rpid) = FILTER_AMMO, FILTER_AMMO, FILTER_AMMO, ITEM_ID_BLACK_CRYSTAL, FILTER_CONTAINER
 	rpid = STARTING_RPID + 45
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("ípŠj", "tactical nuke")
+	rpdatan(rpid) = lang("æˆ¦è¡“æ ¸", "tactical nuke")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_ATOMIC_LAUNCHER, 60 + 3 * 10000
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_DISARM_TRAP, 10, SKILL_NORMAL_CARPENTRY, 40, SKILL_NORMAL_ALCHEMY, 20
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_PANZERFAUST_X, ITEM_ID_NUCLEAR_BOMB
 	rpid = STARTING_RPID + 46
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("‰Œ‘‰ÁH", "tobacco processing")
+	rpdatan(rpid) = lang("ç…™è‰åŠ å·¥", "tobacco processing")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_CIGARETTE, 30
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_CARPENTRY, 7, SKILL_NORMAL_GARDENING, 12
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_TOBACCO, ITEM_ID_HEALTHY_LEAF, (43 /*!!!@[ITEM_ID_WOOD_CHIP @@@ FILTER_RACE_RAT2]@!!! */)
 	rpid = STARTING_RPID + 47
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("‚É‚¬‚è‚ß‚µ", "onigiri")
+	rpdatan(rpid) = lang("ã«ãã‚Šã‚ã—", "onigiri")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_RICE_BALL, 10
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_COOKING, 1, SKILL_NORMAL_ALCHEMY, 1
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_RICE
 	rpid = STARTING_RPID + 48
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("‚±‚¾‚í‚èƒR[ƒq[", "coffee")
+	rpdatan(rpid) = lang("ã“ã ã‚ã‚Šã‚³ãƒ¼ãƒ’ãƒ¼", "coffee")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_COFFEE, 20
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_COOKING, 5, SKILL_NORMAL_ALCHEMY, 5
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_COFFEE_BEANS
 	rpid = STARTING_RPID + 49
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("‹i’ƒ", "tea")
+	rpdatan(rpid) = lang("å–«èŒ¶", "tea")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_GREEN_TEA, 30
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_GARDENING, 10, SKILL_NORMAL_ALCHEMY, 5
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_TEA_LEAF
 	rpid = STARTING_RPID + 50
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("”‰ÁH", "barley and wheat")
+	rpdatan(rpid) = lang("éº¦åŠ å·¥", "barley and wheat")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_SACK_FLOUR, 30
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_COOKING, 10, SKILL_NORMAL_ALCHEMY, 10
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_BANNOU_MUGI
 	rpid = STARTING_RPID + 51
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("“û»•i", "dairy products")
+	rpdatan(rpid) = lang("ä¹³è£½å“", "dairy products")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_CHEESE, 20 + 2 * 10000
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_GENE_ENGINEER, 10, SKILL_NORMAL_COOKING, 15
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_BOTTLE_MILK, (46 /*!!!@[ITEM_ID_BROKEN_VASE @@@ FILTER_RACE_BEETLE2]@!!! */)
 	rpid = STARTING_RPID + 52
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("”­y‹ÃŒÅ", "fermentation coagulation")
+	rpdatan(rpid) = lang("ç™ºé…µå‡å›º", "fermentation coagulation")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_TOFU, 30 + 1 * 10000
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_GARDENING, 18, SKILL_NORMAL_COOKING, 18
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_SOYBEAN
 	rpid = STARTING_RPID + 53
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("”z‡”—¿", "mix feed")
+	rpdatan(rpid) = lang("é…åˆé£¼æ–™", "mix feed")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_LIVESTOCK_FEED, 15
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_GENE_ENGINEER, 7, SKILL_NORMAL_ANATOMY, 7
 	rpdata(RPDATA_MAT + 0, rpid) = FILTER_ITEM_FOOD, FILTER_REMAINS
 	rpid = STARTING_RPID + 54
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("ƒWƒƒƒ“ƒNƒt[ƒh", "junk food")
+	rpdatan(rpid) = lang("ã‚¸ãƒ£ãƒ³ã‚¯ãƒ•ãƒ¼ãƒ‰", "junk food")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_CYBER_SNACK, 20 + 1 * 10000
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_GENE_ENGINEER, 20
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_CORN, ITEM_ID_POTATO
 	rpid = STARTING_RPID + 55
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("ƒnƒ“ƒo[ƒK[", "hamburger")
+	rpdatan(rpid) = lang("ãƒãƒ³ãƒãƒ¼ã‚¬ãƒ¼", "hamburger")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_HAMBURGER, 5
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_COOKING, 35
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_SACK_FLOUR, ITEM_ID_CORPSE, ITEM_ID_CHEESE
 	rpid = STARTING_RPID + 56
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("‹¾ŠJ‚«", "kagami biraki")
+	rpdatan(rpid) = lang("é¡é–‹ã", "kagami biraki")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_OZOUNI, 10
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_COOKING, 25
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_KAGAMI_MOCHI
 	rpid = STARTING_RPID + 57
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("“÷‹l‚ß‘h¶", "Meat-filling resuscitation")
+	rpdatan(rpid) = lang("è‚‰è©°ã‚è˜‡ç”Ÿ", "Meat-filling resuscitation")
 	rpdata(RPDATA_ITEM, rpid) = RECIPE_BLEND_ACTION_MEAT_FILLING, 50, 1
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_GENE_ENGINEER, 25, SKILL_NORMAL_MAGIC_DEVICE, 30
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_CORPSE, ITEM_ID_FIGURINE, ITEM_ID_ROD_LIFE
 	rpid = STARTING_RPID + 58
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("‘f“G‚È‰Ô‘©", "lovely bouquet")
+	rpdatan(rpid) = lang("ç´ æ•µãªèŠ±æŸ", "lovely bouquet")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_LOVELY_BOUQUET, 20
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_ATTR_WIL, 40, SKILL_NORMAL_GARDENING, 10
 	rpdata(RPDATA_MAT + 0, rpid) = RF_FLOWER, RF_FLOWER, RF_FLOWER, RF_FLOWER, RF_FLOWER
 	rpid = STARTING_RPID + 59
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("ƒƒOƒnƒEƒX", "log house")
+	rpdatan(rpid) = lang("ãƒ­ã‚°ãƒã‚¦ã‚¹", "log house")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_DEED, 50 + 12 * 10000
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_ATTR_CON, 50, SKILL_NORMAL_CARPENTRY, 50
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_WOOD_MATERIAL, ITEM_ID_WOOD_MATERIAL, ITEM_ID_WOOD_MATERIAL, ITEM_ID_WOOD_MATERIAL, ITEM_ID_WOOD_MATERIAL
 	rpid = STARTING_RPID + 60
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("_•‹ï‰üC", "Soft equip update")
+	rpdatan(rpid) = lang("æŸ”æ­¦å…·æ”¹ä¿®", "Soft equip update")
 	rpdata(RPDATA_ITEM, rpid) = RECIPE_BLEND_ACTION_SOFT_EQUIP_UPDATE, 50, 1
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 25, SKILL_NORMAL_TAILORING, 35
 	rpdata(RPDATA_MAT + 0, rpid) = RF_SOFT, ITEM_ID_SOFT_MATERIUM, RF_EVITEM
 	rpid = STARTING_RPID + 61
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("„•‹ï‰üC", "Hard equip update")
+	rpdatan(rpid) = lang("å‰›æ­¦å…·æ”¹ä¿®", "Hard equip update")
 	rpdata(RPDATA_ITEM, rpid) = RECIPE_BLEND_ACTION_HARD_EQUIP_UPDATE, 50, 1
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 25, SKILL_NORMAL_JEWELER, 35
 	rpdata(RPDATA_MAT + 0, rpid) = RF_METAL, ITEM_ID_HARD_MATERIUM, RF_EVITEM
 	rpid = STARTING_RPID + 62
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("‰s•‹ï‰üC", "Sharp equip update")
+	rpdatan(rpid) = lang("é‹­æ­¦å…·æ”¹ä¿®", "Sharp equip update")
 	rpdata(RPDATA_ITEM, rpid) = RECIPE_BLEND_ACTION_SHARP_EQUIP_UPDATE, 50, 1
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 25, SKILL_NORMAL_CARPENTRY, 35
 	rpdata(RPDATA_MAT + 0, rpid) = RF_SHARP, ITEM_ID_SHARP_MATERIUM, RF_EVITEM
 	rpid = STARTING_RPID + 63
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("_•‹ï‚Ìì¬", "Soft equip making")
+	rpdatan(rpid) = lang("æŸ”æ­¦å…·ã®ä½œæˆ", "Soft equip making")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_SOFT_HIGH_MATERIUM, 80 + 3 * 10000
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 55, SKILL_NORMAL_TAILORING, 60
 	rpdata(RPDATA_MAT + 0, rpid) = RF_SOFT, ITEM_ID_SOFT_MATERIUM, ITEM_ID_SOFT_HIGH_MATERIUM, MAX_RF
 	rpid = STARTING_RPID + 64
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("„•‹ï‚Ìì¬", "Hard equip making")
+	rpdatan(rpid) = lang("å‰›æ­¦å…·ã®ä½œæˆ", "Hard equip making")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_HARD_HIGH_MATERIUM, 80 + 3 * 10000
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 55, SKILL_NORMAL_JEWELER, 60
 	rpdata(RPDATA_MAT + 0, rpid) = RF_METAL, ITEM_ID_HARD_MATERIUM, ITEM_ID_HARD_HIGH_MATERIUM, MAX_RF
 	rpid = STARTING_RPID + 65
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
-	rpdatan(rpid) = lang("‰s•‹ï‚Ìì¬", "Sharp equip making")
+	rpdatan(rpid) = lang("é‹­æ­¦å…·ã®ä½œæˆ", "Sharp equip making")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_SHARP_HIGH_MATERIUM, 80 + 3 * 10000
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 55, SKILL_NORMAL_CARPENTRY, 60
 	rpdata(RPDATA_MAT + 0, rpid) = RF_SHARP, ITEM_ID_SHARP_MATERIUM, ITEM_ID_SHARP_HIGH_MATERIUM, MAX_RF
@@ -1070,33 +1070,33 @@
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 22, SKILL_NORMAL_JEWELER, 40
 	rpdata(RPDATA_EQ + 0, rpid) = 0
 	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_CRIMBERRY, ITEM_ID_KISERU, (35 /*!!!@[ITEM_ID_EARTH_CRYSTAL @@@ FILTER_RACE_BAT]@!!! */)
-	rfnameorg(RFNAMEORG_ID, RF_DIARY - EXT_RF) = "diary", lang("“ú‹L’ ", "any diary")
-	rfnameorg(RFNAMEORG_ID, RF_VEGE - EXT_RF) = "vege", lang("“K“–‚È–ìØ", "any vege")
-	rfnameorg(RFNAMEORG_ID, RF_SEED - EXT_RF) = "seed", lang("“K“–‚Èí", "any seed")
-	rfnameorg(RFNAMEORG_ID, RF_HERB - EXT_RF) = "herb", lang("Šó­ƒn[ƒu", "rare herb")
-	rfnameorg(RFNAMEORG_ID, RF_FLAVOR - EXT_RF) = "flavor", lang("“K“–‚È’²–¡—¿", "suitable flavoring")
-	rfnameorg(RFNAMEORG_ID, RF_ORE - EXT_RF) = "ore", lang("“K“–‚ÈzÎ", "any ore")
-	rfnameorg(RFNAMEORG_ID, RF_WOOD - EXT_RF) = "wood", lang("–ØŞ‚ğŠÜ‚Ş‰½‚©", "something made of wood")
-	rfnameorg(RFNAMEORG_ID, RF_FISH - EXT_RF) = "fish", lang("‹›‰î—Ş", "fish")
-	rfnameorg(RFNAMEORG_ID, RF_EVITEM - EXT_RF) = "EVitem", lang("i‰»ƒAƒCƒeƒ€", "EVitem")
-	rfnameorg(RFNAMEORG_ID, RF_POISON - EXT_RF) = "poison", lang("ó‘ÔˆÙí–ò", "nega potion")
-	rfnameorg(RFNAMEORG_ID, RF_FRUIT - EXT_RF) = "fruit", lang("“K“–‚È‰Ê•¨", "any fruit")
-	rfnameorg(RFNAMEORG_ID, RF_BREAD - EXT_RF) = "bread", lang("ƒpƒ“—Ş", "any bread")
-	rfnameorg(RFNAMEORG_ID, RF_ALE - EXT_RF) = "ale", lang("“K“–‚ÈƒAƒ‹ƒR[ƒ‹", "any alcohol")
-	rfnameorg(RFNAMEORG_ID, RF_DISINFECTANT - EXT_RF) = "holy", lang("“K“–‚Èò‰»ƒAƒCƒeƒ€", "any holy")
-	rfnameorg(RFNAMEORG_ID, RF_MAGI - EXT_RF) = "magi", lang("–‚—Í”š’e", "any crystal bomb")
-	rfnameorg(RFNAMEORG_ID, RF_MAKENN - EXT_RF) = "makenn", lang("–\–‚Œ•", "any makenn")
-	rfnameorg(RFNAMEORG_ID, MAX_RF - EXT_RF) = "star", lang("ƒXƒ^[ƒ_ƒXƒg‚È‚Ç", "stardust etc.")
-	rfnameorg(RFNAMEORG_ID, RF_FLOWER - EXT_RF) = "hana", lang("“K“–‚È‰Ô", "any flower")
-	rfnameorg(RFNAMEORG_ID, RF_BONE - EXT_RF) = "bone", lang("“K“–‚È“ª‚Ìœ", "any head bone")
-	rfnameorg(RFNAMEORG_ID, RF_METAL - EXT_RF) = "metal", lang("“K“–‚È„•‹ï", "any hard equip")
-	rfnameorg(RFNAMEORG_ID, RF_SOFT - EXT_RF) = "soft", lang("“K“–‚È_•‹ï", "any soft equip")
-	rfnameorg(RFNAMEORG_ID, RF_SHARP - EXT_RF) = "sharp", lang("“K“–‚È‰s•‹ï", "any sharp equip")
-	rfnameorg(RFNAMEORG_ID, RF_COFFIN - EXT_RF) = "coffin", lang("“K“–‚ÈŠ»", "any coffin")
-	rfnameorg(RFNAMEORG_ID, RF_ANY - EXT_RF) = "", lang("‰½‚©•¨‘Ì", "any item")
-	rfnameorg(RFNAMEORG_ID, RF_BAIT - EXT_RF) = "bait", lang("“K“–‚È’Ş‚è‰a", "any bait")
-	rfnameorg(RFNAMEORG_ID, RF_BARREL - EXT_RF) = "taru", lang("“K“–‚Èƒ^ƒ‹", "any bait")
-	rfnameorg(RFNAMEORG_ID, RF_LEAF - EXT_RF) = "kusuri", lang("–ò‘—Ş", "any healthy leaf")
+	rfnameorg(RFNAMEORG_ID, RF_DIARY - EXT_RF) = "diary", lang("æ—¥è¨˜å¸³", "any diary")
+	rfnameorg(RFNAMEORG_ID, RF_VEGE - EXT_RF) = "vege", lang("é©å½“ãªé‡èœ", "any vege")
+	rfnameorg(RFNAMEORG_ID, RF_SEED - EXT_RF) = "seed", lang("é©å½“ãªç¨®", "any seed")
+	rfnameorg(RFNAMEORG_ID, RF_HERB - EXT_RF) = "herb", lang("å¸Œå°‘ãƒãƒ¼ãƒ–", "rare herb")
+	rfnameorg(RFNAMEORG_ID, RF_FLAVOR - EXT_RF) = "flavor", lang("é©å½“ãªèª¿å‘³æ–™", "suitable flavoring")
+	rfnameorg(RFNAMEORG_ID, RF_ORE - EXT_RF) = "ore", lang("é©å½“ãªé‰±çŸ³", "any ore")
+	rfnameorg(RFNAMEORG_ID, RF_WOOD - EXT_RF) = "wood", lang("æœ¨æã‚’å«ã‚€ä½•ã‹", "something made of wood")
+	rfnameorg(RFNAMEORG_ID, RF_FISH - EXT_RF) = "fish", lang("é­šä»‹é¡", "fish")
+	rfnameorg(RFNAMEORG_ID, RF_EVITEM - EXT_RF) = "EVitem", lang("é€²åŒ–ã‚¢ã‚¤ãƒ†ãƒ ", "EVitem")
+	rfnameorg(RFNAMEORG_ID, RF_POISON - EXT_RF) = "poison", lang("çŠ¶æ…‹ç•°å¸¸è–¬", "nega potion")
+	rfnameorg(RFNAMEORG_ID, RF_FRUIT - EXT_RF) = "fruit", lang("é©å½“ãªæœç‰©", "any fruit")
+	rfnameorg(RFNAMEORG_ID, RF_BREAD - EXT_RF) = "bread", lang("ãƒ‘ãƒ³é¡", "any bread")
+	rfnameorg(RFNAMEORG_ID, RF_ALE - EXT_RF) = "ale", lang("é©å½“ãªã‚¢ãƒ«ã‚³ãƒ¼ãƒ«", "any alcohol")
+	rfnameorg(RFNAMEORG_ID, RF_DISINFECTANT - EXT_RF) = "holy", lang("é©å½“ãªæµ„åŒ–ã‚¢ã‚¤ãƒ†ãƒ ", "any holy")
+	rfnameorg(RFNAMEORG_ID, RF_MAGI - EXT_RF) = "magi", lang("é­”åŠ›çˆ†å¼¾", "any crystal bomb")
+	rfnameorg(RFNAMEORG_ID, RF_MAKENN - EXT_RF) = "makenn", lang("æš´é­”å‰£", "any makenn")
+	rfnameorg(RFNAMEORG_ID, MAX_RF - EXT_RF) = "star", lang("ã‚¹ã‚¿ãƒ¼ãƒ€ã‚¹ãƒˆãªã©", "stardust etc.")
+	rfnameorg(RFNAMEORG_ID, RF_FLOWER - EXT_RF) = "hana", lang("é©å½“ãªèŠ±", "any flower")
+	rfnameorg(RFNAMEORG_ID, RF_BONE - EXT_RF) = "bone", lang("é©å½“ãªé ­ã®éª¨", "any head bone")
+	rfnameorg(RFNAMEORG_ID, RF_METAL - EXT_RF) = "metal", lang("é©å½“ãªå‰›æ­¦å…·", "any hard equip")
+	rfnameorg(RFNAMEORG_ID, RF_SOFT - EXT_RF) = "soft", lang("é©å½“ãªæŸ”æ­¦å…·", "any soft equip")
+	rfnameorg(RFNAMEORG_ID, RF_SHARP - EXT_RF) = "sharp", lang("é©å½“ãªé‹­æ­¦å…·", "any sharp equip")
+	rfnameorg(RFNAMEORG_ID, RF_COFFIN - EXT_RF) = "coffin", lang("é©å½“ãªæ£º", "any coffin")
+	rfnameorg(RFNAMEORG_ID, RF_ANY - EXT_RF) = "", lang("ä½•ã‹ç‰©ä½“", "any item")
+	rfnameorg(RFNAMEORG_ID, RF_BAIT - EXT_RF) = "bait", lang("é©å½“ãªé‡£ã‚Šé¤Œ", "any bait")
+	rfnameorg(RFNAMEORG_ID, RF_BARREL - EXT_RF) = "taru", lang("é©å½“ãªã‚¿ãƒ«", "any bait")
+	rfnameorg(RFNAMEORG_ID, RF_LEAF - EXT_RF) = "kusuri", lang("è–¬è‰é¡", "any healthy leaf")
 	return
 
 *com_blend
@@ -1116,12 +1116,12 @@
 			rppage = 0
 			window_recipe list2, -1, wx + ww, wy, 400, wh
 			txtnew
-			txt lang("Šô‚Âì‚éH", "How many items do you want to create?")
-			promptl(0, promptmax) = lang("’²‡‚ğn‚ß‚é", "Start blending"), "a", "" + promptmax
+			txt lang("å¹¾ã¤ä½œã‚‹ï¼Ÿ", "How many items do you want to create?")
+			promptl(0, promptmax) = lang("èª¿åˆã‚’å§‹ã‚ã‚‹", "Start blending"), "a", "" + promptmax
 			promptmax++
-			promptl(0, promptmax) = lang("‘O‚É–ß‚é", "Go back"), "b", "" + promptmax
+			promptl(0, promptmax) = lang("å‰ã«æˆ»ã‚‹", "Go back"), "b", "" + promptmax
 			promptmax++
-			promptl(0, promptmax) = lang("Å‰‚©‚ç", "From the start"), "c", "" + promptmax
+			promptl(0, promptmax) = lang("æœ€åˆã‹ã‚‰", "From the start"), "c", "" + promptmax
 			promptmax++
 			p = 10
 			repeat 10
@@ -1177,7 +1177,7 @@
 		gosub *sort_list
 		windowshadow(1) = 1
 		txtnew
-		txt lang("‚Ç‚ÌƒŒƒVƒs‚ğg‚¤H", "Which recipe do you want to use?")
+		txt lang("ã©ã®ãƒ¬ã‚·ãƒ”ã‚’ä½¿ã†ï¼Ÿ", "Which recipe do you want to use?")
 		goto *com_blend_recipe_loop
 	}
 	rppage = 1
@@ -1212,10 +1212,10 @@
 		goto *com_blend_material_loop_WHILE1
 	}
 	redraw 0
-	s = lang("ƒŒƒVƒs‚Ì‘I‘ğ", "Choose a recipe"), strhint2
+	s = lang("ãƒ¬ã‚·ãƒ”ã®é¸æŠ", "Choose a recipe"), strhint2
 	windowshadow = windowshadow(1)
 	display_window (windoww - 780) / 2 + inf_screenx, winposy(445), 380, 432, 74
-	display_topic lang("ƒŒƒVƒs‚Ì–¼Ì", "Name"), wx + 28, wy + 30
+	display_topic lang("ãƒ¬ã‚·ãƒ”ã®åç§°", "Name"), wx + 28, wy + 30
 	s = "" + listmax + " recipes"
 	font lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 1
 	pos wx + 130, wy + wh - 65 - wh \ 8
@@ -1304,7 +1304,7 @@
 		}
 		p = list(0, p)
 		rpid = p
-		s = lang("", "Recipe of ") + cnven(rpname(rpid)) + lang("‚ÌƒŒƒVƒs", "")
+		s = lang("", "Recipe of ") + cnven(rpname(rpid)) + lang("ã®ãƒ¬ã‚·ãƒ”", "")
 		if ( debug ) {
 			s += ":" + rpdiff(rpid, -1, -1)
 		}
@@ -1372,7 +1372,7 @@
 *com_blend_material_loop_WHILE1
 	windowshadow(1) = 1
 	txtnew
-	txt lang(rpmatname(step) + "‚ğ’Ç‰Á‚µ‚æ‚¤B", "Add \"" + rpmatname(step) + "\".")
+	txt lang(rpmatname(step) + "ã‚’è¿½åŠ ã—ã‚ˆã†ã€‚", "Add \"" + rpmatname(step) + "\".")
 
 *com_blend_material_loop_WHILE1_CONTINUE
 	if ( 1 == 0 ) {
@@ -1390,7 +1390,7 @@
 	}
 	redraw 0
 	if ( jp ) {
-		s = rpmatname(step) + "‚ğ’Ç‰Á"
+		s = rpmatname(step) + "ã‚’è¿½åŠ "
 	}
 	else {
 		s = "Add " + rpmatname(step)
@@ -1398,7 +1398,7 @@
 	s(1) = strhint2
 	windowshadow = windowshadow(1)
 	display_window (windoww - 780) / 2 + inf_screenx, winposy(445), 380, 432, 74
-	display_topic lang("ƒAƒCƒeƒ€‚Ì–¼Ì", "Name"), wx + 28, wy + 30
+	display_topic lang("ã‚¢ã‚¤ãƒ†ãƒ ã®åç§°", "Name"), wx + 28, wy + 30
 	s = "" + listmax + " items"
 	font lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 1
 	pos wx + 130, wy + wh - 65 - wh \ 8
@@ -1539,7 +1539,7 @@
 				item_separate ci
 			}
 		}
-		txt lang(itemname(ci) + "‚ğ‘I‚ñ‚¾B", "You add " + itemname(ci) + ".")
+		txt lang(itemname(ci) + "ã‚’é¸ã‚“ã ã€‚", "You add " + itemname(ci) + ".")
 		step++
 		p = rpdiff(rpid, step, step - 1)
 		goto *com_blend_step
@@ -1607,7 +1607,7 @@
 			}
 			else {
 				if ( rnd(3) == 0 ) {
-					txt lang(itemname(rpref(10 + cnt * 2), 1) + "‚ğ¸‚Á‚½B", "You lose " + itemname(rpref(10 + cnt * 2), 1) + ".")
+					txt lang(itemname(rpref(10 + cnt * 2), 1) + "ã‚’å¤±ã£ãŸã€‚", "You lose " + itemname(rpref(10 + cnt * 2), 1) + ".")
 					inv(INV_ITEM_NUM, rpref(10 + cnt * 2))--
 				}
 			}
@@ -1622,7 +1622,7 @@
 	if ( rpdiff(rpid, -1, -1) < rnd(100) ) {
 		rpresult = 0
 		txtef COLOR_RED
-		txt lang("’²‡¸”sI", "The blending attempt failed!")
+		txt lang("èª¿åˆå¤±æ•—ï¼", "The blending attempt failed!")
 	}
 	else {
 		if ( rpdata(RPDATA_ITEM, rpid) == RECIPE_BLEND_ACTION_WOODCRAFT | rpdata(RPDATA_ITEM, rpid) == RECIPE_BLEND_ACTION_STONECRAFT | rpdata(RPDATA_ITEM, rpid) == RECIPE_BLEND_ACTION_POTTERY ) {
@@ -1656,7 +1656,7 @@
 			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_BLESSED
 			item_identify ci, ITEM_KNOWN_FULL
 			txtef COLOR_GREEN
-			txt lang(itemname(ci, 1) + "‚Ìì¬‚É¬Œ÷‚µ‚½I", "You successfully create " + itemname(ci, 1) + "!")
+			txt lang(itemname(ci, 1) + "ã®ä½œæˆã«æˆåŠŸã—ãŸï¼", "You successfully create " + itemname(ci, 1) + "!")
 			flt
 			itemcreate -1, ITEM_ID_BLACK_TEA, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 2
 			inv(INV_ITEM_LEVEL, ci) = picp
@@ -1677,19 +1677,19 @@
 			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
 			item_identify ci, ITEM_KNOWN_FULL
 			txtef COLOR_GREEN
-			txt lang(itemname(ci, 1) + "‚Ìì¬‚É¬Œ÷‚µ‚½I", "You successfully create " + itemname(ci, 1) + "!")
+			txt lang(itemname(ci, 1) + "ã®ä½œæˆã«æˆåŠŸã—ãŸï¼", "You successfully create " + itemname(ci, 1) + "!")
 			flt
 			itemcreate -1, ITEM_ID_DEAD_FISH, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
 			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
 			item_identify ci, ITEM_KNOWN_FULL
 			txtef COLOR_GREEN
-			txt lang(itemname(ci, 1) + "‚Ìì¬‚É¬Œ÷‚µ‚½I", "You successfully create " + itemname(ci, 1) + "!")
+			txt lang(itemname(ci, 1) + "ã®ä½œæˆã«æˆåŠŸã—ãŸï¼", "You successfully create " + itemname(ci, 1) + "!")
 			flt
 			itemcreate -1, ITEM_ID_BROKEN_VASE, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
 			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
 			item_identify ci, ITEM_KNOWN_FULL
 			txtef COLOR_GREEN
-			txt lang(itemname(ci, 1) + "‚Ìì¬‚É¬Œ÷‚µ‚½I", "You successfully create " + itemname(ci, 1) + "!")
+			txt lang(itemname(ci, 1) + "ã®ä½œæˆã«æˆåŠŸã—ãŸï¼", "You successfully create " + itemname(ci, 1) + "!")
 			flt
 			itemcreate -1, ITEM_ID_BOTTLE_DIRTY_WATER, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
 			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
@@ -1703,13 +1703,13 @@
 			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
 			item_identify ci, ITEM_KNOWN_FULL
 			txtef COLOR_GREEN
-			txt lang(itemname(ci, 1) + "‚Ìì¬‚É¬Œ÷‚µ‚½I", "You successfully create " + itemname(ci, 1) + "!")
+			txt lang(itemname(ci, 1) + "ã®ä½œæˆã«æˆåŠŸã—ãŸï¼", "You successfully create " + itemname(ci, 1) + "!")
 			flt
 			itemcreate -1, ITEM_ID_BUTTER, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
 			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
 			item_identify ci, ITEM_KNOWN_FULL
 			txtef COLOR_GREEN
-			txt lang(itemname(ci, 1) + "‚Ìì¬‚É¬Œ÷‚µ‚½I", "You successfully create " + itemname(ci, 1) + "!")
+			txt lang(itemname(ci, 1) + "ã®ä½œæˆã«æˆåŠŸã—ãŸï¼", "You successfully create " + itemname(ci, 1) + "!")
 			flt
 			itemcreate -1, ITEM_ID_YOGURT, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
 			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
@@ -1724,7 +1724,7 @@
 			item_identify ci, ITEM_KNOWN_FULL
 			if ( picp != ITEM_ID_SOCKS ) {
 				txtef COLOR_GREEN
-				txt lang(itemname(ci, 1) + "‚Ìì¬‚É¬Œ÷‚µ‚½I", "You successfully create " + itemname(ci, 1) + "!")
+				txt lang(itemname(ci, 1) + "ã®ä½œæˆã«æˆåŠŸã—ãŸï¼", "You successfully create " + itemname(ci, 1) + "!")
 				picp = inv(INV_ITEM_ID, rpref(10 + 0 * 2))
 				flt , 4
 				itemcreate -1, picp, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
@@ -1733,7 +1733,7 @@
 				if ( picp != ITEM_ID_SPEED_RING & picp != ITEM_ID_PANTY & picp != ITEM_ID_AURORA_RING & picp != ITEM_ID_VINDALE_CLOAK & picp != ITEM_ID_SEVEN_LEAGUE_BOOTS ) {
 					await 100
 					txtef COLOR_GREEN
-					txt lang(itemname(ci, 1) + "‚Ìì¬‚É¬Œ÷‚µ‚½I", "You successfully create " + itemname(ci, 1) + "!")
+					txt lang(itemname(ci, 1) + "ã®ä½œæˆã«æˆåŠŸã—ãŸï¼", "You successfully create " + itemname(ci, 1) + "!")
 					picp = inv(INV_ITEM_ID, rpref(10 + 0 * 2))
 					flt , 4
 					itemcreate -1, picp, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
@@ -1767,13 +1767,13 @@
 			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
 			item_identify ci, ITEM_KNOWN_FULL
 			txtef COLOR_GREEN
-			txt lang(itemname(ci, 1) + "‚Ìì¬‚É¬Œ÷‚µ‚½I", "You successfully create " + itemname(ci, 1) + "!")
+			txt lang(itemname(ci, 1) + "ã®ä½œæˆã«æˆåŠŸã—ãŸï¼", "You successfully create " + itemname(ci, 1) + "!")
 			flt
 			itemcreate -1, ITEM_ID_FRIED_POTATO, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 6
 			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
 			item_identify ci, ITEM_KNOWN_FULL
 			txtef COLOR_GREEN
-			txt lang(itemname(ci, 1) + "‚Ìì¬‚É¬Œ÷‚µ‚½I", "You successfully create " + itemname(ci, 1) + "!")
+			txt lang(itemname(ci, 1) + "ã®ä½œæˆã«æˆåŠŸã—ãŸï¼", "You successfully create " + itemname(ci, 1) + "!")
 			flt
 			itemcreate -1, ITEM_ID_POP_CORN, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 6
 			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
@@ -1785,7 +1785,7 @@
 			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
 			item_identify ci, ITEM_KNOWN_FULL
 			txtef COLOR_GREEN
-			txt lang(itemname(ci, 1) + "‚Ìì¬‚É¬Œ÷‚µ‚½I", "You successfully create " + itemname(ci, 1) + "!")
+			txt lang(itemname(ci, 1) + "ã®ä½œæˆã«æˆåŠŸã—ãŸï¼", "You successfully create " + itemname(ci, 1) + "!")
 			flt
 			itemcreate -1, ITEM_ID_OSIRUKO, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
 			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
@@ -1815,21 +1815,21 @@
 			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
 			item_identify ci, ITEM_KNOWN_FULL
 			txtef COLOR_GREEN
-			txt lang(itemname(ci, 1) + "‚Ìì¬‚É¬Œ÷‚µ‚½I", "You successfully create " + itemname(ci, 1) + "!")
+			txt lang(itemname(ci, 1) + "ã®ä½œæˆã«æˆåŠŸã—ãŸï¼", "You successfully create " + itemname(ci, 1) + "!")
 			flt
 			itemcreate -1, ITEM_ID_TOFU, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
 			inv(INV_ITEM_LEVEL, ci) = picp
 			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
 			item_identify ci, ITEM_KNOWN_FULL
 			txtef COLOR_GREEN
-			txt lang(itemname(ci, 1) + "‚Ìì¬‚É¬Œ÷‚µ‚½I", "You successfully create " + itemname(ci, 1) + "!")
+			txt lang(itemname(ci, 1) + "ã®ä½œæˆã«æˆåŠŸã—ãŸï¼", "You successfully create " + itemname(ci, 1) + "!")
 			flt
 			itemcreate -1, ITEM_ID_NATTO, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
 			inv(INV_ITEM_LEVEL, ci) = picp
 			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
 			item_identify ci, ITEM_KNOWN_FULL
 			txtef COLOR_GREEN
-			txt lang(itemname(ci, 1) + "‚Ìì¬‚É¬Œ÷‚µ‚½I", "You successfully create " + itemname(ci, 1) + "!")
+			txt lang(itemname(ci, 1) + "ã®ä½œæˆã«æˆåŠŸã—ãŸï¼", "You successfully create " + itemname(ci, 1) + "!")
 			flt
 			itemcreate -1, ITEM_ID_BOTTLE_SOY_SAUCE, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
 			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
@@ -1841,25 +1841,25 @@
 			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
 			item_identify ci, ITEM_KNOWN_FULL
 			txtef COLOR_GREEN
-			txt lang(itemname(ci, 1) + "‚Ìì¬‚É¬Œ÷‚µ‚½I", "You successfully create " + itemname(ci, 1) + "!")
+			txt lang(itemname(ci, 1) + "ã®ä½œæˆã«æˆåŠŸã—ãŸï¼", "You successfully create " + itemname(ci, 1) + "!")
 			flt
 			itemcreate -1, ITEM_ID_POTION_BLINDNESS, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
 			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
 			item_identify ci, ITEM_KNOWN_FULL
 			txtef COLOR_GREEN
-			txt lang(itemname(ci, 1) + "‚Ìì¬‚É¬Œ÷‚µ‚½I", "You successfully create " + itemname(ci, 1) + "!")
+			txt lang(itemname(ci, 1) + "ã®ä½œæˆã«æˆåŠŸã—ãŸï¼", "You successfully create " + itemname(ci, 1) + "!")
 			flt
 			itemcreate -1, ITEM_ID_POTION_CONFUSION, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
 			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
 			item_identify ci, ITEM_KNOWN_FULL
 			txtef COLOR_GREEN
-			txt lang(itemname(ci, 1) + "‚Ìì¬‚É¬Œ÷‚µ‚½I", "You successfully create " + itemname(ci, 1) + "!")
+			txt lang(itemname(ci, 1) + "ã®ä½œæˆã«æˆåŠŸã—ãŸï¼", "You successfully create " + itemname(ci, 1) + "!")
 			flt
 			itemcreate -1, ITEM_ID_POTION_PARALYSIS, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
 			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
 			item_identify ci, ITEM_KNOWN_FULL
 			txtef COLOR_GREEN
-			txt lang(itemname(ci, 1) + "‚Ìì¬‚É¬Œ÷‚µ‚½I", "You successfully create " + itemname(ci, 1) + "!")
+			txt lang(itemname(ci, 1) + "ã®ä½œæˆã«æˆåŠŸã—ãŸï¼", "You successfully create " + itemname(ci, 1) + "!")
 			flt
 			itemcreate -1, ITEM_ID_SLEEPING_DRUG, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
 			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
@@ -1886,26 +1886,26 @@
 			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
 			item_identify ci, ITEM_KNOWN_FULL
 			txtef COLOR_GREEN
-			txt lang(itemname(ci, 1) + "‚Ìì¬‚É¬Œ÷‚µ‚½I", "You successfully create " + itemname(ci, 1) + "!")
+			txt lang(itemname(ci, 1) + "ã®ä½œæˆã«æˆåŠŸã—ãŸï¼", "You successfully create " + itemname(ci, 1) + "!")
 			flt
 			itemcreate -1, ITEM_ID_RAW_NOODLE, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 2
 			inv(INV_ITEM_LEVEL, ci) = picp
 			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
 			item_identify ci, ITEM_KNOWN_FULL
 			txtef COLOR_GREEN
-			txt lang(itemname(ci, 1) + "‚Ìì¬‚É¬Œ÷‚µ‚½I", "You successfully create " + itemname(ci, 1) + "!")
+			txt lang(itemname(ci, 1) + "ã®ä½œæˆã«æˆåŠŸã—ãŸï¼", "You successfully create " + itemname(ci, 1) + "!")
 			flt
 			itemcreate -1, ITEM_ID_BOTTLE_BEER, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 2
 			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_BLESSED
 			item_identify ci, ITEM_KNOWN_FULL
 			txtef COLOR_GREEN
-			txt lang(itemname(ci, 1) + "‚Ìì¬‚É¬Œ÷‚µ‚½I", "You successfully create " + itemname(ci, 1) + "!")
+			txt lang(itemname(ci, 1) + "ã®ä½œæˆã«æˆåŠŸã—ãŸï¼", "You successfully create " + itemname(ci, 1) + "!")
 			flt
 			itemcreate -1, ITEM_ID_BOTTLE_WHISKY, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 2
 			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_BLESSED
 			item_identify ci, ITEM_KNOWN_FULL
 			txtef COLOR_GREEN
-			txt lang(itemname(ci, 1) + "‚Ìì¬‚É¬Œ÷‚µ‚½I", "You successfully create " + itemname(ci, 1) + "!")
+			txt lang(itemname(ci, 1) + "ã®ä½œæˆã«æˆåŠŸã—ãŸï¼", "You successfully create " + itemname(ci, 1) + "!")
 			flt
 			itemcreate -1, ITEM_ID_BARLEY_TEA, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 2
 			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_BLESSED
@@ -2039,21 +2039,21 @@
 			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
 			item_identify ci, ITEM_KNOWN_FULL
 			txtef COLOR_GREEN
-			txt lang(itemname(ci, 1) + "‚Ìì¬‚É¬Œ÷‚µ‚½I", "You successfully create " + itemname(ci, 1) + "!")
+			txt lang(itemname(ci, 1) + "ã®ä½œæˆã«æˆåŠŸã—ãŸï¼", "You successfully create " + itemname(ci, 1) + "!")
 			flt
 			itemcreate -1, ITEM_ID_HAMAKI, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
 			inv(INV_ITEM_LEVEL, ci) = picp
 			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
 			item_identify ci, ITEM_KNOWN_FULL
 			txtef COLOR_GREEN
-			txt lang(itemname(ci, 1) + "‚Ìì¬‚É¬Œ÷‚µ‚½I", "You successfully create " + itemname(ci, 1) + "!")
+			txt lang(itemname(ci, 1) + "ã®ä½œæˆã«æˆåŠŸã—ãŸï¼", "You successfully create " + itemname(ci, 1) + "!")
 			flt
 			itemcreate -1, ITEM_ID_TOBACCO_PIPE, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
 			inv(INV_ITEM_LEVEL, ci) = picp
 			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
 			item_identify ci, ITEM_KNOWN_FULL
 			txtef COLOR_GREEN
-			txt lang(itemname(ci, 1) + "‚Ìì¬‚É¬Œ÷‚µ‚½I", "You successfully create " + itemname(ci, 1) + "!")
+			txt lang(itemname(ci, 1) + "ã®ä½œæˆã«æˆåŠŸã—ãŸï¼", "You successfully create " + itemname(ci, 1) + "!")
 			flt
 			itemcreate -1, ITEM_ID_KISERU, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
 			inv(INV_ITEM_LEVEL, ci) = picp
@@ -2068,7 +2068,7 @@
 			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
 			item_identify ci, ITEM_KNOWN_FULL
 			txtef COLOR_GREEN
-			txt lang(itemname(ci, 1) + "‚Ìì¬‚É¬Œ÷‚µ‚½I", "You successfully create " + itemname(ci, 1) + "!")
+			txt lang(itemname(ci, 1) + "ã®ä½œæˆã«æˆåŠŸã—ãŸï¼", "You successfully create " + itemname(ci, 1) + "!")
 			flt
 			itemcreate -1, ITEM_ID_EMPTY_BOTTLE, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
 			inv(INV_ITEM_LEVEL, ci) = picp
@@ -2084,7 +2084,7 @@
 		}
 		if ( rpdata(RPDATA_ITEM, rpid) < (10000 /*!!!@[STARTING_RECIPE_BLEND_ACTION @@@ RECIPE_BLEND_ACTION_HERBED_FOOD]@!!! */) ) {
 			txtef COLOR_GREEN
-			txt lang(itemname(ci, 1) + "‚Ìì¬‚É¬Œ÷‚µ‚½I", "You successfully create " + itemname(ci, 1) + "!")
+			txt lang(itemname(ci, 1) + "ã®ä½œæˆã«æˆåŠŸã—ãŸï¼", "You successfully create " + itemname(ci, 1) + "!")
 		}
 		snd SOUNDLIST_DRINK1
 	}
@@ -2106,7 +2106,7 @@
 	}
 	if ( cdata(CDATA_ROW_ACT, cc) == ACTION_NONE ) {
 		txtnew
-		txt lang(name(cc) + "‚Í" + rpname(rpid) + "‚Ì’²‡‚ğ‚Í‚¶‚ß‚½B", name(cc) + " start" + _s(cc) + " blending of " + rpname(rpid) + ".")
+		txt lang(name(cc) + "ã¯" + rpname(rpid) + "ã®èª¿åˆã‚’ã¯ã˜ã‚ãŸã€‚", name(cc) + " start" + _s(cc) + " blending of " + rpname(rpid) + ".")
 		cdata(CDATA_ROW_ACT, cc) = ACTION_BLEND
 		r1 = 0
 		gosub *charaRefresh
@@ -2116,7 +2116,7 @@
 	if ( cdata(CDATA_ACTION_PERIOD, cc) > 0 ) {
 		if ( rnd(30) == 0 ) {
 			txtef COLOR_BLUE
-			txt lang(" *‚±‚Ë‚±‚Ë* ", "*pug*"), lang(" *ƒgƒ“ƒgƒ“* ", "*clank*")
+			txt lang(" *ã“ã­ã“ã­* ", "*pug*"), lang(" *ãƒˆãƒ³ãƒˆãƒ³* ", "*clank*")
 		}
 		return
 	}
@@ -2130,7 +2130,7 @@
 			gosub *screen_drawStatus
 			if ( cnt \ 5 == 0 ) {
 				txtef COLOR_BLUE
-				txt lang(" *‚±‚Ë‚±‚Ë* ", "*pug*"), lang(" *ƒgƒ“ƒgƒ“* ", "*clank*")
+				txt lang(" *ã“ã­ã“ã­* ", "*pug*"), lang(" *ãƒˆãƒ³ãƒˆãƒ³* ", "*clank*")
 			}
 			repeat 20
 				redraw 0
@@ -2143,7 +2143,7 @@
 			if ( cdata(CDATA_ACTION_PERIOD, cc) <= 0 ) {
 				gosub *blend_checkMat
 				if ( stat == 0 ) {
-					txt lang("’²‡‚É•K—v‚ÈŞ—¿‚ªŒ©‚Â‚©‚ç‚È‚¢B", "A requied material cannot be found.")
+					txt lang("èª¿åˆã«å¿…è¦ãªææ–™ãŒè¦‹ã¤ã‹ã‚‰ãªã„ã€‚", "A requied material cannot be found.")
 					break
 				}
 				gosub *blend_complete
@@ -2162,7 +2162,7 @@
 	}
 	gosub *blend_checkMat
 	if ( stat == 0 ) {
-		txt lang("’²‡‚É•K—v‚ÈŞ—¿‚ªŒ©‚Â‚©‚ç‚È‚¢B", "A requied material cannot be found.")
+		txt lang("èª¿åˆã«å¿…è¦ãªææ–™ãŒè¦‹ã¤ã‹ã‚‰ãªã„ã€‚", "A requied material cannot be found.")
 		rowactend cc
 		return
 	}
@@ -2202,9 +2202,9 @@
 		_switch_sw = 0
 		ibitmod ITEM_BIT_HERBED_IN, ci, TRUE
 		txtef COLOR_GREEN
-		txt lang(itemname(ci, 1) + "‚Ìì¬‚É¬Œ÷‚µ‚½I", "You successfully create " + itemname(ci, 1) + "!")
+		txt lang(itemname(ci, 1) + "ã®ä½œæˆã«æˆåŠŸã—ãŸï¼", "You successfully create " + itemname(ci, 1) + "!")
 		txtvalid = 0
-		txt lang("‚ ‚È‚½‚ÍH‚×•¨‚Éƒn[ƒu‚ğC‚è‚ñ‚¾B", "You blend herbs to food.")
+		txt lang("ã‚ãªãŸã¯é£Ÿã¹ç‰©ã«ãƒãƒ¼ãƒ–ã‚’æ“¦ã‚Šè¾¼ã‚“ã ã€‚", "You blend herbs to food.")
 		snd SOUNDLIST_OFFER1
 		goto *blend_act_SWEND1
 		_switch_sw++
@@ -2213,7 +2213,7 @@
 		_switch_sw = 0
 		inv(INV_ITEM_PARAM1, ci) = 14
 		txtef COLOR_GREEN
-		txt lang("V‚½‚Èi‰»‚Ì‰Â”\«‚ª¶‚Ü‚ê‚½B", "A possibility of another evolution was born.")
+		txt lang("æ–°ãŸãªé€²åŒ–ã®å¯èƒ½æ€§ãŒç”Ÿã¾ã‚ŒãŸã€‚", "A possibility of another evolution was born.")
 		snd SOUNDLIST_ENC2
 		goto *blend_act_SWEND1
 		_switch_sw++
@@ -2726,7 +2726,7 @@
 		inv(INV_ITEM_WEIGHT, ci) = oldweight
 		inv(INV_ITEM_COL, ci) = oldcol
 		txtef COLOR_GREEN
-		txt lang(itemname(ci) + "‚Ö‚Ì‰üC‚É¬Œ÷‚µ‚½I", "You changed the equip to " + itemname(ci) + "!")
+		txt lang(itemname(ci) + "ã¸ã®æ”¹ä¿®ã«æˆåŠŸã—ãŸï¼", "You changed the equip to " + itemname(ci) + "!")
 		snd SOUNDLIST_BUILD1
 		goto *blend_act_SWEND1
 		_switch_sw++
@@ -2762,7 +2762,7 @@
 		inv(INV_ITEM_WEIGHT, ci) += necrop * 1000
 		item_identify ci, ITEM_KNOWN_FULL
 		txtef COLOR_GREEN
-		txt lang(itemname(ci, 1) + "‚Ìì¬‚É¬Œ÷‚µ‚½I", "You successfully create " + itemname(ci, 1) + "!")
+		txt lang(itemname(ci, 1) + "ã®ä½œæˆã«æˆåŠŸã—ãŸï¼", "You successfully create " + itemname(ci, 1) + "!")
 		snd SOUNDLIST_CURSE2
 		goto *blend_act_SWEND1
 		_switch_sw++
@@ -2784,20 +2784,20 @@
 		}
 		item_stack CHARA_PLAYER, ci
 		txtef COLOR_GREEN
-		txt lang(itemname(ci, 1) + "‚Ìì¬‚É¬Œ÷‚µ‚½I", "You successfully create " + itemname(ci, 1) + "!")
+		txt lang(itemname(ci, 1) + "ã®ä½œæˆã«æˆåŠŸã—ãŸï¼", "You successfully create " + itemname(ci, 1) + "!")
 		snd SOUNDLIST_CURSE3
 		goto *blend_act_SWEND1
 		_switch_sw++
 	}
 	if ( _switch_val == 10021 | _switch_sw ) {
 		_switch_sw = 0
-		txt lang("‰½‚à‚¨‚«‚È‚¢c ", "Nothing happens...")
+		txt lang("ä½•ã‚‚ãŠããªã„â€¦ ", "Nothing happens...")
 		goto *blend_act_SWEND1
 		_switch_sw++
 	}
 	if ( _switch_val == 10023 | _switch_sw ) {
 		_switch_sw = 0
-		txt lang("‰½‚à‚¨‚«‚È‚¢c ", "Nothing happens...")
+		txt lang("ä½•ã‚‚ãŠããªã„â€¦ ", "Nothing happens...")
 		goto *blend_act_SWEND1
 		_switch_sw++
 	}
@@ -2835,7 +2835,7 @@
 		mokua = 0
 		autosave = 1 * (gdata(GDATA_AREA) != AREA_SHOW_HOUSE)
 		txtef COLOR_GREEN
-		txt lang(itemname(ci, 1) + "‚Ìì¬‚É¬Œ÷‚µ‚½I", "You successfully create " + itemname(ci, 1) + "!")
+		txt lang(itemname(ci, 1) + "ã®ä½œæˆã«æˆåŠŸã—ãŸï¼", "You successfully create " + itemname(ci, 1) + "!")
 		goto *blend_act_SWEND1
 		_switch_sw++
 	}
@@ -2873,7 +2873,7 @@
 		mokua = 0
 		autosave = 1 * (gdata(GDATA_AREA) != AREA_SHOW_HOUSE)
 		txtef COLOR_GREEN
-		txt lang(itemname(ci, 1) + "‚Ìì¬‚É¬Œ÷‚µ‚½I", "You successfully create " + itemname(ci, 1) + "!")
+		txt lang(itemname(ci, 1) + "ã®ä½œæˆã«æˆåŠŸã—ãŸï¼", "You successfully create " + itemname(ci, 1) + "!")
 		goto *blend_act_SWEND1
 		_switch_sw++
 	}
@@ -2914,7 +2914,7 @@
 		mokua = 0
 		autosave = 1 * (gdata(GDATA_AREA) != AREA_SHOW_HOUSE)
 		txtef COLOR_GREEN
-		txt lang(itemname(ci, 1) + "‚Ìì¬‚É¬Œ÷‚µ‚½I", "You successfully create " + itemname(ci, 1) + "!")
+		txt lang(itemname(ci, 1) + "ã®ä½œæˆã«æˆåŠŸã—ãŸï¼", "You successfully create " + itemname(ci, 1) + "!")
 		goto *blend_act_SWEND1
 		_switch_sw++
 	}
@@ -2926,20 +2926,20 @@
 		inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_BLESSED
 		item_identify ci, ITEM_KNOWN_FULL
 		txtef COLOR_GREEN
-		txt lang(itemname(ci, 1) + "‚Ìì¬‚É¬Œ÷‚µ‚½I", "You successfully create " + itemname(ci, 1) + "!")
+		txt lang(itemname(ci, 1) + "ã®ä½œæˆã«æˆåŠŸã—ãŸï¼", "You successfully create " + itemname(ci, 1) + "!")
 		goto *blend_act_SWEND1
 		_switch_sw++
 	}
 	if ( _switch_val == 10003 | _switch_sw ) {
 		_switch_sw = 0
 		txtef COLOR_GREEN
-		txt lang(itemname(ci) + "‚É" + itemname(ti, 1) + "‚ğ“h‚è‚½‚­‚Á‚½B", "You put " + itemname(ti, 1) + " on " + itemname(ci) + ".")
+		txt lang(itemname(ci) + "ã«" + itemname(ti, 1) + "ã‚’å¡—ã‚ŠãŸãã£ãŸã€‚", "You put " + itemname(ti, 1) + " on " + itemname(ci) + ".")
 		if ( inv(INV_ITEM_ID, ci) == ITEM_ID_FIREPROOF_BLANKET ) {
-			txt lang("‚¢‚¢ƒAƒCƒfƒA‚¾I‚µ‚©‚µc", "A good idea! But...")
+			txt lang("ã„ã„ã‚¢ã‚¤ãƒ‡ã‚¢ã ï¼ã—ã‹ã—â€¦", "A good idea! But...")
 		}
 		else {
 			ibitmod ITEM_BIT_FIREPROOF, ci, TRUE
-			txt lang(itemname(ci) + "‚Í”M‚©‚çç‚ç‚ê‚½B", itemname(ci) + " gain" + _s2(in) + " fireproof.")
+			txt lang(itemname(ci) + "ã¯ç†±ã‹ã‚‰å®ˆã‚‰ã‚ŒãŸã€‚", itemname(ci) + " gain" + _s2(in) + " fireproof.")
 		}
 		snd SOUNDLIST_DRINK1
 		goto *blend_act_SWEND1
@@ -2950,14 +2950,14 @@
 		if ( inv(INV_ITEM_LEVEL, ci) < 0 ) {
 			inv(INV_ITEM_LEVEL, ci) = 0
 			txtef COLOR_GREEN
-			txt lang(itemname(ci) + "‚ÌK‚ªæ‚ê‚½B", "You scour the rust off.")
+			txt lang(itemname(ci) + "ã®éŒ†ãŒå–ã‚ŒãŸã€‚", "You scour the rust off.")
 			if ( inv_getowner(ci) != (-1) ) {
 				r1 = inv_getowner(ci)
 				gosub *charaRefresh
 			}
 		}
 		else {
-			txt lang("‰½‚à‚¨‚«‚È‚¢c ", "Nothing happens...")
+			txt lang("ä½•ã‚‚ãŠããªã„â€¦ ", "Nothing happens...")
 		}
 		snd SOUNDLIST_DRINK1
 		goto *blend_act_SWEND1
@@ -2972,14 +2972,14 @@
 		inv(INV_ITEM_COL, ci) = inv(INV_ITEM_COL, ti)
 		snd SOUNDLIST_DRINK1
 		txtef COLOR_GREEN
-		txt lang(itemname(ci, 1) + "‚Ìì¬‚É¬Œ÷‚µ‚½I", "You successfully create " + itemname(ci, 1) + "!")
+		txt lang(itemname(ci, 1) + "ã®ä½œæˆã«æˆåŠŸã—ãŸï¼", "You successfully create " + itemname(ci, 1) + "!")
 		goto *blend_act_SWEND1
 		_switch_sw++
 	}
 	if ( _switch_val == 10005 | _switch_sw ) {
 		_switch_sw = 0
 		txtef COLOR_GREEN
-		txt lang(itemname(ti, 1) + "‚ğ" + itemname(ci) + "‚É‘•’…‚µ‚½B", "You bait " + itemname(ci) + " with " + itemname(ti, 1) + ".")
+		txt lang(itemname(ti, 1) + "ã‚’" + itemname(ci) + "ã«è£…ç€ã—ãŸã€‚", "You bait " + itemname(ci) + " with " + itemname(ti, 1) + ".")
 		if ( inv(INV_ITEM_PARAM4, ci) == inv(INV_ITEM_PARAM1, ti) ) {
 			inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) += rnd(10) + 15
 		}
@@ -2994,15 +2994,15 @@
 	if ( _switch_val == 10006 | _switch_sw ) {
 		_switch_sw = 0
 		txtef COLOR_GREEN
-		txt lang(itemname(ti, 1) + "‚ğ" + itemname(ci) + "‚É~‚è‚©‚¯‚½B", "You shower " + itemname(ci) + " on " + itemname(ti, 1) + ".")
+		txt lang(itemname(ti, 1) + "ã‚’" + itemname(ci) + "ã«é™ã‚Šã‹ã‘ãŸã€‚", "You shower " + itemname(ci) + " on " + itemname(ti, 1) + ".")
 		if ( inv(INV_ITEM_STATUS, ti) >= ITEM_STATUS_BLESSED ) {
 			txtef COLOR_YELLOW
-			txt lang(itemname(ci) + "‚Í‹âF‚É‹P‚¢‚½B", itemname(ci) + " shine" + _s2(inv(INV_ITEM_NUM, ci)) + " silvery.")
+			txt lang(itemname(ci) + "ã¯éŠ€è‰²ã«è¼ã„ãŸã€‚", itemname(ci) + " shine" + _s2(inv(INV_ITEM_NUM, ci)) + " silvery.")
 			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_BLESSED
 		}
 		if ( inv(INV_ITEM_STATUS, ti) <= ITEM_STATUS_CURSED ) {
 			txtef COLOR_PURPLE
-			txt lang(itemname(ci) + "‚Í•‚¢ƒI[ƒ‰‚É•ï‚Ü‚ê‚½B", itemname(ci) + " " + is2(inv(INV_ITEM_NUM, ci)) + " wrapped by a dark aura.")
+			txt lang(itemname(ci) + "ã¯é»’ã„ã‚ªãƒ¼ãƒ©ã«åŒ…ã¾ã‚ŒãŸã€‚", itemname(ci) + " " + is2(inv(INV_ITEM_NUM, ci)) + " wrapped by a dark aura.")
 			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_CURSED
 		}
 		snd SOUNDLIST_DRINK1
@@ -3011,24 +3011,24 @@
 	}
 	if ( _switch_val == 10007 | _switch_sw ) {
 		_switch_sw = 0
-		txt lang(itemname(ti, 1) + "‚ğ" + itemname(ci) + "‚É•ú‚è‚ñ‚¾B", "You throw " + itemname(ci) + " into " + itemname(ti, 1) + ".")
+		txt lang(itemname(ti, 1) + "ã‚’" + itemname(ci) + "ã«æ”¾ã‚Šè¾¼ã‚“ã ã€‚", "You throw " + itemname(ci) + " into " + itemname(ti, 1) + ".")
 		if ( inv(INV_ITEM_ID, ti) == ITEM_ID_EMPTY_BOTTLE ) {
-			txt lang("‹ó‚«•r‚ÌŠ„‚ê‚é‰¹‚ª‚µ‚½B", "You hear the sound of the empty bottle shatters.")
+			txt lang("ç©ºãç“¶ã®å‰²ã‚Œã‚‹éŸ³ãŒã—ãŸã€‚", "You hear the sound of the empty bottle shatters.")
 			goto *blend_act_SWEND1
 		}
 		snd SOUNDLIST_DRINK1
 		if ( inv(INV_ITEM_ID, ci) == ITEM_ID_HOLY_WELL ) {
-			txt lang("ˆäŒË‚Í‰˜‚ê‚½B", "The holy well is polluted.")
+			txt lang("äº•æˆ¸ã¯æ±šã‚ŒãŸã€‚", "The holy well is polluted.")
 			goto *blend_act_SWEND1
 		}
 		if ( inv(INV_ITEM_PARAM3, ci) >= 20 ) {
-			txt lang(itemname(ci) + "‚ÍŠ®‘S‚ÉŒÍ‚ê‚Ä‚¢‚éB", itemname(ci) + " is completely dry.")
+			txt lang(itemname(ci) + "ã¯å®Œå…¨ã«æ¯ã‚Œã¦ã„ã‚‹ã€‚", itemname(ci) + " is completely dry.")
 			goto *blend_act_SWEND1
 		}
 		txtef COLOR_GREEN
-		txt lang(itemname(ci) + "‚Íˆêu‹P‚¢‚½B", itemname(ci) + " shines for a moment.")
+		txt lang(itemname(ci) + "ã¯ä¸€ç¬è¼ã„ãŸã€‚", itemname(ci) + " shines for a moment.")
 		if ( inv(INV_ITEM_ID, ti) == ITEM_ID_HANDFUL_SNOW ) {
-			txt lang("‚µ‚©‚µ‚±‚ñ‚È—Ê‚Å‚Íc ", "But the snow just melts.")
+			txt lang("ã—ã‹ã—ã“ã‚“ãªé‡ã§ã¯â€¦ ", "But the snow just melts.")
 		}
 		else {
 			inv(INV_ITEM_PARAM1, ci) += rnd(3)
@@ -3040,14 +3040,14 @@
 		_switch_sw = 0
 		if ( inv(INV_ITEM_PARAM1, ci) < (-5) | inv(INV_ITEM_PARAM3, ci) >= 20 | (inv(INV_ITEM_ID, ci) == ITEM_ID_HOLY_WELL & gdata(GDATA_FLAG_HOLY_WELL) <= 0) ) {
 			valn = itemname(ci)
-			txt lang(valn + "‚ÍŸ¿‚ê‚Ä‚¢‚éB", valn + " is dry.")
+			txt lang(valn + "ã¯æ¶¸ã‚Œã¦ã„ã‚‹ã€‚", valn + " is dry.")
 			txtmore
-			txt lang("‚ ‚ÁI‹ó‚«•r‚ğˆäŒË‚É—‚Æ‚µ‚Ä‚µ‚Ü‚Á‚½c", "Ops! You drop the empty bottle into the well...")
+			txt lang("ã‚ã£ï¼ç©ºãç“¶ã‚’äº•æˆ¸ã«è½ã¨ã—ã¦ã—ã¾ã£ãŸâ€¦", "Ops! You drop the empty bottle into the well...")
 			goto *blend_act_SWEND1
 		}
 		if ( inv_getfreeid(CHARA_PLAYER) == (-1) ) {
 			item_num ti, 1
-			txt lang("ƒoƒbƒNƒpƒbƒN‚É‚ÍA‚à‚¤ƒAƒCƒeƒ€‚ğ“ü‚ê‚é—]—T‚ª‚È‚¢B", "Your inventory is full.")
+			txt lang("ãƒãƒƒã‚¯ãƒ‘ãƒƒã‚¯ã«ã¯ã€ã‚‚ã†ã‚¢ã‚¤ãƒ†ãƒ ã‚’å…¥ã‚Œã‚‹ä½™è£•ãŒãªã„ã€‚", "Your inventory is full.")
 			goto *blend_act_SWEND1
 		}
 		cibk = ci
@@ -3065,9 +3065,9 @@
 			flttypemajor = FILTER_ITEM_POTION
 			itemcreate CHARA_PLAYER, ITEM_ID_DUMMY, -1, -1, 0
 		}
-		txt lang("‹ó‚«•r‚É…‚ğ‚·‚­‚Á‚½B", "You draw water from the well into the empty bottle.")
+		txt lang("ç©ºãç“¶ã«æ°´ã‚’ã™ãã£ãŸã€‚", "You draw water from the well into the empty bottle.")
 		txtef COLOR_GREEN
-		txt lang(itemname(ci, 1) + "‚ğè‚É“ü‚ê‚½B", "You get " + itemname(ci, 1) + ".")
+		txt lang(itemname(ci, 1) + "ã‚’æ‰‹ã«å…¥ã‚ŒãŸã€‚", "You get " + itemname(ci, 1) + ".")
 		item_stack CHARA_PLAYER, ci, 1
 		item_stack CHARA_PLAYER, ci
 		ci = cibk

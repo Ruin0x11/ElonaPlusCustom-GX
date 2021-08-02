@@ -499,7 +499,7 @@
 			}
 			else {
 				txtmore
-				txt lang("‚ ‚È‚½‚ÍƒNƒ‰ƒCƒAƒ“ƒg‚ğ’u‚«‹‚è‚É‚µ‚½B", "You left your client.")
+				txt lang("ã‚ãªãŸã¯ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆã‚’ç½®ãå»ã‚Šã«ã—ãŸã€‚", "You left your client.")
 			}
 		}
 		val = gdata(GDATA_QUEST)
@@ -520,23 +520,23 @@
 
 *quest_fail
 	if ( val == 1 ) {
-		txt lang("‚ ‚È‚½‚Í”s–k‚µ‚½B", "You were defeated.")
+		txt lang("ã‚ãªãŸã¯æ•—åŒ—ã—ãŸã€‚", "You were defeated.")
 		modrank 0, -100
 	}
 	if ( val >= 1000 ) {
-		txt lang(qname(rq) + "‚©‚çó‚¯‚½ˆË—Š‚Í¸”s‚ÉI‚í‚Á‚½B", "You have failed the quest taken from " + qname(rq) + ".")
+		txt lang(qname(rq) + "ã‹ã‚‰å—ã‘ãŸä¾é ¼ã¯å¤±æ•—ã«çµ‚ã‚ã£ãŸã€‚", "You have failed the quest taken from " + qname(rq) + ".")
 		gdata(GDATA_FLAG_JOBS_FAILED)++
 		if ( qdata(QDATA_EXIST, rq) == QUEST_TYPE_DELIVER ) {
 			qdata(QDATA_QUEST_TARGET, qdata((10 /*!!!@[QDATA_ENCOUNTER @@@ QDATA_DEST_CLIENT]@!!! */), rq))--
 			txtmore
 			txtef COLOR_PURPLE
-			txt lang("‚ ‚È‚½‚Íd‘å‚Èß‚ğ”Æ‚µ‚½!", "You comit a serious crime!")
+			txt lang("ã‚ãªãŸã¯é‡å¤§ãªç½ªã‚’çŠ¯ã—ãŸ!", "You comit a serious crime!")
 			modkarma 0, -20
 		}
 		if ( qdata(QDATA_EXIST, rq) == QUEST_TYPE_ESCORT ) {
 			txtmore
 			txtef COLOR_PURPLE
-			txt lang("‚ ‚È‚½‚ÍŒì‰q‚Ì”C–±‚ğ‰Ê‚½‚¹‚È‚©‚Á‚½B", "You have failed to protect the client.")
+			txt lang("ã‚ãªãŸã¯è­·è¡›ã®ä»»å‹™ã‚’æœãŸã›ãªã‹ã£ãŸã€‚", "You have failed to protect the client.")
 			repeat 16
 				if ( cnt != 0 ) {
 					if ( cbit(CHARA_BIT_BODYGUARD, cnt) == TRUE ) {
@@ -545,15 +545,15 @@
 							cbitmod CHARA_BIT_BODYGUARD, cnt, FALSE
 							if ( cdata(CDATA_EXIST, tc) == CHAR_STATE_ALIVE ) {
 								if ( qdata(QDATA_VAR, rq) == 0 ) {
-									s = lang("u‚¨‚¢AˆÃEÒ‚ª„‚ÌŒã‚ë‚É‚¢‚é‚¼v", cnvtalk("Hey, the assassins are killing me."))
+									s = lang("ã€ŒãŠã„ã€æš—æ®ºè€…ãŒç§ã®å¾Œã‚ã«ã„ã‚‹ãã€", cnvtalk("Hey, the assassins are killing me."))
 									p = -11
 								}
 								if ( qdata(QDATA_VAR, rq) == 1 ) {
-									s = lang("u“Å‚ªA“Å‚ª[Iv", cnvtalk("Poison! P-P-Poison in my vein!!"))
+									s = lang("ã€Œæ¯’ãŒã€æ¯’ãŒãƒ¼ï¼ã€", cnvtalk("Poison! P-P-Poison in my vein!!"))
 									p = -4
 								}
 								if ( qdata(QDATA_VAR, rq) == 2 ) {
-									s = lang("uŠÔØ‚ê‚¾B‚±‚¤‚È‚Á‚½‚çcv" + name(tc) + "‚Í‰Î‚ğ‚©‚Ô‚Á‚½B", cnvtalk("I missed the deadline. I don't have a right to live anymore.") + " " + name(tc) + " pours a bottole of molotov cocktail over " + him(tc) + "self.")
+									s = lang("ã€Œæ™‚é–“åˆ‡ã‚Œã ã€‚ã“ã†ãªã£ãŸã‚‰â€¦ã€" + name(tc) + "ã¯ç«ã‚’ã‹ã¶ã£ãŸã€‚", cnvtalk("I missed the deadline. I don't have a right to live anymore.") + " " + name(tc) + " pours a bottole of molotov cocktail over " + him(tc) + "self.")
 									addmef cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 5, 24, rnd(15) + 25, efp, 0
 									mapitem_fire cdata(CDATA_X, tc), cdata(CDATA_Y, tc)
 									p = -9
@@ -578,7 +578,7 @@
 	p = stat
 	txtmore
 	txtef COLOR_RED
-	txt lang("–¼º’l‚ğ" + p + "¸‚Á‚½B", "You lose " + p + " fame.")
+	txt lang("åå£°å€¤ã‚’" + p + "å¤±ã£ãŸã€‚", "You lose " + p + " fame.")
 	return
 
 *quest_petArenaWin
@@ -597,14 +597,14 @@
 	snd SOUNDLIST_CHEER
 	if ( petarenawin == 1 ) {
 		txtef COLOR_GREEN
-		txt lang("‚ ‚È‚½‚Ìƒ`[ƒ€‚ÍŸ—˜‚µ‚½I", "Your team is victorious!")
+		txt lang("ã‚ãªãŸã®ãƒãƒ¼ãƒ ã¯å‹åˆ©ã—ãŸï¼", "Your team is victorious!")
 		txtef COLOR_GREEN
 		txtmore
-		txt lang("" + gdata(GDATA_QUEST_FAME) + "‚Ì–¼º’l‚ğè‚É“ü‚ê‚½B", "You gain " + gdata(GDATA_QUEST_FAME) + " fame.")
+		txt lang("" + gdata(GDATA_QUEST_FAME) + "ã®åå£°å€¤ã‚’æ‰‹ã«å…¥ã‚ŒãŸã€‚", "You gain " + gdata(GDATA_QUEST_FAME) + " fame.")
 		if ( arenaimport == 1 ) {
 			gdata(GDATA_EX_BATTLE_WIN)++
 			if ( enemylv > gdata(GDATA_EX_BATTLE_MAX_LVL) ) {
-				txt lang("EXƒoƒgƒ‹‚ÌŒ‚”j‘ŠèLV‚Ì‹L˜^‚ğXV‚µ‚½(Lv" + gdata(GDATA_EX_BATTLE_MAX_LVL) + " ¨ " + enemylv + " )", "You've made a new record. (Lv" + gdata(GDATA_EX_BATTLE_MAX_LVL) + " to " + enemylv + " )")
+				txt lang("EXãƒãƒˆãƒ«ã®æ’ƒç ´ç›¸æ‰‹LVã®è¨˜éŒ²ã‚’æ›´æ–°ã—ãŸ(Lv" + gdata(GDATA_EX_BATTLE_MAX_LVL) + " â†’ " + enemylv + " )", "You've made a new record. (Lv" + gdata(GDATA_EX_BATTLE_MAX_LVL) + " to " + enemylv + " )")
 				gdata(GDATA_EX_BATTLE_MAX_LVL) = enemylv
 			}
 		}
@@ -615,7 +615,7 @@
 			gdata(GDATA_FLAG_HIGHEST_PET_ARENA_STREAK)++
 			if ( adata(ADATA_PET_ARENA_WIN, gdata(GDATA_RETURN_AREA)) \ 100 == 0 ) {
 				snd SOUNDLIST_DING3
-				txt lang("‚È‚ñ‚Æc" + adata(ADATA_PET_ARENA_WIN, gdata(GDATA_RETURN_AREA)) + "Ÿ‚ğ’B¬‚µ‚½I’Ç‰Á‚Å30000‚Ì–¼º’l‚ğè‚É“ü‚ê‚½B", "You gain 30000 fame!!")
+				txt lang("ãªã‚“ã¨â€¦" + adata(ADATA_PET_ARENA_WIN, gdata(GDATA_RETURN_AREA)) + "å‹ã‚’é”æˆã—ãŸï¼è¿½åŠ ã§30000ã®åå£°å€¤ã‚’æ‰‹ã«å…¥ã‚ŒãŸã€‚", "You gain 30000 fame!!")
 				await 2000
 				cdata(CDATA_FAME, CHARA_PLAYER) += 30000
 				prenshyou = 100
@@ -646,14 +646,14 @@
 	}
 	else {
 		txtef COLOR_PURPLE
-		txt lang("‚ ‚È‚½‚Ìƒ`[ƒ€‚Í”s–k‚µ‚½B", "Your team is defeated.")
+		txt lang("ã‚ãªãŸã®ãƒãƒ¼ãƒ ã¯æ•—åŒ—ã—ãŸã€‚", "Your team is defeated.")
 		modrank 1, -100
 		decfame CHARA_PLAYER, 60
 		p = stat
 		if ( arenaop == 0 ) {
 			txtmore
 			txtef COLOR_RED
-			txt lang("–¼º’l‚ğ" + p + "¸‚Á‚½B", "You loose " + p + " fame.")
+			txt lang("åå£°å€¤ã‚’" + p + "å¤±ã£ãŸã€‚", "You loose " + p + " fame.")
 		}
 	}
 	return
@@ -666,20 +666,20 @@
 	if ( gdata(GDATA_QUEST) == QUEST_SUBTYPE_ELIMINATE ) {
 		snd SOUNDLIST_CHEER
 		txtef COLOR_GREEN
-		txt lang("‚ ‚È‚½‚ÍŸ—˜‚µ‚½I", "You are victorious!")
+		txt lang("ã‚ãªãŸã¯å‹åˆ©ã—ãŸï¼", "You are victorious!")
 		txtef COLOR_GREEN
 		txtmore
-		txt lang("" + gdata(GDATA_QUEST_FAME) + "‚Ì–¼º’l‚ğè‚É“ü‚ê‚½B", "You gain " + gdata(GDATA_QUEST_FAME) + " fame.")
+		txt lang("" + gdata(GDATA_QUEST_FAME) + "ã®åå£°å€¤ã‚’æ‰‹ã«å…¥ã‚ŒãŸã€‚", "You gain " + gdata(GDATA_QUEST_FAME) + " fame.")
 		modrank 0, 100, 2
 		cdata(CDATA_FAME, CHARA_PLAYER) += gdata(GDATA_QUEST_FAME)
-		txt lang("ŠO‚Ö‚ÌŠK’i‚ªŒ»‚ê‚½B", "Stairs appear.")
+		txt lang("å¤–ã¸ã®éšæ®µãŒç¾ã‚ŒãŸã€‚", "Stairs appear.")
 		map_placeupstairs mdata(MDATA_WIDTH) / 2, mdata(MDATA_HEIGHT) / 2
 		adata(ADATA_ARENA_WIN, gdata(GDATA_RETURN_AREA))++
 		gdata(GDATA_FLAG_HIGHEST_ARENA_STREAK)++
 		if ( adata(ADATA_ARENA_WIN, gdata(GDATA_RETURN_AREA)) \ 100 == 0 ) {
 			snd SOUNDLIST_DING3
 			snd SOUNDLIST_DING1
-			txt lang("‚È‚ñ‚Æc" + adata(ADATA_ARENA_WIN, gdata(GDATA_RETURN_AREA)) + "Ÿ‚ğ’B¬‚µ‚½I’Ç‰Á‚Å30000‚Ì–¼º’l‚ğè‚É“ü‚ê‚½B", "You gain 30000 fame!!")
+			txt lang("ãªã‚“ã¨â€¦" + adata(ADATA_ARENA_WIN, gdata(GDATA_RETURN_AREA)) + "å‹ã‚’é”æˆã—ãŸï¼è¿½åŠ ã§30000ã®åå£°å€¤ã‚’æ‰‹ã«å…¥ã‚ŒãŸã€‚", "You gain 30000 fame!!")
 			cdata(CDATA_FAME, CHARA_PLAYER) += 30000
 			renshyou = 100
 		}
@@ -709,22 +709,22 @@
 	if ( gdata(GDATA_QUEST) == QUEST_TYPE_HUNT | gdata(GDATA_QUEST) == QUEST_TYPE_HUNTEX ) {
 		qdata(QDATA_STATE, gdata(GDATA_QUEST_REF)) = QUEST_STATE_SUCCESS
 		txtef COLOR_GREEN
-		txt lang("ƒGƒŠƒA‚ğ§ˆ³‚µ‚½I", "The area is secured!")
+		txt lang("ã‚¨ãƒªã‚¢ã‚’åˆ¶åœ§ã—ãŸï¼", "The area is secured!")
 	}
 	if ( gdata(GDATA_QUEST) == QUEST_TYPE_ESCORT ) {
 		txtef COLOR_GREEN
-		txt lang("ƒGƒŠƒA‚ğ§ˆ³‚µ‚½I", "The area is secured!")
+		txt lang("ã‚¨ãƒªã‚¢ã‚’åˆ¶åœ§ã—ãŸï¼", "The area is secured!")
 	}
 	if ( gdata(GDATA_QUEST) == QUEST_TYPE_THIEVES ) {
 		txtef COLOR_GREEN
-		txt lang("“‘¯’c‚ğ•Ô‚è“¢‚¿‚É‚µ‚½I", "The area is secured!")
+		txt lang("ç›—è³Šå›£ã‚’è¿”ã‚Šè¨ã¡ã«ã—ãŸï¼", "The area is secured!")
 		gdata(GDATA_FLAG_BANDITS_KILLED)++
 	}
 	if ( gdata(GDATA_QUEST) == QUEST_TYPE_CONQUER ) {
 		gdata(GDATA_TIME_LIMIT) = 0
 		qdata(QDATA_STATE, gdata(GDATA_QUEST_REF)) = QUEST_STATE_SUCCESS
 		txtef COLOR_GREEN
-		txt lang("“¢”°‚É¬Œ÷‚µ‚½I", "You successfully slay the target.")
+		txt lang("è¨ä¼ã«æˆåŠŸã—ãŸï¼", "You successfully slay the target.")
 	}
 	return
 
@@ -842,7 +842,7 @@
 	modkarma 0, 1
 	gdata(GDATA_QUEST_FAME) = calcfame(CHARA_PLAYER, qdata(QDATA_LEVEL, rq) * 3 + 10)
 	txtef COLOR_GREEN
-	txt lang(qname(rq) + "‚©‚çó‚¯‚½ˆË—Š‚ğŠ®—¹‚µ‚½B", "You have completed the quest taken from " + qname(rq) + ".")
+	txt lang(qname(rq) + "ã‹ã‚‰å—ã‘ãŸä¾é ¼ã‚’å®Œäº†ã—ãŸã€‚", "You have completed the quest taken from " + qname(rq) + ".")
 	if ( gdata(GDATA_FLAG_ZISILION_SIDEQUEST) == 100 ) {
 		gdata(GDATA_FLAG_ZISILION_SIDEQUEST) = 300
 	}
@@ -850,14 +850,14 @@
 	mdata(MDATA_CITY_AUTHORITY) += hatugen
 	if ( mdata(MDATA_CITY_ETHER_CORRUPTION) != 0 ) {
 		txtef COLOR_GREEN
-		txt lang("”­Œ¾—Í‚ğ" + hatugen + "Šl“¾iŒ»İ" + mdata(MDATA_CITY_AUTHORITY) + "jA", "You get " + hatugen + " praise.")
+		txt lang("ç™ºè¨€åŠ›ã‚’" + hatugen + "ç²å¾—ï¼ˆç¾åœ¨" + mdata(MDATA_CITY_AUTHORITY) + "ï¼‰ã€", "You get " + hatugen + " praise.")
 	}
 	gdata(GDATA_FLAG_JOBS_COMPLETED)++
 	txtef COLOR_GREEN
 	txtmore
-	txt lang("" + gdata(GDATA_QUEST_FAME) + "‚Ì–¼º’l‚ğè‚É“ü‚ê‚½B", "You gain " + gdata(GDATA_QUEST_FAME) + " fame.")
+	txt lang("" + gdata(GDATA_QUEST_FAME) + "ã®åå£°å€¤ã‚’æ‰‹ã«å…¥ã‚ŒãŸã€‚", "You gain " + gdata(GDATA_QUEST_FAME) + " fame.")
 	cdata(CDATA_FAME, CHARA_PLAYER) += gdata(GDATA_QUEST_FAME)
-	txt lang("‰½‚©‚ª‘«Œ³‚É“]‚ª‚Á‚Ä‚«‚½B", "Something is put on the ground.")
+	txt lang("ä½•ã‹ãŒè¶³å…ƒã«è»¢ãŒã£ã¦ããŸã€‚", "Something is put on the ground.")
 	if ( qdata(QDATA_EXIST, rq) == QUEST_TYPE_DELIVER ) {
 		qdata(QDATA_QUEST_TARGET, qdata((10 /*!!!@[QDATA_ENCOUNTER @@@ QDATA_DEST_CLIENT]@!!! */), rq))--
 	}

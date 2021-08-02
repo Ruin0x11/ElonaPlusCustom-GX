@@ -218,17 +218,17 @@
 		if ( tc == CHARA_PLAYER ) {
 			goto *random_eventProc_SWEND1
 		}
-		txt lang(name(tc) + "u‚¬‚á‚Ÿ[[Iv", name(tc) + " screams, " + cnvtalk("Ahhhhhhh!"))
+		txt lang(name(tc) + "ã€Œãã‚ƒããƒ¼ãƒ¼ï¼ã€", name(tc) + " screams, " + cnvtalk("Ahhhhhhh!"))
 		dmghp tc, 44444, DAMAGE_FROM_EXECUTION
 		mdata(MDATA_WEREWOLF_STAGE) = 0
 		mdata(MDATA_CITY_PROPERTY_VALUE) += 5
 		txtef COLOR_GREEN
-		txt lang("ŠX‘®«’l‚ª5ã¸‚µ‚½iŒ»İ" + mdata(MDATA_CITY_PROPERTY_VALUE) + "j", "Security of this area was increased 5.")
-		s = lang("ˆŒY‚ÌŠÔ", "Time of execution")
+		txt lang("è¡—å±æ€§å€¤ãŒ5ä¸Šæ˜‡ã—ãŸï¼ˆç¾åœ¨" + mdata(MDATA_CITY_PROPERTY_VALUE) + "ï¼‰", "Security of this area was increased 5.")
+		s = lang("å‡¦åˆ‘ã®æ™‚é–“", "Time of execution")
 		file = "bg_re7"
-		buff = lang("ŠX‚Ì‚Ç‚±‚©‚©‚çAˆŒY‘ÎÛ‚Ì”÷‚©‚È”ß–Â‚ª•·‚±‚¦‚Ä‚«‚½B", "Suddenly, a painful shriek rises from somewhere in the town.")
+		buff = lang("è¡—ã®ã©ã“ã‹ã‹ã‚‰ã€å‡¦åˆ‘å¯¾è±¡ã®å¾®ã‹ãªæ‚²é³´ãŒèã“ãˆã¦ããŸã€‚", "Suddenly, a painful shriek rises from somewhere in the town.")
 		list(0, listmax) = 1
-		listn(0, listmax) = lang("“ì–³", "Sorry for you.")
+		listn(0, listmax) = lang("å—ç„¡", "Sorry for you.")
 		listmax++
 		gosub *re_select
 		goto *random_eventProc_SWEND1
@@ -272,7 +272,7 @@
 					}
 				}
 				if ( cdata(CDATA_EXIST, p) == CHAR_STATE_ALIVE ) {
-					txt lang(name(p) + "u‚¬‚á‚Ÿ[[Iv", name(p) + " screams, " + cnvtalk("Ahhhhhhh!"))
+					txt lang(name(p) + "ã€Œãã‚ƒããƒ¼ãƒ¼ï¼ã€", name(p) + " screams, " + cnvtalk("Ahhhhhhh!"))
 					dmghp p, 99999, DAMAGE_FROM_UNSEEN
 					kitune = 10
 					break
@@ -289,12 +289,12 @@
 		snd SOUNDLIST_SCREAM
 		mdata(MDATA_WEREWOLF_STAGE) = 1
 		txtef COLOR_RED2
-		txt lang("[l˜T‚É‚æ‚é”íŠQ‚ªo‚Ü‚µ‚½B—LŒ Ò‚ÌŠF‚³‚ñ‚Í‰ö‚µ‚¢l•¨‚ÉˆŒY“Š•[‚µ‚Ä‚­‚¾‚³‚¢]", "[It came out the damage by werewolf. Voters should be executed vote for suspicious person]")
-		s = lang("˜T‚ÌPŒ‚", "Werewolf")
+		txt lang("[äººç‹¼ã«ã‚ˆã‚‹è¢«å®³ãŒå‡ºã¾ã—ãŸã€‚æœ‰æ¨©è€…ã®çš†ã•ã‚“ã¯æ€ªã—ã„äººç‰©ã«å‡¦åˆ‘æŠ•ç¥¨ã—ã¦ãã ã•ã„]", "[It came out the damage by werewolf. Voters should be executed vote for suspicious person]")
+		s = lang("ç‹¼ã®è¥²æ’ƒ", "Werewolf")
 		file = "bg_re9"
-		buff = lang("ŠX‚Ì‚Ç‚±‚©‚©‚çA˜T‚Ì‰“–i‚¦‚Æ”÷‚©‚È”ß–Â‚ª•·‚±‚¦‚Ä‚«‚½B", "Suddenly, a painful shriek rises from somewhere in the town. You see several guards hastily run by.")
+		buff = lang("è¡—ã®ã©ã“ã‹ã‹ã‚‰ã€ç‹¼ã®é å ãˆã¨å¾®ã‹ãªæ‚²é³´ãŒèã“ãˆã¦ããŸã€‚", "Suddenly, a painful shriek rises from somewhere in the town. You see several guards hastily run by.")
 		list(0, listmax) = 1
-		listn(0, listmax) = lang("˜T‚ªo‚½‚¼[I", "Sorry for you.")
+		listn(0, listmax) = lang("ç‹¼ãŒå‡ºãŸããƒ¼ï¼", "Sorry for you.")
 		listmax++
 		gosub *re_select
 		kitune = 0
@@ -309,16 +309,16 @@
 				continue cnt
 			}
 			if ( cdata(CDATA_EXIST, p) == CHAR_STATE_ALIVE ) {
-				txt lang(name(p) + "u‚¬‚á‚Ÿ[[Iv", name(p) + " screams, " + cnvtalk("Ahhhhhhh!"))
+				txt lang(name(p) + "ã€Œãã‚ƒããƒ¼ãƒ¼ï¼ã€", name(p) + " screams, " + cnvtalk("Ahhhhhhh!"))
 				dmghp p, 99999, DAMAGE_FROM_UNSEEN
 				break
 			}
 		loop
-		s = lang("El‹S", "Murderer")
+		s = lang("æ®ºäººé¬¼", "Murderer")
 		file = "bg_re9"
-		buff = lang("ŠX‚Ì‚Ç‚±‚©‚Å”ß–Â‚ª‚ ‚ª‚Á‚½B‚ ‚È‚½‚ÍƒK[ƒh‚ªQ‚µ‚­‘–‚Á‚Ä‚¢‚­‚Ì‚ğ–ÚŒ‚‚µ‚½BulE‚µAlE‚µ‚¾IIv", "Suddenly, a painful shriek rises from somewhere in the town. You see several guards hastily run by.")
+		buff = lang("è¡—ã®ã©ã“ã‹ã§æ‚²é³´ãŒã‚ãŒã£ãŸã€‚ã‚ãªãŸã¯ã‚¬ãƒ¼ãƒ‰ãŒæ…Œã—ãèµ°ã£ã¦ã„ãã®ã‚’ç›®æ’ƒã—ãŸã€‚ã€Œäººæ®ºã—ã€äººæ®ºã—ã ï¼ï¼ã€", "Suddenly, a painful shriek rises from somewhere in the town. You see several guards hastily run by.")
 		list(0, listmax) = 1
-		listn(0, listmax) = lang("‚È‚Şc", "Sorry for you.")
+		listn(0, listmax) = lang("ãªã‚€â€¦", "Sorry for you.")
 		listmax++
 		gosub *re_select
 		goto *random_eventProc_SWEND1
@@ -326,19 +326,19 @@
 	}
 	if ( _switch_val == 14 | _switch_sw ) {
 		_switch_sw = 0
-		s = lang("“ä‚Ì‚²’y‘–", "Strange Feast")
+		s = lang("è¬ã®ã”é¦³èµ°", "Strange Feast")
 		file = "bg_re10"
-		buff = lang("‚ ‚È‚½‚Í–Ú‚Ì‘O‚É‚²’y‘–‚ğ‚İ‚Â‚¯‚½B", "You come across a strange feast.")
+		buff = lang("ã‚ãªãŸã¯ç›®ã®å‰ã«ã”é¦³èµ°ã‚’ã¿ã¤ã‘ãŸã€‚", "You come across a strange feast.")
 		list(0, listmax) = 1
-		listn(0, listmax) = lang("H‚×‚é", "(Eat)")
+		listn(0, listmax) = lang("é£Ÿã¹ã‚‹", "(Eat)")
 		listmax++
 		list(0, listmax) = 2
-		listn(0, listmax) = lang("—§‚¿‹‚é", "(Leave)")
+		listn(0, listmax) = lang("ç«‹ã¡å»ã‚‹", "(Leave)")
 		listmax++
 		gosub *re_select
 		if ( rtval == 1 ) {
 			cdata(CDATA_HUNGER, CHARA_PLAYER) = 15000
-			txt lang("‚È‚©‚È‚©”ü–¡‚µ‚©‚Á‚½B", "It was tasty."), lang("ˆ«‚­‚È‚¢B", "Not bad at all."), lang("‚ ‚È‚½‚ÍãŒÛ‚ğ‚¤‚Á‚½B", "You smack your lips.")
+			txt lang("ãªã‹ãªã‹ç¾å‘³ã—ã‹ã£ãŸã€‚", "It was tasty."), lang("æ‚ªããªã„ã€‚", "Not bad at all."), lang("ã‚ãªãŸã¯èˆŒé¼“ã‚’ã†ã£ãŸã€‚", "You smack your lips.")
 			gosub *eat_finish
 			chara_anorexia 0
 		}
@@ -385,26 +385,26 @@
 			if ( jp ) {
 				txtef COLOR_SKY_BLUE
 				if ( jp ) {
-					txt name(tc) + "‚Íˆêd–‚â‚è‚Æ‚°‚½Šç‚ğ‚µ‚Ä‚¢‚éB", name(tc) + "‚Í‚È‚ñ‚¾‚©‚»‚í‚»‚í‚µ‚Ä‚¢‚éB", "u‘‚­—ˆ‚È‚¢‚Æ‚È‚­‚È‚é" + _yo(3) + "v", "uˆê“ú‚ÌŒ³‹C‚Í’©H‚©‚ç" + _da(3) + "v"
+					txt name(tc) + "ã¯ä¸€ä»•äº‹ã‚„ã‚Šã¨ã’ãŸé¡”ã‚’ã—ã¦ã„ã‚‹ã€‚", name(tc) + "ã¯ãªã‚“ã ã‹ãã‚ãã‚ã—ã¦ã„ã‚‹ã€‚", "ã€Œæ—©ãæ¥ãªã„ã¨ãªããªã‚‹" + _yo(3) + "ã€", "ã€Œä¸€æ—¥ã®å…ƒæ°—ã¯æœé£Ÿã‹ã‚‰" + _da(3) + "ã€"
 				}
 			}
 		}
 		if ( sorg(SKILL_NORMAL_COOKING, tc) != 0 ) {
 			skillexp SKILL_NORMAL_COOKING, tc, 1000
 		}
-		s = lang("’©‚Ì‚Ğ‚Æ‚Æ‚«", "Breakfast")
+		s = lang("æœã®ã²ã¨ã¨ã", "Breakfast")
 		file = "bg_re10"
 		if ( mtc == 0 ) {
-			buff = lang("‚Ç‚¤‚â‚ç" + name(tc) + "‚ª’©H‚ğ€”õ‚µ‚Ä‚¢‚é‚æ‚¤‚¾B", "You come across a strange feast.")
+			buff = lang("ã©ã†ã‚„ã‚‰" + name(tc) + "ãŒæœé£Ÿã‚’æº–å‚™ã—ã¦ã„ã‚‹ã‚ˆã†ã ã€‚", "You come across a strange feast.")
 		}
 		if ( mtc > 0 ) {
-			buff = lang("‚Ç‚¤‚â‚ç" + name(tc) + "‚½‚¿‚ª’©H‚ğ€”õ‚µ‚Ä‚¢‚é‚æ‚¤‚¾B", "You come across a strange feast.")
+			buff = lang("ã©ã†ã‚„ã‚‰" + name(tc) + "ãŸã¡ãŒæœé£Ÿã‚’æº–å‚™ã—ã¦ã„ã‚‹ã‚ˆã†ã ã€‚", "You come across a strange feast.")
 		}
 		list(0, listmax) = 1
-		listn(0, listmax) = lang("H‚×‚é", "(Eat)")
+		listn(0, listmax) = lang("é£Ÿã¹ã‚‹", "(Eat)")
 		listmax++
 		list(0, listmax) = 2
-		listn(0, listmax) = lang("H‚×‚È‚¢", "(Leave)")
+		listn(0, listmax) = lang("é£Ÿã¹ãªã„", "(Leave)")
 		listmax++
 		gosub *re_select
 		if ( rtval == 1 ) {
@@ -437,27 +437,27 @@
 			loop
 			if ( umasa == 0 ) {
 				umai = 1
-				txt lang("–Ú‚ªŠo‚ß‚é‚æ‚¤‚È‚Ü‚¸‚³‚¾B", "Ugh! Yuk!"), lang("“|‚ê‚Ä–²‚Ì’†‚Ö‹t–ß‚è‚µ‚»‚¤‚È–¡‚¾B", "Awful taste!!")
+				txt lang("ç›®ãŒè¦šã‚ã‚‹ã‚ˆã†ãªã¾ãšã•ã ã€‚", "Ugh! Yuk!"), lang("å€’ã‚Œã¦å¤¢ã®ä¸­ã¸é€†æˆ»ã‚Šã—ãã†ãªå‘³ã ã€‚", "Awful taste!!")
 			}
 			if ( umasa >= 1 & umasa <= 10 ) {
 				umai = 2
-				txt lang("­‚µ•¨‘«‚è‚È‚¢–¡‚¾B", "Uh-uh, the taste is so so."), lang("c‚È‚ñ‚Æ‚¢‚¤‚©A”­“W“rã‚Ì–¡‚¾B", "The taste is not bad.")
+				txt lang("å°‘ã—ç‰©è¶³ã‚Šãªã„å‘³ã ã€‚", "Uh-uh, the taste is so so."), lang("â€¦ãªã‚“ã¨ã„ã†ã‹ã€ç™ºå±•é€”ä¸Šã®å‘³ã ã€‚", "The taste is not bad.")
 			}
 			if ( umasa >= 11 & umasa <= 20 ) {
 				umai = 3
-				txt lang("‚»‚Â‚Ì‚È‚¢–¡‚¾B", "Uh-uh, the taste is so so."), lang("ˆ«‚­‚È‚¢–¡‚¾B", "The taste is not bad.")
+				txt lang("ãã¤ã®ãªã„å‘³ã ã€‚", "Uh-uh, the taste is so so."), lang("æ‚ªããªã„å‘³ã ã€‚", "The taste is not bad.")
 			}
 			if ( umasa >= 21 & umasa <= 40 ) {
 				umai = 4
-				txt lang("‚©‚È‚è‚¢‚¯‚éB", "It tasted good."), lang("•’Ê‚É”ü–¡‚µ‚©‚Á‚½B", "Decent meal.")
+				txt lang("ã‹ãªã‚Šã„ã‘ã‚‹ã€‚", "It tasted good."), lang("æ™®é€šã«ç¾å‘³ã—ã‹ã£ãŸã€‚", "Decent meal.")
 			}
 			if ( umasa >= 41 & umasa <= 60 ) {
 				umai = 5
-				txt lang("‚±‚ê‚Í”ü–¡‚µ‚¢I", "Delicious!"), lang("‚±‚ê‚Í‚¢‚¯‚éI", "Gee what a good taste!"), lang("‚¢‚¢–¡‚¾I", "It tasted pretty good!")
+				txt lang("ã“ã‚Œã¯ç¾å‘³ã—ã„ï¼", "Delicious!"), lang("ã“ã‚Œã¯ã„ã‘ã‚‹ï¼", "Gee what a good taste!"), lang("ã„ã„å‘³ã ï¼", "It tasted pretty good!")
 			}
 			if ( umasa >= 61 ) {
 				umai = 6
-				txt lang("Å‚‚É”ü–¡‚µ‚¢I", "Wow! Terrific food!"), lang("’©‚©‚çK‚¹‚È‹C•ª‚¾I", "Yummy! Absolutely yummy!"), lang("g‘Ì‚ÉŠˆ—Í‚ª—N‚¢‚Ä‚­‚éI", "It tasted like seventh heaven!")
+				txt lang("æœ€é«˜ã«ç¾å‘³ã—ã„ï¼", "Wow! Terrific food!"), lang("æœã‹ã‚‰å¹¸ã›ãªæ°—åˆ†ã ï¼", "Yummy! Absolutely yummy!"), lang("èº«ä½“ã«æ´»åŠ›ãŒæ¹§ã„ã¦ãã‚‹ï¼", "It tasted like seventh heaven!")
 			}
 			repeat 16
 				cdata(CDATA_HUNGER, cnt) = 12000
@@ -483,7 +483,7 @@
 			cdata(CDATA_EMO_ICON, tc) = 13 + 100 * 3
 			txtef COLOR_PURPLE
 			if ( jp ) {
-				txt name(tc) + "‚Í‚µ‚å‚ñ‚Ú‚è‚µ‚Ä‚¢‚écB", name(tc) + "‚Í’´ƒVƒ‡ƒbƒN‚ğó‚¯‚Ä‚¢‚éI", name(tc) + "‚Í–³Œ¾‚ÅHŠí‚ğ•Ğ‚Ã‚¯n‚ß‚½B"
+				txt name(tc) + "ã¯ã—ã‚‡ã‚“ã¼ã‚Šã—ã¦ã„ã‚‹â€¦ã€‚", name(tc) + "ã¯è¶…ã‚·ãƒ§ãƒƒã‚¯ã‚’å—ã‘ã¦ã„ã‚‹ï¼", name(tc) + "ã¯ç„¡è¨€ã§é£Ÿå™¨ã‚’ç‰‡ã¥ã‘å§‹ã‚ãŸã€‚"
 			}
 		}
 		mtc = 0
@@ -534,7 +534,7 @@
 			if ( jp ) {
 				txtef COLOR_SKY_BLUE
 				if ( jp ) {
-					txt name(tc) + "‚Íˆêd–‚â‚è‚Æ‚°‚½Šç‚ğ‚µ‚Ä‚¢‚éB", name(tc) + "‚ÍŒÖ‚ç‚µ‚°‚É‚¨è»‚Ì•i‚ğæ‚èo‚µ‚½B", "uŠ„‚Æ©Mì" + _dana(3) + "v", "u‚Ç‚â‚Ÿv"
+					txt name(tc) + "ã¯ä¸€ä»•äº‹ã‚„ã‚Šã¨ã’ãŸé¡”ã‚’ã—ã¦ã„ã‚‹ã€‚", name(tc) + "ã¯èª‡ã‚‰ã—ã’ã«ãŠæ‰‹è£½ã®å“ã‚’å–ã‚Šå‡ºã—ãŸã€‚", "ã€Œå‰²ã¨è‡ªä¿¡ä½œ" + _dana(3) + "ã€", "ã€Œã©ã‚„ãã€"
 				}
 			}
 		}
@@ -560,19 +560,19 @@
 				skillexp cre1, cnt, 500
 			}
 		loop
-		s = lang("èì‚è‚ÌƒvƒŒƒ[ƒ“ƒg", "Handmade gifts")
+		s = lang("æ‰‹ä½œã‚Šã®ãƒ—ãƒ¬ã‚¼ãƒ³ãƒˆ", "Handmade gifts")
 		file = "bg_re3"
 		if ( mtc == 0 ) {
-			buff = lang(name(tc) + "‚ª–é‚È‚×‚ğ‚µ‚Ä–h‹ï‚ğì‚Á‚Ä‚­‚ê‚½‚æ‚¤‚¾B", name(tc) + " made for you the armors to the night work.")
+			buff = lang(name(tc) + "ãŒå¤œãªã¹ã‚’ã—ã¦é˜²å…·ã‚’ä½œã£ã¦ãã‚ŒãŸã‚ˆã†ã ã€‚", name(tc) + " made for you the armors to the night work.")
 		}
 		if ( mtc > 0 ) {
-			buff = lang(name(tc) + "‚½‚¿‚ª–é‚È‚×‚ğ‚µ‚Ä–h‹ï‚ğì‚Á‚Ä‚­‚ê‚½‚æ‚¤‚¾B", name(tc) + " made for you the armors to the night work.")
+			buff = lang(name(tc) + "ãŸã¡ãŒå¤œãªã¹ã‚’ã—ã¦é˜²å…·ã‚’ä½œã£ã¦ãã‚ŒãŸã‚ˆã†ã ã€‚", name(tc) + " made for you the armors to the night work.")
 		}
 		list(0, listmax) = 1
-		listn(0, listmax) = lang("•‚©‚é", "(Receive)")
+		listn(0, listmax) = lang("åŠ©ã‹ã‚‹", "(Receive)")
 		listmax++
 		list(0, listmax) = 2
-		listn(0, listmax) = lang("‚¢‚ç‚È‚¢", "(Not receive)")
+		listn(0, listmax) = lang("ã„ã‚‰ãªã„", "(Not receive)")
 		listmax++
 		gosub *re_select
 		if ( rtval == 1 ) {
@@ -653,9 +653,9 @@
 				inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_BLESSED
 				nooracle = 0
 			}
-			txt lang("‰½‚©‚ª‘«Œ³‚É“]‚ª‚Á‚Ä‚«‚½B", "Something is put on the ground.")
+			txt lang("ä½•ã‹ãŒè¶³å…ƒã«è»¢ãŒã£ã¦ããŸã€‚", "Something is put on the ground.")
 			if ( jp ) {
-				txt name(tc) + "‚ÍŠğ‚µ‚»‚¤‚¾B"
+				txt name(tc) + "ã¯å¬‰ã—ãã†ã ã€‚"
 			}
 		}
 		if ( rtval == 2 ) {
@@ -663,7 +663,7 @@
 			cdata(CDATA_EMO_ICON, tc) = 13 + 100 * 3
 			txtef COLOR_PURPLE
 			if ( jp ) {
-				txt name(tc) + "‚Í”¼‹ƒ‚«‚Å–h‹ï‚ğƒSƒ~‚Éo‚µ‚½B"
+				txt name(tc) + "ã¯åŠæ³£ãã§é˜²å…·ã‚’ã‚´ãƒŸã«å‡ºã—ãŸã€‚"
 			}
 		}
 		autosave = 1 * (gdata(GDATA_AREA) != AREA_SHOW_HOUSE)
@@ -712,7 +712,7 @@
 			if ( jp ) {
 				txtef COLOR_SKY_BLUE
 				if ( jp ) {
-					txt name(tc) + "‚Í‰ö‰ä‚ğ‰B‚µ‚Ä‚¢‚éB", "uŠæ’£‚Á‚Äì‚Á‚½" + _yo(3) + "v", "u‰ÆŒv‚Ì‘«‚µ‚É‚Å‚àcv", "u‚¿‚å‚Á‚Æ•sŠ†D‚¾‚¯‚Çcv"
+					txt name(tc) + "ã¯æ€ªæˆ‘ã‚’éš ã—ã¦ã„ã‚‹ã€‚", "ã€Œé ‘å¼µã£ã¦ä½œã£ãŸ" + _yo(3) + "ã€", "ã€Œå®¶è¨ˆã®è¶³ã—ã«ã§ã‚‚â€¦ã€", "ã€Œã¡ã‚‡ã£ã¨ä¸æ°å¥½ã ã‘ã©â€¦ã€"
 				}
 			}
 		}
@@ -738,19 +738,19 @@
 				skillexp cre1, cnt, 500
 			}
 		loop
-		s = lang("è•Ò‚İ‚ÌƒvƒŒƒ[ƒ“ƒg", "Hand-knitted gifts")
+		s = lang("æ‰‹ç·¨ã¿ã®ãƒ—ãƒ¬ã‚¼ãƒ³ãƒˆ", "Hand-knitted gifts")
 		file = "bg_re14"
 		if ( mtc == 0 ) {
-			buff = lang(name(tc) + "‚ª–é‚È‚×‚ğ‚µ‚Ä–h‹ï‚ğ•Ò‚ñ‚Å‚­‚ê‚½‚æ‚¤‚¾B", name(tc) + " made for you the armors to the night work.")
+			buff = lang(name(tc) + "ãŒå¤œãªã¹ã‚’ã—ã¦é˜²å…·ã‚’ç·¨ã‚“ã§ãã‚ŒãŸã‚ˆã†ã ã€‚", name(tc) + " made for you the armors to the night work.")
 		}
 		if ( mtc > 0 ) {
-			buff = lang(name(tc) + "‚½‚¿‚ª–é‚È‚×‚ğ‚µ‚Ä–h‹ï‚ğ•Ò‚ñ‚Å‚­‚ê‚½‚æ‚¤‚¾B", name(tc) + " made for you the armors to the night work.")
+			buff = lang(name(tc) + "ãŸã¡ãŒå¤œãªã¹ã‚’ã—ã¦é˜²å…·ã‚’ç·¨ã‚“ã§ãã‚ŒãŸã‚ˆã†ã ã€‚", name(tc) + " made for you the armors to the night work.")
 		}
 		list(0, listmax) = 1
-		listn(0, listmax) = lang("‚ ‚è‚ª‚Æ‚¤", "(Receive)")
+		listn(0, listmax) = lang("ã‚ã‚ŠãŒã¨ã†", "(Receive)")
 		listmax++
 		list(0, listmax) = 2
-		listn(0, listmax) = lang("‚¢‚ç‚ñ", "(Not receive)")
+		listn(0, listmax) = lang("ã„ã‚‰ã‚“", "(Not receive)")
 		listmax++
 		gosub *re_select
 		if ( rtval == 1 ) {
@@ -831,9 +831,9 @@
 				inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_BLESSED
 				nooracle = 0
 			}
-			txt lang("‰½‚©‚ª‘«Œ³‚É“]‚ª‚Á‚Ä‚«‚½B", "Something is put on the ground.")
+			txt lang("ä½•ã‹ãŒè¶³å…ƒã«è»¢ãŒã£ã¦ããŸã€‚", "Something is put on the ground.")
 			if ( jp ) {
-				txt name(tc) + "‚Íã‹@Œ™‚¾B"
+				txt name(tc) + "ã¯ä¸Šæ©Ÿå«Œã ã€‚"
 			}
 		}
 		if ( rtval == 2 ) {
@@ -841,7 +841,7 @@
 			cdata(CDATA_EMO_ICON, tc) = 13 + 100 * 3
 			txtef COLOR_PURPLE
 			if ( jp ) {
-				txt name(tc) + "‚Í–³Œ¾‚Å–h‹ï‚ğˆø‚«—ô‚¢‚½B"
+				txt name(tc) + "ã¯ç„¡è¨€ã§é˜²å…·ã‚’å¼•ãè£‚ã„ãŸã€‚"
 			}
 		}
 		autosave = 1 * (gdata(GDATA_AREA) != AREA_SHOW_HOUSE)
@@ -850,12 +850,12 @@
 	}
 	if ( _switch_val == 13 | _switch_sw ) {
 		_switch_sw = 0
-		s = lang("‚²’y‘–‚Ì“õ‚¢", "Smell of Food")
+		s = lang("ã”é¦³èµ°ã®åŒ‚ã„", "Smell of Food")
 		file = "bg_re10"
-		buff = lang("‚Ç‚±‚©‚ç‚Æ‚à‚È‚­•Y‚¤‚²’y‘–‚Ì“õ‚¢‚ÅA‚ ‚È‚½‚Ìˆİ‚Í•s–‚ğ‹©‚Ñn‚ß‚½B", "A sweet smell of food floats from nowhere. Your stomach growls but you can't find out where it comes from.")
+		buff = lang("ã©ã“ã‹ã‚‰ã¨ã‚‚ãªãæ¼‚ã†ã”é¦³èµ°ã®åŒ‚ã„ã§ã€ã‚ãªãŸã®èƒƒã¯ä¸æº€ã‚’å«ã³å§‹ã‚ãŸã€‚", "A sweet smell of food floats from nowhere. Your stomach growls but you can't find out where it comes from.")
 		cdata(CDATA_HUNGER, CHARA_PLAYER) -= 5000
 		list(0, listmax) = 1
-		listn(0, listmax) = lang("• Œ¸‚Á‚½c", "I'm hungry now!")
+		listn(0, listmax) = lang("è…¹æ¸›ã£ãŸâ€¦", "I'm hungry now!")
 		listmax++
 		gosub *re_select
 		goto *random_eventProc_SWEND1
@@ -863,11 +863,11 @@
 	}
 	if ( _switch_val == 1 | _switch_sw ) {
 		_switch_sw = 0
-		s = lang("•s‰^‚Ì‰ñ”ğ", "Avoiding Misfortune")
+		s = lang("ä¸é‹ã®å›é¿", "Avoiding Misfortune")
 		file = "bg_re8"
-		buff = lang("‚ ‚È‚½‚ÍˆêuŒ™‚È—\Š´‚ª‚µ‚½‚ªA‚»‚ê‚Í‚â‚ª‚ÄÁ‚¦‚½B", "You sense a bad feeling for a moment but it fades away quickly.")
+		buff = lang("ã‚ãªãŸã¯ä¸€ç¬å«Œãªäºˆæ„ŸãŒã—ãŸãŒã€ãã‚Œã¯ã‚„ãŒã¦æ¶ˆãˆãŸã€‚", "You sense a bad feeling for a moment but it fades away quickly.")
 		list(0, listmax) = 1
-		listn(0, listmax) = lang("‚æ‚µ", "Good.")
+		listn(0, listmax) = lang("ã‚ˆã—", "Good.")
 		listmax++
 		gosub *re_select
 		goto *random_eventProc_SWEND1
@@ -878,11 +878,11 @@
 		efid = SKILL_EFFECT_POTION_POTENTIAL
 		tc = CHARA_PLAYER
 		gosub *effect
-		s = lang("Ë”\‚ÌŠJ‰Ô", "Your Potential")
+		s = lang("æ‰èƒ½ã®é–‹èŠ±", "Your Potential")
 		file = "bg_re4"
-		buff = lang("“Ë‘R‚ ‚È‚½‚ÌË”\‚ÍŠJ‰Ô‚µ‚½I", "Suddenly you develop your gift!")
+		buff = lang("çªç„¶ã‚ãªãŸã®æ‰èƒ½ã¯é–‹èŠ±ã—ãŸï¼", "Suddenly you develop your gift!")
 		list(0, listmax) = 1
-		listn(0, listmax) = lang("ƒƒ@ƒI[", "Woohoo!")
+		listn(0, listmax) = lang("ãƒ¯ã‚¡ã‚ªãƒ¼", "Woohoo!")
 		listmax++
 		gosub *re_select
 		goto *random_eventProc_SWEND1
@@ -891,11 +891,11 @@
 	if ( _switch_val == 18 | _switch_sw ) {
 		_switch_sw = 0
 		skillexp SKILL_NORMAL_FAITH, CHARA_PLAYER, 1000, 6, 1000
-		s = lang("M‹Â‚Ì[‚Ü‚è", "Gaining Faith")
+		s = lang("ä¿¡ä»°ã®æ·±ã¾ã‚Š", "Gaining Faith")
 		file = "bg_re12"
-		buff = lang("–²‚Ì’†‚ÅA‚ ‚È‚½‚ÍˆÌ‘å‚È‚éÒ‚Ì‰¸‚â‚©‚ÈˆĞŒõ‚ÉG‚ê‚½B", "In your dream, a saint comes out and blesses you.")
+		buff = lang("å¤¢ã®ä¸­ã§ã€ã‚ãªãŸã¯å‰å¤§ãªã‚‹è€…ã®ç©ã‚„ã‹ãªå¨å…‰ã«è§¦ã‚ŒãŸã€‚", "In your dream, a saint comes out and blesses you.")
 		list(0, listmax) = 1
-		listn(0, listmax) = lang("_‚æ", "Great.")
+		listn(0, listmax) = lang("ç¥ã‚ˆ", "Great.")
 		listmax++
 		gosub *re_select
 		goto *random_eventProc_SWEND1
@@ -903,15 +903,15 @@
 	}
 	if ( _switch_val == 12 | _switch_sw ) {
 		_switch_sw = 0
-		s = lang("ƒ}ƒeƒŠƒAƒ‹‚Ì”­Œ©", "Small Luck")
+		s = lang("ãƒãƒ†ãƒªã‚¢ãƒ«ã®ç™ºè¦‹", "Small Luck")
 		file = "bg_re3"
-		buff = lang("Î‚±‚ë‚É‚Â‚Ü‚¸‚¢‚Ä“]‚ñ‚¾”q‚ÉA‚ ‚È‚½‚ÍŠô‚Â‚©‚Ìƒ}ƒeƒŠƒAƒ‹‚ğŒ©‚Â‚¯‚½B", "You stumble over a stone and find some materials on the ground. ")
+		buff = lang("çŸ³ã“ã‚ã«ã¤ã¾ãšã„ã¦è»¢ã‚“ã æ‹å­ã«ã€ã‚ãªãŸã¯å¹¾ã¤ã‹ã®ãƒãƒ†ãƒªã‚¢ãƒ«ã‚’è¦‹ã¤ã‘ãŸã€‚", "You stumble over a stone and find some materials on the ground. ")
 		efid = SKILL_EFFECT_CREATE_MATERIAL
 		efp = 100
 		tc = CHARA_PLAYER
 		gosub *effect
 		list(0, listmax) = 1
-		listn(0, listmax) = lang("‚æ‚µ", "Nice.")
+		listn(0, listmax) = lang("ã‚ˆã—", "Nice.")
 		listmax++
 		gosub *re_select
 		goto *random_eventProc_SWEND1
@@ -923,11 +923,11 @@
 		efp = 200
 		tc = CHARA_PLAYER
 		gosub *effect
-		s = lang("–²‚Ì’†‚ÌûŠn", "Dream Harvest")
+		s = lang("å¤¢ã®ä¸­ã®åç©«", "Dream Harvest")
 		file = "bg_re3"
-		buff = lang("–²‚Ì’†‚ÅA‚ ‚È‚½‚Í‚Ì‚ñ‚«‚Éƒ}ƒeƒŠƒAƒ‹‚ğÌæ‚µ‚Ä‚¢‚½", "In your dream, you harvest materials peacefully.")
+		buff = lang("å¤¢ã®ä¸­ã§ã€ã‚ãªãŸã¯ã®ã‚“ãã«ãƒãƒ†ãƒªã‚¢ãƒ«ã‚’æ¡å–ã—ã¦ã„ãŸ", "In your dream, you harvest materials peacefully.")
 		list(0, listmax) = 1
-		listn(0, listmax) = lang("‚é‚ñô", "Sweet.")
+		listn(0, listmax) = lang("ã‚‹ã‚“â™ª", "Sweet.")
 		listmax++
 		gosub *re_select
 		goto *random_eventProc_SWEND1
@@ -935,14 +935,14 @@
 	}
 	if ( _switch_val == 10 | _switch_sw ) {
 		_switch_sw = 0
-		s = lang("–ì‰cÕ‚Ì”­Œ©", "Camping Site")
+		s = lang("é‡å–¶è·¡ã®ç™ºè¦‹", "Camping Site")
 		file = "bg_re3"
-		buff = lang("‚ ‚È‚½‚Í‰½Ò‚©‚ª–ì‰c‚µ‚½Õ‚ğŒ©‚Â‚¯‚½B•Ó‚è‚É‚ÍH‚×c‚µ‚â‚ª‚ç‚­‚½‚ªU‚ç‚Î‚Á‚Ä‚¢‚éB‚à‚µ‚©‚µ‚½‚çA‰½‚©–ğ‚É—§‚Â‚à‚Ì‚ª‚ ‚é‚©‚à‚µ‚ê‚È‚¢B", "You discover a camping site someone left behind. Chunks of leftovers and junks remain here. You may possibly find some usefull items.")
+		buff = lang("ã‚ãªãŸã¯ä½•è€…ã‹ãŒé‡å–¶ã—ãŸè·¡ã‚’è¦‹ã¤ã‘ãŸã€‚è¾ºã‚Šã«ã¯é£Ÿã¹æ®‹ã—ã‚„ãŒã‚‰ããŸãŒæ•£ã‚‰ã°ã£ã¦ã„ã‚‹ã€‚ã‚‚ã—ã‹ã—ãŸã‚‰ã€ä½•ã‹å½¹ã«ç«‹ã¤ã‚‚ã®ãŒã‚ã‚‹ã‹ã‚‚ã—ã‚Œãªã„ã€‚", "You discover a camping site someone left behind. Chunks of leftovers and junks remain here. You may possibly find some usefull items.")
 		list(0, listmax) = 1
-		listn(0, listmax) = lang("’²‚×‚é", "(Search)")
+		listn(0, listmax) = lang("èª¿ã¹ã‚‹", "(Search)")
 		listmax++
 		list(0, listmax) = 2
-		listn(0, listmax) = lang("—§‚¿‹‚é", "(Leave)")
+		listn(0, listmax) = lang("ç«‹ã¡å»ã‚‹", "(Leave)")
 		listmax++
 		gosub *re_select
 		if ( rtval == 1 ) {
@@ -951,7 +951,7 @@
 				flttypemajor = fsetremain(rnd(length(fsetremain)))
 				itemcreate -1, ITEM_ID_DUMMY, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
 			loop
-			txt lang("‰½‚©‚ª‘«Œ³‚É“]‚ª‚Á‚Ä‚«‚½B", "Something is put on the ground.")
+			txt lang("ä½•ã‹ãŒè¶³å…ƒã«è»¢ãŒã£ã¦ããŸã€‚", "Something is put on the ground.")
 		}
 		goto *random_eventProc_SWEND1
 		_switch_sw++
@@ -972,15 +972,15 @@
 				}
 			}
 		loop
-		s = lang("•s‹C–¡‚È–²", "Creepy Dream")
+		s = lang("ä¸æ°—å‘³ãªå¤¢", "Creepy Dream")
 		file = "bg_re5"
-		buff = lang("‚ ‚È‚½‚Í•s‹C–¡‚È–²‚ğ‚İ‚½B‰A‹C‚ÈŠô‚Â‚à‚Ì“µ‚ª‚ ‚È‚½‚ğ‹Ã‹‚µA‚Ç‚±‚©‚ç‚Æ‚à‚È‚­Î‚¢º‚ª‚±‚¾‚Ü‚µ‚½BuƒPƒ‰ƒPƒ‰ƒPƒ‰cƒ~ƒcƒPƒ^ƒˆcƒPƒ‰ƒPƒ‰v‚ ‚È‚½‚ª“ñ“xQ•Ô‚è‚ğ‚¤‚Á‚½ŒãA‚»‚Ì–²‚ÍI‚í‚Á‚½B", "In your dreams, several pairs of gloomy eyes stare at you and laughter seemingly from nowhere echos around you.  \"Keh-la keh-la keh-la I found you...I found you.. keh-la keh-la keh-la\" After tossing around a couple times, the dream is gone.")
+		buff = lang("ã‚ãªãŸã¯ä¸æ°—å‘³ãªå¤¢ã‚’ã¿ãŸã€‚é™°æ°—ãªå¹¾ã¤ã‚‚ã®ç³ãŒã‚ãªãŸã‚’å‡è¦–ã—ã€ã©ã“ã‹ã‚‰ã¨ã‚‚ãªãç¬‘ã„å£°ãŒã“ã ã¾ã—ãŸã€‚ã€Œã‚±ãƒ©ã‚±ãƒ©ã‚±ãƒ©â€¦ãƒŸãƒ„ã‚±ã‚¿ãƒ¨â€¦ã‚±ãƒ©ã‚±ãƒ©ã€ã‚ãªãŸãŒäºŒåº¦å¯è¿”ã‚Šã‚’ã†ã£ãŸå¾Œã€ãã®å¤¢ã¯çµ‚ã‚ã£ãŸã€‚", "In your dreams, several pairs of gloomy eyes stare at you and laughter seemingly from nowhere echos around you.  \"Keh-la keh-la keh-la I found you...I found you.. keh-la keh-la keh-la\" After tossing around a couple times, the dream is gone.")
 		list(0, listmax) = 1
-		listn(0, listmax) = lang("‚¨‚©‚µ‚È–²‚¾", "Strange...")
+		listn(0, listmax) = lang("ãŠã‹ã—ãªå¤¢ã ", "Strange...")
 		listmax++
 		gosub *re_select
 		if ( f == 0 ) {
-			txt lang("‰½‚à‹N‚±‚ç‚È‚©‚Á‚½‚æ‚¤‚¾B", "Nothing happenes.")
+			txt lang("ä½•ã‚‚èµ·ã“ã‚‰ãªã‹ã£ãŸã‚ˆã†ã ã€‚", "Nothing happenes.")
 			obvious = 0
 		}
 		else {
@@ -998,11 +998,11 @@
 		efp = 100
 		tc = CHARA_PLAYER
 		gosub *effect
-		s = lang("‰ö•¨‚Ì–²", "Monster Dream")
+		s = lang("æ€ªç‰©ã®å¤¢", "Monster Dream")
 		file = "bg_re2"
-		buff = lang("‚ ‚È‚½‚Í‰ö•¨‚Æí‚Á‚Ä‚¢‚½BX‚¢‰»‚¯•¨‚Éa‚è‚©‚©‚ë‚¤‚Æ‚µ‚½A‰ö•¨‚Í”ß–Â‚ğ‚ ‚°‚½BuƒIƒŒƒnƒIƒ}ƒGƒ_IƒIƒ}ƒGƒnƒIƒŒƒ_Iv‚ ‚È‚½‚Í©•ª‚Ì™ï‚«º‚É‹N‚±‚³‚ê‚½B", "You are fighting an ugly monster. You are about to thrust a dagger into the neck of the monster. And the monster screams. \"You are me! I am you!\" You are awakened by your own low moan.")
+		buff = lang("ã‚ãªãŸã¯æ€ªç‰©ã¨æˆ¦ã£ã¦ã„ãŸã€‚é†œã„åŒ–ã‘ç‰©ã«æ–¬ã‚Šã‹ã‹ã‚ã†ã¨ã—ãŸæ™‚ã€æ€ªç‰©ã¯æ‚²é³´ã‚’ã‚ã’ãŸã€‚ã€Œã‚ªãƒ¬ãƒã‚ªãƒã‚¨ãƒ€ï¼ã‚ªãƒã‚¨ãƒã‚ªãƒ¬ãƒ€ï¼ã€ã‚ãªãŸã¯è‡ªåˆ†ã®å‘»ãå£°ã«èµ·ã“ã•ã‚ŒãŸã€‚", "You are fighting an ugly monster. You are about to thrust a dagger into the neck of the monster. And the monster screams. \"You are me! I am you!\" You are awakened by your own low moan.")
 		list(0, listmax) = 1
-		listn(0, listmax) = lang("‚¤‚¤‚£‚ñc", "Urrgh..hh..")
+		listn(0, listmax) = lang("ã†ã†ã…ã‚“â€¦", "Urrgh..hh..")
 		listmax++
 		gosub *re_select
 		goto *random_eventProc_SWEND1
@@ -1052,18 +1052,18 @@
 		}
 		cdata(CDATA_POWER_GAUGE, tc) = 0
 		cdata(CDATA_POWER_GAUGE, CHARA_PLAYER) = 0
-		txt lang("‚ ‚È‚½‚Í‚Ó‚Æ–Ú‚ğŠo‚Ü‚µ‚½B—×‚É" + cdatan(CDATAN_NAME, tc) + "‚ªQ‚Ä‚¢‚écB", "You wake up suddenly.")
+		txt lang("ã‚ãªãŸã¯ãµã¨ç›®ã‚’è¦šã¾ã—ãŸã€‚éš£ã«" + cdatan(CDATAN_NAME, tc) + "ãŒå¯ã¦ã„ã‚‹â€¦ã€‚", "You wake up suddenly.")
 		customtalk tc, DBMODE_FLAVOR_NIGHT
 		gosub *convert_word
 		if ( gdata(GDATA_CUSTOM_TALK) == 100 ) {
 			txtef COLOR_SKY_BLUE
 			if ( jp ) {
-				txt "u‚Ş‚É‚ác‚à‚¤H‚×‚ç‚ê‚È‚¢cv", "u•|‚¢–²AŒ©‚¿‚á‚Á‚½cv", "u‚¨×–‚‚µ‚Ä‚Ü‚·v", "c" + cdatan(CDATAN_NAME, tc) + "‚Í‚·‚â‚·‚â‚ÆQ‘§‚ğ‚½‚Ä‚Ä‚¢‚éB"
+				txt "ã€Œã‚€ã«ã‚ƒâ€¦ã‚‚ã†é£Ÿã¹ã‚‰ã‚Œãªã„â€¦ã€", "ã€Œæ€–ã„å¤¢ã€è¦‹ã¡ã‚ƒã£ãŸâ€¦ã€", "ã€ŒãŠé‚ªé­”ã—ã¦ã¾ã™ã€", "â€¦" + cdatan(CDATAN_NAME, tc) + "ã¯ã™ã‚„ã™ã‚„ã¨å¯æ¯ã‚’ãŸã¦ã¦ã„ã‚‹ã€‚"
 			}
 		}
 		customtalk tc, DBMODE_FLAVOR_EX_ACT
 		if ( iroiro == "" ) {
-			iroiro = lang("FX‚·‚é", "(Various things)")
+			iroiro = lang("è‰²ã€…ã™ã‚‹", "(Various things)")
 		}
 		if ( cdata(CDATA_ID, tc) == CREATURE_ID_JURE | cdata(CDATA_ID, tc) == CREATURE_ID_BLESSED_JURE ) {
 			repeat 245
@@ -1071,31 +1071,31 @@
 					continue
 				}
 				if ( cdata(CDATA_ID, cnt) == CREATURE_ID_ROVID ) {
-					txt lang(cdatan(CDATAN_NAME, cnt) + "u‚®‚Ê‚Êcv", "You heard the chagrined voice of " + cdatan(CDATAN_NAME, cnt) + ".")
+					txt lang(cdatan(CDATAN_NAME, cnt) + "ã€Œãã¬ã¬â€¦ã€", "You heard the chagrined voice of " + cdatan(CDATAN_NAME, cnt) + ".")
 					break
 				}
 			loop
 		}
-		s = lang("“Y‚¢Q", "Sleep Sharing")
+		s = lang("æ·»ã„å¯", "Sleep Sharing")
 		file = "bg_re16"
-		buff = lang("“Y‚¢Q’†‚¾cB", "You noticed " + name(tc) + " was sleeping next to you indistinguishably.")
+		buff = lang("æ·»ã„å¯ä¸­ã â€¦ã€‚", "You noticed " + name(tc) + " was sleeping next to you indistinguishably.")
 		list(0, listmax) = 1
-		listn(0, listmax) = lang("‹C‚É‚¹‚¸Q‚é", "(Sleep without minding)")
+		listn(0, listmax) = lang("æ°—ã«ã›ãšå¯ã‚‹", "(Sleep without minding)")
 		listmax++
 		list(0, listmax) = 2
-		listn(0, listmax) = lang("’Ç‚¢o‚·", "(Kick out)")
+		listn(0, listmax) = lang("è¿½ã„å‡ºã™", "(Kick out)")
 		listmax++
 		list(0, listmax) = 3
-		listn(0, listmax) = lang("—D‚µ‚­•‚Å‚é", "(gently stroke)")
+		listn(0, listmax) = lang("å„ªã—ãæ’«ã§ã‚‹", "(gently stroke)")
 		listmax++
 		list(0, listmax) = 4
-		listn(0, listmax) = lang("‚»‚Á‚Æ•ø‚«‚µ‚ß‚é", "(gently hug)")
+		listn(0, listmax) = lang("ãã£ã¨æŠ±ãã—ã‚ã‚‹", "(gently hug)")
 		listmax++
 		list(0, listmax) = 5
-		listn(0, listmax) = lang("¨Œ³‚Å‚³‚³‚â‚­", "(whisper)")
+		listn(0, listmax) = lang("è€³å…ƒã§ã•ã•ã‚„ã", "(whisper)")
 		listmax++
 		list(0, listmax) = 6
-		listn(0, listmax) = lang("ŠÃ‚¦‚Ä‚İ‚é", "(Behave like a spoiled child)")
+		listn(0, listmax) = lang("ç”˜ãˆã¦ã¿ã‚‹", "(Behave like a spoiled child)")
 		listmax++
 		list(0, listmax) = 7
 		listn(0, listmax) = lang(iroiro + " ", "(" + iroiro + ")")
@@ -1105,12 +1105,12 @@
 			gosub *re_select
 			if ( rtval == 1 ) {
 				txtef COLOR_YELLOW
-				txt lang(cdatan(CDATAN_NAME, tc) + "‚É‚Ø‚µ‚Ø‚µ’@‚©‚ê‚Ä‚¢‚é‚æ‚¤‚ÈŠ´Šo‚ª‚µ‚½‚ªA‹C‚É‚¹‚¸Q‚½B", "You slept without minding.")
+				txt lang(cdatan(CDATAN_NAME, tc) + "ã«ãºã—ãºã—å©ã‹ã‚Œã¦ã„ã‚‹ã‚ˆã†ãªæ„Ÿè¦šãŒã—ãŸãŒã€æ°—ã«ã›ãšå¯ãŸã€‚", "You slept without minding.")
 				break
 			}
 			if ( rtval == 2 ) {
 				txtef COLOR_YELLOW
-				txt lang(cdatan(CDATAN_NAME, tc) + "‚Í‚²‚ë‚²‚ë“]‚ª‚Á‚Ä‚Ç‚±‚©‚Ös‚Á‚½B", cdatan(CDATAN_NAME, tc) + " went to somewhere rolling around.")
+				txt lang(cdatan(CDATAN_NAME, tc) + "ã¯ã”ã‚ã”ã‚è»¢ãŒã£ã¦ã©ã“ã‹ã¸è¡Œã£ãŸã€‚", cdatan(CDATAN_NAME, tc) + " went to somewhere rolling around.")
 				break
 			}
 			if ( rtval == 3 ) {
@@ -1118,19 +1118,19 @@
 					cdata(CDATA_POWER_GAUGE, tc) += 15
 					cdata(CDATA_POWER_GAUGE, CHARA_PLAYER) += 20
 					if ( jp ) {
-						txt cdatan(CDATAN_NAME, tc) + "‚Í©•ª‚©‚çg‘Ì‚ğ‚±‚·‚è‚Â‚¯‚Ä‚«‚½B"
+						txt cdatan(CDATAN_NAME, tc) + "ã¯è‡ªåˆ†ã‹ã‚‰èº«ä½“ã‚’ã“ã™ã‚Šã¤ã‘ã¦ããŸã€‚"
 					}
 				}
 				if ( cdata(CDATA_POWER_GAUGE, tc) > 50 & cdata(CDATA_POWER_GAUGE, tc) <= 80 ) {
 					cdata(CDATA_POWER_GAUGE, tc) += 20
 					if ( jp ) {
-						txt cdatan(CDATAN_NAME, tc) + "‚Í‚­‚·‚®‚Á‚½‚»‚¤‚Éƒ‚ƒ]ƒ‚ƒ]‚µ‚Ä‚¢‚éB"
+						txt cdatan(CDATAN_NAME, tc) + "ã¯ãã™ãã£ãŸãã†ã«ãƒ¢ã‚¾ãƒ¢ã‚¾ã—ã¦ã„ã‚‹ã€‚"
 					}
 				}
 				if ( cdata(CDATA_POWER_GAUGE, tc) <= 50 ) {
 					cdata(CDATA_POWER_GAUGE, tc) += 25
 					if ( jp ) {
-						txt cdatan(CDATAN_NAME, tc) + "‚ÍŠğ‚µ‚ª‚Á‚Ä‚¢‚é‚æ‚¤‚¾B"
+						txt cdatan(CDATAN_NAME, tc) + "ã¯å¬‰ã—ãŒã£ã¦ã„ã‚‹ã‚ˆã†ã ã€‚"
 					}
 				}
 			}
@@ -1139,19 +1139,19 @@
 					cdata(CDATA_POWER_GAUGE, tc) += 20
 					cdata(CDATA_POWER_GAUGE, CHARA_PLAYER) += 25
 					if ( jp ) {
-						txt cdatan(CDATAN_NAME, tc) + "‚Ìg‘Ì‚ª‚Æ‚Ä‚à”M‚¢cB"
+						txt cdatan(CDATAN_NAME, tc) + "ã®èº«ä½“ãŒã¨ã¦ã‚‚ç†±ã„â€¦ã€‚"
 					}
 				}
 				if ( cdata(CDATA_POWER_GAUGE, tc) > 30 & cdata(CDATA_POWER_GAUGE, tc) <= 70 ) {
 					cdata(CDATA_POWER_GAUGE, CHARA_PLAYER) += 15
 					if ( jp ) {
-						txt cdatan(CDATAN_NAME, tc) + "‚Í‹t‚É‚ ‚È‚½‚É•ø‚«‚Â‚¢‚Ä—£‚ê‚È‚¢I"
+						txt cdatan(CDATAN_NAME, tc) + "ã¯é€†ã«ã‚ãªãŸã«æŠ±ãã¤ã„ã¦é›¢ã‚Œãªã„ï¼"
 					}
 				}
 				if ( cdata(CDATA_POWER_GAUGE, tc) <= 30 ) {
 					cdata(CDATA_POWER_GAUGE, tc) += 10
 					if ( jp ) {
-						txt cdatan(CDATAN_NAME, tc) + "‚Í‚¿‚å‚Á‚ÆQ‚Ä‚Ä‚¢‚éI"
+						txt cdatan(CDATAN_NAME, tc) + "ã¯ã¡ã‚‡ã£ã¨æ…Œã¦ã¦ã„ã‚‹ï¼"
 					}
 				}
 			}
@@ -1160,19 +1160,19 @@
 					cdata(CDATA_POWER_GAUGE, tc) += 10
 					cdata(CDATA_POWER_GAUGE, CHARA_PLAYER) += 20
 					if ( jp ) {
-						txt cdatan(CDATAN_NAME, tc) + "‚Í“ ‚¯‚½•\î‚Å‚ ‚È‚½‚ÌŒ¾—t‚ğ•·‚¢‚Ä‚¢‚éB"
+						txt cdatan(CDATAN_NAME, tc) + "ã¯è•©ã‘ãŸè¡¨æƒ…ã§ã‚ãªãŸã®è¨€è‘‰ã‚’èã„ã¦ã„ã‚‹ã€‚"
 					}
 				}
 				if ( cdata(CDATA_POWER_GAUGE, tc) > 40 & cdata(CDATA_POWER_GAUGE, tc) <= 90 ) {
 					cdata(CDATA_POWER_GAUGE, tc) += 10
 					if ( jp ) {
-						txt cdatan(CDATAN_NAME, tc) + "‚Í–Ù‚Á‚Ä‚ ‚È‚½‚ÌŒ¾—t‚É¨‚ğŒX‚¯‚Ä‚¢‚écB"
+						txt cdatan(CDATAN_NAME, tc) + "ã¯é»™ã£ã¦ã‚ãªãŸã®è¨€è‘‰ã«è€³ã‚’å‚¾ã‘ã¦ã„ã‚‹â€¦ã€‚"
 					}
 				}
 				if ( cdata(CDATA_POWER_GAUGE, tc) <= 40 ) {
 					cdata(CDATA_POWER_GAUGE, CHARA_PLAYER) += 10
 					if ( jp ) {
-						txt cdatan(CDATAN_NAME, tc) + "‚Íç’k‚Û‚­Î‚Á‚½B"
+						txt cdatan(CDATAN_NAME, tc) + "ã¯å†—è«‡ã½ãç¬‘ã£ãŸã€‚"
 					}
 				}
 			}
@@ -1181,20 +1181,20 @@
 					cdata(CDATA_POWER_GAUGE, CHARA_PLAYER) += 25
 					cdata(CDATA_POWER_GAUGE, tc) += 10
 					if ( jp ) {
-						txt cdatan(CDATAN_NAME, tc) + "‚Í‚ ‚È‚½‚ğ•ø‚«‚µ‚ßA¨Œ³‚Å‰½‚©‚³‚³‚â‚¢‚½cB"
+						txt cdatan(CDATAN_NAME, tc) + "ã¯ã‚ãªãŸã‚’æŠ±ãã—ã‚ã€è€³å…ƒã§ä½•ã‹ã•ã•ã‚„ã„ãŸâ€¦ã€‚"
 					}
 				}
 				if ( cdata(CDATA_POWER_GAUGE, tc) > 30 & cdata(CDATA_POWER_GAUGE, tc) <= 70 ) {
 					cdata(CDATA_POWER_GAUGE, CHARA_PLAYER) += 20
 					cdata(CDATA_POWER_GAUGE, tc) += 5
 					if ( jp ) {
-						txt cdatan(CDATAN_NAME, tc) + "‚Í‚ ‚È‚½‚ğ‚«‚Â‚­•ø‚«‚µ‚ß‚½cB"
+						txt cdatan(CDATAN_NAME, tc) + "ã¯ã‚ãªãŸã‚’ãã¤ãæŠ±ãã—ã‚ãŸâ€¦ã€‚"
 					}
 				}
 				if ( cdata(CDATA_POWER_GAUGE, tc) <= 30 ) {
 					cdata(CDATA_POWER_GAUGE, CHARA_PLAYER) += 15
 					if ( jp ) {
-						txt cdatan(CDATAN_NAME, tc) + "‚Í‚ ‚È‚½‚ğ’§”­‚µ‚Ä‚¢‚écB"
+						txt cdatan(CDATAN_NAME, tc) + "ã¯ã‚ãªãŸã‚’æŒ‘ç™ºã—ã¦ã„ã‚‹â€¦ã€‚"
 					}
 				}
 			}
@@ -1206,19 +1206,19 @@
 				if ( gdata(GDATA_CUSTOM_TALK) == 100 ) {
 					if ( jp ) {
 						txtef COLOR_YELLOW
-						txt "u‚È‚ñ‚Ä‘å’_‚Èv", "u‚È‚ÁcIHv", "c" + cdatan(CDATAN_NAME, tc) + "‚Í‚·‚²‚­’p‚¸‚©‚µ‚»‚¤‚¾B"
+						txt "ã€Œãªã‚“ã¦å¤§èƒ†ãªã€", "ã€Œãªã£â€¦ï¼ï¼Ÿã€", "â€¦" + cdatan(CDATAN_NAME, tc) + "ã¯ã™ã”ãæ¥ãšã‹ã—ãã†ã ã€‚"
 					}
 				}
-				buff = lang("“Y‚¢Q’†‚¾cB", "You noticed " + name(tc) + " was sleeping next to you indistinguishably.")
+				buff = lang("æ·»ã„å¯ä¸­ã â€¦ã€‚", "You noticed " + name(tc) + " was sleeping next to you indistinguishably.")
 			}
 			txtef COLOR_YELLOW
-			txt lang("‚ ‚È‚½" + cdata(CDATA_POWER_GAUGE, CHARA_PLAYER) + "%@‘Šè" + cdata(CDATA_POWER_GAUGE, tc) + "% ", "You" + cdata(CDATA_POWER_GAUGE, CHARA_PLAYER) + "%-Opponent" + cdata(CDATA_POWER_GAUGE, tc) + "% ")
+			txt lang("ã‚ãªãŸ" + cdata(CDATA_POWER_GAUGE, CHARA_PLAYER) + "%ã€€ç›¸æ‰‹" + cdata(CDATA_POWER_GAUGE, tc) + "% ", "You" + cdata(CDATA_POWER_GAUGE, CHARA_PLAYER) + "%-Opponent" + cdata(CDATA_POWER_GAUGE, tc) + "% ")
 			if ( cdata(CDATA_POWER_GAUGE, CHARA_PLAYER) >= 100 ) {
 				if ( cdata(CDATA_POWER_GAUGE, tc) < 100 ) {
 					txtmore
 					txtef COLOR_RED
 					txtmore
-					txt lang("‚ ‚È‚½‚ÍŒÀŠE‚É’B‚µ‚½Ic‚»‚±‚Å‚ ‚È‚½‚ÌˆÓ¯‚Í“rØ‚ê‚½B", "You have reached the limit! So ... your consciousness is interrupted.")
+					txt lang("ã‚ãªãŸã¯é™ç•Œã«é”ã—ãŸï¼â€¦ãã“ã§ã‚ãªãŸã®æ„è­˜ã¯é€”åˆ‡ã‚ŒãŸã€‚", "You have reached the limit! So ... your consciousness is interrupted.")
 					snd SOUNDLIST_ATK_FIRE
 					if ( cdata(CDATA_MASTER_SERVANT2, tc) < 10 ) {
 						cdata(CDATA_MASTER_SERVANT2, tc)++
@@ -1234,13 +1234,13 @@
 				if ( cdata(CDATA_POWER_GAUGE, CHARA_PLAYER) >= 100 ) {
 					txtef COLOR_RED
 					txtmore
-					txt lang(cdatan(CDATAN_NAME, tc) + "‚Æ‚ ‚È‚½‚ÍŒÀŠE‚É’B‚µ‚½I", "You have reached the limit with " + cdatan(CDATAN_NAME, tc) + "!")
+					txt lang(cdatan(CDATAN_NAME, tc) + "ã¨ã‚ãªãŸã¯é™ç•Œã«é”ã—ãŸï¼", "You have reached the limit with " + cdatan(CDATAN_NAME, tc) + "!")
 					modimp tc, 15
 				}
 				else {
 					txtef COLOR_RED
 					txtmore
-					txt lang(cdatan(CDATAN_NAME, tc) + "‚ÍŒÀŠE‚É’B‚µ‚½I", cdatan(CDATAN_NAME, tc) + " reached the limit!")
+					txt lang(cdatan(CDATAN_NAME, tc) + "ã¯é™ç•Œã«é”ã—ãŸï¼", cdatan(CDATAN_NAME, tc) + " reached the limit!")
 					modimp tc, 5
 				}
 				snd SOUNDLIST_ATK_FIRE
@@ -1256,10 +1256,10 @@
 				if ( gdata(GDATA_CUSTOM_TALK) == 100 ) {
 					if ( jp ) {
 						if ( cdata(CDATA_MASTER_SERVANT2, tc) < 5 ) {
-							txt cdatan(CDATAN_NAME, tc) + "‚Í‚ ‚È‚½‚É•ø‚«‚Â‚¢‚Ä–Ú‚ğ•Â‚¶‚½cB"
+							txt cdatan(CDATAN_NAME, tc) + "ã¯ã‚ãªãŸã«æŠ±ãã¤ã„ã¦ç›®ã‚’é–‰ã˜ãŸâ€¦ã€‚"
 						}
 						if ( cdata(CDATA_MASTER_SERVANT2, tc) >= 5 ) {
-							txt cdatan(CDATAN_NAME, tc) + "‚Í‚ ‚È‚½‚ğ‚ª‚Á‚¿‚è‰Ÿ‚³‚¦‚Â‚¯A––Ê‚ÌÎ‚İ‚ğ•‚‚©‚×‚½B"
+							txt cdatan(CDATAN_NAME, tc) + "ã¯ã‚ãªãŸã‚’ãŒã£ã¡ã‚ŠæŠ¼ã•ãˆã¤ã‘ã€æº€é¢ã®ç¬‘ã¿ã‚’æµ®ã‹ã¹ãŸã€‚"
 						}
 					}
 				}
@@ -1293,15 +1293,15 @@
 		cbitmod CHARA_BIT_MAKE_GENE, tc, FALSE
 		cdata(CDATA_POWER_GAUGE, tc) = 0
 		cdata(CDATA_POWER_GAUGE, CHARA_PLAYER) = 0
-		s = lang("‹­§“Y‚¢Q", "Force Sleep Sharing")
+		s = lang("å¼·åˆ¶æ·»ã„å¯", "Force Sleep Sharing")
 		file = "bg_re16"
-		buff = lang("‚Ç‚¤‚µ‚Ä‚â‚ë‚¤‚©B", "What do you try...")
-		txt lang("ƒxƒbƒh‚É" + cdatan(CDATAN_NAME, tc) + "‚ğ–³—–î—Q‚©‚¹‚Ä‚¢‚éB", "You're laid forced " + cdatan(CDATAN_NAME, tc) + " to bed.")
+		buff = lang("ã©ã†ã—ã¦ã‚„ã‚ã†ã‹ã€‚", "What do you try...")
+		txt lang("ãƒ™ãƒƒãƒ‰ã«" + cdatan(CDATAN_NAME, tc) + "ã‚’ç„¡ç†çŸ¢ç†å¯ã‹ã›ã¦ã„ã‚‹ã€‚", "You're laid forced " + cdatan(CDATAN_NAME, tc) + " to bed.")
 		if ( cdata(CDATA_MASTER_SERVANT, tc) < 200 ) {
 			modimp tc, -10
 			cdata(CDATA_MASTER_SERVANT, tc)++
 		}
-		bui = lang("g‘Ì", "body")
+		bui = lang("èº«ä½“", "body")
 		repeat 30, 100
 			if ( cdata(cnt, CHARA_PLAYER) == 0 ) {
 				continue
@@ -1316,40 +1316,40 @@
 				continue
 			}
 			if ( cdata(cnt, CHARA_PLAYER) / EXT_EQUIP_SLOTS == 3 ) {
-				bui = lang("”w’†", "back")
+				bui = lang("èƒŒä¸­", "back")
 				break
 			}
 			if ( cdata(cnt, CHARA_PLAYER) / EXT_EQUIP_SLOTS == 4 ) {
-				bui = lang("˜", "chest")
+				bui = lang("è…°", "chest")
 				break
 			}
 			if ( cdata(cnt, CHARA_PLAYER) / EXT_EQUIP_SLOTS == 7 ) {
-				bui = lang("˜r", "arm")
+				bui = lang("è…•", "arm")
 				break
 			}
 			if ( cdata(cnt, CHARA_PLAYER) / EXT_EQUIP_SLOTS == 9 ) {
-				bui = lang("‘«", "leg")
+				bui = lang("è¶³", "leg")
 				break
 			}
 			if ( cdata(cnt, CHARA_PLAYER) / EXT_EQUIP_SLOTS == 6 ) {
-				bui = lang("w", "finger")
+				bui = lang("æŒ‡", "finger")
 				break
 			}
 		loop
 		list(0, listmax) = 1
-		listn(0, listmax) = lang("•ú’u‚µ‚ÄQ‚é", "(Sleep on standing)")
+		listn(0, listmax) = lang("æ”¾ç½®ã—ã¦å¯ã‚‹", "(Sleep on standing)")
 		listmax++
 		list(0, listmax) = 2
-		listn(0, listmax) = lang("“y‰ºÀ‚³‚¹‚é", "(To Dogeza)")
+		listn(0, listmax) = lang("åœŸä¸‹åº§ã•ã›ã‚‹", "(To Dogeza)")
 		listmax++
 		list(0, listmax) = 3
-		listn(0, listmax) = lang(bui + "‚ğär‚ß‚³‚¹‚é", "(Lick your " + bui + " )")
+		listn(0, listmax) = lang(bui + "ã‚’èˆã‚ã•ã›ã‚‹", "(Lick your " + bui + " )")
 		listmax++
 		list(0, listmax) = 4
-		listn(0, listmax) = lang("‚Ğ‚Á‚Ï‚½‚­", "(Slap)")
+		listn(0, listmax) = lang("ã²ã£ã±ãŸã", "(Slap)")
 		listmax++
 		list(0, listmax) = 5
-		listn(0, listmax) = lang("•‚Å‚Ü‚í‚·", "(Rub)")
+		listn(0, listmax) = lang("æ’«ã§ã¾ã‚ã™", "(Rub)")
 		listmax++
 		repeat 20
 			customtalk tc, DBMODE_FLAVOR_MIDNIGHT
@@ -1357,10 +1357,10 @@
 			if ( gdata(GDATA_CUSTOM_TALK) == 100 ) {
 				if ( jp ) {
 					if ( cdata(CDATA_MASTER_SERVANT, tc) < 200 ) {
-						txt name(tc) + "‚ÍÃ‚©‚É‹ƒ‚¢‚Ä‚¢‚écB", name(tc) + "‚Í”ß‚µ‚»‚¤‚È–Ú‚Å‚Ç‚±‚©‰“‚­‚ğŒ©‚Ä‚¢‚écB", name(tc) + "‚Í‚ ‚È‚½‚Ì‚â‚è•û‚ğ”ñ“ï‚µ‚Ä‚¢‚éB", name(tc) + "‚Í‚ ‚È‚½‚ğ‰s‚­áÉ‚İ‚Â‚¯‚Ä‚¢‚éB"
+						txt name(tc) + "ã¯é™ã‹ã«æ³£ã„ã¦ã„ã‚‹â€¦ã€‚", name(tc) + "ã¯æ‚²ã—ãã†ãªç›®ã§ã©ã“ã‹é ãã‚’è¦‹ã¦ã„ã‚‹â€¦ã€‚", name(tc) + "ã¯ã‚ãªãŸã®ã‚„ã‚Šæ–¹ã‚’éé›£ã—ã¦ã„ã‚‹ã€‚", name(tc) + "ã¯ã‚ãªãŸã‚’é‹­ãç¨ã¿ã¤ã‘ã¦ã„ã‚‹ã€‚"
 					}
 					else {
-						txt name(tc) + "‚Í‘ål‚µ‚­‚µ‚Ä‚¢‚éB", name(tc) + "‚Í‚ ‚È‚½‚ÌŠçF‚ğ‚¤‚©‚ª‚Á‚Ä‚¢‚écB", name(tc) + "‚Í‚Ñ‚­‚è‚Æk‚¦‚½B"
+						txt name(tc) + "ã¯å¤§äººã—ãã—ã¦ã„ã‚‹ã€‚", name(tc) + "ã¯ã‚ãªãŸã®é¡”è‰²ã‚’ã†ã‹ãŒã£ã¦ã„ã‚‹â€¦ã€‚", name(tc) + "ã¯ã³ãã‚Šã¨éœ‡ãˆãŸã€‚"
 					}
 				}
 			}
@@ -1368,39 +1368,39 @@
 			gosub *re_select
 			if ( rtval == 1 ) {
 				txtef COLOR_YELLOW
-				txt lang("‚ ‚È‚½‚Í" + cdatan(CDATAN_NAME, tc) + "‚ğ•ú’u‚µ‚ÄA‚»‚Ì‚Ü‚ÜQ‚½B", "You slept on standing " + cdatan(CDATAN_NAME, tc) + ".")
+				txt lang("ã‚ãªãŸã¯" + cdatan(CDATAN_NAME, tc) + "ã‚’æ”¾ç½®ã—ã¦ã€ãã®ã¾ã¾å¯ãŸã€‚", "You slept on standing " + cdatan(CDATAN_NAME, tc) + ".")
 				break
 			}
 			if ( rtval == 2 ) {
 				if ( cdata(CDATA_MASTER_SERVANT, tc) >= 200 | rnd(sdata(SKILL_ATTR_CHA, CHARA_PLAYER)) > rnd(sdata(SKILL_ATTR_WIL, tc)) ) {
-					txt lang(cdatan(CDATAN_NAME, tc) + "‚Í‚í‚¯‚à‚í‚©‚ç‚È‚¢‚Ü‚ÜA‚Ğ‚½‚·‚ç“y‰ºÀ‚ğ‚µ‚½B", "Without knowing apparent reason, " + cdatan(CDATAN_NAME, tc) + " was the prostrate earnestly.")
+					txt lang(cdatan(CDATAN_NAME, tc) + "ã¯ã‚ã‘ã‚‚ã‚ã‹ã‚‰ãªã„ã¾ã¾ã€ã²ãŸã™ã‚‰åœŸä¸‹åº§ã‚’ã—ãŸã€‚", "Without knowing apparent reason, " + cdatan(CDATAN_NAME, tc) + " was the prostrate earnestly.")
 					modimp2 tc, 5
 					cdata(CDATA_POWER_GAUGE, CHARA_PLAYER) += 10
 				}
 				else {
 					if ( rnd(sdata(SKILL_ATTR_STR, CHARA_PLAYER)) > rnd(sdata(SKILL_ATTR_STR, tc)) ) {
-						txt lang(cdatan(CDATAN_NAME, tc) + "‚ª‹‘â‚µ‚½‚Ì‚ÅA—Í‚Ã‚­‚Å“y‰ºÀ‚³‚¹‚½B", "Because " + cdatan(CDATAN_NAME, tc) + " was rejected, to dogeza by force.")
+						txt lang(cdatan(CDATAN_NAME, tc) + "ãŒæ‹’çµ¶ã—ãŸã®ã§ã€åŠ›ã¥ãã§åœŸä¸‹åº§ã•ã›ãŸã€‚", "Because " + cdatan(CDATAN_NAME, tc) + " was rejected, to dogeza by force.")
 						modimp2 tc, 3
 						cdata(CDATA_POWER_GAUGE, CHARA_PLAYER) += 10
 						cdata(CDATA_POWER_GAUGE, tc) += 15
 						modimp tc, -5
 					}
 					else {
-						txt lang(cdatan(CDATAN_NAME, tc) + "‚Í–Ú‚É—Ü‚ğ•‚‚©‚×‚Ä‹‘â‚µ‚½B", cdatan(CDATAN_NAME, tc) + " rejected with tears in eyes.")
+						txt lang(cdatan(CDATAN_NAME, tc) + "ã¯ç›®ã«æ¶™ã‚’æµ®ã‹ã¹ã¦æ‹’çµ¶ã—ãŸã€‚", cdatan(CDATAN_NAME, tc) + " rejected with tears in eyes.")
 						cdata(CDATA_POWER_GAUGE, tc) += 10
 					}
 				}
 			}
 			if ( rtval == 3 ) {
 				if ( cdata(CDATA_MASTER_SERVANT, tc) >= 200 | rnd(sdata(SKILL_ATTR_CHA, CHARA_PLAYER)) > rnd(sdata(SKILL_ATTR_WIL, tc) * 2) ) {
-					txt lang(cdatan(CDATAN_NAME, tc) + "‚Í‚¨‚¸‚¨‚¸‚Æ‚ ‚È‚½‚Ì" + bui + "‚ğär‚ß‚Í‚¶‚ß‚½B", cdatan(CDATAN_NAME, tc) + " began to lick your " + bui + " sheepishly.")
+					txt lang(cdatan(CDATAN_NAME, tc) + "ã¯ãŠãšãŠãšã¨ã‚ãªãŸã®" + bui + "ã‚’èˆã‚ã¯ã˜ã‚ãŸã€‚", cdatan(CDATAN_NAME, tc) + " began to lick your " + bui + " sheepishly.")
 					snd SOUNDLIST_WATER2
 					modimp2 tc, 8
 					cdata(CDATA_POWER_GAUGE, CHARA_PLAYER) += 15
 				}
 				else {
 					if ( rnd(sdata(SKILL_ATTR_STR, CHARA_PLAYER)) > rnd(sdata(SKILL_ATTR_STR, tc) * 2) ) {
-						txt lang(cdatan(CDATAN_NAME, tc) + "‚ª‹‘â‚µ‚½‚Ì‚ÅA–³—–î—" + bui + "‚ğär‚ß‚³‚¹‚½B", "Because " + cdatan(CDATAN_NAME, tc) + " was rejected, forced to lick your " + bui + ".")
+						txt lang(cdatan(CDATAN_NAME, tc) + "ãŒæ‹’çµ¶ã—ãŸã®ã§ã€ç„¡ç†çŸ¢ç†" + bui + "ã‚’èˆã‚ã•ã›ãŸã€‚", "Because " + cdatan(CDATAN_NAME, tc) + " was rejected, forced to lick your " + bui + ".")
 						snd SOUNDLIST_WATER2
 						modimp2 tc, 8
 						cdata(CDATA_POWER_GAUGE, CHARA_PLAYER) += 20
@@ -1408,7 +1408,7 @@
 						modimp tc, -2
 					}
 					else {
-						txt lang(cdatan(CDATAN_NAME, tc) + "‚ÍŒ„‚ğŒ©‚ÄŠš‚İ‚Â‚¢‚Ä‚«‚½I", cdatan(CDATAN_NAME, tc) + " has bite!")
+						txt lang(cdatan(CDATAN_NAME, tc) + "ã¯éš™ã‚’è¦‹ã¦å™›ã¿ã¤ã„ã¦ããŸï¼", cdatan(CDATAN_NAME, tc) + " has bite!")
 						cdata(CDATA_MASTER_SERVANT, tc) -= 10
 						cdata(CDATA_POWER_GAUGE, tc) += 5
 						snd SOUNDLIST_EAT1
@@ -1421,24 +1421,24 @@
 				await 400
 				snd SOUNDLIST_SLAP
 				if ( cdata(CDATA_MASTER_SERVANT, tc) >= 200 | cdata(CDATA_MASTER_SERVANT2, tc) <= (-5) ) {
-					txt lang(cdatan(CDATAN_NAME, tc) + "‚Í‚ ‚È‚½‚Ì‚È‚·‚ª‚Ü‚ÜA–Ù‚Á‚Ä‘Ï‚¦‚Ä‚¢‚écB", "Form your left, He endured the pain in silence...")
+					txt lang(cdatan(CDATAN_NAME, tc) + "ã¯ã‚ãªãŸã®ãªã™ãŒã¾ã¾ã€é»™ã£ã¦è€ãˆã¦ã„ã‚‹â€¦ã€‚", "Form your left, He endured the pain in silence...")
 					modimp2 tc, 10
 					cdata(CDATA_POWER_GAUGE, CHARA_PLAYER) += 35
 					if ( cdata(CDATA_MASTER_SERVANT2, tc) <= (-5) ) {
-						txt lang(cdatan(CDATAN_NAME, tc) + "‚Í‰½ŒÌ‚©‚¿‚å‚Á‚ÆŠğ‚µ‚»‚¤‚¾B", cdatan(CDATAN_NAME, tc) + " is a happy little for some reason.")
+						txt lang(cdatan(CDATAN_NAME, tc) + "ã¯ä½•æ•…ã‹ã¡ã‚‡ã£ã¨å¬‰ã—ãã†ã ã€‚", cdatan(CDATAN_NAME, tc) + " is a happy little for some reason.")
 						cdata(CDATA_MASTER_SERVANT, tc)++
 					}
 				}
 				else {
 					if ( rnd(sdata(SKILL_ATTR_STR, CHARA_PLAYER)) > rnd(sdata(SKILL_ATTR_STR, tc)) ) {
-						txt lang("‚ ‚È‚½‚Í" + cdatan(CDATAN_NAME, tc) + "‚ª‘ål‚µ‚­‚È‚é‚Ü‚Å‚Ğ‚Á‚Ï‚½‚¢‚½B", "You were beaten up until " + cdatan(CDATAN_NAME, tc) + " was quiet.")
+						txt lang("ã‚ãªãŸã¯" + cdatan(CDATAN_NAME, tc) + "ãŒå¤§äººã—ããªã‚‹ã¾ã§ã²ã£ã±ãŸã„ãŸã€‚", "You were beaten up until " + cdatan(CDATAN_NAME, tc) + " was quiet.")
 						modimp2 tc, 15
 						cdata(CDATA_POWER_GAUGE, tc) += 30
 						cdata(CDATA_POWER_GAUGE, CHARA_PLAYER) += 30
 						modimp tc, -15
 					}
 					else {
-						txt lang(cdatan(CDATAN_NAME, tc) + "‚Í•K€‚Å’ïR‚µ‚½I", cdatan(CDATAN_NAME, tc) + " resisted desperately!")
+						txt lang(cdatan(CDATAN_NAME, tc) + "ã¯å¿…æ­»ã§æŠµæŠ—ã—ãŸï¼", cdatan(CDATAN_NAME, tc) + " resisted desperately!")
 						modimp2 tc, 5
 						cdata(CDATA_POWER_GAUGE, tc) += 15
 					}
@@ -1446,34 +1446,34 @@
 			}
 			if ( rtval == 5 ) {
 				if ( cdata(CDATA_MASTER_SERVANT, tc) >= 200 ) {
-					txt lang(cdatan(CDATAN_NAME, tc) + "‚Í‘ål‚µ‚­g‘Ì‚ğ•‚Å‚ç‚ê‚Ä‚¢‚écB", cdatan(CDATAN_NAME, tc) + " is quietly stroked.")
+					txt lang(cdatan(CDATAN_NAME, tc) + "ã¯å¤§äººã—ãèº«ä½“ã‚’æ’«ã§ã‚‰ã‚Œã¦ã„ã‚‹â€¦ã€‚", cdatan(CDATAN_NAME, tc) + " is quietly stroked.")
 					modimp2 tc, 2
 					cdata(CDATA_POWER_GAUGE, CHARA_PLAYER) += 10
 				}
 				else {
 					if ( rnd(sdata(SKILL_ATTR_STR, CHARA_PLAYER)) > rnd(sdata(SKILL_ATTR_STR, tc)) ) {
-						txt lang(cdatan(CDATAN_NAME, tc) + "‚ª–\‚ê‚é‚Ì‚ÅA‚µ‚Á‚©‚è‚Æ‰Ÿ‚³‚¦‚Â‚¯‚Ä‚©‚ç•‚Å‚Ü‚í‚µ‚½B", "Because " + cdatan(CDATAN_NAME, tc) + " rage, you were turning stroked it from hold " + cdatan(CDATAN_NAME, tc) + " down.")
+						txt lang(cdatan(CDATAN_NAME, tc) + "ãŒæš´ã‚Œã‚‹ã®ã§ã€ã—ã£ã‹ã‚Šã¨æŠ¼ã•ãˆã¤ã‘ã¦ã‹ã‚‰æ’«ã§ã¾ã‚ã—ãŸã€‚", "Because " + cdatan(CDATAN_NAME, tc) + " rage, you were turning stroked it from hold " + cdatan(CDATAN_NAME, tc) + " down.")
 						modimp2 tc, 2
 						cdata(CDATA_POWER_GAUGE, CHARA_PLAYER) += 10
 						cdata(CDATA_POWER_GAUGE, tc) += 15
 						modimp tc, -2
 					}
 					else {
-						txt lang(cdatan(CDATAN_NAME, tc) + "‚ÍŒ™‚ª‚Á‚Ä–\‚ê‚½I", cdatan(CDATAN_NAME, tc) + " was violent and loath!")
+						txt lang(cdatan(CDATAN_NAME, tc) + "ã¯å«ŒãŒã£ã¦æš´ã‚ŒãŸï¼", cdatan(CDATAN_NAME, tc) + " was violent and loath!")
 						cdata(CDATA_POWER_GAUGE, tc) += 5
 					}
 				}
 			}
 			txtef COLOR_YELLOW
-			txt lang("‚ ‚È‚½" + cdata(CDATA_POWER_GAUGE, CHARA_PLAYER) + "%@‘Šè" + cdata(CDATA_POWER_GAUGE, tc) + "% ", "You" + cdata(CDATA_POWER_GAUGE, CHARA_PLAYER) + "%-Opponent" + cdata(CDATA_POWER_GAUGE, tc) + "% ")
+			txt lang("ã‚ãªãŸ" + cdata(CDATA_POWER_GAUGE, CHARA_PLAYER) + "%ã€€ç›¸æ‰‹" + cdata(CDATA_POWER_GAUGE, tc) + "% ", "You" + cdata(CDATA_POWER_GAUGE, CHARA_PLAYER) + "%-Opponent" + cdata(CDATA_POWER_GAUGE, tc) + "% ")
 			if ( cdata(CDATA_POWER_GAUGE, tc) >= 100 ) {
 				txtef COLOR_RED
 				txtmore
-				txt lang(cdatan(CDATAN_NAME, tc) + "‚Í‚±‚êˆÈã‘Ï‚¦‚ç‚ê‚È‚­‚È‚èA“¦‚°o‚µ‚½I", "It is no longer endure any more, " + cdatan(CDATAN_NAME, tc) + " ran away!")
+				txt lang(cdatan(CDATAN_NAME, tc) + "ã¯ã“ã‚Œä»¥ä¸Šè€ãˆã‚‰ã‚Œãªããªã‚Šã€é€ƒã’å‡ºã—ãŸï¼", "It is no longer endure any more, " + cdatan(CDATAN_NAME, tc) + " ran away!")
 				modimp tc, -5
 				if ( cdata(CDATA_POWER_GAUGE, CHARA_PLAYER) >= 100 | rnd(sdata(SKILL_ATTR_SPD, CHARA_PLAYER)) > rnd(sdata(SKILL_ATTR_SPD, tc)) ) {
 					await 400
-					txt lang("‚µ‚©‚µA‚ ‚È‚½‚Í“¦‚°o‚·" + cdatan(CDATAN_NAME, tc) + "‚ğ•ß‚Ü‚¦‚é‚Æ—eÍ‚È‚­ƒxƒbƒh‚Éˆø‚«–ß‚µ‚½cB", "But you caught " + cdatan(CDATAN_NAME, tc) + " and pulled back to bed without mercy.")
+					txt lang("ã—ã‹ã—ã€ã‚ãªãŸã¯é€ƒã’å‡ºã™" + cdatan(CDATAN_NAME, tc) + "ã‚’æ•ã¾ãˆã‚‹ã¨å®¹èµ¦ãªããƒ™ãƒƒãƒ‰ã«å¼•ãæˆ»ã—ãŸâ€¦ã€‚", "But you caught " + cdatan(CDATAN_NAME, tc) + " and pulled back to bed without mercy.")
 					modimp2 tc, 20
 					snd SOUNDLIST_GET1
 				}
@@ -1489,7 +1489,7 @@
 				snd SOUNDLIST_ATK_FIRE
 				txtef COLOR_RED
 				txtmore
-				txt lang("‚ ‚È‚½‚Í‚±‚êˆÈã‰ä–‚Å‚«‚È‚¢I", "You can not stand any more!")
+				txt lang("ã‚ãªãŸã¯ã“ã‚Œä»¥ä¸Šæˆ‘æ…¢ã§ããªã„ï¼", "You can not stand any more!")
 				customtalk CHARA_PLAYER, DBMODE_FLAVOR_LIMIT
 				gosub *convert_word
 				await 800
@@ -1508,12 +1508,12 @@
 		_switch_sw = 0
 		flt
 		itemcreate CHARA_PLAYER, ITEM_ID_TREASURE_MAP, -1, -1, 0
-		txt lang(itemname(ci, 1) + "‚ğƒoƒbƒNƒpƒbƒN‚É“ü‚ê‚½B", "You put " + itemname(ci, 1) + " in your backpack.")
-		s = lang("•ó‚ğ–„‚ß‚é–²", "Treasure of Dream")
+		txt lang(itemname(ci, 1) + "ã‚’ãƒãƒƒã‚¯ãƒ‘ãƒƒã‚¯ã«å…¥ã‚ŒãŸã€‚", "You put " + itemname(ci, 1) + " in your backpack.")
+		s = lang("å®ã‚’åŸ‹ã‚ã‚‹å¤¢", "Treasure of Dream")
 		file = "bg_re15"
-		buff = lang("‚ ‚È‚½‚Í–²‚Ì’†‚Å•ó‚ğ–„‚ß‚½B‚ ‚È‚½‚Í‚·‚®‚É”ò‚Ñ‹N‚«A‚»‚ÌêŠ‚ğ†‚É‘‚«—¯‚ß‚½", "You buried treasure in your dream. You quickly get up and write down the location.")
+		buff = lang("ã‚ãªãŸã¯å¤¢ã®ä¸­ã§å®ã‚’åŸ‹ã‚ãŸã€‚ã‚ãªãŸã¯ã™ãã«é£›ã³èµ·ãã€ãã®å ´æ‰€ã‚’ç´™ã«æ›¸ãç•™ã‚ãŸ", "You buried treasure in your dream. You quickly get up and write down the location.")
 		list(0, listmax) = 1
-		listn(0, listmax) = lang("ƒƒ@ƒI[", "Woohoo!")
+		listn(0, listmax) = lang("ãƒ¯ã‚¡ã‚ªãƒ¼", "Woohoo!")
 		listmax++
 		gosub *re_select
 		goto *random_eventProc_SWEND1
@@ -1522,11 +1522,11 @@
 	if ( _switch_val == 20 | _switch_sw ) {
 		_switch_sw = 0
 		addbuff tc, BUFF_LUCK, 777, 1500
-		s = lang("K‰^‚Ì“ú", "Lucky Day")
+		s = lang("å¹¸é‹ã®æ—¥", "Lucky Day")
 		file = "bg_re12"
-		buff = lang("‚¤‚İ‚İ‚á‚ŸI", "Mewmewmew!")
+		buff = lang("ã†ã¿ã¿ã‚ƒãï¼", "Mewmewmew!")
 		list(0, listmax) = 1
-		listn(0, listmax) = lang("ƒƒ@ƒI[", "Woohoo!")
+		listn(0, listmax) = lang("ãƒ¯ã‚¡ã‚ªãƒ¼", "Woohoo!")
 		listmax++
 		gosub *re_select
 		goto *random_eventProc_SWEND1
@@ -1534,30 +1534,30 @@
 	}
 	if ( _switch_val == 21 | _switch_sw ) {
 		_switch_sw = 0
-		s = lang("‰^–½‚Ì‹C‚Ü‚®‚ê", "Quirk of Fate")
+		s = lang("é‹å‘½ã®æ°—ã¾ãã‚Œ", "Quirk of Fate")
 		file = "bg_re15"
-		buff = lang("‚¤‚İ‚İ‚á‚ÁAŒ©‚Â‚¯‚½‚ËI", "Mewmew? You've found me!")
+		buff = lang("ã†ã¿ã¿ã‚ƒã£ã€è¦‹ã¤ã‘ãŸã­ï¼", "Mewmew? You've found me!")
 		list(0, listmax) = 1
-		listn(0, listmax) = lang("ƒƒ@ƒI[", "Woohoo!")
+		listn(0, listmax) = lang("ãƒ¯ã‚¡ã‚ªãƒ¼", "Woohoo!")
 		listmax++
 		gosub *re_select
 		flt
 		itemcreate CHARA_PLAYER, ITEM_ID_STATUE_EHEKATL, -1, -1, 0
-		txt lang(itemname(ci, 1) + "‚ğƒoƒbƒNƒpƒbƒN‚É“ü‚ê‚½B", "You put " + itemname(ci, 1) + " in your backpack.")
+		txt lang(itemname(ci, 1) + "ã‚’ãƒãƒƒã‚¯ãƒ‘ãƒƒã‚¯ã«å…¥ã‚ŒãŸã€‚", "You put " + itemname(ci, 1) + " in your backpack.")
 		goto *random_eventProc_SWEND1
 		_switch_sw++
 	}
 	if ( _switch_val == 5 | _switch_sw ) {
 		_switch_sw = 0
-		s = lang("ô‚¢‚Ì‚Â‚Ô‚â‚«", "Cursed Whispering")
+		s = lang("å‘ªã„ã®ã¤ã¶ã‚„ã", "Cursed Whispering")
 		file = "bg_re5"
-		buff = lang("‚Ç‚±‚©‚ç‚Æ‚à‚È‚­•·‚±‚¦‚éô‚¢‚Ì‚Â‚Ô‚â‚«‚ªA‚ ‚È‚½‚Ì–°‚è‚ğ–W‚°‚½B", "Your sleep is disturbed by a harshly whispering that comes from nowhere.")
+		buff = lang("ã©ã“ã‹ã‚‰ã¨ã‚‚ãªãèã“ãˆã‚‹å‘ªã„ã®ã¤ã¶ã‚„ããŒã€ã‚ãªãŸã®çœ ã‚Šã‚’å¦¨ã’ãŸã€‚", "Your sleep is disturbed by a harshly whispering that comes from nowhere.")
 		list(0, listmax) = 1
-		listn(0, listmax) = lang("–°‚ê‚È‚¢c", "Can't...sleep...")
+		listn(0, listmax) = lang("çœ ã‚Œãªã„â€¦", "Can't...sleep...")
 		listmax++
 		gosub *re_select
 		if ( trait(TRAIT_NORMAL_OTHER_RES_CURSE) ) {
-			txt lang("‚ ‚È‚½‚Í‹F“˜‚ğ•ù‚°ô‚¢‚Ì‚Â‚Ô‚â‚«‚ğ–³Œø‚É‚µ‚½B", "Your prayer nullifies the curse.")
+			txt lang("ã‚ãªãŸã¯ç¥ˆç¥·ã‚’æ§ã’å‘ªã„ã®ã¤ã¶ã‚„ãã‚’ç„¡åŠ¹ã«ã—ãŸã€‚", "Your prayer nullifies the curse.")
 		}
 		else {
 			f = 0
@@ -1586,11 +1586,11 @@
 	}
 	if ( _switch_val == 8 | _switch_sw ) {
 		_switch_sw = 0
-		s = lang("ˆ«ˆÓ‚ ‚éè", "Malicious Hand")
+		s = lang("æ‚ªæ„ã‚ã‚‹æ‰‹", "Malicious Hand")
 		file = "bg_re9"
-		buff = lang("ˆ«ˆÓ‚Ì‚ ‚éè‚ª”E‚ÑŠñ‚èA‚ ‚È‚½‚ª‹C•t‚©‚È‚¢ŠÔ‚É‹à‰İ‚ğ’D‚Á‚Ä“¦‚°‚½B", "A malicious hand slips and steals your money.")
+		buff = lang("æ‚ªæ„ã®ã‚ã‚‹æ‰‹ãŒå¿ã³å¯„ã‚Šã€ã‚ãªãŸãŒæ°—ä»˜ã‹ãªã„é–“ã«é‡‘è²¨ã‚’å¥ªã£ã¦é€ƒã’ãŸã€‚", "A malicious hand slips and steals your money.")
 		list(0, listmax) = 1
-		listn(0, listmax) = lang("“l‚ßc", "Bloody thieves...")
+		listn(0, listmax) = lang("ç›—äººã‚â€¦", "Bloody thieves...")
 		listmax++
 		gosub *re_select
 		p = rnd(cdata(CDATA_GOLD, CHARA_PLAYER) / 8 + 1)
@@ -1598,29 +1598,29 @@
 			p = 0
 		}
 		if ( p > 0 ) {
-			txt lang("‹à‰İ" + p + "–‡‚ğ¸‚Á‚½B", "You lose " + p + " gold pieces.")
+			txt lang("é‡‘è²¨" + p + "æšã‚’å¤±ã£ãŸã€‚", "You lose " + p + " gold pieces.")
 			cdata(CDATA_GOLD, CHARA_PLAYER) -= p
 		}
 		else {
-			txt lang("‘¹ŠQ‚Í‚È‚©‚Á‚½B", "The thief fails to steal money from you.")
+			txt lang("æå®³ã¯ãªã‹ã£ãŸã€‚", "The thief fails to steal money from you.")
 		}
 		goto *random_eventProc_SWEND1
 		_switch_sw++
 	}
 	if ( _switch_val == 11 | _switch_sw ) {
 		_switch_sw = 0
-		s = lang("–`Œ¯Ò‚ÌˆâŠ[", "Corpse")
+		s = lang("å†’é™ºè€…ã®éºéª¸", "Corpse")
 		file = "bg_re7"
-		buff = lang("‚±‚ÌêŠ‚Å—Ís‚«‚½–`Œ¯Ò‚ÌˆâŠ[‚ğŒ©‚Â‚¯‚½BŠù‚É‹€‚¿‚©‚¯‚Ä‚¢‚éœ‚ÆAg‚É’…‚¯‚Ä‚¢‚½‚Æv‚í‚ê‚éŠô‚Â‚©‚Ì‘•”õ‚ªU‚ç‚Î‚Á‚Ä‚¢‚éB", "You find a corpse of an adventurer. There're bones and equipment scatters on the ground waiting to decay.")
+		buff = lang("ã“ã®å ´æ‰€ã§åŠ›å°½ããŸå†’é™ºè€…ã®éºéª¸ã‚’è¦‹ã¤ã‘ãŸã€‚æ—¢ã«æœ½ã¡ã‹ã‘ã¦ã„ã‚‹éª¨ã¨ã€èº«ã«ç€ã‘ã¦ã„ãŸã¨æ€ã‚ã‚Œã‚‹å¹¾ã¤ã‹ã®è£…å‚™ãŒæ•£ã‚‰ã°ã£ã¦ã„ã‚‹ã€‚", "You find a corpse of an adventurer. There're bones and equipment scatters on the ground waiting to decay.")
 		list(0, listmax) = 1
-		listn(0, listmax) = lang("‚ ‚³‚é", "(Loot)")
+		listn(0, listmax) = lang("ã‚ã•ã‚‹", "(Loot)")
 		listmax++
 		list(0, listmax) = 2
-		listn(0, listmax) = lang("–„‘’‚·‚é", "(Bury)")
+		listn(0, listmax) = lang("åŸ‹è‘¬ã™ã‚‹", "(Bury)")
 		listmax++
 		gosub *re_select
 		if ( rtval == 1 ) {
-			txt lang("‚ ‚È‚½‚Íˆâ—¯•i‚ğ‚ ‚³‚Á‚½B", "You loot the remains.")
+			txt lang("ã‚ãªãŸã¯éºç•™å“ã‚’ã‚ã•ã£ãŸã€‚", "You loot the remains.")
 			modkarma 0, -2
 			repeat 1 + rnd(3)
 				flt 0, calcfixlv(FIX_QUALITY_GREAT)
@@ -1632,10 +1632,10 @@
 				}
 				itemcreate -1, ITEM_ID_DUMMY, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
 			loop
-			txt lang("‰½‚©‚ª‘«Œ³‚É“]‚ª‚Á‚Ä‚«‚½B", "Something is put on the ground.")
+			txt lang("ä½•ã‹ãŒè¶³å…ƒã«è»¢ãŒã£ã¦ããŸã€‚", "Something is put on the ground.")
 		}
 		else {
-			txt lang("‚ ‚È‚½‚Íœ‚Æˆâ—¯•i‚ğ–„‘’‚µ‚½B", "You bury the corpse with respect.")
+			txt lang("ã‚ãªãŸã¯éª¨ã¨éºç•™å“ã‚’åŸ‹è‘¬ã—ãŸã€‚", "You bury the corpse with respect.")
 			modkarma 0, 5
 		}
 		goto *random_eventProc_SWEND1
@@ -1643,11 +1643,11 @@
 	}
 	if ( _switch_val == 2 | _switch_sw ) {
 		_switch_sw = 0
-		s = lang("–‚–@g‚¢‚Ì–²", "Wizard's Dream")
+		s = lang("é­”æ³•ä½¿ã„ã®å¤¢", "Wizard's Dream")
 		file = "bg_re6"
-		buff = lang("–²‚Ì’†‚Å‚ ‚È‚½‚ÍÔ‚¢”¯‚Ì–‚pt‚Éo‰ï‚Á‚½Bu’N‚¶‚áA‚¨å‚ÍH‚Ó‚ŞAŠÔˆá‚Á‚½Ò‚Ì–²‚ÉŒ»‚ê‚Ä‚µ‚Ü‚Á‚½‚æ‚¤‚¶‚áB‚·‚Ü‚Ê‚ÈB‚¨˜l‚Ñ‚Æ‚¢‚Á‚Ä‚Í‚È‚ñ‚¶‚á‚ªcv–‚–@g‚¢‚Íw‚ğ‚­‚é‚è‚Æ‰ñ‚µ‚½B‚ ‚È‚½‚ÍŒy‚¢“ª’É‚ğŠo‚¦‚½B", "In your dream, you meet a wizard with a red mustache. \"Who are you? Hmm, I guess I picked up the wrong man's dream. My apology for disturbing your sleep. To make up for this...\" The wizard draws a circle in the air and vanishs. You feel the effects of a faint headache.")
+		buff = lang("å¤¢ã®ä¸­ã§ã‚ãªãŸã¯èµ¤ã„é«ªã®é­”è¡“å¸«ã«å‡ºä¼šã£ãŸã€‚ã€Œèª°ã˜ã‚ƒã€ãŠä¸»ã¯ï¼Ÿãµã‚€ã€é–“é•ã£ãŸè€…ã®å¤¢ã«ç¾ã‚Œã¦ã—ã¾ã£ãŸã‚ˆã†ã˜ã‚ƒã€‚ã™ã¾ã¬ãªã€‚ãŠè©«ã³ã¨ã„ã£ã¦ã¯ãªã‚“ã˜ã‚ƒãŒâ€¦ã€é­”æ³•ä½¿ã„ã¯æŒ‡ã‚’ãã‚‹ã‚Šã¨å›ã—ãŸã€‚ã‚ãªãŸã¯è»½ã„é ­ç—›ã‚’è¦šãˆãŸã€‚", "In your dream, you meet a wizard with a red mustache. \"Who are you? Hmm, I guess I picked up the wrong man's dream. My apology for disturbing your sleep. To make up for this...\" The wizard draws a circle in the air and vanishs. You feel the effects of a faint headache.")
 		list(0, listmax) = 1
-		listn(0, listmax) = lang("‚¨‚©‚µ‚È–²‚¾", "A weird dream.")
+		listn(0, listmax) = lang("ãŠã‹ã—ãªå¤¢ã ", "A weird dream.")
 		listmax++
 		gosub *re_select
 		efid = SKILL_EFFECT_GAIN_SPELL
@@ -1672,17 +1672,17 @@
 				}
 			loop
 		loop
-		s = lang("¬’·‚Ì‚«‚´‚µ", "Development")
+		s = lang("æˆé•·ã®ãã–ã—", "Development")
 		file = "bg_re4"
-		buff = lang("’·”N‚Ì’b˜B‚Ì¬‰Ê‚ªÀ‚Á‚½‚æ‚¤‚¾B‚È‚©‚È‚©–°‚è‚É‚Â‚¯‚¸l‚¦‚²‚Æ‚ğ‚µ‚Ä‚¢‚½‚ ‚È‚½‚ÍA‚Ó‚ÆA©‚ç‚Ì‹Zp‚ÉŠÖ‚·‚éV‚µ‚¢ƒAƒCƒfƒA‚ğv‚¢‚Â‚¢‚½B", "You lie awake, sunk deep into thought. As memories of your journey flow from one into another, you chance upon a new theory to improve one of your skills.")
+		buff = lang("é•·å¹´ã®é›éŒ¬ã®æˆæœãŒå®Ÿã£ãŸã‚ˆã†ã ã€‚ãªã‹ãªã‹çœ ã‚Šã«ã¤ã‘ãšè€ƒãˆã”ã¨ã‚’ã—ã¦ã„ãŸã‚ãªãŸã¯ã€ãµã¨ã€è‡ªã‚‰ã®æŠ€è¡“ã«é–¢ã™ã‚‹æ–°ã—ã„ã‚¢ã‚¤ãƒ‡ã‚¢ã‚’æ€ã„ã¤ã„ãŸã€‚", "You lie awake, sunk deep into thought. As memories of your journey flow from one into another, you chance upon a new theory to improve one of your skills.")
 		list(0, listmax) = 1
-		listn(0, listmax) = lang("‚æ‚µI", "Good!")
+		listn(0, listmax) = lang("ã‚ˆã—ï¼", "Good!")
 		listmax++
 		gosub *re_select
 		if ( synccheck(tc, -1) ) {
 			snd SOUNDLIST_DING2
 			txtef COLOR_GREEN
-			txt lang(name(0) + "‚ÌƒXƒLƒ‹‚Ìöİ”\—Í‚ªã¸‚µ‚½B", "potential of " + name(0) + your(CHARA_PLAYER) + " some skill increases.")
+			txt lang(name(0) + "ã®ã‚¹ã‚­ãƒ«ã®æ½œåœ¨èƒ½åŠ›ãŒä¸Šæ˜‡ã—ãŸã€‚", "potential of " + name(0) + your(CHARA_PLAYER) + " some skill increases.")
 		}
 		r1 = 0
 		gosub *charaRefresh
@@ -1692,11 +1692,11 @@
 	if ( _switch_val == 6 | _switch_sw ) {
 		_switch_sw = 0
 		skillexp SKILL_NORMAL_HEALING, CHARA_PLAYER, 1000
-		s = lang("©‘R¡–ü—Í‚ÌŒüã", "Regeneration")
+		s = lang("è‡ªç„¶æ²»ç™’åŠ›ã®å‘ä¸Š", "Regeneration")
 		file = "bg_re4"
-		buff = lang("g‘Ì‚ª–­‚É‰ÎÆ‚Á‚Ä‚ ‚È‚½‚Í–Ú‚ğŠo‚Ü‚µ‚½B‹C‚ª‚Â‚­‚ÆA˜r‚É‚ ‚Á‚½Õ‚ªŠ®‘S‚ÉÁ‚¦‚Ä‚¢‚½B", "Your entire body flushs. When you wake up, a scar in your arm is gone.")
+		buff = lang("èº«ä½“ãŒå¦™ã«ç«ç…§ã£ã¦ã‚ãªãŸã¯ç›®ã‚’è¦šã¾ã—ãŸã€‚æ°—ãŒã¤ãã¨ã€è…•ã«ã‚ã£ãŸå‚·è·¡ãŒå®Œå…¨ã«æ¶ˆãˆã¦ã„ãŸã€‚", "Your entire body flushs. When you wake up, a scar in your arm is gone.")
 		list(0, listmax) = 1
-		listn(0, listmax) = lang("‚æ‚µ", "Good.")
+		listn(0, listmax) = lang("ã‚ˆã—", "Good.")
 		listmax++
 		gosub *re_select
 		goto *random_eventProc_SWEND1
@@ -1705,11 +1705,11 @@
 	if ( _switch_val == 7 | _switch_sw ) {
 		_switch_sw = 0
 		skillexp SKILL_NORMAL_MEDITATION, CHARA_PLAYER, 1000
-		s = lang("áÒ‘z—Í‚ÌŒüã", "Meditation")
+		s = lang("ç‘æƒ³åŠ›ã®å‘ä¸Š", "Meditation")
 		file = "bg_re4"
-		buff = lang("‚ ‚È‚½‚ÍA–²‚Ì’†‚Å‚à‹Á‚­‚Ù‚Ç—«‚ğ•Û‚Á‚Ä‚¢‚½B‚Ü‚é‚ÅáÒ‘z‚ğs‚Á‚Ä‚¢‚é‚Ì‚æ‚¤‚ÉA‚ ‚È‚½‚ÍS‚Ì•½˜a‚ğŠ´‚¶‚½B", "In your dream, you meditate and feel inner peace.")
+		buff = lang("ã‚ãªãŸã¯ã€å¤¢ã®ä¸­ã§ã‚‚é©šãã»ã©ç†æ€§ã‚’ä¿ã£ã¦ã„ãŸã€‚ã¾ã‚‹ã§ç‘æƒ³ã‚’è¡Œã£ã¦ã„ã‚‹æ™‚ã®ã‚ˆã†ã«ã€ã‚ãªãŸã¯å¿ƒã®å¹³å’Œã‚’æ„Ÿã˜ãŸã€‚", "In your dream, you meditate and feel inner peace.")
 		list(0, listmax) = 1
-		listn(0, listmax) = lang("‚æ‚µ", "Good.")
+		listn(0, listmax) = lang("ã‚ˆã—", "Good.")
 		listmax++
 		gosub *re_select
 		goto *random_eventProc_SWEND1
@@ -1718,11 +1718,11 @@
 	if ( _switch_val == 9 | _switch_sw ) {
 		_switch_sw = 0
 		cdata(CDATA_PLATINUM, CHARA_PLAYER)++
-		s = lang("˜Hã‚É“]‚ª‚éK‰^", "Great Luck")
+		s = lang("è·¯ä¸Šã«è»¢ãŒã‚‹å¹¸é‹", "Great Luck")
 		file = "bg_re1"
-		buff = lang("‰º‚ğŒü‚¢‚Ä•à‚¢‚Ä‚¢‚é‚ÆAK‰^‚É‚àƒvƒ‰ƒ`ƒid‰İ‚ğŒ©‚Â‚¯‚½B", "You stumble over a stone and find a platinum coin.")
+		buff = lang("ä¸‹ã‚’å‘ã„ã¦æ­©ã„ã¦ã„ã‚‹ã¨ã€å¹¸é‹ã«ã‚‚ãƒ—ãƒ©ãƒãƒŠç¡¬è²¨ã‚’è¦‹ã¤ã‘ãŸã€‚", "You stumble over a stone and find a platinum coin.")
 		list(0, listmax) = 1
-		listn(0, listmax) = lang("ƒ‰ƒbƒL[I", "What a luck!")
+		listn(0, listmax) = lang("ãƒ©ãƒƒã‚­ãƒ¼ï¼", "What a luck!")
 		listmax++
 		gosub *re_select
 		goto *random_eventProc_SWEND1
@@ -1730,16 +1730,16 @@
 	}
 	if ( _switch_val == 16 | _switch_sw ) {
 		_switch_sw = 0
-		s = lang("”­‹¶‚µ‚½‹à‚¿", "Mad Millionaire")
+		s = lang("ç™ºç‹‚ã—ãŸé‡‘æŒã¡", "Mad Millionaire")
 		file = "bg_re1"
-		buff = lang("”­‹¶‚µ‚½‹à‚¿‚ªA‰½‚©‹©‚Ñ‚È‚ª‚ç‹à‰İ‚ğ‚Î‚ç‚Ü‚¢‚Ä‚¢‚éc", "A rich mad man is scattering his money all over the ground.")
+		buff = lang("ç™ºç‹‚ã—ãŸé‡‘æŒã¡ãŒã€ä½•ã‹å«ã³ãªãŒã‚‰é‡‘è²¨ã‚’ã°ã‚‰ã¾ã„ã¦ã„ã‚‹â€¦", "A rich mad man is scattering his money all over the ground.")
 		list(0, listmax) = 1
-		listn(0, listmax) = lang("ƒ‰ƒbƒL[I", "What a luck!")
+		listn(0, listmax) = lang("ãƒ©ãƒƒã‚­ãƒ¼ï¼", "What a luck!")
 		listmax++
 		gosub *re_select
 		p = limit(rnd((cdata(CDATA_GOLD, CHARA_PLAYER) + 1) / 10 + 1), 100, 99999) + 20 * sdata(SKILL_ATTR_LUC, CHARA_PLAYER)
 		cdata(CDATA_GOLD, CHARA_PLAYER) += p
-		txt lang("‹à‰İ" + p + "–‡‚ğè‚É“ü‚ê‚½B", "You pick up " + p + " gold pieces.")
+		txt lang("é‡‘è²¨" + p + "æšã‚’æ‰‹ã«å…¥ã‚ŒãŸã€‚", "You pick up " + p + " gold pieces.")
 		goto *random_eventProc_SWEND1
 		_switch_sw++
 	}
@@ -1749,11 +1749,11 @@
 		efp = 800
 		tc = CHARA_PLAYER
 		gosub *effect
-		s = lang("’ÒƒvƒŠ[ƒXƒg", "Wandering Priest")
+		s = lang("è¾»ãƒ—ãƒªãƒ¼ã‚¹ãƒˆ", "Wandering Priest")
 		file = "bg_re11"
-		buff = lang("“Ë‘RAŒü‚©‚¢‚©‚ç‚â‚Á‚Ä—ˆ‚½ˆêl‚Ì_Š¯‚ªA‚·‚êˆá‚¢‚´‚Ü‚É‚ ‚È‚½‚É–‚–@‚ğ‚©‚¯‚½Buƒm[ƒvƒƒuƒŒƒ€v", "A priest comes up to you and casts a spell on you. \"No problem.\"")
+		buff = lang("çªç„¶ã€å‘ã‹ã„ã‹ã‚‰ã‚„ã£ã¦æ¥ãŸä¸€äººã®ç¥å®˜ãŒã€ã™ã‚Œé•ã„ã–ã¾ã«ã‚ãªãŸã«é­”æ³•ã‚’ã‹ã‘ãŸã€‚ã€Œãƒãƒ¼ãƒ—ãƒ­ãƒ–ãƒ¬ãƒ ã€", "A priest comes up to you and casts a spell on you. \"No problem.\"")
 		list(0, listmax) = 1
-		listn(0, listmax) = lang("‚ ‚è‚ª‚Æ‚¤", "Thanks.")
+		listn(0, listmax) = lang("ã‚ã‚ŠãŒã¨ã†", "Thanks.")
 		listmax++
 		gosub *re_select
 		goto *random_eventProc_SWEND1
@@ -1772,7 +1772,7 @@
 			snd SOUNDLIST_POP4
 			txt "" + buff
 			txtvalid = 0
-			txt lang("u", "\"") + listn(0, 0) + lang("v", "\"")
+			txt lang("ã€Œ", "\"") + listn(0, 0) + lang("ã€", "\"")
 			rtval = -1
 			return rtval
 		}
@@ -1822,7 +1822,7 @@
 	color 240, 230, 220
 	boxl wx + 12, wy + 6, wx + tx + 12, wy + ty + 6
 	font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
-	q = lang("s " + s + " t", " < " + s + " > ")
+	q = lang("ã€Š " + s + " ã€‹", " < " + s + " > ")
 	pos wx + 40, wy + 16
 	color 30, 20, 10
 	bmes q, 245, 235, 225
@@ -2109,13 +2109,13 @@
 	}
 	s = "" + income + lang("gold", " gold pieces")
 	if ( income(1) != 0 ) {
-		s += lang("‚Æ" + income(1) + "ŒÂ‚ÌƒAƒCƒeƒ€", " and " + income(1) + " items")
+		s += lang("ã¨" + income(1) + "å€‹ã®ã‚¢ã‚¤ãƒ†ãƒ ", " and " + income(1) + " items")
 	}
 	if ( income != 0 | income(1) != 0 ) {
 		snd SOUNDLIST_DING2
 		txtmore
 		txtef COLOR_YELLOW
-		txt lang(s + "‚ª‹‹—¿‚Æ‚µ‚ÄU‚è‚Ü‚ê‚½B", "As a salary, " + s + " have been sent to your house.")
+		txt lang(s + "ãŒçµ¦æ–™ã¨ã—ã¦æŒ¯ã‚Šè¾¼ã¾ã‚ŒãŸã€‚", "As a salary, " + s + " have been sent to your house.")
 		autosave = 1 * (gdata(GDATA_AREA) != AREA_SHOW_HOUSE)
 	}
 	if ( gdata(GDATA_DAY) == 1 ) {
@@ -2141,19 +2141,19 @@
 				mode = MODELIST_MAIN
 				gdata(GDATA_BILL)++
 				txtmore
-				txt lang("¿‹‘‚ª‘—‚ç‚ê‚Ä‚«‚½B", "A bill has been sent to your house.")
+				txt lang("è«‹æ±‚æ›¸ãŒé€ã‚‰ã‚Œã¦ããŸã€‚", "A bill has been sent to your house.")
 			}
 			else {
 				nouzei = gdata(GDATA_COST_HIRE) + calccostbuilding() + calccosttax()
 				gdata(GDATA_FLAG_TAX_PREPAID_BALANCE) -= nouzei
 				if ( gdata(GDATA_FLAG_TAX_PREPAID_BALANCE) > 0 ) {
 					txtmore
-					txt lang("¡Œ•ª‚ÍŠù‚É”[Å‚µ‚Ä‚¢‚éB", "You don't have to pay tax.")
+					txt lang("ä»Šæœˆåˆ†ã¯æ—¢ã«ç´ç¨ã—ã¦ã„ã‚‹ã€‚", "You don't have to pay tax.")
 				}
 				if ( gdata(GDATA_FLAG_TAX_PREPAID_BALANCE) <= 0 ) {
 					gdata(GDATA_FLAG_TAX_PREPAID_BALANCE) = 0
 					txtmore
-					txt lang("æ•¥‚¢•ª‚ª¡Œ‚Å‚È‚­‚È‚Á‚½B", "Your prepaid balance of tax payment has disappeared this month.")
+					txt lang("å…ˆæ‰•ã„åˆ†ãŒä»Šæœˆã§ãªããªã£ãŸã€‚", "Your prepaid balance of tax payment has disappeared this month.")
 				}
 			}
 			if ( gdata(GDATA_BILL) > 1 ) {
@@ -2161,30 +2161,30 @@
 					txtmore
 					txtef COLOR_RED
 					if ( gdata(GDATA_BILL) > 3 ) {
-						s = lang("ŒxII", "Warning!! "), lang("‘‹}‚Éƒpƒ‹ƒ~ƒA‘ågŠÙ‚Ü‚Ås‚«AÅ‹à‚ğ”[‚ß‚È‚¯‚ê‚Î‚È‚ç‚È‚¢B", "You have to go to the Embassy of Palmia and pay tax at once. ")
+						s = lang("è­¦å‘Šï¼ï¼", "Warning!! "), lang("æ—©æ€¥ã«ãƒ‘ãƒ«ãƒŸã‚¢å¤§ä½¿é¤¨ã¾ã§è¡Œãã€ç¨é‡‘ã‚’ç´ã‚ãªã‘ã‚Œã°ãªã‚‰ãªã„ã€‚", "You have to go to the Embassy of Palmia and pay tax at once. ")
 					}
 					else {
-						s = lang("’ˆÓI", "Caution! "), ""
+						s = lang("æ³¨æ„ï¼", "Caution! "), ""
 					}
-					txt s + lang("Å‹à‚ğ" + (gdata(GDATA_BILL) - 1) + "ƒ–Œ•ª‘Ø”[‚µ‚Ä‚¢‚éB", "You are in arrears with your tax for " + (gdata(GDATA_BILL) - 1) + " months.") + s(1)
+					txt s + lang("ç¨é‡‘ã‚’" + (gdata(GDATA_BILL) - 1) + "ãƒ¶æœˆåˆ†æ»ç´ã—ã¦ã„ã‚‹ã€‚", "You are in arrears with your tax for " + (gdata(GDATA_BILL) - 1) + " months.") + s(1)
 				}
 			}
 			if ( gdata(GDATA_BILL) > 4 ) {
 				txtmore
 				txtef COLOR_RED
-				txt lang("‚ ‚È‚½‚ÍÅ‹à‚ğ" + (gdata(GDATA_BILL) - 1) + "ƒ–Œ‘Ø”[‚µ‚½ß‚Å‘i‚¦‚ç‚ê‚½B", "You have been accused for being in arrears with your tax for" + (gdata(GDATA_BILL) - 1) + " months.")
+				txt lang("ã‚ãªãŸã¯ç¨é‡‘ã‚’" + (gdata(GDATA_BILL) - 1) + "ãƒ¶æœˆæ»ç´ã—ãŸç½ªã§è¨´ãˆã‚‰ã‚ŒãŸã€‚", "You have been accused for being in arrears with your tax for" + (gdata(GDATA_BILL) - 1) + " months.")
 				decfame CHARA_PLAYER, 50
 				p = stat
 				txtmore
 				txtef COLOR_RED
-				txt lang("–¼º’l‚ğ" + p + "¸‚Á‚½B", "You lose " + p + " fame.")
+				txt lang("åå£°å€¤ã‚’" + p + "å¤±ã£ãŸã€‚", "You lose " + p + " fame.")
 				txtmore
 				modkarma 0, (-30) * 2
 			}
 		}
 		else {
 			txtmore
-			txt lang("ƒŒƒxƒ‹‚ª10‚É’B‚µ‚Ä‚¢‚È‚¢‚Ì‚Å”[Å‚Ì‹`–±‚Í‚È‚¢B", "You don't have to pay tax until you hit level 10.")
+			txt lang("ãƒ¬ãƒ™ãƒ«ãŒ10ã«é”ã—ã¦ã„ãªã„ã®ã§ç´ç¨ã®ç¾©å‹™ã¯ãªã„ã€‚", "You don't have to pay tax until you hit level 10.")
 		}
 	}
 	file = "shop" + invfile + ".s2"

@@ -1,17 +1,17 @@
 *add_ally
 	f = get_freeally()
 	if ( f == 0 ) {
-		txt lang("’‡ŠÔ‚ÌÅ‘å”‚É’B‚µ‚Ä‚¢‚é‚½‚ßA’‡ŠÔ‚É‚Å‚«‚È‚©‚Á‚½cB", "Your party is already full. You can't invite someone anymore.")
+		txt lang("ä»²é–“ã®æœ€å¤§æ•°ã«é”ã—ã¦ã„ã‚‹ãŸã‚ã€ä»²é–“ã«ã§ããªã‹ã£ãŸâ€¦ã€‚", "Your party is already full. You can't invite someone anymore.")
 		if ( wishally == 100 ) {
 			chara_vanquish rc
-			txt lang(cdatan(CDATAN_NAME, rc) + "‚Í’‡ŠÔ‚Ì˜g‚ª‚È‚¢‚±‚Æ‚É‹C‚ª‚Â‚­‚ÆAâ‚µ‚»‚¤‚É‚»‚Ì‚Ü‚Ü‰½ˆ‚©‚És‚Á‚Ä‚µ‚Ü‚Á‚½cB", cdatan(CDATAN_NAME, rc) + " went somewhere...")
+			txt lang(cdatan(CDATAN_NAME, rc) + "ã¯ä»²é–“ã®æ ãŒãªã„ã“ã¨ã«æ°—ãŒã¤ãã¨ã€å¯‚ã—ãã†ã«ãã®ã¾ã¾ä½•å‡¦ã‹ã«è¡Œã£ã¦ã—ã¾ã£ãŸâ€¦ã€‚", cdatan(CDATAN_NAME, rc) + " went somewhere...")
 			wishally = 0
 		}
 		return -1
 	}
 	if ( cdata(CDATA_ROW_ACT, rc) != ACTION_NONE ) {
 		if ( synccheck(rc, -1) ) {
-			txt lang(name(rc) + "‚Ís“®‚ğ’†’f‚µ‚½B", name(rc) + " stopped action.")
+			txt lang(name(rc) + "ã¯è¡Œå‹•ã‚’ä¸­æ–­ã—ãŸã€‚", name(rc) + " stopped action.")
 			rowactend rc
 		}
 	}
@@ -62,12 +62,12 @@
 				loop
 				if ( cdata(CDATA_ALLIED, rc) == 0 ) {
 					txtef COLOR_PURPLE
-					txt lang(cdatan(CDATAN_NAME, rc) + "‚Ì_—Í‚Í‹}Œƒ‚É¸‚í‚ê‚Ä‚¢‚Á‚½cB", cdatan(CDATAN_NAME, rc) + " 's god power lost in a moment...")
+					txt lang(cdatan(CDATAN_NAME, rc) + "ã®ç¥åŠ›ã¯æ€¥æ¿€ã«å¤±ã‚ã‚Œã¦ã„ã£ãŸâ€¦ã€‚", cdatan(CDATAN_NAME, rc) + " 's god power lost in a moment...")
 				}
 			}
 			else {
 				txtef COLOR_PURPLE
-				txt lang(cdatan(CDATAN_NAME, rc) + "‚Ì—Í‚Ìˆê•”‚Í¢ŠE‚Ì‹·ŠÔ‚Ö‚Æˆù‚İ‚Ü‚ê‚Ä‚¢‚Á‚½cB", cdatan(CDATAN_NAME, rc) + " 's god power lost in a moment...")
+				txt lang(cdatan(CDATAN_NAME, rc) + "ã®åŠ›ã®ä¸€éƒ¨ã¯ä¸–ç•Œã®ç‹­é–“ã¸ã¨é£²ã¿è¾¼ã¾ã‚Œã¦ã„ã£ãŸâ€¦ã€‚", cdatan(CDATAN_NAME, rc) + " 's god power lost in a moment...")
 			}
 			cdata(CDATA_CHARACTER_TIER, rc) = CHARACTER_TIER_NONE
 		}
@@ -96,7 +96,7 @@
 					cdata(i, rc) = 0
 				loop
 				txtef COLOR_PURPLE
-				txt lang(cdatan(CDATAN_NAME, rc) + "‚ÍäD”²‚¯‚½B", cdatan(CDATAN_NAME, rc) + " became a dag.")
+				txt lang(cdatan(CDATAN_NAME, rc) + "ã¯è…‘æŠœã‘ãŸã€‚", cdatan(CDATAN_NAME, rc) + " became a dag.")
 			}
 		}
 	}
@@ -151,7 +151,7 @@
 			cdata(i, rc) = 0
 		loop
 		txtef COLOR_PURPLE
-		txt lang(cdatan(CDATAN_NAME, rc) + "‚Ì—Í‚Ì‘å•”•ª‚ÍA‚Æ‹óŠÔ‚Ì‚¤‚Ë‚è‚Ö‚Æˆù‚İ‚Ü‚ê‚Ä‚¢‚Á‚½cB", cdatan(CDATAN_NAME, rc) + " 's god power lost in a moment...")
+		txt lang(cdatan(CDATAN_NAME, rc) + "ã®åŠ›ã®å¤§éƒ¨åˆ†ã¯ã€æ™‚ã¨ç©ºé–“ã®ã†ã­ã‚Šã¸ã¨é£²ã¿è¾¼ã¾ã‚Œã¦ã„ã£ãŸâ€¦ã€‚", cdatan(CDATAN_NAME, rc) + " 's god power lost in a moment...")
 	}
 	if ( cbit(CHARA_BIT_LIVESTOCK, rc) != FALSE & (gdata(GDATA_AREA) == AREA_DOJO | adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_DISCARDED_RANCH) ) {
 		gdata(GDATA_TEMPORARY_FLAGS2) = 200
@@ -186,7 +186,7 @@
 	gosub *charaRefresh
 	snd SOUNDLIST_PRAY1
 	txtef COLOR_YELLOW
-	txt lang(cdatan(CDATAN_NAME, rc) + "‚ª’‡ŠÔ‚É‰Á‚í‚Á‚½I", cdatan(CDATAN_NAME, rc) + " join" + _s(rc) + " your party!")
+	txt lang(cdatan(CDATAN_NAME, rc) + "ãŒä»²é–“ã«åŠ ã‚ã£ãŸï¼", cdatan(CDATAN_NAME, rc) + " join" + _s(rc) + " your party!")
 	return 1
 
 *adv_init
@@ -254,7 +254,7 @@
 				cdata(CDATA_HIRE_DATE, rc) = 0
 				cbitmod CHARA_BIT_HIRED, rc, FALSE
 				cdata(CDATA_RELATION, rc) = RELATION_NEUTRAL
-				txt lang(cdatan(CDATAN_NAME, rc) + "‚Æ‚ÌŒ_–ñŠúŠÔ‚ªØ‚ê‚½B", "The period of contract with " + cdatan(CDATAN_NAME, rc) + " has been expired.")
+				txt lang(cdatan(CDATAN_NAME, rc) + "ã¨ã®å¥‘ç´„æœŸé–“ãŒåˆ‡ã‚ŒãŸã€‚", "The period of contract with " + cdatan(CDATAN_NAME, rc) + " has been expired.")
 			}
 		}
 		if ( cdata(CDATA_AREA, rc) == gdata(GDATA_AREA) ) {
@@ -269,7 +269,7 @@
 				if ( rnd(3) == 0 | cdata(CDATA_CUSTOM_TALK_LINE, rc) == 5 & cdata(CDATA_CUSTOM_TALK_LINE, rc) != 4 ) {
 					if ( cdata(CDATA_CUSTOM_TALK_LINE, rc) == 5 ) {
 						cdata(CDATA_CUSTOM_TALK_LINE, rc) = 0
-						txt lang(cdatan(CDATAN_AKA, rc) + "‚Í‚ ‚È‚½‚©‚ç‚ÌƒƒbƒZ[ƒW‚ğv‚¢o‚µ‚½cB", cdatan(CDATAN_AKA, rc) + " recalled your message...")
+						txt lang(cdatan(CDATAN_AKA, rc) + "ã¯ã‚ãªãŸã‹ã‚‰ã®ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’æ€ã„å‡ºã—ãŸâ€¦ã€‚", cdatan(CDATAN_AKA, rc) + " recalled your message...")
 					}
 					addnews 5, rc
 					cdata(CDATA_EXIST, rc) = CHAR_STATE_DEAD
@@ -278,7 +278,7 @@
 				else {
 					if ( cdata(CDATA_CUSTOM_TALK_LINE, rc) == 4 ) {
 						cdata(CDATA_CUSTOM_TALK_LINE, rc) = 0
-						txt lang(cdatan(CDATAN_AKA, rc) + "‚Í‚ ‚È‚½‚©‚ç‚ÌƒƒbƒZ[ƒW‚ğv‚¢o‚µ‚½cB", cdatan(CDATAN_AKA, rc) + " recalled your message...")
+						txt lang(cdatan(CDATAN_AKA, rc) + "ã¯ã‚ãªãŸã‹ã‚‰ã®ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’æ€ã„å‡ºã—ãŸâ€¦ã€‚", cdatan(CDATAN_AKA, rc) + " recalled your message...")
 					}
 					addnews 3, rc
 					cdata(CDATA_EXIST, rc) = CHAR_STATE_ADV
@@ -358,7 +358,7 @@
 					cdata(CDATA_RELATION, rc) = RELATION_NEUTRAL
 					cdata(CDATA_AI_AGGRO, rc) = 0
 					cdata(CDATA_CUSTOM_TALK_LINE, rc) = 0
-					addnews2 lang(cdatan(CDATAN_AKA, rc) + "‚Í‚ ‚È‚½‚©‚ç‚ÌƒƒbƒZ[ƒW‚ğv‚¢o‚µ‚½cB", cdatan(CDATAN_AKA, rc) + " recalled your message...")
+					addnews2 lang(cdatan(CDATAN_AKA, rc) + "ã¯ã‚ãªãŸã‹ã‚‰ã®ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’æ€ã„å‡ºã—ãŸâ€¦ã€‚", cdatan(CDATAN_AKA, rc) + " recalled your message...")
 				}
 			}
 		}

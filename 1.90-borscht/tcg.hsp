@@ -113,16 +113,16 @@
 	}
 	if ( cardreftype == 30 ) {
 		cardrefbg = 6
-		rtvaln += lang(" <“y’n>", " <Land>")
+		rtvaln += lang(" <åœŸåœ°>", " <Land>")
 	}
 	if ( cardreftype == 20 ) {
 		cardrefbg = 5
-		rtvaln += lang(" <ƒXƒyƒ‹>", " <Spell>")
+		rtvaln += lang(" <ã‚¹ãƒšãƒ«>", " <Spell>")
 	}
-	rtvaln += lang("  ƒ‰ƒ“ƒN:", "  Rank:") + cardrefcost
-	rtvaln += lang("  ƒŒƒA“x:", "  Rare:") + cnvrare(cardrefrare)
+	rtvaln += lang("  ãƒ©ãƒ³ã‚¯:", "  Rank:") + cardrefcost
+	rtvaln += lang("  ãƒ¬ã‚¢åº¦:", "  Rare:") + cnvrare(cardrefrare)
 	locvar_cnvrare_s = ""
-	locvar_cnvrare_s += lang("î•ñ:", "data:") + cardrefskill
+	locvar_cnvrare_s += lang("æƒ…å ±:", "data:") + cardrefskill
 	talk_conv locvar_cnvrare_s, 89
 	rtvaln += "\n" + locvar_cnvrare_s
 	return dbid
@@ -410,10 +410,10 @@
 		if ( locvar_tcgdrawcard_cs == (-1) ) {
 			if ( locvar_tcgdraw_phase == 2 ) {
 				if ( locvar_tcgdraw_selectmode == 0 ) {
-					cardhelp lang("ƒƒCƒ“ƒtƒFƒCƒY‚ğI—¹‚·‚éB", "End your main phase.")
+					cardhelp lang("ãƒ¡ã‚¤ãƒ³ãƒ•ã‚§ã‚¤ã‚ºã‚’çµ‚äº†ã™ã‚‹ã€‚", "End your main phase.")
 				}
 				else {
-					cardhelp lang("ƒuƒƒbƒN‚µ‚È‚¢B", "No blocker.")
+					cardhelp lang("ãƒ–ãƒ­ãƒƒã‚¯ã—ãªã„ã€‚", "No blocker.")
 				}
 			}
 			pos locvar_tcgdraw_holderix - locvar_tcgdraw_holderspace - 5, locvar_tcgdraw_holderiy - 5
@@ -774,10 +774,10 @@
 	snd SOUNDLIST_FEAT
 	locvar_saccard_sac++
 	if ( saccard_arg2 == 0 ) {
-		cardhelp lang("ƒJ[ƒh‚ğ•ù‚°‚½B", "You sacrifice the card."), 40
+		cardhelp lang("ã‚«ãƒ¼ãƒ‰ã‚’æ§ã’ãŸã€‚", "You sacrifice the card."), 40
 	}
 	else {
-		cardhelp lang("‘Šè‚ÍƒJ[ƒh‚ğ•ù‚°‚½B", "The opponent sacrifices the card."), 40
+		cardhelp lang("ç›¸æ‰‹ã¯ã‚«ãƒ¼ãƒ‰ã‚’æ§ã’ãŸã€‚", "The opponent sacrifices the card."), 40
 	}
 	repeat locvar_makecardlist_maxcard
 		if ( locvar_cdbit_card(1, cnt) != saccard_arg2 ) {
@@ -1040,14 +1040,14 @@
 	if ( getspotsum(putcard_arg2) >= 8 ) {
 		if ( putcard_arg2 == locvar_cpisplayer_player ) {
 			snd SOUNDLIST_FAIL1
-			cardhelp lang("‚±‚êˆÈã‚Íê‚Éo‚¹‚È‚¢B", "Your field is full."), 40
+			cardhelp lang("ã“ã‚Œä»¥ä¸Šã¯å ´ã«å‡ºã›ãªã„ã€‚", "Your field is full."), 40
 		}
 		return -1
 	}
 	if ( locvar_cdbit_card(10, putcard_arg1) > locvar_tcgdraw_cpdata(5, putcard_arg2) ) {
 		if ( putcard_arg2 == locvar_cpisplayer_player ) {
 			snd SOUNDLIST_FAIL1
-			cardhelp lang("ƒ}ƒi‚ª‘«‚è‚È‚¢B", "You don't have enough mana."), 40
+			cardhelp lang("ãƒãƒŠãŒè¶³ã‚Šãªã„ã€‚", "You don't have enough mana."), 40
 		}
 		if ( debug == 0 ) {
 			return -3
@@ -1261,13 +1261,13 @@
 
 *tcgDeck_loop
 	tcgdrawbg
-	locvar_cnvrare_s = lang("”’", "White"), lang("Â", "Blue"), lang("‹â", "Silver"), lang("Ô", "Red"), lang("•", "Black")
+	locvar_cnvrare_s = lang("ç™½", "White"), lang("é’", "Blue"), lang("éŠ€", "Silver"), lang("èµ¤", "Red"), lang("é»’", "Black")
 	repeat 5
-		locvar_cnvrare_s(cnt) += lang("‚ÌƒfƒbƒL", " Deck")
+		locvar_cnvrare_s(cnt) += lang("ã®ãƒ‡ãƒƒã‚­", " Deck")
 		locvar_tcgdeck_file = "" + exedir + "tmp\\deck_" + cnt + ".s2"
 		existwrapper locvar_tcgdeck_file
 		if ( strsize == (-1) ) {
-			locvar_cnvrare_s(cnt) += lang(" (V‹Kì¬)", " (New)")
+			locvar_cnvrare_s(cnt) += lang(" (æ–°è¦ä½œæˆ)", " (New)")
 		}
 		else {
 			if ( gdata(GDATA_DECK_SIZE + cnt) != 30 ) {
@@ -1288,9 +1288,9 @@
 		file = "" + exedir + "tmp\\deck_" + curdeck + ".s2"
 		existwrapper file
 		if ( strsize != (-1) ) {
-			promptl(0, promptmax) = lang("ƒfƒbƒL‚Ì\’z", "Edit Deck"), "null", "" + promptmax
+			promptl(0, promptmax) = lang("ãƒ‡ãƒƒã‚­ã®æ§‹ç¯‰", "Edit Deck"), "null", "" + promptmax
 			promptmax++
-			promptl(0, promptmax) = lang("ƒƒCƒ“ƒfƒbƒL‚Éİ’è", "Set as Main Deck"), "null", "" + promptmax
+			promptl(0, promptmax) = lang("ãƒ¡ã‚¤ãƒ³ãƒ‡ãƒƒã‚­ã«è¨­å®š", "Set as Main Deck"), "null", "" + promptmax
 			promptmax++
 			val = 400, locvar_tcgdrawcard_basey + 230, 240, 1
 			gosub *prompt_key
@@ -1645,7 +1645,7 @@
 	font lang(cfg_font1, cfg_font2), 13 - en * 2, 0
 	color 255, 255, 255
 	pos locvar_tcgdrawcard_basex + 160, locvar_tcgdrawcard_basey + 510
-	mes lang("" + key_next + "," + key_prev + ",Tab [ƒtƒBƒ‹ƒ^[Ø‘Ö]  Œˆ’è·° [ƒJ[ƒh‘I‘ğ]  ·¬İ¾Ù·° [I—¹]", "" + key_next + "," + key_prev + " [Change Filter]  Enter [Select]  Cancel [Exit]")
+	mes lang("" + key_next + "," + key_prev + ",Tab [ãƒ•ã‚£ãƒ«ã‚¿ãƒ¼åˆ‡æ›¿]  æ±ºå®šï½·ï½° [ã‚«ãƒ¼ãƒ‰é¸æŠ]  ï½·ï½¬ï¾ï½¾ï¾™ï½·ï½° [çµ‚äº†]", "" + key_next + "," + key_prev + " [Change Filter]  Enter [Select]  Cancel [Exit]")
 	pos locvar_tcgdrawcard_basex + 700, locvar_tcgdrawcard_basey + 510
 	mes "Page " + locvar_tcgdrawcard_dsc / 8 / 3 + "/" + (locvar_cslinedown_dlistmax - 1) / 8 / 3
 	return
@@ -1782,7 +1782,7 @@
 	dim locvar_tcgdrawcard_dlist, 2, 400
 	dim locvar_cslinedown_cflist, 10
 	sdim locvar_cslinedown_cfname, 16, 10
-	locvar_cslinedown_cfname = lang("Œó•â", "List"), lang("ƒfƒbƒL", "Deck"), locvar_tcginit_domname(0), locvar_tcginit_domname(1), locvar_tcginit_domname(2), locvar_tcginit_domname(3), locvar_tcginit_domname(4), locvar_tcginit_domname(5), locvar_tcginit_domname(6), locvar_tcginit_domname(7), locvar_tcginit_domname(8), locvar_tcginit_domname(9)
+	locvar_cslinedown_cfname = lang("å€™è£œ", "List"), lang("ãƒ‡ãƒƒã‚­", "Deck"), locvar_tcginit_domname(0), locvar_tcginit_domname(1), locvar_tcginit_domname(2), locvar_tcginit_domname(3), locvar_tcginit_domname(4), locvar_tcginit_domname(5), locvar_tcginit_domname(6), locvar_tcginit_domname(7), locvar_tcginit_domname(8), locvar_tcginit_domname(9)
 	locvar_cslinedown_cflist = 0
 	locvar_cslinedown_cfmax = 1
 	locvar_cslinedown_ccf = 0
@@ -1910,7 +1910,7 @@
 			if ( locvar_cdbit_card(9, locvar_tcgdrawcard_dlist(0, locvar_tcgdrawcard_dsc)) == 10 ) {
 				if ( locvar_cdbit_card(10, locvar_tcgdrawcard_dlist(0, locvar_tcgdrawcard_dsc)) == 0 ) {
 					snd SOUNDLIST_FAIL1
-					cardhelp lang("–¢À‘•‚ÌƒJ[ƒh", "The card isn't available in this version."), 40
+					cardhelp lang("æœªå®Ÿè£…ã®ã‚«ãƒ¼ãƒ‰", "The card isn't available in this version."), 40
 					goto *select_deck_loop_WHILE1_CONTINUE
 				}
 			}
@@ -1964,9 +1964,9 @@
 	}
 	if ( key == key_cancel ) {
 		if ( locvar_actionproc_deckmode == 0 ) {
-			promptl(0, promptmax) = lang("ƒZ[ƒu‚µ‚ÄI—¹", "Save & Exit"), "null", "" + promptmax
+			promptl(0, promptmax) = lang("ã‚»ãƒ¼ãƒ–ã—ã¦çµ‚äº†", "Save & Exit"), "null", "" + promptmax
 			promptmax++
-			promptl(0, promptmax) = lang("ƒZ[ƒu‚µ‚È‚¢‚ÅI—¹", "Just Exit"), "null", "" + promptmax
+			promptl(0, promptmax) = lang("ã‚»ãƒ¼ãƒ–ã—ãªã„ã§çµ‚äº†", "Just Exit"), "null", "" + promptmax
 			promptmax++
 			val = locvar_tcgdrawcard_basex + 420, locvar_tcgdrawcard_basey + 230, 240, 1
 			gosub *prompt_key
@@ -2065,13 +2065,13 @@
 			if ( locvar_cdbit_card(10, locvar_tcgdraw_cc) <= locvar_tcgdraw_cpdata(5, locvar_cpflip_cp) ) {
 				if ( locvar_cdbit_card(9, locvar_tcgdraw_cc) == 20 | locvar_tcgdraw_selectmode == 0 ) {
 					locvar_actionproc_act(0) = 1
-					locvar_cnvrare_s += lang("ª   ƒJ[ƒh‚ğo‚·B\n", "UP: Put the card.\n")
+					locvar_cnvrare_s += lang("â†‘   ã‚«ãƒ¼ãƒ‰ã‚’å‡ºã™ã€‚\n", "UP: Put the card.\n")
 				}
 			}
 			if ( locvar_saccard_sac == 0 ) {
 				if ( locvar_tcgdraw_selectmode == 0 ) {
 					locvar_actionproc_act(1) = 1
-					locvar_cnvrare_s += lang("«   ƒJ[ƒh‚ğ•ù‚°‚Äƒ}ƒi‚ğ“¾‚é(1ƒ^[ƒ“‚É1‰ñ)B\n", "Down: Sacrifice the card.\n")
+					locvar_cnvrare_s += lang("â†“   ã‚«ãƒ¼ãƒ‰ã‚’æ§ã’ã¦ãƒãƒŠã‚’å¾—ã‚‹(1ã‚¿ãƒ¼ãƒ³ã«1å›)ã€‚\n", "Down: Sacrifice the card.\n")
 				}
 			}
 		}
@@ -2080,19 +2080,19 @@
 				if ( locvar_cdbit_card(14, locvar_tcgdraw_cc) != (-1) ) {
 					if ( cardcandeclareattack(locvar_tcgdraw_cc) ) {
 						locvar_actionproc_act(0) = 1
-						locvar_cnvrare_s += lang("ª   UŒ‚‚ğéŒ¾‚·‚éB\n", "UP: Declare an attack.\n")
+						locvar_cnvrare_s += lang("â†‘   æ”»æ’ƒã‚’å®£è¨€ã™ã‚‹ã€‚\n", "UP: Declare an attack.\n")
 					}
 				}
 			}
 			if ( locvar_tcgdraw_selectmode == 1 ) {
 				if ( cardcanblock(locvar_tcgdraw_cc) ) {
 					locvar_actionproc_act(0) = 1
-					locvar_cnvrare_s += lang("ª   ƒuƒƒbƒN‚·‚éB\n", "UP: Block.\n")
+					locvar_cnvrare_s += lang("â†‘   ãƒ–ãƒ­ãƒƒã‚¯ã™ã‚‹ã€‚\n", "UP: Block.\n")
 				}
 			}
 			if ( cardcanuseskill(locvar_tcgdraw_cc) ) {
 				locvar_actionproc_act(2) = 1
-				locvar_cnvrare_s += lang("Œˆ’è ƒXƒLƒ‹‚ğg—p‚·‚éB\n", "ENTER: Use the skill.\n")
+				locvar_cnvrare_s += lang("æ±ºå®š ã‚¹ã‚­ãƒ«ã‚’ä½¿ç”¨ã™ã‚‹ã€‚\n", "ENTER: Use the skill.\n")
 			}
 		}
 		locvar_makecardlist_f = 0
@@ -2105,7 +2105,7 @@
 		if ( locvar_makecardlist_f == 0 ) {
 			if ( debug == 0 ) {
 				snd SOUNDLIST_FAIL1
-				cardhelp lang("‰Â”\‚Ès“®‚Í‚È‚¢B", "There is no action available."), 40
+				cardhelp lang("å¯èƒ½ãªè¡Œå‹•ã¯ãªã„ã€‚", "There is no action available."), 40
 				goto *card_player_WHILE1_CONTINUE
 			}
 		}
@@ -2201,7 +2201,7 @@
 		goto *card_player_WEND1
 	}
 	if ( key == "s" ) {
-		promptl(0, promptmax) = lang("~Q‚·‚é", "Surrender"), "null", "" + promptmax
+		promptl(0, promptmax) = lang("é™å‚ã™ã‚‹", "Surrender"), "null", "" + promptmax
 		promptmax++
 		val = locvar_tcgdrawcard_basex + 420, locvar_tcgdrawcard_basey + 230, 200, 1
 		gosub *prompt_key

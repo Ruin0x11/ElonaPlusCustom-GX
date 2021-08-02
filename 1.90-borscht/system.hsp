@@ -41,7 +41,7 @@
 
 *fixSave
 	if ( gdata(GDATA_VERSION) != int(double("3.21") * 1000) ) {
-		dialog lang("Ver." + gdata(GDATA_VERSION) + "‚ÌƒZ[ƒuƒf[ƒ^‚ğƒAƒbƒvƒf[ƒg‚µ‚Ü‚·B", "Updating your save data from Ver." + gdata(GDATA_VERSION) + " now.")
+		dialog lang("Ver." + gdata(GDATA_VERSION) + "ã®ã‚»ãƒ¼ãƒ–ãƒ‡ãƒ¼ã‚¿ã‚’ã‚¢ãƒƒãƒ—ãƒ‡ãƒ¼ãƒˆã—ã¾ã™ã€‚", "Updating your save data from Ver." + gdata(GDATA_VERSION) + " now.")
 	}
 	if ( gdata(GDATA_HEIR_DEED) < 0 ) {
 		gdata(GDATA_HEIR_DEED) = 1
@@ -108,7 +108,7 @@
 			deletewrapper file + "mdata_5_103.s2"
 		}
 		if ( gdata(GDATA_AREA) == AREA_VERNIS ) {
-			dialog "ƒ}ƒbƒv‚ğƒAƒbƒvƒf[ƒg‚·‚é‚½‚ßAˆê“xƒ”ƒFƒ‹ƒj[ƒX‚Éo“ü‚è‚µ‚Ä‚­‚¾‚³‚¢B"
+			dialog "ãƒãƒƒãƒ—ã‚’ã‚¢ãƒƒãƒ—ãƒ‡ãƒ¼ãƒˆã™ã‚‹ãŸã‚ã€ä¸€åº¦ãƒ´ã‚§ãƒ«ãƒ‹ãƒ¼ã‚¹ã«å‡ºå…¥ã‚Šã—ã¦ãã ã•ã„ã€‚"
 		}
 	}
 	if ( gdata(GDATA_VERSION) < 1010 ) {
@@ -147,7 +147,7 @@
 	}
 	if ( gdata(GDATA_VERSION) < 1111 ) {
 		gdata(GDATA_WORLD_RENEW) = TRUE
-		dialog lang("ƒ†[ƒU[•¨Œ‚Ìî•ñ‚ğƒAƒbƒvƒf[ƒg‚·‚é‚½‚ßAƒQ[ƒ€ŠJnŒãˆê“xƒ[ƒ‹ƒhƒ}ƒbƒv‚Éo‚Ä‚­‚¾‚³‚¢B", "Please exit the current area and enter the world map once to update game data.")
+		dialog lang("ãƒ¦ãƒ¼ã‚¶ãƒ¼ç‰©ä»¶ã®æƒ…å ±ã‚’ã‚¢ãƒƒãƒ—ãƒ‡ãƒ¼ãƒˆã™ã‚‹ãŸã‚ã€ã‚²ãƒ¼ãƒ é–‹å§‹å¾Œä¸€åº¦ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒãƒƒãƒ—ã«å‡ºã¦ãã ã•ã„ã€‚", "Please exit the current area and enter the world map once to update game data.")
 	}
 	if ( gdata(GDATA_VERSION) < 1130 ) {
 		cfg_net = 1
@@ -178,11 +178,11 @@
 	if ( gdata(GDATA_VERSION) < 1170 ) {
 		if ( 0 == 0 ) {
 			if ( adata(ADATA_TYPE, gdata(GDATA_AREA)) != MAP_TYPE_TOWN ) {
-				dialog lang("ƒAƒbƒvƒf[ƒg‚ğs‚¤‚É‚ÍAŠX’†‚ÅƒZ[ƒu‚µ‚½ƒZ[ƒuƒf[ƒ^‚ª•K—v‚Å‚·B", "To update your game, please save your game in a town in the previous version then retry.")
+				dialog lang("ã‚¢ãƒƒãƒ—ãƒ‡ãƒ¼ãƒˆã‚’è¡Œã†ã«ã¯ã€è¡—ä¸­ã§ã‚»ãƒ¼ãƒ–ã—ãŸã‚»ãƒ¼ãƒ–ãƒ‡ãƒ¼ã‚¿ãŒå¿…è¦ã§ã™ã€‚", "To update your game, please save your game in a town in the previous version then retry.")
 				goto *exit_game
 			}
 		}
-		dialog lang("Ÿ‚ÌƒvƒƒZƒX‚ÌŠ®—¹‚Ü‚Å‚É‚ÍA‚µ‚Î‚ç‚­ŠÔ‚ª‚©‚©‚é‚±‚Æ‚ª‚ ‚è‚Ü‚·B", "The next updating process may take a while to complete.")
+		dialog lang("æ¬¡ã®ãƒ—ãƒ­ã‚»ã‚¹ã®å®Œäº†ã¾ã§ã«ã¯ã€ã—ã°ã‚‰ãæ™‚é–“ãŒã‹ã‹ã‚‹ã“ã¨ãŒã‚ã‚Šã¾ã™ã€‚", "The next updating process may take a while to complete.")
 		memcpy adata(ADATA_TYPE, 300), adata(ADATA_TYPE, 100), 40 * (150 - 100) * 4
 		memcpy adata(ADATA_TYPE, 450), adata(ADATA_TYPE, 150), 40 * (200 - 150) * 4
 		repeat 200 - 100, 100
@@ -226,7 +226,7 @@
 	if ( gdata(GDATA_VERSION) < 2130 ) {
 		if ( gdata(GDATA_QUEST) == QUEST_TYPE_THIEVES ) {
 			gdata(GDATA_QUEST) = QUEST_TYPE_NONE
-			dialog lang("“‘¯’cƒtƒ‰ƒO–•ÁB", "Death bug is corrected.")
+			dialog lang("ç›—è³Šå›£ãƒ•ãƒ©ã‚°æŠ¹æ¶ˆã€‚", "Death bug is corrected.")
 		}
 	}
 	if ( gdata(GDATA_VERSION) < 2160 ) {
@@ -373,7 +373,7 @@
 		loop
 	}
 	if ( gdata(GDATA_VERSION) == 2180 ) {
-		dialog lang("ƒAƒbƒvƒf[ƒg‚ğs‚¤‚É‚ÍA1.1555ˆÈŠO‚ÌƒZ[ƒuƒf[ƒ^‚ª•K—v‚Å‚·B", "To update your game, please save not 1.1555 version then retry.")
+		dialog lang("ã‚¢ãƒƒãƒ—ãƒ‡ãƒ¼ãƒˆã‚’è¡Œã†ã«ã¯ã€1.1555ä»¥å¤–ã®ã‚»ãƒ¼ãƒ–ãƒ‡ãƒ¼ã‚¿ãŒå¿…è¦ã§ã™ã€‚", "To update your game, please save not 1.1555 version then retry.")
 		goto *exit_game
 	}
 	if ( gdata(GDATA_VERSION) < 2210 ) {
@@ -382,7 +382,7 @@
 		loop
 	}
 	if ( gdata(GDATA_VERSION) == 2220 ) {
-		dialog lang("1.18fixˆÈŠO‚ÌƒZ[ƒuƒf[ƒ^‚Íg‚¦‚Ü‚¹‚ñB", "To update your game, please save not 1.18fix version then retry.")
+		dialog lang("1.18fixä»¥å¤–ã®ã‚»ãƒ¼ãƒ–ãƒ‡ãƒ¼ã‚¿ã¯ä½¿ãˆã¾ã›ã‚“ã€‚", "To update your game, please save not 1.18fix version then retry.")
 		goto *exit_game
 	}
 	if ( gdata(GDATA_VERSION) < 2260 ) {
@@ -450,7 +450,7 @@
 		gdata(GDATA_FLAG_HIGHEST_NORMAL_DAMAGE) = 0
 	}
 	if ( gdata(GDATA_VERSION) == 2310 ) {
-		dialog lang("ƒAƒbƒvƒf[ƒg‚ğs‚¤‚É‚ÍA1.25ˆÈŠO‚ÌƒZ[ƒuƒf[ƒ^‚ª•K—v‚Å‚·B", "To update your game, please save not 1.25 version then retry.")
+		dialog lang("ã‚¢ãƒƒãƒ—ãƒ‡ãƒ¼ãƒˆã‚’è¡Œã†ã«ã¯ã€1.25ä»¥å¤–ã®ã‚»ãƒ¼ãƒ–ãƒ‡ãƒ¼ã‚¿ãŒå¿…è¦ã§ã™ã€‚", "To update your game, please save not 1.25 version then retry.")
 		goto *exit_game
 	}
 	if ( gdata(GDATA_VERSION) <= 2390 ) {
@@ -467,7 +467,7 @@
 						tc = cnt
 						cbitmod CHARA_BIT_BODYGUARD, cnt, FALSE
 						if ( cdata(CDATA_EXIST, tc) == CHAR_STATE_ALIVE ) {
-							s = lang("u‚¨‚¢AˆÃEÒ‚ª„‚ÌŒã‚ë‚É‚¢‚é‚¼v", cnvtalk("Hey, the assassins are killing me."))
+							s = lang("ã€ŒãŠã„ã€æš—æ®ºè€…ãŒç§ã®å¾Œã‚ã«ã„ã‚‹ãã€", cnvtalk("Hey, the assassins are killing me."))
 							p = -11
 							txtef COLOR_SKY_BLUE
 							txtmore
@@ -510,7 +510,7 @@
 		loop
 	}
 	if ( gdata(GDATA_VERSION) == 2500 ) {
-		dialog lang("1.38‚ÌƒZ[ƒuƒf[ƒ^‚ÍƒAƒbƒvƒf[ƒg‚Å‚«‚Ü‚¹‚ñB", "To update your game, please save not 1.38 version then retry.")
+		dialog lang("1.38ã®ã‚»ãƒ¼ãƒ–ãƒ‡ãƒ¼ã‚¿ã¯ã‚¢ãƒƒãƒ—ãƒ‡ãƒ¼ãƒˆã§ãã¾ã›ã‚“ã€‚", "To update your game, please save not 1.38 version then retry.")
 		goto *exit_game
 	}
 	if ( gdata(GDATA_VERSION) < 2510 ) {
@@ -532,7 +532,7 @@
 			spact(SKILL_SPACT_GAUGE_RELEASE - STARTING_SKILL_SPACT) = 1
 			txtmore
 			txtef COLOR_YELLOW
-			txt lang("‚ ‚È‚½‚Íu" + skillname(SKILL_SPACT_GAUGE_RELEASE) + "v‚Ì”\—Í‚ğ“¾‚½B", "You have learned new ability, " + skillname(SKILL_SPACT_GAUGE_RELEASE) + ".")
+			txt lang("ã‚ãªãŸã¯ã€Œ" + skillname(SKILL_SPACT_GAUGE_RELEASE) + "ã€ã®èƒ½åŠ›ã‚’å¾—ãŸã€‚", "You have learned new ability, " + skillname(SKILL_SPACT_GAUGE_RELEASE) + ".")
 		}
 		repeat 57
 			if ( cbit(CHARA_BIT_AWAKE_NEAR_DEATH_DAMAGE, cnt) ) {
@@ -684,7 +684,7 @@
 	}
 	if ( gdata(GDATA_FLAG_GAME_MODE) == 3 ) {
 		if ( gdata(GDATA_GAMEMODE_PENALTY) == 4 ) {
-			dialog lang("‚»‚Ì–`Œ¯Ò‚Í‘h‚ç‚È‚¢cB", "The adventurer is not revived again...")
+			dialog lang("ãã®å†’é™ºè€…ã¯è˜‡ã‚‰ãªã„â€¦ã€‚", "The adventurer is not revived again...")
 			goto *exit_game
 		}
 	}
@@ -716,7 +716,7 @@
 	}
 	if ( gdata(GDATA_FLAG_GAME_MODE) == 1 | gdata(GDATA_FLAG_GAME_MODE) == 3 | gdata(GDATA_FLAG_GAME_MODE) == 4 ) {
 		if ( gdata(GDATA_GAMEMODE_PENALTY) == 0 ) {
-			dialog lang("EscƒL[‚ÅƒZ[ƒuŒã©“®I—¹‚¹‚¸‚ÉA‹­§I—¹‚µ‚½ƒZ[ƒuƒf[ƒ^‚É‚Íƒyƒiƒ‹ƒeƒB‚ª—^‚¦‚ç‚ê‚Ü‚·B", "It is a nosave penalty.")
+			dialog lang("Escã‚­ãƒ¼ã§ã‚»ãƒ¼ãƒ–å¾Œè‡ªå‹•çµ‚äº†ã›ãšã«ã€å¼·åˆ¶çµ‚äº†ã—ãŸã‚»ãƒ¼ãƒ–ãƒ‡ãƒ¼ã‚¿ã«ã¯ãƒšãƒŠãƒ«ãƒ†ã‚£ãŒä¸ãˆã‚‰ã‚Œã¾ã™ã€‚", "It is a nosave penalty.")
 			modkarma 0, -100
 			skillmod SKILL_ATTR_LIFE, CHARA_PLAYER, -5000
 			skillmod SKILL_ATTR_MANA, CHARA_PLAYER, -5000
@@ -1114,7 +1114,7 @@
 		if ( instr(untaglist, 0, "/" + userdatan(0, tg) + "/") != (-1) ) {
 			usernpcmax--
 			if ( instr(s, 0, "_tmp_") == (-1) ) {
-				msgtemp += lang("“¯–¼NPC‚Í“Ç‚İ‚Ü‚ê‚È‚¢B", "A npc of the same name exists.") + "(skipped:" + userdatan(0, tg) + "," + s + ") "
+				msgtemp += lang("åŒåNPCã¯èª­ã¿è¾¼ã¾ã‚Œãªã„ã€‚", "A npc of the same name exists.") + "(skipped:" + userdatan(0, tg) + "," + s + ") "
 			}
 			continue
 		}
@@ -1260,7 +1260,7 @@
 	if ( dbg_usernpc ) {
 	}
 	else {
-		txt lang("‚Ç‚Ìƒtƒ@ƒCƒ‹‚©‚çNPC‚ğì¬‚·‚éH", "Choose the original file.")
+		txt lang("ã©ã®ãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰NPCã‚’ä½œæˆã™ã‚‹ï¼Ÿ", "Choose the original file.")
 		redraw 1
 		fileext = "txt"
 		filedsc = "Custom Npc Text"
@@ -1281,7 +1281,7 @@
 	if ( dbg_usernpc ) {
 	}
 	else {
-		txt lang("‚Ç‚Ì‰æ‘œ‚ğ–„‚ß‚ŞH", "Choose the graphic file.")
+		txt lang("ã©ã®ç”»åƒã‚’åŸ‹ã‚è¾¼ã‚€ï¼Ÿ", "Choose the graphic file.")
 		redraw 1
 		fileext = "bmp"
 		filedsc = "Bit Map File"
@@ -1354,7 +1354,7 @@
 	q = s
 	gosub *userNpc_update
 	initunid = findunid(q)
-	txt lang("ƒJƒXƒ^ƒ€NPC‚ğì¬‚µ‚½I", "A custom NPC has been successfully generated!")
+	txt lang("ã‚«ã‚¹ã‚¿ãƒ NPCã‚’ä½œæˆã—ãŸï¼", "A custom NPC has been successfully generated!")
 	if ( cdata(CDATA_X, CHARA_PLAYER) > 1 ) {
 		sux = cdata(CDATA_X, CHARA_PLAYER) - 1
 	}
@@ -1370,7 +1370,7 @@
 	}
 	else {
 		cdata(CDATA_RELATION, rc) = RELATION_ENEMY
-		txt lang(name(rc) + "‚Í‹»•±‚µ‚ÄP‚¢Š|‚©‚Á‚Ä‚«‚½B", name(rc) + " is excited and attacks you.")
+		txt lang(name(rc) + "ã¯èˆˆå¥®ã—ã¦è¥²ã„æ›ã‹ã£ã¦ããŸã€‚", name(rc) + " is excited and attacks you.")
 	}
 	folder = exedir + "user\\"
 	gosub *del_userTemp
@@ -1470,7 +1470,7 @@
 					exist file
 					if ( strsize == (-1) ) {
 						if ( cnt != 15 ) {
-							dialog lang("ƒZ[ƒuƒtƒ@ƒCƒ‹F" + file + "‚ª‘¶İ‚µ‚Ü‚¹‚ñBƒtƒ@ƒCƒ‹ˆÚAƒ~ƒX‚Ì‰Â”\«‚ª‚ ‚é‚Ì‚ÅŠY“–ƒtƒHƒ‹ƒ_“à‚ğŠm”F‚µ‚Ä‚­‚¾‚³‚¢B", "Save file: " + file + " does not exist. Please check the appropriate folder.")
+							dialog lang("ã‚»ãƒ¼ãƒ–ãƒ•ã‚¡ã‚¤ãƒ«ï¼š" + file + "ãŒå­˜åœ¨ã—ã¾ã›ã‚“ã€‚ãƒ•ã‚¡ã‚¤ãƒ«ç§»æ¤ãƒŸã‚¹ã®å¯èƒ½æ€§ãŒã‚ã‚‹ã®ã§è©²å½“ãƒ•ã‚©ãƒ«ãƒ€å†…ã‚’ç¢ºèªã—ã¦ãã ã•ã„ã€‚", "Save file: " + file + " does not exist. Please check the appropriate folder.")
 							goto *exit_game
 						}
 					}
@@ -1492,7 +1492,7 @@
 					zOpen hgz, file, 0
 					if ( stat != 0 ) {
 						if ( cnt != 15 ) {
-							dialog lang("ƒZ[ƒuƒtƒ@ƒCƒ‹F" + file + "‚ª“Ç‚İ‚ß‚Ü‚¹‚ñ‚Å‚µ‚½BŠY“–‚Ìƒtƒ@ƒCƒ‹‚ª”j‘¹‚µ‚Ä‚¢‚é‰Â”\«‚ª‚ ‚è‚Ü‚·B", "Save file: " + file + " could not be read. There is a possibility that the file in question is corrupted.")
+							dialog lang("ã‚»ãƒ¼ãƒ–ãƒ•ã‚¡ã‚¤ãƒ«ï¼š" + file + "ãŒèª­ã¿è¾¼ã‚ã¾ã›ã‚“ã§ã—ãŸã€‚è©²å½“ã®ãƒ•ã‚¡ã‚¤ãƒ«ãŒç ´æã—ã¦ã„ã‚‹å¯èƒ½æ€§ãŒã‚ã‚Šã¾ã™ã€‚", "Save file: " + file + " could not be read. There is a possibility that the file in question is corrupted.")
 							goto *exit_game
 						}
 					}
@@ -1705,7 +1705,7 @@
 			folder = exedir + "save\\" + geneuse + "\\"
 		}
 		if ( fmode == 14 ) {
-			playerheader = "" + cdatan(CDATAN_NAME, CHARA_PLAYER) + "(Lv" + cdata(CDATA_LEVEL, CHARA_PLAYER) + ")‚Ìˆâ“`q"
+			playerheader = "" + cdatan(CDATAN_NAME, CHARA_PLAYER) + "(Lv" + cdata(CDATA_LEVEL, CHARA_PLAYER) + ")ã®éºä¼å­"
 			file = folder + "gene_header.txt"
 			bsave file, playerheader
 			fileadd file
@@ -2457,16 +2457,16 @@
 	lensum = 1024
 	sdim filebuff, lensum
 	if ( usertitle != "" ) {
-		headtemp = "[{»]y" + usertitle + "z\n"
+		headtemp = "[ï¼‹è£½]ã€" + usertitle + "ã€‘\n"
 	}
 	else {
-		headtemp = "[{»]y" + mdatan(0) + "z\n"
+		headtemp = "[ï¼‹è£½]ã€" + mdatan(0) + "ã€‘\n"
 	}
 	headtemp += "" + cdatan(CDATAN_AKA, CHARA_PLAYER) + cdatan(CDATAN_NAME, CHARA_PLAYER) + "\n"
 	headtemp += "\n"
 	headtemp += "\n"
 	headtemp += "" + 100002 + "\n"
-	headtemp += "[{»]" + usermsg + "\n"
+	headtemp += "[ï¼‹è£½]" + usermsg + "\n"
 	headtemp += "" + userrelation + "\n"
 	memcpy filebuff, headtemp, 1024, 0
 	fmode = 20
@@ -2496,7 +2496,7 @@
 	id = 0
 	lensum = 1024
 	sdim filebuff, lensum
-	headtemp = "y" + gdatan(GDATAN_TEAM1) + "z(" + n + "‘Ì) Lv" + lv + "\n"
+	headtemp = "ã€" + gdatan(GDATAN_TEAM1) + "ã€‘(" + n + "ä½“) Lv" + lv + "\n"
 	headtemp += "" + cdatan(CDATAN_AKA, CHARA_PLAYER) + cdatan(CDATAN_NAME, CHARA_PLAYER) + "\n"
 	headtemp += "\n"
 	headtemp += "\n"
@@ -2599,7 +2599,7 @@
 	}
 	else {
 	}
-	diaryhead = "<HTML><TITLE>" + cdatan(CDATAN_AKA, CHARA_PLAYER) + cdatan(CDATAN_NAME, CHARA_PLAYER) + "‚Ì–`Œ¯“ú</TITLE>"
+	diaryhead = "<HTML><TITLE>" + cdatan(CDATAN_AKA, CHARA_PLAYER) + cdatan(CDATAN_NAME, CHARA_PLAYER) + "ã®å†’é™ºæ—¥èªŒ</TITLE>"
 	diarystat = ""
 	diarylog = ""
 	diaryfoot = "</HTML>"
@@ -2611,7 +2611,7 @@
 *game_save
 	if ( gdata(GDATA_AREA) == AREA_SHOW_HOUSE | (gdata(GDATA_AREA) == AREA_CHAOS_CRADLE & gdata(GDATA_LEVEL) == 179) ) {
 		txtef COLOR_RED
-		txt lang("‚±‚±‚Å‚ÍƒZ[ƒu‚³‚ê‚È‚¢B", "The game is not saved in this map.")
+		txt lang("ã“ã“ã§ã¯ã‚»ãƒ¼ãƒ–ã•ã‚Œãªã„ã€‚", "The game is not saved in this map.")
 		gosub *screen_draw
 		return
 	}
@@ -2674,7 +2674,7 @@
 
 *game_title
 	if ( cfg_titledialog ) {
-		dialog lang("ƒ—˜—p‹K–ñ„\n\n elonaplus‚ÍƒtƒŠ[ƒEƒFƒA‚Å‚ ‚èAelona‚Ì“ñŸ‘nì‚Å‚·B\nE–{ƒ\ƒtƒgƒEƒFƒA‚ÍŒ»İŠJ”­’†‚Å‚·B•s‹ï‡‚âƒoƒ‰ƒ“ƒX‚Ì‹}Œƒ‚È•Ï“®‚ª‚ ‚è‚Ü‚·B\nEŒ´ì‚¨‚æ‚Ñ‘¼“ñŸ‘nì‚ÌìÒEƒoƒ‰ƒ“ƒXEİ’è“™‚ğ”Û’è‚·‚éˆÓ}‚Í‚ ‚è‚Ü‚¹‚ñB\nE–\—Í“IE«“IE—ÂŠï“I‚È•\Œ»A•`Ê‚ª‘½”‘¶İ‚µ‚Ü‚·B\nE–{ƒ\ƒtƒg‚Ì—˜—p‚É‚æ‚Á‚Ä‚¢‚©‚È‚é•s—˜‰v‚ª”­¶‚µ‚½ê‡‚Å‚àìÒ‚ÍˆêØ‚ÌÓ”C‚ğ•‰‚¢‚Ü‚¹‚ñB©ŒÈÓ”C‚Å—˜—p‚µ‚Ä‚­‚¾‚³‚¢B\nE‹»–¡‚ğ‚Á‚Ä‚¢‚È‚¢l‚Ö‚Ì‰ß“x‚Ì„‘E‚âĞ‰î‚ÍT‚¦Awiki‚Ö‚Ì—U“±’ö“x‚É—¯‚ß‚Ä‚­‚¾‚³‚¢B\nEƒÀƒeƒXƒgƒvƒŒƒCƒ„[‚Æ‚µ‚ÄƒfƒoƒbƒO‹`–±‚È‚­•’Ê‚É—V‚Ô‚±‚Æ‚ª‚Å‚«‚Ü‚·‚ªAƒvƒŒƒC’†‚ÉƒoƒO‚É‘˜‹ö‚µ‚½ê‡‚Í•ñ‚µ‚Ä‚¢‚½‚¾‚¯‚é‚Æ•‚©‚è‚Ü‚·(”CˆÓ)B\n‚½‚¾‚µA‚¹‚Á‚©‚­•ñ‚µ‚Ä‚¢‚½‚¾‚¢‚Ä‚à“à—e‚ª•s‘«‚µ‚Ä‚¢‚é‚ÆƒoƒOC³‚ÉŒ‹‚Ñ‚Â‚©‚È‚¢‚½‚ßAƒeƒ“ƒvƒŒ[ƒg‚ğ—p‚¢‚½•ñ‚âŒŸØ‚É‚²‹¦—Í‚­‚¾‚³‚¢B\n\n“¯«‚Ìà–¾‘(elona,elonaplus)‚É‚à–Ú‚ğ’Ê‚µAã‹L€–Ú‚ğŠÜ‚ß‚Ä—‰ğE³•‚Å‚«‚é•û‚Ì‚İ—˜—p‚Å‚«‚Ü‚·B", "Elonaplus is a freeware, This is a secondary creation of elona. \n * This software is currently in development. There are defect and abrupt change of balance. \n * There is no intention to deny the author, balance, setting, of the other secondary creations and original creation. \n * There are many violent, sexual, bizarre, depictions. \n * Even if any disadvantage was caused by use of this software, the author does not take any responsibility. Please use at your own risk. \n * If you can comply the instructions and the above-mentioned items, you can use this software.")
+		dialog lang("ï¼œåˆ©ç”¨è¦ç´„ï¼\n\n elonaplusã¯ãƒ•ãƒªãƒ¼ã‚¦ã‚§ã‚¢ã§ã‚ã‚Šã€elonaã®äºŒæ¬¡å‰µä½œã§ã™ã€‚\nãƒ»æœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã¯ç¾åœ¨é–‹ç™ºä¸­ã§ã™ã€‚ä¸å…·åˆã‚„ãƒãƒ©ãƒ³ã‚¹ã®æ€¥æ¿€ãªå¤‰å‹•ãŒã‚ã‚Šã¾ã™ã€‚\nãƒ»åŸä½œãŠã‚ˆã³ä»–äºŒæ¬¡å‰µä½œã®ä½œè€…ãƒ»ãƒãƒ©ãƒ³ã‚¹ãƒ»è¨­å®šç­‰ã‚’å¦å®šã™ã‚‹æ„å›³ã¯ã‚ã‚Šã¾ã›ã‚“ã€‚\nãƒ»æš´åŠ›çš„ãƒ»æ€§çš„ãƒ»çŒŸå¥‡çš„ãªè¡¨ç¾ã€æå†™ãŒå¤šæ•°å­˜åœ¨ã—ã¾ã™ã€‚\nãƒ»æœ¬ã‚½ãƒ•ãƒˆã®åˆ©ç”¨ã«ã‚ˆã£ã¦ã„ã‹ãªã‚‹ä¸åˆ©ç›ŠãŒç™ºç”Ÿã—ãŸå ´åˆã§ã‚‚ä½œè€…ã¯ä¸€åˆ‡ã®è²¬ä»»ã‚’è² ã„ã¾ã›ã‚“ã€‚è‡ªå·±è²¬ä»»ã§åˆ©ç”¨ã—ã¦ãã ã•ã„ã€‚\nãƒ»èˆˆå‘³ã‚’æŒã£ã¦ã„ãªã„äººã¸ã®éåº¦ã®æ¨è–¦ã‚„ç´¹ä»‹ã¯æ§ãˆã€wikiã¸ã®èª˜å°ç¨‹åº¦ã«ç•™ã‚ã¦ãã ã•ã„ã€‚\nãƒ»Î²ãƒ†ã‚¹ãƒˆãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã¨ã—ã¦ãƒ‡ãƒãƒƒã‚°ç¾©å‹™ãªãæ™®é€šã«éŠã¶ã“ã¨ãŒã§ãã¾ã™ãŒã€ãƒ—ãƒ¬ã‚¤ä¸­ã«ãƒã‚°ã«é­é‡ã—ãŸå ´åˆã¯å ±å‘Šã—ã¦ã„ãŸã ã‘ã‚‹ã¨åŠ©ã‹ã‚Šã¾ã™(ä»»æ„)ã€‚\nãŸã ã—ã€ã›ã£ã‹ãå ±å‘Šã—ã¦ã„ãŸã ã„ã¦ã‚‚å†…å®¹ãŒä¸è¶³ã—ã¦ã„ã‚‹ã¨ãƒã‚°ä¿®æ­£ã«çµã³ã¤ã‹ãªã„ãŸã‚ã€ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã‚’ç”¨ã„ãŸå ±å‘Šã‚„æ¤œè¨¼ã«ã”å”åŠ›ãã ã•ã„ã€‚\n\nåŒæ¢±ã®èª¬æ˜æ›¸(elona,elonaplus)ã«ã‚‚ç›®ã‚’é€šã—ã€ä¸Šè¨˜é …ç›®ã‚’å«ã‚ã¦ç†è§£ãƒ»æ‰¿æœã§ãã‚‹æ–¹ã®ã¿åˆ©ç”¨ã§ãã¾ã™ã€‚", "Elonaplus is a freeware, This is a secondary creation of elona. \n * This software is currently in development. There are defect and abrupt change of balance. \n * There is no intention to deny the author, balance, setting, of the other secondary creations and original creation. \n * There are many violent, sexual, bizarre, depictions. \n * Even if any disadvantage was caused by use of this software, the author does not take any responsibility. Please use at your own risk. \n * If you can comply the instructions and the above-mentioned items, you can use this software.")
 	}
 	mode = MODELIST_TITLE
 	lomiaseaster = 0
@@ -2711,7 +2711,7 @@
 		mes "Contributor f1r3fly, Sunstrike, Schmidt, Elvenspirit / View the credits for more"
 	}
 	if ( jp ) {
-		s = "–`Œ¯‚Ì“¹•W", strhint1
+		s = "å†’é™ºã®é“æ¨™", strhint1
 	}
 	else {
 		s = "Starting Menu", strhint1
@@ -2726,7 +2726,7 @@
 	grotate BUFFER_MAP, cmbg / 2 * 180, cmbg \ 2 * 300, 0, x, y
 	gmode 2
 	if ( jp ) {
-		s = "Restore an adventurer", "–`Œ¯‚ğÄŠJ‚·‚é", "Generate an adventurer", "V‚µ‚¢–`Œ¯Ò‚ğì¬‚·‚é", "Incarnate an adventurer", "–`Œ¯Ò‚ÌˆøŒp‚¬", "View the homepage", "–{‰ÆElonaƒz[ƒ€ƒy[ƒW", "Configure", "İ’è‚Ì•ÏX", "Exit", "I—¹"
+		s = "Restore an adventurer", "å†’é™ºã‚’å†é–‹ã™ã‚‹", "Generate an adventurer", "æ–°ã—ã„å†’é™ºè€…ã‚’ä½œæˆã™ã‚‹", "Incarnate an adventurer", "å†’é™ºè€…ã®å¼•ç¶™ã", "View the homepage", "æœ¬å®¶Elonaãƒ›ãƒ¼ãƒ ãƒšãƒ¼ã‚¸", "Configure", "è¨­å®šã®å¤‰æ›´", "Exit", "çµ‚äº†"
 	}
 	if ( en ) {
 		s = "Restore an Adventurer", "Generate an Adventurer", "Incarnate an Adventurer", "View the Homepage", "Options", "Exit"
@@ -2843,7 +2843,7 @@
 	gcopy BUFFER_BUF, 0, 0, windoww, windowh
 	gmode 2
 	if ( jp ) {
-		s = "‚Ç‚Ì–`Œ¯‚ğÄŠJ‚·‚é‚ñ‚¾‚¢H"
+		s = "ã©ã®å†’é™ºã‚’å†é–‹ã™ã‚‹ã‚“ã ã„ï¼Ÿ"
 	}
 	else {
 		s = "Which save game do you want to continue?"
@@ -2880,7 +2880,7 @@
 	}
 	redraw 0
 	if ( jp ) {
-		s = "–`Œ¯Ò‚Ì‘I‘ğ", "BackSpace [íœ]  " + strhint3b
+		s = "å†’é™ºè€…ã®é¸æŠ", "BackSpace [å‰Šé™¤]  " + strhint3b
 	}
 	else {
 		s = "Game Selection", "BackSpace [Delete]  " + strhint3b
@@ -2930,7 +2930,7 @@
 				p = list(0, cs)
 				playerid = listn(0, p)
 				if ( jp ) {
-					s = "–{“–‚É" + playerid + "‚ğíœ‚µ‚Ä‚¢‚¢‚Ì‚©‚¢H"
+					s = "æœ¬å½“ã«" + playerid + "ã‚’å‰Šé™¤ã—ã¦ã„ã„ã®ã‹ã„ï¼Ÿ"
 				}
 				else {
 					s = "Do you really want to delete " + playerid + " ?"
@@ -2945,7 +2945,7 @@
 					goto *game_title_selectID
 				}
 				if ( jp ) {
-					s = "–{“–‚Ì–{“–‚É" + playerid + "‚ğíœ‚µ‚Ä‚¢‚¢‚Ì‚©‚¢H"
+					s = "æœ¬å½“ã®æœ¬å½“ã«" + playerid + "ã‚’å‰Šé™¤ã—ã¦ã„ã„ã®ã‹ã„ï¼Ÿ"
 				}
 				else {
 					s = "Are you sure you really want to delete " + playerid + " ?"
@@ -2984,7 +2984,7 @@
 	gcopy BUFFER_BUF, 0, 0, windoww, windowh
 	gmode 2
 	if ( jp ) {
-		s = "‚Ç‚Ìˆâ“`q‚ğˆø‚«Œp‚®H"
+		s = "ã©ã®éºä¼å­ã‚’å¼•ãç¶™ãï¼Ÿ"
 	}
 	else {
 		s = "Which gene do you want to incarnate?"
@@ -3018,7 +3018,7 @@
 	}
 	redraw 0
 	if ( jp ) {
-		s = "ˆâ“`q‚Ì‘I‘ğ", strhint3b
+		s = "éºä¼å­ã®é¸æŠ", strhint3b
 	}
 	else {
 		s = "Gene Selection", strhint3b
@@ -3974,7 +3974,7 @@
 	mutex_handle = stat
 	func_3
 	if ( stat == 183 ) {
-		dialog lang("“ñd‹N“®‚Ì‚½‚ßI—¹‚µ‚Ü‚·B", "The program is already running."), 1
+		dialog lang("äºŒé‡èµ·å‹•ã®ãŸã‚çµ‚äº†ã—ã¾ã™ã€‚", "The program is already running."), 1
 		end
 	}
 	return

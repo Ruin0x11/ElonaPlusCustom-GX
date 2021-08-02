@@ -527,7 +527,7 @@
 	if ( locvar_item_exchange_p == (-1) ) {
 		if ( inv_getfreeid_charid == (-1) ) {
 			if ( mode != MODELIST_SHOP ) {
-				txt lang("ÉAÉCÉeÉÄèÓïÒÇ™ëΩÇ∑Ç¨ÇÈÅIäÙÇ¬Ç©ÇÃÉAÉCÉeÉÄÇÕîjâÛÇ≥ÇÍÇΩÅB", "Too many item data! Some items in this area are destroyed.")
+				txt lang("„Ç¢„Ç§„ÉÜ„É†ÊÉÖÂ†±„ÅåÂ§ö„Åô„Åé„ÇãÔºÅÂπæ„Å§„Åã„ÅÆ„Ç¢„Ç§„ÉÜ„É†„ÅØÁ†¥Â£ä„Åï„Çå„Åü„ÄÇ", "Too many item data! Some items in this area are destroyed.")
 				item_compress inv_getfreeid_charid
 			}
 		}
@@ -582,7 +582,7 @@
 		locvar_item_separate_ti = inv_getfreeid(-1)
 		if ( locvar_item_separate_ti == (-1) ) {
 			inv(INV_ITEM_NUM, item_separate_itemid) = 1
-			txt lang("âΩÇ©Ç™ínñ Ç…óéÇøÇƒè¡Ç¶ÇΩÅc", "Something falls to the ground and desappear...")
+			txt lang("‰Ωï„Åã„ÅåÂú∞Èù¢„Å´ËêΩ„Å°„Å¶Ê∂à„Åà„Åü‚Ä¶", "Something falls to the ground and desappear...")
 			return item_separate_itemid
 		}
 	}
@@ -599,7 +599,7 @@
 			inv(INV_ITEM_Y, locvar_item_separate_ti) = inv(INV_ITEM_Y, item_separate_itemid)
 			itemturn locvar_item_separate_ti
 			cell_refresh inv(INV_ITEM_X, locvar_item_separate_ti), inv(INV_ITEM_Y, locvar_item_separate_ti)
-			txt lang("âΩÇ©Ç™ínñ Ç…óéÇøÇΩÅB", "Something falls to the ground from your backpack.")
+			txt lang("‰Ωï„Åã„ÅåÂú∞Èù¢„Å´ËêΩ„Å°„Åü„ÄÇ", "Something falls to the ground from your backpack.")
 			gosub *calcBurdenPc
 		}
 	}
@@ -614,7 +614,7 @@
 		locvar_item_separate_ti = inv_getfreeid(-1)
 		if ( locvar_item_separate_ti == (-1) ) {
 			inv(INV_ITEM_NUM, item_separatefish_itemid) = 1
-			txt lang("âΩÇ©Ç™âaÇíDÇ¡ÇƒêÖíÍÇ…êˆÇ¡Çƒì¶Ç∞ÇΩÅc", "Something dives to the water bottom and desappear...")
+			txt lang("‰Ωï„Åã„ÅåÈ§å„ÇíÂ•™„Å£„Å¶Ê∞¥Â∫ï„Å´ÊΩú„Å£„Å¶ÈÄÉ„Åí„Åü‚Ä¶", "Something dives to the water bottom and desappear...")
 			return item_separatefish_itemid
 		}
 	}
@@ -631,7 +631,7 @@
 			inv(INV_ITEM_Y, locvar_item_separate_ti) = inv(INV_ITEM_Y, item_separatefish_itemid)
 			itemturn locvar_item_separate_ti
 			cell_refresh inv(INV_ITEM_X, locvar_item_separate_ti), inv(INV_ITEM_Y, locvar_item_separate_ti)
-			txt lang("âΩÇ©Ç™âaÇ…ãCÇ√Ç¢ÇƒïÇÇ©ÇÒÇ≈Ç´ÇΩÅB", "Something has emerged in order to get the bait.")
+			txt lang("‰Ωï„Åã„ÅåÈ§å„Å´Ê∞ó„Å•„ÅÑ„Å¶ÊµÆ„Åã„Çì„Åß„Åç„Åü„ÄÇ", "Something has emerged in order to get the bait.")
 			gosub *calcBurdenPc
 		}
 	}
@@ -730,44 +730,44 @@
 	if ( inv(INV_ITEM_ID, itemowner_itemid) == ITEM_ID_ANCIENT_BOOK ) {
 		if ( jp ) {
 			if ( inv(INV_ITEM_PARAM2, itemowner_itemid) != 0 ) {
-				locvar_itemowner_s += "âì«çœÇ›ÇÃ"
+				locvar_itemowner_s += "Ëß£Ë™≠Ê∏à„Åø„ÅÆ"
 			}
 		}
 		if ( inv(INV_ITEM_KNOWN, itemowner_itemid) >= ITEM_KNOWN_FULL ) {
-			locvar_itemowner_s += lang("Ås" + magebookn(inv(INV_ITEM_PARAM1, itemowner_itemid)) + "ÅtÇ∆Ç¢Ç§ëËñºÇÃ", " titled <" + magebookn(inv(INV_ITEM_PARAM1, itemowner_itemid)) + ">")
+			locvar_itemowner_s += lang("„Ää" + magebookn(inv(INV_ITEM_PARAM1, itemowner_itemid)) + "„Äã„Å®„ÅÑ„ÅÜÈ°åÂêç„ÅÆ", " titled <" + magebookn(inv(INV_ITEM_PARAM1, itemowner_itemid)) + ">")
 		}
 	}
 	if ( inv(INV_ITEM_ID, itemowner_itemid) == ITEM_ID_RECIPE ) {
 		if ( inv(INV_ITEM_PARAM1, itemowner_itemid) == 0 ) {
-			locvar_itemowner_s += lang("Ç‡Ç§égÇ¶Ç»Ç¢", " which cannot be used anymore")
+			locvar_itemowner_s += lang("„ÇÇ„ÅÜ‰Ωø„Åà„Å™„ÅÑ", " which cannot be used anymore")
 		}
 		else {
 			if ( inv(INV_ITEM_SUB_NAME, itemowner_itemid) == 0 ) {
-				locvar_itemowner_s += lang("ÉJÉXÉ^ÉÄ", "")
+				locvar_itemowner_s += lang("„Ç´„Çπ„Çø„É†", "")
 			}
 			else {
-				locvar_itemowner_s += lang("" + rpname(inv(INV_ITEM_SUB_NAME, itemowner_itemid)) + "ÇÃ", " of " + rpname(inv(INV_ITEM_SUB_NAME, itemowner_itemid)) + "")
+				locvar_itemowner_s += lang("" + rpname(inv(INV_ITEM_SUB_NAME, itemowner_itemid)) + "„ÅÆ", " of " + rpname(inv(INV_ITEM_SUB_NAME, itemowner_itemid)) + "")
 			}
 		}
 	}
 	if ( locvar_itemowner_a == 55000 ) {
 		if ( inv(INV_ITEM_ID, itemowner_itemid) == ITEM_ID_SKILLBOOK ) {
-			locvar_itemowner_s += lang("Ås" + skillname(inv(INV_ITEM_PARAM1, itemowner_itemid)) + "ÅtÇ∆Ç¢Ç§ëËñºÇÃ", " titled <Art of " + skillname(inv(INV_ITEM_PARAM1, itemowner_itemid)) + ">")
+			locvar_itemowner_s += lang("„Ää" + skillname(inv(INV_ITEM_PARAM1, itemowner_itemid)) + "„Äã„Å®„ÅÑ„ÅÜÈ°åÂêç„ÅÆ", " titled <Art of " + skillname(inv(INV_ITEM_PARAM1, itemowner_itemid)) + ">")
 		}
 		else {
 			if ( inv(INV_ITEM_ID, itemowner_itemid) == ITEM_ID_BOOK_RACHEL ) {
-				locvar_itemowner_s += lang("ëÊ", " of Rachel No.") + inv(INV_ITEM_PARAM2, itemowner_itemid) + lang("ä™ñ⁄ÇÃ", "")
+				locvar_itemowner_s += lang("Á¨¨", " of Rachel No.") + inv(INV_ITEM_PARAM2, itemowner_itemid) + lang("Â∑ªÁõÆ„ÅÆ", "")
 			}
 			else {
 				if ( inv(INV_ITEM_ID, itemowner_itemid) == ITEM_ID_RED_BOOK ) {
-					locvar_itemowner_s += lang("Ås" + booktitle(inv(INV_ITEM_PARAM1, itemowner_itemid)) + "ÅtÇ∆Ç¢Ç§ëËñºÇÃ", " titled <" + booktitle(inv(INV_ITEM_PARAM1, itemowner_itemid)) + ">")
+					locvar_itemowner_s += lang("„Ää" + booktitle(inv(INV_ITEM_PARAM1, itemowner_itemid)) + "„Äã„Å®„ÅÑ„ÅÜÈ°åÂêç„ÅÆ", " titled <" + booktitle(inv(INV_ITEM_PARAM1, itemowner_itemid)) + ">")
 				}
 			}
 		}
 	}
 	if ( locvar_itemowner_a == 60002 ) {
 		if ( inv(INV_ITEM_PARAM1, itemowner_itemid) != 0 ) {
-			locvar_itemowner_s += lang(godname(inv(INV_ITEM_PARAM1, itemowner_itemid)) + "ÇÃ", " <" + godname(inv(INV_ITEM_PARAM1, itemowner_itemid)) + ">")
+			locvar_itemowner_s += lang(godname(inv(INV_ITEM_PARAM1, itemowner_itemid)) + "„ÅÆ", " <" + godname(inv(INV_ITEM_PARAM1, itemowner_itemid)) + ">")
 		}
 	}
 	if ( inv(INV_ITEM_ID, itemowner_itemid) == ITEM_ID_JUICE ) {
@@ -777,21 +777,21 @@
 			inv(INV_ITEM_ID, itemowner_itemid) = ITEM_ID_JUICE
 		}
 		if ( ibit(ITEM_BIT_HERBED_IN, itemowner_itemid) == TRUE ) {
-			locvar_itemowner_s += lang("É~ÉbÉNÉX", " mix")
+			locvar_itemowner_s += lang("„Éü„ÉÉ„ÇØ„Çπ", " mix")
 		}
 		if ( ibit(ITEM_BIT_ACIDPROOF, itemowner_itemid) == TRUE ) {
-			locvar_itemowner_s += lang("ÉIÅ[Éå", " milk")
+			locvar_itemowner_s += lang("„Ç™„Éº„É¨", " milk")
 		}
 		if ( ibit(ITEM_BIT_ACIDPROOF, itemowner_itemid) != TRUE ) {
-			locvar_itemowner_s += lang("ÉWÉÖÅ[ÉX", " juice")
+			locvar_itemowner_s += lang("„Ç∏„É•„Éº„Çπ", " juice")
 		}
 	}
 	if ( inv(INV_ITEM_ID, itemowner_itemid) == ITEM_ID_COFFEE ) {
 		if ( ibit(ITEM_BIT_ACIDPROOF, itemowner_itemid) == TRUE ) {
-			locvar_itemowner_s += lang("ÉJÉtÉFÉIÅ[Éå", "milk coffee")
+			locvar_itemowner_s += lang("„Ç´„Éï„Çß„Ç™„Éº„É¨", "milk coffee")
 		}
 		if ( ibit(ITEM_BIT_ACIDPROOF, itemowner_itemid) != TRUE ) {
-			locvar_itemowner_s += lang("ÉRÅ[ÉqÅ[", "coffee")
+			locvar_itemowner_s += lang("„Ç≥„Éº„Éí„Éº", "coffee")
 		}
 	}
 	if ( locvar_itemowner_a == 57000 ) {
@@ -808,7 +808,7 @@
 			}
 		}
 		if ( inv(INV_ITEM_PROPERTY, itemowner_itemid) == PROPERTY_QUEST ) {
-			locvar_itemowner_s += lang("", " grown ") + _weight(inv(INV_ITEM_SUB_NAME, itemowner_itemid)) + lang("àÁÇ¡ÇΩ", "")
+			locvar_itemowner_s += lang("", " grown ") + _weight(inv(INV_ITEM_SUB_NAME, itemowner_itemid)) + lang("ËÇ≤„Å£„Åü", "")
 		}
 	}
 	if ( inv(INV_ITEM_SUB_NAME, itemowner_itemid) != 0 ) {
@@ -829,7 +829,7 @@
 					if ( inv(INV_ITEM_PROPERTY, itemowner_itemid) != PROPERTY_QUEST ) {
 						locvar_itemowner_s += lang("", " of ") + refchara(inv(INV_ITEM_SUB_NAME, itemowner_itemid), DBSPEC_CHARA_NAME_ORG, 1)
 						if ( jp ) {
-							locvar_itemowner_s += "Ç∆ÇÃ"
+							locvar_itemowner_s += "„Å®„ÅÆ"
 						}
 					}
 				}
@@ -841,7 +841,7 @@
 					if ( inv(INV_ITEM_PROPERTY, itemowner_itemid) != PROPERTY_QUEST ) {
 						locvar_itemowner_s += lang("", " of ") + refchara(inv(INV_ITEM_SUB_NAME, itemowner_itemid), DBSPEC_CHARA_NAME_ORG, 1)
 						if ( jp ) {
-							locvar_itemowner_s += "ÇÃ"
+							locvar_itemowner_s += "„ÅÆ"
 						}
 					}
 				}
@@ -858,40 +858,40 @@
 			}
 		}
 		if ( inv(INV_ITEM_ID, itemowner_itemid) == ITEM_ID_DEED ) {
-			locvar_itemowner_s += lang("", " of ") + _homename(inv(INV_ITEM_PARAM1, itemowner_itemid)) + lang("ÇÃ", "")
+			locvar_itemowner_s += lang("", " of ") + _homename(inv(INV_ITEM_PARAM1, itemowner_itemid)) + lang("„ÅÆ", "")
 		}
 		if ( inv(INV_ITEM_ID, itemowner_itemid) == ITEM_ID_BILL ) {
-			locvar_itemowner_s += lang("" + inv(INV_ITEM_SUB_NAME, itemowner_itemid) + "goldÇÃ", " <" + inv(INV_ITEM_SUB_NAME, itemowner_itemid) + " gp>")
+			locvar_itemowner_s += lang("" + inv(INV_ITEM_SUB_NAME, itemowner_itemid) + "gold„ÅÆ", " <" + inv(INV_ITEM_SUB_NAME, itemowner_itemid) + " gp>")
 		}
 		if ( inv(INV_ITEM_ID, itemowner_itemid) == ITEM_ID_VOMIT | inv(INV_ITEM_ID, itemowner_itemid) == ITEM_ID_URINE ) {
 			if ( inv(INV_ITEM_SUB_NAME, itemowner_itemid) < 0 | inv(INV_ITEM_SUB_NAME, itemowner_itemid) >= 1199 ) {
 				locvar_itemowner_s += "/bugged/"
 				return
 			}
-			locvar_itemowner_s += lang("" + refchara(inv(INV_ITEM_SUB_NAME, itemowner_itemid), DBSPEC_CHARA_NAME_ORG, 1) + "ÇÃ", " of " + refchara(inv(INV_ITEM_SUB_NAME, itemowner_itemid), DBSPEC_CHARA_NAME_ORG, 1))
+			locvar_itemowner_s += lang("" + refchara(inv(INV_ITEM_SUB_NAME, itemowner_itemid), DBSPEC_CHARA_NAME_ORG, 1) + "„ÅÆ", " of " + refchara(inv(INV_ITEM_SUB_NAME, itemowner_itemid), DBSPEC_CHARA_NAME_ORG, 1))
 		}
 	}
 	if ( inv(INV_ITEM_ID, itemowner_itemid) == ITEM_ID_SECRET_TREASURE ) {
 		if ( inv(INV_ITEM_PARAM1, itemowner_itemid) == 169 ) {
-			locvar_itemowner_s += lang("ëPêlÇÃ", " of saint")
+			locvar_itemowner_s += lang("ÂñÑ‰∫∫„ÅÆ", " of saint")
 		}
 		if ( inv(INV_ITEM_PARAM1, itemowner_itemid) == 162 ) {
-			locvar_itemowner_s += lang("à´êlÇÃ", " of wicked")
+			locvar_itemowner_s += lang("ÊÇ™‰∫∫„ÅÆ", " of wicked")
 		}
 		if ( inv(INV_ITEM_PARAM1, itemowner_itemid) == 163 ) {
-			locvar_itemowner_s += lang("ÉGÉwÉJÉgÉãÇÃ", " of Ehekatl")
+			locvar_itemowner_s += lang("„Ç®„Éò„Ç´„Éà„É´„ÅÆ", " of Ehekatl")
 		}
 		if ( inv(INV_ITEM_PARAM1, itemowner_itemid) == 164 ) {
-			locvar_itemowner_s += lang("ÉIÉpÅ[ÉgÉXÇÃ", " of Opatos")
+			locvar_itemowner_s += lang("„Ç™„Éë„Éº„Éà„Çπ„ÅÆ", " of Opatos")
 		}
 		if ( inv(INV_ITEM_PARAM1, itemowner_itemid) == 165 ) {
-			locvar_itemowner_s += lang("ÉCÉcÉpÉçÉgÉãÇÃ", " of Itzpalt")
+			locvar_itemowner_s += lang("„Ç§„ÉÑ„Éë„É≠„Éà„É´„ÅÆ", " of Itzpalt")
 		}
 		if ( inv(INV_ITEM_PARAM1, itemowner_itemid) == 166 ) {
-			locvar_itemowner_s += lang("ÉWÉÖÉAÇÃ", " of Jure")
+			locvar_itemowner_s += lang("„Ç∏„É•„Ç¢„ÅÆ", " of Jure")
 		}
 		if ( inv(INV_ITEM_PARAM1, itemowner_itemid) == locvar_itemowner_traitmanifeat ) {
-			locvar_itemowner_s += lang("É}ÉjÇÃ", " of Mani")
+			locvar_itemowner_s += lang("„Éû„Éã„ÅÆ", " of Mani")
 		}
 	}
 	return
@@ -900,7 +900,7 @@
 	itemnamehack = inv(INV_ITEM_ID, itemname_itemid) + 1
 	if ( inv(INV_ITEM_ID, itemname_itemid) >= maxitemid - 2 | inv(INV_ITEM_ID, itemname_itemid) > length(ioriginalnameref) ) {
 		itemnamehack = 0
-		return lang("ñ¢ímÇÃÉAÉCÉeÉÄ(ÉoÅ[ÉWÉáÉìîÒå›ä∑)", "unknown item (incompatible version)")
+		return lang("Êú™Áü•„ÅÆ„Ç¢„Ç§„ÉÜ„É†(„Éê„Éº„Ç∏„Éß„É≥Èùû‰∫íÊèõ)", "unknown item (incompatible version)")
 	}
 	if ( inv(INV_ITEM_QUALITY, itemname_itemid) >= FIX_QUALITY_GODLY ) {
 		locvar_itemname_iqiality(itemname_itemid) = 5
@@ -915,35 +915,35 @@
 	locvar_itemowner_a = refitem(inv(INV_ITEM_ID, itemname_itemid), DBSPEC_ITEM_TYPE)
 	if ( jp ) {
 		if ( locvar_itemname_num2 > 1 ) {
-			locvar_itemname_s2 = "å¬ÇÃ"
+			locvar_itemname_s2 = "ÂÄã„ÅÆ"
 			if ( locvar_itemowner_a == 16000 ) {
-				locvar_itemname_s2 = "íÖÇÃ"
+				locvar_itemname_s2 = "ÁùÄ„ÅÆ"
 			}
 			if ( locvar_itemowner_a == 54000 | locvar_itemowner_a == 55000 ) {
 				if ( inv(INV_ITEM_ID, itemname_itemid) == ITEM_ID_RECIPE ) {
-					locvar_itemname_s2 = "ñáÇÃ"
+					locvar_itemname_s2 = "Êûö„ÅÆ"
 				}
 				else {
-					locvar_itemname_s2 = "ç˚ÇÃ"
+					locvar_itemname_s2 = "ÂÜä„ÅÆ"
 				}
 			}
 			if ( locvar_itemowner_a == 10000 ) {
-				locvar_itemname_s2 = "ñ{ÇÃ"
+				locvar_itemname_s2 = "Êú¨„ÅÆ"
 			}
 			if ( locvar_itemowner_a == 52000 ) {
-				locvar_itemname_s2 = "ïûÇÃ"
+				locvar_itemname_s2 = "Êúç„ÅÆ"
 			}
 			if ( locvar_itemowner_a == 53000 ) {
-				locvar_itemname_s2 = "ä™ÇÃ"
+				locvar_itemname_s2 = "Â∑ª„ÅÆ"
 			}
 			if ( locvar_itemowner_a == 22000 | locvar_itemowner_a == 18000 ) {
-				locvar_itemname_s2 = "ëŒÇÃ"
+				locvar_itemname_s2 = "ÂØæ„ÅÆ"
 			}
 			if ( locvar_itemowner_a == 68000 | locvar_itemowner_a == 69000 | inv(INV_ITEM_ID, itemname_itemid) == ITEM_ID_SMALL_MEDAL | inv(INV_ITEM_ID, itemname_itemid) == ITEM_ID_MUSIC_TICKET | inv(INV_ITEM_ID, itemname_itemid) == ITEM_ID_TOKEN_FRIENDSHIP | inv(INV_ITEM_ID, itemname_itemid) == ITEM_ID_SOCKS | inv(INV_ITEM_ID, itemname_itemid) == ITEM_ID_PANTY | inv(INV_ITEM_ID, itemname_itemid) == ITEM_ID_1_2_MILLION_TAX_CERTIFICATE | inv(INV_ITEM_ID, itemname_itemid) == ITEM_ID_12_MILLION_TAX_CERTIFICATE | inv(INV_ITEM_ID, itemname_itemid) == ITEM_ID_BRONZE_COIN | inv(INV_ITEM_ID, itemname_itemid) == ITEM_ID_SKILL_TICKET ) {
-				locvar_itemname_s2 = "ñáÇÃ"
+				locvar_itemname_s2 = "Êûö„ÅÆ"
 			}
 			if ( inv(INV_ITEM_ID, itemname_itemid) == ITEM_ID_FISH ) {
-				locvar_itemname_s2 = "ïCÇÃ"
+				locvar_itemname_s2 = "Âåπ„ÅÆ"
 			}
 			locvar_itemowner_s = "" + locvar_itemname_num2 + locvar_itemname_s2
 		}
@@ -1026,7 +1026,7 @@
 	}
 	if ( inv(INV_ITEM_SHOP_SAMPLE, itemname_itemid) == 100 ) {
 		if ( jp ) {
-			locvar_itemowner_s += "å©ñ{ópÇÃ"
+			locvar_itemowner_s += "Ë¶ãÊú¨Áî®„ÅÆ"
 		}
 		else {
 			locvar_itemowner_s += "sample "
@@ -1035,7 +1035,7 @@
 	if ( inv(INV_ITEM_MATERIAL, itemname_itemid) == ITEM_MATERIAL_RAW ) {
 		if ( inv(INV_ITEM_PARAM3, itemname_itemid) < 0 ) {
 			if ( jp ) {
-				locvar_itemowner_s += "ïÖÇ¡ÇΩ"
+				locvar_itemowner_s += "ËÖê„Å£„Åü"
 			}
 			else {
 				locvar_itemowner_s += "rotten "
@@ -1044,7 +1044,7 @@
 	}
 	if ( locvar_itemowner_a == 57000 & inv(INV_ITEM_PARAM1, itemname_itemid) / 1000 == 6 & inv(INV_ITEM_PARAM2, itemname_itemid) == 0 ) {
 		if ( jp ) {
-			locvar_itemowner_s += "" + inv(INV_ITEM_WEIGHT, itemname_itemid) / 100 * sqrt(sqrt(inv(INV_ITEM_WEIGHT, itemname_itemid) + 4000)) + "cmÇÃ"
+			locvar_itemowner_s += "" + inv(INV_ITEM_WEIGHT, itemname_itemid) / 100 * sqrt(sqrt(inv(INV_ITEM_WEIGHT, itemname_itemid) + 4000)) + "cm„ÅÆ"
 		}
 		else {
 			locvar_itemowner_s += "" + inv(INV_ITEM_WEIGHT, itemname_itemid) / 100 * sqrt(sqrt(inv(INV_ITEM_WEIGHT, itemname_itemid) + 4000)) + "cm "
@@ -1082,12 +1082,12 @@
 	if ( dbg_name ) {
 	}
 	if ( inv(INV_ITEM_ID, itemname_itemid) == ITEM_ID_MATERIAL_KIT ) {
-		locvar_itemowner_s += "" + mtname(0, inv(INV_ITEM_MATERIAL, itemname_itemid)) + lang("êªÇÃ", " ")
+		locvar_itemowner_s += "" + mtname(0, inv(INV_ITEM_MATERIAL, itemname_itemid)) + lang("Ë£Ω„ÅÆ", " ")
 	}
 	if ( inv(INV_ITEM_ID, itemname_itemid) == ITEM_ID_HANDMADE_CHOCOLATE ) {
 		if ( inv(INV_ITEM_PARAM3, itemname_itemid) == 6 ) {
 			if ( jp ) {
-				locvar_itemowner_s += "äËÇ¢ÇÃèóê_ÇÃ"
+				locvar_itemowner_s += "È°ò„ÅÑ„ÅÆÂ•≥Á•û„ÅÆ"
 			}
 			else {
 				locvar_itemowner_s += "god "
@@ -1101,7 +1101,7 @@
 		if ( inv(INV_ITEM_ID, itemname_itemid) != ITEM_ID_WILD_FLOWER ) {
 			if ( inv(INV_ITEM_MATERIAL, itemname_itemid) != ITEM_MATERIAL_SAND ) {
 				if ( jp ) {
-					locvar_itemowner_s += "" + mtname(0, inv(INV_ITEM_MATERIAL, itemname_itemid)) + "ç◊çHÇÃ"
+					locvar_itemowner_s += "" + mtname(0, inv(INV_ITEM_MATERIAL, itemname_itemid)) + "Á¥∞Â∑•„ÅÆ"
 				}
 				else {
 					locvar_itemowner_s += "" + mtname(0, inv(INV_ITEM_MATERIAL, itemname_itemid)) + "work "
@@ -1111,50 +1111,50 @@
 		if ( inv(INV_ITEM_ID, itemname_itemid) == ITEM_ID_WILD_FLOWER ) {
 			if ( inv(INV_ITEM_MATERIAL, itemname_itemid) != ITEM_MATERIAL_RAW ) {
 				if ( jp ) {
-					locvar_itemowner_s += "" + mtname(0, inv(INV_ITEM_MATERIAL, itemname_itemid)) + "ç◊çHÇÃ"
+					locvar_itemowner_s += "" + mtname(0, inv(INV_ITEM_MATERIAL, itemname_itemid)) + "Á¥∞Â∑•„ÅÆ"
 				}
 				else {
 					locvar_itemowner_s += "" + mtname(0, inv(INV_ITEM_MATERIAL, itemname_itemid)) + "work "
 				}
 			}
 			if ( inv(INV_ITEM_PARAM2, itemname_itemid) == 0 ) {
-				locvar_itemowner_s += lang("ñÏâ‘", "wild flower")
+				locvar_itemowner_s += lang("ÈáéËä±", "wild flower")
 			}
 			if ( inv(INV_ITEM_PARAM2, itemname_itemid) == 1 ) {
-				locvar_itemowner_s += lang("ÉXÉCÉZÉì", "daffodil")
+				locvar_itemowner_s += lang("„Çπ„Ç§„Çª„É≥", "daffodil")
 			}
 			if ( inv(INV_ITEM_PARAM2, itemname_itemid) == 2 ) {
-				locvar_itemowner_s += lang("É}Å[ÉKÉåÉbÉg", "margaret")
+				locvar_itemowner_s += lang("„Éû„Éº„Ç¨„É¨„ÉÉ„Éà", "margaret")
 			}
 			if ( inv(INV_ITEM_PARAM2, itemname_itemid) == 3 ) {
-				locvar_itemowner_s += lang("ÇΩÇÒÇ€Ç€", "dandelion")
+				locvar_itemowner_s += lang("„Åü„Çì„ÅΩ„ÅΩ", "dandelion")
 			}
 			if ( inv(INV_ITEM_PARAM2, itemname_itemid) == 4 ) {
-				locvar_itemowner_s += lang("É`ÉÖÅ[ÉäÉbÉv", "tulip")
+				locvar_itemowner_s += lang("„ÉÅ„É•„Éº„É™„ÉÉ„Éó", "tulip")
 			}
 			if ( inv(INV_ITEM_PARAM2, itemname_itemid) == 5 ) {
-				locvar_itemowner_s += lang("ÉoÉâ", "rose")
+				locvar_itemowner_s += lang("„Éê„É©", "rose")
 			}
 			if ( inv(INV_ITEM_PARAM2, itemname_itemid) == 6 ) {
-				locvar_itemowner_s += lang("ÉAÉWÉTÉC", "hydrangea")
+				locvar_itemowner_s += lang("„Ç¢„Ç∏„Çµ„Ç§", "hydrangea")
 			}
 			if ( inv(INV_ITEM_PARAM2, itemname_itemid) == 7 ) {
-				locvar_itemowner_s += lang("ïSçá", "lily")
+				locvar_itemowner_s += lang("ÁôæÂêà", "lily")
 			}
 			if ( inv(INV_ITEM_PARAM2, itemname_itemid) == 8 ) {
-				locvar_itemowner_s += lang("Ç–Ç‹ÇÌÇË", "sunflower")
+				locvar_itemowner_s += lang("„Å≤„Åæ„Çè„Çä", "sunflower")
 			}
 			if ( inv(INV_ITEM_PARAM2, itemname_itemid) == 9 ) {
-				locvar_itemowner_s += lang("É}ÉäÅ[ÉSÅ[ÉãÉh", "marigold")
+				locvar_itemowner_s += lang("„Éû„É™„Éº„Ç¥„Éº„É´„Éâ", "marigold")
 			}
 			if ( inv(INV_ITEM_PARAM2, itemname_itemid) == 10 ) {
-				locvar_itemowner_s += lang("ÉRÉXÉÇÉX", "cosmos")
+				locvar_itemowner_s += lang("„Ç≥„Çπ„É¢„Çπ", "cosmos")
 			}
 			if ( inv(INV_ITEM_PARAM2, itemname_itemid) == 11 ) {
-				locvar_itemowner_s += lang("ÉLÉN", "chrysanthemum")
+				locvar_itemowner_s += lang("„Ç≠„ÇØ", "chrysanthemum")
 			}
 			if ( inv(INV_ITEM_PARAM2, itemname_itemid) >= 12 ) {
-				locvar_itemowner_s += lang("ÉvÉäÉÄÉâ", "primula")
+				locvar_itemowner_s += lang("„Éó„É™„É†„É©", "primula")
 			}
 		}
 	}
@@ -1169,7 +1169,7 @@
 		if ( locvar_itemowner_a < 50000 ) {
 			if ( ibit(ITEM_BIT_ULTIMATE, itemname_itemid) ) {
 				locvar_itemname_alpha = 1
-				locvar_itemowner_s += lang("ÉGÉ^Å[ÉiÉãÉtÉHÅ[ÉX", "eternal force") + strblank
+				locvar_itemowner_s += lang("„Ç®„Çø„Éº„Éä„É´„Éï„Ç©„Éº„Çπ", "eternal force") + strblank
 			}
 			else {
 				if ( inv(INV_ITEM_SUB_NAME, itemname_itemid) >= 10000 ) {
@@ -1200,7 +1200,7 @@
 									locvar_itemname_alpha = 1
 								}
 								else {
-									locvar_itemowner_s += "ÇÃ"
+									locvar_itemowner_s += "„ÅÆ"
 								}
 							}
 						}
@@ -1441,7 +1441,7 @@
 			else {
 				if ( inv(INV_ITEM_QUALITY, itemname_itemid) == FIX_QUALITY_UNIQUE | ibit(ITEM_BIT_PRECIOUS, itemname_itemid) == TRUE ) {
 					if ( jp ) {
-						locvar_itemowner_s = "Åö" + locvar_itemowner_s + ioriginalnameref(inv(INV_ITEM_ID, itemname_itemid))
+						locvar_itemowner_s = "‚òÖ" + locvar_itemowner_s + ioriginalnameref(inv(INV_ITEM_ID, itemname_itemid))
 					}
 					else {
 						locvar_itemowner_s += ioriginalnameref(inv(INV_ITEM_ID, itemname_itemid))
@@ -1450,7 +1450,7 @@
 				else {
 					if ( inv(INV_ITEM_QUALITY, itemname_itemid) >= FIX_QUALITY_MIRACLE ) {
 						if ( jp ) {
-							locvar_itemowner_s = "Åô" + locvar_itemowner_s
+							locvar_itemowner_s = "‚òÜ" + locvar_itemowner_s
 						}
 					}
 					if ( locvar_itemname_alpha == 1 & jp ) {
@@ -1471,10 +1471,10 @@
 					if ( inv(INV_ITEM_SUB_NAME, itemname_itemid) >= 40000 ) {
 						randomize inv(INV_ITEM_SUB_NAME, itemname_itemid) - 40000
 						if ( inv(INV_ITEM_QUALITY, itemname_itemid) == FIX_QUALITY_MIRACLE ) {
-							locvar_itemowner_s += lang("Åw", " <") + random_title(1) + lang("Åx", ">")
+							locvar_itemowner_s += lang("„Äé", " <") + random_title(1) + lang("„Äè", ">")
 						}
 						else {
-							locvar_itemowner_s += lang("Ås", " {") + random_title(1) + lang("Åt", "}")
+							locvar_itemowner_s += lang("„Ää", " {") + random_title(1) + lang("„Äã", "}")
 						}
 						randomize
 					}
@@ -1520,7 +1520,7 @@
 			}
 		}
 		if ( ibit(ITEM_BIT_CHARGE_ITEM, itemname_itemid) == TRUE ) {
-			locvar_itemowner_s += lang("(écÇË" + inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), itemname_itemid) + "âÒ)", "(Charges: " + inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), itemname_itemid) + ")")
+			locvar_itemowner_s += lang("(ÊÆã„Çä" + inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), itemname_itemid) + "Âõû)", "(Charges: " + inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), itemname_itemid) + ")")
 		}
 		if ( refitem(inv(INV_ITEM_ID, itemname_itemid), DBSPEC_ITEM_TYPE) == FILTER_ITEM_FOOD ) {
 			if ( inv(INV_ITEM_PARAM1, itemname_itemid) != 0 ) {
@@ -1534,49 +1534,49 @@
 		}
 		if ( inv(INV_ITEM_ID, itemname_itemid) == ITEM_ID_COFFIN_OF_NECROMANCY ) {
 			if ( inv(INV_ITEM_PARAM1, itemname_itemid) <= 2 ) {
-				locvar_itemowner_s += lang("(îLÉ]ÉìÉr)", "(cat)")
+				locvar_itemowner_s += lang("(Áå´„Çæ„É≥„Éì)", "(cat)")
 			}
 			if ( inv(INV_ITEM_PARAM1, itemname_itemid) == 3 ) {
-				locvar_itemowner_s += lang("(É]ÉìÉr)", "(zombie)")
+				locvar_itemowner_s += lang("(„Çæ„É≥„Éì)", "(zombie)")
 			}
 			if ( inv(INV_ITEM_PARAM1, itemname_itemid) == 4 ) {
-				locvar_itemowner_s += lang("(É}É~Å[)", "(mummy)")
+				locvar_itemowner_s += lang("(„Éû„Éü„Éº)", "(mummy)")
 			}
 			if ( inv(INV_ITEM_PARAM1, itemname_itemid) == 5 ) {
-				locvar_itemowner_s += lang("(ä[çúêÌém)", "(skeleton)")
+				locvar_itemowner_s += lang("(È™∏È™®Êà¶Â£´)", "(skeleton)")
 			}
 			if ( inv(INV_ITEM_PARAM1, itemname_itemid) == 6 ) {
-				locvar_itemowner_s += lang("(ÉäÉbÉ`)", "(lich)")
+				locvar_itemowner_s += lang("(„É™„ÉÉ„ÉÅ)", "(lich)")
 			}
 			if ( inv(INV_ITEM_PARAM1, itemname_itemid) == 7 ) {
-				locvar_itemowner_s += lang("(ÉlÉNÉçÉhÅ[Éã)", "(doll)")
+				locvar_itemowner_s += lang("(„Éç„ÇØ„É≠„Éâ„Éº„É´)", "(doll)")
 			}
 			if ( inv(INV_ITEM_PARAM1, itemname_itemid) == 8 ) {
-				locvar_itemowner_s += lang("(ÉhÉâÉSÉìÉ]ÉìÉr)", "(dragon)")
+				locvar_itemowner_s += lang("(„Éâ„É©„Ç¥„É≥„Çæ„É≥„Éì)", "(dragon)")
 			}
 			if ( inv(INV_ITEM_PARAM1, itemname_itemid) == 9 ) {
-				locvar_itemowner_s += lang("(ÉfÉbÉhÉAÉCÉY)", "(dead-eyes)")
+				locvar_itemowner_s += lang("(„Éá„ÉÉ„Éâ„Ç¢„Ç§„Ç∫)", "(dead-eyes)")
 			}
 			if ( inv(INV_ITEM_PARAM2, itemname_itemid) >= 18000 ) {
-				locvar_itemowner_s += lang("-éáâÖ", "-Shion")
+				locvar_itemowner_s += lang("-Á¥´ÊÄ®", "-Shion")
 			}
 			if ( inv(INV_ITEM_PARAM2, itemname_itemid) >= 12000 & inv(INV_ITEM_PARAM2, itemname_itemid) < 18000 ) {
-				locvar_itemowner_s += lang("-ã\ëU", "-Deceive")
+				locvar_itemowner_s += lang("-Ê¨∫Áπï", "-Deceive")
 			}
 			if ( inv(INV_ITEM_PARAM2, itemname_itemid) == 341 ) {
-				locvar_itemowner_s += lang("-êÌóÍ", "-Aggressive")
+				locvar_itemowner_s += lang("-Êà¶Èö∑", "-Aggressive")
 			}
 			if ( inv(INV_ITEM_PARAM2, itemname_itemid) == 340 ) {
-				locvar_itemowner_s += lang("-îÈäÊ", "-Tough")
+				locvar_itemowner_s += lang("-ÁßòÈ†ë", "-Tough")
 			}
 			if ( inv(INV_ITEM_PARAM2, itemname_itemid) == 339 ) {
-				locvar_itemowner_s += lang("-ëÄãZ", "-Control")
+				locvar_itemowner_s += lang("-ÊìçÊäÄ", "-Control")
 			}
 			if ( inv(INV_ITEM_PARAM2, itemname_itemid) == 338 ) {
-				locvar_itemowner_s += lang("-éºñe", "-Drench")
+				locvar_itemowner_s += lang("-ÊπøË≤å", "-Drench")
 			}
 			if ( inv(INV_ITEM_PARAM2, itemname_itemid) == 337 ) {
-				locvar_itemowner_s += lang("-âŒçé", "-Refractory")
+				locvar_itemowner_s += lang("-ÁÅ´ÂÖã", "-Refractory")
 			}
 		}
 		if ( inv(INV_ITEM_ID, itemname_itemid) != ITEM_ID_CHEST ) {
@@ -1613,12 +1613,12 @@
 	}
 	if ( inv(INV_ITEM_ID, itemname_itemid) == ITEM_ID_FISHING_POLE ) {
 		if ( inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), itemname_itemid) != 0 ) {
-			locvar_itemowner_s += lang("(" + biten(inv(INV_ITEM_PARAM4, itemname_itemid)) + "écÇË" + inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), itemname_itemid) + "ïC)", "(" + inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), itemname_itemid) + " " + biten(inv(INV_ITEM_PARAM4, itemname_itemid)) + ")")
+			locvar_itemowner_s += lang("(" + biten(inv(INV_ITEM_PARAM4, itemname_itemid)) + "ÊÆã„Çä" + inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), itemname_itemid) + "Âåπ)", "(" + inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), itemname_itemid) + " " + biten(inv(INV_ITEM_PARAM4, itemname_itemid)) + ")")
 		}
 	}
 	if ( inv(INV_ITEM_ID, itemname_itemid) == ITEM_ID_MONSTER_BALL ) {
 		if ( inv(INV_ITEM_SUB_NAME, itemname_itemid) == 0 ) {
-			locvar_itemowner_s += lang(" Lv", " Level ") + inv(INV_ITEM_PARAM2, itemname_itemid) + lang(" (ãÛ)", "(Empty)")
+			locvar_itemowner_s += lang(" Lv", " Level ") + inv(INV_ITEM_PARAM2, itemname_itemid) + lang(" (Á©∫)", "(Empty)")
 		}
 		else {
 			locvar_itemowner_s += " (" + refchara(inv(INV_ITEM_SUB_NAME, itemname_itemid), DBSPEC_CHARA_NAME_ORG, 1) + ")"
@@ -1632,53 +1632,53 @@
 			locvar_itemowner_s += " (" + cnven(_quality(inv(INV_ITEM_QUALITY, itemname_itemid))) + ")"
 			if ( inv(INV_ITEM_PARAM4, itemname_itemid) == 0 ) {
 				if ( jp ) {
-					locvar_itemowner_s += "[" + mtname(0, inv(INV_ITEM_MATERIAL, itemname_itemid)) + "êª]"
+					locvar_itemowner_s += "[" + mtname(0, inv(INV_ITEM_MATERIAL, itemname_itemid)) + "Ë£Ω]"
 				}
 				else {
 					locvar_itemowner_s += "[" + cnven(mtname(0, inv(INV_ITEM_MATERIAL, itemname_itemid))) + "]"
 				}
 			}
 			if ( inv(INV_ITEM_STATUS, itemname_itemid) == ITEM_STATUS_CURSED ) {
-				locvar_itemowner_s += lang("(ã∞ÇÎÇµÇ¢)", "(Scary)")
+				locvar_itemowner_s += lang("(ÊÅê„Çç„Åó„ÅÑ)", "(Scary)")
 			}
 			if ( inv(INV_ITEM_STATUS, itemname_itemid) == ITEM_STATUS_DOOMED ) {
-				locvar_itemowner_s += lang("(â–ÅXÇµÇ¢)", "(Dreadful)")
+				locvar_itemowner_s += lang("(Á¶ç„ÄÖ„Åó„ÅÑ)", "(Dreadful)")
 			}
 		}
 	}
 	if ( locvar_itemowner_a == 72000 ) {
 		if ( inv(INV_ITEM_ID, itemname_itemid) == ITEM_ID_SHOPKEEPERS_TRUNK ) {
-			locvar_itemowner_s += lang("(à⁄ìÆéûè¡ñ≈)", "(Temporal)")
+			locvar_itemowner_s += lang("(ÁßªÂãïÊôÇÊ∂àÊªÖ)", "(Temporal)")
 		}
 		else {
 			if ( inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), itemname_itemid) == 0 ) {
 				if ( inv(INV_ITEM_PARAM1, itemname_itemid) == 0 ) {
-					locvar_itemowner_s += lang("(ãÛÇ¡Ç€)", "(Empty)")
+					locvar_itemowner_s += lang("(Á©∫„Å£„ÅΩ)", "(Empty)")
 				}
 			}
 		}
 	}
 	if ( locvar_itemowner_a == 92000 ) {
 		if ( inv(INV_ITEM_PARAM2, itemname_itemid) != 0 ) {
-			locvar_itemowner_s += lang("(édì¸ÇÍíl " + inv(INV_ITEM_PARAM2, itemname_itemid) + "g)", "(Buying price: " + inv(INV_ITEM_PARAM2, itemname_itemid) + ")")
+			locvar_itemowner_s += lang("(‰ªïÂÖ•„ÇåÂÄ§ " + inv(INV_ITEM_PARAM2, itemname_itemid) + "g)", "(Buying price: " + inv(INV_ITEM_PARAM2, itemname_itemid) + ")")
 		}
 	}
 	if ( ibit(ITEM_BIT_LOVE_BLEND, itemname_itemid) == TRUE ) {
-		locvar_itemowner_s += lang("(õZñÚç¨ì¸)", "(Aphrodisiac)")
+		locvar_itemowner_s += lang("(Â™öËñ¨Ê∑∑ÂÖ•)", "(Aphrodisiac)")
 	}
 	if ( ibit(ITEM_BIT_POISON_BLEND, itemname_itemid) == TRUE ) {
-		locvar_itemowner_s += lang("(ì≈ï®ç¨ì¸)", "(Poisoned)")
+		locvar_itemowner_s += lang("(ÊØíÁâ©Ê∑∑ÂÖ•)", "(Poisoned)")
 	}
 	if ( ibit(ITEM_BIT_HAZARD, itemname_itemid) == TRUE ) {
-		locvar_itemowner_s += lang("(äÎåØÅI)", "(Danger!)")
+		locvar_itemowner_s += lang("(Âç±Èô∫ÔºÅ)", "(Danger!)")
 	}
 	if ( ibit(ITEM_BIT_HERBED_IN, itemname_itemid) == TRUE ) {
 		if ( locvar_itemowner_a == 57000 ) {
-			locvar_itemowner_s += lang("(ÉnÅ[Éuì¸ÇË)", "(Herb)")
+			locvar_itemowner_s += lang("(„Éè„Éº„ÉñÂÖ•„Çä)", "(Herb)")
 		}
 	}
 	if ( ibit(ITEM_BIT_ANTISEPTIC, itemname_itemid) == TRUE ) {
-		locvar_itemowner_s += lang("(ñhïÖèàóù)", "(Antiseptic)")
+		locvar_itemowner_s += lang("(Èò≤ËÖêÂá¶ÁêÜ)", "(Antiseptic)")
 	}
 	if ( ibit(ITEM_BIT_PERIOD, itemname_itemid) == TRUE ) {
 		if ( gdata(GDATA_AREA) == AREA_VALM ) {
@@ -1696,22 +1696,22 @@
 			}
 		}
 		if ( gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 < inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), itemname_itemid) ) {
-			locvar_itemowner_s += lang("(" + (inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), itemname_itemid) - (gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12)) + "éûä‘)", "(Next: " + (inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), itemname_itemid) - (gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12)) + "h.)")
+			locvar_itemowner_s += lang("(" + (inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), itemname_itemid) - (gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12)) + "ÊôÇÈñì)", "(Next: " + (inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), itemname_itemid) - (gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12)) + "h.)")
 		}
 		if ( inv(INV_ITEM_NEED_SLEEP, itemname_itemid) > 1 ) {
 			if ( inv(INV_ITEM_NEED_SLEEP, itemname_itemid) >= gdata(GDATA_FLAG_DATE_OF_LAST_BREAKFAST) ) {
-				locvar_itemowner_s += lang("(óvêáñ∞)", "(Need Sleep)")
+				locvar_itemowner_s += lang("(Ë¶ÅÁù°Áú†)", "(Need Sleep)")
 			}
 		}
 	}
 	if ( inv(INV_ITEM_ID, itemname_itemid) == ITEM_ID_SHELTER ) {
 		if ( inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), itemname_itemid) != 0 ) {
-			locvar_itemowner_s += lang(" ÉVÉäÉAÉãNo.", " serial no.") + inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), itemname_itemid)
+			locvar_itemowner_s += lang(" „Ç∑„É™„Ç¢„É´No.", " serial no.") + inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), itemname_itemid)
 		}
 	}
 	if ( inv(INV_ITEM_ID, itemname_itemid) == ITEM_ID_DEED_PROPERTY_TRANSFER ) {
 		if ( inv(INV_ITEM_PARAM2, itemname_itemid) != 0 ) {
-			locvar_itemowner_s += lang(" ï®åèNo.", " property no.") + inv(INV_ITEM_PARAM2, itemname_itemid)
+			locvar_itemowner_s += lang(" Áâ©‰ª∂No.", " property no.") + inv(INV_ITEM_PARAM2, itemname_itemid)
 		}
 	}
 	if ( inv(INV_ITEM_ID, itemname_itemid) == ITEM_ID_DISC ) {
@@ -1872,7 +1872,7 @@
 		}
 		if ( item_stack_mode != 0 ) {
 			txtmore
-			txt lang(itemname(ti, 1) + "ÇÇ‹Ç∆ÇﬂÇΩ(åv" + inv(INV_ITEM_NUM, ti) + "å¬) ", itemname(ti, 1) + " has been stacked. (Total:" + inv(INV_ITEM_NUM, ti) + ")")
+			txt lang(itemname(ti, 1) + "„Çí„Åæ„Å®„ÇÅ„Åü(Ë®à" + inv(INV_ITEM_NUM, ti) + "ÂÄã) ", itemname(ti, 1) + " has been stacked. (Total:" + inv(INV_ITEM_NUM, ti) + ")")
 		}
 	}
 	return locvar_item_stack_p
@@ -1942,10 +1942,10 @@
 		if ( jp ) {
 			colorres
 			if ( inv(40 + cnt * 2 + 1, equipinfo_arg1) >= 0 ) {
-				mes "Åú"
+				mes "‚óè"
 			}
 			else {
-				mes "Å•"
+				mes "‚ñº"
 			}
 			pos equipinfo_arg2 + (locvar_colorres_i - 50) * 20 + 5, equipinfo_arg3 + 1
 			color 0, 0, 0

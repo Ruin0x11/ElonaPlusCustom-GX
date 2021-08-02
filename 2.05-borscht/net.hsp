@@ -41,13 +41,13 @@
 	sockopen 0, locvar_net_send_conurl, 80
 	if ( stat ) {
 		sockclose
-		txt "[" + stat + "]" + lang("ƒlƒbƒg‚ÉŒq‚ª‚Á‚Ä‚¢‚È‚¢B", "You need an internet connection.")
+		txt "[" + stat + "]" + lang("ãƒãƒƒãƒˆã«ç¹‹ãŒã£ã¦ã„ãªã„ã€‚", "You need an internet connection.")
 		return 0
 	}
 	sockput "GET " + locvar_net_send_url + locvar_net_send_msg + " HTTP/1.0\nHost:www.nifty.com???\nUser-Agent: Mozilla/4.0 (compatible; MSIE 6.0; Windows 98; Win 9x 4.90)\n\n"
 	if ( stat ) {
 		sockclose
-		txt lang("‘—M‚É¸”s‚µ‚½B", "Failed to send a message.")
+		txt lang("é€ä¿¡ã«å¤±æ•—ã—ãŸã€‚", "Failed to send a message.")
 		return 0
 	}
 	sockclose
@@ -347,7 +347,7 @@
 			chatdeny = 0
 		}
 		else {
-			txt lang("‚à‚¤­‚µ‘Ò‚Á‚½•û‚ª‚¢‚¢‹C‚ª‚·‚éB", "You think you should wait a little more.")
+			txt lang("ã‚‚ã†å°‘ã—å¾…ã£ãŸæ–¹ãŒã„ã„æ°—ãŒã™ã‚‹ã€‚", "You think you should wait a little more.")
 			return
 		}
 	}
@@ -362,7 +362,7 @@
 		return
 	}
 	if ( jp ) {
-		inputlog = "u" + inputlog + "v"
+		inputlog = "ã€Œ" + inputlog + "ã€"
 	}
 	else {
 		inputlog = "\"" + inputlog + "\""
@@ -377,7 +377,7 @@
 *com_vote_new
 	if ( mdata(MDATA_WEREWOLF_STAGE) == 0 ) {
 		snd SOUNDLIST_FAIL1
-		txt lang("Œ»İAˆŒY“Š•[‚Ís‚í‚ê‚Ä‚¢‚È‚¢B", "You need to wait before submitting a new vote.")
+		txt lang("ç¾åœ¨ã€å‡¦åˆ‘æŠ•ç¥¨ã¯è¡Œã‚ã‚Œã¦ã„ãªã„ã€‚", "You need to wait before submitting a new vote.")
 		return -1
 	}
 	autosave = 1 * (gdata(GDATA_AREA) != AREA_SHOW_HOUSE)
@@ -461,7 +461,7 @@
 	mdata(MDATA_WEREWOLF_STAGE) = 2
 	if ( gdata(GDATA_NEXT_VOTE) > gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 ) {
 		comctrl = 0
-		txt lang("‚ ‚È‚½‚Ì“Š•[Œ ‚Í‚Ü‚¾•œŠˆ‚µ‚Ä‚¢‚È‚¢(" + cnvdate(gdata(GDATA_NEXT_VOTE), 1) + "‚Ü‚Å)", "You can't vote until " + cnvdate(gdata(GDATA_NEXT_VOTE), 1) + ".")
+		txt lang("ã‚ãªãŸã®æŠ•ç¥¨æ¨©ã¯ã¾ã å¾©æ´»ã—ã¦ã„ãªã„(" + cnvdate(gdata(GDATA_NEXT_VOTE), 1) + "ã¾ã§)", "You can't vote until " + cnvdate(gdata(GDATA_NEXT_VOTE), 1) + ".")
 		repeat listmax
 			list(1, cnt) = 1000000 - list(1, cnt)
 		loop
@@ -469,7 +469,7 @@
 	}
 	else {
 		comctrl = 1
-		txt lang("‚Ç‚ÌŒó•â‚É“Š•[‚·‚éH", "Which one do you want to vote?")
+		txt lang("ã©ã®å€™è£œã«æŠ•ç¥¨ã™ã‚‹ï¼Ÿ", "Which one do you want to vote?")
 		repeat listmax
 			list(1, cnt) = cdata(CDATA_VOTES_RECEIVED, cnt)
 		loop
@@ -495,7 +495,7 @@
 		goto *com_vote_new_loop_WEND1
 	}
 	redraw 0
-	s = lang("“Š•[” ", "Voting Box"), lang("Œˆ’è [“Š•[‚·‚é€–Ú‚ğ‘I‘ğ]  ", "Enter [Vote] ") + strhint2 + strhint3
+	s = lang("æŠ•ç¥¨ç®±", "Voting Box"), lang("æ±ºå®š [æŠ•ç¥¨ã™ã‚‹é …ç›®ã‚’é¸æŠ]  ", "Enter [Vote] ") + strhint2 + strhint3
 	display_window (windoww - 640) / 2 + inf_screenx, winposy(448), 640, 448
 	x = ww / 5 * 3
 	y = wh - 80
@@ -503,7 +503,7 @@
 	pos wx + ww / 3 * 2, wy + wh / 2
 	grotate BUFFER_BUF, cmbg / 4 \ 4 * 180, cmbg / 4 / 4 \ 2 * 300, 0, x, y
 	gmode 2
-	s = lang("NPC‚Ì–¼‘O", "Name"), "", lang("•[”", "Vote")
+	s = lang("NPCã®åå‰", "Name"), "", lang("ç¥¨æ•°", "Vote")
 	display_topic s, wx + 58, wy + 36
 	display_topic s(2), wx + 340, wy + 36
 	keyrange = 0
@@ -536,15 +536,15 @@
 		i = list(0, p)
 		zyuni = p + 1
 		if ( comctrl == 0 ) {
-			s = lang("‘æ" + zyuni + "ˆÊ@", cnvrank(zyuni))
+			s = lang("ç¬¬" + zyuni + "ä½ã€€", cnvrank(zyuni))
 		}
 		else {
-			s = lang("Œó•â@", "")
+			s = lang("å€™è£œã€€", "")
 		}
 		s += cdatan(CDATAN_NAME, i)
 		cutname s, 36
 		cs_list s, wx + 84, wy + 66 + cnt * 19 - 1, 19
-		s = lang(" ", "(") + cdata(CDATA_VOTES_RECEIVED, i) + "" + lang("•[", ")")
+		s = lang(" ", "(") + cdata(CDATA_VOTES_RECEIVED, i) + "" + lang("ç¥¨", ")")
 		pos wx + 372, wy + 66 + cnt * 19 + 2
 		mes s
 		if ( i != (-999) ) {
@@ -570,16 +570,16 @@
 	if ( p != (-1) ) {
 		if ( gdata(GDATA_NEXT_VOTE) > gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 ) {
 			snd SOUNDLIST_FAIL1
-			txt lang("‚Ü‚¾“Š•[Œ ‚ª•œŠˆ‚µ‚Ä‚¢‚È‚¢B", "You need to wait before submitting a new vote.")
+			txt lang("ã¾ã æŠ•ç¥¨æ¨©ãŒå¾©æ´»ã—ã¦ã„ãªã„ã€‚", "You need to wait before submitting a new vote.")
 			goto *com_vote_new_loop
 		}
 		cdata(CDATA_VOTES_RECEIVED, p)++
 		snd SOUNDLIST_CARD1
 		gdata(GDATA_NEXT_VOTE) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 + 24
 		txtmore
-		txt lang("“Š•[‚µ‚½B", "You vote.")
+		txt lang("æŠ•ç¥¨ã—ãŸã€‚", "You vote.")
 		modrank 6, 100, 5
-		promptl(0, 0) = lang("ƒIƒbƒP[", "Ok"), "y", "0"
+		promptl(0, 0) = lang("ã‚ªãƒƒã‚±ãƒ¼", "Ok"), "y", "0"
 		promptmax = 1
 		val = promptx, prompty, 200, 1
 		gosub *prompt_key
@@ -627,12 +627,12 @@
 	txt lang(listn(0, 1), listn(0, 2))
 	listmax = 0
 	list(0, listmax) = -999, 0
-	listn(0, listmax) = lang("‚ ‚È‚½‚ÌˆÙ–¼‚ğ“o˜^‚·‚é", "Submit your alias.")
+	listn(0, listmax) = lang("ã‚ãªãŸã®ç•°åã‚’ç™»éŒ²ã™ã‚‹", "Submit your alias.")
 	listmax++
 	net_read 1
 	if ( gdata(GDATA_NEXT_VOTE) > gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 ) {
 		comctrl = 0
-		txt lang("‚ ‚È‚½‚Ì“Š•[Œ ‚Í‚Ü‚¾•œŠˆ‚µ‚Ä‚¢‚È‚¢(" + cnvdate(gdata(GDATA_NEXT_VOTE), 1) + "‚Ü‚Å)", "You can't vote until " + cnvdate(gdata(GDATA_NEXT_VOTE), 1) + ".")
+		txt lang("ã‚ãªãŸã®æŠ•ç¥¨æ¨©ã¯ã¾ã å¾©æ´»ã—ã¦ã„ãªã„(" + cnvdate(gdata(GDATA_NEXT_VOTE), 1) + "ã¾ã§)", "You can't vote until " + cnvdate(gdata(GDATA_NEXT_VOTE), 1) + ".")
 		repeat listmax
 			if ( cnt == 0 ) {
 				continue
@@ -643,7 +643,7 @@
 	}
 	else {
 		comctrl = 1
-		txt lang("‚Ç‚ÌŒó•â‚É“Š•[‚·‚éH", "Which one do you want to vote?")
+		txt lang("ã©ã®å€™è£œã«æŠ•ç¥¨ã™ã‚‹ï¼Ÿ", "Which one do you want to vote?")
 		repeat listmax
 			if ( cnt == 0 ) {
 				continue
@@ -675,7 +675,7 @@
 		goto *com_vote_loop_WEND1
 	}
 	redraw 0
-	s = lang("“Š•[” ", "Voting Box"), lang("Œˆ’è [“Š•[‚·‚é€–Ú‚ğ‘I‘ğ]  ", "Enter [Vote] ") + strhint2 + strhint3
+	s = lang("æŠ•ç¥¨ç®±", "Voting Box"), lang("æ±ºå®š [æŠ•ç¥¨ã™ã‚‹é …ç›®ã‚’é¸æŠ]  ", "Enter [Vote] ") + strhint2 + strhint3
 	display_window (windoww - 640) / 2 + inf_screenx, winposy(448), 640, 448
 	x = ww / 5 * 3
 	y = wh - 80
@@ -683,7 +683,7 @@
 	pos wx + ww / 3 * 2, wy + wh / 2
 	grotate BUFFER_BUF, cmbg / 4 \ 4 * 180, cmbg / 4 / 4 \ 2 * 300, 0, x, y
 	gmode 2
-	s = lang("“Š•[€–Ú", "Choice"), "", lang("”õl", "Vote")
+	s = lang("æŠ•ç¥¨é …ç›®", "Choice"), "", lang("å‚™è€ƒ", "Vote")
 	display_topic s, wx + 28, wy + 36
 	display_topic s(2), wx + 440, wy + 36
 	keyrange = 0
@@ -714,10 +714,10 @@
 		if ( p != 0 ) {
 			pos wx + 90, wy + 66 + cnt * 19 + 2
 			if ( comctrl == 0 ) {
-				mes lang("‘æ" + p + "ˆÊ", cnvrank(p))
+				mes lang("ç¬¬" + p + "ä½", cnvrank(p))
 			}
 			else {
-				mes lang("Œó•â", "")
+				mes lang("å€™è£œ", "")
 			}
 		}
 		cs_list s, wx + 138, wy + 66 + cnt * 19 - 1, 19
@@ -744,7 +744,7 @@
 	if ( p != (-1) ) {
 		if ( p == (-999) ) {
 			net_send "" + cdatan(CDATAN_AKA, CHARA_PLAYER) + lang("", " ") + cdatan(CDATAN_NAME, CHARA_PLAYER), 1
-			promptl(0, 0) = lang("ƒIƒbƒP[", "Ok"), "y", "0"
+			promptl(0, 0) = lang("ã‚ªãƒƒã‚±ãƒ¼", "Ok"), "y", "0"
 			promptmax = 1
 			val = promptx, prompty, 200, 1
 			gosub *prompt_key
@@ -753,17 +753,17 @@
 		if ( 0 == 0 ) {
 			if ( gdata(GDATA_NEXT_VOTE) > gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 ) {
 				snd SOUNDLIST_FAIL1
-				txt lang("‚Ü‚¾“Š•[Œ ‚ª•œŠˆ‚µ‚Ä‚¢‚È‚¢B", "You need to wait before submitting a new vote.")
+				txt lang("ã¾ã æŠ•ç¥¨æ¨©ãŒå¾©æ´»ã—ã¦ã„ãªã„ã€‚", "You need to wait before submitting a new vote.")
 				goto *com_vote_loop
 			}
 		}
 		gdata(GDATA_NEXT_VOTE) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 + 24 * 7
-		txt lang("u" + listn(0, cs + pagesize * page) + "‚Í‘f“GIv", cnvtalk("I like " + listn(0, cs + pagesize * page) + "!"))
+		txt lang("ã€Œ" + listn(0, cs + pagesize * page) + "ã¯ç´ æ•µï¼ã€", cnvtalk("I like " + listn(0, cs + pagesize * page) + "!"))
 		txtmore
-		txt lang("“Š•[‚µ‚½B", "You vote.")
+		txt lang("æŠ•ç¥¨ã—ãŸã€‚", "You vote.")
 		net_send "" + p, 2
 		modrank 6, 100, 5
-		promptl(0, 0) = lang("ƒIƒbƒP[", "Ok"), "y", "0"
+		promptl(0, 0) = lang("ã‚ªãƒƒã‚±ãƒ¼", "Ok"), "y", "0"
 		promptmax = 1
 		val = promptx, prompty, 200, 1
 		gosub *prompt_key
@@ -804,11 +804,11 @@
 	font "", 12, 0
 	color 0, 0, 0
 	pos 140, 25
-	mes lang("EscƒL[‚Å•Â‚¶‚Ü‚·B", "Select a file and press the upload button.\nPress the Esc key to return.")
+	mes lang("Escã‚­ãƒ¼ã§é–‰ã˜ã¾ã™ã€‚", "Select a file and press the upload button.\nPress the Esc key to return.")
 	pos 120, 180
-	mes lang("QÆƒ{ƒ^ƒ“‚ğ‰Ÿ‚µ‚ÄAelona/userƒtƒHƒ‹ƒ_‚Ì’†‚Ìƒtƒ@ƒCƒ‹‚ğ‘I‘ğ‚µ\nƒAƒbƒvƒ[ƒh‚µ‚Ä‚­‚¾‚³‚¢B", "Select a file and press the upload button.")
+	mes lang("å‚ç…§ãƒœã‚¿ãƒ³ã‚’æŠ¼ã—ã¦ã€elona/userãƒ•ã‚©ãƒ«ãƒ€ã®ä¸­ã®ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é¸æŠã—\nã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰ã—ã¦ãã ã•ã„ã€‚", "Select a file and press the upload button.")
 	sdim url, 512
-	url = "http://" + "hpcgi3.nifty.com" + "/rfish/usercgi/clip.cgi?mode=simple&mes=‚ yhyhhhhf‚“‚†&pas=" + userpassword + "&sb1=c&sb2=d"
+	url = "http://" + "hpcgi3.nifty.com" + "/rfish/usercgi/clip.cgi?mode=simple&mes=ã‚yhyhhhhfï½“ï½†&pas=" + userpassword + "&sb1=c&sb2=d"
 	uploadcount = 0
 	pos 0, 65
 	axobj ie, "Shell.Explorer.2", 480, 100
@@ -841,7 +841,7 @@
 		if ( p > 300 ) {
 			if ( iewarning == 0 ) {
 				iewarning = 1
-				txt lang("ƒuƒ‰ƒEƒU“™‚ğ•Â‚¶‚é‚©AƒQ[ƒ€‚ğÄ‹N“®‚µ‚Ä‚İ‚½‚ç‚¢‚¢‚©‚à‚µ‚ê‚È‚¢c‚Æ‚ ‚È‚½‚ÍŠ´‚¶‚½B", "Slow loading? Try exiting your internet browser or restart the game.")
+				txt lang("ãƒ–ãƒ©ã‚¦ã‚¶ç­‰ã‚’é–‰ã˜ã‚‹ã‹ã€ã‚²ãƒ¼ãƒ ã‚’å†èµ·å‹•ã—ã¦ã¿ãŸã‚‰ã„ã„ã‹ã‚‚ã—ã‚Œãªã„â€¦ã¨ã‚ãªãŸã¯æ„Ÿã˜ãŸã€‚", "Slow loading? Try exiting your internet browser or restart the game.")
 				goto *uploader_load
 			}
 		}
@@ -867,7 +867,7 @@
 		gosub *game_save
 		txtmore
 		txtef COLOR_YELLOW
-		txt lang(" *•Û‘¶* ", "*saving*")
+		txt lang(" *ä¿å­˜* ", "*saving*")
 	}
 	return
 
@@ -887,7 +887,7 @@
 	font "", 12, 0
 	color 0, 0, 0
 	pos 140, 25
-	mes lang("EscƒL[‚Å•Â‚¶‚Ü‚·B", "Press the Esc key to return.")
+	mes lang("Escã‚­ãƒ¼ã§é–‰ã˜ã¾ã™ã€‚", "Press the Esc key to return.")
 	sdim url, 512
 	url = "http://hpcgi3.nifty.com/rfish/vote/votec.cgi?no=" + usermapid + "&uname=" + cdatan(CDATAN_AKA, CHARA_PLAYER) + cdatan(CDATAN_NAME, CHARA_PLAYER)
 	uploadcount = 0
@@ -923,7 +923,7 @@
 		if ( p > 300 ) {
 			if ( iewarning == 0 ) {
 				iewarning = 1
-				txt lang("ƒuƒ‰ƒEƒU“™‚ğ•Â‚¶‚é‚©AƒQ[ƒ€‚ğÄ‹N“®‚µ‚Ä‚İ‚½‚ç‚¢‚¢‚©‚à‚µ‚ê‚È‚¢c‚Æ‚ ‚È‚½‚ÍŠ´‚¶‚½B", "Slow loading? Try exiting your internet browser or restart the game.")
+				txt lang("ãƒ–ãƒ©ã‚¦ã‚¶ç­‰ã‚’é–‰ã˜ã‚‹ã‹ã€ã‚²ãƒ¼ãƒ ã‚’å†èµ·å‹•ã—ã¦ã¿ãŸã‚‰ã„ã„ã‹ã‚‚ã—ã‚Œãªã„â€¦ã¨ã‚ãªãŸã¯æ„Ÿã˜ãŸã€‚", "Slow loading? Try exiting your internet browser or restart the game.")
 				goto *browser_load
 			}
 		}
