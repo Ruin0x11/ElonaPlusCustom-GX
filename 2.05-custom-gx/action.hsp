@@ -57,12 +57,7 @@
 			if ( y >= 0 ) {
 				if ( x < mdata(MDATA_WIDTH) ) {
 					if ( y < mdata(MDATA_HEIGHT) ) {
-                        if ( (chipm(CHIPM_ATTRIB, map(x, y, MAP_TILE_ID)) & CHIPM_ATTRIB_CANT_PASS) == 0
-                            & map(x, y, MAP_FEATS_ON_TILE) / 1000 \ 100 != 21
-                            & map(x, y, MAP_FEATS_ON_TILE) / 1000 \ 100 != 23
-                            & map(x, y, MAP_FEATS_ON_TILE) / 1000 \ 100 != 31
-                            & map(x, y, MAP_FEATS_ON_TILE) / 1000 \ 100 != 33 )
-                        {
+                        if ( (chipm(CHIPM_ATTRIB, map(x, y, MAP_TILE_ID)) & CHIPM_ATTRIB_CANT_PASS) == 0 & map(x, y, MAP_FEATS_ON_TILE) / 1000 \ 100 != 21 & map(x, y, MAP_FEATS_ON_TILE) / 1000 \ 100 != 23 & map(x, y, MAP_FEATS_ON_TILE) / 1000 \ 100 != 31 & map(x, y, MAP_FEATS_ON_TILE) / 1000 \ 100 != 33 ) {
 							tlocx = x
 							tlocy = y
 						}
@@ -2152,10 +2147,7 @@
 						if ( cdata(CDATA_LEVEL, CHARA_PLAYER) <= 5 ) {
 							encounterlv /= 2
 						}
-                        if ( xy2pic(0, 1) <= map(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), MAP_TILE_ID)
-                            & map(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), MAP_TILE_ID) < xy2pic(24, 1)
-                            & map(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), MAP_TILE_ID) != xy2pic(11, 1) )
-                        {
+                        if ( xy2pic(0, 1) <= map(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), MAP_TILE_ID) & map(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), MAP_TILE_ID) < xy2pic(24, 1) & map(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), MAP_TILE_ID) != xy2pic(11, 1) ) {
 							encounterlv /= 2
 						}
 						else {
@@ -3085,7 +3077,6 @@
 					}
 				}
  			}
-			}
 			flt
 			itemcreate -1, ITEM_ID_CARD, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
 			inv(INV_ITEM_SUB_NAME, ci) = cardno
@@ -3899,7 +3890,7 @@
 				if ( gdata(GDATA_TEMPORARY_FLAGS3) == 0 ) {
 					if ( gdata(GDATA_TEMPORARY_FLAGS2) == 0 ) {
 						if ( attackrange != 0 ) {
-							if ( cdata(CDATA_CONDITION_DIM, tc) < 60 & cdata(CDATA_CONDITION_SLEEP, tc) == 0 & cdata(CDATA_CONDITION_PARALYZE, tc) == 0 & cdata(CDATA_CONDITION_BLIND, tc) == 0 & gdata(GDATA_TIME_STOP_TIME) == 0 & gdata((GDATA_FLAG_STOP_TIME_OTHER)) == 0 ) {
+							if ( cdata(CDATA_CONDITION_DIM, tc) < 60 & cdata(CDATA_CONDITION_SLEEP, tc) == 0 & cdata(CDATA_CONDITION_PARALYZE, tc) == 0 & cdata(CDATA_CONDITION_BLIND, tc) == 0 & gdata(GDATA_TIME_STOP_TIME) == 0 & gdata(GDATA_FLAG_STOP_TIME_OTHER) == 0 ) {
 								if ( synccheck(cc, -1) ) {
 									txtef COLOR_PURPLE
 									txt lang(name(tc) + "は反射的に先制射撃を行った。" + name(cc) + "は怯んだ。", name(cc) + " " + is(cc) + " struck by several thorns.")
@@ -5302,7 +5293,7 @@
 		}
 	}
 	if ( adata(ADATA_WAKEUP_NEFIA, gdata(GDATA_AREA)) == WAKEUP_NEFIA_TIME ) {
-		if ( gdata(GDATA_TIME_STOP_TIME) == 0 & gdata((GDATA_FLAG_STOP_TIME_OTHER)) == 0 ) {
+		if ( gdata(GDATA_TIME_STOP_TIME) == 0 & gdata(GDATA_FLAG_STOP_TIME_OTHER) == 0 ) {
 			if ( rnd(50) == 0 ) {
 				txtef COLOR_SKY_BLUE
 				txt lang(name(cc) + "以外の時が止まった。", name(cc) + " stop" + _s(cc) + " time.")
@@ -5359,7 +5350,7 @@
 			continue
 		}
 		if ( enc == ENCHANT_TIME_STOP ) {
-			if ( gdata(GDATA_TIME_STOP_TIME) == 0 & gdata((GDATA_FLAG_STOP_TIME_OTHER)) == 0 ) {
+			if ( gdata(GDATA_TIME_STOP_TIME) == 0 & gdata(GDATA_FLAG_STOP_TIME_OTHER) == 0 ) {
 				if ( rnd(25) == 0 ) {
 					snd SOUNDLIST_CHEST1
 					animeload ANIMATION_UNISON_IMPACT4, cc
@@ -5373,7 +5364,7 @@
 			}
 		}
 		if ( enc == ENCHANT_KALPA_HAND ) {
-			if ( gdata(GDATA_TIME_STOP_TIME) == 0 & gdata((GDATA_FLAG_STOP_TIME_OTHER)) == 0 ) {
+			if ( gdata(GDATA_TIME_STOP_TIME) == 0 & gdata(GDATA_FLAG_STOP_TIME_OTHER) == 0 ) {
 				if ( rnd(30) == 0 ) {
 					snd SOUNDLIST_CHEST1
 					animeload 42, cc
@@ -5475,7 +5466,7 @@
 		}
 	loop
 	if ( ammoproc == ENCHANT_AMMO_TIME_STOP ) {
-		if ( gdata(GDATA_TIME_STOP_TIME) == 0 & gdata((GDATA_FLAG_STOP_TIME_OTHER)) == 0 ) {
+		if ( gdata(GDATA_TIME_STOP_TIME) == 0 & gdata(GDATA_FLAG_STOP_TIME_OTHER) == 0 ) {
 			snd SOUNDLIST_CHEST1
 			animeload 42, cc
 			txtef COLOR_SKY_BLUE
@@ -11491,7 +11482,6 @@
 					dbid = ITEM_ID_PLATINUM_COIN
 					p = 1
 				}
-				if ( gdata(GDATA_DAY) * gdata(GDATA_MONTH) == 90 ) {
 				if ( gdata(GDATA_FLAG_STATUE_OF_YACATECT) \ 30 == 0 ) {
 					dbid = ITEM_ID_SMALL_MEDAL
 					p = 1
@@ -16664,7 +16654,7 @@
 	skillexp SKILL_NORMAL_GARDENING, CHARA_PLAYER, 300
 	gardenlv = 0
 
-    if ( !usecustom ) {
+    if ( usecustom != 1 ) {
         snd SOUNDLIST_BUSH1
     }
 

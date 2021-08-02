@@ -598,12 +598,7 @@
 			}
 			if ( rc > CHARA_PLAYER ) {
 				if ( cdata(CDATA_IN_TAGTEAM, rc) != 0 ) {
-					txtselecttc 2
-					repeat 2
-						promptAdd s(cnt), key_select(cnt)
-					loop
-					val = promptx, prompty, 200, 0
-					gosub *prompt_key
+					promptTagTeam
 					if ( rtval == 1 ) {
 						rc = cdata(CDATA_TAGTEAM_PARTNER, rc)
 					}
@@ -4808,12 +4803,7 @@
 		}
 	}
 	if ( cdata(CDATA_TAGTEAM_PARTNER, tc) > 0 ) {
-		txtselecttc 2
-		repeat 2
-			promptAdd s(cnt), key_select(cnt)
-		loop
-		val = promptx, prompty, 200, 0
-		gosub *prompt_key
+		promptTagTeam
 		if ( rtval == 1 ) {
 			tc = cdata(CDATA_TAGTEAM_PARTNER, tc)
 		}
@@ -4868,12 +4858,7 @@
 		}
 	}
 	if ( cdata(CDATA_TAGTEAM_PARTNER, tc) > 0 ) {
-		txtselecttc 2
-		repeat 2
-			promptAdd s(cnt), key_select(cnt)
-		loop
-		val = promptx, prompty, 200, 0
-		gosub *prompt_key
+		promptTagTeam
 		if ( rtval == 1 ) {
 			tc = cdata(CDATA_TAGTEAM_PARTNER, tc)
 		}

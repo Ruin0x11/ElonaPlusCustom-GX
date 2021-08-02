@@ -148,6 +148,27 @@
 	loop
 	return
 
+#deffunc modgauge int modgauge_charaidx, int modgauge_amount
+	locvar_modgauge_a = modgauge_amount
+	cdata(CDATA_POWER_GAUGE, modgauge_charaidx) += locvar_modgauge_a
+	locvar_modgauge_max = 100
+	if ( cdata(CDATA_SHIFT_FORM, modgauge_charaidx) > SHIFT_FORM_NONE ) {
+		locvar_modgauge_max = 200
+	}
+	if ( cdata(CDATA_EVOLUTION_STAGE, modgauge_charaidx) > 0 ) {
+		locvar_modgauge_max = 200
+	}
+	if ( cdata(CDATA_QUALITY, modgauge_charaidx) >= FIX_QUALITY_MIRACLE ) {
+		locvar_modgauge_max = 200
+	}
+	if ( cdata(CDATA_POWER_GAUGE, modgauge_charaidx) > locvar_modgauge_max ) {
+		cdata(CDATA_POWER_GAUGE, modgauge_charaidx) = locvar_modgauge_max
+	}
+	if ( cdata(CDATA_POWER_GAUGE, modgauge_charaidx) < 0 ) {
+		cdata(CDATA_POWER_GAUGE, modgauge_charaidx) = 0
+	}
+	return
+
 #deffunc modkarma int modkarma_arg1, int modkarma_arg2
 	locvar_modkarma_a = modkarma_arg2
 	if ( trait(TRAIT_OTHER_WICKED) ) {
