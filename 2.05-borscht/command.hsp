@@ -2191,7 +2191,7 @@
 		listn(0, listmax) = lang("[覚醒]", "[AWAKE]") + lang("あなたは零の間撃を会得している", "You got Zero shoot.")
 		listmax++
 	}
-	if ( cbit(CHARA_BIT_AWAKE_STRUCK_OUT, tc) == TRUE ) {
+	if ( cbit(CHARA_BIT_AWAKE_TACTICAL_THROW, tc) == TRUE ) {
 		list(0, listmax) = 1, 99998
 		listn(0, listmax) = lang("[覚醒]", "[AWAKE]") + lang("あなたはタクティカルスローを会得している", "You got Tactical Throw.")
 		listmax++
@@ -5853,7 +5853,7 @@
 		goto *pc_turn
 	}
 	if ( p == 27 ) {
-		gosub *label_5511
+		gosub *com_tag_team
 		gosub *screen_draw
 		goto *pc_turn
 	}
@@ -9571,7 +9571,7 @@
 	gosub *screen_draw
 	return
 
-*label_5511
+*com_tag_team
 	gosub *screen_draw
 	tatiebk = cdata(CDATA_FACE, tc)
 	n = 0
@@ -9582,9 +9582,9 @@
 	await 1000
 	p = 0
 
-*label_5513
+*com_tag_team_WHILE1
 	if ( 1 == 0 ) {
-		goto *label_5515
+		goto *com_tag_team_WEND
 	}
 	if ( cdata(CDATA_FACE, tc) > 0 ) {
 		stati = exedir + "\\user\\graphic2\\face" + cdata(CDATA_FACE, tc) + "_B.bmp"
@@ -9670,9 +9670,9 @@
 	await cfg_wait1
 	key_check
 	cursor_check
-	goto *label_5513
+	goto *com_tag_team_WHILE1
 
-*label_5515
+*com_tag_team_WEND
 	gosub *screen_draw
 	return
 

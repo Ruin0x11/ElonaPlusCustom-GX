@@ -151,7 +151,7 @@
 #defcfunc blendcheckmat int blendcheckmat_arg1
 	rpid = blendcheckmat_arg1
 	repeat 10
-		if ( rpdata(RPDATA_MAT + cnt, rpid) == (0 /*!!!@[ITEM_ID_DUMMY @@@ FILTER_NOTHING @@@ FILTER_NOTHING]@!!! */) ) {
+		if ( rpdata(RPDATA_MAT + cnt, rpid) == (0 /*!!!@[FILTER_NOTHING @@@ FILTER_NOTHING @@@ ITEM_ID_DUMMY]@!!! */) ) {
 			break
 		}
 		locvar_blendcheckmat_f = 0
@@ -489,7 +489,7 @@
 	locvar_window_recipe_dy += 17
 	locvar_window_recipe_i++
 	repeat 10
-		if ( rpdata(RPDATA_MAT + cnt, rpid) == (0 /*!!!@[ITEM_ID_DUMMY @@@ FILTER_NOTHING @@@ FILTER_NOTHING]@!!! */) ) {
+		if ( rpdata(RPDATA_MAT + cnt, rpid) == (0 /*!!!@[FILTER_NOTHING @@@ FILTER_NOTHING @@@ ITEM_ID_DUMMY]@!!! */) ) {
 			break
 		}
 		pos locvar_window_recipe_dx - 10, locvar_window_recipe_dy - 2
@@ -652,7 +652,7 @@
 	rpdatan(rpid) = lang("蒸留", "distillation")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_BOTTLE_WATER, 30 + 1 * 10000
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_MAGIC_DEVICE, 6
-	rpdata(RPDATA_MAT + 0, rpid) = (43 /*!!!@[ITEM_ID_WOOD_CHIP @@@ FILTER_RACE_RAT2]@!!! */), ITEM_ID_ROD_FIRE_WALL, ITEM_ID_POTION_SALT_SOLUTION
+	rpdata(RPDATA_MAT + 0, rpid) = (43 /*!!!@[FILTER_RACE_RAT2 @@@ ITEM_ID_WOOD_CHIP]@!!! */), ITEM_ID_ROD_FIRE_WALL, ITEM_ID_POTION_SALT_SOLUTION
 	rpid = STARTING_RPID + 3
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("瞬間発酵", "instant ale")
@@ -664,13 +664,13 @@
 	rpdatan(rpid) = lang("抗体結晶", "cure crystal")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_CURE_CRYSTAL, 15
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 10
-	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_POTION_CURE_CORRUPTION, (35 /*!!!@[ITEM_ID_EARTH_CRYSTAL @@@ FILTER_RACE_BAT]@!!! */)
+	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_POTION_CURE_CORRUPTION, (35 /*!!!@[FILTER_RACE_BAT @@@ ITEM_ID_EARTH_CRYSTAL]@!!! */)
 	rpid = STARTING_RPID + 5
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("有害ポーション", "harmful potion")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_POISON, 20
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_GENE_ENGINEER, 3, SKILL_NORMAL_ALCHEMY, 12
-	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_SCROLL_CURSE, (26 /*!!!@[ITEM_ID_BOTTLE_DIRTY_WATER @@@ FILTER_RACE_ROCK]@!!! */)
+	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_SCROLL_CURSE, (26 /*!!!@[FILTER_RACE_ROCK @@@ ITEM_ID_BOTTLE_DIRTY_WATER]@!!! */)
 	rpid = STARTING_RPID + 6
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("消毒薬", "antidote")
@@ -724,7 +724,7 @@
 	rpdatan(rpid) = lang("硫酸", "sulfuric")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_BOTTLE_SULFURIC, 10
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 5
-	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_SULFUR, (26 /*!!!@[ITEM_ID_BOTTLE_DIRTY_WATER @@@ FILTER_RACE_ROCK]@!!! */)
+	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_SULFUR, (26 /*!!!@[FILTER_RACE_ROCK @@@ ITEM_ID_BOTTLE_DIRTY_WATER]@!!! */)
 	rpid = STARTING_RPID + 15
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("自家製火炎瓶", "homemade molotov")
@@ -799,7 +799,7 @@
 	rpdatan(rpid) = lang("ネクロマンシー", "necromancy")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_COFFIN_OF_NECROMANCY, 20 + 1 * 10000
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ANATOMY, 10, SKILL_NORMAL_ALCHEMY, 10
-	rpdata(RPDATA_MAT + 0, rpid) = (36 /*!!!@[ITEM_ID_MANA_CRYSTAL @@@ FILTER_RACE_BAT2]@!!! */), FILTER_REMAINS, RF_COFFIN
+	rpdata(RPDATA_MAT + 0, rpid) = (36 /*!!!@[FILTER_RACE_BAT2 @@@ ITEM_ID_MANA_CRYSTAL]@!!! */), FILTER_REMAINS, RF_COFFIN
 	rpid = STARTING_RPID + 27
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("ネクロチューニング", "necro remodel")
@@ -817,25 +817,25 @@
 	rpdatan(rpid) = lang("ルビナス細工", "brilliant rubynus")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_BRILLIANT_RUBYNUS, 10
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 10, SKILL_NORMAL_JEWELER, 10
-	rpdata(RPDATA_MAT + 0, rpid) = (39 /*!!!@[ITEM_ID_RAW_RUBYNUS_ORE @@@ FILTER_RACE_WASP2]@!!! */), (39 /*!!!@[ITEM_ID_RAW_RUBYNUS_ORE @@@ FILTER_RACE_WASP2]@!!! */), (39 /*!!!@[ITEM_ID_RAW_RUBYNUS_ORE @@@ FILTER_RACE_WASP2]@!!! */), (39 /*!!!@[ITEM_ID_RAW_RUBYNUS_ORE @@@ FILTER_RACE_WASP2]@!!! */), (39 /*!!!@[ITEM_ID_RAW_RUBYNUS_ORE @@@ FILTER_RACE_WASP2]@!!! */)
+	rpdata(RPDATA_MAT + 0, rpid) = (39 /*!!!@[FILTER_RACE_WASP2 @@@ ITEM_ID_RAW_RUBYNUS_ORE]@!!! */), (39 /*!!!@[FILTER_RACE_WASP2 @@@ ITEM_ID_RAW_RUBYNUS_ORE]@!!! */), (39 /*!!!@[FILTER_RACE_WASP2 @@@ ITEM_ID_RAW_RUBYNUS_ORE]@!!! */), (39 /*!!!@[FILTER_RACE_WASP2 @@@ ITEM_ID_RAW_RUBYNUS_ORE]@!!! */), (39 /*!!!@[FILTER_RACE_WASP2 @@@ ITEM_ID_RAW_RUBYNUS_ORE]@!!! */)
 	rpid = STARTING_RPID + 30
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("エメラルド細工", "emerald tablet")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_TABLET_EMERALD, 10
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 15, SKILL_NORMAL_JEWELER, 20
-	rpdata(RPDATA_MAT + 0, rpid) = (41 /*!!!@[ITEM_ID_RAW_EMERALD_ORE @@@ FILTER_RACE_SPIDER3]@!!! */), (41 /*!!!@[ITEM_ID_RAW_EMERALD_ORE @@@ FILTER_RACE_SPIDER3]@!!! */), (41 /*!!!@[ITEM_ID_RAW_EMERALD_ORE @@@ FILTER_RACE_SPIDER3]@!!! */), (41 /*!!!@[ITEM_ID_RAW_EMERALD_ORE @@@ FILTER_RACE_SPIDER3]@!!! */), (41 /*!!!@[ITEM_ID_RAW_EMERALD_ORE @@@ FILTER_RACE_SPIDER3]@!!! */)
+	rpdata(RPDATA_MAT + 0, rpid) = (41 /*!!!@[FILTER_RACE_SPIDER3 @@@ ITEM_ID_RAW_EMERALD_ORE]@!!! */), (41 /*!!!@[FILTER_RACE_SPIDER3 @@@ ITEM_ID_RAW_EMERALD_ORE]@!!! */), (41 /*!!!@[FILTER_RACE_SPIDER3 @@@ ITEM_ID_RAW_EMERALD_ORE]@!!! */), (41 /*!!!@[FILTER_RACE_SPIDER3 @@@ ITEM_ID_RAW_EMERALD_ORE]@!!! */), (41 /*!!!@[FILTER_RACE_SPIDER3 @@@ ITEM_ID_RAW_EMERALD_ORE]@!!! */)
 	rpid = STARTING_RPID + 31
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("ダイヤモンド細工", "brilliant diamond")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_BRILLIANT_DIAMOND, 10
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 20, SKILL_NORMAL_JEWELER, 30
-	rpdata(RPDATA_MAT + 0, rpid) = (42 /*!!!@[ITEM_ID_RAW_DIAMOND_ORE @@@ FILTER_RACE_GHOST]@!!! */), (42 /*!!!@[ITEM_ID_RAW_DIAMOND_ORE @@@ FILTER_RACE_GHOST]@!!! */), (42 /*!!!@[ITEM_ID_RAW_DIAMOND_ORE @@@ FILTER_RACE_GHOST]@!!! */), (42 /*!!!@[ITEM_ID_RAW_DIAMOND_ORE @@@ FILTER_RACE_GHOST]@!!! */), (42 /*!!!@[ITEM_ID_RAW_DIAMOND_ORE @@@ FILTER_RACE_GHOST]@!!! */)
+	rpdata(RPDATA_MAT + 0, rpid) = (42 /*!!!@[FILTER_RACE_GHOST @@@ ITEM_ID_RAW_DIAMOND_ORE]@!!! */), (42 /*!!!@[FILTER_RACE_GHOST @@@ ITEM_ID_RAW_DIAMOND_ORE]@!!! */), (42 /*!!!@[FILTER_RACE_GHOST @@@ ITEM_ID_RAW_DIAMOND_ORE]@!!! */), (42 /*!!!@[FILTER_RACE_GHOST @@@ ITEM_ID_RAW_DIAMOND_ORE]@!!! */), (42 /*!!!@[FILTER_RACE_GHOST @@@ ITEM_ID_RAW_DIAMOND_ORE]@!!! */)
 	rpid = STARTING_RPID + 32
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("木の加工", "wood craft")
 	rpdata(RPDATA_ITEM, rpid) = RECIPE_BLEND_ACTION_WOODCRAFT, 100
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 2, SKILL_NORMAL_CARPENTRY, 2
-	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_CARPENTERS_TOOL, ITEM_ID_WOOD_MATERIAL, (43 /*!!!@[ITEM_ID_WOOD_CHIP @@@ FILTER_RACE_RAT2]@!!! */)
+	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_CARPENTERS_TOOL, ITEM_ID_WOOD_MATERIAL, (43 /*!!!@[FILTER_RACE_RAT2 @@@ ITEM_ID_WOOD_CHIP]@!!! */)
 	rpid = STARTING_RPID + 33
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("石の加工", "stone craft")
@@ -847,13 +847,13 @@
 	rpdatan(rpid) = lang("焼き物", "clay craft")
 	rpdata(RPDATA_ITEM, rpid) = RECIPE_BLEND_ACTION_POTTERY, 100
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 2, SKILL_NORMAL_SENSE_QUALITY, 2, SKILL_ATTR_DEX, 40
-	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_STOVE, ITEM_ID_CLAY, (46 /*!!!@[ITEM_ID_BROKEN_VASE @@@ FILTER_RACE_BEETLE2]@!!! */)
+	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_STOVE, ITEM_ID_CLAY, (46 /*!!!@[FILTER_RACE_BEETLE2 @@@ ITEM_ID_BROKEN_VASE]@!!! */)
 	rpid = STARTING_RPID + 35
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("クラフトマイン", "craft mine")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_MINE, 25
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_CARPENTRY, 10, SKILL_NORMAL_DISARM_TRAP, 15
-	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_SULFUR, (35 /*!!!@[ITEM_ID_EARTH_CRYSTAL @@@ FILTER_RACE_BAT]@!!! */), FILTER_CONTAINER
+	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_SULFUR, (35 /*!!!@[FILTER_RACE_BAT @@@ ITEM_ID_EARTH_CRYSTAL]@!!! */), FILTER_CONTAINER
 	rpid = STARTING_RPID + 36
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("たる爆弾", "barrel bomb")
@@ -865,7 +865,7 @@
 	rpdatan(rpid) = lang("魔力爆弾", "crystal bomb")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_MAGISTUS, 10
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 4, SKILL_NORMAL_CONTROL_MAGIC, 4
-	rpdata(RPDATA_MAT + 0, rpid) = (36 /*!!!@[ITEM_ID_MANA_CRYSTAL @@@ FILTER_RACE_BAT2]@!!! */), (45 /*!!!@[ITEM_ID_GARBAGE @@@ FILTER_RACE_BEETLE]@!!! */)
+	rpdata(RPDATA_MAT + 0, rpid) = (36 /*!!!@[FILTER_RACE_BAT2 @@@ ITEM_ID_MANA_CRYSTAL]@!!! */), (45 /*!!!@[FILTER_RACE_BEETLE @@@ ITEM_ID_GARBAGE]@!!! */)
 	rpid = STARTING_RPID + 38
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("すごい魔力爆弾", "big crystal bomb")
@@ -901,7 +901,7 @@
 	rpdatan(rpid) = lang("ファーストエイド", "first aid kit")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_FIRST_AID_KIT, 20
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_TAILORING, 1
-	rpdata(RPDATA_MAT + 0, rpid) = RF_LEAF, ITEM_ID_BOTTLE_WHISKY, (47 /*!!!@[ITEM_ID_WASHINGS @@@ FILTER_RACE_KOBOLT4]@!!! */)
+	rpdata(RPDATA_MAT + 0, rpid) = RF_LEAF, ITEM_ID_BOTTLE_WHISKY, (47 /*!!!@[FILTER_RACE_KOBOLT4 @@@ ITEM_ID_WASHINGS]@!!! */)
 	rpid = STARTING_RPID + 44
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("特殊矢弾箱", "special ammos box")
@@ -919,7 +919,7 @@
 	rpdatan(rpid) = lang("煙草加工", "tobacco processing")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_CIGARETTE, 30
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_CARPENTRY, 7, SKILL_NORMAL_GARDENING, 12
-	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_TOBACCO, ITEM_ID_HEALTHY_LEAF, (43 /*!!!@[ITEM_ID_WOOD_CHIP @@@ FILTER_RACE_RAT2]@!!! */)
+	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_TOBACCO, ITEM_ID_HEALTHY_LEAF, (43 /*!!!@[FILTER_RACE_RAT2 @@@ ITEM_ID_WOOD_CHIP]@!!! */)
 	rpid = STARTING_RPID + 47
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("にぎりめし", "onigiri")
@@ -949,7 +949,7 @@
 	rpdatan(rpid) = lang("乳製品", "dairy products")
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_CHEESE, 20 + 2 * 10000
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_GENE_ENGINEER, 10, SKILL_NORMAL_COOKING, 15
-	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_BOTTLE_MILK, (46 /*!!!@[ITEM_ID_BROKEN_VASE @@@ FILTER_RACE_BEETLE2]@!!! */)
+	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_BOTTLE_MILK, (46 /*!!!@[FILTER_RACE_BEETLE2 @@@ ITEM_ID_BROKEN_VASE]@!!! */)
 	rpid = STARTING_RPID + 52
 	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
 	rpdatan(rpid) = lang("発酵凝固", "fermentation coagulation")
@@ -1051,7 +1051,7 @@
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_POTION_SOMA, 120 + 10 * 10000
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 40, SKILL_NORMAL_GARDENING, 50
 	rpdata(RPDATA_EQ + 0, rpid) = 0
-	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_POTION_HEALER, (31 /*!!!@[ITEM_ID_BOTTLE_CRIM_ALE @@@ FILTER_RACE_CAT]@!!! */), ITEM_ID_RAINBOW_FRUIT
+	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_POTION_HEALER, (31 /*!!!@[FILTER_RACE_CAT @@@ ITEM_ID_BOTTLE_CRIM_ALE]@!!! */), ITEM_ID_RAINBOW_FRUIT
 	rpid = ITEM_ID_POTION_NEKTAR + EXT_RP
 	rplistshop(length(rplistshop)) = 30 * EXT_RECIPES + rpid
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_POTION_NEKTAR, 240 + 12 * 10000
@@ -1069,7 +1069,7 @@
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_DRUG_KISERU, 20 + 1 * 10000
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 22, SKILL_NORMAL_JEWELER, 40
 	rpdata(RPDATA_EQ + 0, rpid) = 0
-	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_CRIMBERRY, ITEM_ID_KISERU, (35 /*!!!@[ITEM_ID_EARTH_CRYSTAL @@@ FILTER_RACE_BAT]@!!! */)
+	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_CRIMBERRY, ITEM_ID_KISERU, (35 /*!!!@[FILTER_RACE_BAT @@@ ITEM_ID_EARTH_CRYSTAL]@!!! */)
 	rfnameorg(RFNAMEORG_ID, RF_DIARY - EXT_RF) = "diary", lang("日記帳", "any diary")
 	rfnameorg(RFNAMEORG_ID, RF_VEGE - EXT_RF) = "vege", lang("適当な野菜", "any vege")
 	rfnameorg(RFNAMEORG_ID, RF_SEED - EXT_RF) = "seed", lang("適当な種", "any seed")
@@ -1112,7 +1112,7 @@
 
 *com_blend_step
 	if ( step != (-1) ) {
-		if ( rpdata(RPDATA_MAT + step, rpid) == (0 /*!!!@[ITEM_ID_DUMMY @@@ FILTER_NOTHING @@@ FILTER_NOTHING]@!!! */) ) {
+		if ( rpdata(RPDATA_MAT + step, rpid) == (0 /*!!!@[FILTER_NOTHING @@@ FILTER_NOTHING @@@ ITEM_ID_DUMMY]@!!! */) ) {
 			rppage = 0
 			window_recipe list2, -1, wx + ww, wy, 400, wh
 			txtnew
