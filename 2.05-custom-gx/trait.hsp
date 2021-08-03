@@ -935,12 +935,12 @@
 		if ( traitmode == 0 ) {
 			traitref = 3, -3, 0, 1, 0, 100, -1
 			if ( trait(tid) < 0 ) {
-				traitrefn(2) = "", lang("あなたの顔はただれている[魅力" + (-1) * (4 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 5) + "]", "You have sores on your face. [CHR" + (-1) * (4 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 5) + "]"), lang("あなたの顔中に蕁麻疹が出ている[魅力" + (-2) * (4 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 5) + "]", "Your face is ulcerate. [CHR" + (-2) * (4 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 5) + "]"), lang("あなたの顔は崩れかけている[魅力" + (-3) * (4 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 5) + "]", "Your face is crumbling. [CHR" + (-3) * (4 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 5) + "]")
+				traitrefn(2) = "", lang("あなたの顔はただれている[魅力" + limit((-1) * (4 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 5), -999, 0) + "]", "You have sores on your face. [CHR" + limit((-1) * (4 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 5), -999, 0) + "]"), lang("あなたの顔中に蕁麻疹が出ている[魅力" + limit((-2) * (4 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 5), -999, 0) + "]", "Your face is ulcerate. [CHR" + limit((-2) * (4 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 5), -999, 0) + "]"), lang("あなたの顔は崩れかけている[魅力" + limit((-3) * (4 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 5), -999, 0) + "]", "Your face is crumbling. [CHR" + limit((-3) * (4 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 5), -999, 0) + "]")
 			}
 			traitrefn = lang("あなたの顔のただれは軽くなった。", "The swelling in your face decreases."), lang("あなたの顔はただれた。", "Your face is festered.")
 			return 1
 		}
-		sdata(SKILL_ATTR_CHA, CHARA_PLAYER) = limit(sdata(SKILL_ATTR_CHA, CHARA_PLAYER) + trait(tid) * (4 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 5), sdata(SKILL_ATTR_CHA, CHARA_PLAYER) > 0, 9999)
+		sdata(SKILL_ATTR_CHA, CHARA_PLAYER) = limit(sdata(SKILL_ATTR_CHA, CHARA_PLAYER) + limit(trait(tid) * (4 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 5), -999, 0), sdata(SKILL_ATTR_CHA, CHARA_PLAYER) > 0, 9999)
 		return 1
 	}
 	if ( tid == TRAIT_ETHER_EQUIP_LEG ) {
@@ -959,12 +959,12 @@
 		if ( traitmode == 0 ) {
 			traitref = 3, -1, 0, 1, 0, 100, -1
 			if ( trait(tid) < 0 ) {
-				traitrefn(2) = "", lang("あなたの目は4つある[感覚+" + limit(5 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 3, 0, 255) + " 魅力" + limit((5 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 3) * (-1), -255, 255) + "]", "You have 4 eyes. [PER+" + limit(5 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 3, 0, 255) + " CHR" + limit((5 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 3) * (-1), -255, 255) + "]")
+				traitrefn(2) = "", lang("あなたの目は4つある[感覚+" + limit(5 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 3, 0, 255) + " 魅力" + limit((5 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 3) * (-1), -255, 0) + "]", "You have 4 eyes. [PER+" + limit(5 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 3, 0, 255) + " CHR" + limit((5 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 3) * (-1), -255, 0) + "]")
 			}
 			traitrefn = lang("あなたの目は減った。", "Your eyes become normal."), lang("あなたの目は増殖した。", "Your eyes are multiplying.")
 			return 1
 		}
-		sdata(SKILL_ATTR_CHA, CHARA_PLAYER) = limit(sdata(SKILL_ATTR_CHA, CHARA_PLAYER) + limit((5 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 3) * (-1), -255, 255), sdata(SKILL_ATTR_CHA, CHARA_PLAYER) > 0, 9999)
+		sdata(SKILL_ATTR_CHA, CHARA_PLAYER) = limit(sdata(SKILL_ATTR_CHA, CHARA_PLAYER) + limit((5 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 3) * (-1), -255, 0), sdata(SKILL_ATTR_CHA, CHARA_PLAYER) > 0, 9999)
 		sdata(SKILL_ATTR_PER, CHARA_PLAYER) = limit(sdata(SKILL_ATTR_PER, CHARA_PLAYER) + limit(5 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 3, 0, 255), sdata(SKILL_ATTR_PER, CHARA_PLAYER) > 0, 9999)
 		return 1
 	}
@@ -985,12 +985,12 @@
 		if ( traitmode == 0 ) {
 			traitref = 3, -1, 0, 1, 0, 100, -1
 			if ( trait(tid) < 0 ) {
-				traitrefn(2) = "", lang("あなたの首はもの凄く太い[首装備不可 魅力" + limit((5 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 5) * (-1), -255, 255) + " PV+" + limit(12 + cdata(CDATA_LEVEL, CHARA_PLAYER), 0, 255) + "]", "Your neck is extremely thick. [CHR" + limit((5 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 5) * (-1), -255, 255) + " PV+" + limit(12 + cdata(CDATA_LEVEL, CHARA_PLAYER), 0, 255) + " Can't wear amulets]")
+				traitrefn(2) = "", lang("あなたの首はもの凄く太い[首装備不可 魅力" + limit((5 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 5) * (-1), -255, 0) + " PV+" + limit(12 + cdata(CDATA_LEVEL, CHARA_PLAYER), 0, 255) + "]", "Your neck is extremely thick. [CHR" + limit((5 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 5) * (-1), -255, 0) + " PV+" + limit(12 + cdata(CDATA_LEVEL, CHARA_PLAYER), 0, 255) + " Can't wear amulets]")
 			}
 			traitrefn = lang("あなたの首は細くなった。", "Your neck becomes thin."), lang("あなたの首は太くなった。", "Your neck becomes extremely thick.")
 			return 1
 		}
-		sdata(SKILL_ATTR_CHA, CHARA_PLAYER) = limit(sdata(SKILL_ATTR_CHA, CHARA_PLAYER) + limit((5 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 5) * (-1), -255, 255), sdata(SKILL_ATTR_CHA, CHARA_PLAYER) > 0, 9999)
+		sdata(SKILL_ATTR_CHA, CHARA_PLAYER) = limit(sdata(SKILL_ATTR_CHA, CHARA_PLAYER) + limit((5 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 5) * (-1), -255, 0), sdata(SKILL_ATTR_CHA, CHARA_PLAYER) > 0, 9999)
 		cdata(CDATA_PV, CHARA_PLAYER) += limit(12 + cdata(CDATA_LEVEL, CHARA_PLAYER), 0, 255)
 		return 1
 	}
@@ -1009,13 +1009,13 @@
 		if ( traitmode == 0 ) {
 			traitref = 3, -1, 0, 1, 0, 100, -1
 			if ( trait(tid) < 0 ) {
-				traitrefn(2) = "", lang("あなたの頭は巨大化している[耐久" + limit((5 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 3) * (-1), -255, 255) + " 器用" + limit((4 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 4) * (-1), -255, 255) + " 習得+" + limit(6 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 2, 0, 255) + " 意志+" + limit(2 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 6, 0, 255) + "]", "Your head has grown huge. [CON" + limit((5 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 3) * (-1), -255, 255) + " DEX" + limit((4 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 4) * (-1), -255, 255) + " LER+" + limit(6 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 2, 0, 255) + " WIL+" + limit(2 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 6, 0, 255) + "]")
+				traitrefn(2) = "", lang("あなたの頭は巨大化している[耐久" + limit((5 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 3) * (-1), -255, 0) + " 器用" + limit((4 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 4) * (-1), -255, 0) + " 習得+" + limit(6 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 2, 0, 255) + " 意志+" + limit(2 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 6, 0, 255) + "]", "Your head has grown huge. [END" + limit((5 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 3) * (-1), -255, 0) + " DEX" + limit((4 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 4) * (-1), -255, 0) + " LER+" + limit(6 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 2, 0, 255) + " WIL+" + limit(2 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 6, 0, 255) + "]")
 			}
 			traitrefn = lang("あなたの頭は元に戻った。", "Your head is normal size now."), lang("あなたの頭は巨大化した。", "Suddenly your head become giant size.")
 			return 1
 		}
-		sdata(SKILL_ATTR_CON, CHARA_PLAYER) = limit(sdata(SKILL_ATTR_CON, CHARA_PLAYER) + limit((5 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 3) * (-1), -255, 255), sdata(SKILL_ATTR_CON, CHARA_PLAYER) > 0, 9999)
-		sdata(SKILL_ATTR_DEX, CHARA_PLAYER) = limit(sdata(SKILL_ATTR_DEX, CHARA_PLAYER) + limit((4 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 4) * (-1), -255, 255), sdata(SKILL_ATTR_DEX, CHARA_PLAYER) > 0, 9999)
+		sdata(SKILL_ATTR_CON, CHARA_PLAYER) = limit(sdata(SKILL_ATTR_CON, CHARA_PLAYER) + limit((5 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 3) * (-1), -255, 0), sdata(SKILL_ATTR_CON, CHARA_PLAYER) > 0, 9999)
+		sdata(SKILL_ATTR_DEX, CHARA_PLAYER) = limit(sdata(SKILL_ATTR_DEX, CHARA_PLAYER) + limit((4 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 4) * (-1), -255, 0), sdata(SKILL_ATTR_DEX, CHARA_PLAYER) > 0, 9999)
 		sdata(SKILL_ATTR_LER, CHARA_PLAYER) = limit(sdata(SKILL_ATTR_LER, CHARA_PLAYER) + limit(6 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 2, 0, 255), sdata(SKILL_ATTR_LER, CHARA_PLAYER) > 0, 9999)
 		sdata(SKILL_ATTR_WIL, CHARA_PLAYER) = limit(sdata(SKILL_ATTR_WIL, CHARA_PLAYER) + limit(2 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 6, 0, 255), sdata(SKILL_ATTR_WIL, CHARA_PLAYER) > 0, 9999)
 		return 1
@@ -1046,12 +1046,12 @@
 		if ( traitmode == 0 ) {
 			traitref = 3, -1, 0, 1, 0, 100, -1
 			if ( trait(tid) < 0 ) {
-				traitrefn(2) = "", lang("あなたは衰弱している[HP-15% 筋力" + (4 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 2) * (-1) + "]", "You suffer debilitation. [HP-15% STR" + (4 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 2) * (-1) + "]")
+				traitrefn(2) = "", lang("あなたは衰弱している[HP-15% 筋力" + limit((4 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 2) * (-1), -255, 0) + "]", "You suffer debilitation. [HP-15% STR" + limit((4 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 2) * (-1), -255, 0) + "]")
 			}
 			traitrefn = lang("あなたは健康になった。", "You become healthy again."), lang("あなたは衰弱した。", "You become weak, very weak.")
 			return 1
 		}
-		sdata(SKILL_ATTR_STR, CHARA_PLAYER) = limit(sdata(SKILL_ATTR_STR, CHARA_PLAYER) + (4 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 2) * (-1), sdata(SKILL_ATTR_STR, CHARA_PLAYER) > 0, 9999)
+		sdata(SKILL_ATTR_STR, CHARA_PLAYER) = limit(sdata(SKILL_ATTR_STR, CHARA_PLAYER) + limit((4 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 2) * (-1), -255, 0), sdata(SKILL_ATTR_STR, CHARA_PLAYER) > 0, 9999)
 		sdata(SKILL_ATTR_LIFE, CHARA_PLAYER) = limit(sdata(SKILL_ATTR_LIFE, CHARA_PLAYER) + (-15), sdata(SKILL_ATTR_LIFE, CHARA_PLAYER) > 0, 9999)
 		return 1
 	}
@@ -1059,12 +1059,12 @@
 		if ( traitmode == 0 ) {
 			traitref = 3, -1, 0, 1, 0, 100, -1
 			if ( trait(tid) < 0 ) {
-				traitrefn(2) = "", lang("あなたは痴呆になっている[MP-15% 魔力" + (4 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 2) * (-1) + "]", "You have dementia. [MP-15% MAG" + (4 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 2) * (-1) + "]")
+				traitrefn(2) = "", lang("あなたは痴呆になっている[MP-15% 魔力" + limit((4 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 2) * (-1), -255, 0) + "]", "You have dementia. [MP-15% MAG" + limit((4 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 2) * (-1), -255, 0) + "]")
 			}
 			traitrefn = lang("あなたは明晰になった。", "You become confident again."), lang("あなたはぼけた。", "You become feebleminded.")
 			return 1
 		}
-		sdata(SKILL_ATTR_MAG, CHARA_PLAYER) = limit(sdata(SKILL_ATTR_MAG, CHARA_PLAYER) + (4 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 2) * (-1), sdata(SKILL_ATTR_MAG, CHARA_PLAYER) > 0, 9999)
+		sdata(SKILL_ATTR_MAG, CHARA_PLAYER) = limit(sdata(SKILL_ATTR_MAG, CHARA_PLAYER) + limit((4 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 2) * (-1), -255, 0), sdata(SKILL_ATTR_MAG, CHARA_PLAYER) > 0, 9999)
 		sdata(SKILL_ATTR_MANA, CHARA_PLAYER) = limit(sdata(SKILL_ATTR_MANA, CHARA_PLAYER) + (-15), sdata(SKILL_ATTR_MANA, CHARA_PLAYER) > 0, 9999)
 		return 1
 	}
@@ -1072,12 +1072,12 @@
 		if ( traitmode == 0 ) {
 			traitref = 3, -1, 0, 1, 0, 100, -1
 			if ( trait(tid) < 0 ) {
-				traitrefn(2) = "", lang("あなたは重い甲殻で覆われている[PV+" + limit(15 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 2, 0, 255) + " 速度" + limit((20 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 2) * (-1), -255, 255) + "]", "You are covered by a heavy carapace. [PV+" + limit(15 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 2, 0, 255) + " SPD" + limit((20 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 2) * (-1), -255, 255) + "]")
+				traitrefn(2) = "", lang("あなたは重い甲殻で覆われている[PV+" + limit(15 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 2, 0, 255) + " 速度" + limit((20 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 2) * (-1), -255, 0) + "]", "You are covered by heavy carapace. [PV+" + limit(15 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 2, 0, 255) + " SPD" + limit((20 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 2) * (-1), -255, 0) + "]")
 			}
 			traitrefn = lang("あなたの皮膚から甲殻が消えた。", "Your carapace starts to break."), lang("あなたの皮膚は甲殻で覆われた。", "A heavy carapace starts to cover up your skin.")
 			return 1
 		}
-		sdata(SKILL_ATTR_SPD, CHARA_PLAYER) = limit(sdata(SKILL_ATTR_SPD, CHARA_PLAYER) + limit((20 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 2) * (-1), -255, 255), sdata(SKILL_ATTR_SPD, CHARA_PLAYER) > 0, 9999)
+		sdata(SKILL_ATTR_SPD, CHARA_PLAYER) = limit(sdata(SKILL_ATTR_SPD, CHARA_PLAYER) + limit((20 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 2) * (-1), -255, 0), sdata(SKILL_ATTR_SPD, CHARA_PLAYER) > 0, 9999)
 		cdata(CDATA_PV, CHARA_PLAYER) += limit(15 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 2, 0, 255)
 		return 1
 	}
@@ -1121,10 +1121,129 @@
 			if ( trait(tid) < 0 ) {
 				traitrefn(2) = "", lang("あなたの頭には獣の耳が生えている[頭装備不可 感覚+" + limit(10 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 4, 0, 255) + "]", "Your head is growing ears of a beast. [PER+" + limit(10 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 4, 0, 255) + " Can't wear helms]")
 			}
-			traitrefn = lang("あなたの耳は元通りになった。", "Your ears are clean now."), lang("あなたに獣の耳が生えた。", "The ears of a beast grew on your head.")
+			traitrefn = lang("あなたの耳は元通りになった。", "Your ears have been restored."), lang("あなたに獣の耳が生えた。", "Ears of the beast grew on your head.")
 			return 1
 		}
 		sdata(SKILL_ATTR_PER, CHARA_PLAYER) = limit(sdata(SKILL_ATTR_PER, CHARA_PLAYER) + limit(10 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 4, 0, 255), sdata(SKILL_ATTR_PER, CHARA_PLAYER) > 0, 9999)
+		return 1
+	}
+	if ( tid == TRAIT_ETHER_BONES ) {
+		if ( traitmode == 0 ) {
+			traitref = 3, -1, 0, 1, 0, 100, -1
+			if ( trait(tid) < 0 ) {
+				traitrefn(2) = "", lang("あなたの骨は飛び出している[体装備不可 切り傷反撃]", "Your bones are popping out. [Deals cut damage to the attacker, Can't wear armors]")
+			}
+			traitrefn = lang("あなたの骨は元通りになった。", "Your bones have retracted."), lang("あなたの体から鋭い骨が皮膚を突き破って飛び出した。", "Sharp bones from your body pierced through your skin.")
+			return 1
+		}
+		return 1
+	}
+	if ( tid == TRAIT_ETHER_TAIL ) {
+		if ( traitmode == 0 ) {
+			traitref = 3, -1, 0, 1, 0, 100, -1
+			if ( trait(tid) < 0 ) {
+				traitrefn(2) = "", lang("あなたには発達した尻尾がある[腰装備不可 器用+" + limit(10 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 4, 0, 255) + "]", "You have a developed tail. [DEX+" + limit(10 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 4, 0, 255) + " Can't wear girdles]")
+			}
+			traitrefn = lang("あなたの尻尾は元通りになった。", "Your tail has shrunk."), lang("あなたは尻尾が発達した。", "Your tail has grown.")
+			return 1
+		}
+		sdata(SKILL_ATTR_DEX, CHARA_PLAYER) = limit(sdata(SKILL_ATTR_DEX, CHARA_PLAYER) + limit(10 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 4, 0, 255), sdata(SKILL_ATTR_DEX, CHARA_PLAYER) > 0, 9999)
+		return 1
+	}
+	if ( tid == TRAIT_ETHER_BLOOMING_FLOWER ) {
+		if ( traitmode == 0 ) {
+			traitref = 3, -1, 0, 1, 0, 100, -1
+			if ( trait(tid) < 0 ) {
+				traitrefn(2) = "", lang("あなたには美しい花が咲いている[寄生無効 [治癒" + limit((4 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 2) * (-1), -255, 0) + " 魅力+" + limit(1 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 8, 0, 255) + "]", "The beautiful flower is blooming on you. [Prevents-aliens Healing" + limit((4 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 2) * (-1), -255, 0) + " CHR" + limit(1 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 8, 0, 255) + "]")
+			}
+			traitrefn = lang("あなたに咲いていた花が散った。", "The flower that was blooming on you scattered."), lang("あなたの皮膚が破れて花が咲いた。", "Your skin has torn and flowers have bloomed.")
+			return 1
+		}
+		sdata(SKILL_NORMAL_HEALING, CHARA_PLAYER) = limit(sdata(SKILL_NORMAL_HEALING, CHARA_PLAYER) + limit((4 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 2) * (-1), -255, 0), sdata(SKILL_NORMAL_HEALING, CHARA_PLAYER) > 0, 9999)
+		sdata(SKILL_ATTR_CHA, CHARA_PLAYER) = limit(sdata(SKILL_ATTR_CHA, CHARA_PLAYER) + limit(1 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 8, 0, 255), sdata(SKILL_ATTR_CHA, CHARA_PLAYER) > 0, 9999)
+		return 1
+	}
+	if ( tid == TRAIT_ETHER_WEBBED ) {
+		if ( traitmode == 0 ) {
+			traitref = 3, -1, 0, 1, 0, 100, -1
+			if ( trait(tid) < 0 ) {
+				traitrefn(2) = "", lang("あなたには大きな水かきがついている[指装備不可 着衣水泳+" + limit(2 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 6, 0, 255) + "]", "You have a big webbeds. [Swimming+" + limit(2 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 6, 0, 255) + " Can't wear rings]")
+			}
+			traitrefn = lang("あなたの水かきは元通りになった。", "Your webbed has become smaller."), lang("あなたの指の間に大きな水かきができた。", "Large webbeds were generated between your fingers.")
+			return 1
+		}
+		sdata(SKILL_NORMAL_SWIMMING, CHARA_PLAYER) = limit(sdata(SKILL_NORMAL_SWIMMING, CHARA_PLAYER) + limit(2 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 6, 0, 255), sdata(SKILL_NORMAL_SWIMMING, CHARA_PLAYER) > 0, 9999)
+		return 1
+	}
+	if ( tid == TRAIT_ETHER_THICK_ARMS ) {
+		if ( traitmode == 0 ) {
+			traitref = 3, -1, 0, 1, 0, 100, -1
+			if ( trait(tid) < 0 ) {
+				traitrefn(2) = "", lang("あなたの腕は胴より太い[腕装備不可 筋力+" + limit(5 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 6, 0, 255) + "]", "Your arms are thicker than your torso. [STR+" + limit(5 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 6, 0, 255) + " Can't wear gloves]")
+			}
+			traitrefn = lang("あなたの腕は元通りになった。", "Your arms became restored."), lang("あなたの腕が胴より太くなった。", "Your arms become thicker than your torso.")
+			return 1
+		}
+		sdata(SKILL_ATTR_STR, CHARA_PLAYER) = limit(sdata(SKILL_ATTR_STR, CHARA_PLAYER) + limit(5 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 6, 0, 255), sdata(SKILL_ATTR_STR, CHARA_PLAYER) > 0, 9999)
+		return 1
+	}
+	if ( tid == TRAIT_ETHER_BLADE_HANDS ) {
+		if ( traitmode == 0 ) {
+			traitref = 3, -1, 0, 1, 0, 100, -1
+			if ( trait(tid) < 0 ) {
+				traitrefn(2) = "", lang("あなたの手は刃物になっている[手装備不可 首狩り攻撃会得]", "Your hands are blades. [Can't wear weapons, Available Decapitation]")
+			}
+			traitrefn = lang("あなたの手は元通りになった。", "Your hands became restored."), lang("あなたの手が鋭い刃物に変化した。", "Your hands has turned into sharp blades.")
+			return 1
+		}
+		return 1
+	}
+	if ( tid == TRAIT_ETHER_TORN_MOUTH ) {
+		if ( traitmode == 0 ) {
+			traitref = 3, -1, 0, 1, 0, 100, -1
+			if ( trait(tid) < 0 ) {
+				traitrefn(2) = "", lang("あなたの口は裂けている[魅力" + limit((4 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 8) * (-1), -255, 0) + " 貪食の牙会得]", "Your mouth is torn. [CHR" + limit((4 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 8) * (-1), -255, 0) + " Available Voracity Fang]")
+			}
+			traitrefn = lang("あなたの口は元通りになった。", "Your mouth became restored."), lang("あなたの口が大きく裂けた。", "Your mouth began to torn greatly.")
+			return 1
+		}
+		sdata(SKILL_ATTR_CHA, CHARA_PLAYER) = limit(sdata(SKILL_ATTR_CHA, CHARA_PLAYER) + limit((4 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 8) * (-1), -255, 0), sdata(SKILL_ATTR_CHA, CHARA_PLAYER) > 0, 9999)
+		return 1
+	}
+	if ( tid == TRAIT_ETHER_MULTIPLE_MOUTHS ) {
+		if ( traitmode == 0 ) {
+			traitref = 3, -1, 0, 1, 0, 100, -1
+			if ( trait(tid) < 0 ) {
+				traitrefn(2) = "", lang("あなたには口が複数ある[耐久" + limit((4 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 6) * (-1), -255, 0) + " 食事ターン半減]", "You have multiple mouths. [END" + limit((4 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 6) * (-1), -255, 0) + " Halve eating turn]")
+			}
+			traitrefn = lang("あなたの口は元通りの数になった。", "Your mouth has returned to its original number."), lang("あなたの皮膚が割れて新たな口が形成された。", "Your skin cracked and a new mouth was formed.")
+			return 1
+		}
+		sdata(SKILL_ATTR_CON, CHARA_PLAYER) = limit(sdata(SKILL_ATTR_CON, CHARA_PLAYER) + limit((4 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 6) * (-1), -255, 0), sdata(SKILL_ATTR_CON, CHARA_PLAYER) > 0, 9999)
+		return 1
+	}
+	if ( tid == TRAIT_ETHER_ABNORMAL_LIBIDO ) {
+		if ( traitmode == 0 ) {
+			traitref = 3, -1, 0, 1, 0, 100, -1
+			if ( trait(tid) < 0 ) {
+				traitrefn(2) = "", lang("あなたの精力は異常だ[SP+20% 意志" + limit((4 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 4) * (-1), -255, 0) + " 習得" + limit((4 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 4) * (-1), -255, 0) + "]", "Your libido is abnormal. [SP+20% WIL" + limit((4 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 4) * (-1), -255, 0) + " LER" + limit((4 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 4) * (-1), -255, 0) + "]")
+			}
+			traitrefn = lang("あなたの精力は元通りになった。", "Your libido has subsided."), lang("あなたは精力が病的なまでにみなぎってきた。", "You have full of libido pathologically.")
+			return 1
+		}
+		sdata(SKILL_ATTR_WIL, CHARA_PLAYER) = limit(sdata(SKILL_ATTR_WIL, CHARA_PLAYER) + limit((4 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 4) * (-1), -255, 0), sdata(SKILL_ATTR_WIL, CHARA_PLAYER) > 0, 9999)
+		sdata(SKILL_ATTR_LER, CHARA_PLAYER) = limit(sdata(SKILL_ATTR_LER, CHARA_PLAYER) + limit((4 + cdata(CDATA_LEVEL, CHARA_PLAYER) / 4) * (-1), -255, 0), sdata(SKILL_ATTR_LER, CHARA_PLAYER) > 0, 9999)
+		return 1
+	}
+	if ( tid == TRAIT_ETHER_TENTACLES ) {
+		if ( traitmode == 0 ) {
+			traitref = 3, -2, 0, 1, 0, 100, -1
+			if ( trait(tid) < 0 ) {
+				traitrefn(2) = "", lang("あなたには細い触手が生えている[戦闘・干渉時に触手暴走]", "Thin tentacles are growing from you. [Tentacles runaway during battle and interference]"), lang("あなたには太い触手が生えている[戦闘・干渉時に強触手暴走]", "Thick tentacles are growing from you. [Strong tentacles runaway during battle and interference]")
+			}
+			traitrefn = lang("あなたの触手はしなびた。", "Your tentacles have shrunk."), lang("あなたの体から触手が生えてきた。", "Tentacles have grown from your body.")
+			return 1
+		}
 		return 1
 	}
 	return 0

@@ -1649,6 +1649,9 @@ if instr(s,0,%1)!-1{	%c\
 	if ( cnvdate_arg2 == 1 ) {
 		locvar_cnvdate_s += "" + locvar_cnvdate_hour + lang("時", "h")
 	}
+   	if ( cnvdate_arg2 == 2 ) {
+   		locvar_cnvdate_s = "" + locvar_cnvdate_month + lang("月", "/") + locvar_cnvdate_day + lang("日", " ") + locvar_cnvdate_hour + lang("時", "h")
+   	}
 	return locvar_cnvdate_s
 
 #defcfunc cnvplaytime int cnvplaytime_arg1
@@ -1890,8 +1893,8 @@ if instr(s,0,%1)!-1{	%c\
 	dim rainx, maxrain * 2
 	dim rainy, maxrain * 2
 	sdim fltnrace
-	dim card, 4, 1000
-	dim deck, 1000
+	dim card, 4, MAX_CARD
+	dim deck, MAX_CARD
 	gosub *sRefDefine
 	gosub *bRefDefine
 	gosub *mRefDefine

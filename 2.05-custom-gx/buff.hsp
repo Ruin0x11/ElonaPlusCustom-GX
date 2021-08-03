@@ -79,6 +79,10 @@
 	buffname(BUFF_LUCK) = lang("幸運", "Luck")
 	bufftxt(0, BUFF_LUCK) = lang("に幸運な日が訪れた！", " feel"), " very lucky today!"
 
+	bdataref(0, BUFF_LIFE_TASTING) = BUFF_TYPE_FOOD, 1, 0
+	buffname(BUFF_LIFE_TASTING) = lang("人生の含味", "Life Tasting")
+	bufftxt(0, BUFF_LIFE_TASTING) = lang("はスキルの成長期に突入した。", "enters"), " a period of rapid skill growth."
+
 	bdataref(0, BUFF_GROW_STRENGTH) = BUFF_TYPE_FOOD, 1, 0
 	buffname(BUFF_GROW_STRENGTH) = lang("筋力の成長", "Grow Strength")
 	bufftxt(0, BUFF_GROW_STRENGTH) = lang("は筋力の成長期に突入した。", " enter"), " a period of rapid STR growth."
@@ -192,7 +196,7 @@
 	bufftxt(0, BUFF_FORM_SHIFT_DELTA) = lang("に変化した。", " change"), " form."
 
 	bdataref(0, BUFF_FORM_SHIFT_OMEGA) = BUFF_TYPE_BUFF, 1, 0
-	buffname(BUFF_FORM_SHIFT_OMEGA) = lang("ファイナルシフト", "Final Shift")
+	buffname(BUFF_FORM_SHIFT_OMEGA) = lang("ファイナルシフト", "Final Form Shift")
 	bufftxt(0, BUFF_FORM_SHIFT_OMEGA) = lang("に変化した。", " change"), " form."
 
 	bdataref(0, BUFF_RESOLUTION_HAND) = BUFF_TYPE_BUFF, 1, 0
@@ -206,6 +210,14 @@
 	bdataref(0, BUFF_SHIELD_PARRY) = BUFF_TYPE_BUFF, 1, 0
 	buffname(BUFF_SHIELD_PARRY) = lang("シールドパリィ", "Shield Parry")
 	bufftxt(0, BUFF_SHIELD_PARRY) = lang("は盾の力を引き出した。", " bring"), " out the power of the shield."
+
+	bdataref(0, BUFF_JYUSOU_GOUSHIN) = BUFF_TYPE_BUFF, 1, 0
+	buffname(BUFF_JYUSOU_GOUSHIN) = lang("呪装豪身", "Jyusou Goushin")
+	bufftxt(0, BUFF_JYUSOU_GOUSHIN) = lang("は呪いの力を引き出した。", "bring out"), " the power of curse."
+
+	bdataref(0, BUFF_HARMONIC_ASSAULT) = BUFF_TYPE_BUFF, 1, 0
+	buffname(BUFF_HARMONIC_ASSAULT) = lang("ハーモニックアサルト", "Harmonic Assault")
+	bufftxt(0, BUFF_HARMONIC_ASSAULT) = lang("は言葉の力を引き出した。", "bring out"), " the power of voice."
 
 	bdataref(0, BUFF_GRAVITY_ACCEL) = BUFF_TYPE_BUFF, 1, 0
 	buffname(BUFF_GRAVITY_ACCEL) = lang("重力偏向", "Gravity Accel")
@@ -239,6 +251,14 @@
 	buffname(BUFF_SHOOTING_MODE) = lang("シューティングモード", "Shooting Mode")
 	bufftxt(0, BUFF_SHOOTING_MODE) = lang("は姿勢を固定した。", " shift"), " to shooting mode."
 
+	bdataref(0, BUFF_OVERLIMIT_THROW) = BUFF_TYPE_BUFF, 1, 0
+	buffname(BUFF_OVERLIMIT_THROW) = lang("一投入魂", "OverLimit-Throw")
+	bufftxt(0, BUFF_OVERLIMIT_THROW) = lang("は投擲に魂を込めた。", "pour"), " mana into throwing."
+
+	bdataref(0, BUFF_DATA_SCAN) = BUFF_TYPE_BUFF, 1, 0
+	buffname(BUFF_DATA_SCAN) = lang("データスキャン", "Data scan")
+	bufftxt(0, BUFF_DATA_SCAN) = lang("はスキャンモードに移行した。", "shift"), " to the scanning mode."
+
 	bdataref(0, BUFF_DISINFECTION) = BUFF_TYPE_BUFF, 1, 0
 	buffname(BUFF_DISINFECTION) = lang("ディスインフェクション", "Disinfection")
 	bufftxt(0, BUFF_DISINFECTION) = lang("は汚染から守られた。", " receive"), " pollution protection."
@@ -263,6 +283,21 @@
 			}
 		}
 		cdata(STARTING_CDATA_FOOD_EXP + (calcbuff_buffid - BUFF_GROW_STRENGTH + SKILL_ATTR_STR) - RANGE_CDATA_FOOD_EXP, calcbuff_charid) = locvar_calcbuff_p
+		return
+	}
+	if ( calcbuff_buffid == BUFF_LIFE_TASTING ) {
+		dur = 10 + calcbuff_power / 10
+		locvar_calcbuff_p = calcbuff_power
+		if ( calcbuff_charid < CHARA_PLAYER ) {
+			if ( calcbuff_charid == CALCBUFF_DURATION ) {
+				return
+			}
+			else {
+				buffdesc = lang("全スキルの成長率を" + locvar_calcbuff_p + "%上昇", "Increases the growth rate skills by " + locvar_calcbuff_p + "")
+				return
+			}
+		}
+		cdata(270 + 19 - 10, calcbuff_charid) = locvar_calcbuff_p
 		return
 	}
 	if ( calcbuff_buffid == BUFF_HOLY_SHIELD ) {
@@ -306,7 +341,7 @@
 				return
 			}
 			else {
-				buffdesc = lang("体力、スタミナの回復強化", "Enhances regeneration")
+				buffdesc = lang("体力、スタミナの回復強化/震え耐性", "Enhances regeneration/RES+ chills")
 				return
 			}
 		}
@@ -465,7 +500,7 @@
 				return
 			}
 			else {
-				buffdesc = lang("物理攻撃＋10％と物理防御＋5％と" + locvar_calcbuff_p + "の加速", "Attack +10%/Defense +5%/Speed +" + locvar_calcbuff_p)
+				buffdesc = lang("通常攻撃＋10％と通常防御＋5％と" + locvar_calcbuff_p + "の加速", "Attack +10%/Defense +5%/Speed +" + locvar_calcbuff_p)
 				return
 			}
 		}
@@ -532,6 +567,29 @@
 		cdata(CDATA_CONDITION_CONFUSE, calcbuff_charid) = 0
 		return
 	}
+	if ( calcbuff_buffid == BUFF_JYUSOU_GOUSHIN ) {
+		dur = 66
+		locvar_calcbuff_p = limit(66 + calcbuff_power / 30, 66, 666)
+		if ( calcbuff_charid < CHARA_PLAYER ) {
+			if ( calcbuff_charid == CALCBUFF_DURATION ) {
+				return
+			}
+			else {
+				buffdesc = lang("筋力耐久器用感覚意志魔力速度を" + locvar_calcbuff_p + "上昇/耐恐怖/魔法耐性上昇", "Increases STR,DEX by 10% and " + locvar_calcbuff_p + "/RES+ fear,confusion")
+				return
+			}
+		}
+		sdata(SKILL_ATTR_STR, calcbuff_charid) += locvar_calcbuff_p
+		sdata(SKILL_ATTR_CON, calcbuff_charid) += locvar_calcbuff_p
+		sdata(SKILL_ATTR_DEX, calcbuff_charid) += locvar_calcbuff_p
+		sdata(SKILL_ATTR_PER, calcbuff_charid) += locvar_calcbuff_p
+		sdata(SKILL_ATTR_WIL, calcbuff_charid) += locvar_calcbuff_p
+		sdata(SKILL_ATTR_MAG, calcbuff_charid) += locvar_calcbuff_p
+		sdata(SKILL_ATTR_SPD, calcbuff_charid) += locvar_calcbuff_p
+		cdata(CDATA_CONDITION_FEAR, calcbuff_charid) = 0
+		sdata(SKILL_RES_MAGIC, calcbuff_charid) += 80 + calcbuff_power / 20
+		return
+	}
 	if ( calcbuff_buffid == BUFF_SHOOTING_MODE ) {
 		dur = 25
 		locvar_calcbuff_p = 25
@@ -544,7 +602,35 @@
 				return
 			}
 		}
-		cdata(CDATA_CONDITION_BIND, calcbuff_charid) = 25
+		cdata(CDATA_CONDITION_BIND, calcbuff_charid) += 25
+		return
+	}
+	if ( calcbuff_buffid == BUFF_DATA_SCAN ) {
+		dur = 20
+		locvar_calcbuff_p = 20
+		if ( calcbuff_charid < CHARA_PLAYER ) {
+			if ( calcbuff_charid == CALCBUFF_DURATION ) {
+				return
+			}
+			else {
+				buffdesc = lang("分析率を上げやすくするが毎ターン微疲労", "To help raise the analysis rate/fatigue every turn/SP expend")
+				return
+			}
+		}
+		return
+	}
+	if ( calcbuff_buffid == BUFF_OVERLIMIT_THROW ) {
+		dur = 25
+		locvar_calcbuff_p = 25
+		if ( calcbuff_charid < CHARA_PLAYER ) {
+			if ( calcbuff_charid == CALCBUFF_DURATION ) {
+				return
+			}
+			else {
+				buffdesc = lang("瞑想依存で通常投擲強化/MP消費", "Throwing reinforced with meditation/MP expend")
+				return
+			}
+		}
 		return
 	}
 	if ( calcbuff_buffid == BUFF_DISINFECTION ) {
@@ -639,18 +725,15 @@
 				return
 			}
 			else {
-				buffdesc = lang("感覚・意志・習得が25％減少/詠唱成功率5％減少", "PER, WIL and LER -25%, Casting chance -5%")
+				buffdesc = lang("感覚・意志が20％減少/詠唱成功率3％減少", "PER and WIL -20%, Casting chance -3%")
 				return
 			}
 		}
 		if ( sdata(SKILL_ATTR_PER, calcbuff_charid) >= 1 ) {
-			sdata(SKILL_ATTR_PER, calcbuff_charid) = sdata(SKILL_ATTR_PER, calcbuff_charid) * 3 / 4
+			sdata(SKILL_ATTR_PER, calcbuff_charid) = sdata(SKILL_ATTR_PER, calcbuff_charid) * 4 / 5
 		}
 		if ( sdata(SKILL_ATTR_WIL, calcbuff_charid) >= 1 ) {
-			sdata(SKILL_ATTR_WIL, calcbuff_charid) = sdata(SKILL_ATTR_WIL, calcbuff_charid) * 3 / 4
-		}
-		if ( sdata(SKILL_ATTR_LER, calcbuff_charid) >= 1 ) {
-			sdata(SKILL_ATTR_LER, calcbuff_charid) = sdata(SKILL_ATTR_LER, calcbuff_charid) * 3 / 4
+			sdata(SKILL_ATTR_WIL, calcbuff_charid) = sdata(SKILL_ATTR_WIL, calcbuff_charid) * 4 / 5
 		}
 		return
 	}
@@ -662,7 +745,7 @@
 				return
 			}
 			else {
-				buffdesc = lang("20％の確率で行動ターン放棄/パワーゲージ逓減", "Skip turn with 20% chance/Diminishes power gauge")
+				buffdesc = lang("10％の確率で行動ターン放棄/パワーゲージ逓減", "Skip turn with 10% chance/Diminishes power gauge")
 				return
 			}
 		}
@@ -725,7 +808,7 @@
 				return
 			}
 			else {
-				buffdesc = lang("ﾊﾟﾜｰ" + locvar_calcbuff_p + "の呪い(hex)への抵抗", "Hex protection (power: " + locvar_calcbuff_p + ")")
+				buffdesc = lang("ﾊﾟﾜｰ" + locvar_calcbuff_p + "の呪い(hex)への抵抗/怯み耐性", "Hex protection (power: " + locvar_calcbuff_p + ")/RES+ wince")
 				return
 			}
 		}
@@ -859,6 +942,20 @@
 		sdata(SKILL_ATTR_STR, calcbuff_charid) = sdata(SKILL_ATTR_STR, calcbuff_charid) * locvar_calcbuff_p / 100 + 10
 		sdata(SKILL_ATTR_PER, calcbuff_charid) = sdata(SKILL_ATTR_PER, calcbuff_charid) * locvar_calcbuff_p / 100 + 10
 		sdata(SKILL_ATTR_MAG, calcbuff_charid) = sdata(SKILL_ATTR_MAG, calcbuff_charid) * locvar_calcbuff_p / 100 + 10
+		return
+	}
+	if ( calcbuff_buffid == BUFF_HARMONIC_ASSAULT ) {
+		dur = 50
+		locvar_calcbuff_p = 50
+		if ( calcbuff_charid < CHARA_PLAYER ) {
+			if ( calcbuff_charid == CALCBUFF_DURATION ) {
+				return
+			}
+			else {
+				buffdesc = lang("交渉系技能に分析スキルで連携・中断耐性", "Cooperation, interruption resistance of negotiate abilities")
+				return
+			}
+		}
 		return
 	}
 	if ( calcbuff_buffid == BUFF_CONTINGENCY ) {
@@ -1004,21 +1101,21 @@
 				return
 			}
 			else {
-				buffdesc = lang("一度だけ物理/魔法/放射技能での攻撃力上昇", "Strengthens Physical/Magical/Breath damage for one attack")
+				buffdesc = lang("一度だけ通常攻撃/魔法/放射技能での攻撃力上昇", "Strengthens Physical/Magical/Breath damage for one attack")
 				return
 			}
 		}
 		return
 	}
 	if ( calcbuff_buffid == BUFF_EMERGENCY_EVASION ) {
-		dur = 10
+		dur = 15
 		locvar_calcbuff_p = 25
 		if ( calcbuff_charid < CHARA_PLAYER ) {
 			if ( calcbuff_charid == (-1) ) {
 				return
 			}
 			else {
-				buffdesc = lang("軽装備時、通常発生のクリティカルを回避/物理ダメージ小軽減", "Light equipment increases critical evasion/Small physical damage reduction")
+				buffdesc = lang("軽装備時、クリティカル発生を無効化/通常ダメージ小軽減", "Light equipment prevents criticals/Small physical damage reduction")
 				return
 			}
 		}
@@ -1046,7 +1143,7 @@
 				return
 			}
 			else {
-				buffdesc = lang("重装備時、物理大ダメージ軽減/重量命中ペナルティ無効/耐朦朧", "Heavy equipment reduces physical damage taken/No weight hit penalty/RES+ dim")
+				buffdesc = lang("重装備時、通常大ダメージ軽減/重量命中ペナルティ無効/耐朦朧", "Heavy equipment reduces physical damage taken/No weight hit penalty/RES+ dim")
 				return
 			}
 		}
@@ -1074,10 +1171,11 @@
 				return
 			}
 			else {
-				buffdesc = lang("回避判定を追加し回避成功時反撃", "Add chance to avoid attacks, counterattacks when successful")
+				buffdesc = lang("回避成功時反撃/戦術見切り依存の回避スキル上昇", "Increase Evasion with Tactics & Greater Evasion, counterattack when evading")
 				return
 			}
 		}
+		sdata(SKILL_NORMAL_EVASION, calcbuff_charid) += (sdata(SKILL_NORMAL_TACTICS, calcbuff_charid) + sdata(SKILL_NORMAL_GREATER_EVASION, calcbuff_charid) + 2) / 2
 		return
 	}
 	if ( calcbuff_buffid == BUFF_ATTRIBUTE ) {
@@ -1102,7 +1200,7 @@
 				return
 			}
 			else {
-				buffdesc = lang("特定スキル上昇/一部アイテム使用時ゲージ増加", "Increases MagicDevice,Throw,Alchemy")
+				buffdesc = lang("特定スキル上昇/一部アイテム使用時ゲージ増加", "Increases Magic Device, Throw, Alchemy, Literacy")
 				return
 			}
 		}
