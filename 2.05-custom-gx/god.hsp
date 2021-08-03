@@ -498,9 +498,16 @@
 		goto *turn_end
 	}
 	if ( gdata(GDATA_AREA) == AREA_CHAOS_CRADLE & gdata(GDATA_LEVEL) == 179 ) {
-		txtef COLOR_PURPLE
-		txtmore
-		txt lang(godname(cdata(CDATA_GOD, CHARA_PLAYER)) + "の助けも、ここに届かないようだ…。", "" + godname(cdata(CDATA_GOD, CHARA_PLAYER)) + "'s help does not seem to reach here...")
+		if ( gdata(GDATA_FLAG_MAIN) < 845 ) {
+			txtef COLOR_PURPLE
+			txtmore
+			txt lang(godname(cdata(CDATA_GOD, CHARA_PLAYER)) + "の助けも、ここに届かないようだ…。", "" + godname(cdata(CDATA_GOD, CHARA_PLAYER)) + "'s help does not seem to reach here...")
+		}
+		if ( gdata(GDATA_FLAG_MAIN) >= 845 & gdata(GDATA_FLAG_MAIN) < 900 ) {
+			txtef COLOR_PURPLE
+			txtmore
+			txt lang(godname(cdata(CDATA_GOD, CHARA_PLAYER)) + "も、今は余裕がないようだ…。", "It seems that " + godname(cdata(CDATA_GOD, CHARA_PLAYER)) + " cannot afford now...")
+		}
 		goto *turn_end
 	}
 	animeid = ANIMATION_HOLY
