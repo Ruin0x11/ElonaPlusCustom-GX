@@ -40,8 +40,11 @@
 					id = RANDOM_EVENT_FAITH
 				}
 			}
-			if ( rnd(80) == 0 ) {
+			if ( rnd(120) == 0 ) {
 				id = RANDOM_EVENT_DREAM_LOSE_RES, 120
+			}
+			if ( rnd(100) == 0 ) {
+				id = RANDOM_EVENT_DREAM_CONNECT
 			}
 			if ( rnd(50) == 0 ) {
 				id = RANDOM_EVENT_DREAM_GROWTH
@@ -49,8 +52,11 @@
 			if ( rnd(25) == 0 ) {
 				id = RANDOM_EVENT_DREAM_MAGIC
 			}
-			if ( rnd(100) == 0 ) {
+			if ( rnd(150) == 0 ) {
 				id = RANDOM_EVENT_DREAM_CURSE, 65
+			}
+			if ( rnd(150) == 0 ) {
+				id = RANDOM_EVENT_DREAM_STRANGE_STAIRS
 			}
 			if ( rnd(20) == 0 ) {
 				id = RANDOM_EVENT_DREAM_REGEN_HP
@@ -58,8 +64,11 @@
 			if ( rnd(20) == 0 ) {
 				id = RANDOM_EVENT_DREAM_REGEN_MP
 			}
-			if ( rnd(70) == 0 ) {
+			if ( rnd(120) == 0 ) {
 				id = RANDOM_EVENT_THIEF, 40
+			}
+			if ( rnd(300) == 0 ) {
+				id = RANDOM_EVENT_DREAM_BUTTERFLY
 			}
 			if ( rnd(50) == 0 ) {
 				id = RANDOM_EVENT_DREAM_MATERIAL
@@ -67,8 +76,11 @@
 			if ( rnd(300) == 0 ) {
 				id = RANDOM_EVENT_DREAM_POTENTIAL
 			}
-			if ( rnd(90) == 0 ) {
+			if ( rnd(120) == 0 ) {
 				id = RANDOM_EVENT_DREAM_MUTATION, 70
+			}
+			if ( rnd(100) == 0 ) {
+				id = RANDOM_EVENT_DREAM_SHEEP_NIGHTMARE
 			}
 			if ( rnd(50) == 0 | soine == 2000 ) {
 				id = RANDOM_EVENT_SLEEP_SHARING
@@ -867,6 +879,209 @@
 		gosub *re_select
 		goto *random_eventProc_SWEND1
 	}
+	if ( _switch_val == RANDOM_EVENT_DREAM_STRANGE_STAIRS | _switch_sw ) {
+		_switch_sw = 0
+		if ( gdata(GDATA_FLAG_STRANGE_STAIRS_DREAM) == 0 ) {
+			s = lang("奇妙な階段の夢", "Strange Stairs Dream")
+			file = "bg_re18"
+			buff = lang("あなたは布一枚身に着けていない状態で、薄暗い階段の途中に一人立っていた。階段の上には闇が広がっておりその先は見えない…。階段のずっと下には、焔のような灯りが小さくゆらめいているのが見える。", "You were standing alone on the dim stairs without a piece of cloth. The darkness spreads on the top of the stairs and you cannot see beyond it. At the bottom of the stairs, you can see small flickering lights.")
+			chatList 1, lang("階段を下りてみよう", "I go down the stairs")
+			chatList 2, lang("近づかない方がいい気がする", "I feel that is better not to approach the light.")
+			chatList 3, lang("全裸最高！", "Naked is wonderful!")
+			gosub *re_select
+			msg_clear
+			if ( rtval == 1 ) {
+				txt lang("階段を下りきったところで洞窟を見つけた。そこであなたの意識は途切れた。", "You find a cave where you have gone down the stairs. At that time your consciousness was interrupted.")
+				gdata(GDATA_FLAG_STRANGE_STAIRS_DREAM)++
+			}
+			if ( rtval == 2 ) {
+				txt lang("あなたは警戒してその場から動けなかった…。", "You did not move from the spot on alert ....")
+			}
+			if ( rtval == 3 ) {
+				txt lang("あなたは解放感に任せて踊り狂った！", "You danced madly with a feeling of liberation!")
+			}
+			skillexp SKILL_ATTR_PER, CHARA_PLAYER, 300
+			goto *random_eventProc_SWEND1
+		}
+		if ( gdata(GDATA_FLAG_STRANGE_STAIRS_DREAM) == 1 ) {
+			s = lang("奇妙な洞窟の夢", "Strange Cave Dream")
+			file = "bg_re20"
+			buff = lang("あなたは布一枚身に着けていない状態で、奇妙な洞窟の前に立っていた。背後には薄暗い階段がある。洞窟の両脇には、焔が怪しくゆらめている。", "You were standing in front of a strange cave, without a piece of cloth. There is a dim stairs behind. Flames are shaking on both sides of the cave.")
+			chatList 1, lang("入ってみよう", "I enter the cave.")
+			chatList 2, lang("他の所も探してみよう", "I will look elsewhere.")
+			chatList 3, lang("全裸万歳！", "Naked is great!")
+			gosub *re_select
+			msg_clear
+			if ( rtval == 1 ) {
+				txt lang("おそるおそる洞窟を進んでいく。その途中であなたの意識は途切れた。", "You go through the cave. On the way, your consciousness was interrupted.")
+				gdata(GDATA_FLAG_STRANGE_STAIRS_DREAM)++
+			}
+			if ( rtval == 2 ) {
+				txt lang("あなたは階段を戻りながら、他に何かないか探した。…特に何も見つけられなかった。", "While return the stairs, you looked for something else...You couldn't find anything.")
+				gdata(GDATA_FLAG_STRANGE_STAIRS_DREAM)--
+			}
+			if ( rtval == 3 ) {
+				txt lang("あなたは解放感に任せて飛び跳ね、転げまわった！", "You jumped around  with a feeling of liberation!")
+			}
+			skillexp SKILL_ATTR_PER, CHARA_PLAYER, 300
+			goto *random_eventProc_SWEND1
+		}
+		if ( gdata(GDATA_FLAG_STRANGE_STAIRS_DREAM) == 2 ) {
+			s = lang("奇妙な二人組の夢", "Strange Twosome Dream")
+			file = "bg_re20"
+			buff = lang("あなたは布一枚身に着けていない状態で、洞窟を進んでいる。しかし見慣れない格好の二人組が現れ、あなたの前に立ちはだかった。二人組はあなたを品定めするように見ている。", "You are traveling in a cave without a piece of cloth. But an unfamiliar looking duo appeared and stood in front of you. The duo are staring at you.")
+			chatList 1, lang("服が欲しい", "I want clothes.")
+			chatList 2, lang("は、恥ずかしすぎる", "I'm embarrassed!")
+			chatList 3, lang("お前らも裸になれ！", "You guys also Take off your clothes!")
+			gosub *re_select
+			msg_clear
+			if ( rtval == 1 ) {
+				txt lang("慣れた手つきで服や道具を渡され、先に進むように促された。そのまま進み、洞窟の出口に辿り着いたところであなたの意識は途切れた。", "You have been given clothes and utensils from them and have been prompted to proceed. Proceed as it is and when you reach the exit of the cave, your consciousness is interrupted.")
+				gdata(GDATA_FLAG_STRANGE_STAIRS_DREAM)++
+			}
+			if ( rtval == 2 ) {
+				txt lang("あなたは顔を隠し、背を向けて逃げ出した。洞窟の入口まで戻ったが、特に二人組が追ってくる気配はなかった。", "You hid your face, turned away and ran away. You returned to the cave entrance, but there was no sign of the duo pursuing.")
+				gdata(GDATA_FLAG_STRANGE_STAIRS_DREAM)--
+			}
+			if ( rtval == 3 ) {
+				txt lang("あなたは二人組の服をつかみ、強引に脱がせようとした！「なんだこいつ…」「帰れ変態」", "You grabbed the duo's clothes and tried to forcibly undress them. The duo thought you were a pervert.")
+			}
+			skillexp SKILL_ATTR_PER, CHARA_PLAYER, 300
+			goto *random_eventProc_SWEND1
+		}
+		if ( gdata(GDATA_FLAG_STRANGE_STAIRS_DREAM) == 3 ) {
+			s = lang("奇妙な長い階段の夢", "Strange Long Stairs Dream")
+			file = "bg_re18"
+			buff = lang("洞窟の出口にあなたは立っていた。洞窟の先には見るからに長い階段があり、下にずっと続いている…。", "You stood at the exit of the cave. There is a long stairs to see from the cave...")
+			chatList 1, lang("階段を下りてみよう", "I go down the stairs.")
+			chatList 2, lang("二人組に聞きたいことがある", "There are several things I want to ask the duo.")
+			chatList 3, lang("服などいらぬ！", "I don't need clothes!")
+			gosub *re_select
+			msg_clear
+			if ( rtval == 1 ) {
+				txt lang("階段は何百段も続いた。下りきったところであなたの意識は途切れた。", "The stairs continued for hundreds of steps. At the end of the stairs your consciousness was interrupted.")
+				gdata(GDATA_FLAG_STRANGE_STAIRS_DREAM)++
+			}
+			if ( rtval == 2 ) {
+				txt lang("あなたは洞窟に戻り二人組を探した。しかし見つからず、入口にたどり着くこともなく、洞窟内を彷徨い続けた…。", "You return to the cave and seek for the duo. However, the duo were not found, without ever reaching the entrance, you continued wandering inside the cave...")
+				gdata(GDATA_FLAG_STRANGE_STAIRS_DREAM)--
+			}
+			if ( rtval == 3 ) {
+				txt lang("あなたは二人組から渡された服を捨て、全身で解放感にひたった！", "You throw away the clothes passed by the duo, you felt a feeling of liberation in your whole body!")
+			}
+			skillexp SKILL_ATTR_PER, CHARA_PLAYER, 300
+			goto *random_eventProc_SWEND1
+		}
+		if ( gdata(GDATA_FLAG_STRANGE_STAIRS_DREAM) == 4 ) {
+			s = lang("奇妙な門の夢", "Strange Gate Dream")
+			file = "bg_re19"
+			buff = lang("あなたは閉ざされた門の前に立っていた。背後には長い階段がある。あなたはぼんやりとする意識の中、この門が何か大きな境界であることを感じとった。", "You were standing in front of the closed gate. There are long stairs behind. You felt in a hazy consciousness that this gate is some big boundary.")
+			chatList 1, lang("門の先へ進もう", "I will open this gate.") 
+			chatList 2, lang("これ以上は危険な気がする", "It is dangerous to proceed.") 
+			chatList 3, lang("門を破壊する！", "I will destroy this gate!") 
+			gosub *re_select
+			msg_clear
+			if ( rtval == 1 ) {
+				txt lang("あなたは意を決し、門に手をかけた。開いた先の光景は…。", "You are ready and pushed the gate with your hand.")
+				txtgod cdata(CDATA_GOD, CHARA_PLAYER), GOD_TEXT_WIP
+			}
+			if ( rtval == 2 ) {
+				txt lang("警戒したあなたは階段に戻った。上がりきったところであなたの意識は途切れた。", "You are alert and return to the stairs. When you have gone up the stairs, your consciousness has ceased.")
+				gdata(GDATA_FLAG_STRANGE_STAIRS_DREAM)--
+			}
+			if ( rtval == 3 ) {
+				txt lang("事態に気づいたのか、門の先から武装した人々が駆けつけてきた。取り押さえようとする人々に抵抗し、取っ組み合いを始めたところであなたの意識は途切れた。", "Armed people rushed from behind the gate, noticing the situation. Your consciousness was cut off when you started resistance.")
+			}
+			skillexp SKILL_ATTR_PER, CHARA_PLAYER, 300
+			goto *random_eventProc_SWEND1
+		}
+		goto *random_eventProc_SWEND1
+		_switch_sw++
+	}
+	if ( _switch_val == RANDOM_EVENT_DREAM_SHEEP_NIGHTMARE | _switch_sw ) {
+		_switch_sw = 0
+		s = lang("羊の悪夢", "Sheep Nightmare")
+		file = "bg_re5"
+		buff = lang("あなたは羊の群れに取り囲まれていた。辺りは見渡す限り、妙にカラフルな羊で埋め尽くされている。あちこちでメェメェと鳴き声が響き、死ぬほどうるさい…。", "You were surrounded by a flock of sheep.As far as the eye can see, filled with strangely colorful sheeps. Here and there in the noisy echoing the sheep cry...")
+		chatList 1, lang("羊を数える", "(Counting sheeps)") 
+		chatList 2, lang("羊に襲いかかる", "(Attacking sheeps)") 
+		gosub *re_select
+		msg_clear
+		if ( rtval == 1 ) {
+			txt lang("羊が一匹…羊が二匹…", "One sheep...two sheep...")
+			if ( rnd(25) == 0 ) {
+				txt lang("数えている内に、あなたは紫色の羊と目が合った。", "Within that are counting, you saw the eyes of purple sheep.")
+				txtef COLOR_RED2
+				txt lang("目が合ってしまった。", "You saw the eyes of purple sheep.")
+				snd SOUNDLIST_CURSE2
+				addbuff tc, BUFF_NIGHTMARE, 99999, 666
+			}
+			else {
+				txt lang("数えている内に、あなたは深い眠りへ落ちていった…。", "Within that are counting, you went down to the deep sleep...")
+				skillexp SKILL_NORMAL_EVASION, CHARA_PLAYER, 1000
+			}
+		}
+		if ( rtval == 2 ) {
+			if ( rnd(2) == 0 ) {
+				txt lang("襲われた羊たちは…突然風に乗って舞い上がり、タンポポの綿毛のように飛んでいってしまった。", "Sheeps suddenly soar in the wind, flew like a dandelion fluff.")
+			}
+			else {
+				txtef COLOR_BLUE
+				txt lang("襲いかかろうとした瞬間、横から巨大な獏が現れた。獏は逃げる羊たちをバクバク食べて、食べ終わると消えてしまった。…辺りにはもう何もない。", "At the moment of the attack, a huge baku appeared from the side. Baku eats the fleeing sheeps, disappeared after eating...there is nothing around here.")
+			}
+		}
+		goto *random_eventProc_SWEND1
+		_switch_sw++
+	}
+	if ( _switch_val == RANDOM_EVENT_DREAM_CONNECT | _switch_sw ) {
+		_switch_sw = 0
+		tc = -1
+		repeat MAX_CHARA_TOTAL
+			if ( cnt == CHARA_PLAYER ) {
+				continue
+			}
+			if ( cdata(CDATA_EXIST, cnt) == CHAR_STATE_DEAD ) {
+				continue
+			}
+			if ( cdata(CDATA_IMPRESSION, cnt) < 100 ) {
+				continue
+			}
+			if ( rnd(10) != 0 ) {
+				continue
+			}
+			tc = cnt
+			break
+		loop
+		if ( tc <= CHARA_PLAYER ) {
+			goto *random_eventProc_SWEND1
+		}
+		snd SOUNDLIST_OFFER2
+		modimp tc, 20
+		s = lang("繋がる夢廻廊", "Dream Connect")
+		file = "bg_re14"
+		buff = lang("あなたの夢に、" + cdatan(CDATAN_AKA, tc) + cdatan(CDATAN_NAME, tc) + "が出てきた。夢なので、普段は話せないようなことを話したり、普段はできないようなことをして盛り上がった。", cdatan(CDATAN_AKA, tc) + cdatan(CDATAN_NAME, tc) + " came out in your dream. Because it was your dream, You talked about things you couldn't usually talk about, and did something that you couldn't usually do.")
+		chatList 1, lang("楽しい！", "Fun!") 
+		gosub *re_select
+		goto *random_eventProc_SWEND1
+		_switch_sw++
+	}
+	if ( _switch_val == RANDOM_EVENT_DREAM_BUTTERFLY | _switch_sw ) {
+		_switch_sw = 0
+		s = lang("胡蝶の夢", "Dream?")
+		file = "bg_re17"
+		buff = lang("夢の中のあなたは違う姿をしていた。あなたがあなたの生活を眺めていた。夢の中のあなたは、今いる場所が現実だと思い込んでいた。あなたはコンピュータの画面を見て文章を読んでいる…。それを見ている、もう一人のあなたには気づかずに。", "In the dream you had a different appearance. You were watching your life. In a dream you convinced that it is reality. You are reading the text on the computer screen. You are unaware that you are being seen by another you.")
+		chatList 1, lang("これは現実だ", "This is reality.") 
+		chatList 2, lang("これは夢だ", "This is dream.") 
+		chatList 3, lang("あなたは誰？", "Who are you?") 
+		gosub *re_select
+		snd SOUNDLIST_ATK_MIND
+		dmgsan CHARA_PLAYER, 50
+		if ( rnd(5) == 0 ) {
+			skillexp SKILL_ATTR_WIL, CHARA_PLAYER, 1000
+		}
+		goto *random_eventProc_SWEND1
+		_switch_sw++
+	}
 	if ( _switch_val == RANDOM_EVENT_SLEEP_SHARING | _switch_sw ) {
 		_switch_sw = 0
 		if ( soine == 2000 ) {
@@ -1442,18 +1657,14 @@
 	}
 	if ( _switch_val == RANDOM_EVENT_DREAM_GROWTH | _switch_sw ) {
 		_switch_sw = 0
-		repeat STARTING_SKILL_NORMAL
-			repeat
-				await
-				p = rnd(STARTING_SKILL_SPELL - STARTING_SKILL_WEAPON) + STARTING_SKILL_WEAPON
-				if ( sdataref(SKILL_DATAREF_USE, p) != 0 ) {
-					if ( sorg(p, CHARA_PLAYER) == 0 ) {
-						continue
-					}
-					modgrowth CHARA_PLAYER, p, 1
-					break
+		repeat STARTING_SKILL_SPELL - STARTING_SKILL_WEAPON, STARTING_SKILL_WEAPON
+			await
+			if ( sdataref(SKILL_DATAREF_USE, cnt) != SKILL_NONE ) {
+				if ( sorg(cnt, CHARA_PLAYER) == 0 ) {
+					continue
 				}
-			loop
+				modgrowth CHARA_PLAYER, cnt, 15
+			}
 		loop
 		s = lang("成長のきざし", "Development")
 		file = "bg_re4"
