@@ -1414,7 +1414,7 @@
 				goto *ai_followMove
 			}
 		}
-		goto *ai_actMain
+		goto *label_8753
 	}
 	if ( cdata(CDATA_RELATION, cc) < RELATION_ALLY ) {
 		if ( cbit(CHARA_BIT_SANDBAG, tc) ) {
@@ -2081,7 +2081,7 @@
 		if ( relationbetween(cc, tc) == (-3) ) {
 			cdata(CDATA_TARGET, cc) = tc
 			cdata(CDATA_AI_AGGRO, cc) += 4
-			goto *ai_actMain
+			goto *label_8753
 		}
 		else {
 			if ( cdata(CDATA_QUALITY, cc) > FIX_QUALITY_GREAT | cdata(CDATA_ID, cc) == CREATURE_ID_AILE_THE_ATTENDANT & cdata(CDATA_LEVEL, cc) > cdata(CDATA_LEVEL, tc) & cc >= MAX_CHARA_FOLLOWER | cbit(CHARA_BIT_SANDBAG, tc) | (cbit(CHARA_BIT_SUMMONED, tc) == TRUE & gdata(GDATA_AREA) == AREA_PET_ARENA) ) {
@@ -2310,7 +2310,7 @@
 	}
 	return 0
 
-*ai_actMain
+*label_8753
 	if ( tc == CHARA_PLAYER ) {
 		pcattacker = cc
 	}
@@ -2490,15 +2490,15 @@
 		powai = 0
 	}
 	if ( cbit(CHARA_BIT_AWAKE_PROXIMITY_ATTACK, cc) ) {
-		act = AI_ACTION_MELEE
+		act = ACTION_MELEE
 	}
 	if ( cbit(CHARA_BIT_AWAKE_RANGED_ATTACK, cc) ) {
-		act = AI_ACTION_RANGE
+		act = ACTION_RANGE
 	}
 	if ( cbit(CHARA_BIT_AWAKE_RANGED_ATTACK, cc) ) {
 		if ( cbit(CHARA_BIT_AWAKE_PROXIMITY_ATTACK, cc) ) {
 			if ( rnd(10) > 4 ) {
-				act = AI_ACTION_MELEE
+				act = ACTION_MELEE
 			}
 		}
 	}
@@ -2532,7 +2532,7 @@
 				act = SKILL_SPACT_SHADOW_STEP
 			}
 			if ( cbit(CHARA_BIT_SUICIDE, tc) ) {
-				act = AI_ACTION_RANGE
+				act = ACTION_RANGE
 			}
 			if ( dist(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), cdata(CDATA_X, tc), cdata(CDATA_Y, tc)) == 1 ) {
 				if ( cdata(CDATA_HP, tc) < cdata(CDATA_MAX_HP, tc) / 10 ) {
@@ -3218,7 +3218,7 @@
 		}
 		if ( cdata(CDATA_ID, cc) == CREATURE_ID_LIZARD_MAN ) {
 			if ( rnd(2) == 0 ) {
-				act = AI_ACTION_RANGE
+				act = ACTION_RANGE
 			}
 			if ( rnd(5) == 0 ) {
 				act = SKILL_SPACT_LIGHTNING_BREATH
@@ -3277,13 +3277,13 @@
 		if ( cdata(CDATA_ID, cc) == CREATURE_ID_GRUDGE | cdata(CDATA_ID, cc) == CREATURE_ID_HUNGRY_DEMON | cdata(CDATA_ID, cc) == CREATURE_ID_YOUNG_LADY ) {
 			if ( cdata(CDATA_DIRECTIVE_MODE, cc) != DIRECTIVE_MODE_DEFENSIVE & cdata(CDATA_DIRECTIVE_MODE, cc) != DIRECTIVE_MODE_TALKING ) {
 				if ( rnd(5) == 0 ) {
-					act = AI_ACTION_THROW_POTION_GREATER
-					if ( act >= AI_ACTION_THROW & act < MAX_AI_ACTION_THROW ) {
+					act = ACTION_THROW_POTION_GREATER
+					if ( act >= ACTION_THROW & act < MAX_ACTION_THROW ) {
 						if ( distance < 8 ) {
 							if ( fov_los(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), cdata(CDATA_X, tc), cdata(CDATA_Y, tc)) ) {
 								tlocx = cdata(CDATA_X, tc)
 								tlocy = cdata(CDATA_Y, tc)
-								if ( act == AI_ACTION_THROW_POTION_GREATER ) {
+								if ( act == ACTION_THROW_POTION_GREATER ) {
 									flt
 									flttypemajor = FILTER_ITEM_POTION
 									itemcreate cc, isetthrowpotiongreater(rnd(length(isetthrowpotiongreater))), -1, -1, 0
@@ -3578,7 +3578,7 @@
 	if ( cdata(CDATA_ID, cc) == CREATURE_ID_SHURAIDA_THE_EXPERT_MERC | cdata(CDATA_ID, cc) == CREATURE_ID_ARIBEL_THE_WHITE_ARMS | cdata(CDATA_ID, cc) == CREATURE_ID_LANKATA_THE_LIGHTNING_OF_BLUE ) {
 		if ( dist(cdata(CDATA_X, tc), cdata(CDATA_Y, tc), cdata(CDATA_X, cc), cdata(CDATA_Y, cc)) == 1 ) {
 			if ( rnd(3) == 0 ) {
-				act = AI_ACTION_WAIT_MELEE
+				act = ACTION_WAIT_MELEE
 			}
 		}
 	}
@@ -3849,7 +3849,7 @@
 	}
 	if ( act == SKILL_SPACT_SWARM | act == SKILL_SPACT_SMASH_GROUND ) {
 		if ( dist(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), cdata(CDATA_X, tc), cdata(CDATA_Y, tc)) > 1 ) {
-			act = AI_ACTION_RANGE
+			act = ACTION_RANGE
 		}
 	}
 	if ( cdata(CDATA_DIRECTIVE_MODE, cc) != DIRECTIVE_MODE_DEFENSIVE & cdata(CDATA_DIRECTIVE_MODE, cc) != DIRECTIVE_MODE_TALKING ) {
@@ -3862,35 +3862,35 @@
 				}
 				if ( act == SKILL_SPACT_SWARM | act == SKILL_SPACT_SMASH_GROUND ) {
 					if ( dist(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), cdata(CDATA_X, tc), cdata(CDATA_Y, tc)) > 1 ) {
-						act = AI_ACTION_RANGE
+						act = ACTION_RANGE
 					}
 				}
 				if ( cdata(CDATA_ID, cc) == CREATURE_ID_ALCHEMIST_NAPLUS & gdata(GDATA_FLAG_SUB_DOGS_TAIL) >= 1000 ) {
 					if ( rnd(5) == 0 ) {
-						act = AI_ACTION_THROW_POTION_GREATER
+						act = ACTION_THROW_POTION_GREATER
 					}
 				}
-				if ( act >= AI_ACTION_THROW & act < MAX_AI_ACTION_THROW ) {
+				if ( act >= ACTION_THROW & act < MAX_ACTION_THROW ) {
 					if ( distance < 8 ) {
 						if ( fov_los(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), cdata(CDATA_X, tc), cdata(CDATA_Y, tc)) ) {
 							tlocx = cdata(CDATA_X, tc)
 							tlocy = cdata(CDATA_Y, tc)
-							if ( act == AI_ACTION_THROW_POTION_MINOR ) {
+							if ( act == ACTION_THROW_POTION_MINOR ) {
 								flt
 								flttypemajor = FILTER_ITEM_POTION
 								itemcreate cc, isetthrowpotionminor(rnd(length(isetthrowpotionminor))), -1, -1, 0
 							}
-							if ( act == AI_ACTION_THROW_POTION_MAJOR ) {
+							if ( act == ACTION_THROW_POTION_MAJOR ) {
 								flt
 								flttypemajor = FILTER_ITEM_POTION
 								itemcreate cc, isetthrowpotionmajor(rnd(length(isetthrowpotionmajor))), -1, -1, 0
 							}
-							if ( act == AI_ACTION_THROW_POTION_GREATER ) {
+							if ( act == ACTION_THROW_POTION_GREATER ) {
 								flt
 								flttypemajor = FILTER_ITEM_POTION
 								itemcreate cc, isetthrowpotiongreater(rnd(length(isetthrowpotiongreater))), -1, -1, 0
 							}
-							if ( act == AI_ACTION_THROW_POTION_SALT ) {
+							if ( act == ACTION_THROW_POTION_SALT ) {
 								flt
 								itemcreate cc, ITEM_ID_POTION_SALT_SOLUTION, -1, -1, 0
 							}
@@ -3906,7 +3906,7 @@
 	}
 	if ( act == SKILL_SPACT_SHADOW_STEP ) {
 		if ( dist(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), cdata(CDATA_X, tc), cdata(CDATA_Y, tc)) == 1 ) {
-			act = AI_ACTION_MELEE
+			act = ACTION_MELEE
 		}
 	}
 	if ( act == SKILL_SPACT_SHADOW_STEP | act == SKILL_SPACT_UNCONTROL | act == BUFF_GROW_PERCEPTION | act == SKILL_SPACT_CLASH_RUSH ) {
@@ -3919,145 +3919,145 @@
 		if ( act == SKILL_SPELL_HERO ) {
 			if ( findbuff(cc, BUFF_HERO) != (-1) ) {
 				buffact++
-				goto *ai_actMain
+				goto *label_8753
 			}
 		}
 		if ( act == SKILL_SPELL_HOLY_SHIELD ) {
 			if ( findbuff(cc, BUFF_HOLY_SHIELD) != (-1) ) {
 				buffact++
-				goto *ai_actMain
+				goto *label_8753
 			}
 		}
 		if ( act == SKILL_SPELL_REGENERATION ) {
 			if ( findbuff(cc, BUFF_REGENERATION) != (-1) ) {
 				buffact++
-				goto *ai_actMain
+				goto *label_8753
 			}
 		}
 		if ( act == SKILL_SPELL_ATTRIBUTE_SHIELD ) {
 			if ( findbuff(cc, BUFF_ATTRIBUTE_SHIELD) != (-1) ) {
 				buffact++
-				goto *ai_actMain
+				goto *label_8753
 			}
 		}
 		if ( act == SKILL_SPELL_SPEED ) {
 			if ( findbuff(cc, BUFF_SPEED) != (-1) ) {
 				buffact++
-				goto *ai_actMain
+				goto *label_8753
 			}
 		}
 		if ( act == SKILL_SPELL_HOLY_VEIL ) {
 			if ( findbuff(cc, BUFF_HOLY_VEIL) != (-1) ) {
 				buffact++
-				goto *ai_actMain
+				goto *label_8753
 			}
 		}
 		if ( act == SKILL_SPELL_DIVINE_WISDOM ) {
 			if ( findbuff(cc, BUFF_DIVINE_WISDOM) != (-1) ) {
 				buffact++
-				goto *ai_actMain
+				goto *label_8753
 			}
 		}
 		if ( act == SKILL_SPACT_LULWYS_TRICK ) {
 			if ( findbuff(cc, BUFF_LULWYS_TRICK) != (-1) ) {
 				buffact++
-				goto *ai_actMain
+				goto *label_8753
 			}
 		}
 		if ( act == SKILL_SPACT_BOOST ) {
 			if ( findbuff(cc, BUFF_BOOST) != (-1) ) {
 				buffact++
-				goto *ai_actMain
+				goto *label_8753
 			}
 		}
 		if ( act == SKILL_SPELL_CONTINGENCY ) {
 			if ( findbuff(cc, BUFF_CONTINGENCY) != (-1) ) {
 				buffact++
-				goto *ai_actMain
+				goto *label_8753
 			}
 		}
 		if ( act == SKILL_SPACT_CLEAR_MIND ) {
 			if ( findbuff(cc, BUFF_CLEAR_MIND) != (-1) ) {
 				buffact++
-				goto *ai_actMain
+				goto *label_8753
 			}
 		}
 		if ( act == SKILL_SPELL_FEATHER ) {
 			if ( findbuff(cc, BUFF_FEATHER) != (-1) ) {
 				buffact++
-				goto *ai_actMain
+				goto *label_8753
 			}
 		}
 		if ( act == SKILL_SPACT_CHARGE ) {
 			if ( findbuff(cc, BUFF_CHARGE) != (-1) ) {
 				buffact++
-				goto *ai_actMain
+				goto *label_8753
 			}
 		}
 		if ( act == SKILL_SPACT_ATTRIBUTE ) {
 			if ( findbuff(cc, BUFF_ATTRIBUTE) != (-1) ) {
 				buffact++
-				goto *ai_actMain
+				goto *label_8753
 			}
 		}
 		if ( act == SKILL_SPACT_ABSOLUTE_PROTECT ) {
 			if ( findbuff(cc, BUFF_AUTO_GUARD) != (-1) ) {
 				buffact++
-				goto *ai_actMain
+				goto *label_8753
 			}
 		}
 		if ( act == SKILL_SPACT_SPACE_RETENTION ) {
 			if ( findbuff(cc, BUFF_RETENTION) != (-1) ) {
 				buffact++
-				goto *ai_actMain
+				goto *label_8753
 			}
 		}
 		if ( act == SKILL_SPELL_CONCENTRATION ) {
 			if ( findbuff(cc, BUFF_CONCENTRATION) != (-1) ) {
 				buffact++
-				goto *ai_actMain
+				goto *label_8753
 			}
 		}
 		if ( act == SKILL_SPELL_ELEMENT_SCAR ) {
 			if ( findbuff(tc, BUFF_ELEMENT_SCAR) != (-1) ) {
 				buffact++
-				goto *ai_actMain
+				goto *label_8753
 			}
 		}
 		if ( act == SKILL_SPELL_MIST_OF_SILENCE ) {
 			if ( findbuff(tc, BUFF_MIST_OF_SILENCE) != (-1) ) {
 				buffact++
-				goto *ai_actMain
+				goto *label_8753
 			}
 		}
 		if ( act == SKILL_SPELL_SLOW ) {
 			if ( findbuff(tc, BUFF_SLOW) != (-1) ) {
 				buffact++
-				goto *ai_actMain
+				goto *label_8753
 			}
 		}
 		if ( act == SKILL_SPELL_MIST_OF_FRAILNESS ) {
 			if ( findbuff(tc, BUFF_MIST_OF_FRAILNESS) != (-1) ) {
 				buffact++
-				goto *ai_actMain
+				goto *label_8753
 			}
 		}
 		if ( act == SKILL_SPELL_NIGHTMARE ) {
 			if ( findbuff(tc, BUFF_NIGHTMARE) != (-1) ) {
 				buffact++
-				goto *ai_actMain
+				goto *label_8753
 			}
 		}
 		if ( act == SKILL_SPACT_PUNISHMENT ) {
 			if ( findbuff(tc, BUFF_PUNISHMENT) != (-1) ) {
 				buffact++
-				goto *ai_actMain
+				goto *label_8753
 			}
 		}
 		if ( act == SKILL_SPACT_DEATH_WORD | act == SKILL_SPACT_DEATH_SONG ) {
 			if ( findbuff(tc, BUFF_DEATH_WORD) != (-1) | cdata(CDATA_QUALITY, tc) >= FIX_QUALITY_MIRACLE ) {
 				buffact++
-				goto *ai_actMain
+				goto *label_8753
 			}
 		}
 	}
@@ -4085,7 +4085,7 @@
 	}
 	if ( cdata(CDATA_ALLIED, cc) == 100 ) {
 		if ( act == SKILL_SPELL_SUMMON_MONSTERS | act == SKILL_SPELL_SUMMON_WILD | act == SKILL_SPACT_SUMMON_FIRE | act == SKILL_SPACT_SUMMON_PAWN | act == SKILL_SPACT_SUMMON_CATS | act == SKILL_SPACT_SUMMON_YEEK | act == SKILL_SPACT_SUMMON_SISTER | act == SKILL_SPELL_SUMMON_SPIRIT | act == SKILL_SPACT_SUMMON_CHAOS ) {
-			act = AI_ACTION_MELEE
+			act = ACTION_MELEE
 		}
 	}
 	if ( cdata(CDATA_DIRECTIVE_MODE, cc) == DIRECTIVE_MODE_TALKING ) {
@@ -4149,10 +4149,10 @@
 	}
 	if ( cdata(CDATA_ID, cc) == CREATURE_ID_USER ) {
 		if ( act == SKILL_SPELL_WISH | act == SKILL_SPELL_WIZARDS_HARVEST | act == SKILL_SPACT_MEWMEWMEW | act == SKILL_SPACT_MANIS_DISASSEMBLY | act == SKILL_SPACT_INSANE_WAVE | act == SKILL_SPACT_SUPER_VIBRATING_FIST | act == SKILL_SPACT_TEMPEST_ARROW | act == SKILL_SPACT_EXCESSIVE_HEAL | act == SKILL_SPACT_SHINE_SNAIL | act == SKILL_SPACT_SMOKE_MIRROR | act == SKILL_SPACT_ELEMENTIA | act == SKILL_SPACT_GOLD_RUSH | (act >= SKILL_SPACT_CONVERGE_BREATH & act <= SKILL_SPACT_MANA_SLASH) | act == SKILL_SPACT_SPINNING_THROW ) {
-			act = AI_ACTION_RANGE
+			act = ACTION_RANGE
 		}
 	}
-	if ( act == AI_ACTION_RANDOM_MOVE ) {
+	if ( act == ACTION_RANDOM_MOVE ) {
 		cdata(CDATA_X_NEW, cc) = rnd(3) - 1 + cdata(CDATA_X, cc)
 		cdata(CDATA_Y_NEW, cc) = rnd(3) - 1 + cdata(CDATA_Y, cc)
 		cell_check cdata(CDATA_X_NEW, cc), cdata(CDATA_Y_NEW, cc)
@@ -4190,7 +4190,7 @@
 			}
 		}
 	}
-	if ( act == AI_ACTION_WAIT_MELEE ) {
+	if ( act == ACTION_WAIT_MELEE ) {
 		if ( distance == 1 ) {
 			gosub *act_melee
 		}
@@ -4208,20 +4208,20 @@
 		goto *turn_end
 	}
 	if ( cbit(CHARA_BIT_AWAKE_PROXIMITY_ATTACK, cc) ) {
-		act = AI_ACTION_MELEE
+		act = ACTION_MELEE
 	}
 	if ( cbit(CHARA_BIT_AWAKE_RANGED_ATTACK, cc) ) {
-		act = AI_ACTION_RANGE
+		act = ACTION_RANGE
 	}
 	if ( cbit(CHARA_BIT_AWAKE_RANGED_ATTACK, cc) ) {
 		if ( cbit(CHARA_BIT_AWAKE_PROXIMITY_ATTACK, cc) ) {
 			if ( rnd(10) > 4 ) {
-				act = AI_ACTION_MELEE
+				act = ACTION_MELEE
 			}
 		}
 	}
 	if ( cdata(CDATA_DIRECTIVE_MODE, cc) != DIRECTIVE_MODE_DEFENSIVE & cdata(CDATA_DIRECTIVE_MODE, cc) != DIRECTIVE_MODE_TALKING ) {
-		if ( act == AI_ACTION_RANGE ) {
+		if ( act == ACTION_RANGE ) {
 			if ( distance < 6 ) {
 				if ( fov_los(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), cdata(CDATA_X, tc), cdata(CDATA_Y, tc)) ) {
 					gosub *label_5612

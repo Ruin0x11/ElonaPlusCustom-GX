@@ -1158,7 +1158,7 @@
 			goto *turn_end
 		}
 	}
-	efid = (0 /*!!!@[BUFF_NONE @@@ SKILL_NONE]@!!! */)
+	efid = (0 /*!!!@[SKILL_NONE @@@ BUFF_NONE]@!!! */)
 	dbmode = DBMODE_ON_READ
 	dbid = inv(INV_ITEM_ID, ci)
 	gosub *db_item
@@ -7244,7 +7244,7 @@
 		if ( rtval == 3 ) {
 			efid = -1
 			gosub *com_spell
-			if ( efid > (0 /*!!!@[BUFF_NONE @@@ SKILL_NONE]@!!! */) ) {
+			if ( efid > (0 /*!!!@[SKILL_NONE @@@ BUFF_NONE]@!!! */) ) {
 				num = spell(efid - 400) / 2000
 				spell(efid - 400) /= 2
 				if ( efid == SKILL_SPELL_GEM_POWER ) {
