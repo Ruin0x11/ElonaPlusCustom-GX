@@ -76,11 +76,19 @@
 	isetplantvegen = ITEM_ID_EGGPLANT, ITEM_ID_WATERMELON, ITEM_ID_LECCHO, ITEM_ID_MELON
 	isetplantvegea = ITEM_ID_CORN, ITEM_ID_SQUASH, ITEM_ID_SWEET_POTATO, ITEM_ID_ALOE
 	isetplantvegef = ITEM_ID_POTATO, ITEM_ID_IMO, ITEM_ID_RADISH, ITEM_ID_CARROT, ITEM_ID_GUAVA
+	isetplantartifacth = ITEM_ID_RING, ITEM_ID_ARMORED_RING, ITEM_ID_COMPOSITE_RING
+	isetplantartifactn = ITEM_ID_BEJEWELED_AMULET, ITEM_ID_CHARM, ITEM_ID_NECK_GUARD
+	isetplantartifacta = ITEM_ID_TALISMAN, ITEM_ID_PERIDOT, ITEM_ID_DECORATIVE_AMULET
+	isetplantartifactf = ITEM_ID_DECORATIVE_RING, ITEM_ID_ENGAGEMENT_RING, ITEM_ID_ENGAGEMENT_AMULET
+	isetplantherbh = ITEM_ID_STOMAFILLIA, ITEM_ID_CURARIA, ITEM_ID_ALRAUNIA
+	isetplantherbn = ITEM_ID_STOMAFILLIA, ITEM_ID_CURARIA, ITEM_ID_SPENSEWEED
+	isetplantherba = ITEM_ID_STOMAFILLIA, ITEM_ID_CURARIA, ITEM_ID_MAREILON
+	isetplantherbf = ITEM_ID_STOMAFILLIA, ITEM_ID_CURARIA, ITEM_ID_MORGIA
 	isetdrinkinn = ITEM_ID_COFFEE, ITEM_ID_COLA, ITEM_ID_BARLEY_TEA, ITEM_ID_GREEN_TEA, ITEM_ID_BLACK_TEA, ITEM_ID_JUICE
 	fsetremain = FILTER_AMMO, FILTER_ITEM_FOOD, FILTER_ITEM_FOOD, FILTER_ORE, FILTER_ITEM_SCROLL, FILTER_ITEM_POTION, FILTER_ITEM_FOOD
 	fsetbarrel = FILTER_AMMO, FILTER_ITEM_FOOD, FILTER_ITEM_SCROLL, FILTER_ITEM_POTION, FILTER_ORE, FILTER_JUNK
 	fsetcollect = FILTER_JUNK, FILTER_FURNITURE, FILTER_ITEM_FOOD, FILTER_ORE
-	isetdeed = ITEM_ID_DEED, ITEM_ID_DEED_MUSEUM, ITEM_ID_DEED_SHOP, ITEM_ID_DEED_FARM, ITEM_ID_DEED_STORAGE_HOUSE, ITEM_ID_SHELTER, ITEM_ID_DEED_RANCH
+	isetdeed = ITEM_ID_DEED, ITEM_ID_DEED_MUSEUM, ITEM_ID_DEED_SHOP, ITEM_ID_DEED_FARM, ITEM_ID_DEED_STORAGE_HOUSE, ITEM_ID_SHELTER, ITEM_ID_DEED_RANCH, ITEM_ID_DEED_OF_LAND_BATTLESHIP, ITEM_ID_DEED_OF_MAGIC_LOCOMOTIVE, ITEM_ID_DEED_OF_TRUCK, ITEM_ID_DEED_OF_CARRIAGE
 	isetfruit = ITEM_ID_APPLE, ITEM_ID_GRAPE, ITEM_ID_TANGERINE, ITEM_ID_LEMON, ITEM_ID_STRAWBERRY, ITEM_ID_CHERRY, ITEM_ID_KAKI
 	isetthrowpotionminor = ITEM_ID_POTION_BLINDNESS, ITEM_ID_POTION_CONFUSION, ITEM_ID_SLEEPING_DRUG, ITEM_ID_POTION_PARALYSIS, ITEM_ID_POISON, ITEM_ID_BOTTLE_BEER
 	isetthrowpotionmajor = ITEM_ID_POTION_SLOW, ITEM_ID_POTION_SILENCE, ITEM_ID_POTION_WEAKEN_RESISTANCE, ITEM_ID_ESSENTIAL_OIL, ITEM_ID_MOLOTOV, ITEM_ID_BOTTLE_WHISKY, ITEM_ID_POTION_WEAKNESS
@@ -565,12 +573,19 @@
 		}
 		inv(INV_ITEM_NUM, ci) = 0
 	loop
+	if ( cbit(CHARA_BIT_DROP_GOLD, rc) == TRUE ) {
+		if ( cdata(CDATA_GOLD, rc) > 0 ) {
+			flt
+			itemcreate -1, ITEM_ID_GOLD_PIECE, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), cdata(CDATA_GOLD, rc)
+			cdata(CDATA_GOLD, rc) = 0
+		}
+	}
 	if ( (cdata(CDATA_ROLE, rc) >= ROLE_SHOP_MIN & cdata(CDATA_ROLE, rc) < ROLE_GUEST_MIN | cdata(CDATA_ROLE, rc) == ROLE_GUEST_MERCHANT) != 1 ) {
-		if ( cdata(CDATA_QUALITY, rc) >= FIX_QUALITY_MIRACLE | gdata(GDATA_FLAG_DUEL_TARGET) == (-2) | rnd(10) == 0 | rc < MAX_CHARA_FOLLOWER | cbit(CHARA_BIT_DROP_GOLD, rc) == 1 ) {
+		if ( cdata(CDATA_QUALITY, rc) >= FIX_QUALITY_MIRACLE | gdata(GDATA_FLAG_DUEL_TARGET) == (-2) | rnd(10) == 0 | rc < MAX_CHARA_FOLLOWER ) {
 			if ( cdata(CDATA_GOLD, rc) > 0 ) {
 				flt
 				itemcreate -1, ITEM_ID_GOLD_PIECE, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), cdata(CDATA_GOLD, rc) / 4
-				cdata(CDATA_GOLD, rc) -= cdata(CDATA_GOLD, rc) / (1 + 3 * (cbit(CHARA_BIT_DROP_GOLD, rc) == 0))
+				cdata(CDATA_GOLD, rc) -= cdata(CDATA_GOLD, rc) / 4
 			}
 		}
 	}
@@ -997,9 +1012,7 @@
 				if ( stat != 0 ) {
 					remain_make ci, rc
 					if ( adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_RANCH & cbit(CHARA_BIT_LIVESTOCK, rc) == 1 ) {
-						if ( sdata(SKILL_NORMAL_ANATOMY, CHARA_PLAYER) != 0 ) {
-							inv(INV_ITEM_NUM, ci) += rnd(1 + (sdata(SKILL_NORMAL_ANATOMY, CHARA_PLAYER) > cdata(CDATA_LEVEL, rc))) + ryou
-						}
+						inv(INV_ITEM_NUM, ci) += rnd(1 + (sdata(SKILL_NORMAL_ANATOMY, CHARA_PLAYER) > cdata(CDATA_LEVEL, rc))) + ryou
 					}
 				}
 				if ( adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_RANCH & cbit(CHARA_BIT_LIVESTOCK, rc) == 1 ) {
@@ -1056,7 +1069,9 @@
 		drop = ITEM_ID_GLOVES_OF_VESDA, -1
 	}
 	if ( cdata(CDATA_ID, rc) == CREATURE_ID_FRISIA_THE_CAT_QUEEN | cdata(CDATA_ID, rc) == CREATURE_ID_UTIMA_THE_DESTROYER_OF_XEREN | cdata(CDATA_ID, rc) == CREATURE_ID_AZZRSSIL_THE_IMPURE ) {
-		drop = ITEM_ID_ARTIFACT_SEED, ITEM_ID_ARTIFACT_SEED, -1
+		if ( gdata(GDATA_AREA) != AREA_AMUR_CAGE ) {
+            drop = ITEM_ID_ARTIFACT_SEED, ITEM_ID_ARTIFACT_SEED, -1
+		}
 	}
 	if ( gdata(GDATA_AREA) == AREA_PYRAMID ) {
 		if ( cdata(CDATA_ID, rc) == CREATURE_ID_TUWEN_THE_MASTER_OF_THE_PYRAMID ) {
@@ -1071,6 +1086,21 @@
 		itemcreate -1, drop(cnt), cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
 	loop
 	if ( gdata(GDATA_AREA) != AREA_AMUR_CAGE ) {
+		if ( cdata(CDATA_ID, rc) == CREATURE_ID_ZEOME_THE_FALSE_PROPHET ) {
+			flt
+			itemcreate -1, ITEM_ID_LESIMAS_FRAGMENT, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+		}
+		if ( cdata(CDATA_ID, rc) == CREATURE_ID_MESHERA_ALPHA_THE_DEFORMED_ANGEL ) {
+			flt
+			itemcreate -1, ITEM_ID_REMIDO_FRAGMENT, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+		}
+		if ( cdata(CDATA_ID, rc) == CREATURE_ID_TEZCATLIPOCA ) {
+			flt
+			itemcreate -1, ITEM_ID_CHAOS_FRAGMENT, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+		}
 		if ( rnd(100) == 0 ) {
 			if ( gdata(GDATA_FLAG_RARE_DROP) == 100 ) {
 				if ( cdata(CDATA_ID, rc) == CREATURE_ID_VALIANT_WYVERN | cdata(CDATA_ID, rc) == CREATURE_ID_GAGU | cdata(CDATA_ID, rc) == CREATURE_ID_SKY_GOLEM | cdata(CDATA_ID, rc) == CREATURE_ID_DRAGON_BAT | cdata(CDATA_ID, rc) == CREATURE_ID_GIRAFFE ) {
@@ -1789,7 +1819,7 @@
 		}
 	}
 	if ( mdata(MDATA_TYPE) != MAP_TYPE_WORLD ) {
-		if ( rnd(30) == 0 ) {
+		if ( rnd(3) == 0 ) {
 			if ( synccheck(cc, -1) ) {
 				txt lang("何かが" + name(cc) + "の腹を破り飛び出した！", "Something splits " + name(cc) + your(cc) + " body and breaks out!")
 			}
@@ -1802,14 +1832,19 @@
 			initlv = limit(cdata(CDATA_LEVEL, cc) / 2 + 1, 1, 200)
 			novoidlv = 1
 			characreate -1, kodomo, cdata(CDATA_X, cc), cdata(CDATA_Y, cc)
+			cdata(CDATA_AGE, rc) = gdata(GDATA_YEAR)
 			cbitmod CHARA_BIT_SUMMONED, rc, 1
 			cdata(CDATA_CHARACTER_TIER, rc) = CHARACTER_TIER_SUMMONED_NORMAL
 			if ( stat != 0 ) {
 				if ( strlen(cdatan(CDATAN_NAME, cc)) > 10 | instr(cdatan(CDATAN_NAME, cc), 0, lang("の子供", "child")) != (-1) ) {
-					cdatan(CDATAN_NAME, rc) = lang("寄生生物の子供", "parasite kid")
+					if ( kodomo != CREATURE_ID_SUNBARARIAN	| mdata(MDATA_TYPE) != MAP_TYPE_TOWN ) {
+						cdatan(CDATAN_NAME, rc) = lang("寄生生物の子供", "parasite kid")
+					}
 				}
 				else {
-					cdatan(CDATAN_NAME, rc) = lang(cdatan(CDATAN_NAME, cc) + "の子供", "child of " + cdatan(CDATAN_NAME, cc))
+					if ( kodomo != CREATURE_ID_SUNBARARIAN | mdata(MDATA_TYPE) != MAP_TYPE_TOWN ) {
+						cdatan(CDATAN_NAME, rc) = lang(cdatan(CDATAN_NAME, cc) + "の子供", "child of " + cdatan(CDATAN_NAME, cc))
+					}
 				}
 			}
 			kodomo = 0
@@ -1992,9 +2027,11 @@
 				fixlv++
 			}
 		}
-		if ( fixlv == FIX_QUALITY_GODLY ) {
-			if ( rnd(2) == 0 ) {
-				fixlv--
+		if ( gdata(GDATA_FLAG_DESTINY_LETTERS) != 8 ) {
+			if ( fixlv == FIX_QUALITY_GODLY ) {
+				if ( rnd(2) == 0 ) {
+					fixlv--
+				}
 			}
 		}
 	}
@@ -2090,6 +2127,12 @@
 	inv(INV_ITEM_COL, ci) = icolref(inv(INV_ITEM_ID, ci))
 	if ( inv(INV_ITEM_COL, ci) == COLOR_RANDOM ) {
 		inv(INV_ITEM_COL, ci) = randcolor(rnd(length(randcolor)))
+		if ( inv(INV_ITEM_ID, ci) == ITEM_ID_CF_POTIOMAN | inv(INV_ITEM_ID, ci) == ITEM_ID_CRUSH_POTIOMAN | inv(INV_ITEM_ID, ci) == ITEM_ID_BATTLE_POTIOMAN | inv(INV_ITEM_ID, ci) == ITEM_ID_SUPER_POTIOMAN ) {
+			inv(INV_ITEM_COL, ci) = rnd(MAX_COLOR - COLOR_GREEN) + COLOR_GREEN
+			if ( inv(INV_ITEM_COL, ci) == COLOR_DARK_GRAY3 ) {
+				inv(INV_ITEM_COL, ci) = COLOR_DARK_GRAY2
+			}
+		}
 	}
 	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_BOTTLE_DYE ) {
 		inv(INV_ITEM_COL, ci) = rnd(MAX_COLOR)
@@ -2208,6 +2251,12 @@
 			inv(INV_ITEM_PIC, ci) = xy2pic(23, 31)
 		}
 	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_JEWEL_CORAL ) {
+		inv(INV_ITEM_PIC, ci) += rnd(2)
+	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_AQUATIC_PLANT ) {
+		inv(INV_ITEM_PIC, ci) += rnd(3)
+	}
 	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_BAIT ) {
 		inv(INV_ITEM_PARAM1, ci) = rnd(6)
 		inv(INV_ITEM_PIC, ci) = xy2pic(22, 11) + inv(INV_ITEM_PARAM1, ci)
@@ -2247,11 +2296,12 @@
 		inv(INV_ITEM_VALUE, ci) = inv(INV_ITEM_PARAM2, ci) * inv(INV_ITEM_PARAM2, ci) * inv(INV_ITEM_PARAM2, ci) * 1000 + 1000
 	}
 	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_MONSTER_BALL ) {
-		inv(INV_ITEM_PARAM2, ci) = limit(rnd(objlv + 2) + 1, 1, 200)
+		inv(INV_ITEM_PARAM2, ci) = rnd(objlv + 2) + 1
 		if ( inv(INV_ITEM_PARAM2, ci) >= gdata(GDATA_DEEPEST_LEVEL) + 10 ) {
 			inv(INV_ITEM_PARAM2, ci) = rnd(gdata(GDATA_DEEPEST_LEVEL) + 2) + 10
 		}
-		inv(INV_ITEM_VALUE, ci) = 2000 + inv(INV_ITEM_PARAM2, ci) * inv(INV_ITEM_PARAM2, ci) + inv(INV_ITEM_PARAM2, ci) * 100
+		kati = limit(inv(INV_ITEM_PARAM2, ci), 1, 200)
+		inv(INV_ITEM_VALUE, ci) = 2000 + kati * kati + kati * 100
 	}
 	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_MATERIAL_KIT ) {
 		gosub *choose_material
@@ -2753,15 +2803,15 @@
 	}
 	if ( ibit(ITEM_BIT_HERBED_IN, ci) == 1 ) {
 		if ( cc == CHARA_PLAYER ) {
-			skillexp SKILL_ATTR_STR, cc, 2400
-			skillexp SKILL_ATTR_CON, cc, 2400
-			skillexp SKILL_ATTR_DEX, cc, 2400
-			skillexp SKILL_ATTR_PER, cc, 2400
-			skillexp SKILL_ATTR_LER, cc, 2400
-			skillexp SKILL_ATTR_WIL, cc, 2400
-			skillexp SKILL_ATTR_MAG, cc, 2400
-			skillexp SKILL_ATTR_CHA, cc, 2400
-			skillexp SKILL_ATTR_SPD, cc, 2400
+			skillexp SKILL_ATTR_STR, cc, 6000
+			skillexp SKILL_ATTR_CON, cc, 6000
+			skillexp SKILL_ATTR_DEX, cc, 6000
+			skillexp SKILL_ATTR_PER, cc, 6000
+			skillexp SKILL_ATTR_LER, cc, 6000
+			skillexp SKILL_ATTR_WIL, cc, 6000
+			skillexp SKILL_ATTR_MAG, cc, 6000
+			skillexp SKILL_ATTR_CHA, cc, 6000
+			skillexp SKILL_ATTR_SPD, cc, 6000
 		}
 		else {
 			skillexp SKILL_ATTR_STR, cc, 8000
@@ -2894,10 +2944,7 @@
 		nutrition = 3500
 	}
 	if ( inv(INV_ITEM_LEVEL, ci) > 0 & inv(INV_ITEM_LEVEL, ci) <= 15 ) {
-		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
-			fdlist(0, fdmax) = SKILL_ATTR_SPD, 10 + inv(INV_ITEM_LEVEL, ci) * 2
-			fdmax++
-		}
+		modgrowth cc, SKILL_ATTR_SPD, inv(INV_ITEM_LEVEL, ci) / 2 + 3
 	}
 	nutrition = nutrition * (100 + inv(INV_ITEM_PARAM2, ci) * 15) / 100
 	repeat fdmax
@@ -3055,39 +3102,39 @@
 	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_CURARIA ) {
 		fdmax = 0
 		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
-			fdlist(0, fdmax) = SKILL_ATTR_STR, 100
+			fdlist(0, fdmax) = SKILL_ATTR_STR, 130
 			fdmax++
 		}
 		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
-			fdlist(0, fdmax) = SKILL_ATTR_CON, 100
+			fdlist(0, fdmax) = SKILL_ATTR_CON, 130
 			fdmax++
 		}
 		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
-			fdlist(0, fdmax) = SKILL_ATTR_CHA, 100
+			fdlist(0, fdmax) = SKILL_ATTR_CHA, 130
 			fdmax++
 		}
 		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
-			fdlist(0, fdmax) = SKILL_ATTR_MAG, 100
+			fdlist(0, fdmax) = SKILL_ATTR_MAG, 130
 			fdmax++
 		}
 		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
-			fdlist(0, fdmax) = SKILL_ATTR_DEX, 100
+			fdlist(0, fdmax) = SKILL_ATTR_DEX, 130
 			fdmax++
 		}
 		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
-			fdlist(0, fdmax) = SKILL_ATTR_PER, 100
+			fdlist(0, fdmax) = SKILL_ATTR_PER, 130
 			fdmax++
 		}
 		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
-			fdlist(0, fdmax) = SKILL_ATTR_LER, 100
+			fdlist(0, fdmax) = SKILL_ATTR_LER, 130
 			fdmax++
 		}
 		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
-			fdlist(0, fdmax) = SKILL_ATTR_WIL, 100
+			fdlist(0, fdmax) = SKILL_ATTR_WIL, 130
 			fdmax++
 		}
 		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
-			fdlist(0, fdmax) = SKILL_ATTR_SPD, 100
+			fdlist(0, fdmax) = SKILL_ATTR_SPD, 130
 			fdmax++
 		}
 		nutrition = 2500
@@ -3100,11 +3147,11 @@
 	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_MORGIA ) {
 		fdmax = 0
 		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
-			fdlist(0, fdmax) = SKILL_ATTR_STR, 900
+			fdlist(0, fdmax) = SKILL_ATTR_STR, 600
 			fdmax++
 		}
 		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
-			fdlist(0, fdmax) = SKILL_ATTR_CON, 700
+			fdlist(0, fdmax) = SKILL_ATTR_CON, 600
 			fdmax++
 		}
 		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
@@ -3159,7 +3206,7 @@
 			fdmax++
 		}
 		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
-			fdlist(0, fdmax) = SKILL_ATTR_MAG, 800
+			fdlist(0, fdmax) = SKILL_ATTR_MAG, 600
 			fdmax++
 		}
 		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
@@ -3175,7 +3222,7 @@
 			fdmax++
 		}
 		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
-			fdlist(0, fdmax) = SKILL_ATTR_WIL, 800
+			fdlist(0, fdmax) = SKILL_ATTR_WIL, 600
 			fdmax++
 		}
 		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
@@ -3210,11 +3257,11 @@
 			fdmax++
 		}
 		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
-			fdlist(0, fdmax) = SKILL_ATTR_DEX, 750
+			fdlist(0, fdmax) = SKILL_ATTR_DEX, 600
 			fdmax++
 		}
 		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
-			fdlist(0, fdmax) = SKILL_ATTR_PER, 800
+			fdlist(0, fdmax) = SKILL_ATTR_PER, 600
 			fdmax++
 		}
 		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
@@ -3249,7 +3296,7 @@
 			fdmax++
 		}
 		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
-			fdlist(0, fdmax) = SKILL_ATTR_CHA, 850
+			fdlist(0, fdmax) = SKILL_ATTR_CHA, 600
 			fdmax++
 		}
 		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
@@ -3265,7 +3312,7 @@
 			fdmax++
 		}
 		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
-			fdlist(0, fdmax) = SKILL_ATTR_LER, 700
+			fdlist(0, fdmax) = SKILL_ATTR_LER, 600
 			fdmax++
 		}
 		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
@@ -3320,7 +3367,7 @@
 			fdmax++
 		}
 		if ( fdmax < MAX_SKILL_ATTR - STARTING_SKILL_ATTR ) {
-			fdlist(0, fdmax) = SKILL_ATTR_SPD, 50
+			fdlist(0, fdmax) = SKILL_ATTR_SPD, 300
 			fdmax++
 		}
 		nutrition = 20000
@@ -3387,9 +3434,6 @@
 			skillexp fdlist(0, cnt), cc, fdlist(1, cnt) * i / 100
 		}
 	loop
-	if ( inv(INV_ITEM_STATUS, ci) >= ITEM_STATUS_BLESSED ) {
-		nutrition = nutrition * 150 / 100
-	}
 	if ( inv(INV_ITEM_STATUS, ci) <= ITEM_STATUS_CURSED ) {
 		nutrition = nutrition * 50 / 100
 	}
@@ -3425,10 +3469,11 @@
 			if ( nutrition >= 4000 ) {
 				if ( cbit(CHARA_BIT_EXCLUSIVE_SKILL_CHARGE, cc) != 0 ) {
 					cibk = ci
+					gdata(GDATA_FLAG_CUTE_FAIRY_SEEDS_SPIT)++
 					flt
 					itemcreate -1, ITEM_ID_VEGETABLE_SEED, cdata(CDATA_X, cc), cdata(CDATA_Y, cc), 2
 					inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
-					if ( gdata(GDATA_DAY) == 9 | gdata(GDATA_DAY) == 19 | gdata(GDATA_DAY) == 29 | gdata(GDATA_DAY) == 3 | gdata(GDATA_DAY) == 13 | gdata(GDATA_DAY) == 23 | gdata(GDATA_DAY) == 30 | gdata(GDATA_DAY) == 6 | gdata(GDATA_DAY) == 16 | gdata(GDATA_DAY) == 26 ) {
+					if ( gdata(GDATA_FLAG_CUTE_FAIRY_SEEDS_SPIT) \ 3 == 0 ) {
 						flt
 						itemcreate -1, ITEM_ID_MAGICAL_SEED, cdata(CDATA_X, cc), cdata(CDATA_Y, cc), 0
 						inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
@@ -3438,7 +3483,7 @@
 						itemcreate -1, ITEM_ID_FRUIT_SEED, cdata(CDATA_X, cc), cdata(CDATA_Y, cc), 2
 						inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
 					}
-					if ( gdata(GDATA_DAY) == 9 | gdata(GDATA_DAY) == 19 | gdata(GDATA_DAY) == 29 | gdata(GDATA_DAY) == 3 | gdata(GDATA_DAY) == 13 | gdata(GDATA_DAY) == 23 | gdata(GDATA_DAY) == 30 ) {
+					if ( gdata(GDATA_FLAG_CUTE_FAIRY_SEEDS_SPIT) \ 5 == 0 ) {
 						flt
 						itemcreate -1, ITEM_ID_HERB_SEED, cdata(CDATA_X, cc), cdata(CDATA_Y, cc), 0
 						inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
@@ -3517,22 +3562,23 @@
 	}
 	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_CORPSE ) {
 		if ( inv(INV_ITEM_SUB_NAME, ci) == CREATURE_ID_LITTLE_SISTER ) {
-			txtef COLOR_GREEN
-			txt lang(name(cc) + "は進化した。", name(cc) + " evolve" + _s(cc) + ".")
-			if ( gdata(GDATA_FLAG_RARE_DROP) == 100 ) {
-				if ( rnd(sorg(SKILL_ATTR_LIFE, cc) * sorg(SKILL_ATTR_LIFE, cc) + 1) < 4000 ) {
-					skillmod SKILL_ATTR_LIFE, cc, 1000
-				}
-				if ( rnd(sorg(SKILL_ATTR_MANA, cc) * sorg(SKILL_ATTR_MANA, cc) + 1) < 4000 ) {
+			if ( inv(INV_ITEM_AMUR_CAGE, ci) != 1 ) {
+				txtef COLOR_GREEN
+				txt lang(name(cc) + "は進化した。", name(cc) + " evolve" + _s(cc) + ".")
+				gdata(GDATA_FLAG_LITTLE_SISTER_CORPSES_FED_TO_ALLIES)++
+				if ( gdata(GDATA_FLAG_LITTLE_SISTER_CORPSES_FED_TO_ALLIES) \ 3 == 0 ) {
 					skillmod SKILL_ATTR_MANA, cc, 1000
 				}
-			}
-			repeat STARTING_SKILL_SPELL - STARTING_SKILL_WEAPON, STARTING_SKILL_WEAPON
-				if ( sdataref(SKILL_DATAREF_USE, cnt) == 0 | sorg(cnt, cc) == 0 ) {
-					continue
+				if ( gdata(GDATA_FLAG_LITTLE_SISTER_CORPSES_FED_TO_ALLIES) \ 6 == 0 ) {
+					skillmod SKILL_ATTR_LIFE, cc, 1000
 				}
-				modgrowth cc, cnt, rnd(10) + 1
-			loop
+				repeat STARTING_SKILL_SPELL - STARTING_SKILL_WEAPON, STARTING_SKILL_WEAPON
+					if ( sdataref(SKILL_DATAREF_USE, cnt) == 0 | sorg(cnt, cc) == 0 ) {
+						continue
+					}
+					modgrowth cc, cnt, rnd(10) + 1
+				loop
+            }
 		}
 	}
 	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_HANDMADE_CHOCOLATE ) {
@@ -3553,7 +3599,7 @@
 			anix = cdata(CDATA_X, cc)
 			aniy = cdata(CDATA_Y, cc)
 			gosub *anime
-			dmghp cc, cdata(CDATA_MAX_HP, cc) * 10 / 100
+			dmghp cc, limit(cdata(CDATA_MAX_HP, cc) * 10 / 100, 1, 999)
 			if ( cc == CHARA_PLAYER ) {
 				txt lang("ぐわぁぁぁぁぁっ！！！", "Arrrrg!")
 			}
@@ -3575,6 +3621,7 @@
 		}
 	}
 	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_CHEWING_GUM | inv(INV_ITEM_ID, ci) == ITEM_ID_CHEWED_UP_GUM ) {
+		cibk = ci
 		if ( inv_getspace(cc) == 0 | (cc == CHARA_PLAYER & gdata(GDATA_FLAG_GAME_MODE) == GAMEMODE_ABNORMAL & inv_sum(CHARA_PLAYER) > 20) ) {
 			flt
 			itemcreate -1, ITEM_ID_CHEWED_UP_GUM, cdata(CDATA_X, cc), cdata(CDATA_Y, cc), 0
@@ -3587,6 +3634,7 @@
 			item_stack cc, ci
 		}
 		txt lang("「んべっ」", name(cc) + " spew" + _s(cc) + " up " + itemname(ci, 1) + ".")
+		ci = cibk
 	}
 	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_KAGAMI_MOCHI ) {
 		txt lang("これは縁起がいい！", "This is auspicious!")
@@ -3849,7 +3897,7 @@
 			continue
 		}
 		if ( enc == ENCHANT_TIME_STOP ) {
-			if ( gdata(GDATA_TIME_STOP_TIME) == 0 ) {
+			if ( gdata(GDATA_TIME_STOP_TIME) == 0 & gdata(GDATA_FLAG_STOP_TIME_OTHER) == 0 ) {
 				txtef COLOR_SKY_BLUE
 				txt lang(name(cc) + "は時を止めた。", name(cc) + " stop" + _s(cc) + " time.")
 				gdata(GDATA_TIME_STOP_TIME) = inv(STARTING_INV_ITEM_ENCHANT + cnt * 2 + 1, ci) / 100 + 1 + 1
@@ -3861,7 +3909,7 @@
 			enc = enc \ EXT_ENCHANTMENT
 			if ( enc2 == ENCHANT_SKILL ) {
 				skillexp enc, cc, (inv(STARTING_INV_ITEM_ENCHANT + cnt * 2 + 1, ci) / 50 + 1) * 100 * (1 + (cc != CHARA_PLAYER) * 5)
-				if ( inv(STARTING_INV_ITEM_ENCHANT + cnt * 2 + 1, ci) >= 0 ) {
+				if ( inv(STARTING_INV_ITEM_ENCHANT + cnt * 2 + 1, ci) / 50 + 1 >= 0 ) {
 					txt lang(skillname(enc) + "の参考になる！", skillname(enc) + " develops.")
 				}
 				else {
@@ -3883,7 +3931,7 @@
 
 				/********** ANNA CUSTOM - ENDING **********/
 
-				if ( inv(STARTING_INV_ITEM_ENCHANT + cnt * 2 + 1, ci) >= 0 ) {
+				if ( inv(STARTING_INV_ITEM_ENCHANT + cnt * 2 + 1, ci) / 50 + 1 >= 0 ) {
 					txt lang(skillname(enc) + "が発達した。", his2(cc) + your2(cc) + " " + skillname(enc) + " develops.")
 				}
 				else {
@@ -3893,7 +3941,7 @@
 			}
 			if ( enc2 == ENCHANT_FOOD ) {
 				modgrowth cc, enc, limit((inv(STARTING_INV_ITEM_ENCHANT + cnt * 2 + 1, ci) / 50 + 1) * 5, -50, 50)
-				if ( inv(STARTING_INV_ITEM_ENCHANT + cnt * 2 + 1, ci) >= 0 ) {
+				if ( inv(STARTING_INV_ITEM_ENCHANT + cnt * 2 + 1, ci) / 50 + 1 >= 0 ) {
 					txt lang(skillname(enc) + "が回復した。", skillname(enc) + " is restored.")
 				}
 				else {
@@ -3907,7 +3955,7 @@
 			}
 		}
 	loop
-	eatstatus inv(INV_ITEM_STATUS, cieat), cc
+	eatstatusfood inv(INV_ITEM_STATUS, cieat), cc
 	return
 
 *eatHard
@@ -4150,6 +4198,15 @@
 	return
 
 *alien_effect
+	if ( tc == CHARA_PLAYER ) {
+		if ( trait(TRAIT_ETHER_BLOOMING_FLOWER) != 0 ) {
+			if ( synccheck(tc, -1) ) {
+				txt lang("しかしすぐに花の養分に変えられた。", "But it was immediately turned into flower nutrients.")
+			}
+			ninsin = 0
+			return
+		}
+	}
 	if ( encfind(tc, ENCHANT_RES_PREGNANCY) != (-1) ) {
 		if ( synccheck(tc, -1) ) {
 			txt lang("しかしすぐに吐き出した。", "But " + he(tc) + " puke" + _s(tc) + " it out quickly.")
