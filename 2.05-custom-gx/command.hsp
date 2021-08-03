@@ -20,16 +20,35 @@
 			rtvaln = itemname(rtval(1))
 		}
 		if ( inv(INV_ITEM_PROPERTY, rtval(1)) <= PROP_NONE ) {
-			return lang(rtvaln + "が落ちている。", "You see " + rtvaln + " here.")
+			bedtxt = lang(rtvaln + "が落ちている。", "You see " + rtvaln + " here.")
 		}
 		else {
 			if ( inv(INV_ITEM_PROPERTY, rtval(1)) == PROP_CONSTRUCT ) {
-				return lang(rtvaln + "が設置されている。", "" + rtvaln + " is constructed here.")
+				bedtxt = lang(rtvaln + "が設置されている。", "" + rtvaln + " is constructed here.")
 			}
 			else {
-				return lang(rtvaln + "がある。", "You see " + rtvaln + " placed here.")
+				bedtxt = lang(rtvaln + "がある。", "You see " + rtvaln + " placed here.")
 			}
 		}
+		if ( inv(INV_ITEM_ID, rtval(1)) == ITEM_ID_JURES_BODY_PILLOW ) {
+			bedtxt += lang("寝心地は悪そうだが、いい夢を見れそうだ。", "I don't feel comfortable sleeping, but I think I can have a good dream.")
+		}
+		if ( inv(INV_ITEM_ID, rtval(1)) == ITEM_ID_SLEEPING_BAG | inv(INV_ITEM_ID, rtval(1)) == ITEM_ID_CHEAP_BED2 ) {
+			bedtxt += lang("地べたで寝るのと大差ないだろう。", "It wouldn't be much different from sleeping on the ground.")
+		}
+		if ( inv(INV_ITEM_ID, rtval(1)) == ITEM_ID_PLAIN_BED | inv(INV_ITEM_ID, rtval(1)) == ITEM_ID_CHEAP_BED | inv(INV_ITEM_ID, rtval(1)) == ITEM_ID_BUNK_BED ) {
+			bedtxt += lang("地べたで寝るよりはマシだが…。", "It's better than sleeping on the ground.")
+		}
+		if ( inv(INV_ITEM_ID, rtval(1)) == ITEM_ID_GIANT_BED | inv(INV_ITEM_ID, rtval(1)) == ITEM_ID_COMFORTABLE_BED | inv(INV_ITEM_ID, rtval(1)) == ITEM_ID_EASTERN_BED | inv(INV_ITEM_ID, rtval(1)) == ITEM_ID_CLEAN_BED | inv(INV_ITEM_ID, rtval(1)) == ITEM_ID_SOFT_BED | inv(INV_ITEM_ID, rtval(1)) == ITEM_ID_COFFIN ) {
+			bedtxt += lang("まぁまぁ休めそうだ。", "I think I can rest to some extent.")
+		}
+		if ( inv(INV_ITEM_ID, rtval(1)) == ITEM_ID_SLEEP_SHEEP | inv(INV_ITEM_ID, rtval(1)) == ITEM_ID_LUXURY_BED | inv(INV_ITEM_ID, rtval(1)) == ITEM_ID_DOUBLE_BED ) {
+			bedtxt += lang("寝心地が良さそうだ。", "I seem to be able to sleep comfortably.")
+		}
+		if ( inv(INV_ITEM_ID, rtval(1)) == ITEM_ID_KINGS_BED | inv(INV_ITEM_ID, rtval(1)) == ITEM_ID_HAPPY_BED ) {
+			bedtxt += lang("とっても寝心地が良さそうだ！", "I seem to be able to sleep very comfortably!")
+		}
+		return bedtxt
 	}
 	return lang("ここには" + rtval + "種類のアイテムがある。", "There are " + rtval + " items lying here.")
 
@@ -599,6 +618,9 @@
 			if ( rc > CHARA_PLAYER ) {
 				if ( cdata(CDATA_IN_TAGTEAM, rc) != 0 ) {
 					promptTagTeam
+					if ( stat == 0 ) {
+						goto *findLocation_WHILE1_CONTINUE
+					}
 					if ( rtval == 1 ) {
 						rc = cdata(CDATA_TAGTEAM_PARTNER, rc)
 					}
@@ -867,6 +889,20 @@
 				continue
 			}
 		}
+		if ( allyctrl == 8 ) {
+			if ( cnt == tc ) {
+				continue
+			}
+			if ( cdata(CDATA_IN_TAGTEAM, cnt) != 0 ) {
+				continue
+			}
+			if ( cdata(CDATA_EXIST, cnt) != CHAR_STATE_ALIVE ) {
+				continue
+			}
+			if ( cdata(CDATA_AREA, cnt) != 0 ) {
+				continue
+			}
+		}
 		if ( cnt == CHARA_PLAYER ) {
 			continue
 		}
@@ -931,11 +967,7 @@
 		x = 20
 	}
 	if ( allyctrl == 3 ) {
-		if ( leoleo == 1 ) {
-			txt lang("誰の力を覚醒させる？", "Whose power will you awaken?")
-			s(10) = lang("対象候補", "Ally List"), strhint2 + strhint3, lang("仲間の情報", "Name"), lang("速度/AP", "SPD/AP")
-		}
-		if ( leoleo == 2 ) {
+		if ( leoleo == 1 | leoleo == 2 ) {
 			txt lang("誰の力を覚醒させる？", "Whose power will you awaken?")
 			s(10) = lang("対象候補", "Ally List"), strhint2 + strhint3, lang("仲間の情報", "Name"), lang("必要AP/所持AP", "Cost/AP")
 		}
@@ -973,7 +1005,7 @@
 		}
 		x = 20
 	}
-	if ( allyctrl == 4 | allyctrl == 5 | allyctrl == 6 | allyctrl == 7 ) {
+	if ( allyctrl == 4 | allyctrl == 5 | allyctrl == 6 | allyctrl == 7 | allyctrl == 8 ) {
 		txt lang("対象にする仲間は？", "Who is the subject?")
 		s(10) = lang("仲間", "Ally List"), strhint2 + strhint3, lang("仲間の情報", "Name"), lang("状態", "Status")
 		if ( allyctrl == 5 ) {
@@ -1012,7 +1044,11 @@
 			break
 		}
 		if ( list(0, p) != 99 ) {
-			i = cdata(CDATA_PIC, list(0, p)) \ COLOR_TINT_MULT + cdata(CDATA_CHARA_PIC, list(0, p)) * COLOR_TINT_MULT, (cdata(CDATA_PIC, list(0, p)) - cdata(CDATA_CHARA_PIC, list(0, p)) * COLOR_TINT_MULT) / COLOR_TINT_MULT
+			picols = cdata(CDATA_CHARA_PIC, list(0, p))
+			if ( cdata(CDATA_PIC, list(0, p)) >= xy2pic(1, 21) & cdata(CDATA_PIC, list(0, p)) <= xy2pic(31, 21) ) {
+				picols = 0
+			}
+			i = cdata(CDATA_PIC, list(0, p)) \ COLOR_TINT_MULT + picols * COLOR_TINT_MULT, (cdata(CDATA_PIC, list(0, p)) - picols * COLOR_TINT_MULT) / COLOR_TINT_MULT
 			chara_preparepic i, i(1)
 			pos wx + 40, wy + 74 + cnt * 19 - 8
 			gmode 2, chipc(CHIPC_WIDTH, i), chipc(CHIPC_HEIGHT, i)
@@ -1023,7 +1059,7 @@
 			cs_list lang("決定", "Proceed"), wx + 84, wy + 66 + cnt * 19 - 1, 19
 			continue
 		}
-		if ( allyctrl == 0 | allyctrl == 2 | allyctrl == 3 | allyctrl == 4 | allyctrl == 5 | allyctrl == 6 | allyctrl == 7 ) {
+		if ( allyctrl == 0 | allyctrl == 2 | allyctrl == 3 | allyctrl == 4 | allyctrl == 5 | allyctrl == 6 | allyctrl == 7 | allyctrl == 8 ) {
 			s = "" + cdatan(CDATAN_AKA, i) + " " + cdatan(CDATAN_NAME, i)
 			if ( cdata(CDATA_AREA, i) != AREA_NONE ) {
 				s = s + "(" + mapname(cdata(CDATA_AREA, i)) + ")"
@@ -1092,11 +1128,18 @@
 						}
 					}
 					if ( cdata(CDATA_EXIST, i) == CHAR_STATE_SUSPEND ) {
-						if ( allyctrl == 0 ) {
-							s += lang("(はぐれている)", "(Stray)")
-						}
+						if ( gdata(GDATA_FLAG_MAIN) >= 875 & gdata(GDATA_FLAG_MAIN) < 1000 ) {
+							if ( allyctrl == 0 ) {
+								s += lang("(灰になった)", "(Ash)")
+							}
+                        }
 						else {
-							s += "(Hp: " + cdata(CDATA_HP, i) * 100 / cdata(CDATA_MAX_HP, i) + "%)"
+							if ( allyctrl == 0 ) {
+								s += lang("(はぐれている)", "(Stray)")
+							}
+                            else {
+								s += "(Hp: " + cdata(CDATA_HP, i) * 100 / cdata(CDATA_MAX_HP, i) + "%)"
+                            }
 						}
 					}
 				}
@@ -1106,11 +1149,12 @@
 					s = "   " + sorg(SKILL_ATTR_LIFE, i)
 				}
 				if ( leoleo == 1 ) {
-					s = "   " + sorg(SKILL_ATTR_SPD, i) + " / " + cdata(CDATA_AP_CURRENT, i)
+					hpcost = cdata(CDATA_INIT_SPEED, i) + 100
+					s = "   " + hpcost + " / " + cdata(CDATA_AP_CURRENT, i)
 				}
 				if ( leoleo == 2 ) {
 					hpcost = 0
-					hpcost = sorg(SKILL_ATTR_LIFE, i) * 2 + 300
+					hpcost = cdata(CDATA_INIT_LIFEMANA, i) + 300
 					if ( cbit(CHARA_BIT_ARMOUR, i) ) {
 						hpcost += 300
 					}
@@ -1244,7 +1288,7 @@
 	buff = ""
 	notesel buff
 	if ( jp ) {
-		buff += "<title1>◆精神状態<def>\n"
+		buff += "<title1>◆思考状態<def>\n"
 	}
 	if ( en ) {
 		buff += "<title1>* Mental state<def>\n"
@@ -1443,7 +1487,7 @@
 		}
 	}
 	if ( tc == CHARA_PLAYER ) {
-		s = lang("自分の心を覗くのは奇妙な感じだ", "Too many participants.")
+		s = lang("自分の心を覗くのは奇妙な感じだ", "It's a strange feeling looking into one's own heart.")
 	}
 	buff += s
 	buff += "\n"
@@ -1913,9 +1957,9 @@
 		listn(0, listmax) = lang("[覚醒]", "[AWAKE]") + lang("あなたは零の間撃を会得している", "You got Zero shoot.")
 		listmax++
 	}
-	if ( cbit(CHARA_BIT_AWAKE_STRUCK_OUT, tc) == 1 ) {
+	if ( cbit(CHARA_BIT_AWAKE_TACTICAL_THROW, tc) == 1 ) {
 		list(0, listmax) = 1, 99998
-		listn(0, listmax) = lang("[覚醒]", "[AWAKE]") + lang("あなたはストラックアウトを会得している", "You got Struck Out.")
+		listn(0, listmax) = lang("[覚醒]", "[AWAKE]") + lang("あなたはタクティカルスローを会得している", "You got Tactical Throw.")
 		listmax++
 	}
 	if ( cbit(CHARA_BIT_AWAKE_VARIABLE_BREATH, tc) == 1 ) {
@@ -2368,7 +2412,7 @@
 		noteadd ""
 		noteadd "◆ 請求書内訳(毎月1日に発行)"
 		noteadd "@RE　人件費  : 約 " + gdata(GDATA_COST_HIRE) + strgold
-		noteadd "@RE　運営費  : 約 " + calccostbuilding() + strgold
+		noteadd "@RE　維持費  : 約 " + calccostbuilding() + strgold
 		noteadd "@RE　税金    : 約 " + calccosttax() + strgold
 		noteadd "@RE　合計　  : 約 " + (gdata(GDATA_COST_HIRE) + calccostbuilding() + calccosttax()) + strgold
 		if ( gdata(STARTING_GDATA_FLAG + 359) > 0 ) {
@@ -2403,7 +2447,7 @@
 			noteadd "@BL　最深攻略階層　　: " + gdata(GDATA_DEEPEST_LEVEL) + lang("階相当", " level")
 			noteadd "@BL　ネフィア制覇数  : " + gdata(GDATA_FLAG_NEFIA_CONQUERED) + ""
 			noteadd "@BL　殺害数　　　　  : " + gdata(GDATA_KILLED) + ""
-			noteadd "@BL　プラチナ総入手数: " + gdata(GDATA_FLAG_TOTAL_PLATINUM) + lang("枚", " Plat")
+			noteadd "@BL　決闘の経験　　　: " + gdata(GDATA_FLAG_TIMES_DUELED) + ""
 			noteadd "@BL　依頼達成数　　  : " + gdata(GDATA_FLAG_JOBS_COMPLETED) + ""
 			noteadd ""
 			noteadd "@BL　世界移動距離　　: " + gdata(GDATA_FLAG_MILES_TRAVELED) + lang("マイル", " Miles")
@@ -2423,12 +2467,17 @@
 			noteadd "@BL　わが家への訪問客: " + gdata(GDATA_FLAG_HOUSE_VISITORS) + lang("人", " Guest")
 			noteadd "@BL　宝発掘回数　　　: " + gdata(GDATA_FLAG_TREASURE_FOUND) + ""
 			noteadd "@BL　潰した盗賊団の数: " + gdata(GDATA_FLAG_BANDITS_KILLED) + ""
-			noteadd "@BL　アリーナ連勝数　: " + gdata(GDATA_FLAG_HIGHEST_ARENA_STREAK) + ""
-			noteadd "@BL　Ｐアリーナ連勝数: " + gdata(GDATA_FLAG_HIGHEST_PET_ARENA_STREAK) + ""
+			noteadd "@BL　アリーナ総勝数　: " + gdata(GDATA_FLAG_HIGHEST_ARENA_STREAK) + ""
+			noteadd "@BL　Ｐアリーナ総勝数: " + gdata(GDATA_FLAG_HIGHEST_PET_ARENA_STREAK) + ""
 			noteadd ""
-			noteadd "@BL　決闘の経験　　　: " + gdata(GDATA_FLAG_TIMES_DUELED) + ""
+			noteadd "@BL　ﾌﾟﾗﾁﾅ硬貨入手数 : " + gdata(GDATA_FLAG_TOTAL_PLATINUM) + lang("枚", " Plat")
+			noteadd "@BL　PCｽｷﾙﾎﾞｰﾅｽ入手数: " + gdata(GDATA_FLAG_PC_SKILL_BONUS_OBTAINED) + ""
+			noteadd "@BL　ｽﾍﾟﾙﾎﾞｰﾅｽ入手数 : " + gdata(GDATA_FLAG_SKILL_BONUS_OBTAINED) + ""
 			if ( gdata(GDATA_FLAG_MAIN) >= 370 ) {
 				noteadd "@BL　クイズ最高記録　: " + gdata(GDATA_FLAG_MELGET_HISCORE) + lang("点", " points")
+			}
+			else {
+				noteadd ""
 			}
 			if ( cfg_record == 2 ) {
 				noteadd ""
@@ -2485,7 +2534,7 @@
 			noteadd "@BL   Deepest Lvl : " + gdata(GDATA_DEEPEST_LEVEL) + ""
 			noteadd "@BL   Nefia Conquered: " + gdata(GDATA_FLAG_NEFIA_CONQUERED) + ""
 			noteadd "@BL   Kills: " + gdata(GDATA_KILLED) + ""
-			noteadd "@BL   Total Platinum: " + gdata(GDATA_FLAG_TOTAL_PLATINUM) + ""
+			noteadd "@BL   Total Duels Experienced: " + gdata(GDATA_FLAG_TIMES_DUELED) + ""
 			noteadd "@BL   Jobs Completed: " + gdata(GDATA_FLAG_JOBS_COMPLETED) + ""
 			noteadd ""
 			noteadd "@BL   Miles Traveled: " + gdata(GDATA_FLAG_MILES_TRAVELED) + ""
@@ -2508,9 +2557,14 @@
 			noteadd "@BL   Max Arena Streak: " + gdata(GDATA_FLAG_HIGHEST_ARENA_STREAK) + ""
 			noteadd "@BL   Max Pet Arena Streak: " + gdata(GDATA_FLAG_HIGHEST_PET_ARENA_STREAK) + ""
 			noteadd ""
-			noteadd "@BL   Duels Experienced: " + gdata(GDATA_FLAG_TIMES_DUELED) + ""
+			noteadd "@BL   Total Platinum: " + gdata(GDATA_FLAG_TOTAL_PLATINUM) + lang("枚", " Plat")
+			noteadd "@BL   Player Skill Points Earned: " + gdata(GDATA_FLAG_PC_SKILL_BONUS_OBTAINED) + ""
+			noteadd "@BL   Total Skill Points Earned: " + gdata(GDATA_FLAG_SKILL_BONUS_OBTAINED) + ""
 			if ( gdata(GDATA_FLAG_MAIN) >= 370 ) {
 				noteadd "@BL   Melget Hiscore: " + gdata(GDATA_FLAG_MELGET_HISCORE) + " points"
+			}
+			else {
+				noteadd ""
 			}
 			if ( cfg_record == 2 ) {
 				noteadd ""
@@ -2959,7 +3013,11 @@
 			break
 		}
 		i = cdata(CDATA_PIC, list(0, p)) \ COLOR_TINT_MULT + cdata(CDATA_CHARA_PIC, list(0, p)) * COLOR_TINT_MULT, (cdata(CDATA_PIC, list(0, p)) - cdata(CDATA_CHARA_PIC, list(0, p)) * COLOR_TINT_MULT) / COLOR_TINT_MULT
-		chara_preparepic i, i(1)
+		picols = cdata(CDATA_CHARA_PIC, list(0, p))
+		if ( cdata(CDATA_PIC, list(0, p)) >= xy2pic(1, 21) & cdata(CDATA_PIC, list(0, p)) <= xy2pic(31, 21) ) {
+			picols = 0
+		}
+		i = cdata(CDATA_PIC, list(0, p)) \ COLOR_TINT_MULT + picols * COLOR_TINT_MULT, (cdata(CDATA_PIC, list(0, p)) - picols * COLOR_TINT_MULT) / COLOR_TINT_MULT
 		pos wx + 40, wy + 74 + cnt * 19 - 8
 		gmode 2, chipc(CHIPC_WIDTH, i), chipc(CHIPC_HEIGHT, i)
 		grotate 5, 0, 960, 0, chipc(CHIPC_WIDTH, i) / (1 + (chipc(CHIPC_HEIGHT, i) > inf_tiles)), inf_tiles
@@ -2972,7 +3030,7 @@
 			s += lang("両性具有", "hermaphrodite")
 		}
 		if ( cdatan(CDATAN_NEWSEX, i) == lang("なし", "none") ) {
-			s += lang("性別なし", "none")
+			s += lang("性別不明", "unknown")
 		}
 		if ( cdatan(CDATAN_NEWSEX, i) == lang("男性", "male") ) {
 			s += lang("男性", "male")
@@ -3090,14 +3148,9 @@
 			break
 		}
 		i = list(0, p)
-		gsel 1
-		color 0
-		boxf 0, 960, chipi(CHIPI_WIDTH, xy2pic(0, 13)), chipi(CHIPI_HEIGHT, xy2pic(0, 13)) + 960
-		pos 0, 960
-		gcopy 1, chipi(CHIPI_X, xy2pic(0, 13)), chipi(CHIPI_Y, xy2pic(0, 13)), chipi(CHIPI_WIDTH, xy2pic(0, 13)), chipi(CHIPI_HEIGHT, xy2pic(0, 13))
-		gfini chipi(CHIPI_WIDTH, xy2pic(0, 13)), chipi(CHIPI_HEIGHT, xy2pic(0, 13))
-		gfdec2 c_col(0, 0), c_col(1, 0), c_col(2, 0)
-		gsel selcur
+
+        preparePicItem xy2pic(0, 13), 0
+
 		pos wx + 38, wy + 73 + cnt * 19
 		gmode 2, inf_tiles, inf_tiles
 		grotate 1, 0, 960, 0, inf_tiles, inf_tiles
@@ -3440,6 +3493,12 @@
 			s += "mcHome0"
 		}
 		if ( p == 82 ) {
+			s += "mcZangyou"
+		}
+		if ( p == 83 ) {
+			s += "mcMelan"
+		}
+		if ( p == 84 ) {
 			s += "No Music"
 		}
 		cs_list s, wx + 84, wy + 66 + cnt * 19 - 1, 19
@@ -3498,7 +3557,12 @@
 	s = lang("冒険者ランク", "Adventurer Rank"), strhint2 + strhint3
 	display_window (windoww - 640) / 2 + inf_screenx, winposy(448), 640, 448
 	display_topic lang("冒険者の名前とランク", "Name and Rank"), wx + 28, wy + 36
-	display_topic lang("名声(Lv)", "Fame(Lv)"), wx + 320, wy + 36
+	if ( csctrl == 4 ) {
+		display_topic lang("名声(友好)", "Fame(Impress)"), wx + 290, wy + 36
+	}
+	else {
+		display_topic lang("伝言種類(友好)", "Message(Impress)"), wx + 290, wy + 36
+	}
 	display_topic lang("現在地", "Location"), wx + 420, wy + 36
 	keyrange = 0
 	repeat pagesize
@@ -3522,7 +3586,11 @@
 		if ( p >= listmax ) {
 			break
 		}
-		i = cdata(CDATA_PIC, list(0, p)) \ COLOR_TINT_MULT + cdata(CDATA_CHARA_PIC, list(0, p)) * COLOR_TINT_MULT, (cdata(CDATA_PIC, list(0, p)) - cdata(CDATA_CHARA_PIC, list(0, p)) * COLOR_TINT_MULT) / COLOR_TINT_MULT
+		picols = cdata(CDATA_CHARA_PIC, list(0, p))
+		if ( cdata(CDATA_PIC, list(0, p)) >= xy2pic(1, 21) & cdata(CDATA_PIC, list(0, p)) <= xy2pic(31, 21) ) {
+			picols = 0
+		}
+		i = cdata(CDATA_PIC, list(0, p)) \ COLOR_TINT_MULT + picols * COLOR_TINT_MULT, (cdata(CDATA_PIC, list(0, p)) - picols * COLOR_TINT_MULT) / COLOR_TINT_MULT
 		chara_preparepic i, i(1)
 		pos wx + 40, wy + 74 + cnt * 19 - 8
 		gmode 2, chipc(CHIPC_WIDTH, i), chipc(CHIPC_HEIGHT, i)
@@ -3533,7 +3601,16 @@
 		s = "" + cdatan(CDATAN_AKA, i) + " " + cdatan(CDATAN_NAME, i)
 		cutname s, 26
 		cs_list s, wx + 118, wy + 66 + cnt * 19 - 1, 19
-		s = "" + cdata(CDATA_FAME, i) + "(" + cdata(CDATA_LEVEL, i) + ")"
+		if ( csctrl == 4 ) {
+			s = "" + cdata(CDATA_FAME, i) + "(" + _impression(implevel(cdata(CDATA_IMPRESSION, i))) + ")"
+		}
+		else {
+			dengon = cdata(CDATA_CUSTOM_TALK_LINE, i)
+			if ( i < 16 ) {
+				dengon = 0
+			}
+			s = "" + _dengon(dengon) + "(" + _impression(implevel(cdata(CDATA_IMPRESSION, i))) + ")"
+		}
 		pos wx + 402 - strlen(s) * 7, wy + 66 + cnt * 19 + 2
 		mes s
 		s = mapname(cdata(CDATA_AREA, i))
@@ -3560,6 +3637,45 @@
 			break
 		}
 	loop
+	if ( p != (-1) ) {
+		if ( csctrl == 4 ) {
+			snd SOUNDLIST_PAYGOLD1
+			cdata(CDATA_GOLD, CHARA_PLAYER) -= 100
+			cc = p
+			snd SOUNDLIST_POP2
+			gosub *com_charainfo
+			tc = tcbk
+			return
+		}
+		if ( csctrl == 5 ) {
+			cc = p
+			if ( cc < MAX_CHARA_FOLLOWER | (cdata(CDATA_AREA, cc) == gdata(GDATA_AREA) & cdata(CDATA_EXIST, cc) != CHAR_STATE_ADV_HOSPITAL) ) {
+				snd SOUNDLIST_FAIL1
+				txt lang("「冷やかし" + _ka(1) + "」", " " + cnvtalk("You kidding?"))
+				return
+			}
+			txtsetadvmes 6
+			repeat 6
+				promptl(0, promptmax) = s(cnt), key_select(cnt), "" + promptmax
+				promptmax++
+			loop
+			val = promptx, prompty, 400, 1
+			gosub *prompt_key
+			if ( stat == 0 ) {
+				return
+			}
+			cdata(CDATA_CUSTOM_TALK_LINE, cc) = rtval
+			if ( rtval == 0 ) {
+				txt lang("「わかった" + _yo(3) + "」", " " + cnvtalk("Well noted!"))
+				return
+			}
+			txt lang("「こっちの情報網を使って、確実に伝えておく" + _yo(3) + "」", " " + cnvtalk("I will definitely deliver your message!"))
+			snd SOUNDLIST_PAYGOLD1
+			cdata(CDATA_GOLD, CHARA_PLAYER) -= 2000
+			tc = tcbk
+			return
+		}
+	}
 	page_change *com_listAdv_loop_pgchk
 	if ( key == key_cancel ) {
 		return
@@ -3590,15 +3706,24 @@
 *com_aka_WHILE1
 	redraw 0
 	if ( cs != cs_bk ) {
-		s = lang("異名の選択", "Alias Selection"), strhint3b
+		if ( val != 4 ) {
+			s = lang("名前の選択", "Alias Selection"), strhint3b
+		}
+		if ( val == 4 ) {
+			s = lang("名前の選択", "Alias Selection"), strhint1
+		}
 		display_window (windoww - 400) / 2 + inf_screenx, winposy(458), 400, 458
-		display_topic lang("異名の候補", "Alias List"), wx + 28, wy + 30
+		display_topic lang("名前の候補", "Alias List"), wx + 28, wy + 30
 		font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
 		color 0, 0, 0
 		repeat 17
 			key_list(cnt) = key_select(cnt)
 			keyrange = cnt + 1
 			if ( val == 3 ) {
+				randomize i + cnt
+			}
+			if ( val == 4 ) {
+				i += rnd(500) * 17
 				randomize i + cnt
 			}
 			if ( list(0, 0) == (-1) ) {
@@ -3636,6 +3761,9 @@
 			cs_bk = -1
 		}
 		else {
+			if ( val == 4 ) {
+				return p
+			}
 			if ( val == 3 ) {
 				return p
 			}
@@ -3649,9 +3777,11 @@
 			return 1
 		}
 	}
-	if ( key == key_cancel ) {
-		snd SOUNDLIST_POP2
-		return 0
+	if ( val != 4 ) {
+		if ( key == key_cancel ) {
+			snd SOUNDLIST_POP2
+			return 0
+		}
 	}
 	goto *com_aka_WHILE1
 *com_aka_WEND1
@@ -3663,9 +3793,16 @@
 
 *com_wish
 	if ( gdata(GDATA_AREA) == AREA_CHAOS_CRADLE & gdata(GDATA_LEVEL) == 179 ) {
-		txtef COLOR_PURPLE
-		txt lang("願いの女神の力も、ここに届かないようだ…。", "The power of the Wish Goddess does not seem to reach here...")
-		return
+		if ( gdata(GDATA_FLAG_MAIN) < 845 ) {
+			txtef COLOR_PURPLE
+			txt lang("願いの女神の力も、ここには届かないようだ…。", "The power of the Wish Goddess does not seem to reach here...")
+			return
+		}
+		if ( gdata(GDATA_FLAG_MAIN) >= 845 ) {
+			txtef COLOR_PURPLE
+			txt lang("願いの女神も、今は神力に余裕がないようだ…。", "Even the goddess of wishes can't afford now...")
+			return
+		}
 	}
 	txtcopy = ""
 	txtef COLOR_YELLOW
@@ -4098,6 +4235,13 @@
 				txt lang("あ、それ在庫切れ。", "It's sold out.")
 				txtmore
 			}
+			if ( inv(INV_ITEM_ID, ci) == ITEM_ID_DEED_OF_LAND_BATTLESHIP | inv(INV_ITEM_ID, ci) == ITEM_ID_DEED_OF_MAGIC_LOCOMOTIVE ) {
+				inv(INV_ITEM_NUM, ci) = 0
+				flt
+				itemcreate -1, ITEM_ID_DEED_OF_CARRIAGE, cdata(CDATA_X, cc), cdata(CDATA_Y, cc), 0
+				txt lang("あ、それ在庫切れ。", "It's sold out.")
+				txtmore
+			}
 			if ( inv(INV_ITEM_ID, ci) == ITEM_ID_RESEARCHERS_DIARY ) {
 				inv(INV_ITEM_NUM, ci) = 0
 				flt
@@ -4107,6 +4251,14 @@
 				inv(INV_ITEM_NUM, ci) = 0
 				flt
 				itemcreate -1, ITEM_ID_BOTTLE_WATER, cdata(CDATA_X, cc), cdata(CDATA_Y, cc), 3
+				inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_BLESSED
+				txt lang("あ、それ在庫切れ。", "It's sold out.")
+				txtmore
+			}
+			if ( inv(INV_ITEM_ID, ci) == ITEM_ID_MEMORY_FRAGMENT ) {
+				inv(INV_ITEM_NUM, ci) = 0
+				flt
+				itemcreate -1, ITEM_ID_SKILLBOOK, cdata(CDATA_X, cc), cdata(CDATA_Y, cc), 0
 				inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_BLESSED
 				txt lang("あ、それ在庫切れ。", "It's sold out.")
 				txtmore
@@ -4336,7 +4488,7 @@
 			goto *turn_end
 		}
 	}
-	if ( (chipm(CHIPM_ATTRIB, map(x, y, 0)) & CHIPM_ATTRIB_CANT_PASS) == 0 | chipm(CHIPM_ROLE, map(x, y, 0)) == MAP_CHIP_ROLE_WATER | mdata(MDATA_TYPE) == MAP_TYPE_WORLD | map(x, y, 0) == 701 | map(x, y, 0) == 671 ) {
+	if ( (chipm(CHIPM_ATTRIB, map(x, y, MAP_TILE_ID)) & CHIPM_ATTRIB_CANT_PASS) == 0 | chipm(CHIPM_ROLE, map(x, y, MAP_TILE_ID)) == MAP_CHIP_ROLE_WATER | mdata(MDATA_TYPE) == MAP_TYPE_WORLD | map(x, y, MAP_TILE_ID) == xy2pic(8, 21) | map(x, y, MAP_TILE_ID) == xy2pic(14, 23) | map(x, y, MAP_TILE_ID) == xy2pic(17, 23) | map(x, y, MAP_TILE_ID) == xy2pic(20, 23) ) {
 		txt_impossible
 		gosub *screen_draw
 		goto *pc_turn
@@ -4499,6 +4651,9 @@
 	}
 	if ( key == key_mode2 ) {
 		p = list(0, pagesize * page + cs)
+		if ( p <= 0 ) {
+			goto *com_applySkill
+		}
 		if ( p == SKILL_ACTIVE_PICKPOCKET | p == SKILL_ACTIVE_RIDING ) {
 			snd SOUNDLIST_FAIL1
 			txtef COLOR_RED
@@ -4686,8 +4841,11 @@
 		goto *com_applyWideSkill_loop_pgchk
 	}
 	if ( key == key_mode2 ) {
-		snd SOUNDLIST_LOCKED1
 		p = list(0, pagesize * page + cs)
+		if ( p <= 0 ) {
+			goto *com_applyWideSkill
+		}
+		snd SOUNDLIST_LOCKED1
 		txtef COLOR_YELLOW
 		txt lang("【非表示：" + skillname(p) + "】", "[Hidden: " + skillname(p) + "]")
 		spact(p - STARTING_SKILL_SPACT) = 2
@@ -4789,16 +4947,69 @@
 		goto *pc_turn
 	}
 	tc -= 1
-	if ( tc == CHARA_PLAYER ) {
-		if ( gdata(GDATA_RIDER) != 0 ) {
-			txtselectride 2
-			repeat 2
-				promptAdd s(cnt), key_select(cnt)
-			loop
-			val = promptx, prompty, 150, 0
-			gosub *prompt_key
-			if ( rtval == 1 ) {
-				tc = gdata(GDATA_RIDER)
+	tatc = tc
+	if ( cdata(CDATA_TAGTEAM_PARTNER, tc) > 0 ) {
+		tatc2 = cdata(CDATA_TAGTEAM_PARTNER, tc)
+	}
+	if ( cdata(CDATA_FACE, tatc) > 0 ) {
+		stati = exedir + "\\user\\graphic2\\face" + cdata(CDATA_FACE, tatc) + "_B.bmp"
+		if ( cdata(CDATA_EMO_ICON, tatc) \ 100 == 18 | cdata(CDATA_CONDITION_ANGRY, tatc) > 0 ) {
+			stati = exedir + "\\user\\graphic2\\face" + cdata(CDATA_FACE, tatc) + "_A.bmp"
+		}
+		if ( cdata(CDATA_EMO_ICON, tatc) \ 100 == 21 ) {
+			stati = exedir + "\\user\\graphic2\\face" + cdata(CDATA_FACE, tatc) + "_Q.bmp"
+		}
+		if ( cdata(CDATA_EMO_ICON, tatc) \ 100 == 6 ) {
+			stati = exedir + "\\user\\graphic2\\face" + cdata(CDATA_FACE, tatc) + "_F.bmp"
+		}
+		if ( cdata(CDATA_EMO_ICON, tatc) \ 100 == 17 ) {
+			stati = exedir + "\\user\\graphic2\\face" + cdata(CDATA_FACE, tatc) + "_H.bmp"
+		}
+		if ( cdata(CDATA_HP, tatc) < cdata(CDATA_MAX_HP, tatc) / 2 | cdata(CDATA_EMO_ICON, tatc) \ 100 == 26 ) {
+			stati = exedir + "\\user\\graphic2\\face" + cdata(CDATA_FACE, tatc) + "_E.bmp"
+		}
+		exist stati
+		if ( strsize != (-1) ) {
+			gsel BUFFER_BUF
+			pos 0, 0
+			picload stati, 1
+			gsel BUFFER_SCREEN
+			if ( cdata(CDATA_IN_TAGTEAM, tatc) == 0 ) {
+				pos windoww - 300, windowh - 588
+				gcopy BUFFER_BUF, 0, 0, 300, 500
+			}
+			else {
+				pos 0, windowh - 588
+				gcopy BUFFER_BUF, 0, 0, 300, 500
+			}
+		}
+	}
+	if ( cdata(CDATA_TAGTEAM_PARTNER, tatc) > 0 ) {
+		if ( cdata(CDATA_FACE, tatc2) > 0 ) {
+			stati2 = exedir + "\\user\\graphic2\\face" + cdata(CDATA_FACE, tatc2) + "_B.bmp"
+			if ( cdata(CDATA_EMO_ICON, tatc2) \ 100 == 18 | cdata(CDATA_CONDITION_ANGRY, tatc2) > 0 ) {
+				stati2 = exedir + "\\user\\graphic2\\face" + cdata(CDATA_FACE, tatc2) + "_A.bmp"
+			}
+			if ( cdata(CDATA_EMO_ICON, tatc2) \ 100 == 21 ) {
+				stati2 = exedir + "\\user\\graphic2\\face" + cdata(CDATA_FACE, tatc2) + "_Q.bmp"
+			}
+			if ( cdata(CDATA_EMO_ICON, tatc2) \ 100 == 6 ) {
+				stati2 = exedir + "\\user\\graphic2\\face" + cdata(CDATA_FACE, tatc2) + "_F.bmp"
+			}
+			if ( cdata(CDATA_EMO_ICON, tatc2) \ 100 == 17 ) {
+				stati2 = exedir + "\\user\\graphic2\\face" + cdata(CDATA_FACE, tatc2) + "_H.bmp"
+			}
+			if ( cdata(CDATA_HP, tatc2) < cdata(CDATA_MAX_HP, tatc2) / 2 | cdata(CDATA_EMO_ICON, tatc2) \ 100 == 26 ) {
+				stati2 = exedir + "\\user\\graphic2\\face" + cdata(CDATA_FACE, tatc2) + "_E.bmp"
+			}
+			exist stati2
+			if ( strsize != (-1) ) {
+				gsel BUFFER_BUF
+				pos 0, 0
+				picload stati2, 1
+				gsel BUFFER_SCREEN
+				pos windoww - 300, windowh - 588
+				gcopy BUFFER_BUF, 0, 0, 300, 500
 			}
 		}
 	}
@@ -4808,11 +5019,24 @@
 			tc = cdata(CDATA_TAGTEAM_PARTNER, tc)
 		}
 	}
-	if ( tc == CHARA_PLAYER ) {
-		if ( gdata(GDATA_RIDER) != 0 ) {
-			tc = gdata(GDATA_RIDER)
-		}
-	}
+ 	if ( tc == CHARA_PLAYER ) {
+ 		if ( gdata(GDATA_RIDER) != 0 ) {
+ 			txtselectride 2
+ 			repeat 2
+ 				promptl(0, promptmax) = s(cnt), key_select(cnt), "" + promptmax
+ 				promptmax++
+ 			loop
+			val = promptx, prompty, 150, 1
+ 			gosub *prompt_key
+			if ( stat == 0 ) {
+				gosub *screen_draw
+				goto *pc_turn
+			}
+ 			if ( rtval == 1 ) {
+ 				tc = gdata(GDATA_RIDER)
+ 			}
+ 		}
+ 	}
 	if ( tc != CHARA_PLAYER ) {
 		if ( tc < MAX_CHARA_FOLLOWER ) {
 			if ( cbit(CHARA_BIT_BODYGUARD, tc) == 0 ) {
@@ -4863,6 +5087,22 @@
 			tc = cdata(CDATA_TAGTEAM_PARTNER, tc)
 		}
 	}
+	if ( trait(TRAIT_ETHER_TENTACLES) != 0 ) {
+		if ( cc == CHARA_PLAYER ) {
+			if ( cdata(CDATA_EXIST, tc) == CHAR_STATE_ALIVE & rnd(50) == 0 ) {
+				txt lang("触手が勝手に" + name(tc) + "へ襲いかかった！", "Your tentacles have attacked to " + name(tc) + " without permission!")
+				snd SOUNDLIST_ATTACK00
+				telv = limit(cdata(CDATA_LEVEL, cc), 1, 1000)
+				tdmg = (telv / 10 + 4) * (telv / 10 + 3) * 2 + rnd(telv + 5) + 1
+				if ( trait(TRAIT_ETHER_TENTACLES) == (-2) ) {
+					tdmg = tdmg * 2
+				}
+				dmghp tc, tdmg, cc, SKILL_RESDMG_CRUSH, 1000
+				gosub *screen_draw
+				goto *turn_end
+			}
+		}
+	}
 	txt lang(name(tc) + "に何をする？ ", "What action do you want to perform to " + him(tc) + "? ")
 	if ( cdata(CDATA_ID, tc) == CREATURE_ID_POPPY_THE_LITTLE_DOG ) {
 		if ( gdata(GDATA_FLAG_SUB_DOG) >= 1000 ) {
@@ -4888,9 +5128,12 @@
 				}
 			}
 		}
+		if ( cbit(CHARA_BIT_HAS_BEEN_CONFESSED_TO, tc) == FALSE ) {
+			promptAdd lang("気持ちを伝える", "Tell feelings"), "null", "" + 29
+		}
 		if ( cbit(CHARA_BIT_BODYGUARD, tc) == 0 & cbit(CHARA_BIT_GUARD_TEMP, tc) == 0 ) {
 			if ( tc < MAX_CHARA_FOLLOWER | (cbit(CHARA_BIT_LIVESTOCK, tc) == 1 & gdata(GDATA_AREA) == AREA_DOJO) ) {
-				promptAdd lang("所持品", "Inventory"), "null", 4
+				promptAdd lang("何かを渡す/もらう", "Give or Take"), "null", "" + 4
 			}
 			else {
 				promptAdd lang("何かを渡す", "Give"), "null", 2
@@ -4935,6 +5178,7 @@
 			}
 		}
 	}
+	promptAdd lang("立ち姿を変える", "Change Tatie"), "null", "" + 27
 	promptAdd lang("アイテム画像の付与", "Item mark set"), "null", 23
 	if ( cdata(CDATA_MARK_ITEM_PIC, tc) > 0 ) {
 		promptAdd lang("アイテム画像の調整", "Item mark adjust"), "null", 26
@@ -4949,7 +5193,9 @@
 		if ( tc < MAX_CHARA_FOLLOWER ) {
 			if ( cdata(CDATA_IN_TAGTEAM, tc) != 1 ) {
 				if ( cdata(CDATA_AREA, tc) == AREA_NONE | tc == CHARA_PLAYER ) {
-					promptAdd lang("タッグ編成", "Tag organization"), "null", 16
+					if ( cdata(CDATA_IN_TAGTEAM, tc) == 0 ) {
+						promptAdd lang("タッグ編成", "Tag organization"), "null", 16
+					}
 					if ( cdata(CDATA_TAGTEAM_PARTNER, tc) > 0 ) {
 						if ( cdata(CDATA_EXIST, cdata(CDATA_TAGTEAM_PARTNER, tc)) == CHAR_STATE_ALIVE ) {
 							promptAdd lang("タッグ解散", "Tag dissolution"), "null", 17
@@ -4961,6 +5207,9 @@
 	}
 	promptAdd lang("口調を変える", "Change Tone"), "null", 10
 	promptAdd lang("名前をつける", "Name"), "null", 3
+	if ( tc != CHARA_PLAYER & cdata(CDATA_RELATION, tc) == RELATION_ALLY | (gdata(GDATA_AREA) == AREA_DOJO & cbit(CHARA_BIT_LIVESTOCK, tc) == TRUE) ) {
+		promptAdd lang("能力の開示", "Info"), "null", "" + 28
+	}
 	if ( gdata(GDATA_WIZARD) | (gdata(GDATA_AREA) == AREA_DOJO & cbit(CHARA_BIT_LIVESTOCK, tc) == 1) ) {
 		promptAdd lang("情報", "Information"), "null", 6
 	}
@@ -5407,13 +5656,18 @@
 			txt lang("吊るしたままでは連れ出せない。", "You cannot leave livestock on hanging.")
 			goto *pc_turn
 		}
+		f = get_freeally()
+		if ( f == 0 ) {
+			txt lang("仲間の最大数に達しているため連れ出せない。", "Your party is already full. You can't invite someone anymore.")
+			goto *pc_turn
+		}
 		rc = tc
 		gosub *add_ally
 		cdata(CDATA_AREA, rc) = AREA_NONE
 		gosub *screen_draw
 		goto *turn_end
 	}
-	if ( p == 6 ) {
+	if ( p == 6 | 28 ) {
 		csctrl = 4
 		snd SOUNDLIST_POP2
 		cc = tc
@@ -5485,6 +5739,158 @@
 		gosub *com_item_mark_adjust
 		gosub *screen_draw
 		goto *pc_turn
+	}
+	if ( p == 27 ) {
+		gosub *com_tag_team
+		gosub *screen_draw
+		goto *pc_turn
+	}
+	if ( p == 29 ) {
+		if ( gdata(GDATA_DAY) \ 3 == 0 ) {
+			txtselectkimoti0 11
+		}
+		if ( gdata(GDATA_DAY) \ 3 == 1 ) {
+			txtselectkimoti1 11
+		}
+		if ( gdata(GDATA_DAY) \ 3 == 2 ) {
+			txtselectkimoti2 11
+		}
+		repeat 11
+			promptl(0, promptmax) = s(cnt), key_select(cnt), "" + promptmax
+			promptmax++
+		loop
+		val = promptx, prompty, 300, 1
+		gosub *prompt_key
+		if ( stat == 0 ) {
+			gosub *screen_draw
+			goto *pc_turn
+		}
+		if ( rtval == 0 ) {
+			txt lang(cdatan(CDATAN_NAME, tc) + "はあなたが何を伝えようとしたのか、すごく気になっている…。", cdatan(CDATAN_NAME, tc) + " cares what you tried to tell.")
+			cdata(CDATA_EMO_ICON, tc) = 21 + 100 * 3
+		}
+		if ( rtval >= 1 & rtval <= 3 ) {
+			if ( cdata(CDATA_IMPRESSION, tc) >= 150 ) {
+				modimp tc, 12
+				snd SOUNDLIST_PRAY1
+				cdata(CDATA_EMO_ICON, tc) = 17 + 100 * 3
+				txtef COLOR_GREEN
+				txt lang(cdatan(CDATAN_NAME, tc) + "は" + _aisite(3) + "。", cdatan(CDATAN_NAME, tc) + " looks happy.")
+			}
+			if ( cdata(CDATA_IMPRESSION, tc) >= 75 & cdata(CDATA_IMPRESSION, tc) < 150 ) {
+				txt lang(cdatan(CDATAN_NAME, tc) + "は大袈裟な冗談だと思ったようだ。", cdatan(CDATAN_NAME, tc) + " seemed to think it was an exaggerated joke.")
+			}
+			if ( cdata(CDATA_IMPRESSION, tc) < 75 ) {
+				modimp tc, -5
+				snd SOUNDLIST_ATK_DARK
+				txtef COLOR_RED
+				txt lang(cdatan(CDATAN_NAME, tc) + "は気持ち悪そうにあなたを見ている…。", cdatan(CDATAN_NAME, tc) + " felt you creepy.")
+			}
+			cbitmod CHARA_BIT_HAS_BEEN_CONFESSED_TO, tc, TRUE
+		}
+		if ( rtval >= 4 & rtval <= 6 ) {
+			snd SOUNDLIST_DING2
+			txtef COLOR_YELLOW
+			txt lang(cdatan(CDATAN_NAME, tc) + "はまんざらでもないようだ。", cdatan(CDATAN_NAME, tc) + " felt it wasn't too bad.")
+			modimp tc, 7
+			cdata(CDATA_EMO_ICON, tc) = 6 + 100 * 3
+			cbitmod CHARA_BIT_HAS_BEEN_CONFESSED_TO, tc, TRUE
+		}
+		if ( rtval >= 7 & rtval <= 9 ) {
+			if ( cdata(CDATA_IMPRESSION, tc) >= 150 ) {
+				dmgcon tc, CONDITION_CONFUSE, 1000
+				cdata(CDATA_EMO_ICON, tc) = 21 + 100 * 3
+				txt lang(cdatan(CDATAN_NAME, tc) + "は何かの間違いではないかと耳を疑っている…。", cdatan(CDATAN_NAME, tc) + " can't believe the ear...")
+			}
+			if ( cdata(CDATA_IMPRESSION, tc) >= 75 & cdata(CDATA_IMPRESSION, tc) < 150 ) {
+				txt lang(cdatan(CDATAN_NAME, tc) + "は憐れむような目であなたを見た。", cdatan(CDATAN_NAME, tc) + " looked at you with merciful eyes.")
+			}
+			if ( cdata(CDATA_IMPRESSION, tc) < 75 ) {
+				txt lang(cdatan(CDATAN_NAME, tc) + "はやれやれと肩をすくめた。", cdatan(CDATAN_NAME, tc) + " shrugged.")
+			}
+			cbitmod CHARA_BIT_HAS_BEEN_CONFESSED_TO, tc, TRUE
+		}
+		if ( rtval == 10 ) {
+			if ( cbit(CHARA_BIT_MARRIED, tc) != FALSE ) {
+				if ( gdata(GDATA_FLAG_GAME_MODE) == GAMEMODE_OVERDOSE | gdata(GDATA_FLAG_GAME_MODE) == GAMEMODE_PURGE ) {
+					snd SOUNDLIST_FAIL1
+					txt lang("このゲームモードでは遺伝子を残せない。", "I do not make gene in this game mode.")
+					goto *turn_end
+				}
+				if ( gdata(GDATA_SLEEP) < 15 ) {
+					snd SOUNDLIST_FAIL1
+					txt lang("「まだ眠くない" + _yo(3) + "」", cdatan(CDATAN_NAME, tc) + " isn't sleepy yet.")
+					goto *turn_end
+				}
+				if ( gdata(GDATA_AREA) == AREA_SHELTER ) {
+					snd SOUNDLIST_FAIL1
+					txt lang("「こんな場所では嫌" + _yo(3) + "」", cdatan(CDATAN_NAME, tc) + " seems to want to get out of here.")
+					goto *turn_end
+				}
+				txt lang("「いやん、あなたったら…」", "*blush*")
+				if ( cdata(CDATA_ID, tc) == CREATURE_ID_JURE | cdata(CDATA_ID, tc) == CREATURE_ID_JURE ) {
+					repeat 245
+						if ( cdata(CDATA_EXIST, cnt) != CHAR_STATE_ALIVE ) {
+							continue
+						}
+						if ( cdata(CDATA_ID, cnt) == CREATURE_ID_ROVID ) {
+							snd SOUNDLIST_AMMO
+							txt lang(cdatan(CDATAN_NAME, cnt) + "「やめなさい！ジュア様が嫌だと言っているでしょう！？」", "Action was arrested by " + cdatan(CDATAN_NAME, cnt) + ".")
+							goto *turn_end
+							break
+						}
+					loop
+				}
+				cdata(CDATA_EMO_ICON, tc) = 17 + 100 * 3
+				cbitmod CHARA_BIT_MAKE_GENE, tc, TRUE
+				if ( gdata(GDATA_WIZARD) == 0 ) {
+					gdata(GDATA_SLEEP_GENE) = tc
+				}
+				goto *turn_end
+			}
+		}
+		if ( rtval == 10 ) {
+			if ( cbit(CHARA_BIT_MARRIED, tc) == FALSE ) {
+				if ( cdata(CDATA_ID, tc) == CREATURE_ID_JURE | cdata(CDATA_ID, tc) == CREATURE_ID_JURE ) {
+					repeat 245
+						if ( cdata(CDATA_EXIST, cnt) != CHAR_STATE_ALIVE ) {
+							continue
+						}
+						if ( cdata(CDATA_ID, cnt) == CREATURE_ID_ROVID ) {
+							snd SOUNDLIST_AMMO
+							txt lang(cdatan(CDATAN_NAME, cnt) + "「私が許しませんよ！」", "Action was arrested by " + cdatan(CDATAN_NAME, cnt) + ".")
+							goto *turn_end
+							break
+						}
+					loop
+				}
+				if ( cdata(CDATA_IMPRESSION, tc) < 200 ) {
+					txtef COLOR_PURPLE
+					snd SOUNDLIST_ATK_DARK
+					txt lang("…" + cdatan(CDATAN_NAME, tc) + "はやんわりと断った。", "..." + cdatan(CDATAN_NAME, tc) + " gently refuses your proposal. ")
+					goto *turn_end
+				}
+				if ( cdata(CDATA_ALLIED, tc) == 0 ) {
+					txtef COLOR_PURPLE
+					snd SOUNDLIST_ATK_DARK
+					txt lang("「嬉しい" + _ga(3) + "、" + _ore(3) + "の立場も考えて" + _kure(3) + "」", "..." + cdatan(CDATAN_NAME, tc) + " sadly refuses your proposal. ")
+					goto *turn_end
+				}
+				cbitmod CHARA_BIT_MARRIED, tc, TRUE
+				txtef COLOR_PINK
+				txt lang("「はい…喜んで」", "..." + cdatan(CDATAN_NAME, tc) + " blushed and nodded!")
+				gdata(GDATA_FLAG_TIMES_MARRIED)++
+				cdata(CDATA_JOIN_DATE_MONTH, tc) = gdata(GDATA_MONTH)
+				cdata(CDATA_JOIN_DATE_DAY, tc) = gdata(GDATA_DAY)
+				cdata(CDATA_JOIN_DATE_YEAR, tc) = gdata(GDATA_YEAR)
+				cdata(CDATA_EMO_ICON, tc) = 17 + 100 * 3
+				marry = tc
+				evadd EVENT_MARRY
+				goto *turn_end
+			}
+		}
+		gosub *screen_draw
+		goto *turn_end
 	}
 	if ( p == 11 ) {
 		if ( cdata(CDATA_ID, tc) == CREATURE_ID_ITZPALT ) {
@@ -5657,7 +6063,7 @@
 		}
 	}
 	if ( p == 16 ) {
-		allyctrl = 4
+		allyctrl = 8
 		gosub *com_ally
 		if ( stat != (-1) ) {
 			ttc = stat
@@ -5808,6 +6214,9 @@
 		goto *turn_end
 	}
 	if ( p == 14 ) {
+		if ( cdata(CDATA_SHIFT_FORM, tc) != SHIFT_FORM_NONE ) {
+			gdata(GDATA_SENSE_OBJECT) = 1
+		}
 		ccbk = cc
 		cc = tc
 		gosub *com_shape_change
@@ -5823,7 +6232,6 @@
 		inputlog = ""
 		gosub *prompt_word
 		if ( inputlog == "1" ) {
-			cdata(CDATA_CHARA_PIC, tc) = cdata(CDATA_CHARA_PIC_ORG, tc)
 			if ( cdata(CDATA_PIC_ORG, tc) != 0 ) {
 				cdata(CDATA_PIC, tc) = cdata(CDATA_PIC_ORG, tc)
 				txtef COLOR_GREEN
@@ -6234,6 +6642,305 @@
 	}
 	goto *com_book_loop_pgchg
 
+*com_spellbook
+	listmax = 0
+	page = 0
+	pagesize = 16
+	cs = 0
+	cc = CHARA_PLAYER
+	cs_bk = -1
+	cs = commark(1) \ 1000
+	page = commark(1) / 1000
+	curmenu = 0
+	repeat 200
+		if ( spell(cnt) > 0 ) {
+			if ( spells(cnt) == 0 ) {
+				list(0, listmax) = cnt + STARTING_SKILL_SPELL, sdataref(SKILL_DATAREF_USE, STARTING_SKILL_SPELL + cnt)
+				listmax++
+			}
+		}
+	loop
+	gosub *sort_list
+	redraw 0
+	gsel BUFFER_INF
+	pos 960, 96
+	picload exedir + "graphic\\deco_spell.bmp", 1
+	gsel BUFFER_SCREEN
+	windowshadow = 1
+
+*com_spellbook_loop_pgchk
+	redraw 0
+	cs_bk = -1
+	pagemax = (listmax - 1) / pagesize
+	if ( page < 0 ) {
+		page = pagemax
+	}
+	else {
+		if ( page > pagemax ) {
+			page = 0
+		}
+	}
+	drawmenu 1
+
+*com_spellbook_loop
+	redraw 0
+	s = lang("魔法書の作成", "Spellbook make"), strhint2 + strhint3 + strhint7 + strhint8
+	display_window (windoww - 720) / 2 + inf_screenx, winposy(438), 720, 438
+	display_topic lang("魔法の名称", "Name"), wx + 28, wy + 36
+	display_topic lang("消費MP(ｽﾄｯｸ)　LV/成功　(潜在) ", "Cost(Stock) Lv/Chance"), wx + 190, wy + 36
+	display_topic lang("冊数", "Number"), wx + 460, wy + 36
+	pos wx + 46, wy - 16
+	gcopy BUFFER_INF, 288 + 13 * 48, 48, 48, 48
+	pos wx + ww - 78, wy
+	gcopy BUFFER_INF, 960, 96, 72, 144
+	pos wx + ww - 180, wy
+	gcopy BUFFER_INF, 1032, 96, 72, 96
+	keyrange = 0
+	repeat pagesize
+		p = pagesize * page + cnt
+		if ( p >= listmax ) {
+			break
+		}
+		key_list(cnt) = key_select(cnt)
+		keyrange++
+		if ( cnt \ 2 == 0 ) {
+			pos wx + 70, wy + 66 + cnt * 19
+			gfini 620, 18
+			gfdec2 12, 14, 16
+		}
+		display_key wx + 58, wy + 66 + cnt * 19 - 2, cnt
+	loop
+	font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
+	cs_listbk
+	repeat pagesize
+		p = pagesize * page + cnt
+		if ( p >= listmax ) {
+			break
+		}
+		i = list(0, p)
+		pos wx + 40, wy + 74 + cnt * 19
+		gmode 2, inf_tiles, inf_tiles
+		grotate BUFFER_ITEM, (sdataref(SKILL_DATAREF_USE, i) - 10) * inf_tiles, 672, 0, inf_tiles, inf_tiles
+		s = ""
+		cs_list skillname(i) + s, wx + 84, wy + 66 + cnt * 19 - 1, 19
+		s = "" + calcspellcostmp(i, cc) + "(" + spell(i - 400) + ")"
+		pos wx + 296 - strlen(s) * 7, wy + 66 + cnt * 19 + 2
+		mes s
+		satusuu = spell(i - 400) / 2000
+		if ( i == SKILL_SPELL_RESTORE_BODY ) {
+			satusuu = -1
+		}
+		if ( i == SKILL_SPELL_RESTORE_SPIRIT ) {
+			satusuu = -1
+		}
+		if ( i == SKILL_SPELL_TELEPORT_OTHER ) {
+			satusuu = -1
+		}
+		if ( i == SKILL_SPELL_SUMMON_WILD ) {
+			satusuu = -1
+		}
+		if ( i == 426 ) { // TODO
+			satusuu = -1
+		}
+		if ( i == 427 ) { // TODO
+			satusuu = -1
+		}
+		if ( i == SKILL_SPELL_MIST_OF_DARKNESS ) {
+			satusuu = -1
+		}
+		if ( i == SKILL_SPELL_RESURRECTION ) {
+			satusuu = -1
+		}
+		if ( i == SKILL_SPELL_METEOR ) {
+			satusuu = -1
+		}
+		if ( i == SKILL_SPELL_GRAVITY ) {
+			satusuu = -1
+		}
+		if ( i == SKILL_SPELL_SUMMON_SPIRIT ) {
+			satusuu = -1
+		}
+		if ( i == SKILL_SPELL_ECLIPSE ) {
+			satusuu = -1
+		}
+		if ( i == SKILL_SPELL_THUNDER_VORTEX ) {
+			satusuu = -1
+		}
+		if ( i == SKILL_SPELL_NETHER_WAVE ) {
+			satusuu = -1
+		}
+		if ( i == SKILL_SPELL_MIST_OF_DAZZLING ) {
+			satusuu = -1
+		}
+		if ( i == SKILL_SPELL_POISON_STORM ) {
+			satusuu = -1
+		}
+		if ( i == SKILL_SPELL_BUBBLE_STORM ) {
+			satusuu = -1
+		}
+		if ( satusuu > 0 ) {
+			s = "" + satusuu + lang("冊作れる ", "books can be maked ")
+		}
+		if ( satusuu == 0 ) {
+			s = lang("ストックが足りない ", "Not enough stock ")
+		}
+		if ( satusuu == (-1) ) {
+			s = lang("魔法書に変換できない ", "Can't make ")
+		}
+		s = strmid(s, 0, 40)
+		pos wx + 305, wy + 66 + cnt * 19 + 2
+		mes "" + sdata(i, cc) + "/" + calcspellfail(i, cc) + "% (" + sgrowth(i, cc) + "%)"
+		pos wx + 420, wy + 66 + cnt * 19 + 2
+		mes s
+	loop
+	if ( keyrange != 0 ) {
+		cs_bk = cs
+	}
+	redraw 1
+	await cfg_wait1
+	key_check
+	cursor_check
+	p = -1
+	commark(1) = page * 1000 + cs
+	repeat keyrange
+		if ( key == key_select(cnt) ) {
+			p = list(0, pagesize * page + cnt)
+			break
+		}
+	loop
+	if ( p != (-1) ) {
+		menucycle = 0
+		if ( spell(p - STARTING_SKILL_SPELL) < 2000 ) {
+			efid = -1
+			return
+		}
+		if ( p == SKILL_SPELL_RESTORE_BODY ) {
+			efid = -1
+			return
+		}
+		if ( p == SKILL_SPELL_RESTORE_SPIRIT ) {
+			efid = -1
+			return
+		}
+		if ( p == SKILL_SPELL_TELEPORT_OTHER ) {
+			efid = -1
+			return
+		}
+		if ( p == SKILL_SPELL_SUMMON_WILD ) {
+			efid = -1
+			return
+		}
+		if ( p == 426 ) { // TODO
+			efid = -1
+			return
+		}
+		if ( p == 427 ) { // TODO
+			efid = -1
+			return
+		}
+		if ( p == SKILL_SPELL_MIST_OF_DARKNESS ) {
+			efid = -1
+			return
+		}
+		if ( p == SKILL_SPELL_RESURRECTION ) {
+			efid = -1
+			return
+		}
+		if ( p == SKILL_SPELL_METEOR ) {
+			efid = -1
+			return
+		}
+		if ( p == SKILL_SPELL_GRAVITY ) {
+			efid = -1
+			return
+		}
+		if ( p == SKILL_SPELL_SUMMON_SPIRIT ) {
+			efid = -1
+			return
+		}
+		if ( p == SKILL_SPELL_ECLIPSE ) {
+			efid = -1
+			return
+		}
+		if ( p == SKILL_SPELL_THUNDER_VORTEX ) {
+			efid = -1
+			return
+		}
+		if ( p == SKILL_SPELL_NETHER_WAVE ) {
+			efid = -1
+			return
+		}
+		if ( p == SKILL_SPELL_MIST_OF_DAZZLING ) {
+			efid = -1
+			return
+		}
+		if ( p == SKILL_SPELL_POISON_STORM ) {
+			efid = -1
+			return
+		}
+		if ( p == SKILL_SPELL_BUBBLE_STORM ) {
+			efid = -1
+			return
+		}
+		efid = p
+		snd SOUNDLIST_ENC
+		return
+	}
+	if ( menucycle == 1 ) {
+		if ( key == key_next | key == key_prev ) {
+			p = curmenu
+			if ( key == key_next ) {
+				curmenu++
+				if ( curmenu > 2 ) {
+					curmenu = 0
+				}
+			}
+			if ( key == key_prev ) {
+				curmenu--
+				if ( curmenu < 0 ) {
+					curmenu = 2
+				}
+			}
+			key = ""
+			if ( p != curmenu ) {
+				screenupdate = -1
+				gosub *screen_draw
+				if ( curmenu == 0 ) {
+					snd SOUNDLIST_SPELL
+					goto *com_spell
+				}
+				if ( curmenu == 1 ) {
+					snd SOUNDLIST_SKILL
+					goto *com_applySkill
+				}
+				if ( curmenu == 2 ) {
+					snd SOUNDLIST_SKILL
+					goto *com_applyWideSkill
+				}
+			}
+		}
+	}
+	if ( key == key_pageup ) {
+		if ( pagemax != 0 ) {
+			snd SOUNDLIST_POP1
+			page++
+			goto *com_spellbook_loop_pgchk
+		}
+	}
+	if ( key == key_pagedown ) {
+		if ( pagemax != 0 ) {
+			snd SOUNDLIST_POP1
+			page--
+			goto *com_spellbook_loop_pgchk
+		}
+	}
+	if ( key == key_cancel ) {
+		gosub *screen_draw
+		efid = -1
+		return
+	}
+	goto *com_spellbook_loop
+
 *com_spellcast
 	tc = cc
 	gosub *cast
@@ -6310,6 +7017,11 @@
 		pos wx + 40, wy + 74 + cnt * 19
 		gmode 2, inf_tiles, inf_tiles
 		grotate 1, (sdataref(SKILL_DATAREF_USE, i) - 10) * inf_tiles, 672, 0, inf_tiles, inf_tiles
+		if ( cdata(CDATA_CUSTOM_TALK_LINE, CHARA_PLAYER) == 1 ) {
+			pos wx + 18, wy + 75 + cnt * 19
+			gmode 2, inf_tiles, inf_tiles
+			grotate BUFFER_ITEM, 576, 1680, 0, inf_tiles, inf_tiles
+		}
 		s = ""
 		repeat RANGE_GDATA_SHORTCUT
 			if ( gdata(STARTING_GDATA_SHORTCUT + cnt) == list(0, p) ) {
@@ -7601,12 +8313,22 @@
 	}
 *com_charainfo_loop_WHILE1
 	redraw 0
-	s = ""
-	if ( csctrl == 0 | csctrl == 4 ) {
-		if ( page != 0 ) {
-			s = lang("残り " + cdata(CDATA_SKILLPOINT, cc) + " のボーナスをスキルに分配できる", "You can spend " + cdata(CDATA_SKILLPOINT, cc) + " bonus points.")
+	if ( cc == CHARA_PLAYER ) {
+		s = ""
+		if ( csctrl == 0 | csctrl == 4 ) {
+			if ( page != 0 ) {
+				s = lang("残り " + cdata(CDATA_SKILLPOINT, cc) + " のボーナスをスキルに、残り " + gdata(GDATA_FLAG_SCROLL_OF_WITCHCRAFT_TOTAL_SKILL_BONUS) + " のボーナスをスペルに分配できる", "You can spend " + cdata(CDATA_SKILLPOINT, cc) + " bonus to skill / " + gdata(GDATA_FLAG_SCROLL_OF_WITCHCRAFT_TOTAL_SKILL_BONUS) + " bonus to spell.")
+			}
 		}
 	}
+	if ( cc != CHARA_PLAYER ) {
+		s = ""
+		if ( csctrl == 0 | csctrl == 4 ) {
+			if ( page != 0 ) {
+				s = lang("残り " + cdata(CDATA_SKILLPOINT, cc) + " のボーナスをスキルに分配できる", "You can spend " + cdata(CDATA_SKILLPOINT, cc) + " bonus points.")
+			}
+ 		}
+ 	}
 	display_window2 (windoww - 700) / 2 + inf_screenx, winposy(400) - 10, 700, 400, 7
 	if ( page == 0 ) {
 		keyrange = 0
@@ -7671,15 +8393,24 @@
 			}
 		}
 		else {
-			i = cdata(CDATA_PIC, cc) \ COLOR_TINT_MULT + cdata(CDATA_CHARA_PIC, cc) * COLOR_TINT_MULT
-			chara_preparepic cdata(CDATA_PIC, cc) \ COLOR_TINT_MULT + cdata(CDATA_CHARA_PIC, cc) * COLOR_TINT_MULT, (cdata(CDATA_PIC, cc) - cdata(CDATA_CHARA_PIC, cc) * COLOR_TINT_MULT) / COLOR_TINT_MULT
+			picols = cdata(CDATA_CHARA_PIC, cc)
+			if ( cdata(CDATA_PIC, cc) >= xy2pic(1, 21) & cdata(CDATA_PIC, cc) <= xy2pic(31, 21) ) {
+				picols = 0
+			}
+			i = cdata(CDATA_PIC, cc) \ 1000 + picols * 1000
+			chara_preparepic cdata(CDATA_PIC, cc) \ COLOR_TINT_MULT + picols * COLOR_TINT_MULT, (cdata(CDATA_PIC, cc) - picols * COLOR_TINT_MULT) / COLOR_TINT_MULT
 			pos wx + 596 + 22, wy + 86 + 24
 			gmode 2, chipc(CHIPC_WIDTH, i), chipc(CHIPC_HEIGHT, i)
 			grotate 5, 0, 960, 0, chipc(CHIPC_WIDTH, i) / (1 + (chipc(CHIPC_HEIGHT, i) > inf_tiles)), inf_tiles
 		}
 		font lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 1
 		color 20, 10, 0
-		s = lang("レベル", "Level"), lang("経験", "EXP"), lang("必要値", "Next Lv"), lang("信仰", "God"), lang("所属", "Guild")
+		if ( cdata(CDATA_ROLE, cc) == ROLE_ADVENTURER | cc < MAX_CHARA_FOLLOWER ) {
+			s = lang("レベル", "Level"), lang("経験", "EXP"), lang("必要値", "Next Lv"), lang("信仰", "God"), lang("所属", "Guild")
+		}
+		else {
+			s = lang("レベル", "Level"), lang("経験", "EXP"), lang("必要値", "Next Lv"), lang("信仰", "God"), ""
+		}
 		repeat 5
 			pos wx + 355, wy + 46 + cnt * 15
 			mes s(cnt)
@@ -7697,10 +8428,10 @@
 			mes _stats2(cnt)
 		loop
 		if ( cc < MAX_CHARA_FOLLOWER ) {
-			s = lang("HP/MP", "HP/MP"), lang("生命力", "Life"), lang("マナ", "Mana"), lang("狂気度", "Sanity"), lang("速度", "Speed"), lang("名声", "Fame"), lang("カルマ", "Karma"), lang("撃破LV", "Defeat"), lang("打撃修正", "Melee"), lang("射撃修正", "Shoot"), "", "", "", "", "", ""
+			s = lang("HP/MP", "HP/MP"), lang("生命力", "Life"), lang("マナ", "Mana"), lang("狂気度", "Sanity"), lang("速度", "Speed"), lang("名声", "Fame"), lang("カルマ", "Karma"), lang("適正", "Rating"), lang("打撃修正", "Melee"), lang("射撃修正", "Shoot"), "", "", "", "", "", ""
 		}
 		else {
-			s = lang("HP/MP", "HP/MP"), lang("生命力", "Life"), lang("マナ", "Mana"), lang("狂気度", "Sanity"), lang("速度", "Speed"), lang("名声", "Fame"), lang("カルマ", "Karma"), "", "", "", "", "", ""
+			s = lang("HP/MP", "HP/MP"), lang("生命力", "Life"), lang("マナ", "Mana"), lang("狂気度", "Sanity"), lang("速度", "Speed"), lang("名声", "Fame"), "", "", "", "", "", "", ""
 		}
 		repeat 8
 			pos wx + 255, wy + 151 + cnt * 15
@@ -7745,7 +8476,30 @@
 		}
 		font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
 		color 0, 0, 0
-		s = "" + cdata(CDATA_LEVEL, cc), "" + cdata(CDATA_EXP, cc), "" + cdata(CDATA_EXP_TO_NEXT_LVL, cc), godname(cdata(CDATA_GOD, cc)), guildname()
+		if ( cdata(CDATA_ROLE, cc) != ROLE_ADVENTURER ) {
+			if ( cc < MAX_CHARA_FOLLOWER ) {
+				s = "" + cdata(CDATA_LEVEL, cc), "" + cdata(CDATA_EXP, cc), "" + cdata(CDATA_EXP_TO_NEXT_LVL, cc), godname(cdata(CDATA_GOD, cc)), guildname()
+			}
+			if ( cc >= MAX_CHARA_FOLLOWER ) {
+				s = "" + cdata(CDATA_LEVEL, cc), "" + cdata(CDATA_EXP, cc), "" + cdata(CDATA_EXP_TO_NEXT_LVL, cc), godname(cdata(CDATA_GOD, cc)), ""
+			}
+		}
+		if ( cdata(CDATA_ROLE, cc) == ROLE_ADVENTURER ) {
+			if ( cdata(CDATA_GOD, cc) == GOD_EYTH ) {
+				cdata(CDATA_GOD, cc) = rnd(8) + 1
+			}
+			guildadv = lang("なし", "None")
+			if ( cdatan(CDATAN_CLASS, cc) == "wizard" ) {
+				guildadv = lang("魔術士ギルド", "Mages Guild")
+			}
+			if ( cdatan(CDATAN_CLASS, cc) == "warrior" ) {
+				guildadv = lang("戦士ギルド", "Fighters Guild")
+			}
+			if ( cdatan(CDATAN_CLASS, cc) == "archer" ) {
+				guildadv = lang("盗賊ギルド", "Thieves Guild")
+			}
+			s = "" + cdata(CDATA_LEVEL, cc), "" + cdata(CDATA_EXP, cc), "" + cdata(CDATA_EXP_TO_NEXT_LVL, cc), godname(cdata(CDATA_GOD, cc)), guildadv
+		}
 		repeat 5
 			pos wx + 410 + en * 5, wy + 45 + cnt * 15
 			mes s(cnt)
@@ -7774,6 +8528,9 @@
 		inipower = cdata(CDATA_INIT_LIFEMANA, cc) + cdata(CDATA_INIT_ATTR, cc)
 		if ( cdatan(CDATAN_NEWSEX, cc) != "" ) {
 			s(3) = cnven(lang("" + cdatan(CDATAN_NEWSEX, cc), cdatan(CDATAN_NEWSEX, cc)))
+		}
+		if ( cdatan(CDATAN_NEWSEX, cc) == lang("なし", "none") ) {
+			s(3) = lang("性別不明", "unknown")
 		}
 		s(5) = "" + calcage(cc) + " " + lang("歳", ""), "" + cdata(CDATA_HEIGHT, cc) + " cm", "" + cdata(CDATA_WEIGHT, cc) + " kg", "" + inipower + "/" + cdata(CDATA_INIT_SPEED, cc), "" + cdata(CDATA_AP_CURRENT, cc) + "(" + cdata(CDATA_AP_TOTAL, cc) + ")", ""
 		repeat 10
@@ -7811,10 +8568,15 @@
 			mes "Hopeless"
 		loop
 		if ( cc < MAX_CHARA_FOLLOWER ) {
-			s = "" + cdata(CDATA_HP, cc) + "/" + cdata(CDATA_MP, cc), "" + sdata(SKILL_ATTR_LIFE, cc) + "(" + sorg(SKILL_ATTR_LIFE, cc) + ")", "" + sdata(SKILL_ATTR_MANA, cc) + "(" + sorg(SKILL_ATTR_MANA, cc) + ")", "" + cdata(CDATA_SANITY, cc), "" + cdata(CDATA_SPEED, cc) + "(" + sorg(SKILL_ATTR_SPD, cc) + ")", "" + cdata(CDATA_FAME, cc), "" + cdata(CDATA_KARMA, cc), "" + cdata(CDATA_SHOP_INVEST, cc), ""
+			s = "" + cdata(CDATA_HP, cc) + "/" + cdata(CDATA_MP, cc), "" + sdata(SKILL_ATTR_LIFE, cc) + "(" + sorg(SKILL_ATTR_LIFE, cc) + ")", "" + sdata(SKILL_ATTR_MANA, cc) + "(" + sorg(SKILL_ATTR_MANA, cc) + ")", "" + cdata(CDATA_SANITY, cc), "" + cdata(CDATA_SPEED, cc) + "(" + sorg(SKILL_ATTR_SPD, cc) + ")", "" + cdata(CDATA_FAME, cc), "" + cdata(CDATA_KARMA, CHARA_PLAYER), "" + cdata(CDATA_SHOP_INVEST, cc) + "" + lang("階相当", " level"), ""
 		}
 		else {
-			s = "" + cdata(CDATA_HP, cc) + "/" + cdata(CDATA_MP, cc), "" + sdata(SKILL_ATTR_LIFE, cc) + "(" + sorg(SKILL_ATTR_LIFE, cc) + ")", "" + sdata(SKILL_ATTR_MANA, cc) + "(" + sorg(SKILL_ATTR_MANA, cc) + ")", "" + cdata(CDATA_SANITY, cc), "" + cdata(CDATA_SPEED, cc) + "(" + sorg(SKILL_ATTR_SPD, cc) + ")", "" + cdata(CDATA_FAME, cc), "" + cdata(CDATA_KARMA, cc), "", ""
+			if ( cdata(CDATA_ALLIED, cc) == 0 ) {
+				if ( cdata(CDATA_FAME, cc) == 0 ) {
+					cdata(CDATA_FAME, cc) = cdata(CDATA_LEVEL, cc) * 10 * cdata(CDATA_QUALITY, cc) * cdata(CDATA_QUALITY, cc) * cdata(CDATA_QUALITY, cc)
+				}
+			}
+			s = "" + cdata(CDATA_HP, cc) + "/" + cdata(CDATA_MP, cc), "" + sdata(SKILL_ATTR_LIFE, cc) + "(" + sorg(SKILL_ATTR_LIFE, cc) + ")", "" + sdata(SKILL_ATTR_MANA, cc) + "(" + sorg(SKILL_ATTR_MANA, cc) + ")", "" + cdata(CDATA_SANITY, cc), "" + cdata(CDATA_SPEED, cc) + "(" + sorg(SKILL_ATTR_SPD, cc) + ")", "" + cdata(CDATA_FAME, cc), "", "", ""
 		}
 		repeat MAX_SKILL_ATTR_BASIC
 			pos wx + 310, wy + 151 + cnt * 15
@@ -7829,11 +8591,19 @@
 		mes lang("軽減", "Prot")
 		pos wx + 590 - en * 16, wy + 281 + p(2) * 16
 		mes lang("回避", "Evade")
+		pos wx + 564 - en * 10, wy + 263
+		mes lang("魔法威力", "SpellPow")
+		hoseis = limit(cdata(CDATA_ENHANCE_SPELL, cc) * 2 / 3, 0, 1000) / 10 + limit(sdata(SKILL_ATTR_MAG, cc) / 5, 0, 300) + 100
+		if ( cdata(CDATA_EQUIP_WEIGHT, cc) < 35000 & cdata(CDATA_EQUIP_WEIGHT, cc) >= 15000 & findbuff(cc, BUFF_MAGIC_EQUIP) != (-1) ) {
+			hoseis = hoseis * 6 / 5
+		}
 		attackskill = SKILL_WEAPON_MARTIAL_ARTS
 		evade = calcattackhit(2)
 		prot = calcattackdmg(2)
 		font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
 		color 0, 0, 0
+		pos wx + 625 - en * 8, wy + 263
+		mes "" + hoseis + "%"
 		pos wx + 460 + en * 8, wy + 279 + p(2) * 16
 		mes "" + (100 - 10000 / (prot + 100)) + "% + " + protdice1 + "d" + protdice2
 		pos wx + 625 - en * 8, wy + 279 + p(2) * 16
@@ -7987,6 +8757,50 @@
 				pos wx + 38, wy + 75 + cnt * 19
 				gmode 2, inf_tiles, inf_tiles
 				grotate 1, p(1) * inf_tiles, 672, 0, inf_tiles, inf_tiles
+				if ( cm == 0 ) {
+					if ( gdata(GDATA_FLAG_STUDY_BONUS_KIND) == STUDY_BONUS_TRAINING ) {
+						if ( i == SKILL_NORMAL_WEIGHT_LIFTING | i == SKILL_NORMAL_HEALING | i == SKILL_NORMAL_MEDITATION | i == SKILL_NORMAL_MAGIC_CAPACITY | i == SKILL_NORMAL_HEAVY_ARMOR | i == SKILL_NORMAL_MEDIUM_ARMOR | i == SKILL_NORMAL_LIGHT_ARMOR | i == SKILL_NORMAL_FAITH ) {
+							pos wx + 18, wy + 75 + cnt * 19
+							gmode 2, inf_tiles, inf_tiles
+							grotate BUFFER_ITEM, 576, 1680, 0, inf_tiles, inf_tiles
+						}
+					}
+					if ( gdata(GDATA_FLAG_STUDY_BONUS_KIND) == STUDY_BONUS_COMBAT ) {
+						if ( i == SKILL_NORMAL_TACTICS | i == SKILL_NORMAL_DUAL_WIELD | i == SKILL_NORMAL_TWO_HAND | i == SKILL_NORMAL_SHIELD | i == SKILL_NORMAL_EVASION | i == SKILL_NORMAL_EYE_OF_MIND | i == SKILL_NORMAL_GREATER_EVASION | i == SKILL_NORMAL_MARKSMAN | (i >= STARTING_SKILL_WEAPON & i < MAX_SKILL_WEAPON ) ) {
+							pos wx + 18, wy + 75 + cnt * 19
+							gmode 2, inf_tiles, inf_tiles
+							grotate BUFFER_ITEM, 576, 1680, 0, inf_tiles, inf_tiles
+						}
+					}
+					if ( gdata(GDATA_FLAG_STUDY_BONUS_KIND) == STUDY_BONUS_JOB ) {
+						if ( i == SKILL_NORMAL_NEGOTIATION | i == SKILL_NORMAL_INVESTING | i == SKILL_NORMAL_CARPENTRY | i == SKILL_NORMAL_TAILORING | i == SKILL_NORMAL_ALCHEMY | i == SKILL_NORMAL_JEWELER | i == SKILL_NORMAL_GARDENING | i == SKILL_NORMAL_PERFORMER | i == SKILL_NORMAL_COOKING | i == SKILL_NORMAL_FISHING | i == SKILL_ACTIVE_PICKPOCKET ) {
+							pos wx + 18, wy + 75 + cnt * 19
+							gmode 2, inf_tiles, inf_tiles
+							grotate BUFFER_ITEM, 576, 1680, 0, inf_tiles, inf_tiles
+						}
+					}
+					if ( gdata(GDATA_FLAG_STUDY_BONUS_KIND) == STUDY_BONUS_EXPLORATION ) {
+						if ( i == SKILL_NORMAL_STEALTH | i == SKILL_NORMAL_LOCK_PICKING | i == SKILL_NORMAL_DETECTION | i == SKILL_NORMAL_MINING | i == SKILL_NORMAL_DISARM_TRAP | i == SKILL_NORMAL_TRAVELING | i == SKILL_NORMAL_SWIMMING | i == SKILL_ACTIVE_RIDING ) {
+							pos wx + 18, wy + 75 + cnt * 19
+							gmode 2, inf_tiles, inf_tiles
+							grotate BUFFER_ITEM, 576, 1680, 0, inf_tiles, inf_tiles
+						}
+					}
+					if ( gdata(GDATA_FLAG_STUDY_BONUS_KIND) == STUDY_BONUS_STUDY ) {
+						if ( i == SKILL_NORMAL_LITERACY | i == SKILL_NORMAL_GENE_ENGINEER | i == SKILL_NORMAL_ANATOMY | i == SKILL_NORMAL_SENSE_QUALITY | i == SKILL_NORMAL_MEMORIZATION | i == SKILL_NORMAL_CASTING | i == SKILL_NORMAL_MAGIC_DEVICE | i == SKILL_NORMAL_CONTROL_MAGIC ) {
+							pos wx + 18, wy + 75 + cnt * 19
+							gmode 2, inf_tiles, inf_tiles
+							grotate BUFFER_ITEM, 576, 1680, 0, inf_tiles, inf_tiles
+						}
+					}
+					if ( i >= STARTING_SKILL_SPELL & i < MAX_SPELL ) {
+						if ( cdata(CDATA_CUSTOM_TALK_LINE, CHARA_PLAYER) == 1 ) {
+							pos wx + 18, wy + 75 + cnt * 19
+							gmode 2, inf_tiles, inf_tiles
+							grotate BUFFER_ITEM, 576, 1680, 0, inf_tiles, inf_tiles
+						}
+					}
+				}
 				s = skillname(i)
 				if ( i >= STARTING_SKILL_RESIST & i < STARTING_SKILL_WEAPON ) {
 					s = lang("", "Resist ") + cnven(s) + lang("耐性", "")
@@ -8167,17 +8981,37 @@
 				tc = tcbk
 				return
 			}
-			if ( cdata(CDATA_SKILLPOINT, CHARA_PLAYER) < 1 | p < 0 | p < 100 ) {
-				goto *com_charainfo_loop
+			if ( p < STARTING_SKILL_SPELL ) {
+				if ( cdata(CDATA_SKILLPOINT, CHARA_PLAYER) < 1 | p < 0 | p < STARTING_SKILL_WEAPON ) {
+					goto *com_charainfo_loop
+				}
+				if ( sorg(csskill, CHARA_PLAYER) == 0 ) {
+					snd SOUNDLIST_FAIL1
+					goto *com_charainfo_loop
+				}
+				cdata(CDATA_SKILLPOINT, CHARA_PLAYER)--
+				if ( dbg_skillpointfix ) {
+					cdata(CDATA_SKILLPOINT, CHARA_PLAYER)++
+				}
 			}
-			if ( sorg(csskill, CHARA_PLAYER) == 0 ) {
-				snd SOUNDLIST_FAIL1
-				goto *com_charainfo_loop
-			}
-			cdata(CDATA_SKILLPOINT, CHARA_PLAYER)--
+			else {
+				if ( gdata(GDATA_FLAG_SCROLL_OF_WITCHCRAFT_TOTAL_SKILL_BONUS) < 1 | p < 0 | p < 100 ) {
+					goto *com_charainfo_loop
+				}
+				if ( sorg(csskill, CHARA_PLAYER) == 0 ) {
+					snd SOUNDLIST_FAIL1
+					goto *com_charainfo_loop
+				}
+				gdata(GDATA_FLAG_SCROLL_OF_WITCHCRAFT_TOTAL_SKILL_BONUS)--
+				if ( dbg_skillpointfix ) {
+					gdata(GDATA_FLAG_SCROLL_OF_WITCHCRAFT_TOTAL_SKILL_BONUS)++
+				}
+            }
 			snd SOUNDLIST_SPEND1
+			gdata(GDATA_SENSE_OBJECT) = 1
 			skillexp csskill, cc, 400, 2, 1000
-			modgrowth cc, csskill, limit(15 - sgrowth(csskill, cc) / 15, 2, 15)
+			modgrowth cc, csskill, 20
+			gdata(GDATA_SENSE_OBJECT) = 0
 			redraw 0
 			gosub *screen_drawStatus
 			goto *com_charainfo_loop
@@ -8442,12 +9276,13 @@
 	goto *com_item_mark_loop
 
 *com_item_mark_adjust
-	bkitemz = cdata(CDATA_MARK_ITEM_ADJUST_Z, tc)
-	bkitemr = cdata(CDATA_MARK_ITEM_ADJUST_R, tc)
+	bkiteml = cdata(CDATA_MARK_ITEM_ADJUST_L, tc)
+	bkitemw = cdata(CDATA_MARK_ITEM_ADJUST_Z, tc)
+ 	bkitemr = cdata(CDATA_MARK_ITEM_ADJUST_R, tc)
 	n = 0
 	txtnew
 	txtef COLOR_YELLOW2
-	txt lang("上下キーでサイズ調整、左右キーで角度調整、Enterキーで決定、キャンセルキーで終了。", "Up and down keys to adjust the item mark size, left and right keys to adjust the item mark angle, hit the enter key to decide the position, hit the cancel key to exit.")
+	txt lang("上下キーで縦サイズ調整、左右キーで横サイズ調整、zxキーで角度調整、Enterキーで決定、キャンセルキーで終了。", "Up and down keys to adjust item mark length, left and right keys to adjust item mark width, z and x keys to adjust item mark angle, hit the enter key to decide the position, hit the cancel key to exit.")
 	windowshadow = 1
 	await 1000
 	p = 0
@@ -8465,8 +9300,9 @@
 	}
 	if ( key == key_cancel ) {
 		snd SOUNDLIST_EQUIP1
-		cdata(CDATA_MARK_ITEM_ADJUST_Z, tc) = bkitemz
-		cdata(CDATA_MARK_ITEM_ADJUST_R, tc) = bkitemr
+		cdata(CDATA_MARK_ITEM_ADJUST_L, tc) = bkiteml
+		cdata(CDATA_MARK_ITEM_ADJUST_Z, tc) = bkitemw
+ 		cdata(CDATA_MARK_ITEM_ADJUST_R, tc) = bkitemr
 		gosub *screen_draw
 		n = 0
 		txtnew
@@ -8474,26 +9310,40 @@
 		return
 	}
 	if ( key == key_north ) {
-		if ( cdata(CDATA_MARK_ITEM_ADJUST_Z, tc) < 11 ) {
-			cdata(CDATA_MARK_ITEM_ADJUST_Z, tc)++
+		if ( cdata(CDATA_MARK_ITEM_ADJUST_L, tc) < 36 ) {
+			cdata(CDATA_MARK_ITEM_ADJUST_L, tc)++
 		}
 		snd SOUNDLIST_CURSOR1
 	}
 	if ( key == key_south ) {
-		if ( cdata(CDATA_MARK_ITEM_ADJUST_Z, tc) >= (-9) ) {
-			cdata(CDATA_MARK_ITEM_ADJUST_Z, tc)--
+		if ( cdata(CDATA_MARK_ITEM_ADJUST_L, tc) >= (-9) ) {
+			cdata(CDATA_MARK_ITEM_ADJUST_L, tc)--
 		}
 		snd SOUNDLIST_CURSOR1
 	}
 	if ( key == key_pageup ) {
-		if ( cdata(CDATA_MARK_ITEM_ADJUST_R, tc) > (-11) ) {
-			cdata(CDATA_MARK_ITEM_ADJUST_R, tc)--
+		if ( cdata(CDATA_MARK_ITEM_ADJUST_Z, tc) < 36 ) {
+			cdata(CDATA_MARK_ITEM_ADJUST_Z, tc)++
 		}
 		snd SOUNDLIST_CURSOR1
 	}
 	if ( key == key_pagedown ) {
+		if ( cdata(CDATA_MARK_ITEM_ADJUST_Z, tc) < (-9) ) {
+			cdata(CDATA_MARK_ITEM_ADJUST_Z, tc)--
+		}
+		snd SOUNDLIST_CURSOR1
+	}
+	getkey p, 90
+	if ( p ) {
 		if ( cdata(CDATA_MARK_ITEM_ADJUST_R, tc) < 11 ) {
 			cdata(CDATA_MARK_ITEM_ADJUST_R, tc)++
+		}
+		snd SOUNDLIST_CURSOR1
+	}
+	getkey p, 88
+	if ( p ) {
+		if ( cdata(CDATA_MARK_ITEM_ADJUST_R, tc) > (-11) ) {
+			cdata(CDATA_MARK_ITEM_ADJUST_R, tc)--
 		}
 		snd SOUNDLIST_CURSOR1
 	}
@@ -8503,10 +9353,110 @@
 	cursor_check
 	goto *com_item_mark_adjust_loop
 
+*com_tag_team
+	gosub *screen_draw
+	tatiebk = cdata(CDATA_FACE, tc)
+	n = 0
+	txtnew
+	txtef COLOR_YELLOW2
+	txt lang("左右キーで選択、Enterキーで決定、キャンセルキーでキャンセル。", "Left and right keys to change graphic, hit the enter key to decide, hit the cancel key to exit.")
+	windowshadow = 1
+	await 1000
+	p = 0
+
+*com_tag_team_WHILE1
+	if ( cdata(CDATA_FACE, tc) > 0 ) {
+		stati = exedir + "\\user\\graphic2\\face" + cdata(CDATA_FACE, tc) + "_B.bmp"
+		if ( cdata(CDATA_EMO_ICON, tc) \ 100 == 6 ) {
+			stati = exedir + "\\user\\graphic2\\face" + cdata(CDATA_FACE, tc) + "_F.bmp"
+		}
+		if ( cdata(CDATA_EMO_ICON, tc) \ 100 == 17 ) {
+			stati = exedir + "\\user\\graphic2\\face" + cdata(CDATA_FACE, tc) + "_H.bmp"
+		}
+		if ( cdata(CDATA_HP, tc) < cdata(CDATA_MAX_HP, tc) / 2 | cdata(CDATA_EMO_ICON, tc) \ 100 == 26 ) {
+			stati = exedir + "\\user\\graphic2\\face" + cdata(CDATA_FACE, tc) + "_E.bmp"
+		}
+		if ( cdata(CDATA_EMO_ICON, tc) \ 100 == 18 | cdata(CDATA_CONDITION_ANGRY, tc) > 0 ) {
+			stati = exedir + "\\user\\graphic2\\face" + cdata(CDATA_FACE, tc) + "_A.bmp"
+		}
+		if ( cdata(CDATA_EMO_ICON, tc) \ 100 == 21 ) {
+			stati = exedir + "\\user\\graphic2\\face" + cdata(CDATA_FACE, tc) + "_Q.bmp"
+		}
+		exist stati
+		if ( strsize == (-1) ) {
+			cdata(CDATA_FACE, tc) = tatiebk2
+		}
+		if ( strsize != (-1) ) {
+			gsel BUFFER_BUF
+			pos 0, 0
+			picload stati, 1
+			gsel BUFFER_SCREEN
+			if ( cdata(CDATA_IN_TAGTEAM, tc) == 0 | cdata(CDATA_IN_TAGTEAM, tc) == 1 ) {
+				pos windoww - 300, windowh - 588
+				gcopy BUFFER_BUF, 0, 0, 300, 500
+			}
+			else {
+				pos 0, windowh - 588
+				gcopy BUFFER_BUF, 0, 0, 300, 500
+			}
+		}
+	}
+	if ( cdata(CDATA_FACE, tc) > 0 ) {
+		if ( cdata(CDATA_IN_TAGTEAM, tc) == 0 | cdata(CDATA_IN_TAGTEAM, tc) == 1 ) {
+			pos windoww - 300 + 50, windowh - 588 - 10
+		}
+		else {
+			pos 50, windowh - 588 - 10
+		}
+		if ( jp ) {
+			color 0, 0, 0
+			bmes "現在の立ち姿：face" + cdata(CDATA_FACE, tc) + "　", 235, 235, 35
+		}
+		if ( en ) {
+			color 0, 0, 0
+			bmes "face" + cdata(CDATA_FACE, tc) + " now.", 235, 235, 35
+		}
+	}
+	getkey p, 13
+	if ( p ) {
+		snd SOUNDLIST_PORT
+		goto *com_tag_team_WEND1
+	}
+	if ( key == key_cancel ) {
+		snd SOUNDLIST_EQUIP1
+		cdata(CDATA_FACE, tc) = tatiebk
+		goto *com_tag_team_WEND1
+	}
+	if ( key == key_pageup ) {
+		tatiebk2 = cdata(CDATA_FACE, tc)
+		if ( cdata(CDATA_FACE, tc) < 40 ) {
+			cdata(CDATA_FACE, tc)++
+		}
+		gosub *screen_draw
+		snd SOUNDLIST_CURSOR1
+	}
+	if ( key == key_pagedown ) {
+		tatiebk2 = cdata(CDATA_FACE, tc)
+		if ( cdata(CDATA_FACE, tc) > 0 ) {
+			cdata(CDATA_FACE, tc)--
+		}
+		gosub *screen_draw
+		snd SOUNDLIST_CURSOR1
+	}
+	redraw 1
+	await cfg_wait1
+	key_check
+	cursor_check
+	goto *com_tag_team_WHILE1
+
+*com_tag_team_WEND1
+	gosub *screen_draw
+	return
+
 *com_shape_change
-	if ( cdata(CDATA_PIC, cc) < 693 | cdata(CDATA_PIC, cc) > 724 ) {
-		cdata(CDATA_CHARA_PIC_ORG, cc) = cdata(CDATA_CHARA_PIC, cc)
-		cdata(CDATA_CHARA_PIC, cc) = xy2pic(0, 0)
+	if ( cdata(CDATA_PIC, cc) < xy2pic(0, 21) | cdata(CDATA_PIC, cc) > xy2pic(31, 21) ) {
+		cdata(CDATA_PIC_ORG, cc) = cdata(CDATA_PIC, cc)
+		cdata(CDATA_PIC, cc) = xy2pic(1, 21)
 	}
 	create_pcpic cc, 0
 	page = 0
@@ -8541,7 +9491,12 @@
 	}
 	listmax = 0
 	if ( page == 0 ) {
-		s = lang("決定    ", "Done    "), lang("元々の姿にする", "Original"), lang("適用 ：Pic_", "apply:Pic_")
+		if ( gdata(GDATA_SENSE_OBJECT) == 0 ) {
+            s = lang("決定    ", "Done    "), lang("元々の姿にする", "Original"), lang("適用 ：Pic_", "apply:Pic_")
+        }
+        else {
+            s = lang("決定    ", "Done    "), "", lang("適用 ：Pic_", "apply:Pic_")
+        }
 		p = 3
 	}
 	repeat p
@@ -8575,8 +9530,12 @@
 		f++
 	}
 	window2 wx + 234, wy + 71, 88, 120, 1, 1
-	i = cdata(CDATA_PIC, cc) \ COLOR_TINT_MULT + cdata(CDATA_CHARA_PIC, cc) * COLOR_TINT_MULT
-	chara_preparepic cdata(CDATA_PIC, cc) \ COLOR_TINT_MULT + cdata(CDATA_CHARA_PIC, cc) * COLOR_TINT_MULT, (cdata(CDATA_PIC, cc) - cdata(CDATA_CHARA_PIC, cc) * COLOR_TINT_MULT) / COLOR_TINT_MULT
+	picols = cdata(CDATA_CHARA_PIC, cc)
+	if ( cdata(CDATA_PIC, cc) >= xy2pic(1, 21) & cdata(CDATA_PIC, cc) <= xy2pic(31, 21) ) {
+		picols = 0
+	}
+	i = cdata(CDATA_PIC, cc) \ COLOR_TINT_MULT + picols * COLOR_TINT_MULT
+	chara_preparepic cdata(CDATA_PIC, cc) \ COLOR_TINT_MULT + picols * COLOR_TINT_MULT, (cdata(CDATA_PIC, cc) - picols * COLOR_TINT_MULT) / COLOR_TINT_MULT
 	pos wx + 276, wy + 130
 	gmode 2, chipc(CHIPC_WIDTH, i), chipc(CHIPC_HEIGHT, i)
 	grotate 5, 0, 960, 0, chipc(CHIPC_WIDTH, i), chipc(CHIPC_HEIGHT, i)
@@ -8627,15 +9586,21 @@
 			if ( key == key_enter ) {
 				cbitmod CHARA_BIT_PCC, cc, 0
 				create_pcpic cc, 1
+				gdata(GDATA_SENSE_OBJECT) = 0
 				return 1
 			}
 		}
 		if ( rtval == (-3) ) {
 			if ( key == key_enter ) {
-				cdata(CDATA_PIC, cc) = cdata(CDATA_PIC_ORG, cc)
-				cdata(CDATA_CHARA_PIC, cc) = cdata(CDATA_CHARA_PIC_ORG, cc)
-				create_pcpic cc, 1
-				return 1
+				if ( gdata(GDATA_SENSE_OBJECT) == 0 ) {
+					cdata(CDATA_PIC, cc) = cdata(CDATA_PIC_ORG, cc)
+					create_pcpic cc, 1
+					gdata(GDATA_SENSE_OBJECT) = 0
+					return 1
+				}
+				if ( gdata(GDATA_SENSE_OBJECT) == 1 ) {
+					snd SOUNDLIST_FAIL1
+				}
 			}
 		}
 		if ( key == key_pageup | key == key_pagedown ) {
@@ -8678,11 +9643,13 @@
 		/********** ANNA CUSTOM - ENDING **********/
 
 		create_pcpic cc, 1
+		gdata(GDATA_SENSE_OBJECT) = 0
 		return 0
 	}
 	if ( mode == MODELIST_CHARA_CREATION ) {
 		getkey p, 112
 		if ( p ) {
+			gdata(GDATA_SENSE_OBJECT) = 0
 			return -1
 		}
 	}
@@ -8808,8 +9775,12 @@
 			}
 		}
 		else {
-			i = cdata(CDATA_PIC, cc) \ COLOR_TINT_MULT + cdata(CDATA_CHARA_PIC, cc) * COLOR_TINT_MULT
-			chara_preparepic cdata(CDATA_PIC, cc) \ COLOR_TINT_MULT + cdata(CDATA_CHARA_PIC, cc) * COLOR_TINT_MULT, (cdata(CDATA_PIC, cc) - cdata(CDATA_CHARA_PIC, cc) * COLOR_TINT_MULT) / COLOR_TINT_MULT
+			picols = cdata(CDATA_CHARA_PIC, cc)
+			if ( cdata(CDATA_PIC, cc) >= xy2pic(1, 21) & cdata(CDATA_PIC, cc) <= xy2pic(31, 21) ) {
+				picols = 0
+			}
+			i = cdata(CDATA_PIC, cc) \ COLOR_TINT_MULT + picols * COLOR_TINT_MULT
+			chara_preparepic cdata(CDATA_PIC, cc) \ COLOR_TINT_MULT + picols * COLOR_TINT_MULT, (cdata(CDATA_PIC, cc) - picols * COLOR_TINT_MULT) / COLOR_TINT_MULT
 			pos wx + 276, wy + 130
 			gmode 2, chipc(CHIPC_WIDTH, i), chipc(CHIPC_HEIGHT, i)
 			grotate 5, 0, 960, 0, chipc(CHIPC_WIDTH, i), chipc(CHIPC_HEIGHT, i)
@@ -9227,6 +10198,31 @@
 					continue
 				}
 			}
+			if ( trait(TRAIT_ETHER_BONES) != 0 ) {
+				if ( cdata(cnt, cc) / EXT_EQUIP_SLOTS == EQUIP_SLOT_BODY ) {
+					continue
+				}
+			}
+			if ( trait(TRAIT_ETHER_BLADE_HANDS) != 0 ) {
+				if ( cdata(cnt, cc) / EXT_EQUIP_SLOTS == EQUIP_SLOT_HAND ) {
+					continue
+				}
+			}
+			if ( trait(TRAIT_ETHER_WEBBED) != 0 ) {
+				if ( cdata(cnt, cc) / EXT_EQUIP_SLOTS == EQUIP_SLOT_RING ) {
+					continue
+				}
+			}
+			if ( trait(TRAIT_ETHER_THICK_ARMS) != 0 ) {
+				if ( cdata(cnt, cc) / EXT_EQUIP_SLOTS == EQUIP_SLOT_ARM ) {
+					continue
+				}
+			}
+			if ( trait(TRAIT_ETHER_TAIL) != 0 ) {
+				if ( cdata(cnt, cc) / EXT_EQUIP_SLOTS == EQUIP_SLOT_WAIST ) {
+					continue
+				}
+			}
 			if ( mainhand == 0 ) {
 				if ( cdata(cnt, cc) / EXT_EQUIP_SLOTS == EQUIP_SLOT_HAND ) {
 					mainhand = cnt
@@ -9352,46 +10348,9 @@
 			p(1) = p(1) \ 10000 - 1
 			s = itemname(p(1)), cnvweight(inv(INV_ITEM_WEIGHT, p(1)))
 			p(2) = inv(INV_ITEM_PIC, p(1))
-			gsel 1
-			color 0
-			boxf 0, 960, chipi(CHIPI_WIDTH, p(2)), chipi(CHIPI_HEIGHT, p(2)) + 960
-			if ( p(2) == xy2pic(0, 16) ) {
-				gmode 2
-				pos 0, 960
-				gcopy 1, 0, 768, inf_tiles, inf_tiles
-				pos 0, 1008
-				gzoom 22, 20, 5, chipc(CHIPC_X, inv(INV_ITEM_COL, p(1))) + 8, chipc(CHIPC_Y, inv(INV_ITEM_COL, p(1))) + 4 + (chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, p(1))) > inf_tiles) * 8, chipc(CHIPC_WIDTH, inv(INV_ITEM_COL, p(1))) - 16, chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, p(1))) - 8 - (chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, p(1))) > inf_tiles) * 10, 1
-				pos 6, 974
-				gcopy 1, 0, 1008, 22, 20
-				gsel selcur
-			}
-			else {
-				if ( p(2) == xy2pic(30, 33) ) {
-					pos 8, 1058 - chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, p(1)))
-					gcopy 5, chipc(CHIPC_X, inv(INV_ITEM_COL, p(1))) + 8, chipc(CHIPC_Y, inv(INV_ITEM_COL, p(1))) + 2, chipc(CHIPC_WIDTH, inv(INV_ITEM_COL, p(1))), chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, p(1)))
-					gmode 2
-					gsel selcur
-				}
-				else {
-					if ( p(2) == xy2pic(3, 16) ) {
-						pos 8, 1058 - chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, p(1)))
-						gcopy 5, chipc(CHIPC_X, inv(INV_ITEM_COL, p(1))) + 8, chipc(CHIPC_Y, inv(INV_ITEM_COL, p(1))) + 2, chipc(CHIPC_WIDTH, inv(INV_ITEM_COL, p(1))) - 16, chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, p(1))) - 8
-						gmode 4, , , 150
-						color 0, 0, 0
-						pos 0, 960 + (chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, p(1))) == inf_tiles) * 48
-						gcopy 1, 144, 768 + (chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, p(1))) > inf_tiles) * 48, inf_tiles, chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, p(1))) + (chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, p(1))) > inf_tiles) * 48
-						gmode 2
-						gsel selcur
-					}
-					else {
-						pos 0, 960
-						gcopy 1, chipi(CHIPI_X, p(2)), chipi(CHIPI_Y, p(2)), chipi(CHIPI_WIDTH, p(2)), chipi(CHIPI_HEIGHT, p(2))
-						gfini chipi(CHIPI_WIDTH, p(2)), chipi(CHIPI_HEIGHT, p(2))
-						gfdec2 c_col(0, inv(INV_ITEM_COL, p(1))), c_col(1, inv(INV_ITEM_COL, p(1))), c_col(2, inv(INV_ITEM_COL, p(1)))
-						gsel selcur
-					}
-				}
-			}
+
+            preparePicItem p(2), inv(INV_ITEM_COL, p(1))
+
 			pos wx + 126, wy + 70 + cnt * 19
 			gmode 2, inf_tiles, inf_tiles
 			grotate 1, 0, 960, 0, chipi(CHIPI_WIDTH, p(2)), chipi(CHIPI_HEIGHT, p(2))
@@ -9591,7 +10550,7 @@
 							val = 0
 						}
 						gosub *item_seedRegrowth
-						if ( feat(2) == CELL_SUB_FEATURE_SEED_ARTIFACT ) {
+						if ( feat(FEAT_CELL_SUB_FEATURE_ID) \ 10 == CELL_SUB_FEATURE_SEED_ARTIFACT ) {
 							autosave = 1 * (gdata(GDATA_AREA) != AREA_SHOW_HOUSE)
 						}
 						gosub *calcBurdenPc
@@ -10282,6 +11241,35 @@
 						continue
 					}
 				}
+				if ( invctrl(1) == 21 ) {
+					if ( inv(INV_ITEM_ID, cnt) != ITEM_ID_MANUSCRIPT ) {
+						continue
+					}
+				}
+				if ( invctrl(1) == 22 ) {
+					if ( inv(INV_ITEM_ID, cnt) != ITEM_ID_CF_POTIOMAN & inv(INV_ITEM_ID, cnt) != ITEM_ID_CRUSH_POTIOMAN & inv(INV_ITEM_ID, cnt) != ITEM_ID_BATTLE_POTIOMAN & inv(INV_ITEM_ID, cnt) != ITEM_ID_SUPER_POTIOMAN ) {
+						continue
+					}
+					if ( inv(INV_ITEM_PARAM3, cnt) != 0 ) {
+						continue
+					}
+				}
+				if ( invctrl(1) == 23 ) {
+					if ( reftype != FILTER_ITEM_SCROLL ) {
+						continue
+					}
+					if ( inv(INV_ITEM_NUM, cnt) < 10 ) {
+						continue
+					}
+				}
+				if ( invctrl(1) == 24 ) {
+					if ( reftype != FILTER_ITEM_SCROLL ) {
+						continue
+					}
+					if ( inv(INV_ITEM_NUM, cnt) < 20 ) {
+						continue
+					}
+				}
 			}
 			if ( invctrl == 24 ) {
 				if ( invctrl(1) == 0 ) {
@@ -10343,7 +11331,7 @@
 				}
 			}
 			if ( invctrl == 26 ) {
-				if ( reftype != FILTER_ITEM_POTION & reftype != FILTER_ITEM_FOOD & inv(INV_ITEM_ID, cnt) != ITEM_ID_KITTY_BANK & inv(INV_ITEM_ID, cnt) != ITEM_ID_MONSTER_BALL & inv(INV_ITEM_ID, cnt) != ITEM_ID_LITTLE_BALL & inv(INV_ITEM_ID, cnt) != ITEM_ID_DUEL_GLOVE & inv(INV_ITEM_ID, cnt) != ITEM_ID_LULWYS_PHOTO_COLLECTION & reftype != FILTER_ENVIRONMENT & reftype != FILTER_FURNITURE & reftype != FILTER_JUNK ) {
+				if ( reftype != FILTER_ITEM_POTION & reftype != FILTER_ITEM_FOOD & inv(INV_ITEM_ID, cnt) != ITEM_ID_KITTY_BANK & inv(INV_ITEM_ID, cnt) != ITEM_ID_MONSTER_BALL & inv(INV_ITEM_ID, cnt) != ITEM_ID_LITTLE_BALL & inv(INV_ITEM_ID, cnt) != ITEM_ID_DUEL_GLOVE & inv(INV_ITEM_ID, cnt) != ITEM_ID_LULWYS_PHOTO_COLLECTION & inv(INV_ITEM_ID, cnt) != ITEM_ID_KEMURIDAMA & reftype != FILTER_ENVIRONMENT & reftype != FILTER_FURNITURE & reftype != FILTER_JUNK ) {
 					continue
 				}
 				if ( inv(INV_ITEM_ID, cnt) == ITEM_ID_MONSTER_BALL ) {
@@ -10610,8 +11598,9 @@
 				bmes "(" + invkey(p) + ")", 235, 235, 235
 			}
 		loop
-		color 0, 0, 0
-		pos x + 325, y + 32
+		font lang(cfg_font1, cfg_font2), 14 + sizefix - en * 2, 0
+		color 180, 30, 0
+		pos x + 145, y + 30
 		bmes "" + key_prev + "," + key_next + ",Tab " + lang("[メニュー切替]", "[Change]"), 255, 255, 255
 	}
 *com_inventory_loop_WHILE1
@@ -10710,7 +11699,7 @@
 	pos wx - 6, wy - 6
 	gcopy 3, 960, 216, 48, 72
 	s = "" + listmax + " items"
-	s += lang("  (重さ合計 ", "  (Weight ") + cnvweight(cdata(CDATA_INV_WEIGHT, CHARA_PLAYER)) + "/" + cnvweight(cdata(CDATA_CARRY_LIMIT, CHARA_PLAYER)) + lang("  荷車 ", " Cargo ") + cnvweight(gdata(GDATA_CARGO_WEIGHT)) + ")"
+	s += lang("  (重さ合計 ", "  (Weight ") + cnvweight(cdata(CDATA_INV_WEIGHT, CHARA_PLAYER)) + "/" + cnvweight(cdata(CDATA_CARRY_LIMIT, CHARA_PLAYER)) + lang("  荷車 ", " Cargo ") + cnvweight(gdata(GDATA_CARGO_WEIGHT)) + "/" + cnvweight(gdata(GDATA_CARGO_LIMIT)) + ")"
 	if ( invctrl == 25 ) {
 		s = ""
 	}
@@ -10812,6 +11801,9 @@
 		if ( inv(INV_ITEM_PIC, p) >= COLOR_TINT_MULT ) {
 			p(1) = inv(INV_ITEM_PIC, p)
 		}
+
+        preparePicItem p(1), inv(INV_ITEM_COL, p)
+
 		gsel 1
 		color 0
 		boxf 0, 960, chipi(CHIPI_WIDTH, p(1)), chipi(CHIPI_HEIGHT, p(1)) + 960
@@ -11497,10 +12489,33 @@
 					}
 				}
 				if ( reftype == FILTER_JUNK ) {
-					if ( inv(INV_ITEM_ID, ci) != ITEM_ID_MAGATAMA & inv(INV_ITEM_ID, ci) != ITEM_ID_MAGAQUA & inv(INV_ITEM_ID, ci) != ITEM_ID_SKILL_TICKET & inv(INV_ITEM_ID, ci) != ITEM_ID_BIO_BATTERY ) {
+					if ( inv(INV_ITEM_ID, ci) != ITEM_ID_MAGATAMA & inv(INV_ITEM_ID, ci) != ITEM_ID_MAGAQUA & inv(INV_ITEM_ID, ci) != ITEM_ID_SKILL_TICKET & inv(INV_ITEM_ID, ci) != ITEM_ID_BIO_BATTERY & inv(INV_ITEM_ID, ci) != ITEM_ID_MAGAICE ) {
 						f = 3
 					}
 				}
+			}
+			if ( inv(INV_ITEM_ID, ci) == ITEM_ID_FILTRATION_BOTTLE ) {
+				f = 1
+				if ( inv(INV_ITEM_PARAM2, ci) == 0 ) {
+					f = 2
+					snd SOUNDLIST_FAIL1
+				}
+				if ( cdata(CDATA_THIRST, tc) > 10000 ) {
+					f = 3
+					snd SOUNDLIST_FAIL1
+				}
+				if ( f == 1 ) {
+					if ( inv(INV_ITEM_PARAM2, ci) > 0 ) {
+						f = 4
+						snd SOUNDLIST_DRINK1
+						inv(INV_ITEM_PARAM2, ci)--
+						cdata(CDATA_THIRST, tc) += 2000
+						cdata(CDATA_HUNGER, tc) += 150
+					}
+				}
+				s = "", lang("重すぎ", "Too heavy!"), lang("からっぽ！", "No way."), lang("いらん", "I don't want it."), lang("ありがとう！", "Never!")
+				txt lang(name(tc) + "「" + s(f) + "」", cnvtalk(s(f)))
+				goto *com_inventory_loop
 			}
 			if ( inv(INV_ITEM_WEIGHT, ci) < 0 ) {
 				f = 4
@@ -11778,7 +12793,9 @@
 			return 1
 		}
 		if ( invctrl == 23 ) {
-			item_separate ci
+			if ( invctrl(1) != 21 & invctrl(1) != 23 & invctrl(1) != 24 ) {
+				item_separate ci
+			}
 			invsubroutine = 0
 			return 1
 		}
@@ -11949,7 +12966,7 @@
 				}
 				goto *pc_turn
 			}
-			if ( chipm(CHIPM_ATTRIB, map(tlocx, tlocy, 0)) & CHIPM_ATTRIB_CANT_PASS ) {
+			if ( chipm(CHIPM_ATTRIB, map(tlocx, tlocy, MAP_TILE_ID)) & CHIPM_ATTRIB_CANT_PASS | map(tlocx, tlocy, MAP_FEATS_ON_TILE) / 1000 \ 100 == CELL_FEATURE_DOOR_CLOSED | map(tlocx, tlocy, MAP_FEATS_ON_TILE) / 1000 \ 100 == 23 | map(tlocx, tlocy, MAP_FEATS_ON_TILE) / 1000 \ 100 == 31 | map(tlocx, tlocy, MAP_FEATS_ON_TILE) / 1000 \ 100 == 33 ) { // TODO
 				txt lang("そこには投げられない。", "The location is blocked.")
 				gosub *screen_draw
 				goto *pc_turn
@@ -13487,6 +14504,12 @@
 		gosub *screen_draw
 		return
 	}
+	if ( gdata(GDATA_FLAG_MAIN) >= 845 & gdata(GDATA_FLAG_MAIN) < 1000 & gdata(GDATA_AREA) == AREA_CHAOS_CRADLE & gdata(GDATA_LEVEL) == 179 ) {
+		snd SOUNDLIST_FAIL1
+		txt lang("最後まであきらめずに戦おう。", "I will fight until the end without giving up.")
+		gosub *screen_draw
+		return
+	}
 	p = 0
 	p = 0
 	i = 7
@@ -13522,11 +14545,11 @@
 			continue
 		}
 		f = 0
-		if ( adata(ADATA_ID, i) == AREA_MAID_MANSION | adata(ADATA_ID, i) == AREA_NT_SOUTH_BORDER ) {
+		if ( adata(ADATA_ID, i) == AREA_MAID_MANSION | adata(ADATA_ID, i) == AREA_NT_SOUTH_BORDER | adata(ADATA_ID, i) == AREA_AMUR_CAGE | adata(ADATA_ID, i) == AREA_ZAILE ) {
 			adata(ADATA_DEEPEST, i) = adata(ADATA_MIN_LEVEL, i)
 			f = 1
 		}
-		if ( adata(ADATA_ID, i) == AREA_LESIMAS | adata(ADATA_ID, i) == AREA_LARNA | adata(ADATA_ID, i) == AREA_SISTER_MANSION | adata(ADATA_ID, i) == AREA_VOID | adata(ADATA_ID, i) == AREA_NT_SOUTH_BORDER | adata(ADATA_ID, i) == AREA_ST_NORTH_BORDER | adata(ADATA_ID, i) == AREA_REMIDO | adata(ADATA_ID, i) == AREA_ANCIENT_GARDEN | adata(ADATA_ID, i) == AREA_CHAOS_CRADLE | adata(ADATA_ID, i) == AREA_ULM_LESON ) {
+		if ( adata(ADATA_ID, i) == AREA_LESIMAS | adata(ADATA_ID, i) == AREA_LARNA | adata(ADATA_ID, i) == AREA_SISTER_MANSION | adata(ADATA_ID, i) == AREA_VOID | adata(ADATA_ID, i) == AREA_NT_SOUTH_BORDER | adata(ADATA_ID, i) == AREA_ST_NORTH_BORDER | adata(ADATA_ID, i) == AREA_REMIDO | adata(ADATA_ID, i) == AREA_ANCIENT_GARDEN | adata(ADATA_ID, i) == AREA_CHAOS_CRADLE | adata(ADATA_ID, i) == AREA_ULM_LESON | adata(ADATA_ID, i) == AREA_WEST_RASKILIS ) {
 			f = 1
 		}
 		if ( gdata(GDATA_WIZARD) ) {
@@ -13854,6 +14877,31 @@
 			}
 			if ( trait(TRAIT_ETHER_EQUIP_HEAD) != 0 ) {
 				if ( cdata(cnt, cc) / EXT_EQUIP_SLOTS == EQUIP_SLOT_HEAD ) {
+					continue
+				}
+			}
+			if ( trait(TRAIT_ETHER_BONES) != 0 ) {
+				if ( cdata(cnt, cc) / EXT_EQUIP_SLOTS == EQUIP_SLOT_BODY ) {
+					continue
+				}
+			}
+			if ( trait(TRAIT_ETHER_BLADE_HANDS) != 0 ) {
+				if ( cdata(cnt, cc) / EXT_EQUIP_SLOTS == EQUIP_SLOT_HAND ) {
+					continue
+				}
+			}
+			if ( trait(TRAIT_ETHER_WEBBED) != 0 ) {
+				if ( cdata(cnt, cc) / EXT_EQUIP_SLOTS == EQUIP_SLOT_RING ) {
+					continue
+				}
+			}
+			if ( trait(raitetherarm) != 0 ) {
+				if ( cdata(cnt, cc) / EXT_EQUIP_SLOTS == EQUIP_SLOT_ARM ) {
+					continue
+				}
+			}
+			if ( trait(TRAIT_ETHER_TAIL) != 0 ) {
+				if ( cdata(cnt, cc) / EXT_EQUIP_SLOTS == EQUIP_SLOT_WAIST ) {
 					continue
 				}
 			}

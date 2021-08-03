@@ -15570,7 +15570,7 @@
 				bitp = CHARA_BIT_AWAKE_ZERO_SHOOT
 			}
 			if ( leoval == 21 ) {
-				bitp = CHARA_BIT_AWAKE_STRUCK_OUT
+				bitp = CHARA_BIT_AWAKE_TACTICAL_THROW
 			}
 			if ( cbit(bitp, c) ) {
 				cbitmod bitp, c, 0
@@ -17434,6 +17434,9 @@
 							if ( cdata(CDATA_MASTER_SERVANT, tc) >= 150 ) {
 								chatList 94, lang("特殊指示を出す", "Give special instructions.")
 							}
+
+			                /********** ORIGINAL 1.90 - BEGINNING ********** // Replaced with the confession mechanic in stock 2.05.
+
 							if ( cbit(CHARA_BIT_MARRIED, tc) == 0 ) {
 								chatList 38, lang("婚約を申し込む", "May I ask for your hand?")
 							}
@@ -17442,6 +17445,9 @@
 									chatList 39, lang("遺伝子を残す", "Let's make a gene.")
 								}
 							}
+
+	 	                    ********** ORIGINAL 1.90 - ENDING **********/
+
 							if ( cdata(CDATA_TXT, tc) != 0 ) {
 								if ( cbit(CHARA_BIT_SHUT_UP, tc) == 0 ) {
 									chatList 48, lang("黙らせる", "Shut up.")
@@ -17524,11 +17530,11 @@
 			chatList 98, lang("クエストの攻略情報(300Gold)", "Tell me the quest strategy information.(300Gold)")
 			chatList 82, lang("【誕生日を教える】", "[ I will inform my birthday.]")
 
-			/********** RUIN0X11 CUSTOM - BEGINNING **********/ // Removed in stock 2.05.
+			/********** ORIGINAL 1.90 - BEGINNING ********** // Removed in stock 2.05, since it's now an interact option.
 
 			chatList 47, lang("仲間の調査", "I want you to investigate one of my allies.")
 
-			/********** RUIN0X11 CUSTOM - ENDING **********/
+			/********** ORIGINAL 1.90 - ENDING **********/
 
 			clientguide
 			if ( stat != 0 ) {
