@@ -2,6 +2,1481 @@
 	if ( dbmode != DBMODE_FIND ) {
 		goto *db_item_set
 	}
+//*db_item_GOLDEN_DOLL
+	dbmax = 0
+	dbsum = 0
+	if ( 5 > objlv ) {
+		goto *db_item_FILTRATION_BOTTLE
+	}
+	if ( fltselect != 1 ) {
+		goto *db_item_FILTRATION_BOTTLE
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_ORE ) {
+			goto *db_item_FILTRATION_BOTTLE
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_NONE ) {
+			goto *db_item_FILTRATION_BOTTLE
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_GOLDEN_DOLL), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_FILTRATION_BOTTLE
+		}
+	}
+	dbsum += 800000 / (1000 + abs(objlv - 5) * 10) + 1
+	dblist(0, dbmax) = ITEM_ID_GOLDEN_DOLL, dbsum
+	dbmax++
+*db_item_FILTRATION_BOTTLE
+	if ( 1 > objlv ) {
+		goto *db_item_CHAOS_FRAGMENT
+	}
+	if ( fltselect != 0 ) {
+		goto *db_item_CHAOS_FRAGMENT
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_ITEM_TOOL ) {
+			goto *db_item_CHAOS_FRAGMENT
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_NONE ) {
+			goto *db_item_CHAOS_FRAGMENT
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_FILTRATION_BOTTLE), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_CHAOS_FRAGMENT
+		}
+	}
+	dbsum += 300000 / (1000 + abs(objlv - 1) * 10) + 1
+	dblist(0, dbmax) = ITEM_ID_FILTRATION_BOTTLE, dbsum
+	dbmax++
+*db_item_CHAOS_FRAGMENT
+	if ( 1 > objlv ) {
+		goto *db_item_REMIDO_FRAGMENT
+	}
+	if ( fltselect != 3 ) {
+		goto *db_item_REMIDO_FRAGMENT
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_ITEM_TOOL ) {
+			goto *db_item_REMIDO_FRAGMENT
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_NONE ) {
+			goto *db_item_REMIDO_FRAGMENT
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_CHAOS_FRAGMENT), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_REMIDO_FRAGMENT
+		}
+	}
+	dbsum += 1000000 / (1000 + abs(objlv - 1) * 10) + 1
+	dblist(0, dbmax) = ITEM_ID_CHAOS_FRAGMENT, dbsum
+	dbmax++
+*db_item_REMIDO_FRAGMENT
+	if ( 1 > objlv ) {
+		goto *db_item_LESIMAS_FRAGMENT
+	}
+	if ( fltselect != 3 ) {
+		goto *db_item_LESIMAS_FRAGMENT
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_ITEM_TOOL ) {
+			goto *db_item_LESIMAS_FRAGMENT
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_NONE ) {
+			goto *db_item_LESIMAS_FRAGMENT
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_REMIDO_FRAGMENT), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_LESIMAS_FRAGMENT
+		}
+	}
+	dbsum += 1000000 / (1000 + abs(objlv - 1) * 10) + 1
+	dblist(0, dbmax) = ITEM_ID_REMIDO_FRAGMENT, dbsum
+	dbmax++
+*db_item_LESIMAS_FRAGMENT
+	if ( 1 > objlv ) {
+		goto *db_item_G_FINGER
+	}
+	if ( fltselect != 3 ) {
+		goto *db_item_G_FINGER
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_ITEM_TOOL ) {
+			goto *db_item_G_FINGER
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_NONE ) {
+			goto *db_item_G_FINGER
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_LESIMAS_FRAGMENT), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_G_FINGER
+		}
+	}
+	dbsum += 1000000 / (1000 + abs(objlv - 1) * 10) + 1
+	dblist(0, dbmax) = ITEM_ID_LESIMAS_FRAGMENT, dbsum
+	dbmax++
+*db_item_G_FINGER
+	if ( 1 > objlv ) {
+		goto *db_item_PHOTON_FAIRY
+	}
+	if ( fltselect != 3 ) {
+		goto *db_item_PHOTON_FAIRY
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_ITEM_TOOL ) {
+			goto *db_item_PHOTON_FAIRY
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_NONE ) {
+			goto *db_item_PHOTON_FAIRY
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_G_FINGER), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_PHOTON_FAIRY
+		}
+	}
+	dbsum += 1000000 / (1000 + abs(objlv - 1) * 10) + 1
+	dblist(0, dbmax) = ITEM_ID_G_FINGER, dbsum
+	dbmax++
+*db_item_PHOTON_FAIRY
+	if ( 1 > objlv ) {
+		goto *db_item_CONTRADCTION
+	}
+	if ( fltselect != 3 ) {
+		goto *db_item_CONTRADCTION
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_ITEM_TOOL ) {
+			goto *db_item_CONTRADCTION
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_NONE ) {
+			goto *db_item_CONTRADCTION
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_PHOTON_FAIRY), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_CONTRADCTION
+		}
+	}
+	dbsum += 1000000 / (1000 + abs(objlv - 1) * 10) + 1
+	dblist(0, dbmax) = ITEM_ID_PHOTON_FAIRY, dbsum
+	dbmax++
+*db_item_CONTRADCTION
+	if ( 1 > objlv ) {
+		goto *db_item_BIGAMY_PERMIT
+	}
+	if ( fltselect != 3 ) {
+		goto *db_item_BIGAMY_PERMIT
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_ITEM_TOOL ) {
+			goto *db_item_BIGAMY_PERMIT
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_NONE ) {
+			goto *db_item_BIGAMY_PERMIT
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_CONTRADCTION), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_BIGAMY_PERMIT
+		}
+	}
+	dbsum += 1000000 / (1000 + abs(objlv - 1) * 10) + 1
+	dblist(0, dbmax) = ITEM_ID_CONTRADCTION, dbsum
+	dbmax++
+*db_item_BIGAMY_PERMIT
+	if ( 1 > objlv ) {
+		goto *db_item_FLOATING_FORTRESS_KEY
+	}
+	if ( fltselect != 3 ) {
+		goto *db_item_FLOATING_FORTRESS_KEY
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_ITEM_TOOL ) {
+			goto *db_item_FLOATING_FORTRESS_KEY
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_NONE ) {
+			goto *db_item_FLOATING_FORTRESS_KEY
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_BIGAMY_PERMIT), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_FLOATING_FORTRESS_KEY
+		}
+	}
+	dbsum += 1000000 / (1000 + abs(objlv - 1) * 10) + 1
+	dblist(0, dbmax) = ITEM_ID_BIGAMY_PERMIT, dbsum
+	dbmax++
+*db_item_FLOATING_FORTRESS_KEY
+	if ( 1 > objlv ) {
+		goto *db_item_MEMORY_CONVERTER
+	}
+	if ( fltselect != 3 ) {
+		goto *db_item_MEMORY_CONVERTER
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_ITEM_TOOL ) {
+			goto *db_item_MEMORY_CONVERTER
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_NONE ) {
+			goto *db_item_MEMORY_CONVERTER
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_FLOATING_FORTRESS_KEY), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_MEMORY_CONVERTER
+		}
+	}
+	dbsum += 800000 / (1000 + abs(objlv - 1) * 10) + 1
+	dblist(0, dbmax) = ITEM_ID_FLOATING_FORTRESS_KEY, dbsum
+	dbmax++
+*db_item_MEMORY_CONVERTER
+	if ( 1 > objlv ) {
+		goto *db_item_CF_POTIOMAN
+	}
+	if ( fltselect != 1 ) {
+		goto *db_item_CF_POTIOMAN
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_ITEM_TOOL ) {
+			goto *db_item_CF_POTIOMAN
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_NONE ) {
+			goto *db_item_CF_POTIOMAN
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_MEMORY_CONVERTER), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_CF_POTIOMAN
+		}
+	}
+	dbsum += 50000 / (1000 + abs(objlv - 1) * 10) + 1
+	dblist(0, dbmax) = ITEM_ID_MEMORY_CONVERTER, dbsum
+	dbmax++
+*db_item_CF_POTIOMAN
+	if ( 1 > objlv ) {
+		goto *db_item_CRUSH_POTIOMAN
+	}
+	if ( fltselect != 0 ) {
+		goto *db_item_CRUSH_POTIOMAN
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_ITEM_TOOL ) {
+			goto *db_item_CRUSH_POTIOMAN
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_NONE ) {
+			goto *db_item_CRUSH_POTIOMAN
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_CF_POTIOMAN), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_CRUSH_POTIOMAN
+		}
+	}
+	dbsum += 500000 / (1000 + abs(objlv - 1) * 10) + 1
+	dblist(0, dbmax) = ITEM_ID_CF_POTIOMAN, dbsum
+	dbmax++
+*db_item_CRUSH_POTIOMAN
+	if ( 1 > objlv ) {
+		goto *db_item_BATTLE_POTIOMAN
+	}
+	if ( fltselect != 0 ) {
+		goto *db_item_BATTLE_POTIOMAN
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_ITEM_TOOL ) {
+			goto *db_item_BATTLE_POTIOMAN
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_NONE ) {
+			goto *db_item_BATTLE_POTIOMAN
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_CRUSH_POTIOMAN), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_BATTLE_POTIOMAN
+		}
+	}
+	dbsum += 500000 / (1000 + abs(objlv - 1) * 10) + 1
+	dblist(0, dbmax) = ITEM_ID_CRUSH_POTIOMAN, dbsum
+	dbmax++
+*db_item_BATTLE_POTIOMAN
+	if ( 1 > objlv ) {
+		goto *db_item_SUPER_POTIOMAN
+	}
+	if ( fltselect != 0 ) {
+		goto *db_item_SUPER_POTIOMAN
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_ITEM_TOOL ) {
+			goto *db_item_SUPER_POTIOMAN
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_NONE ) {
+			goto *db_item_SUPER_POTIOMAN
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_BATTLE_POTIOMAN), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_SUPER_POTIOMAN
+		}
+	}
+	dbsum += 500000 / (1000 + abs(objlv - 1) * 10) + 1
+	dblist(0, dbmax) = ITEM_ID_BATTLE_POTIOMAN, dbsum
+	dbmax++
+*db_item_SUPER_POTIOMAN
+	if ( 1 > objlv ) {
+		goto *db_item_OPERATING_BOARD
+	}
+	if ( fltselect != 0 ) {
+		goto *db_item_OPERATING_BOARD
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_ITEM_TOOL ) {
+			goto *db_item_OPERATING_BOARD
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_NONE ) {
+			goto *db_item_OPERATING_BOARD
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_SUPER_POTIOMAN), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_OPERATING_BOARD
+		}
+	}
+	dbsum += 500000 / (1000 + abs(objlv - 1) * 10) + 1
+	dblist(0, dbmax) = ITEM_ID_SUPER_POTIOMAN, dbsum
+	dbmax++
+*db_item_OPERATING_BOARD
+	if ( 1 > objlv ) {
+		goto *db_item_PRODUCED_BOOK
+	}
+	if ( fltselect != 1 ) {
+		goto *db_item_PRODUCED_BOOK
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_ITEM_TOOL ) {
+			goto *db_item_PRODUCED_BOOK
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_NONE ) {
+			goto *db_item_PRODUCED_BOOK
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_OPERATING_BOARD), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_PRODUCED_BOOK
+		}
+	}
+	dbsum += 1000000 / (1000 + abs(objlv - 1) * 10) + 1
+	dblist(0, dbmax) = ITEM_ID_OPERATING_BOARD, dbsum
+	dbmax++
+*db_item_PRODUCED_BOOK
+	if ( 1 > objlv ) {
+		goto *db_item_MANUSCRIPT
+	}
+	if ( fltselect != 1 ) {
+		goto *db_item_MANUSCRIPT
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_ITEM_BOOK ) {
+			goto *db_item_MANUSCRIPT
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_NONE ) {
+			goto *db_item_MANUSCRIPT
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_PRODUCED_BOOK), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_MANUSCRIPT
+		}
+	}
+	dbsum += 2000000 / (1000 + abs(objlv - 1) * 10) + 1
+	dblist(0, dbmax) = ITEM_ID_PRODUCED_BOOK, dbsum
+	dbmax++
+*db_item_MANUSCRIPT
+	if ( 1 > objlv ) {
+		goto *db_item_JADE_DARK_ORB
+	}
+	if ( fltselect != 1 ) {
+		goto *db_item_JADE_DARK_ORB
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_JUNK ) {
+			goto *db_item_JADE_DARK_ORB
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_NONE ) {
+			goto *db_item_JADE_DARK_ORB
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_MANUSCRIPT), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_JADE_DARK_ORB
+		}
+	}
+	dbsum += 500000 / (1000 + abs(objlv - 1) * 10) + 1
+	dblist(0, dbmax) = ITEM_ID_MANUSCRIPT, dbsum
+	dbmax++
+*db_item_JADE_DARK_ORB
+	if ( 1 > objlv ) {
+		goto *db_item_AZURE_DARK_ORB
+	}
+	if ( fltselect != 1 ) {
+		goto *db_item_AZURE_DARK_ORB
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_ITEM_TOOL ) {
+			goto *db_item_AZURE_DARK_ORB
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_NONE ) {
+			goto *db_item_AZURE_DARK_ORB
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_JADE_DARK_ORB), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_AZURE_DARK_ORB
+		}
+	}
+	dbsum += 100000 / (1000 + abs(objlv - 1) * 10) + 1
+	dblist(0, dbmax) = ITEM_ID_JADE_DARK_ORB, dbsum
+	dbmax++
+*db_item_AZURE_DARK_ORB
+	if ( 1 > objlv ) {
+		goto *db_item_CRIMSON_DARK_ORB
+	}
+	if ( fltselect != 1 ) {
+		goto *db_item_CRIMSON_DARK_ORB
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_ITEM_TOOL ) {
+			goto *db_item_CRIMSON_DARK_ORB
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_NONE ) {
+			goto *db_item_CRIMSON_DARK_ORB
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_AZURE_DARK_ORB), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_CRIMSON_DARK_ORB
+		}
+	}
+	dbsum += 100000 / (1000 + abs(objlv - 1) * 10) + 1
+	dblist(0, dbmax) = ITEM_ID_AZURE_DARK_ORB, dbsum
+	dbmax++
+*db_item_CRIMSON_DARK_ORB
+	if ( 1 > objlv ) {
+		goto *db_item_FISHING_INTRODUCTION
+	}
+	if ( fltselect != 1 ) {
+		goto *db_item_FISHING_INTRODUCTION
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_ITEM_TOOL ) {
+			goto *db_item_FISHING_INTRODUCTION
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_NONE ) {
+			goto *db_item_FISHING_INTRODUCTION
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_CRIMSON_DARK_ORB), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_FISHING_INTRODUCTION
+		}
+	}
+	dbsum += 100000 / (1000 + abs(objlv - 1) * 10) + 1
+	dblist(0, dbmax) = ITEM_ID_CRIMSON_DARK_ORB, dbsum
+	dbmax++
+*db_item_FISHING_INTRODUCTION
+	if ( 1 > objlv ) {
+		goto *db_item_QUEST_ADVICE
+	}
+	if ( fltselect != 1 ) {
+		goto *db_item_QUEST_ADVICE
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_ITEM_BOOK ) {
+			goto *db_item_QUEST_ADVICE
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_NONE ) {
+			goto *db_item_QUEST_ADVICE
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_FISHING_INTRODUCTION), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_QUEST_ADVICE
+		}
+	}
+	dbsum += 1000000 / (1000 + abs(objlv - 1) * 10) + 1
+	dblist(0, dbmax) = ITEM_ID_FISHING_INTRODUCTION, dbsum
+	dbmax++
+*db_item_QUEST_ADVICE
+	if ( 1 > objlv ) {
+		goto *db_item_MEMORY_FRAGMENT
+	}
+	if ( fltselect != 1 ) {
+		goto *db_item_MEMORY_FRAGMENT
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_ITEM_BOOK ) {
+			goto *db_item_MEMORY_FRAGMENT
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_NONE ) {
+			goto *db_item_MEMORY_FRAGMENT
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_QUEST_ADVICE), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_MEMORY_FRAGMENT
+		}
+	}
+	dbsum += 1000000 / (1000 + abs(objlv - 1) * 10) + 1
+	dblist(0, dbmax) = ITEM_ID_QUEST_ADVICE, dbsum
+	dbmax++
+*db_item_MEMORY_FRAGMENT
+	if ( 1 > objlv ) {
+		goto *db_item_DEED_OF_LAND_BATTLESHIP
+	}
+	if ( fltselect != 1 ) {
+		goto *db_item_DEED_OF_LAND_BATTLESHIP
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_ITEM_TOOL ) {
+			goto *db_item_DEED_OF_LAND_BATTLESHIP
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_NONE ) {
+			goto *db_item_DEED_OF_LAND_BATTLESHIP
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_MEMORY_FRAGMENT), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_DEED_OF_LAND_BATTLESHIP
+		}
+	}
+	dbsum += 50000 / (1000 + abs(objlv - 1) * 10) + 1
+	dblist(0, dbmax) = ITEM_ID_MEMORY_FRAGMENT, dbsum
+	dbmax++
+*db_item_DEED_OF_LAND_BATTLESHIP
+	if ( 1 > objlv ) {
+		goto *db_item_DEED_OF_MAGIC_LOCOMOTIVE
+	}
+	if ( fltselect != 1 ) {
+		goto *db_item_DEED_OF_MAGIC_LOCOMOTIVE
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_ITEM_SCROLL ) {
+			goto *db_item_DEED_OF_MAGIC_LOCOMOTIVE
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_ITEM_DEED ) {
+			goto *db_item_DEED_OF_MAGIC_LOCOMOTIVE
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_DEED_OF_LAND_BATTLESHIP), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_DEED_OF_MAGIC_LOCOMOTIVE
+		}
+	}
+	dbsum += 1000 / (1000 + abs(objlv - 1) * 10) + 1
+	dblist(0, dbmax) = ITEM_ID_DEED_OF_LAND_BATTLESHIP, dbsum
+	dbmax++
+*db_item_DEED_OF_MAGIC_LOCOMOTIVE
+	if ( 1 > objlv ) {
+		goto *db_item_DEED_OF_TRUCK
+	}
+	if ( fltselect != 1 ) {
+		goto *db_item_DEED_OF_TRUCK
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_ITEM_SCROLL ) {
+			goto *db_item_DEED_OF_TRUCK
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_ITEM_DEED ) {
+			goto *db_item_DEED_OF_TRUCK
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_DEED_OF_MAGIC_LOCOMOTIVE), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_DEED_OF_TRUCK
+		}
+	}
+	dbsum += 1000 / (1000 + abs(objlv - 1) * 10) + 1
+	dblist(0, dbmax) = ITEM_ID_DEED_OF_MAGIC_LOCOMOTIVE, dbsum
+	dbmax++
+*db_item_DEED_OF_TRUCK
+	if ( 1 > objlv ) {
+		goto *db_item_DEED_OF_CARRIAGE
+	}
+	if ( fltselect != 1 ) {
+		goto *db_item_DEED_OF_CARRIAGE
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_ITEM_SCROLL ) {
+			goto *db_item_DEED_OF_CARRIAGE
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_ITEM_DEED ) {
+			goto *db_item_DEED_OF_CARRIAGE
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_DEED_OF_TRUCK), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_DEED_OF_CARRIAGE
+		}
+	}
+	dbsum += 1000 / (1000 + abs(objlv - 1) * 10) + 1
+	dblist(0, dbmax) = ITEM_ID_DEED_OF_TRUCK, dbsum
+	dbmax++
+*db_item_DEED_OF_CARRIAGE
+	if ( 1 > objlv ) {
+		goto *db_item_CLOTHWORLD
+	}
+	if ( fltselect != 1 ) {
+		goto *db_item_CLOTHWORLD
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_ITEM_SCROLL ) {
+			goto *db_item_CLOTHWORLD
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_ITEM_DEED ) {
+			goto *db_item_CLOTHWORLD
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_DEED_OF_CARRIAGE), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_CLOTHWORLD
+		}
+	}
+	dbsum += 1000 / (1000 + abs(objlv - 1) * 10) + 1
+	dblist(0, dbmax) = ITEM_ID_DEED_OF_CARRIAGE, dbsum
+	dbmax++
+*db_item_CLOTHWORLD
+	if ( 20 > objlv ) {
+		goto *db_item_BAMAGICAR
+	}
+	if ( fltselect != 3 ) {
+		goto *db_item_BAMAGICAR
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_ARMOR ) {
+			goto *db_item_BAMAGICAR
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_ARMOR_LIGHT ) {
+			goto *db_item_BAMAGICAR
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_CLOTHWORLD), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_BAMAGICAR
+		}
+	}
+	dbsum += 1000000 / (1000 + abs(objlv - 20) * 10) + 1
+	dblist(0, dbmax) = ITEM_ID_CLOTHWORLD, dbsum
+	dbmax++
+*db_item_BAMAGICAR
+	if ( 30 > objlv ) {
+		goto *db_item_RAVENBRAND
+	}
+	if ( fltselect != 3 ) {
+		goto *db_item_RAVENBRAND
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_ARMOR ) {
+			goto *db_item_RAVENBRAND
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_ARMOR_HEAVY ) {
+			goto *db_item_RAVENBRAND
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_BAMAGICAR), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_RAVENBRAND
+		}
+	}
+	dbsum += 1000000 / (1000 + abs(objlv - 30) * 10) + 1
+	dblist(0, dbmax) = ITEM_ID_BAMAGICAR, dbsum
+	dbmax++
+*db_item_RAVENBRAND
+	if ( 50 > objlv ) {
+		goto *db_item_BAMBNIR
+	}
+	if ( fltselect != 3 ) {
+		goto *db_item_BAMBNIR
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_WEAPON ) {
+			goto *db_item_BAMBNIR
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_WEAPON_LONGSWORD ) {
+			goto *db_item_BAMBNIR
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_RAVENBRAND), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_BAMBNIR
+		}
+	}
+	dbsum += 1000000 / (1000 + abs(objlv - 50) * 10) + 1
+	dblist(0, dbmax) = ITEM_ID_RAVENBRAND, dbsum
+	dbmax++
+*db_item_BAMBNIR
+	if ( 55 > objlv ) {
+		goto *db_item_KALPA_HAND
+	}
+	if ( fltselect != 2 ) {
+		goto *db_item_KALPA_HAND
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_WEAPON ) {
+			goto *db_item_KALPA_HAND
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_WEAPON_POLEARM ) {
+			goto *db_item_KALPA_HAND
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_BAMBNIR), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_KALPA_HAND
+		}
+	}
+	dbsum += 1000000 / (1000 + abs(objlv - 55) * 10) + 1
+	dblist(0, dbmax) = ITEM_ID_BAMBNIR, dbsum
+	dbmax++
+*db_item_KALPA_HAND
+	if ( 60 > objlv ) {
+		goto *db_item_KEMURIDAMA
+	}
+	if ( fltselect != 3 ) {
+		goto *db_item_KEMURIDAMA
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_WEAPON ) {
+			goto *db_item_KEMURIDAMA
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_WEAPON_LONGSWORD ) {
+			goto *db_item_KEMURIDAMA
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_KALPA_HAND), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_KEMURIDAMA
+		}
+	}
+	dbsum += 1000000 / (1000 + abs(objlv - 60) * 10) + 1
+	dblist(0, dbmax) = ITEM_ID_KALPA_HAND, dbsum
+	dbmax++
+*db_item_KEMURIDAMA
+	if ( 1 > objlv ) {
+		goto *db_item_YACA_POINT_CARD
+	}
+	if ( fltselect != 0 ) {
+		goto *db_item_YACA_POINT_CARD
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_ITEM_TOOL ) {
+			goto *db_item_YACA_POINT_CARD
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_NONE ) {
+			goto *db_item_YACA_POINT_CARD
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_KEMURIDAMA), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_YACA_POINT_CARD
+		}
+	}
+	dbsum += 1000000 / (1000 + abs(objlv - 1) * 10) + 1
+	dblist(0, dbmax) = ITEM_ID_KEMURIDAMA, dbsum
+	dbmax++
+*db_item_YACA_POINT_CARD
+	if ( 1000 > objlv ) {
+		goto *db_item_AQUATIC_PLANT
+	}
+	if ( fltselect != 1 ) {
+		goto *db_item_AQUATIC_PLANT
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_ITEM_TOOL ) {
+			goto *db_item_AQUATIC_PLANT
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_NONE ) {
+			goto *db_item_AQUATIC_PLANT
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_YACA_POINT_CARD), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_AQUATIC_PLANT
+		}
+	}
+	dbsum += 1000000 / (1000 + abs(objlv - 1000) * 0) + 1
+	dblist(0, dbmax) = ITEM_ID_YACA_POINT_CARD, dbsum
+	dbmax++
+*db_item_AQUATIC_PLANT
+	if ( 1 > objlv ) {
+		goto *db_item_JEWEL_CORAL
+	}
+	if ( fltselect != 1 ) {
+		goto *db_item_JEWEL_CORAL
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_ITEM_FOOD ) {
+			goto *db_item_JEWEL_CORAL
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_NONE ) {
+			goto *db_item_JEWEL_CORAL
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_AQUATIC_PLANT), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_JEWEL_CORAL
+		}
+	}
+	dbsum += 1000000 / (1000 + abs(objlv - 1) * 10) + 1
+	dblist(0, dbmax) = ITEM_ID_AQUATIC_PLANT, dbsum
+	dbmax++
+*db_item_JEWEL_CORAL
+	if ( 1 > objlv ) {
+		goto *db_item_SPOTTED_GARDEN_EEL
+	}
+	if ( fltselect != 1 ) {
+		goto *db_item_SPOTTED_GARDEN_EEL
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_ORE ) {
+			goto *db_item_SPOTTED_GARDEN_EEL
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_NONE ) {
+			goto *db_item_SPOTTED_GARDEN_EEL
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_JEWEL_CORAL), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_SPOTTED_GARDEN_EEL
+		}
+	}
+	dbsum += 1000000 / (1000 + abs(objlv - 1) * 10) + 1
+	dblist(0, dbmax) = ITEM_ID_JEWEL_CORAL, dbsum
+	dbmax++
+*db_item_SPOTTED_GARDEN_EEL
+	if ( 40 > objlv ) {
+		goto *db_item_DRAGONS_RED
+	}
+	if ( fltselect != 1 ) {
+		goto *db_item_DRAGONS_RED
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_ITEM_FOOD ) {
+			goto *db_item_DRAGONS_RED
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_NONE ) {
+			goto *db_item_DRAGONS_RED
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_SPOTTED_GARDEN_EEL), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_DRAGONS_RED
+		}
+	}
+	dbsum += 100000 / (1000 + abs(objlv - 40) * 10) + 1
+	dblist(0, dbmax) = ITEM_ID_SPOTTED_GARDEN_EEL, dbsum
+	dbmax++
+*db_item_DRAGONS_RED
+	if ( 1 > objlv ) {
+		goto *db_item_MOKU_JIN
+	}
+	if ( fltselect != 1 ) {
+		goto *db_item_MOKU_JIN
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_ORE ) {
+			goto *db_item_MOKU_JIN
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_ORE_GEM ) {
+			goto *db_item_MOKU_JIN
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_DRAGONS_RED), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_MOKU_JIN
+		}
+	}
+	dbsum += 250000 / (1000 + abs(objlv - 1) * 10) + 1
+	dblist(0, dbmax) = ITEM_ID_DRAGONS_RED, dbsum
+	dbmax++
+*db_item_MOKU_JIN
+	if ( 1 > objlv ) {
+		goto *db_item_CROP_MANAGEMENT_TOOLS
+	}
+	if ( fltselect != 3 ) {
+		goto *db_item_CROP_MANAGEMENT_TOOLS
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_ITEM_TOOL ) {
+			goto *db_item_CROP_MANAGEMENT_TOOLS
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_NONE ) {
+			goto *db_item_CROP_MANAGEMENT_TOOLS
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_MOKU_JIN), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_CROP_MANAGEMENT_TOOLS
+		}
+	}
+	dbsum += 1000000 / (1000 + abs(objlv - 1) * 0) + 1
+	dblist(0, dbmax) = ITEM_ID_MOKU_JIN, dbsum
+	dbmax++
+*db_item_CROP_MANAGEMENT_TOOLS
+	if ( 1000 > objlv ) {
+		goto *db_item_SCROLL_OF_WITCHCRAFT
+	}
+	if ( fltselect != 1 ) {
+		goto *db_item_SCROLL_OF_WITCHCRAFT
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_ITEM_TOOL ) {
+			goto *db_item_SCROLL_OF_WITCHCRAFT
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_NONE ) {
+			goto *db_item_SCROLL_OF_WITCHCRAFT
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_CROP_MANAGEMENT_TOOLS), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_SCROLL_OF_WITCHCRAFT
+		}
+	}
+	dbsum += 1000000 / (1000 + abs(objlv - 1000) * 0) + 1
+	dblist(0, dbmax) = ITEM_ID_CROP_MANAGEMENT_TOOLS, dbsum
+	dbmax++
+*db_item_SCROLL_OF_WITCHCRAFT
+	if ( 30 > objlv ) {
+		goto *db_item_MAGAICE
+	}
+	if ( fltselect != 0 ) {
+		goto *db_item_MAGAICE
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_ITEM_SCROLL ) {
+			goto *db_item_MAGAICE
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_NONE ) {
+			goto *db_item_MAGAICE
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_SCROLL_OF_WITCHCRAFT), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_MAGAICE
+		}
+	}
+	dbsum += 150000 / (1000 + abs(objlv - 30) * 0) + 1
+	dblist(0, dbmax) = 1173, dbsum
+	dbmax++
+*db_item_MAGAICE
+	if ( 1 > objlv ) {
+		goto *db_item_FRIGHT_PRAWN
+	}
+	if ( fltselect != 0 ) {
+		goto *db_item_FRIGHT_PRAWN
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_JUNK ) {
+			goto *db_item_FRIGHT_PRAWN
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_NONE ) {
+			goto *db_item_FRIGHT_PRAWN
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_MAGAICE), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_FRIGHT_PRAWN
+		}
+	}
+	dbsum += 500000 / (1000 + abs(objlv - 1) * 10) + 1
+	dblist(0, dbmax) = ITEM_ID_MAGAICE, dbsum
+	dbmax++
+*db_item_FRIGHT_PRAWN
+	if ( 30 > objlv ) {
+		goto *db_item_ANNINDOFU_LIKE_A_LIGHTSABRE
+	}
+	if ( fltselect != 3 ) {
+		goto *db_item_ANNINDOFU_LIKE_A_LIGHTSABRE
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_RANGE ) {
+			goto *db_item_ANNINDOFU_LIKE_A_LIGHTSABRE
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_RANGE_ROCK_THROW ) {
+			goto *db_item_ANNINDOFU_LIKE_A_LIGHTSABRE
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_FRIGHT_PRAWN), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_ANNINDOFU_LIKE_A_LIGHTSABRE
+		}
+	}
+	dbsum += 1000000 / (1000 + abs(objlv - 30) * 10) + 1
+	dblist(0, dbmax) = ITEM_ID_FRIGHT_PRAWN, dbsum
+	dbmax++
+*db_item_ANNINDOFU_LIKE_A_LIGHTSABRE
+	if ( 6 > objlv ) {
+		goto *db_item_KANI_KAMA
+	}
+	if ( fltselect != 2 ) {
+		goto *db_item_KANI_KAMA
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_WEAPON ) {
+			goto *db_item_KANI_KAMA
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_WEAPON_LONGSWORD ) {
+			goto *db_item_KANI_KAMA
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_ANNINDOFU_LIKE_A_LIGHTSABRE), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_KANI_KAMA
+		}
+	}
+	dbsum += 1000000 / (1000 + abs(objlv - 6) * 10) + 1
+	dblist(0, dbmax) = ITEM_ID_ANNINDOFU_LIKE_A_LIGHTSABRE, dbsum
+	dbmax++
+*db_item_KANI_KAMA
+	if ( 15 > objlv ) {
+		goto *db_item_GO_RENGE
+	}
+	if ( fltselect != 3 ) {
+		goto *db_item_GO_RENGE
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_WEAPON ) {
+			goto *db_item_GO_RENGE
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_WEAPON_SICKLE ) {
+			goto *db_item_GO_RENGE
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_KANI_KAMA), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_GO_RENGE
+		}
+	}
+	dbsum += 1000000 / (1000 + abs(objlv - 15) * 10) + 1
+	dblist(0, dbmax) = ITEM_ID_KANI_KAMA, dbsum
+	dbmax++
+*db_item_GO_RENGE
 	dbmax = 0
 	dbsum = 0
 	if ( 50 > objlv ) {
@@ -37440,6 +38915,3101 @@
 
 	/********** ANNA CUSTOM - ENDING **********/
 
+	if ( dbid == 1214 ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 10000
+			inv(INV_ITEM_WEIGHT, ci) = 10000
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_GOLDEN_DOLL
+			inv(INV_ITEM_PIC, ci) = xy2pic(18, 36)
+			reftype = FILTER_ORE
+			reftypeminor = FILTER_NOTHING
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_ORE
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 5 ) {
+				return 77000
+			}
+			if ( dbspec == 9 ) {
+				return 99999
+			}
+			if ( dbspec == 20 ) {
+				return 10000
+			}
+			if ( dbspec == 19 ) {
+				return
+			}
+			if ( dbspec == 18 ) {
+				return 0
+			}
+			if ( dbspec == 7 ) {
+				return 5
+			}
+			if ( dbspec == 8 ) {
+				return 800
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t金ぴかな像。大変リアルな造形であり、まるで本物がそのまま金に変えられたかのようだ。\n#〜ルミエスト美術目録〜\n"
+				description(1) = ""
+				description(2) = ""
+				description(3) = "\t\t高価だが重い像だ。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == 1213 ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 9000
+			inv(INV_ITEM_WEIGHT, ci) = 3000
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_FILTRATION_BOTTLE
+			inv(INV_ITEM_PIC, ci) = xy2pic(19, 36)
+			reftype = FILTER_ITEM_TOOL
+			reftypeminor = FILTER_NOTHING
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_EFFECT, ci) = EFFECT_FILTRATION_BOTTLE
+			inv(INV_ITEM_PARAM1, ci) = 0
+			inv(INV_ITEM_PARAM2, ci) = 5
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_ITEM_TOOL
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 5 ) {
+				return 59000
+			}
+			if ( dbspec == 9 ) {
+				return 99999
+			}
+			if ( dbspec == 20 ) {
+				return 9000
+			}
+			if ( dbspec == 19 ) {
+				return
+			}
+			if ( dbspec == 11 ) {
+				return 1
+			}
+			if ( dbspec == 18 ) {
+				return 0
+			}
+			if ( dbspec == 7 ) {
+				return 1
+			}
+			if ( dbspec == 8 ) {
+				return 300
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t生化学文明末期に製造された水筒。高度ろ過機構を搭載しており、汚染された水も量さえ用意できればどうにか飲めるようにできる。\n#〜別冊ヨウィン・未知の知識を追え！〜\n"
+				description(1) = ""
+				description(2) = ""
+				description(3) = "\t\t喉を潤せる水筒。水中で使えば補充も可能。何度でも使用することができる。\n#〜鑑定報告書：＜器具＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == 1212 ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 60000
+			inv(INV_ITEM_WEIGHT, ci) = 1000
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_CHAOS_FRAGMENT
+			inv(INV_ITEM_PIC, ci) = xy2pic(20, 36)
+			reftype = FILTER_ITEM_TOOL
+			reftypeminor = FILTER_NOTHING
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_EFFECT, ci) = EFFECT_CHAOS_FRAGMENT
+			ibitmod ITEM_BIT_PRECIOUS, ci, TRUE
+			ibitmod ITEM_BIT_PERIOD, ci, TRUE
+			inv(INV_ITEM_PARAM1, ci) = 0
+			inv(INV_ITEM_PARAM3, ci) = 480
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			fixlv = FIX_QUALITY_UNIQUE
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_ITEM_TOOL
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 5 ) {
+				return 59000
+			}
+			if ( dbspec == 9 ) {
+				return 99999
+			}
+			if ( dbspec == 20 ) {
+				return 60000
+			}
+			if ( dbspec == 19 ) {
+				return 480
+			}
+			if ( dbspec == 11 ) {
+				return 1
+			}
+			if ( dbspec == 18 ) {
+				return 0
+			}
+			if ( dbspec == 7 ) {
+				return 1
+			}
+			if ( dbspec == 8 ) {
+				return 1000
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\tテスカトリポカからこぼれ落ちた歪な結晶。通常のネフィア守護者が遺す欠片とは似て非なる物体。これ自体に魔力はないが、強力な触媒になる。\n#〜イルヴァ幻想辞典〜\n"
+				description(1) = ""
+				description(2) = ""
+				description(3) = "\t\t能力を一定値まで上昇させる結晶。何度でも使用することができる。\n#〜鑑定報告書：＜秘宝＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == 1211 ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 40000
+			inv(INV_ITEM_WEIGHT, ci) = 1000
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_REMIDO_FRAGMENT
+			inv(INV_ITEM_PIC, ci) = xy2pic(20, 36)
+			reftype = FILTER_ITEM_TOOL
+			reftypeminor = FILTER_NOTHING
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_EFFECT, ci) = EFFECT_REMIDO_FRAGMENT
+			ibitmod ITEM_BIT_PRECIOUS, ci, TRUE
+			ibitmod ITEM_BIT_PERIOD, ci, TRUE
+			inv(INV_ITEM_PARAM1, ci) = 0
+			inv(INV_ITEM_PARAM3, ci) = 360
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			fixlv = FIX_QUALITY_UNIQUE
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_ITEM_TOOL
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 5 ) {
+				return 59000
+			}
+			if ( dbspec == 9 ) {
+				return 99999
+			}
+			if ( dbspec == 20 ) {
+				return 40000
+			}
+			if ( dbspec == 19 ) {
+				return 360
+			}
+			if ( dbspec == 11 ) {
+				return 1
+			}
+			if ( dbspec == 18 ) {
+				return 0
+			}
+			if ( dbspec == 7 ) {
+				return 1
+			}
+			if ( dbspec == 8 ) {
+				return 1000
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t異形の天使の体内から見つかった歪な結晶。通常のネフィア守護者が遺す欠片とは似て非なる物体。これ自体に魔力はないが、強力な触媒になる。\n#〜イルヴァ幻想辞典〜\n"
+				description(1) = ""
+				description(2) = ""
+				description(3) = "\t\t能力を一定値まで上昇させる結晶。何度でも使用することができる。\n#〜鑑定報告書：＜秘宝＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == 1210 ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 20000
+			inv(INV_ITEM_WEIGHT, ci) = 1000
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_LESIMAS_FRAGMENT
+			inv(INV_ITEM_PIC, ci) = xy2pic(20, 36)
+			reftype = FILTER_ITEM_TOOL
+			reftypeminor = FILTER_NOTHING
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_EFFECT, ci) = EFFECT_LESIMAS_FRAGMENT
+			ibitmod ITEM_BIT_PRECIOUS, ci, TRUE
+			ibitmod ITEM_BIT_PERIOD, ci, TRUE
+			inv(INV_ITEM_PARAM1, ci) = 0
+			inv(INV_ITEM_PARAM3, ci) = 240
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			fixlv = FIX_QUALITY_UNIQUE
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_ITEM_TOOL
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 5 ) {
+				return 59000
+			}
+			if ( dbspec == 9 ) {
+				return 99999
+			}
+			if ( dbspec == 20 ) {
+				return 20000
+			}
+			if ( dbspec == 19 ) {
+				return 240
+			}
+			if ( dbspec == 11 ) {
+				return 1
+			}
+			if ( dbspec == 18 ) {
+				return 0
+			}
+			if ( dbspec == 7 ) {
+				return 1
+			}
+			if ( dbspec == 8 ) {
+				return 1000
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\tゼームが保管していた歪な結晶。通常のネフィア守護者が遺す欠片とは似て非なる物体。これ自体に魔力はないが、強力な触媒になる。\n#〜イルヴァ幻想辞典〜\n"
+				description(1) = ""
+				description(2) = ""
+				description(3) = "\t\t能力を一定値まで上昇させる結晶。何度でも使用することができる。\n#〜鑑定報告書：＜秘宝＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == 1209 ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 30000
+			inv(INV_ITEM_WEIGHT, ci) = 4000
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_G_FINGER
+			inv(INV_ITEM_PIC, ci) = xy2pic(21, 36)
+			reftype = FILTER_ITEM_TOOL
+			reftypeminor = FILTER_NOTHING
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_EFFECT, ci) = EFFECT_G_FINGER
+			ibitmod ITEM_BIT_PRECIOUS, ci, TRUE
+			ibitmod ITEM_BIT_PERIOD, ci, TRUE
+			inv(INV_ITEM_PARAM1, ci) = 0
+			inv(INV_ITEM_PARAM3, ci) = 1
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			fixlv = FIX_QUALITY_UNIQUE
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_ITEM_TOOL
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 5 ) {
+				return 59000
+			}
+			if ( dbspec == 9 ) {
+				return 99999
+			}
+			if ( dbspec == 20 ) {
+				return 30000
+			}
+			if ( dbspec == 19 ) {
+				return 1
+			}
+			if ( dbspec == 11 ) {
+				return 1
+			}
+			if ( dbspec == 18 ) {
+				return 0
+			}
+			if ( dbspec == 7 ) {
+				return 1
+			}
+			if ( dbspec == 8 ) {
+				return 1000
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t神の力を宿した手。かつて同じ力を手にしたロバ耳の黄金王が、愛の力で悲劇を打ち破った話はあまりにも有名。\n#〜イルヴァ幻想辞典〜\n"
+				description(1) = ""
+				description(2) = ""
+				description(3) = "\t\t瀕死の敵を金の塊に変える道具。何度でも使用することができる。\n#〜鑑定報告書：＜秘宝＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == 1208 ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 30000
+			inv(INV_ITEM_WEIGHT, ci) = 100
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_PHOTON_FAIRY
+			inv(INV_ITEM_PIC, ci) = xy2pic(21, 36)
+			reftype = FILTER_ITEM_TOOL
+			reftypeminor = FILTER_NOTHING
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_EFFECT, ci) = EFFECT_PHOTON_FAIRY
+			ibitmod ITEM_BIT_PRECIOUS, ci, TRUE
+			ibitmod ITEM_BIT_PERIOD, ci, TRUE
+			inv(INV_ITEM_PARAM1, ci) = 0
+			inv(INV_ITEM_PARAM3, ci) = 24
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			fixlv = FIX_QUALITY_UNIQUE
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_ITEM_TOOL
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 5 ) {
+				return 59000
+			}
+			if ( dbspec == 9 ) {
+				return 99999
+			}
+			if ( dbspec == 20 ) {
+				return 30000
+			}
+			if ( dbspec == 19 ) {
+				return 24
+			}
+			if ( dbspec == 11 ) {
+				return 1
+			}
+			if ( dbspec == 18 ) {
+				return 0
+			}
+			if ( dbspec == 7 ) {
+				return 1
+			}
+			if ( dbspec == 8 ) {
+				return 1000
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t光子で構成された巡回プログラム。光速で飛び回って情報を収集したり逆に情報を広めたりする。\n#〜イルヴァ幻想辞典〜\n"
+				description(1) = ""
+				description(2) = ""
+				description(3) = "\t\t名声か発言力を獲得する道具。何度でも使用することができる。\n#〜鑑定報告書：＜秘宝＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == 1207 ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 30000
+			inv(INV_ITEM_WEIGHT, ci) = 300
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_CONTRADCTION
+			inv(INV_ITEM_PIC, ci) = xy2pic(21, 36)
+			reftype = FILTER_ITEM_TOOL
+			reftypeminor = FILTER_NOTHING
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_EFFECT, ci) = EFFECT_CONTRADICTION
+			ibitmod ITEM_BIT_PRECIOUS, ci, TRUE
+			ibitmod ITEM_BIT_PERIOD, ci, TRUE
+			inv(INV_ITEM_PARAM1, ci) = 0
+			inv(INV_ITEM_PARAM3, ci) = 2
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			fixlv = FIX_QUALITY_UNIQUE
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_ITEM_TOOL
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 5 ) {
+				return 59000
+			}
+			if ( dbspec == 9 ) {
+				return 99999
+			}
+			if ( dbspec == 20 ) {
+				return 30000
+			}
+			if ( dbspec == 19 ) {
+				return 2
+			}
+			if ( dbspec == 11 ) {
+				return 1
+			}
+			if ( dbspec == 18 ) {
+				return 0
+			}
+			if ( dbspec == 7 ) {
+				return 1
+			}
+			if ( dbspec == 8 ) {
+				return 1000
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t神々しい勲章。自分を貫き通す強さと、自分さえ捨ててまで守るべきものを守り通す強さを象徴する。強い力を秘めているが、よく考えて使わないと何も守れず何も貫けずに死ぬことになる。\n#〜イルヴァ幻想辞典〜\n"
+				description(1) = ""
+				description(2) = ""
+				description(3) = "\t\t２つの技能を発動する道具。何度でも使用することができる。\n#〜鑑定報告書：＜秘宝＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == 1206 ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 30000
+			inv(INV_ITEM_WEIGHT, ci) = 500
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_BIGAMY_PERMIT
+			inv(INV_ITEM_PIC, ci) = xy2pic(21, 36)
+			reftype = FILTER_ITEM_TOOL
+			reftypeminor = FILTER_NOTHING
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_EFFECT, ci) = EFFECT_BIGAMY_PERMIT
+			ibitmod ITEM_BIT_PRECIOUS, ci, TRUE
+			inv(INV_ITEM_PARAM1, ci) = 0
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			fixlv = FIX_QUALITY_UNIQUE
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_ITEM_TOOL
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 5 ) {
+				return 59000
+			}
+			if ( dbspec == 9 ) {
+				return 99999
+			}
+			if ( dbspec == 20 ) {
+				return 30000
+			}
+			if ( dbspec == 19 ) {
+				return
+			}
+			if ( dbspec == 11 ) {
+				return 1
+			}
+			if ( dbspec == 18 ) {
+				return 0
+			}
+			if ( dbspec == 7 ) {
+				return 1
+			}
+			if ( dbspec == 8 ) {
+				return 1000
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t神が用意した許可証。現代イルヴァにおいては、まず仲間関係にならなければ結婚は許可されない。しかしこれを突きつければ、結婚が可能になるのだ。もちろん相手には断る権利があるのだが。\n#〜イルヴァ幻想辞典〜\n"
+				description(1) = ""
+				description(2) = ""
+				description(3) = "\t\t仲間以外とも結婚できる道具。何度でも使用することができる。\n#〜鑑定報告書：＜秘宝＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == 1205 ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 50000
+			inv(INV_ITEM_WEIGHT, ci) = 2300
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_FLOATING_FORTRESS_KEY
+			inv(INV_ITEM_PIC, ci) = xy2pic(24, 36)
+			reftype = FILTER_ITEM_TOOL
+			reftypeminor = FILTER_NOTHING
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_EFFECT, ci) = efffort
+			ibitmod ITEM_BIT_PRECIOUS, ci, TRUE
+			ibitmod ITEM_BIT_PERIOD, ci, TRUE
+			inv(INV_ITEM_PARAM3, ci) = 480
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			fixlv = FIX_QUALITY_UNIQUE
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_ITEM_TOOL
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 5 ) {
+				return 59000
+			}
+			if ( dbspec == 9 ) {
+				return 99999
+			}
+			if ( dbspec == 20 ) {
+				return 50000
+			}
+			if ( dbspec == 19 ) {
+				return 480
+			}
+			if ( dbspec == 11 ) {
+				return 1
+			}
+			if ( dbspec == 18 ) {
+				return 0
+			}
+			if ( dbspec == 7 ) {
+				return 1
+			}
+			if ( dbspec == 8 ) {
+				return 800
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t空間潜航している浮遊要塞を呼び寄せるアクセスキー。ただし何らかの改造を施されており、明らかに規格外の電子部品が外付けされている。\n#〜イルヴァ幻想辞典〜\n"
+				description(1) = ""
+				description(2) = ""
+				description(3) = "\t\tワールドマップで使用することができる。定期的に使用することができる。\n#〜鑑定報告書：＜秘宝＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == 1204 ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 12000
+			inv(INV_ITEM_WEIGHT, ci) = 300
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_MEMORY_CONVERTER
+			inv(INV_ITEM_PIC, ci) = xy2pic(6, 30)
+			reftype = FILTER_ITEM_TOOL
+			reftypeminor = FILTER_NOTHING
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_EFFECT, ci) = effmemory2
+			inv(INV_ITEM_PARAM1, ci) = 0
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_ITEM_TOOL
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 5 ) {
+				return 59000
+			}
+			if ( dbspec == 9 ) {
+				return 99999
+			}
+			if ( dbspec == 20 ) {
+				return 12000
+			}
+			if ( dbspec == 19 ) {
+				return
+			}
+			if ( dbspec == 11 ) {
+				return 1
+			}
+			if ( dbspec == 18 ) {
+				return 0
+			}
+			if ( dbspec == 7 ) {
+				return 1
+			}
+			if ( dbspec == 8 ) {
+				return 50
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t守護者の体内から見つかる謎の結晶。記憶と化合することで力を生み出すという。ネフィア症候群の末期患者を解剖したところ、体内に同様の結晶が形成されつつあったという記録もある。\n#〜イルヴァ幻想辞典〜\n"
+				description(1) = ""
+				description(2) = ""
+				description(3) = "\t\tスキルをボーナスに変換する結晶。使用することができる（使い捨て）。\n#〜鑑定報告書：＜遺物＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == 1203 ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 2400
+			inv(INV_ITEM_WEIGHT, ci) = 600
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_CF_POTIOMAN
+			inv(INV_ITEM_PIC, ci) = xy2pic(28, 36)
+			reftype = FILTER_ITEM_TOOL
+			reftypeminor = FILTER_NOTHING
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_EFFECT, ci) = EFFECT_CF_POTIOMAN
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_ITEM_TOOL
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 5 ) {
+				return 59000
+			}
+			if ( dbspec == 9 ) {
+				return 99999
+			}
+			if ( dbspec == 20 ) {
+				return 2400
+			}
+			if ( dbspec == 19 ) {
+				return
+			}
+			if ( dbspec == 11 ) {
+				return 1
+			}
+			if ( dbspec == 18 ) {
+				return 0
+			}
+			if ( dbspec == 7 ) {
+				return 1
+			}
+			if ( dbspec == 8 ) {
+				return 500
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t伝統工芸品の一種。これの使い手はポーショナーと呼ばれる。ポーションを混ぜると、魔力を吸収して一時的にパワーアップする。基本威力は単純な握力と射撃の腕前に左右され、その魔力を帯びた衝撃はどんな鎧でも防げず、ＭＰにまでダメージを与える。これは自我が宿っているタイプであり、吸収した魔力を効率的に使ってくれる。\n#〜バトルホビー列伝〜\n"
+				description(1) = ""
+				description(2) = ""
+				description(3) = "\t\tポーションの栓を高速射出する道具。何度でも使用することができる。\n#〜鑑定報告書：＜器具＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == 1202 ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 2400
+			inv(INV_ITEM_WEIGHT, ci) = 600
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_CRUSH_POTIOMAN
+			inv(INV_ITEM_PIC, ci) = xy2pic(28, 36)
+			reftype = FILTER_ITEM_TOOL
+			reftypeminor = FILTER_NOTHING
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_EFFECT, ci) = EFFECT_CF_POTIOMAN
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_ITEM_TOOL
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 5 ) {
+				return 59000
+			}
+			if ( dbspec == 9 ) {
+				return 99999
+			}
+			if ( dbspec == 20 ) {
+				return 2400
+			}
+			if ( dbspec == 19 ) {
+				return
+			}
+			if ( dbspec == 11 ) {
+				return 1
+			}
+			if ( dbspec == 18 ) {
+				return 0
+			}
+			if ( dbspec == 7 ) {
+				return 1
+			}
+			if ( dbspec == 8 ) {
+				return 500
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t伝統工芸品の一種。時代に合わせて色々な飲み物の栓が弾に用いられてきたという。ポーションを混ぜると、魔力を吸収して一時的にパワーアップする。基本威力は単純な握力と射撃の腕前に左右され、その魔力を帯びた衝撃はどんな鎧でも防げず、ＭＰにまでダメージを与える。これはシンクロさせることで外付けのグレネードを発射可能なタイプ。\n#〜バトルホビー列伝〜\n"
+				description(1) = ""
+				description(2) = ""
+				description(3) = "\t\tポーションの栓を高速射出する道具。何度でも使用することができる。\n#〜鑑定報告書：＜器具＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == 1201 ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 2400
+			inv(INV_ITEM_WEIGHT, ci) = 600
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_BATTLE_POTIOMAN
+			inv(INV_ITEM_PIC, ci) = xy2pic(28, 36)
+			reftype = FILTER_ITEM_TOOL
+			reftypeminor = FILTER_NOTHING
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_EFFECT, ci) = EFFECT_CF_POTIOMAN
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_ITEM_TOOL
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 5 ) {
+				return 59000
+			}
+			if ( dbspec == 9 ) {
+				return 99999
+			}
+			if ( dbspec == 20 ) {
+				return 2400
+			}
+			if ( dbspec == 19 ) {
+				return
+			}
+			if ( dbspec == 11 ) {
+				return 1
+			}
+			if ( dbspec == 18 ) {
+				return 0
+			}
+			if ( dbspec == 7 ) {
+				return 1
+			}
+			if ( dbspec == 8 ) {
+				return 500
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t伝統工芸品の一種。地域によってはコルクマンと呼ぶところもある。ポーションを混ぜると、魔力を吸収して一時的にパワーアップする。基本威力は単純な握力と射撃の腕前に左右され、その魔力を帯びた衝撃はどんな鎧でも防げず、ＭＰにまでダメージを与える。撃ち合いを想定して半透明のシールドを備えたタイプであり、発射後しばらく防御力が上がる。\n#〜バトルホビー列伝〜\n"
+				description(1) = ""
+				description(2) = ""
+				description(3) = "\t\tポーションの栓を高速射出する道具。何度でも使用することができる。\n#〜鑑定報告書：＜器具＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == 1200 ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 2400
+			inv(INV_ITEM_WEIGHT, ci) = 600
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_SUPER_POTIOMAN
+			inv(INV_ITEM_PIC, ci) = xy2pic(28, 36)
+			reftype = FILTER_ITEM_TOOL
+			reftypeminor = FILTER_NOTHING
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_EFFECT, ci) = EFFECT_CF_POTIOMAN
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_ITEM_TOOL
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 5 ) {
+				return 59000
+			}
+			if ( dbspec == 9 ) {
+				return 99999
+			}
+			if ( dbspec == 20 ) {
+				return 2400
+			}
+			if ( dbspec == 19 ) {
+				return
+			}
+			if ( dbspec == 11 ) {
+				return 1
+			}
+			if ( dbspec == 18 ) {
+				return 0
+			}
+			if ( dbspec == 7 ) {
+				return 1
+			}
+			if ( dbspec == 8 ) {
+				return 500
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t伝統工芸品の一種。使ったポーションの数だけ弾数が増えるのだが、一般的でない容器の栓は直径が違うので使用できない。ポーションを混ぜると、魔力を吸収して一時的にパワーアップする。基本威力は単純な握力と射撃の腕前に左右され、その魔力を帯びた衝撃はどんな鎧でも防げず、ＭＰにまでダメージを与える。力加減を考えていない初期タイプであり、握力で威力が上がりやすい。\n#〜バトルホビー列伝〜\n"
+				description(1) = ""
+				description(2) = ""
+				description(3) = "\t\tポーションの栓を高速射出する道具。何度でも使用することができる。\n#〜鑑定報告書：＜器具＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == 1199 ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 4500
+			inv(INV_ITEM_WEIGHT, ci) = 40000
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_OPERATING_BOARD
+			inv(INV_ITEM_PIC, ci) = xy2pic(8, 35)
+			reftype = FILTER_ITEM_TOOL
+			reftypeminor = FILTER_NOTHING
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_EFFECT, ci) = EFFECT_HOUSE_BOARD
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_ITEM_TOOL
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 5 ) {
+				return 59000
+			}
+			if ( dbspec == 9 ) {
+				return 99999
+			}
+			if ( dbspec == 20 ) {
+				return 4500
+			}
+			if ( dbspec == 19 ) {
+				return
+			}
+			if ( dbspec == 11 ) {
+				return 1
+			}
+			if ( dbspec == 18 ) {
+				return 0
+			}
+			if ( dbspec == 7 ) {
+				return 1
+			}
+			if ( dbspec == 8 ) {
+				return 1000
+			}
+			if ( dbspec == 12 ) {
+				if ( cdata(CDATA_GOD, CHARA_PLAYER) == GOD_MANI ) {
+					return 1
+				}
+				else {
+					return 0
+				}
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t様々な計器やパネル、液晶がついたボード。全ての機能を扱いこなすには、高い情報処理能力が求められる。\n#〜別冊ヨウィン・未知の知識を追え！〜\n"
+				description(1) = ""
+				description(2) = ""
+				description(3) = "\t\t膨大な情報を処理する為の道具。何度でも使用することができる。\n#〜鑑定報告書：＜器具＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == 1198 ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 500
+			inv(INV_ITEM_WEIGHT, ci) = 100
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_PRODUCED_BOOK
+			inv(INV_ITEM_PIC, ci) = xy2pic(3, 10)
+			reftype = FILTER_ITEM_BOOK
+			reftypeminor = FILTER_NOTHING
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_PARAM1, ci) = 0
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_ITEM_BOOK
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 5 ) {
+				return 55000
+			}
+			if ( dbspec == 9 ) {
+				return 99999
+			}
+			if ( dbspec == 20 ) {
+				return 500
+			}
+			if ( dbspec == 19 ) {
+				return
+			}
+			if ( dbspec == 2 ) {
+				return 1
+			}
+			if ( dbspec == 18 ) {
+				return 0
+			}
+			if ( dbspec == 7 ) {
+				return 1
+			}
+			if ( dbspec == 8 ) {
+				return 2000
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_ON_READ ) {
+			gosub *read
+			return -1
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\tノースティリスで広く流通している記録媒体。どちらかというと内容よりボリュームが重視されがち。店に卸せば著者の知名度が上がるだろう。\n#〜本の為の本〜\n"
+				description(1) = ""
+				description(2) = ""
+				description(3) = "\t\t雑多な情報が書かれた本。何度でも読むことができる。\n#〜鑑定報告書：＜書類＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == 1197 ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 10
+			inv(INV_ITEM_WEIGHT, ci) = 20
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_MANUSCRIPT
+			inv(INV_ITEM_PIC, ci) = xy2pic(21, 29)
+			reftype = FILTER_JUNK
+			reftypeminor = FILTER_NOTHING
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_JUNK
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 5 ) {
+				return 64000
+			}
+			if ( dbspec == 9 ) {
+				return 99999
+			}
+			if ( dbspec == 20 ) {
+				return 10
+			}
+			if ( dbspec == 19 ) {
+				return
+			}
+			if ( dbspec == 18 ) {
+				return 0
+			}
+			if ( dbspec == 7 ) {
+				return 1
+			}
+			if ( dbspec == 8 ) {
+				return 500
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t様々な文章や絵が書かれている紙。大事に封筒に入れられているが、このままだと一般的に価値はない。\n#〜本の為の本〜\n"
+				description(1) = ""
+				description(2) = ""
+				description(3) = "\t\t本を作るための素材だ。\n#〜鑑定報告書：＜紙片＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == 1196 ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 9000
+			inv(INV_ITEM_WEIGHT, ci) = 200
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_JADE_DARK_ORB
+			inv(INV_ITEM_PIC, ci) = xy2pic(9, 35)
+			reftype = FILTER_ITEM_TOOL
+			reftypeminor = FILTER_NOTHING
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_EFFECT, ci) = EFFECT_JADE_DARK_ORB
+			inv(INV_ITEM_PARAM1, ci) = 0
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_ITEM_TOOL
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 5 ) {
+				return 59000
+			}
+			if ( dbspec == 9 ) {
+				return 99999
+			}
+			if ( dbspec == 20 ) {
+				return 9000
+			}
+			if ( dbspec == 19 ) {
+				return
+			}
+			if ( dbspec == 11 ) {
+				return 1
+			}
+			if ( dbspec == 18 ) {
+				return 0
+			}
+			if ( dbspec == 7 ) {
+				return 1
+			}
+			if ( dbspec == 8 ) {
+				return 100
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t魔神の力を秘めているという翠の石。分類上は魔石の一種だが、製法は大きく異なる。魔法の罠を使用者の現在地に仕掛け、石を再使用することで罠が起動する。罠の起動は一瞬でありターンが経過しないが、ＳＰを少し消費する。（未実装）\n#〜イルヴァ幻想辞典〜\n"
+				description(1) = ""
+				description(2) = ""
+				description(3) = "\t\t罠を設置・起動する石だ。何度でも使用することができる。\n#〜鑑定報告書：＜魔道具＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == 1195 ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 9000
+			inv(INV_ITEM_WEIGHT, ci) = 200
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_AZURE_DARK_ORB
+			inv(INV_ITEM_PIC, ci) = xy2pic(10, 35)
+			reftype = FILTER_ITEM_TOOL
+			reftypeminor = FILTER_NOTHING
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_EFFECT, ci) = EFFECT_AZURE_DARK_ORB
+			inv(INV_ITEM_PARAM1, ci) = 0
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_ITEM_TOOL
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 5 ) {
+				return 59000
+			}
+			if ( dbspec == 9 ) {
+				return 99999
+			}
+			if ( dbspec == 20 ) {
+				return 9000
+			}
+			if ( dbspec == 19 ) {
+				return
+			}
+			if ( dbspec == 11 ) {
+				return 1
+			}
+			if ( dbspec == 18 ) {
+				return 0
+			}
+			if ( dbspec == 7 ) {
+				return 1
+			}
+			if ( dbspec == 8 ) {
+				return 100
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t魔神の力を秘めているという蒼の石。分類上は魔石の一種だが、製法は大きく異なる。魔法の罠を使用者の現在地に仕掛け、石を再使用することで罠が起動する。罠の起動は一瞬でありターンが経過しないが、ＭＰを少し消費する。（未実装）\n#〜イルヴァ幻想辞典〜\n"
+				description(1) = ""
+				description(2) = ""
+				description(3) = "\t\t罠を設置・起動する石だ。何度でも使用することができる。\n#〜鑑定報告書：＜魔道具＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == 1194 ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 9000
+			inv(INV_ITEM_WEIGHT, ci) = 200
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_CRIMSON_DARK_ORB
+			inv(INV_ITEM_PIC, ci) = xy2pic(11, 35)
+			reftype = FILTER_ITEM_TOOL
+			reftypeminor = FILTER_NOTHING
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_EFFECT, ci) = EFFECT_CRIMSON_DARK_ORB
+			inv(INV_ITEM_PARAM1, ci) = 0
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_ITEM_TOOL
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 5 ) {
+				return 59000
+			}
+			if ( dbspec == 9 ) {
+				return 99999
+			}
+			if ( dbspec == 20 ) {
+				return 9000
+			}
+			if ( dbspec == 19 ) {
+				return
+			}
+			if ( dbspec == 11 ) {
+				return 1
+			}
+			if ( dbspec == 18 ) {
+				return 0
+			}
+			if ( dbspec == 7 ) {
+				return 1
+			}
+			if ( dbspec == 8 ) {
+				return 100
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t魔神の力を秘めているという紅の石。分類上は魔石の一種だが、製法は大きく異なる。魔法の罠を使用者の現在地に仕掛け、石を再使用することで罠が起動する。罠の起動は一瞬でありターンが経過しないが、ＨＰを少し消費する。（未実装）\n#〜イルヴァ幻想辞典〜\n"
+				description(1) = ""
+				description(2) = ""
+				description(3) = "\t\t罠を設置・起動する石だ。何度でも使用することができる。\n#〜鑑定報告書：＜魔道具＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == 1193 ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 900
+			inv(INV_ITEM_WEIGHT, ci) = 80
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_FISHING_INTRODUCTION
+			inv(INV_ITEM_PIC, ci) = xy2pic(3, 10)
+			reftype = FILTER_ITEM_BOOK
+			reftypeminor = FILTER_NOTHING
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_PARAM1, ci) = 31
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_ITEM_BOOK
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 5 ) {
+				return 55000
+			}
+			if ( dbspec == 9 ) {
+				return 99999
+			}
+			if ( dbspec == 20 ) {
+				return 900
+			}
+			if ( dbspec == 19 ) {
+				return
+			}
+			if ( dbspec == 2 ) {
+				return 1
+			}
+			if ( dbspec == 18 ) {
+				return 0
+			}
+			if ( dbspec == 7 ) {
+				return 1
+			}
+			if ( dbspec == 8 ) {
+				return 1000
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_ON_READ ) {
+			inv(INV_ITEM_PARAM1, ci) = 31
+			gosub *read
+			return -1
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\tある釣り人が釣り仲間を増やすために書いた本。執筆には釣りの待ち時間を有効活用したのだとか。\n#〜本の為の本〜\n"
+				description(1) = ""
+				description(2) = ""
+				description(3) = "\t\t雑多な情報が書かれた本。何度でも読むことができる。\n#〜鑑定報告書：＜書類＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == 1192 ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 100
+			inv(INV_ITEM_WEIGHT, ci) = 80
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_QUEST_ADVICE
+			inv(INV_ITEM_PIC, ci) = xy2pic(3, 10)
+			reftype = FILTER_ITEM_BOOK
+			reftypeminor = FILTER_NOTHING
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_PARAM1, ci) = 30
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_ITEM_BOOK
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 5 ) {
+				return 55000
+			}
+			if ( dbspec == 9 ) {
+				return 99999
+			}
+			if ( dbspec == 20 ) {
+				return 100
+			}
+			if ( dbspec == 19 ) {
+				return
+			}
+			if ( dbspec == 2 ) {
+				return 1
+			}
+			if ( dbspec == 18 ) {
+				return 0
+			}
+			if ( dbspec == 7 ) {
+				return 1
+			}
+			if ( dbspec == 8 ) {
+				return 1000
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_ON_READ ) {
+			inv(INV_ITEM_PARAM1, ci) = 30
+			gosub *read
+			return -1
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\tとある父親が用意した手帳。子供を心配して荷物に忍ばせていたようだ。落としたのか捨てたのか忘れたのかは不明だが掲示板の傍らにあった。\n#〜本の為の本〜\n"
+				description(1) = ""
+				description(2) = ""
+				description(3) = "\t\t雑多な情報が書かれた手帳。何度でも読むことができる。\n#〜鑑定報告書：＜書類＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == 1191 ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 10000
+			inv(INV_ITEM_WEIGHT, ci) = 100
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_MEMORY_FRAGMENT
+			inv(INV_ITEM_PIC, ci) = xy2pic(19, 6)
+			reftype = FILTER_ITEM_TOOL
+			reftypeminor = FILTER_NOTHING
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_EFFECT, ci) = EFFECT_MEMORY_FRAGMENT
+			inv(INV_ITEM_PARAM1, ci) = 0
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_ITEM_TOOL
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 5 ) {
+				return 59000
+			}
+			if ( dbspec == 9 ) {
+				return 99999
+			}
+			if ( dbspec == 20 ) {
+				return 10000
+			}
+			if ( dbspec == 19 ) {
+				return
+			}
+			if ( dbspec == 11 ) {
+				return 1
+			}
+			if ( dbspec == 18 ) {
+				return 0
+			}
+			if ( dbspec == 7 ) {
+				return 1
+			}
+			if ( dbspec == 8 ) {
+				return 50
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t守護者となってしまった者が遺す破片。ネフィアから与えられた知識や過去の技術、守護者自身の記憶などがかすかに宿っている。技術や知識を吸収することができるが、他人の記憶が流れ込んでくるので気が狂いそうになる。もしもネフィア症候群の末期患者が使った場合、意識を失い、新たなネフィアの守護者となってしまうだろう。\n#〜イルヴァ幻想辞典〜\n"
+				description(1) = ""
+				description(2) = "\t\t「抵抗力のある者であればネフィアに取り込まれず、記憶片を集めて強くなれる。何事にも穴はあるものだ。…いや待てよ。抵抗力のある者に力を集中させることが本来の目的だとしたら…？」\n#〜遺跡研究者『メローキア』の言葉〜\n"
+				description(3) = "\t\tスキル経験を得られる欠片。使用することができる（使い捨て）。\n#〜鑑定報告書：＜遺物＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == 1190 ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 1800000
+			inv(INV_ITEM_WEIGHT, ci) = 500
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_DEED_OF_LAND_BATTLESHIP
+			inv(INV_ITEM_PIC, ci) = xy2pic(11, 9)
+			reftype = FILTER_ITEM_SCROLL
+			reftypeminor = FILTER_ITEM_DEED
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_PARAM1, ci) = 4
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_ITEM_SCROLL
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 5 ) {
+				return 53000
+			}
+			if ( dbspec == 9 ) {
+				return 53100
+			}
+			if ( dbspec == 20 ) {
+				return 1800000
+			}
+			if ( dbspec == 19 ) {
+				return
+			}
+			if ( dbspec == 2 ) {
+				return 1
+			}
+			if ( dbspec == 18 ) {
+				return 0
+			}
+			if ( dbspec == 7 ) {
+				return 1
+			}
+			if ( dbspec == 8 ) {
+				return 1
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_ON_READ ) {
+			efid = SKILL_EFFECT_DEED_SUMMON_VEHICLE
+			gosub *readScroll
+			return -1
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t陸上戦艦の所有権を得られる証書。機械文明時代の遺跡から発掘されたものを、ジャンク屋が独自修復したらしい。ちょっとした金持ち程度では維持費を工面できない、ロマンの塊。全盛期の性能こそ発揮できないがそこは腐っても戦艦。野良モンスター程度なら先制攻撃で蹴散らせる。かなり重い荷物を運べるし、重すぎても速度が落ちにくい。空調設備もあるので砂漠でも快適だ。\n#〜今日から君も冒険者・旅用マニュアル〜\n"
+				description(1) = ""
+				description(2) = "\t\t「よりにもよってコイツばかり発掘されるとはな。…まぁ現代では問題にならないだろう」\n#〜現場を見た専門家の言葉〜\n"
+				description(3) = "\t\t読むことでワールドマップでの乗り物を変える権利書だ。染めれば色も指定可能。\n#〜鑑定報告書：＜証書＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = "A deed for a land battleship."
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == 1189 ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 600000
+			inv(INV_ITEM_WEIGHT, ci) = 500
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_DEED_OF_MAGIC_LOCOMOTIVE
+			inv(INV_ITEM_PIC, ci) = xy2pic(11, 9)
+			reftype = FILTER_ITEM_SCROLL
+			reftypeminor = FILTER_ITEM_DEED
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_PARAM1, ci) = 3
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_ITEM_SCROLL
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 5 ) {
+				return 53000
+			}
+			if ( dbspec == 9 ) {
+				return 53100
+			}
+			if ( dbspec == 20 ) {
+				return 600000
+			}
+			if ( dbspec == 19 ) {
+				return
+			}
+			if ( dbspec == 2 ) {
+				return 1
+			}
+			if ( dbspec == 18 ) {
+				return 0
+			}
+			if ( dbspec == 7 ) {
+				return 1
+			}
+			if ( dbspec == 8 ) {
+				return 1
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_ON_READ ) {
+			efid = SKILL_EFFECT_DEED_SUMMON_VEHICLE
+			gosub *readScroll
+			return -1
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t魔法で動く機関車の所有権が得られる証書。魔法のレールを展開して走るため、雪原地帯でも移動に影響を受けない。また、やや重い荷物も牽引でき、重すぎても速度が落ちにくい。ただし魔力炉を活性化させていないと走行に支障が出る弱点があり、少量でもＭＰを投入し続ける必要がある。出力の調整や整備がなかなか面倒な点もあり、エウダーナ国内でも珍品扱いである。\n#〜今日から君も冒険者・旅用マニュアル〜\n"
+				description(1) = ""
+				description(2) = "\t\t「俺は天才だ！俺の魔導機関が評価されないのはベルム家の陰謀だ！」\n#〜自称天才魔道具技師の言葉〜\n"
+				description(3) = "\t\t読むことでワールドマップでの乗り物を変える権利書だ。染めれば色も指定可能。\n#〜鑑定報告書：＜証書＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = "A deed for a magic locomotive."
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == 1188 ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 120000
+			inv(INV_ITEM_WEIGHT, ci) = 500
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_DEED_OF_TRUCK
+			inv(INV_ITEM_PIC, ci) = xy2pic(11, 9)
+			reftype = FILTER_ITEM_SCROLL
+			reftypeminor = FILTER_ITEM_DEED
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_PARAM1, ci) = 2
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_ITEM_SCROLL
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 5 ) {
+				return 53000
+			}
+			if ( dbspec == 9 ) {
+				return 53100
+			}
+			if ( dbspec == 20 ) {
+				return 120000
+			}
+			if ( dbspec == 19 ) {
+				return
+			}
+			if ( dbspec == 2 ) {
+				return 1
+			}
+			if ( dbspec == 18 ) {
+				return 0
+			}
+			if ( dbspec == 7 ) {
+				return 1
+			}
+			if ( dbspec == 8 ) {
+				return 1
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_ON_READ ) {
+			efid = SKILL_EFFECT_DEED_SUMMON_VEHICLE
+			gosub *readScroll
+			return -1
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t輸送車の所有権が得られる証書。悪路でもそれなりに速く走れるよう設計されているが、整備された道ならより速く進むことができる。\n#〜今日から君も冒険者・旅用マニュアル〜\n"
+				description(1) = ""
+				description(2) = ""
+				description(3) = "\t\t読むことでワールドマップでの乗り物を変える権利書だ。染めれば色も指定可能。\n#〜鑑定報告書：＜証書＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = "A deed for a truck."
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == 1187 ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 30000
+			inv(INV_ITEM_WEIGHT, ci) = 500
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_DEED_OF_CARRIAGE
+			inv(INV_ITEM_PIC, ci) = xy2pic(11, 9)
+			reftype = FILTER_ITEM_SCROLL
+			reftypeminor = FILTER_ITEM_DEED
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_PARAM1, ci) = 1
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_ITEM_SCROLL
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 5 ) {
+				return 53000
+			}
+			if ( dbspec == 9 ) {
+				return 53100
+			}
+			if ( dbspec == 20 ) {
+				return 30000
+			}
+			if ( dbspec == 19 ) {
+				return
+			}
+			if ( dbspec == 2 ) {
+				return 1
+			}
+			if ( dbspec == 18 ) {
+				return 0
+			}
+			if ( dbspec == 7 ) {
+				return 1
+			}
+			if ( dbspec == 8 ) {
+				return 1
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_ON_READ ) {
+			efid = SKILL_EFFECT_DEED_SUMMON_VEHICLE
+			gosub *readScroll
+			return -1
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t大型馬車の所有権が得られる証書。専用の訓練を受けた馬もセット。徒歩よりは旅がはかどるだろう。\n#〜今日から君も冒険者・旅用マニュアル〜\n"
+				description(1) = ""
+				description(2) = ""
+				description(3) = "\t\t読むことでワールドマップでの乗り物を変える権利書だ。染めれば色も指定可能。\n#〜鑑定報告書：＜証書＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = "A deed for a carriage."
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == 1186 ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_DV, ci) = 76
+			inv(INV_ITEM_PV, ci) = 32
+			inv(INV_ITEM_MATERIAL, ci) = ITEM_MATERIAL_NANOMACHINE
+			inv(INV_ITEM_VALUE, ci) = 32000
+			inv(INV_ITEM_WEIGHT, ci) = 900
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_CLOTHWORLD
+			inv(INV_ITEM_PIC, ci) = xy2pic(12, 34)
+			reftype = FILTER_ARMOR
+			reftypeminor = FILTER_ARMOR_LIGHT
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = ENCHANT_RESISTANCE * EXT_ENCHANTMENT + SKILL_RES_LIGHTNING, 300, ENCHANT_RESISTANCE * EXT_ENCHANTMENT + SKILL_RES_NERVE, 300, ENCHANT_SKILL * EXT_ENCHANTMENT + SKILL_NORMAL_STEALTH, 300, 55, 100, 0
+			inv(INV_ITEM_EFFECT, ci) = EFFECT_CLOTHWORLD
+			ibitmod ITEM_BIT_PRECIOUS, ci, TRUE
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 500
+			fixlv = FIX_QUALITY_UNIQUE
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_ARMOR
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 5 ) {
+				return 16000
+			}
+			if ( dbspec == 9 ) {
+				return 16003
+			}
+			if ( dbspec == 20 ) {
+				return 32000
+			}
+			if ( dbspec == 19 ) {
+				return
+			}
+			if ( dbspec == 18 ) {
+				return 3
+			}
+			if ( dbspec == 7 ) {
+				return 20
+			}
+			if ( dbspec == 8 ) {
+				return 1000
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\tかつて世界征服を目論んだ秘密組織によって開発された。高性能な潜入用アイテムであり、当時の世界中のあらゆる組織の制服に自在に変化する。現在はわずかに発掘されたものが職人の手で修復されて残っている程度。ナノマシン制御装置の劣化などにより、変化できる形態がとても少なくなっている。\n#〜イルヴァ幻想辞典〜\n"
+				description(1) = ""
+				description(2) = ""
+				description(3) = "\t\t使うと見た目が変わる服だ。何度でも使用することができる。\n#〜鑑定報告書：＜秘宝＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == 1185 ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_DV, ci) = 43
+			inv(INV_ITEM_PV, ci) = 84
+			inv(INV_ITEM_MATERIAL, ci) = ITEM_MATERIAL_BAMBOO
+			inv(INV_ITEM_VALUE, ci) = 35000
+			inv(INV_ITEM_WEIGHT, ci) = 3000
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_BAMAGICAR
+			inv(INV_ITEM_PIC, ci) = xy2pic(13, 13)
+			reftype = FILTER_ARMOR
+			reftypeminor = FILTER_ARMOR_HEAVY
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = ENCHANT_RESISTANCE * EXT_ENCHANTMENT + SKILL_RES_MAGIC, 500, ENCHANT_RESISTANCE * EXT_ENCHANTMENT + SKILL_RES_SOUND, 250, ENCHANT_SKILL * EXT_ENCHANTMENT + SKILL_NORMAL_MEDITATION, 350, ENCHANT_SKILL * EXT_ENCHANTMENT + SKILL_NORMAL_STEALTH, -250, ENCHANT_ATTRIBUTE * EXT_ENCHANTMENT + SKILL_ATTR_LUC, 750, 24, 100, 0
+			ibitmod ITEM_BIT_PRECIOUS, ci, TRUE
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 500
+			fixlv = FIX_QUALITY_UNIQUE
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_ARMOR
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 5 ) {
+				return 16000
+			}
+			if ( dbspec == 9 ) {
+				return 16001
+			}
+			if ( dbspec == 20 ) {
+				return 35000
+			}
+			if ( dbspec == 19 ) {
+				return
+			}
+			if ( dbspec == 18 ) {
+				return 6
+			}
+			if ( dbspec == 7 ) {
+				return 30
+			}
+			if ( dbspec == 8 ) {
+				return 1000
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t魔法アイテム発明家の作品。竹鎧を使いこなしている騎士を見て、竹の可能性に気付いたとのこと。一から設計を行い、上質な竹を割って作り、高級塗料でコーティングし、魔法で何度も強化したそれは、防具を超えた一級芸術品となった。後に、アイディアをくれた騎士に進呈しようとしたところ、なぜか複雑そうな笑顔を浮かべて丁重にお断りされたという。\n#〜イルヴァ幻想辞典〜\n"
+				description(1) = ""
+				description(2) = ""
+				description(3) = "\t\tカランカランうるさい竹のアーマーだ。\n#〜鑑定報告書：＜秘宝＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == 1184 ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_DICE1, ci) = 3
+			inv(INV_ITEM_DICE2, ci) = 12
+			inv(INV_ITEM_ATTACK, ci) = 8
+			inv(INV_ITEM_DAMAGE, ci) = 5
+			inv(INV_ITEM_DV, ci) = -2
+			inv(INV_ITEM_PV, ci) = 6
+			inv(INV_ITEM_MATERIAL, ci) = ITEM_MATERIAL_OBSIDIAN
+			inv(INV_ITEM_VALUE, ci) = 60000
+			inv(INV_ITEM_WEIGHT, ci) = 3000
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_SKILL_REF, ci) = SKILL_WEAPON_LONGSWORD
+			inv(INV_ITEM_ID, ci) = ITEM_ID_RAVENBRAND
+			inv(INV_ITEM_PIC, ci) = xy2pic(13, 34)
+			reftype = FILTER_WEAPON
+			reftypeminor = FILTER_WEAPON_LONGSWORD
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 36, 150, 38, 150, ENCHANT_ELEMENTAL_DMG * EXT_ENCHANTMENT + SKILL_RES_CHAOS, 500, ENCHANT_ELEMENTAL_DMG * EXT_ENCHANTMENT + SKILL_RES_NETHER, 100, ENCHANT_SKILL * EXT_ENCHANTMENT + SKILL_NORMAL_DUAL_WIELD, 300, ENCHANT_RESISTANCE * EXT_ENCHANTMENT + SKILL_RES_DARKNESS, 250, ENCHANT_RESISTANCE * EXT_ENCHANTMENT + SKILL_RES_NERVE, 250, 0
+			ibitmod ITEM_BIT_PRECIOUS, ci, TRUE
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 500
+			fixlv = FIX_QUALITY_UNIQUE
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_WEAPON
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 5 ) {
+				return 10000
+			}
+			if ( dbspec == 9 ) {
+				return 10002
+			}
+			if ( dbspec == 20 ) {
+				return 60000
+			}
+			if ( dbspec == 19 ) {
+				return
+			}
+			if ( dbspec == 18 ) {
+				return 0
+			}
+			if ( dbspec == 7 ) {
+				return 50
+			}
+			if ( dbspec == 8 ) {
+				return 1000
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t邪を祓う為に更に強大な邪を用いる、という考えから生み出された黒の剣。これには分身ともいうべく剣が世界を越えて複数存在し、それぞれ姿や能力が微妙に異なるという。\n#〜イルヴァ幻想辞典〜\n"
+				description(1) = ""
+				description(2) = ""
+				description(3) = "\t\t兄弟剣が存在するといわれる長剣だ。\n#〜鑑定報告書：＜秘宝＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = "An evil black sword surrounded with an aura of dread."
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == 1183 ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_DICE1, ci) = 3
+			inv(INV_ITEM_DICE2, ci) = 13
+			inv(INV_ITEM_ATTACK, ci) = -20
+			inv(INV_ITEM_DAMAGE, ci) = 15
+			inv(INV_ITEM_MATERIAL, ci) = ITEM_MATERIAL_BAMBOO
+			inv(INV_ITEM_VALUE, ci) = 40000
+			inv(INV_ITEM_WEIGHT, ci) = 1700
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_SKILL_REF, ci) = SKILL_WEAPON_POLEARM
+			inv(INV_ITEM_ID, ci) = ITEM_ID_BAMBNIR
+			inv(INV_ITEM_PIC, ci) = xy2pic(14, 34)
+			reftype = FILTER_WEAPON
+			reftypeminor = FILTER_WEAPON_POLEARM
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = ENCHANT_ELEMENTAL_DMG * EXT_ENCHANTMENT + SKILL_RES_FIRE, 300, ENCHANT_PROC * EXT_ENCHANTMENT + ENCHANT_PROC_GRENADE, 80, 61, 200, 23, 100, 0
+			ibitmod ITEM_BIT_PRECIOUS, ci, TRUE
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 500
+			fixlv = FIX_QUALITY_UNIQUE
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_WEAPON
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 5 ) {
+				return 10000
+			}
+			if ( dbspec == 9 ) {
+				return 10007
+			}
+			if ( dbspec == 20 ) {
+				return 40000
+			}
+			if ( dbspec == 19 ) {
+				return
+			}
+			if ( dbspec == 18 ) {
+				return 0
+			}
+			if ( dbspec == 7 ) {
+				return 55
+			}
+			if ( dbspec == 8 ) {
+				return 1000
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t自由と独立を象徴する伝説の竹槍。ふさわしき者が手にすれば、ニンジャを一突きで殺すどころか、爆撃機すらも撃墜し、神をも殺せるという。\n#〜イルヴァ幻想辞典〜\n"
+				description(1) = ""
+				description(2) = ""
+				description(3) = "\t\t竹でできた長槍だ。\n#〜鑑定報告書：＜秘宝＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == 1182 ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_DICE1, ci) = 1
+			inv(INV_ITEM_DICE2, ci) = 60
+			inv(INV_ITEM_MATERIAL, ci) = ITEM_MATERIAL_ETHER
+			inv(INV_ITEM_VALUE, ci) = 60000
+			inv(INV_ITEM_WEIGHT, ci) = 600000
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_SKILL_REF, ci) = SKILL_WEAPON_LONGSWORD
+			inv(INV_ITEM_ID, ci) = ITEM_ID_KALPA_HAND
+			inv(INV_ITEM_PIC, ci) = xy2pic(19, 1)
+			reftype = FILTER_WEAPON
+			reftypeminor = FILTER_WEAPON_LONGSWORD
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 25, 100, 23, 100, ENCHANT_ATTRIBUTE * EXT_ENCHANTMENT + SKILL_ATTR_DEX, 800, 74, 100, 34, 600, 77, 500, 0
+			ibitmod ITEM_BIT_PRECIOUS, ci, TRUE
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 500
+			fixlv = FIX_QUALITY_UNIQUE
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_WEAPON
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 5 ) {
+				return 10000
+			}
+			if ( dbspec == 9 ) {
+				return 10002
+			}
+			if ( dbspec == 20 ) {
+				return 60000
+			}
+			if ( dbspec == 19 ) {
+				return
+			}
+			if ( dbspec == 18 ) {
+				return 0
+			}
+			if ( dbspec == 7 ) {
+				return 60
+			}
+			if ( dbspec == 8 ) {
+				return 1000
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\tカルパの針。カルパとはひとつの世界が誕生し消滅するまでの時間。膨大な時の流れが刃の表面を伝っている。神力を込めて振るえば時空を切り裂くことが可能であり、移動手段にも使われている。\n#〜叡智の書〜\n"
+				description(1) = ""
+				description(2) = ""
+				description(3) = "\t\t長剣として使える長針だ。\n#〜鑑定報告書：＜秘宝＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == 1181 ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 300
+			inv(INV_ITEM_WEIGHT, ci) = 400
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_KEMURIDAMA
+			inv(INV_ITEM_PIC, ci) = xy2pic(15, 34)
+			reftype = FILTER_ITEM_TOOL
+			reftypeminor = FILTER_NOTHING
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_ITEM_TOOL
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 5 ) {
+				return 59000
+			}
+			if ( dbspec == 9 ) {
+				return 99999
+			}
+			if ( dbspec == 20 ) {
+				return 300
+			}
+			if ( dbspec == 19 ) {
+				return
+			}
+			if ( dbspec == 18 ) {
+				return 0
+			}
+			if ( dbspec == 7 ) {
+				return 1
+			}
+			if ( dbspec == 8 ) {
+				return 1000
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t古来より忍者が使用・発展させてきた煙幕発生装置。旧式は火をつける必要があったが、現代のものは着火不要になっている。投げると煙幕を展開して視界を遮断する。煙幕はほとんどの遠距離攻撃を妨げるため、その隙に逃げたり奇襲して各個撃破したりできる。忍術の中にはこれを用いず、自力で煙を発生させる流派もあるのだとか。\n#〜図解・忍者のひみつ１００選〜\n"
+				description(1) = ""
+				description(2) = ""
+				description(3) = "\t\t煙幕を張るアイテムだ。投げつけて使う（使い捨て）。\n#〜鑑定報告書：＜用具＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == 1180 ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 300
+			inv(INV_ITEM_WEIGHT, ci) = 10
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_YACA_POINT_CARD
+			inv(INV_ITEM_PIC, ci) = xy2pic(16, 34)
+			reftype = FILTER_ITEM_TOOL
+			reftypeminor = FILTER_NOTHING
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_EFFECT, ci) = EFFECT_YACA_POINT_CARD
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_ITEM_TOOL
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 5 ) {
+				return 59000
+			}
+			if ( dbspec == 9 ) {
+				return 99999
+			}
+			if ( dbspec == 20 ) {
+				return 300
+			}
+			if ( dbspec == 19 ) {
+				return
+			}
+			if ( dbspec == 11 ) {
+				return 1
+			}
+			if ( dbspec == 18 ) {
+				return 0
+			}
+			if ( dbspec == 7 ) {
+				return 1000
+			}
+			if ( dbspec == 8 ) {
+				return 1000
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t富の女神が発行しているカード。商人の保護・育成と経済活動促進を目的としているらしい。店の売り上げと客入りに応じてヤカポイントが加算されていく。ポイントは１０万が上限なので適度に使おう。\n#〜脱冒険者から始める商いライフ〜\n"
+				description(1) = ""
+				description(2) = "\t\t「毎年１２月はヤカポイント５倍や！年末商戦は計画的に！」\n#〜富の女神の言葉〜\n"
+				description(3) = "\t\tポイントの確認と使用ができるカードだ。何度でも使用することができる。\n#〜鑑定報告書：＜紙片＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == 1179 ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 600
+			inv(INV_ITEM_WEIGHT, ci) = 50
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_AQUATIC_PLANT
+			inv(INV_ITEM_PIC, ci) = xy2pic(14, 35)
+			reftype = FILTER_ITEM_FOOD
+			reftypeminor = FILTER_NOTHING
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_PARAM1, ci) = 2000
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_ITEM_FOOD
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 5 ) {
+				return 57000
+			}
+			if ( dbspec == 9 ) {
+				return 99999
+			}
+			if ( dbspec == 20 ) {
+				return 600
+			}
+			if ( dbspec == 19 ) {
+				return
+			}
+			if ( dbspec == 18 ) {
+				return 0
+			}
+			if ( dbspec == 7 ) {
+				return 1
+			}
+			if ( dbspec == 8 ) {
+				return 1000
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t一度は陸上生活に適応した植物なのに、そこから水中生活に再適応した出戻り組。観賞用に広く使われるが、食べられないこともない。\n#〜移り変わりゆくティリスの食〜\n"
+				description(1) = ""
+				description(2) = ""
+				description(3) = "\t\t満腹度を回復することができる食物。調理することができる。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = "A type of vegetation."
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == 1178 ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 9200
+			inv(INV_ITEM_WEIGHT, ci) = 500
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_JEWEL_CORAL
+			inv(INV_ITEM_PIC, ci) = xy2pic(18, 34)
+			reftype = FILTER_ORE
+			reftypeminor = FILTER_NOTHING
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_ORE
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 5 ) {
+				return 77000
+			}
+			if ( dbspec == 9 ) {
+				return 99999
+			}
+			if ( dbspec == 20 ) {
+				return 9200
+			}
+			if ( dbspec == 19 ) {
+				return
+			}
+			if ( dbspec == 18 ) {
+				return 0
+			}
+			if ( dbspec == 7 ) {
+				return 1
+			}
+			if ( dbspec == 8 ) {
+				return 1000
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t珊瑚虫が形成した美しい骨格。石灰質で硬いのだが、強靭な魚にはバリバリ食われたり丸呑みにされたりする。\n#〜ルミエスト美術目録〜\n"
+				description(1) = ""
+				description(2) = ""
+				description(3) = "\t\t深海の芸術だ。\n#〜鑑定報告書：＜美術品＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == 1177 ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_MATERIAL, ci) = ITEM_MATERIAL_RAW
+			inv(INV_ITEM_VALUE, ci) = 3000
+			inv(INV_ITEM_WEIGHT, ci) = 400
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_SPOTTED_GARDEN_EEL
+			inv(INV_ITEM_PIC, ci) = xy2pic(31, 35)
+			reftype = FILTER_ITEM_FOOD
+			reftypeminor = FILTER_NOTHING
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_PARAM1, ci) = 6000
+			inv(INV_ITEM_PARAM3, ci) = 5
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = "/fish/"
+			reftype = FILTER_ITEM_FOOD
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 5 ) {
+				return 57000
+			}
+			if ( dbspec == 9 ) {
+				return 99999
+			}
+			if ( dbspec == 20 ) {
+				return 3000
+			}
+			if ( dbspec == 19 ) {
+				return 5
+			}
+			if ( dbspec == 18 ) {
+				return 0
+			}
+			if ( dbspec == 7 ) {
+				return 40
+			}
+			if ( dbspec == 8 ) {
+				return 100
+			}
+			if ( dbspec == 12 ) {
+				if ( cdata(CDATA_GOD, CHARA_PLAYER) == GOD_EHEKATL ) {
+					return 1
+				}
+				else {
+					return 0
+				}
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\tひょうきんな顔の小魚。普段は海底に半分埋まっており、流れてくる餌ばかり食べている。そのため釣れることはないし、地上に揚げてもどこかに埋まろうとする。名前のチンは、顔つきが似ている犬の種類名から来ているらしい。埋まっているのを引きずり出すと、意外と長い。\n#〜移り変わりゆくティリスの食〜\n"
+				description(1) = ""
+				description(2) = ""
+				description(3) = "\t\t満腹度を回復することができる食物。調理することができる。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == 1176 ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 1000
+			inv(INV_ITEM_WEIGHT, ci) = 200
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_DRAGONS_RED
+			inv(INV_ITEM_PIC, ci) = xy2pic(17, 6)
+			reftype = FILTER_ORE
+			reftypeminor = FILTER_ORE_GEM
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_ORE
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 5 ) {
+				return 77000
+			}
+			if ( dbspec == 9 ) {
+				return 77001
+			}
+			if ( dbspec == 20 ) {
+				return 1000
+			}
+			if ( dbspec == 19 ) {
+				return
+			}
+			if ( dbspec == 18 ) {
+				return 0
+			}
+			if ( dbspec == 7 ) {
+				return 1
+			}
+			if ( dbspec == 8 ) {
+				return 250
+			}
+			if ( dbspec == 12 ) {
+				if ( cdata(CDATA_GOD, CHARA_PLAYER) == GOD_JURE | cdata(CDATA_GOD, CHARA_PLAYER) == GOD_OPATOS ) {
+					return 1
+				}
+				else {
+					return 0
+				}
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t赤みを帯びたこの鉱石は、そのままでは鉄よりも柔らかいが、一度加熱して加工すると、色が銀色に変色し、驚くほど硬くなる。\n#〜ザイール鉱物図鑑〜\n"
+				description(1) = ""
+				description(2) = ""
+				description(3) = "\t\t武具の素材になりそうな鉱石だ。\n#〜鑑定報告書：＜鉱物＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == 1175 ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 12000
+			inv(INV_ITEM_WEIGHT, ci) = 24000
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_MOKU_JIN
+			inv(INV_ITEM_PIC, ci) = xy2pic(17, 34)
+			reftype = FILTER_ITEM_TOOL
+			reftypeminor = FILTER_NOTHING
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_EFFECT, ci) = EFFECT_MOKU_JIN
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			fixlv = FIX_QUALITY_UNIQUE
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_ITEM_TOOL
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 5 ) {
+				return 59000
+			}
+			if ( dbspec == 9 ) {
+				return 99999
+			}
+			if ( dbspec == 20 ) {
+				return 12000
+			}
+			if ( dbspec == 19 ) {
+				return
+			}
+			if ( dbspec == 11 ) {
+				return 1
+			}
+			if ( dbspec == 18 ) {
+				return 0
+			}
+			if ( dbspec == 7 ) {
+				return 1
+			}
+			if ( dbspec == 8 ) {
+				return 1000
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t人型に似せて作られた木人。この木人を戦闘相手に見立てて、武器スキルの訓練ができる。\n#〜イムウエル幻想辞典〜\n"
+				description(1) = ""
+				description(2) = "\t\t「君はあの洞窟でずっと待っていたんだね…帰ってこない主人を何人も、何年も」\n#〜ガイドの『ノルン』の言葉〜\n"
+				description(3) = "\t\t武器スキルを鍛える道具。何度でも使用することができる。\n#〜鑑定報告書：＜秘宝＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == 1174 ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 3500
+			inv(INV_ITEM_WEIGHT, ci) = 4800
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_CROP_MANAGEMENT_TOOLS
+			inv(INV_ITEM_PIC, ci) = xy2pic(25, 7)
+			reftype = FILTER_ITEM_TOOL
+			reftypeminor = FILTER_NOTHING
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_EFFECT, ci) = EFFECT_CROP_MANAGEMENT_TOOLS
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_ITEM_TOOL
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 5 ) {
+				return 59000
+			}
+			if ( dbspec == 9 ) {
+				return 99999
+			}
+			if ( dbspec == 20 ) {
+				return 3500
+			}
+			if ( dbspec == 19 ) {
+				return
+			}
+			if ( dbspec == 11 ) {
+				return 1
+			}
+			if ( dbspec == 18 ) {
+				return 0
+			}
+			if ( dbspec == 7 ) {
+				return 1000
+			}
+			if ( dbspec == 8 ) {
+				return 1000
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t農作業道具の詰め合わせ。作物に成長促進と品質向上をもたらす。特定の品種が有利に育つように作業方法を選び、環境を整える。その都合上、混ざっている他の品種は成長競争に負け養分と化す。作業にはスタミナを消費するので注意。\n#〜農業、その新たな可能性〜\n"
+				description(1) = ""
+				description(2) = ""
+				description(3) = "\t\t収穫物を固定する道具。何度でも使用することができる。\n#〜鑑定報告書：＜器具＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == 1173 ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 15000
+			inv(INV_ITEM_WEIGHT, ci) = 20
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_SCROLL_OF_WITCHCRAFT
+			inv(INV_ITEM_PIC, ci) = xy2pic(8, 14)
+			reftype = FILTER_ITEM_SCROLL
+			reftypeminor = FILTER_NOTHING
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = "/noshop/"
+			reftype = FILTER_ITEM_SCROLL
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 5 ) {
+				return 53000
+			}
+			if ( dbspec == 9 ) {
+				return 99999
+			}
+			if ( dbspec == 20 ) {
+				return 15000
+			}
+			if ( dbspec == 19 ) {
+				return
+			}
+			if ( dbspec == 2 ) {
+				return 1
+			}
+			if ( dbspec == 18 ) {
+				return 0
+			}
+			if ( dbspec == 7 ) {
+				return 30
+			}
+			if ( dbspec == 8 ) {
+				return 150
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_ON_READ ) {
+			efid = SKILL_EFFECT_SCROLL_OF_WITCHCRAFT
+			efp = 300
+			gosub *readScroll
+			return -1
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t魔法文明時代、とある魔女が幼い弟子育成のために残した巻物。魔女が生涯を費やして得た魔術の知識が、極めてわかりやすく記されている。情報は読みやすく分割されており、ひとつ読むと次の巻物では別の情報が出てくる仕掛け。\n#〜魔具全典〜\n"
+				description(1) = ""
+				description(2) = "\t\t「どんな力も使い方次第で人を幸福にも不幸にもする…それをどうか忘れないで」\n#〜隅に記された魔女の言葉〜\n"
+				description(3) = "\t\tスペルボーナスを獲得できる巻物だ。\n#〜鑑定報告書：＜紙片＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == 1172 ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 2800
+			inv(INV_ITEM_WEIGHT, ci) = 200
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_MAGAICE
+			inv(INV_ITEM_PIC, ci) = xy2pic(27, 1)
+			reftype = FILTER_JUNK
+			reftypeminor = FILTER_NOTHING
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_JUNK
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 5 ) {
+				return 64000
+			}
+			if ( dbspec == 9 ) {
+				return 99999
+			}
+			if ( dbspec == 20 ) {
+				return 2800
+			}
+			if ( dbspec == 19 ) {
+				return
+			}
+			if ( dbspec == 18 ) {
+				return 0
+			}
+			if ( dbspec == 7 ) {
+				return 1
+			}
+			if ( dbspec == 8 ) {
+				return 500
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t冷気を吸収する魔力を持つ曲がった石。冷気を放つ際にレンズのようにして魔力を通すと凍結破壊を抑えられる。しかしその効果範囲は非常に狭く、周囲を覆う冷気から身を守るためには役に立たない。\n#〜不思議な古代装飾品〜\n"
+				description(1) = ""
+				description(2) = ""
+				description(3) = "\t\t所持していると冷気を放っても物が砕けない勾玉だ。\n#〜鑑定報告書：＜鉱物＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == 1171 ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_DICE1, ci) = 1
+			inv(INV_ITEM_DICE2, ci) = 9
+			inv(INV_ITEM_ATTACK, ci) = 17
+			inv(INV_ITEM_MATERIAL, ci) = ITEM_MATERIAL_RAW
+			inv(INV_ITEM_VALUE, ci) = 30000
+			inv(INV_ITEM_WEIGHT, ci) = 300
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_SKILL_REF, ci) = SKILL_WEAPON_THROWING
+			inv(INV_ITEM_ID, ci) = ITEM_ID_FRIGHT_PRAWN
+			inv(INV_ITEM_PIC, ci) = xy2pic(30, 35)
+			reftype = FILTER_RANGE
+			reftypeminor = FILTER_RANGE_ROCK_THROW
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = ENCHANT_PROC * EXT_ENCHANTMENT + ENCHANT_PROC_GRENADE, 100, ENCHANT_RESISTANCE * EXT_ENCHANTMENT + SKILL_RES_FIRE, 700, ENCHANT_RESISTANCE * EXT_ENCHANTMENT + SKILL_RES_COLD, -200, ENCHANT_SKILL * EXT_ENCHANTMENT + SKILL_NORMAL_STEALTH, 300, 51, 300, 76, 100, 0
+			ibitmod ITEM_BIT_PRECIOUS, ci, TRUE
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 500
+			fixlv = FIX_QUALITY_UNIQUE
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_RANGE
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 5 ) {
+				return 24000
+			}
+			if ( dbspec == 9 ) {
+				return 24030
+			}
+			if ( dbspec == 20 ) {
+				return 30000
+			}
+			if ( dbspec == 19 ) {
+				return
+			}
+			if ( dbspec == 18 ) {
+				return 0
+			}
+			if ( dbspec == 7 ) {
+				return 30
+			}
+			if ( dbspec == 8 ) {
+				return 1000
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t成分は普通のエビフライとほぼ変わりないのだが、エビフライ・エフェクトと呼ばれる現象を引き起こし、色々あって爆発する危険物。空中散布されると、ミサイルのように飛んでいったり地雷のように残ったりする。見た目に興味を持った子供が犠牲になりやすく、「悪魔の兵器」の別称でも知られている。\n#〜イルヴァ幻想辞典〜\n"
+				description(1) = ""
+				description(2) = "\t\t「エビフライ５本くらいぶつけんぞ」\n#〜混乱する店員の言葉〜\n"
+				description(3) = "\t\t爆発するエビフライだ。手榴弾として使える。\n#〜鑑定報告書：＜秘宝＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == 1170 ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_DICE1, ci) = 2
+			inv(INV_ITEM_DICE2, ci) = 4
+			inv(INV_ITEM_DAMAGE, ci) = 4
+			inv(INV_ITEM_MATERIAL, ci) = ITEM_MATERIAL_RAW
+			inv(INV_ITEM_VALUE, ci) = 4000
+			inv(INV_ITEM_WEIGHT, ci) = 800
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_SKILL_REF, ci) = SKILL_WEAPON_LONGSWORD
+			inv(INV_ITEM_ID, ci) = ITEM_ID_ANNINDOFU_LIKE_A_LIGHTSABRE
+			inv(INV_ITEM_PIC, ci) = xy2pic(11, 20)
+			reftype = FILTER_WEAPON
+			reftypeminor = FILTER_WEAPON_LONGSWORD
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = ENCHANT_RESISTANCE * EXT_ENCHANTMENT + SKILL_RES_MIND, 100, ENCHANT_SKILL * EXT_ENCHANTMENT + SKILL_NORMAL_TACTICS, 100, ENCHANT_SKILL * EXT_ENCHANTMENT + SKILL_NORMAL_COOKING, 600, 0
+			ibitmod ITEM_BIT_PRECIOUS, ci, TRUE
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 500
+			fixlv = FIX_QUALITY_UNIQUE
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_WEAPON
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 5 ) {
+				return 10000
+			}
+			if ( dbspec == 9 ) {
+				return 10002
+			}
+			if ( dbspec == 20 ) {
+				return 4000
+			}
+			if ( dbspec == 19 ) {
+				return
+			}
+			if ( dbspec == 18 ) {
+				return 0
+			}
+			if ( dbspec == 7 ) {
+				return 6
+			}
+			if ( dbspec == 8 ) {
+				return 1000
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t柄のような形の杏仁豆腐に、細長くて発光して貫通力のある杏仁豆腐を着けた杏仁豆腐。切れ味はライトセーバーにやや劣る。\n#〜イルヴァ幻想辞典〜\n"
+				description(1) = ""
+				description(2) = ""
+				description(3) = "\t\tライトセーバーの形をした杏仁豆腐。長剣として装備可能。\n#〜鑑定報告書：＜秘宝＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == 1169 ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_DICE1, ci) = 3
+			inv(INV_ITEM_DICE2, ci) = 9
+			inv(INV_ITEM_ATTACK, ci) = 32
+			inv(INV_ITEM_DAMAGE, ci) = 10
+			inv(INV_ITEM_MATERIAL, ci) = ITEM_MATERIAL_RAW
+			inv(INV_ITEM_VALUE, ci) = 20000
+			inv(INV_ITEM_WEIGHT, ci) = 4500
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_SKILL_REF, ci) = SKILL_WEAPON_SCYTHE
+			inv(INV_ITEM_ID, ci) = ITEM_ID_KANI_KAMA
+			inv(INV_ITEM_PIC, ci) = xy2pic(29, 35)
+			reftype = FILTER_WEAPON
+			reftypeminor = FILTER_WEAPON_SICKLE
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = ENCHANT_PROC * EXT_ENCHANTMENT + ENCHANT_PROC_DECAPITATION, 100, ENCHANT_RESISTANCE * EXT_ENCHANTMENT + SKILL_RES_FIRE, 350, ENCHANT_SKILL * EXT_ENCHANTMENT + SKILL_NORMAL_WEIGHT_LIFTING, 500, ENCHANT_ATTRIBUTE * EXT_ENCHANTMENT + SKILL_ATTR_STR, 500, 0
+			ibitmod ITEM_BIT_PRECIOUS, ci, TRUE
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 500
+			fixlv = FIX_QUALITY_UNIQUE
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_WEAPON
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 5 ) {
+				return 10000
+			}
+			if ( dbspec == 9 ) {
+				return 10011
+			}
+			if ( dbspec == 20 ) {
+				return 20000
+			}
+			if ( dbspec == 19 ) {
+				return
+			}
+			if ( dbspec == 18 ) {
+				return 0
+			}
+			if ( dbspec == 7 ) {
+				return 15
+			}
+			if ( dbspec == 8 ) {
+				return 1000
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\tカニが自らのハサミに似せて作りだした巨大な第三の手。捕食した生物の殻と擬似筋肉で構成されており、神経接続によって動かすらしい。カニのハサミのようでカニのハサミでない存在。\n#〜イルヴァ幻想辞典〜\n"
+				description(1) = ""
+				description(2) = ""
+				description(3) = "\t\tカニっぽい鋏鎌だ。\n#〜鑑定報告書：＜秘宝＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
 	if ( dbid == ITEM_ID_GO_RENGE ) {
 		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
 			inv(INV_ITEM_DICE1, ci) = 4
