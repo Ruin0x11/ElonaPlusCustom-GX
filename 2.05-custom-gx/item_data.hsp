@@ -235,6 +235,7 @@
 	encref(0, ENCHANT_RAGNAROK) = 99, 100, 1000, FILTER_WEAPON, FILTER_RANGE
 	encref(0, ENCHANT_PIERCING_CHANCE) = 99, 300, 500, FILTER_WEAPON, FILTER_GLOVES
 	encref(0, ENCHANT_TIME_STOP) = 99, 300, 500, FILTER_WEAPON, FILTER_RANGE
+	encref(0, ENCHANT_KALPA_HAND) = 100, 300, 500, FILTER_WEAPON, FILTER_RANGE
 	encref(0, ENCHANT_CHARGING) = 3, 120, 1500, FILTER_RANGE
 	encref(0, ENCHANT_RES_STEAL) = 99, 300, 1500, FILTER_NOTHING
 	encref(0, ENCHANT_RES_CURSE) = 99, 150, 2000, FILTER_NOTHING
@@ -255,6 +256,12 @@
 	encref(0, ENCHANT_FIRE_AND_COLD) = 3, 150, 350, FILTER_ACCESSORY_RING, FILTER_CLOAK
 	encref(0, ENCHANT_MIND_AND_SOUND) = 3, 150, 350, FILTER_HELM, FILTER_SHIELD
 	encref(0, ENCHANT_POISON_AND_NERVE) = 3, 150, 350, FILTER_GLOVES, FILTER_BOOTS
+	encref(0, ENCHANT_POTIOMAN_ROTATION) = 100, 120, 300, FILTER_FURNITURE
+	encref(0, ENCHANT_POTIOMAN_POWER) = 100, 120, 300, FILTER_FURNITURE
+	encref(0, ENCHANT_POTIOMAN_TWO_SHOTS) = 100, 120, 300, FILTER_FURNITURE
+	encref(0, ENCHANT_POTIOMAN_CONTINUOUS_SHOT) = 100, 120, 300, FILTER_FURNITURE
+	encref(0, ENCHANT_POTIOMAN_PRECISE_SHOT) = 100, 120, 300, FILTER_FURNITURE
+	encref(0, ENCHANT_POTIOMAN_CHANGING_TRAJECTORY) = 100, 120, 300, FILTER_FURNITURE
 	encref(0, ENCHANT_BANE_FLYING) = 2, 170, 150, FILTER_WEAPON, FILTER_GLOVES
 
 	dim encprocref, 6, MAX_EHCHANTMENT_PROC
@@ -285,7 +292,7 @@
 	encprocref(0, 24) = SKILL_SPACT_GRENADE, TARGET_TYPE_ENEMY, 1000, FILTER_WEAPON, FILTER_RANGE, 20
 	encprocref(0, 25) = SKILL_SPACT_DECAPITATION2, TARGET_TYPE_ENEMY, 20, FILTER_WEAPON, FILTER_NOTHING, 44
 	encprocref(0, 26) = SKILL_SPACT_GRAVITY_SPHERE, TARGET_TYPE_ENEMY, 500, FILTER_WEAPON, FILTER_RANGE, 60
-	encprocref(0, 27) = SKILL_SPACT_SHINING_WAVE, TARGET_TYPE_ENEMY, 500, FILTER_WEAPON, FILTER_RANGE, 4
+	encprocref(0, 27) = SKILL_SPACT_SHINING_WAVE, TARGET_TYPE_ENEMY, 500, FILTER_WEAPON, FILTER_RANGE, 20
 	return
 
 *item_encdetail
@@ -424,7 +431,7 @@
 		}
 		if ( val(10) == ENCHANT_SUSTAIN ) {
 			rtval = 8
-			s = lang(skillname(sid) + "を維持する", "maintains " + skillname(sid) + ".")
+			s = lang(skillname(sid) + "を弱体化から守る", "protects " + skillname(sid) + " from weakening.")
 			if ( val(3) == FILTER_ITEM_FOOD ) {
 				s = lang("" + skillname(sid) + "の成長を助ける栄養をもっている", "can help you exercise your " + skillname(sid) + " faster.") + " ["
 				putenclv val(1) / 50
@@ -1448,6 +1455,34 @@
 			}
 		}
 	}
+	if ( val == 77 ) {
+		rtval = 4
+		s = lang("時を纏っている", "is covered with time.")
+		if ( (-1) == (-1) ) {
+			return
+		}
+		else {
+			if ( val(2) == 0 ) {
+				s += " ["
+				putenclv -1
+				s += "]"
+
+				/********** ANNA CUSTOM - BEGINNING **********/ // Show Enchant Strength With Objet of Heart
+
+				item_find ITEM_ID_OBJET_HEART, 3
+				if ( stat != (-1) & TweakData(TWEAK_UI_SHOW_ENCHANT_STRENGTH, TWEAK_CATEGORY_UI) == 1 ) {
+					s += "(" + val(1) + ")"
+				}
+
+				/********** ANNA CUSTOM - ENDING **********/
+				return
+			}
+			else {
+				rtval(1) = -1
+				return
+			}
+		}
+	}
 	if ( val == ENCHANT_CRIT_CHANCE ) {
 		rtval = 4
 		s = lang("クリティカルヒットの機会を増やす", "increases your chance to deliver critical hits.")
@@ -2089,6 +2124,180 @@
 	if ( val == ENCHANT_REMOTE_BLOW ) {
 		rtval = 4
 		s = lang("遠隔打撃を可能とする", "makes it possible to remote blow.")
+		if ( (-1) == (-1) ) {
+			return
+		}
+		else {
+			if ( val(2) == 0 ) {
+				s += " ["
+				putenclv -1
+				s += "]"
+
+				/********** ANNA CUSTOM - BEGINNING **********/ // Show Enchant Strength With Objet of Heart
+
+				item_find ITEM_ID_OBJET_HEART, 3
+				if ( stat != (-1) & TweakData(TWEAK_UI_SHOW_ENCHANT_STRENGTH, TWEAK_CATEGORY_UI) == 1 ) {
+					s += "(" + val(1) + ")"
+				}
+
+				/********** ANNA CUSTOM - ENDING **********/
+
+				return
+			}
+			else {
+				rtval(1) = -1
+				return
+			}
+		}
+	}
+	if ( val == 78 ) {
+		rtval = 4
+		s = lang("弾に凄まじい回転をかける", "gives a tremendous rotation to plug.")
+		if ( (-1) == (-1) ) {
+			return
+		}
+		else {
+			if ( val(2) == 0 ) {
+				s += " ["
+				putenclv -1
+				s += "]"
+
+				/********** ANNA CUSTOM - BEGINNING **********/ // Show Enchant Strength With Objet of Heart
+
+				item_find ITEM_ID_OBJET_HEART, 3
+				if ( stat != (-1) & TweakData(TWEAK_UI_SHOW_ENCHANT_STRENGTH, TWEAK_CATEGORY_UI) == 1 ) {
+					s += "(" + val(1) + ")"
+				}
+
+				/********** ANNA CUSTOM - ENDING **********/
+
+				return
+			}
+			else {
+				rtval(1) = -1
+				return
+			}
+		}
+	}
+	if ( val == 79 ) {
+		rtval = 4
+		s = lang("基本威力が高い", "has high basic power.")
+		if ( (-1) == (-1) ) {
+			return
+		}
+		else {
+			if ( val(2) == 0 ) {
+				s += " ["
+				putenclv -1
+				s += "]"
+
+				/********** ANNA CUSTOM - BEGINNING **********/ // Show Enchant Strength With Objet of Heart
+
+				item_find ITEM_ID_OBJET_HEART, 3
+				if ( stat != (-1) & TweakData(TWEAK_UI_SHOW_ENCHANT_STRENGTH, TWEAK_CATEGORY_UI) == 1 ) {
+					s += "(" + val(1) + ")"
+				}
+
+				/********** ANNA CUSTOM - ENDING **********/
+
+				return
+			}
+			else {
+				rtval(1) = -1
+				return
+			}
+		}
+	}
+	if ( val == 80 ) {
+		rtval = 4
+		s = lang("二発同時発射できる", "fires two shots at the same time.")
+		if ( (-1) == (-1) ) {
+			return
+		}
+		else {
+			if ( val(2) == 0 ) {
+				s += " ["
+				putenclv -1
+				s += "]"
+
+				/********** ANNA CUSTOM - BEGINNING **********/ // Show Enchant Strength With Objet of Heart
+
+				item_find ITEM_ID_OBJET_HEART, 3
+				if ( stat != (-1) & TweakData(TWEAK_UI_SHOW_ENCHANT_STRENGTH, TWEAK_CATEGORY_UI) == 1 ) {
+					s += "(" + val(1) + ")"
+				}
+
+				/********** ANNA CUSTOM - ENDING **********/
+
+				return
+			}
+			else {
+				rtval(1) = -1
+				return
+			}
+		}
+	}
+	if ( val == 81 ) {
+		rtval = 4
+		s = lang("絶え間なく射撃できる", "can shoot continuously.")
+		if ( (-1) == (-1) ) {
+			return
+		}
+		else {
+			if ( val(2) == 0 ) {
+				s += " ["
+				putenclv -1
+				s += "]"
+
+				/********** ANNA CUSTOM - BEGINNING **********/ // Show Enchant Strength With Objet of Heart
+
+				item_find ITEM_ID_OBJET_HEART, 3
+				if ( stat != (-1) & TweakData(TWEAK_UI_SHOW_ENCHANT_STRENGTH, TWEAK_CATEGORY_UI) == 1 ) {
+					s += "(" + val(1) + ")"
+				}
+
+				/********** ANNA CUSTOM - ENDING **********/
+
+				return
+			}
+			else {
+				rtval(1) = -1
+				return
+			}
+		}
+	}
+	if ( val == 82 ) {
+		rtval = 4
+		s = lang("精密な射撃を可能にする", "allows precise shooting.")
+		if ( (-1) == (-1) ) {
+			return
+		}
+		else {
+			if ( val(2) == 0 ) {
+				s += " ["
+				putenclv -1
+				s += "]"
+
+				/********** ANNA CUSTOM - BEGINNING **********/ // Show Enchant Strength With Objet of Heart
+
+				item_find ITEM_ID_OBJET_HEART, 3
+				if ( stat != (-1) & TweakData(TWEAK_UI_SHOW_ENCHANT_STRENGTH, TWEAK_CATEGORY_UI) == 1 ) {
+					s += "(" + val(1) + ")"
+				}
+
+				/********** ANNA CUSTOM - ENDING **********/
+
+				return
+			}
+			else {
+				rtval(1) = -1
+				return
+			}
+		}
+	}
+	if ( val == 83 ) {
+		rtval = 4
+		s = lang("変幻自在の弾道で翻弄する", "confuses with a changing trajectory.")
 		if ( (-1) == (-1) ) {
 			return
 		}
@@ -3132,7 +3341,7 @@
 	fishdata(FISHDATA_PIC, p) = xy2pic(13, 25), 2, 800, 10, 100, 300, 1200, ITEM_ID_FISH
 	p++
 	fishdatan(p) = lang("ウニ", "sea urchin")
-	fishdata(FISHDATA_PIC, p) = xy2pic(14, 25), 2, 250, 12, 100, 400, 1800, ITEM_ID_FISH
+	fishdata(FISHDATA_PIC, p) = xy2pic(19, 35), 2, 250, 12, 100, 400, 1800, ITEM_ID_FISH
 	p++
 	fishdatan(p) = lang("シロアマダイ", "red sea bream")
 	fishdata(FISHDATA_PIC, p) = xy2pic(15, 25), 2, 50, 16, 100, 350, 4500, ITEM_ID_FISH
@@ -3196,6 +3405,18 @@
 	p++
 	fishdatan(p) = lang("壊れた携帯", "broken cell phone")
 	fishdata(FISHDATA_PIC, p) = xy2pic(2, 26), 5, 400, 0, 100, 250, 25, ITEM_ID_FISH_JUNK
+	p++
+	fishdatan(p) = lang("ムーピー", "moopy")
+	fishdata(FISHDATA_PIC, p) = xy2pic(17, 9), 6, 1000, 3, 100, 380, 200, ITEM_ID_FISH
+	p++
+	fishdatan(p) = lang("カラウオ", "hollow fish")
+	fishdata(FISHDATA_PIC, p) = xy2pic(21, 9), 6, 800, 9, 100, 240, 300, ITEM_ID_FISH
+	p++
+	fishdatan(p) = lang("ロックフィッシュ", " rock fish")
+	fishdata(FISHDATA_PIC, p) = xy2pic(14, 9), 6, 250, 13, 100, 960, 1000, ITEM_ID_FISH
+	p++
+	fishdatan(p) = lang("マンサ", "yruas")
+	fishdata(FISHDATA_PIC, p) = xy2pic(13, 9), 6, 50, 20, 100, 1150, 3000, ITEM_ID_FISH
 	p++
 	return
 
