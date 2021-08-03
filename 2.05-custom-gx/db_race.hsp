@@ -299,7 +299,7 @@
 		cdata(CDATA_RACE_ID, r1) = DB_RACE_METAL
 		return
 	}
-	if ( cdatan(CDATAN_RACE, r1) == "behicle" ) {
+	if ( cdatan(CDATAN_RACE, r1) == "behicle" | cdatan(CDATAN_RACE, r1) == "vehicle" ) {
 		cdata(CDATA_RACE_ID, r1) = DB_RACE_BEHICLE
 		return
 	}
@@ -687,7 +687,7 @@
 			listmax++
 		}
 		if ( val == 1 ) {
-			listn(1, listmax) = "behicle"
+			listn(1, listmax) = "vehicle"
 			list(0, listmax) = 1
 			listmax++
 		}
@@ -871,7 +871,9 @@
 			skillinit SKILL_ATTR_CHA, rc, 3
 			skillinit SKILL_ATTR_SPD, rc, 100
 			skillinit SKILL_WEAPON_MARTIAL_ARTS, rc, 3
-			skillinit SKILL_NORMAL_HEALING, rc, 40
+			skillinit SKILL_NORMAL_HEALING, rc, 30
+			skillinit SKILL_NORMAL_DISARM_TRAP, rc, 2
+			skillinit SKILL_NORMAL_SENSE_QUALITY, rc, 2
 			s(1) = "頭|首|体|背|手|足|足|"
 			gosub *set_figure
 		}
@@ -995,6 +997,7 @@
 			skillinit SKILL_WEAPON_MARTIAL_ARTS, rc, 3
 			skillinit SKILL_NORMAL_TACTICS, rc, 4
 			skillinit SKILL_NORMAL_EYE_OF_MIND, rc, 3
+			skillinit SKILL_NORMAL_MINING, rc, 2
 			s(1) = "頭|体|手|手|指|腰|足|"
 			gosub *set_figure
 		}
@@ -1195,6 +1198,7 @@
 			skillinit SKILL_NORMAL_CASTING, rc, 5
 			skillinit SKILL_NORMAL_LITERACY, rc, 3
 			skillinit SKILL_NORMAL_MAGIC_DEVICE, rc, 3
+			skillinit SKILL_NORMAL_INVESTING, rc, 2
 			s(1) = "頭|首|体|背|手|手|指|指|腕|腰|足|"
 			gosub *set_figure
 		}
@@ -1268,6 +1272,7 @@
 			skillinit SKILL_NORMAL_CASTING, rc, 5
 			skillinit SKILL_ACTIVE_PICKPOCKET, rc, 3
 			skillinit SKILL_NORMAL_LIGHT_ARMOR, rc, 3
+			skillinit SKILL_NORMAL_COOKING, rc, 2
 			s(1) = "頭|首|体|背|手|手|指|指|腕|腰|足|"
 			gosub *set_figure
 		}
@@ -1330,6 +1335,7 @@
 			skillinit SKILL_NORMAL_DUAL_WIELD, rc, 30
 			skillinit SKILL_NORMAL_GREATER_EVASION, rc, 6
 			skillinit SKILL_NORMAL_ANATOMY, rc, 4
+			skillinit SKILL_NORMAL_CARPENTRY, rc, 4
 			s(1) = "手|手|手|手|首|"
 			gosub *set_figure
 		}
@@ -1391,6 +1397,7 @@
 			skillinit SKILL_WEAPON_MARTIAL_ARTS, rc, 2
 			skillinit SKILL_NORMAL_EVASION, rc, 2
 			skillinit SKILL_NORMAL_PERFORMER, rc, 3
+			skillinit SKILL_NORMAL_HEALING, rc, 3
 			s(1) = "頭|"
 			gosub *set_figure
 		}
@@ -1514,6 +1521,7 @@
 			skillinit SKILL_NORMAL_COOKING, rc, 4
 			skillinit SKILL_NORMAL_JEWELER, rc, 3
 			skillinit SKILL_NORMAL_MINING, rc, 4
+			skillinit SKILL_NORMAL_GARDENING, rc, 2
 			s(1) = "頭|首|体|背|手|手|指|指|腕|腰|足|"
 			gosub *set_figure
 		}
@@ -1646,6 +1654,7 @@
 			skillinit SKILL_WEAPON_MARTIAL_ARTS, rc, 3
 			skillinit SKILL_NORMAL_COOKING, rc, 3
 			skillinit SKILL_NORMAL_FISHING, rc, 3
+			skillinit SKILL_NORMAL_ANATOMY, rc, 2
 			s(1) = "頭|首|体|背|手|手|指|腕|腰|"
 			gosub *set_figure
 		}
@@ -1712,6 +1721,7 @@
 			skillinit SKILL_NORMAL_MAGIC_CAPACITY, rc, 5
 			skillinit SKILL_NORMAL_CASTING, rc, 2
 			skillinit SKILL_NORMAL_MEMORIZATION, rc, 3
+			skillinit SKILL_NORMAL_COOKING, rc, 4
 			s(1) = "頭|首|体|背|手|手|指|指|腕|腰|足|"
 			gosub *set_figure
 		}
@@ -1772,6 +1782,8 @@
 			skillinit SKILL_ATTR_SPD, rc, 100
 			skillinit SKILL_WEAPON_MARTIAL_ARTS, rc, 1
 			skillinit SKILL_ACTIVE_RIDING, rc, 3
+			skillinit SKILL_NORMAL_DETECTION, rc, 3
+			skillinit SKILL_NORMAL_TRAVELING, rc, 3
 			s(1) = "頭|首|体|背|腕|"
 			gosub *set_figure
 		}
@@ -1833,6 +1845,7 @@
 			skillinit SKILL_WEAPON_MARTIAL_ARTS, rc, 1
 			skillinit SKILL_NORMAL_HEALING, rc, 3
 			skillinit SKILL_NORMAL_ANATOMY, rc, 3
+			skillinit SKILL_NORMAL_TAILORING, rc, 2
 			s(1) = "頭|首|体|背|腕|足|"
 			gosub *set_figure
 		}
@@ -1955,6 +1968,8 @@
 			skillinit SKILL_ATTR_SPD, rc, 70
 			skillinit SKILL_WEAPON_MARTIAL_ARTS, rc, 1
 			skillinit SKILL_NORMAL_EYE_OF_MIND, rc, 3
+			skillinit SKILL_NORMAL_MINING, rc, 3
+			skillinit SKILL_NORMAL_STEALTH, rc, 3
 			s(1) = "背|指|指|"
 			gosub *set_figure
 		}
@@ -2139,6 +2154,7 @@
 			skillinit SKILL_WEAPON_MARTIAL_ARTS, rc, 2
 			skillinit SKILL_NORMAL_CASTING, rc, 3
 			skillinit SKILL_NORMAL_STEALTH, rc, 3
+			skillinit SKILL_NORMAL_GARDENING, rc, 2
 			s(1) = "首|"
 			gosub *set_figure
 		}
@@ -2200,6 +2216,7 @@
 			skillinit SKILL_WEAPON_MARTIAL_ARTS, rc, 1
 			skillinit SKILL_NORMAL_TAILORING, rc, 3
 			skillinit SKILL_NORMAL_ALCHEMY, rc, 2
+			skillinit SKILL_NORMAL_GARDENING, rc, 4
 			s(1) = "頭|首|"
 			gosub *set_figure
 		}
@@ -2261,6 +2278,8 @@
 			skillinit SKILL_ATTR_SPD, rc, 140
 			skillinit SKILL_WEAPON_MARTIAL_ARTS, rc, 2
 			skillinit SKILL_NORMAL_GREATER_EVASION, rc, 3
+			skillinit SKILL_NORMAL_DETECTION, rc, 3
+			skillinit SKILL_NORMAL_NEGOTIATION, rc, 2
 			s(1) = "頭|"
 			gosub *set_figure
 		}
@@ -2389,6 +2408,7 @@
 			skillinit SKILL_NORMAL_MEDITATION, rc, 5
 			skillinit SKILL_NORMAL_MAGIC_DEVICE, rc, 3
 			skillinit SKILL_NORMAL_CASTING, rc, 3
+			skillinit SKILL_NORMAL_GENE_ENGINEER, rc, 2
 			s(1) = "頭|首|体|背|手|手|指|指|腕|腰|足|"
 			gosub *set_figure
 		}
@@ -2451,6 +2471,7 @@
 			skillinit SKILL_NORMAL_CONTROL_MAGIC, rc, 4
 			skillinit SKILL_NORMAL_CASTING, rc, 3
 			skillinit SKILL_NORMAL_HEALING, rc, 30
+			skillinit SKILL_NORMAL_GENE_ENGINEER, rc, 2
 			s(1) = "体|"
 			gosub *set_figure
 		}
@@ -2579,6 +2600,7 @@
 			skillinit SKILL_WEAPON_MARTIAL_ARTS, rc, 2
 			skillinit SKILL_NORMAL_CASTING, rc, 4
 			skillinit SKILL_NORMAL_CONTROL_MAGIC, rc, 2
+			skillinit SKILL_NORMAL_INVESTING, rc, 3
 			s(1) = "頭|首|体|背|手|手|指|指|腕|"
 			gosub *set_figure
 		}
@@ -2640,6 +2662,7 @@
 			skillinit SKILL_WEAPON_MARTIAL_ARTS, rc, 2
 			skillinit SKILL_NORMAL_DETECTION, rc, 3
 			skillinit SKILL_NORMAL_ANATOMY, rc, 3
+			skillinit SKILL_NORMAL_GENE_ENGINEER, rc, 3
 			s(1) = "頭|"
 			gosub *set_figure
 		}
@@ -2762,6 +2785,8 @@
 			skillinit SKILL_ATTR_SPD, rc, 100
 			skillinit SKILL_WEAPON_MARTIAL_ARTS, rc, 2
 			skillinit SKILL_NORMAL_GREATER_EVASION, rc, 2
+			skillinit SKILL_NORMAL_GARDENING, rc, 3
+			skillinit SKILL_ACTIVE_PICKPOCKET, rc, 2
 			s(1) = "頭|"
 			gosub *set_figure
 		}
@@ -2946,6 +2971,8 @@
 			skillinit SKILL_ATTR_SPD, rc, 70
 			skillinit SKILL_WEAPON_MARTIAL_ARTS, rc, 2
 			skillinit SKILL_NORMAL_EYE_OF_MIND, rc, 4
+			skillinit SKILL_NORMAL_CARPENTRY, rc, 2
+			skillinit SKILL_NORMAL_COOKING, rc, 3
 			s(1) = "手|手|指|指|腕|"
 			gosub *set_figure
 		}
@@ -3006,6 +3033,8 @@
 			skillinit SKILL_ATTR_SPD, rc, 70
 			skillinit SKILL_WEAPON_MARTIAL_ARTS, rc, 2
 			skillinit SKILL_NORMAL_STEALTH, rc, 4
+			skillinit SKILL_NORMAL_SWIMMING, rc, 2
+			skillinit SKILL_NORMAL_EYE_OF_MIND, rc, 2
 			s(1) = "体|"
 			gosub *set_figure
 		}
@@ -3255,6 +3284,7 @@
 			skillinit SKILL_WEAPON_MARTIAL_ARTS, rc, 2
 			skillinit SKILL_NORMAL_LOCK_PICKING, rc, 3
 			skillinit SKILL_NORMAL_MAGIC_DEVICE, rc, 2
+			skillinit SKILL_NORMAL_HEAVY_ARMOR, rc, 8
 			s(1) = "頭|首|体|背|手|手|腕|腰|"
 			gosub *set_figure
 		}
@@ -3316,6 +3346,7 @@
 			skillinit SKILL_WEAPON_MARTIAL_ARTS, rc, 3
 			skillinit SKILL_NORMAL_MAGIC_CAPACITY, rc, 3
 			skillinit SKILL_NORMAL_CONTROL_MAGIC, rc, 3
+			skillinit SKILL_NORMAL_ALCHEMY, rc, 2
 			s(1) = "体|手|手|指|指|腕|足|"
 			gosub *set_figure
 		}
@@ -3378,6 +3409,7 @@
 			skillinit SKILL_NORMAL_GREATER_EVASION, rc, 4
 			skillinit SKILL_NORMAL_CONTROL_MAGIC, rc, 4
 			skillinit SKILL_NORMAL_CASTING, rc, 4
+			skillinit SKILL_NORMAL_INVESTING, rc, 3
 			s(1) = "首|体|手|手|指|指|腕|腰|"
 			gosub *set_figure
 		}
@@ -3506,6 +3538,7 @@
 			skillinit SKILL_WEAPON_MARTIAL_ARTS, rc, 2
 			skillinit SKILL_NORMAL_MAGIC_CAPACITY, rc, 3
 			skillinit SKILL_NORMAL_MAGIC_DEVICE, rc, 2
+			skillinit SKILL_NORMAL_PERFORMER, rc, 2
 			s(1) = "首|背|手|手|指|指|腕|足|"
 			gosub *set_figure
 		}
@@ -3629,6 +3662,7 @@
 			skillinit SKILL_WEAPON_MARTIAL_ARTS, rc, 4
 			skillinit SKILL_NORMAL_TRAVELING, rc, 3
 			skillinit SKILL_NORMAL_GREATER_EVASION, rc, 2
+			skillinit SKILL_NORMAL_HEALING, rc, 3
 			s(1) = "首|体|指|指|"
 			gosub *set_figure
 		}
@@ -3752,6 +3786,7 @@
 			skillinit SKILL_WEAPON_MARTIAL_ARTS, rc, 2
 			skillinit SKILL_NORMAL_STEALTH, rc, 3
 			skillinit SKILL_NORMAL_ANATOMY, rc, 5
+			skillinit SKILL_NORMAL_TAILORING, rc, 3
 			s(1) = "指|指|"
 			gosub *set_figure
 		}
@@ -3814,6 +3849,7 @@
 			skillinit SKILL_WEAPON_MARTIAL_ARTS, rc, 4
 			skillinit SKILL_NORMAL_WEIGHT_LIFTING, rc, 5
 			skillinit SKILL_NORMAL_MINING, rc, 3
+			skillinit SKILL_NORMAL_ALCHEMY, rc, 3
 			s(1) = "頭|首|体|背|手|手|指|指|腕|腰|足|"
 			gosub *set_figure
 		}
@@ -3876,6 +3912,7 @@
 			skillinit SKILL_WEAPON_MARTIAL_ARTS, rc, 1
 			skillinit SKILL_NORMAL_WEIGHT_LIFTING, rc, 3
 			skillinit SKILL_NORMAL_MINING, rc, 3
+			skillinit SKILL_NORMAL_MARKSMAN, rc, 3
 			s(1) = "頭|"
 			gosub *set_figure
 		}
@@ -3942,6 +3979,7 @@
 			skillinit SKILL_NORMAL_PERFORMER, rc, 4
 			skillinit SKILL_NORMAL_HEALING, rc, 3
 			skillinit SKILL_NORMAL_TACTICS, rc, 3
+			skillinit SKILL_NORMAL_GENE_ENGINEER, rc, 3
 			s(1) = "頭|首|体|背|手|手|指|指|腕|腰|足|"
 			gosub *set_figure
 		}
@@ -4071,6 +4109,7 @@
 			skillinit SKILL_WEAPON_MARTIAL_ARTS, rc, 2
 			skillinit SKILL_NORMAL_MAGIC_CAPACITY, rc, 2
 			skillinit SKILL_NORMAL_LITERACY, rc, 3
+			skillinit SKILL_NORMAL_TACTICS, rc, 3
 			s(1) = "頭|首|体|背|手|手|指|指|腕|腰|"
 			gosub *set_figure
 		}
@@ -4323,6 +4362,7 @@
 			skillinit SKILL_WEAPON_MARTIAL_ARTS, rc, 1
 			skillinit SKILL_NORMAL_STEALTH, rc, 3
 			skillinit SKILL_NORMAL_ANATOMY, rc, 2
+			skillinit SKILL_ACTIVE_RIDING, rc, 2
 			s(1) = "背|手|腕|腰|足|"
 			gosub *set_figure
 		}
@@ -4635,6 +4675,7 @@
 			skillinit SKILL_NORMAL_MEDITATION, rc, 3
 			skillinit SKILL_NORMAL_LOCK_PICKING, rc, 3
 			skillinit SKILL_NORMAL_DISARM_TRAP, rc, 3
+			skillinit SKILL_NORMAL_CARPENTRY, rc, 3
 			s(1) = "頭|首|体|背|手|手|指|指|腕|腰|足|"
 			gosub *set_figure
 		}
@@ -4696,6 +4737,7 @@
 			skillinit SKILL_WEAPON_MARTIAL_ARTS, rc, 1
 			skillinit SKILL_NORMAL_CONTROL_MAGIC, rc, 3
 			skillinit SKILL_NORMAL_MAGIC_CAPACITY, rc, 5
+			skillinit SKILL_NORMAL_MEDITATION, rc, 4
 			s(1) = "頭|"
 			gosub *set_figure
 		}
@@ -4881,6 +4923,7 @@
 			skillinit SKILL_WEAPON_MARTIAL_ARTS, rc, 4
 			skillinit SKILL_NORMAL_TWO_HAND, rc, 6
 			skillinit SKILL_NORMAL_TACTICS, rc, 4
+			skillinit SKILL_NORMAL_JEWELER, rc, 2
 			s(1) = "頭|首|体|背|手|手|指|指|腕|腰|足|"
 			gosub *set_figure
 		}
@@ -4946,6 +4989,7 @@
 			skillinit SKILL_WEAPON_MARTIAL_ARTS, rc, 2
 			skillinit SKILL_NORMAL_MAGIC_CAPACITY, rc, 3
 			skillinit SKILL_NORMAL_HEALING, rc, 4
+			skillinit SKILL_NORMAL_GENE_ENGINEER, rc, 4
 			s(1) = "体|手|"
 			gosub *set_figure
 		}
@@ -5007,6 +5051,7 @@
 			skillinit SKILL_WEAPON_MARTIAL_ARTS, rc, 1
 			skillinit SKILL_NORMAL_MEDITATION, rc, 3
 			skillinit SKILL_NORMAL_NEGOTIATION, rc, 4
+			skillinit SKILL_NORMAL_FISHING, rc, 2
 			s(1) = "頭|首|体|背|手|手|指|指|腕|腰|足|"
 			gosub *set_figure
 		}
@@ -5068,6 +5113,7 @@
 			skillinit SKILL_WEAPON_MARTIAL_ARTS, rc, 3
 			skillinit SKILL_NORMAL_CONTROL_MAGIC, rc, 4
 			skillinit SKILL_NORMAL_CASTING, rc, 4
+			skillinit SKILL_NORMAL_MAGIC_DEVICE, rc, 3
 			s(1) = "手|手|手|手|指|指|指|指|"
 			gosub *set_figure
 		}
@@ -5198,6 +5244,8 @@
 			skillinit SKILL_ATTR_SPD, rc, 125
 			skillinit SKILL_WEAPON_MARTIAL_ARTS, rc, 1
 			skillinit SKILL_NORMAL_HEALING, rc, 4
+			skillinit SKILL_NORMAL_WEIGHT_LIFTING, rc, 3
+			skillinit SKILL_ACTIVE_RIDING, rc, 2
 			s(1) = "体|足|足|"
 			gosub *set_figure
 		}
@@ -5403,12 +5451,13 @@
 			skillinit SKILL_WEAPON_MARTIAL_ARTS, rc, 1
 			skillinit SKILL_NORMAL_MAGIC_CAPACITY, rc, 4
 			skillinit SKILL_NORMAL_GREATER_EVASION, rc, 6
+			skillinit SKILL_NORMAL_JEWELER, rc, 2
 			s(1) = "頭|体|背|"
 			gosub *set_figure
 		}
 		return
 	}
-	if ( dbidn == "behicle" ) {
+	if ( dbidn == "behicle" || dbidn == "vehicle" ) {
 		if ( dbmode == DBMODE_REF_SPEC ) {
 			if ( dbspec == DBSPEC_RACE_BLOOD ) {
 				return 1
@@ -5419,7 +5468,7 @@
 			return
 		}
 		if ( dbmode == DBMODE_REF ) {
-			racename = lang("乗用機械", cnven("behicle"))
+			racename = lang("乗用機械", cnven("vehicle"))
 			cpicref = xy2pic(9, 14)
 			return
 		}
@@ -5432,7 +5481,7 @@
 			return 0
 		}
 		if ( dbmode == DBMODE_SET ) {
-			cdatan(CDATAN_RACE, rc) = "behicle"
+			cdatan(CDATAN_RACE, rc) = "vehicle"
 			cdata(CDATA_RACE_ID, rc) = DB_RACE_BEHICLE
 			cdata(CDATA_MELEE_STYLE, rc) = 10
 			cdata(CDATA_CAST_STYLE, rc) = 6
