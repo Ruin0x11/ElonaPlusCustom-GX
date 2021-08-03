@@ -42021,11 +42021,11 @@
 			inv(INV_ITEM_WEIGHT, ci) = 2000
 		}
 		if ( dbmode == DBMODE_SET ) {
-			inv(INV_ITEM_SKILL_REF, ci) = SKILL_WEAPON_THROWING
+			inv(INV_ITEM_SKILL_REF, ci) = SKILL_WEAPON_SHORTSWORD
 			inv(INV_ITEM_ID, ci) = ITEM_ID_GO_RENGE
 			inv(INV_ITEM_PIC, ci) = 1180
-			reftype = FILTER_RANGE
-			reftypeminor = FILTER_RANGE_ROCK_THROW
+			reftype = FILTER_WEAPON
+			reftypeminor = FILTER_WEAPON_SHORTSWORD
 			inv(INV_ITEM_NUM, ci) = 1
 			fixeditemenc = ENCHANT_ABSORB_STAMINA, 400, ENCHANT_SKILL * EXT_ENCHANTMENT + SKILL_WEAPON_STAVE, 600, ENCHANT_SKILL * EXT_ENCHANTMENT + SKILL_NORMAL_TACTICS, 300, ENCHANT_RESISTANCE * EXT_ENCHANTMENT + SKILL_RES_COLD, 550, ENCHANT_RES_CONFUSE, 100, 0
 			ibitmod ITEM_BIT_PRECIOUS, ci, 1
@@ -42041,10 +42041,10 @@
 		}
 		if ( dbmode == DBMODE_REF_SPEC ) {
 			if ( dbspec == DBSPEC_TYPE ) {
-				return FILTER_RANGE
+				return FILTER_WEAPON
 			}
 			if ( dbspec == DBSPEC_TYPE_MINOR ) {
-				return FILTER_RANGE_ROCK_THROW
+				return FILTER_WEAPON_SHORTSWORD
 			}
 			if ( dbspec == DBSPEC_VALUE_ORG ) {
 				return 35000
@@ -45704,21 +45704,26 @@
 	if ( dbid == ITEM_ID_NYOI_MIMIKAKI ) {
 		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
 			inv(INV_ITEM_VALUE, ci) = 9000
-			inv(INV_ITEM_WEIGHT, ci) = 500
+			inv(INV_ITEM_WEIGHT, ci) = 300
 		}
 		if ( dbmode == DBMODE_SET ) {
 			inv(INV_ITEM_ID, ci) = ITEM_ID_NYOI_MIMIKAKI
-			inv(INV_ITEM_PIC, ci) = xy2pic(29, 33)
+			inv(INV_ITEM_PIC, ci) = xy2pic(23, 36)
 			reftype = FILTER_ITEM_TOOL
 			reftypeminor = FILTER_NOTHING
 			inv(INV_ITEM_NUM, ci) = 1
 			fixeditemenc = 0
+			inv(INV_ITEM_EFFECT, ci) = EFFECT_NYOI_MIMIKAKI
+			ibitmod ITEM_BIT_PRECIOUS, ci, TRUE
+			ibitmod ITEM_BIT_PERIOD, ci, TRUE
+			inv(INV_ITEM_PARAM3, ci) = 24
 			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			fixlv = FIX_QUALITY_UNIQUE
 			return
 		}
 		if ( dbmode == DBMODE_REF ) {
 			ichargelevel = 0
-			infilterref = "/noshop/"
+			infilterref = ""
 			reftype = FILTER_ITEM_TOOL
 			return
 		}
@@ -45733,7 +45738,10 @@
 				return 9000
 			}
 			if ( dbspec == DBSPEC_PARAM3_ORG ) {
-				return
+				return 24
+			}
+			if ( dbspec == DBSPEC_ITEM_CAN_USE ) {
+				return 1
 			}
 			if ( dbspec == DBSPEC_PCC ) {
 				return 0
@@ -45742,7 +45750,7 @@
 				return 1
 			}
 			if ( dbspec == DBSPEC_RARE_LEVEL ) {
-				return 50
+				return 1000
 			}
 			return 0
 		}
@@ -58811,7 +58819,7 @@
 	if ( dbid == ITEM_ID_MUSKMELON ) {
 		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
 			inv(INV_ITEM_MATERIAL, ci) = ITEM_MATERIAL_RAW
-			inv(INV_ITEM_VALUE, ci) = 1500
+			inv(INV_ITEM_VALUE, ci) = 450
 			inv(INV_ITEM_WEIGHT, ci) = 1000
 		}
 		if ( dbmode == DBMODE_SET ) {
@@ -58840,7 +58848,7 @@
 				return FILTER_ITEM_FOOD_VEGETABLE
 			}
 			if ( dbspec == DBSPEC_VALUE_ORG ) {
-				return 1500
+				return 450
 			}
 			if ( dbspec == DBSPEC_PARAM3_ORG ) {
 				return 12
@@ -58875,7 +58883,7 @@
 	if ( dbid == ITEM_ID_WATERMELON ) {
 		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
 			inv(INV_ITEM_MATERIAL, ci) = ITEM_MATERIAL_RAW
-			inv(INV_ITEM_VALUE, ci) = 400
+			inv(INV_ITEM_VALUE, ci) = 320
 			inv(INV_ITEM_WEIGHT, ci) = 5000
 		}
 		if ( dbmode == DBMODE_SET ) {
@@ -58904,7 +58912,7 @@
 				return FILTER_ITEM_FOOD_VEGETABLE
 			}
 			if ( dbspec == DBSPEC_VALUE_ORG ) {
-				return 400
+				return 320
 			}
 			if ( dbspec == DBSPEC_PARAM3_ORG ) {
 				return 12
@@ -65647,7 +65655,7 @@
 		if ( dbmode == DBMODE_SET ) {
 			inv(INV_ITEM_SKILL_REF, ci) = SKILL_WEAPON_LONGSWORD
 			inv(INV_ITEM_ID, ci) = ITEM_ID_STORM_BRINGER
-			inv(INV_ITEM_PIC, ci) = xy2pic(9, 12)
+			inv(INV_ITEM_PIC, ci) = xy2pic(13, 34)
 			reftype = FILTER_WEAPON
 			reftypeminor = FILTER_WEAPON_LONGSWORD
 			inv(INV_ITEM_NUM, ci) = 1
@@ -78270,7 +78278,7 @@
 			inv(INV_ITEM_NUM, ci) = 1
 			fixeditemenc = 0
 			inv(INV_ITEM_PARAM1, ci) = 6000
-			inv(INV_ITEM_PARAM3, ci) = 4
+			inv(INV_ITEM_PARAM3, ci) = 8
 			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
 			return
 		}
@@ -78291,7 +78299,7 @@
 				return 1200
 			}
 			if ( dbspec == DBSPEC_PARAM3_ORG ) {
-				return 4
+				return 8
 			}
 			if ( dbspec == DBSPEC_PCC ) {
 				return 0
@@ -91003,7 +91011,7 @@
 				return 1
 			}
 			if ( dbspec == DBSPEC_RARE_LEVEL ) {
-				return 80
+				return 320
 			}
 			return 0
 		}
@@ -91127,7 +91135,7 @@
 				return 1
 			}
 			if ( dbspec == DBSPEC_RARE_LEVEL ) {
-				return 80
+				return 320
 			}
 			return 0
 		}
@@ -91189,7 +91197,7 @@
 				return 1
 			}
 			if ( dbspec == DBSPEC_RARE_LEVEL ) {
-				return 80
+				return 320
 			}
 			return 0
 		}
@@ -91251,7 +91259,7 @@
 				return 1
 			}
 			if ( dbspec == DBSPEC_RARE_LEVEL ) {
-				return 80
+				return 320
 			}
 			return 0
 		}
@@ -101940,7 +101948,7 @@
 		}
 		if ( dbmode == DBMODE_SET ) {
 			inv(INV_ITEM_ID, ci) = ITEM_ID_BOMB_FISH
-			inv(INV_ITEM_PIC, ci) = xy2pic(3, 6)
+			inv(INV_ITEM_PIC, ci) = xy2pic(18, 35)
 			reftype = FILTER_ITEM_FOOD
 			reftypeminor = FILTER_NOTHING
 			inv(INV_ITEM_NUM, ci) = 1
@@ -114811,7 +114819,7 @@
 		if ( dbmode == DBMODE_SET ) {
 			inv(INV_ITEM_SKILL_REF, ci) = SKILL_WEAPON_LONGSWORD
 			inv(INV_ITEM_ID, ci) = ITEM_ID_MOURNBLADE
-			inv(INV_ITEM_PIC, ci) = xy2pic(9, 12)
+			inv(INV_ITEM_PIC, ci) = xy2pic(13, 34)
 			reftype = FILTER_WEAPON
 			reftypeminor = FILTER_WEAPON_LONGSWORD
 			inv(INV_ITEM_NUM, ci) = 1
