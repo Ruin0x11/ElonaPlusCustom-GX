@@ -76,7 +76,7 @@
 		if ( inv(INV_ITEM_ID, cnt) == ITEM_ID_SHELTER ) {
 			if ( inv(INV_ITEM_PROPERTY, cnt) == PROPERTY_CONSTRUCT ) {
 				inv(INV_ITEM_PROPERTY, cnt) = PROPERTY_NONE
-				inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), cnt) = 0
+				inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), cnt) = 0
 				inv(INV_ITEM_PARAM2, cnt) = 100
 				snd SOUNDLIST_AMMO
 			}
@@ -140,7 +140,7 @@
 			}
 			if ( item_find_mode == ITEM_FIND_MODE_CHARGE_EQ_6666 ) {
 				if ( inv(INV_ITEM_ID, cnt) == item_find_query ) {
-					if ( inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), cnt) == 6666 ) {
+					if ( inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), cnt) == 6666 ) {
 						locvar_item_find_p = cnt
 					}
 				}
@@ -1520,7 +1520,7 @@
 			}
 		}
 		if ( ibit(ITEM_BIT_CHARGE_ITEM, itemname_itemid) == TRUE ) {
-			locvar_itemowner_s += lang("(残り" + inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), itemname_itemid) + "回)", "(Charges: " + inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), itemname_itemid) + ")")
+			locvar_itemowner_s += lang("(残り" + inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), itemname_itemid) + "回)", "(Charges: " + inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), itemname_itemid) + ")")
 		}
 		if ( refitem(inv(INV_ITEM_ID, itemname_itemid), DBSPEC_ITEM_TYPE) == FILTER_ITEM_FOOD ) {
 			if ( inv(INV_ITEM_PARAM1, itemname_itemid) != 0 ) {
@@ -1612,8 +1612,8 @@
 		}
 	}
 	if ( inv(INV_ITEM_ID, itemname_itemid) == ITEM_ID_FISHING_POLE ) {
-		if ( inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), itemname_itemid) != 0 ) {
-			locvar_itemowner_s += lang("(" + biten(inv(INV_ITEM_PARAM4, itemname_itemid)) + "残り" + inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), itemname_itemid) + "匹)", "(" + inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), itemname_itemid) + " " + biten(inv(INV_ITEM_PARAM4, itemname_itemid)) + ")")
+		if ( inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), itemname_itemid) != 0 ) {
+			locvar_itemowner_s += lang("(" + biten(inv(INV_ITEM_PARAM4, itemname_itemid)) + "残り" + inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), itemname_itemid) + "匹)", "(" + inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), itemname_itemid) + " " + biten(inv(INV_ITEM_PARAM4, itemname_itemid)) + ")")
 		}
 	}
 	if ( inv(INV_ITEM_ID, itemname_itemid) == ITEM_ID_MONSTER_BALL ) {
@@ -1651,7 +1651,7 @@
 			locvar_itemowner_s += lang("(移動時消滅)", "(Temporal)")
 		}
 		else {
-			if ( inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), itemname_itemid) == 0 ) {
+			if ( inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), itemname_itemid) == 0 ) {
 				if ( inv(INV_ITEM_PARAM1, itemname_itemid) == 0 ) {
 					locvar_itemowner_s += lang("(空っぽ)", "(Empty)")
 				}
@@ -1683,20 +1683,20 @@
 	if ( ibit(ITEM_BIT_PERIOD, itemname_itemid) == TRUE ) {
 		if ( gdata(GDATA_AREA) == AREA_VALM ) {
 			if ( gdata(GDATA_LEVEL) == 3 ) {
-				inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), itemname_itemid) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 + inv(INV_ITEM_PARAM3, itemname_itemid)
+				inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), itemname_itemid) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 + inv(INV_ITEM_PARAM3, itemname_itemid)
 				if ( inv(INV_ITEM_PARAM3, itemname_itemid) >= 24 ) {
 					inv(INV_ITEM_NEED_SLEEP, itemname_itemid) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12
 				}
 			}
 		}
 		if ( gdata(GDATA_FLAG_INSIDE_DEEP_SEA_CASTLE) == 100 ) {
-			inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), itemname_itemid) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 + inv(INV_ITEM_PARAM3, itemname_itemid)
+			inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), itemname_itemid) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 + inv(INV_ITEM_PARAM3, itemname_itemid)
 			if ( inv(INV_ITEM_PARAM3, itemname_itemid) >= 24 ) {
 				inv(INV_ITEM_NEED_SLEEP, itemname_itemid) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12
 			}
 		}
-		if ( gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 < inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), itemname_itemid) ) {
-			locvar_itemowner_s += lang("(" + (inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), itemname_itemid) - (gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12)) + "時間)", "(Next: " + (inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), itemname_itemid) - (gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12)) + "h.)")
+		if ( gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 < inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), itemname_itemid) ) {
+			locvar_itemowner_s += lang("(" + (inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), itemname_itemid) - (gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12)) + "時間)", "(Next: " + (inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), itemname_itemid) - (gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12)) + "h.)")
 		}
 		if ( inv(INV_ITEM_NEED_SLEEP, itemname_itemid) > 1 ) {
 			if ( inv(INV_ITEM_NEED_SLEEP, itemname_itemid) >= gdata(GDATA_FLAG_DATE_OF_LAST_BREAKFAST) ) {
@@ -1705,8 +1705,8 @@
 		}
 	}
 	if ( inv(INV_ITEM_ID, itemname_itemid) == ITEM_ID_SHELTER ) {
-		if ( inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), itemname_itemid) != 0 ) {
-			locvar_itemowner_s += lang(" シリアルNo.", " serial no.") + inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), itemname_itemid)
+		if ( inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), itemname_itemid) != 0 ) {
+			locvar_itemowner_s += lang(" シリアルNo.", " serial no.") + inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), itemname_itemid)
 		}
 	}
 	if ( inv(INV_ITEM_ID, itemname_itemid) == ITEM_ID_DEED_PROPERTY_TRANSFER ) {

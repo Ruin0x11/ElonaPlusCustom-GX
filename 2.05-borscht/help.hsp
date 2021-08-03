@@ -5693,7 +5693,7 @@
 		inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
 		flt
 		itemcreate CHARA_PLAYER, ITEM_ID_FISHING_POLE, -1, -1, 0
-		inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) = 100
+		inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) = 100
 		flt
 		itemcreate CHARA_PLAYER, ITEM_ID_EVITEM, -1, -1, 0
 		inv(INV_ITEM_PARAM1, ci) = 13
@@ -10275,7 +10275,7 @@
 		itemcreate -1, ITEM_ID_COFFIN_OF_NECROMANCY, evdata1(evnum - (evnum != 0) * 1), evdata2(evnum - (evnum != 0) * 1), 0
 		inv(INV_ITEM_PARAM1, ci) = gnecroid
 		inv(INV_ITEM_WEIGHT, ci) += gnecroid * 1000
-		inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 + inv(INV_ITEM_PARAM3, ci) * 24
+		inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 + inv(INV_ITEM_PARAM3, ci) * 24
 		snd SOUNDLIST_CURSE3
 		goto *event_SWEND1
 		_switch_sw++
@@ -11606,7 +11606,7 @@
 			cdata(CDATA_AI_CALM, rc) = 3
 			cbitmod CHARA_BIT_GUEST, rc, TRUE
 		}
-		if ( mdata(MDATA_TYPE) >= (20 /*!!!@[MAP_TYPE_DUNGEON_MIN @@@ MAP_TYPE_DUNGEON]@!!! */) ) {
+		if ( mdata(MDATA_TYPE) >= (20 /*!!!@[MAP_TYPE_DUNGEON @@@ MAP_TYPE_DUNGEON_MIN]@!!! */) ) {
 			flt
 			initlv = limit(gdata(GDATA_LEVEL) * 3 / 4, 1, 1300)
 			novoidlv = 1
@@ -12650,7 +12650,7 @@
 				}
 				if ( rnd(4) == 0 & ehemeka == 0 ) {
 					characreate -1, CREATURE_ID_BEGGAR, -3, 0
-					cdata(CDATA_ROLE, rc) = (2000 /*!!!@[ROLE_GUEST_MIN @@@ ROLE_GUEST_BEGGAR]@!!! */)
+					cdata(CDATA_ROLE, rc) = (2000 /*!!!@[ROLE_GUEST_BEGGAR @@@ ROLE_GUEST_MIN]@!!! */)
 					break
 				}
 				if ( rnd(4) == 0 & ehemeka == 0 ) {

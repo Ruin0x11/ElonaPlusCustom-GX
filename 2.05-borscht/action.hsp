@@ -788,14 +788,14 @@
 				snd SOUNDLIST_BUILD1
 				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_SHELTER ) {
 					midbk = mid
-					mid = "" + 30 + "_" + (100 + inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci))
+					mid = "" + 30 + "_" + (100 + inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci))
 					existwrapper exedir + "tmp\\mdata_" + mid + ".s2"
 					if ( strsize != (-1) ) {
 						fmode = 11
 						gosub *game_ctrlFile
 					}
 					mid = midbk
-					inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) = 0
+					inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) = 0
 					inv(INV_ITEM_PARAM2, ci) = 100
 					inv(INV_ITEM_PROPERTY, ci) = PROPERTY_NONE
 				}
@@ -820,21 +820,21 @@
 	if ( cc == CHARA_PLAYER ) {
 		if ( trait(TRAIT_ETHER_ABSORB_ROD) != 0 ) {
 			if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_ITEM_ROD ) {
-				if ( inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) > 0 ) {
+				if ( inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) > 0 ) {
 					dbmode = DBMODE_ON_ZAP
 					dbid = inv(INV_ITEM_ID, ci)
 					gosub *db_item
 					txt lang("あなたは" + itemname(ci) + "から魔力を吸い取った。", "You absorb magic from " + itemname(ci) + ".")
 					if ( efid >= SKILL_SPELL_HEAL_LIGHT & efid < MAX_SPELL ) {
-						skillgain CHARA_PLAYER, efid, 1, inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) * 5 * inv(INV_ITEM_NUM, ci) + 10
+						skillgain CHARA_PLAYER, efid, 1, inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) * 5 * inv(INV_ITEM_NUM, ci) + 10
 						txtef COLOR_BLUE
 						txt lang(name(0) + "は" + skillname(efid) + "の魔法のストックを得た。", s + "you gain knowledge of a spell, " + skillname(efid) + ".")
 					}
 					else {
-						healmp CHARA_PLAYER, inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) * 5 * inv(INV_ITEM_NUM, ci)
+						healmp CHARA_PLAYER, inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) * 5 * inv(INV_ITEM_NUM, ci)
 						txt lang(name(0) + "のマナが回復した。", name(0) + your(CHARA_PLAYER) + " mana is restored.")
 					}
-					inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) = 0
+					inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) = 0
 				}
 			}
 		}
@@ -946,7 +946,7 @@
 							if ( cdata(CDATA_ROLE, cnt) == ROLE_SHOP_TRADE ) {
 								continue
 							}
-							if ( (cdata(CDATA_ROLE, cnt) >= (1000 /*!!!@[ROLE_SHOP_MIN @@@ ROLE_SHOP_WEAPON]@!!! */) & cdata(CDATA_ROLE, cnt) < (2000 /*!!!@[ROLE_GUEST_MIN @@@ ROLE_GUEST_BEGGAR]@!!! */) | cdata(CDATA_ROLE, cnt) == ROLE_GUEST_MERCHANT) != 1 ) {
+							if ( (cdata(CDATA_ROLE, cnt) >= (1000 /*!!!@[ROLE_SHOP_MIN @@@ ROLE_SHOP_WEAPON]@!!! */) & cdata(CDATA_ROLE, cnt) < (2000 /*!!!@[ROLE_GUEST_BEGGAR @@@ ROLE_GUEST_MIN]@!!! */) | cdata(CDATA_ROLE, cnt) == ROLE_GUEST_MERCHANT) != 1 ) {
 								continue
 							}
 							cdata(CDATA_FAME, cnt) += sellgold
@@ -1056,9 +1056,9 @@
 	}
 	if ( dropval == 1 ) {
 		inv(INV_ITEM_PROPERTY, ti) = PROPERTY_CONSTRUCT
-		inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ti) = gdata(GDATA_COUNT_SHELTER) + 5
+		inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ti) = gdata(GDATA_COUNT_SHELTER) + 5
 		gdata(GDATA_COUNT_SHELTER)++
-		if ( inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ti) > 50 ) {
+		if ( inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ti) > 50 ) {
 			inv(INV_ITEM_PARAM2, ti) = 10
 		}
 	}
@@ -1158,7 +1158,7 @@
 			goto *turn_end
 		}
 	}
-	efid = (0 /*!!!@[SKILL_NONE @@@ BUFF_NONE]@!!! */)
+	efid = (0 /*!!!@[BUFF_NONE @@@ SKILL_NONE]@!!! */)
 	dbmode = DBMODE_ON_READ
 	dbid = inv(INV_ITEM_ID, ci)
 	gosub *db_item
@@ -1690,7 +1690,7 @@
 					snd SOUNDLIST_BASH1
 					txt lang(name(tc) + "を轢いた。", "You blew " + name(tc) + ".")
 					txtmore
-					dmghp tc, (sdata(SKILL_ACTIVE_RIDING, CHARA_PLAYER) / 4 + 4) * (sdata(SKILL_ATTR_WIL, CHARA_PLAYER) / 4 + 3) + rnd(sdata(SKILL_ATTR_SPD, CHARA_PLAYER) + 5), (0 /*!!!@[DAMAGE_FROM_CHARA @@@ CHARA_PLAYER]@!!! */), SKILL_RESDMG_CRUSH, 1000
+					dmghp tc, (sdata(SKILL_ACTIVE_RIDING, CHARA_PLAYER) / 4 + 4) * (sdata(SKILL_ATTR_WIL, CHARA_PLAYER) / 4 + 3) + rnd(sdata(SKILL_ATTR_SPD, CHARA_PLAYER) + 5), (0 /*!!!@[CHARA_PLAYER @@@ DAMAGE_FROM_CHARA]@!!! */), SKILL_RESDMG_CRUSH, 1000
 					if ( cdata(CDATA_CONDITION_WINCE, tc) < 0 ) {
 						cdata(CDATA_CONDITION_WINCE, tc) = 1
 					}
@@ -2016,10 +2016,10 @@
 							if ( qdata(QDATA_EXIST, rq) == QUEST_TYPE_ESCORT ) {
 								if ( qdata(QDATA_STATE, rq) == QUEST_STATE_ONGOING ) {
 									if ( qdata(QDATA_VAR, rq) == 0 ) {
-										if ( qdata((10 /*!!!@[QDATA_ENCOUNTER @@@ QDATA_DEST_CLIENT]@!!! */), rq) < 2 ) {
+										if ( qdata((10 /*!!!@[QDATA_DEST_CLIENT @@@ QDATA_ENCOUNTER]@!!! */), rq) < 2 ) {
 											encounter = 3
 											encounterref = rq
-											qdata((10 /*!!!@[QDATA_ENCOUNTER @@@ QDATA_DEST_CLIENT]@!!! */), rq)++
+											qdata((10 /*!!!@[QDATA_DEST_CLIENT @@@ QDATA_ENCOUNTER]@!!! */), rq)++
 											break
 										}
 									}
@@ -2821,8 +2821,8 @@
 		}
 		goto *turn_end
 	}
-	if ( inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) != 0 ) {
-		invfile = inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci)
+	if ( inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) != 0 ) {
+		invfile = inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci)
 		invcontainer(1) = ci
 		if ( inv(INV_ITEM_ID, ci) == ITEM_ID_COOLER_BOX ) {
 			refweight = -1
@@ -2830,14 +2830,14 @@
 		else {
 			refweight = 0
 		}
-		if ( inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) == 3 | inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) == 4 | inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) == 6 | inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) == 10 | inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) == 12 | inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) == 11 ) {
+		if ( inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) == 3 | inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) == 4 | inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) == 6 | inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) == 10 | inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) == 12 | inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) == 11 ) {
 			if ( gdata(GDATA_AREA) != AREA_HOME & gdata(GDATA_AREA) != AREA_MAID_MANSION ) {
 				txt lang("それは家の中でのみ使用できる。", "You can only use it at your home.")
 				gosub *screen_draw
 				goto *pc_turn
 			}
 		}
-		if ( inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) == 5 ) {
+		if ( inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) == 5 ) {
 			if ( adata(ADATA_ID, gdata(GDATA_AREA)) != AREA_SHOP ) {
 				txt lang("それは店の中でのみ使用できる。", "You can only use it at your shop")
 				gosub *screen_draw
@@ -3576,13 +3576,13 @@
 	ammoy = cdata(CDATA_Y, tc)
 	attackitem = cw
 	if ( ammo != (-1) ) {
-		if ( inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ammo) != (-1) ) {
-			if ( inv(40 + inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ammo) * 2 + 1, ammo) \ 1000 <= 0 ) {
+		if ( inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ammo) != (-1) ) {
+			if ( inv(40 + inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ammo) * 2 + 1, ammo) \ 1000 <= 0 ) {
 				txt lang("通常弾を装填した。", "You load normal ammo.")
-				inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ammo) = -1
+				inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ammo) = -1
 			}
 			else {
-				ammoproc = inv(40 + inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ammo) * 2, ammo) \ 10000
+				ammoproc = inv(40 + inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ammo) * 2, ammo) \ 10000
 				if ( cc == CHARA_PLAYER ) {
 					if ( cdata(CDATA_SP, CHARA_PLAYER) < 50 ) {
 						if ( cdata(CDATA_SP, CHARA_PLAYER) < rnd(75) ) {
@@ -3594,7 +3594,7 @@
 					}
 					dmgsp CHARA_PLAYER, rnd(encammoref(ENCAMMOREF_SP_COST, ammoproc) + 1)
 				}
-				inv(40 + inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ammo) * 2 + 1, ammo)--
+				inv(40 + inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ammo) * 2 + 1, ammo)--
 			}
 		}
 	}
@@ -5700,10 +5700,10 @@
 		snd SOUNDLIST_EQUIP1
 		txt lang(itemname(cidip, 1) + "を" + itemname(ci) + "に装着した。", "You bait " + itemname(ci) + " with " + itemname(cidip, 1) + ".")
 		if ( inv(INV_ITEM_PARAM4, ci) == inv(INV_ITEM_PARAM1, cidip) ) {
-			inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) += rnd(10) + 15
+			inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) += rnd(10) + 15
 		}
 		else {
-			inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) = rnd(10) + 15
+			inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) = rnd(10) + 15
 			inv(INV_ITEM_PARAM4, ci) = inv(INV_ITEM_PARAM1, cidip)
 		}
 		goto *turn_end
@@ -5997,13 +5997,13 @@
 	}
 	if ( ibit(ITEM_BIT_PERIOD, ci) == TRUE ) {
 		if ( gdata(GDATA_FLAG_INSIDE_DEEP_SEA_CASTLE) == 100 ) {
-			inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 + inv(INV_ITEM_PARAM3, ci)
+			inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 + inv(INV_ITEM_PARAM3, ci)
 			if ( inv(INV_ITEM_PARAM3, ci) >= 24 ) {
 				inv(INV_ITEM_NEED_SLEEP, ci) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12
 			}
 		}
-		if ( gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 < inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) ) {
-			txt lang("そのアイテムが次に使用できるのは" + cnvdate(inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci), 1) + "だ。", "This item will be useable again at " + cnvdate(inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci), 1) + ".")
+		if ( gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 < inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) ) {
+			txt lang("そのアイテムが次に使用できるのは" + cnvdate(inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci), 1) + "だ。", "This item will be useable again at " + cnvdate(inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci), 1) + ".")
 			gosub *screen_draw
 			goto *pc_turn
 		}
@@ -6015,19 +6015,19 @@
 			}
 		}
 		item_separate ci
-		inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 + inv(INV_ITEM_PARAM3, ci)
+		inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 + inv(INV_ITEM_PARAM3, ci)
 		if ( inv(INV_ITEM_PARAM3, ci) >= 24 ) {
 			inv(INV_ITEM_NEED_SLEEP, ci) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12
 		}
 	}
 	if ( ibit(ITEM_BIT_CHARGE_ITEM, ci) == TRUE ) {
-		if ( inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) <= 0 ) {
+		if ( inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) <= 0 ) {
 			txt lang("それはもう使えない。", "It's out of charge.")
 			gosub *screen_draw
 			goto *pc_turn
 		}
 		item_separate ci
-		inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci)--
+		inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci)--
 	}
 	if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE_MINOR) == FILTER_ITEM_SEED ) {
 		goto *item_seed
@@ -7244,7 +7244,7 @@
 		if ( rtval == 3 ) {
 			efid = -1
 			gosub *com_spell
-			if ( efid > (0 /*!!!@[SKILL_NONE @@@ BUFF_NONE]@!!! */) ) {
+			if ( efid > (0 /*!!!@[BUFF_NONE @@@ SKILL_NONE]@!!! */) ) {
 				num = spell(efid - 400) / 2000
 				spell(efid - 400) /= 2
 				if ( efid == SKILL_SPELL_GEM_POWER ) {
@@ -7432,7 +7432,7 @@
 				}
 				flt
 				itemcreate -1, dbid, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), num
-				inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) = 1
+				inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) = 1
 				item_identify ci, ITEM_KNOWN_FULL
 				txt lang("何かが足元に転がってきた。", "Something is put on the ground.")
 			}
@@ -8748,7 +8748,7 @@
 	}
 	if ( _switch_val == 82 | _switch_sw ) {
 		_switch_sw = 0
-		inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci)++
+		inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci)++
 		if ( mdata(MDATA_TYPE) == MAP_TYPE_WORLD ) {
 			goto *act_use_SWEND1
 		}
@@ -8774,9 +8774,9 @@
 		}
 		tlocx = cdata(CDATA_X, tc)
 		tlocy = cdata(CDATA_Y, tc)
-		inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci)--
-		if ( inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) < 0 ) {
-			inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) = 0
+		inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci)--
+		if ( inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) < 0 ) {
+			inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) = 0
 		}
 		item_stack CHARA_PLAYER, ci, 1
 		animeid = ANIMATION_NUCLEAR
@@ -8797,7 +8797,7 @@
 	}
 	if ( _switch_val == 83 | _switch_sw ) {
 		_switch_sw = 0
-		inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci)++
+		inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci)++
 		if ( mdata(MDATA_TYPE) == MAP_TYPE_WORLD ) {
 			goto *act_use_SWEND1
 		}
@@ -8822,9 +8822,9 @@
 		aniy = tlocy
 		gosub *anime
 		gosub *screen_draw
-		inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci)--
-		if ( inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) < 0 ) {
-			inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) = 0
+		inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci)--
+		if ( inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) < 0 ) {
+			inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) = 0
 		}
 		item_stack CHARA_PLAYER, ci, 1
 		efp = limit(sdata(SKILL_RES_FIRE, CHARA_PLAYER) * 2, 1, 5000) + sqrt(sdata(SKILL_NORMAL_MARKSMAN, CHARA_PLAYER) + 1) * sdata(SKILL_NORMAL_MARKSMAN, CHARA_PLAYER) * 2 + sdata(SKILL_ATTR_CON, CHARA_PLAYER) * 10
@@ -9882,7 +9882,7 @@
 		inv(INV_ITEM_PARAM1, ci) = necrop
 		inv(INV_ITEM_PARAM2, ci) = cdata(CDATA_FORM_SHIFT_PIC, dead1)
 		inv(INV_ITEM_WEIGHT, ci) += necrop * 1000
-		inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 + inv(INV_ITEM_PARAM3, ci) * 24
+		inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 + inv(INV_ITEM_PARAM3, ci) * 24
 		inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
 		inv(INV_ITEM_KNOWN, ci) = ITEM_KNOWN_NECRO
 		inv(INV_ITEM_CHARA_PIC, ci) = necrop3
@@ -9918,7 +9918,7 @@
 		inv(INV_ITEM_PARAM1, ci) = necrop
 		inv(INV_ITEM_PARAM2, ci) = cdata(CDATA_FORM_SHIFT_PIC, dead2)
 		inv(INV_ITEM_WEIGHT, ci) += necrop * 1000
-		inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 + inv(INV_ITEM_PARAM3, ci) * 24
+		inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 + inv(INV_ITEM_PARAM3, ci) * 24
 		inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
 		inv(INV_ITEM_KNOWN, ci) = ITEM_KNOWN_NECRO
 		inv(INV_ITEM_CHARA_PIC, ci) = necrop3
@@ -10362,13 +10362,13 @@
 			goto *act_use_SWEND1
 		}
 		if ( inv(INV_ITEM_ID, ci) == ITEM_ID_POTION_RACK ) {
-			inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) = 10
+			inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) = 10
 		}
 		if ( inv(INV_ITEM_ID, ci) == ITEM_ID_BREAD_DISPLAY ) {
-			inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) = 11
+			inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) = 11
 		}
 		if ( inv(INV_ITEM_ID, ci) == ITEM_ID_LARGE_BOOKSHELF | inv(INV_ITEM_ID, ci) == ITEM_ID_OLD_BOOKSHELF | inv(INV_ITEM_ID, ci) == ITEM_ID_CRAFT_BOOK_SHELF | inv(INV_ITEM_ID, ci) == ITEM_ID_BOOKSHELF ) {
-			inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) = 12
+			inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) = 12
 		}
 		goto *act_open
 		goto *act_use_SWEND1
@@ -11534,7 +11534,7 @@
 			itemcreate -1, ITEM_ID_GOLD_PIECE, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), kane
 			txt lang("何かが足元に転がってきた。", "Something is put on the ground.")
 			kane = 0
-			inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), cibk) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12
+			inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), cibk) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12
 			ci = cibk
 		}
 		txt lang("[ 現在の預金額：" + inv(INV_ITEM_PARAM1, ci) + "gold ]", "You count your coins and sigh...")
@@ -11550,12 +11550,12 @@
 			goto *pc_turn
 		}
 		if ( rtval == 0 ) {
-			inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12
+			inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12
 			txt lang("「ウチウチ詐欺には気をつけんといかんよ！」", cnvtalk("Please pay attention to fraud when transferring money!"))
 			goto *pc_turn
 		}
 		if ( rtval == 1 ) {
-			inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12
+			inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12
 			if ( inv(INV_ITEM_PARAM1, ci) == 0 ) {
 				inv(INV_ITEM_PARAM1, ci) = 0
 				txt lang("「これぞ金を産むガチョウ…って空っぽやんか！」", cnvtalk("This is the goose that gives birth to gol..d...what? empty!?"))
@@ -11588,14 +11588,14 @@
 			if ( ybank > cdata(CDATA_GOLD, CHARA_PLAYER) ) {
 				txt lang("金貨が足りない…", "You count your coins and sigh...")
 				ybank = 0
-				inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12
+				inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12
 				gosub *screen_draw
 				goto *pc_turn
 			}
 			if ( inv(INV_ITEM_PARAM1, ci) >= 1000000000 ) {
 				txt lang("貯金箱は一杯だ。", "The money box if ull.")
 				ybank = 0
-				inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12
+				inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12
 				gosub *screen_draw
 				goto *pc_turn
 			}
@@ -12212,7 +12212,7 @@
 					gosub *prompt_key
 					if ( stat == 0 ) {
 						gosub *screen_draw
-						inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12
+						inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12
 						inv(INV_ITEM_NEED_SLEEP, ci) = 0
 						goto *pc_turn
 					}
@@ -12224,7 +12224,7 @@
 					if ( cdata(CDATA_IMPRESSION, tc) < 150 ) {
 						snd SOUNDLIST_FAIL1
 						txt lang(name(tc) + "はやんわりと断った。", name(tc) + " gently refuses you.")
-						inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12
+						inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12
 						inv(INV_ITEM_NEED_SLEEP, ci) = 0
 						goto *pc_turn
 					}
@@ -12243,13 +12243,13 @@
 					gosub *prompt_key
 					if ( stat == 0 ) {
 						gosub *screen_draw
-						inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12
+						inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12
 						inv(INV_ITEM_NEED_SLEEP, ci) = 0
 						goto *pc_turn
 					}
 					if ( rtval == 0 ) {
 						gosub *screen_draw
-						inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12
+						inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12
 						inv(INV_ITEM_NEED_SLEEP, ci) = 0
 						goto *pc_turn
 					}
@@ -12436,7 +12436,7 @@
 				}
 			}
 			else {
-				inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12
+				inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12
 				inv(INV_ITEM_NEED_SLEEP, ci) = 0
 			}
 		}
@@ -12727,7 +12727,7 @@
 					continue
 				}
 				if ( rtval == 5 ) {
-					inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) = -1
+					inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) = -1
 					s = lang("通常弾", "Normal"), lang("無限", "Unlimited")
 					snd SOUNDLIST_AMMO
 					txtef COLOR_GREEN
@@ -12760,7 +12760,7 @@
 							enc = enc \ 10000
 							if ( i == 9 ) {
 								if ( inv(40 + cnt * 2, ci) \ 10000 == amp ) {
-									inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) = cnt
+									inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) = cnt
 									change = 1
 									break
 								}
@@ -12773,7 +12773,7 @@
 					}
 					snd SOUNDLIST_AMMO
 					change = 0
-					i = inv(40 + inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) * 2 + 1, ci) \ 1000, inv(40 + inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) * 2 + 1, ci) / 1000
+					i = inv(40 + inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) * 2 + 1, ci) \ 1000, inv(40 + inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) * 2 + 1, ci) / 1000
 					s = ammoname(amp), "" + i + "/" + i(1)
 					s = s + ":" + s(1)
 					txtef COLOR_GREEN

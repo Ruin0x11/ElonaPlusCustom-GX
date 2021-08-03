@@ -326,13 +326,13 @@
 			shops = lang("ジャンク屋", "Junk shop")
 		}
 		txt lang("店タイプ：" + shops + "。", "Shop type : " + shops + ".")
-		if ( adata((37 /*!!!@[ADATA_SHOP_SALE_RESTRICTION @@@ ADATA_RANCH_BREED_RESTRICTION]@!!! */), gdata(GDATA_AREA)) == 0 ) {
+		if ( adata((37 /*!!!@[ADATA_RANCH_BREED_RESTRICTION @@@ ADATA_SHOP_SALE_RESTRICTION]@!!! */), gdata(GDATA_AREA)) == 0 ) {
 			txt lang("販売制限なし。", "Shop type : " + shops + ".")
 		}
-		if ( adata((37 /*!!!@[ADATA_SHOP_SALE_RESTRICTION @@@ ADATA_RANCH_BREED_RESTRICTION]@!!! */), gdata(GDATA_AREA)) == 1 ) {
+		if ( adata((37 /*!!!@[ADATA_RANCH_BREED_RESTRICTION @@@ ADATA_SHOP_SALE_RESTRICTION]@!!! */), gdata(GDATA_AREA)) == 1 ) {
 			txt lang("1日15品限定販売。", "15 items limited sale.")
 		}
-		if ( adata((37 /*!!!@[ADATA_SHOP_SALE_RESTRICTION @@@ ADATA_RANCH_BREED_RESTRICTION]@!!! */), gdata(GDATA_AREA)) == 2 ) {
+		if ( adata((37 /*!!!@[ADATA_RANCH_BREED_RESTRICTION @@@ ADATA_SHOP_SALE_RESTRICTION]@!!! */), gdata(GDATA_AREA)) == 2 ) {
 			txt lang("1日5品限定販売。", "5 items limited sale")
 		}
 		if ( getworker(gdata(GDATA_AREA)) != (-1) ) {
@@ -442,19 +442,19 @@
 		promptmax++
 		promptl(0, promptmax) = lang("場内消毒（浄化消毒薬消費）", "Consume disinfectant"), "null", "" + 18
 		promptmax++
-		if ( adata((37 /*!!!@[ADATA_SHOP_SALE_RESTRICTION @@@ ADATA_RANCH_BREED_RESTRICTION]@!!! */), gdata(GDATA_AREA)) == 0 ) {
+		if ( adata((37 /*!!!@[ADATA_RANCH_BREED_RESTRICTION @@@ ADATA_SHOP_SALE_RESTRICTION]@!!! */), gdata(GDATA_AREA)) == 0 ) {
 			promptl(0, promptmax) = lang("繁殖防止コード発動", "Activate breeding-prevent code"), "null", "" + 19
 			promptmax++
 		}
-		if ( adata((39 /*!!!@[ADATA_SHOP_TYPE_CHANGE_COOLDOWN @@@ ADATA_RANCH_PRODUCE_RESTRICTION]@!!! */), gdata(GDATA_AREA)) == 0 ) {
+		if ( adata((39 /*!!!@[ADATA_RANCH_PRODUCE_RESTRICTION @@@ ADATA_SHOP_TYPE_CHANGE_COOLDOWN]@!!! */), gdata(GDATA_AREA)) == 0 ) {
 			promptl(0, promptmax) = lang("生産防止コード発動", "Activate production-prevent code"), "null", "" + 20
 			promptmax++
 		}
-		if ( adata((37 /*!!!@[ADATA_SHOP_SALE_RESTRICTION @@@ ADATA_RANCH_BREED_RESTRICTION]@!!! */), gdata(GDATA_AREA)) != 0 ) {
+		if ( adata((37 /*!!!@[ADATA_RANCH_BREED_RESTRICTION @@@ ADATA_SHOP_SALE_RESTRICTION]@!!! */), gdata(GDATA_AREA)) != 0 ) {
 			promptl(0, promptmax) = lang("繁殖防止コード解除", "Cancel breeding-prevent code"), "null", "" + 21
 			promptmax++
 		}
-		if ( adata((39 /*!!!@[ADATA_SHOP_TYPE_CHANGE_COOLDOWN @@@ ADATA_RANCH_PRODUCE_RESTRICTION]@!!! */), gdata(GDATA_AREA)) != 0 ) {
+		if ( adata((39 /*!!!@[ADATA_RANCH_PRODUCE_RESTRICTION @@@ ADATA_SHOP_TYPE_CHANGE_COOLDOWN]@!!! */), gdata(GDATA_AREA)) != 0 ) {
 			promptl(0, promptmax) = lang("生産防止コード解除", "Cancel production-prevent code"), "null", "" + 22
 			promptmax++
 		}
@@ -999,7 +999,7 @@
 		snd SOUNDLIST_AMMO
 		txtef COLOR_RED
 		txt lang("この牧場では繁殖が行われない。", "This area will prevent breeding.")
-		adata((37 /*!!!@[ADATA_SHOP_SALE_RESTRICTION @@@ ADATA_RANCH_BREED_RESTRICTION]@!!! */), gdata(GDATA_AREA)) = 10
+		adata((37 /*!!!@[ADATA_RANCH_BREED_RESTRICTION @@@ ADATA_SHOP_SALE_RESTRICTION]@!!! */), gdata(GDATA_AREA)) = 10
 		goto *label_4482
 		_switch_sw++
 	}
@@ -1009,7 +1009,7 @@
 		snd SOUNDLIST_AMMO
 		txtef COLOR_RED
 		txt lang("この牧場では生産が行われない。", "This area will prevent production.")
-		adata((39 /*!!!@[ADATA_SHOP_TYPE_CHANGE_COOLDOWN @@@ ADATA_RANCH_PRODUCE_RESTRICTION]@!!! */), gdata(GDATA_AREA)) = 10
+		adata((39 /*!!!@[ADATA_RANCH_PRODUCE_RESTRICTION @@@ ADATA_SHOP_TYPE_CHANGE_COOLDOWN]@!!! */), gdata(GDATA_AREA)) = 10
 		goto *label_4482
 		_switch_sw++
 	}
@@ -1019,7 +1019,7 @@
 		snd SOUNDLIST_ENC
 		txtef COLOR_GREEN
 		txt lang("繁殖が通常通り行われるようになった。", "This area does not prevent breeding.")
-		adata((37 /*!!!@[ADATA_SHOP_SALE_RESTRICTION @@@ ADATA_RANCH_BREED_RESTRICTION]@!!! */), gdata(GDATA_AREA)) = 0
+		adata((37 /*!!!@[ADATA_RANCH_BREED_RESTRICTION @@@ ADATA_SHOP_SALE_RESTRICTION]@!!! */), gdata(GDATA_AREA)) = 0
 		goto *label_4482
 		_switch_sw++
 	}
@@ -1029,7 +1029,7 @@
 		snd SOUNDLIST_ENC
 		txtef COLOR_GREEN
 		txt lang("生産が通常通り行われるようになった。", "This area does not prevent production.")
-		adata((39 /*!!!@[ADATA_SHOP_TYPE_CHANGE_COOLDOWN @@@ ADATA_RANCH_PRODUCE_RESTRICTION]@!!! */), gdata(GDATA_AREA)) = 0
+		adata((39 /*!!!@[ADATA_RANCH_PRODUCE_RESTRICTION @@@ ADATA_SHOP_TYPE_CHANGE_COOLDOWN]@!!! */), gdata(GDATA_AREA)) = 0
 		goto *label_4482
 		_switch_sw++
 	}
@@ -1052,8 +1052,8 @@
 	if ( _switch_val == 11 | _switch_sw ) {
 		_switch_sw = 0
 		txtnew
-		if ( adata((39 /*!!!@[ADATA_SHOP_TYPE_CHANGE_COOLDOWN @@@ ADATA_RANCH_PRODUCE_RESTRICTION]@!!! */), gdata(GDATA_AREA)) > gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 ) {
-			txt lang("次に変更できるのは" + cnvdate(adata((39 /*!!!@[ADATA_SHOP_TYPE_CHANGE_COOLDOWN @@@ ADATA_RANCH_PRODUCE_RESTRICTION]@!!! */), gdata(GDATA_AREA)), 1) + "だ。", "This Shop will be changeable again at " + cnvdate(adata((39 /*!!!@[ADATA_SHOP_TYPE_CHANGE_COOLDOWN @@@ ADATA_RANCH_PRODUCE_RESTRICTION]@!!! */), gdata(GDATA_AREA)), 1) + ".")
+		if ( adata((39 /*!!!@[ADATA_RANCH_PRODUCE_RESTRICTION @@@ ADATA_SHOP_TYPE_CHANGE_COOLDOWN]@!!! */), gdata(GDATA_AREA)) > gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 ) {
+			txt lang("次に変更できるのは" + cnvdate(adata((39 /*!!!@[ADATA_RANCH_PRODUCE_RESTRICTION @@@ ADATA_SHOP_TYPE_CHANGE_COOLDOWN]@!!! */), gdata(GDATA_AREA)), 1) + "だ。", "This Shop will be changeable again at " + cnvdate(adata((39 /*!!!@[ADATA_RANCH_PRODUCE_RESTRICTION @@@ ADATA_SHOP_TYPE_CHANGE_COOLDOWN]@!!! */), gdata(GDATA_AREA)), 1) + ".")
 			snd SOUNDLIST_FAIL1
 			goto *label_4482
 		}
@@ -1067,7 +1067,7 @@
 		if ( rtval == 0 ) {
 			goto *label_4482
 		}
-		adata((39 /*!!!@[ADATA_SHOP_TYPE_CHANGE_COOLDOWN @@@ ADATA_RANCH_PRODUCE_RESTRICTION]@!!! */), gdata(GDATA_AREA)) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 + 24 * 15
+		adata((39 /*!!!@[ADATA_RANCH_PRODUCE_RESTRICTION @@@ ADATA_SHOP_TYPE_CHANGE_COOLDOWN]@!!! */), gdata(GDATA_AREA)) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 + 24 * 15
 		adata(ADATA_SHOP_TYPE, gdata(GDATA_AREA)) = rtval - 1
 		if ( adata(ADATA_SHOP_TYPE, gdata(GDATA_AREA)) == 0 ) {
 			shops = lang("何でも屋", "Goods shop")
@@ -1208,7 +1208,7 @@
 		if ( rtval == 0 ) {
 			goto *label_4482
 		}
-		adata((37 /*!!!@[ADATA_SHOP_SALE_RESTRICTION @@@ ADATA_RANCH_BREED_RESTRICTION]@!!! */), gdata(GDATA_AREA)) = rtval - 1
+		adata((37 /*!!!@[ADATA_RANCH_BREED_RESTRICTION @@@ ADATA_SHOP_SALE_RESTRICTION]@!!! */), gdata(GDATA_AREA)) = rtval - 1
 		snd SOUNDLIST_BUILD1
 		goto *label_4482
 		_switch_sw++
@@ -1798,12 +1798,12 @@
 			}
 		}
 		in = rnd(inv(INV_ITEM_NUM, ci)) + 1
-		if ( adata((37 /*!!!@[ADATA_SHOP_SALE_RESTRICTION @@@ ADATA_RANCH_BREED_RESTRICTION]@!!! */), area) == 1 ) {
+		if ( adata((37 /*!!!@[ADATA_RANCH_BREED_RESTRICTION @@@ ADATA_SHOP_SALE_RESTRICTION]@!!! */), area) == 1 ) {
 			if ( in + sold > 15 ) {
 				in = 15 - sold
 			}
 		}
-		if ( adata((37 /*!!!@[ADATA_SHOP_SALE_RESTRICTION @@@ ADATA_RANCH_BREED_RESTRICTION]@!!! */), area) == 2 ) {
+		if ( adata((37 /*!!!@[ADATA_RANCH_BREED_RESTRICTION @@@ ADATA_SHOP_SALE_RESTRICTION]@!!! */), area) == 2 ) {
 			if ( in + sold > 5 ) {
 				in = 5 - sold
 			}
@@ -1842,12 +1842,12 @@
 				}
 			loop
 		}
-		if ( adata((37 /*!!!@[ADATA_SHOP_SALE_RESTRICTION @@@ ADATA_RANCH_BREED_RESTRICTION]@!!! */), area) == 1 ) {
+		if ( adata((37 /*!!!@[ADATA_RANCH_BREED_RESTRICTION @@@ ADATA_SHOP_SALE_RESTRICTION]@!!! */), area) == 1 ) {
 			if ( sold >= 15 ) {
 				break
 			}
 		}
-		if ( adata((37 /*!!!@[ADATA_SHOP_SALE_RESTRICTION @@@ ADATA_RANCH_BREED_RESTRICTION]@!!! */), area) == 2 ) {
+		if ( adata((37 /*!!!@[ADATA_RANCH_BREED_RESTRICTION @@@ ADATA_SHOP_SALE_RESTRICTION]@!!! */), area) == 2 ) {
 			if ( sold >= 5 ) {
 				break
 			}
@@ -1947,7 +1947,7 @@
 			txtef COLOR_YELLOW
 			txt lang("[店]" + customer + "人の来客があり、" + cdatan(CDATAN_NAME, worker) + "は" + sold + "個のアイテムを売却した。" + s + "が売り上げとして金庫に保管された。そして" + yaca + "ヤカポイントを獲得した。", "[Shop]" + customer + " customers visited your shop and " + cdatan(CDATAN_NAME, worker) + " sold " + sold + " items. " + cdatan(CDATAN_NAME, worker) + " put " + s + " in the shop strong box. You got " + yaca + " yaca points.")
 		}
-		skillexp SKILL_NORMAL_NEGOTIATION, worker, limit(int(sqrt(income)) * 10, 25, 2000) * (adata((37 /*!!!@[ADATA_SHOP_SALE_RESTRICTION @@@ ADATA_RANCH_BREED_RESTRICTION]@!!! */), area) + 2) / 2
+		skillexp SKILL_NORMAL_NEGOTIATION, worker, limit(int(sqrt(income)) * 10, 25, 2000) * (adata((37 /*!!!@[ADATA_RANCH_BREED_RESTRICTION @@@ ADATA_SHOP_SALE_RESTRICTION]@!!! */), area) + 2) / 2
 		cdata(CDATA_SALES_EXP, worker)++
 		if ( 0 ) {
 			cdata(CDATA_SALES_EXP, worker) += 360
@@ -2346,7 +2346,7 @@
 		if ( worker == (-1) ) {
 			goto *skipBreeder
 		}
-		if ( adata((37 /*!!!@[ADATA_SHOP_SALE_RESTRICTION @@@ ADATA_RANCH_BREED_RESTRICTION]@!!! */), gdata(GDATA_AREA)) == 10 ) {
+		if ( adata((37 /*!!!@[ADATA_RANCH_BREED_RESTRICTION @@@ ADATA_SHOP_SALE_RESTRICTION]@!!! */), gdata(GDATA_AREA)) == 10 ) {
 			goto *skipBreeder
 		}
 		if ( cdatan(CDATAN_RACE, worker) == "quickling" ) {
@@ -2584,7 +2584,7 @@
 					cdata(CDATA_EMO_ICON, cnt) = 8 + 100 * 30
 				}
 			}
-			if ( adata((39 /*!!!@[ADATA_SHOP_TYPE_CHANGE_COOLDOWN @@@ ADATA_RANCH_PRODUCE_RESTRICTION]@!!! */), gdata(GDATA_AREA)) == 10 ) {
+			if ( adata((39 /*!!!@[ADATA_RANCH_PRODUCE_RESTRICTION @@@ ADATA_SHOP_TYPE_CHANGE_COOLDOWN]@!!! */), gdata(GDATA_AREA)) == 10 ) {
 				break
 			}
 			if ( cnt == 0 ) {

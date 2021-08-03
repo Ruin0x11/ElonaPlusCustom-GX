@@ -19,7 +19,7 @@
 	}
 	atxspot = ATX_FIELD1
 	atxlv = gdata(GDATA_LEVEL)
-	if ( mdata(MDATA_TYPE) == (20 /*!!!@[MAP_TYPE_DUNGEON_MIN @@@ MAP_TYPE_DUNGEON]@!!! */) ) {
+	if ( mdata(MDATA_TYPE) == (20 /*!!!@[MAP_TYPE_DUNGEON @@@ MAP_TYPE_DUNGEON_MIN]@!!! */) ) {
 		atxspot = ATX_DUNGEON1
 	}
 	if ( mdata(MDATA_TYPE) == MAP_TYPE_TOWER ) {
@@ -40,7 +40,7 @@
 	if ( mdata(MDATA_TYPE) == MAP_TYPE_MINE ) {
 		atxspot = ATX_MINE1
 	}
-	if ( mdata(MDATA_TYPE) == (27 /*!!!@[MAP_TYPE_LAKE @@@ MAP_TYPE_DUNGEON_MAX]@!!! */) ) {
+	if ( mdata(MDATA_TYPE) == (27 /*!!!@[MAP_TYPE_DUNGEON_MAX @@@ MAP_TYPE_LAKE]@!!! */) ) {
 		atxspot = ATX_WATER1
 	}
 	if ( mdata(MDATA_TYPE) == MAP_TYPE_WORLD ) {
@@ -63,7 +63,7 @@
 	}
 	cell_featread cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER)
 	if ( feat(FEAT_CELL_FEATURE_ID) == CELL_FEATURE_SAMPLING_SPOT_DETECTION ) {
-		if ( mdata(MDATA_TYPE) == (20 /*!!!@[MAP_TYPE_DUNGEON_MIN @@@ MAP_TYPE_DUNGEON]@!!! */) ) {
+		if ( mdata(MDATA_TYPE) == (20 /*!!!@[MAP_TYPE_DUNGEON @@@ MAP_TYPE_DUNGEON_MIN]@!!! */) ) {
 			atxspot = ATX_DUNGEON1
 		}
 		if ( mdata(MDATA_TYPE) == MAP_TYPE_TOWER ) {
@@ -84,7 +84,7 @@
 		if ( mdata(MDATA_TYPE) == MAP_TYPE_MINE ) {
 			atxspot = ATX_MINE1
 		}
-		if ( mdata(MDATA_TYPE) == (27 /*!!!@[MAP_TYPE_LAKE @@@ MAP_TYPE_DUNGEON_MAX]@!!! */) ) {
+		if ( mdata(MDATA_TYPE) == (27 /*!!!@[MAP_TYPE_DUNGEON_MAX @@@ MAP_TYPE_LAKE]@!!! */) ) {
 			atxspot = ATX_WATER1
 		}
 	}
@@ -398,7 +398,7 @@
 						dmghp cc, 50 + limit(rnd(gdata(GDATA_LEVEL) + gdata(GDATA_FLAG_MINEFIELD_QUEST_LEVEL) + 1) * 5, 1, 99999), DAMAGE_FROM_TRAP
 					}
 					if ( feat(FEAT_CELL_SUB_FEATURE_ID) == CELL_SUB_FEATURE_TRAP_MINE ) {
-						dmghp cc, 50 + limit(rnd(gdata(GDATA_LEVEL) + 1) * 5, 1, 99999), (0 /*!!!@[DAMAGE_FROM_CHARA @@@ CHARA_PLAYER]@!!! */)
+						dmghp cc, 50 + limit(rnd(gdata(GDATA_LEVEL) + 1) * 5, 1, 99999), (0 /*!!!@[CHARA_PLAYER @@@ DAMAGE_FROM_CHARA]@!!! */)
 					}
 					if ( gdata(GDATA_QUEST) == QUEST_TYPE_MINEFIELD ) {
 						if ( feat(FEAT_CELL_SUB_FEATURE_ID) == CELL_SUB_FEATURE_TRAP_QUEST_MINE ) {
@@ -427,7 +427,7 @@
 						dmghp cc, limit((gdata(GDATA_LEVEL) + gdata(GDATA_FLAG_MINEFIELD_QUEST_LEVEL)) / 2 + limit(rnd(gdata(GDATA_LEVEL) + gdata(GDATA_FLAG_MINEFIELD_QUEST_LEVEL) + 1) * 2, 1, 9999) - cdata(CDATA_DV, cc), 2, 9999), DAMAGE_FROM_TRAP
 					}
 					if ( feat(FEAT_CELL_SUB_FEATURE_ID) == CELL_SUB_FEATURE_TRAP_PITFALL ) {
-						dmghp cc, limit(gdata(GDATA_LEVEL) / 2 + limit(rnd(gdata(GDATA_LEVEL) + 1) * 2, 1, 9999) - cdata(CDATA_DV, cc), 2, 9999), (0 /*!!!@[DAMAGE_FROM_CHARA @@@ CHARA_PLAYER]@!!! */)
+						dmghp cc, limit(gdata(GDATA_LEVEL) / 2 + limit(rnd(gdata(GDATA_LEVEL) + 1) * 2, 1, 9999) - cdata(CDATA_DV, cc), 2, 9999), (0 /*!!!@[CHARA_PLAYER @@@ DAMAGE_FROM_CHARA]@!!! */)
 					}
 					if ( cdata(CDATA_CONDITION_INVERT, cc) < 2 ) {
 						cdata(CDATA_CONDITION_INVERT, cc) = 2
@@ -627,7 +627,7 @@
 						if ( tc < MAX_CHARA_FOLLOWER ) {
 							p = rnd(limit(p, 1, 100)) + 1
 						}
-						if ( cdata(CDATA_ROLE, tc) >= (1000 /*!!!@[ROLE_SHOP_MIN @@@ ROLE_SHOP_WEAPON]@!!! */) & cdata(CDATA_ROLE, tc) < (2000 /*!!!@[ROLE_GUEST_MIN @@@ ROLE_GUEST_BEGGAR]@!!! */) | cdata(CDATA_ROLE, tc) == ROLE_GUEST_MERCHANT ) {
+						if ( cdata(CDATA_ROLE, tc) >= (1000 /*!!!@[ROLE_SHOP_MIN @@@ ROLE_SHOP_WEAPON]@!!! */) & cdata(CDATA_ROLE, tc) < (2000 /*!!!@[ROLE_GUEST_BEGGAR @@@ ROLE_GUEST_MIN]@!!! */) | cdata(CDATA_ROLE, tc) == ROLE_GUEST_MERCHANT ) {
 							p /= 10
 						}
 						if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) == TRUE | cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) == TRUE | cbit(CHARA_BIT_SUMMONED, tc) == TRUE ) {
@@ -958,7 +958,7 @@
 						if ( tc < MAX_CHARA_FOLLOWER ) {
 							p = 1
 						}
-						if ( cdata(CDATA_ROLE, tc) >= (1000 /*!!!@[ROLE_SHOP_MIN @@@ ROLE_SHOP_WEAPON]@!!! */) & cdata(CDATA_ROLE, tc) < (2000 /*!!!@[ROLE_GUEST_MIN @@@ ROLE_GUEST_BEGGAR]@!!! */) | cdata(CDATA_ROLE, tc) == ROLE_GUEST_MERCHANT ) {
+						if ( cdata(CDATA_ROLE, tc) >= (1000 /*!!!@[ROLE_SHOP_MIN @@@ ROLE_SHOP_WEAPON]@!!! */) & cdata(CDATA_ROLE, tc) < (2000 /*!!!@[ROLE_GUEST_BEGGAR @@@ ROLE_GUEST_MIN]@!!! */) | cdata(CDATA_ROLE, tc) == ROLE_GUEST_MERCHANT ) {
 							p /= 100
 						}
 						if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) == TRUE | cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) == TRUE | cbit(CHARA_BIT_SUMMONED, tc) == TRUE ) {
@@ -1214,7 +1214,7 @@
 						if ( tc < MAX_CHARA_FOLLOWER ) {
 							p = 1
 						}
-						if ( cdata(CDATA_ROLE, tc) >= (1000 /*!!!@[ROLE_SHOP_MIN @@@ ROLE_SHOP_WEAPON]@!!! */) & cdata(CDATA_ROLE, tc) < (2000 /*!!!@[ROLE_GUEST_MIN @@@ ROLE_GUEST_BEGGAR]@!!! */) | cdata(CDATA_ROLE, tc) == ROLE_GUEST_MERCHANT ) {
+						if ( cdata(CDATA_ROLE, tc) >= (1000 /*!!!@[ROLE_SHOP_MIN @@@ ROLE_SHOP_WEAPON]@!!! */) & cdata(CDATA_ROLE, tc) < (2000 /*!!!@[ROLE_GUEST_BEGGAR @@@ ROLE_GUEST_MIN]@!!! */) | cdata(CDATA_ROLE, tc) == ROLE_GUEST_MERCHANT ) {
 							p /= 50
 						}
 						if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) == TRUE | cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) == TRUE | cbit(CHARA_BIT_SUMMONED, tc) == TRUE ) {
@@ -2799,7 +2799,7 @@
 		chatteleport = 1
 		gdata(GDATA_RETURN_AREA) = gdata(GDATA_AREA), gdata(GDATA_LEVEL), cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER)
 		gdata(GDATA_TELEPORT_AREA) = AREA_SHELTER
-		gdata(GDATA_TELEPORT_LEVEL) = 5 + inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) \ 50
+		gdata(GDATA_TELEPORT_LEVEL) = 5 + inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) \ 50
 		if ( inv(INV_ITEM_PARAM2, ci) <= 10 ) {
 			shelterd = 6
 			inv(INV_ITEM_PARAM2, ci) = 100
@@ -3844,7 +3844,7 @@
 					rtval = 38
 				}
 			}
-			if ( mdata(MDATA_TYPE) == (20 /*!!!@[MAP_TYPE_DUNGEON_MIN @@@ MAP_TYPE_DUNGEON]@!!! */) | mdata(MDATA_TYPE) == (27 /*!!!@[MAP_TYPE_LAKE @@@ MAP_TYPE_DUNGEON_MAX]@!!! */) ) {
+			if ( mdata(MDATA_TYPE) == (20 /*!!!@[MAP_TYPE_DUNGEON @@@ MAP_TYPE_DUNGEON_MIN]@!!! */) | mdata(MDATA_TYPE) == (27 /*!!!@[MAP_TYPE_DUNGEON_MAX @@@ MAP_TYPE_LAKE]@!!! */) ) {
 				if ( rnd(5) == 0 ) {
 					rtval = -1
 				}
@@ -3923,7 +3923,7 @@
 								rtval = 38
 							}
 						}
-						if ( mdata(MDATA_TYPE) == (20 /*!!!@[MAP_TYPE_DUNGEON_MIN @@@ MAP_TYPE_DUNGEON]@!!! */) | mdata(MDATA_TYPE) == (27 /*!!!@[MAP_TYPE_LAKE @@@ MAP_TYPE_DUNGEON_MAX]@!!! */) ) {
+						if ( mdata(MDATA_TYPE) == (20 /*!!!@[MAP_TYPE_DUNGEON @@@ MAP_TYPE_DUNGEON_MIN]@!!! */) | mdata(MDATA_TYPE) == (27 /*!!!@[MAP_TYPE_DUNGEON_MAX @@@ MAP_TYPE_LAKE]@!!! */) ) {
 							if ( rnd(5) == 0 ) {
 								rtval = -1
 							}
@@ -4271,11 +4271,11 @@
 		ci = cibkread
 		if ( stat == 0 ) {
 			rowactend cc
-			inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci)--
-			if ( inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) < 0 ) {
-				inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) = 0
+			inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci)--
+			if ( inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) < 0 ) {
+				inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) = 0
 			}
-			if ( inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) == 0 ) {
+			if ( inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) == 0 ) {
 				inv(INV_ITEM_NUM, ci)--
 				if ( ci >= 5080 ) {
 					cell_refresh inv(INV_ITEM_X, ci), inv(INV_ITEM_Y, ci)
@@ -4312,7 +4312,7 @@
 		item_identify ci, ITEM_KNOWN_FULL
 		txt lang(itemname(ci, 1) + "を解読した！", "You finished decoding " + itemname(ci, 1) + "!")
 		inv(INV_ITEM_PARAM2, ci) = 1
-		inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) = 1
+		inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) = 1
 		ibitmod ITEM_BIT_CHARGE_ITEM, ci, FALSE
 		item_stack CHARA_PLAYER, ci, 1
 	}
@@ -4359,11 +4359,11 @@
 	}
 	item_identify ci, ITEM_KNOWN_NAME
 	if ( inv(INV_ITEM_ID, ci) != ITEM_ID_ANCIENT_BOOK ) {
-		inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci)--
-		if ( inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) < 0 ) {
-			inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) = 0
+		inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci)--
+		if ( inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) < 0 ) {
+			inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) = 0
 		}
-		if ( inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) == 0 ) {
+		if ( inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) == 0 ) {
 			removeitem ci, 1
 			if ( synccheck(cc, -1) ) {
 				txt lang(itemname(ci, 1) + "は塵となって崩れ落ちた。", itemname(ci, 1) + " falls apart.")
@@ -4696,7 +4696,7 @@
 		txtef COLOR_RED
 		txt lang(name(tc) + "の意識が現実を離れ、幻覚に呑み込まれていく…。", name(tc) + " regretted being born.")
 		dmg = (sdata(SKILL_NORMAL_GENE_ENGINEER, CHARA_PLAYER) + 3) / 2 * sqrt(sdata(SKILL_NORMAL_GENE_ENGINEER, CHARA_PLAYER) + 4) + rnd(sdata(SKILL_NORMAL_GENE_ENGINEER, CHARA_PLAYER) * 3 + 5)
-		dmghp tc, (dmg + 10) / 10 * (rnd(200) + limit(sdata(SKILL_NORMAL_GENE_ENGINEER, CHARA_PLAYER) * 2, 200, 2000)) / 100 + 1, (0 /*!!!@[DAMAGE_FROM_CHARA @@@ CHARA_PLAYER]@!!! */), SKILL_RES_MIND, 1000
+		dmghp tc, (dmg + 10) / 10 * (rnd(200) + limit(sdata(SKILL_NORMAL_GENE_ENGINEER, CHARA_PLAYER) * 2, 200, 2000)) / 100 + 1, (0 /*!!!@[CHARA_PLAYER @@@ DAMAGE_FROM_CHARA]@!!! */), SKILL_RES_MIND, 1000
 	}
 	if ( inv(INV_ITEM_ID, ci) != ITEM_ID_HANDFUL_SNOW & inv(INV_ITEM_ID, ci) != ITEM_ID_BOTTLE_DYE ) {
 		if ( potionthrow != 90 ) {
@@ -5004,7 +5004,7 @@
 	return 1
 
 *zapStaff
-	if ( inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) <= 0 ) {
+	if ( inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) <= 0 ) {
 		if ( synccheck(cc, -1) ) {
 			txt lang(name(cc) + "は" + itemname(ci, 1) + "を振った。", name(cc) + " zap " + itemname(ci, 1) + ".")
 			txtvalid = 0
@@ -5044,7 +5044,7 @@
 		if ( cc != CHARA_PLAYER & cdata(CDATA_SP, cc) > 0 & (sdata(SKILL_NORMAL_ALCHEMY, cc) > 0 | 0) ) {
 			if ( sqrt(sdata(SKILL_NORMAL_ALCHEMY, cc)) + 80 >= rnd(100) | 0 ) {
 				item_separate ci
-				inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci)++
+				inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci)++
 				efp = efp * 7 / 10 + 1
 				txtef COLOR_GREEN
 				txt lang(name(cc) + "は杖を一時複製した。", name(cc) + " duplicated replica of " + itemname(ci) + ".")
@@ -5056,7 +5056,7 @@
 		if ( cc == CHARA_PLAYER & gdata(GDATA_FLAG_DUPLICANE) == 100 & cdata(CDATA_SP, CHARA_PLAYER) > 0 ) {
 			item_separate ci
 			dupli = 0
-			inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci)++
+			inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci)++
 			efp = efp * 7 / 10 + 1
 			txtef COLOR_GREEN
 			txt lang(name(cc) + "は杖を一時複製した。", name(cc) + " duplicated replica of " + itemname(ci) + ".")
@@ -5121,7 +5121,7 @@
 		}
 	}
 	item_separate ci
-	inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci)--
+	inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci)--
 	if ( cc == CHARA_PLAYER ) {
 		item_stack CHARA_PLAYER, ci, 1
 	}
@@ -8397,7 +8397,7 @@
 			return 0
 		}
 		if ( 0 == 0 ) {
-			if ( inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) == 0 ) {
+			if ( inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) == 0 ) {
 				txt lang("釣竿には餌が付いていない。", "You need a bait to fish.")
 				return 0
 			}
@@ -8466,7 +8466,7 @@
 			dmgsp CHARA_PLAYER, rnd(sdataref(SKILL_DATAREF_COST, efid) / 2 + 1) + sdataref(SKILL_DATAREF_COST, efid) / 2 + 1
 		}
 		item_separate ci
-		inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci)--
+		inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci)--
 		rowactre = 0
 		gosub *fishing
 		goto *effect_end
@@ -12269,7 +12269,7 @@
 				goto *effect_end
 			}
 			f = 1
-			if ( inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) > ichargelevel ) {
+			if ( inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) > ichargelevel ) {
 				f = -1
 			}
 			if ( f == (-1) ) {
@@ -12289,14 +12289,14 @@
 			}
 			if ( f == 1 ) {
 				p = 2
-				if ( p + inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) > ichargelevel ) {
-					p = ichargelevel - inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) + 1
+				if ( p + inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) > ichargelevel ) {
+					p = ichargelevel - inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) + 1
 				}
 				if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_ITEM_SPELLBOOK ) {
 					p = 1
 				}
 				txt lang(itemname(ci) + "は充填された(+" + p + ")", itemname(ci) + " " + is2(inv(INV_ITEM_NUM, ci)) + " recharged by +" + p + ".")
-				inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) += p
+				inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) += p
 				animeload 8, cc
 				if ( cc == CHARA_PLAYER ) {
 					item_stack CHARA_PLAYER, ci, 1
@@ -12360,11 +12360,11 @@
 			loop
 			animeload 8, cc
 			if ( ichargelevel >= 14 ) {
-				p = (inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) + 1) / 2
+				p = (inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) + 1) / 2
 				gdata(GDATA_ABSORB_CHARGE) += p
 			}
 			else {
-				p = p * inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci)
+				p = p * inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci)
 				gdata(GDATA_ABSORB_CHARGE) += p
 			}
 			txt lang(itemname(ci) + "を破壊して" + p + "の魔力を抽出した(計" + gdata(GDATA_ABSORB_CHARGE) + ")", "You destroy " + itemname(ci) + " and extract " + p + " recharge powers. (Total:" + gdata(GDATA_ABSORB_CHARGE) + ")")
@@ -15641,7 +15641,7 @@
 									inv(INV_ITEM_PARAM1, ci) = necrop
 									inv(INV_ITEM_PARAM2, ci) = cdata(CDATA_FORM_SHIFT_PIC, tc)
 									inv(INV_ITEM_WEIGHT, ci) += necrop * 1000
-									inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 + inv(INV_ITEM_PARAM3, ci)
+									inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 + inv(INV_ITEM_PARAM3, ci)
 									inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
 									inv(INV_ITEM_KNOWN, ci) = ITEM_KNOWN_NECRO
 									inv(INV_ITEM_CHARA_PIC, ci) = necrop3
@@ -19998,7 +19998,7 @@
 				goto *effect_directive
 			}
 			if ( rtval == 5 ) {
-				inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) = -1
+				inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) = -1
 				s = lang("通常弾", "Normal"), lang("無限", "Unlimited")
 				snd SOUNDLIST_AMMO
 				txtef COLOR_GREEN
@@ -20031,7 +20031,7 @@
 						enc = enc \ 10000
 						if ( i == 9 ) {
 							if ( inv(40 + cnt * 2, ci) \ 10000 == amp ) {
-								inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) = cnt
+								inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) = cnt
 								change = 1
 								break
 							}
@@ -20045,7 +20045,7 @@
 				}
 				snd SOUNDLIST_AMMO
 				change = 0
-				i = inv(40 + inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) * 2 + 1, ci) \ 1000, inv(40 + inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) * 2 + 1, ci) / 1000
+				i = inv(40 + inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) * 2 + 1, ci) \ 1000, inv(40 + inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) * 2 + 1, ci) / 1000
 				s = ammoname(amp), "" + i + "/" + i(1)
 				s = s + ":" + s(1)
 				txtef COLOR_GREEN

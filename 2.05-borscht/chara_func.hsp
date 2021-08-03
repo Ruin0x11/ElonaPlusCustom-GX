@@ -3592,7 +3592,7 @@
 					if ( cdata(CDATA_ID, check_kill_arg2) == CREATURE_ID_TOURIST ) {
 						locvar_check_kill_p = -5
 					}
-					if ( cdata(CDATA_ROLE, check_kill_arg2) >= (1000 /*!!!@[ROLE_SHOP_MIN @@@ ROLE_SHOP_WEAPON]@!!! */) & cdata(CDATA_ROLE, check_kill_arg2) < (2000 /*!!!@[ROLE_GUEST_MIN @@@ ROLE_GUEST_BEGGAR]@!!! */) | cdata(CDATA_ROLE, check_kill_arg2) == ROLE_GUEST_MERCHANT ) {
+					if ( cdata(CDATA_ROLE, check_kill_arg2) >= (1000 /*!!!@[ROLE_SHOP_MIN @@@ ROLE_SHOP_WEAPON]@!!! */) & cdata(CDATA_ROLE, check_kill_arg2) < (2000 /*!!!@[ROLE_GUEST_BEGGAR @@@ ROLE_GUEST_MIN]@!!! */) | cdata(CDATA_ROLE, check_kill_arg2) == ROLE_GUEST_MERCHANT ) {
 						locvar_check_kill_p = -10
 					}
 					if ( cdata(CDATA_ID, check_kill_arg2) == CREATURE_ID_SILVER_WOLF | cdata(CDATA_ID, check_kill_arg2) == CREATURE_ID_TWINTAIL | cdata(CDATA_ID, check_kill_arg2) == CREATURE_ID_POPPY_THE_LITTLE_DOG | cdata(CDATA_ID, check_kill_arg2) == CREATURE_ID_DOG | cdata(CDATA_ID, check_kill_arg2) == CREATURE_ID_STRAY_CAT | cdata(CDATA_ID, check_kill_arg2) == CREATURE_ID_SILVER_CAT | cdata(CDATA_ID, check_kill_arg2) == CREATURE_ID_CAT | cdata(CDATA_ID, check_kill_arg2) == CREATURE_ID_HOUND | cdata(CDATA_ID, check_kill_arg2) == CREATURE_ID_DOG_COP | cdata(CDATA_ID, check_kill_arg2) == CREATURE_ID_PASCAL | cdata(CDATA_ID, check_kill_arg2) == CREATURE_ID_SHEEPDOG | cdata(CDATA_ID, check_kill_arg2) == CREATURE_ID_PADANGU ) {
@@ -4042,8 +4042,8 @@
 						if ( synccheck(item_fire_arg1, -1) ) {
 							txt lang(itemname(locvar_item_fire_ti, 1) + "が" + name(item_fire_arg1) + "の持ち物を炎から守った。", itemname(locvar_item_fire_ti, 1) + " protects " + name(item_fire_arg1) + your(item_fire_arg1) + " stuff from fire.")
 						}
-						if ( inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), locvar_item_fire_ti) > 0 ) {
-							inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), locvar_item_fire_ti)--
+						if ( inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), locvar_item_fire_ti) > 0 ) {
+							inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), locvar_item_fire_ti)--
 						}
 						else {
 							inv(INV_ITEM_NUM, locvar_item_fire_ti)--
@@ -4204,8 +4204,8 @@
 			if ( locvar_item_fire_ti != (-1) ) {
 				if ( inv(INV_ITEM_NUM, locvar_item_fire_ti) > 0 ) {
 					txt lang(itemname(locvar_item_fire_ti, 1) + "が" + name(item_cold_arg1) + "の持ち物を冷気から守った。", itemname(locvar_item_fire_ti, 1) + " protects " + name(item_cold_arg1) + your(item_cold_arg1) + " stuff from cold.")
-					if ( inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), locvar_item_fire_ti) > 0 ) {
-						inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), locvar_item_fire_ti)--
+					if ( inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), locvar_item_fire_ti) > 0 ) {
+						inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), locvar_item_fire_ti)--
 					}
 					else {
 						txt lang(itemname(locvar_item_fire_ti, 1) + "は粉々に砕けた。", itemname(locvar_item_fire_ti, 1) + " is broken to pieces.")
@@ -4555,7 +4555,7 @@
 		return 0
 	}
 	locvar_dmghp_dmg = dmghp_amount * (1 + (cdata(CDATA_CONDITION_ANGRY, dmghp_charid) > 0))
-	if ( dmghp_source >= (0 /*!!!@[DAMAGE_FROM_CHARA @@@ CHARA_PLAYER]@!!! */) ) {
+	if ( dmghp_source >= (0 /*!!!@[CHARA_PLAYER @@@ DAMAGE_FROM_CHARA]@!!! */) ) {
 		if ( cdata(CDATA_CONDITION_ATROPHY, dmghp_source) > 0 ) {
 			locvar_dmghp_dmg = locvar_dmghp_dmg / 2
 		}
@@ -4583,7 +4583,7 @@
 		}
 		locvar_dmghp_dmg = locvar_dmghp_dmg * 100 / (sdata(SKILL_RES_MAGIC, dmghp_charid) / 2 + 50)
 	}
-	if ( dmghp_source == (0 /*!!!@[DAMAGE_FROM_CHARA @@@ CHARA_PLAYER]@!!! */) ) {
+	if ( dmghp_source == (0 /*!!!@[CHARA_PLAYER @@@ DAMAGE_FROM_CHARA]@!!! */) ) {
 		if ( gdata(GDATA_TEMPORARY_FLAGS2) < 1000 ) {
 			if ( critical ) {
 				snd SOUNDLIST_ATK2
@@ -4594,7 +4594,7 @@
 		}
 	}
 	else {
-		if ( dmghp_source >= (0 /*!!!@[DAMAGE_FROM_CHARA @@@ CHARA_PLAYER]@!!! */) ) {
+		if ( dmghp_source >= (0 /*!!!@[CHARA_PLAYER @@@ DAMAGE_FROM_CHARA]@!!! */) ) {
 			if ( dist(cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), cdata(CDATA_X, dmghp_charid), cdata(CDATA_Y, dmghp_charid)) <= sdataref(SKILL_DATAREF_TG, SKILL_SPACT_CHEER) \ 1000 + 1 ) {
 				if ( gdata(GDATA_TEMPORARY_FLAGS2) < 1000 ) {
 					if ( critical ) {
@@ -4629,12 +4629,12 @@
 	if ( cdata(CDATA_CONDITION_WINCE, dmghp_charid) != 0 ) {
 		locvar_dmghp_dmg = locvar_dmghp_dmg * 12 / 10
 	}
-	if ( dmghp_source >= (0 /*!!!@[DAMAGE_FROM_CHARA @@@ CHARA_PLAYER]@!!! */) ) {
+	if ( dmghp_source >= (0 /*!!!@[CHARA_PLAYER @@@ DAMAGE_FROM_CHARA]@!!! */) ) {
 		if ( cdata(CDATA_CONDITION_CHILLS, dmghp_source) != 0 ) {
 			locvar_dmghp_dmg = locvar_dmghp_dmg * 8 / 10
 		}
 	}
-	if ( dmghp_source >= (0 /*!!!@[DAMAGE_FROM_CHARA @@@ CHARA_PLAYER]@!!! */) ) {
+	if ( dmghp_source >= (0 /*!!!@[CHARA_PLAYER @@@ DAMAGE_FROM_CHARA]@!!! */) ) {
 		if ( cdata(CDATA_ID, dmghp_source) == CREATURE_ID_SPIPHA_THE_DRAGON_HUNTER ) {
 			locvar_dmghp_s = refchara(cdata(CDATA_ID, dmghp_charid), DBSPEC_CHARA_FILTER, 1)
 			if ( instr(locvar_dmghp_s, 0, "/dragon/") != (-1) ) {
@@ -4654,7 +4654,7 @@
 	if ( gdata(GDATA_FLAG_MAIN) == 900 ) {
 		if ( cdata(CDATA_ID, dmghp_charid) == CREATURE_ID_JALDABAOTH_THE_CHAOS_CHILD & cdata(CDATA_ALLIED, dmghp_charid) == 0 ) {
 			if ( gdata(GDATA_FLAG_COLLECTED_WISHES) > 0 ) {
-				if ( dmghp_source == (0 /*!!!@[DAMAGE_FROM_CHARA @@@ CHARA_PLAYER]@!!! */) ) {
+				if ( dmghp_source == (0 /*!!!@[CHARA_PLAYER @@@ DAMAGE_FROM_CHARA]@!!! */) ) {
 					repeat 2
 						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 100 ) {
 							gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 100
@@ -5024,7 +5024,7 @@
 	if ( gdata(GDATA_TEMPORARY_FLAGS2) == 1200 ) {
 		locvar_dmghp_dmg = locvar_dmghp_dmg * 1 / 6 + 1
 	}
-	if ( dmghp_source >= (0 /*!!!@[DAMAGE_FROM_CHARA @@@ CHARA_PLAYER]@!!! */) ) {
+	if ( dmghp_source >= (0 /*!!!@[CHARA_PLAYER @@@ DAMAGE_FROM_CHARA]@!!! */) ) {
 		if ( locvar_dmghp_dmg > 0 ) {
 			if ( cdata(CDATA_QUALITY, dmghp_charid) >= FIX_QUALITY_MIRACLE ) {
 				locvar_dmghp_dmg = locvar_dmghp_dmg * 10 / limit(sdata(SKILL_ATTR_SPD, dmghp_source) * 10 / sdata(SKILL_ATTR_SPD, dmghp_charid), 10, 50)
@@ -5475,7 +5475,7 @@
 			}
 		}
 	}
-	if ( dmghp_source >= (0 /*!!!@[DAMAGE_FROM_CHARA @@@ CHARA_PLAYER]@!!! */) ) {
+	if ( dmghp_source >= (0 /*!!!@[CHARA_PLAYER @@@ DAMAGE_FROM_CHARA]@!!! */) ) {
 		if ( locvar_dmghp_dmg >= 10 ) {
 			if ( cbit(CHARA_BIT_AWAKE_NEAR_DEATH_DAMAGE, dmghp_source) ) {
 				if ( cdata(CDATA_HP, dmghp_source) < cdata(CDATA_MAX_HP, dmghp_source) / 2 & cdata(CDATA_HP, dmghp_source) >= 0 ) {
@@ -5505,7 +5505,7 @@
 			}
 		}
 	}
-	if ( dmghp_source >= (0 /*!!!@[DAMAGE_FROM_CHARA @@@ CHARA_PLAYER]@!!! */) ) {
+	if ( dmghp_source >= (0 /*!!!@[CHARA_PLAYER @@@ DAMAGE_FROM_CHARA]@!!! */) ) {
 		if ( cdata(CDATA_CONDITION_ANGRY, dmghp_source) > 0 ) {
 			locvar_dmghp_dmg *= 2
 		}
@@ -5519,7 +5519,7 @@
 		cdata(CDATA_CONDITION_METAL, dmghp_charid) = 0
 	}
 	if ( cbit(CHARA_BIT_AWAKE_MP_BARRIER, dmghp_charid) ) {
-		if ( dmghp_source >= (0 /*!!!@[DAMAGE_FROM_CHARA @@@ CHARA_PLAYER]@!!! */) ) {
+		if ( dmghp_source >= (0 /*!!!@[CHARA_PLAYER @@@ DAMAGE_FROM_CHARA]@!!! */) ) {
 			if ( locvar_dmghp_dmg > 0 ) {
 				if ( cdata(CDATA_MP, dmghp_charid) >= cdata(CDATA_MAX_MP, dmghp_charid) / 3 ) {
 					locvar_dmghp_manabar = locvar_dmghp_dmg
@@ -5548,7 +5548,7 @@
 		}
 	}
 	if ( locvar_dmghp_ele == 56 ) {
-		if ( dmghp_source >= (0 /*!!!@[DAMAGE_FROM_CHARA @@@ CHARA_PLAYER]@!!! */) ) {
+		if ( dmghp_source >= (0 /*!!!@[CHARA_PLAYER @@@ DAMAGE_FROM_CHARA]@!!! */) ) {
 			if ( locvar_dmghp_dmg > 0 ) {
 				if ( cdata(CDATA_HP, dmghp_charid) > 0 ) {
 					locvar_dmghp_healn = limit(rnd(locvar_dmghp_dmg * (150 + dmghp_element_power * 2) / 1000 + 10), 1, cdata(CDATA_MAX_HP, dmghp_source) / 10 + rnd(5))
@@ -5562,7 +5562,7 @@
 		}
 	}
 	if ( dmghp_charid == CHARA_PLAYER ) {
-		if ( dmghp_source == (0 /*!!!@[DAMAGE_FROM_CHARA @@@ CHARA_PLAYER]@!!! */) ) {
+		if ( dmghp_source == (0 /*!!!@[CHARA_PLAYER @@@ DAMAGE_FROM_CHARA]@!!! */) ) {
 			lasttc = dmghp_charid
 		}
 		if ( dbg_hpalwaysfull ) {
@@ -5581,7 +5581,7 @@
 		}
 	}
 	if ( sutemi == 100 ) {
-		if ( dmghp_source >= (0 /*!!!@[DAMAGE_FROM_CHARA @@@ CHARA_PLAYER]@!!! */) ) {
+		if ( dmghp_source >= (0 /*!!!@[CHARA_PLAYER @@@ DAMAGE_FROM_CHARA]@!!! */) ) {
 			if ( locvar_dmghp_dmg > 0 ) {
 				cdata(CDATA_HP, dmghp_source) -= locvar_dmghp_dmg / 2
 			}
@@ -5594,7 +5594,7 @@
 	else {
 		locvar_dmghp_dmglevel = locvar_dmghp_dmg * 6 / cdata(CDATA_MAX_HP, dmghp_charid)
 	}
-	if ( dmghp_source >= (0 /*!!!@[DAMAGE_FROM_CHARA @@@ CHARA_PLAYER]@!!! */) & cbit(CHARA_BIT_SANDBAG, dmghp_charid) != TRUE ) {
+	if ( dmghp_source >= (0 /*!!!@[CHARA_PLAYER @@@ DAMAGE_FROM_CHARA]@!!! */) & cbit(CHARA_BIT_SANDBAG, dmghp_charid) != TRUE ) {
 		if ( cdata(CDATA_GAUGE_COOLDOWN, dmghp_source) == 0 ) {
 			cdata(CDATA_GAUGE_COOLDOWN, dmghp_source) = 1
 			cdata(CDATA_POWER_GAUGE, dmghp_source) += 2
@@ -5604,7 +5604,7 @@
 		}
 		if ( cdata(CDATA_POWER_GAUGE, dmghp_source) > 100 ) {
 			if ( cdata(CDATA_POWER_GAUGE, dmghp_source) > 100 ) {
-				if ( cdata(CDATA_SHIFT_FORM, dmghp_source) <= SHIFT_FORM_NONE & (cdata(CDATA_EVOLUTION_STAGE, dmghp_source) <= 0 | dmghp_source == (0 /*!!!@[DAMAGE_FROM_CHARA @@@ CHARA_PLAYER]@!!! */)) & (cdata(CDATA_QUALITY, dmghp_source) < FIX_QUALITY_MIRACLE | dmghp_source <= MAX_CHARA_FOLLOWER) ) {
+				if ( cdata(CDATA_SHIFT_FORM, dmghp_source) <= SHIFT_FORM_NONE & (cdata(CDATA_EVOLUTION_STAGE, dmghp_source) <= 0 | dmghp_source == (0 /*!!!@[CHARA_PLAYER @@@ DAMAGE_FROM_CHARA]@!!! */)) & (cdata(CDATA_QUALITY, dmghp_source) < FIX_QUALITY_MIRACLE | dmghp_source <= MAX_CHARA_FOLLOWER) ) {
 					cdata(CDATA_POWER_GAUGE, dmghp_source) = 100
 				}
 			}
@@ -5817,7 +5817,7 @@
 		}
 *skipDmgTxt
 		if ( gdata(GDATA_FLAG_GAME_MODE) == 1 ) {
-			if ( dmghp_source >= (0 /*!!!@[DAMAGE_FROM_CHARA @@@ CHARA_PLAYER]@!!! */) ) {
+			if ( dmghp_source >= (0 /*!!!@[CHARA_PLAYER @@@ DAMAGE_FROM_CHARA]@!!! */) ) {
 				if ( locvar_dmghp_dmg >= cdata(CDATA_MAX_HP, dmghp_charid) / 5 ) {
 					locvar_dmghp_ci = -1
 					repeat 30, 100
@@ -5871,7 +5871,7 @@
 						else {
 							locvar_dmghp_f = 0
 						}
-						if ( dmghp_source == (0 /*!!!@[DAMAGE_FROM_CHARA @@@ CHARA_PLAYER]@!!! */) | dmghp_source < MAX_CHARA_FOLLOWER ) {
+						if ( dmghp_source == (0 /*!!!@[CHARA_PLAYER @@@ DAMAGE_FROM_CHARA]@!!! */) | dmghp_source < MAX_CHARA_FOLLOWER ) {
 							if ( trait(TRAIT_NORMAL_OTHER_GENTLE_FACE) ) {
 								locvar_dmghp_f = 0
 							}
@@ -5990,7 +5990,7 @@
 				txt lang(name(dmghp_charid) + "は眠りを妨げられた。", name(dmghp_charid) + your(dmghp_charid) + " sleep " + is(dmghp_charid) + " disturbed.")
 			}
 		}
-		if ( dmghp_source == (0 /*!!!@[DAMAGE_FROM_CHARA @@@ CHARA_PLAYER]@!!! */) ) {
+		if ( dmghp_source == (0 /*!!!@[CHARA_PLAYER @@@ DAMAGE_FROM_CHARA]@!!! */) ) {
 			locvar_dmghp_pcnoise = 100
 			hostileaction CHARA_PLAYER, dmghp_charid
 			gdata(GDATA_SCOPE) = dmghp_charid
@@ -6088,7 +6088,7 @@
 				}
 			}
 		}
-		if ( dmghp_source >= (0 /*!!!@[DAMAGE_FROM_CHARA @@@ CHARA_PLAYER]@!!! */) ) {
+		if ( dmghp_source >= (0 /*!!!@[CHARA_PLAYER @@@ DAMAGE_FROM_CHARA]@!!! */) ) {
 			locvar_dmghp_f = 0
 			if ( cdata(CDATA_RELATION, dmghp_charid) <= RELATION_ENEMY ) {
 				if ( cdata(CDATA_RELATION_ORG, dmghp_source) > RELATION_ENEMY ) {
@@ -6104,7 +6104,7 @@
 					}
 				}
 			}
-			if ( dmghp_source != (0 /*!!!@[DAMAGE_FROM_CHARA @@@ CHARA_PLAYER]@!!! */) ) {
+			if ( dmghp_source != (0 /*!!!@[CHARA_PLAYER @@@ DAMAGE_FROM_CHARA]@!!! */) ) {
 				if ( cdata(CDATA_TARGET, dmghp_source) == dmghp_charid ) {
 					if ( rnd(3) == 0 ) {
 						locvar_dmghp_f = 1
@@ -6149,12 +6149,12 @@
 		}
 		txtmore
 		txtef COLOR_RED
-		if ( dmghp_source >= (0 /*!!!@[DAMAGE_FROM_CHARA @@@ CHARA_PLAYER]@!!! */) ) {
+		if ( dmghp_source >= (0 /*!!!@[CHARA_PLAYER @@@ DAMAGE_FROM_CHARA]@!!! */) ) {
 			repeat 245
 				if ( cdata(CDATA_EXIST, cnt) != CHAR_STATE_ALIVE ) {
 					continue
 				}
-				if ( dmghp_source < MAX_CHARA_FOLLOWER | dmghp_source == (0 /*!!!@[DAMAGE_FROM_CHARA @@@ CHARA_PLAYER]@!!! */) ) {
+				if ( dmghp_source < MAX_CHARA_FOLLOWER | dmghp_source == (0 /*!!!@[CHARA_PLAYER @@@ DAMAGE_FROM_CHARA]@!!! */) ) {
 					if ( cnt > 16 ) {
 						continue
 					}
@@ -6173,7 +6173,7 @@
 				if ( cdata(CDATA_RELATION, dmghp_source) == cdata(CDATA_RELATION, dmghp_charid) ) {
 					continue
 				}
-				if ( dmghp_source < MAX_CHARA_FOLLOWER | dmghp_source == (0 /*!!!@[DAMAGE_FROM_CHARA @@@ CHARA_PLAYER]@!!! */) ) {
+				if ( dmghp_source < MAX_CHARA_FOLLOWER | dmghp_source == (0 /*!!!@[CHARA_PLAYER @@@ DAMAGE_FROM_CHARA]@!!! */) ) {
 					if ( cdata(CDATA_RELATION, dmghp_charid) != RELATION_ENEMY ) {
 						continue
 					}
@@ -6414,7 +6414,7 @@
 			}
 		}
 		if ( locvar_dmghp_ele == 56 ) {
-			if ( dmghp_source >= (0 /*!!!@[DAMAGE_FROM_CHARA @@@ CHARA_PLAYER]@!!! */) ) {
+			if ( dmghp_source >= (0 /*!!!@[CHARA_PLAYER @@@ DAMAGE_FROM_CHARA]@!!! */) ) {
 				if ( locvar_dmghp_dmg > 0 ) {
 					locvar_dmghp_healn = limit(rnd(locvar_dmghp_dmg * (150 + dmghp_element_power * 2) / 1000 + 10), 1, cdata(CDATA_MAX_HP, dmghp_source) / 10 + rnd(5))
 					if ( locvar_dmghp_healn > cdata(CDATA_MAX_HP, dmghp_charid) / 10 + 1 ) {
@@ -6444,8 +6444,8 @@
 				spillblood cdata(CDATA_X, dmghp_charid), cdata(CDATA_Y, dmghp_charid), 4
 			}
 		}
-		if ( dmghp_source >= (0 /*!!!@[DAMAGE_FROM_CHARA @@@ CHARA_PLAYER]@!!! */) ) {
-			if ( dmghp_source != (0 /*!!!@[DAMAGE_FROM_CHARA @@@ CHARA_PLAYER]@!!! */) ) {
+		if ( dmghp_source >= (0 /*!!!@[CHARA_PLAYER @@@ DAMAGE_FROM_CHARA]@!!! */) ) {
+			if ( dmghp_source != (0 /*!!!@[CHARA_PLAYER @@@ DAMAGE_FROM_CHARA]@!!! */) ) {
 				if ( sdata(SKILL_ACTIVE_PICKPOCKET, dmghp_source) != 0 ) {
 					if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, dmghp_charid) != TRUE & cbit(CHARA_BIT_SPLIT_NO_EFFECT, dmghp_charid) != TRUE & cbit(CHARA_BIT_SUMMONED, dmghp_charid) != TRUE & cbit(CHARA_BIT_LIVESTOCK, dmghp_charid) != TRUE ) {
 						locvar_dmghp_goudatu = limit(sdata(SKILL_ACTIVE_PICKPOCKET, dmghp_source) * 5 + 100, 50, 2000)
@@ -6517,17 +6517,17 @@
 		if ( dmghp_charid == gdata(GDATA_SCOPE) ) {
 			gdata(GDATA_SCOPE) = 0
 		}
-		if ( dmghp_source >= (0 /*!!!@[DAMAGE_FROM_CHARA @@@ CHARA_PLAYER]@!!! */) ) {
+		if ( dmghp_source >= (0 /*!!!@[CHARA_PLAYER @@@ DAMAGE_FROM_CHARA]@!!! */) ) {
 			cdata(CDATA_TARGET, dmghp_source) = 0
 			customtalk dmghp_source, DBMODE_FLAVOR_KILL
 			gosub *convert_word
 			locvar_dmghp_exp = limit(cdata(CDATA_LEVEL, dmghp_charid), 1, 400) * limit(cdata(CDATA_LEVEL, dmghp_charid) + 1, 1, 400) * limit(cdata(CDATA_LEVEL, dmghp_charid) + 2, 1, 400) / 10 + 8
-			if ( dmghp_source == (0 /*!!!@[DAMAGE_FROM_CHARA @@@ CHARA_PLAYER]@!!! */) ) {
+			if ( dmghp_source == (0 /*!!!@[CHARA_PLAYER @@@ DAMAGE_FROM_CHARA]@!!! */) ) {
 				if ( cdata(CDATA_LEVEL, dmghp_charid) < cdata(CDATA_LEVEL, dmghp_source) ) {
 					locvar_dmghp_exp = locvar_dmghp_exp / 100 + 10
 				}
 			}
-			if ( dmghp_source == (0 /*!!!@[DAMAGE_FROM_CHARA @@@ CHARA_PLAYER]@!!! */) ) {
+			if ( dmghp_source == (0 /*!!!@[CHARA_PLAYER @@@ DAMAGE_FROM_CHARA]@!!! */) ) {
 				if ( cdata(CDATA_LEVEL, dmghp_charid) > cdata(CDATA_LEVEL, dmghp_source) ) {
 					locvar_dmghp_exp *= limit(cdata(CDATA_LEVEL, dmghp_charid) * 2 / cdata(CDATA_LEVEL, CHARA_PLAYER), 1, 10)
 				}
@@ -6536,7 +6536,7 @@
 				locvar_dmghp_exp = 0
 			}
 			cdata(CDATA_EXP, dmghp_source) += locvar_dmghp_exp
-			if ( dmghp_source == (0 /*!!!@[DAMAGE_FROM_CHARA @@@ CHARA_PLAYER]@!!! */) ) {
+			if ( dmghp_source == (0 /*!!!@[CHARA_PLAYER @@@ DAMAGE_FROM_CHARA]@!!! */) ) {
 				if ( gdata(GDATA_SLEEP_EXP) > 1000000000 ) {
 					gdata(GDATA_SLEEP_EXP) = 1000000000
 				}
@@ -6547,10 +6547,10 @@
 			}
 			cdata(CDATA_AI_AGGRO, dmghp_source) = 0
 		}
-		if ( dmghp_source >= (0 /*!!!@[DAMAGE_FROM_CHARA @@@ CHARA_PLAYER]@!!! */) ) {
+		if ( dmghp_source >= (0 /*!!!@[CHARA_PLAYER @@@ DAMAGE_FROM_CHARA]@!!! */) ) {
 			if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, dmghp_charid) != TRUE & cbit(CHARA_BIT_SPLIT_NO_EFFECT, dmghp_charid) != TRUE & cbit(CHARA_BIT_SUMMONED, dmghp_charid) != TRUE ) {
 				if ( dmghp_source < MAX_CHARA_FOLLOWER ) {
-					if ( dmghp_source != (0 /*!!!@[DAMAGE_FROM_CHARA @@@ CHARA_PLAYER]@!!! */) ) {
+					if ( dmghp_source != (0 /*!!!@[CHARA_PLAYER @@@ DAMAGE_FROM_CHARA]@!!! */) ) {
 						if ( cdata(CDATA_IMPRESSION, dmghp_source) >= 100 ) {
 							if ( sdata(SKILL_NORMAL_MINING, dmghp_source) > 0 ) {
 								cdata(CDATA_MATERIAL1_COUNTER, dmghp_source) += limit(sdata(SKILL_NORMAL_MINING, dmghp_source) / 5, 1, 10)
@@ -6754,8 +6754,8 @@
 								txt lang("ジャーナルが更新された。", "Your journal has been updated.")
 							}
 						}
-						if ( cdata(CDATA_ID, dmghp_charid) == CREATURE_ID_BIG_DADDY & dmghp_source >= (0 /*!!!@[DAMAGE_FROM_CHARA @@@ CHARA_PLAYER]@!!! */) ) {
-							if ( dmghp_source == (0 /*!!!@[DAMAGE_FROM_CHARA @@@ CHARA_PLAYER]@!!! */) | dmghp_source < MAX_CHARA_FOLLOWER | cbit(CHARA_BIT_NECRO, dmghp_source) == TRUE ) {
+						if ( cdata(CDATA_ID, dmghp_charid) == CREATURE_ID_BIG_DADDY & dmghp_source >= (0 /*!!!@[CHARA_PLAYER @@@ DAMAGE_FROM_CHARA]@!!! */) ) {
+							if ( dmghp_source == (0 /*!!!@[CHARA_PLAYER @@@ DAMAGE_FROM_CHARA]@!!! */) | dmghp_source < MAX_CHARA_FOLLOWER | cbit(CHARA_BIT_NECRO, dmghp_source) == TRUE ) {
 								evadd EVENT_LITTLE_SISTER, cdata(CDATA_X, dmghp_charid), cdata(CDATA_Y, dmghp_charid)
 							}
 							else {
@@ -7158,7 +7158,7 @@
 		if ( rnd(60) == 0 ) {
 			rollanatomy = 1
 		}
-		if ( dmghp_source >= (0 /*!!!@[DAMAGE_FROM_CHARA @@@ CHARA_PLAYER]@!!! */) ) {
+		if ( dmghp_source >= (0 /*!!!@[CHARA_PLAYER @@@ DAMAGE_FROM_CHARA]@!!! */) ) {
 			if ( cdata(CDATA_ID, dmghp_source) == CREATURE_ID_BLACK_CAT ) {
 				if ( cdata(CDATA_RELATION, dmghp_source) == RELATION_ALLY ) {
 					catitem = dmghp_source
@@ -7202,7 +7202,7 @@
 				loop
 			loop
 		}
-		if ( dmghp_source == (0 /*!!!@[DAMAGE_FROM_CHARA @@@ CHARA_PLAYER]@!!! */) ) {
+		if ( dmghp_source == (0 /*!!!@[CHARA_PLAYER @@@ DAMAGE_FROM_CHARA]@!!! */) ) {
 			if ( gdata(GDATA_GOD_TALK) ) {
 				if ( rnd(20) == 0 ) {
 					txtgod cdata(CDATA_GOD, CHARA_PLAYER), GOD_TEXT_KILL

@@ -7,12 +7,12 @@
 				locvar_clientguide_i = -1
 				if ( qdata(QDATA_EXIST, locvar_clientguide_p) == QUEST_TYPE_COLLECT ) {
 					if ( qdata(QDATA_MAP, locvar_clientguide_p) == gdata(GDATA_AREA) ) {
-						locvar_clientguide_i = qdata((10 /*!!!@[QDATA_ENCOUNTER @@@ QDATA_DEST_CLIENT]@!!! */), locvar_clientguide_p)
+						locvar_clientguide_i = qdata((10 /*!!!@[QDATA_DEST_CLIENT @@@ QDATA_ENCOUNTER]@!!! */), locvar_clientguide_p)
 					}
 				}
 				if ( qdata(QDATA_EXIST, locvar_clientguide_p) == QUEST_TYPE_DELIVER ) {
-					if ( qdata(QDATA_MAP, qdata((10 /*!!!@[QDATA_ENCOUNTER @@@ QDATA_DEST_CLIENT]@!!! */), locvar_clientguide_p)) == gdata(GDATA_AREA) ) {
-						locvar_clientguide_i = qdata(QDATA_CLIENT, qdata((10 /*!!!@[QDATA_ENCOUNTER @@@ QDATA_DEST_CLIENT]@!!! */), locvar_clientguide_p))
+					if ( qdata(QDATA_MAP, qdata((10 /*!!!@[QDATA_DEST_CLIENT @@@ QDATA_ENCOUNTER]@!!! */), locvar_clientguide_p)) == gdata(GDATA_AREA) ) {
+						locvar_clientguide_i = qdata(QDATA_CLIENT, qdata((10 /*!!!@[QDATA_DEST_CLIENT @@@ QDATA_ENCOUNTER]@!!! */), locvar_clientguide_p))
 					}
 				}
 				if ( locvar_clientguide_i != (-1) ) {
@@ -40,7 +40,7 @@
 		if ( qdata(QDATA_STATE, locvar_clientguide_p) == QUEST_STATE_ONGOING ) {
 			if ( gdata(GDATA_LEVEL) == 1 ) {
 				if ( qdata(QDATA_MAP, locvar_clientguide_p) == gdata(GDATA_AREA) ) {
-					if ( tradecheck_charid == qdata((10 /*!!!@[QDATA_ENCOUNTER @@@ QDATA_DEST_CLIENT]@!!! */), locvar_clientguide_p) ) {
+					if ( tradecheck_charid == qdata((10 /*!!!@[QDATA_DEST_CLIENT @@@ QDATA_ENCOUNTER]@!!! */), locvar_clientguide_p) ) {
 						locvar_clientguide_j = 1
 						break
 					}
@@ -160,7 +160,7 @@
 	if ( gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 >= cdata(CDATA_INTEREST_RENEW, tc) ) {
 		cdata(CDATA_INTEREST, tc) = 100
 	}
-	if ( cdata(CDATA_ROLE, tc) >= (1000 /*!!!@[ROLE_SHOP_MIN @@@ ROLE_SHOP_WEAPON]@!!! */) & cdata(CDATA_ROLE, tc) < (2000 /*!!!@[ROLE_GUEST_MIN @@@ ROLE_GUEST_BEGGAR]@!!! */) | cdata(CDATA_ROLE, tc) == ROLE_GUEST_MERCHANT ) {
+	if ( cdata(CDATA_ROLE, tc) >= (1000 /*!!!@[ROLE_SHOP_MIN @@@ ROLE_SHOP_WEAPON]@!!! */) & cdata(CDATA_ROLE, tc) < (2000 /*!!!@[ROLE_GUEST_BEGGAR @@@ ROLE_GUEST_MIN]@!!! */) | cdata(CDATA_ROLE, tc) == ROLE_GUEST_MERCHANT ) {
 		bkrestock = cdata(CDATA_ROLE_RESTOCK, tc)
 		invfile = cdata(CDATA_ROLE_FILE_ID, tc)
 		gosub *shop_init
@@ -2106,7 +2106,7 @@
 		if ( gdata(GDATA_FLAG_SUB_ROGUE) == 2 ) {
 			flt
 			itemcreate -1, ITEM_ID_ROD_IDENTIFY, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
-			inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) = 12
+			inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) = 12
 			flt
 			nostack = 1
 			itemcreate -1, ITEM_ID_MONSTER_BALL, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
@@ -38153,7 +38153,7 @@
 			listn(0, listmax) = lang("話がしたい", "Let's Talk.")
 			listmax++
 		}
-		if ( cdata(CDATA_ROLE, tc) >= (1000 /*!!!@[ROLE_SHOP_MIN @@@ ROLE_SHOP_WEAPON]@!!! */) & cdata(CDATA_ROLE, tc) < (2000 /*!!!@[ROLE_GUEST_MIN @@@ ROLE_GUEST_BEGGAR]@!!! */) | cdata(CDATA_ROLE, tc) == ROLE_GUEST_MERCHANT ) {
+		if ( cdata(CDATA_ROLE, tc) >= (1000 /*!!!@[ROLE_SHOP_MIN @@@ ROLE_SHOP_WEAPON]@!!! */) & cdata(CDATA_ROLE, tc) < (2000 /*!!!@[ROLE_GUEST_BEGGAR @@@ ROLE_GUEST_MIN]@!!! */) | cdata(CDATA_ROLE, tc) == ROLE_GUEST_MERCHANT ) {
 			list(0, listmax) = 10
 			listn(0, listmax) = lang("買いたい", "I want to buy something.")
 			listmax++
@@ -38550,7 +38550,7 @@
 				continue
 			}
 			if ( qdata(QDATA_TYPE, cnt) == QUEST_SUBTYPE_DELIVER ) {
-				if ( qdata((10 /*!!!@[QDATA_ENCOUNTER @@@ QDATA_DEST_CLIENT]@!!! */), cnt) == rq ) {
+				if ( qdata((10 /*!!!@[QDATA_DEST_CLIENT @@@ QDATA_ENCOUNTER]@!!! */), cnt) == rq ) {
 					inv_getheader 0
 					p = qdata(QDATA_DEST_ITEM, cnt)
 					deliver = cnt
@@ -38633,7 +38633,7 @@
 	if ( gdata(GDATA_AREA) == AREA_HOME ) {
 		if ( tc >= MAX_CHARA_SAVE ) {
 			if ( cdata(CDATA_ROLE, tc) != ROLE_NONE ) {
-				if ( cdata(CDATA_ROLE, tc) >= (2000 /*!!!@[ROLE_GUEST_MIN @@@ ROLE_GUEST_BEGGAR]@!!! */) & cdata(CDATA_ROLE, tc) < MAX_ROLE_GUEST ) {
+				if ( cdata(CDATA_ROLE, tc) >= (2000 /*!!!@[ROLE_GUEST_BEGGAR @@@ ROLE_GUEST_MIN]@!!! */) & cdata(CDATA_ROLE, tc) < MAX_ROLE_GUEST ) {
 				}
 				else {
 					if ( evid() == (-1) ) {
@@ -38666,7 +38666,7 @@
 	chatesc = 1
 	gosub *chat_select
 	if ( chatval == 10 | chatval == 11 ) {
-		if ( cdata(CDATA_ROLE, tc) >= (1000 /*!!!@[ROLE_SHOP_MIN @@@ ROLE_SHOP_WEAPON]@!!! */) & cdata(CDATA_ROLE, tc) < (2000 /*!!!@[ROLE_GUEST_MIN @@@ ROLE_GUEST_BEGGAR]@!!! */) | cdata(CDATA_ROLE, tc) == ROLE_GUEST_MERCHANT ) {
+		if ( cdata(CDATA_ROLE, tc) >= (1000 /*!!!@[ROLE_SHOP_MIN @@@ ROLE_SHOP_WEAPON]@!!! */) & cdata(CDATA_ROLE, tc) < (2000 /*!!!@[ROLE_GUEST_BEGGAR @@@ ROLE_GUEST_MIN]@!!! */) | cdata(CDATA_ROLE, tc) == ROLE_GUEST_MERCHANT ) {
 			if ( cdata(CDATA_KARMA, CHARA_PLAYER) < (-30) ) {
 				if ( gdata(GDATA_AREA) != AREA_DERPHY ) {
 					if ( gdata(GDATA_AREA) != AREA_HOME ) {
@@ -40955,7 +40955,7 @@
 			buff = lang("充填する必要はないみたい" + _da(), "Reload what? You don't have any ammo in your inventory.")
 			goto *chat_default
 		}
-		if ( adata((37 /*!!!@[ADATA_SHOP_SALE_RESTRICTION @@@ ADATA_RANCH_BREED_RESTRICTION]@!!! */), gdata(GDATA_AREA)) == 100 ) {
+		if ( adata((37 /*!!!@[ADATA_RANCH_BREED_RESTRICTION @@@ ADATA_SHOP_SALE_RESTRICTION]@!!! */), gdata(GDATA_AREA)) == 100 ) {
 			buff = lang("今は在庫の準備中" + _da(), "It is currently in preparation.")
 			goto *chat_default
 		}
@@ -40974,7 +40974,7 @@
 			snd SOUNDLIST_PAYGOLD1
 			cdata(CDATA_GOLD, CHARA_PLAYER) -= calccostreload(0)
 			p = calccostreload(0, 1)
-			adata((37 /*!!!@[ADATA_SHOP_SALE_RESTRICTION @@@ ADATA_RANCH_BREED_RESTRICTION]@!!! */), gdata(GDATA_AREA)) = 100
+			adata((37 /*!!!@[ADATA_RANCH_BREED_RESTRICTION @@@ ADATA_SHOP_SALE_RESTRICTION]@!!! */), gdata(GDATA_AREA)) = 100
 			buff = lang(_thanks(2), "Thanks!")
 		}
 		else {
@@ -42026,7 +42026,7 @@
 		}
 		buff = lang(_thanks() + "期待してい" + _ru(), "Thanks. I'm counting on you.")
 		if ( qdata(QDATA_EXIST, rq) == QUEST_TYPE_DELIVER ) {
-			qdata(QDATA_QUEST_TARGET, qdata((10 /*!!!@[QDATA_ENCOUNTER @@@ QDATA_DEST_CLIENT]@!!! */), rq))++
+			qdata(QDATA_QUEST_TARGET, qdata((10 /*!!!@[QDATA_DEST_CLIENT @@@ QDATA_ENCOUNTER]@!!! */), rq))++
 			flt
 			itemcreate CHARA_PLAYER, qdata(QDATA_DEST_ITEM, rq), cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
 			txt lang(itemname(ci, 1) + "をバックパックに入れた。", "You put " + itemname(ci, 1) + " in your backpack.")
@@ -42627,7 +42627,7 @@
 				cdata(CDATA_ROLE_SHOP_LEVEL, tc) = 10
 			}
 		}
-		if ( cdata(CDATA_ROLE, tc) >= (1000 /*!!!@[ROLE_SHOP_MIN @@@ ROLE_SHOP_WEAPON]@!!! */) & cdata(CDATA_ROLE, tc) < (2000 /*!!!@[ROLE_GUEST_MIN @@@ ROLE_GUEST_BEGGAR]@!!! */) | cdata(CDATA_ROLE, tc) == ROLE_GUEST_MERCHANT ) {
+		if ( cdata(CDATA_ROLE, tc) >= (1000 /*!!!@[ROLE_SHOP_MIN @@@ ROLE_SHOP_WEAPON]@!!! */) & cdata(CDATA_ROLE, tc) < (2000 /*!!!@[ROLE_GUEST_BEGGAR @@@ ROLE_GUEST_MIN]@!!! */) | cdata(CDATA_ROLE, tc) == ROLE_GUEST_MERCHANT ) {
 			s += lang(" 店の規模:", " Shop Rank:") + cdata(CDATA_ROLE_SHOP_LEVEL, tc)
 		}
 		if ( gdata(GDATA_GOD_DETECT) ) {
@@ -43393,7 +43393,7 @@
 			inv(INV_ITEM_NUM, ci) = 1
 			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
 			if ( inv(INV_ITEM_ID, ci) == ITEM_ID_ROD_DOMINATION ) {
-				inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) = 4
+				inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) = 4
 			}
 			continue
 		}

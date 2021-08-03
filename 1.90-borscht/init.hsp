@@ -5791,7 +5791,7 @@
 		if ( mdata(MDATA_MUSIC) != MUSICLIST_NONE ) {
 			music = mdata(MDATA_MUSIC)
 		}
-		if ( adata(ADATA_TYPE, gdata(GDATA_AREA)) >= (20 /*!!!@[MAP_TYPE_DUNGEON_MIN @@@ MAP_TYPE_DUNGEON]@!!! */) ) {
+		if ( adata(ADATA_TYPE, gdata(GDATA_AREA)) >= (20 /*!!!@[MAP_TYPE_DUNGEON @@@ MAP_TYPE_DUNGEON_MIN]@!!! */) ) {
 			music = 55 + gdata(GDATA_HOUR) \ 6
 		}
 		if ( gdata(GDATA_AREA) == AREA_CHAOS_CRADLE ) {
@@ -9753,7 +9753,7 @@
 	}
 	if ( adata(ADATA_TYPE, gdata(GDATA_AREA)) != MAP_TYPE_TOWN ) {
 		if ( gdata(GDATA_AREA) != AREA_NT_SOUTH_BORDER & gdata(GDATA_AREA) != AREA_ST_NORTH_BORDER & gdata(GDATA_AREA) != AREA_VALM ) {
-			if ( adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_LESIMAS | adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_RANDOM_DUNGEON | adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_QUEST | (mdata(MDATA_TYPE) >= (20 /*!!!@[MAP_TYPE_DUNGEON_MIN @@@ MAP_TYPE_DUNGEON]@!!! */) & mdata(MDATA_TYPE) <= (27 /*!!!@[MAP_TYPE_LAKE @@@ MAP_TYPE_DUNGEON_MAX]@!!! */)) == 1 ) {
+			if ( adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_LESIMAS | adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_RANDOM_DUNGEON | adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_QUEST | (mdata(MDATA_TYPE) >= (20 /*!!!@[MAP_TYPE_DUNGEON @@@ MAP_TYPE_DUNGEON_MIN]@!!! */) & mdata(MDATA_TYPE) <= (27 /*!!!@[MAP_TYPE_DUNGEON_MAX @@@ MAP_TYPE_LAKE]@!!! */)) == 1 ) {
 				return "" + cnvrank(gdata(GDATA_LEVEL) - adata(ADATA_MIN_LEVEL, gdata(GDATA_AREA)) + 1) + lang("層", "")
 			}
 		}
@@ -10203,7 +10203,7 @@
 	}
 	if ( adata(ADATA_ID, mapname_mapid) == AREA_RANDOM_DUNGEON ) {
 		s = mapnamerd(adata(ADATA_NAME, mapname_mapid), limitmax(adata(ADATA_MIN_LEVEL, mapname_mapid) / 5, length2(mapnamerd) - 1))
-		if ( adata(ADATA_TYPE, mapname_mapid) == (20 /*!!!@[MAP_TYPE_DUNGEON_MIN @@@ MAP_TYPE_DUNGEON]@!!! */) ) {
+		if ( adata(ADATA_TYPE, mapname_mapid) == (20 /*!!!@[MAP_TYPE_DUNGEON @@@ MAP_TYPE_DUNGEON_MIN]@!!! */) ) {
 			s += lang("洞窟", "Dungeon")
 		}
 		if ( adata(ADATA_TYPE, mapname_mapid) == MAP_TYPE_FOREST ) {
@@ -10224,7 +10224,7 @@
 		if ( adata(ADATA_TYPE, mapname_mapid) == MAP_TYPE_MINE ) {
 			s += lang("鉱山", "Mine")
 		}
-		if ( adata(ADATA_TYPE, mapname_mapid) == (27 /*!!!@[MAP_TYPE_LAKE @@@ MAP_TYPE_DUNGEON_MAX]@!!! */) ) {
+		if ( adata(ADATA_TYPE, mapname_mapid) == (27 /*!!!@[MAP_TYPE_DUNGEON_MAX @@@ MAP_TYPE_LAKE]@!!! */) ) {
 			s += lang("湖", "Lake")
 		}
 		if ( adata(ADATA_WAKEUP_NEFIA, mapname_mapid) == 100 ) {
@@ -10238,7 +10238,7 @@
 		if ( s(1) != "" ) {
 			return s(1)
 		}
-		if ( adata(ADATA_TYPE, mapname_mapid) >= (20 /*!!!@[MAP_TYPE_DUNGEON_MIN @@@ MAP_TYPE_DUNGEON]@!!! */) ) {
+		if ( adata(ADATA_TYPE, mapname_mapid) >= (20 /*!!!@[MAP_TYPE_DUNGEON @@@ MAP_TYPE_DUNGEON_MIN]@!!! */) ) {
 			return lang(s + "への入り口がある(入り口の危険度は" + adata(ADATA_MIN_LEVEL, mapname_mapid) + "階相当)。", "You see an entrance leading to " + s + ".(Approximate danger level: " + adata(ADATA_MIN_LEVEL, mapname_mapid) + ") ")
 		}
 		return lang(s + "がある。", "You see " + s + ".")
@@ -14119,7 +14119,7 @@
 			p = instr(buff, 0, "%CAVE," + lang("JP", "EN"))
 			break
 		}
-		if ( cdata(CDATA_ROLE, tc) >= (1000 /*!!!@[ROLE_SHOP_MIN @@@ ROLE_SHOP_WEAPON]@!!! */) & cdata(CDATA_ROLE, tc) < (2000 /*!!!@[ROLE_GUEST_MIN @@@ ROLE_GUEST_BEGGAR]@!!! */) | cdata(CDATA_ROLE, tc) == ROLE_GUEST_MERCHANT ) {
+		if ( cdata(CDATA_ROLE, tc) >= (1000 /*!!!@[ROLE_SHOP_MIN @@@ ROLE_SHOP_WEAPON]@!!! */) & cdata(CDATA_ROLE, tc) < (2000 /*!!!@[ROLE_GUEST_BEGGAR @@@ ROLE_GUEST_MIN]@!!! */) | cdata(CDATA_ROLE, tc) == ROLE_GUEST_MERCHANT ) {
 			if ( rnd(3) ) {
 				if ( gdata(GDATA_MONTH) == 4 ) {
 					p = instr(buff, 0, "%ASHOPKEEPER," + lang("JP", "EN"))
@@ -16005,9 +16005,9 @@
 		}
 	}
 	if ( qdata(QDATA_EXIST, rq) == QUEST_TYPE_DELIVER ) {
-		if ( qdata(QDATA_MAP, qdata((10 /*!!!@[QDATA_ENCOUNTER @@@ QDATA_DEST_CLIENT]@!!! */), rq)) == gdata(GDATA_AREA) ) {
+		if ( qdata(QDATA_MAP, qdata((10 /*!!!@[QDATA_DEST_CLIENT @@@ QDATA_ENCOUNTER]@!!! */), rq)) == gdata(GDATA_AREA) ) {
 			if ( gdata(GDATA_LEVEL) == 1 ) {
-				qname(qdata((10 /*!!!@[QDATA_ENCOUNTER @@@ QDATA_DEST_CLIENT]@!!! */), rq)) = cdatan(CDATAN_NAME, qdata(QDATA_CLIENT, qdata((10 /*!!!@[QDATA_ENCOUNTER @@@ QDATA_DEST_CLIENT]@!!! */), rq)))
+				qname(qdata((10 /*!!!@[QDATA_DEST_CLIENT @@@ QDATA_ENCOUNTER]@!!! */), rq)) = cdatan(CDATAN_NAME, qdata(QDATA_CLIENT, qdata((10 /*!!!@[QDATA_DEST_CLIENT @@@ QDATA_ENCOUNTER]@!!! */), rq)))
 			}
 		}
 	}
@@ -16083,8 +16083,8 @@
 		s = "%DELIVER," + qdata(QDATA_PARAM1, rq)
 		gosub *talk_quest_load
 		s(10) = cnvarticle(cnvitemname(qdata(QDATA_DEST_ITEM, rq)))
-		s(11) = "" + mapname(qdata(QDATA_MAP, qdata((10 /*!!!@[QDATA_ENCOUNTER @@@ QDATA_DEST_CLIENT]@!!! */), rq)))
-		s(12) = "" + qname(qdata((10 /*!!!@[QDATA_ENCOUNTER @@@ QDATA_DEST_CLIENT]@!!! */), rq))
+		s(11) = "" + mapname(qdata(QDATA_MAP, qdata((10 /*!!!@[QDATA_DEST_CLIENT @@@ QDATA_ENCOUNTER]@!!! */), rq)))
+		s(12) = "" + qname(qdata((10 /*!!!@[QDATA_DEST_CLIENT @@@ QDATA_ENCOUNTER]@!!! */), rq))
 		if ( iorgweight(qdata(QDATA_DEST_ITEM, rq)) > 50000 ) {
 			s(10) += lang("(凄く重い)", "(Heavy!)")
 		}
@@ -16123,7 +16123,7 @@
 		s(10) = cnvarticle(cnvitemname(qdata(QDATA_DEST_ITEM, rq)))
 		s(11) = "" + mapname(qdata(QDATA_MAP, rq))
 		if ( gdata(GDATA_AREA) == qdata(QDATA_MAP, rq) & gdata(GDATA_LEVEL) == 1 ) {
-			s(12) = "" + cdatan(CDATAN_NAME, qdata((10 /*!!!@[QDATA_ENCOUNTER @@@ QDATA_DEST_CLIENT]@!!! */), rq))
+			s(12) = "" + cdatan(CDATAN_NAME, qdata((10 /*!!!@[QDATA_DEST_CLIENT @@@ QDATA_ENCOUNTER]@!!! */), rq))
 		}
 		else {
 			s(12) = lang(s(11) + "に住む人物", "the target in " + s(11))

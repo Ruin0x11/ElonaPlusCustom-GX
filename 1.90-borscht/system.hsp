@@ -64,7 +64,7 @@
 	if ( gdata(GDATA_VERSION) < 950 ) {
 		itemcreate CHARA_PLAYER, ITEM_ID_PLAYBACK_DISC, -1, -1, 0
 		itemcreate CHARA_PLAYER, ITEM_ID_FREEZER, -1, -1, 0
-		inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) = 6
+		inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) = 6
 	}
 	if ( gdata(GDATA_VERSION) < 952 ) {
 		gdata(GDATA_WORLD_RENEW) = TRUE
@@ -643,8 +643,8 @@
 			if ( adata(ADATA_ID, cnt) != AREA_SHOP ) {
 				continue
 			}
-			adata((37 /*!!!@[ADATA_SHOP_SALE_RESTRICTION @@@ ADATA_RANCH_BREED_RESTRICTION]@!!! */), cnt) = 0
-			adata((39 /*!!!@[ADATA_SHOP_TYPE_CHANGE_COOLDOWN @@@ ADATA_RANCH_PRODUCE_RESTRICTION]@!!! */), cnt) = 0
+			adata((37 /*!!!@[ADATA_RANCH_BREED_RESTRICTION @@@ ADATA_SHOP_SALE_RESTRICTION]@!!! */), cnt) = 0
+			adata((39 /*!!!@[ADATA_RANCH_PRODUCE_RESTRICTION @@@ ADATA_SHOP_TYPE_CHANGE_COOLDOWN]@!!! */), cnt) = 0
 		loop
 	}
 	if ( gdata(GDATA_VERSION) < 3080 ) {
@@ -825,7 +825,7 @@
 			continue
 		}
 		if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_ITEM_TYPE) == FILTER_AMMO ) {
-			inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), cnt) = -1
+			inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), cnt) = -1
 		}
 		inv(INV_ITEM_EQUIP, cnt) = 0
 		item_copy cnt, inv_getfreeid(-1)
@@ -3890,7 +3890,7 @@
 		noteadd "gQuest:" + gdata(GDATA_QUEST) + " gQuestRef:" + gdata(GDATA_QUEST_REF) + " gQuestStatus:" + gdata(GDATA_QUEST_STATE) + " rq:" + rq
 		repeat 5
 			p = gdata(GDATA_QUEST_POOL + cnt)
-			noteadd "quest" + cnt + " " + p + " exist" + qdata(QDATA_EXIST, p) + " status" + qdata(QDATA_STATE, p) + " var" + qdata(QDATA_VAR, p) + " encount" + qdata((10 /*!!!@[QDATA_ENCOUNTER @@@ QDATA_DEST_CLIENT]@!!! */), p)
+			noteadd "quest" + cnt + " " + p + " exist" + qdata(QDATA_EXIST, p) + " status" + qdata(QDATA_STATE, p) + " var" + qdata(QDATA_VAR, p) + " encount" + qdata((10 /*!!!@[QDATA_DEST_CLIENT @@@ QDATA_ENCOUNTER]@!!! */), p)
 		loop
 		repeat gdata(GDATA_CLIENT)
 			noteadd "" + cnt + " " + qdata(QDATA_CLIENT, cnt) + "/" + qdata(QDATA_MAP, cnt)

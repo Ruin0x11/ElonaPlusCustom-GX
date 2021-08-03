@@ -322,7 +322,7 @@
 			objlv = 5
 		}
 		if ( rnd(20) != 0 ) {
-			if ( mdata(MDATA_TYPE) == (20 /*!!!@[MAP_TYPE_DUNGEON_MIN @@@ MAP_TYPE_DUNGEON]@!!! */) ) {
+			if ( mdata(MDATA_TYPE) == (20 /*!!!@[MAP_TYPE_DUNGEON @@@ MAP_TYPE_DUNGEON_MIN]@!!! */) ) {
 				fltn "nefia1"
 			}
 			if ( mdata(MDATA_TYPE) == MAP_TYPE_FOREST ) {
@@ -343,7 +343,7 @@
 			if ( mdata(MDATA_TYPE) == MAP_TYPE_MINE ) {
 				fltn "nefia7"
 			}
-			if ( mdata(MDATA_TYPE) == (27 /*!!!@[MAP_TYPE_LAKE @@@ MAP_TYPE_DUNGEON_MAX]@!!! */) ) {
+			if ( mdata(MDATA_TYPE) == (27 /*!!!@[MAP_TYPE_DUNGEON_MAX @@@ MAP_TYPE_LAKE]@!!! */) ) {
 				fltn "nefia8"
 			}
 		}
@@ -352,7 +352,7 @@
 		}
 		return
 	}
-	if ( mdata(MDATA_TYPE) >= (20 /*!!!@[MAP_TYPE_DUNGEON_MIN @@@ MAP_TYPE_DUNGEON]@!!! */) ) {
+	if ( mdata(MDATA_TYPE) >= (20 /*!!!@[MAP_TYPE_DUNGEON @@@ MAP_TYPE_DUNGEON_MIN]@!!! */) ) {
 		flt calcobjlv(gdata(GDATA_LEVEL)), calcfixlv(FIX_QUALITY_GOOD)
 		return
 	}
@@ -439,7 +439,7 @@
 	if ( mdata(MDATA_MODERATE_CROWD) == 0 ) {
 		return
 	}
-	if ( mdata(MDATA_TYPE) >= (20 /*!!!@[MAP_TYPE_DUNGEON_MIN @@@ MAP_TYPE_DUNGEON]@!!! */) ) {
+	if ( mdata(MDATA_TYPE) >= (20 /*!!!@[MAP_TYPE_DUNGEON @@@ MAP_TYPE_DUNGEON_MIN]@!!! */) ) {
 		if ( rnd(20) > 0 ) {
 			return
 		}
@@ -599,7 +599,7 @@
 									inv(INV_ITEM_PARAM1, ci) = necrop
 									inv(INV_ITEM_PARAM2, ci) = cdata(CDATA_FORM_SHIFT_PIC, tc)
 									inv(INV_ITEM_WEIGHT, ci) += necrop * 1000
-									inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) = 6666
+									inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) = 6666
 									inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
 									inv(INV_ITEM_KNOWN, ci) = ITEM_KNOWN_NECRO
 									inv(INV_ITEM_CHARA_PIC, ci) = necrop3
@@ -611,7 +611,7 @@
 									inv(INV_ITEM_PARAM1, ci) = necrop
 									inv(INV_ITEM_PARAM2, ci) = cdata(CDATA_FORM_SHIFT_PIC, tc)
 									inv(INV_ITEM_WEIGHT, ci) += necrop * 1000
-									inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) = 6666
+									inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) = 6666
 									inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
 									inv(INV_ITEM_KNOWN, ci) = ITEM_KNOWN_NECRO
 									inv(INV_ITEM_CHARA_PIC, ci) = necrop3
@@ -632,7 +632,7 @@
 		}
 	}
 	if ( adata(ADATA_ID, gdata(GDATA_AREA)) != AREA_SHOP & adata(ADATA_ID, gdata(GDATA_AREA)) != AREA_RANCH ) {
-		adata((37 /*!!!@[ADATA_SHOP_SALE_RESTRICTION @@@ ADATA_RANCH_BREED_RESTRICTION]@!!! */), gdata(GDATA_AREA)) = 0
+		adata((37 /*!!!@[ADATA_RANCH_BREED_RESTRICTION @@@ ADATA_SHOP_SALE_RESTRICTION]@!!! */), gdata(GDATA_AREA)) = 0
 	}
 	gdata(GDATA_AREA_PREV) = gdata(GDATA_AREA)
 	if ( gdata(GDATA_AREA_PREV) == 81 ) {
@@ -897,7 +897,7 @@
 				gdata(GDATA_AREA) = gdata(GDATA_WORLD)
 			}
 		}
-		if ( mdata(MDATA_TYPE) >= (20 /*!!!@[MAP_TYPE_DUNGEON_MIN @@@ MAP_TYPE_DUNGEON]@!!! */) | mdata(MDATA_TYPE) == MAP_TYPE_FIELD | gdata(GDATA_AREA) == AREA_DOCK | gdata(GDATA_AREA) == AREA_OBLIVION_PALACE ) {
+		if ( mdata(MDATA_TYPE) >= (20 /*!!!@[MAP_TYPE_DUNGEON @@@ MAP_TYPE_DUNGEON_MIN]@!!! */) | mdata(MDATA_TYPE) == MAP_TYPE_FIELD | gdata(GDATA_AREA) == AREA_DOCK | gdata(GDATA_AREA) == AREA_OBLIVION_PALACE ) {
 			if ( gdata(GDATA_LEVEL) < adata(ADATA_MIN_LEVEL, gdata(GDATA_AREA)) ) {
 				gdata(GDATA_AREA) = gdata(GDATA_WORLD)
 			}
@@ -1257,7 +1257,7 @@
 			if ( cdata(CDATA_EXIST, cnt) == CHAR_STATE_DEAD ) {
 				continue
 			}
-			if ( cdata(CDATA_ROLE, cnt) >= (1000 /*!!!@[ROLE_SHOP_MIN @@@ ROLE_SHOP_WEAPON]@!!! */) & cdata(CDATA_ROLE, cnt) < (2000 /*!!!@[ROLE_GUEST_MIN @@@ ROLE_GUEST_BEGGAR]@!!! */) | cdata(CDATA_ROLE, cnt) == ROLE_GUEST_MERCHANT ) {
+			if ( cdata(CDATA_ROLE, cnt) >= (1000 /*!!!@[ROLE_SHOP_MIN @@@ ROLE_SHOP_WEAPON]@!!! */) & cdata(CDATA_ROLE, cnt) < (2000 /*!!!@[ROLE_GUEST_BEGGAR @@@ ROLE_GUEST_MIN]@!!! */) | cdata(CDATA_ROLE, cnt) == ROLE_GUEST_MERCHANT ) {
 				rolebk(0, maxnpcbk) = cdata(CDATA_ROLE, cnt), cdata(CDATA_ROLE_SHOP_LEVEL, cnt)
 				maxnpcbk++
 			}
@@ -1395,7 +1395,7 @@
 		inv(INV_ITEM_PARAM1, ci) = 8
 		flt
 		itemcreate -1, ITEM_ID_SHOP_STRONGBOX, 19, 10, 0
-		inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) = 5
+		inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) = 5
 		flt
 		itemcreate -1, ITEM_ID_REGISTER, 17, 11, 0
 		if ( 0 ) {
@@ -1714,7 +1714,7 @@
 				mdata(MDATA_TILESET) = MAP_TILESET_DUNGEON
 				map_initcustom "11mesh"
 				mdata(MDATA_FIELD) = MAP_FIELD_INDOOR
-				mdata(MDATA_TYPE) = (20 /*!!!@[MAP_TYPE_DUNGEON_MIN @@@ MAP_TYPE_DUNGEON]@!!! */)
+				mdata(MDATA_TYPE) = (20 /*!!!@[MAP_TYPE_DUNGEON @@@ MAP_TYPE_DUNGEON_MIN]@!!! */)
 				mdata(MDATA_MODERATE_CROWD) = 0
 				mdata(MDATA_MUSIC) = MUSICLIST_MCCHAOS
 				mdata(MDATA_NO_RENEW) = 1
@@ -2153,13 +2153,13 @@
 				cdata(CDATA_ROLE, rc) = ROLE_SPECIAL
 				flt
 				itemcreate -1, ITEM_ID_HEIR_TRUNK, 6, 10, 0
-				inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) = 3
+				inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) = 3
 				flt
 				itemcreate -1, ITEM_ID_SALARY_CHEST, 15, 19, 0
-				inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) = 4
+				inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) = 4
 				flt
 				itemcreate -1, ITEM_ID_FREEZER, 9, 8, 0
-				inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) = 6
+				inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) = 6
 				flt
 				itemcreate -1, ITEM_ID_RED_BOOK, 18, 19, 0
 				inv(INV_ITEM_PARAM1, ci) = 1
@@ -2666,7 +2666,7 @@
 			mdata(MDATA_TILESET) = MAP_TILESET_DUNGEON
 			map_initcustom "sqSewer"
 			mdata(MDATA_FIELD) = MAP_FIELD_INDOOR
-			mdata(MDATA_TYPE) = (20 /*!!!@[MAP_TYPE_DUNGEON_MIN @@@ MAP_TYPE_DUNGEON]@!!! */)
+			mdata(MDATA_TYPE) = (20 /*!!!@[MAP_TYPE_DUNGEON @@@ MAP_TYPE_DUNGEON_MIN]@!!! */)
 			mdata(MDATA_MODERATE_CROWD) = 0
 			mdata(MDATA_MUSIC) = MUSICLIST_MCPUTI
 			mdata(MDATA_NO_RENEW) = 1
@@ -2876,7 +2876,7 @@
 			mdata(MDATA_TILESET) = MAP_TILESET_DUNGEON
 			map_initcustom "sqcat"
 			mdata(MDATA_FIELD) = MAP_FIELD_INDOOR
-			mdata(MDATA_TYPE) = (20 /*!!!@[MAP_TYPE_DUNGEON_MIN @@@ MAP_TYPE_DUNGEON]@!!! */)
+			mdata(MDATA_TYPE) = (20 /*!!!@[MAP_TYPE_DUNGEON @@@ MAP_TYPE_DUNGEON_MIN]@!!! */)
 			mdata(MDATA_MODERATE_CROWD) = 0
 			mdata(MDATA_MUSIC) = MUSICLIST_MCPUTI
 			mdata(MDATA_NO_RENEW) = 1
@@ -2888,7 +2888,7 @@
 			mdata(MDATA_TILESET) = MAP_TILESET_DUNGEON
 			map_initcustom "sqwar"
 			mdata(MDATA_FIELD) = MAP_FIELD_OUTDOOR
-			mdata(MDATA_TYPE) = (20 /*!!!@[MAP_TYPE_DUNGEON_MIN @@@ MAP_TYPE_DUNGEON]@!!! */)
+			mdata(MDATA_TYPE) = (20 /*!!!@[MAP_TYPE_DUNGEON @@@ MAP_TYPE_DUNGEON_MIN]@!!! */)
 			mdata(MDATA_MODERATE_CROWD) = 0
 			mdata(MDATA_MUSIC) = MUSICLIST_MCPUTI
 			mdata(MDATA_NO_RENEW) = 1
@@ -3038,7 +3038,7 @@
 			mdata(MDATA_TILESET) = MAP_TILESET_CAVE
 			map_initcustom "ice"
 			mdata(MDATA_FIELD) = MAP_FIELD_OUTDOOR
-			mdata(MDATA_TYPE) = (20 /*!!!@[MAP_TYPE_DUNGEON_MIN @@@ MAP_TYPE_DUNGEON]@!!! */)
+			mdata(MDATA_TYPE) = (20 /*!!!@[MAP_TYPE_DUNGEON @@@ MAP_TYPE_DUNGEON_MIN]@!!! */)
 			mdata(MDATA_MODERATE_CROWD) = 0
 			mdata(MDATA_MUSIC) = MUSICLIST_MCBOSS5
 			mdata(MDATA_NO_RENEW) = 1
@@ -3209,7 +3209,7 @@
 			mdata(MDATA_TILESET) = MAP_TILESET_DUNGEON
 			map_initcustom "sqkamikaze"
 			mdata(MDATA_FIELD) = MAP_FIELD_INDOOR
-			mdata(MDATA_TYPE) = (20 /*!!!@[MAP_TYPE_DUNGEON_MIN @@@ MAP_TYPE_DUNGEON]@!!! */)
+			mdata(MDATA_TYPE) = (20 /*!!!@[MAP_TYPE_DUNGEON @@@ MAP_TYPE_DUNGEON_MIN]@!!! */)
 			mdata(MDATA_MODERATE_CROWD) = 0
 			mdata(MDATA_MUSIC) = MUSICLIST_MCBATTLE1
 			mdata(MDATA_NO_RENEW) = 1
@@ -3334,7 +3334,7 @@
 			mdata(MDATA_TILESET) = MAP_TILESET_DUNGEON
 			map_initcustom "puti"
 			mdata(MDATA_FIELD) = MAP_FIELD_INDOOR
-			mdata(MDATA_TYPE) = (20 /*!!!@[MAP_TYPE_DUNGEON_MIN @@@ MAP_TYPE_DUNGEON]@!!! */)
+			mdata(MDATA_TYPE) = (20 /*!!!@[MAP_TYPE_DUNGEON @@@ MAP_TYPE_DUNGEON_MIN]@!!! */)
 			mdata(MDATA_MODERATE_CROWD) = 0
 			mdata(MDATA_MUSIC) = MUSICLIST_MCPUTI
 			mdata(MDATA_NO_RENEW) = 1
@@ -3346,7 +3346,7 @@
 			mdata(MDATA_TILESET) = MAP_TILESET_DUNGEON
 			map_initcustom "sqrogue"
 			mdata(MDATA_FIELD) = MAP_FIELD_INDOOR
-			mdata(MDATA_TYPE) = (20 /*!!!@[MAP_TYPE_DUNGEON_MIN @@@ MAP_TYPE_DUNGEON]@!!! */)
+			mdata(MDATA_TYPE) = (20 /*!!!@[MAP_TYPE_DUNGEON @@@ MAP_TYPE_DUNGEON_MIN]@!!! */)
 			mdata(MDATA_MODERATE_CROWD) = 0
 			mdata(MDATA_MUSIC) = MUSICLIST_MCPUTI
 			mdata(MDATA_NO_RENEW) = 1
@@ -3358,7 +3358,7 @@
 			mdata(MDATA_TILESET) = MAP_TILESET_DUNGEON
 			map_initcustom "sqNightmare"
 			mdata(MDATA_FIELD) = MAP_FIELD_INDOOR
-			mdata(MDATA_TYPE) = (20 /*!!!@[MAP_TYPE_DUNGEON_MIN @@@ MAP_TYPE_DUNGEON]@!!! */)
+			mdata(MDATA_TYPE) = (20 /*!!!@[MAP_TYPE_DUNGEON @@@ MAP_TYPE_DUNGEON_MIN]@!!! */)
 			mdata(MDATA_MODERATE_CROWD) = 0
 			mdata(MDATA_MUSIC) = MUSICLIST_MCCHAOS
 			mdata(MDATA_NO_RENEW) = 1
@@ -5234,7 +5234,7 @@
 		if ( gdata(GDATA_LEVEL) == 5 ) {
 			map_initcustom "kara"
 			mdata(MDATA_FIELD) = MAP_FIELD_INDOOR
-			mdata(MDATA_TYPE) = (20 /*!!!@[MAP_TYPE_DUNGEON_MIN @@@ MAP_TYPE_DUNGEON]@!!! */)
+			mdata(MDATA_TYPE) = (20 /*!!!@[MAP_TYPE_DUNGEON @@@ MAP_TYPE_DUNGEON_MIN]@!!! */)
 			mdata(MDATA_MODERATE_CROWD) = 0
 			mdata(MDATA_CAN_SAVE) = 0
 			mdata(MDATA_NO_RENEW) = 0
@@ -5356,7 +5356,7 @@
 			mdata(MDATA_TILESET) = MAP_TILESET_DUNGEON
 			map_initcustom "sqRed"
 			mdata(MDATA_FIELD) = MAP_FIELD_OUTDOOR
-			mdata(MDATA_TYPE) = (20 /*!!!@[MAP_TYPE_DUNGEON_MIN @@@ MAP_TYPE_DUNGEON]@!!! */)
+			mdata(MDATA_TYPE) = (20 /*!!!@[MAP_TYPE_DUNGEON @@@ MAP_TYPE_DUNGEON_MIN]@!!! */)
 			mdata(MDATA_MODERATE_CROWD) = 0
 			mdata(MDATA_MUSIC) = MUSICLIST_MCBOSS5
 			mdata(MDATA_NO_RENEW) = 1
@@ -6143,7 +6143,7 @@
 			mdata(MDATA_TILESET) = MAP_TILESET_DUNGEON
 			map_initcustom "sqBlack"
 			mdata(MDATA_FIELD) = MAP_FIELD_OUTDOOR
-			mdata(MDATA_TYPE) = (20 /*!!!@[MAP_TYPE_DUNGEON_MIN @@@ MAP_TYPE_DUNGEON]@!!! */)
+			mdata(MDATA_TYPE) = (20 /*!!!@[MAP_TYPE_DUNGEON @@@ MAP_TYPE_DUNGEON_MIN]@!!! */)
 			mdata(MDATA_MODERATE_CROWD) = 0
 			mdata(MDATA_MUSIC) = MUSICLIST_MCBOSS5
 			mdata(MDATA_NO_RENEW) = 1
@@ -6545,7 +6545,7 @@
 			mdata(MDATA_TILESET) = MAP_TILESET_DUNGEON
 			map_initcustom "sqEulderna"
 			mdata(MDATA_FIELD) = MAP_FIELD_INDOOR
-			mdata(MDATA_TYPE) = (20 /*!!!@[MAP_TYPE_DUNGEON_MIN @@@ MAP_TYPE_DUNGEON]@!!! */)
+			mdata(MDATA_TYPE) = (20 /*!!!@[MAP_TYPE_DUNGEON @@@ MAP_TYPE_DUNGEON_MIN]@!!! */)
 			mdata(MDATA_MODERATE_CROWD) = 0
 			mdata(MDATA_MUSIC) = MUSICLIST_MCBATTLE1
 			mdata(MDATA_NO_RENEW) = 1
@@ -6648,7 +6648,7 @@
 			mdata(MDATA_TILESET) = MAP_TILESET_DUNGEON
 			map_initcustom "sqRevenge"
 			mdata(MDATA_FIELD) = MAP_FIELD_OUTDOOR
-			mdata(MDATA_TYPE) = (20 /*!!!@[MAP_TYPE_DUNGEON_MIN @@@ MAP_TYPE_DUNGEON]@!!! */)
+			mdata(MDATA_TYPE) = (20 /*!!!@[MAP_TYPE_DUNGEON @@@ MAP_TYPE_DUNGEON_MIN]@!!! */)
 			mdata(MDATA_MODERATE_CROWD) = 0
 			mdata(MDATA_MUSIC) = MUSICLIST_MCPUTI
 			mdata(MDATA_NO_RENEW) = 0
@@ -6661,7 +6661,7 @@
 			mdata(MDATA_TILESET) = MAP_TILESET_DUNGEON
 			map_initcustom "sqRevenge2"
 			mdata(MDATA_FIELD) = MAP_FIELD_OUTDOOR
-			mdata(MDATA_TYPE) = (20 /*!!!@[MAP_TYPE_DUNGEON_MIN @@@ MAP_TYPE_DUNGEON]@!!! */)
+			mdata(MDATA_TYPE) = (20 /*!!!@[MAP_TYPE_DUNGEON @@@ MAP_TYPE_DUNGEON_MIN]@!!! */)
 			mdata(MDATA_MODERATE_CROWD) = 0
 			mdata(MDATA_MUSIC) = MUSICLIST_MCBOSS4
 			mdata(MDATA_NO_RENEW) = 0
@@ -6935,7 +6935,7 @@
 			mdata(MDATA_TILESET) = MAP_TILESET_DUNGEON
 			map_initcustom "sqPirate"
 			mdata(MDATA_FIELD) = MAP_FIELD_INDOOR
-			mdata(MDATA_TYPE) = (20 /*!!!@[MAP_TYPE_DUNGEON_MIN @@@ MAP_TYPE_DUNGEON]@!!! */)
+			mdata(MDATA_TYPE) = (20 /*!!!@[MAP_TYPE_DUNGEON @@@ MAP_TYPE_DUNGEON_MIN]@!!! */)
 			mdata(MDATA_MODERATE_CROWD) = 0
 			mdata(MDATA_MUSIC) = MUSICLIST_MCBOSS3
 			mdata(MDATA_NO_RENEW) = 1
@@ -6950,7 +6950,7 @@
 			mdata(MDATA_TILESET) = MAP_TILESET_DUNGEON
 			map_initcustom "Ninjya"
 			mdata(MDATA_FIELD) = MAP_FIELD_INDOOR
-			mdata(MDATA_TYPE) = (20 /*!!!@[MAP_TYPE_DUNGEON_MIN @@@ MAP_TYPE_DUNGEON]@!!! */)
+			mdata(MDATA_TYPE) = (20 /*!!!@[MAP_TYPE_DUNGEON @@@ MAP_TYPE_DUNGEON_MIN]@!!! */)
 			mdata(MDATA_MODERATE_CROWD) = 0
 			mdata(MDATA_MUSIC) = MUSICLIST_MCBOSS3
 			mdata(MDATA_NO_RENEW) = 1
@@ -7441,7 +7441,7 @@
 			mdata(MDATA_TILESET) = MAP_TILESET_DUNGEON
 			map_initcustom "sqHitman"
 			mdata(MDATA_FIELD) = MAP_FIELD_INDOOR
-			mdata(MDATA_TYPE) = (20 /*!!!@[MAP_TYPE_DUNGEON_MIN @@@ MAP_TYPE_DUNGEON]@!!! */)
+			mdata(MDATA_TYPE) = (20 /*!!!@[MAP_TYPE_DUNGEON @@@ MAP_TYPE_DUNGEON_MIN]@!!! */)
 			mdata(MDATA_MODERATE_CROWD) = 0
 			mdata(MDATA_MUSIC) = MUSICLIST_MCBATTLE2
 			mdata(MDATA_NO_RENEW) = 1
@@ -7504,7 +7504,7 @@
 			mdata(MDATA_TILESET) = MAP_TILESET_DUNGEON
 			map_initcustom "goki"
 			mdata(MDATA_FIELD) = MAP_FIELD_INDOOR
-			mdata(MDATA_TYPE) = (20 /*!!!@[MAP_TYPE_DUNGEON_MIN @@@ MAP_TYPE_DUNGEON]@!!! */)
+			mdata(MDATA_TYPE) = (20 /*!!!@[MAP_TYPE_DUNGEON @@@ MAP_TYPE_DUNGEON_MIN]@!!! */)
 			mdata(MDATA_MODERATE_CROWD) = 0
 			mdata(MDATA_MUSIC) = MUSICLIST_MCBOSS4
 			mdata(MDATA_NO_RENEW) = 0
@@ -7717,7 +7717,7 @@
 			if ( cdata(CDATA_EXIST, cnt) == CHAR_STATE_DEAD ) {
 				continue
 			}
-			if ( cdata(CDATA_ROLE, cnt) >= (1000 /*!!!@[ROLE_SHOP_MIN @@@ ROLE_SHOP_WEAPON]@!!! */) & cdata(CDATA_ROLE, cnt) < (2000 /*!!!@[ROLE_GUEST_MIN @@@ ROLE_GUEST_BEGGAR]@!!! */) | cdata(CDATA_ROLE, cnt) == ROLE_GUEST_MERCHANT ) {
+			if ( cdata(CDATA_ROLE, cnt) >= (1000 /*!!!@[ROLE_SHOP_MIN @@@ ROLE_SHOP_WEAPON]@!!! */) & cdata(CDATA_ROLE, cnt) < (2000 /*!!!@[ROLE_GUEST_BEGGAR @@@ ROLE_GUEST_MIN]@!!! */) | cdata(CDATA_ROLE, cnt) == ROLE_GUEST_MERCHANT ) {
 				cnt2 = cnt
 				repeat maxnpcbk
 					if ( cdata(CDATA_ROLE, cnt2) == rolebk(0, cnt) ) {
@@ -8878,7 +8878,7 @@
 			}
 		}
 	}
-	if ( mdata(MDATA_TYPE) >= (20 /*!!!@[MAP_TYPE_DUNGEON_MIN @@@ MAP_TYPE_DUNGEON]@!!! */) ) {
+	if ( mdata(MDATA_TYPE) >= (20 /*!!!@[MAP_TYPE_DUNGEON @@@ MAP_TYPE_DUNGEON_MIN]@!!! */) ) {
 		if ( zyuusann == 100 ) {
 			if ( gdata(GDATA_LEVEL) >= 66 ) {
 				if ( rnd(130) == 0 ) {
@@ -9983,7 +9983,7 @@
 	}
 	if ( dbg_randomsite ) {
 		mtypebk = mdata(MDATA_TYPE)
-		mdata(MDATA_TYPE) = (20 /*!!!@[MAP_TYPE_DUNGEON_MIN @@@ MAP_TYPE_DUNGEON]@!!! */)
+		mdata(MDATA_TYPE) = (20 /*!!!@[MAP_TYPE_DUNGEON @@@ MAP_TYPE_DUNGEON_MIN]@!!! */)
 		repeat dbg_randomsite
 			map_randsite
 		loop
@@ -10976,7 +10976,7 @@
 	p = 49
 	adata(ADATA_ID, p) = AREA_REMIDO
 	adata(ADATA_ICON, p) = xy2pic(29, 4)
-	adata(ADATA_TYPE, p) = (20 /*!!!@[MAP_TYPE_DUNGEON_MIN @@@ MAP_TYPE_DUNGEON]@!!! */)
+	adata(ADATA_TYPE, p) = (20 /*!!!@[MAP_TYPE_DUNGEON @@@ MAP_TYPE_DUNGEON_MIN]@!!! */)
 	adata(ADATA_X, p) = 33
 	adata(ADATA_Y, p) = 25
 	adata(ADATA_START_ON, p) = 1
@@ -10992,7 +10992,7 @@
 	p = 76
 	adata(ADATA_ID, p) = AREA_CHAOS_CRADLE
 	adata(ADATA_ICON, p) = xy2pic(17, 4)
-	adata(ADATA_TYPE, p) = (20 /*!!!@[MAP_TYPE_DUNGEON_MIN @@@ MAP_TYPE_DUNGEON]@!!! */)
+	adata(ADATA_TYPE, p) = (20 /*!!!@[MAP_TYPE_DUNGEON @@@ MAP_TYPE_DUNGEON_MIN]@!!! */)
 	adata(ADATA_X, p) = 39
 	adata(ADATA_Y, p) = 25
 	adata(ADATA_START_ON, p) = 1
@@ -11142,7 +11142,7 @@
 	p = 78
 	adata(ADATA_ID, p) = AREA_DRAGON_VOLCANO
 	adata(ADATA_ICON, p) = xy2pic(8, 11)
-	adata(ADATA_TYPE, p) = (20 /*!!!@[MAP_TYPE_DUNGEON_MIN @@@ MAP_TYPE_DUNGEON]@!!! */)
+	adata(ADATA_TYPE, p) = (20 /*!!!@[MAP_TYPE_DUNGEON @@@ MAP_TYPE_DUNGEON_MIN]@!!! */)
 	adata(ADATA_X, p) = 10
 	adata(ADATA_Y, p) = 38
 	adata(ADATA_START_ON, p) = 1
@@ -11158,7 +11158,7 @@
 	p = 83
 	adata(ADATA_ID, p) = AREA_HARVEST_SHIP
 	adata(ADATA_ICON, p) = xy2pic(15, 4)
-	adata(ADATA_TYPE, p) = (20 /*!!!@[MAP_TYPE_DUNGEON_MIN @@@ MAP_TYPE_DUNGEON]@!!! */)
+	adata(ADATA_TYPE, p) = (20 /*!!!@[MAP_TYPE_DUNGEON @@@ MAP_TYPE_DUNGEON_MIN]@!!! */)
 	adata(ADATA_X, p) = 65
 	adata(ADATA_Y, p) = 51
 	adata(ADATA_START_ON, p) = 1
@@ -11410,7 +11410,7 @@
 	p = 89
 	adata(ADATA_ID, p) = AREA_GRAVITY_VALLEY
 	adata(ADATA_ICON, p) = xy2pic(13, 11)
-	adata(ADATA_TYPE, p) = (20 /*!!!@[MAP_TYPE_DUNGEON_MIN @@@ MAP_TYPE_DUNGEON]@!!! */)
+	adata(ADATA_TYPE, p) = (20 /*!!!@[MAP_TYPE_DUNGEON @@@ MAP_TYPE_DUNGEON_MIN]@!!! */)
 	adata(ADATA_X, p) = 35
 	adata(ADATA_Y, p) = 3
 	adata(ADATA_START_ON, p) = 1
@@ -11442,7 +11442,7 @@
 	p = 58
 	adata(ADATA_ID, p) = AREA_CHAOS_SHRINE
 	adata(ADATA_ICON, p) = xy2pic(9, 4)
-	adata(ADATA_TYPE, p) = (20 /*!!!@[MAP_TYPE_DUNGEON_MIN @@@ MAP_TYPE_DUNGEON]@!!! */)
+	adata(ADATA_TYPE, p) = (20 /*!!!@[MAP_TYPE_DUNGEON @@@ MAP_TYPE_DUNGEON_MIN]@!!! */)
 	adata(ADATA_X, p) = 45
 	adata(ADATA_Y, p) = 22
 	adata(ADATA_START_ON, p) = 1
@@ -11458,7 +11458,7 @@
 	p = 59
 	adata(ADATA_ID, p) = AREA_VALLEY_HADES
 	adata(ADATA_ICON, p) = xy2pic(30, 4)
-	adata(ADATA_TYPE, p) = (20 /*!!!@[MAP_TYPE_DUNGEON_MIN @@@ MAP_TYPE_DUNGEON]@!!! */)
+	adata(ADATA_TYPE, p) = (20 /*!!!@[MAP_TYPE_DUNGEON @@@ MAP_TYPE_DUNGEON_MIN]@!!! */)
 	adata(ADATA_X, p) = 59
 	adata(ADATA_Y, p) = 46
 	adata(ADATA_START_ON, p) = 1
@@ -11725,7 +11725,7 @@
 	p = 3
 	adata(ADATA_ID, p) = AREA_LESIMAS
 	adata(ADATA_ICON, p) = xy2pic(7, 4)
-	adata(ADATA_TYPE, p) = (20 /*!!!@[MAP_TYPE_DUNGEON_MIN @@@ MAP_TYPE_DUNGEON]@!!! */)
+	adata(ADATA_TYPE, p) = (20 /*!!!@[MAP_TYPE_DUNGEON @@@ MAP_TYPE_DUNGEON_MIN]@!!! */)
 	adata(ADATA_X, p) = 23
 	adata(ADATA_Y, p) = 29
 	adata(ADATA_START_ON, p) = 1
@@ -11741,7 +11741,7 @@
 	p = 42
 	adata(ADATA_ID, p) = AREA_VOID
 	adata(ADATA_ICON, p) = xy2pic(7, 4)
-	adata(ADATA_TYPE, p) = (20 /*!!!@[MAP_TYPE_DUNGEON_MIN @@@ MAP_TYPE_DUNGEON]@!!! */)
+	adata(ADATA_TYPE, p) = (20 /*!!!@[MAP_TYPE_DUNGEON @@@ MAP_TYPE_DUNGEON_MIN]@!!! */)
 	adata(ADATA_X, p) = 81
 	adata(ADATA_Y, p) = 51
 	adata(ADATA_START_ON, p) = 1
@@ -11789,7 +11789,7 @@
 	p = 17
 	adata(ADATA_ID, p) = AREA_CRYPT_OF_THE_DAMNED
 	adata(ADATA_ICON, p) = xy2pic(9, 4)
-	adata(ADATA_TYPE, p) = (20 /*!!!@[MAP_TYPE_DUNGEON_MIN @@@ MAP_TYPE_DUNGEON]@!!! */)
+	adata(ADATA_TYPE, p) = (20 /*!!!@[MAP_TYPE_DUNGEON @@@ MAP_TYPE_DUNGEON_MIN]@!!! */)
 	adata(ADATA_X, p) = 37
 	adata(ADATA_Y, p) = 20
 	adata(ADATA_START_ON, p) = 1
@@ -11821,7 +11821,7 @@
 	p = 19
 	adata(ADATA_ID, p) = AREA_DRAGON_NEST
 	adata(ADATA_ICON, p) = xy2pic(14, 4)
-	adata(ADATA_TYPE, p) = (20 /*!!!@[MAP_TYPE_DUNGEON_MIN @@@ MAP_TYPE_DUNGEON]@!!! */)
+	adata(ADATA_TYPE, p) = (20 /*!!!@[MAP_TYPE_DUNGEON @@@ MAP_TYPE_DUNGEON_MIN]@!!! */)
 	adata(ADATA_X, p) = 13
 	adata(ADATA_Y, p) = 32
 	adata(ADATA_START_ON, p) = 1
@@ -11837,7 +11837,7 @@
 	p = 26
 	adata(ADATA_ID, p) = AREA_MOUNTAIN_PASS
 	adata(ADATA_ICON, p) = xy2pic(14, 4)
-	adata(ADATA_TYPE, p) = (20 /*!!!@[MAP_TYPE_DUNGEON_MIN @@@ MAP_TYPE_DUNGEON]@!!! */)
+	adata(ADATA_TYPE, p) = (20 /*!!!@[MAP_TYPE_DUNGEON @@@ MAP_TYPE_DUNGEON_MIN]@!!! */)
 	adata(ADATA_X, p) = 64
 	adata(ADATA_Y, p) = 43
 	adata(ADATA_START_ON, p) = 2
@@ -11853,7 +11853,7 @@
 	p = 68
 	adata(ADATA_ID, p) = AREA_MOUNTAIN_PASS_WINDY
 	adata(ADATA_ICON, p) = xy2pic(2, 4)
-	adata(ADATA_TYPE, p) = (20 /*!!!@[MAP_TYPE_DUNGEON_MIN @@@ MAP_TYPE_DUNGEON]@!!! */)
+	adata(ADATA_TYPE, p) = (20 /*!!!@[MAP_TYPE_DUNGEON @@@ MAP_TYPE_DUNGEON_MIN]@!!! */)
 	adata(ADATA_X, p) = 46
 	adata(ADATA_Y, p) = 18
 	adata(ADATA_START_ON, p) = 2
@@ -11869,7 +11869,7 @@
 	p = 27
 	adata(ADATA_ID, p) = AREA_PUPPY_CAVE
 	adata(ADATA_ICON, p) = xy2pic(14, 4)
-	adata(ADATA_TYPE, p) = (20 /*!!!@[MAP_TYPE_DUNGEON_MIN @@@ MAP_TYPE_DUNGEON]@!!! */)
+	adata(ADATA_TYPE, p) = (20 /*!!!@[MAP_TYPE_DUNGEON @@@ MAP_TYPE_DUNGEON_MIN]@!!! */)
 	adata(ADATA_X, p) = 29
 	adata(ADATA_Y, p) = 24
 	adata(ADATA_START_ON, p) = 1
@@ -11901,7 +11901,7 @@
 	p = 38
 	adata(ADATA_ID, p) = AREA_MINOTAUR_NEST
 	adata(ADATA_ICON, p) = xy2pic(14, 4)
-	adata(ADATA_TYPE, p) = (20 /*!!!@[MAP_TYPE_DUNGEON_MIN @@@ MAP_TYPE_DUNGEON]@!!! */)
+	adata(ADATA_TYPE, p) = (20 /*!!!@[MAP_TYPE_DUNGEON @@@ MAP_TYPE_DUNGEON_MIN]@!!! */)
 	adata(ADATA_X, p) = 43
 	adata(ADATA_Y, p) = 39
 	adata(ADATA_START_ON, p) = 1
@@ -11917,7 +11917,7 @@
 	p = 28
 	adata(ADATA_ID, p) = AREA_YEEK_NEST
 	adata(ADATA_ICON, p) = xy2pic(14, 4)
-	adata(ADATA_TYPE, p) = (20 /*!!!@[MAP_TYPE_DUNGEON_MIN @@@ MAP_TYPE_DUNGEON]@!!! */)
+	adata(ADATA_TYPE, p) = (20 /*!!!@[MAP_TYPE_DUNGEON @@@ MAP_TYPE_DUNGEON_MIN]@!!! */)
 	adata(ADATA_X, p) = 38
 	adata(ADATA_Y, p) = 31
 	adata(ADATA_START_ON, p) = 1
@@ -11933,7 +11933,7 @@
 	p = 37
 	adata(ADATA_ID, p) = AREA_PYRAMID
 	adata(ADATA_ICON, p) = xy2pic(28, 4)
-	adata(ADATA_TYPE, p) = (20 /*!!!@[MAP_TYPE_DUNGEON_MIN @@@ MAP_TYPE_DUNGEON]@!!! */)
+	adata(ADATA_TYPE, p) = (20 /*!!!@[MAP_TYPE_DUNGEON @@@ MAP_TYPE_DUNGEON_MIN]@!!! */)
 	adata(ADATA_X, p) = 4
 	adata(ADATA_Y, p) = 11
 	adata(ADATA_START_ON, p) = 1
@@ -12405,7 +12405,7 @@
 		adata(ADATA_BOSS, p) = 0
 		adata(ADATA_NAME, p) = rnd(length(mapnamerd))
 		map(x, y, MAP_FEATS_ON_TILE) = 1
-		if ( adata(ADATA_TYPE, p) == (20 /*!!!@[MAP_TYPE_DUNGEON_MIN @@@ MAP_TYPE_DUNGEON]@!!! */) ) {
+		if ( adata(ADATA_TYPE, p) == (20 /*!!!@[MAP_TYPE_DUNGEON @@@ MAP_TYPE_DUNGEON_MIN]@!!! */) ) {
 			adata(ADATA_ICON, p) = xy2pic(1, 4)
 			adata(ADATA_TILESET, p) = 0
 		}
@@ -12433,7 +12433,7 @@
 			adata(ADATA_ICON, p) = xy2pic(19, 11)
 			adata(ADATA_TILESET, p) = 17
 		}
-		if ( adata(ADATA_TYPE, p) == (27 /*!!!@[MAP_TYPE_LAKE @@@ MAP_TYPE_DUNGEON_MAX]@!!! */) ) {
+		if ( adata(ADATA_TYPE, p) == (27 /*!!!@[MAP_TYPE_DUNGEON_MAX @@@ MAP_TYPE_LAKE]@!!! */) ) {
 			adata(ADATA_ICON, p) = xy2pic(20, 11)
 			adata(ADATA_TILESET, p) = 18
 		}

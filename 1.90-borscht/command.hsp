@@ -3135,7 +3135,7 @@
 			if ( cnt < 16 ) {
 				continue
 			}
-			if ( cdata(CDATA_ROLE, cnt) >= ROLE_IDENTIFIER & cdata(CDATA_ROLE, cnt) < (2000 /*!!!@[ROLE_GUEST_MIN @@@ ROLE_GUEST_BEGGAR]@!!! */) ) {
+			if ( cdata(CDATA_ROLE, cnt) >= ROLE_IDENTIFIER & cdata(CDATA_ROLE, cnt) < (2000 /*!!!@[ROLE_GUEST_BEGGAR @@@ ROLE_GUEST_MIN]@!!! */) ) {
 				continue
 			}
 		}
@@ -5690,7 +5690,7 @@
 		inv(INV_ITEM_PARAM1, ci) = necrop
 		inv(INV_ITEM_PARAM2, ci) = cdata(CDATA_FORM_SHIFT_PIC, tc)
 		inv(INV_ITEM_WEIGHT, ci) += necrop * 1000
-		inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 + inv(INV_ITEM_PARAM3, ci)
+		inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 + inv(INV_ITEM_PARAM3, ci)
 		inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
 		inv(INV_ITEM_KNOWN, ci) = ITEM_KNOWN_NECRO
 		inv(INV_ITEM_CHARA_PIC, ci) = necrop3
@@ -10577,7 +10577,7 @@
 				ci = p
 				f = 1
 				if ( ibit(ITEM_BIT_CHARGE_ITEM, ci) ) {
-					if ( inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) <= 0 ) {
+					if ( inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) <= 0 ) {
 						continue
 					}
 				}
@@ -13883,7 +13883,7 @@
 		if ( i != 0 ) {
 			enc = enc \ 10000
 			if ( i == 9 ) {
-				if ( inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) == cnt ) {
+				if ( inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) == cnt ) {
 					cs = cnt
 				}
 				list(0, listmax) = cnt
@@ -13893,17 +13893,17 @@
 		}
 	loop
 	if ( listmax == 0 ) {
-		inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) = -1
+		inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) = -1
 		txt lang(itemname(ci) + "は切り替えに対応していない。", itemname(ci) + " isn't capable of changing ammos.")
 		goto *pc_turn
 	}
 	snd SOUNDLIST_AMMO
 	cs++
 	if ( cs >= listmax ) {
-		inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) = -1
+		inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) = -1
 	}
 	else {
-		inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) = list(0, cs)
+		inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) = list(0, cs)
 	}
 	txt lang("現在の装填弾:", "Current Ammo Type:")
 	repeat listmax + 1
@@ -13916,7 +13916,7 @@
 			s = ammoname(inv(40 + p * 2, ci) \ 10000), "" + i + "/" + i(1)
 		}
 		s = s + ":" + s(1)
-		if ( inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) == cnt - 1 ) {
+		if ( inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) == cnt - 1 ) {
 			s = "[" + s + "]"
 			txtef COLOR_BLUE
 		}

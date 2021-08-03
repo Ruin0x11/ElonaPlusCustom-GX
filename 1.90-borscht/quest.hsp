@@ -147,7 +147,7 @@
 			flttypemajor = fsetcollect(rnd(length(fsetcollect)))
 			itemcreate n, ITEM_ID_DUMMY, -1, -1, 0
 			if ( stat != 0 ) {
-				inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) = rq
+				inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) = rq
 				i = n, inv(INV_ITEM_ID, ci)
 				ibitmod ITEM_BIT_DROP, ci, TRUE
 				break
@@ -158,7 +158,7 @@
 			}
 		loop
 		if ( i != (-1) ) {
-			qdata((10 /*!!!@[QDATA_ENCOUNTER @@@ QDATA_DEST_CLIENT]@!!! */), rq) = i
+			qdata((10 /*!!!@[QDATA_DEST_CLIENT @@@ QDATA_ENCOUNTER]@!!! */), rq) = i
 			qdata(QDATA_DEST_ITEM, rq) = i(1)
 			qdata(QDATA_MAP, rq) = gdata(GDATA_AREA)
 			rewardfix = 60
@@ -232,7 +232,7 @@
 		qdata(QDATA_EXIST, rq) = QUEST_TYPE_ESCORT
 		qdata(QDATA_TYPE, rq) = QUEST_SUBTYPE_GUARD
 		qdata(QDATA_VAR, rq) = rnd(3)
-		qdata((10 /*!!!@[QDATA_ENCOUNTER @@@ QDATA_DEST_CLIENT]@!!! */), rq) = 0
+		qdata((10 /*!!!@[QDATA_DEST_CLIENT @@@ QDATA_ENCOUNTER]@!!! */), rq) = 0
 		qdata(QDATA_REWARD_ITEM, rq) = (5 /*!!!@[FILTER_RACE_KOBOLT @@@ QUEST_REWARD_SUPPLY]@!!! */)
 		if ( gdata(GDATA_AREA) == AREA_EIREL | gdata(GDATA_AREA) == AREA_MELKAWN | gdata(GDATA_AREA) == AREA_KURUALM | gdata(GDATA_AREA) == AREA_VALM | gdata(GDATA_AREA) == AREA_MELUGAS | gdata(GDATA_AREA) == AREA_ARCBELC | gdata(GDATA_AREA) == AREA_LUDUS ) {
 			repeat
@@ -396,7 +396,7 @@
 			p = rnd(gdata(GDATA_CLIENT))
 			repeat gdata(GDATA_CLIENT)
 				if ( qdata(QDATA_EXIST, cnt) == QUEST_TYPE_DELIVER ) {
-					if ( qdata((10 /*!!!@[QDATA_ENCOUNTER @@@ QDATA_DEST_CLIENT]@!!! */), cnt) == p ) {
+					if ( qdata((10 /*!!!@[QDATA_DEST_CLIENT @@@ QDATA_ENCOUNTER]@!!! */), cnt) == p ) {
 						p = -1
 						break
 					}
@@ -428,7 +428,7 @@
 			if ( p == 33 | gdata(GDATA_AREA) == AREA_NOYEL ) {
 				rewardfix = rewardfix * 175 / 100
 			}
-			qdata((10 /*!!!@[QDATA_ENCOUNTER @@@ QDATA_DEST_CLIENT]@!!! */), rq) = i
+			qdata((10 /*!!!@[QDATA_DEST_CLIENT @@@ QDATA_ENCOUNTER]@!!! */), rq) = i
 			flt
 			dbmode = DBMODE_FIND
 			flttypemajor = fsetdeliver(rnd(length(fsetdeliver)))
@@ -528,7 +528,7 @@
 		txt lang(qname(rq) + "から受けた依頼は失敗に終わった。", "You have failed the quest taken from " + qname(rq) + ".")
 		gdata(GDATA_FLAG_JOBS_FAILED)++
 		if ( qdata(QDATA_EXIST, rq) == QUEST_TYPE_DELIVER ) {
-			qdata(QDATA_QUEST_TARGET, qdata((10 /*!!!@[QDATA_ENCOUNTER @@@ QDATA_DEST_CLIENT]@!!! */), rq))--
+			qdata(QDATA_QUEST_TARGET, qdata((10 /*!!!@[QDATA_DEST_CLIENT @@@ QDATA_ENCOUNTER]@!!! */), rq))--
 			txtmore
 			txtef COLOR_PURPLE
 			txt lang("あなたは重大な罪を犯した!", "You comit a serious crime!")
@@ -859,7 +859,7 @@
 	cdata(CDATA_FAME, CHARA_PLAYER) += gdata(GDATA_QUEST_FAME)
 	txt lang("何かが足元に転がってきた。", "Something is put on the ground.")
 	if ( qdata(QDATA_EXIST, rq) == QUEST_TYPE_DELIVER ) {
-		qdata(QDATA_QUEST_TARGET, qdata((10 /*!!!@[QDATA_ENCOUNTER @@@ QDATA_DEST_CLIENT]@!!! */), rq))--
+		qdata(QDATA_QUEST_TARGET, qdata((10 /*!!!@[QDATA_DEST_CLIENT @@@ QDATA_ENCOUNTER]@!!! */), rq))--
 	}
 	qdata(QDATA_EXIST, rq) = QUEST_TYPE_NONE
 	qdata(QDATA_STATE, rq) = QUEST_STATE_NONE

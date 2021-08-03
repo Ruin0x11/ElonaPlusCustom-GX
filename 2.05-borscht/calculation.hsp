@@ -254,15 +254,15 @@
 		dbid = inv(INV_ITEM_ID, calcitemvalue_itemid)
 		dbmode = DBMODE_REF
 		gosub *db_item
-		if ( inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), calcitemvalue_itemid) < 0 ) {
+		if ( inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), calcitemvalue_itemid) < 0 ) {
 			locvar_calcitemvalue_value = locvar_calcitemvalue_value / 10
 		}
 		else {
 			if ( locvar_calcitemvalue_reftype == 54000 ) {
-				locvar_calcitemvalue_value = locvar_calcitemvalue_value / 5 + locvar_calcitemvalue_value * inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), calcitemvalue_itemid) / (ichargelevel * 2 + 1)
+				locvar_calcitemvalue_value = locvar_calcitemvalue_value / 5 + locvar_calcitemvalue_value * inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), calcitemvalue_itemid) / (ichargelevel * 2 + 1)
 			}
 			else {
-				locvar_calcitemvalue_value = locvar_calcitemvalue_value / 2 + locvar_calcitemvalue_value * inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), calcitemvalue_itemid) / (ichargelevel * 3 + 1)
+				locvar_calcitemvalue_value = locvar_calcitemvalue_value / 2 + locvar_calcitemvalue_value * inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), calcitemvalue_itemid) / (ichargelevel * 3 + 1)
 			}
 		}
 	}
@@ -459,7 +459,7 @@
 	if ( cdata(CDATA_ROLE, calchirecost_charid) == ROLE_GUARD ) {
 		locvar_calcitemvalue_value = 50
 	}
-	if ( cdata(CDATA_ROLE, calchirecost_charid) >= (1000 /*!!!@[ROLE_SHOP_MIN @@@ ROLE_SHOP_WEAPON]@!!! */) & cdata(CDATA_ROLE, calchirecost_charid) < (2000 /*!!!@[ROLE_GUEST_MIN @@@ ROLE_GUEST_BEGGAR]@!!! */) | cdata(CDATA_ROLE, calchirecost_charid) == ROLE_GUEST_MERCHANT ) {
+	if ( cdata(CDATA_ROLE, calchirecost_charid) >= (1000 /*!!!@[ROLE_SHOP_MIN @@@ ROLE_SHOP_WEAPON]@!!! */) & cdata(CDATA_ROLE, calchirecost_charid) < (2000 /*!!!@[ROLE_GUEST_BEGGAR @@@ ROLE_GUEST_MIN]@!!! */) | cdata(CDATA_ROLE, calchirecost_charid) == ROLE_GUEST_MERCHANT ) {
 		locvar_calcitemvalue_value = 1000
 		if ( cdata(CDATA_ROLE, calchirecost_charid) == ROLE_SHOP_BLACKMARKET ) {
 			locvar_calcitemvalue_value *= 4
@@ -472,7 +472,7 @@
 
 #deffunc generatemoney int generatemoney_charid
 	locvar_generatemoney_p = rnd(100) + rnd(cdata(CDATA_LEVEL, generatemoney_charid) * 50 + 1)
-	if ( cdata(CDATA_ROLE, generatemoney_charid) >= (1000 /*!!!@[ROLE_SHOP_MIN @@@ ROLE_SHOP_WEAPON]@!!! */) & cdata(CDATA_ROLE, generatemoney_charid) < (2000 /*!!!@[ROLE_GUEST_MIN @@@ ROLE_GUEST_BEGGAR]@!!! */) | cdata(CDATA_ROLE, generatemoney_charid) == ROLE_GUEST_MERCHANT ) {
+	if ( cdata(CDATA_ROLE, generatemoney_charid) >= (1000 /*!!!@[ROLE_SHOP_MIN @@@ ROLE_SHOP_WEAPON]@!!! */) & cdata(CDATA_ROLE, generatemoney_charid) < (2000 /*!!!@[ROLE_GUEST_BEGGAR @@@ ROLE_GUEST_MIN]@!!! */) | cdata(CDATA_ROLE, generatemoney_charid) == ROLE_GUEST_MERCHANT ) {
 		locvar_generatemoney_p += 2500 + cdata(CDATA_ROLE_SHOP_LEVEL, generatemoney_charid) * 250
 		if ( cdata(CDATA_ROLE, generatemoney_charid) == ROLE_SHOP_TRADE ) {
 			locvar_generatemoney_p = 25000 + cdata(CDATA_ROLE_SHOP_LEVEL, generatemoney_charid) * 500

@@ -296,7 +296,7 @@
 						inv(INV_ITEM_PARAM1, ci) = necrop
 						inv(INV_ITEM_PARAM2, ci) = cdata(CDATA_FORM_SHIFT_PIC, rc)
 						inv(INV_ITEM_WEIGHT, ci) += necrop * 1000
-						inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 + inv(INV_ITEM_PARAM3, ci) * 24
+						inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 + inv(INV_ITEM_PARAM3, ci) * 24
 						inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
 						inv(INV_ITEM_KNOWN, ci) = ITEM_KNOWN_NECRO
 						inv(INV_ITEM_CHARA_PIC, ci) = necrop3
@@ -564,7 +564,7 @@
 		}
 		inv(INV_ITEM_NUM, ci) = 0
 	loop
-	if ( (cdata(CDATA_ROLE, rc) >= (1000 /*!!!@[ROLE_SHOP_MIN @@@ ROLE_SHOP_WEAPON]@!!! */) & cdata(CDATA_ROLE, rc) < (2000 /*!!!@[ROLE_GUEST_MIN @@@ ROLE_GUEST_BEGGAR]@!!! */) | cdata(CDATA_ROLE, rc) == ROLE_GUEST_MERCHANT) != 1 ) {
+	if ( (cdata(CDATA_ROLE, rc) >= (1000 /*!!!@[ROLE_SHOP_MIN @@@ ROLE_SHOP_WEAPON]@!!! */) & cdata(CDATA_ROLE, rc) < (2000 /*!!!@[ROLE_GUEST_BEGGAR @@@ ROLE_GUEST_MIN]@!!! */) | cdata(CDATA_ROLE, rc) == ROLE_GUEST_MERCHANT) != 1 ) {
 		if ( cdata(CDATA_QUALITY, rc) >= FIX_QUALITY_MIRACLE | gdata(GDATA_FLAG_DUEL_TARGET) == (-2) | rnd(10) == 0 | rc < MAX_CHARA_FOLLOWER | cbit(CHARA_BIT_DROP_GOLD, rc) == TRUE ) {
 			if ( cdata(CDATA_GOLD, rc) > 0 ) {
 				flt
@@ -2270,7 +2270,7 @@
 		inv(INV_ITEM_ATTACK, ci) = 1 + rnd(100)
 	}
 	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_M202_SPECIAL ) {
-		inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) = 4
+		inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) = 4
 	}
 	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_CORE_OF_NEFIA ) {
 		if ( adata(ADATA_NEFIA_GEM_CHANCE, gdata(GDATA_AREA)) <= 0 ) {
@@ -2432,31 +2432,31 @@
 	}
 	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_COOLER_BOX ) {
 		gdata(GDATA_COUNT_SHOP)++
-		inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) = gdata(GDATA_COUNT_SHOP)
+		inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) = gdata(GDATA_COUNT_SHOP)
 	}
 	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_HEIR_TRUNK ) {
-		inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) = 3
+		inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) = 3
 	}
 	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_SHOP_STRONGBOX ) {
-		inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) = 5
+		inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) = 5
 	}
 	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_SALARY_CHEST ) {
-		inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) = 4
+		inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) = 4
 	}
 	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_FREEZER ) {
-		inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) = 6
+		inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) = 6
 	}
 	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_DD_CEMETERY_KEY ) {
-		inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) = 9
+		inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) = 9
 	}
 	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_POTION_RACK ) {
-		inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) = 10
+		inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) = 10
 	}
 	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_BREAD_DISPLAY ) {
-		inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) = 11
+		inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) = 11
 	}
 	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_LARGE_BOOKSHELF | inv(INV_ITEM_ID, ci) == ITEM_ID_OLD_BOOKSHELF | inv(INV_ITEM_ID, ci) == ITEM_ID_CRAFT_BOOK_SHELF | inv(INV_ITEM_ID, ci) == ITEM_ID_BOOKSHELF ) {
-		inv((9 /*!!!@[INV_ITEM_CHARGE @@@ INV_ITEM_FILE @@@ INV_ITEM_AMMO @@@ INV_ITEM_NEXT_PERIOD @@@ INV_ITEM_CLIENT]@!!! */), ci) = 12
+		inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) = 12
 	}
 	if ( reftype == FILTER_CONTAINER ) {
 		inv(INV_ITEM_PARAM1, ci) = gdata(GDATA_LEVEL) * (gdata(GDATA_AREA) != AREA_SHELTER) + 5
@@ -3047,7 +3047,7 @@
 			txt lang(name(cc) + "は白目を剥いてぶっ倒れた。", name(cc) + "  roll eyes back and fell down.")
 		}
 		dmg = (sdata(SKILL_NORMAL_GENE_ENGINEER, CHARA_PLAYER) + 2) / 2 * sqrt(sdata(SKILL_NORMAL_GENE_ENGINEER, CHARA_PLAYER) + 1) + rnd(sdata(SKILL_NORMAL_GENE_ENGINEER, CHARA_PLAYER) * 2 + 5)
-		dmghp cc, dmg, (0 /*!!!@[DAMAGE_FROM_CHARA @@@ CHARA_PLAYER]@!!! */)
+		dmghp cc, dmg, (0 /*!!!@[CHARA_PLAYER @@@ DAMAGE_FROM_CHARA]@!!! */)
 		if ( cdata(CDATA_EXIST, cc) == CHAR_STATE_ALIVE ) {
 			if ( fatal == 0 ) {
 				chara_vomit cc
