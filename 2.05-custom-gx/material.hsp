@@ -292,46 +292,9 @@
 		}
 		s = ioriginalnameref(i)
 		p(1) = ipicref(i)
-		gsel 1
-		color 0
-		boxf 0, 960, chipi(CHIPI_WIDTH, p(1)), chipi(CHIPI_HEIGHT, p(1)) + 960
-		if ( p(1) == xy2pic(0, 16) ) {
-			gmode 2
-			pos 0, 960
-			gcopy 1, 0, 768, inf_tiles, inf_tiles
-			pos 0, 1008
-			gzoom 22, 20, 5, chipc(CHIPC_X, 0) + 8, chipc(CHIPC_Y, 0) + 4 + (chipc(CHIPC_HEIGHT, 0) > inf_tiles) * 8, chipc(CHIPC_WIDTH, 0) - 16, chipc(CHIPC_HEIGHT, 0) - 8 - (chipc(CHIPC_HEIGHT, 0) > inf_tiles) * 10, 1
-			pos 6, 974
-			gcopy 1, 0, 1008, 22, 20
-			gsel selcur
-		}
-		else {
-			if ( p(1) == xy2pic(30, 33) ) {
-				pos 8, 1058 - chipc(CHIPC_HEIGHT, 0)
-				gcopy 5, chipc(CHIPC_X, 0) + 8, chipc(CHIPC_Y, 0) + 2, chipc(CHIPC_WIDTH, 0), chipc(CHIPC_HEIGHT, 0)
-				gmode 2
-				gsel selcur
-			}
-			else {
-				if ( p(1) == xy2pic(3, 16) ) {
-					pos 8, 1058 - chipc(CHIPC_HEIGHT, 0)
-					gcopy 5, chipc(CHIPC_X, 0) + 8, chipc(CHIPC_Y, 0) + 2, chipc(CHIPC_WIDTH, 0) - 16, chipc(CHIPC_HEIGHT, 0) - 8
-					gmode 4, , , 150
-					color 0, 0, 0
-					pos 0, 960 + (chipc(CHIPC_HEIGHT, 0) == inf_tiles) * 48
-					gcopy 1, 144, 768 + (chipc(CHIPC_HEIGHT, 0) > inf_tiles) * 48, inf_tiles, chipc(CHIPC_HEIGHT, 0) + (chipc(CHIPC_HEIGHT, 0) > inf_tiles) * 48
-					gmode 2
-					gsel selcur
-				}
-				else {
-					pos 0, 960
-					gcopy 1, chipi(CHIPI_X, p(1)), chipi(CHIPI_Y, p(1)), chipi(CHIPI_WIDTH, p(1)), chipi(CHIPI_HEIGHT, p(1))
-					gfini chipi(CHIPI_WIDTH, p(1)), chipi(CHIPI_HEIGHT, p(1))
-					gfdec2 c_col(0, 0), c_col(1, 0), c_col(2, 0)
-					gsel selcur
-				}
-			}
-		}
+
+	    preparePicItem p(1), 0
+
 		s(1) = lang("アイテム[" + s + "]", "Make [" + s + "]")
 		font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
 		if ( int(listn(0, p)) == (-1) ) {
@@ -493,46 +456,9 @@
 		pos wx + 308, wy + 66 + cnt * 19 + 2
 		mes s
 		p(1) = matref(MATREF_PIC, i)
-		gsel 1
-		color 0
-		boxf 0, 960, chipi(CHIPI_WIDTH, p(1)), chipi(CHIPI_HEIGHT, p(1)) + 960
-		if ( p(1) == xy2pic(0, 16) ) {
-			gmode 2
-			pos 0, 960
-			gcopy 1, 0, 768, inf_tiles, inf_tiles
-			pos 0, 1008
-			gzoom 22, 20, 5, chipc(CHIPC_X, 0) + 8, chipc(CHIPC_Y, 0) + 4 + (chipc(CHIPC_HEIGHT, 0) > inf_tiles) * 8, chipc(CHIPC_WIDTH, 0) - 16, chipc(CHIPC_HEIGHT, 0) - 8 - (chipc(CHIPC_HEIGHT, 0) > inf_tiles) * 10, 1
-			pos 6, 974
-			gcopy 1, 0, 1008, 22, 20
-			gsel selcur
-		}
-		else {
-			if ( p(1) == xy2pic(30, 33) ) {
-				pos 8, 1058 - chipc(CHIPC_HEIGHT, 0)
-				gcopy 5, chipc(CHIPC_X, 0) + 8, chipc(CHIPC_Y, 0) + 2, chipc(CHIPC_WIDTH, 0), chipc(CHIPC_HEIGHT, 0)
-				gmode 2
-				gsel selcur
-			}
-			else {
-				if ( p(1) == xy2pic(3, 16) ) {
-					pos 8, 1058 - chipc(CHIPC_HEIGHT, 0)
-					gcopy 5, chipc(CHIPC_X, 0) + 8, chipc(CHIPC_Y, 0) + 2, chipc(CHIPC_WIDTH, 0) - 16, chipc(CHIPC_HEIGHT, 0) - 8
-					gmode 4, , , 150
-					color 0, 0, 0
-					pos 0, 960 + (chipc(CHIPC_HEIGHT, 0) == inf_tiles) * 48
-					gcopy 1, 144, 768 + (chipc(CHIPC_HEIGHT, 0) > inf_tiles) * 48, inf_tiles, chipc(CHIPC_HEIGHT, 0) + (chipc(CHIPC_HEIGHT, 0) > inf_tiles) * 48
-					gmode 2
-					gsel selcur
-				}
-				else {
-					pos 0, 960
-					gcopy 1, chipi(CHIPI_X, p(1)), chipi(CHIPI_Y, p(1)), chipi(CHIPI_WIDTH, p(1)), chipi(CHIPI_HEIGHT, p(1))
-					gfini chipi(CHIPI_WIDTH, p(1)), chipi(CHIPI_HEIGHT, p(1))
-					gfdec2 c_col(0, 0), c_col(1, 0), c_col(2, 0)
-					gsel selcur
-				}
-			}
-		}
+
+        preparePicItem p(1), 0
+
 		pos wx + 47, wy + 69 + cnt * 19 + 2
 		gmode 2, inf_tiles, inf_tiles
 		grotate 1, 0, 960, 0, chipi(CHIPI_WIDTH, p(1)), chipi(CHIPI_HEIGHT, p(1))

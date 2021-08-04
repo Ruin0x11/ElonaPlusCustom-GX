@@ -448,16 +448,51 @@
 	if ( cbit(CHARA_BIT_SANDBAG, skillexp_charid) & TweakData(52, 2) == 0 ) {
 		locvar_skillmod_exp = 0
 	}
-	if ( skillexp_skillid >= STARTING_SKILL_WEAPON ) {
-		if ( gdata(GDATA_TEMPORARY_FLAGS) != 11111111 ) {
-			if ( rnd(sdata(SKILL_ATTR_LER, skillexp_charid) + 50) > rnd(1000) ) {
-				if ( locvar_skillmod_exp != 0 ) {
-					locvar_skillmod_exp = locvar_skillmod_exp * limit(sqrt(sdata(SKILL_ATTR_LER, skillexp_charid)) + 20, 20, 50) / 10
+	if ( gdata(GDATA_SENSE_OBJECT) == 0 ) {
+		if ( skillexp_charid < MAX_CHARA_FOLLOWER ) {
+			if ( gdata(GDATA_FLAG_STUDY_BONUS_KIND) == 0 ) {
+				if ( skillexp_skillid == SKILL_NORMAL_WEIGHT_LIFTING | skillexp_skillid == SKILL_NORMAL_HEALING | skillexp_skillid == SKILL_NORMAL_MEDITATION | skillexp_skillid == SKILL_NORMAL_MAGIC_CAPACITY | skillexp_skillid == SKILL_NORMAL_HEAVY_ARMOR | skillexp_skillid == SKILL_NORMAL_MEDIUM_ARMOR | skillexp_skillid == SKILL_NORMAL_LIGHT_ARMOR | skillexp_skillid == SKILL_NORMAL_FAITH ) {
+					locvar_skillmod_exp = locvar_skillmod_exp * 3
+				}
+			}
+			if ( gdata(GDATA_FLAG_STUDY_BONUS_KIND) == 1 ) {
+				if ( skillexp_skillid == SKILL_NORMAL_TACTICS | skillexp_skillid == SKILL_NORMAL_DUAL_WIELD | skillexp_skillid == SKILL_NORMAL_TWO_HAND | skillexp_skillid == SKILL_NORMAL_SHIELD | skillexp_skillid == SKILL_NORMAL_EVASION | skillexp_skillid == SKILL_NORMAL_EYE_OF_MIND | skillexp_skillid == SKILL_NORMAL_GREATER_EVASION | skillexp_skillid == SKILL_NORMAL_MARKSMAN | (skillexp_skillid >= SKILL_WEAPON_LONGSWORD & skillexp_skillid < MAX_SKILL_WEAPON) ) {
+					locvar_skillmod_exp = locvar_skillmod_exp * 3
+				}
+			}
+			if ( gdata(GDATA_FLAG_STUDY_BONUS_KIND) == 2 ) {
+				if ( skillexp_skillid == SKILL_NORMAL_NEGOTIATION | skillexp_skillid == SKILL_NORMAL_INVESTING | skillexp_skillid == SKILL_NORMAL_CARPENTRY | skillexp_skillid == SKILL_NORMAL_TAILORING | skillexp_skillid == SKILL_NORMAL_ALCHEMY | skillexp_skillid == SKILL_NORMAL_JEWELER | skillexp_skillid == SKILL_NORMAL_GARDENING | skillexp_skillid == SKILL_NORMAL_PERFORMER | skillexp_skillid == SKILL_NORMAL_COOKING | skillexp_skillid == SKILL_NORMAL_FISHING | skillexp_skillid == SKILL_ACTIVE_PICKPOCKET ) {
+					locvar_skillmod_exp = locvar_skillmod_exp * 3
+				}
+			}
+			if ( gdata(GDATA_FLAG_STUDY_BONUS_KIND) == 3 ) {
+				if ( skillexp_skillid == SKILL_NORMAL_STEALTH | skillexp_skillid == SKILL_NORMAL_LOCK_PICKING | skillexp_skillid == SKILL_NORMAL_DETECTION | skillexp_skillid == SKILL_NORMAL_MINING | skillexp_skillid == SKILL_NORMAL_DISARM_TRAP | skillexp_skillid == SKILL_NORMAL_TRAVELING | skillexp_skillid == SKILL_NORMAL_SWIMMING | skillexp_skillid == SKILL_ACTIVE_RIDING ) {
+					locvar_skillmod_exp = locvar_skillmod_exp * 3
+				}
+			}
+			if ( gdata(GDATA_FLAG_STUDY_BONUS_KIND) == 4 ) {
+				if ( skillexp_skillid == SKILL_NORMAL_LITERACY | skillexp_skillid == SKILL_NORMAL_GENE_ENGINEER | skillexp_skillid == SKILL_NORMAL_ANATOMY | skillexp_skillid == SKILL_NORMAL_SENSE_QUALITY | skillexp_skillid == SKILL_NORMAL_MEMORIZATION | skillexp_skillid == SKILL_NORMAL_CASTING | skillexp_skillid == SKILL_NORMAL_MAGIC_DEVICE | skillexp_skillid == SKILL_NORMAL_CONTROL_MAGIC ) {
+					locvar_skillmod_exp = locvar_skillmod_exp * 3
+				}
+			}
+			if ( skillexp_skillid >= SKILL_SPELL_HEAL_LIGHT & skillexp_skillid < MAX_SPELL ) {
+				if ( cdata(CDATA_CUSTOM_TALK_LINE, CHARA_PLAYER) == 1 ) {
+					if ( gdata(GDATA_TEMPORARY_FLAGS) != 11111111 ) {
+						locvar_skillmod_exp = locvar_skillmod_exp * 3
+					}
 				}
 			}
 		}
 	}
+	if ( cdata(STARTING_CDATA_FOOD_EXP + SKILL_ATTR_LUC - RANGE_CDATA_FOOD_EXP, skillexp_charid) > 0 ) {
+		if ( skillexp_skillid >= STARTING_SKILL_WEAPON & skillexp_skillid < MAX_SKILL_ACTIVE ) {
+			locvar_skillmod_exp = locvar_skillmod_exp * 11 / 10
+		}
+	}
 	if ( skillexp_skillid >= STARTING_SKILL_WEAPON ) {
+		if ( skillexp_charid == CHARA_PLAYER ) {
+			locvar_skillmod_exp = locvar_skillmod_exp * 3
+		}
 		if ( skillexp_charid != CHARA_PLAYER & skillexp_charid < MAX_CHARA_FOLLOWER ) {
 			locvar_skillmod_exp = locvar_skillmod_exp * 4
 		}
@@ -466,7 +501,9 @@
 		locvar_skillmod_exp = 20000
 	}
 	if ( gdata(GDATA_FLAG_GAME_MODE) == GAMEMODE_OVERDOSE ) {
-		locvar_skillmod_exp = locvar_skillmod_exp * (gdata(GDATA_FLAG_OVERDOSE_MODE_EXP_MULT) + 3)
+		if ( locvar_skillmod_exp > 0 ) {
+			locvar_skillmod_exp = locvar_skillmod_exp * (gdata(GDATA_FLAG_OVERDOSE_MODE_EXP_MULT) + 3)
+		}
 	}
 	if ( gdata(GDATA_SLEEP) >= 50 ) {
 		if ( skillexp_charid == CHARA_PLAYER | skillexp_charid < MAX_CHARA_FOLLOWER ) {
@@ -474,8 +511,60 @@
 		}
 	}
 	if ( gdata(GDATA_FLAG_GAME_MODE) == GAMEMODE_PURGE ) {
-		if ( locvar_skillmod_exp == 0 ) {
-			locvar_skillmod_exp = 1
+		if ( skillexp_charid < MAX_CHARA_FOLLOWER ) {
+			if ( locvar_skillmod_exp < gdata(GDATA_FLAG_GUARANTEED_EXP_PERCENTAGE) ) {
+				locvar_skillmod_exp = gdata(GDATA_FLAG_GUARANTEED_EXP_PERCENTAGE)
+			}
+		}
+	}
+	if ( skillexp_skillid == SKILL_NORMAL_WEIGHT_LIFTING | skillexp_skillid == SKILL_NORMAL_HEALING | skillexp_skillid == SKILL_NORMAL_MEDITATION | skillexp_skillid == SKILL_NORMAL_MAGIC_CAPACITY | skillexp_skillid == SKILL_NORMAL_HEAVY_ARMOR | skillexp_skillid == SKILL_NORMAL_MEDIUM_ARMOR | skillexp_skillid == SKILL_NORMAL_LIGHT_ARMOR | skillexp_skillid == SKILL_NORMAL_FAITH ) {
+		if ( gdata(GDATA_FLAG_STUDY_BONUS_TRAINING_EXP) < 15000 ) {
+			gdata(GDATA_FLAG_STUDY_BONUS_TRAINING_EXP) += locvar_skillmod_exp
+			if ( gdata(GDATA_FLAG_STUDY_BONUS_TRAINING_EXP) >= 15000 ) {
+				if ( gdata(GDATA_FLAG_DESTINY_LETTERS) < 7 ) {
+					gdata(GDATA_FLAG_DESTINY_LETTERS)++
+				}
+			}
+		}
+	}
+	if ( skillexp_skillid == SKILL_NORMAL_TACTICS | skillexp_skillid == SKILL_NORMAL_DUAL_WIELD | skillexp_skillid == SKILL_NORMAL_TWO_HAND | skillexp_skillid == SKILL_NORMAL_SHIELD | skillexp_skillid == SKILL_NORMAL_EVASION | skillexp_skillid == SKILL_NORMAL_EYE_OF_MIND | skillexp_skillid == SKILL_NORMAL_GREATER_EVASION | skillexp_skillid == SKILL_NORMAL_MARKSMAN | (skillexp_skillid >= SKILL_WEAPON_LONGSWORD & skillexp_skillid < MAX_SKILL_WEAPON) ) {
+		if ( gdata(GDATA_FLAG_STUDY_BONUS_COMBAT_EXP) < 15000 ) {
+			gdata(GDATA_FLAG_STUDY_BONUS_COMBAT_EXP) += locvar_skillmod_exp
+			if ( gdata(GDATA_FLAG_STUDY_BONUS_COMBAT_EXP) >= 15000 ) {
+				if ( gdata(GDATA_FLAG_DESTINY_LETTERS) < 7 ) {
+					gdata(GDATA_FLAG_DESTINY_LETTERS)++
+				}
+			}
+		}
+	}
+	if ( skillexp_skillid == SKILL_NORMAL_NEGOTIATION | skillexp_skillid == SKILL_NORMAL_INVESTING | skillexp_skillid == SKILL_NORMAL_CARPENTRY | skillexp_skillid == SKILL_NORMAL_TAILORING | skillexp_skillid == SKILL_NORMAL_ALCHEMY | skillexp_skillid == SKILL_NORMAL_JEWELER | skillexp_skillid == SKILL_NORMAL_GARDENING | skillexp_skillid == SKILL_NORMAL_PERFORMER | skillexp_skillid == SKILL_NORMAL_COOKING | skillexp_skillid == SKILL_NORMAL_FISHING | skillexp_skillid == SKILL_ACTIVE_PICKPOCKET ) {
+		if ( gdata(GDATA_FLAG_STUDY_BONUS_JOB_EXP) < 15000 ) {
+			gdata(GDATA_FLAG_STUDY_BONUS_JOB_EXP) += locvar_skillmod_exp
+			if ( gdata(GDATA_FLAG_STUDY_BONUS_JOB_EXP) >= 15000 ) {
+				if ( gdata(GDATA_FLAG_DESTINY_LETTERS) < 7 ) {
+					gdata(GDATA_FLAG_DESTINY_LETTERS)++
+				}
+			}
+		}
+	}
+	if ( skillexp_skillid == SKILL_NORMAL_STEALTH | skillexp_skillid == SKILL_NORMAL_LOCK_PICKING | skillexp_skillid == SKILL_NORMAL_DETECTION | skillexp_skillid == SKILL_NORMAL_MINING | skillexp_skillid == SKILL_NORMAL_DISARM_TRAP | skillexp_skillid == SKILL_NORMAL_TRAVELING | skillexp_skillid == SKILL_NORMAL_SWIMMING | skillexp_skillid == SKILL_ACTIVE_RIDING ) {
+		if ( gdata(GDATA_FLAG_STUDY_BONUS_EXPLORATION_EXP) < 15000 ) {
+			gdata(GDATA_FLAG_STUDY_BONUS_EXPLORATION_EXP) += locvar_skillmod_exp
+			if ( gdata(GDATA_FLAG_STUDY_BONUS_EXPLORATION_EXP) >= 15000 ) {
+				if ( gdata(GDATA_FLAG_DESTINY_LETTERS) < 7 ) {
+					gdata(GDATA_FLAG_DESTINY_LETTERS)++
+				}
+			}
+		}
+	}
+	if ( skillexp_skillid == SKILL_NORMAL_LITERACY | skillexp_skillid == SKILL_NORMAL_GENE_ENGINEER | skillexp_skillid == SKILL_NORMAL_ANATOMY | skillexp_skillid == SKILL_NORMAL_SENSE_QUALITY | skillexp_skillid == SKILL_NORMAL_MEMORIZATION | skillexp_skillid == SKILL_NORMAL_CASTING | skillexp_skillid == SKILL_NORMAL_MAGIC_DEVICE | skillexp_skillid == SKILL_NORMAL_CONTROL_MAGIC ) {
+		if ( gdata(GDATA_FLAG_STUDY_BONUS_STUDY_EXP) < 15000 ) {
+			gdata(GDATA_FLAG_STUDY_BONUS_STUDY_EXP) += locvar_skillmod_exp
+			if ( gdata(GDATA_FLAG_STUDY_BONUS_STUDY_EXP) >= 15000 ) {
+				if ( gdata(GDATA_FLAG_DESTINY_LETTERS) < 7 ) {
+					gdata(GDATA_FLAG_DESTINY_LETTERS)++
+				}
+			}
 		}
 	}
 	if ( locvar_skillmod_exp > 0 ) {
@@ -1097,46 +1186,7 @@
 			locvar_cell_shownull_p = map(cell_show_x, cell_show_y, 8) - 1
 			pos locvar_cell_shownull_dx, locvar_cell_shownull_dy
 			if ( mef(1, locvar_cell_shownull_p) > 10000 ) {
-				gsel 1
-				color 0
-				boxf 0, 960, chipi(CHIPI_WIDTH, mef(1, locvar_cell_shownull_p) \ 10000), chipi(CHIPI_HEIGHT, mef(1, locvar_cell_shownull_p) \ 10000) + 960
-				if ( mef(1, locvar_cell_shownull_p) \ 10000 == xy2pic(0, 16) ) {
-					gmode 2
-					pos 0, 960
-					gcopy 1, 0, 768, inf_tiles, inf_tiles
-					pos 0, 1008
-					gzoom 22, 20, 5, chipc(CHIPC_X, mef(1, locvar_cell_shownull_p) / 10000) + 8, chipc(CHIPC_Y, mef(1, locvar_cell_shownull_p) / 10000) + 4 + (chipc(CHIPC_HEIGHT, mef(1, locvar_cell_shownull_p) / 10000) > inf_tiles) * 8, chipc(CHIPC_WIDTH, mef(1, locvar_cell_shownull_p) / 10000) - 16, chipc(CHIPC_HEIGHT, mef(1, locvar_cell_shownull_p) / 10000) - 8 - (chipc(CHIPC_HEIGHT, mef(1, locvar_cell_shownull_p) / 10000) > inf_tiles) * 10, 1
-					pos 6, 974
-					gcopy 1, 0, 1008, 22, 20
-					gsel selcur
-				}
-				else {
-					if ( mef(1, locvar_cell_shownull_p) \ 10000 == xy2pic(30, 33) ) {
-						pos 8, 1058 - chipc(CHIPC_HEIGHT, mef(1, locvar_cell_shownull_p) / 10000)
-						gcopy 5, chipc(CHIPC_X, mef(1, locvar_cell_shownull_p) / 10000) + 8, chipc(CHIPC_Y, mef(1, locvar_cell_shownull_p) / 10000) + 2, chipc(CHIPC_WIDTH, mef(1, locvar_cell_shownull_p) / 10000), chipc(CHIPC_HEIGHT, mef(1, locvar_cell_shownull_p) / 10000)
-						gmode 2
-						gsel selcur
-					}
-					else {
-						if ( mef(1, locvar_cell_shownull_p) \ 10000 == xy2pic(3, 16) ) {
-							pos 8, 1058 - chipc(CHIPC_HEIGHT, mef(1, locvar_cell_shownull_p) / 10000)
-							gcopy 5, chipc(CHIPC_X, mef(1, locvar_cell_shownull_p) / 10000) + 8, chipc(CHIPC_Y, mef(1, locvar_cell_shownull_p) / 10000) + 2, chipc(CHIPC_WIDTH, mef(1, locvar_cell_shownull_p) / 10000) - 16, chipc(CHIPC_HEIGHT, mef(1, locvar_cell_shownull_p) / 10000) - 8
-							gmode 4, , , 150
-							color 0, 0, 0
-							pos 0, 960 + (chipc(CHIPC_HEIGHT, mef(1, locvar_cell_shownull_p) / 10000) == inf_tiles) * 48
-							gcopy 1, 144, 768 + (chipc(CHIPC_HEIGHT, mef(1, locvar_cell_shownull_p) / 10000) > inf_tiles) * 48, inf_tiles, chipc(CHIPC_HEIGHT, mef(1, locvar_cell_shownull_p) / 10000) + (chipc(CHIPC_HEIGHT, mef(1, locvar_cell_shownull_p) / 10000) > inf_tiles) * 48
-							gmode 2
-							gsel selcur
-						}
-						else {
-							pos 0, 960
-							gcopy 1, chipi(CHIPI_X, mef(1, locvar_cell_shownull_p) \ 10000), chipi(CHIPI_Y, mef(1, locvar_cell_shownull_p) \ 10000), chipi(CHIPI_WIDTH, mef(1, locvar_cell_shownull_p) \ 10000), chipi(CHIPI_HEIGHT, mef(1, locvar_cell_shownull_p) \ 10000)
-							gfini chipi(CHIPI_WIDTH, mef(1, locvar_cell_shownull_p) \ 10000), chipi(CHIPI_HEIGHT, mef(1, locvar_cell_shownull_p) \ 10000)
-							gfdec2 c_col(0, mef(1, locvar_cell_shownull_p) / 10000), c_col(1, mef(1, locvar_cell_shownull_p) / 10000), c_col(2, mef(1, locvar_cell_shownull_p) / 10000)
-							gsel selcur
-						}
-					}
-				}
+                preparePicItem mef(1, locvar_cell_shownull_p) \ 10000, mef(1, locvar_cell_shownull_p) / 10000
 				gcopy 1, 0, 960, inf_tiles, inf_tiles
 			}
 			else {
@@ -1147,46 +1197,9 @@
 	if ( map(cell_show_x, cell_show_y, 5) != 0 ) {
 		locvar_cell_shownull_p = wpeek(map(cell_show_x, cell_show_y, 5), 0)
 		locvar_cell_show_i = wpeek(map(cell_show_x, cell_show_y, 5), 2)
-		gsel 1
-		color 0
-		boxf 0, 960, chipi(CHIPI_WIDTH, locvar_cell_shownull_p), chipi(CHIPI_HEIGHT, locvar_cell_shownull_p) + 960
-		if ( locvar_cell_shownull_p == xy2pic(0, 16) ) {
-			gmode 2
-			pos 0, 960
-			gcopy 1, 0, 768, inf_tiles, inf_tiles
-			pos 0, 1008
-			gzoom 22, 20, 5, chipc(CHIPC_X, locvar_cell_show_i) + 8, chipc(CHIPC_Y, locvar_cell_show_i) + 4 + (chipc(CHIPC_HEIGHT, locvar_cell_show_i) > inf_tiles) * 8, chipc(CHIPC_WIDTH, locvar_cell_show_i) - 16, chipc(CHIPC_HEIGHT, locvar_cell_show_i) - 8 - (chipc(CHIPC_HEIGHT, locvar_cell_show_i) > inf_tiles) * 10, 1
-			pos 6, 974
-			gcopy 1, 0, 1008, 22, 20
-			gsel selcur
-		}
-		else {
-			if ( locvar_cell_shownull_p == xy2pic(30, 33) ) {
-				pos 8, 1058 - chipc(CHIPC_HEIGHT, locvar_cell_show_i)
-				gcopy 5, chipc(CHIPC_X, locvar_cell_show_i) + 8, chipc(CHIPC_Y, locvar_cell_show_i) + 2, chipc(CHIPC_WIDTH, locvar_cell_show_i), chipc(CHIPC_HEIGHT, locvar_cell_show_i)
-				gmode 2
-				gsel selcur
-			}
-			else {
-				if ( locvar_cell_shownull_p == xy2pic(3, 16) ) {
-					pos 8, 1058 - chipc(CHIPC_HEIGHT, locvar_cell_show_i)
-					gcopy 5, chipc(CHIPC_X, locvar_cell_show_i) + 8, chipc(CHIPC_Y, locvar_cell_show_i) + 2, chipc(CHIPC_WIDTH, locvar_cell_show_i) - 16, chipc(CHIPC_HEIGHT, locvar_cell_show_i) - 8
-					gmode 4, , , 150
-					color 0, 0, 0
-					pos 0, 960 + (chipc(CHIPC_HEIGHT, locvar_cell_show_i) == inf_tiles) * 48
-					gcopy 1, 144, 768 + (chipc(CHIPC_HEIGHT, locvar_cell_show_i) > inf_tiles) * 48, inf_tiles, chipc(CHIPC_HEIGHT, locvar_cell_show_i) + (chipc(CHIPC_HEIGHT, locvar_cell_show_i) > inf_tiles) * 48
-					gmode 2
-					gsel selcur
-				}
-				else {
-					pos 0, 960
-					gcopy 1, chipi(CHIPI_X, locvar_cell_shownull_p), chipi(CHIPI_Y, locvar_cell_shownull_p), chipi(CHIPI_WIDTH, locvar_cell_shownull_p), chipi(CHIPI_HEIGHT, locvar_cell_shownull_p)
-					gfini chipi(CHIPI_WIDTH, locvar_cell_shownull_p), chipi(CHIPI_HEIGHT, locvar_cell_shownull_p)
-					gfdec2 c_col(0, locvar_cell_show_i), c_col(1, locvar_cell_show_i), c_col(2, locvar_cell_show_i)
-					gsel selcur
-				}
-			}
-		}
+
+        preparePicItem locvar_cell_shownull_p, locvar_cell_show_i
+
 		if ( mdata(MDATA_TYPE) == MAP_TYPE_WORLD ) {
 			gmode 2, chipi(CHIPI_WIDTH, locvar_cell_shownull_p), chipi(CHIPI_HEIGHT, locvar_cell_shownull_p)
 			pos locvar_cell_shownull_dx + 24, locvar_cell_shownull_dy + 24
@@ -1215,6 +1228,11 @@
 				}
 			}
 			if ( locvar_cell_show_c != 0 ) {
+				if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) > VEHICLE_NONE & mdata(MDATA_TYPE) == MAP_TYPE_WORLD & cdata(CDATA_RELATION, locvar_cell_show_c) == RELATION_ALLY ) {
+					locvar_cell_show_c = 0
+				}
+            }
+			if ( locvar_cell_show_c != 0 ) {
 				if ( cdata(CDATA_PIC, locvar_cell_show_c) == xy2pic(0, 0) ) {
 					if ( cdata(CDATA_CHARA_PIC, locvar_cell_show_c) == xy2pic(1, 0) ) {
 						cdata(CDATA_PIC, locvar_cell_show_c) = 13000
@@ -1222,6 +1240,10 @@
 				}
 				locvar_cell_show_col = (cdata(CDATA_PIC, locvar_cell_show_c) - cdata(CDATA_CHARA_PIC, locvar_cell_show_c) * COLOR_TINT_MULT) / COLOR_TINT_MULT
 				locvar_cell_shownull_p = cdata(CDATA_PIC, locvar_cell_show_c) \ COLOR_TINT_MULT + cdata(CDATA_CHARA_PIC, locvar_cell_show_c) * COLOR_TINT_MULT
+				if ( cdata(CDATA_PIC, locvar_cell_show_c) >= xy2pic(1, 21) & cdata(CDATA_PIC, locvar_cell_show_c) <= xy2pic(31, 21) ) {
+					locvar_cell_show_col = 0
+					locvar_cell_shownull_p = cdata(CDATA_PIC, locvar_cell_show_c)
+				}
 				gsel 5
 				color 0
 				boxf 0, 960, chipc(CHIPC_WIDTH, locvar_cell_shownull_p), chipc(CHIPC_HEIGHT, locvar_cell_shownull_p) + 960
@@ -1283,6 +1305,11 @@
 					}
 				}
 				if ( locvar_cell_show_c != 0 ) {
+					if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) > 0 & mdata(MDATA_TYPE) == MAP_TYPE_WORLD & cdata(CDATA_RELATION, locvar_cell_show_c) == RELATION_ALLY ) {
+						locvar_cell_show_c = 0
+					}
+				}
+				if ( locvar_cell_show_c != 0 ) {
 					if ( cdata(CDATA_PIC, locvar_cell_show_c) == xy2pic(0, 0) ) {
 						if ( cdata(CDATA_CHARA_PIC, locvar_cell_show_c) == xy2pic(1, 0) ) {
 							cdata(CDATA_PIC, locvar_cell_show_c) = 13000
@@ -1290,6 +1317,10 @@
 					}
 					locvar_cell_show_col = (cdata(CDATA_PIC, locvar_cell_show_c) - cdata(CDATA_CHARA_PIC, locvar_cell_show_c) * COLOR_TINT_MULT) / COLOR_TINT_MULT
 					locvar_cell_shownull_p = cdata(CDATA_PIC, locvar_cell_show_c) \ COLOR_TINT_MULT + cdata(CDATA_CHARA_PIC, locvar_cell_show_c) * COLOR_TINT_MULT
+					if ( cdata(CDATA_PIC, locvar_cell_show_c) >= xy2pic(1, 21) & cdata(CDATA_PIC, locvar_cell_show_c) <= xy2pic(31, 21) ) {
+						locvar_cell_show_col = 0
+						locvar_cell_shownull_p = cdata(CDATA_PIC, locvar_cell_show_c)
+					}
 					gsel 5
 					color 0
 					boxf 0, 960, chipc(CHIPC_WIDTH, locvar_cell_shownull_p), chipc(CHIPC_HEIGHT, locvar_cell_shownull_p) + 960
@@ -1482,48 +1513,11 @@
 									else {
 										pos locvar_cell_draw_px + 12 + cdata(CDATA_MARK_ITEM_X, CHARA_PLAYER), locvar_cell_draw_py + 18 + cdata(CDATA_MARK_ITEM_Y, CHARA_PLAYER) + (chipm(CHIPM_ROLE, locvar_cell_draw_ground) == MAP_CHIP_ROLE_WATER) * 16 - (cbit(CHARA_BIT_SANDBAG, CHARA_PLAYER) == 1) * 24
 									}
-									gsel 1
-									color 0
-									boxf 0, 960, chipi(CHIPI_WIDTH, cdata(CDATA_MARK_ITEM_PIC, CHARA_PLAYER)), chipi(CHIPI_HEIGHT, cdata(CDATA_MARK_ITEM_PIC, CHARA_PLAYER)) + 960
-									if ( cdata(CDATA_MARK_ITEM_PIC, CHARA_PLAYER) == xy2pic(0, 16) ) {
-										gmode 2
-										pos 0, 960
-										gcopy 1, 0, 768, inf_tiles, inf_tiles
-										pos 0, 1008
-										gzoom 22, 20, 5, chipc(CHIPC_X, cdata(CDATA_MARK_ITEM_COL, CHARA_PLAYER)) + 8, chipc(CHIPC_Y, cdata(CDATA_MARK_ITEM_COL, CHARA_PLAYER)) + 4 + (chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, CHARA_PLAYER)) > inf_tiles) * 8, chipc(CHIPC_WIDTH, cdata(CDATA_MARK_ITEM_COL, CHARA_PLAYER)) - 16, chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, CHARA_PLAYER)) - 8 - (chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, CHARA_PLAYER)) > inf_tiles) * 10, 1
-										pos 6, 974
-										gcopy 1, 0, 1008, 22, 20
-										gsel selcur
-									}
-									else {
-										if ( cdata(CDATA_MARK_ITEM_PIC, CHARA_PLAYER) == xy2pic(30, 33) ) {
-											pos 8, 1058 - chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, CHARA_PLAYER))
-											gcopy 5, chipc(CHIPC_X, cdata(CDATA_MARK_ITEM_COL, CHARA_PLAYER)) + 8, chipc(CHIPC_Y, cdata(CDATA_MARK_ITEM_COL, CHARA_PLAYER)) + 2, chipc(CHIPC_WIDTH, cdata(CDATA_MARK_ITEM_COL, CHARA_PLAYER)), chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, CHARA_PLAYER))
-											gmode 2
-											gsel selcur
-										}
-										else {
-											if ( cdata(CDATA_MARK_ITEM_PIC, CHARA_PLAYER) == xy2pic(3, 16) ) {
-												pos 8, 1058 - chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, CHARA_PLAYER))
-												gcopy 5, chipc(CHIPC_X, cdata(CDATA_MARK_ITEM_COL, CHARA_PLAYER)) + 8, chipc(CHIPC_Y, cdata(CDATA_MARK_ITEM_COL, CHARA_PLAYER)) + 2, chipc(CHIPC_WIDTH, cdata(CDATA_MARK_ITEM_COL, CHARA_PLAYER)) - 16, chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, CHARA_PLAYER)) - 8
-												gmode 4, , , 150
-												color 0, 0, 0
-												pos 0, 960 + (chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, CHARA_PLAYER)) == inf_tiles) * 48
-												gcopy 1, 144, 768 + (chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, CHARA_PLAYER)) > inf_tiles) * 48, inf_tiles, chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, CHARA_PLAYER)) + (chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, CHARA_PLAYER)) > inf_tiles) * 48
-												gmode 2
-												gsel selcur
-											}
-											else {
-												pos 0, 960
-												gcopy 1, chipi(CHIPI_X, cdata(CDATA_MARK_ITEM_PIC, CHARA_PLAYER)), chipi(CHIPI_Y, cdata(CDATA_MARK_ITEM_PIC, CHARA_PLAYER)), chipi(CHIPI_WIDTH, cdata(CDATA_MARK_ITEM_PIC, CHARA_PLAYER)), chipi(CHIPI_HEIGHT, cdata(CDATA_MARK_ITEM_PIC, CHARA_PLAYER))
-												gfini chipi(CHIPI_WIDTH, cdata(CDATA_MARK_ITEM_PIC, CHARA_PLAYER)), chipi(CHIPI_HEIGHT, cdata(CDATA_MARK_ITEM_PIC, CHARA_PLAYER))
-												gfdec2 c_col(0, cdata(CDATA_MARK_ITEM_COL, CHARA_PLAYER)), c_col(1, cdata(CDATA_MARK_ITEM_COL, CHARA_PLAYER)), c_col(2, cdata(CDATA_MARK_ITEM_COL, CHARA_PLAYER))
-												gsel selcur
-											}
-										}
-									}
+
+                                    preparePicItem cdata(CDATA_MARK_ITEM_PIC, CHARA_PLAYER), cdata(CDATA_MARK_ITEM_COL, CHARA_PLAYER)
+
 									gmode 2, 48, 48
-									grotate 1, 0, 960, cdata(CDATA_MARK_ITEM_ADJUST_R, CHARA_PLAYER) * 6.54498469498, 24 + cdata(CDATA_MARK_ITEM_ADJUST_W, CHARA_PLAYER) * 2, 24 + cdata(CDATA_MARK_ITEM_ADJUST_W, CHARA_PLAYER) * 2
+									grotate 1, 0, 960, cdata(CDATA_MARK_ITEM_ADJUST_R, CHARA_PLAYER) * 6.54498469498, 24 + cdata(CDATA_MARK_ITEM_ADJUST_W, CHARA_PLAYER) * 2, 24 + cdata(CDATA_MARK_ITEM_ADJUST_L, CHARA_PLAYER) * 2
 								}
 							}
 						}
@@ -1535,20 +1529,55 @@
 								locvar_cell_draw_ani = cdata(CDATA_TURN, CHARA_PLAYER) \ 4 * 32
 							}
 							if ( mdata(MDATA_TYPE) == MAP_TYPE_WORLD ) {
-								gmode 6, 32, 16, 85
-								color 0, 0, 0
-								pos locvar_cell_draw_px + 24, locvar_cell_draw_py + 27
-								grotate 3, 240, 384, 0, 20, 10
-								if ( cfg_pcc_show == 0 ) {
-									gmode 2, 32, 48
-									pos locvar_cell_draw_px + 24, locvar_cell_draw_py + 14
-									grotate 10, locvar_cell_draw_ani, cdata(CDATA_DIR, CHARA_PLAYER) * 48, 0, 24, 36
+								if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) > 0 ) {
+									locvar_cell_draw_wide = 1
+									if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) == 4 ) {
+										locvar_cell_draw_wide = 2
+									}
+									if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) == 3 ) {
+                                        preparePicItem 1168, (gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_PIC) - gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND))
+										if ( gdata(GDATA_RUN_DIR) == 2 ) {
+											pos locvar_cell_draw_px - 10, locvar_cell_draw_py + 8
+											gmode 2, 33, 48
+											grotate BUFFER_ITEM, 0, 960, 0, -33, 48
+										}
+										if ( gdata(GDATA_RUN_DIR) == 1 ) {
+											pos locvar_cell_draw_px + 53, locvar_cell_draw_py + 8
+											gmode 2, 33, 48
+											grotate BUFFER_ITEM, 0, 960, 0, 33, 48
+										}
+									}
+									gmode 6, , , 110
+									color 0, 0, 0
+									pos locvar_cell_draw_px + 8, locvar_cell_draw_py + 20
+									gcopy BUFFER_INF, 240, 384, 32, 16
+									if ( cfg_pcc_show == 0 ) {
+										gmode 2, 32, 48
+										pos locvar_cell_draw_px + 22, locvar_cell_draw_py + 8
+										grotate BUFFER_PCC, locvar_cell_draw_ani, cdata(CDATA_DIR, CHARA_PLAYER) * 48, 0, 32 * locvar_cell_draw_wide, 48
+									}
+									if ( cfg_pcc_show == 1 ) {
+										gmode 2, 32, 48
+										pos locvar_cell_draw_px + 24, locvar_cell_draw_py + 8
+										grotate BUFFER_PCC, locvar_cell_draw_ani, cdata(CDATA_DIR, CHARA_PLAYER) * 48, 0, 24 * locvar_cell_draw_wide, 40
+									}
 								}
-								if ( cfg_pcc_show == 1 ) {
-									gmode 2, 32, 48
-									pos locvar_cell_draw_px + 24, locvar_cell_draw_py + 14
-									grotate 10, locvar_cell_draw_ani, cdata(CDATA_DIR, CHARA_PLAYER) * 48, 0, 16, 24
-								}
+                                else {
+									gmode 6, 32, 16, 85
+									color 0, 0, 0
+									pos locvar_cell_draw_px + 24, locvar_cell_draw_py + 27
+									grotate 3, 240, 384, 0, 20, 10
+									if ( cfg_pcc_show == 0 ) {
+										gmode 2, 32, 48
+										pos locvar_cell_draw_px + 24, locvar_cell_draw_py + 14
+										grotate 10, locvar_cell_draw_ani, cdata(CDATA_DIR, CHARA_PLAYER) * 48, 0, 24, 36
+									}
+									if ( cfg_pcc_show == 1 ) {
+										gmode 2, 32, 48
+										pos locvar_cell_draw_px + 24, locvar_cell_draw_py + 14
+										grotate 10, locvar_cell_draw_ani, cdata(CDATA_DIR, CHARA_PLAYER) * 48, 0, 16, 24
+									}
+                                }
 							}
 							else {
 								if ( chipm(CHIPM_ROLE, locvar_cell_draw_ground) == MAP_CHIP_ROLE_WATER ) {
@@ -1588,16 +1617,48 @@
 											locvar_cell_draw_py += fishanime(1) \ 4 * (fishanime(1) \ 4) - 9
 										}
 									}
-									if ( cfg_pcc_show == 0 ) {
-										gmode 2, 32, 48
-										pos locvar_cell_draw_px + 22, locvar_cell_draw_py + 8
-										grotate 10, locvar_cell_draw_ani, cdata(CDATA_DIR, CHARA_PLAYER) * 48, 0, 32, 48
+									if ( gdata(GDATA_FLAG_MAIN) >= 875 & gdata(GDATA_FLAG_MAIN) < 900 ) {
+										if ( gdata(GDATA_FLAG_MAIN) < 885 ) {
+											if ( cfg_pcc_show == 0 ) {
+												gmode 5, 32, 48, 120
+												pos locvar_cell_draw_px + 22, locvar_cell_draw_py + 8
+												grotate BUFFER_PCC, locvar_cell_draw_ani, cdata(CDATA_DIR, CHARA_PLAYER) * 48, 0, 32, 48
+											}
+										}
+										if ( gdata(GDATA_FLAG_MAIN) < 885 ) {
+											if ( cfg_pcc_show == 1 ) {
+												gmode 5, 32, 48, 120
+												pos locvar_cell_draw_px + 24, locvar_cell_draw_py + 8
+												grotate BUFFER_PCC, locvar_cell_draw_ani, cdata(CDATA_DIR, CHARA_PLAYER) * 48, 0, 24, 40
+											}
+										}
+										if ( gdata(GDATA_FLAG_MAIN) >= 885 ) {
+											if ( cfg_pcc_show == 0 ) {
+												gmode 6, 32, 48, 320
+												pos locvar_cell_draw_px + 22, locvar_cell_draw_py + 8
+												grotate BUFFER_PCC, locvar_cell_draw_ani, cdata(CDATA_DIR, CHARA_PLAYER) * 48, 0, 32, 48
+											}
+										}
+										if ( gdata(GDATA_FLAG_MAIN) >= 885 ) {
+											if ( cfg_pcc_show == 1 ) {
+												gmode 6, 32, 48, 320
+												pos locvar_cell_draw_px + 24, locvar_cell_draw_py + 8
+												grotate BUFFER_PCC, locvar_cell_draw_ani, cdata(CDATA_DIR, CHARA_PLAYER) * 48, 0, 24, 40
+											}
+										}
 									}
-									if ( cfg_pcc_show == 1 ) {
-										gmode 2, 32, 48
-										pos locvar_cell_draw_px + 24, locvar_cell_draw_py + 8
-										grotate 10, locvar_cell_draw_ani, cdata(CDATA_DIR, CHARA_PLAYER) * 48, 0, 24, 40
-									}
+									else {
+										if ( cfg_pcc_show == 0 ) {
+											gmode 2, 32, 48
+											pos locvar_cell_draw_px + 22, locvar_cell_draw_py + 8
+											grotate 10, locvar_cell_draw_ani, cdata(CDATA_DIR, CHARA_PLAYER) * 48, 0, 32, 48
+										}
+										if ( cfg_pcc_show == 1 ) {
+											gmode 2, 32, 48
+											pos locvar_cell_draw_px + 24, locvar_cell_draw_py + 8
+											grotate 10, locvar_cell_draw_ani, cdata(CDATA_DIR, CHARA_PLAYER) * 48, 0, 24, 40
+										}
+                                    }
 								}
 							}
 							gmode 2
@@ -1619,50 +1680,18 @@
 									else {
 										pos locvar_cell_draw_px + 12 + cdata(CDATA_MARK_ITEM_X, CHARA_PLAYER), locvar_cell_draw_py + 18 + cdata(CDATA_MARK_ITEM_Y, CHARA_PLAYER) + (chipm(CHIPM_ROLE, locvar_cell_draw_ground) == MAP_CHIP_ROLE_WATER) * 16 - (cbit(CHARA_BIT_SANDBAG, CHARA_PLAYER) == 1) * 24
 									}
-									gsel 1
-									color 0
-									boxf 0, 960, chipi(CHIPI_WIDTH, cdata(CDATA_MARK_ITEM_PIC, CHARA_PLAYER)), chipi(CHIPI_HEIGHT, cdata(CDATA_MARK_ITEM_PIC, CHARA_PLAYER)) + 960
-									if ( cdata(CDATA_MARK_ITEM_PIC, CHARA_PLAYER) == xy2pic(0, 16) ) {
-										gmode 2
-										pos 0, 960
-										gcopy 1, 0, 768, inf_tiles, inf_tiles
-										pos 0, 1008
-										gzoom 22, 20, 5, chipc(CHIPC_X, cdata(CDATA_MARK_ITEM_COL, CHARA_PLAYER)) + 8, chipc(CHIPC_Y, cdata(CDATA_MARK_ITEM_COL, CHARA_PLAYER)) + 4 + (chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, CHARA_PLAYER)) > inf_tiles) * 8, chipc(CHIPC_WIDTH, cdata(CDATA_MARK_ITEM_COL, CHARA_PLAYER)) - 16, chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, CHARA_PLAYER)) - 8 - (chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, CHARA_PLAYER)) > inf_tiles) * 10, 1
-										pos 6, 974
-										gcopy 1, 0, 1008, 22, 20
-										gsel selcur
-									}
-									else {
-										if ( cdata(CDATA_MARK_ITEM_PIC, CHARA_PLAYER) == xy2pic(30, 33) ) {
-											pos 8, 1058 - chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, CHARA_PLAYER))
-											gcopy 5, chipc(CHIPC_X, cdata(CDATA_MARK_ITEM_COL, CHARA_PLAYER)) + 8, chipc(CHIPC_Y, cdata(CDATA_MARK_ITEM_COL, CHARA_PLAYER)) + 2, chipc(CHIPC_WIDTH, cdata(CDATA_MARK_ITEM_COL, CHARA_PLAYER)), chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, CHARA_PLAYER))
-											gmode 2
-											gsel selcur
-										}
-										else {
-											if ( cdata(CDATA_MARK_ITEM_PIC, CHARA_PLAYER) == xy2pic(3, 16) ) {
-												pos 8, 1058 - chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, CHARA_PLAYER))
-												gcopy 5, chipc(CHIPC_X, cdata(CDATA_MARK_ITEM_COL, CHARA_PLAYER)) + 8, chipc(CHIPC_Y, cdata(CDATA_MARK_ITEM_COL, CHARA_PLAYER)) + 2, chipc(CHIPC_WIDTH, cdata(CDATA_MARK_ITEM_COL, CHARA_PLAYER)) - 16, chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, CHARA_PLAYER)) - 8
-												gmode 4, , , 150
-												color 0, 0, 0
-												pos 0, 960 + (chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, CHARA_PLAYER)) == inf_tiles) * 48
-												gcopy 1, 144, 768 + (chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, CHARA_PLAYER)) > inf_tiles) * 48, inf_tiles, chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, CHARA_PLAYER)) + (chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, CHARA_PLAYER)) > inf_tiles) * 48
-												gmode 2
-												gsel selcur
-											}
-											else {
-												pos 0, 960
-												gcopy 1, chipi(CHIPI_X, cdata(CDATA_MARK_ITEM_PIC, CHARA_PLAYER)), chipi(CHIPI_Y, cdata(CDATA_MARK_ITEM_PIC, CHARA_PLAYER)), chipi(CHIPI_WIDTH, cdata(CDATA_MARK_ITEM_PIC, CHARA_PLAYER)), chipi(CHIPI_HEIGHT, cdata(CDATA_MARK_ITEM_PIC, CHARA_PLAYER))
-												gfini chipi(CHIPI_WIDTH, cdata(CDATA_MARK_ITEM_PIC, CHARA_PLAYER)), chipi(CHIPI_HEIGHT, cdata(CDATA_MARK_ITEM_PIC, CHARA_PLAYER))
-												gfdec2 c_col(0, cdata(CDATA_MARK_ITEM_COL, CHARA_PLAYER)), c_col(1, cdata(CDATA_MARK_ITEM_COL, CHARA_PLAYER)), c_col(2, cdata(CDATA_MARK_ITEM_COL, CHARA_PLAYER))
-												gsel selcur
-											}
-										}
-									}
+
+                                    preparePicItem cdata(CDATA_MARK_ITEM_PIC, CHARA_PLAYER), cdata(CDATA_MARK_ITEM_COL, CHARA_PLAYER)
+
 									gmode 2, 48, 48
-									grotate 1, 0, 960, cdata(CDATA_MARK_ITEM_ADJUST_R, CHARA_PLAYER) * 6.54498469498, 24 + cdata(CDATA_MARK_ITEM_ADJUST_W, CHARA_PLAYER) * 2, 24 + cdata(CDATA_MARK_ITEM_ADJUST_W, CHARA_PLAYER) * 2
+									grotate 1, 0, 960, cdata(CDATA_MARK_ITEM_ADJUST_R, CHARA_PLAYER) * 6.54498469498, 24 + cdata(CDATA_MARK_ITEM_ADJUST_W, CHARA_PLAYER) * 2, 24 + cdata(CDATA_MARK_ITEM_ADJUST_L, CHARA_PLAYER) * 2
 								}
 							}
+						}
+						if ( gdata(GDATA_FLAG_MAIN) >= 900 & gdata(GDATA_FLAG_MAIN) < 1000 ) {
+							pos locvar_cell_draw_px, locvar_cell_draw_py - 15
+							gmode 5, inf_tiles, inf_tiles, 120 + rnd(100)
+							gcopy BUFFER_INF, 192 + 48 * 11 + rnd(1) * inf_tiles, 704
 						}
 					}
 				}
@@ -1774,46 +1803,7 @@
 						locvar_cell_draw_p += (locvar_cell_draw_scrturn + locvar_cell_draw_p2) \ (chipi(CHIPI_ANIM, locvar_cell_draw_p) + 1) - ((locvar_cell_draw_scrturn + locvar_cell_draw_p2) \ (chipi(CHIPI_ANIM, locvar_cell_draw_p) + 1) == chipi(CHIPI_ANIM, locvar_cell_draw_p)) * 2 * (chipi(CHIPI_ANIM, locvar_cell_draw_p) != 0)
 					}
 					if ( mef(1, locvar_cell_draw_p2) > 10000 ) {
-						gsel 1
-						color 0
-						boxf 0, 960, chipi(CHIPI_WIDTH, locvar_cell_draw_p), chipi(CHIPI_HEIGHT, locvar_cell_draw_p) + 960
-						if ( locvar_cell_draw_p == xy2pic(0, 16) ) {
-							gmode 2
-							pos 0, 960
-							gcopy 1, 0, 768, inf_tiles, inf_tiles
-							pos 0, 1008
-							gzoom 22, 20, 5, chipc(CHIPC_X, locvar_cell_draw_p(1)) + 8, chipc(CHIPC_Y, locvar_cell_draw_p(1)) + 4 + (chipc(CHIPC_HEIGHT, locvar_cell_draw_p(1)) > inf_tiles) * 8, chipc(CHIPC_WIDTH, locvar_cell_draw_p(1)) - 16, chipc(CHIPC_HEIGHT, locvar_cell_draw_p(1)) - 8 - (chipc(CHIPC_HEIGHT, locvar_cell_draw_p(1)) > inf_tiles) * 10, 1
-							pos 6, 974
-							gcopy 1, 0, 1008, 22, 20
-							gsel selcur
-						}
-						else {
-							if ( locvar_cell_draw_p == xy2pic(30, 33) ) {
-								pos 8, 1058 - chipc(CHIPC_HEIGHT, locvar_cell_draw_p(1))
-								gcopy 5, chipc(CHIPC_X, locvar_cell_draw_p(1)) + 8, chipc(CHIPC_Y, locvar_cell_draw_p(1)) + 2, chipc(CHIPC_WIDTH, locvar_cell_draw_p(1)), chipc(CHIPC_HEIGHT, locvar_cell_draw_p(1))
-								gmode 2
-								gsel selcur
-							}
-							else {
-								if ( locvar_cell_draw_p == xy2pic(3, 16) ) {
-									pos 8, 1058 - chipc(CHIPC_HEIGHT, locvar_cell_draw_p(1))
-									gcopy 5, chipc(CHIPC_X, locvar_cell_draw_p(1)) + 8, chipc(CHIPC_Y, locvar_cell_draw_p(1)) + 2, chipc(CHIPC_WIDTH, locvar_cell_draw_p(1)) - 16, chipc(CHIPC_HEIGHT, locvar_cell_draw_p(1)) - 8
-									gmode 4, , , 150
-									color 0, 0, 0
-									pos 0, 960 + (chipc(CHIPC_HEIGHT, locvar_cell_draw_p(1)) == inf_tiles) * 48
-									gcopy 1, 144, 768 + (chipc(CHIPC_HEIGHT, locvar_cell_draw_p(1)) > inf_tiles) * 48, inf_tiles, chipc(CHIPC_HEIGHT, locvar_cell_draw_p(1)) + (chipc(CHIPC_HEIGHT, locvar_cell_draw_p(1)) > inf_tiles) * 48
-									gmode 2
-									gsel selcur
-								}
-								else {
-									pos 0, 960
-									gcopy 1, chipi(CHIPI_X, locvar_cell_draw_p), chipi(CHIPI_Y, locvar_cell_draw_p), chipi(CHIPI_WIDTH, locvar_cell_draw_p), chipi(CHIPI_HEIGHT, locvar_cell_draw_p)
-									gfini chipi(CHIPI_WIDTH, locvar_cell_draw_p), chipi(CHIPI_HEIGHT, locvar_cell_draw_p)
-									gfdec2 c_col(0, locvar_cell_draw_p(1)), c_col(1, locvar_cell_draw_p(1)), c_col(2, locvar_cell_draw_p(1))
-									gsel selcur
-								}
-							}
-						}
+                        preparePicItem locvar_cell_draw_p, locvar_cell_draw_p(1)
 						gcopy 1, 0, 960, inf_tiles, inf_tiles
 					}
 					else {
@@ -1838,46 +1828,9 @@
 						}
 						locvar_cell_draw_p = inv(INV_ITEM_PIC, locvar_cell_draw_flooritem(locvar_cell_draw_cnt2))
 						locvar_cell_draw_i = inv(INV_ITEM_COL, locvar_cell_draw_flooritem(locvar_cell_draw_cnt2))
-						gsel 1
-						color 0
-						boxf 0, 960, chipi(CHIPI_WIDTH, locvar_cell_draw_p), chipi(CHIPI_HEIGHT, locvar_cell_draw_p) + 960
-						if ( locvar_cell_draw_p == xy2pic(0, 16) ) {
-							gmode 2
-							pos 0, 960
-							gcopy 1, 0, 768, inf_tiles, inf_tiles
-							pos 0, 1008
-							gzoom 22, 20, 5, chipc(CHIPC_X, locvar_cell_draw_i) + 8, chipc(CHIPC_Y, locvar_cell_draw_i) + 4 + (chipc(CHIPC_HEIGHT, locvar_cell_draw_i) > inf_tiles) * 8, chipc(CHIPC_WIDTH, locvar_cell_draw_i) - 16, chipc(CHIPC_HEIGHT, locvar_cell_draw_i) - 8 - (chipc(CHIPC_HEIGHT, locvar_cell_draw_i) > inf_tiles) * 10, 1
-							pos 6, 974
-							gcopy 1, 0, 1008, 22, 20
-							gsel selcur
-						}
-						else {
-							if ( locvar_cell_draw_p == xy2pic(30, 33) ) {
-								pos 8, 1058 - chipc(CHIPC_HEIGHT, locvar_cell_draw_i)
-								gcopy 5, chipc(CHIPC_X, locvar_cell_draw_i) + 8, chipc(CHIPC_Y, locvar_cell_draw_i) + 2, chipc(CHIPC_WIDTH, locvar_cell_draw_i), chipc(CHIPC_HEIGHT, locvar_cell_draw_i)
-								gmode 2
-								gsel selcur
-							}
-							else {
-								if ( locvar_cell_draw_p == xy2pic(3, 16) ) {
-									pos 8, 1058 - chipc(CHIPC_HEIGHT, locvar_cell_draw_i)
-									gcopy 5, chipc(CHIPC_X, locvar_cell_draw_i) + 8, chipc(CHIPC_Y, locvar_cell_draw_i) + 2, chipc(CHIPC_WIDTH, locvar_cell_draw_i) - 16, chipc(CHIPC_HEIGHT, locvar_cell_draw_i) - 8
-									gmode 4, , , 150
-									color 0, 0, 0
-									pos 0, 960 + (chipc(CHIPC_HEIGHT, locvar_cell_draw_i) == inf_tiles) * 48
-									gcopy 1, 144, 768 + (chipc(CHIPC_HEIGHT, locvar_cell_draw_i) > inf_tiles) * 48, inf_tiles, chipc(CHIPC_HEIGHT, locvar_cell_draw_i) + (chipc(CHIPC_HEIGHT, locvar_cell_draw_i) > inf_tiles) * 48
-									gmode 2
-									gsel selcur
-								}
-								else {
-									pos 0, 960
-									gcopy 1, chipi(CHIPI_X, locvar_cell_draw_p), chipi(CHIPI_Y, locvar_cell_draw_p), chipi(CHIPI_WIDTH, locvar_cell_draw_p), chipi(CHIPI_HEIGHT, locvar_cell_draw_p)
-									gfini chipi(CHIPI_WIDTH, locvar_cell_draw_p), chipi(CHIPI_HEIGHT, locvar_cell_draw_p)
-									gfdec2 c_col(0, locvar_cell_draw_i), c_col(1, locvar_cell_draw_i), c_col(2, locvar_cell_draw_i)
-									gsel selcur
-								}
-							}
-						}
+
+                        preparePicItem locvar_cell_draw_p, locvar_cell_draw_i 
+
 						if ( mdata(MDATA_TYPE) == MAP_TYPE_WORLD ) {
 							gmode 2, chipi(CHIPI_WIDTH, locvar_cell_draw_p), chipi(CHIPI_HEIGHT, locvar_cell_draw_p)
 							pos locvar_cell_draw_dx + 24, locvar_cell_draw_dy + 24 - locvar_cell_draw_stackh / 2
@@ -1909,7 +1862,7 @@
 							}
 						}
 						locvar_cell_draw_stackh += chipi(CHIPI_S, locvar_cell_draw_p)
-						if ( locvar_cell_draw_p == xy2pic(3, 16) | locvar_cell_draw_p == xy2pic(30, 33) ) {
+						if ( locvar_cell_draw_p == xy2pic(3, 16) | locvar_cell_draw_p == xy2pic(30, 33) | locvar_cell_draw_p == xy2pic(18, 36) ) {
 							if ( chipc(CHIPC_HEIGHT, locvar_cell_draw_i) == 96 ) {
 								locvar_cell_draw_stackh += 44
 							}
@@ -1920,46 +1873,8 @@
 					locvar_cell_draw_i = wpeek(map(locvar_cell_draw_x, locvar_cell_draw_y, 5), 2)
 					locvar_cell_draw_p = wpeek(map(locvar_cell_draw_x, locvar_cell_draw_y, 5), 0)
 *skipitemDraw
-					gsel 1
-					color 0
-					boxf 0, 960, chipi(CHIPI_WIDTH, locvar_cell_draw_p), chipi(CHIPI_HEIGHT, locvar_cell_draw_p) + 960
-					if ( locvar_cell_draw_p == xy2pic(0, 16) ) {
-						gmode 2
-						pos 0, 960
-						gcopy 1, 0, 768, inf_tiles, inf_tiles
-						pos 0, 1008
-						gzoom 22, 20, 5, chipc(CHIPC_X, locvar_cell_draw_i) + 8, chipc(CHIPC_Y, locvar_cell_draw_i) + 4 + (chipc(CHIPC_HEIGHT, locvar_cell_draw_i) > inf_tiles) * 8, chipc(CHIPC_WIDTH, locvar_cell_draw_i) - 16, chipc(CHIPC_HEIGHT, locvar_cell_draw_i) - 8 - (chipc(CHIPC_HEIGHT, locvar_cell_draw_i) > inf_tiles) * 10, 1
-						pos 6, 974
-						gcopy 1, 0, 1008, 22, 20
-						gsel selcur
-					}
-					else {
-						if ( locvar_cell_draw_p == xy2pic(30, 33) ) {
-							pos 8, 1058 - chipc(CHIPC_HEIGHT, locvar_cell_draw_i)
-							gcopy 5, chipc(CHIPC_X, locvar_cell_draw_i) + 8, chipc(CHIPC_Y, locvar_cell_draw_i) + 2, chipc(CHIPC_WIDTH, locvar_cell_draw_i), chipc(CHIPC_HEIGHT, locvar_cell_draw_i)
-							gmode 2
-							gsel selcur
-						}
-						else {
-							if ( locvar_cell_draw_p == xy2pic(3, 16) ) {
-								pos 8, 1058 - chipc(CHIPC_HEIGHT, locvar_cell_draw_i)
-								gcopy 5, chipc(CHIPC_X, locvar_cell_draw_i) + 8, chipc(CHIPC_Y, locvar_cell_draw_i) + 2, chipc(CHIPC_WIDTH, locvar_cell_draw_i) - 16, chipc(CHIPC_HEIGHT, locvar_cell_draw_i) - 8
-								gmode 4, , , 150
-								color 0, 0, 0
-								pos 0, 960 + (chipc(CHIPC_HEIGHT, locvar_cell_draw_i) == inf_tiles) * 48
-								gcopy 1, 144, 768 + (chipc(CHIPC_HEIGHT, locvar_cell_draw_i) > inf_tiles) * 48, inf_tiles, chipc(CHIPC_HEIGHT, locvar_cell_draw_i) + (chipc(CHIPC_HEIGHT, locvar_cell_draw_i) > inf_tiles) * 48
-								gmode 2
-								gsel selcur
-							}
-							else {
-								pos 0, 960
-								gcopy 1, chipi(CHIPI_X, locvar_cell_draw_p), chipi(CHIPI_Y, locvar_cell_draw_p), chipi(CHIPI_WIDTH, locvar_cell_draw_p), chipi(CHIPI_HEIGHT, locvar_cell_draw_p)
-								gfini chipi(CHIPI_WIDTH, locvar_cell_draw_p), chipi(CHIPI_HEIGHT, locvar_cell_draw_p)
-								gfdec2 c_col(0, locvar_cell_draw_i), c_col(1, locvar_cell_draw_i), c_col(2, locvar_cell_draw_i)
-								gsel selcur
-							}
-						}
-					}
+                    preparePicItem locvar_cell_draw_p, locvar_cell_draw_i 
+
 					if ( mdata(MDATA_TYPE) == MAP_TYPE_WORLD ) {
 						gmode 2, chipi(CHIPI_WIDTH, locvar_cell_draw_p), chipi(CHIPI_HEIGHT, locvar_cell_draw_p)
 						pos locvar_cell_draw_dx + 24, locvar_cell_draw_dy + 24
@@ -1967,7 +1882,7 @@
 					}
 					else {
 						if ( cfg_objectshadow ) {
-							if ( chipi(CHIPI_SH, locvar_cell_draw_p) ) {
+							if ( chipi(CHIPI_SH, locvar_cell_draw_p) >= 0 ) {
 								gmode 2, chipi(CHIPI_WIDTH, locvar_cell_draw_p), chipi(CHIPI_HEIGHT, locvar_cell_draw_p), 80
 								if ( chipi(CHIPI_HEIGHT, locvar_cell_draw_p) == inf_tiles ) {
 									pos locvar_cell_draw_dx + chipi(CHIPI_WIDTH, locvar_cell_draw_p) / 2 + chipi(CHIPI_SH, locvar_cell_draw_p) / 80 + 2, locvar_cell_draw_dy - chipi(CHIPI_F, locvar_cell_draw_p) + 22
@@ -1982,12 +1897,221 @@
 								gmode 2
 							}
 						}
-						pos locvar_cell_draw_dx, locvar_cell_draw_dy - chipi(CHIPI_F, locvar_cell_draw_p)
-						if ( chipi(CHIPI_ANIM, locvar_cell_draw_p) == 0 ) {
-							gcopy 1, 0, 960, chipi(CHIPI_WIDTH, locvar_cell_draw_p), chipi(CHIPI_HEIGHT, locvar_cell_draw_p)
-						}
+						if ( chipi(CHIPI_SH, locvar_cell_draw_p) == (-1) ) {
+							pos locvar_cell_draw_dx + 24, locvar_cell_draw_dy - chipi(CHIPI_F, locvar_cell_draw_p) + 24
+							locvar_cell_draw_kaiten = 0
+							if ( locvar_cell_draw_p == 825 ) {
+								pos locvar_cell_draw_dx + 24 - rnd(2), locvar_cell_draw_dy - chipi(CHIPI_F, locvar_cell_draw_p) + 24
+							}
+							if ( locvar_cell_draw_p == 826 ) {
+								if ( rnd(3) == 0 ) {
+									pos locvar_cell_draw_dx + 24 - rnd(2), locvar_cell_draw_dy - chipi(CHIPI_F, locvar_cell_draw_p) + 24
+								}
+							}
+							if ( locvar_cell_draw_p == 827 ) {
+								pos locvar_cell_draw_dx + 24 - rnd(2), locvar_cell_draw_dy - chipi(CHIPI_F, locvar_cell_draw_p) + 24
+								if ( rnd(3) == 0 ) {
+									locvar_cell_draw_kaiten = rnd(2)
+								}
+							}
+							if ( locvar_cell_draw_p == 828 ) {
+								pos locvar_cell_draw_dx + 24, locvar_cell_draw_dy - chipi(CHIPI_F, locvar_cell_draw_p) + 24 - rnd(2)
+							}
+							if ( locvar_cell_draw_p == 831 ) {
+								pos locvar_cell_draw_dx + 24, locvar_cell_draw_dy - chipi(CHIPI_F, locvar_cell_draw_p) + 24 - rnd(2)
+								if ( rnd(5) == 0 ) {
+									locvar_cell_draw_kaiten = rnd(2)
+								}
+							}
+							if ( locvar_cell_draw_p == 832 ) {
+								if ( rnd(3) == 0 ) {
+									pos locvar_cell_draw_dx + 24 - rnd(2) + rnd(2), locvar_cell_draw_dy - chipi(CHIPI_F, locvar_cell_draw_p) + 24 - rnd(2)
+								}
+							}
+							if ( locvar_cell_draw_p == 833 ) {
+								if ( rnd(4) == 0 ) {
+									pos locvar_cell_draw_dx + 24 - rnd(2) + rnd(2), locvar_cell_draw_dy - chipi(CHIPI_F, locvar_cell_draw_p) + 24 - rnd(2)
+									locvar_cell_draw_kaiten = rnd(2)
+								}
+							}
+							if ( locvar_cell_draw_p == 834 ) {
+								if ( rnd(4) == 0 ) {
+									pos locvar_cell_draw_dx + 24, locvar_cell_draw_dy - chipi(CHIPI_F, locvar_cell_draw_p) + 24 - rnd(2)
+									locvar_cell_draw_kaiten = rnd(2)
+								}
+							}
+							if ( locvar_cell_draw_p == 837 ) {
+								pos locvar_cell_draw_dx + 24, locvar_cell_draw_dy - chipi(CHIPI_F, locvar_cell_draw_p) + 24 - rnd(2)
+							}
+							if ( locvar_cell_draw_p == 838 ) {
+								pos locvar_cell_draw_dx + 24 - rnd(2) + rnd(2), locvar_cell_draw_dy - chipi(CHIPI_F, locvar_cell_draw_p) + 24
+							}
+							if ( locvar_cell_draw_p == 1174 ) {
+								if ( rnd(8) == 0 ) {
+									pos locvar_cell_draw_dx + 24 - rnd(2) + rnd(2), locvar_cell_draw_dy - chipi(CHIPI_F, locvar_cell_draw_p) + 24 - rnd(2)
+								}
+							}
+							if ( locvar_cell_draw_p == 840 ) {
+								if ( rnd(8) == 0 ) {
+									pos locvar_cell_draw_dx + 24 - rnd(2) + rnd(2), locvar_cell_draw_dy - chipi(CHIPI_F, locvar_cell_draw_p) + 24 - rnd(2)
+								}
+							}
+							if ( locvar_cell_draw_p == 843 ) {
+								if ( rnd(5) == 0 ) {
+									pos locvar_cell_draw_dx + 24, locvar_cell_draw_dy - chipi(CHIPI_F, locvar_cell_draw_p) + 24 - rnd(2)
+									locvar_cell_draw_kaiten = rnd(2)
+								}
+							}
+							if ( locvar_cell_draw_p == 844 ) {
+								if ( rnd(4) == 0 ) {
+									pos locvar_cell_draw_dx + 24, locvar_cell_draw_dy - chipi(CHIPI_F, locvar_cell_draw_p) + 24 - rnd(2)
+								}
+							}
+							if ( locvar_cell_draw_p == 845 ) {
+								pos locvar_cell_draw_dx + 24 - rnd(2) + rnd(2), locvar_cell_draw_dy - chipi(CHIPI_F, locvar_cell_draw_p) + 24 - rnd(2)
+							}
+							if ( locvar_cell_draw_p == 846 ) {
+								if ( rnd(4) == 0 ) {
+									pos locvar_cell_draw_dx + 24, locvar_cell_draw_dy - chipi(CHIPI_F, locvar_cell_draw_p) + 24 - rnd(2)
+								}
+							}
+							if ( locvar_cell_draw_p == 849 ) {
+								pos locvar_cell_draw_dx + 24 - rnd(2) + rnd(2), locvar_cell_draw_dy - chipi(CHIPI_F, locvar_cell_draw_p) + 24 - rnd(2)
+							}
+							if ( locvar_cell_draw_p == 850 ) {
+								if ( rnd(2) == 0 ) {
+									pos locvar_cell_draw_dx + 24, locvar_cell_draw_dy - chipi(CHIPI_F, locvar_cell_draw_p) + 24 - rnd(2)
+									locvar_cell_draw_kaiten = rnd(2)
+								}
+							}
+							if ( locvar_cell_draw_p == 851 ) {
+								if ( rnd(2) == 0 ) {
+									pos locvar_cell_draw_dx + 24 - rnd(2) + rnd(2), locvar_cell_draw_dy - chipi(CHIPI_F, locvar_cell_draw_p) + 24 - rnd(2)
+								}
+							}
+							if ( locvar_cell_draw_p == 852 ) {
+								pos locvar_cell_draw_dx + 24 - rnd(2) + rnd(2), locvar_cell_draw_dy - chipi(CHIPI_F, locvar_cell_draw_p) + 24 - rnd(2)
+								locvar_cell_draw_kaiten = rnd(2)
+							}
+							if ( locvar_cell_draw_p == 855 ) {
+								pos locvar_cell_draw_dx + 24 - rnd(2), locvar_cell_draw_dy - chipi(CHIPI_F, locvar_cell_draw_p) + 24
+								if ( rnd(2) == 0 ) {
+									locvar_cell_draw_kaiten = rnd(2)
+								}
+							}
+							if ( locvar_cell_draw_p == 856 ) {
+								pos locvar_cell_draw_dx + 24, locvar_cell_draw_dy - chipi(CHIPI_F, locvar_cell_draw_p) + 24 - rnd(2)
+							}
+							if ( locvar_cell_draw_p == 857 ) {
+								pos locvar_cell_draw_dx + 24 - rnd(2) + rnd(2), locvar_cell_draw_dy - chipi(CHIPI_F, locvar_cell_draw_p) + 24
+							}
+							if ( locvar_cell_draw_p == 858 ) {
+								if ( rnd(5) == 0 ) {
+									pos locvar_cell_draw_dx + 24, locvar_cell_draw_dy - chipi(CHIPI_F, locvar_cell_draw_p) + 24 - rnd(2)
+								}
+							}
+							if ( locvar_cell_draw_p == 871 ) {
+								if ( rnd(3) == 0 ) {
+									pos locvar_cell_draw_dx + 24 - rnd(3) + rnd(3), locvar_cell_draw_dy - chipi(CHIPI_F, locvar_cell_draw_p) + 24
+								}
+							}
+							if ( locvar_cell_draw_p == 318 ) {
+								pos locvar_cell_draw_dx + 24 - rnd(2), locvar_cell_draw_dy - chipi(CHIPI_F, locvar_cell_draw_p) + 24
+								if ( rnd(2) == 0 ) {
+									locvar_cell_draw_kaiten = -1
+								}
+							}
+							if ( locvar_cell_draw_p == 317 ) {
+								pos locvar_cell_draw_dx + 24 - rnd(2), locvar_cell_draw_dy - chipi(CHIPI_F, locvar_cell_draw_p) + 24
+								locvar_cell_draw_kaiten = -1
+							}
+							if ( locvar_cell_draw_p == 316 ) {
+								pos locvar_cell_draw_dx + 24, locvar_cell_draw_dy - chipi(CHIPI_F, locvar_cell_draw_p) + 24 - rnd(5)
+							}
+							if ( locvar_cell_draw_p == 315 ) {
+								if ( rnd(3) == 0 ) {
+									pos locvar_cell_draw_dx + 24 - rnd(2), locvar_cell_draw_dy - chipi(CHIPI_F, locvar_cell_draw_p) + 24
+								}
+							}
+							if ( locvar_cell_draw_p == 314 ) {
+								pos locvar_cell_draw_dx + 24, locvar_cell_draw_dy - chipi(CHIPI_F, locvar_cell_draw_p) + 24 - rnd(2)
+								locvar_cell_draw_kaiten = -1
+							}
+							if ( locvar_cell_draw_p == 313 ) {
+								if ( rnd(3) == 0 ) {
+									pos locvar_cell_draw_dx + 24, locvar_cell_draw_dy - chipi(CHIPI_F, locvar_cell_draw_p) + 24 - rnd(3)
+								}
+							}
+							if ( locvar_cell_draw_p == 312 ) {
+								if ( rnd(5) == 0 ) {
+									pos locvar_cell_draw_dx + 24 + rnd(3), locvar_cell_draw_dy - chipi(CHIPI_F, locvar_cell_draw_p) + 24
+								}
+							}
+							if ( locvar_cell_draw_p == 311 ) {
+								pos locvar_cell_draw_dx + 24, locvar_cell_draw_dy - chipi(CHIPI_F, locvar_cell_draw_p) + 24 - rnd(2)
+								if ( rnd(3) == 0 ) {
+									locvar_cell_draw_kaiten = rnd(2) - rnd(2)
+								}
+							}
+							if ( locvar_cell_draw_p == 310 ) {
+								pos locvar_cell_draw_dx + 24, locvar_cell_draw_dy - chipi(CHIPI_F, locvar_cell_draw_p) + 24 - rnd(4)
+								locvar_cell_draw_kaiten = -1
+							}
+							if ( locvar_cell_draw_p == 309 ) {
+								pos locvar_cell_draw_dx + 24, locvar_cell_draw_dy - chipi(CHIPI_F, locvar_cell_draw_p) + 24 - rnd(2)
+								if ( rnd(3) == 0 ) {
+									locvar_cell_draw_kaiten = -1
+								}
+							}
+							if ( locvar_cell_draw_p == 1173 ) {
+								pos locvar_cell_draw_dx + 24 - rnd(2) + rnd(2), locvar_cell_draw_dy - chipi(CHIPI_F, locvar_cell_draw_p) + 24 - rnd(2)
+							}
+							if ( locvar_cell_draw_p == 1186 ) {
+								if ( rnd(3) == 0 ) {
+									pos locvar_cell_draw_dx + 24 - rnd(2) + rnd(2), locvar_cell_draw_dy - chipi(CHIPI_F, locvar_cell_draw_p) + 24 - rnd(2)
+								}
+							}
+							if ( chipm(CHIPM_ROLE, map(locvar_cell_draw_x, locvar_cell_draw_y, MAP_TILE_ID_MEMORY)) == MAP_CHIP_ROLE_WATER ) {
+								gmode 4, inf_tiles, inf_tiles, 140
+								color 0, 0, 0
+								grotate BUFFER_ITEM, 0, 960, 0 - locvar_cell_draw_kaiten, chipi(CHIPI_WIDTH, locvar_cell_draw_p), chipi(CHIPI_HEIGHT, locvar_cell_draw_p)
+							}
+							if ( chipm(CHIPM_ROLE, map(locvar_cell_draw_x, locvar_cell_draw_y, MAP_TILE_ID_MEMORY)) != MAP_CHIP_ROLE_WATER ) {
+								grotate BUFFER_ITEM, 0, 960, 0 - locvar_cell_draw_kaiten, chipi(CHIPI_WIDTH, locvar_cell_draw_p), chipi(CHIPI_HEIGHT, locvar_cell_draw_p)
+							}
+ 						}
 						else {
-							gcopy 1, chipi(CHIPI_X, locvar_cell_draw_p) + (locvar_cell_draw_scrturn \ (chipi(CHIPI_ANIM, locvar_cell_draw_p) + 1) - (locvar_cell_draw_scrturn \ (chipi(CHIPI_ANIM, locvar_cell_draw_p) + 1) == chipi(CHIPI_ANIM, locvar_cell_draw_p)) * 2 * (chipi(CHIPI_ANIM, locvar_cell_draw_p) != 0)) * inf_tiles, chipi(CHIPI_Y, locvar_cell_draw_p), chipi(CHIPI_WIDTH, locvar_cell_draw_p), chipi(CHIPI_HEIGHT, locvar_cell_draw_p)
+							pos locvar_cell_draw_dx, locvar_cell_draw_dy - chipi(CHIPI_F, locvar_cell_draw_p)
+							if ( chipm(CHIPM_ROLE, map(locvar_cell_draw_x, locvar_cell_draw_y, MAP_TILE_ID_MEMORY)) == MAP_CHIP_ROLE_WATER ) {
+								if ( chipi(CHIPI_F, locvar_cell_draw_p) == 0 ) {
+									gmode 4, inf_tiles, inf_tiles, 140
+									color 0, 0, 0
+									pos locvar_cell_draw_dx, locvar_cell_draw_dy - chipi(CHIPI_F, locvar_cell_draw_p)
+									gcopy BUFFER_ITEM, 0, 960, chipi(CHIPI_WIDTH, locvar_cell_draw_p), chipi(CHIPI_HEIGHT, locvar_cell_draw_p)
+								}
+								else {
+									gmode 4, inf_tiles, inf_tiles, 140
+									color 0, 0, 0
+									pos locvar_cell_draw_dx, locvar_cell_draw_dy - chipi(CHIPI_F, locvar_cell_draw_p) + 22
+									gcopy BUFFER_ITEM, 0, 982, chipi(CHIPI_WIDTH, locvar_cell_draw_p), chipi(CHIPI_HEIGHT, locvar_cell_draw_p) - 22
+									pos locvar_cell_draw_dx, locvar_cell_draw_dy - chipi(CHIPI_F, locvar_cell_draw_p)
+									gmode 2, inf_tiles, inf_tiles
+									if ( chipi(CHIPI_ANIM, locvar_cell_draw_p) == 0 ) {
+										gcopy BUFFER_ITEM, 0, 960, chipi(CHIPI_WIDTH, locvar_cell_draw_p), chipi(CHIPI_HEIGHT, locvar_cell_draw_p) - 22
+									}
+									else {
+										gcopy BUFFER_ITEM, chipi(CHIPI_X, locvar_cell_draw_p) + (locvar_cell_draw_scrturn \ (chipi(CHIPI_ANIM, locvar_cell_draw_p) + 1) - (locvar_cell_draw_scrturn \ (chipi(CHIPI_ANIM, locvar_cell_draw_p) + 1) == chipi(CHIPI_ANIM, locvar_cell_draw_p)) * 2 * (chipi(CHIPI_ANIM, locvar_cell_draw_p) != 0)) * inf_tiles, chipi(CHIPI_Y, locvar_cell_draw_p), chipi(CHIPI_WIDTH, locvar_cell_draw_p), chipi(CHIPI_HEIGHT, locvar_cell_draw_p) - 22
+									}
+								}
+							}
+							else {
+								if ( chipi(CHIPI_ANIM, locvar_cell_draw_p) == 0 ) {
+									gcopy BUFFER_ITEM, 0, 960, chipi(CHIPI_WIDTH, locvar_cell_draw_p), chipi(CHIPI_HEIGHT, locvar_cell_draw_p)
+								}
+								else {
+									gcopy BUFFER_ITEM, chipi(CHIPI_X, locvar_cell_draw_p) + (locvar_cell_draw_scrturn \ (chipi(CHIPI_ANIM, locvar_cell_draw_p) + 1) - (locvar_cell_draw_scrturn \ (chipi(CHIPI_ANIM, locvar_cell_draw_p) + 1) == chipi(CHIPI_ANIM, locvar_cell_draw_p)) * 2 * (chipi(CHIPI_ANIM, locvar_cell_draw_p) != 0)) * inf_tiles, chipi(CHIPI_Y, locvar_cell_draw_p), chipi(CHIPI_WIDTH, locvar_cell_draw_p), chipi(CHIPI_HEIGHT, locvar_cell_draw_p)
+								}
+							}
 						}
 					}
 				}
@@ -2005,15 +2129,20 @@
 						}
 					}
 					if ( locvar_cell_draw_c != CHARA_PLAYER ) {
+						if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) > 0 & mdata(MDATA_TYPE) == MAP_TYPE_WORLD & cdata(CDATA_RELATION, locvar_cell_draw_c) == RELATION_ALLY ) {
+							locvar_cell_draw_c = 0
+						}
+					}
+					if ( locvar_cell_draw_c != 0 ) {
 						if ( cbit(CHARA_BIT_MARK_ITEM, locvar_cell_draw_c) ) {
 							if ( mdata(MDATA_TYPE) != MAP_TYPE_WORLD ) {
 								if ( cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c) > xy2pic(0, 0) ) {
 									if ( cdata(CDATA_IN_TAGTEAM, locvar_cell_draw_c) == 1 ) {
 										if ( chipi(CHIPI_HEIGHT, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)) > 48 ) {
-											pos locvar_cell_draw_dx + 12 + cdata(CDATA_IN_TAGTEAM, locvar_cell_draw_c) * 15 + cdata(CDATA_MARK_ITEM_X, locvar_cell_draw_c), locvar_cell_draw_dy + 14 + cdata(CDATA_MARK_ITEM_Y, locvar_cell_draw_c) + (chipm(CHIPM_ROLE, locvar_cell_draw_ground) == MAP_CHIP_ROLE_WATER) * 16 - (cbit(CHARA_BIT_SANDBAG, locvar_cell_draw_c) == 1) * 24
+											pos locvar_cell_draw_dx + 12 + cdata(CDATA_IN_TAGTEAM, locvar_cell_draw_c) * 12 + cdata(CDATA_MARK_ITEM_X, locvar_cell_draw_c), locvar_cell_draw_dy + 14 + cdata(CDATA_MARK_ITEM_Y, locvar_cell_draw_c) + (chipm(CHIPM_ROLE, locvar_cell_draw_ground) == MAP_CHIP_ROLE_WATER) * 16 - (cbit(CHARA_BIT_SANDBAG, locvar_cell_draw_c) == 1) * 24
 										}
 										if ( chipi(CHIPI_HEIGHT, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)) <= 48 ) {
-											pos locvar_cell_draw_dx + 12 + cdata(CDATA_IN_TAGTEAM, locvar_cell_draw_c) * 15 + cdata(CDATA_MARK_ITEM_X, locvar_cell_draw_c), locvar_cell_draw_dy + 18 + cdata(CDATA_MARK_ITEM_Y, locvar_cell_draw_c) + (chipm(CHIPM_ROLE, locvar_cell_draw_ground) == MAP_CHIP_ROLE_WATER) * 16 - (cbit(CHARA_BIT_SANDBAG, locvar_cell_draw_c) == 1) * 24
+											pos locvar_cell_draw_dx + 12 + cdata(CDATA_IN_TAGTEAM, locvar_cell_draw_c) * 12 + cdata(CDATA_MARK_ITEM_X, locvar_cell_draw_c), locvar_cell_draw_dy + 18 + cdata(CDATA_MARK_ITEM_Y, locvar_cell_draw_c) + (chipm(CHIPM_ROLE, locvar_cell_draw_ground) == MAP_CHIP_ROLE_WATER) * 16 - (cbit(CHARA_BIT_SANDBAG, locvar_cell_draw_c) == 1) * 24
 										}
 									}
 									else {
@@ -2024,53 +2153,16 @@
 											pos locvar_cell_draw_dx + 12 + cdata(CDATA_MARK_ITEM_X, locvar_cell_draw_c), locvar_cell_draw_dy + 18 + cdata(CDATA_MARK_ITEM_Y, locvar_cell_draw_c) + (chipm(CHIPM_ROLE, locvar_cell_draw_ground) == MAP_CHIP_ROLE_WATER) * 16 - (cbit(CHARA_BIT_SANDBAG, locvar_cell_draw_c) == 1) * 24
 										}
 									}
-									gsel 1
-									color 0
-									boxf 0, 960, chipi(CHIPI_WIDTH, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)), chipi(CHIPI_HEIGHT, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)) + 960
-									if ( cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c) == xy2pic(0, 16) ) {
-										gmode 2
-										pos 0, 960
-										gcopy 1, 0, 768, inf_tiles, inf_tiles
-										pos 0, 1008
-										gzoom 22, 20, 5, chipc(CHIPC_X, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) + 8, chipc(CHIPC_Y, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) + 4 + (chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) > inf_tiles) * 8, chipc(CHIPC_WIDTH, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) - 16, chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) - 8 - (chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) > inf_tiles) * 10, 1
-										pos 6, 974
-										gcopy 1, 0, 1008, 22, 20
-										gsel selcur
-									}
-									else {
-										if ( cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c) == xy2pic(30, 33) ) {
-											pos 8, 1058 - chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c))
-											gcopy 5, chipc(CHIPC_X, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) + 8, chipc(CHIPC_Y, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) + 2, chipc(CHIPC_WIDTH, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)), chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c))
-											gmode 2
-											gsel selcur
-										}
-										else {
-											if ( cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c) == xy2pic(3, 16) ) {
-												pos 8, 1058 - chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c))
-												gcopy 5, chipc(CHIPC_X, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) + 8, chipc(CHIPC_Y, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) + 2, chipc(CHIPC_WIDTH, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) - 16, chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) - 8
-												gmode 4, , , 150
-												color 0, 0, 0
-												pos 0, 960 + (chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) == inf_tiles) * 48
-												gcopy 1, 144, 768 + (chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) > inf_tiles) * 48, inf_tiles, chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) + (chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) > inf_tiles) * 48
-												gmode 2
-												gsel selcur
-											}
-											else {
-												pos 0, 960
-												gcopy 1, chipi(CHIPI_X, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)), chipi(CHIPI_Y, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)), chipi(CHIPI_WIDTH, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)), chipi(CHIPI_HEIGHT, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c))
-												gfini chipi(CHIPI_WIDTH, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)), chipi(CHIPI_HEIGHT, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c))
-												gfdec2 c_col(0, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)), c_col(1, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)), c_col(2, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c))
-												gsel selcur
-											}
-										}
-									}
+
+                                    preparePicItem cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c), cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)
+
 									if ( chipi(CHIPI_HEIGHT, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)) > 48 ) {
 										gmode 2, chipi(CHIPI_WIDTH, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)), chipi(CHIPI_HEIGHT, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c))
-										grotate 1, 0, 960, cdata(CDATA_MARK_ITEM_ADJUST_R, locvar_cell_draw_c) * 6.54498469498, chipi(CHIPI_WIDTH, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)) / 4 + cdata(CDATA_MARK_ITEM_ADJUST_W, locvar_cell_draw_c) * 2, chipi(CHIPI_HEIGHT, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)) / 4 + cdata(CDATA_MARK_ITEM_ADJUST_W, locvar_cell_draw_c) * 2
+										grotate 1, 0, 960, cdata(CDATA_MARK_ITEM_ADJUST_R, locvar_cell_draw_c) * 6.54498469498, chipi(CHIPI_WIDTH, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)) / 4 + cdata(CDATA_MARK_ITEM_ADJUST_W, locvar_cell_draw_c) * 2, chipi(CHIPI_HEIGHT, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)) / 4 + cdata(CDATA_MARK_ITEM_ADJUST_L, locvar_cell_draw_c) * 2
 									}
 									if ( chipi(CHIPI_HEIGHT, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)) <= 48 ) {
 										gmode 2, chipi(CHIPI_WIDTH, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)), chipi(CHIPI_HEIGHT, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c))
-										grotate 1, 0, 960, cdata(CDATA_MARK_ITEM_ADJUST_R, locvar_cell_draw_c) * 6.54498469498, chipi(CHIPI_WIDTH, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)) / 2 + cdata(CDATA_MARK_ITEM_ADJUST_W, locvar_cell_draw_c) * 2, chipi(CHIPI_HEIGHT, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)) / 2 + cdata(CDATA_MARK_ITEM_ADJUST_W, locvar_cell_draw_c) * 2
+										grotate 1, 0, 960, cdata(CDATA_MARK_ITEM_ADJUST_R, locvar_cell_draw_c) * 6.54498469498, chipi(CHIPI_WIDTH, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)) / 2 + cdata(CDATA_MARK_ITEM_ADJUST_W, locvar_cell_draw_c) * 2, chipi(CHIPI_HEIGHT, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)) / 2 + cdata(CDATA_MARK_ITEM_ADJUST_L, locvar_cell_draw_c) * 2
 									}
 								}
 							}
@@ -2152,6 +2244,10 @@
 							}
 							locvar_cell_draw_col = (cdata(CDATA_PIC, locvar_cell_draw_c) - cdata(CDATA_CHARA_PIC, locvar_cell_draw_c) * COLOR_TINT_MULT) / COLOR_TINT_MULT
 							locvar_cell_draw_p = cdata(CDATA_PIC, locvar_cell_draw_c) \ COLOR_TINT_MULT + cdata(CDATA_CHARA_PIC, locvar_cell_draw_c) * COLOR_TINT_MULT
+							if ( cdata(CDATA_PIC, locvar_cell_draw_c) >= xy2pic(1, 21) & cdata(CDATA_PIC, locvar_cell_draw_c) <= xy2pic(31, 21) ) {
+								locvar_cell_draw_col = 0
+								locvar_cell_draw_p = cdata(CDATA_PIC, locvar_cell_draw_c)
+							}
 							if ( cbit(CHARA_BIT_SANDBAG, locvar_cell_draw_c) ) {
 								gmode 2, 48, 96, 80
 								pos locvar_cell_draw_dx + 26 - 11, locvar_cell_draw_dy - 32 + 11
@@ -2227,10 +2323,10 @@
 									if ( cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c) > xy2pic(0, 0) ) {
 										if ( cdata(CDATA_IN_TAGTEAM, locvar_cell_draw_c) == 1 ) {
 											if ( chipi(CHIPI_HEIGHT, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)) > 48 ) {
-												pos locvar_cell_draw_dx + 12 + cdata(CDATA_IN_TAGTEAM, locvar_cell_draw_c) * 15 + cdata(CDATA_MARK_ITEM_X, locvar_cell_draw_c), locvar_cell_draw_dy + 14 + cdata(CDATA_MARK_ITEM_Y, locvar_cell_draw_c) + (chipm(CHIPM_ROLE, locvar_cell_draw_ground) == MAP_CHIP_ROLE_WATER) * 16 - (cbit(CHARA_BIT_SANDBAG, locvar_cell_draw_c) == 1) * 24
+												pos locvar_cell_draw_dx + 12 + cdata(CDATA_IN_TAGTEAM, locvar_cell_draw_c) * 12 + cdata(CDATA_MARK_ITEM_X, locvar_cell_draw_c), locvar_cell_draw_dy + 14 + cdata(CDATA_MARK_ITEM_Y, locvar_cell_draw_c) + (chipm(CHIPM_ROLE, locvar_cell_draw_ground) == MAP_CHIP_ROLE_WATER) * 16 - (cbit(CHARA_BIT_SANDBAG, locvar_cell_draw_c) == 1) * 24
 											}
 											if ( chipi(CHIPI_HEIGHT, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)) <= 48 ) {
-												pos locvar_cell_draw_dx + 12 + cdata(CDATA_IN_TAGTEAM, locvar_cell_draw_c) * 15 + cdata(CDATA_MARK_ITEM_X, locvar_cell_draw_c), locvar_cell_draw_dy + 18 + cdata(CDATA_MARK_ITEM_Y, locvar_cell_draw_c) + (chipm(CHIPM_ROLE, locvar_cell_draw_ground) == MAP_CHIP_ROLE_WATER) * 16 - (cbit(CHARA_BIT_SANDBAG, locvar_cell_draw_c) == 1) * 24
+												pos locvar_cell_draw_dx + 12 + cdata(CDATA_IN_TAGTEAM, locvar_cell_draw_c) * 12 + cdata(CDATA_MARK_ITEM_X, locvar_cell_draw_c), locvar_cell_draw_dy + 18 + cdata(CDATA_MARK_ITEM_Y, locvar_cell_draw_c) + (chipm(CHIPM_ROLE, locvar_cell_draw_ground) == MAP_CHIP_ROLE_WATER) * 16 - (cbit(CHARA_BIT_SANDBAG, locvar_cell_draw_c) == 1) * 24
 											}
 										}
 										else {
@@ -2241,53 +2337,16 @@
 												pos locvar_cell_draw_dx + 12 + cdata(CDATA_MARK_ITEM_X, locvar_cell_draw_c), locvar_cell_draw_dy + 18 + cdata(CDATA_MARK_ITEM_Y, locvar_cell_draw_c) + (chipm(CHIPM_ROLE, locvar_cell_draw_ground) == MAP_CHIP_ROLE_WATER) * 16 - (cbit(CHARA_BIT_SANDBAG, locvar_cell_draw_c) == 1) * 24
 											}
 										}
-										gsel 1
-										color 0
-										boxf 0, 960, chipi(CHIPI_WIDTH, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)), chipi(CHIPI_HEIGHT, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)) + 960
-										if ( cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c) == xy2pic(0, 16) ) {
-											gmode 2
-											pos 0, 960
-											gcopy 1, 0, 768, inf_tiles, inf_tiles
-											pos 0, 1008
-											gzoom 22, 20, 5, chipc(CHIPC_X, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) + 8, chipc(CHIPC_Y, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) + 4 + (chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) > inf_tiles) * 8, chipc(CHIPC_WIDTH, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) - 16, chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) - 8 - (chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) > inf_tiles) * 10, 1
-											pos 6, 974
-											gcopy 1, 0, 1008, 22, 20
-											gsel selcur
-										}
-										else {
-											if ( cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c) == xy2pic(30, 33) ) {
-												pos 8, 1058 - chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c))
-												gcopy 5, chipc(CHIPC_X, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) + 8, chipc(CHIPC_Y, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) + 2, chipc(CHIPC_WIDTH, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)), chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c))
-												gmode 2
-												gsel selcur
-											}
-											else {
-												if ( cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c) == xy2pic(3, 16) ) {
-													pos 8, 1058 - chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c))
-													gcopy 5, chipc(CHIPC_X, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) + 8, chipc(CHIPC_Y, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) + 2, chipc(CHIPC_WIDTH, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) - 16, chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) - 8
-													gmode 4, , , 150
-													color 0, 0, 0
-													pos 0, 960 + (chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) == inf_tiles) * 48
-													gcopy 1, 144, 768 + (chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) > inf_tiles) * 48, inf_tiles, chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) + (chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) > inf_tiles) * 48
-													gmode 2
-													gsel selcur
-												}
-												else {
-													pos 0, 960
-													gcopy 1, chipi(CHIPI_X, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)), chipi(CHIPI_Y, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)), chipi(CHIPI_WIDTH, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)), chipi(CHIPI_HEIGHT, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c))
-													gfini chipi(CHIPI_WIDTH, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)), chipi(CHIPI_HEIGHT, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c))
-													gfdec2 c_col(0, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)), c_col(1, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)), c_col(2, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c))
-													gsel selcur
-												}
-											}
-										}
+
+                                        preparePicItem cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c), cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)
+
 										if ( chipi(CHIPI_HEIGHT, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)) > 48 ) {
 											gmode 2, chipi(CHIPI_WIDTH, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)), chipi(CHIPI_HEIGHT, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c))
-											grotate 1, 0, 960, cdata(CDATA_MARK_ITEM_ADJUST_R, locvar_cell_draw_c) * 6.54498469498, chipi(CHIPI_WIDTH, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)) / 4 + cdata(CDATA_MARK_ITEM_ADJUST_W, locvar_cell_draw_c) * 2, chipi(CHIPI_HEIGHT, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)) / 4 + cdata(CDATA_MARK_ITEM_ADJUST_W, locvar_cell_draw_c) * 2
+											grotate 1, 0, 960, cdata(CDATA_MARK_ITEM_ADJUST_R, locvar_cell_draw_c) * 6.54498469498, chipi(CHIPI_WIDTH, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)) / 4 + cdata(CDATA_MARK_ITEM_ADJUST_W, locvar_cell_draw_c) * 2, chipi(CHIPI_HEIGHT, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)) / 4 + cdata(CDATA_MARK_ITEM_ADJUST_L, locvar_cell_draw_c) * 2
 										}
 										if ( chipi(CHIPI_HEIGHT, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)) <= 48 ) {
 											gmode 2, chipi(CHIPI_WIDTH, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)), chipi(CHIPI_HEIGHT, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c))
-											grotate 1, 0, 960, cdata(CDATA_MARK_ITEM_ADJUST_R, locvar_cell_draw_c) * 6.54498469498, chipi(CHIPI_WIDTH, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)) / 2 + cdata(CDATA_MARK_ITEM_ADJUST_W, locvar_cell_draw_c) * 2, chipi(CHIPI_HEIGHT, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)) / 2 + cdata(CDATA_MARK_ITEM_ADJUST_W, locvar_cell_draw_c) * 2
+											grotate 1, 0, 960, cdata(CDATA_MARK_ITEM_ADJUST_R, locvar_cell_draw_c) * 6.54498469498, chipi(CHIPI_WIDTH, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)) / 2 + cdata(CDATA_MARK_ITEM_ADJUST_W, locvar_cell_draw_c) * 2, chipi(CHIPI_HEIGHT, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)) / 2 + cdata(CDATA_MARK_ITEM_ADJUST_L, locvar_cell_draw_c) * 2
 										}
 									}
 								}
@@ -2304,6 +2363,44 @@
 								locvar_cell_draw_h = cdata(CDATA_HP, locvar_cell_draw_c) * 15 / cdata(CDATA_MAX_HP, locvar_cell_draw_c)
 								if ( locvar_cell_draw_h > 15 ) {
 									locvar_cell_draw_h = 15
+								}
+							}
+
+                            /********** ORIGINAL - BEGINNING ********** // Remove chain attacks.
+
+							if ( cdata(CDATA_CHAIN_ATTACK_COUNT, locvar_cell_draw_c) >= 10 ) {
+								font lang(cfg_font1, cfg_font2), 12 + en - en * 2, 0
+								pos locvar_cell_draw_dx - 5, locvar_cell_draw_dy + 20
+								color 0, 0, 0
+								bmes " " + cdata(CDATA_CHAIN_ATTACK_COUNT, locvar_cell_draw_c) + "Chain！", 235, 185, 35
+							}
+
+                             ********** ORIGINAL - ENDING **********/
+
+							if ( gdata(GDATA_SCOPE) == locvar_cell_draw_c ) {
+								if ( cdata(CDATA_PLATINUM, locvar_cell_draw_c) < 20 ) {
+									pos locvar_cell_draw_dx + 9, locvar_cell_draw_dy + 23
+									gcopy BUFFER_INF, 1392, 534, 8, 8
+								}
+								if ( cdata(CDATA_PLATINUM, locvar_cell_draw_c) >= 20 & cdata(CDATA_PLATINUM, locvar_cell_draw_c) < 40 ) {
+									pos locvar_cell_draw_dx + 9, locvar_cell_draw_dy + 23
+									gcopy BUFFER_INF, 1392, 542, 8, 8
+								}
+								if ( cdata(CDATA_PLATINUM, locvar_cell_draw_c) >= 40 & cdata(CDATA_PLATINUM, locvar_cell_draw_c) < 60 ) {
+									pos locvar_cell_draw_dx + 9, locvar_cell_draw_dy + 23
+									gcopy BUFFER_INF, 1392, 550, 8, 8
+								}
+								if ( cdata(CDATA_PLATINUM, locvar_cell_draw_c) >= 60 & cdata(CDATA_PLATINUM, locvar_cell_draw_c) < 80 ) {
+									pos locvar_cell_draw_dx + 9, locvar_cell_draw_dy + 23
+									gcopy BUFFER_INF, 1392, 558, 8, 8
+								}
+								if ( cdata(CDATA_PLATINUM, locvar_cell_draw_c) >= 80 & cdata(CDATA_PLATINUM, locvar_cell_draw_c) < 100 ) {
+									pos locvar_cell_draw_dx + 9, locvar_cell_draw_dy + 23
+									gcopy BUFFER_INF, 1392, 566, 8, 8
+								}
+								if ( cdata(CDATA_PLATINUM, locvar_cell_draw_c) >= 100 ) {
+									pos locvar_cell_draw_dx + 9, locvar_cell_draw_dy + 23
+									gcopy BUFFER_INF, 1392, 574, 42, 8
 								}
 							}
 							if ( locvar_cell_draw_c < MAX_CHARA_FOLLOWER ) {
@@ -2477,6 +2574,13 @@
 							gmode 2, 96, 96
 							gcopy 3, 1239, 390
 						}
+						if ( cdata(CDATA_ID, locvar_cell_draw_c) == CREATURE_ID_JALDABAOTH_THE_CHAOS_CHILD ) {
+							if ( cdata(CDATA_PIC, locvar_cell_draw_c) == xy2pic(21, 28) ) {
+								pos locvar_cell_draw_dx - 48, locvar_cell_draw_dy - 63
+								gmode 2, 144, 96
+								gcopy BUFFER_INF, 908 + rnd(3) * 144, 494
+							}
+						}
 						if ( cdata(CDATA_ID, locvar_cell_draw_c) == CREATURE_ID_HAND_OF_THE_GOD & cdata(CDATA_PIC, locvar_cell_draw_c) == xy2pic(15, 6) + COLOR_YELLOW * COLOR_TINT_MULT | (cdata(CDATA_ID, locvar_cell_draw_c) == CREATURE_ID_GOLD_SHEEP & cdata(CDATA_PIC, locvar_cell_draw_c) == xy2pic(5, 5) + COLOR_YELLOW * COLOR_TINT_MULT) | (cdata(CDATA_ID, locvar_cell_draw_c) == CREATURE_ID_GOLDEN_ARMOR & cdata(CDATA_PIC, locvar_cell_draw_c) == xy2pic(25, 6) + COLOR_YELLOW * COLOR_TINT_MULT) ) {
 							pos locvar_cell_draw_dx, locvar_cell_draw_dy - 15
 							gmode 5, inf_tiles, inf_tiles, 50 + rnd(70)
@@ -2547,6 +2651,11 @@
 							gmode 5, inf_tiles, inf_tiles, 100 + rnd(50)
 							gcopy 3, 192 + 48 * 11 + rnd(1) * inf_tiles, 704
 						}
+						if ( cdata(CDATA_PIC, locvar_cell_draw_c) == 1039 + 5 * 1000 ) {
+							pos locvar_cell_draw_dx, locvar_cell_draw_dy - 19
+							gmode 5, inf_tiles, inf_tiles, 100 + rnd(50)
+							gcopy BUFFER_INF, 192 + 48 * 3 + rnd(1) * inf_tiles, 704
+						}
 						if ( cdata(CDATA_ID, locvar_cell_draw_c) == CREATURE_ID_CTHUGHA & cdata(CDATA_PIC, locvar_cell_draw_c) == xy2pic(7, 23) | cdata(CDATA_PIC, locvar_cell_draw_c) == xy2pic(9, 23) ) {
 							pos locvar_cell_draw_dx, locvar_cell_draw_dy - 15
 							gmode 5, inf_tiles, inf_tiles, 100 + rnd(70)
@@ -2572,7 +2681,7 @@
 							gmode 5, inf_tiles, inf_tiles, 100 + rnd(70)
 							gcopy 3, 192 + 48 * 11 + rnd(1) * inf_tiles, 704
 						}
-						if ( cdata(CDATA_ID, locvar_cell_draw_c) == CREATURE_ID_THE_ELEMENT & cdata(CDATA_PIC, locvar_cell_draw_c) == xy2pic(1, 15) + COLOR_RED * COLOR_TINT_MULT | (cdata(CDATA_ID, locvar_cell_draw_c) == CREATURE_ID_HYPER_YACATECT & cdata(CDATA_PIC, locvar_cell_draw_c) == xy2pic(0, 15)) | (cdata(CDATA_ID, locvar_cell_draw_c) == CREATURE_ID_BLESSED_JURE & cdata(CDATA_PIC, locvar_cell_draw_c) == xy2pic(6, 12)) | (cdata(CDATA_ID, locvar_cell_draw_c) == CREATURE_ID_DEVASTATE_LULWY & cdata(CDATA_PIC, locvar_cell_draw_c) == xy2pic(30, 11)) | (cdata(CDATA_ID, locvar_cell_draw_c) == CREATURE_ID_BUILDUP_OPATOS & cdata(CDATA_PIC, locvar_cell_draw_c) == xy2pic(3, 13)) | (cdata(CDATA_ID, locvar_cell_draw_c) == CREATURE_ID_DEUS_EX_MANINA & cdata(CDATA_PIC, locvar_cell_draw_c) == xy2pic(18, 13) + COLOR_YELLOW * COLOR_TINT_MULT) | (cdata(CDATA_ID, locvar_cell_draw_c) == CREATURE_ID_GOD_INSIDE_EHEKATL & cdata(CDATA_PIC, locvar_cell_draw_c) == xy2pic(17, 12) + COLOR_BLACK * COLOR_TINT_MULT) ) {
+						if ( cdata(CDATA_ID, locvar_cell_draw_c) == CREATURE_ID_THE_ELEMENT & cdata(CDATA_PIC, locvar_cell_draw_c) == 496 + COLOR_RED * COLOR_TINT_MULT | (cdata(CDATA_ID, locvar_cell_draw_c) == CREATURE_ID_HYPER_YACATECT & cdata(CDATA_PIC, locvar_cell_draw_c) == xy2pic(0, 15)) | (cdata(CDATA_ID, locvar_cell_draw_c) == CREATURE_ID_BLESSED_JURE & cdata(CDATA_PIC, locvar_cell_draw_c) == xy2pic(6, 12)) | (cdata(CDATA_ID, locvar_cell_draw_c) == CREATURE_ID_DEVASTATE_LULWY & cdata(CDATA_PIC, locvar_cell_draw_c) == xy2pic(30, 11)) | (cdata(CDATA_ID, locvar_cell_draw_c) == CREATURE_ID_BUILDUP_OPATOS & cdata(CDATA_PIC, locvar_cell_draw_c) == xy2pic(3, 13)) | (cdata(CDATA_ID, locvar_cell_draw_c) == CREATURE_ID_DEUS_EX_MANINA & cdata(CDATA_PIC, locvar_cell_draw_c) == 447 + COLOR_YELLOW * COLOR_TINT_MULT) | (cdata(CDATA_ID, locvar_cell_draw_c) == CREATURE_ID_GOD_INSIDE_EHEKATL & cdata(CDATA_PIC, locvar_cell_draw_c) == 413 + COLOR_BLACK * COLOR_TINT_MULT) | (cdata(CDATA_ID, locvar_cell_draw_c) == CREATURE_ID_YAYAUHQUI_TEZCATLIPOCA & cdata(CDATA_PIC, locvar_cell_draw_c) == 931 + COLOR_BLACK * COLOR_TINT_MULT) | (cdata(CDATA_ID, locvar_cell_draw_c) == CREATURE_ID_JALDABAOTH_THE_CHAOS_CHILD & cdata(CDATA_PIC, locvar_cell_draw_c) == xy2pic(21, 28)) ) {
 							pos locvar_cell_draw_dx, locvar_cell_draw_dy - 40
 							gmode 5, inf_tiles, inf_tiles, 100 + rnd(70)
 							gcopy 3, 192 + 48 * 11 + rnd(1) * inf_tiles, 704
@@ -2595,15 +2704,20 @@
 								}
 							}
 							if ( locvar_cell_draw_c != CHARA_PLAYER ) {
+								if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) > 0 & mdata(MDATA_TYPE) == MAP_TYPE_WORLD & cdata(CDATA_RELATION, locvar_cell_draw_c) == RELATION_ALLY ) {
+									locvar_cell_draw_c = 0
+								}
+							}
+							if ( locvar_cell_draw_c != 0 ) {
 								if ( cbit(CHARA_BIT_MARK_ITEM, locvar_cell_draw_c) ) {
 									if ( mdata(MDATA_TYPE) != MAP_TYPE_WORLD ) {
 										if ( cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c) > xy2pic(0, 0) ) {
 											if ( cdata(CDATA_IN_TAGTEAM, locvar_cell_draw_c) == 1 ) {
 												if ( chipi(CHIPI_HEIGHT, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)) > 48 ) {
-													pos locvar_cell_draw_dx + 12 + cdata(CDATA_IN_TAGTEAM, locvar_cell_draw_c) * 15 + cdata(CDATA_MARK_ITEM_X, locvar_cell_draw_c), locvar_cell_draw_dy + 14 + cdata(CDATA_MARK_ITEM_Y, locvar_cell_draw_c) + (chipm(CHIPM_ROLE, locvar_cell_draw_ground) == MAP_CHIP_ROLE_WATER) * 16 - (cbit(CHARA_BIT_SANDBAG, locvar_cell_draw_c) == 1) * 24
+													pos locvar_cell_draw_dx + 12 + cdata(CDATA_IN_TAGTEAM, locvar_cell_draw_c) * 12 + cdata(CDATA_MARK_ITEM_X, locvar_cell_draw_c), locvar_cell_draw_dy + 14 + cdata(CDATA_MARK_ITEM_Y, locvar_cell_draw_c) + (chipm(CHIPM_ROLE, locvar_cell_draw_ground) == MAP_CHIP_ROLE_WATER) * 16 - (cbit(CHARA_BIT_SANDBAG, locvar_cell_draw_c) == 1) * 24
 												}
 												if ( chipi(CHIPI_HEIGHT, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)) <= 48 ) {
-													pos locvar_cell_draw_dx + 12 + cdata(CDATA_IN_TAGTEAM, locvar_cell_draw_c) * 15 + cdata(CDATA_MARK_ITEM_X, locvar_cell_draw_c), locvar_cell_draw_dy + 18 + cdata(CDATA_MARK_ITEM_Y, locvar_cell_draw_c) + (chipm(CHIPM_ROLE, locvar_cell_draw_ground) == MAP_CHIP_ROLE_WATER) * 16 - (cbit(CHARA_BIT_SANDBAG, locvar_cell_draw_c) == 1) * 24
+													pos locvar_cell_draw_dx + 12 + cdata(CDATA_IN_TAGTEAM, locvar_cell_draw_c) * 12 + cdata(CDATA_MARK_ITEM_X, locvar_cell_draw_c), locvar_cell_draw_dy + 18 + cdata(CDATA_MARK_ITEM_Y, locvar_cell_draw_c) + (chipm(CHIPM_ROLE, locvar_cell_draw_ground) == MAP_CHIP_ROLE_WATER) * 16 - (cbit(CHARA_BIT_SANDBAG, locvar_cell_draw_c) == 1) * 24
 												}
 											}
 											else {
@@ -2614,53 +2728,16 @@
 													pos locvar_cell_draw_dx + 12 + cdata(CDATA_MARK_ITEM_X, locvar_cell_draw_c), locvar_cell_draw_dy + 18 + cdata(CDATA_MARK_ITEM_Y, locvar_cell_draw_c) + (chipm(CHIPM_ROLE, locvar_cell_draw_ground) == MAP_CHIP_ROLE_WATER) * 16 - (cbit(CHARA_BIT_SANDBAG, locvar_cell_draw_c) == 1) * 24
 												}
 											}
-											gsel 1
-											color 0
-											boxf 0, 960, chipi(CHIPI_WIDTH, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)), chipi(CHIPI_HEIGHT, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)) + 960
-											if ( cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c) == xy2pic(0, 16) ) {
-												gmode 2
-												pos 0, 960
-												gcopy 1, 0, 768, inf_tiles, inf_tiles
-												pos 0, 1008
-												gzoom 22, 20, 5, chipc(CHIPC_X, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) + 8, chipc(CHIPC_Y, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) + 4 + (chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) > inf_tiles) * 8, chipc(CHIPC_WIDTH, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) - 16, chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) - 8 - (chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) > inf_tiles) * 10, 1
-												pos 6, 974
-												gcopy 1, 0, 1008, 22, 20
-												gsel selcur
-											}
-											else {
-												if ( cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c) == xy2pic(30, 33) ) {
-													pos 8, 1058 - chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c))
-													gcopy 5, chipc(CHIPC_X, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) + 8, chipc(CHIPC_Y, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) + 2, chipc(CHIPC_WIDTH, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)), chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c))
-													gmode 2
-													gsel selcur
-												}
-												else {
-													if ( cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c) == xy2pic(3, 16) ) {
-														pos 8, 1058 - chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c))
-														gcopy 5, chipc(CHIPC_X, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) + 8, chipc(CHIPC_Y, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) + 2, chipc(CHIPC_WIDTH, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) - 16, chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) - 8
-														gmode 4, , , 150
-														color 0, 0, 0
-														pos 0, 960 + (chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) == inf_tiles) * 48
-														gcopy 1, 144, 768 + (chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) > inf_tiles) * 48, inf_tiles, chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) + (chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) > inf_tiles) * 48
-														gmode 2
-														gsel selcur
-													}
-													else {
-														pos 0, 960
-														gcopy 1, chipi(CHIPI_X, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)), chipi(CHIPI_Y, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)), chipi(CHIPI_WIDTH, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)), chipi(CHIPI_HEIGHT, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c))
-														gfini chipi(CHIPI_WIDTH, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)), chipi(CHIPI_HEIGHT, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c))
-														gfdec2 c_col(0, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)), c_col(1, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)), c_col(2, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c))
-														gsel selcur
-													}
-												}
-											}
+
+                                            preparePicItem cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c), cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)
+
 											if ( chipi(CHIPI_HEIGHT, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)) > 48 ) {
 												gmode 2, chipi(CHIPI_WIDTH, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)), chipi(CHIPI_HEIGHT, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c))
-												grotate 1, 0, 960, cdata(CDATA_MARK_ITEM_ADJUST_R, locvar_cell_draw_c) * 6.54498469498, chipi(CHIPI_WIDTH, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)) / 4 + cdata(CDATA_MARK_ITEM_ADJUST_W, locvar_cell_draw_c) * 2, chipi(CHIPI_HEIGHT, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)) / 4 + cdata(CDATA_MARK_ITEM_ADJUST_W, locvar_cell_draw_c) * 2
+												grotate 1, 0, 960, cdata(CDATA_MARK_ITEM_ADJUST_R, locvar_cell_draw_c) * 6.54498469498, chipi(CHIPI_WIDTH, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)) / 4 + cdata(CDATA_MARK_ITEM_ADJUST_W, locvar_cell_draw_c) * 2, chipi(CHIPI_HEIGHT, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)) / 4 + cdata(CDATA_MARK_ITEM_ADJUST_L, locvar_cell_draw_c) * 2
 											}
 											if ( chipi(CHIPI_HEIGHT, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)) <= 48 ) {
 												gmode 2, chipi(CHIPI_WIDTH, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)), chipi(CHIPI_HEIGHT, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c))
-												grotate 1, 0, 960, cdata(CDATA_MARK_ITEM_ADJUST_R, locvar_cell_draw_c) * 6.54498469498, chipi(CHIPI_WIDTH, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)) / 2 + cdata(CDATA_MARK_ITEM_ADJUST_W, locvar_cell_draw_c) * 2, chipi(CHIPI_HEIGHT, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)) / 2 + cdata(CDATA_MARK_ITEM_ADJUST_W, locvar_cell_draw_c) * 2
+												grotate 1, 0, 960, cdata(CDATA_MARK_ITEM_ADJUST_R, locvar_cell_draw_c) * 6.54498469498, chipi(CHIPI_WIDTH, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)) / 2 + cdata(CDATA_MARK_ITEM_ADJUST_W, locvar_cell_draw_c) * 2, chipi(CHIPI_HEIGHT, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)) / 2 + cdata(CDATA_MARK_ITEM_ADJUST_L, locvar_cell_draw_c) * 2
 											}
 										}
 									}
@@ -2742,6 +2819,10 @@
 									}
 									locvar_cell_draw_col = (cdata(CDATA_PIC, locvar_cell_draw_c) - cdata(CDATA_CHARA_PIC, locvar_cell_draw_c) * COLOR_TINT_MULT) / COLOR_TINT_MULT
 									locvar_cell_draw_p = cdata(CDATA_PIC, locvar_cell_draw_c) \ COLOR_TINT_MULT + cdata(CDATA_CHARA_PIC, locvar_cell_draw_c) * COLOR_TINT_MULT
+									if ( cdata(CDATA_PIC, locvar_cell_draw_c) >= xy2pic(1, 21) & cdata(CDATA_PIC, locvar_cell_draw_c) <= xy2pic(31, 21) ) {
+										locvar_cell_draw_col = 0
+										locvar_cell_draw_p = cdata(CDATA_PIC, locvar_cell_draw_c)
+									}
 									if ( cbit(CHARA_BIT_SANDBAG, locvar_cell_draw_c) ) {
 										gmode 2, 48, 96, 80
 										pos locvar_cell_draw_dx + 26 - 11, locvar_cell_draw_dy - 32 + 11
@@ -2809,10 +2890,10 @@
 											if ( cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c) > xy2pic(0, 0) ) {
 												if ( cdata(CDATA_IN_TAGTEAM, locvar_cell_draw_c) == 1 ) {
 													if ( chipi(CHIPI_HEIGHT, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)) > 48 ) {
-														pos locvar_cell_draw_dx + 12 + cdata(CDATA_IN_TAGTEAM, locvar_cell_draw_c) * 15 + cdata(CDATA_MARK_ITEM_X, locvar_cell_draw_c), locvar_cell_draw_dy + 14 + cdata(CDATA_MARK_ITEM_Y, locvar_cell_draw_c) + (chipm(CHIPM_ROLE, locvar_cell_draw_ground) == MAP_CHIP_ROLE_WATER) * 16 - (cbit(CHARA_BIT_SANDBAG, locvar_cell_draw_c) == 1) * 24
+														pos locvar_cell_draw_dx + 12 + cdata(CDATA_IN_TAGTEAM, locvar_cell_draw_c) * 12 + cdata(CDATA_MARK_ITEM_X, locvar_cell_draw_c), locvar_cell_draw_dy + 14 + cdata(CDATA_MARK_ITEM_Y, locvar_cell_draw_c) + (chipm(CHIPM_ROLE, locvar_cell_draw_ground) == MAP_CHIP_ROLE_WATER) * 16 - (cbit(CHARA_BIT_SANDBAG, locvar_cell_draw_c) == 1) * 24
 													}
 													if ( chipi(CHIPI_HEIGHT, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)) <= 48 ) {
-														pos locvar_cell_draw_dx + 12 + cdata(CDATA_IN_TAGTEAM, locvar_cell_draw_c) * 15 + cdata(CDATA_MARK_ITEM_X, locvar_cell_draw_c), locvar_cell_draw_dy + 18 + cdata(CDATA_MARK_ITEM_Y, locvar_cell_draw_c) + (chipm(CHIPM_ROLE, locvar_cell_draw_ground) == MAP_CHIP_ROLE_WATER) * 16 - (cbit(CHARA_BIT_SANDBAG, locvar_cell_draw_c) == 1) * 24
+														pos locvar_cell_draw_dx + 12 + cdata(CDATA_IN_TAGTEAM, locvar_cell_draw_c) * 12 + cdata(CDATA_MARK_ITEM_X, locvar_cell_draw_c), locvar_cell_draw_dy + 18 + cdata(CDATA_MARK_ITEM_Y, locvar_cell_draw_c) + (chipm(CHIPM_ROLE, locvar_cell_draw_ground) == MAP_CHIP_ROLE_WATER) * 16 - (cbit(CHARA_BIT_SANDBAG, locvar_cell_draw_c) == 1) * 24
 													}
 												}
 												else {
@@ -2823,53 +2904,16 @@
 														pos locvar_cell_draw_dx + 12 + cdata(CDATA_MARK_ITEM_X, locvar_cell_draw_c), locvar_cell_draw_dy + 18 + cdata(CDATA_MARK_ITEM_Y, locvar_cell_draw_c) + (chipm(CHIPM_ROLE, locvar_cell_draw_ground) == MAP_CHIP_ROLE_WATER) * 16 - (cbit(CHARA_BIT_SANDBAG, locvar_cell_draw_c) == 1) * 24
 													}
 												}
-												gsel 1
-												color 0
-												boxf 0, 960, chipi(CHIPI_WIDTH, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)), chipi(CHIPI_HEIGHT, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)) + 960
-												if ( cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c) == xy2pic(0, 16) ) {
-													gmode 2
-													pos 0, 960
-													gcopy 1, 0, 768, inf_tiles, inf_tiles
-													pos 0, 1008
-													gzoom 22, 20, 5, chipc(CHIPC_X, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) + 8, chipc(CHIPC_Y, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) + 4 + (chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) > inf_tiles) * 8, chipc(CHIPC_WIDTH, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) - 16, chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) - 8 - (chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) > inf_tiles) * 10, 1
-													pos 6, 974
-													gcopy 1, 0, 1008, 22, 20
-													gsel selcur
-												}
-												else {
-													if ( cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c) == xy2pic(30, 33) ) {
-														pos 8, 1058 - chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c))
-														gcopy 5, chipc(CHIPC_X, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) + 8, chipc(CHIPC_Y, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) + 2, chipc(CHIPC_WIDTH, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)), chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c))
-														gmode 2
-														gsel selcur
-													}
-													else {
-														if ( cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c) == xy2pic(3, 16) ) {
-															pos 8, 1058 - chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c))
-															gcopy 5, chipc(CHIPC_X, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) + 8, chipc(CHIPC_Y, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) + 2, chipc(CHIPC_WIDTH, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) - 16, chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) - 8
-															gmode 4, , , 150
-															color 0, 0, 0
-															pos 0, 960 + (chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) == inf_tiles) * 48
-															gcopy 1, 144, 768 + (chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) > inf_tiles) * 48, inf_tiles, chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) + (chipc(CHIPC_HEIGHT, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)) > inf_tiles) * 48
-															gmode 2
-															gsel selcur
-														}
-														else {
-															pos 0, 960
-															gcopy 1, chipi(CHIPI_X, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)), chipi(CHIPI_Y, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)), chipi(CHIPI_WIDTH, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)), chipi(CHIPI_HEIGHT, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c))
-															gfini chipi(CHIPI_WIDTH, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)), chipi(CHIPI_HEIGHT, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c))
-															gfdec2 c_col(0, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)), c_col(1, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)), c_col(2, cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c))
-															gsel selcur
-														}
-													}
-												}
+
+                                                preparePicItem cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c), cdata(CDATA_MARK_ITEM_COL, locvar_cell_draw_c)
+
 												if ( chipi(CHIPI_HEIGHT, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)) > 48 ) {
 													gmode 2, chipi(CHIPI_WIDTH, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)), chipi(CHIPI_HEIGHT, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c))
-													grotate 1, 0, 960, cdata(CDATA_MARK_ITEM_ADJUST_R, locvar_cell_draw_c) * 6.54498469498, chipi(CHIPI_WIDTH, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)) / 4 + cdata(CDATA_MARK_ITEM_ADJUST_W, locvar_cell_draw_c) * 2, chipi(CHIPI_HEIGHT, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)) / 4 + cdata(CDATA_MARK_ITEM_ADJUST_W, locvar_cell_draw_c) * 2
+													grotate 1, 0, 960, cdata(CDATA_MARK_ITEM_ADJUST_R, locvar_cell_draw_c) * 6.54498469498, chipi(CHIPI_WIDTH, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)) / 4 + cdata(CDATA_MARK_ITEM_ADJUST_W, locvar_cell_draw_c) * 2, chipi(CHIPI_HEIGHT, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)) / 4 + cdata(CDATA_MARK_ITEM_ADJUST_L, locvar_cell_draw_c) * 2
 												}
 												if ( chipi(CHIPI_HEIGHT, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)) <= 48 ) {
 													gmode 2, chipi(CHIPI_WIDTH, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)), chipi(CHIPI_HEIGHT, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c))
-													grotate 1, 0, 960, cdata(CDATA_MARK_ITEM_ADJUST_R, locvar_cell_draw_c) * 6.54498469498, chipi(CHIPI_WIDTH, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)) / 2 + cdata(CDATA_MARK_ITEM_ADJUST_W, locvar_cell_draw_c) * 2, chipi(CHIPI_HEIGHT, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)) / 2 + cdata(CDATA_MARK_ITEM_ADJUST_W, locvar_cell_draw_c) * 2
+													grotate 1, 0, 960, cdata(CDATA_MARK_ITEM_ADJUST_R, locvar_cell_draw_c) * 6.54498469498, chipi(CHIPI_WIDTH, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)) / 2 + cdata(CDATA_MARK_ITEM_ADJUST_W, locvar_cell_draw_c) * 2, chipi(CHIPI_HEIGHT, cdata(CDATA_MARK_ITEM_PIC, locvar_cell_draw_c)) / 2 + cdata(CDATA_MARK_ITEM_ADJUST_L, locvar_cell_draw_c) * 2
 												}
 											}
 										}
@@ -3044,6 +3088,13 @@
 									gmode 2, 96, 96
 									gcopy 3, 1239, 390
 								}
+								if ( cdata(CDATA_ID, locvar_cell_draw_c) == CREATURE_ID_JALDABAOTH_THE_CHAOS_CHILD ) {
+									if ( cdata(CDATA_PIC, locvar_cell_draw_c) == xy2pic(21, 28) ) {
+										pos locvar_cell_draw_dx - 48 + cdata(CDATA_IN_TAGTEAM, locvar_cell_draw_c) * 12, locvar_cell_draw_dy - 63
+										gmode 2, 144, 96
+										gcopy BUFFER_INF, 908 + rnd(3) * 144, 494
+									}
+								}
 								if ( cdata(CDATA_ID, locvar_cell_draw_c) == CREATURE_ID_HAND_OF_THE_GOD & cdata(CDATA_PIC, locvar_cell_draw_c) == xy2pic(15, 6) + COLOR_YELLOW * COLOR_TINT_MULT | (cdata(CDATA_ID, locvar_cell_draw_c) == CREATURE_ID_GOLD_SHEEP & cdata(CDATA_PIC, locvar_cell_draw_c) == xy2pic(5, 5) + COLOR_YELLOW * COLOR_TINT_MULT) | (cdata(CDATA_ID, locvar_cell_draw_c) == CREATURE_ID_GOLDEN_ARMOR & cdata(CDATA_PIC, locvar_cell_draw_c) == xy2pic(25, 6) + COLOR_YELLOW * COLOR_TINT_MULT) ) {
 									pos locvar_cell_draw_dx + cdata(CDATA_IN_TAGTEAM, locvar_cell_draw_c) * 12, locvar_cell_draw_dy - 15
 									gmode 5, inf_tiles, inf_tiles, 50 + rnd(70)
@@ -3053,6 +3104,11 @@
 									pos locvar_cell_draw_dx + cdata(CDATA_IN_TAGTEAM, locvar_cell_draw_c) * 12, locvar_cell_draw_dy - 35
 									gmode 5, inf_tiles, inf_tiles, 100 + rnd(50)
 									gcopy 3, 192 + 48 * 7 + rnd(1) * inf_tiles, 704
+								}
+								if ( cdata(CDATA_PIC, locvar_cell_draw_c) == 656 + COLOR_LIGHT_BLUE * COLOR_TINT_MULT ) {
+									pos locvar_cell_draw_dx - 3 + cdata(CDATA_IN_TAGTEAM, locvar_cell_draw_c) * 12, locvar_cell_draw_dy - 45
+									gmode 5, inf_tiles, inf_tiles, 100 + rnd(50)
+									gcopy BUFFER_INF, 192 + 48 * 7 + rnd(1) * inf_tiles, 704
 								}
 								if ( cdata(CDATA_ID, locvar_cell_draw_c) == CREATURE_ID_GOLD_BELL & cdata(CDATA_PIC, locvar_cell_draw_c) == xy2pic(21, 7) + COLOR_YELLOW * COLOR_TINT_MULT | (cdata(CDATA_ID, locvar_cell_draw_c) == CREATURE_ID_PLATINA_BELL & cdata(CDATA_PIC, locvar_cell_draw_c) == xy2pic(21, 7)) ) {
 									pos locvar_cell_draw_dx + cdata(CDATA_IN_TAGTEAM, locvar_cell_draw_c) * 12, locvar_cell_draw_dy - 10
@@ -3093,6 +3149,21 @@
 									pos locvar_cell_draw_dx + cdata(CDATA_IN_TAGTEAM, locvar_cell_draw_c) * 12, locvar_cell_draw_dy - 15
 									gmode 5, inf_tiles, inf_tiles, 50 + rnd(70)
 									gcopy 3, 192 + 48 * 11 + rnd(1) * inf_tiles, 704
+								}
+								if ( cdata(CDATA_PIC, locvar_cell_draw_c) == 390 + COLOR_RED * COLOR_TINT_MULT ) {
+									pos locvar_cell_draw_dx + cdata(CDATA_IN_TAGTEAM, locvar_cell_draw_c) * 12, locvar_cell_draw_dy - 25
+									gmode 5, inf_tiles, inf_tiles, 100 + rnd(70)
+									gcopy BUFFER_INF, 192 + 48 * 1 + rnd(2) * inf_tiles, 704
+								}
+								if ( cdata(CDATA_PIC, locvar_cell_draw_c) == 867 + COLOR_YELLOW * COLOR_TINT_MULT ) {
+									pos locvar_cell_draw_dx + cdata(CDATA_IN_TAGTEAM, locvar_cell_draw_c) * 12, locvar_cell_draw_dy - 25
+									gmode 5, inf_tiles, inf_tiles, 100 + rnd(50)
+									gcopy BUFFER_INF, 192 + 48 * 11 + rnd(1) * inf_tiles, 704
+								}
+								if ( cdata(CDATA_PIC, locvar_cell_draw_c) == 1039 + COLOR_YELLOW * COLOR_TINT_MULT ) {
+									pos locvar_cell_draw_dx + cdata(CDATA_IN_TAGTEAM, locvar_cell_draw_c) * 12, locvar_cell_draw_dy - 19
+									gmode 5, inf_tiles, inf_tiles, 100 + rnd(50)
+									gcopy BUFFER_INF, 192 + 48 * 3 + rnd(1) * inf_tiles, 704
 								}
 								if ( cdata(CDATA_ID, locvar_cell_draw_c) == CREATURE_ID_CTHUGHA & cdata(CDATA_PIC, locvar_cell_draw_c) == xy2pic(7, 23) | cdata(CDATA_PIC, locvar_cell_draw_c) == xy2pic(9, 23) ) {
 									pos locvar_cell_draw_dx + cdata(CDATA_IN_TAGTEAM, locvar_cell_draw_c) * 12, locvar_cell_draw_dy - 15

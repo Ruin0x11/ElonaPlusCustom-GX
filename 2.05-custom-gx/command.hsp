@@ -5667,7 +5667,7 @@
 		gosub *screen_draw
 		goto *turn_end
 	}
-	if ( p == 6 | 28 ) {
+	if ( p == 6 | p == 28 ) {
 		csctrl = 4
 		snd SOUNDLIST_POP2
 		cc = tc
@@ -9328,7 +9328,7 @@
 		snd SOUNDLIST_CURSOR1
 	}
 	if ( key == key_pagedown ) {
-		if ( cdata(CDATA_MARK_ITEM_ADJUST_W, tc) < (-9) ) {
+		if ( cdata(CDATA_MARK_ITEM_ADJUST_W, tc) >= (-9) ) {
 			cdata(CDATA_MARK_ITEM_ADJUST_W, tc)--
 		}
 		snd SOUNDLIST_CURSOR1
