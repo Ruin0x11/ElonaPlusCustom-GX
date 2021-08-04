@@ -3628,7 +3628,7 @@
 	if ( ammoproc == ENCHANT_AMMO_RAPID ) {
 		gdata(GDATA_RAPID_FIRE) = 100
 		repeat 3
-			gosub *label_5612
+			gosub *FindRangeWeapon
 			ele = SKILL_NONE
 			extraattack = 0
 			gosub *act_attack
@@ -3650,7 +3650,7 @@
 	else {
 		if ( ammoproc == ENCHANT_AMMO_BURST ) {
 			repeat 20
-				gosub *label_5612
+				gosub *FindRangeWeapon
 				ele = SKILL_NONE
 				gosub *com_findTarget
 				if ( listmax == 0 ) {
@@ -3736,7 +3736,7 @@
 		if ( cdata(CDATA_BARRIER, tc) ) {
 			if ( distance < 6 ) {
 				if ( fov_los(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), cdata(CDATA_X, tc), cdata(CDATA_Y, tc)) ) {
-					gosub *label_5612
+					gosub *FindRangeWeapon
 					if ( stat == 1 ) {
 						gosub *act_fire
 					}

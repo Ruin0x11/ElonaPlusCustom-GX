@@ -10308,7 +10308,7 @@
 		gosub *com_skill_calcAttack
 	}
 	attacknum = 0
-	gosub *label_5612
+	gosub *FindRangeWeapon
 	if ( stat == 1 ) {
 		s(1) = lang("射撃", "Dist")
 		if ( iequiploc(cw) == 5 ) {
@@ -14213,7 +14213,7 @@
 			goto *pc_turn
 		}
 	}
-	gosub *label_5612
+	gosub *FindRangeWeapon
 	if ( stat == (-1) ) {
 		msgdup++
 		txt lang("射撃用の道具を装備していない。", "You need to equip a firing weapon.")
@@ -14235,7 +14235,7 @@
 	gosub *act_fire
 	goto *turn_end
 
-*label_5612
+*FindRangeWeapon
 	cw = -1
 	ammo = -1
 	repeat 30

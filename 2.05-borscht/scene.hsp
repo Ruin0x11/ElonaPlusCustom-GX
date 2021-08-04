@@ -2544,7 +2544,7 @@
 	}
 	if ( cbit(CHARA_BIT_AWAKE_TACTICAL_THROW, cc) ) {
 		if ( rnd(3) == 0 ) {
-			gosub *label_5612
+			gosub *FindRangeWeapon
 			if ( stat == 1 ) {
 				if ( ammo == (-1) ) {
 					if ( rnd(5) == 0 ) {
@@ -4197,7 +4197,7 @@
 		if ( rnd(3) == 0 | cc < MAX_CHARA_FOLLOWER | cdata(CDATA_ALLIED, cc) == 100 ) {
 			if ( distance < 6 ) {
 				if ( fov_los(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), cdata(CDATA_X, tc), cdata(CDATA_Y, tc)) ) {
-					gosub *label_5612
+					gosub *FindRangeWeapon
 					if ( stat == 1 ) {
 						gosub *act_fire
 						goto *turn_end
@@ -4224,7 +4224,7 @@
 		if ( act == ACTION_RANGE ) {
 			if ( distance < 6 ) {
 				if ( fov_los(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), cdata(CDATA_X, tc), cdata(CDATA_Y, tc)) ) {
-					gosub *label_5612
+					gosub *FindRangeWeapon
 					if ( stat == 1 ) {
 						gosub *act_fire
 						goto *turn_end
@@ -4242,7 +4242,7 @@
 	if ( cdata(CDATA_DIRECTIVE_MODE, cc) != DIRECTIVE_MODE_DEFENSIVE & cdata(CDATA_DIRECTIVE_MODE, cc) != DIRECTIVE_MODE_TALKING ) {
 		if ( distance < 6 ) {
 			if ( fov_los(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), cdata(CDATA_X, tc), cdata(CDATA_Y, tc)) ) {
-				gosub *label_5612
+				gosub *FindRangeWeapon
 				if ( stat == 1 ) {
 					gosub *act_fire
 					goto *turn_end

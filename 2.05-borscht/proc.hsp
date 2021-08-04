@@ -10881,7 +10881,7 @@
 				gosub *act_melee
 				goto *effect_end
 			}
-			gosub *label_5612
+			gosub *FindRangeWeapon
 			if ( stat == 1 ) {
 				if ( ammo == (-1) ) {
 					goto *effect_end
@@ -10917,7 +10917,7 @@
 				gosub *act_melee
 				goto *effect_end
 			}
-			gosub *label_5612
+			gosub *FindRangeWeapon
 			if ( stat == 1 ) {
 				if ( ammo == (-1) ) {
 					goto *effect_end
@@ -11015,7 +11015,7 @@
 		motoy = cdata(CDATA_Y, cc)
 		efid = SKILL_SPACT_SHADOW_STEP
 		gosub *effect
-		gosub *label_5612
+		gosub *FindRangeWeapon
 		if ( stat == 1 ) {
 			if ( ammo == (-1) ) {
 				goto *effect_end
@@ -11088,7 +11088,7 @@
 		animeload 40, cc
 		snd SOUNDLIST_BOLT1
 		animeload 29, cc
-		gosub *label_5612
+		gosub *FindRangeWeapon
 		if ( stat == 1 ) {
 			if ( ammo != (-1) ) {
 				goto *effect_end
@@ -14085,7 +14085,7 @@
 			goto *effect_end
 		}
 		tcbk = tc
-		gosub *label_5612
+		gosub *FindRangeWeapon
 		if ( stat == 1 ) {
 			if ( ammo != (-1) ) {
 				goto *effect_end
@@ -14110,7 +14110,7 @@
 		txtef COLOR_BLUE
 		txt lang("ストラックアウト！", "Struck Out!")
 		tcbk = tc
-		gosub *label_5612
+		gosub *FindRangeWeapon
 		if ( stat == 1 ) {
 			if ( ammo != (-1) ) {
 				goto *effect_end
@@ -15117,7 +15117,7 @@
 			gosub *act_melee
 			goto *effect_end
 		}
-		gosub *label_5612
+		gosub *FindRangeWeapon
 		if ( stat == 1 ) {
 			if ( ammo == (-1) ) {
 				goto *effect_end
@@ -15256,7 +15256,7 @@
 					}
 				}
 				if ( cbit(CHARA_BIT_AWAKE_MAGIC_ATTACK, cc) != TRUE ) {
-					gosub *label_5612
+					gosub *FindRangeWeapon
 					if ( stat == 1 ) {
 						attackrange = 1
 						extraattack = 0
