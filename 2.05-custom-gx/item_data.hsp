@@ -295,36 +295,7 @@
 	encprocref(0, 27) = SKILL_SPACT_SHINING_WAVE, TARGET_TYPE_ENEMY, 500, FILTER_WEAPON, FILTER_RANGE, 20
 	return
 
-
-	if ( val == ENCHANT_RANDOM_TELEPORT ) {
-		rtval = 9
-		s = lang("ランダムなテレポートを引き起こす", "causes random teleport.")
-		if ( val(1) / 50 == (-1) ) {
-			return
-		}
-		else {
-			if ( val(2) == 0 ) {
-				s += " ["
-				putenclv val(1) / 50
-				s += "]"
-
-				/********** ANNA CUSTOM - BEGINNING **********/ // Show Enchant Strength With Objet of Heart
-
-				item_find ITEM_ID_OBJET_HEART, 3
-				if ( stat != (-1) & TweakData(TWEAK_UI_SHOW_ENCHANT_STRENGTH, TWEAK_CATEGORY_UI) == 1 ) {
-					s += "(" + val(1) + ")"
-				}
-
-				/********** ANNA CUSTOM - ENDING **********/
-
-				return
-			}
-			else {
-				rtval(1) = val(1) / 50
-				return
-			}
-		}
-	}
+/********** ANNA CUSTOM - BEGINNING **********/ // Show Enchant Strength With Objet of Heart
 
 #define encDisp(%1,%2,%3,%4=-1) \
     if val == %1 {%c\
@@ -348,6 +319,8 @@
     	}%c\
     	return%c\
     }%c\
+
+/********** ANNA CUSTOM - ENDING **********/
 
 *item_encdetail
 	rtval = 4, 0
