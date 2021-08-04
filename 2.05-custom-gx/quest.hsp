@@ -259,9 +259,9 @@
 	}
 	if ( rnd(35) == 0 | (gdata(GDATA_AREA) == AREA_DERPHY & rnd(8) == 0) | (gdata(GDATA_AREA) == AREA_LUDUS & rnd(12) == 0) ) {
 		if ( gdata(GDATA_AREA) != AREA_RUST_PLAZA & gdata(GDATA_AREA) != AREA_OL_DRAN ) {
-			qdata(QDATA_LEVEL, rq) = limit(rnd(sdata(SKILL_NORMAL_DETECTION, CHARA_PLAYER) + sdata(SKILL_ATTR_PER, CHARA_PLAYER) / 10 + 10), int(1.5 * sqrt(sdata(SKILL_NORMAL_DETECTION, CHARA_PLAYER))) + 10, cdata(CDATA_FAME, CHARA_PLAYER) / 1000 + 10)
-			if ( qdata(QDATA_LEVEL, rq) > 200 ) {
-				qdata(QDATA_LEVEL, rq) = 200
+			qdata(QDATA_LEVEL, rq) = limit(rnd(sdata(SKILL_NORMAL_DETECTION, CHARA_PLAYER) + sdata(SKILL_ATTR_PER, CHARA_PLAYER) / 30 + 5), int(sqrt(sdata(SKILL_NORMAL_DETECTION, CHARA_PLAYER)) + 1) / 2 + 5, cdata(CDATA_FAME, CHARA_PLAYER) / 2000 + 5)
+			if ( qdata(QDATA_LEVEL, rq) > 66 ) {
+				qdata(QDATA_LEVEL, rq) = 66
 			}
 			qdata(QDATA_RENEW, rq) = (rnd(6) + 2) * 24 + (gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12)
 			qdata(QDATA_REWARD_ITEM, rq) = QUEST_REWARD_NONE
@@ -503,7 +503,6 @@
 
 *quest_fail
 	if ( val == 1 ) {
-		adata(ADATA_ARENA_WIN, gdata(GDATA_RETURN_AREA)) = 0
 		txt lang("あなたは敗北した。", "You were defeated.")
 		modrank 0, -100
 	}
@@ -576,6 +575,7 @@
 		if ( cdata(CDATA_HP, cnt) < cdata(CDATA_MAX_HP, cnt) / 2 ) {
 			cdata(CDATA_HP, cnt) = cdata(CDATA_MAX_HP, cnt) / 2
 		}
+		cdata(CDATA_FAME, cnt) += calcfame(cnt, (220 - gdata(GDATA_RANK_PET_ARENA) / 50) * (50 + limit(adata(ADATA_PET_ARENA_WIN, gdata(GDATA_RETURN_AREA)), 0, 50)) / 100 + 2) * 2
 	loop
 	snd SOUNDLIST_CHEER
 	if ( petarenawin == 1 ) {
@@ -594,26 +594,27 @@
 		else {
 			cdata(CDATA_FAME, CHARA_PLAYER) += gdata(GDATA_QUEST_FAME)
 			modrank 1, 100, 2
-			adata(ADATA_PET_ARENA_WIN, gdata(GDATA_RETURN_AREA))++
-			if ( adata(ADATA_PET_ARENA_WIN, gdata(GDATA_RETURN_AREA)) > gdata(GDATA_FLAG_HIGHEST_PET_ARENA_STREAK) ) {
-				gdata(GDATA_FLAG_HIGHEST_PET_ARENA_STREAK) = adata(ADATA_PET_ARENA_WIN, gdata(GDATA_RETURN_AREA))
-			}
-			if ( gdata(GDATA_RANK_PET_ARENA) / 100 == 1 & adata(ADATA_PET_ARENA_WIN, gdata(GDATA_RETURN_AREA)) \ 100 == 0 ) {
+			gdata(GDATA_FLAG_HIGHEST_PET_ARENA_STREAK)++
+			if ( adata(ADATA_PET_ARENA_WIN, gdata(GDATA_RETURN_AREA)) \ 100 == 0 ) {
 				snd SOUNDLIST_DING3
-				snd SOUNDLIST_DING1
-				syoukin = limit(adata(ADATA_PET_ARENA_WIN, gdata(GDATA_RETURN_AREA)) + 50, 150, 350) * 2000
-				txt lang("なんと…" + adata(ADATA_PET_ARENA_WIN, gdata(GDATA_RETURN_AREA)) + "連勝を達成した！追加で30000の名声値を手に入れた。さらに" + syoukin + "gpの賞金が全ペットに贈られた。", "Amazing... You've reached " + adata(ADATA_PET_ARENA_WIN, gdata(GDATA_RETURN_AREA)) + " wins in a row! You gain 30000 fame. Additionally, a prize of " + syoukin + "gp has been awarded to all pets.")
+				txt lang("なんと…" + adata(ADATA_PET_ARENA_WIN, gdata(GDATA_RETURN_AREA)) + "勝を達成した！追加で30000の名声値を手に入れた。", "You gain 30000 fame!!")
 				await 2000
 				cdata(CDATA_FAME, CHARA_PLAYER) += 30000
-				repeat MAX_CHARA_FOLLOWER
-					if ( cnt == CHARA_PLAYER ) {
-						continue
-					}
-					cdata(CDATA_GOLD, cnt) += syoukin
-				loop
-				syoukin = 0
+				prenshyou = 100
 			}
 			else {
+				if ( adata(ADATA_PET_ARENA_WIN, gdata(GDATA_RETURN_AREA)) \ 3 == 0 ) {
+					prenshyou = 3
+				}
+				if ( adata(ADATA_PET_ARENA_WIN, gdata(GDATA_RETURN_AREA)) \ 10 == 0 ) {
+					prenshyou = 10
+				}
+				if ( adata(ADATA_PET_ARENA_WIN, gdata(GDATA_RETURN_AREA)) \ 30 == 0 ) {
+					prenshyou = 30
+				}
+				if ( adata(ADATA_PET_ARENA_WIN, gdata(GDATA_RETURN_AREA)) \ 50 == 0 ) {
+					prenshyou = 50
+				}
 				if ( adata(ADATA_PET_ARENA_WIN, gdata(GDATA_RETURN_AREA)) \ 20 == 0 ) {
 					matgetmain MATERIAL_500_YEN_COIN, 1
 				}
@@ -627,8 +628,7 @@
 	}
 	else {
 		txtef COLOR_PURPLE
-		txt lang("あなたのチームは敗北した。", "Your team is defeated.")
-		adata(ADATA_PET_ARENA_WIN, gdata(GDATA_RETURN_AREA)) = 0
+		txt lang("あなたのチームは敗北した。", "Your team was defeated.")
 		modrank 1, -100
 		decfame CHARA_PLAYER, 60
 		p = stat
@@ -657,28 +657,27 @@
 		txt lang("外への階段が現れた。", "Stairs appear.")
 		map_placeupstairs mdata(MDATA_WIDTH) / 2, mdata(MDATA_HEIGHT) / 2
 		adata(ADATA_ARENA_WIN, gdata(GDATA_RETURN_AREA))++
-		if ( adata(ADATA_ARENA_WIN, gdata(GDATA_RETURN_AREA)) > gdata(GDATA_FLAG_HIGHEST_ARENA_STREAK) ) {
-			gdata(GDATA_FLAG_HIGHEST_ARENA_STREAK) = adata(ADATA_ARENA_WIN, gdata(GDATA_RETURN_AREA))
-		}
-		if ( gdata(GDATA_RANK_ARENA) / 100 == 1 & adata(ADATA_ARENA_WIN, gdata(GDATA_RETURN_AREA)) \ 100 == 0 ) {
+		gdata(GDATA_FLAG_HIGHEST_ARENA_STREAK)++
+		if ( adata(ADATA_ARENA_WIN, gdata(GDATA_RETURN_AREA)) \ 100 == 0 ) {
 			snd SOUNDLIST_DING3
 			snd SOUNDLIST_DING1
-			txt lang("なんと…" + adata(ADATA_ARENA_WIN, gdata(GDATA_RETURN_AREA)) + "連勝を達成した！追加で30000の名声値を手に入れた。さらに足元に何かが転がってきた。", "You achieved " + adata(ADATA_ARENA_WIN, gdata(GDATA_RETURN_AREA)) + " consecutive victories and gained 30000 fame.")
+			txt lang("なんと…" + adata(ADATA_ARENA_WIN, gdata(GDATA_RETURN_AREA)) + "勝を達成した！追加で30000の名声値を手に入れた。", "You gain 30000 fame!!")
 			cdata(CDATA_FAME, CHARA_PLAYER) += 30000
-			p = limit(adata(ADATA_ARENA_WIN, gdata(GDATA_RETURN_AREA)) / 100 + 1, 2, 4)
-			repeat p
-				flt
-				nostack = 1
-				itemcreate -1, ITEM_ID_POTION_EVOLUTION, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
-				flt
-				nostack = 1
-				itemcreate -1, ITEM_ID_MATERIAL_KIT, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
-				flt
-				nostack = 1
-				itemcreate -1, ITEM_ID_TREASURE_MAP, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
-			loop
+			renshyou = 100
 		}
 		else {
+			if ( adata(ADATA_ARENA_WIN, gdata(GDATA_RETURN_AREA)) \ 3 == 0 ) {
+				renshyou = 3
+			}
+			if ( adata(ADATA_ARENA_WIN, gdata(GDATA_RETURN_AREA)) \ 10 == 0 ) {
+				renshyou = 10
+			}
+			if ( adata(ADATA_ARENA_WIN, gdata(GDATA_RETURN_AREA)) \ 30 == 0 ) {
+				renshyou = 30
+			}
+			if ( adata(ADATA_ARENA_WIN, gdata(GDATA_RETURN_AREA)) \ 50 == 0 ) {
+				renshyou = 50
+			}
 			if ( adata(ADATA_ARENA_WIN, gdata(GDATA_RETURN_AREA)) \ 20 == 0 ) {
 				matgetmain MATERIAL_500_YEN_COIN, 1
 			}
@@ -732,7 +731,7 @@
 		p = limit(rnd(1 + cdata(CDATA_FAME, CHARA_PLAYER) / 10000), 1, 3)
 	}
 	if ( qdata(QDATA_EXIST, rq) == QUEST_TYPE_CONQUER | qdata(QDATA_EXIST, rq) == QUEST_TYPE_HUNTEX ) {
-		p = limit(rnd(2 + cdata(CDATA_FAME, CHARA_PLAYER) / 20000), 2, 10)
+		p = limit(rnd(2 + cdata(CDATA_FAME, CHARA_PLAYER) / 20000), 2, 6)
 	}
 	flt
 	itemcreate -1, ITEM_ID_PLATINUM_COIN, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), p
@@ -746,7 +745,7 @@
 		flt
 		itemcreate -1, ITEM_ID_DEVIL_FRAGMENT, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), limit(1 + qdata(QDATA_PARAM2, rq) / 5, 1, 30)
 		inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
-		if ( qdata(QDATA_PARAM1, rq) * 150 / 100 <= qdata(QDATA_PARAM2, rq) | qdata(QDATA_VAR, rq) == 1 ) {
+		if ( qdata(QDATA_PARAM1, rq) * 125 / 100 <= qdata(QDATA_PARAM2, rq) | qdata(QDATA_VAR, rq) == 1 ) {
 			flt
 			itemcreate -1, ITEM_ID_BRONZE_COIN, cdata(CDATA_X, cc), cdata(CDATA_Y, cc), 1
 		}
