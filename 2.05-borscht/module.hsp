@@ -427,8 +427,8 @@
 		}
 		if ( skillexp_skillid >= SKILL_ATTR_STR ) {
 			if ( skillexp_skillid < SKILL_ATTR_LUC ) {
-				if ( cdata(270 + skillexp_skillid - 10, skillexp_charid) > 0 ) {
-					locvar_skillmod_exp = locvar_skillmod_exp * (100 + cdata(270 + skillexp_skillid - 10, skillexp_charid)) / 100
+				if ( cdata(STARTING_CDATA_FOOD_EXP + skillexp_skillid - 10, skillexp_charid) > 0 ) {
+					locvar_skillmod_exp = locvar_skillmod_exp * (100 + cdata(STARTING_CDATA_FOOD_EXP + skillexp_skillid - 10, skillexp_charid)) / 100
 				}
 			}
 		}
@@ -496,7 +496,7 @@
 			}
 		}
 	}
-	if ( cdata(270 + 19 - 10, skillexp_charid) > 0 ) {
+	if ( cdata(STARTING_CDATA_FOOD_EXP + 19 - 10, skillexp_charid) > 0 ) {
 		if ( skillexp_skillid >= SKILL_WEAPON_LONGSWORD & skillexp_skillid < MAX_SKILL_ACTIVE ) {
 			locvar_skillmod_exp = locvar_skillmod_exp * 11 / 10
 		}
