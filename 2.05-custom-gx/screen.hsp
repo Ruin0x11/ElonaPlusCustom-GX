@@ -3783,7 +3783,21 @@
 		loop
 	loop
 	pos 688, 528
+
+	/********** ORIGINAL - BEGINNING **********
+
 	gfini raderw * mdata(MDATA_WIDTH), raderh * mdata(MDATA_HEIGHT)
+
+	 ********** ORIGINAL - ENDING **********/
+
+	/********** RUIN0X11 - BEGINNING **********/ // Prevent glitches with Jaldabaoth's special graphics.
+
+    // This has the potential to blit into a frame of Jaldabaoth's wings and
+    // the enrage emote, so limit the manipulated area.
+	gfini limit(raderw * mdata(MDATA_WIDTH), 0, 212), limit(raderh * mdata(MDATA_HEIGHT), 0, 96)
+
+	/********** RUIN0X11 - ENDING **********/
+
 	gfinc 10, 10, 10
 	gsel 0
 	return

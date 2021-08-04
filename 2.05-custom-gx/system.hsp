@@ -3515,6 +3515,14 @@
 	}
 	goto *prompt_key_WHILE1
 
+*DumpBuffers
+    repeat 11
+        gsel cnt
+        bmpsave exedir + "tmp\\" + cnt + ".bmp"
+    loop
+    gsel BUFFER_SCREEN
+    return
+
 *game_debug
 	notesel dbm
 	buff = ""
@@ -3838,6 +3846,11 @@
 		noteadd "Wizard mode activated."
 		goto *console_write
 	}
+    if ( instr(buff, 0, "dump_buffers") != (-1) ) {
+        gosub *DumpBuffers
+        noteadd "Done."
+        goto *console_write
+    }
 	if ( gdata(GDATA_WIZARD) ) {
 
 		/********** ANNA CUSTOM - BEGINNING **********/ // Spawn npc command
@@ -3967,6 +3980,7 @@
     noteadd "\tclient\t\tLists all the clients."
     noteadd "\texitroom\tLeaves current show-room."
     noteadd "\twizard\t\tEnables wizard mode."
+    noteadd "\tdump_buffers\t\tDump the graphics buffers to .bmp files."
     noteadd "\tlua\t\tToggles Lua console mode."
     noteadd ""
     noteadd "\tThe commands below can be used in the Wizard mode."
