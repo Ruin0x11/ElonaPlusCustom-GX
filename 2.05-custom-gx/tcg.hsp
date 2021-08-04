@@ -126,7 +126,12 @@
 	rtvaln += lang("  レア度:", "  Rare:") + cnvrare(cardrefrare)
 	s@tcg = ""
 	s@tcg += lang("情報:", "data:") + cardrefskill
-	talk_conv s@tcg, 89
+	if ( gdata(GDATA_QUICK_USE) == 1 ) {
+		talk_conv s@tcg, 95
+	}
+	else {
+		talk_conv s@tcg, 100
+	}
 	rtvaln += "\n" + s@tcg
 	return dbid
 
@@ -900,7 +905,7 @@
 	sdim carddetailn@tcg, 200, maxcard@tcg
 	sdim cardrefn
 	sdim helpmsg@tcg
-	dim deck, 1000
+	dim deck, MAX_CARD
 	sdim domname@tcg, 20, 10
 	phasen@tcg = "Begin", "Draw", "Main", "End", ""
 	domname@tcg(0) = lang("0-150", "0-150")
@@ -1000,9 +1005,9 @@
 	return
 
 #deffunc decktest
-	dim card, 4, 1000
-	dim deck, 1000
-	repeat 1000
+	dim card, 4, MAX_CARD
+	dim deck, MAX_CARD
+	repeat MAX_CARD
 		dbid = cnt
 		gosub *db_card@
 		if ( stat == 0 ) {
@@ -1013,11 +1018,11 @@
 	return
 
 #deffunc tcgdeck
-	maxcard@tcg = 1000
+	maxcard@tcg = MAX_CARD
 	tcginit
 	cardmode@tcg = 1
 	i@tcg = 0
-	repeat 1000
+	repeat MAX_CARD
 		if ( card(0, cnt) == 0 ) {
 			continue
 		}
@@ -1048,7 +1053,7 @@
 	val = basex@tcg + 400, basey@tcg + 230, 300, 1
 	gosub *prompt_key@
 	if ( rtval != (-1) ) {
-		dim deck, 1000
+		dim deck, MAX_CARD
 		curdeck = rtval
 		file = "" + exedir + "tmp\\deck_" + curdeck + ".s2"
 		existwrapper file
@@ -1497,9 +1502,16 @@
 		pos basex@tcg + 24, basey@tcg + 240
 		mes s@tcg
 	}
-	font lang(cfg_font1, cfg_font2), 12 + en - en * 2, 0
-	pos basex@tcg + 146, basey@tcg + 545
-	mes helpmsg@tcg
+	if ( gdata(GDATA_QUICK_USE) == 1 ) {
+		font lang(cfg_font1, cfg_font2), 12 + en - en * 2, 0
+		pos basex@tcg + 125, basey@tcg + 542
+		mes helpmsg@tcg
+	}
+	else {
+		font lang(cfg_font1, cfg_font2), 11 + en - en * 2, 0
+		pos basex@tcg + 120, basey@tcg + 537
+		mes helpmsg@tcg
+	}
 	return
 
 *tcg_initBg

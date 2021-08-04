@@ -660,6 +660,88 @@
 	if ( gdata(GDATA_VERSION) < 3180 ) {
 		kamen6 = 100
 	}
+	if ( gdata(GDATA_VERSION) < 3930 ) {
+		repeat MAX_CHARA_TOTAL
+			cdata(CDATA_CUSTOM_TALK_LINE, cnt) = 0
+		loop
+		gdata(GDATA_FLAG_SCROLL_OF_WITCHCRAFT_TOTAL_SKILL_BONUS) = cdata(CDATA_LEVEL, CHARA_PLAYER) * 5
+		if ( gdata(GDATA_FLAG_GAME_MODE) == GAMEMODE_PURGE ) {
+			gdata(GDATA_FLAG_SCROLL_OF_WITCHCRAFT_TOTAL_SKILL_BONUS) += 10000
+		}
+		txt lang("あなたはスペルボーナスを獲得した。", "You gain spellbonus points.")
+	}
+	if ( gdata(GDATA_VERSION) < 3990 ) {
+		repeat MAX_CHARA_TOTAL
+			if ( cdata(CDATA_EVOLUTION_STAGE, cnt) != 1 ) {
+				continue
+			}
+			if ( cdata(CDATA_ID, cnt) == CREATURE_ID_FLOATING_EYE | cdata(CDATA_ID, cnt) == CREATURE_ID_CHAOS_EYE | cdata(CDATA_ID, cnt) == CREATURE_ID_MAD_GAZE | cdata(CDATA_ID, cnt) == CREATURE_ID_DEATH_GAZE | cdata(CDATA_ID, cnt) == CREATURE_ID_DEFORMED_EYE | cdata(CDATA_ID, cnt) == CREATURE_ID_IMPURE_EYE ) {
+				cdata(CDATA_CHARA_PIC, cnt) = xy2pic(1, 0)
+				txt lang("目系進化体グラフィック修正。", "The graphic of the eye evolution character have been corrected.")
+			}
+		loop
+		gdata(GDATA_CARGO_LIMIT) = gdata(GDATA_CARGO_LIMIT) / 10000 * 10000
+		if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) == VEHICLE_CARRIAGE ) {
+			gdata(GDATA_CARGO_LIMIT) += 10 * 1000
+		}
+		if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) == VEHICLE_TRUCK ) {
+			gdata(GDATA_CARGO_LIMIT) += 20 * 1000
+		}
+		if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) == VEHICLE_LOCOMOTIVE ) {
+			gdata(GDATA_CARGO_LIMIT) += 30 * 1000
+		}
+		if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) == VEHICLE_LAND_BATTLESHIP ) {
+			gdata(GDATA_CARGO_LIMIT) += 100 * 1000
+		}
+	}
+	if ( gdata(GDATA_VERSION) < 5980 ) {
+		gdata(GDATA_FLAG_PC_SKILL_BONUS_OBTAINED) = cdata(CDATA_SKILLPOINT, CHARA_PLAYER)
+		gdata(GDATA_FLAG_SKILL_BONUS_OBTAINED) = gdata(GDATA_FLAG_SCROLL_OF_WITCHCRAFT_TOTAL_SKILL_BONUS)
+
+        /********** ORIGINAL - BEGINNING ********** // Remove skill bonus limit.
+
+		if ( gdata(GDATA_FLAG_SCROLL_OF_WITCHCRAFT_TOTAL_SKILL_BONUS) >= 100 | cdata(CDATA_SKILLPOINT, CHARA_PLAYER) >= 100 | cdata(CDATA_PLATINUM, CHARA_PLAYER) >= 100 ) {
+			if ( gdata(GDATA_FLAG_GAME_MODE) != 2 & gdata(GDATA_FLAG_GAME_MODE) != GAMEMODE_PURGE ) {
+				dialog lang("注意！スペルボーナス、スキルボーナス、プラチナ硬貨は100以上所持していると新たに獲得できない。", "Caution! While the spell bonus is 100 or more, you cannot get new.")
+			}
+		}
+
+         ********** ORIGINAL - ENDING **********/
+
+	}
+	if ( gdata(GDATA_VERSION) < 6020 ) {
+		gdata(GDATA_FLAG_SUB_MISSION_FROM_GARZIEM) = 0
+	}
+	if ( gdata(GDATA_VERSION) < 6050 ) {
+		if ( gdata(GDATA_FLAG_MAIN) >= 180 ) {
+			kamen7 = 100
+		}
+		if ( gdata(GDATA_FLAG_MAIN) >= 340 ) {
+			kamen8 = 100
+		}
+		if ( gdata(GDATA_FLAG_MAIN) >= 680 ) {
+			kamen9 = 100
+		}
+	}
+	repeat 16
+		if ( cdata(CDATA_CHARA_PIC_ORG, cnt) == 1 ) {
+			cdata(CDATA_CHARA_PIC, cnt) = xy2pic(1, 0)
+		}
+		if ( cnt == 0 ) {
+			continue
+		}
+		if ( gdata(GDATA_AREA) == AREA_ARENA ) {
+			continue
+		}
+		if ( cdata(CDATA_EXIST, cnt) != CHAR_STATE_SUSPEND ) {
+			continue
+		}
+		if ( cdata(CDATA_IN_TAGTEAM, cnt) != 0 ) {
+			map(cdata(CDATA_X, cnt), cdata(CDATA_Y, cnt), MAP_CHARA_INDEX_PLUS_ONE) = 0
+			cdata(CDATA_EXIST, cdata(CDATA_TAGTEAM_PARTNER, cnt)) = CHAR_STATE_SUSPEND
+			hagureta = 100
+		}
+	loop
 	if ( gdata(GDATA_VERSION) != VERSION_NUMBER ) {
 		gdata(GDATA_WORLD_RENEW) = 1
 	}
@@ -2609,7 +2691,7 @@
 	return
 
 *game_save
-	if ( gdata(GDATA_AREA) == AREA_SHOW_HOUSE | (gdata(GDATA_AREA) == AREA_CHAOS_CRADLE & gdata(GDATA_LEVEL) == 179) ) {
+	if ( gdata(GDATA_AREA) == AREA_SHOW_HOUSE | (gdata(GDATA_AREA) == AREA_CHAOS_CRADLE & gdata(GDATA_LEVEL) == 179) | (gdata(GDATA_AREA) == AREA_AMUR_CAGE & gdata(GDATA_LEVEL) >= 10) ) {
 		txtef COLOR_RED
 		txt lang("ここではセーブされない。", "The game is not saved in this map.")
 		gosub *screen_draw
@@ -3515,6 +3597,8 @@
 	}
 	goto *prompt_key_WHILE1
 
+/********** RUIN0X11 CUSTOM - BEGINNING **********/
+
 *DumpBuffers
     repeat 11
         gsel cnt
@@ -3522,6 +3606,8 @@
     loop
     gsel BUFFER_SCREEN
     return
+
+/********** RUIN0X11 CUSTOM - ENDING **********/
 
 *game_debug
 	notesel dbm
@@ -3846,11 +3932,17 @@
 		noteadd "Wizard mode activated."
 		goto *console_write
 	}
+
+    /********** RUIN0X11 CUSTOM - BEGINNING **********/
+
     if ( instr(buff, 0, "dump_buffers") != (-1) ) {
         gosub *DumpBuffers
         noteadd "Done."
         goto *console_write
     }
+
+    /********** RUIN0X11 CUSTOM - ENDING **********/
+
 	if ( gdata(GDATA_WIZARD) ) {
 
 		/********** ANNA CUSTOM - BEGINNING **********/ // Spawn npc command
