@@ -33,7 +33,7 @@
 *building_new
 	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_DEED_PROPERTY_TRANSFER ) {
 		if ( mdata(MDATA_TYPE) != MAP_TYPE_WORLD ) {
-			if ( adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_CROP | adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_MUSEUM | adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_SHOP | adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_STORAGE_HOUSE | adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_RANCH | adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_DISCARDED_RANCH ) {
+			if ( adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_CROP | adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_MUSEUM | adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_SHOP | adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_STORAGE_HOUSE | adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_RANCH | adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_DISCARDED_RANCH | adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_DUNGEON ) {
 				item_separate ci
 				inv(INV_ITEM_PARAM2, ci) = gdata(GDATA_AREA)
 				txt lang("物件No" + inv(INV_ITEM_PARAM2, ci) + "を登録した。", "Property No. " + inv(INV_ITEM_PARAM2, ci) + " has been registered.")
@@ -293,20 +293,26 @@
 	txtmore
 	if ( adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_SHOP ) {
 		if ( adata(ADATA_SHOP_TYPE, gdata(GDATA_AREA)) == SHOP_TYPE_GOODS ) {
-			shops = lang("何でも屋", "the goods shop")
+			shops = lang("何でも屋", "Goods shop")
 		}
 		if ( adata(ADATA_SHOP_TYPE, gdata(GDATA_AREA)) == SHOP_TYPE_FOOD ) {
-			shops = lang("食品店", "the food shop")
+			shops = lang("食品店", "Food shop")
 		}
 		if ( adata(ADATA_SHOP_TYPE, gdata(GDATA_AREA)) == SHOP_TYPE_MAGIC ) {
-			shops = lang("魔法店", "the magic shop")
+			shops = lang("魔法店", "Magic shop")
 		}
 		if ( adata(ADATA_SHOP_TYPE, gdata(GDATA_AREA)) == SHOP_TYPE_BLACKSMITH ) {
-			shops = lang("武具店", "the blacksmith")
+			shops = lang("武具店", "Blacksmith")
 		}
 		if ( adata(ADATA_SHOP_TYPE, gdata(GDATA_AREA)) == SHOP_TYPE_INN ) {
-			shops = lang("宿屋", "the inn")
+			shops = lang("宿屋", "Inn shop")
 		}
+		if ( adata(ADATA_SHOP_TYPE, gdata(GDATA_AREA)) == SHOP_TYPE_DECORATIVE_ARTS ) {
+			shops = lang("装飾家具店", "Decorative arts shop")
+		}
+		if ( adata(ADATA_SHOP_TYPE, gdata(GDATA_AREA)) == SHOP_TYPE_JUNK ) {
+			shops = lang("ジャンク屋", "Junk shop")
+ 		}
 		txt lang("店タイプ：" + shops + "。", "Shop type: " + shops + ".")
 		if ( adata(ADATA_SHOP_SALE_RESTRICTION, gdata(GDATA_AREA)) == SHOP_SALE_NONE ) {
 			txt lang("販売制限なし。", "No sale restrictions.")
@@ -684,46 +690,9 @@
 			if ( inv(INV_ITEM_PIC, p) / COLOR_TINT_MULT >= 1 ) {
 				p(1) = inv(INV_ITEM_PIC, p)
 			}
-			gsel 1
-			color 0
-			boxf 0, 960, chipi(CHIPI_WIDTH, p(1)), chipi(CHIPI_HEIGHT, p(1)) + 960
-			if ( p(1) == xy2pic(0, 16) ) {
-				gmode 2
-				pos 0, 960
-				gcopy 1, 0, 768, inf_tiles, inf_tiles
-				pos 0, 1008
-				gzoom 22, 20, 5, chipc(CHIPC_X, inv(INV_ITEM_COL, p)) + 8, chipc(CHIPC_Y, inv(INV_ITEM_COL, p)) + 4 + (chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, p)) > inf_tiles) * 8, chipc(CHIPC_WIDTH, inv(INV_ITEM_COL, p)) - 16, chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, p)) - 8 - (chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, p)) > inf_tiles) * 10, 1
-				pos 6, 974
-				gcopy 1, 0, 1008, 22, 20
-				gsel selcur
-			}
-			else {
-				if ( p(1) == xy2pic(30, 33) ) {
-					pos 8, 1058 - chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, p))
-					gcopy 5, chipc(CHIPC_X, inv(INV_ITEM_COL, p)) + 8, chipc(CHIPC_Y, inv(INV_ITEM_COL, p)) + 2, chipc(CHIPC_WIDTH, inv(INV_ITEM_COL, p)), chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, p))
-					gmode 2
-					gsel selcur
-				}
-				else {
-					if ( p(1) == xy2pic(3, 16) ) {
-						pos 8, 1058 - chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, p))
-						gcopy 5, chipc(CHIPC_X, inv(INV_ITEM_COL, p)) + 8, chipc(CHIPC_Y, inv(INV_ITEM_COL, p)) + 2, chipc(CHIPC_WIDTH, inv(INV_ITEM_COL, p)) - 16, chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, p)) - 8
-						gmode 4, , , 150
-						color 0, 0, 0
-						pos 0, 960 + (chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, p)) == inf_tiles) * 48
-						gcopy 1, 144, 768 + (chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, p)) > inf_tiles) * 48, inf_tiles, chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, p)) + (chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, p)) > inf_tiles) * 48
-						gmode 2
-						gsel selcur
-					}
-					else {
-						pos 0, 960
-						gcopy 1, chipi(CHIPI_X, p(1)), chipi(CHIPI_Y, p(1)), chipi(CHIPI_WIDTH, p(1)), chipi(CHIPI_HEIGHT, p(1))
-						gfini chipi(CHIPI_WIDTH, p(1)), chipi(CHIPI_HEIGHT, p(1))
-						gfdec2 c_col(0, inv(INV_ITEM_COL, p)), c_col(1, inv(INV_ITEM_COL, p)), c_col(2, inv(INV_ITEM_COL, p))
-						gsel selcur
-					}
-				}
-			}
+
+            preparePicItem p(1), inv(INV_ITEM_COL, p)
+
 			pos wx + 37, cnt * 16 + wy + 138
 			gmode 2, chipi(CHIPI_WIDTH, p(1)), chipi(CHIPI_HEIGHT, p(1))
 			grotate 1, 0, 960, 0, chipi(CHIPI_WIDTH, p(1)) * inf_tiles / chipi(CHIPI_HEIGHT, p(1)), inf_tiles
@@ -915,6 +884,7 @@
 			inv(INV_ITEM_NUM, ci) -= 1
 			gosub *calcBurdenPc
 			snd SOUNDLIST_BUSH1
+            ccbk = cc
 			repeat MAX_CHARA_TOTAL
 				if ( cdata(CDATA_EXIST, cnt) != CHAR_STATE_ALIVE ) {
 					continue
@@ -939,6 +909,7 @@
 				cdata(CDATA_EMO_ICON, cc) = 16 + 100 * 1
 				modimp2 cc, 15
 			loop
+            cc = ccbk
 		}
 		goto *com_home_SWEND1
 	}
@@ -1051,11 +1022,11 @@
 			snd SOUNDLIST_FAIL1
 			goto *com_home_SWEND1
 		}
-		txtsetshop 6
-		repeat 6
+		txtsetshop 8
+		repeat 8
 			promptAdd s(cnt), key_select(cnt)
 		loop
-		val = promptx, prompty, 300, 0
+		val = promptx, prompty, 350, 0
 		gosub *prompt_key
 		if ( rtval == 0 ) {
 			goto *com_home_SWEND1
@@ -1063,20 +1034,26 @@
 		adata(ADATA_SHOP_TYPE_CHANGE_COOLDOWN, gdata(GDATA_AREA)) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 + 24 * 15
 		adata(ADATA_SHOP_TYPE, gdata(GDATA_AREA)) = rtval - 1
 		if ( adata(ADATA_SHOP_TYPE, gdata(GDATA_AREA)) == SHOP_TYPE_GOODS ) {
-			shops = lang("何でも屋", "the goods shop")
+			shops = lang("何でも屋", "Goods shop")
 		}
 		if ( adata(ADATA_SHOP_TYPE, gdata(GDATA_AREA)) == SHOP_TYPE_FOOD ) {
-			shops = lang("食品店", "the food shop")
+			shops = lang("食品店", "Food shop")
 		}
 		if ( adata(ADATA_SHOP_TYPE, gdata(GDATA_AREA)) == SHOP_TYPE_MAGIC ) {
-			shops = lang("魔法店", "the magic shop")
+			shops = lang("魔法店", "Magic shop")
 		}
 		if ( adata(ADATA_SHOP_TYPE, gdata(GDATA_AREA)) == SHOP_TYPE_BLACKSMITH ) {
-			shops = lang("武具店", "the blacksmith")
+			shops = lang("武具店", "Blacksmith")
 		}
 		if ( adata(ADATA_SHOP_TYPE, gdata(GDATA_AREA)) == SHOP_TYPE_INN ) {
-			shops = lang("宿屋", "the inn")
+			shops = lang("宿屋", "Inn shop")
 		}
+		if ( adata(ADATA_SHOP_TYPE, gdata(GDATA_AREA)) == SHOP_TYPE_DECORATIVE_ARTS ) {
+			shops = lang("装飾家具店", "Decorative arts shop")
+		}
+		if ( adata(ADATA_SHOP_TYPE, gdata(GDATA_AREA)) == SHOP_TYPE_JUNK ) {
+			shops = lang("ジャンク屋", "Junk shop")
+ 		}
 		txtef COLOR_GREEN
 		txt lang("店種類変更：" + shops + "。", "Shop type changed: " + shops + ".")
 		snd SOUNDLIST_BUILD1
@@ -1298,11 +1275,11 @@
 	}
 	if ( _switch_val == 9 | _switch_sw ) {
 		_switch_sw = 0
-		if ( adata(ADATA_ICON, gdata(GDATA_AREA)) < xy2pic(0, 10) | adata(ADATA_ICON, gdata(GDATA_AREA)) > xy2pic(31, 10) ) {
+		if ( adata(ADATA_ICON, gdata(GDATA_AREA)) < xy2pic(0, 10) | adata(ADATA_ICON, gdata(GDATA_AREA)) > xy2pic(32, 10) ) {
 			adata(ADATA_ICON_ORG, gdata(GDATA_AREA)) = adata(ADATA_ICON, gdata(GDATA_AREA))
 		}
 		txtef COLOR_YELLOW
-		txt lang("対応する画像の番号は？（1〜32で入力。0を入力するとデフォルトに。）", "Input the number of map_ . (1-32)")
+		txt lang("対応する画像の番号は？（1〜33で入力。0を入力するとデフォルトに。）", "Input the number of map_ . (1-33) / If input 0, undo.")
 		val = (windoww - 100) / 2 + inf_screenx, winposy(90), 5, 0, 0
 		inputlog = ""
 		gosub *prompt_word
@@ -1411,7 +1388,10 @@
 			if ( inputlog == "32" ) {
 				adata(ADATA_ICON, gdata(GDATA_AREA)) = xy2pic(31, 10)
 			}
-			if ( adata(ADATA_ICON, gdata(GDATA_AREA)) >= xy2pic(0, 10) & adata(ADATA_ICON, gdata(GDATA_AREA)) <= xy2pic(31, 10) ) {
+			if ( inputlog == "33" ) {
+				adata(ADATA_ICON, gdata(GDATA_AREA)) = xy2pic(32, 10)
+			}
+			if ( adata(ADATA_ICON, gdata(GDATA_AREA)) >= xy2pic(0, 10) & adata(ADATA_ICON, gdata(GDATA_AREA)) <= xy2pic(32, 10) ) {
 				snd SOUNDLIST_DING2
 				sekaikousin = 100
 			}
@@ -1553,6 +1533,9 @@
 				}
 			}
 		}
+		if ( mdata(MDATA_TILE_FILE) == 1 & cnt == 267 ) {
+			f = 0
+		}
 		if ( chipm(CHIPM_ROLE, cnt) == MAP_CHIP_ROLE_CROP ) {
 			f = 0
 		}
@@ -1596,6 +1579,7 @@
 	return
 
 *shop_turn_main
+	yaca = 0
 	worker = getworker(area)
 	if ( worker == (-1) ) {
 		txt lang("[店]店には店番がいない。", "[Shop] Your shop doesn't have a shopkeeper.")
@@ -1634,6 +1618,9 @@
 		if ( inv(INV_ITEM_ID, cnt) == ITEM_ID_REGISTER ) {
 			continue
 		}
+		if ( inv(INV_ITEM_ID, cnt) == ITEM_ID_YACA_POINT_CARD ) {
+			continue
+		}
 		if ( inv(INV_ITEM_ID, cnt) == ITEM_ID_RED_BOOK & TweakData(50, 2) == 0 ) {
 			continue
 		}
@@ -1658,15 +1645,17 @@
 		if ( inv(INV_ITEM_SHOP_SAMPLE, cnt) == 100 ) {
 			continue
 		}
-		if ( adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_SHOP ) {
+		if ( area == gdata(GDATA_AREA) ) {
 			if ( chipm(CHIPM_ROLE, map(inv(INV_ITEM_X, cnt), inv(INV_ITEM_Y, cnt), 0)) == MAP_CHIP_ROLE_DISPLAY_SPACE ) {
 				continue
 			}
 		}
 		a = refitem(inv(INV_ITEM_ID, cnt), DBSPEC_TYPE)
-		if ( a == FILTER_FURNITURE & inv(INV_ITEM_ID, cnt) != ITEM_ID_WILD_FLOWER & TweakData(50, 2) == 0 ) {
-			continue
-		}
+		if ( adata(ADATA_SHOP_TYPE, area) != SHOP_TYPE_DECORATIVE_ARTS ) {
+			if ( a == FILTER_FURNITURE & inv(INV_ITEM_ID, cnt) != ITEM_ID_WILD_FLOWER & TweakData(TWEAK_GAMEPLAY_EVERYTHING_MUST_GO, 2) == 0 ) {
+				continue
+			}
+        }
 		dblist(0, dblistmax) = cnt, a
 		dblistmax++
 	loop
@@ -1704,6 +1693,16 @@
 				val = val * 6 / 5
 			}
 		}
+		if ( adata(ADATA_SHOP_TYPE, area) == SHOP_TYPE_DECORATIVE_ARTS ) {
+			if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_ENVIRONMENT | refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_FURNITURE | refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_FURNITURE_WELL | refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_FURNITURE_ALTAR ) {
+				val = val * 6 / 5
+			}
+		}
+		if ( adata(ADATA_SHOP_TYPE, area) == SHOP_TYPE_JUNK ) {
+			if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_JUNK | refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_REMAINS | refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_ITEM_TOOL ) {
+				val = val * 6 / 5
+			}
+		}
 		if ( val <= 1 ) {
 			continue
 		}
@@ -1711,6 +1710,9 @@
 			continue
 		}
 		if ( inv(INV_ITEM_NUM, ci) <= 0 ) {
+			continue
+		}
+		if ( inv(INV_ITEM_ID, ci) == ITEM_ID_YACA_POINT_CARD ) {
 			continue
 		}
 		if ( adata(ADATA_SHOP_TYPE, area) == SHOP_TYPE_GOODS ) {
@@ -1746,6 +1748,20 @@
 				}
 			}
 		}
+		if ( adata(ADATA_SHOP_TYPE, area) == SHOP_TYPE_DECORATIVE_ARTS ) {
+			if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) != FILTER_ENVIRONMENT & refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) != FILTER_FURNITURE & refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) != FILTER_FURNITURE_WELL & refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) != FILTER_FURNITURE_ALTAR ) {
+				if ( rnd(5) ) {
+					continue
+				}
+			}
+		}
+		if ( adata(ADATA_SHOP_TYPE, area) == SHOP_TYPE_JUNK ) {
+			if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) != FILTER_JUNK & refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) != FILTER_REMAINS & refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) != FILTER_ITEM_TOOL ) {
+				if ( rnd(5) ) {
+					continue
+				}
+			}
+		}
 		if ( adata(ADATA_SHOP_TYPE, area) != SHOP_TYPE_GOODS ) {
 			if ( rnd(2) ) {
 				continue
@@ -1760,6 +1776,16 @@
 		if ( adata(ADATA_SHOP_SALE_RESTRICTION, area) == SHOP_SALE_5_ITEMS ) {
 			if ( in + sold > 5 ) {
 				in = 5 - sold
+			}
+		}
+		if ( inv(INV_ITEM_ID, ci) == ITEM_ID_PRODUCED_BOOK ) {
+			if ( inv(INV_ITEM_PARAM2, ci) == 0 ) {
+				bookfame = (inv(INV_ITEM_PARAM3, ci) + 5) * in
+				cdata(CDATA_FAME, CHARA_PLAYER) += bookfame
+				if ( 0 ) {
+					txtef COLOR_GREEN
+					txt lang("" + bookfame + "の名声値を手に入れた。", "You gain " + bookfame + " fame.")
+				}
 			}
 		}
 		inv(INV_ITEM_NUM, ci) -= in
@@ -1840,6 +1866,7 @@
 				break
 			}
 			if ( inv(INV_ITEM_VALUE, ci) > int(listn(1, cnt2)) * 2 * (3 + eye) / 3 + 300 * eye ) {
+				yaca += inv(INV_ITEM_VALUE, ci) / 1000
 				f = 1
 				break
 			}
@@ -1863,16 +1890,24 @@
 		}
 	loop
 	eye = 0
+	yaca += income / 1000 + customer / 10
+	if ( gdata(GDATA_MONTH) == 12 ) {
+		yaca *= 5
+	}
 	if ( adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_SHOP ) {
 		autosave = 1 * (gdata(GDATA_AREA) != AREA_SHOW_HOUSE)
 	}
 	if ( sold == 0 ) {
+		yaca = 0
 		if ( cfg_hideshopresult == 0 ) {
 			txt lang("[店]" + customer + "人が来客したが、" + cdatan(CDATAN_NAME, worker) + "はアイテムを一つも売れなかった。", "[Shop]" + customer + " customers visited your shop but " + cdatan(CDATAN_NAME, worker) + " couldn't sell any item.")
 		}
 	}
 	else {
 		if ( cfg_hideshopresult <= 1 ) {
+			if ( gdata(GDATA_FLAG_YACA_POINTS) >= 100000 ) {
+				yaca = 0
+			}
 			s = "" + income + lang("gold", " gold pieces")
 			if ( income(1) != 0 ) {
 				s += lang("と" + income(1) + "個のアイテム", " and " + income(1) + " items")
@@ -1880,7 +1915,7 @@
 			snd SOUNDLIST_DING2
 			txtmore
 			txtef COLOR_YELLOW
-			txt lang("[店]" + customer + "人の来客があり、" + cdatan(CDATAN_NAME, worker) + "は" + sold + "個のアイテムを売却した。" + s + "が売り上げとして金庫に保管された。", "[Shop] " + customer + " customers visited your shop and " + cdatan(CDATAN_NAME, worker) + " sold " + sold + " items. " + cdatan(CDATAN_NAME, worker) + " put " + s + " in the shop strong box.")
+			txt lang("[店]" + customer + "人の来客があり、" + cdatan(CDATAN_NAME, worker) + "は" + sold + "個のアイテムを売却した。" + s + "が売り上げとして金庫に保管された。そして" + yaca + "ヤカポイントを獲得した。", "[Shop]" + customer + " customers visited your shop and " + cdatan(CDATAN_NAME, worker) + " sold " + sold + " items. " + cdatan(CDATAN_NAME, worker) + " put " + s + " in the shop strong box. You got " + yaca + " yaca points.")
 		}
 
 		/********** ORIGINAL - BEGINNING **********
@@ -1896,6 +1931,11 @@
 		PrevNEG = sdata(SKILL_NORMAL_NEGOTIATION, worker)
 		skillexp SKILL_NORMAL_NEGOTIATION, worker, limit(int(sqrt(income)) * 10, 25, 2000) * (adata(ADATA_SHOP_SALE_RESTRICTION, area) + 2) / 2
 		cdata(CDATA_SALES_EXP, worker)++
+
+		gdata(GDATA_FLAG_YACA_POINTS) += yaca
+		if ( gdata(GDATA_FLAG_YACA_POINTS) >= 100000 ) {
+			gdata(GDATA_FLAG_YACA_POINTS) = 100000
+		}
 
 		if ( sdata(SKILL_ATTR_CHA, worker) != PrevCHA ) {
 			StatPotential = sgrowth(SKILL_ATTR_CHA, worker)
@@ -1967,9 +2007,20 @@
 		}
 		flt
 		itemcreate -1, ITEM_ID_GOLD_PIECE, -1, -1, dokuzi
+		yaca = dokuzi / 100
+		if ( gdata(GDATA_MONTH) == 12 ) {
+			yaca *= 5
+		}
+		if ( gdata(GDATA_FLAG_YACA_POINTS) >= 100000 ) {
+			yaca = 0
+		}
 		txtef COLOR_YELLOW
-		txt lang("[店]" + cdatan(CDATAN_NAME, worker) + "は独自に" + dokuzi + "gold稼ぎ、金庫に保管した。", "[Shop] " + cdatan(CDATAN_NAME, worker) + " earned " + dokuzi + " gold on " + his(worker, 1) + " own and put it in the shop strong box.")
+		txt lang("[店]" + cdatan(CDATAN_NAME, worker) + "は独自に" + dokuzi + "gold稼ぎ、金庫に保管した。そして" + yaca + "ヤカポイントを獲得した。", "[Shop]" + customer + " customers visited your shop and " + cdatan(CDATAN_NAME, worker) + " sold " + sold + " items. " + cdatan(CDATAN_NAME, worker) + " put " + s + " in the shop strong box. You got " + yaca + " yaca points.")
 		dokuzi = 0
+		gdata(GDATA_FLAG_YACA_POINTS) += yaca
+		if ( gdata(GDATA_FLAG_YACA_POINTS) >= 100000 ) {
+			gdata(GDATA_FLAG_YACA_POINTS) = 100000
+		}
 	}
 	mode = MODELIST_MAIN
 	file = "shop" + 5 + ".s2"

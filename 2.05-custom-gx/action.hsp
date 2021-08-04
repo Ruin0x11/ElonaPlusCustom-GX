@@ -2118,7 +2118,12 @@
 					goto *map_exit
 				}
 				if ( encounter == 3 ) {
-					txt lang("暗殺者につかまった。あなたはクライアントを守らなければならない。", "You are caught by assassins. You have to protect your client.")
+		   	 		if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) == VEHICLE_LAND_BATTLESHIP ) {
+		   	 			txt lang("行商人に変装していた暗殺者が襲いかかってきた。あなたはクライアントを守らなければならない。", "You are caught by assassins disguised as a wandering vendor. You have to protect your client.")
+		   	 		}
+		   	 		if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) != VEHICLE_LAND_BATTLESHIP ) {
+		   	 			txt lang("暗殺者につかまった。あなたはクライアントを守らなければならない。", "You are caught by assassins. You have to protect your client.")
+		   	 		}
 					msg_halt
 					gdata(GDATA_RETURN_AREA) = gdata(GDATA_AREA), gdata(GDATA_LEVEL), cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER)
 					levelexitby = 4

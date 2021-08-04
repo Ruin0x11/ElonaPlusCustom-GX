@@ -470,8 +470,7 @@
 	return
 
 *map_exit
-	procid = (procid + 1) \ 4
-	proclist(procid) = "map_exit" + " ct:" + ct
+	proc "map_exit"
 	gdata(GDATA_TIME_LIMIT) = 0
 	gdata(GDATA_MAP_EVENT) = 0
 	if ( mdata(MDATA_TYPE) == MAP_TYPE_HOME ) {
@@ -1004,7 +1003,12 @@
 		}
 		else {
 			if ( adata(ADATA_TYPE, gdata(GDATA_AREA_PREV)) == MAP_TYPE_WORLD ) {
-				msgtemp += lang(mapname(gdata(GDATA_AREA)) + "に入った。", "You entered " + mapname(gdata(GDATA_AREA)) + ".")
+				if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) > 0 ) {
+					msgtemp += lang("乗り物から降りて" + mapname(gdata(GDATA_AREA)) + "に入った。", "You got off the world-vehicle and entered " + mapname(gdata(GDATA_AREA)) + ".")
+				}
+				if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) == 0 ) {
+					msgtemp += lang(mapname(gdata(GDATA_AREA)) + "に入った。", "You entered " + mapname(gdata(GDATA_AREA)) + ".")
+				}
 			}
 			else {
 				if ( mdata(MDATA_TYPE) == MAP_TYPE_QUEST ) {
@@ -1015,9 +1019,18 @@
 				}
 			}
 		}
-		if ( gdata(GDATA_CARGO_WEIGHT) > gdata(GDATA_CARGO_LIMIT) ) {
-			if ( adata(ADATA_TYPE, gdata(GDATA_AREA)) == MAP_TYPE_WORLD | adata(ADATA_TYPE, gdata(GDATA_AREA)) == MAP_TYPE_LOCAL ) {
-				msgtemp += lang("荷車の重量超過でかなり鈍足になっている！ ", "The weight of your cargo burdens your traveling speed.")
+		if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) == VEHICLE_NONE ) {
+			if ( gdata(GDATA_CARGO_WEIGHT) > gdata(GDATA_CARGO_LIMIT) ) {
+				if ( adata(ADATA_TYPE, gdata(GDATA_AREA)) == MAP_TYPE_WORLD | adata(ADATA_TYPE, gdata(GDATA_AREA)) == MAP_TYPE_LOCAL ) {
+					msgtemp += lang("荷車の重量超過でかなり鈍足になっている！ ", "The weight of your cargo burdens your traveling speed.")
+				}
+			}
+		}
+		if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) > VEHICLE_NONE ) {
+			if ( gdata(GDATA_CARGO_WEIGHT) > gdata(GDATA_CARGO_LIMIT) ) {
+				if ( adata(ADATA_TYPE, gdata(GDATA_AREA)) == MAP_TYPE_WORLD ) {
+					msgtemp += lang("荷車の重量超過でかなり鈍足になっている！ ", "The weight of your cargo burdens your traveling speed.")
+				}
 			}
 		}
 	}
@@ -1162,8 +1175,7 @@
 	return
 
 *map_init
-	procid = (procid + 1) \ 4
-	proclist(procid) = "map_init" + " ct:" + ct
+	proc "map_init"
 	mapupdate = 0
 	if ( gdata(GDATA_LEVEL) > adata(ADATA_MAX_LEVEL, gdata(GDATA_AREA)) ) {
 		gdata(GDATA_LEVEL) = adata(ADATA_MAX_LEVEL, gdata(GDATA_AREA))
@@ -1219,6 +1231,22 @@
 		fmode = 11
 		gosub *game_ctrlFile
 	}
+	if ( gdata(GDATA_AREA) == AREA_DOCK ) {
+		if ( gdata(GDATA_FLAG_SUB_MISSION_FROM_GARZIEM) \ 10 == 2 ) {
+			if ( gdata(GDATA_TELEPORT_LEVEL) == 70 ) {
+				fmode = 11
+				gosub *game_ctrlFile
+			}
+		}
+	}
+	if ( gdata(GDATA_AREA) == AREA_REMIDO ) {
+		if ( gdata(GDATA_LEVEL) == 114 ) {
+			if ( gdata(GDATA_FLAG_ORPHE_IN_REMIDO) == 0 & gdata(GDATA_FLAG_MAIN) < 270 ) {
+				fmode = 11
+				gosub *game_ctrlFile
+			}
+		}
+	}
 	existwrapper exedir + "tmp\\mdata_" + mid + ".s2"
 	if ( strsize != (-1) ) {
 		fmode = 1
@@ -1241,11 +1269,9 @@
 		goto *map_preBegin
 	}
 *map_init_main
-	procid = (procid + 1) \ 4
-	proclist(procid) = "map_init_main" + " ct:" + ct
+	proc "map_init_main"
 	if ( mapupdate == 1 ) {
-		procid = (procid + 1) \ 4
-		proclist(procid) = "map_init_mapUpdate" + " ct:" + ct
+		proc "map_init_mapUpdate"
 		maxnpcbk = 0
 		dim rolebk, 2, 245
 		repeat MAX_CHARA_TOTAL
@@ -1374,6 +1400,8 @@
 		mdata(MDATA_WALL) = 0
 		flt
 		itemcreate -1, ITEM_ID_RED_BOOK, 15, 17, 0
+		flt
+		itemcreate -1, ITEM_ID_REGISTER, 18, 17, 0
 		inv(INV_ITEM_BOOK_ID, ci) = 4
 	}
 	if ( adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_SHOP ) {
@@ -2001,6 +2029,7 @@
 		loop
 		if ( arenaop == 0 ) {
 			fixlv = arenaop(2)
+			initlv = aitelv
 			characreate -1, arenaop(1), cdata(CDATA_X, CHARA_PLAYER) - 1, cdata(CDATA_Y, CHARA_PLAYER) - 4
 			cdata(CDATA_AI_AGGRO, rc) = 30
 			cdata(CDATA_RELATION, rc) = -3
@@ -3635,7 +3664,7 @@
 			repeat 2 + kaisuu
 				flt calcobjlv(encounterlv), calcfixlv(FIX_QUALITY_GOOD)
 				if ( gdata(GDATA_WEATHER) == WEATHER_ETHER ) {
-					if ( 33 > gdata(GDATA_WORLD_TILE) | gdata(GDATA_WORLD_TILE) >= 66 ) {
+					if ( range_tileRoad(gdata(GDATA_WORLD_TILE)) ) {
 						if ( rnd(3) == 0 ) {
 							fixlv = FIX_QUALITY_GODLY
 						}
@@ -3676,15 +3705,13 @@
 				if ( gdata(GDATA_FLAG_MAIN) < 170 ) {
 					evadd EVENT_BOSS_LESIMAS
 				}
-				procid = (procid + 1) \ 4
-				proclist(procid) = "lesimas1" + " ct:" + ct
+				proc "lesimas1"
 				x = 16
 				y = 13
 				cell_featset x, y, tile_upstairs, CELL_FEATURE_UPSTAIRS
 				mdata(MDATA_UPSTAIRS_POS) = y * 1000 + x
 				map_placeplayer
-				procid = (procid + 1) \ 4
-				proclist(procid) = "lesimas2" + " ct:" + ct
+				proc "lesimas2"
 				if ( gdata(GDATA_FLAG_MAIN) <= 170 ) {
 					flt
 					characreate -1, CREATURE_ID_ZEOME_THE_FALSE_PROPHET, 16, 6
@@ -3695,8 +3722,7 @@
 						characreate -1, CREATURE_ID_ORPHE_THE_CHAOS_CHILD, 16, 6
 					}
 				}
-				procid = (procid + 1) \ 4
-				proclist(procid) = "lesimas3" + " ct:" + ct
+				proc "lesimas3"
 				break
 			}
 			gosub *map_randomDungeon
@@ -3722,12 +3748,12 @@
 				mdata(MDATA_CAN_SAVE) = 1
 				mdata(MDATA_MUSIC) = MUSICLIST_MCLASTBOSS
 				mdatan(MDATAN_NAME) = lang("15階大広間", "Hall")
-				if ( gdata(GDATA_FLAG_MAIN) < 269 ) {
+				if ( gdata(GDATA_FLAG_MAIN) <= 269 & gdata(GDATA_FLAG_ORPHE_IN_REMIDO) == 0 ) {
 					evadd EVENT_ORPHE
 					gdata(GDATA_FLAG_MAIN) = 269
+					gdata(GDATA_FLAG_ORPHE_IN_REMIDO) = 1
 				}
-				procid = (procid + 1) \ 4
-				proclist(procid) = "Rehmido2" + " ct:" + ct
+				proc "Rehmido2"
 				map_placeplayer
 				break
 			}
@@ -3748,8 +3774,7 @@
 						cdata(CDATA_AI_CALM, rc) = 3
 					loop
 				}
-				procid = (procid + 1) \ 4
-				proclist(procid) = "Rehmido1" + " ct:" + ct
+				proc "Rehmido1"
 				x = 16
 				y = 13
 				cell_featset x, y, tile_upstairs, CELL_FEATURE_UPSTAIRS
@@ -3828,8 +3853,7 @@
 					novoidlv = 1
 					characreate -1, CREATURE_ID_CHAOS_HUNTER, 13, 8
 				}
-				procid = (procid + 1) \ 4
-				proclist(procid) = "chaos2" + " ct:" + ct
+				proc "chaos2"
 				map_placeplayer
 				break
 			}
@@ -3891,8 +3915,7 @@
 					cdata(CDATA_RELATION_ORG, rc) = 10
 					cdata(CDATA_CONDITION_BIND, rc) = 20
 				}
-				procid = (procid + 1) \ 4
-				proclist(procid) = "chaos3" + " ct:" + ct
+				proc "chaos3"
 				map_placeplayer
 				break
 			}
@@ -3913,8 +3936,7 @@
 				characreate -1, CREATURE_ID_NORNE_THE_GUIDE, 9, 11
 				cbitmod CHARA_BIT_CRADLE_15TH, rc, 1
 				cdata(CDATA_AI_CALM, rc) = 3
-				procid = (procid + 1) \ 4
-				proclist(procid) = "chaos4" + " ct:" + ct
+				proc "chaos4"
 				map_placeplayer
 				break
 			}
@@ -3928,8 +3950,7 @@
 				characreate -1, CREATURE_ID_MANYTIA_THE_ADVENTURE_MERCHANT, 10, 11
 				cdata(CDATA_AI_CALM, rc) = 3
 				cdata(CDATA_ROLE, rc) = ROLE_SPECIAL
-				procid = (procid + 1) \ 4
-				proclist(procid) = "chaos4" + " ct:" + ct
+				proc "chaos4"
 				cell_featset 10, 1, tile_downlocked, CELL_FEATURE_DOWNSTAIRS
 				map_placeplayer
 				break
@@ -3952,8 +3973,7 @@
 				if ( gdata(GDATA_FLAG_MAIN_CHAOS_CRADLE_25) == 0 ) {
 					evadd EVENT_GUILD
 				}
-				procid = (procid + 1) \ 4
-				proclist(procid) = "chaos5" + " ct:" + ct
+				proc "chaos5"
 				map_placeplayer
 				break
 			}
@@ -4007,54 +4027,113 @@
 					gdata(GDATA_FLAG_MAIN) = 615
 					evadd EVENT_AIKAGE
 				}
-				procid = (procid + 1) \ 4
-				proclist(procid) = "chaos6" + " ct:" + ct
+                proc "chaos6"
 				map_placeplayer
 				break
 			}
 			if ( gdata(GDATA_LEVEL) == 178 ) {
-				map_initcustom "chaos7"
-				mdata(MDATA_MODERATE_CROWD) = 0
-				mdata(MDATA_CAN_SAVE) = 1
-				mdatan(MDATAN_NAME) = lang("39階広間", "Hall")
-				flt
-				initlv = 200
-				novoidlv = 1
-				characreate -1, CREATURE_ID_BLACK_GAUNTLET_LEOLD, 10, 7
-				cdata(CDATA_ROLE, rc) = ROLE_SPECIAL
-				procid = (procid + 1) \ 4
-				proclist(procid) = "chaos7" + " ct:" + ct
-				map_placeplayer
-				break
+				if ( gdata(GDATA_FLAG_MAIN) >= 990 ) {
+					map_initcustom "chaos11"
+					mdata(MDATA_MODERATE_CROWD) = 0
+					mdata(MDATA_CAN_SAVE) = 1
+					mdatan(0) = lang("大広間", "Hall")
+					flt
+					initlv = 200
+					novoidlv = 1
+					characreate -1, CREATURE_ID_BLACK_GAUNTLET_LEOLD, 10, 7
+					cdata(CDATA_ROLE, rc) = ROLE_SPECIAL
+                    proc "chaos11"
+					map_placeplayer
+					break
+				}
+				else {
+					map_initcustom "chaos7"
+					mdata(MDATA_MODERATE_CROWD) = 0
+					mdata(MDATA_CAN_SAVE) = 1
+					mdatan(0) = lang("大広間", "Hall")
+					flt
+					initlv = 200
+					novoidlv = 1
+					characreate -1, CREATURE_ID_BLACK_GAUNTLET_LEOLD, 10, 7
+					cdata(CDATA_ROLE, rc) = ROLE_SPECIAL
+                    proc "chaos7"
+					map_placeplayer
+					break
+				}
 			}
 			if ( gdata(GDATA_LEVEL) == 179 ) {
-				map_initcustom "chaos8"
-				mdata(MDATA_MODERATE_CROWD) = 0
-				mdata(MDATA_CAN_SAVE) = 0
-				mdata(MDATA_MUSIC) = MUSICLIST_MCLASTBOSS
-				mdatan(MDATAN_NAME) = lang("神の間", "God's Prison")
-				flt
-				initlv = 200
-				novoidlv = 1
-				characreate -1, CREATURE_ID_BLACK_GAUNTLET_LEOLD, 10, 12
-				cdata(CDATA_AI_CALM, rc) = 4
-				cdata(CDATA_RELATION, rc) = 10
-				cdata(CDATA_RELATION_ORG, rc) = 10
-				cdata(CDATA_AI_AGGRO, rc) = 30
-				if ( gdata(GDATA_FLAG_MAIN) < 715 ) {
-					evadd EVENT_ENTHUMESIS
+				if ( gdata(GDATA_FLAG_MAIN) >= 990 ) {
+					map_initcustom "chaos10"
+					mdata(MDATA_MODERATE_CROWD) = 0
+					mdata(MDATA_CAN_SAVE) = 0
+					mdata(MDATA_MUSIC) = MUSICLIST_MCLASTBOSS3
+					mdatan(0) = lang("神の間<復元>", "God's prison")
+					proc "Chaos10"
+					map_placeplayer
+					tc = CHARA_PLAYER
+					gosub *effect_elixer
+					r1 = 0
+					gosub *charaRefresh
+					break
+				}
+				if ( gdata(GDATA_FLAG_MAIN) >= 845 & gdata(GDATA_FLAG_MAIN) < 990 ) {
+					map_initcustom "chaos9"
+					mdata(MDATA_MODERATE_CROWD) = 0
+					mdata(MDATA_CAN_SAVE) = 0
+					mdata(MDATA_MUSIC) = MUSICLIST_MCLASTBOSS3
+					mdatan(0) = lang("神の間<崩壊>", "God's prison")
+					proc "Chaos9"
 					flt
+					initlv = 200
 					novoidlv = 1
-					characreate -1, CREATURE_ID_ENTHUMESIS, 10, 10
+					characreate -1, CREATURE_ID_BLACK_GAUNTLET_LEOLD, 10, 12
+					cdata(CDATA_AI_CALM, rc) = 4
+					cdata(CDATA_RELATION, rc) = RELATION_ALLY
+					cdata(CDATA_RELATION_ORG, rc) = RELATION_ALLY
+					cdata(CDATA_AI_AGGRO, rc) = 30
+					flt
+					initlv = 350
+					novoidlv = 1
+					characreate -1, CREATURE_ID_ORPHE_THE_CHAOS_DISCPLE, 10, 10
+					cdata(CDATA_AI_CALM, rc) = 4
+					cdata(CDATA_TARGET, rc) = 0
+					cdata(CDATA_AI_AGGRO, rc) = 30
+					flt
+					initlv = 3500
+					novoidlv = 1
+					characreate -1, CREATURE_ID_THE_CHAOS_CHILD, 10, 8
 					cdata(CDATA_AI_CALM, rc) = 3
+					map_placeplayer
+					break
 				}
-				if ( gdata(GDATA_FLAG_MAIN) == 715 | gdata(GDATA_FLAG_MAIN) == 720 ) {
-					evadd EVENT_ENTHUMESIS2
+				if ( gdata(GDATA_FLAG_MAIN) < 845 ) {
+					map_initcustom "chaos8"
+					mdata(MDATA_MODERATE_CROWD) = 0
+					mdata(MDATA_CAN_SAVE) = 0
+					mdata(MDATA_MUSIC) = MUSICLIST_MCLASTBOSS
+					mdatan(0) = lang("神の間", "God's prison")
+					flt
+					initlv = 200
+					novoidlv = 1
+					characreate -1, CREATURE_ID_BLACK_GAUNTLET_LEOLD, 10, 12
+					cdata(CDATA_AI_CALM, rc) = 4
+					cdata(CDATA_RELATION, rc) = RELATION_ALLY
+					cdata(CDATA_RELATION_ORG, rc) = RELATION_ALLY
+					cdata(CDATA_AI_AGGRO, rc) = 30
+					if ( gdata(GDATA_FLAG_MAIN) < 715 ) {
+						evadd EVENT_ENTHUMESIS
+						flt
+						novoidlv = 1
+						characreate -1, CREATURE_ID_ENTHUMESIS, 10, 10
+						cdata(CDATA_AI_CALM, rc) = 3
+					}
+					if ( gdata(GDATA_FLAG_MAIN) == 715 | gdata(GDATA_FLAG_MAIN) == 720 ) {
+						evadd EVENT_ENTHUMESIS2
+					}
+					proc "Chaos8"
+					map_placeplayer
+					break
 				}
-				procid = (procid + 1) \ 4
-				proclist(procid) = "Chaos8" + " ct:" + ct
-				map_placeplayer
-				break
 			}
 			gosub *map_randomDungeon
 			break
@@ -4432,7 +4511,7 @@
 		cdata(CDATA_TONE, rc) = 0
 		cdata(CDATA_TONE_SEX, rc) = 2
 		cdata(CDATA_PIC, rc) = xy2pic(4, 31)
-		cdata(CDATA_PORTRAIT, tc) = 18
+		cdata(CDATA_PORTRAIT, rc) = 18
 		cdata(CDATA_ROLE, rc) = ROLE_SHOP_OFFICE, 10
 		cdatan(CDATAN_NAME, rc) = lang("装飾品売り", "the interior goods vendor")
 		flt
@@ -4451,9 +4530,133 @@
 		cdata(CDATA_TONE, rc) = 2
 		cdata(CDATA_TONE_SEX, rc) = 2
 		cdata(CDATA_PIC, rc) = xy2pic(3, 31)
-		cdata(CDATA_PORTRAIT, tc) = 6
+		cdata(CDATA_PORTRAIT, rc) = 6
 		cdata(CDATA_ROLE, rc) = ROLE_SHOP_BAKERY, 5
 		cdatan(CDATAN_NAME, rc) = lang("パン屋の店員", "the bakery clerk")
+	}
+	if ( gdata(GDATA_AREA) == AREA_WEST_RASKILIS ) {
+		if ( gdata(GDATA_LEVEL) == 1 ) {
+			map_initcustom "ras0"
+			mdata(MDATA_MODERATE_CROWD) = 0
+			mdata(MDATA_MUSIC) = MUSICLIST_MCVOYAGE
+			map_placeplayer
+			cell_featset 42, 27, tile_downstairs, CELL_FEATURE_DOWNSTAIRS, 2
+			flt
+			characreate -1, CREATURE_ID_JENNA_THE_MYTHICAL_MANIAC, 36, 24
+			cdata(CDATA_ROLE, rc) = ROLE_SPECIAL
+			flt
+			characreate -1, CREATURE_ID_MARY_THE_FLOWER_PICKER, 16, 11
+			cdata(CDATA_ROLE, rc) = ROLE_SPECIAL
+			flt
+			characreate -1, CREATURE_ID_CRAY_THE_CURIOUS_ADVENTURER, 23, 25
+			cdata(CDATA_ROLE, rc) = ROLE_SPECIAL
+			flt
+			characreate -1, CREATURE_ID_MANSON_THE_CAREFUL_ADVENTURER, 25, 25
+			cdata(CDATA_ROLE, rc) = ROLE_SPECIAL
+		}
+		if ( gdata(GDATA_LEVEL) == 2 ) {
+			map_initcustom "ras02"
+			mdata(MDATA_MODERATE_CROWD) = 0
+			mdata(MDATA_MUSIC) = MUSICLIST_MCSAD
+			map_placeplayer
+			cell_featset 83, 12, tile_downstairs, CELL_FEATURE_DOWNSTAIRS, 3
+			cell_featset 1, 7, tile_upstairs, CELL_FEATURE_UPSTAIRS, 1
+		}
+		if ( gdata(GDATA_LEVEL) == 3 ) {
+			map_initcustom "ras03"
+			mdata(MDATA_MODERATE_CROWD) = 0
+			mdata(MDATA_MUSIC) = MUSICLIST_MCSAD
+			map_placeplayer
+			cell_featset 25, 1, tile_downstairs, CELL_FEATURE_DOWNSTAIRS, 4
+			cell_featset 1, 26, tile_upstairs, CELL_FEATURE_UPSTAIRS, 2
+			flt
+			characreate -1, CREATURE_ID_OBLIVION_RUDE_BEAST, 6, 32
+			cdata(CDATA_ROLE, rc) = ROLE_SPECIAL
+			flt
+			characreate -1, CREATURE_ID_OBLIVION_RUDE_BEAST, 32, 9
+			cdata(CDATA_ROLE, rc) = ROLE_SPECIAL
+			flt
+			characreate -1, CREATURE_ID_OBLIVION_RUDE_BEAST, 28, 11
+			cdata(CDATA_ROLE, rc) = ROLE_SPECIAL
+		}
+		if ( gdata(GDATA_LEVEL) == 4 ) {
+			map_initcustom "ras04"
+			mdata(MDATA_MODERATE_CROWD) = 0
+			mdata(MDATA_MUSIC) = MUSICLIST_MCSAD
+			map_placeplayer
+			cell_featset 45, 25, tile_downstairs, CELL_FEATURE_DOWNSTAIRS, 5
+			cell_featset 26, 53, tile_upstairs, CELL_FEATURE_UPSTAIRS, 3
+			flt
+			characreate -1, CREATURE_ID_OBLIVION_RUDE_BEAST, 37, 10
+			cdata(CDATA_ROLE, rc) = ROLE_SPECIAL
+			flt
+			characreate -1, CREATURE_ID_OBLIVION_RUDE_BEAST, 29, 8
+			cdata(CDATA_ROLE, rc) = ROLE_SPECIAL
+			flt
+			characreate -1, CREATURE_ID_OBLIVION_RUDE_BEAST, 36, 33
+			cdata(CDATA_ROLE, rc) = ROLE_SPECIAL
+			flt
+			characreate -1, CREATURE_ID_STRANGE_OLD_PERSON, 14, 29
+			cdata(CDATA_AI_CALM, rc) = 3
+			cdata(CDATA_ROLE, rc) = ROLE_SPECIAL
+			flt
+			characreate -1, CREATURE_ID_SILVER_CAT, 15, 30
+			cdata(CDATA_AI_CALM, rc) = 3
+			cdata(CDATA_ROLE, rc) = ROLE_SPECIAL
+			cdatan(CDATAN_NAME, rc) = lang("白猫", "white cat")
+		}
+		if ( gdata(GDATA_LEVEL) == 5 ) {
+			map_initcustom "ras05"
+			mdata(MDATA_MODERATE_CROWD) = 0
+			mdata(MDATA_MUSIC) = MUSICLIST_MCSAD
+			map_placeplayer
+			cell_featset 27, 31, tile_downstairs, CELL_FEATURE_DOWNSTAIRS, 6
+			cell_featset 1, 43, tile_upstairs, CELL_FEATURE_UPSTAIRS, 4
+			flt
+			characreate -1, CREATURE_ID_BONYAC_THE_GENERAL_VENDOR, 15, 3
+			cdata(CDATA_AI_CALM, rc) = 3
+			cdata(CDATA_ROLE, rc) = ROLE_SPECIAL
+			flt
+			characreate -1, CREATURE_ID_OBLIVION_RUDE_BEAST, 28, 46
+			cdata(CDATA_ROLE, rc) = ROLE_SPECIAL
+			flt
+			characreate -1, CREATURE_ID_OBLIVION_RUDE_BEAST, 21, 45
+			cdata(CDATA_ROLE, rc) = ROLE_SPECIAL
+		}
+		if ( gdata(GDATA_LEVEL) == 6 ) {
+			map_initcustom "ras06"
+			mdata(MDATA_MODERATE_CROWD) = 0
+			mdata(MDATA_MUSIC) = MUSICLIST_MCSAD
+			map_placeplayer
+			cell_featset 45, 20, tile_downstairs, CELL_FEATURE_DOWNSTAIRS, 7
+			cell_featset 1, 19, tile_upstairs, CELL_FEATURE_UPSTAIRS, 5
+		}
+		if ( gdata(GDATA_LEVEL) == 7 ) {
+			map_initcustom "ras07"
+			mdata(MDATA_MODERATE_CROWD) = 0
+			mdata(MDATA_MUSIC) = MUSICLIST_MCSAD
+			map_placeplayer
+			cell_featset 1, 1, tile_downstairs, CELL_FEATURE_DOWNSTAIRS, 8
+			cell_featset 1, 27, tile_upstairs, CELL_FEATURE_UPSTAIRS, 6
+		}
+		if ( gdata(GDATA_LEVEL) == 8 ) {
+			map_initcustom "ras08"
+			mdata(MDATA_MODERATE_CROWD) = 0
+			mdata(MDATA_MUSIC) = MUSICLIST_MCSAD
+			map_placeplayer
+			cell_featset 28, 1, tile_downstairs, CELL_FEATURE_DOWNSTAIRS, 9
+			cell_featset 8, 24, tile_upstairs, CELL_FEATURE_UPSTAIRS, 7
+		}
+		if ( gdata(GDATA_LEVEL) == 9 ) {
+			map_initcustom "ras09"
+			mdata(MDATA_MODERATE_CROWD) = 0
+			mdata(MDATA_MUSIC) = MUSICLIST_MCHOME0
+			map_placeplayer
+			flt
+			characreate -1, CREATURE_ID_MIKRAANESIS, 8, 10
+			cdata(CDATA_ROLE, rc) = ROLE_SPECIAL
+			cell_featset 26, 23, tile_upstairs, CELL_FEATURE_UPSTAIRS, 8
+		}
 	}
 	if ( gdata(GDATA_AREA) == AREA_SOUTH_RASKILIS ) {
 		map_initcustom "ras_south"
@@ -5773,17 +5976,628 @@
 				}
 			loop
 		}
-		if ( gdata(GDATA_LEVEL) == 3 ) {
-			mdata(MDATA_TILESET) = 0
-			map_initcustom "sqKari"
-			mdata(MDATA_FIELD) = 1
+		if ( gdata(GDATA_LEVEL) == 2 ) {
+			mdata(MDATA_TILESET) = MAP_TILESET_DUNGEON
+			map_initcustom "3haka2"
+			map_placeplayer
+			mdata(MDATA_WALL) = 0
+			if ( gdata(GDATA_FLAG_AMUR_CAGE_SIVA) == 1 ) {
+				flt
+				characreate -1, CREATURE_ID_SIVA_THE_DESTRUCTION, 43, 20
+				cdata(CDATA_RELATION, rc) = RELATION_NEUTRAL
+				cdata(CDATA_RELATION_ORG, rc) = RELATION_NEUTRAL
+				cdata(CDATA_ROLE, rc) = ROLE_CITIZEN
+			}
+			if ( gdata(GDATA_FLAG_AMUR_CAGE_YERLESWOOD) == 1 ) {
+				flt
+				characreate -1, CREATURE_ID_YERLESWOOD_THE_SAVAGE_MACHINE, 45, 20
+				cdata(CDATA_RELATION, rc) = RELATION_NEUTRAL
+				cdata(CDATA_RELATION_ORG, rc) = RELATION_NEUTRAL
+				cdata(CDATA_ROLE, rc) = ROLE_CITIZEN
+			}
+			if ( gdata(GDATA_FLAG_AMUR_CAGE_ULZASSIL) == 1 ) {
+				flt
+				characreate -1, CREATURE_ID_ULZASSIL_THE_DEAD_EMPEROR, 47, 20
+				cdata(CDATA_RELATION, rc) = RELATION_NEUTRAL
+				cdata(CDATA_RELATION_ORG, rc) = RELATION_NEUTRAL
+				cdata(CDATA_ROLE, rc) = ROLE_CITIZEN
+			}
+			if ( gdata(GDATA_FLAG_AMUR_CAGE_FRISIA) == 1 ) {
+				flt
+				characreate -1, CREATURE_ID_FRISIA_THE_CAT_QUEEN, 43, 17
+				cdata(CDATA_RELATION, rc) = RELATION_NEUTRAL
+				cdata(CDATA_RELATION_ORG, rc) = RELATION_NEUTRAL
+				cdata(CDATA_ROLE, rc) = ROLE_CITIZEN
+			}
+			if ( gdata(GDATA_FLAG_AMUR_CAGE_UTIMA) == 1 ) {
+				flt
+				characreate -1, CREATURE_ID_UTIMA_THE_DESTROYER_OF_XEREN, 45, 17
+				cdata(CDATA_RELATION, rc) = RELATION_NEUTRAL
+				cdata(CDATA_RELATION_ORG, rc) = RELATION_NEUTRAL
+				cdata(CDATA_ROLE, rc) = ROLE_CITIZEN
+			}
+			if ( gdata(GDATA_FLAG_AMUR_CAGE_AZZRSSIL) == 1 ) {
+				flt
+				characreate -1, CREATURE_ID_AZZRSSIL_THE_IMPURE, 47, 17
+				cdata(CDATA_RELATION, rc) = RELATION_NEUTRAL
+				cdata(CDATA_RELATION_ORG, rc) = RELATION_NEUTRAL
+				cdata(CDATA_ROLE, rc) = ROLE_CITIZEN
+			}
+			if ( gdata(GDATA_FLAG_AMUR_CAGE_SUNRISE) == 1 ) {
+				flt
+				characreate -1, CREATURE_ID_SUNRISE_THE_ARCHIPELAGO_DRAGON, 21, 6
+				cdata(CDATA_RELATION, rc) = RELATION_NEUTRAL
+				cdata(CDATA_RELATION_ORG, rc) = RELATION_NEUTRAL
+				cdata(CDATA_ROLE, rc) = ROLE_CITIZEN
+			}
+			if ( gdata(GDATA_FLAG_AMUR_CAGE_PASCAL) == 1 ) {
+				flt
+				characreate -1, CREATURE_ID_PASCAL, 23, 6
+				cdata(CDATA_RELATION, rc) = RELATION_NEUTRAL
+				cdata(CDATA_RELATION_ORG, rc) = RELATION_NEUTRAL
+				cdata(CDATA_ROLE, rc) = ROLE_CITIZEN
+			}
+			if ( gdata(GDATA_FLAG_AMUR_CAGE_WING_SNAIL) == 1 ) {
+				flt
+				characreate -1, CREATURE_ID_WING_SNAIL, 23, 6
+				cdata(CDATA_RELATION, rc) = RELATION_NEUTRAL
+				cdata(CDATA_RELATION_ORG, rc) = RELATION_NEUTRAL
+				cdata(CDATA_ROLE, rc) = ROLE_CITIZEN
+			}
+			if ( gdata(GDATA_FLAG_AMUR_CAGE_MURDER_KNIGHT) == 1 ) {
+				flt
+				characreate -1, CREATURE_ID_MURDER_KNIGHT, 27, 6
+				cdata(CDATA_RELATION, rc) = RELATION_NEUTRAL
+				cdata(CDATA_RELATION_ORG, rc) = RELATION_NEUTRAL
+				cdata(CDATA_ROLE, rc) = ROLE_CITIZEN
+			}
+			if ( gdata(GDATA_FLAG_AMUR_CAGE_LITYOU) == 1 ) {
+				flt
+				characreate -1, CREATURE_ID_LITYOU, 29, 6
+				cdata(CDATA_RELATION, rc) = RELATION_NEUTRAL
+				cdata(CDATA_RELATION_ORG, rc) = RELATION_NEUTRAL
+				cdata(CDATA_ROLE, rc) = ROLE_CITIZEN
+			}
+			if ( gdata(GDATA_FLAG_AMUR_CAGE_MAD_SCIENTIST) == 1 ) {
+				flt
+				characreate -1, CREATURE_ID_MAD_SCIENTIST, 31, 6
+				cdata(CDATA_RELATION, rc) = RELATION_NEUTRAL
+				cdata(CDATA_RELATION_ORG, rc) = RELATION_NEUTRAL
+				cdata(CDATA_ROLE, rc) = ROLE_CITIZEN
+			}
+			if ( gdata(GDATA_FLAG_AMUR_CAGE_ISCA) == 1 ) {
+				flt
+				characreate -1, CREATURE_ID_ISCA_THE_FALLEN_ANGEL, 33, 6
+				cdata(CDATA_RELATION, rc) = RELATION_NEUTRAL
+				cdata(CDATA_RELATION_ORG, rc) = RELATION_NEUTRAL
+				cdata(CDATA_ROLE, rc) = ROLE_CITIZEN
+			}
+			if ( gdata(GDATA_FLAG_AMUR_CAGE_DUNGEON_CLEANER) == 1 ) {
+				flt
+				characreate -1, CREATURE_ID_DUNGEON_CLEANER, 21, 10
+				cdata(CDATA_RELATION, rc) = RELATION_NEUTRAL
+				cdata(CDATA_RELATION_ORG, rc) = RELATION_NEUTRAL
+				cdata(CDATA_ROLE, rc) = ROLE_CITIZEN
+			}
+			if ( gdata(GDATA_FLAG_AMUR_CAGE_GODA) == 1 ) {
+				flt
+				characreate -1, CREATURE_ID_GODA_THE_CAPTAIN_OF_ORC, 23, 10
+				cdata(CDATA_RELATION, rc) = RELATION_NEUTRAL
+				cdata(CDATA_RELATION_ORG, rc) = RELATION_NEUTRAL
+				cdata(CDATA_ROLE, rc) = ROLE_CITIZEN
+			}
+		}
+		if ( gdata(GDATA_LEVEL) == 10 ) {
+			map_initcustom "meiq101"
+			mdata(MDATA_FIELD) = MAP_FIELD_INDOOR
 			mdata(MDATA_TYPE) = MAP_TYPE_VILLAGE
 			mdata(MDATA_MODERATE_CROWD) = 0
-			mdata(MDATA_MUSIC) = MUSICLIST_MCDUNGEON9
-			mdata(MDATA_NO_RENEW) = 1
-			mdatan(MDATAN_NAME) = lang("仮", "Underground passage")
-			put_questtarget
+			mdata(MDATA_MUSIC) = MUSICLIST_UNDEFINED_4
+			mdata(MDATA_CAN_SAVE) = 0
+			mdata(MDATA_NO_RENEW) = 0
+			mdatan(0) = lang("冥宮入口", "LabyrinDeath 1F")
+			gdata(GDATA_LEVEL_START_ON) = 7
+			mapstartx = 17
+			mapstarty = 3
 			map_placeplayer
+		}
+		if ( gdata(GDATA_LEVEL) == 11 ) {
+			map_initcustom "meiq111"
+			mdata(MDATA_FIELD) = MAP_FIELD_INDOOR
+			mdata(MDATA_TYPE) = MAP_TYPE_VILLAGE
+			mdata(MDATA_MODERATE_CROWD) = 0
+			mdata(MDATA_MUSIC) = MUSICLIST_UNDEFINED_4
+			mdata(MDATA_CAN_SAVE) = 0
+			mdata(MDATA_NO_RENEW) = 0
+			mdatan(0) = lang("冥宮入口", "LabyrinDeath 1F")
+			gdata(GDATA_LEVEL_START_ON) = 7
+			mapstartx = 17
+			mapstarty = 24
+			map_placeplayer
+			if ( soulstage < 5 ) {
+				flt , 6
+				novoidlv = 1
+				characreate -1, CREATURE_ID_HELLABYRINTH_RULER, 17, 2
+				cdata(CDATA_AI_CALM, rc) = 3
+				cdata(CDATA_PIC, rc) = xy2pic(3, 31)
+				cdata(CDATA_RELATION, rc) = RELATION_NEUTRAL
+				cdata(CDATA_RELATION_ORG, rc) = RELATION_NEUTRAL
+				cdata(CDATA_SEX, rc) = 1
+				cdatan(CDATAN_NAME, rc) = lang("？？？？", "????")
+			}
+			evadd EVENT_AMURDEAD_SUB_FIREWORKS
+		}
+		if ( gdata(GDATA_LEVEL) == 12 ) {
+			map_initcustom "meiq121"
+			mdata(MDATA_FIELD) = MAP_FIELD_INDOOR
+			mdata(MDATA_TYPE) = MAP_TYPE_VILLAGE
+			mdata(MDATA_MODERATE_CROWD) = 0
+			mdata(MDATA_MUSIC) = MUSICLIST_UNDEFINED_4
+			mdata(MDATA_CAN_SAVE) = 0
+			mdata(MDATA_NO_RENEW) = 0
+			mdatan(0) = lang("冥宮入口", "LabyrinDeath 1F")
+			gdata(GDATA_LEVEL_START_ON) = 7
+			mapstartx = 17
+			mapstarty = 24
+			map_placeplayer
+			if ( soulstage < 5 ) {
+				flt , 6
+				novoidlv = 1
+				characreate -1, CREATURE_ID_HELLABYRINTH_RULER, 17, 2
+				cdata(CDATA_AI_CALM, rc) = 3
+				cdata(CDATA_PIC, rc) = xy2pic(3, 31)
+				cdata(CDATA_RELATION, rc) = RELATION_NEUTRAL
+				cdata(CDATA_RELATION_ORG, rc) = RELATION_NEUTRAL
+				cdata(CDATA_SEX, rc) = 1
+				cdatan(CDATAN_NAME, rc) = lang("？？？？", "????")
+			}
+			evadd EVENT_AMURDEAD_SUB_FIREWORKS
+		}
+		if ( gdata(GDATA_LEVEL) == 16 ) {
+			map_initcustom "meiq161"
+			mdata(MDATA_FIELD) = MAP_FIELD_INDOOR
+			mdata(MDATA_TYPE) = MAP_TYPE_VILLAGE
+			mdata(MDATA_MODERATE_CROWD) = 0
+			mdata(MDATA_MUSIC) = MUSICLIST_UNDEFINED_4
+			mdata(MDATA_CAN_SAVE) = 0
+			mdata(MDATA_NO_RENEW) = 0
+			mdatan(0) = lang("悪鬼の掌", "Area of Curse")
+			gdata(GDATA_LEVEL_START_ON) = 7
+			mapstartx = 17
+			mapstarty = 16
+			map_placeplayer
+			if ( rnd(2) == 0 | 0 ) {
+				kaidan = 1
+			}
+			else {
+				kaidan = 0
+			}
+			if ( kaidan == 0 ) {
+				cell_featset 17, 12, tile_upstairs, CELL_FEATURE_UPSTAIRS, 11
+			}
+			else {
+				cell_featset 17, 12, tile_upstairs, CELL_FEATURE_UPSTAIRS, 12
+			}
+			flt , 4
+			novoidlv = 1
+			characreate -1, CREATURE_ID_HELLABYRINTH_RULER, 17, 12
+			cdata(CDATA_AI_CALM, rc) = 3
+			cdata(CDATA_AI_MOVE_FREQ, rc) = 0
+		}
+		if ( gdata(GDATA_LEVEL) == 20 ) {
+			map_initcustom "meiq102"
+			mdata(MDATA_FIELD) = MAP_FIELD_INDOOR
+			mdata(MDATA_TYPE) = MAP_TYPE_VILLAGE
+			mdata(MDATA_MODERATE_CROWD) = 0
+			mdata(MDATA_MUSIC) = MUSICLIST_UNDEFINED_4
+			mdata(MDATA_CAN_SAVE) = 0
+			mdata(MDATA_NO_RENEW) = 0
+			mdatan(0) = lang("冥宮　2層", "LabyrinDeath 2F")
+			gdata(GDATA_LEVEL_START_ON) = 7
+			mapstartx = 23
+			mapstarty = 4
+			map_placeplayer
+		}
+		if ( gdata(GDATA_LEVEL) == 21 ) {
+			map_initcustom "meiq112"
+			mdata(MDATA_FIELD) = MAP_FIELD_INDOOR
+			mdata(MDATA_TYPE) = MAP_TYPE_VILLAGE
+			mdata(MDATA_MODERATE_CROWD) = 0
+			mdata(MDATA_MUSIC) = MUSICLIST_UNDEFINED_4
+			mdata(MDATA_CAN_SAVE) = 0
+			mdata(MDATA_NO_RENEW) = 0
+			mdatan(0) = lang("冥宮　2層", "LabyrinDeath 2F")
+			gdata(GDATA_LEVEL_START_ON) = 7
+			mapstartx = 31
+			mapstarty = 16
+			map_placeplayer
+			if ( rnd(2) == 0 | 0 ) {
+				kaidan = 1
+			}
+			else {
+				kaidan = 0
+			}
+			if ( kaidan == 0 ) {
+				cell_featset 17, 2, tile_upstairs, CELL_FEATURE_UPSTAIRS, 11
+			}
+			else {
+				cell_featset 17, 2, tile_upstairs, CELL_FEATURE_UPSTAIRS, 12
+			}
+			txt lang("「…か…び…よ…」", cnvtalk("...dle.. fin..."))
+		}
+		if ( gdata(GDATA_LEVEL) == 22 ) {
+			map_initcustom "meiq122"
+			mdata(MDATA_FIELD) = MAP_FIELD_INDOOR
+			mdata(MDATA_TYPE) = MAP_TYPE_VILLAGE
+			mdata(MDATA_MODERATE_CROWD) = 0
+			mdata(MDATA_MUSIC) = MUSICLIST_UNDEFINED_4
+			mdata(MDATA_CAN_SAVE) = 0
+			mdata(MDATA_NO_RENEW) = 0
+			mdatan(0) = lang("冥宮　2層", "LabyrinDeath 2F")
+			gdata(GDATA_LEVEL_START_ON) = 7
+			mapstartx = 31
+			mapstarty = 16
+			map_placeplayer
+			if ( rnd(2) == 0 | 0 ) {
+				kaidan = 1
+			}
+			else {
+				kaidan = 0
+			}
+			if ( kaidan == 0 ) {
+				cell_featset 6, 7, tile_upstairs, CELL_FEATURE_UPSTAIRS, 11
+			}
+			else {
+				cell_featset 6, 7, tile_upstairs, CELL_FEATURE_UPSTAIRS, 12
+			}
+			txt lang("「こ…び…だ…」", cnvtalk("...ittl.. fin..."))
+		}
+		if ( gdata(GDATA_LEVEL) == 26 ) {
+			map_initcustom "meiq162"
+			mdata(MDATA_FIELD) = MAP_FIELD_INDOOR
+			mdata(MDATA_TYPE) = MAP_TYPE_VILLAGE
+			mdata(MDATA_MODERATE_CROWD) = 0
+			mdata(MDATA_MUSIC) = MUSICLIST_UNDEFINED_4
+			mdata(MDATA_CAN_SAVE) = 0
+			mdata(MDATA_NO_RENEW) = 0
+			mdatan(0) = lang("悪鬼の掌", "Area of Curse")
+			gdata(GDATA_LEVEL_START_ON) = 7
+			mapstartx = 17
+			mapstarty = 16
+			map_placeplayer
+			if ( rnd(2) == 0 | 0 ) {
+				kaidan = 1
+			}
+			else {
+				kaidan = 0
+			}
+			if ( kaidan == 0 ) {
+				cell_featset 17, 12, tile_upstairs, CELL_FEATURE_UPSTAIRS, 21
+			}
+			else {
+				cell_featset 17, 12, tile_upstairs, CELL_FEATURE_UPSTAIRS, 22
+			}
+			flt , 4
+			novoidlv = 1
+			characreate -1, CREATURE_ID_HELLABYRINTH_RULER, 17, 12
+			cdata(CDATA_AI_CALM, rc) = 3
+			cdata(CDATA_AI_MOVE_FREQ, rc) = 0
+		}
+		if ( gdata(GDATA_LEVEL) == 30 ) {
+			map_initcustom "meiq103"
+			mdata(MDATA_FIELD) = MAP_FIELD_INDOOR
+			mdata(MDATA_TYPE) = MAP_TYPE_VILLAGE
+			mdata(MDATA_MODERATE_CROWD) = 0
+			mdata(MDATA_MUSIC) = MUSICLIST_UNDEFINED_4
+			mdata(MDATA_CAN_SAVE) = 0
+			mdata(MDATA_NO_RENEW) = 0
+			mdatan(0) = lang("冥宮　3層", "LabyrinDeath 3F")
+			gdata(GDATA_LEVEL_START_ON) = 7
+			mapstartx = 17
+			mapstarty = 2
+			map_placeplayer
+		}
+		if ( gdata(GDATA_LEVEL) == 31 ) {
+			map_initcustom "meiq113"
+			mdata(MDATA_FIELD) = MAP_FIELD_INDOOR
+			mdata(MDATA_TYPE) = MAP_TYPE_VILLAGE
+			mdata(MDATA_MODERATE_CROWD) = 0
+			mdata(MDATA_MUSIC) = MUSICLIST_UNDEFINED_4
+			mdata(MDATA_CAN_SAVE) = 0
+			mdata(MDATA_NO_RENEW) = 0
+			mdatan(0) = lang("冥宮　3層", "LabyrinDeath 3F")
+			gdata(GDATA_LEVEL_START_ON) = 7
+			mapstartx = 31
+			mapstarty = 16
+			map_placeplayer
+			if ( rnd(2) == 0 | 0 ) {
+				kaidan = 1
+			}
+			else {
+				kaidan = 0
+			}
+			if ( kaidan == 0 ) {
+				cell_featset 11, 4, tile_upstairs, CELL_FEATURE_UPSTAIRS, 21
+			}
+			else {
+				cell_featset 11, 4, tile_upstairs, CELL_FEATURE_UPSTAIRS, 22
+			}
+			txt lang("「あお…だ…」", cnvtalk("Bl.. sta..."))
+			evadd EVENT_AMURDEAD_SUB_FIREWORKS
+		}
+		if ( gdata(GDATA_LEVEL) == 32 ) {
+			map_initcustom "meiq123"
+			mdata(MDATA_FIELD) = MAP_FIELD_INDOOR
+			mdata(MDATA_TYPE) = MAP_TYPE_VILLAGE
+			mdata(MDATA_MODERATE_CROWD) = 0
+			mdata(MDATA_MUSIC) = MUSICLIST_UNDEFINED_4
+			mdata(MDATA_CAN_SAVE) = 0
+			mdata(MDATA_NO_RENEW) = 0
+			mdatan(0) = lang("冥宮　3層", "LabyrinDeath 3F")
+			gdata(GDATA_LEVEL_START_ON) = 7
+			mapstartx = 31
+			mapstarty = 16
+			map_placeplayer
+			if ( rnd(2) == 0 | 0 ) {
+				kaidan = 1
+			}
+			else {
+				kaidan = 0
+			}
+			if ( kaidan == 0 ) {
+				cell_featset 23, 4, tile_upstairs, CELL_FEATURE_UPSTAIRS, 21
+			}
+			else {
+				cell_featset 23, 4, tile_upstairs, CELL_FEATURE_UPSTAIRS, 22
+			}
+			txt lang("「あお…だ…」", cnvtalk("Bl.. sta..."))
+			evadd EVENT_AMURDEAD_SUB_FIREWORKS
+		}
+		if ( gdata(GDATA_LEVEL) == 36 ) {
+			map_initcustom "meiq163"
+			mdata(MDATA_FIELD) = MAP_FIELD_INDOOR
+			mdata(MDATA_TYPE) = MAP_TYPE_VILLAGE
+			mdata(MDATA_MODERATE_CROWD) = 0
+			mdata(MDATA_MUSIC) = MUSICLIST_UNDEFINED_4
+			mdata(MDATA_CAN_SAVE) = 0
+			mdata(MDATA_NO_RENEW) = 0
+			mdatan(0) = lang("悪鬼の掌", "Area of Curse")
+			gdata(GDATA_LEVEL_START_ON) = 7
+			mapstartx = 17
+			mapstarty = 16
+			map_placeplayer
+			if ( rnd(2) == 0 | 0 ) {
+				kaidan = 1
+			}
+			else {
+				kaidan = 0
+			}
+			if ( kaidan == 0 ) {
+				cell_featset 17, 12, tile_upstairs, CELL_FEATURE_UPSTAIRS, 31
+			}
+			else {
+				cell_featset 17, 12, tile_upstairs, CELL_FEATURE_UPSTAIRS, 32
+			}
+			flt , 4
+			novoidlv = 1
+			characreate -1, CREATURE_ID_HELLABYRINTH_RULER, 17, 12
+			cdata(CDATA_AI_CALM, rc) = 3
+			cdata(CDATA_AI_MOVE_FREQ, rc) = 0
+		}
+		if ( gdata(GDATA_LEVEL) == 40 ) {
+			map_initcustom "meiq104"
+			mdata(MDATA_FIELD) = MAP_FIELD_INDOOR
+			mdata(MDATA_TYPE) = MAP_TYPE_VILLAGE
+			mdata(MDATA_MODERATE_CROWD) = 0
+			mdata(MDATA_MUSIC) = MUSICLIST_UNDEFINED_4
+			mdata(MDATA_CAN_SAVE) = 0
+			mdata(MDATA_NO_RENEW) = 0
+			mdatan(0) = lang("冥宮　4層", "LabyrinDeath 4F")
+			gdata(GDATA_LEVEL_START_ON) = 7
+			mapstartx = 11
+			mapstarty = 4
+			map_placeplayer
+		}
+		if ( gdata(GDATA_LEVEL) == 41 ) {
+			map_initcustom "meiq114"
+			mdata(MDATA_FIELD) = MAP_FIELD_INDOOR
+			mdata(MDATA_TYPE) = MAP_TYPE_VILLAGE
+			mdata(MDATA_MODERATE_CROWD) = 0
+			mdata(MDATA_MUSIC) = MUSICLIST_UNDEFINED_4
+			mdata(MDATA_CAN_SAVE) = 0
+			mdata(MDATA_NO_RENEW) = 0
+			mdatan(0) = lang("冥宮　4層", "LabyrinDeath 4F")
+			gdata(GDATA_LEVEL_START_ON) = 7
+			mapstartx = 31
+			mapstarty = 16
+			map_placeplayer
+			if ( rnd(2) == 0 | 0 ) {
+				kaidan = 1
+			}
+			else {
+				kaidan = 0
+			}
+			if ( kaidan == 0 ) {
+				cell_featset 17, 2, tile_upstairs, CELL_FEATURE_UPSTAIRS, 31
+			}
+			else {
+				cell_featset 17, 2, tile_upstairs, CELL_FEATURE_UPSTAIRS, 32
+			}
+			txt lang("「赤の階…だ…」", cnvtalk("Re..d sta..irs..."))
+		}
+		if ( gdata(GDATA_LEVEL) == 42 ) {
+			map_initcustom "meiq124"
+			mdata(MDATA_FIELD) = MAP_FIELD_INDOOR
+			mdata(MDATA_TYPE) = MAP_TYPE_VILLAGE
+			mdata(MDATA_MODERATE_CROWD) = 0
+			mdata(MDATA_MUSIC) = MUSICLIST_UNDEFINED_4
+			mdata(MDATA_CAN_SAVE) = 0
+			mdata(MDATA_NO_RENEW) = 0
+			mdatan(0) = lang("冥宮　4層", "LabyrinDeath 4F")
+			gdata(GDATA_LEVEL_START_ON) = 7
+			mapstartx = 31
+			mapstarty = 16
+			map_placeplayer
+			if ( rnd(2) == 0 | 0 ) {
+				kaidan = 1
+			}
+			else {
+				kaidan = 0
+			}
+			if ( kaidan == 0 ) {
+				cell_featset 11, 4, tile_upstairs, CELL_FEATURE_UPSTAIRS, 31
+			}
+			else {
+				cell_featset 11, 4, tile_upstairs, CELL_FEATURE_UPSTAIRS, 32
+			}
+			txt lang("「くすりゆび…階だ…」", cnvtalk("Rin..g fin...ger st...airs..."))
+		}
+		if ( gdata(GDATA_LEVEL) == 46 ) {
+			map_initcustom "meiq164"
+			mdata(MDATA_FIELD) = MAP_FIELD_INDOOR
+			mdata(MDATA_TYPE) = MAP_TYPE_VILLAGE
+			mdata(MDATA_MODERATE_CROWD) = 0
+			mdata(MDATA_MUSIC) = MUSICLIST_UNDEFINED_4
+			mdata(MDATA_CAN_SAVE) = 0
+			mdata(MDATA_NO_RENEW) = 0
+			mdatan(0) = lang("悪鬼の掌", "Area of Curse")
+			gdata(GDATA_LEVEL_START_ON) = 7
+			mapstartx = 17
+			mapstarty = 16
+			map_placeplayer
+			if ( rnd(2) == 0 | 0 ) {
+				kaidan = 1
+			}
+			else {
+				kaidan = 0
+			}
+			if ( kaidan == 0 ) {
+				cell_featset 17, 12, tile_upstairs, CELL_FEATURE_UPSTAIRS, 41
+			}
+			else {
+				cell_featset 17, 12, tile_upstairs, CELL_FEATURE_UPSTAIRS, 42
+			}
+			flt , 4
+			novoidlv = 1
+			characreate -1, CREATURE_ID_HELLABYRINTH_RULER, 17, 12
+			cdata(CDATA_AI_CALM, rc) = 3
+			cdata(CDATA_AI_MOVE_FREQ, rc) = 0
+		}
+		if ( gdata(GDATA_LEVEL) == 50 ) {
+			map_initcustom "meiq105"
+			mdata(MDATA_FIELD) = MAP_FIELD_INDOOR
+			mdata(MDATA_TYPE) = MAP_TYPE_VILLAGE
+			mdata(MDATA_MODERATE_CROWD) = 0
+			mdata(MDATA_MUSIC) = MUSICLIST_UNDEFINED_4
+			mdata(MDATA_CAN_SAVE) = 0
+			mdata(MDATA_NO_RENEW) = 0
+			mdatan(0) = lang("冥宮　5層", "LabyrinDeath 5F")
+			gdata(GDATA_LEVEL_START_ON) = 7
+			mapstartx = 6
+			mapstarty = 7
+			map_placeplayer
+		}
+		if ( gdata(GDATA_LEVEL) == 51 ) {
+			map_initcustom "meiq115"
+			mdata(MDATA_FIELD) = MAP_FIELD_INDOOR
+			mdata(MDATA_TYPE) = MAP_TYPE_VILLAGE
+			mdata(MDATA_MODERATE_CROWD) = 0
+			mdata(MDATA_MUSIC) = MUSICLIST_UNDEFINED_4
+			mdata(MDATA_CAN_SAVE) = 0
+			mdata(MDATA_NO_RENEW) = 0
+			mdatan(0) = lang("冥宮　5層", "LabyrinDeath 5F")
+			gdata(GDATA_LEVEL_START_ON) = 7
+			mapstartx = 31
+			mapstarty = 16
+			map_placeplayer
+			if ( rnd(2) == 0 | 0 ) {
+				kaidan = 1
+			}
+			else {
+				kaidan = 0
+			}
+			if ( kaidan == 0 ) {
+				cell_featset 23, 4, tile_upstairs, CELL_FEATURE_UPSTAIRS, 41
+			}
+			else {
+				cell_featset 23, 4, tile_upstairs, CELL_FEATURE_UPSTAIRS, 42
+			}
+			txt lang("「ひとさしゆびの階段だよ…」", cnvtalk("Index finger stairs..."))
+		}
+		if ( gdata(GDATA_LEVEL) == 52 ) {
+			map_initcustom "meiq125"
+			mdata(MDATA_FIELD) = MAP_FIELD_INDOOR
+			mdata(MDATA_TYPE) = MAP_TYPE_VILLAGE
+			mdata(MDATA_MODERATE_CROWD) = 0
+			mdata(MDATA_MUSIC) = MUSICLIST_UNDEFINED_4
+			mdata(MDATA_CAN_SAVE) = 0
+			mdata(MDATA_NO_RENEW) = 0
+			mdatan(0) = lang("冥宮　5層", "LabyrinDeath 5F")
+			gdata(GDATA_LEVEL_START_ON) = 7
+			mapstartx = 31
+			mapstarty = 16
+			map_placeplayer
+			if ( rnd(2) == 0 | 0 ) {
+				kaidan = 1
+			}
+			else {
+				kaidan = 0
+			}
+			if ( kaidan == 0 ) {
+				cell_featset 6, 7, tile_upstairs, CELL_FEATURE_UPSTAIRS, 41
+			}
+			else {
+				cell_featset 6, 7, tile_upstairs, CELL_FEATURE_UPSTAIRS, 42
+			}
+			txt lang("「青の階段だよ…」", cnvtalk("Blue stairs..."))
+		}
+		if ( gdata(GDATA_LEVEL) == 56 ) {
+			map_initcustom "meiq165"
+			mdata(MDATA_FIELD) = MAP_FIELD_INDOOR
+			mdata(MDATA_TYPE) = MAP_TYPE_VILLAGE
+			mdata(MDATA_MODERATE_CROWD) = 0
+			mdata(MDATA_MUSIC) = MUSICLIST_UNDEFINED_4
+			mdata(MDATA_CAN_SAVE) = 0
+			mdata(MDATA_NO_RENEW) = 0
+			mdatan(0) = lang("悪鬼の掌", "Area of Curse")
+			gdata(GDATA_LEVEL_START_ON) = 7
+			mapstartx = 17
+			mapstarty = 16
+			map_placeplayer
+			if ( rnd(2) == 0 | 0 ) {
+				kaidan = 1
+			}
+			else {
+				kaidan = 0
+			}
+			if ( kaidan == 0 ) {
+				cell_featset 17, 12, tile_upstairs, CELL_FEATURE_UPSTAIRS, 51
+			}
+			else {
+				cell_featset 17, 12, tile_upstairs, CELL_FEATURE_UPSTAIRS, 52
+			}
+			flt , 4
+			novoidlv = 1
+			characreate -1, CREATURE_ID_HELLABYRINTH_RULER, 17, 12
+			cdata(CDATA_AI_CALM, rc) = 3
+			cdata(CDATA_AI_MOVE_FREQ, rc) = 0
+		}
+		if ( gdata(GDATA_LEVEL) == 60 ) {
+			map_initcustom "meiq106"
+			mdata(MDATA_FIELD) = MAP_FIELD_INDOOR
+			mdata(MDATA_TYPE) = MAP_TYPE_VILLAGE
+			mdata(MDATA_MODERATE_CROWD) = 0
+			mdata(MDATA_MUSIC) = MUSICLIST_UNDEFINED_4
+			mdata(MDATA_CAN_SAVE) = 0
+			mdata(MDATA_NO_RENEW) = 0
+			mdatan(0) = lang("冥宮　6層", "LabyrinDeath 6F")
+			gdata(GDATA_LEVEL_START_ON) = 7
+			mapstartx = 26
+			mapstarty = 26
+			map_placeplayer
+			flt , 6
+			novoidlv = 1
+			characreate -1, CREATURE_ID_STRAY_SOUL, 8, 21
 		}
 	}
 	if ( gdata(GDATA_AREA) == AREA_YLVA_LIBRARY ) {
@@ -6119,6 +6933,134 @@
 				cdata(CDATA_ROLE, rc) = ROLE_CITIZEN
 			loop
 		}
+		if ( gdata(GDATA_LEVEL) == 70 ) {
+			mdata(MDATA_TILESET) = MAP_TILESET_DUNGEON
+			map_initcustom "87bship"
+			mdata(MDATA_FIELD) = MAP_FIELD_INDOOR
+			mdata(MDATA_TYPE) = MAP_TYPE_VILLAGE
+			mdata(MDATA_MODERATE_CROWD) = 0
+			mdata(MDATA_MUSIC) = MUSICLIST_MCMELAN
+			mdata(MDATA_NO_RENEW) = 0
+			mdatan(0) = lang("作業区画", "Work area")
+			gdata(GDATA_LEVEL_START_ON) = 7
+			mapstartx = 15
+			mapstarty = 12
+			map_placeplayer
+			flt
+			characreate -1, CREATURE_ID_WORKER_02, 9, 3
+			cdata(CDATA_RELATION, rc) = RELATION_NEUTRAL
+			cdata(CDATA_RELATION_ORG, rc) = RELATION_NEUTRAL
+			cdata(CDATA_ROLE, rc) = ROLE_SISTER
+			cdata(CDATA_PIC, rc) = 761 + 15 * 1000
+			cdata(CDATA_AI_CALM, rc) = 3
+			flt
+			characreate -1, CREATURE_ID_WORKER_02, 7, 7
+			cdata(CDATA_SEX, rc) = 0
+			cdata(CDATA_RELATION, rc) = RELATION_NEUTRAL
+			cdata(CDATA_RELATION_ORG, rc) = RELATION_NEUTRAL
+			cdata(CDATA_ROLE, rc) = ROLE_SISTER
+			cdata(CDATA_PIC, rc) = 761 + 15 * 1000
+			cdata(CDATA_AI_CALM, rc) = 3
+			flt
+			characreate -1, CREATURE_ID_WORKER_02, 3, 11
+			cdata(CDATA_SEX, rc) = 1
+			cdata(CDATA_RELATION, rc) = RELATION_NEUTRAL
+			cdata(CDATA_RELATION_ORG, rc) = RELATION_NEUTRAL
+			cdata(CDATA_ROLE, rc) = ROLE_SISTER
+			cdata(CDATA_PIC, rc) = 761 + 15 * 1000
+			cdata(CDATA_AI_CALM, rc) = 3
+			flt
+			characreate -1, CREATURE_ID_WORKER_02, 5, 15
+			cdata(CDATA_RELATION, rc) = RELATION_NEUTRAL
+			cdata(CDATA_RELATION_ORG, rc) = RELATION_NEUTRAL
+			cdata(CDATA_ROLE, rc) = ROLE_SISTER
+			cdata(CDATA_PIC, rc) = 761 + 15 * 1000
+			cdata(CDATA_AI_CALM, rc) = 3
+			flt
+			characreate -1, CREATURE_ID_WORKER_01, 21, 1
+			cdata(CDATA_RELATION, rc) = RELATION_NEUTRAL
+			cdata(CDATA_RELATION_ORG, rc) = RELATION_NEUTRAL
+			cdata(CDATA_ROLE, rc) = ROLE_SPECIAL
+			cdata(CDATA_AI_CALM, rc) = 3
+			flt
+			characreate -1, CREATURE_ID_WORKER_01, 22, 1
+			cdata(CDATA_RELATION, rc) = RELATION_NEUTRAL
+			cdata(CDATA_RELATION_ORG, rc) = RELATION_NEUTRAL
+			cdata(CDATA_ROLE, rc) = ROLE_SPECIAL
+			cdata(CDATA_AI_CALM, rc) = 3
+			flt
+			characreate -1, CREATURE_ID_WORKER_01, 21, 11
+			cdata(CDATA_RELATION, rc) = RELATION_NEUTRAL
+			cdata(CDATA_RELATION_ORG, rc) = RELATION_NEUTRAL
+			cdata(CDATA_ROLE, rc) = ROLE_SPECIAL
+			cdata(CDATA_AI_CALM, rc) = 3
+			flt
+			characreate -1, CREATURE_ID_WORKER_01, 3, 3
+			cdata(CDATA_RELATION, rc) = RELATION_NEUTRAL
+			cdata(CDATA_RELATION_ORG, rc) = RELATION_NEUTRAL
+			cdata(CDATA_ROLE, rc) = ROLE_SPECIAL
+			cdata(CDATA_AI_CALM, rc) = 3
+			flt
+			characreate -1, CREATURE_ID_WORKER_01, 7, 3
+			cdata(CDATA_RELATION, rc) = RELATION_NEUTRAL
+			cdata(CDATA_RELATION_ORG, rc) = RELATION_NEUTRAL
+			cdata(CDATA_ROLE, rc) = ROLE_SPECIAL
+			cdata(CDATA_AI_CALM, rc) = 3
+			flt
+			characreate -1, CREATURE_ID_WORKER_01, 3, 7
+			cdata(CDATA_RELATION, rc) = RELATION_NEUTRAL
+			cdata(CDATA_RELATION_ORG, rc) = RELATION_NEUTRAL
+			cdata(CDATA_ROLE, rc) = ROLE_SPECIAL
+			cdata(CDATA_AI_CALM, rc) = 3
+			flt
+			characreate -1, CREATURE_ID_WORKER_01, 5, 7
+			cdata(CDATA_RELATION, rc) = RELATION_NEUTRAL
+			cdata(CDATA_RELATION_ORG, rc) = RELATION_NEUTRAL
+			cdata(CDATA_ROLE, rc) = ROLE_SPECIAL
+			cdata(CDATA_AI_CALM, rc) = 3
+			flt
+			characreate -1, CREATURE_ID_WORKER_01, 9, 7
+			cdata(CDATA_RELATION, rc) = RELATION_NEUTRAL
+			cdata(CDATA_RELATION_ORG, rc) = RELATION_NEUTRAL
+			cdata(CDATA_ROLE, rc) = ROLE_SPECIAL
+			cdata(CDATA_AI_CALM, rc) = 3
+			flt
+			characreate -1, CREATURE_ID_WORKER_01, 9, 11
+			cdata(CDATA_RELATION, rc) = RELATION_NEUTRAL
+			cdata(CDATA_RELATION_ORG, rc) = RELATION_NEUTRAL
+			cdata(CDATA_ROLE, rc) = ROLE_SPECIAL
+			cdata(CDATA_AI_CALM, rc) = 3
+			flt
+			characreate -1, CREATURE_ID_WORKER_01, 5, 11
+			cdata(CDATA_RELATION, rc) = RELATION_NEUTRAL
+			cdata(CDATA_RELATION_ORG, rc) = RELATION_NEUTRAL
+			cdata(CDATA_ROLE, rc) = ROLE_SPECIAL
+			cdata(CDATA_AI_CALM, rc) = 3
+			flt
+			characreate -1, CREATURE_ID_WORKER_01, 7, 11
+			cdata(CDATA_RELATION, rc) = RELATION_NEUTRAL
+			cdata(CDATA_RELATION_ORG, rc) = RELATION_NEUTRAL
+			cdata(CDATA_ROLE, rc) = ROLE_SPECIAL
+			cdata(CDATA_AI_CALM, rc) = 3
+			flt
+			characreate -1, CREATURE_ID_WORKER_01, 3, 15
+			cdata(CDATA_RELATION, rc) = RELATION_NEUTRAL
+			cdata(CDATA_RELATION_ORG, rc) = RELATION_NEUTRAL
+			cdata(CDATA_ROLE, rc) = ROLE_SPECIAL
+			cdata(CDATA_AI_CALM, rc) = 3
+			flt
+			characreate -1, CREATURE_ID_WORKER_01, 9, 15
+			cdata(CDATA_RELATION, rc) = RELATION_NEUTRAL
+			cdata(CDATA_RELATION_ORG, rc) = RELATION_NEUTRAL
+			cdata(CDATA_ROLE, rc) = ROLE_SPECIAL
+			cdata(CDATA_AI_CALM, rc) = 3
+			flt
+			characreate -1, CREATURE_ID_WORKER_01, 7, 15
+			cdata(CDATA_RELATION, rc) = RELATION_NEUTRAL
+			cdata(CDATA_RELATION_ORG, rc) = RELATION_NEUTRAL
+			cdata(CDATA_ROLE, rc) = ROLE_SPECIAL
+			cdata(CDATA_AI_CALM, rc) = 3
+		}
 		if ( gdata(GDATA_LEVEL) == 100 ) {
 			mdata(MDATA_TILESET) = 0
 			map_initcustom "sqBlack"
@@ -6349,6 +7291,14 @@
 				cdata(CDATA_ROLE, rc) = ROLE_SPECIAL
 				cdata(CDATA_AI_CALM, rc) = 3
 			}
+			if ( gdata(GDATA_FLAG_GUARDIAN_SHRINE) >= 1 ) {
+				flt
+				characreate -1, CREATURE_ID_AIME_THE_STORY_TELLER, 20, 8
+				cdata(CDATA_RELATION, rc) = RELATION_NEUTRAL
+				cdata(CDATA_RELATION_ORG, rc) = RELATION_NEUTRAL
+				cdata(CDATA_ROLE, rc) = ROLE_SPECIAL
+				cdata(CDATA_AI_CALM, rc) = 3
+			}
 			repeat 10
 				flt
 				characreate -1, CREATURE_ID_DEFENDER, -3, 0
@@ -6446,6 +7396,7 @@
 			flt
 			characreate -1, CREATURE_ID_MILIS_CAPTAIN_OF_THE_SPECIAL_FORCES, 2, 2
 			cdata(CDATA_ROLE, rc) = ROLE_SPECIAL
+			cdata(CDATA_AI_CALM, rc) = 3
 			flt
 			characreate -1, CREATURE_ID_CLEANER, 41, 3
 			cdata(CDATA_ROLE, rc) = ROLE_SPECIAL
@@ -7612,8 +8563,7 @@
 		mdata(MDATA_WALL) = 0
 	}
 	map_setfog
-	procid = (procid + 1) \ 4
-	proclist(procid) = "map_init:1" + " ct:" + ct
+	proc "map_init:1"
 	if ( gdata(GDATA_AREA) == AREA_PET_ARENA | dbg_revealmap | gdata(GDATA_AREA) == AREA_ARENA | mdata(MDATA_TYPE) == MAP_TYPE_TOWN | mdata(MDATA_TYPE) == MAP_TYPE_WORLD | mdata(MDATA_TYPE) == MAP_TYPE_HOME | mdata(MDATA_TYPE) == MAP_TYPE_VILLAGE | gdata(GDATA_AREA) == AREA_SHELTER | gdata(GDATA_AREA) == AREA_EMBASSY | gdata(GDATA_AREA) == AREA_MIROK_WORKSHOP | gdata(GDATA_AREA) == AREA_ABODE_OF_WITCH | gdata(GDATA_AREA) == AREA_DEVIL_CAPE | gdata(GDATA_AREA) == AREA_SHOW_HOUSE | (gdata(GDATA_AREA) == AREA_QUEST & gdata(GDATA_QUEST) == QUEST_TYPE_PARTY) ) {
 		repeat mdata(MDATA_HEIGHT)
 			y = cnt
@@ -7652,7 +8602,7 @@
 								if ( x < 0 | y < 0 | x >= mdata(MDATA_WIDTH) | y >= mdata(MDATA_HEIGHT) ) {
 									continue
 								}
-								if ( 33 <= map(x, y, 0) & map(x, y, 0) < 66 ) {
+								if ( range_tileRoad(map(x, y, 0)) ) {
 									continue
 								}
 								if ( map(x, y, 0) > 16 ) {
@@ -7673,7 +8623,7 @@
 								if ( i == 0 ) {
 									continue
 								}
-								dialog lang("エリア" + adata(ADATA_PARENT, p) + "が再配置" + gdata(GDATA_WORLD) + "され" + prevworld + "ます。" + mapname(p) + "の位置は、x" + adata(ADATA_X, p) + ":y" + adata(ADATA_Y, p) + "からx" + x + ":y" + y + "に変更されます。", "The location of " + mapname(p) + " has been changed from x" + adata(ADATA_X, p) + ":y" + adata(ADATA_Y, p) + " to x" + x + ":y" + y + ".")
+								dialog lang("ワールド" + prevworld + "からワールド" + gdata(GDATA_WORLD) + "へ移動に伴い、エリア" + adata(ADATA_PARENT, p) + "が再配置されます。" + mapname(p) + "の位置は、x" + adata(ADATA_X, p) + ":y" + adata(ADATA_Y, p) + "からx" + x + ":y" + y + "に変更されます。", "The location of " + mapname(p) + " has been changed from x" + adata(ADATA_X, p) + ":y" + adata(ADATA_Y, p) + " to x" + x + ":y" + y + ".")
 								adata(ADATA_X, p) = x
 								adata(ADATA_Y, p) = y
 								f++
@@ -7710,8 +8660,7 @@
 	mdata(MDATA_VERSION) = gdata(GDATA_MAP_VERSION)
 	mdata(MDATA_VERSION_FIX1) = 1
 *map_preBegin
-	procid = (procid + 1) \ 4
-	proclist(procid) = "map_preBegin" + " ct:" + ct
+	proc "map_preBegin"
 	if ( gdata(GDATA_AREA) == AREA_NORTH_TYRIS | gdata(GDATA_AREA) == AREA_SOUTH_TYRIS | gdata(GDATA_AREA) == AREA_LOST_YLVA | gdata(GDATA_AREA) == AREA_AIMWELL ) {
 		if ( sekaikousin == 100 ) {
 			gsel 2
@@ -7884,6 +8833,9 @@
 						if ( gdata(GDATA_AREA) == AREA_SOUTH_RASKILIS ) {
 							map_reload "ras_south"
 						}
+						if ( gdata(GDATA_AREA) == AREA_WEST_RASKILIS ) {
+							map_reload "ras0"
+						}
 						if ( gdata(GDATA_AREA) == AREA_LUDUS ) {
 							if ( gdata(GDATA_MONTH) == 8 ) {
 								if ( adata(ADATA_FESTIVAL, gdata(GDATA_AREA)) == 0 ) {
@@ -7957,6 +8909,11 @@
 							map_reload "8bship"
 						}
 					}
+					if ( gdata(GDATA_AREA) == AREA_DOCK ) {
+						if ( gdata(GDATA_LEVEL) == 70 ) {
+							map_reload "87bship"
+						}
+					}
 					if ( gdata(GDATA_AREA) == AREA_MIROK_WORKSHOP ) {
 						map_reload "smith0"
 					}
@@ -7968,6 +8925,11 @@
 					}
 					if ( gdata(GDATA_AREA) == AREA_IRMA_THALIA_WORKSHOP ) {
 						map_reload "10dwa"
+					}
+					if ( gdata(GDATA_AREA) == AREA_AMUR_CAGE ) {
+						if ( gdata(GDATA_LEVEL) == 2 ) {
+							map_reload "3haka2"
+						}
 					}
 				}
 			}
@@ -8028,6 +8990,16 @@
 							chipm(CHIPM_ATTRIB, map(cdata(CDATA_X_ORG, rc), cdata(CDATA_Y_ORG, rc), 0)) = 0
 						}
 					}
+					if ( mdata(MDATA_TILE_FILE) == 2 ) {
+						if ( map(cdata(CDATA_X_ORG, rc), cdata(CDATA_Y_ORG, rc), MAP_TILE_ID) <= xy2pic(32, 11) ) {
+							chipm(CHIPM_ATTRIB, map(cdata(CDATA_X_ORG, rc), cdata(CDATA_Y_ORG, rc), MAP_TILE_ID)) = CHIPM_ATTRIB_DEFAULT
+						}
+					}
+					if ( mdata(MDATA_TILE_FILE) == 1 ) {
+						if ( map(cdata(CDATA_X_ORG, rc), cdata(CDATA_Y_ORG, rc), MAP_TILE_ID) >= xy2pic(24, 9) & map(cdata(CDATA_X_ORG, rc), cdata(CDATA_Y_ORG, rc), MAP_TILE_ID) <= xy2pic(32, 11) ) {
+							chipm(CHIPM_ATTRIB, map(cdata(CDATA_X_ORG, rc), cdata(CDATA_Y_ORG, rc), MAP_TILE_ID)) = CHIPM_ATTRIB_DEFAULT
+						}
+					}
 					cdata(CDATA_X, rc) = cdata(CDATA_X_ORG, rc)
 					cdata(CDATA_Y, rc) = cdata(CDATA_Y_ORG, rc)
 				}
@@ -8052,9 +9024,24 @@
 				if ( mdata(MDATA_TYPE) == MAP_TYPE_TOWN | mdata(MDATA_TYPE) == MAP_TYPE_VILLAGE ) {
 					cdata(CDATA_CONDITION_SLEEP, rc) = 0
 					if ( gdata(GDATA_HOUR) >= 22 | gdata(GDATA_HOUR) < 7 ) {
-						if ( rnd(6) == 0 ) {
-							cdata(CDATA_CONDITION_SLEEP, rc) = rnd(400)
+						if ( cbit(CHARA_BIT_NECRO, rc) != TRUE ) {
+							if ( rnd(6) == 0 ) {
+								cdata(CDATA_CONDITION_SLEEP, rc) = rnd(400)
+							}
 						}
+					}
+				}
+			}
+			if ( dbg_advTalkLine ) {
+				cdata(CDATA_CUSTOM_TALK_LINE, rc) = 1
+			}
+			if ( cdata(CDATA_ROLE, rc) == ROLE_ADVENTURER ) {
+				if ( cdata(CDATA_CUSTOM_TALK_LINE, rc) == 1 ) {
+					if ( cdata(CDATA_RELATION, rc) < RELATION_NEUTRAL ) {
+						cdata(CDATA_RELATION, rc) = RELATION_NEUTRAL
+						cdata(CDATA_AI_AGGRO, rc) = 0
+						cdata(CDATA_CUSTOM_TALK_LINE, rc) = 0
+						msgtemp += lang(cdatan(CDATAN_AKA, rc) + "はあなたからのメッセージを思い出した…。", cdatan(CDATAN_AKA, rc) + " recalled your message...")
 					}
 				}
 			}
@@ -8090,6 +9077,7 @@
 		loop
 	}
 *map_begin
+	create_pcpic 0, 1 ; image is refreshed here because of world-vehicle display
 	if ( gdata(GDATA_ADVENTURER_ORACLE) == 100 ) {
 		gdata(GDATA_ADVENTURER_ORACLE) = 0
 	}
@@ -8110,11 +9098,9 @@
 	if ( gdata(GDATA_AREA) == AREA_SHOW_HOUSE ) {
 		gosub *userNpc_update
 	}
-	procid = (procid + 1) \ 4
-	proclist(procid) = "Map:Check renew" + " ct:" + ct
+	proc "Map:Check renew"
 	gosub *check_renew
-	procid = (procid + 1) \ 4
-	proclist(procid) = "Map:Recaluculate crowd" + " ct:" + ct
+	proc "Map:Recaluculate crowd"
 	gdata(GDATA_CROWD) = 0
 	repeat MAX_CHARA_TOTAL
 		if ( gdata(GDATA_SPEEDSUM_RESET) == 0 ) {
@@ -8149,7 +9135,7 @@
 	}
 	loop
 	gdata(GDATA_SPEEDSUM_RESET) = 0
-	if ( gdata(STARTING_GDATA_FLAG + 327) == int(gettime(0)) & gdata(STARTING_GDATA_FLAG + 322) == int(gettime(1)) & gdata(STARTING_GDATA_FLAG + 323) == int(gettime(3)) ) {
+	if ( gdata(GDATA_FLAG_BIRTHDAY_CURRENT_YEAR) <= int(gettime(0)) & gdata(GDATA_FLAG_INFORMER_BIRTHDAY_MONTH) == int(gettime(1)) & gdata(GDATA_FLAG_INFORMER_BIRTHDAY_DAY) == int(gettime(3)) ) {
 		evadd EVENT_BIRTHDAY
 	}
 	if ( adata(ADATA_ECONOMY, gdata(GDATA_AREA)) != 0 & adata(ADATA_ID, gdata(GDATA_AREA)) != AREA_NONE ) {
@@ -8283,8 +9269,7 @@
 			}
 		}
 	}
-	procid = (procid + 1) \ 4
-	proclist(procid) = "Map:Prepare tile" + " ct:" + ct
+	proc "Map:Prepare tile"
 	cdata(CDATA_AREA, CHARA_PLAYER) = gdata(GDATA_AREA), gdata(GDATA_LEVEL)
 	raderx = -1
 	radery = -1
@@ -8296,8 +9281,7 @@
 	gosub *map_prepareTile
 	gosub *rader_preDraw
 	gosub *screen_setPos
-	procid = (procid + 1) \ 4
-	proclist(procid) = "Map:Update quest" + " ct:" + ct
+	proc "Map:Update quest"
 	if ( mdata(MDATA_TYPE) == MAP_TYPE_TOWN | gdata(GDATA_AREA) == AREA_LUDUS ) {
 		if ( gdata(GDATA_AREA) != AREA_GUARDIAN_SHRINE & gdata(GDATA_AREA) != AREA_BLIMP ) {
 			if ( adata(ADATA_QUEST_RENEW, gdata(GDATA_AREA)) != 4 ) {
@@ -8380,6 +9364,33 @@
 		}
 		kamen6 = 0
 	}
+	if ( kamen7 >= 100 ) {
+		if ( kamen7 == 100 ) {
+			flt
+			itemcreate -1, ITEM_ID_LESIMAS_FRAGMENT, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
+			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+			txt lang("何かが足元に転がってきた。", "Something is put on the ground.")
+		}
+		kamen7 = 0
+	}
+	if ( kamen8 >= 100 ) {
+		if ( kamen8 == 100 ) {
+			flt
+			itemcreate -1, ITEM_ID_REMIDO_FRAGMENT, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
+			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+			txt lang("何かが足元に転がってきた。", "Something is put on the ground.")
+		}
+		kamen8 = 0
+	}
+	if ( kamen9 >= 100 ) {
+		if ( kamen9 == 100 ) {
+			flt
+			itemcreate -1, ITEM_ID_CHAOS_FRAGMENT, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
+			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+			txt lang("何かが足元に転がってきた。", "Something is put on the ground.")
+		}
+		kamen9 = 0
+	}
 	if ( tuikabui == 100 ) {
 		flt
 		itemcreate -1, ITEM_ID_WONDER_BODY_FORMER, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 6
@@ -8387,6 +9398,95 @@
 		txt_questitem
 		tuikabui = 0
 		gdata(GDATA_FLAG_CAN_USE_WONDER_BODY_FORMER) = 140
+	}
+	if ( hagureta == 100 ) {
+		hagureta = 0
+		gosub *screen_draw
+	}
+	if ( renshyou != 0 ) {
+		txt lang("何かが足元に転がってきた。", "Something is put on the ground.")
+		snd SOUNDLIST_DING1
+		if ( renshyou == 3 ) {
+			flt
+			itemcreate -1, ITEM_ID_POTION_RESISTANCE, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
+			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+		}
+		if ( renshyou == 10 ) {
+			flt
+			itemcreate -1, ITEM_ID_SCROLL_OF_WITCHCRAFT, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
+			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+		}
+		if ( renshyou == 30 ) {
+			flt
+			itemcreate -1, ITEM_ID_SCROLL_GROWTH, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
+			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+		}
+		if ( renshyou == 50 ) {
+			flt
+			itemcreate -1, ITEM_ID_ASTRAL_LIGHT_PEN, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
+			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+		}
+		if ( renshyou == 100 ) {
+			p = limit(adata(ADATA_ARENA_WIN, gdata(GDATA_AREA)) / 100 + 1, 2, 4)
+			repeat p
+				flt
+				itemcreate -1, ITEM_ID_POTION_EVOLUTION, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
+				inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+				flt
+				itemcreate -1, ITEM_ID_POTION_DESCENT, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
+				inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+				flt
+				itemcreate -1, ITEM_ID_TREASURE_MAP, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
+				inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+			loop
+		}
+		renshyou = 0
+	}
+	if ( prenshyou != 0 ) {
+		txt lang("何かが足元に転がってきた。", "Something is put on the ground.")
+		snd SOUNDLIST_DING1
+		if ( prenshyou == 3 ) {
+			flt
+			itemcreate -1, ITEM_ID_SCROLL_CHANGE_MATERIAL, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
+			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+		}
+		if ( prenshyou == 10 ) {
+			flt
+			itemcreate -1, ITEM_ID_SCROLL_SUPERIOR_MATERIAL, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
+			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+		}
+		if ( prenshyou == 30 ) {
+			flt
+			itemcreate -1, ITEM_ID_CRAFT_REPAIR_KIT, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
+			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+		}
+		if ( prenshyou == 50 ) {
+			flt
+			itemcreate -1, ITEM_ID_EVITEM, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
+			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+			inv(INV_ITEM_PARAM1, ci) = 15
+		}
+		if ( prenshyou == 100 ) {
+			p = limit(adata(ADATA_PET_ARENA_WIN, gdata(GDATA_AREA)) / 100, 1, 3)
+			repeat p
+				flt
+				nostack = 1
+				itemcreate -1, ITEM_ID_MATERIAL_KIT, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
+				inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+				flt
+				nostack = 1
+				itemcreate -1, ITEM_ID_EVITEM, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
+				inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+				inv(INV_ITEM_PARAM1, ci) = 13
+			loop
+		}
+		prenshyou = 0
+	}
+	kamui = 0
+	gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) = 0
+	gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 0
+	if ( gdata(GDATA_FLAG_MAIN) >= 875 & gdata(GDATA_FLAG_MAIN) < 990 ) {
+		gdata(GDATA_FLAG_MAIN) = 845
 	}
 	if ( deru == 44 ) {
 		deru = 0
@@ -8408,8 +9508,7 @@
 			}
 		}
 	}
-	procid = (procid + 1) \ 4
-	proclist(procid) = "Map:Proc scene" + " ct:" + ct
+	proc "Map:Proc scene"
 	if ( gdata(GDATA_FLAG_MAIN) == 9 ) {
 		sceneid = 2
 		gosub *scene
@@ -8491,6 +9590,14 @@
 		sceneid = 123
 		gosub *scene
 		gdata(GDATA_FLAG_MAIN) = 368
+	}
+	if ( gdata(GDATA_FLAG_MAIN) == 820 | gdata(GDATA_FLAG_MAIN) == 825 ) {
+		evadd EVENT_NORNE
+	}
+	if ( gdata(GDATA_FLAG_MAIN) == 1000 ) {
+		sceneid = 400
+		gosub *scene
+		gdata(GDATA_FLAG_MAIN) = 1010
 	}
 	if ( gdata(GDATA_AREA) == AREA_LESIMAS ) {
 		if ( gdata(GDATA_FLAG_MAIN) == 10 ) {
@@ -8763,9 +9870,22 @@
 				gdata(GDATA_FLAG_MAIN) = 705
 			}
 		}
+		if ( gdata(GDATA_LEVEL) == 179 ) {
+			if ( gdata(GDATA_FLAG_MAIN) == 995 ) {
+				gdata(GDATA_YEAR) += 3
+				sceneid = 395
+				gosub *scene
+				gdata(GDATA_FLAG_MAIN) = 1000
+				evadd EVENT_RETURN_FROM_CHAOS_CRADLE
+			}
+		}
 	}
-	procid = (procid + 1) \ 4
-	proclist(procid) = "Map:Area specific" + " ct:" + ct
+	if ( gdata(GDATA_AREA) == AREA_DOCK ) {
+		if ( gdata(GDATA_LEVEL) == 70 ) {
+			evadd EVENT_DOCK_WORKER
+		}
+	}
+	proc "Map:Area specific"
 	repeat MAX_CHARA_TOTAL
 		if ( cdata(CDATA_ID, cnt) == CREATURE_ID_USER ) {
 			if ( cdata(CDATA_PIC, cnt) < 693 | cdata(CDATA_PIC, cnt) > 724 ) {
@@ -8835,7 +9955,10 @@
 				tc = findchara(CREATURE_ID_TEZCATLIPOCA)
 				if ( tc == CHARA_PLAYER ) {
 					if ( gdata(GDATA_FLAG_MAIN) == 675 ) {
-						evadd EVENT_TEZCATLIPOCA_ADDS2, 10, 7
+						if ( findchara(CREATURE_ID_BLACK_GAUNTLET_LEOLD) != 0 ) {
+							chara_vanquish findchara(CREATURE_ID_BLACK_GAUNTLET_LEOLD)
+						}
+						evadd EVENT_TEZCATLIPOCA_ADDS2
 					}
 				}
 			}
@@ -8990,6 +10113,9 @@
 	}
 	if ( adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_CYBER_DOME ) {
 		if ( gdata(GDATA_FLAG_LEOLD_LOCATION_STATE) == 0 ) {
+			if ( findchara(CREATURE_ID_BLACK_GAUNTLET_LEOLD) != 0 ) {
+				chara_vanquish findchara(CREATURE_ID_BLACK_GAUNTLET_LEOLD)
+			}
 			evadd EVENT_SPAWN_EVENT_NPCS
 			gdata(GDATA_FLAG_LEOLD_LOCATION_STATE) = 1
 		}
@@ -9294,6 +10420,9 @@
 			gdata(GDATA_FLAG_MAIN) = 404
 		}
 		if ( gdata(GDATA_FLAG_SUB_MONOCHROME_DELIVERY_SERVICE) == 1 ) {
+			if ( findchara(CREATURE_ID_KURON_THE_BLACK_CLOTH) != 0 ) {
+				chara_vanquish findchara(CREATURE_ID_KURON_THE_BLACK_CLOTH)
+			}
 			evadd EVENT_SPAWN_EVENT_NPCS
 			gdata(GDATA_FLAG_SUB_MONOCHROME_DELIVERY_SERVICE) = 2
 		}
@@ -9305,10 +10434,6 @@
 		}
 	}
 	if ( gdata(GDATA_AREA) == AREA_YOWYN ) {
-		if ( gdata(GDATA_FLAG_MAIN) >= 200 & gdata(GDATA_FLAG_GWEN_STAGE) == 0 ) {
-			evadd EVENT_SPAWN_EVENT_NPCS
-			gdata(GDATA_FLAG_GWEN_STAGE) = 1001
-		}
 		tc = findchara(CREATURE_ID_TAM_THE_CAT_HATER)
 		if ( tc != CHARA_PLAYER ) {
 			if ( cdata(CDATA_PORTRAIT, tc) != 70 ) {
@@ -9318,6 +10443,9 @@
 	}
 	if ( gdata(GDATA_AREA) == AREA_KURUALM ) {
 		if ( gdata(GDATA_FLAG_SUB_LAW_OF_NINJAS) == 1000 ) {
+			if ( findchara(CREATURE_ID_NEW_CITIZEN) != 0 ) {
+				chara_vanquish findchara(CREATURE_ID_NEW_CITIZEN)
+			}
 			evadd EVENT_SPAWN_EVENT_NPCS
 			gdata(GDATA_FLAG_SUB_LAW_OF_NINJAS) = 1001
 		}
@@ -9364,19 +10492,52 @@
 	}
 	if ( adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_RUOZA ) {
 		if ( gdata(GDATA_FLAG_LEOLD_LOCATION_STATE) == 2 ) {
+			if ( findchara(CREATURE_ID_BLACK_GAUNTLET_LEOLD) != 0 ) {
+				chara_vanquish findchara(CREATURE_ID_BLACK_GAUNTLET_LEOLD)
+			}
 			evadd EVENT_SPAWN_EVENT_NPCS
 			gdata(GDATA_FLAG_LEOLD_LOCATION_STATE) = 3
 		}
-		if ( gdata(GDATA_FLAG_MAIN) >= 625 ) {
-			if ( gdata(STARTING_GDATA_FLAG + 320) == 0 ) {
-				evadd EVENT_SOUTH_TYRIS
-				gdata(STARTING_GDATA_FLAG + 320) = 1
-			}
-		}
+ 		if ( gdata(GDATA_FLAG_MAIN) >= 625 ) {
+ 			if ( gdata(GDATA_FLAG_ENCOUNTER_HALION_IN_RUOZA) == 0 ) {
+				if ( findchara(CREATURE_ID_MILOS_OF_THE_FORGOTTEN_WORLD) != 0 ) {
+					chara_vanquish findchara(CREATURE_ID_MILOS_OF_THE_FORGOTTEN_WORLD)
+				}
+				if ( findchara(CREATURE_ID_HALION_THE_EXTREMIST) != 0 ) {
+					chara_vanquish findchara(CREATURE_ID_HALION_THE_EXTREMIST)
+				}
+ 				evadd EVENT_SOUTH_TYRIS
+ 				gdata(GDATA_FLAG_ENCOUNTER_HALION_IN_RUOZA) = 1
+ 			}
+ 		}
 		tc = findchara(CREATURE_ID_BLACK_GAUNTLET_LEOLD)
 		if ( tc != CHARA_PLAYER ) {
 			if ( gdata(GDATA_FLAG_MAIN) >= 365 ) {
 				chara_vanquish findchara(CREATURE_ID_BLACK_GAUNTLET_LEOLD)
+			}
+		}
+		if ( gdata(GDATA_FLAG_MAIN) >= 835 ) {
+			tc = findchara(CREATURE_ID_CARLA_OF_THE_FORGOTTEN_WORLD)
+			if ( tc != CHARA_PLAYER ) {
+				evname = lang("忘れられない世界の『カルラ』", "<Karura> the unforgettable singularity")
+				evold = lang("忘れられた世界の『カルラ』", "<Karura> hail flom Erusia")
+				if ( strmid(cdatan(CDATAN_NAME, tc), 0, strlen(evold)) == evold ) {
+					cdatan(CDATAN_NAME, tc) = evname + strmid(cdatan(CDATAN_NAME, tc), strlen(evold), strlen(cdatan(CDATAN_NAME, tc)) - strlen(evold))
+				}
+				if ( strlen(cdatan(CDATAN_NAME, tc)) > strlen(evname) ) {
+					cdatan(CDATAN_NAME, tc) = evname
+				}
+			}
+			tc = findchara(CREATURE_ID_MILOS_OF_THE_FORGOTTEN_WORLD)
+			if ( tc != CHARA_PLAYER ) {
+				evname = lang("忘れられない世界の『ミロス』", "<Miros> the unforgettable singularity")
+				evold = lang("忘れられた世界の『ミロス』", "<Miros> hail flom Erusia")
+				if ( strmid(cdatan(CDATAN_NAME, tc), 0, strlen(evold)) == evold ) {
+					cdatan(CDATAN_NAME, tc) = evname + strmid(cdatan(CDATAN_NAME, tc), strlen(evold), strlen(cdatan(CDATAN_NAME, tc)) - strlen(evold))
+				}
+				if ( strlen(cdatan(CDATAN_NAME, tc)) > strlen(evname) ) {
+					cdatan(CDATAN_NAME, tc) = evname
+				}
 			}
 		}
 	}
@@ -9454,6 +10615,9 @@
 	}
 	if ( adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_ARCBELC ) {
 		if ( gdata(GDATA_FLAG_VISITED_ARCBELC) == 0 ) {
+			if ( findchara(CREATURE_ID_LENAS_THE_MAGE_REPORTER) != 0 ) {
+				chara_vanquish findchara(CREATURE_ID_LENAS_THE_MAGE_REPORTER)
+			}
 			evadd EVENT_SPAWN_EVENT_NPCS
 			gdata(GDATA_FLAG_VISITED_ARCBELC) = 1
 		}
@@ -9478,6 +10642,9 @@
 	}
 	if ( adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_MELKAWN ) {
 		if ( gdata(GDATA_FLAG_VISITED_MELKAWN) == 0 ) {
+			if ( findchara(CREATURE_ID_NAGA_THE_THIEF_REPORTER) != 0 ) {
+				chara_vanquish findchara(CREATURE_ID_NAGA_THE_THIEF_REPORTER)
+			}
 			evadd EVENT_SPAWN_EVENT_NPCS
 			gdata(GDATA_FLAG_VISITED_MELKAWN) = 1
 		}
@@ -9485,16 +10652,25 @@
 	if ( adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_VALM ) {
 		if ( gdata(GDATA_FLAG_VISITED_VALM) == 0 ) {
 			if ( gdata(GDATA_LEVEL) == 1 ) {
+				if ( findchara(CREATURE_ID_RATIN_THE_FIGHTER_REPORTER) != 0 ) {
+					chara_vanquish findchara(CREATURE_ID_RATIN_THE_FIGHTER_REPORTER)
+				}
 				evadd EVENT_SPAWN_EVENT_NPCS
 				gdata(GDATA_FLAG_VISITED_VALM) = 1
 			}
 		}
-		if ( gdata(STARTING_GDATA_FLAG + 275) == 3 ) {
-			if ( gdata(GDATA_LEVEL) == 1 ) {
-				evadd EVENT_SOUTH_TYRIS
-				gdata(STARTING_GDATA_FLAG + 275) = 4
-			}
-		}
+ 		if ( gdata(GDATA_FLAG_SUB_NINE_HEAD_DRAGON) == 3 ) {
+ 			if ( gdata(GDATA_LEVEL) == 1 ) {
+				if ( findchara(CREATURE_ID_SNAIL_THE_ANDROID_RIDER) != 0 ) {
+					chara_vanquish findchara(CREATURE_ID_SNAIL_THE_ANDROID_RIDER)
+				}
+				if ( findchara(CREATURE_ID_RECONCILED_CLEANER) != 0 ) {
+					chara_vanquish findchara(CREATURE_ID_RECONCILED_CLEANER)
+				}
+ 				evadd EVENT_SOUTH_TYRIS
+ 				gdata(GDATA_FLAG_SUB_NINE_HEAD_DRAGON) = 4
+ 			}
+ 		}
 		if ( gdata(GDATA_LEVEL) == 3 ) {
 			tc = findchara(CREATURE_ID_MIZUKI_THE_ABYSS_PRINCESS)
 			if ( tc != CHARA_PLAYER ) {
@@ -9578,6 +10754,11 @@
 		if ( gdata(GDATA_FLAG_MAIN) == 765 ) {
 			evadd EVENT_NORNE
 		}
+		if ( gdata(GDATA_FLAG_MAIN) == 830 ) {
+			sceneid = 391
+			gosub *scene
+			gdata(GDATA_FLAG_MAIN) = 835
+		}
 	}
 	if ( gdata(GDATA_AREA) == AREA_SOUTH_TYRIS ) {
 		if ( gdata(GDATA_FLAG_MAIN) == 200 ) {
@@ -9598,6 +10779,11 @@
 		}
 		if ( gdata(GDATA_FLAG_MAIN) == 765 ) {
 			evadd EVENT_NORNE
+		}
+		if ( gdata(GDATA_FLAG_MAIN) == 835 ) {
+			sceneid = 392
+			gosub *scene
+			gdata(GDATA_FLAG_MAIN) = 840
 		}
 	}
 	if ( gdata(GDATA_AREA) == AREA_LOST_YLVA ) {
@@ -9635,6 +10821,9 @@
 		}
 		if ( gdata(GDATA_FLAG_MAIN) >= 368 ) {
 			if ( gdata(GDATA_FLAG_VISITED_ULM_LESON) == 0 ) {
+				if ( findchara(CREATURE_ID_MELUGAST_TYPE0_THE_DIMENSION_DRIVER) != 0 ) {
+					chara_vanquish findchara(CREATURE_ID_MELUGAST_TYPE0_THE_DIMENSION_DRIVER)
+				}
 				evadd EVENT_SPAWN_EVENT_NPCS
 				gdata(GDATA_FLAG_VISITED_ULM_LESON) = 1
 			}
@@ -9658,6 +10847,9 @@
 	if ( adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_YLVA_LIBRARY ) {
 		adata(ADATA_START_ON, gdata(GDATA_AREA)) = 8
 		if ( gdata(GDATA_FLAG_SUB_THE_TRUE_APPEARANCE) == 1001 ) {
+			if ( findchara(CREATURE_ID_ARIBEL_THE_WHITE_ARMS) != 0 ) {
+				chara_vanquish findchara(CREATURE_ID_ARIBEL_THE_WHITE_ARMS)
+			}
 			evadd EVENT_SPAWN_EVENT_NPCS
 			gdata(GDATA_FLAG_SUB_THE_TRUE_APPEARANCE) = 1002
 		}
@@ -9693,6 +10885,11 @@
 				}
 			}
 		}
+		if ( gdata(GDATA_LEVEL) == 179 ) {
+			if ( gdata(GDATA_FLAG_MAIN) >= 845 & gdata(GDATA_FLAG_MAIN) < 990 ) {
+				evadd EVENT_CHAOS_CRADLE_CHAT_ORPHE
+			}
+		}
 	}
 	if ( adata(ADATA_ID, gdata(GDATA_AREA)) != AREA_CHAOS_CRADLE ) {
 		if ( gdata(GDATA_FLAG_MAIN) == 760 ) {
@@ -9704,27 +10901,55 @@
 	if ( adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_GUARDIAN_SHRINE ) {
 		if ( gdata(GDATA_LEVEL) == 1 ) {
 			if ( gdata(GDATA_FLAG_MAIN_CHAOS_CRADLE_34) == 100 ) {
+				if ( findchara(CREATURE_ID_LANKATA_THE_LIGHTNING_OF_BLUE) != 0 ) {
+					chara_vanquish findchara(CREATURE_ID_LANKATA_THE_LIGHTNING_OF_BLUE)
+				}
+				if ( findchara(CREATURE_ID_ALFRED_THE_CANGNAN_WIND) != 0 ) {
+					chara_vanquish findchara(CREATURE_ID_ALFRED_THE_CANGNAN_WIND)
+				}
 				evadd EVENT_SPAWN_EVENT_NPCS
 				gdata(GDATA_FLAG_MAIN_CHAOS_CRADLE_34) = 101
+			}
+			if ( gdata(GDATA_FLAG_GUARDIAN_SHRINE) == 0 ) {
+				if ( findchara(CREATURE_ID_AIME_THE_STORY_TELLER) != 0 ) {
+					chara_vanquish findchara(CREATURE_ID_AIME_THE_STORY_TELLER)
+				}
+				evadd EVENT_SOUTH_TYRIS
+				gdata(GDATA_FLAG_GUARDIAN_SHRINE) = 1
 			}
 		}
 	}
 	if ( adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_AMUR_CAGE ) {
-		if ( gdata(GDATA_LEVEL) == 1 ) {
+		if ( gdata(GDATA_LEVEL) <= 2 ) {
 			evadd EVENT_SPAWN_EVENT_NPCS
+		}
+		if ( gdata(GDATA_LEVEL) == 1 ) {
+			if ( gdata(GDATA_FLAG_SUB_AMURDAD) \ 10 == 1 ) {
+				if ( soulstage >= 3 ) {
+					evadd EVENT_AMURDEAD_SUB_FIREWORKS
+				}
+			}
 		}
 	}
 	if ( adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_HARVEST_SHIP ) {
 		if ( gdata(GDATA_LEVEL) == 140 ) {
-			if ( gdata(GDATA_FLAG_SUB_THE_DISTANT_SEA_OF_STARS) == 1000 ) {
-				evadd EVENT_SPAWN_EVENT_NPCS
-				gdata(GDATA_FLAG_SUB_THE_DISTANT_SEA_OF_STARS) = 1001
+			if ( gdata(GDATA_FLAG_MAIN) >= 1010 ) {
+				if ( gdata(GDATA_FLAG_SUB_THE_DISTANT_SEA_OF_STARS) == 1000 ) {
+					if ( findchara(CREATURE_ID_JIN_THE_MACHINE_REBEL) != 0 ) {
+						chara_vanquish findchara(CREATURE_ID_JIN_THE_MACHINE_REBEL)
+					}
+					evadd EVENT_SPAWN_EVENT_NPCS
+					gdata(GDATA_FLAG_SUB_THE_DISTANT_SEA_OF_STARS) = 1001
+				}
 			}
 		}
 	}
 	if ( adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_ANCIENT_GARDEN ) {
 		if ( gdata(GDATA_FLAG_MAIN) >= 368 ) {
 			if ( gdata(GDATA_FLAG_VISITED_ANCIENT_GARDEN) == 0 ) {
+				if ( findchara(CREATURE_ID_MELUGAST_TYPE0_THE_DIMENSION_DRIVER) != 0 ) {
+					chara_vanquish findchara(CREATURE_ID_MELUGAST_TYPE0_THE_DIMENSION_DRIVER)
+				}
 				evadd EVENT_SPAWN_EVENT_NPCS
 				gdata(GDATA_FLAG_VISITED_ANCIENT_GARDEN) = 1
 			}
@@ -9733,6 +10958,33 @@
 			sceneid = 126
 			gosub *scene
 			gdata(GDATA_FLAG_MAIN) = 385
+		}
+	}
+	if ( adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_WEST_RASKILIS ) {
+		if ( gdata(GDATA_FLAG_MAIN) == 790 & gdata(GDATA_LEVEL) == 2 ) {
+			sceneid = 387
+			gosub *scene
+			gdata(GDATA_FLAG_MAIN) = 795
+		}
+		if ( gdata(GDATA_FLAG_MAIN) == 795 & gdata(GDATA_LEVEL) == 4 ) {
+			sceneid = 388
+			gosub *scene
+			gdata(GDATA_FLAG_MAIN) = 800
+		}
+		if ( gdata(GDATA_LEVEL) == 3 ) {
+			if ( gdata(GDATA_FLAG_SUB_RESEARCH_DESTRUCTION_CRISIS) < 900 ) {
+				gdata(GDATA_FLAG_SUB_RESEARCH_DESTRUCTION_CRISIS) = 900
+			}
+		}
+		if ( gdata(GDATA_FLAG_MAIN) == 800 & gdata(GDATA_LEVEL) == 6 ) {
+			sceneid = 389
+			gosub *scene
+			gdata(GDATA_FLAG_MAIN) = 805
+		}
+		if ( gdata(GDATA_FLAG_MAIN) == 805 & gdata(GDATA_LEVEL) == 8 ) {
+			sceneid = 390
+			gosub *scene
+			gdata(GDATA_FLAG_MAIN) = 810
 		}
 	}
 	if ( adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_REMIDO ) {
@@ -9751,6 +11003,9 @@
 	if ( gdata(GDATA_AREA) == AREA_OL_DRAN ) {
 		if ( gdata(GDATA_LEVEL) == 1 ) {
 			if ( gdata(GDATA_FLAG_VISITED_OL_DRAN) == 0 ) {
+				if ( findchara(CREATURE_ID_MELGET_THE_INFORMER) != 0 ) {
+					chara_vanquish findchara(CREATURE_ID_MELGET_THE_INFORMER)
+				}
 				evadd EVENT_SPAWN_EVENT_NPCS
 				gdata(GDATA_FLAG_VISITED_OL_DRAN) = 10
 			}
@@ -9762,12 +11017,18 @@
 	if ( gdata(GDATA_AREA) == AREA_DOCK ) {
 		if ( gdata(GDATA_LEVEL) == 1 ) {
 			if ( gdata(GDATA_FLAG_SUB_SOCKS_THIEF) == 0 ) {
+				if ( findchara(CREATURE_ID_KUROYA_THE_LOOKING_UNIVERSE) != 0 ) {
+					chara_vanquish findchara(CREATURE_ID_KUROYA_THE_LOOKING_UNIVERSE)
+				}
 				evadd EVENT_SPAWN_EVENT_NPCS
 				gdata(GDATA_FLAG_SUB_SOCKS_THIEF) = 10
 			}
 		}
 		if ( gdata(GDATA_LEVEL) == 60 ) {
 			if ( gdata(GDATA_FLAG_SUB_REGULUS_KIKKASU) == 1 ) {
+				if ( findchara(CREATURE_ID_SHURAIDA_THE_EXPERT_MERC) != 0 ) {
+					chara_vanquish findchara(CREATURE_ID_SHURAIDA_THE_EXPERT_MERC)
+				}
 				evadd EVENT_SPAWN_EVENT_NPCS
 				gdata(GDATA_FLAG_SUB_REGULUS_KIKKASU) = 2
 			}
@@ -9813,12 +11074,10 @@
 			}
 		}
 	}
-	procid = (procid + 1) \ 4
-	proclist(procid) = "Map:Init music" + " ct:" + ct
+	proc "Map:Init music"
 	gosub *music_play
 	gosub *fixOnMapEnter
-	procid = (procid + 1) \ 4
-	proclist(procid) = "Map:Init world" + " ct:" + ct
+	proc "Map:Init world"
 	noaggrorefresh = 0
 	if ( adata(ADATA_TYPE, gdata(GDATA_AREA)) == MAP_TYPE_WORLD ) {
 		gosub *cloud_init
@@ -9828,8 +11087,7 @@
 		}
 		gosub *world_update
 	}
-	procid = (procid + 1) \ 4
-	proclist(procid) = "Map:Continue" + " ct:" + ct
+	proc "Map:Continue"
 	if ( mode == MODELIST_CONTINUE ) {
 		mode = MODELIST_MAIN
 		if ( mapsubroutine == 0 ) {
@@ -9849,8 +11107,7 @@
 			return
 		}
 	}
-	procid = (procid + 1) \ 4
-	proclist(procid) = "Map:Update area" + " ct:" + ct
+	proc "Map:Update area"
 	wake_up
 	pcattacker = 0
 	cdata(CDATA_TARGET, CHARA_PLAYER) = 0
@@ -9885,6 +11142,9 @@
 	}
 	if ( gdata(GDATA_AREA) == AREA_NOYEL ) {
 		if ( gdata(GDATA_FLAG_SUB_REGULUS_MAYROON) == 1 ) {
+			if ( findchara(CREATURE_ID_MARKA_THE_SILVER_BEAR) != 0 ) {
+				chara_vanquish findchara(CREATURE_ID_MARKA_THE_SILVER_BEAR)
+			}
 			evadd EVENT_SPAWN_EVENT_NPCS
 			gdata(GDATA_FLAG_SUB_REGULUS_MAYROON) = 2
 		}
@@ -9894,12 +11154,12 @@
 			if ( findchara(CREATURE_ID_GWEN_THE_INNOCENT) != 0 ) {
 				chara_vanquish findchara(CREATURE_ID_GWEN_THE_INNOCENT)
 			}
-			if ( gdata(GDATA_FLAG_GWEN_STAGE) == 1000 ) {
+			if ( gdata(GDATA_FLAG_MAIN) >= 200 & gdata(GDATA_FLAG_GWEN_STAGE) == 0 ) {
 				if ( findchara(CREATURE_ID_GWEN_THE_PITILESS) != 0 ) {
 					chara_vanquish findchara(CREATURE_ID_GWEN_THE_PITILESS)
-					evadd EVENT_SPAWN_EVENT_NPCS
-					gdata(GDATA_FLAG_GWEN_STAGE) = 1001
 				}
+				evadd EVENT_SPAWN_EVENT_NPCS
+				gdata(GDATA_FLAG_GWEN_STAGE) = 1001
 			}
 		}
 	}
@@ -9991,8 +11251,7 @@
 			adata(ADATA_MAX_LEVEL, gdata(GDATA_AREA)) = 2
 		}
 	}
-	procid = (procid + 1) \ 4
-	proclist(procid) = "Map:Init final" + " ct:" + ct
+	proc "Map:Init final"
 	if ( mdata(MDATA_TYPE) == MAP_TYPE_WORLD ) {
 		if ( cfg_extrahelp ) {
 			if ( gdata(STARTING_GDATA_HELP + 2) == 0 ) {
@@ -10188,8 +11447,7 @@
 		txt lang("門下生は修行で少し成長しているようだ。", "The students seem to have improved a bit through training.")
 		gdata(GDATA_DOJO_TURNS) = 0
 	}
-	procid = (procid + 1) \ 4
-	proclist(procid) = "Map:Quest message" + " ct:" + ct
+	proc "Map:Quest message"
 	if ( gdata(GDATA_AREA) == AREA_QUEST ) {
 		if ( gdata(GDATA_QUEST) == QUEST_TYPE_PARTY ) {
 			txtef COLOR_SKY_BLUE
@@ -10220,8 +11478,7 @@
 		adata(ADATA_RANDOM_RENEW, gdata(GDATA_AREA)) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 + 24
 	}
 	if ( gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 >= mdata(MDATA_RENEW) ) {
-		procid = (procid + 1) \ 4
-		proclist(procid) = "renew_major" + " ct:" + ct
+		proc "renew_major"
 		if ( mdata(MDATA_NO_RENEW) == 0 ) {
 			if ( mdata(MDATA_RENEW) != 0 ) {
 				if ( adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_RANCH ) {
@@ -10350,6 +11607,9 @@
 			if ( gdata(GDATA_AREA) == AREA_SOUTH_RASKILIS ) {
 				p = 40 + rnd(10)
 			}
+			if ( gdata(GDATA_AREA) == AREA_WEST_RASKILIS ) {
+				p = 20 + rnd(5)
+			}
 			if ( adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_RANDOM_DUNGEON & gdata(STARTING_GDATA_FLAG + 353) == 100 ) {
 				repeat p + 10
 					map_fever
@@ -10367,8 +11627,7 @@
 		}
 	}
 	if ( gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 >= mdata(MDATA_RENEW_MINOR) ) {
-		procid = (procid + 1) \ 4
-		proclist(procid) = "renew_minor" + " ct:" + ct
+		proc "renew_minor"
 		if ( mdata(MDATA_RENEW_MINOR) == 0 ) {
 			renewmulti = 1
 		}
@@ -10478,8 +11737,7 @@
 	return
 
 *map_prepareTile
-	procid = (procid + 1) \ 4
-	proclist(procid) = "map_prepareTile:begin" + " ct:" + ct
+	proc "map_prepareTile:begin"
 	if ( gdata(GDATA_AREA) == AREA_ZAILE ) {
 		if ( adata(ADATA_TILE_FILE, gdata(GDATA_AREA)) != 3 ) {
 			adata(ADATA_TILE_FILE, gdata(GDATA_AREA)) = 3
@@ -10501,53 +11759,105 @@
 	gcopy 6, 0, 0, 33 * inf_tiles, 25 * inf_tiles
 	p = 5, 5, 5
 	shade = 15
-	if ( mdata(MDATA_FIELD) == 2 ) {
-		if ( gdata(GDATA_HOUR) >= 24 ) {
-			p = 110, 90, 60
-			shade = 8
-		}
-		if ( gdata(GDATA_HOUR) >= 0 & gdata(GDATA_HOUR) < 4 ) {
-			p = 110, 90, 60
-			shade = 8
-		}
-		if ( gdata(GDATA_HOUR) >= 4 & gdata(GDATA_HOUR) < 10 ) {
-			p = 70 - (gdata(GDATA_HOUR) - 3) * 10, 80 - (gdata(GDATA_HOUR) - 3) * 12, 60 - (gdata(GDATA_HOUR) - 3) * 10
-			if ( p < 10 ) {
-				p = 10
-				shade = (gdata(GDATA_HOUR) - 3) * 2 + 8
+	if ( mdata(MDATA_FIELD) == MAP_FIELD_OUTDOOR ) {
+		if ( gdata(GDATA_LIGHT_SOURCE) == 1 ) {
+			if ( gdata(GDATA_HOUR) >= 24 ) {
+				p = 80, 65, 50
+				shade = 8
+			}
+			if ( gdata(GDATA_HOUR) >= 0 & gdata(GDATA_HOUR) < 4 ) {
+				p = 80, 65, 50
+				shade = 8
+			}
+			if ( gdata(GDATA_HOUR) >= 4 & gdata(GDATA_HOUR) < 9 ) {
+				p = 60 - (gdata(GDATA_HOUR) - 3) * 10, 70 - (gdata(GDATA_HOUR) - 3) * 12, 50 - (gdata(GDATA_HOUR) - 3) * 10
+				if ( p < 10 ) {
+					p = 10
+					shade = (gdata(GDATA_HOUR) - 3) * 2 + 8
+				}
+			}
+			if ( gdata(GDATA_HOUR) >= 9 & gdata(GDATA_HOUR) < 12 ) {
+				p = 5, 5, 5
+				shade = 25
+			}
+			if ( gdata(GDATA_HOUR) >= 12 & gdata(GDATA_HOUR) < 18 ) {
+				p = 0, 0, 0
+				shade = 25
+			}
+			if ( gdata(GDATA_HOUR) >= 18 & gdata(GDATA_HOUR) < 21 ) {
+				p = 0 + (gdata(GDATA_HOUR) - 18) * 20, 15 + (gdata(GDATA_HOUR) - 18) * 15, 10 + (gdata(GDATA_HOUR) - 18) * 10
+				shade = 12
+			}
+			if ( gdata(GDATA_HOUR) >= 21 & gdata(GDATA_HOUR) < 24 ) {
+				p = 50 + (gdata(GDATA_HOUR) - 21) * 10, 45 + (gdata(GDATA_HOUR) - 21) * 10, 30 + (gdata(GDATA_HOUR) - 21) * 5
+				shade = 7
+			}
+			if ( gdata(GDATA_WEATHER) == WEATHER_RAIN ) {
+				if ( p < 35 ) {
+					p = 35, 35, 35
+				}
+			}
+			if ( gdata(GDATA_WEATHER) == WEATHER_HARD_RAIN ) {
+				if ( p < 55 ) {
+					p = 55, 55, 55
+				}
+			}
+			if ( gdata(GDATA_AREA) == AREA_NOYEL ) {
+				if ( gdata(GDATA_HOUR) >= 17 | gdata(GDATA_HOUR) < 7 ) {
+					p += 25
+					p(1) += 25
+					p(2) += 25
+				}
 			}
 		}
-		if ( gdata(GDATA_HOUR) >= 10 & gdata(GDATA_HOUR) < 12 ) {
-			p = 10, 10, 10
-			shade = 25
-		}
-		if ( gdata(GDATA_HOUR) >= 12 & gdata(GDATA_HOUR) < 17 ) {
-			p = 0, 0, 0
-			shade = 25
-		}
-		if ( gdata(GDATA_HOUR) >= 17 & gdata(GDATA_HOUR) < 21 ) {
-			p = 0 + (gdata(GDATA_HOUR) - 17) * 20, 15 + (gdata(GDATA_HOUR) - 16) * 15, 10 + (gdata(GDATA_HOUR) - 16) * 10
-			shade = 12
-		}
-		if ( gdata(GDATA_HOUR) >= 21 & gdata(GDATA_HOUR) < 24 ) {
-			p = 80 + (gdata(GDATA_HOUR) - 21) * 10, 70 + (gdata(GDATA_HOUR) - 21) * 10, 40 + (gdata(GDATA_HOUR) - 21) * 5
-			shade = 7
-		}
-		if ( gdata(GDATA_WEATHER) == WEATHER_RAIN ) {
-			if ( p < 40 ) {
-				p = 40, 40, 40
+		else {
+			if ( gdata(GDATA_HOUR) >= 24 ) {
+				p = 110, 90, 60
+				shade = 8
 			}
-		}
-		if ( gdata(GDATA_WEATHER) == WEATHER_HARD_RAIN ) {
-			if ( p < 65 ) {
-				p = 65, 65, 65
+			if ( gdata(GDATA_HOUR) >= 0 & gdata(GDATA_HOUR) < 4 ) {
+				p = 110, 90, 60
+				shade = 8
 			}
-		}
-		if ( gdata(GDATA_AREA) == AREA_NOYEL ) {
-			if ( gdata(GDATA_HOUR) >= 17 | gdata(GDATA_HOUR) < 7 ) {
-				p += 35
-				p(1) += 35
-				p(2) += 35
+			if ( gdata(GDATA_HOUR) >= 4 & gdata(GDATA_HOUR) < 10 ) {
+				p = 70 - (gdata(GDATA_HOUR) - 3) * 10, 80 - (gdata(GDATA_HOUR) - 3) * 12, 60 - (gdata(GDATA_HOUR) - 3) * 10
+				if ( p < 10 ) {
+					p = 10
+					shade = (gdata(GDATA_HOUR) - 3) * 2 + 8
+				}
+			}
+			if ( gdata(GDATA_HOUR) >= 10 & gdata(GDATA_HOUR) < 12 ) {
+				p = 10, 10, 10
+				shade = 25
+			}
+			if ( gdata(GDATA_HOUR) >= 12 & gdata(GDATA_HOUR) < 17 ) {
+				p = 0, 0, 0
+				shade = 25
+			}
+			if ( gdata(GDATA_HOUR) >= 17 & gdata(GDATA_HOUR) < 21 ) {
+				p = 0 + (gdata(GDATA_HOUR) - 17) * 20, 15 + (gdata(GDATA_HOUR) - 16) * 15, 10 + (gdata(GDATA_HOUR) - 16) * 10
+				shade = 12
+			}
+			if ( gdata(GDATA_HOUR) >= 21 & gdata(GDATA_HOUR) < 24 ) {
+				p = 80 + (gdata(GDATA_HOUR) - 21) * 10, 70 + (gdata(GDATA_HOUR) - 21) * 10, 40 + (gdata(GDATA_HOUR) - 21) * 5
+				shade = 7
+			}
+			if ( gdata(GDATA_WEATHER) == WEATHER_RAIN ) {
+				if ( p < 40 ) {
+					p = 40, 40, 40
+				}
+			}
+			if ( gdata(GDATA_WEATHER) == WEATHER_HARD_RAIN ) {
+				if ( p < 65 ) {
+					p = 65, 65, 65
+				}
+			}
+			if ( gdata(GDATA_AREA) == AREA_NOYEL ) {
+				if ( gdata(GDATA_HOUR) >= 17 | gdata(GDATA_HOUR) < 7 ) {
+					p += 35
+					p(1) += 35
+					p(2) += 35
+				}
 			}
 		}
 	}
@@ -10575,13 +11885,11 @@
 	gmode 0
 	gsel 0
 	gmode 2, 24, 24
-	procid = (procid + 1) \ 4
-	proclist(procid) = "map_prepareTile:end" + " ct:" + ct
+	proc "map_prepareTile:end"
 	return
 
 *world_newRandArea
-	procid = (procid + 1) \ 4
-	proclist(procid) = "world_newRandArea" + " ct:" + ct
+	proc "world_newRandArea"
 	p = 0
 	repeat MAX_AREA_COUNT - STARTING_RANDOM_AREA, STARTING_RANDOM_AREA
 		if ( adata(ADATA_ID, cnt) == AREA_RANDOM_DUNGEON ) {
@@ -10606,8 +11914,7 @@
 	return 1
 
 *world_update
-	procid = (procid + 1) \ 4
-	proclist(procid) = "world_update" + " ct:" + ct
+	proc "world_update"
 	if ( gdata(GDATA_WORLD_RENEW) == 1 ) {
 		gosub *setArea
 		gosub *world_refresh
@@ -10652,8 +11959,7 @@
 		}
 	loop
 	if ( p <= 25 | gdata(GDATA_FLAG_RENEW_DUNGEON) != 0 | gdata(GDATA_WORLD_RENEW) ) {
-		procid = (procid + 1) \ 4
-		proclist(procid) = "world_update_rand_dungeon" + " ct:" + ct
+		proc "world_update_rand_dungeon"
 		gdata(GDATA_FLAG_RENEW_DUNGEON) = 0
 		msgtemp += lang("この大陸に大きな地殻変動が起こった。", " A sudden diastrophism hits the continent.")
 		repeat MAX_AREA_COUNT - STARTING_RANDOM_AREA, STARTING_RANDOM_AREA
@@ -10676,8 +11982,7 @@
 	return
 
 *world_setArea
-	procid = (procid + 1) \ 4
-	proclist(procid) = "world_setArea:building" + " ct:" + ct
+	proc "world_setArea:building"
 	gosub *mapchip_init
 	repeat 20
 		cnt2 = cnt
@@ -10716,8 +12021,7 @@
 		}
 		p = cnt
 		if ( chipm(CHIPM_ATTRIB, map(adata(ADATA_X, cnt), adata(ADATA_Y, cnt), 0)) & CHIPM_ATTRIB_CANT_PASS | map(adata(ADATA_X, cnt), adata(ADATA_Y, cnt), 6) != 0 ) {
-			procid = (procid + 1) \ 4
-			proclist(procid) = "world_setArea:fix:loop" + " ct:" + ct
+			proc "world_setArea:fix:loop"
 			repeat
 				await
 				dx = limit(rnd(cnt / 4 + 1) + 1, 1, mdata(MDATA_WIDTH))
@@ -10727,7 +12031,7 @@
 				if ( x <= 0 | y <= 0 | x >= mdata(MDATA_WIDTH) - 1 | y >= mdata(MDATA_HEIGHT) - 1 ) {
 					continue
 				}
-				if ( 33 <= map(x, y, 0) & map(x, y, 0) < 66 ) {
+				if ( range_tileRoad(map(x, y, 0)) ) {
 					continue
 				}
 				if ( chipm(CHIPM_ATTRIB, map(x, y, 0)) & CHIPM_ATTRIB_CANT_PASS ) {
@@ -10745,18 +12049,19 @@
 		proclist(procid) = "world_setArea:fix:xy:" + x + ":" + y + " ct:" + ct
 		procid = (procid + 1) \ 4
 		proclist(procid) = "world_setArea:fix:map:" + map(adata(ADATA_X, cnt), adata(ADATA_Y, cnt), 0) + " ct:" + ct
-		if ( 33 > map(adata(ADATA_X, cnt), adata(ADATA_Y, cnt), 0) | map(adata(ADATA_X, cnt), adata(ADATA_Y, cnt), 0) >= 66 & chipm(CHIPM_ROLE, map(adata(ADATA_X, cnt), adata(ADATA_Y, cnt), 0)) != MAP_CHIP_ROLE_SNOW & chipm(CHIPM_ROLE_SUB, map(adata(ADATA_X, cnt), adata(ADATA_Y, cnt), 0)) != MAP_CHIP_ROLE_COAST ) {
+		if ( range_tileRoad(map(adata(ADATA_X, cnt))) | chipm(CHIPM_ROLE, map(adata(ADATA_X, cnt), adata(ADATA_Y, cnt), 0)) == MAP_CHIP_ROLE_SNOW & chipm(CHIPM_ROLE_SUB, map(adata(ADATA_X, cnt), adata(ADATA_Y, cnt), 0)) == MAP_CHIP_ROLE_COAST ) {
+            ; pass
+        }
+        else {
 			map(adata(ADATA_X, cnt), adata(ADATA_Y, cnt), 0) = 0
 		}
 		cell_featset adata(ADATA_X, cnt), adata(ADATA_Y, cnt), adata(ADATA_ICON, cnt), CELL_FEATURE_NEFIA, cnt \ 100, cnt / 100
-		procid = (procid + 1) \ 4
-		proclist(procid) = "world_setArea:fix:'" + " ct:" + ct
+		proc "world_setArea:fix:'"
 		if ( adata(ADATA_TYPE, cnt) == MAP_TYPE_TOWN | adata(ADATA_TYPE, cnt) == MAP_TYPE_VILLAGE ) {
 			map(adata(ADATA_X, cnt), adata(ADATA_Y, cnt), 9) = 11
 		}
 	loop
-	procid = (procid + 1) \ 4
-	proclist(procid) = "world_setArea:end" + " ct:" + ct
+	proc "world_setArea:end"
 	return
 
 *world_clear
@@ -10812,6 +12117,22 @@
 	adata(ADATA_TYPE, p) = MAP_TYPE_FIELD
 	adata(ADATA_X, p) = 25
 	adata(ADATA_Y, p) = 14
+	adata(ADATA_START_ON, p) = 3
+	adata(ADATA_TILE_FILE, p) = 3
+	adata(ADATA_TILESET, p) = tstown2
+	adata(ADATA_TIME_SCALE, p) = 10000
+	adata(ADATA_MIN_LEVEL, p) = 1
+	adata(ADATA_MAX_LEVEL, p) = 999
+	adata(ADATA_FIELD, p) = 2
+	adata(ADATA_CAN_SAVE, p) = 1
+	adata(ADATA_RESTORE_POS, p) = 1
+	adata(ADATA_PARENT, p) = AREA_AIMWELL
+	p = AREA_WEST_RASKILIS
+	adata(ADATA_ID, p) = AREA_WEST_RASKILIS
+	adata(ADATA_ICON, p) = xy2pic(21, 11)
+	adata(ADATA_TYPE, p) = MAP_TYPE_FIELD
+	adata(ADATA_X, p) = 21
+	adata(ADATA_Y, p) = 12
 	adata(ADATA_START_ON, p) = 3
 	adata(ADATA_TILE_FILE, p) = 3
 	adata(ADATA_TILESET, p) = tstown2
@@ -12273,7 +13594,7 @@
 			if ( x <= 5 | y <= 5 | x >= mdata(MDATA_WIDTH) - 6 | y >= mdata(MDATA_HEIGHT) - 6 ) {
 				continue
 			}
-			if ( 33 <= map(x, y, 0) & map(x, y, 0) < 66 ) {
+			if ( range_tileRoad(map(x, y, 0)) ) {
 				continue
 			}
 			if ( map(x, y, 0) > 16 ) {
@@ -12909,6 +14230,43 @@
 					y = 16
 					flt
 					characreate -1, CREATURE_ID_MURDER_COCKROACH, x, y
+					cbitmod CHARA_BIT_SUMMONED, rc, TRUE
+					cdata(CDATA_AI_AGGRO, rc) = 1000
+					cdata(CDATA_TARGET, rc) = 0
+					return
+				}
+			}
+		}
+	}
+	if ( gdata(GDATA_AREA) == AREA_WEST_RASKILIS ) {
+		if ( gdata(GDATA_LEVEL) >= 2 & gdata(GDATA_LEVEL) <= 6 ) {
+			if ( gdata(GDATA_FLAG_MAIN) < 1000 ) {
+				if ( rnd(100) == 0 ) {
+					x = cdata(CDATA_X, CHARA_PLAYER)
+					y = cdata(CDATA_Y, CHARA_PLAYER)
+					if ( gdata(GDATA_LEVEL) == 2 ) {
+						x = 78
+						y = 12
+					}
+					if ( gdata(GDATA_LEVEL) == 3 ) {
+						x = 22
+						y = 6
+					}
+					if ( gdata(GDATA_LEVEL) == 4 ) {
+						x = 41
+						y = 26
+					}
+					if ( gdata(GDATA_LEVEL) == 5 ) {
+						x = 22
+						y = 31
+					}
+					if ( gdata(GDATA_LEVEL) == 6 ) {
+						x = 37
+						y = 16
+					}
+					flt
+					characreate -1, CREATURE_ID_OBLIVION_BEAST, x, y
+					cbitmod CHARA_BIT_SUMMONED, rc, TRUE
 					cdata(CDATA_AI_AGGRO, rc) = 1000
 					cdata(CDATA_TARGET, rc) = 0
 					return

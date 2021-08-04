@@ -1,3 +1,11 @@
+#define global ctype range_tilePlain(%1)	(0<=%1)&(%1<4)
+#define global ctype range_tileForest(%1) 	(4<=%1)&(%1<9)
+#define global ctype range_tileBush(%1)		(9<=%1)&(%1<13)
+#define global ctype range_tileDesert(%1)	(13<=%1)&(%1<17)
+#define global ctype range_tileRoad(%1)		(33<=%1)&(%1<57)&(%1!=44)
+#define global ctype range_tileWater(%1)	((264<=%1)&(%1<363))
+#define global ctype range_cellWater(%1)	(%1=594)or( (%1>=165)&(%1<169) )
+
 *setCellObj
 	tile_trap = 234
 	tile_doorclosed = 726
@@ -116,11 +124,11 @@
 		tile_doorclosed = 730
 		tile_dooropen = 264
 	}
-	if ( gdata(GDATA_AREA) == AREA_MACHINERY_FORT & gdata(GDATA_LEVEL) == adata(ADATA_MAX_LEVEL, gdata(GDATA_AREA)) ) {
+	if ( gdata(GDATA_AREA) == AREA_MACHINERY_FORT & gdata(GDATA_LEVEL) == adata(ADATA_MAX_LEVEL, gdata(GDATA_AREA)) | (gdata(GDATA_AREA) == AREA_DOCK & gdata(GDATA_LEVEL) != 100) ) {
 		tile_doorclosed = 728
 		tile_dooropen = 241
 	}
-	if ( gdata(GDATA_AREA) == AREA_ZAILE ) {
+	if ( gdata(GDATA_AREA) == AREA_ZAILE | gdata(GDATA_AREA) == AREA_SOUTH_RASKILIS | gdata(GDATA_AREA) == AREA_WEST_RASKILIS ) {
 		tile_doorclosed = 734
 		tile_dooropen = 266
 	}
@@ -139,6 +147,14 @@
 	if ( map_tileset_arg1 == 14 ) {
 		tile_doorclosed = 734
 		tile_dooropen = 266
+	}
+	if ( gdata(GDATA_AREA) == AREA_WEST_RASKILIS ) {
+		tile_downstairs = xy2pic(2, 7)
+		tile_upstairs = xy2pic(2, 7)
+	}
+	else {
+		tile_downstairs = xy2pic(0, 7)
+		tile_upstairs = xy2pic(1, 7)
 	}
 	if ( map_tileset_arg1 == 3 ) {
 		tile_room = 41
@@ -495,6 +511,10 @@
 				locvar_map_placecharaonentrance_x = 78
 				locvar_map_placecharaonentrance_y = 54
 			}
+			if ( gdata(GDATA_AREA) == AREA_WEST_RASKILIS ) {
+				locvar_map_placecharaonentrance_x = 42
+				locvar_map_placecharaonentrance_y = 27
+			}
 		}
 		if ( gdata(GDATA_RUN_DIR) == 2 ) {
 			locvar_map_placecharaonentrance_x = 1
@@ -513,6 +533,10 @@
 			if ( gdata(GDATA_AREA) == AREA_SOUTH_RASKILIS ) {
 				locvar_map_placecharaonentrance_x = 1
 				locvar_map_placecharaonentrance_y = 33
+			}
+			if ( gdata(GDATA_AREA) == AREA_WEST_RASKILIS ) {
+				locvar_map_placecharaonentrance_x = 1
+				locvar_map_placecharaonentrance_y = 34
 			}
 		}
 		if ( gdata(GDATA_RUN_DIR) == 3 ) {
@@ -1455,7 +1479,7 @@
 		}
 	loop
 	if ( mdata(MDATA_TYPE) == MAP_TYPE_WORLD ) {
-		if ( 264 <= map(locvar_map_placeupstairs_x, locvar_map_placeupstairs_y, 0) & map(locvar_map_placeupstairs_x, locvar_map_placeupstairs_y, 0) < 363 | (33 <= map(locvar_map_placeupstairs_x, locvar_map_placeupstairs_y, 0) & map(locvar_map_placeupstairs_x, locvar_map_placeupstairs_y, 0) < 66) ) {
+		if ( range_tileWater(map(locvar_map_placeupstairs_x, locvar_map_placeupstairs_y, 0)) | range_tileRoad(map(locvar_map_placeupstairs_x, locvar_map_placeupstairs_y, 0)) ) {
 			locvar_map_randsite_f = 0
 		}
 	}
@@ -1519,47 +1543,49 @@
 		return
 	}
 	if ( mdata(MDATA_TYPE) == MAP_TYPE_TOWN | mdata(MDATA_TYPE) == MAP_TYPE_VILLAGE ) {
-		if ( rnd(3) == 0 ) {
-			flt
-			itemcreate -1, ITEM_ID_MOON_GATE, locvar_map_placeupstairs_x, locvar_map_placeupstairs_y, 0
-			return
-		}
-		if ( rnd(8) == 0 ) {
-			flt
-			itemcreate -1, ITEM_ID_BRONZE_COIN, locvar_map_placeupstairs_x, locvar_map_placeupstairs_y, 0
-			return
-		}
-		if ( rnd(15) == 0 ) {
-			if ( gdata(GDATA_WORLD) != AREA_AIMWELL ) {
+		if ( gdata(GDATA_AREA) != AREA_AMUR_CAGE ) {
+			if ( rnd(3) == 0 ) {
 				flt
-				itemcreate -1, ITEM_ID_PLATINUM_COIN, locvar_map_placeupstairs_x, locvar_map_placeupstairs_y, 0
+				itemcreate -1, ITEM_ID_MOON_GATE, locvar_map_placeupstairs_x, locvar_map_placeupstairs_y, 0
+				return
 			}
-			if ( gdata(GDATA_WORLD) == AREA_AIMWELL ) {
+			if ( rnd(8) == 0 ) {
 				flt
 				itemcreate -1, ITEM_ID_BRONZE_COIN, locvar_map_placeupstairs_x, locvar_map_placeupstairs_y, 0
+				return
 			}
-			return
-		}
-		if ( rnd(20) == 0 ) {
-			flt
-			itemcreate -1, ITEM_ID_WALLET, locvar_map_placeupstairs_x, locvar_map_placeupstairs_y, 0
-			return
-		}
-		if ( rnd(15) == 0 ) {
-			flt
-			itemcreate -1, ITEM_ID_SUITCASE, locvar_map_placeupstairs_x, locvar_map_placeupstairs_y, 0
-			return
-		}
-		if ( rnd(18) == 0 ) {
-			flt calcobjlv(rnd(cdata(CDATA_LEVEL, CHARA_PLAYER) + 10)), calcfixlv(FIX_QUALITY_GREAT)
-			flttypemajor = fsetwear(rnd(length(fsetwear)))
+			if ( rnd(15) == 0 ) {
+				if ( gdata(GDATA_WORLD) != AREA_AIMWELL ) {
+					flt
+					itemcreate -1, ITEM_ID_PLATINUM_COIN, locvar_map_placeupstairs_x, locvar_map_placeupstairs_y, 0
+				}
+				if ( gdata(GDATA_WORLD) == AREA_AIMWELL ) {
+					flt
+					itemcreate -1, ITEM_ID_BRONZE_COIN, locvar_map_placeupstairs_x, locvar_map_placeupstairs_y, 0
+				}
+				return
+			}
+			if ( rnd(20) == 0 ) {
+				flt
+				itemcreate -1, ITEM_ID_WALLET, locvar_map_placeupstairs_x, locvar_map_placeupstairs_y, 0
+				return
+			}
+			if ( rnd(15) == 0 ) {
+				flt
+				itemcreate -1, ITEM_ID_SUITCASE, locvar_map_placeupstairs_x, locvar_map_placeupstairs_y, 0
+				return
+			}
+			if ( rnd(18) == 0 ) {
+				flt calcobjlv(rnd(cdata(CDATA_LEVEL, CHARA_PLAYER) + 10)), calcfixlv(FIX_QUALITY_GREAT)
+				flttypemajor = fsetwear(rnd(length(fsetwear)))
+				itemcreate -1, ITEM_ID_DUMMY, locvar_map_placeupstairs_x, locvar_map_placeupstairs_y, 0
+				return
+			}
+			flt 10
+			flttypeminor = FILTER_JUNK_TOWN
 			itemcreate -1, ITEM_ID_DUMMY, locvar_map_placeupstairs_x, locvar_map_placeupstairs_y, 0
 			return
-		}
-		flt 10
-		flttypeminor = FILTER_JUNK_TOWN
-		itemcreate -1, ITEM_ID_DUMMY, locvar_map_placeupstairs_x, locvar_map_placeupstairs_y, 0
-		return
+        }
 	}
 	return
 
@@ -1582,7 +1608,7 @@
 		}
 	loop
 	if ( mdata(MDATA_TYPE) == MAP_TYPE_WORLD ) {
-		if ( 264 <= map(locvar_map_placeupstairs_x, locvar_map_placeupstairs_y, 0) & map(locvar_map_placeupstairs_x, locvar_map_placeupstairs_y, 0) < 363 | (33 <= map(locvar_map_placeupstairs_x, locvar_map_placeupstairs_y, 0) & map(locvar_map_placeupstairs_x, locvar_map_placeupstairs_y, 0) < 66) ) {
+		if ( range_tileWater(map(locvar_map_placeupstairs_x, locvar_map_placeupstairs_y, 0)) | range_tileRoad(map(locvar_map_placeupstairs_x, locvar_map_placeupstairs_y, 0)) ) {
 			locvar_map_randsite_f = 0
 		}
 	}
@@ -2035,43 +2061,9 @@
 			gsel 1
 			color 0
 			boxf 0, 960, chipi(CHIPI_WIDTH, medititemidx(mitem)), chipi(CHIPI_HEIGHT, medititemidx(mitem)) + 960
-			if ( medititemidx(mitem) == xy2pic(0, 16) ) {
-				gmode 2
-				pos 0, 960
-				gcopy 1, 0, 768, inf_tiles, inf_tiles
-				pos 0, 1008
-				gzoom 22, 20, 5, chipc(CHIPC_X, xy2pic(0, 0)) + 8, chipc(CHIPC_Y, xy2pic(0, 0)) + 4 + (chipc(CHIPC_HEIGHT, xy2pic(0, 0)) > inf_tiles) * 8, chipc(CHIPC_WIDTH, xy2pic(0, 0)) - 16, chipc(CHIPC_HEIGHT, xy2pic(0, 0)) - 8 - (chipc(CHIPC_HEIGHT, xy2pic(0, 0)) > inf_tiles) * 10, 1
-				pos 6, 974
-				gcopy 1, 0, 1008, 22, 20
-				gsel selcur
-			}
-			else {
-				if ( medititemidx(mitem) == xy2pic(30, 33) ) {
-					pos 8, 1058 - chipc(CHIPC_HEIGHT, xy2pic(0, 0))
-					gcopy 5, chipc(CHIPC_X, xy2pic(0, 0)) + 8, chipc(CHIPC_Y, xy2pic(0, 0)) + 2, chipc(CHIPC_WIDTH, xy2pic(0, 0)), chipc(CHIPC_HEIGHT, xy2pic(0, 0))
-					gmode 2
-					gsel selcur
-				}
-				else {
-					if ( medititemidx(mitem) == xy2pic(3, 16) ) {
-						pos 8, 1058 - chipc(CHIPC_HEIGHT, xy2pic(0, 0))
-						gcopy 5, chipc(CHIPC_X, xy2pic(0, 0)) + 8, chipc(CHIPC_Y, xy2pic(0, 0)) + 2, chipc(CHIPC_WIDTH, xy2pic(0, 0)) - 16, chipc(CHIPC_HEIGHT, xy2pic(0, 0)) - 8
-						gmode 4, , , 150
-						color 0, 0, 0
-						pos 0, 960 + (chipc(CHIPC_HEIGHT, xy2pic(0, 0)) == inf_tiles) * 48
-						gcopy 1, 144, 768 + (chipc(CHIPC_HEIGHT, xy2pic(0, 0)) > inf_tiles) * 48, inf_tiles, chipc(CHIPC_HEIGHT, xy2pic(0, 0)) + (chipc(CHIPC_HEIGHT, xy2pic(0, 0)) > inf_tiles) * 48
-						gmode 2
-						gsel selcur
-					}
-					else {
-						pos 0, 960
-						gcopy 1, chipi(CHIPI_X, medititemidx(mitem)), chipi(CHIPI_Y, medititemidx(mitem)), chipi(CHIPI_WIDTH, medititemidx(mitem)), chipi(CHIPI_HEIGHT, medititemidx(mitem))
-						gfini chipi(CHIPI_WIDTH, medititemidx(mitem)), chipi(CHIPI_HEIGHT, medititemidx(mitem))
-						gfdec2 c_col(0, 0), c_col(1, 0), c_col(2, 0)
-						gsel selcur
-					}
-				}
-			}
+
+            preparePicItem medititemidx(mitem), 0
+
 			gcopy 1, 0, 0, 48, 48
 		}
 		else {
@@ -2115,43 +2107,9 @@
 					gsel 1
 					color 0
 					boxf 0, 960, chipi(CHIPI_WIDTH, p), chipi(CHIPI_HEIGHT, p) + 960
-					if ( p == xy2pic(0, 16) ) {
-						gmode 2
-						pos 0, 960
-						gcopy 1, 0, 768, inf_tiles, inf_tiles
-						pos 0, 1008
-						gzoom 22, 20, 5, chipc(CHIPC_X, xy2pic(0, 0)) + 8, chipc(CHIPC_Y, xy2pic(0, 0)) + 4 + (chipc(CHIPC_HEIGHT, xy2pic(0, 0)) > inf_tiles) * 8, chipc(CHIPC_WIDTH, xy2pic(0, 0)) - 16, chipc(CHIPC_HEIGHT, xy2pic(0, 0)) - 8 - (chipc(CHIPC_HEIGHT, xy2pic(0, 0)) > inf_tiles) * 10, 1
-						pos 6, 974
-						gcopy 1, 0, 1008, 22, 20
-						gsel selcur
-					}
-					else {
-						if ( p == xy2pic(30, 33) ) {
-							pos 8, 1058 - chipc(CHIPC_HEIGHT, xy2pic(0, 0))
-							gcopy 5, chipc(CHIPC_X, xy2pic(0, 0)) + 8, chipc(CHIPC_Y, xy2pic(0, 0)) + 2, chipc(CHIPC_WIDTH, xy2pic(0, 0)), chipc(CHIPC_HEIGHT, xy2pic(0, 0))
-							gmode 2
-							gsel selcur
-						}
-						else {
-							if ( p == xy2pic(3, 16) ) {
-								pos 8, 1058 - chipc(CHIPC_HEIGHT, xy2pic(0, 0))
-								gcopy 5, chipc(CHIPC_X, xy2pic(0, 0)) + 8, chipc(CHIPC_Y, xy2pic(0, 0)) + 2, chipc(CHIPC_WIDTH, xy2pic(0, 0)) - 16, chipc(CHIPC_HEIGHT, xy2pic(0, 0)) - 8
-								gmode 4, , , 150
-								color 0, 0, 0
-								pos 0, 960 + (chipc(CHIPC_HEIGHT, xy2pic(0, 0)) == inf_tiles) * 48
-								gcopy 1, 144, 768 + (chipc(CHIPC_HEIGHT, xy2pic(0, 0)) > inf_tiles) * 48, inf_tiles, chipc(CHIPC_HEIGHT, xy2pic(0, 0)) + (chipc(CHIPC_HEIGHT, xy2pic(0, 0)) > inf_tiles) * 48
-								gmode 2
-								gsel selcur
-							}
-							else {
-								pos 0, 960
-								gcopy 1, chipi(CHIPI_X, p), chipi(CHIPI_Y, p), chipi(CHIPI_WIDTH, p), chipi(CHIPI_HEIGHT, p)
-								gfini chipi(CHIPI_WIDTH, p), chipi(CHIPI_HEIGHT, p)
-								gfdec2 c_col(0, 0), c_col(1, 0), c_col(2, 0)
-								gsel selcur
-							}
-						}
-					}
+
+                    preparePicItem p, 0
+
 					gmode 2
 					pos x, y - chipi(CHIPI_F, p)
 					gcopy 1, 0, 960, chipi(CHIPI_WIDTH, p), chipi(CHIPI_HEIGHT, p)
@@ -2184,43 +2142,9 @@
 			gsel 1
 			color 0
 			boxf 0, 960, chipi(CHIPI_WIDTH, p), chipi(CHIPI_HEIGHT, p) + 960
-			if ( p == xy2pic(0, 16) ) {
-				gmode 2
-				pos 0, 960
-				gcopy 1, 0, 768, inf_tiles, inf_tiles
-				pos 0, 1008
-				gzoom 22, 20, 5, chipc(CHIPC_X, xy2pic(0, 0)) + 8, chipc(CHIPC_Y, xy2pic(0, 0)) + 4 + (chipc(CHIPC_HEIGHT, xy2pic(0, 0)) > inf_tiles) * 8, chipc(CHIPC_WIDTH, xy2pic(0, 0)) - 16, chipc(CHIPC_HEIGHT, xy2pic(0, 0)) - 8 - (chipc(CHIPC_HEIGHT, xy2pic(0, 0)) > inf_tiles) * 10, 1
-				pos 6, 974
-				gcopy 1, 0, 1008, 22, 20
-				gsel selcur
-			}
-			else {
-				if ( p == xy2pic(30, 33) ) {
-					pos 8, 1058 - chipc(CHIPC_HEIGHT, xy2pic(0, 0))
-					gcopy 5, chipc(CHIPC_X, xy2pic(0, 0)) + 8, chipc(CHIPC_Y, xy2pic(0, 0)) + 2, chipc(CHIPC_WIDTH, xy2pic(0, 0)), chipc(CHIPC_HEIGHT, xy2pic(0, 0))
-					gmode 2
-					gsel selcur
-				}
-				else {
-					if ( p == xy2pic(3, 16) ) {
-						pos 8, 1058 - chipc(CHIPC_HEIGHT, xy2pic(0, 0))
-						gcopy 5, chipc(CHIPC_X, xy2pic(0, 0)) + 8, chipc(CHIPC_Y, xy2pic(0, 0)) + 2, chipc(CHIPC_WIDTH, xy2pic(0, 0)) - 16, chipc(CHIPC_HEIGHT, xy2pic(0, 0)) - 8
-						gmode 4, , , 150
-						color 0, 0, 0
-						pos 0, 960 + (chipc(CHIPC_HEIGHT, xy2pic(0, 0)) == inf_tiles) * 48
-						gcopy 1, 144, 768 + (chipc(CHIPC_HEIGHT, xy2pic(0, 0)) > inf_tiles) * 48, inf_tiles, chipc(CHIPC_HEIGHT, xy2pic(0, 0)) + (chipc(CHIPC_HEIGHT, xy2pic(0, 0)) > inf_tiles) * 48
-						gmode 2
-						gsel selcur
-					}
-					else {
-						pos 0, 960
-						gcopy 1, chipi(CHIPI_X, p), chipi(CHIPI_Y, p), chipi(CHIPI_WIDTH, p), chipi(CHIPI_HEIGHT, p)
-						gfini chipi(CHIPI_WIDTH, p), chipi(CHIPI_HEIGHT, p)
-						gfdec2 c_col(0, 0), c_col(1, 0), c_col(2, 0)
-						gsel selcur
-					}
-				}
-			}
+
+            preparePicItem p, 0
+
 			gmode 2
 			pos dx * inf_tiles, dy * inf_tiles - chipi(CHIPI_F, p)
 			gcopy 1, 0, 960, chipi(CHIPI_WIDTH, p), chipi(CHIPI_HEIGHT, p)

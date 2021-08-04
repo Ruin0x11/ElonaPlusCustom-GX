@@ -455,6 +455,28 @@
 				itemcreate -1, ITEM_ID_MUSIC_TICKET, -1, -1, 0
 				inv(INV_ITEM_NUM, ci) = limit(nkane / 3, 1, 70)
 			}
+			if ( gdata(GDATA_FLAG_DESTINY_LETTERS) >= 7 ) {
+				mtx = inv(INV_ITEM_X, ci)
+				mty = inv(INV_ITEM_Y, ci)
+				gdata(GDATA_FLAG_DESTINY_LETTERS) = 8
+				repeat 3
+					flt
+					flttypemajor = fsetwear(rnd(length(fsetwear)))
+					fixlv = FIX_QUALITY_GODLY
+					itemcreate -1, ITEM_ID_DUMMY, mtx, mty, 0
+				loop
+				snd SOUNDLIST_DING1
+				txtef COLOR_YELLOW2
+				txt lang("このフロアには運命を感じる…！", "You felt destiny on this floor...!")
+				gdata(GDATA_FLAG_DESTINY_LETTERS) = 0
+				gdata(GDATA_FLAG_STUDY_BONUS_TRAINING_EXP) = 0
+				gdata(GDATA_FLAG_STUDY_BONUS_COMBAT_EXP) = 0
+				gdata(GDATA_FLAG_STUDY_BONUS_JOB_EXP) = 0
+				gdata(GDATA_FLAG_STUDY_BONUS_EXPLORATION_EXP) = 0
+				gdata(GDATA_FLAG_STUDY_BONUS_STUDY_EXP) = 0
+				gdata(GDATA_FLAG_DESTINY_NEFIA_BOSSES_DEFEATED) = 0
+				gdata(GDATA_FLAG_DESTINY_TIMES_SLEPT) = 0
+			}
 		}
 	}
 	if ( adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_LESIMAS ) {
@@ -598,7 +620,7 @@
 			}
 		}
 	loop
-	repeat mdata(MDATA_WIDTH) * mdata(MDATA_HEIGHT) / 10
+	repeat mdata(MDATA_WIDTH) * mdata(MDATA_HEIGHT) / 20
 		if ( qdata(QDATA_VAR, gdata(GDATA_QUEST_REF)) == 0 ) {
 			map_trap 0, 0, qdata(QDATA_LEVEL, gdata(GDATA_QUEST_REF)), 9
 		}
