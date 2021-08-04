@@ -304,25 +304,25 @@
 	txt lang(mapname(gdata(GDATA_AREA)) + "には" + p + "個のアイテムと" + p(1) + "個の家具がある(アイテム最大" + p(2) + "個) ", "There are " + p + " items and " + p(1) + " furniture in " + mapname(gdata(GDATA_AREA)) + ".(Max: " + p(2) + ") ")
 	txtmore
 	if ( adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_SHOP ) {
-		if ( adata(ADATA_SHOP_TYPE, gdata(GDATA_AREA)) == 0 ) {
+		if ( adata(ADATA_SHOP_TYPE, gdata(GDATA_AREA)) == SHOP_TYPE_GOODS ) {
 			shops = lang("何でも屋", "Goods shop")
 		}
-		if ( adata(ADATA_SHOP_TYPE, gdata(GDATA_AREA)) == 1 ) {
+		if ( adata(ADATA_SHOP_TYPE, gdata(GDATA_AREA)) == SHOP_TYPE_FOOD ) {
 			shops = lang("食品店", "Food shop")
 		}
-		if ( adata(ADATA_SHOP_TYPE, gdata(GDATA_AREA)) == 2 ) {
+		if ( adata(ADATA_SHOP_TYPE, gdata(GDATA_AREA)) == SHOP_TYPE_MAGIC ) {
 			shops = lang("魔法店", "Magic shop")
 		}
-		if ( adata(ADATA_SHOP_TYPE, gdata(GDATA_AREA)) == 3 ) {
+		if ( adata(ADATA_SHOP_TYPE, gdata(GDATA_AREA)) == SHOP_TYPE_BLACKSMITH ) {
 			shops = lang("武具店", "Blacksmith")
 		}
-		if ( adata(ADATA_SHOP_TYPE, gdata(GDATA_AREA)) == 4 ) {
+		if ( adata(ADATA_SHOP_TYPE, gdata(GDATA_AREA)) == SHOP_TYPE_INN ) {
 			shops = lang("宿屋", "Inn shop")
 		}
-		if ( adata(ADATA_SHOP_TYPE, gdata(GDATA_AREA)) == 5 ) {
+		if ( adata(ADATA_SHOP_TYPE, gdata(GDATA_AREA)) == SHOP_TYPE_DECORATIVE_ARTS ) {
 			shops = lang("装飾家具店", "Decorative arts shop")
 		}
-		if ( adata(ADATA_SHOP_TYPE, gdata(GDATA_AREA)) == 6 ) {
+		if ( adata(ADATA_SHOP_TYPE, gdata(GDATA_AREA)) == SHOP_TYPE_JUNK ) {
 			shops = lang("ジャンク屋", "Junk shop")
 		}
 		txt lang("店タイプ：" + shops + "。", "Shop type : " + shops + ".")
@@ -1069,25 +1069,25 @@
 		}
 		adata((39 /*!!!@[ADATA_RANCH_PRODUCE_RESTRICTION @@@ ADATA_SHOP_TYPE_CHANGE_COOLDOWN]@!!! */), gdata(GDATA_AREA)) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 + 24 * 15
 		adata(ADATA_SHOP_TYPE, gdata(GDATA_AREA)) = rtval - 1
-		if ( adata(ADATA_SHOP_TYPE, gdata(GDATA_AREA)) == 0 ) {
+		if ( adata(ADATA_SHOP_TYPE, gdata(GDATA_AREA)) == SHOP_TYPE_GOODS ) {
 			shops = lang("何でも屋", "Goods shop")
 		}
-		if ( adata(ADATA_SHOP_TYPE, gdata(GDATA_AREA)) == 1 ) {
+		if ( adata(ADATA_SHOP_TYPE, gdata(GDATA_AREA)) == SHOP_TYPE_FOOD ) {
 			shops = lang("食品店", "Food shop")
 		}
-		if ( adata(ADATA_SHOP_TYPE, gdata(GDATA_AREA)) == 2 ) {
+		if ( adata(ADATA_SHOP_TYPE, gdata(GDATA_AREA)) == SHOP_TYPE_MAGIC ) {
 			shops = lang("魔法店", "Magic shop")
 		}
-		if ( adata(ADATA_SHOP_TYPE, gdata(GDATA_AREA)) == 3 ) {
+		if ( adata(ADATA_SHOP_TYPE, gdata(GDATA_AREA)) == SHOP_TYPE_BLACKSMITH ) {
 			shops = lang("武具店", "Blacksmith")
 		}
-		if ( adata(ADATA_SHOP_TYPE, gdata(GDATA_AREA)) == 4 ) {
+		if ( adata(ADATA_SHOP_TYPE, gdata(GDATA_AREA)) == SHOP_TYPE_INN ) {
 			shops = lang("宿屋", "Inn shop")
 		}
-		if ( adata(ADATA_SHOP_TYPE, gdata(GDATA_AREA)) == 5 ) {
+		if ( adata(ADATA_SHOP_TYPE, gdata(GDATA_AREA)) == SHOP_TYPE_DECORATIVE_ARTS ) {
 			shops = lang("装飾家具店", "Decorative arts shop")
 		}
-		if ( adata(ADATA_SHOP_TYPE, gdata(GDATA_AREA)) == 6 ) {
+		if ( adata(ADATA_SHOP_TYPE, gdata(GDATA_AREA)) == SHOP_TYPE_JUNK ) {
 			shops = lang("ジャンク屋", "Junk shop")
 		}
 		txtef COLOR_GREEN
@@ -1681,7 +1681,7 @@
 			}
 		}
 		a = refitem(inv(INV_ITEM_ID, cnt), DBSPEC_ITEM_TYPE)
-		if ( adata(ADATA_SHOP_TYPE, area) != 5 ) {
+		if ( adata(ADATA_SHOP_TYPE, area) != SHOP_TYPE_DECORATIVE_ARTS ) {
 			if ( a == 60000 & inv(INV_ITEM_ID, cnt) != ITEM_ID_WILD_FLOWER ) {
 				continue
 			}
@@ -1703,32 +1703,32 @@
 				val = limitvalue
 			}
 		}
-		if ( adata(ADATA_SHOP_TYPE, area) == 1 ) {
+		if ( adata(ADATA_SHOP_TYPE, area) == SHOP_TYPE_FOOD ) {
 			if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_ITEM_FOOD ) {
 				val = val * 6 / 5
 			}
 		}
-		if ( adata(ADATA_SHOP_TYPE, area) == 2 ) {
+		if ( adata(ADATA_SHOP_TYPE, area) == SHOP_TYPE_MAGIC ) {
 			if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_ITEM_SCROLL | refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_ITEM_SPELLBOOK | refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_ITEM_ROD | inv(INV_ITEM_ID, ci) == ITEM_ID_OHUDA ) {
 				val = val * 6 / 5
 			}
 		}
-		if ( adata(ADATA_SHOP_TYPE, area) == 3 ) {
+		if ( adata(ADATA_SHOP_TYPE, area) == SHOP_TYPE_BLACKSMITH ) {
 			if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_WEAPON | refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_RANGE | refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_AMMO | refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_HELM | refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_ARMOR | refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_CLOAK | refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_GIRDLE | refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_BOOTS | refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_GLOVES | refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_SHIELD | refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_ACCESSORY_RING | refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_ACCESSORY_AMULET ) {
 				val = val * 6 / 5
 			}
 		}
-		if ( adata(ADATA_SHOP_TYPE, area) == 4 ) {
+		if ( adata(ADATA_SHOP_TYPE, area) == SHOP_TYPE_INN ) {
 			if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_CONTAINER | refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_ITEM_POTION ) {
 				val = val * 6 / 5
 			}
 		}
-		if ( adata(ADATA_SHOP_TYPE, area) == 5 ) {
+		if ( adata(ADATA_SHOP_TYPE, area) == SHOP_TYPE_DECORATIVE_ARTS ) {
 			if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_ENVIRONMENT | refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_FURNITURE | refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_FURNITURE_WELL | refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_FURNITURE_ALTAR ) {
 				val = val * 6 / 5
 			}
 		}
-		if ( adata(ADATA_SHOP_TYPE, area) == 6 ) {
+		if ( adata(ADATA_SHOP_TYPE, area) == SHOP_TYPE_JUNK ) {
 			if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_JUNK | refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_REMAINS | refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_ITEM_TOOL ) {
 				val = val * 6 / 5
 			}
@@ -1745,54 +1745,54 @@
 		if ( inv(INV_ITEM_ID, ci) == ITEM_ID_YACA_POINT_CARD ) {
 			continue
 		}
-		if ( adata(ADATA_SHOP_TYPE, area) == 0 ) {
+		if ( adata(ADATA_SHOP_TYPE, area) == SHOP_TYPE_GOODS ) {
 			if ( rnd(8) ) {
 				continue
 			}
 		}
-		if ( adata(ADATA_SHOP_TYPE, area) == 1 ) {
+		if ( adata(ADATA_SHOP_TYPE, area) == SHOP_TYPE_FOOD ) {
 			if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) != FILTER_ITEM_FOOD ) {
 				if ( rnd(5) ) {
 					continue
 				}
 			}
 		}
-		if ( adata(ADATA_SHOP_TYPE, area) == 2 ) {
+		if ( adata(ADATA_SHOP_TYPE, area) == SHOP_TYPE_MAGIC ) {
 			if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) != FILTER_ITEM_SCROLL & refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) != FILTER_ITEM_SPELLBOOK & refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) != FILTER_ITEM_ROD & inv(INV_ITEM_ID, ci) != ITEM_ID_OHUDA ) {
 				if ( rnd(5) ) {
 					continue
 				}
 			}
 		}
-		if ( adata(ADATA_SHOP_TYPE, area) == 3 ) {
+		if ( adata(ADATA_SHOP_TYPE, area) == SHOP_TYPE_BLACKSMITH ) {
 			if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) != FILTER_WEAPON & refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) != FILTER_RANGE & refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) != FILTER_AMMO & refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) != FILTER_HELM & refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) != FILTER_ARMOR & refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) != FILTER_CLOAK & refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) != FILTER_GIRDLE & refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) != FILTER_BOOTS & refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) != FILTER_GLOVES & refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) != FILTER_SHIELD & refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) != FILTER_ACCESSORY_RING & refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) != FILTER_ACCESSORY_AMULET ) {
 				if ( rnd(5) ) {
 					continue
 				}
 			}
 		}
-		if ( adata(ADATA_SHOP_TYPE, area) == 4 ) {
+		if ( adata(ADATA_SHOP_TYPE, area) == SHOP_TYPE_INN ) {
 			if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) != FILTER_CONTAINER & refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) != FILTER_ITEM_POTION ) {
 				if ( rnd(5) ) {
 					continue
 				}
 			}
 		}
-		if ( adata(ADATA_SHOP_TYPE, area) == 5 ) {
+		if ( adata(ADATA_SHOP_TYPE, area) == SHOP_TYPE_DECORATIVE_ARTS ) {
 			if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) != FILTER_ENVIRONMENT & refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) != FILTER_FURNITURE & refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) != FILTER_FURNITURE_WELL & refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) != FILTER_FURNITURE_ALTAR ) {
 				if ( rnd(5) ) {
 					continue
 				}
 			}
 		}
-		if ( adata(ADATA_SHOP_TYPE, area) == 6 ) {
+		if ( adata(ADATA_SHOP_TYPE, area) == SHOP_TYPE_JUNK ) {
 			if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) != FILTER_JUNK & refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) != FILTER_REMAINS & refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) != FILTER_ITEM_TOOL ) {
 				if ( rnd(5) ) {
 					continue
 				}
 			}
 		}
-		if ( adata(ADATA_SHOP_TYPE, area) != 0 ) {
+		if ( adata(ADATA_SHOP_TYPE, area) != SHOP_TYPE_GOODS ) {
 			if ( rnd(2) ) {
 				continue
 			}
