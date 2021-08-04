@@ -1529,13 +1529,13 @@
 								locvar_cell_draw_ani = cdata(CDATA_TURN, CHARA_PLAYER) \ 4 * 32
 							}
 							if ( mdata(MDATA_TYPE) == MAP_TYPE_WORLD ) {
-								if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) > 0 ) {
+								if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) > VEHICLE_NONE ) {
 									locvar_cell_draw_wide = 1
-									if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) == 4 ) {
+									if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) == VEHICLE_LAND_BATTLESHIP ) {
 										locvar_cell_draw_wide = 2
 									}
-									if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) == 3 ) {
-                                        preparePicItem 1168, (gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_PIC) - gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND))
+									if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) == VEHICLE_MAGIC_LOCOMOTIVE ) {
+										preparePicItem xy2pic(13, 35), (gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_PIC) - gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND)) / 1000
 										if ( gdata(GDATA_RUN_DIR) == 2 ) {
 											pos locvar_cell_draw_px - 10, locvar_cell_draw_py + 8
 											gmode 2, 33, 48
