@@ -638,6 +638,30 @@
 		mes _conjudo
 		sy -= 20
 	}
+	if ( gdata(GDATA_FLAG_MAIN) >= 875 & gdata(GDATA_FLAG_MAIN) < 900 ) {
+		color 120, 120, 120
+		pos sx, sy
+		gcopy BUFFER_INF, 0 + en * 84, 416, 65 + en * 30, 15
+		pos sx + 6, sy + 1
+		mes _conash
+		sy -= 20
+	}
+	if ( gdata(GDATA_FLAG_MAIN) >= 900 & gdata(GDATA_FLAG_MAIN) < 1000 ) {
+		color 160, 160, 0
+		pos sx, sy
+		gcopy BUFFER_INF, 0 + en * 84, 416, 65 + en * 30, 15
+		pos sx + 6, sy + 1
+		mes _conovergods
+		sy -= 20
+	}
+	if ( cdata(CDATA_ADVANCED_CASTING_ENABLED, CHARA_PLAYER) != 0 ) {
+		color 0, 0, 200
+		pos sx, sy
+		gcopy BUFFER_INF, 0 + en * 84, 416, 65 + en * 30, 15
+		pos sx + 6, sy + 1
+		mes _conadvance
+		sy -= 20
+	}
 	if ( cdata(CDATA_CONDITION_WINCE, CHARA_PLAYER) != 0 ) {
 		color 160, 0, 0
 		pos sx, sy
@@ -801,8 +825,14 @@
 	grotate 3, 0, 288, 0.0174532925199433 * (gdata(GDATA_HOUR) * 30), 48, 48
 	pos inf_clockw - 3, inf_clocky + 17 + vfix
 	mes "" + gdata(GDATA_YEAR) + "/" + gdata(GDATA_MONTH) + "/" + gdata(GDATA_DAY)
-	pos inf_clockw + 6, inf_clocky + 35
-	bmes _time(gdata(GDATA_HOUR) / 4) + " " + _weather(gdata(GDATA_WEATHER)), 255, 255, 255
+	if ( gdata(GDATA_AREA) == AREA_AMUR_CAGE & gdata(GDATA_LEVEL) >= 20 ) {
+        pos inf_clockw + 6, inf_clocky + 35
+        bmes lang("赤い雨", "Blood"), 235, 35, 35
+	}
+	else {
+		pos inf_clockw + 6, inf_clocky + 35
+		bmes _time(gdata(GDATA_HOUR) / 4) + " " + _weather(gdata(GDATA_WEATHER)), 255, 255, 255
+	}
 	if ( gdata(GDATA_WIZARD) == 1 ) {
 		pos inf_clockw + 6, inf_clocky + 50
 		color 0, 0, 0
@@ -810,6 +840,16 @@
 		pos inf_clockw + 80, inf_clocky + 17
 		color 0, 0, 0
 		bmes "loop" + looplev + "、sub" + sublev + " ", 235, 235, 235
+	}
+	if ( gdata(GDATA_FLAG_DESTINY_LETTERS) < 7 ) {
+		pos inf_clockw + 80, inf_clocky + 17
+		color 0, 0, 0
+		bmes _biyori(gdata(GDATA_FLAG_STUDY_BONUS_KIND)) + " / " + _destiny(gdata(GDATA_FLAG_DESTINY_LETTERS)), 255, 255, 255
+	}
+	else {
+		pos inf_clockw + 80, inf_clocky + 17
+		color 0, 80, 180
+		bmes _biyori(gdata(GDATA_FLAG_STUDY_BONUS_KIND)) + " / " + _destiny(gdata(GDATA_FLAG_DESTINY_LETTERS)), 255, 255, 255
 	}
 	if ( gdata(STARTING_GDATA_FLAG + 353) == 100 ) {
 		pos 10, 0
@@ -827,6 +867,1036 @@
 			bmes "You can surrender by pressing the ESC key.", 235, 235, 235
 		}
 	}
+	if ( dbg_subAmurdad ) {
+		paraa = gdata(GDATA_FLAG_SUB_AMURDAD)
+		parab = gdata(GDATA_LEVEL)
+		parac = -1
+		if ( jp ) {
+			pos inf_clockw + 380, inf_clocky + 37
+			color 0, 0, 0
+			bmes "確認" + paraa + "、" + parab + "、" + parac + "。", 235, 235, 235
+		}
+	}
+	if ( gdata(GDATA_AREA) == AREA_AMUR_CAGE ) {
+		if ( gdata(GDATA_LEVEL) >= 10 ) {
+			if ( soulimit > 0 ) {
+				pos inf_clockw + 230, inf_clocky + 37
+				color 0, 0, 0
+				bmes "Soul-Limit < " + soulimit + " > ", 235, 35, 35
+				soulimit--
+				if ( soulimit == 0 ) {
+					gdata(GDATA_FLAG_SUB_AMURDAD) += 9
+					txt lang("ネヘルタード「間に合わなかった…。救済するべき魂はもう助からない…。君だけでも逃げて…」", "You were forced to escape.")
+				}
+			}
+		}
+	}
+	if ( gdata(GDATA_FLAG_MAIN) >= 875 & gdata(GDATA_FLAG_MAIN) < 1000 ) {
+		pos inf_clockw + 280, inf_clocky + 37
+		color 0, 0, 0
+		bmes " < " + gdata(GDATA_FLAG_COLLECTED_WISHES) + " > ", 235, 235, 35
+	}
+	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) >= 1 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) < 100 ) {
+		gdata(GDATA_FLAG_CUT_IN_MESSAGE_1)++
+		if ( jp ) {
+			pos inf_clockw + 80, inf_clocky + 50
+			color 0, 0, 0
+			bmes "ゼーム「さぁ、神との戦いを見せてもらおう！私の知的探求心を満たしてくれ！」", 235, 235, 35
+		}
+		if ( en ) {
+			pos inf_clockw + 80, inf_clocky + 50
+			color 0, 0, 0
+			bmes "Zeome laughs, " + cnvtalk("Show me the battle of the gods! Satisfy my intellectual curiosity!"), 235, 235, 35
+		}
+	}
+	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) >= 200 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) < 400 ) {
+		gdata(GDATA_FLAG_CUT_IN_MESSAGE_1)++
+		if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) >= 200 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) < 300 ) {
+			if ( jp ) {
+				pos inf_clockw + 80, inf_clocky + 50
+				color 0, 0, 0
+				bmes "エリステア「どうか、イルヴァの歴史を守って…！」", 235, 235, 35
+			}
+			if ( en ) {
+				pos inf_clockw + 80, inf_clocky + 50
+				color 0, 0, 0
+				bmes "Erystia prays, " + cnvtalk("Please protect the history of Irva!"), 235, 235, 35
+			}
+		}
+		if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) >= 250 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) < 350 ) {
+			if ( jp ) {
+				pos inf_clockw + 30, inf_clocky + 65
+				color 0, 0, 0
+				bmes "ガベラ「死ぬなよ" + cdatan(CDATAN_NAME, CHARA_PLAYER) + "…もう俺にあんな思いをさせないでくれ」", 235, 235, 35
+			}
+			if ( en ) {
+				pos inf_clockw + 30, inf_clocky + 65
+				color 0, 0, 0
+				bmes "Gavela mutters, " + cnvtalk("Do not die! I don't need tragedy anymore..."), 235, 235, 35
+			}
+		}
+		if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) >= 300 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) < 400 ) {
+			if ( jp ) {
+				pos inf_clockw + 80, inf_clocky + 80
+				color 0, 0, 0
+				bmes "ソピアー「アカシックネットワークに光が流れ込んでいる…？」", 235, 235, 35
+			}
+			if ( en ) {
+				pos inf_clockw + 80, inf_clocky + 80
+				color 0, 0, 0
+				bmes "Sophia wonders, " + cnvtalk("Light is flowing into the Akashic Network...?"), 235, 235, 35
+			}
+		}
+	}
+	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) >= 500 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) < 700 ) {
+		gdata(GDATA_FLAG_CUT_IN_MESSAGE_1)++
+		if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) >= 500 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) < 600 ) {
+			if ( jp ) {
+				pos inf_clockw + 80, inf_clocky + 50
+				color 0, 0, 0
+				bmes "ノルン「君の旅は…こんなところで終わっちゃいけない」", 235, 235, 35
+			}
+			if ( en ) {
+				pos inf_clockw + 80, inf_clocky + 50
+				color 0, 0, 0
+				bmes "Norne mutters, " + cnvtalk("Your journey... shouldn't end here..."), 235, 235, 35
+			}
+		}
+		if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) >= 550 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) < 650 ) {
+			if ( jp ) {
+				pos inf_clockw + 30, inf_clocky + 65
+				color 0, 0, 0
+				bmes "ヴェセル「希望はまだあるはずだ」", 235, 235, 35
+			}
+			if ( en ) {
+				pos inf_clockw + 30, inf_clocky + 65
+				color 0, 0, 0
+				bmes "Vessel says, " + cnvtalk("There should still be hope."), 235, 235, 35
+			}
+		}
+		if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) >= 600 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) < 700 ) {
+			if ( jp ) {
+				pos inf_clockw + 80, inf_clocky + 80
+				color 0, 0, 0
+				bmes "オルフェ「私が決戦因子として至らなかったばかりに、後任がこのような…」", 235, 235, 35
+			}
+			if ( en ) {
+				pos inf_clockw + 80, inf_clocky + 80
+				color 0, 0, 0
+				bmes "Orphe apologizes, " + cnvtalk("Because of my failure, my junior is suffering..."), 235, 235, 35
+			}
+		}
+	}
+	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) >= 850 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) < 900 ) {
+		gdata(GDATA_FLAG_CUT_IN_MESSAGE_1)++
+		if ( jp ) {
+			pos inf_clockw + 80, inf_clocky + 50
+			color 0, 0, 0
+			bmes "エヘカトル「死なにゃいで！死なにゃいって約束して！して！」", 235, 235, 35
+		}
+		if ( en ) {
+			pos inf_clockw + 80, inf_clocky + 50
+			color 0, 0, 0
+			bmes "Ehekatl shouts, " + cnvtalk("Don't die! Promise you don't die!"), 235, 235, 35
+		}
+	}
+	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) >= 900 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) < 1400 ) {
+		gdata(GDATA_FLAG_CUT_IN_MESSAGE_1)++
+		if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) >= 900 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) < 1000 ) {
+			if ( jp ) {
+				pos inf_clockw + 80, inf_clocky + 50
+				color 0, 0, 0
+				bmes "イツパロトル「願いの力が、回廊と来光の牙を通じて集いつつあるのか…？」", 235, 235, 35
+			}
+			if ( en ) {
+				pos inf_clockw + 80, inf_clocky + 50
+				color 0, 0, 0
+				bmes "Itzpalt mutters, " + cnvtalk("Is the light of wishes gathering to Origin of Light?"), 235, 235, 35
+			}
+		}
+		if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) >= 950 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) < 1050 ) {
+			if ( jp ) {
+				pos inf_clockw + 30, inf_clocky + 65
+				color 0, 0, 0
+				bmes "ヤカテクト「よっしゃ！ウチらの残りの神力もまとめて投資したるっ！」", 235, 235, 35
+			}
+			if ( en ) {
+				pos inf_clockw + 30, inf_clocky + 65
+				color 0, 0, 0
+				bmes "Yacatect says, " + cnvtalk("OK! OK! We will also invest the remaining power in you!"), 235, 235, 35
+			}
+		}
+		if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) >= 1000 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) < 1100 ) {
+			if ( jp ) {
+				pos inf_clockw + 80, inf_clocky + 80
+				color 0, 0, 0
+				bmes "オパートス「フハハハハッフハー！！！」", 235, 235, 35
+			}
+			if ( en ) {
+				pos inf_clockw + 80, inf_clocky + 80
+				color 0, 0, 0
+				bmes "Opatos laughs, " + cnvtalk("Muwahahahahahaha!"), 235, 235, 35
+			}
+		}
+		if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) >= 1050 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) < 1150 ) {
+			if ( jp ) {
+				pos inf_clockw + 80, inf_clocky + 50
+				color 0, 0, 0
+				bmes "ルルウィ「戦いなさい、子猫ちゃん。今こそ私の役に立つ時よ」", 235, 235, 35
+			}
+			if ( en ) {
+				pos inf_clockw + 80, inf_clocky + 50
+				color 0, 0, 0
+				bmes "Lulwy sneers, " + cnvtalk("Fight, kitty. Now is the time to help me."), 235, 235, 35
+			}
+		}
+		if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) >= 1100 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) < 1200 ) {
+			if ( jp ) {
+				pos inf_clockw + 30, inf_clocky + 65
+				color 0, 0, 0
+				bmes "クミロミ「…大丈夫…だよね？」", 235, 235, 35
+			}
+			if ( en ) {
+				pos inf_clockw + 30, inf_clocky + 65
+				color 0, 0, 0
+				bmes "Kumiromi worries, " + cnvtalk("Are you...okay..?"), 235, 235, 35
+			}
+		}
+		if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) >= 1150 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) < 1250 ) {
+			if ( jp ) {
+				pos inf_clockw + 80, inf_clocky + 80
+				color 0, 0, 0
+				bmes "マニ「長引かせるな。お前の身体は既に限界を超えている」", 235, 235, 35
+			}
+			if ( en ) {
+				pos inf_clockw + 80, inf_clocky + 80
+				color 0, 0, 0
+				bmes "Mani warns., " + cnvtalk("Hurry. Your body is already over the limit."), 235, 235, 35
+			}
+		}
+		if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) >= 1200 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) < 1300 ) {
+			if ( jp ) {
+				pos inf_clockw + 80, inf_clocky + 50
+				color 0, 0, 0
+				bmes "ジュア「バカ！これで死んだりしたら許さないんだから…！」", 235, 235, 35
+			}
+			if ( en ) {
+				pos inf_clockw + 80, inf_clocky + 50
+				color 0, 0, 0
+				bmes "Jure cries, " + cnvtalk("Stupid! If you die then I will not forgive you...!"), 235, 235, 35
+			}
+		}
+		if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) >= 1250 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) < 1350 ) {
+			if ( jp ) {
+				pos inf_clockw + 30, inf_clocky + 65
+				color 0, 0, 0
+				bmes "ミクラネシス「「「アカシックネットワークがこのように動作するとは想定外だね…」」」", 235, 235, 35
+			}
+			if ( en ) {
+				pos inf_clockw + 30, inf_clocky + 65
+				color 0, 0, 0
+				bmes "Mikraanesis says, " + cnvtalk("Akashic Network is unexpected to work this way."), 235, 235, 35
+			}
+		}
+		if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) >= 1300 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) < 1400 ) {
+			if ( jp ) {
+				pos inf_clockw + 80, inf_clocky + 80
+				color 0, 0, 0
+				bmes "テスカトリポカ「我の魂もここにある。共に戦うぞ、" + cdatan(CDATAN_NAME, CHARA_PLAYER) + "！」", 235, 235, 35
+			}
+			if ( en ) {
+				pos inf_clockw + 80, inf_clocky + 80
+				color 0, 0, 0
+				bmes "Tezcatlipoca cheers, " + cnvtalk("My soul is also here. I will fight together!"), 235, 235, 35
+			}
+		}
+	}
+	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) >= 1500 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) < 1650 ) {
+		gdata(GDATA_FLAG_CUT_IN_MESSAGE_1)++
+		if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) >= 1500 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) < 1600 ) {
+			if ( jp ) {
+				pos inf_clockw + 80, inf_clocky + 50
+				color 0, 0, 0
+				bmes "ラーネイレ「いけない。このままでは…手遅れになってしまうわ…！」", 235, 235, 35
+			}
+			if ( en ) {
+				pos inf_clockw + 80, inf_clocky + 50
+				color 0, 0, 0
+				bmes "Larneire cries, " + cnvtalk("No...before it is too late...!"), 235, 235, 35
+			}
+		}
+		if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) >= 1550 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) < 1650 ) {
+			if ( jp ) {
+				pos inf_clockw + 30, inf_clocky + 65
+				color 0, 0, 0
+				bmes "ロミアス「まだまだ、これからだろう！？」", 235, 235, 35
+			}
+			if ( en ) {
+				pos inf_clockw + 30, inf_clocky + 65
+				color 0, 0, 0
+				bmes "Lomias encourages, " + cnvtalk("It hasn't even started yet... hasn't it!?"), 235, 235, 35
+			}
+		}
+	}
+	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 100 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 190 ) {
+		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
+		if ( jp ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "シナア「この猫蛇野郎が生み出す不幸を、アタシは認めないのニャ！」", 235, 235, 35
+		}
+		if ( en ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "Sinaha growls, " + cnvtalk("I don't approve of the misery this cat-snake creates meow!"), 235, 235, 35
+		}
+	}
+	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 200 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 290 ) {
+		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
+		if ( jp ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "ラシエル「失敗したらお仕置きよ」", 235, 235, 35
+		}
+		if ( en ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "Arasiel laughs, " + cnvtalk("I will punish you if you fail!"), 235, 235, 35
+		}
+	}
+	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 300 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 390 ) {
+		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
+		if ( jp ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "ネヘルタード「今こそ、星の光の祝福を…」", 235, 235, 35
+		}
+		if ( en ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "Amurdad prays, " + cnvtalk("May you have the blessing of the Starlight..."), 235, 235, 35
+		}
+	}
+	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 400 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 490 ) {
+		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
+		if ( jp ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "ウリカグアル「フハハ！根性見せな！」", 235, 235, 35
+		}
+		if ( en ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "Urcaguary laughs, " + cnvtalk("Muwahaha! Show your guts!"), 235, 235, 35
+		}
+	}
+	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 500 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 590 ) {
+		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
+		if ( jp ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "カラヴィカ「イェーイ！愛してるぜベイベー！」", 235, 235, 35
+		}
+		if ( en ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "Karavika shouts, " + cnvtalk("Yeahhhhh! I love you, baby!!"), 235, 235, 35
+		}
+	}
+	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 600 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 690 ) {
+		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
+		if ( jp ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "ガルジエム「貴君の戦いは勲章ものだ」", 235, 235, 35
+		}
+		if ( en ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "Garziem praises, " + cnvtalk("I want to give your battle a medal!"), 235, 235, 35
+		}
+	}
+	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 700 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 790 ) {
+		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
+		if ( jp ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "ロヴィト「君は大勢の想いに守られているのですね…」", 235, 235, 35
+		}
+		if ( en ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "Rovid nods, " + cnvtalk("You are protected by many wishes..."), 235, 235, 35
+		}
+	}
+	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 2000 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 2090 ) {
+		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
+		if ( jp ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "ミシェス「冒険者さん、お願いだから、負けないで」", 235, 235, 35
+		}
+		if ( en ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "Miches prays, " + cnvtalk("I beg of you adventurer, don't lose..."), 235, 235, 35
+		}
+	}
+	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 2100 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 2190 ) {
+		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
+		if ( jp ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "シーナ「お客さま、大丈夫ですか？！」", 235, 235, 35
+		}
+		if ( en ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "Shena panics, " + cnvtalk("Ahhh! Are you alright sir?"), 235, 235, 35
+		}
+	}
+	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 2200 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 2290 ) {
+		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
+		if ( jp ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "ロイター「おい。この脳裏に流れてくる悪夢を早く終わらせろ」", 235, 235, 35
+		}
+		if ( en ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "Loyter orders " + cnvtalk("Hey you! End the nightmare that runs through my brain early!"), 235, 235, 35
+		}
+	}
+	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 2300 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 2390 ) {
+		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
+		if ( jp ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "パエル「悪い神様なんていらない！」", 235, 235, 35
+		}
+		if ( en ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "Pael cries, " + cnvtalk("I don't need a bad god!"), 235, 235, 35
+		}
+	}
+	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 2400 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 2490 ) {
+		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
+		if ( jp ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "ラファエロ「負けるんじゃないぞ。お前さんから貰った嫁が悲しむからな」", 235, 235, 35
+		}
+		if ( en ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "Raphael worries, " + cnvtalk("The wife I got from you seems to cry..."), 235, 235, 35
+		}
+	}
+	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 2500 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 2590 ) {
+		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
+		if ( jp ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "リリアン「今、ポピーといっしょに冒険者さんを応援しているの！」", 235, 235, 35
+		}
+		if ( en ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "Rilian encourages, " + cnvtalk("I support adventurer with Poppy!"), 235, 235, 35
+		}
+	}
+	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 2600 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 2690 ) {
+		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
+		if ( jp ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "タム「こんな猫顔の怪物と戦ってくれていたんですね…」", 235, 235, 35
+		}
+		if ( en ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "Tam moans, " + cnvtalk("You were fighting a cat-faced monster like this!?"), 235, 235, 35
+		}
+	}
+	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 2700 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 2790 ) {
+		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
+		if ( jp ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "ギルバート「おお、勇者よ！諦めないでくれ！フハハハア！」", 235, 235, 35
+		}
+		if ( en ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "Gilbert laughs, " + cnvtalk("Ah, the bravest of the brave! Don't give up! Muwahaha!"), 235, 235, 35
+		}
+	}
+	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 2800 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 2890 ) {
+		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
+		if ( jp ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "アインク「私にはできないことも、あなたならきっとできるはずです！」", 235, 235, 35
+		}
+		if ( en ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "Ainc encourages, " + cnvtalk("You can do things I can't do!"), 235, 235, 35
+		}
+	}
+	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 2900 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 2990 ) {
+		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
+		if ( jp ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "アーノルド「どうか、この死地を切り抜けて生還してください！」", 235, 235, 35
+		}
+		if ( en ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "Arnord wishes, " + cnvtalk("Please survive this battlefield!"), 235, 235, 35
+		}
+	}
+	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 3000 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 3090 ) {
+		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
+		if ( jp ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "ミーア「にゃんこ溢れるこの世界を〜守ってほしいでありますぅ！」", 235, 235, 35
+		}
+		if ( en ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "Mia prays, " + cnvtalk("Mia want nyou to protect this world full of cats!"), 235, 235, 35
+		}
+	}
+	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 3100 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 3190 ) {
+		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
+		if ( jp ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "レントン「君には生きる価値がある…私と違って」", 235, 235, 35
+		}
+		if ( en ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "Renton mutters, " + cnvtalk("You are worth living...unlike me..."), 235, 235, 35
+		}
+	}
+	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 3200 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 3290 ) {
+		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
+		if ( jp ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "マークス「フッ。泥棒に応援される気分はどうです？」", 235, 235, 35
+		}
+		if ( en ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "Marks laughs, " + cnvtalk("Heh, how do you feel about being supported by a thief?"), 235, 235, 35
+		}
+	}
+	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 3300 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 3390 ) {
+		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
+		if ( jp ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "ノエル「そいつに勝ったらカミゴロシくんって呼んであげるわ」", 235, 235, 35
+		}
+		if ( en ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "Noel laughs, " + cnvtalk("If you win, I'll call you god-killer!"), 235, 235, 35
+		}
+	}
+	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 3400 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 3490 ) {
+		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
+		if ( jp ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "イコール「おうおう、諦めたらそこで実験終了じゃぞ」", 235, 235, 35
+		}
+		if ( en ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "Icolle yells, " + cnvtalk("Oh oh oh! If you give up, the experiment is over!"), 235, 235, 35
+		}
+	}
+	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 3500 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 3590 ) {
+		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
+		if ( jp ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "バルザック「世界規模のゴミ野郎を片づけちまいな！」", 235, 235, 35
+		}
+		if ( en ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "Balzak shouts, " + cnvtalk("Clean up world-class trash!"), 235, 235, 35
+		}
+	}
+	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 3600 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 3690 ) {
+		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
+		if ( jp ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "レヴラス「あなたなら勝ってくれると信じていますよ」", 235, 235, 35
+		}
+		if ( en ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "Revlus says, " + cnvtalk("I believe you will win!"), 235, 235, 35
+		}
+	}
+	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 3700 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 3790 ) {
+		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
+		if ( jp ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "フレイ「神だろうと鍛えれば打倒できる。そうだろう？」", 235, 235, 35
+		}
+		if ( en ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "Fray laughs, " + cnvtalk("You can kill even god if you train!"), 235, 235, 35
+		}
+	}
+	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 3800 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 3890 ) {
+		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
+		if ( jp ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "シン「生きろ。命を奪われるくらいなら先に奪え」", 235, 235, 35
+		}
+		if ( en ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "Sin orders, " + cnvtalk("Survive! Don't lose your life..."), 235, 235, 35
+		}
+	}
+	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 4200 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 4290 ) {
+		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
+		if ( jp ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "コネリー「おぬしはわしらの誇りだ！」", 235, 235, 35
+		}
+		if ( en ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "Conery encourages, " + cnvtalk("You are our pride!"), 235, 235, 35
+		}
+	}
+	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 4300 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 4390 ) {
+		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
+		if ( jp ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "謎の科学者「お願い。あの子達には希望が必要なの」", 235, 235, 35
+		}
+		if ( en ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "Strange scientist says, " + cnvtalk("Little sisters need hope..."), 235, 235, 35
+		}
+	}
+	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 4500 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 4590 ) {
+		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
+		if ( jp ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "犬のおまわりさん「この世界のためにも、どうかよろしくお願いなのです！」", 235, 235, 35
+		}
+		if ( en ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "Dog cop asks, " + cnvtalk("Good luck for this world!"), 235, 235, 35
+		}
+	}
+	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 4600 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 4690 ) {
+		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
+		if ( jp ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "ミーリス「もはや軍では対処できない…！貴方に託します」", 235, 235, 35
+		}
+		if ( en ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "Milis laughs, " + cnvtalk("!!"), 235, 235, 35
+		}
+	}
+	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 4700 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 4790 ) {
+		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
+		if ( jp ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "オービル「ちょっ、あんたならなんとかできるだろ？そう言ってくれ！」", 235, 235, 35
+		}
+		if ( en ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "Orville laughs, " + cnvtalk("!!"), 235, 235, 35
+		}
+	}
+	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 4800 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 4890 ) {
+		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
+		if ( jp ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "ザナード「よう。俺様はお前を信じてるぜ！」", 235, 235, 35
+		}
+		if ( en ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "Zernard laughs, " + cnvtalk("!!"), 235, 235, 35
+		}
+	}
+	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 4900 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 4990 ) {
+		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
+		if ( jp ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "豹頭の戦士「俺などの力が何かになるものならば、いくらでも力になってやりたいと思う」", 235, 235, 35
+		}
+		if ( en ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "The leopard warrior laughs, " + cnvtalk("!!"), 235, 235, 35
+		}
+	}
+	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 5000 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 5090 ) {
+		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
+		if ( jp ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "メファン「すまない！報酬は出せないが頑張ってほしい！」", 235, 235, 35
+		}
+		if ( en ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "Mefan laughs, " + cnvtalk("!!"), 235, 235, 35
+		}
+	}
+	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 5100 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 5190 ) {
+		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
+		if ( jp ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "ルーネ「ご主人様、メイドの皆で勝利を願っています！」", 235, 235, 35
+		}
+		if ( en ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "Lune laughs, " + cnvtalk("!!"), 235, 235, 35
+		}
+	}
+	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 5200 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 5290 ) {
+		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
+		if ( jp ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "たけのこ「世界全土が焼き払われちゃかなわないからな！」", 235, 235, 35
+		}
+		if ( en ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "Bamboo Sprout laughs, " + cnvtalk("!!"), 235, 235, 35
+		}
+	}
+	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 5300 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 5390 ) {
+		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
+		if ( jp ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "カイル「父さま、冒険者さんの無事を一緒に祈ろう」", 235, 235, 35
+		}
+		if ( en ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "Kyle laughs, " + cnvtalk("!!"), 235, 235, 35
+		}
+	}
+	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 5400 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 5490 ) {
+		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
+		if ( jp ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "姉「お姉ちゃんを泣かせないでね？」", 235, 235, 35
+		}
+		if ( en ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "Older sister laughs, " + cnvtalk("!!"), 235, 235, 35
+		}
+	}
+	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 6400 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 6490 ) {
+		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
+		if ( jp ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "ライエ「君が、平穏な生活を取り戻せますように…」", 235, 235, 35
+		}
+		if ( en ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "Eila laughs, " + cnvtalk("!!"), 235, 235, 35
+		}
+	}
+	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 6600 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 6690 ) {
+		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
+		if ( jp ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "シラハ「" + _onii(cdata(CDATA_SEX, CHARA_PLAYER)) + "さん、負けないで！」", 235, 235, 35
+		}
+		if ( en ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "Siraha laughs, " + cnvtalk("!!"), 235, 235, 35
+		}
+	}
+	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 7100 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 7190 ) {
+		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
+		if ( jp ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "ナプラス「私、あなたの持つ可能性を信じてるよ」", 235, 235, 35
+		}
+		if ( en ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "Naplus laughs, " + cnvtalk("!!"), 235, 235, 35
+		}
+	}
+	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 7300 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 7390 ) {
+		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
+		if ( jp ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "ナズナ「もっと鍛えておくべきだったな」", 235, 235, 35
+		}
+		if ( en ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "Nazuna laughs, " + cnvtalk("!!"), 235, 235, 35
+		}
+	}
+	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 7600 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 7690 ) {
+		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
+		if ( jp ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "アリス「死中ニ活アリッス」", 235, 235, 35
+		}
+		if ( en ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "Alice laughs, " + cnvtalk("!!"), 235, 235, 35
+		}
+	}
+	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 7700 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 7790 ) {
+		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
+		if ( jp ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "ネイン「よく分からないけど…負けるんじゃないわよ！」", 235, 235, 35
+		}
+		if ( en ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "Nein laughs, " + cnvtalk("!!"), 235, 235, 35
+		}
+	}
+	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 7900 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 7990 ) {
+		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
+		if ( jp ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "ガージンド「この星にこんな怪物が潜んでいたとは…」", 235, 235, 35
+		}
+		if ( en ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "Jin laughs, " + cnvtalk("!!"), 235, 235, 35
+		}
+	}
+	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 8000 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 8090 ) {
+		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
+		if ( jp ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "イルマ「どんな力も、どんな技術も、全ては使う者次第なんじゃ！」", 235, 235, 35
+		}
+		if ( en ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "Irma laughs, " + cnvtalk("!!"), 235, 235, 35
+		}
+	}
+	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 8100 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 8190 ) {
+		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
+		if ( jp ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "スピファル「なんだ、半竜じゃなくて半蛇か…あなたに任せるね」", 235, 235, 35
+		}
+		if ( en ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "Spipha laughs, " + cnvtalk("!!"), 235, 235, 35
+		}
+	}
+	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 8400 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 8490 ) {
+		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
+		if ( jp ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "ミヅキ「わしは…おぬしに勝ってほしいっ！」", 235, 235, 35
+		}
+		if ( en ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "Abyss Princess laughs, " + cnvtalk("!!"), 235, 235, 35
+		}
+	}
+	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 9100 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 9190 ) {
+		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
+		if ( jp ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "エユル「横でレナイも応援しているよ」", 235, 235, 35
+		}
+		if ( en ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "Regulus laughs, " + cnvtalk("!!"), 235, 235, 35
+		}
+	}
+	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 9200 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 9290 ) {
+		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
+		if ( jp ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "ライゼル「…！」", 235, 235, 35
+		}
+		if ( en ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "Raizel laughs, " + cnvtalk("!!"), 235, 235, 35
+		}
+	}
+	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 9300 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 9390 ) {
+		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
+		if ( jp ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "シュライダ「忘れるな、生きて帰るまでが仕事だ」", 235, 235, 35
+		}
+		if ( en ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "Shuraida laughs, " + cnvtalk("!!"), 235, 235, 35
+		}
+	}
+	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 9400 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 9490 ) {
+		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
+		if ( jp ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "マルカ「そいつが何を企んでるのか知らないけど、やっちゃえ！」", 235, 235, 35
+		}
+		if ( en ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "Marka laughs, " + cnvtalk("!!"), 235, 235, 35
+		}
+	}
+	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 10500 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 10590 ) {
+		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
+		if ( jp ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "シズル「いひひ…少しばかり介入させてもらいますのじゃ」", 235, 235, 35
+		}
+		if ( en ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "Ssil laughs, " + cnvtalk("!!"), 235, 235, 35
+		}
+	}
+	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 10900 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 10990 ) {
+		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
+		if ( jp ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "ベルファート「君はクロやんと再会させてくれた恩人だ！無事を祈っている！」", 235, 235, 35
+		}
+		if ( en ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "Belphat laughs, " + cnvtalk("!!"), 235, 235, 35
+		}
+	}
+	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 11500 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 11590 ) {
+		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
+		if ( jp ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "ランカータ「母上…あの人をお守りください…！」", 235, 235, 35
+		}
+		if ( en ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "Lankata laughs, " + cnvtalk("!!"), 235, 235, 35
+		}
+	}
+	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 12600 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 12690 ) {
+		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
+		if ( jp ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "カラ太「ゼミでやったところを思い出して！」", 235, 235, 35
+		}
+		if ( en ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "Karata laughs, " + cnvtalk("!!"), 235, 235, 35
+		}
+	}
+	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 13500 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 13590 ) {
+		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
+		if ( jp ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "カルラ「Etherwindの因果が、あなたの力になるわ」", 235, 235, 35
+		}
+		if ( en ) {
+			pos inf_clockw + 80, inf_clocky + 95
+			color 0, 0, 0
+			bmes "Karura laughs, " + cnvtalk("!!"), 235, 235, 35
+ 		}
+ 	}
+
+	/********** ORIGINAL - BEGINNING ********** // Remove Curtain Call.
+
+	if ( gdata(GDATA_FLAG_CURTAIN_CALL) < 0 ) {
+		if ( jp ) {
+			pos inf_clockw + 380, inf_clocky + 17
+			color 0, 0, 0
+			bmes "*カーテンコール*", 235, 35, 35
+		}
+		if ( en ) {
+			pos inf_clockw + 380, inf_clocky + 17
+			color 0, 0, 0
+			bmes " *Curtain Call* ", 235, 35, 35
+		}
+	}
+
+	 ********** ORIGINAL - ENDING **********/
+
 	ap3 = 0
 	repeat 15
 
@@ -1036,7 +2106,7 @@
 	if ( cfg_animewait == 0 ) {
 		return
 	}
-	if ( animeid != ANIMATION_RAGNA & animeid != ANIMATION_STARS & animeid != ANIMATION_FIREWORK & animeid != ANIMATION_GAMEWIN3 ) {
+	if ( animeid != ANIMATION_RAGNA & animeid != ANIMATION_STARS & animeid != ANIMATION_FIREWORK & animeid != ANIMATION_GAMEWIN3 & animeid != ANIMATION_EVOCHAT_GENTLY ) {
 		gosub *screen_draw
 	}
 	redraw 0
@@ -1053,14 +2123,9 @@
 		if ( synccheck(cc, -1) == 0 ) {
 			goto *anime_SWEND1
 		}
-		gsel 1
-		color 0
-		boxf 0, 960, chipi(CHIPI_WIDTH, xy2pic(10, 0)), chipi(CHIPI_HEIGHT, xy2pic(10, 0)) + 960
-		pos 0, 960
-		gcopy 1, chipi(CHIPI_X, xy2pic(10, 0)), chipi(CHIPI_Y, xy2pic(10, 0)), chipi(CHIPI_WIDTH, xy2pic(10, 0)), chipi(CHIPI_HEIGHT, xy2pic(10, 0))
-		gfini chipi(CHIPI_WIDTH, xy2pic(10, 0)), chipi(CHIPI_HEIGHT, xy2pic(10, 0))
-		gfdec2 c_col(0, anicol), c_col(1, anicol), c_col(2, anicol)
-		gsel selcur
+
+        preparePicItem 10, anicol
+
 		anidx = (cdata(CDATA_X, cc) - scx) * inf_tiles + inf_screenx
 		anidy = (cdata(CDATA_Y, cc) - scy) * inf_tiles + inf_screeny
 		gsel 4
@@ -1082,6 +2147,10 @@
 		goto *anime_SWEND1
 	}
 	if ( _switch_val == ANIMATION_CURSE | _switch_sw ) {
+		_switch_sw = 0
+		_switch_sw++
+	}
+	if ( _switch_val == ANIMATION_JALDABAOTH | _switch_sw ) {
 		_switch_sw = 0
 		_switch_sw++
 	}
@@ -1142,7 +2211,7 @@
 			ax2(cnt) = rnd(inf_tiles)
 			ay2(cnt) = rnd(inf_tiles) - 8
 			ap(cnt) = (rnd(4) + 1) * (-1)
-			if ( animeid == ANIMATION_CURSE ) {
+			if ( animeid == ANIMATION_CURSE | animeid == ANIMATION_JALDABAOTH ) {
 				ap(cnt) *= -1
 			}
 		loop
@@ -1167,14 +2236,9 @@
 	}
 	if ( _switch_val == ANIMATION_BREATH | _switch_sw ) {
 		_switch_sw = 0
-		gsel 1
-		color 0
-		boxf 0, 960, chipi(CHIPI_WIDTH, xy2pic(5, 0)), chipi(CHIPI_HEIGHT, xy2pic(5, 0)) + 960
-		pos 0, 960
-		gcopy 1, chipi(CHIPI_X, xy2pic(5, 0)), chipi(CHIPI_Y, xy2pic(5, 0)), chipi(CHIPI_WIDTH, xy2pic(5, 0)), chipi(CHIPI_HEIGHT, xy2pic(5, 0))
-		gfini chipi(CHIPI_WIDTH, xy2pic(5, 0)), chipi(CHIPI_HEIGHT, xy2pic(5, 0))
-		gfdec2 c_col(0, anicol), c_col(1, anicol), c_col(2, anicol)
-		gsel selcur
+
+        preparePicItem 5, anicol
+
 		snd SOUNDLIST_BREATH1
 		gsel 7
 		picload exedir + "graphic\\anime7.bmp"
@@ -1216,14 +2280,9 @@
 	}
 	if ( _switch_val == ANIMATION_MP_BREATH | _switch_sw ) {
 		_switch_sw = 0
-		gsel 1
-		color 0
-		boxf 0, 960, chipi(CHIPI_WIDTH, xy2pic(5, 0)), chipi(CHIPI_HEIGHT, xy2pic(5, 0)) + 960
-		pos 0, 960
-		gcopy 1, chipi(CHIPI_X, xy2pic(5, 0)), chipi(CHIPI_Y, xy2pic(5, 0)), chipi(CHIPI_WIDTH, xy2pic(5, 0)), chipi(CHIPI_HEIGHT, xy2pic(5, 0))
-		gfini chipi(CHIPI_WIDTH, xy2pic(5, 0)), chipi(CHIPI_HEIGHT, xy2pic(5, 0))
-		gfdec2 c_col(0, anicol), c_col(1, anicol), c_col(2, anicol)
-		gsel selcur
+
+        preparePicItem 5, anicol
+
 		snd SOUNDLIST_BREATH1
 		if ( ele != SKILL_NONE ) {
 			gsel 7
@@ -1372,14 +2431,9 @@
 		if ( efid == SKILL_SPACT_BLOOD_STREAM ) {
 			anicol = 22
 		}
-		gsel 1
-		color 0
-		boxf 0, 960, chipi(CHIPI_WIDTH, xy2pic(3, 0)), chipi(CHIPI_HEIGHT, xy2pic(3, 0)) + 960
-		pos 0, 960
-		gcopy 1, chipi(CHIPI_X, xy2pic(3, 0)), chipi(CHIPI_Y, xy2pic(3, 0)), chipi(CHIPI_WIDTH, xy2pic(3, 0)), chipi(CHIPI_HEIGHT, xy2pic(3, 0))
-		gfini chipi(CHIPI_WIDTH, xy2pic(3, 0)), chipi(CHIPI_HEIGHT, xy2pic(3, 0))
-		gfdec2 c_col(0, anicol), c_col(1, anicol), c_col(2, anicol)
-		gsel selcur
+
+        preparePicItem 3, anicol
+
 		if ( zannku != 100 ) {
 			snd SOUNDLIST_BOLT1
 		}
@@ -1604,70 +2658,78 @@
 	}
 	if ( _switch_val == ANIMATION_GOLDENSTORM | _switch_sw ) {
 		_switch_sw = 0
+		_switch_sw++
+	}
+	if ( _switch_val == ANIMATION_POTION_PLUG_1 | _switch_sw ) {
+		_switch_sw = 0
+		_switch_sw++
+	}
+	if ( _switch_val == ANIMATION_POTION_PLUG_2 | _switch_sw ) {
+		_switch_sw = 0
+		_switch_sw++
+	}
+	if ( _switch_val == ANIMATION_POTION_PLUG_3 | _switch_sw ) {
+		_switch_sw = 0
+		_switch_sw++
+	}
+	if ( _switch_val == ANIMATION_POTION_PLUG_4 | _switch_sw ) {
+		_switch_sw = 0
+		_switch_sw++
+	}
+	if ( _switch_val == ANIMATION_POTION_PLUG_5 | _switch_sw ) {
+		_switch_sw = 0
+		_switch_sw++
+	}
+	if ( _switch_val == ANIMATION_BURN_SCROLLS | _switch_sw ) {
+		_switch_sw = 0
 		if ( synccheck(cc, -1) == 0 ) {
 			goto *anime_SWEND1
 		}
-		gsel 1
-		color 0
-		boxf 0, 960, chipi(CHIPI_WIDTH, xy2pic(6, 0)), chipi(CHIPI_HEIGHT, xy2pic(6, 0)) + 960
-		pos 0, 960
-		gcopy 1, chipi(CHIPI_X, xy2pic(6, 0)), chipi(CHIPI_Y, xy2pic(6, 0)), chipi(CHIPI_WIDTH, xy2pic(6, 0)), chipi(CHIPI_HEIGHT, xy2pic(6, 0))
-		gfini chipi(CHIPI_WIDTH, xy2pic(6, 0)), chipi(CHIPI_HEIGHT, xy2pic(6, 0))
-		gfdec2 c_col(0, anicol), c_col(1, anicol), c_col(2, anicol)
-		gsel selcur
+
+        preparePicItem 6, anicol
+
+		if ( animeid == ANIMATION_BURN_SCROLLS ) {
+            preparePicItem xy2pic(22, 36), 0
+            snd SOUNDLIST_ATK_FIRE
+		}
 		if ( animeid == ANIMATION_GOLDENSTORM ) {
-			gsel 1
-			color 0
-			boxf 0, 960, chipi(CHIPI_WIDTH, xy2pic(5, 0)), chipi(CHIPI_HEIGHT, xy2pic(5, 0)) + 960
-			pos 0, 960
-			gcopy 1, chipi(CHIPI_X, xy2pic(5, 0)), chipi(CHIPI_Y, xy2pic(5, 0)), chipi(CHIPI_WIDTH, xy2pic(5, 0)), chipi(CHIPI_HEIGHT, xy2pic(5, 0))
-			gfini chipi(CHIPI_WIDTH, xy2pic(5, 0)), chipi(CHIPI_HEIGHT, xy2pic(5, 0))
-			gfdec2 c_col(0, 0), c_col(1, 0), c_col(2, 0)
-			gsel selcur
+            preparePicItem xy2pic(5, 0), 0
 			snd SOUNDLIST_GETGOLD1
 		}
 		if ( animeid == ANIMATION_SPORE ) {
-			gsel 1
-			color 0
-			boxf 0, 960, chipi(CHIPI_WIDTH, xy2pic(23, 0)), chipi(CHIPI_HEIGHT, xy2pic(23, 0)) + 960
-			pos 0, 960
-			gcopy 1, chipi(CHIPI_X, xy2pic(23, 0)), chipi(CHIPI_Y, xy2pic(23, 0)), chipi(CHIPI_WIDTH, xy2pic(23, 0)), chipi(CHIPI_HEIGHT, xy2pic(23, 0))
-			gfini chipi(CHIPI_WIDTH, xy2pic(23, 0)), chipi(CHIPI_HEIGHT, xy2pic(23, 0))
-			gfdec2 c_col(0, 0), c_col(1, 0), c_col(2, 0)
-			gsel selcur
+            preparePicItem xy2pic(23, 0), 0
 			snd SOUNDLIST_BOW1
 		}
 		if ( animeid == ANIMATION_INNERVATION ) {
-			gsel 1
-			color 0
-			boxf 0, 960, chipi(CHIPI_WIDTH, xy2pic(31, 33)), chipi(CHIPI_HEIGHT, xy2pic(31, 33)) + 960
-			pos 0, 960
-			gcopy 1, chipi(CHIPI_X, xy2pic(31, 33)), chipi(CHIPI_Y, xy2pic(31, 33)), chipi(CHIPI_WIDTH, xy2pic(31, 33)), chipi(CHIPI_HEIGHT, xy2pic(31, 33))
-			gfini chipi(CHIPI_WIDTH, xy2pic(31, 33)), chipi(CHIPI_HEIGHT, xy2pic(31, 33))
-			gfdec2 c_col(0, 0), c_col(1, 0), c_col(2, 0)
-			gsel selcur
+            preparePicItem xy2pic(31, 33), 0
 			snd SOUNDLIST_SWING39
 		}
 		if ( animeid == ANIMATION_DISTANT_ATK ) {
-			gsel 1
-			color 0
-			boxf 0, 960, chipi(CHIPI_WIDTH, xy2pic(32, 33)), chipi(CHIPI_HEIGHT, xy2pic(32, 33)) + 960
-			pos 0, 960
-			gcopy 1, chipi(CHIPI_X, xy2pic(32, 33)), chipi(CHIPI_Y, xy2pic(32, 33)), chipi(CHIPI_WIDTH, xy2pic(32, 33)), chipi(CHIPI_HEIGHT, xy2pic(32, 33))
-			gfini chipi(CHIPI_WIDTH, xy2pic(32, 33)), chipi(CHIPI_HEIGHT, xy2pic(32, 33))
-			gfdec2 c_col(0, 0), c_col(1, 0), c_col(2, 0)
-			gsel selcur
+            preparePicItem xy2pic(32, 33), 0
 			snd SOUNDLIST_BOW1
 		}
+		if ( animeid == ANIMATION_POTION_PLUG_1 ) {
+            preparePicItem xy2pic(25, 36), 0
+            snd SOUNDLIST_TM2_HIT000
+		}
+		if ( animeid == ANIMATION_POTION_PLUG_2 ) {
+            preparePicItem xy2pic(26, 36), 0
+            snd SOUNDLIST_TM2_HIT000
+		}
+		if ( animeid == ANIMATION_POTION_PLUG_3 ) {
+            preparePicItem xy2pic(25, 36), potionc
+            snd SOUNDLIST_BOLT1
+		}
+		if ( animeid == ANIMATION_POTION_PLUG_4 ) {
+            preparePicItem xy2pic(26, 36), potionc
+            snd SOUNDLIST_BOLT1
+		}
+		if ( animeid == ANIMATION_POTION_PLUG_5 ) {
+            preparePicItem xy2pic(27, 36), potionc
+            snd SOUNDLIST_BOLT1
+		}
 		if ( animeid == ANIMATION_UNUSED1 ) {
-			gsel 1
-			color 0
-			boxf 0, 960, chipi(CHIPI_WIDTH, xy2pic(1, 0)), chipi(CHIPI_HEIGHT, xy2pic(1, 0)) + 960
-			pos 0, 960
-			gcopy 1, chipi(CHIPI_X, xy2pic(1, 0)), chipi(CHIPI_Y, xy2pic(1, 0)), chipi(CHIPI_WIDTH, xy2pic(1, 0)), chipi(CHIPI_HEIGHT, xy2pic(1, 0))
-			gfini chipi(CHIPI_WIDTH, xy2pic(1, 0)), chipi(CHIPI_HEIGHT, xy2pic(1, 0))
-			gfdec2 c_col(0, anicol), c_col(1, anicol), c_col(2, anicol)
-			gsel selcur
+            preparePicItem xy2pic(1, 0), aniciol
 			snd SOUNDLIST_BOW1
 		}
 		if ( animeid == ANIMATION_UNUSED2 ) {
@@ -1676,38 +2738,17 @@
 				stype = 1
 			}
 			if ( stype == 0 ) {
-				gsel 1
-				color 0
-				boxf 0, 960, chipi(CHIPI_WIDTH, xy2pic(1, 0)), chipi(CHIPI_HEIGHT, xy2pic(1, 0)) + 960
-				pos 0, 960
-				gcopy 1, chipi(CHIPI_X, xy2pic(1, 0)), chipi(CHIPI_Y, xy2pic(1, 0)), chipi(CHIPI_WIDTH, xy2pic(1, 0)), chipi(CHIPI_HEIGHT, xy2pic(1, 0))
-				gfini chipi(CHIPI_WIDTH, xy2pic(1, 0)), chipi(CHIPI_HEIGHT, xy2pic(1, 0))
-				gfdec2 c_col(0, anicol), c_col(1, anicol), c_col(2, anicol)
-				gsel selcur
+                preparePicItem xy2pic(1, 0), anicol
 			}
 			if ( stype == 1 ) {
-				gsel 1
-				color 0
-				boxf 0, 960, chipi(2, 1176), chipi(3, 1176) + 960
-				pos 0, 960
-				gcopy 1, chipi(0, 1176), chipi(1, 1176), chipi(2, 1176), chipi(3, 1176)
-				gfini chipi(2, 1176), chipi(3, 1176)
-				gfdec2 c_col(0, anicol), c_col(1, anicol), c_col(2, anicol)
-				gsel selcur
+                preparePicItem xy2pic(21, 35), anicol
 			}
 			snd SOUNDLIST_BOW1
 		}
 		if ( animeid == ANIMATION_UNUSED3 ) {
 			ap = refitem(inv(INV_ITEM_ID, aniref), DBSPEC_TYPE_MINOR)
 			if ( ap == FILTER_RANGE_LASER ) {
-				gsel 1
-				color 0
-				boxf 0, 960, chipi(CHIPI_WIDTH, xy2pic(13, 0)), chipi(CHIPI_HEIGHT, xy2pic(13, 0)) + 960
-				pos 0, 960
-				gcopy 1, chipi(CHIPI_X, xy2pic(13, 0)), chipi(CHIPI_Y, xy2pic(13, 0)), chipi(CHIPI_WIDTH, xy2pic(13, 0)), chipi(CHIPI_HEIGHT, xy2pic(13, 0))
-				gfini chipi(CHIPI_WIDTH, xy2pic(13, 0)), chipi(CHIPI_HEIGHT, xy2pic(13, 0))
-				gfdec2 c_col(0, anicol), c_col(1, anicol), c_col(2, anicol)
-				gsel selcur
+                preparePicItem xy2pic(13, 0), anicol
 				snd SOUNDLIST_LASER1
 			}
 			if ( ap == FILTER_RANGE_PISTOL ) {
@@ -1722,132 +2763,26 @@
 					stype = 3
 				}
 				if ( stype == 0 ) {
-					gsel 1
-					color 0
-					boxf 0, 960, chipi(CHIPI_WIDTH, xy2pic(2, 0)), chipi(CHIPI_HEIGHT, xy2pic(2, 0)) + 960
-					pos 0, 960
-					gcopy 1, chipi(CHIPI_X, xy2pic(2, 0)), chipi(CHIPI_Y, xy2pic(2, 0)), chipi(CHIPI_WIDTH, xy2pic(2, 0)), chipi(CHIPI_HEIGHT, xy2pic(2, 0))
-					gfini chipi(CHIPI_WIDTH, xy2pic(2, 0)), chipi(CHIPI_HEIGHT, xy2pic(2, 0))
-					gfdec2 c_col(0, anicol), c_col(1, anicol), c_col(2, anicol)
-					gsel selcur
+                    preparePicItem xy2pic(2, 0), anicol
 				}
 				if ( stype == 1 ) {
-					gsel 1
-					color 0
-					boxf 0, 960, chipi(2, 1177), chipi(3, 1177) + 960
-					pos 0, 960
-					gcopy 1, chipi(0, 1177), chipi(1, 1177), chipi(2, 1177), chipi(3, 1177)
-					gfini chipi(2, 1177), chipi(3, 1177)
-					gfdec2 c_col(0, anicol), c_col(1, anicol), c_col(2, anicol)
-					gsel selcur
+                    preparePicItem xy2pic(22, 35), anicol
 				}
 				if ( stype == 2 ) {
-					gsel 1
-					color 0
-					boxf 0, 960, chipi(2, 1178), chipi(3, 1178) + 960
-					pos 0, 960
-					gcopy 1, chipi(0, 1178), chipi(1, 1178), chipi(2, 1178), chipi(3, 1178)
-					gfini chipi(2, 1178), chipi(3, 1178)
-					gfdec2 c_col(0, anicol), c_col(1, anicol), c_col(2, anicol)
-					gsel selcur
+                    preparePicItem xy2pic(23, 35), anicol
 				}
 				if ( stype == 3 ) {
-					gsel 1
-					color 0
-					boxf 0, 960, chipi(2, 1179), chipi(3, 1179) + 960
-					pos 0, 960
-					gcopy 1, chipi(0, 1179), chipi(1, 1179), chipi(2, 1179), chipi(3, 1179)
-					gfini chipi(2, 1179), chipi(3, 1179)
-					gfdec2 c_col(0, anicol), c_col(1, anicol), c_col(2, anicol)
-					gsel selcur
+                    preparePicItem xy2pic(24, 35), anicol
 				}
 				snd SOUNDLIST_GUN1
 			}
 		}
 		if ( animeid == ANIMATION_UNUSED4 ) {
 			if ( inv(INV_ITEM_PIC, aniref) / COLOR_TINT_MULT < 1 ) {
-				gsel 1
-				color 0
-				boxf 0, 960, chipi(CHIPI_WIDTH, inv(INV_ITEM_PIC, aniref) \ COLOR_TINT_MULT), chipi(CHIPI_HEIGHT, inv(INV_ITEM_PIC, aniref) \ COLOR_TINT_MULT) + 960
-				if ( inv(INV_ITEM_PIC, aniref) \ COLOR_TINT_MULT == xy2pic(0, 16) ) {
-					gmode 2
-					pos 0, 960
-					gcopy 1, 0, 768, inf_tiles, inf_tiles
-					pos 0, 1008
-					gzoom 22, 20, 5, chipc(CHIPC_X, inv(INV_ITEM_COL, aniref)) + 8, chipc(CHIPC_Y, inv(INV_ITEM_COL, aniref)) + 4 + (chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, aniref)) > inf_tiles) * 8, chipc(CHIPC_WIDTH, inv(INV_ITEM_COL, aniref)) - 16, chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, aniref)) - 8 - (chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, aniref)) > inf_tiles) * 10, 1
-					pos 6, 974
-					gcopy 1, 0, 1008, 22, 20
-					gsel selcur
-				}
-				else {
-					if ( inv(INV_ITEM_PIC, aniref) \ COLOR_TINT_MULT == xy2pic(30, 33) ) {
-						pos 8, 1058 - chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, aniref))
-						gcopy 5, chipc(CHIPC_X, inv(INV_ITEM_COL, aniref)) + 8, chipc(CHIPC_Y, inv(INV_ITEM_COL, aniref)) + 2, chipc(CHIPC_WIDTH, inv(INV_ITEM_COL, aniref)), chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, aniref))
-						gmode 2
-						gsel selcur
-					}
-					else {
-						if ( inv(INV_ITEM_PIC, aniref) \ COLOR_TINT_MULT == xy2pic(3, 16) ) {
-							pos 8, 1058 - chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, aniref))
-							gcopy 5, chipc(CHIPC_X, inv(INV_ITEM_COL, aniref)) + 8, chipc(CHIPC_Y, inv(INV_ITEM_COL, aniref)) + 2, chipc(CHIPC_WIDTH, inv(INV_ITEM_COL, aniref)) - 16, chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, aniref)) - 8
-							gmode 4, , , 150
-							color 0, 0, 0
-							pos 0, 960 + (chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, aniref)) == inf_tiles) * 48
-							gcopy 1, 144, 768 + (chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, aniref)) > inf_tiles) * 48, inf_tiles, chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, aniref)) + (chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, aniref)) > inf_tiles) * 48
-							gmode 2
-							gsel selcur
-						}
-						else {
-							pos 0, 960
-							gcopy 1, chipi(CHIPI_X, inv(INV_ITEM_PIC, aniref) \ COLOR_TINT_MULT), chipi(CHIPI_Y, inv(INV_ITEM_PIC, aniref) \ COLOR_TINT_MULT), chipi(CHIPI_WIDTH, inv(INV_ITEM_PIC, aniref) \ COLOR_TINT_MULT), chipi(CHIPI_HEIGHT, inv(INV_ITEM_PIC, aniref) \ COLOR_TINT_MULT)
-							gfini chipi(CHIPI_WIDTH, inv(INV_ITEM_PIC, aniref) \ COLOR_TINT_MULT), chipi(CHIPI_HEIGHT, inv(INV_ITEM_PIC, aniref) \ COLOR_TINT_MULT)
-							gfdec2 c_col(0, inv(INV_ITEM_COL, aniref)), c_col(1, inv(INV_ITEM_COL, aniref)), c_col(2, inv(INV_ITEM_COL, aniref))
-							gsel selcur
-						}
-					}
-				}
+                preparePicItem inv(INV_ITEM_PIC, aniref) \ COLOR_TINT_MULT, inv(INV_ITEM_COL, aniref)
 			}
 			if ( inv(INV_ITEM_PIC, aniref) / COLOR_TINT_MULT >= 1 ) {
-				gsel 1
-				color 0
-				boxf 0, 960, chipi(CHIPI_WIDTH, inv(INV_ITEM_PIC, aniref)), chipi(CHIPI_HEIGHT, inv(INV_ITEM_PIC, aniref)) + 960
-				if ( inv(INV_ITEM_PIC, aniref) == xy2pic(0, 16) ) {
-					gmode 2
-					pos 0, 960
-					gcopy 1, 0, 768, inf_tiles, inf_tiles
-					pos 0, 1008
-					gzoom 22, 20, 5, chipc(CHIPC_X, inv(INV_ITEM_COL, aniref)) + 8, chipc(CHIPC_Y, inv(INV_ITEM_COL, aniref)) + 4 + (chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, aniref)) > inf_tiles) * 8, chipc(CHIPC_WIDTH, inv(INV_ITEM_COL, aniref)) - 16, chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, aniref)) - 8 - (chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, aniref)) > inf_tiles) * 10, 1
-					pos 6, 974
-					gcopy 1, 0, 1008, 22, 20
-					gsel selcur
-				}
-				else {
-					if ( inv(INV_ITEM_PIC, aniref) == xy2pic(30, 33) ) {
-						pos 8, 1058 - chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, aniref))
-						gcopy 5, chipc(CHIPC_X, inv(INV_ITEM_COL, aniref)) + 8, chipc(CHIPC_Y, inv(INV_ITEM_COL, aniref)) + 2, chipc(CHIPC_WIDTH, inv(INV_ITEM_COL, aniref)), chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, aniref))
-						gmode 2
-						gsel selcur
-					}
-					else {
-						if ( inv(INV_ITEM_PIC, aniref) == xy2pic(3, 16) ) {
-							pos 8, 1058 - chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, aniref))
-							gcopy 5, chipc(CHIPC_X, inv(INV_ITEM_COL, aniref)) + 8, chipc(CHIPC_Y, inv(INV_ITEM_COL, aniref)) + 2, chipc(CHIPC_WIDTH, inv(INV_ITEM_COL, aniref)) - 16, chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, aniref)) - 8
-							gmode 4, , , 150
-							color 0, 0, 0
-							pos 0, 960 + (chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, aniref)) == inf_tiles) * 48
-							gcopy 1, 144, 768 + (chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, aniref)) > inf_tiles) * 48, inf_tiles, chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, aniref)) + (chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, aniref)) > inf_tiles) * 48
-							gmode 2
-							gsel selcur
-						}
-						else {
-							pos 0, 960
-							gcopy 1, chipi(CHIPI_X, inv(INV_ITEM_PIC, aniref)), chipi(CHIPI_Y, inv(INV_ITEM_PIC, aniref)), chipi(CHIPI_WIDTH, inv(INV_ITEM_PIC, aniref)), chipi(CHIPI_HEIGHT, inv(INV_ITEM_PIC, aniref))
-							gfini chipi(CHIPI_WIDTH, inv(INV_ITEM_PIC, aniref)), chipi(CHIPI_HEIGHT, inv(INV_ITEM_PIC, aniref))
-							gfdec2 c_col(0, inv(INV_ITEM_COL, aniref)), c_col(1, inv(INV_ITEM_COL, aniref)), c_col(2, inv(INV_ITEM_COL, aniref))
-							gsel selcur
-						}
-					}
-				}
+                preparePicItem inv(INV_ITEM_PIC, aniref), inv(INV_ITEM_COL, aniref)
 			}
 			kaiten = 0
 			if ( inv(INV_ITEM_ID, aniref) == ITEM_ID_ION_CAKRAM | inv(INV_ITEM_ID, aniref) == ITEM_ID_SLASH_JOKER | inv(INV_ITEM_ID, aniref) == ITEM_ID_GERBERA_CROSS | inv(INV_ITEM_ID, aniref) == ITEM_ID_SHENAS_PANTY | inv(INV_ITEM_ID, aniref) == ITEM_ID_SHURIKEN | inv(INV_ITEM_ID, aniref) == ITEM_ID_PANTY ) {
@@ -2206,19 +3141,61 @@
 		gmode 2
 		goto *anime_SWEND1
 	}
-	if ( _switch_val == 43 | _switch_sw ) {
+	if ( _switch_val == 44 | _switch_sw ) {
 		_switch_sw = 0
 		if ( synccheck(cc, -1) == 0 ) {
 			goto *anime_SWEND1
 		}
-		gsel 1
-		color 0
-		boxf 0, 960, chipi(CHIPI_WIDTH, xy2pic(23, 33)), chipi(CHIPI_HEIGHT, xy2pic(23, 33)) + 960
-		pos 0, 960
-		gcopy 1, chipi(CHIPI_X, xy2pic(23, 33)), chipi(CHIPI_Y, xy2pic(23, 33)), chipi(CHIPI_WIDTH, xy2pic(23, 33)), chipi(CHIPI_HEIGHT, xy2pic(23, 33))
-		gfini chipi(CHIPI_WIDTH, xy2pic(23, 33)), chipi(CHIPI_HEIGHT, xy2pic(23, 33))
-		gfdec2 c_col(0, 0), c_col(1, 0), c_col(2, 0)
-		gsel selcur
+
+        preparePicItem xy2pic(32, 35), 0
+
+		anix = cdata(CDATA_X, tc)
+		aniy = cdata(CDATA_Y, tc)
+		ax = (cdata(CDATA_X, cc) - scx) * inf_tiles
+		ay = (cdata(CDATA_Y, cc) - scy) * inf_tiles
+		ap = dist(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), anix, aniy) / 2 + 1
+		gsel BUFFER_BUF
+		gmode 0
+		pos 0, 0
+		gcopy BUFFER_SCREEN, 0, 0, windoww, windowh
+		gmode 2
+		gsel BUFFER_SCREEN
+		repeat 15
+			await 1
+			snd SOUNDLIST_BREATH1
+			repeat ap
+				ax -= (cdata(CDATA_X, cc) - anix) * inf_tiles / ap
+				ay -= (cdata(CDATA_Y, cc) - aniy) * inf_tiles / ap
+				gmode 2, inf_tiles, inf_tiles
+				if ( ax + inf_tiles / 2 < windoww ) {
+					if ( ay < inf_screenh * inf_tiles + inf_screeny - inf_tiles / 2 ) {
+						pos ax + inf_tiles / 2, ay
+						grotate BUFFER_ITEM, 0, 960, atan(cdata(CDATA_X, tc) - cdata(CDATA_X, cc), cdata(CDATA_Y, cc) - cdata(CDATA_Y, tc)), 96, 240
+					}
+				}
+				redraw 1
+				redraw 0
+				if ( cnt < 3 ) {
+					await 1
+					snd SOUNDLIST_BREATH1
+				}
+			loop
+		loop
+		gmode 0
+		pos 0, 0
+		gcopy BUFFER_BUF, 0, 0, windoww, windowh
+		gmode 2
+		goto *anime_SWEND1
+		_switch_sw++
+	}
+	if ( _switch_val == ANIMATION_UNKNOWN_1 | _switch_sw ) {
+		_switch_sw = 0
+		if ( synccheck(cc, -1) == 0 ) {
+			goto *anime_SWEND1
+		}
+
+        preparePicItem xy2pic(23, 33), 0
+
 		anix = cdata(CDATA_X, tc)
 		aniy = cdata(CDATA_Y, tc)
 		ax = (cdata(CDATA_X, cc) - scx) * inf_tiles
@@ -2320,6 +3297,292 @@
 		gcopy 4, 0, 0, windoww, windowh
 		gmode 2
 		goto *anime_SWEND1
+	}
+	if ( _switch_val == ANIMATION_LASTBOSS_1 | _switch_sw ) {
+		_switch_sw = 0
+		if ( synccheck(anic, -1) == 0 ) {
+			goto *anime_SWEND1
+		}
+		gsel BUFFER_PIC
+		picload exedir + "graphic\\anime77.bmp"
+		gsel BUFFER_BUF
+		gmode 0
+		pos 0, 0
+		gcopy BUFFER_SCREEN, 0, 0, windoww, windowh
+		gmode 2
+		gsel BUFFER_SCREEN
+		anidx = (cdata(CDATA_X, anic) - scx) * inf_tiles + inf_screenx - 240 + 24
+		anidy = (cdata(CDATA_Y, anic) - scy) * inf_tiles + inf_screeny + 24
+		repeat 10
+			redraw 0
+			pos 0, 0
+			gmode 0
+			gcopy BUFFER_BUF, 0, 0, windoww, windowh
+			cnt2 = cnt
+			gmode 2
+			repeat 2
+				pos anidx, anidy - cnt * 240
+				gcopy BUFFER_PIC, cnt2 / 2 * 480, (cnt == 0) * 480, 480, 480
+			loop
+			if ( cnt \ 3 == 0 ) {
+				snd SOUNDLIST_HEAL1
+			}
+			await cfg_animewait + 10
+			redraw 1
+		loop
+		gmode 0
+		pos 0, 0
+		gcopy BUFFER_BUF, 0, 0, windoww, windowh
+		gmode 2
+		goto *anime_SWEND1
+		_switch_sw++
+	}
+	if ( _switch_val == ANIMATION_LASTBOSS_2 | _switch_sw ) {
+		_switch_sw = 0
+		if ( synccheck(anic, -1) == 0 ) {
+			goto *anime_SWEND1
+		}
+		gsel BUFFER_PIC
+		picload exedir + "graphic\\anime78.bmp"
+		gsel BUFFER_BUF
+		gmode 0
+		pos 0, 0
+		gcopy BUFFER_SCREEN, 0, 0, windoww, windowh
+		gmode 2
+		gsel BUFFER_SCREEN
+		anidx = (cdata(CDATA_X, anic) - scx) * inf_tiles + inf_screenx - 240 + 24
+		anidy = (cdata(CDATA_Y, anic) - scy) * inf_tiles + inf_screeny + 24
+		repeat 10
+			redraw 0
+			pos 0, 0
+			gmode 0
+			gcopy BUFFER_BUF, 0, 0, windoww, windowh
+			cnt2 = cnt
+			gmode 2
+			repeat 2
+				pos anidx, anidy - cnt * 240
+				gcopy BUFFER_PIC, cnt2 / 2 * 480, (cnt == 0) * 480, 480, 480
+			loop
+			if ( cnt \ 2 == 0 ) {
+				snd SOUNDLIST_HEAL1
+			}
+			await cfg_animewait + 10
+			redraw 1
+		loop
+		gmode 0
+		pos 0, 0
+		gcopy BUFFER_BUF, 0, 0, windoww, windowh
+		gmode 2
+		goto *anime_SWEND1
+		_switch_sw++
+	}
+	if ( _switch_val == ANIMATION_HOROBINOYARI_1 | _switch_sw ) {
+		_switch_sw = 0
+		if ( synccheck(anic, -1) == 0 ) {
+			goto *anime_SWEND1
+		}
+		gsel BUFFER_PIC
+		picload exedir + "graphic\\anime79.bmp"
+		gsel BUFFER_BUF
+		gmode 0
+		pos 0, 0
+		gcopy BUFFER_SCREEN, 0, 0, windoww, windowh
+		gmode 2
+		gsel BUFFER_SCREEN
+		anidx = (cdata(CDATA_X, anic) - scx) * inf_tiles + inf_screenx - 240 + 24
+		anidy = (cdata(CDATA_Y, anic) - scy) * inf_tiles + inf_screeny + 24
+		repeat 10
+			redraw 0
+			pos 0, 0
+			gmode 0
+			gcopy BUFFER_BUF, 0, 0, windoww, windowh
+			cnt2 = cnt
+			gmode 2
+			repeat 2
+				pos anidx, anidy - cnt * 240
+				gcopy BUFFER_PIC, cnt2 / 2 * 480, (cnt == 0) * 480, 480, 480
+			loop
+			snd SOUNDLIST_HEAL1
+			await cfg_animewait + 10
+			redraw 1
+		loop
+		gmode 0
+		pos 0, 0
+		gcopy BUFFER_BUF, 0, 0, windoww, windowh
+		gmode 2
+		goto *anime_SWEND1
+		_switch_sw++
+	}
+	if ( _switch_val == ANIMATION_HEALING_RAIN | _switch_sw ) {
+		_switch_sw = 0
+		if ( animode == 0 ) {
+			gsel BUFFER_PIC
+			picload exedir + "graphic\\anime50.bmp"
+		}
+		if ( animode == 1 ) {
+			gsel BUFFER_PIC
+			picload exedir + "graphic\\anime75.bmp"
+		}
+		if ( animode == 2 ) {
+			gsel BUFFER_PIC
+			picload exedir + "graphic\\anime76.bmp"
+		}
+		if ( animode == 3 ) {
+			gsel BUFFER_PIC
+			picload exedir + "graphic\\anime28.bmp"
+		}
+		if ( animode == 4 ) {
+			gsel BUFFER_PIC
+			picload exedir + "graphic\\anime18.bmp"
+		}
+		if ( animode == 5 ) {
+			gsel BUFFER_PIC
+			picload exedir + "graphic\\anime14.bmp"
+		}
+		if ( animode == 6 ) {
+			gsel BUFFER_PIC
+			picload exedir + "graphic\\anime80.bmp"
+		}
+		if ( animode == 7 ) {
+			gsel BUFFER_PIC
+			picload exedir + "graphic\\anime40.bmp"
+		}
+		gsel BUFFER_BUF
+		gmode 0
+		pos 0, 0
+		gcopy BUFFER_SCREEN, 0, 0, windoww, windowh
+		gmode 2
+		gsel BUFFER_SCREEN
+		am = 0
+		repeat MAX_CHARA_TOTAL
+			if ( cdata(CDATA_EXIST, cnt) != CHAR_STATE_ALIVE ) {
+				continue
+			}
+			if ( animode == 0 | animode == 2 | animode == 7 ) {
+				if ( cnt == cc ) {
+					continue
+				}
+				if ( cc < MAX_CHARA_FOLLOWER ) {
+					if ( cdata(CDATA_RELATION, cnt) != RELATION_ENEMY ) {
+						continue
+					}
+				}
+				if ( cc >= MAX_CHARA_FOLLOWER ) {
+					if ( cdata(CDATA_RELATION_ORG, cnt) == cdata(CDATA_RELATION_ORG, cc) | cdata(CDATA_RELATION, cnt) == cdata(CDATA_RELATION, cc) | (cdata(CDATA_RELATION, cc) >= RELATION_DISLIKE & cdata(CDATA_RELATION, cnt) >= RELATION_DISLIKE) ) {
+						continue
+					}
+				}
+			}
+			if ( animode == 1 ) {
+				if ( cc == CHARA_PLAYER | cdata(CDATA_RELATION, cc) >= RELATION_NEUTRAL ) {
+					if ( cdata(CDATA_RELATION, cnt) < RELATION_NEUTRAL ) {
+						continue
+					}
+				}
+				if ( cdata(CDATA_RELATION, cc) == RELATION_DISLIKE ) {
+					if ( cdata(CDATA_RELATION, cnt) != RELATION_DISLIKE ) {
+						continue
+					}
+				}
+				if ( cdata(CDATA_RELATION, cc) < RELATION_DISLIKE ) {
+					if ( cdata(CDATA_RELATION, cnt) >= RELATION_DISLIKE ) {
+						continue
+					}
+				}
+			}
+			if ( animode >= 3 & animode <= 6 ) {
+				if ( cnt == cc ) {
+					continue
+				}
+			}
+			tc = cnt
+			dx = cdata(CDATA_X, tc)
+			dy = cdata(CDATA_Y, tc)
+			if ( dist(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), dx, dy) > sdataref(SKILL_DATAREF_TG, SKILL_SPACT_CHEER) \ 1000 + 1 ) {
+				continue
+			}
+			if ( animode == 1 ) {
+				if ( dist(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), dx, dy) > sdataref(SKILL_DATAREF_TG, SKILL_SPELL_HEALING_RAIN) \ 1000 + 1 ) {
+					continue
+				}
+			}
+			if ( fov_los(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), dx, dy) == 0 ) {
+				continue
+			}
+			ax(am) = (cdata(CDATA_X, cnt) - scx) * inf_tiles + inf_screenx - 24
+			if ( am != 0 ) {
+				ax(am) += 4 - rnd(8)
+			}
+			ay(am) = (cdata(CDATA_Y, cnt) - scy) * inf_tiles + inf_screeny + 32
+			if ( ay(am) < 0 | ay(am) > inf_screenh * inf_tiles + inf_screeny ) {
+				continue
+			}
+			if ( ax(am) < (-20) | ax(am) > windoww + 20 ) {
+				continue
+			}
+			ap(am) = 20 + (am != 0) * rnd(5)
+			am++
+		loop
+		repeat
+			redraw 0
+			pos 0, 0
+			gmode 0
+			gcopy BUFFER_BUF, 0, 0, windoww, windowh
+			af = 0
+			repeat am
+				if ( ap(cnt) <= 0 ) {
+					continue
+				}
+				af = 1
+				cnt2 = cnt
+				anidy = ay(cnt) - 32
+				gmode 2, 96, 96
+				pos ax(cnt), anidy - 48
+				gcopy BUFFER_PIC, limit(8 - ap(cnt), 0, 8) * 96 + 96 * (ap(cnt) < 15), 0, 96, 96
+				if ( ap(cnt) >= 20 ) {
+					ap(cnt) -= rnd(2)
+				}
+				else {
+					ap(cnt)--
+				}
+			loop
+			if ( cnt \ 2 == 0 ) {
+				if ( cnt < 30 ) {
+					if ( cnt / 3 < am ) {
+						if ( animode == 1 ) {
+							snd SOUNDLIST_HEAL1
+						}
+						if ( animode == 2 ) {
+							snd SOUNDLIST_BALL1
+						}
+						if ( animode == 3 ) {
+							snd SOUNDLIST_STAB
+						}
+						if ( animode == 4 ) {
+							snd SOUNDLIST_CRACK2
+						}
+						if ( animode == 5 ) {
+							snd SOUNDLIST_ATK_CHAOS
+						}
+						if ( animode == 6 ) {
+							snd SOUNDLIST_OFFER1
+						}
+					}
+				}
+			}
+			if ( af == 0 ) {
+				break
+			}
+			if ( animode == 1 ) {
+				await cfg_animewait + 5
+			}
+			if ( animode == 2 ) {
+				await cfg_animewait + 25
+			}
+			redraw 1
+		loop
+		goto *anime_SWEND1
+		_switch_sw++
 	}
 	if ( _switch_val == ANIMATION_UNISON_IMPACT2 | _switch_sw ) {
 		_switch_sw = 0
@@ -2555,6 +3818,101 @@
 			redraw 1
 		loop
 		goto *anime_SWEND1
+	}
+	if ( _switch_val == ANIMATION_HOROBINOYARI_2 | _switch_sw ) {
+		_switch_sw = 0
+		snd SOUNDLIST_BOLT1
+		gsel BUFFER_PIC
+		picload exedir + "graphic\\anime81.bmp"
+		gsel BUFFER_BUF
+		pos 0, 0
+		gmode 0
+		gcopy BUFFER_SCREEN, 0, 0, windoww, windowh
+		gsel BUFFER_SCREEN
+		am = 0
+		repeat 245
+			if ( cdata(CDATA_EXIST, cnt) != CHAR_STATE_ALIVE ) {
+				continue
+			}
+			if ( gdata(GDATA_TEMPORARY_FLAGS3) == 777 ) {
+				if ( cdata(CDATA_RELATION, cnt) != RELATION_ENEMY ) {
+					continue
+				}
+			}
+			if ( animode == 0 ) {
+				if ( cnt == cc ) {
+					continue
+				}
+			}
+			if ( animode >= 100 ) {
+				if ( cnt != animode - 100 ) {
+					continue
+				}
+			}
+			ax(am) = (cdata(CDATA_X, cnt) - scx) * inf_tiles + inf_screenx - 24
+			if ( am != 0 ) {
+				ax(am) += 4 - rnd(8)
+			}
+			ay(am) = (cdata(CDATA_Y, cnt) - scy) * inf_tiles + inf_screeny + 32
+			if ( ay(am) < 0 | ay(am) > inf_screenh * inf_tiles + inf_screeny ) {
+				continue
+			}
+			if ( ax(am) < (-20) | ax(am) > windoww + 20 ) {
+				continue
+			}
+			ap(am) = 20 + (am != 0) * rnd(5)
+			am++
+		loop
+		repeat
+			redraw 0
+			pos 0, 0
+			gmode 0
+			gcopy BUFFER_BUF, 0, 0, windoww, windowh
+			af = 0
+			repeat am
+				if ( ap(cnt) <= 0 ) {
+					continue
+				}
+				af = 1
+				cnt2 = cnt
+				anidy = ay(cnt) * limit(20 - ap(cnt), 0, 6) / 6 - 96
+				gmode 2, 96, 96
+				pos ax(cnt), anidy
+				gcopy BUFFER_PIC, limit(8 - ap(cnt), 0, 8) * 96 + 96 * (ap(cnt) < 15), 0, 96, 96
+				if ( ap(cnt) <= 14 ) {
+					if ( ap(cnt) >= 6 ) {
+						pos ax(cnt), anidy + 16
+						gcopy BUFFER_PIC, (14 - ap(cnt)) / 2 * 96, 96, 96, 96
+					}
+				}
+				anidx = limit(anidy / 55 + 1, 0, 7 - limit((11 - ap(cnt)) * 2, 0, 7))
+				repeat anidx, 1
+					pos ax(cnt2), anidy - cnt * 55
+					gcopy BUFFER_PIC, 96 * (ap(cnt2) < 15), 0, 96, 55
+					if ( cnt == anidx ) {
+						pos ax(cnt2), anidy - cnt * 55 - 40
+						gcopy BUFFER_PIC, 288, 0, 96, 40
+					}
+				loop
+				if ( ap(cnt) >= 20 ) {
+					ap(cnt) -= rnd(2)
+				}
+				else {
+					ap(cnt)--
+				}
+			loop
+			if ( cnt \ 2 == 0 ) {
+				snd SOUNDLIST_ATK_FIRE
+				snd SOUNDLIST_BOLT1
+			}
+			if ( af == 0 ) {
+				break
+			}
+			await cfg_animewait + 25
+			redraw 1
+		loop
+		goto *anime_SWEND1
+		_switch_sw++
 	}
 	if ( _switch_val == ANIMATION_METEOR | _switch_sw ) {
 		_switch_sw = 0
@@ -3100,6 +4458,80 @@
 		redraw 1
 		goto *anime_SWEND1
 	}
+	if ( _switch_val == ANIMATION_EVOCHAT_GENTLY | _switch_sw ) {
+		_switch_sw = 0
+		gsel BUFFER_PIC2
+		picload exedir + "graphic\\anime74.bmp"
+		gsel BUFFER_BUF
+		pos 0, 0
+		gmode 0
+		gcopy BUFFER_SCREEN, 0, 0, windoww, windowh
+		gsel BUFFER_SCREEN
+		am = 0
+		repeat 100
+			ax(am) = rnd(windoww)
+			ay(am) = rnd(inf_screenh * inf_tiles) + 100
+			if ( ay(am) > inf_screenh * inf_tiles - 50 ) {
+				ay(am) = inf_screenh * inf_tiles - 50
+			}
+			ap(am) = 0 - rnd(6)
+			am++
+		loop
+		repeat
+			redraw 0
+			if ( aniref == 0 ) {
+				pos 0, 5 - rnd(3)
+				gmode 0
+				gcopy BUFFER_BUF, 0, 0, windoww, windowh
+			}
+			if ( aniref == 1 ) {
+				pos 5 - rnd(10), 5 - rnd(10)
+				gmode 0
+				gcopy BUFFER_BUF, 0, 0, windoww, windowh
+			}
+			af = 0
+			repeat am
+				if ( ap(cnt) >= 10 ) {
+					continue
+				}
+				af = 1
+				cnt2 = cnt
+				anidy = ay(cnt) * limit(20 - ap(cnt), 0, 6) / 6 - 96
+				gmode 2, 96, 96
+				if ( ap(cnt) < 10 ) {
+					if ( aniref == 0 ) {
+						if ( cnt \ 3 == 0 ) {
+							pos ax(cnt), ay(cnt) - 96
+							gcopy BUFFER_PIC2, ap(cnt) * 96, 0, 96, 96
+						}
+					}
+					if ( aniref == 1 ) {
+						pos ax(cnt), ay(cnt) - 96
+						gcopy BUFFER_PIC2, ap(cnt) * 96, 0, 96, 96
+					}
+				}
+				if ( ap(cnt) < 0 ) {
+					ap(cnt) += rnd(2)
+				}
+				else {
+					ap(cnt)++
+				}
+			loop
+			if ( af == 0 ) {
+				break
+			}
+			await cfg_animewait + 40
+			redraw 1
+		loop
+		redraw 1
+		gmode 0
+		pos 0, 0
+		gcopy BUFFER_BUF, 0, 0, windoww, windowh
+		gmode 2
+		redraw 1
+		goto *anime_SWEND1
+		_switch_sw++
+	}
 	if ( _switch_val == ANIMATION_GIGA | _switch_sw ) {
 		_switch_sw = 0
 		gsel 7
@@ -3175,23 +4607,11 @@
 		ax = (sx - scx) * inf_tiles + inf_screenx
 		ay = (sy - scy) * inf_tiles + inf_screeny
 		if ( animeid == ANIMATION_CRUSH ) {
-			gsel 1
-			color 0
-			boxf 0, 960, chipi(CHIPI_WIDTH, xy2pic(17, 0)), chipi(CHIPI_HEIGHT, xy2pic(17, 0)) + 960
-			pos 0, 960
-			gcopy 1, chipi(CHIPI_X, xy2pic(17, 0)), chipi(CHIPI_Y, xy2pic(17, 0)), chipi(CHIPI_WIDTH, xy2pic(17, 0)), chipi(CHIPI_HEIGHT, xy2pic(17, 0))
-			gfini chipi(CHIPI_WIDTH, xy2pic(17, 0)), chipi(CHIPI_HEIGHT, xy2pic(17, 0))
-			gfdec2 c_col(0, 0), c_col(1, 0), c_col(2, 0)
-			gsel selcur
-			gsel 1
-			color 0
-			boxf 0, 960, chipi(CHIPI_WIDTH, xy2pic(18, 0)), chipi(CHIPI_HEIGHT, xy2pic(18, 0)) + 960
-			pos 0, 960
-			gcopy 1, chipi(CHIPI_X, xy2pic(18, 0)), chipi(CHIPI_Y, xy2pic(18, 0)), chipi(CHIPI_WIDTH, xy2pic(18, 0)), chipi(CHIPI_HEIGHT, xy2pic(18, 0))
-			gfini chipi(CHIPI_WIDTH, xy2pic(18, 0)), chipi(CHIPI_HEIGHT, xy2pic(18, 0))
-			gfdec2 c_col(0, 0), c_col(1, 0), c_col(2, 0)
-			gsel selcur
-		}
+            preparePicItem xy2pic(17, 0), 0
+        }
+        else {
+            preparePicItem xy2pic(18, 0), 0
+        }
 		repeat aniref
 			sx(cnt) = rnd(24) - 12
 			sy(cnt) = rnd(8)
@@ -3532,7 +4952,36 @@
 			gosub *screen_ether
 		}
 	}
+	if ( gdata(GDATA_AREA) == AREA_AMUR_CAGE ) {
+		if ( gdata(GDATA_LEVEL) >= 20 ) {
+			gosub *screen_hardRainAmurCage
+		}
+	}
 	screendrawhack = 0
+	return
+
+*screen_hardRainAmurCage
+	repeat maxrain * (1 + (mdata(MDATA_TYPE) == MAP_TYPE_WORLD))
+		s_p = rnd(20)
+		color 255 - s_p, 20 - s_p, 20 - s_p
+		line rainx(cnt) - 40, rainy(cnt) - cnt \ 5 - 4, rainx(cnt) - 39 + cnt \ 2, rainy(cnt)
+		if ( rainx(cnt) == 0 ) {
+			rainx(cnt) = rnd(windoww) + 40
+		}
+		else {
+			rainx(cnt) += 1
+		}
+		if ( rainy(cnt) == 0 ) {
+			rainy(cnt) = rnd(windowh - inf_verh) - 6
+		}
+		else {
+			rainy(cnt) += 24 + cnt \ 8
+			if ( rainy(cnt) > windowh - inf_verh - 10 ) {
+				rainy(cnt) = 0
+				rainx(cnt) = 0
+			}
+		}
+	loop
 	return
 
 *screen_rain
@@ -3712,8 +5161,10 @@
 		if ( cdata(CDATA_IN_TAGTEAM, CHARA_PLAYER) == 0 ) {
 			keybd_wait = 1000
 		}
-		if ( chipm(CHIPM_ROLE, map(cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0)) == MAP_CHIP_ROLE_SNOW ) {
-			scrollp = 9
+        if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) != 3 ) {
+            if ( chipm(CHIPM_ROLE, map(cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), MAP_TILE_ID)) == MAP_CHIP_ROLE_SNOW ) {
+                scrollp = 9
+            }
 		}
 	}
 	else {
@@ -4190,6 +5641,33 @@
 		}
 		p = limit(5 * (100 + sorg(SKILL_ATTR_LER, r1) * 10) / (300 + cdata(CDATA_LEVEL, r1) * 15) + 1, 5, 15)
 		if ( r1 == CHARA_PLAYER ) {
+
+            /********** ORIGINAL - BEGINNING ********** // Remove skill bonus limit.
+   
+			if ( gdata(GDATA_FLAG_SCROLL_OF_WITCHCRAFT_TOTAL_SKILL_BONUS) >= 100 ) {
+				if ( gdata(GDATA_FLAG_GAME_MODE) != 2 & gdata(GDATA_FLAG_GAME_MODE) != 5 ) {
+					gdata(GDATA_FLAG_SCROLL_OF_WITCHCRAFT_TOTAL_SKILL_BONUS) -= p
+					gdata(GDATA_FLAG_SKILL_BONUS_OBTAINED) -= p
+				}
+			}
+
+             ********** ORIGINAL - ENDING **********/
+
+			gdata(GDATA_FLAG_SCROLL_OF_WITCHCRAFT_TOTAL_SKILL_BONUS) += p
+			gdata(GDATA_FLAG_SKILL_BONUS_OBTAINED) += p
+
+            /********** ORIGINAL - BEGINNING ********** // Remove skill bonus limit.
+
+			if ( gdata(GDATA_FLAG_SCROLL_OF_WITCHCRAFT_TOTAL_SKILL_BONUS) >= 100 ) {
+				if ( gdata(GDATA_FLAG_GAME_MODE) != 2 & gdata(GDATA_FLAG_GAME_MODE) != 5 ) {
+					snd SOUNDLIST_CHIME
+					txtef COLOR_RED
+					txt lang("注意！スペルボーナスは100以上あると新たに獲得できない。", "Caution! While the spell bonus is 100 or more, you cannot get new.")
+				}
+			}
+
+             ********** ORIGINAL - ENDING **********/
+
 			if ( gdata(STARTING_GDATA_FLAG + 362) < 10 ) {
 				gdata(STARTING_GDATA_FLAG + 362)++
 			}
@@ -4363,7 +5841,7 @@
 	return
 
 *expMagicCapacity
-	skillexp SKILL_NORMAL_MAGIC_CAPACITY, r1, limit(abs(cdata(CDATA_MP, r1)) * 400 / (cdata(CDATA_MAX_MP, r1) + 1), 1, 2000)
+	skillexp SKILL_NORMAL_MAGIC_CAPACITY, r1, limit(abs(cdata(CDATA_MP, r1)) * 400 / (cdata(CDATA_MAX_MP, r1) + 1), 1, 400)
 	return
 
 *expRegen
@@ -4472,7 +5950,7 @@
 	return
 
 *expMemorize
-	skillexp SKILL_NORMAL_MEMORIZATION, CHARA_PLAYER, 10 + sdataref(SKILL_DATAREF_DIFF, efid) / 5
+	skillexp SKILL_NORMAL_MEMORIZATION, CHARA_PLAYER, 30 + sdataref(SKILL_DATAREF_DIFF, efid)
 	return
 
 *expProduct
@@ -4482,9 +5960,19 @@
 #defcfunc calcattackhit int calcattackhit_arg1
 	critical = 0
 	if ( attackskill == SKILL_WEAPON_MARTIAL_ARTS ) {
-		tohitorg = sdata(SKILL_ATTR_DEX, cc) / 5 + sdata(SKILL_ATTR_STR, cc) / 2 + sdata(attackskill, cc) + 50
-		tohitfix = sdata(SKILL_ATTR_DEX, cc) / 5 + sdata(SKILL_ATTR_STR, cc) / 10 + cdata(CDATA_ATTACK, cc)
-		pierce = limit(sdata(attackskill, cc) / 5, 5, 50)
+		tohitorg = sdata(SKILL_ATTR_DEX, cc) / 4 + sdata(attackskill, cc) / 3 + sdata(attackskill, cc) + 50
+		tohitfix = cdata(CDATA_ATTACK, cc)
+		handmartial = 0
+		repeat 30, 100
+			if ( cdata(cnt, cc) / EXT_EQUIP_SLOTS == 5 ) {
+				handmartial++
+			}
+			if ( handmartial >= 4 ) {
+				break
+			}
+		loop
+		tohitorg = tohitorg * (handmartial + 3) / 3
+		pierce = limit(sdata(attackskill, cc) / 7 + 15, 15, 50)
 		if ( cdata(CDATA_ATTACK_STYLE, cc) & STYLE_SHIELD ) {
 			tohitorg = tohitorg * 100 / 130
 		}
@@ -4609,19 +6097,46 @@
 	if ( calcattackhit_arg1 == 1 ) {
 		return tohit
 	}
+	if ( gdata(GDATA_TEMPORARY_FLAGS2) == 1200 ) {
+		tohit = tohit * 2
+	}
 	evade = sdata(SKILL_ATTR_PER, tc) / 6 + sdata(SKILL_NORMAL_EVASION, tc) + cdata(CDATA_DV, tc) * 2 * 7 / 4 + 25 - cdata(CDATA_EVASION_PENALTY, tc) * 100
+	if ( cdata(CDATA_DIRECTIVE_MODE, tc) == DIRECTIVE_MODE_DEFENSIVE ) {
+		evade += sdata(SKILL_NORMAL_SHIELD, tc) + sdata(SKILL_ATTR_CON, tc) / 6
+	}
+	if ( cdata(CDATA_CONDITION_WET, tc) > 0 ) {
+		if ( chipm(CHIPM_ROLE, map(cdata(CDATA_X, tc), cdata(CDATA_Y, tc), MAP_TILE_ID)) == MAP_CHIP_ROLE_WATER ) {
+			if ( sdata(SKILL_NORMAL_SWIMMING, tc) < 50 ) {
+				evade -= (50 - sdata(SKILL_NORMAL_SWIMMING, tc)) * 2
+			}
+			if ( sdata(SKILL_NORMAL_SWIMMING, tc) >= 50 ) {
+				evade += sdata(SKILL_NORMAL_SWIMMING, tc) / 2
+			}
+		}
+	}
+	if ( cdata(CDATA_PLATINUM, cc) > 0 ) {
+		if ( calcattackhit_arg1 == 0 ) {
+			evade += (limit(sdata(SKILL_NORMAL_MEMORIZATION, tc) / 5, 1, 100) + 10) * (cdata(CDATA_PLATINUM, cc) / 10 + 1)
+			if ( sorg(SKILL_NORMAL_MEMORIZATION, tc) > 0 ) {
+				skillexp SKILL_NORMAL_MEMORIZATION, tc, 4, 0, 1000
+			}
+		}
+	}
 	if ( evade <= 0 ) {
 		evade = 1
 	}
 	if ( cbit(CHARA_BIT_AWAKE_NEAR_DEATH_EVASION, tc) ) {
 		if ( cdata(CDATA_HP, tc) >= 0 ) {
-			evade = evade * (100 + limit((cdata(CDATA_MAX_HP, tc) / (cdata(CDATA_HP, tc) + 1) - 1) * 20, 0, 200)) / 100
+			evade = evade * (100 + limit((cdata(CDATA_MAX_HP, tc) / (cdata(CDATA_HP, tc) + 1) - 1) * 20, 1, 200)) / 100
 		}
 	}
 	if ( calcattackhit_arg1 == 2 ) {
 		return evade
 	}
-	if ( gdata(GDATA_TIME_STOP_TIME) > 0 ) {
+	if ( gdata(GDATA_TIME_STOP_TIME) > 0 | gdata(GDATA_FLAG_STOP_TIME_OTHER) > 0 ) {
+		if ( inv(INV_ITEM_ID, cw) == ITEM_ID_KALPA_HAND ) {
+			critical = 1
+		}
 		return 1
 	}
 	if ( gdata(GDATA_TEMPORARY_FLAGS3) != 0 ) {
@@ -4715,6 +6230,17 @@
 	if ( cdata(CDATA_CONDITION_SLEEP, tc) != 0 | cdata(CDATA_CONDITION_BIND, tc) >= 20 ) {
 		return 1
 	}
+	if ( cdata(CDATA_ID, tc) == CREATURE_ID_JALDABAOTH_THE_CHAOS_CHILD ) {
+		if ( cdata(CDATA_ALLIED, tc) == 0 ) {
+			if ( gdata(GDATA_FLAG_MAIN) == 875 ) {
+				gdata(GDATA_FLAG_MAIN) = 880
+			}
+			if ( gdata(GDATA_FLAG_MAIN) == 885 ) {
+				gdata(GDATA_FLAG_MAIN) = 890
+			}
+			return 1
+		}
+	}
 	if ( cdata(CDATA_CONDITION_DIM, cc) != 0 ) {
 		if ( attackrange ) {
 			tohit /= 5
@@ -4732,14 +6258,7 @@
 		}
 	}
 	if ( rnd(5000) < sdata(SKILL_ATTR_PER, cc) + 50 ) {
-		if ( findbuff(tc, BUFF_EMERGENCY_EVASION) != (-1) & cdata(CDATA_EQUIP_WEIGHT, tc) < 15000 ) {
-			if ( synccheck(cc, -1) ) {
-				txtef COLOR_YELLOW
-				txt lang("*緊急回避*", "*Emergency Evade*")
-				critical = 0
-				return -1
-			}
-		}
+		critical = 1
 		if ( cbit(CHARA_BIT_AWAKE_NEAR_DEATH_EVASION, tc) ) {
 			if ( cdata(CDATA_HP, tc) >= 0 ) {
 				if ( limit(cdata(CDATA_MAX_HP, tc) / (cdata(CDATA_HP, tc) + 1), 1, 20) > rnd(5) ) {
@@ -4748,8 +6267,12 @@
 				}
 			}
 		}
-		critical = 1
-		return 1
+		if ( findbuff(tc, BUFF_EMERGENCY_EVASION) != (-1) & cdata(CDATA_EQUIP_WEIGHT, tc) < 15000 ) {
+			critical = 0
+		}
+		if ( critical == 1 ) {
+			return 1
+		}
 	}
 	if ( cdatan(CDATAN_CLASS, cc) == "predator" ) {
 		cr = 20
@@ -4768,17 +6291,28 @@
 			creva = limit(inv(INV_ITEM_WEIGHT, cw) / 10, 1, 400) / 2
 		}
 	}
-	if ( cdata(CDATA_CRIT_CHANCE, cc) * 4 + cr + 10 > (rnd(400) + rnd(creva + 2) + cdata(CDATA_DEC_ENEMY_CRIT_CHANCE, tc) * 2) ) {
-		if ( findbuff(tc, BUFF_EMERGENCY_EVASION) != (-1) & cdata(CDATA_EQUIP_WEIGHT, tc) < 15000 ) {
-			if ( synccheck(cc, -1) ) {
-				txtef COLOR_YELLOW
-				txt lang("*緊急回避*", "*Emergency Evade*")
-				critical = 0
-				return -1
+	handryoute = 0
+	if ( cdata(CDATA_ATTACK_STYLE, cc) & 2 ) {
+		repeat 30, 100
+			if ( cdata(cnt, cc) / EXT_EQUIP_SLOTS == 5 ) {
+				handryoute++
 			}
+			if ( handryoute >= 4 ) {
+				break
+			}
+		loop
+		if ( handryoute == 1 ) {
+			handryoute = 0
 		}
+	}
+	if ( (cdata(CDATA_CRIT_CHANCE, cc) * 4 + cr + 10) * (handryoute + 10) / 10 > (rnd(400) + rnd(creva + 2) + cdata(CDATA_DEC_ENEMY_CRIT_CHANCE, tc) * 2) * (extraattack + 1) ) {
 		critical = 1
-		return 1
+		if ( findbuff(tc, BUFF_EMERGENCY_EVASION) != (-1) & cdata(CDATA_EQUIP_WEIGHT, tc) < 15000 ) {
+			critical = 0
+		}
+		if ( critical == 1 ) {
+			return 1
+		}
 	}
 	if ( cdata(CDATA_ATTACK_STYLE, tc) & STYLE_SHIELD ) {
 		if ( findbuff(tc, BUFF_SHIELD_PARRY) != (-1) ) {
@@ -4821,12 +6355,11 @@
 	if ( evade < 1 ) {
 		return 1
 	}
-	if ( findbuff(tc, BUFF_KILLING_DANCE) != (-1) ) {
-		if ( rnd(tohit) <= rnd(evade * 3 / 2) ) {
-			return -1
-		}
+	evade = evade * 3 / 2
+	if ( gdata(GDATA_FLAG_DATA_SCAN_CHARA_INDEX) != 0 ) {
+		txt lang("[命中力" + tohit + "][回避力" + evade + "]", "[HIT" + ohit + "][EVA" + evade + "]")
 	}
-	if ( rnd(tohit) > rnd(evade * 3 / 2) ) {
+	if ( rnd(tohit) > rnd(evade) ) {
 		return 1
 	}
 	return -1
@@ -4835,7 +6368,7 @@
 	if ( attackskill == SKILL_WEAPON_MARTIAL_ARTS ) {
 		dmgfix = sdata(SKILL_ATTR_STR, cc) / 16 + sdata(SKILL_ATTR_DEX, cc) / 16 + sdata(SKILL_WEAPON_MARTIAL_ARTS, cc) / 16 + sdata(SKILL_ATTR_WIL, cc) / 20 + cdata(CDATA_DAMAGE, cc)
 		dice1 = 2
-		dice2 = sdata(SKILL_WEAPON_MARTIAL_ARTS, cc) / 8 + 5
+		dice2 = limit(sdata(SKILL_WEAPON_MARTIAL_ARTS, cc) / 5 + 10, 10, 120)
 		dmgmulti = 0.5 + double(sdata(SKILL_ATTR_STR, cc) / 2 + sdata(SKILL_ATTR_WIL, cc) / 2 + sdata(attackskill, cc) / 5 + sdata(SKILL_NORMAL_TACTICS, cc) * 2) / 40
 	}
 	else {
@@ -4851,6 +6384,12 @@
 			if ( attackskill == SKILL_WEAPON_BLUNT ) {
 				dice2 = inv(INV_ITEM_DICE2, cw) / 2
 			}
+		}
+		if ( dice1 <= 0 ) {
+			dice1 = 1
+		}
+		if ( dice2 <= 0 ) {
+			dice2 = 1
 		}
 		if ( inv(INV_ITEM_DICE1, cw) == 0 ) {
 			dice1 = 4
@@ -4870,6 +6409,12 @@
 			dmgmulti = 0.6 + double(sdata(SKILL_ATTR_STR, cc) + sdata(inv(INV_ITEM_SKILL_REF, cw), cc) / 5 + sdata(attackskill, cc) / 5 + sdata(SKILL_NORMAL_TACTICS, cc) * 2) / 45
 			if ( inv(INV_ITEM_SKILL_REF, cw) == SKILL_WEAPON_FIREARM | inv(INV_ITEM_SKILL_REF, cw) == SKILL_WEAPON_CROSSBOW | inv(INV_ITEM_SKILL_REF, cw) == SKILL_WEAPON_BOW | attackskill == SKILL_WEAPON_THROWING ) {
 				dmgmulti = 0.6 + double(sdata(SKILL_ATTR_STR, cc) + sdata(attackskill, cc) / 5 + sdata(attackskill, cc) / 5 + sdata(SKILL_NORMAL_TACTICS, cc) * 2) / 45
+			}
+			if ( attackrange ) {
+				if ( findbuff(cc, BUFF_OVERLIMIT_THROW) != (-1) ) {
+					dmgmulti *= 1.5
+					dmgmulti += 0.03 * sdata(SKILL_NORMAL_MEDITATION, cc)
+				}
 			}
 		}
 	}
@@ -4899,17 +6444,17 @@
 			}
 			else {
 				if ( cdata(CDATA_ROCK_THROWING, cc) != 0 & (inv(INV_ITEM_ID, cw) == ITEM_ID_STONE | inv(INV_ITEM_ID, cw) == ITEM_ID_VANILLA_ROCK) ) {
-					dmgmulti = dmgmulti * (rangemap(rangedist) + 50) / 100
+					dmgmulti = dmgmulti * (rangemap(rangedist) / 2 + 150) / 100
 					if ( encharge == 100 ) {
 						dmgmulti = dmgmulti2 * 3 / 2
 					}
 				}
 				else {
 					if ( gdata(GDATA_TEMPORARY_FLAGS3) != 0 ) {
-						dmgmulti = dmgmulti * (rangemap(rangedist) + 100) / 100
+						dmgmulti = dmgmulti * (rangemap(rangedist) / 2 + 150) / 100
 					}
 					else {
-						dmgmulti = dmgmulti * rangemap(rangedist) / 100
+						dmgmulti = dmgmulti * (rangemap(rangedist) / 2 + 100) / 100
 					}
 					if ( encharge == 100 ) {
 						dmgmulti = dmgmulti2 * 3 / 2
@@ -5060,6 +6605,11 @@
 		}
 	}
 	orgdmg = damage
+	if ( attackskill != SKILL_WEAPON_MARTIAL_ARTS ) {
+		if ( pierce <= 80 ) {
+			pierce += (130 - pierce * 3 / 2) * limit(sdata(attackskill, cc) / 30, 1, 10) / 30
+		}
+	}
 	if ( pierce > 0 ) {
 		pierce = pierce * (100 - limit(sdata(carmor(tc), tc) / 50, 0, 50)) / 100
 	}
@@ -5336,7 +6886,7 @@
 			}
 		}
 		if ( cdata(CDATA_WEAPON_STYLE_TYPE, r1) == 0 ) {
-			if ( inv(INV_ITEM_ID, rp) == ITEM_ID_LONG_SWORD | inv(INV_ITEM_ID, rp) == ITEM_ID_KATANA | inv(INV_ITEM_ID, rp) == ITEM_ID_LIGHTSABRE | inv(INV_ITEM_ID, rp) == ITEM_ID_DIABLOS | inv(INV_ITEM_ID, rp) == ITEM_ID_ZANTETSUKEN | inv(INV_ITEM_ID, rp) == ITEM_ID_MOURNBLADE | inv(INV_ITEM_ID, rp) == ITEM_ID_RAGNAROK | inv(INV_ITEM_ID, rp) == ITEM_ID_HIRYU_TO | inv(INV_ITEM_ID, rp) == ITEM_ID_STORM_BRINGER | inv(INV_ITEM_ID, rp) == ITEM_ID_MOONLIGHT | inv(INV_ITEM_ID, rp) == ITEM_ID_HOUSENKA | inv(INV_ITEM_ID, rp) == ITEM_ID_FLEURE | inv(INV_ITEM_ID, rp) == ITEM_ID_EPECLAIR ) {
+			if ( inv(INV_ITEM_ID, rp) == ITEM_ID_LONG_SWORD | inv(INV_ITEM_ID, rp) == ITEM_ID_KATANA | inv(INV_ITEM_ID, rp) == ITEM_ID_LIGHTSABRE | inv(INV_ITEM_ID, rp) == ITEM_ID_DIABLOS | inv(INV_ITEM_ID, rp) == ITEM_ID_ZANTETSUKEN | inv(INV_ITEM_ID, rp) == ITEM_ID_MOURNBLADE | inv(INV_ITEM_ID, rp) == ITEM_ID_RAGNAROK | inv(INV_ITEM_ID, rp) == ITEM_ID_HIRYU_TO | inv(INV_ITEM_ID, rp) == ITEM_ID_STORM_BRINGER | inv(INV_ITEM_ID, rp) == ITEM_ID_MOONLIGHT | inv(INV_ITEM_ID, rp) == ITEM_ID_HOUSENKA | inv(INV_ITEM_ID, rp) == ITEM_ID_THE_WHITE_HAWK | inv(INV_ITEM_ID, rp) == ITEM_ID_FLEURE | inv(INV_ITEM_ID, rp) == ITEM_ID_EPECLAIR | inv(INV_ITEM_ID, rp) == ITEM_ID_ANNINDOFU_LIKE_A_LIGHTSABRE | inv(INV_ITEM_ID, rp) == ITEM_ID_KALPA_HAND | inv(INV_ITEM_ID, rp) == ITEM_ID_RAVENBRAND ) {
 				cdata(CDATA_WEAPON_STYLE_TYPE, r1) = WEAPON_STYLE_LONGSWORD
 			}
 			if ( inv(INV_ITEM_ID, rp) == ITEM_ID_SCIMITAR | inv(INV_ITEM_ID, rp) == ITEM_ID_WAKIZASHI | inv(INV_ITEM_ID, rp) == ITEM_ID_DYNAMIC_SABER | inv(INV_ITEM_ID, rp) == ITEM_ID_BLACK_MONKSHOOD ) {
@@ -5357,7 +6907,7 @@
 			if ( inv(INV_ITEM_ID, rp) == ITEM_ID_CLUB | inv(INV_ITEM_ID, rp) == ITEM_ID_HAMMER | inv(INV_ITEM_ID, rp) == ITEM_ID_BLOOD_MOON | inv(INV_ITEM_ID, rp) == ITEM_ID_GAIA_HAMMER | inv(INV_ITEM_ID, rp) == ITEM_ID_BUSTER_BOOK | inv(INV_ITEM_ID, rp) == ITEM_ID_NAIL_STRADIVARIUS | inv(INV_ITEM_ID, rp) == ITEM_ID_SOCKS | inv(INV_ITEM_ID, rp) == ITEM_ID_LUCKY_ALMONDS | inv(INV_ITEM_ID, rp) == ITEM_ID_ZUGAIKURAI | inv(INV_ITEM_ID, rp) == ITEM_ID_GRAVITAIL | inv(INV_ITEM_ID, rp) == ITEM_ID_WAR_HAMMER | inv(INV_ITEM_ID, rp) == ITEM_ID_STAR_HAMMER | inv(INV_ITEM_ID, rp) == ITEM_ID_NAZUNAS_SOX ) {
 				cdata(CDATA_WEAPON_STYLE_TYPE, r1) = WEAPON_STYLE_BLUDGEON
 			}
-			if ( inv(INV_ITEM_ID, rp) == ITEM_ID_SPEAR | inv(INV_ITEM_ID, rp) == ITEM_ID_TRIDENT | inv(INV_ITEM_ID, rp) == ITEM_ID_HALBERD | inv(INV_ITEM_ID, rp) == ITEM_ID_RANKIS | inv(INV_ITEM_ID, rp) == ITEM_ID_HOLY_LANCE | inv(INV_ITEM_ID, rp) == ITEM_ID_PILE_DRIVER | inv(INV_ITEM_ID, rp) == ITEM_ID_UNICORN_DRILL | inv(INV_ITEM_ID, rp) == ITEM_ID_TRISHULA | inv(INV_ITEM_ID, rp) == ITEM_ID_SPADILLE | inv(INV_ITEM_ID, rp) == ITEM_ID_DRILL | inv(INV_ITEM_ID, rp) == ITEM_ID_LANCE | inv(INV_ITEM_ID, rp) == ITEM_ID_GOUTEN ) {
+			if ( inv(INV_ITEM_ID, rp) == ITEM_ID_SPEAR | inv(INV_ITEM_ID, rp) == ITEM_ID_TRIDENT | inv(INV_ITEM_ID, rp) == ITEM_ID_HALBERD | inv(INV_ITEM_ID, rp) == ITEM_ID_RANKIS | inv(INV_ITEM_ID, rp) == ITEM_ID_HOLY_LANCE | inv(INV_ITEM_ID, rp) == ITEM_ID_PILE_DRIVER | inv(INV_ITEM_ID, rp) == ITEM_ID_UNICORN_DRILL | inv(INV_ITEM_ID, rp) == ITEM_ID_TRISHULA | inv(INV_ITEM_ID, rp) == ITEM_ID_SPADILLE | inv(INV_ITEM_ID, rp) == ITEM_ID_DRILL | inv(INV_ITEM_ID, rp) == ITEM_ID_LANCE | inv(INV_ITEM_ID, rp) == ITEM_ID_GOUTEN | inv(INV_ITEM_ID, rp) == ITEM_ID_BAMBNIR ) {
 				cdata(CDATA_WEAPON_STYLE_TYPE, r1) = WEAPON_STYLE_POLEARM
 			}
 			if ( inv(INV_ITEM_ID, rp) == ITEM_ID_SOLAR_CANE ) {
@@ -5366,7 +6916,7 @@
 			if ( inv(INV_ITEM_ID, rp) == ITEM_ID_STAFF | inv(INV_ITEM_ID, rp) == ITEM_ID_LONG_STAFF | inv(INV_ITEM_ID, rp) == ITEM_ID_STAFF_OF_INSANITY | inv(INV_ITEM_ID, rp) == ITEM_ID_ELEMENTAL_STAFF | inv(INV_ITEM_ID, rp) == ITEM_ID_VITAL_FLAYER | inv(INV_ITEM_ID, rp) == ITEM_ID_ZWIEBEL | inv(INV_ITEM_ID, rp) == ITEM_ID_DRAKE_ROD | inv(INV_ITEM_ID, rp) == ITEM_ID_VICE_STAFF | inv(INV_ITEM_ID, rp) == ITEM_ID_WHIP | inv(INV_ITEM_ID, rp) == ITEM_ID_IVY_SPINE | inv(INV_ITEM_ID, rp) == ITEM_ID_BLOODY_TEARS | inv(INV_ITEM_ID, rp) == ITEM_ID_BLOOD_ROD | inv(INV_ITEM_ID, rp) == ITEM_ID_SHAKUJO | inv(INV_ITEM_ID, rp) == ITEM_ID_NUNCHAKU | inv(INV_ITEM_ID, rp) == ITEM_ID_POWER_TRIANGLE ) {
 				cdata(CDATA_WEAPON_STYLE_TYPE, r1) = WEAPON_STYLE_STAVE2
 			}
-			if ( inv(INV_ITEM_ID, rp) == ITEM_ID_ASTRAL_SICKLE | inv(INV_ITEM_ID, rp) == ITEM_ID_BEAST_SICKLE | inv(INV_ITEM_ID, rp) == ITEM_ID_FRISIAS_TAIL | inv(INV_ITEM_ID, rp) == ITEM_ID_SCYTHE | inv(INV_ITEM_ID, rp) == ITEM_ID_KUMIROMI_SCYTHE | inv(INV_ITEM_ID, rp) == ITEM_ID_SICKLE | inv(INV_ITEM_ID, rp) == ITEM_ID_SCYTHE_OF_THE_VOID | inv(INV_ITEM_ID, rp) == ITEM_ID_CHAINSICKLE | inv(INV_ITEM_ID, rp) == ITEM_ID_SASANQUA_SICKLE | inv(INV_ITEM_ID, rp) == ITEM_ID_NECROMANTIS | inv(INV_ITEM_ID, rp) == ITEM_ID_SCISSORS | inv(INV_ITEM_ID, rp) == ITEM_ID_BONE_SCYTHE | inv(INV_ITEM_ID, rp) == ITEM_ID_NUMENIUS ) {
+			if ( inv(INV_ITEM_ID, rp) == ITEM_ID_ASTRAL_SICKLE | inv(INV_ITEM_ID, rp) == ITEM_ID_BEAST_SICKLE | inv(INV_ITEM_ID, rp) == ITEM_ID_FRISIAS_TAIL | inv(INV_ITEM_ID, rp) == ITEM_ID_SCYTHE | inv(INV_ITEM_ID, rp) == ITEM_ID_KUMIROMI_SCYTHE | inv(INV_ITEM_ID, rp) == ITEM_ID_SICKLE | inv(INV_ITEM_ID, rp) == ITEM_ID_SCYTHE_OF_THE_VOID | inv(INV_ITEM_ID, rp) == ITEM_ID_CHAINSICKLE | inv(INV_ITEM_ID, rp) == ITEM_ID_SASANQUA_SICKLE | inv(INV_ITEM_ID, rp) == ITEM_ID_NECROMANTIS | inv(INV_ITEM_ID, rp) == ITEM_ID_SCISSORS | inv(INV_ITEM_ID, rp) == ITEM_ID_BONE_SCYTHE | inv(INV_ITEM_ID, rp) == ITEM_ID_NUMENIUS | inv(INV_ITEM_ID, rp) == ITEM_ID_KANI_KAMA ) {
 				cdata(CDATA_WEAPON_STYLE_TYPE, r1) = WEAPON_STYLE_SICKLE
 			}
 		}
@@ -5581,6 +7131,9 @@
 	loop
 	cdata(CDATA_SHIELD_PARRY, r1) = limit(cdata(CDATA_SHIELD_PARRY, r1), -5, 10)
 	if ( r1 == CHARA_PLAYER ) {
+		if ( trait(TRAIT_ETHER_BONES) != 0 ) {
+			cdata(CDATA_REFLECT_DAMAGE, r1) += 50
+		}
 		if ( cdata(CDATA_REMOTE_BLOW, r1) == 0 ) {
 			spact(SKILL_SPACT_DISTANT_ATTACK - STARTING_SKILL_SPACT) = 0
 		}
@@ -5591,6 +7144,18 @@
 		}
 		if ( cbit(CHARA_BIT_PREGNANT, r1) == 0 ) {
 			spact(SKILL_SPACT_PREGNANT - STARTING_SKILL_SPACT) = 0
+		}
+		if ( trait(TRAIT_ETHER_BLADE_HANDS) != 0 ) {
+			spact(SKILL_SPACT_DECAPITATION - STARTING_SKILL_SPACT) = 1
+		}
+		else {
+			spact(SKILL_SPACT_DECAPITATION - STARTING_SKILL_SPACT) = 0
+		}
+		if ( trait(TRAIT_ETHER_TORN_MOUTH) != 0 ) {
+			spact(SKILL_SPACT_VORACITY_FANG - STARTING_SKILL_SPACT) = 1
+		}
+		else {
+			spact(SKILL_SPACT_VORACITY_FANG - STARTING_SKILL_SPACT) = 0
 		}
 	}
 	if ( sdata(SKILL_NORMAL_EYE_OF_MIND, r1) ) {
@@ -5622,6 +7187,11 @@
 	if ( r1 != CHARA_PLAYER ) {
 		cdata(CDATA_PIETY, r1) = sdata(SKILL_NORMAL_FAITH, r1) * 50
 	}
+	if ( cdata(CDATA_ID, r1) == CREATURE_ID_JALDABAOTH_THE_CHAOS_CHILD ) {
+		if ( gdata(GDATA_FLAG_MAIN) == 860 ) {
+			sdata(SKILL_ATTR_SPD, r1) = 666666
+		}
+	}
 	if ( cdata(CDATA_ATTACK_STYLE, r1) & STYLE_SHIELD ) {
 		if ( cdata(CDATA_PV, r1) > 0 ) {
 			if ( cdata(CDATA_SHIELD_STYLE_TYPE, r1) == SHIELD_STYLE_NORMAL ) {
@@ -5647,9 +7217,15 @@
 			cdata(CDATA_PV, r1) = cdata(CDATA_PV, r1) * 13 / 10
 		}
 	}
-	cdata(CDATA_MAX_MP, r1) = limit((sdata(SKILL_ATTR_MAG, r1) * 3 + sdata(SKILL_ATTR_WIL, r1) + sdata(SKILL_ATTR_LER, r1)) / 3 * limit(cdata(CDATA_LEVEL, r1), 1, 10000) / 9 + sdata(SKILL_ATTR_MAG, r1), 1, 2000000) * limit(sdata(SKILL_ATTR_MANA, r1), 1, 1000) / 100
-	cdata(CDATA_MAX_HP, r1) = limit((sdata(SKILL_ATTR_CON, r1) * 3 + sdata(SKILL_ATTR_STR, r1) + sdata(SKILL_ATTR_WIL, r1)) / 3 * limit(cdata(CDATA_LEVEL, r1), 1, 10000) / 9 + sdata(SKILL_ATTR_CON, r1), 1, 2000000) * limit(sdata(SKILL_ATTR_LIFE, r1), 1, 1000) / 100 + 5
+	lvhosei = limit(cdata(CDATA_LEVEL, r1) / 4 + limit(cdata(CDATA_LEVEL, r1) / 4, 1, 250) + limit(cdata(CDATA_LEVEL, r1) / 4, 1, 500) + limit(cdata(CDATA_LEVEL, r1) / 4, 1, 750), 1, 4000)
+	cdata(CDATA_MAX_MP, r1) = limit((sdata(SKILL_ATTR_MAG, r1) * 3 + sdata(SKILL_ATTR_WIL, r1) + sdata(SKILL_ATTR_LER, r1)) / 3 * lvhosei / 9 + sdata(SKILL_ATTR_MAG, r1), 1, 2000000) * limit(sdata(SKILL_ATTR_MANA, r1), 1, 1000) / 100
+	cdata(CDATA_MAX_HP, r1) = limit((sdata(SKILL_ATTR_CON, r1) * 3 + sdata(SKILL_ATTR_STR, r1) + sdata(SKILL_ATTR_WIL, r1)) / 3 * lvhosei / 9 + sdata(SKILL_ATTR_CON, r1), 1, 2000000) * limit(sdata(SKILL_ATTR_LIFE, r1), 1, 1000) / 100 + 5
 	cdata(CDATA_MAX_SP, r1) = 100 + (sdata(SKILL_ATTR_WIL, r1) + sdata(SKILL_ATTR_CON, r1)) / 5 + trait(TRAIT_NORMAL_STAT_STAMINA) * 8
+	if ( r1 == CHARA_PLAYER ) {
+		if ( trait(TRAIT_ETHER_ABNORMAL_LIBIDO) != 0 ) {
+			cdata(CDATA_MAX_SP, r1) = cdata(CDATA_MAX_SP, r1) * 6 / 5
+		}
+	}
 	if ( cdata(CDATA_MAX_MP, r1) < 1 ) {
 		cdata(CDATA_MAX_MP, r1) = 1
 	}

@@ -9033,14 +9033,14 @@
 				}
 			}
 			if ( dbg_advTalkLine ) {
-				cdata(CDATA_CUSTOM_TALK_LINE, rc) = 1
+				cdata(CDATA_CUSTOM_TALK_LINE, rc) = ADVENTURER_MESSAGE_GET_ALONG
 			}
 			if ( cdata(CDATA_ROLE, rc) == ROLE_ADVENTURER ) {
-				if ( cdata(CDATA_CUSTOM_TALK_LINE, rc) == 1 ) {
+				if ( cdata(CDATA_CUSTOM_TALK_LINE, rc) == ADVENTURER_MESSAGE_GET_ALONG ) {
 					if ( cdata(CDATA_RELATION, rc) < RELATION_NEUTRAL ) {
 						cdata(CDATA_RELATION, rc) = RELATION_NEUTRAL
 						cdata(CDATA_AI_AGGRO, rc) = 0
-						cdata(CDATA_CUSTOM_TALK_LINE, rc) = 0
+						cdata(CDATA_ADVENTURER_MESSAGE_RECEIVED, rc) = ADVENTURER_MESSAGE_NONE
 						msgtemp += lang(cdatan(CDATAN_AKA, rc) + "はあなたからのメッセージを思い出した…。", cdatan(CDATAN_AKA, rc) + " recalled your message...")
 					}
 				}

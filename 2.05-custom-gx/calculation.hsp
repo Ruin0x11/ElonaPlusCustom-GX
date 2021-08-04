@@ -840,7 +840,7 @@
 	if ( calcspellfail_skillid == SKILL_SPELL_WIZARDS_HARVEST ) {
 		locvar_calcspellfail_i += sdata(calcspellfail_skillid, calcspellfail_charid) / 3
 	}
-	if ( cdata(CDATA_CUSTOM_TALK_LINE, CHARA_PLAYER) == 1 ) {
+	if ( cdata(CDATA_ADVANCED_CASTING_ENABLED, CHARA_PLAYER) == 1 ) {
 		locvar_calcspellfail_i = locvar_calcspellfail_i * 3
 	}
 	locvar_calcspellfail_p = 90 + sdata(calcspellfail_skillid, calcspellfail_charid) - sdataref(SKILL_DATAREF_DIFF, calcspellfail_skillid) * locvar_calcspellfail_i / (5 + sdata(SKILL_NORMAL_CASTING, calcspellfail_charid) * 4)

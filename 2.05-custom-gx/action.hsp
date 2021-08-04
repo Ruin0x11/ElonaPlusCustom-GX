@@ -7865,7 +7865,7 @@
 			goto *pc_turn
 		}
 
-        /********** ORIGINAL - BEGINNING ********** // Remove skill point limit.
+        /********** ORIGINAL - BEGINNING ********** // Remove skill bonus limit.
 
 		if ( cdata(CDATA_SKILLPOINT, tc) >= 100 ) {
 			if ( gdata(GDATA_FLAG_GAME_MODE) != 2 & gdata(GDATA_FLAG_GAME_MODE) != 5 ) {
@@ -7890,6 +7890,9 @@
 		txt lang(name(tc) + "のスキルがボーナスに変換された。", "Skill memories have been converted to bonuses.")
 		sdata(inv(INV_ITEM_PARAM1, ci) + STARTING_SKILL_SPACT, tc) = sdata(inv(INV_ITEM_PARAM1, ci) + STARTING_SKILL_SPACT, tc) / 2
 		cdata(CDATA_SKILLPOINT, tc) += 3
+
+        /********** ORIGINAL - BEGINNING ********** // Remove skill bonus limit.
+
 		if ( cdata(CDATA_SKILLPOINT, tc) >= 100 ) {
 			if ( gdata(GDATA_FLAG_GAME_MODE) != 2 & gdata(GDATA_FLAG_GAME_MODE) != 5 ) {
 				snd SOUNDLIST_CHIME
@@ -7897,6 +7900,9 @@
 				txt lang("注意！スキルボーナスは100以上あると新たに獲得できない。", "Caution! While the skill bonus is 100 or more, you cannot get new.")
 			}
 		}
+
+		 ********** ORIGINAL - ENDING **********/
+
 		inv(INV_ITEM_NUM, ci)--
 		cell_refresh inv(INV_ITEM_X, ci), inv(INV_ITEM_Y, ci)
 		r1 = tc

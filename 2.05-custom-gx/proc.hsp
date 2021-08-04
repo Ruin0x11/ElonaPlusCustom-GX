@@ -10129,12 +10129,18 @@
 		if ( gdata(GDATA_FLAG_SCROLL_OF_WITCHCRAFT_TOTAL_SKILL_BONUS) < 100 | gdata(GDATA_FLAG_GAME_MODE) == 2 | gdata(GDATA_FLAG_GAME_MODE) == 5 ) {
 			txt lang("あなたはスペルボーナスを獲得した。", "You gain 5 spellbonus points.")
 		}
+
+    	/********** ORIGINAL - BEGINNING ********** // Remove skill bonus limit.
+
 		if ( gdata(GDATA_FLAG_SCROLL_OF_WITCHCRAFT_TOTAL_SKILL_BONUS) >= 100 ) {
 			if ( gdata(GDATA_FLAG_GAME_MODE) != 2 & gdata(GDATA_FLAG_GAME_MODE) != 5 ) {
 				gdata(GDATA_FLAG_SCROLL_OF_WITCHCRAFT_TOTAL_SKILL_BONUS) -= 5
 				gdata(GDATA_FLAG_SKILL_BONUS_OBTAINED) -= 5
 			}
 		}
+
+    	 ********** ORIGINAL - ENDING **********/
+
 		gdata(GDATA_FLAG_SCROLL_OF_WITCHCRAFT_TOTAL_SKILL_BONUS) += 5
 		gdata(GDATA_FLAG_SKILL_BONUS_OBTAINED) += 5
 
@@ -16040,13 +16046,13 @@
 	}
 	if ( _switch_val == SKILL_SPACT_ADVANCED_CASTING | _switch_sw ) {
 		_switch_sw = 0
-		if ( cdata(CDATA_CUSTOM_TALK_LINE, CHARA_PLAYER) == 0 ) {
+		if ( cdata(CDATA_ADVANCED_CASTING_ENABLED, CHARA_PLAYER) == FALSE ) {
 			snd SOUNDLIST_ENC
-			cdata(CDATA_CUSTOM_TALK_LINE, CHARA_PLAYER) = 1
+			cdata(CDATA_ADVANCED_CASTING_ENABLED, CHARA_PLAYER) = TRUE
 		}
 		else {
 			snd SOUNDLIST_LOCKED1
-			cdata(CDATA_CUSTOM_TALK_LINE, CHARA_PLAYER) = 0
+			cdata(CDATA_ADVANCED_CASTING_ENABLED, CHARA_PLAYER) = FALSE
 		}
 		txt lang(name(0) + "は詠唱モードを切り替えた。", name(tc) + " switched the casting mode.")
 		goto *effect_end

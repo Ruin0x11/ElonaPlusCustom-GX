@@ -16865,16 +16865,35 @@
 					hyouzyou = 3
 				}
 			}
+			if ( cdata(CDATA_ROLE, tc) == ROLE_ADVENTURER ) {
+				if ( cdata(CDATA_ADVENTURER_MESSAGE_RECEIVED, tc) == ADVENTURER_MESSAGE_GET_ALONG ) {
+					txt lang(cdatan(CDATAN_AKA, tc) + "はあなたからのメッセージを思い出した…。", cdatan(CDATAN_AKA, tc) + " recalled your message...")
+					cdata(CDATA_ADVENTURER_MESSAGE_RECEIVED, tc) = ADVENTURER_MESSAGE_NONE
+					modimp tc, 10
+				}
+				if ( cdata(CDATA_ADVENTURER_MESSAGE_RECEIVED, tc) == ADVENTURER_MESSAGE_I_LOVE_YOU ) {
+					txt lang(cdatan(CDATAN_AKA, tc) + "はあなたからのメッセージを思い出した…。", cdatan(CDATAN_AKA, tc) + " recalled your message...")
+					cdata(CDATA_ADVENTURER_MESSAGE_RECEIVED, tc) = ADVENTURER_MESSAGE_NONE
+					if ( cdata(CDATA_IMPRESSION, tc) >= 150 ) {
+						modimp tc, 20
+					}
+					if ( cdata(CDATA_IMPRESSION, tc) < 150 ) {
+						modimp tc, -7
+					}
+				}
+			}
 			if ( cdata(CDATA_INTEREST, tc) > 0 ) {
-				if ( cdata(CDATA_RELATION, tc) != 10 ) {
+				if ( cdata(CDATA_RELATION, tc) != RELATION_ALLY ) {
 					if ( tc >= MAX_CHARA_FOLLOWER ) {
-						if ( rnd(3) == 0 ) {
-							if ( cdata(CDATA_IMPRESSION, tc) < 100 ) {
-								if ( rnd(sdata(SKILL_ATTR_CHA, CHARA_PLAYER) + 1) > 10 ) {
-									modimp tc, rnd(3)
-								}
-								else {
-									modimp tc, rnd(3) * (-1)
+						if ( gdata(GDATA_AREA) != AREA_DOCK | gdata(GDATA_LEVEL) != 70 ) {
+							if ( rnd(3) == 0 ) {
+								if ( cdata(CDATA_IMPRESSION, tc) < 100 ) {
+									if ( rnd(sdata(SKILL_ATTR_CHA, CHARA_PLAYER) + 1) > 10 ) {
+										modimp tc, rnd(3)
+									}
+									else {
+										modimp tc, rnd(3) * (-1)
+									}
 								}
 							}
 						}

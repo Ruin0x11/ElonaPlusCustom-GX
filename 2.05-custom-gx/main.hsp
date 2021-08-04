@@ -122,7 +122,8 @@
         dbg_figure = 1
         dbg_extraSkills = 1
         dbg_evolution = 0
-        dbg_advTalkLine = 0
+        dbg_advMessages = 0
+        dbg_subAmurdad = 0
         dbg_doNothing = 1
 		dbg_quickStart = 1
         dbg_luaConsole = 1
@@ -7230,6 +7231,14 @@
 	}
 	if ( _switch_val == EVENT_SOUTH_TYRIS | _switch_sw ) {
 		_switch_sw = 0
+		if ( gdata(GDATA_AREA) == AREA_GUARDIAN_SHRINE ) {
+			flt
+			characreate -1, CREATURE_ID_AIME_THE_STORY_TELLER, 20, 8
+			cdata(CDATA_RELATION, rc) = RELATION_NEUTRAL
+			cdata(CDATA_RELATION_ORG, rc) = RELATION_NEUTRAL
+			cdata(CDATA_ROLE, rc) = ROLE_SPECIAL
+			cdata(CDATA_AI_CALM, rc) = 3
+		}
 		if ( gdata(GDATA_AREA) == AREA_VALM ) {
 			flt
 			characreate -1, CREATURE_ID_SNAIL_THE_ANDROID_RIDER, 41, 9
@@ -7241,6 +7250,15 @@
 		if ( gdata(GDATA_AREA) == AREA_ULM_LESON ) {
 			if ( gdata(GDATA_FLAG_MAIN) >= 605 ) {
 				if ( gdata(STARTING_GDATA_FLAG + 319) == 0 ) {
+					if ( findchara(CREATURE_ID_RIANNA_THE_DAYDREAMER) != 0 ) {
+						chara_vanquish findchara(CREATURE_ID_RIANNA_THE_DAYDREAMER)
+					}
+					if ( findchara(CREATURE_ID_LOMIAS_THE_MESSENGER_FROM_VINDALE) != 0 ) {
+						chara_vanquish findchara(CREATURE_ID_LOMIAS_THE_MESSENGER_FROM_VINDALE)
+					}
+					if ( findchara(CREATURE_ID_LARNNEIRE_THE_LISTENER_OF_WIND) != 0 ) {
+						chara_vanquish findchara(CREATURE_ID_LARNNEIRE_THE_LISTENER_OF_WIND)
+					}
 					flt
 					characreate -1, CREATURE_ID_RIANNA_THE_DAYDREAMER, 30, 6
 					cdata(CDATA_ROLE, rc) = ROLE_SPECIAL
@@ -7254,7 +7272,10 @@
 				}
 			}
 			if ( gdata(GDATA_FLAG_MAIN) >= 760 ) {
-				if ( gdata(STARTING_GDATA_FLAG + 367) == 0 ) {
+				if ( gdata(GDATA_FLAG_BETHEL_THE_WHITE_HAWK_SPAWNED) == 0 ) {
+					if ( findchara(CREATURE_ID_BETHEL_THE_WHITE_HAWK) != 0 ) {
+						chara_vanquish findchara(CREATURE_ID_BETHEL_THE_WHITE_HAWK)
+					}
 					flt
 					initlv = 200
 					characreate -1, CREATURE_ID_BETHEL_THE_WHITE_HAWK, 32, 2
@@ -7301,6 +7322,10 @@
 			gosub *music_play
 		}
 		if ( gdata(GDATA_FLAG_BOSS_MUSIC) == 6 ) {
+			gosub *music_play
+		}
+		if ( gdata(GDATA_FLAG_BOSS_MUSIC) == 7 ) {
+			music = MUSICLIST_MCZANGYOU
 			gosub *music_play
 		}
 		gdata(GDATA_FLAG_BOSS_MUSIC) = 0
@@ -7357,6 +7382,11 @@
 					if ( cbit(CHARA_BIT_HIRED, i) == 0 ) {
 						cdata(CDATA_AREA, i) != gdata(GDATA_AREA)
 						if ( cdata(CDATA_RELATION, i) >= 0 ) {
+							if ( cdata(CDATA_ADVENTURER_MESSAGE_RECEIVED, i) == ADVENTURER_MESSAGE_COME_TO_MY_HOUSE ) {
+								cdata(CDATA_ADVENTURER_MESSAGE_RECEIVED, i) = ADVENTURER_MESSAGE_NONE
+								tc = i
+								break
+							}
 							if ( rnd(25) < p ) {
 								break
 							}

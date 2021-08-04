@@ -3605,7 +3605,7 @@
 			s = "" + cdata(CDATA_FAME, i) + "(" + _impression(implevel(cdata(CDATA_IMPRESSION, i))) + ")"
 		}
 		else {
-			dengon = cdata(CDATA_CUSTOM_TALK_LINE, i)
+			dengon = cdata(CDATA_ADVENTURER_MESSAGE_RECEIVED, i)
 			if ( i < 16 ) {
 				dengon = 0
 			}
@@ -3664,7 +3664,7 @@
 			if ( stat == 0 ) {
 				return
 			}
-			cdata(CDATA_CUSTOM_TALK_LINE, cc) = rtval
+			cdata(CDATA_ADVENTURER_MESSAGE_RECEIVED, cc) = rtval
 			if ( rtval == 0 ) {
 				txt lang("「わかった" + _yo(3) + "」", " " + cnvtalk("Well noted!"))
 				return
@@ -7017,7 +7017,7 @@
 		pos wx + 40, wy + 74 + cnt * 19
 		gmode 2, inf_tiles, inf_tiles
 		grotate 1, (sdataref(SKILL_DATAREF_USE, i) - 10) * inf_tiles, 672, 0, inf_tiles, inf_tiles
-		if ( cdata(CDATA_CUSTOM_TALK_LINE, CHARA_PLAYER) == 1 ) {
+		if ( cdata(CDATA_ADVANCED_CASTING_ENABLED, CHARA_PLAYER) == 1 ) {
 			pos wx + 18, wy + 75 + cnt * 19
 			gmode 2, inf_tiles, inf_tiles
 			grotate BUFFER_ITEM, 576, 1680, 0, inf_tiles, inf_tiles
@@ -8794,7 +8794,7 @@
 						}
 					}
 					if ( i >= STARTING_SKILL_SPELL & i < MAX_SPELL ) {
-						if ( cdata(CDATA_CUSTOM_TALK_LINE, CHARA_PLAYER) == 1 ) {
+						if ( cdata(CDATA_ADVANCED_CASTING_ENABLED, CHARA_PLAYER) == 1 ) {
 							pos wx + 18, wy + 75 + cnt * 19
 							gmode 2, inf_tiles, inf_tiles
 							grotate BUFFER_ITEM, 576, 1680, 0, inf_tiles, inf_tiles
