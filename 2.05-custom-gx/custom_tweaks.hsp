@@ -16,6 +16,7 @@ TweakData(1, 1) = "Can Change Item Sprites In Home."
 TweakData(2, 1) = "Highlight/Filter Items."
 TweakData(3, 1) = "Re-parse ItemList.txt values."
 TweakData(50,1) = "Throw potion at self with [t]."
+TweakData(51,1) = "Allow running in world map."
 
 TweakData(x, 2) = "Gameplay Tweaks"
 TweakData(0, 2) = "Gather Items At End Of Party Time."
@@ -42,7 +43,10 @@ TweakData(50, 4) = "Fist of the North Star Mode."
 */
 
 *TweakMenu
+    cs = 0
+	cs_bk = -1
 	pagesize = 0
+*TweakMenu_loop
 	redraw 0
 	s = "Tweak Setup", strhint3b
 	display_window (windoww - 680) / 2 + inf_screenx, winposy(448), 640, 448
@@ -97,33 +101,58 @@ TweakData(50, 4) = "Fist of the North Star Mode."
 	await cfg_wait1
 	key_check
 	cursor_check
-	if ( key == key_select(TWEAK_CATEGORY_UI) ) {
-		goto *UITweakMenu
-	}
-	if ( key == key_select(TWEAK_CATEGORY_CONVENIENCE) ) {
-		goto *ConvenienceTweakMenu
-	}
-	if ( key == key_select(TWEAK_CATEGORY_GAMEPLAY) ) {
-		goto *GameplayTweakMenu
-	}
-	if ( key == key_select(TWEAK_CATEGORY_AI) ) {
-		goto *AITweakMenu
-	}
-	if ( key == key_select(TWEAK_CATEGORY_MISC) ) {
-		goto *MiscTweakMenu
-	}
-	if ( key == key_select(TWEAK_CATEGORY_MAX) ) {
-		gosub *screen_draw
-		goto *pc_turn
-	}
-	if ( key == key_cancel ) {
-		gosub *screen_draw
-		goto *pc_turn
-	}
-	goto *TweakMenu
-	return
+    repeat
+        if ( key == key_select(TWEAK_CATEGORY_UI) ) {
+            snd SOUNDLIST_OK1
+            gosub *UITweakMenu
+            cs = cs_bk
+            keyhalt = 1
+            break
+        }
+        if ( key == key_select(TWEAK_CATEGORY_CONVENIENCE) ) {
+            snd SOUNDLIST_OK1
+            gosub *ConvenienceTweakMenu
+            cs = cs_bk
+            keyhalt = 1
+            break
+        }
+        if ( key == key_select(TWEAK_CATEGORY_GAMEPLAY) ) {
+            snd SOUNDLIST_OK1
+            gosub *GameplayTweakMenu
+            cs = cs_bk
+            keyhalt = 1
+            break
+        }
+        if ( key == key_select(TWEAK_CATEGORY_AI) ) {
+            snd SOUNDLIST_OK1
+            gosub *AITweakMenu
+            cs = cs_bk
+            keyhalt = 1
+            break
+        }
+        if ( key == key_select(TWEAK_CATEGORY_MISC) ) {
+            snd SOUNDLIST_OK1
+            gosub *MiscTweakMenu
+            cs = cs_bk
+            keyhalt = 1
+            break
+        }
+        if ( key == key_select(TWEAK_CATEGORY_MAX) ) {
+            snd SOUNDLIST_OK1
+            gosub *screen_draw
+            goto *pc_turn
+        }
+        if ( key == key_cancel ) {
+            gosub *screen_draw
+            goto *pc_turn
+        }
+        break
+    loop
+	goto *TweakMenu_loop
 
 *UITweakMenu
+    cs = 0
+*UITweakMenu_loop
 	redraw 0
 	s = "Tweak Setup", strhint3b
 	display_window (windoww - 680) / 2 + inf_screenx, winposy(448), 640, 448
@@ -135,8 +164,8 @@ TweakData(50, 4) = "Fist of the North Star Mode."
 	listn(0, TWEAK_UI_POTENTIALS_IN_SKILL_TRACKER) = "Add Potentials To Skill Tracker." + GetTStatus(TWEAK_CATEGORY_UI, TWEAK_UI_POTENTIALS_IN_SKILL_TRACKER)
 	listn(0, TWEAK_UI_FILTER_SKILL_TRACKER_BY_POTENTIAL) = "Filter Skill Tracker By Potential." + GetTStatus(TWEAK_CATEGORY_UI, TWEAK_UI_FILTER_SKILL_TRACKER_BY_POTENTIAL)
 	listn(0, TWEAK_UI_SHOW_SPELLSTOCK_IN_SKILL_TRACKER) = "Show Spell Stock In Tracker." + GetTStatus(TWEAK_CATEGORY_UI, TWEAK_UI_SHOW_SPELLSTOCK_IN_SKILL_TRACKER)
-	listn(0, 5) = "Display Pickpocket shortcut." + GetTStatus(0, 50)
-	listn(0, 6) = "Report museum duplicates." + GetTStatus(0, 51)
+	listn(0, 5) = "Display Pickpocket shortcut." + GetTStatus(TWEAK_CATEGORY_UI, TWEAK_UI_DISPLAY_PICKPOCKET_SHORTCUT)
+	listn(0, 6) = "Report museum duplicates." + GetTStatus(TWEAK_CATEGORY_UI, TWEAK_UI_REPORT_MUSEUM_DUPLICATES)
 	listn(0, 7) = "Return."
 	font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
 
@@ -181,7 +210,6 @@ TweakData(50, 4) = "Fist of the North Star Mode."
 		}
 	loop
 
-	cs_bk = cs
 	redraw 1
 	await cfg_wait1
 	key_check
@@ -214,20 +242,23 @@ TweakData(50, 4) = "Fist of the North Star Mode."
 		gosub *ToggleTweak
 	}
 	if ( key == key_select(5) ) {
-		tc = 0
-		tn = 50
+		tc = TWEAK_CATEGORY_UI
+		tn = TWEAK_UI_DISPLAY_PICKPOCKET_SHORTCUT
 		gosub *ToggleTweak
 	}
 	if ( key == key_select(6) ) {
-		tc = 0
-		tn = 51
+		tc = TWEAK_CATEGORY_UI
+		tn = TWEAK_UI_REPORT_MUSEUM_DUPLICATES
 		gosub *ToggleTweak
 	}
-	if ( key == key_select(7) | key == key_cancel ) {
-		goto *TweakMenu
+	if ( key == key_select(7) ) {
+        snd SOUNDLIST_OK1
+        return
 	}
-	goto *UITweakMenu
-	return
+	if ( key == key_cancel ) {
+        return
+	}
+	goto *UITweakMenu_loop
 
 #defcfunc GetTStatus int TweakCategory, int TweakNumber
 	if ( TweakData(TweakNumber, TweakCategory) == 0 ) {
@@ -253,6 +284,7 @@ TweakData(50, 4) = "Fist of the North Star Mode."
 	return " FAILED"
 
 *ToggleTweak
+    snd SOUNDLIST_OK1
 	if ( TweakData(tn, tc) == 0 ) {
 		TweakData(tn, tc) = 1
 	}
@@ -262,6 +294,7 @@ TweakData(50, 4) = "Fist of the North Star Mode."
 	return
 
 *IncrementTweak
+    snd SOUNDLIST_OK1
 	TweakData(tn, tc) += ts
 	if ( TweakData(tn, tc) > tm ) {
 		TweakData(tn, tc) = 0
@@ -269,6 +302,8 @@ TweakData(50, 4) = "Fist of the North Star Mode."
 	return
 
 *ConvenienceTweakMenu
+    cs = 0
+*ConvenienceTweakMenu_loop
 	redraw 0
 	s = "Tweak Setup", strhint3b
 	display_window (windoww - 680) / 2 + inf_screenx, winposy(448), 640, 448
@@ -279,11 +314,12 @@ TweakData(50, 4) = "Fist of the North Star Mode."
 	listn(0, TWEAK_CONVENIENCE_CHANGE_ITEM_SPRITE_HOME) = "Can Change Item Sprites In Home." + GetTStatus(TWEAK_CATEGORY_CONVENIENCE, TWEAK_CONVENIENCE_CHANGE_ITEM_SPRITE_HOME)
 	listn(0, TWEAK_CONVENIENCE_HIGHLIGHT_FILTER) = "Highlight/Filter Items. (Currently: " + TweakData(TWEAK_CONVENIENCE_HIGHLIGHT_FILTER, TWEAK_CATEGORY_CONVENIENCE) + ")"
 	listn(0, TWEAK_CONVENIENCE_REPARSE_ITEMLIST) = "Re-parse ItemList.txt."
-	listn(0, 4) = "Throw potion at self with [t]." + GetTStatus(1, 50)
-	listn(0, 5) = "Return."
+	listn(0, 4) = "Throw potion at self with [t]." + GetTStatus(TWEAK_CATEGORY_CONVENIENCE, TWEAK_CONVENIENCE_THROW_POTION_AT_SELF)
+	listn(0, 5) = "Allow running in world map." + GetTStatus(TWEAK_CATEGORY_CONVENIENCE, TWEAK_CONVENIENCE_ALLOW_RUNNING_IN_WORLD_MAP)
+	listn(0, 6) = "Return."
 	font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
 
-	repeat 6
+	repeat 7
 		key_list(cnt) = key_select(cnt)
 		keyrange = cnt + 1
 		pos wx + 38, wy + 40 + cnt * 19 - 2
@@ -293,7 +329,7 @@ TweakData(50, 4) = "Fist of the North Star Mode."
 
 	font lang(cfg_font1, cfg_font2), 13 - en * 2, 0
 
-	repeat 6
+	repeat 7
 		if ( listn(0, cs) == listn(0, cnt) ) {
 			if ( cnt == TWEAK_CONVENIENCE_FEED_OPTION_PETS ) {
 				s = "Adds a Feed option that works like Give but that filters out non-food items when\ninteracting with pets. Also allows for feeding pets raw equipment."
@@ -311,6 +347,9 @@ TweakData(50, 4) = "Fist of the North Star Mode."
 				s = "Adds potions to the [t]ool menu.\nUsing a potion with this tweak enabled throws it at your tile."
 			}
 			if ( cnt == 5 ) {
+				s = "Allows running in the world map by holding Shift."
+			}
+			if ( cnt == 6 ) {
 				s = "Return to the previous menu."
 			}
 			pos wx + 38, wy + 343
@@ -318,7 +357,6 @@ TweakData(50, 4) = "Fist of the North Star Mode."
 		}
 	loop
 
-	cs_bk = cs
 	redraw 1
 	await cfg_wait1
 	key_check
@@ -346,20 +384,27 @@ TweakData(50, 4) = "Fist of the North Star Mode."
 		gosub *Load_Item_Highlights
 	}
 	if ( key == key_select(4) ) {
-		tc = 1
-		tn = 50
+		tc = TWEAK_CATEGORY_CONVENIENCE
+		tn = TWEAK_CONVENIENCE_THROW_POTION_AT_SELF
 		gosub *ToggleTweak
 	}
 	if ( key == key_select(5) ) {
-		goto *TweakMenu
+		tc = TWEAK_CATEGORY_CONVENIENCE
+		tn = TWEAK_CONVENIENCE_ALLOW_RUNNING_IN_WORLD_MAP
+		gosub *ToggleTweak
+	}
+	if ( key == key_select(6) ) {
+		snd SOUNDLIST_OK1
+        return
 	}
 	if ( key == key_cancel ) {
-		goto *TweakMenu
+        return
 	}
-	goto *ConvenienceTweakMenu
-	return
+	goto *ConvenienceTweakMenu_loop
 
 *GameplayTweakMenu
+    cs = 0
+*GameplayTweakMenu_loop
 	redraw 0
 	s = "Tweak Setup", strhint3b
 	display_window (windoww - 680) / 2 + inf_screenx, winposy(448), 640, 448
@@ -373,11 +418,11 @@ TweakData(50, 4) = "Fist of the North Star Mode."
 	listn(0, TWEAK_GAMEPLAY_ENABLE_SAVE_SCUMMING) = "Re-enable save-scumming." + GetTStatus(TWEAK_CATEGORY_GAMEPLAY, TWEAK_GAMEPLAY_ENABLE_SAVE_SCUMMING)
 	listn(0, TWEAK_GAMEPLAY_BASH_ALL_FRUIT) = "Bash all fruit." + GetTStatus(TWEAK_CATEGORY_GAMEPLAY, TWEAK_GAMEPLAY_BASH_ALL_FRUIT)
 	listn(0, TWEAK_GAMEPLAY_ORGANIZE_RANCH) = "Organize ranch produce." + GetTStatus(TWEAK_CATEGORY_GAMEPLAY, TWEAK_GAMEPLAY_ORGANIZE_RANCH)
-	listn(0, 7) = "Everything must go!" + GetTStatus(2, 50)
-	listn(0, 8) = "Disable Deep-Sea Castle persistance." + GetTStatus(2, 51)
-	listn(0, 9) = "Sandbag training." + GetTStatus(2, 52)
-	listn(0, 10) = "No naps while traveling." + GetTStatus(2, 53)
-	listn(0, 11) = "Harvest Moon Mode for ranches." + GetTStatus(2, 54)
+	listn(0, 7) = "Everything must go!" + GetTStatus(TWEAK_CATEGORY_GAMEPLAY, TWEAK_GAMEPLAY_EVERYTHING_MUST_GO)
+	listn(0, 8) = "Disable Deep-Sea Castle persistance." + GetTStatus(TWEAK_CATEGORY_GAMEPLAY, TWEAK_GAMEPLAY_DISABLE_DEEP_SEA_CASTLE_PERSISTENCE)
+	listn(0, 9) = "Sandbag training." + GetTStatus(TWEAK_CATEGORY_GAMEPLAY, TWEAK_GAMEPLAY_SANDBAG_TRAINING)
+	listn(0, 10) = "No naps while traveling." + GetTStatus(TWEAK_CATEGORY_GAMEPLAY, TWEAK_GAMEPLAY_NO_NAPS_WHILE_TRAVELING)
+	listn(0, 11) = "Harvest Moon Mode for ranches." + GetTStatus(TWEAK_CATEGORY_GAMEPLAY, TWEAK_GAMEPLAY_HARVEST_MOON_RANCH)
 	listn(0, 12) = "Return"
 
 	font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
@@ -438,7 +483,6 @@ TweakData(50, 4) = "Fist of the North Star Mode."
 		}
 	loop
 
-	cs_bk = cs
 	redraw 1
 	await cfg_wait1
 	key_check
@@ -479,37 +523,42 @@ TweakData(50, 4) = "Fist of the North Star Mode."
 		gosub *ToggleTweak
 	}
 	if ( key == key_select(7) ) {
-		tc = 2
-		tn = 50
+		tc = TWEAK_CATEGORY_GAMEPLAY
+		tn = TWEAK_GAMEPLAY_EVERYTHING_MUST_GO
 		gosub *ToggleTweak
 	}
 	if ( key == key_select(8) ) {
-		tc = 2
-		tn = 51
+		tc = TWEAK_CATEGORY_GAMEPLAY
+		tn = TWEAK_GAMEPLAY_DISABLE_DEEP_SEA_CASTLE_PERSISTENCE
 		gosub *ToggleTweak
 	}
 	if ( key == key_select(9) ) {
-		tc = 2
-		tn = 52
+		tc = TWEAK_CATEGORY_GAMEPLAY
+		tn = TWEAK_GAMEPLAY_SANDBAG_TRAINING
 		gosub *ToggleTweak
 	}
 	if ( key == key_select(10) ) {
-		tc = 2
-		tn = 53
+		tc = TWEAK_CATEGORY_GAMEPLAY
+		tn = TWEAK_GAMEPLAY_NO_NAPS_WHILE_TRAVELING
 		gosub *ToggleTweak
 	}
 	if ( key == key_select(11) ) {
-		tc = 2
-		tn = 54
+		tc = TWEAK_CATEGORY_GAMEPLAY
+		tn = TWEAK_GAMEPLAY_HARVEST_MOON_RANCH
 		gosub *ToggleTweak
 	}
-	if ( key == key_select(12) | key == key_cancel ) {
-		goto *TweakMenu
+	if ( key == key_select(12) ) {
+		snd SOUNDLIST_OK1
+        return
 	}
-	goto *GameplayTweakMenu
-	return
+	if ( key == key_cancel ) {
+        return
+	}
+	goto *GameplayTweakMenu_loop
 
 *AITweakMenu
+    cs = 0
+*AITweakMenu_loop
 	redraw 0
 	s = "Tweak Setup", strhint3b
 	display_window (windoww - 680) / 2 + inf_screenx, winposy(448), 640, 448
@@ -543,7 +592,6 @@ TweakData(50, 4) = "Fist of the North Star Mode."
 		}
 	loop
 
-	cs_bk = cs
 	redraw 1
 	await cfg_wait1
 	key_check
@@ -554,27 +602,29 @@ TweakData(50, 4) = "Fist of the North Star Mode."
 		gosub *ToggleTweak
 	}
 	if ( key == key_select(1) ) {
-		goto *TweakMenu
+		snd SOUNDLIST_OK1
+        return
 	}
 	if ( key == key_cancel ) {
-		goto *TweakMenu
+        return
 	}
-	goto *AITweakMenu
-	return
+	goto *AITweakMenu_loop
 
 *MiscTweakMenu
+    cs = 0
+*MiscTweakMenu_loop
 	redraw 0
 	s = "Tweak Setup", strhint3b
 	display_window (windoww - 680) / 2 + inf_screenx, winposy(448), 640, 448
 	s = "Configure Tweaks"
 	gosub *screen_drawMsg2
 
-	listn(0, TWEAK_MISC_RANDOM_START_MP3) = "Enable Random Start For MP3." + GetTStatus(4, 0)
-	listn(0, TWEAK_MISC_WEATHER_EVERYWHERE) = "Display Weather Everywhere." + GetTStatus(4, 1)
-	listn(0, TWEAK_MISC_CONFIRM_RELOAD_F2) = "Confirm Reload With F2." + GetTStatus(4, 2)
+	listn(0, TWEAK_MISC_RANDOM_START_MP3) = "Enable Random Start For MP3." + GetTStatus(TWEAK_CATEGORY_MISC, TWEAK_MISC_RANDOM_START_MP3)
+	listn(0, TWEAK_MISC_WEATHER_EVERYWHERE) = "Display Weather Everywhere." + GetTStatus(TWEAK_CATEGORY_MISC, TWEAK_MISC_WEATHER_EVERYWHERE)
+	listn(0, TWEAK_MISC_CONFIRM_RELOAD_F2) = "Confirm Reload With F2." + GetTStatus(TWEAK_CATEGORY_MISC, TWEAK_MISC_CONFIRM_RELOAD_F2)
 	listn(0, TWEAK_MISC_PREVENT_STAYER_MOVEMENT) = "Prevent home stayers from moving." + GetTStatus(TWEAK_CATEGORY_MISC, TWEAK_MISC_PREVENT_STAYER_MOVEMENT)
 	listn(0, TWEAK_MISC_PREVENT_BUMP_ATTACK) = "Prevent bump attack." + GetTStatus(TWEAK_CATEGORY_MISC, TWEAK_MISC_PREVENT_BUMP_ATTACK)
-	listn(0, 5) = "Fist of the North Star Mode." + GetTStatus(4, 50)
+	listn(0, 5) = "Fist of the North Star Mode." + GetTStatus(TWEAK_CATEGORY_MISC, TWEAK_MISC_HOKUTO_NO_KEN_MODE)
 	listn(0, 6) = "Return."
 	font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
 
@@ -616,7 +666,6 @@ TweakData(50, 4) = "Fist of the North Star Mode."
 		}
 	loop
 
-	cs_bk = cs
 	redraw 1
 	await cfg_wait1
 	key_check
@@ -648,16 +697,19 @@ TweakData(50, 4) = "Fist of the North Star Mode."
 	}
 	if ( key == key_select(5) ) {
 		tc = TWEAK_CATEGORY_MISC
-		tn = 50
+		tn = TWEAK_MISC_HOKUTO_NO_KEN_MODE
 		ts = 1
 		tm = 3
 		gosub *IncrementTweak
 	}
-	if ( key == key_select(6) | key == key_cancel ) {
-		goto *TweakMenu
+	if ( key == key_select(6) ) {
+		snd SOUNDLIST_OK1
+        return
 	}
-	goto *MiscTweakMenu
-	return
+	if ( key == key_cancel ) {
+        return
+	}
+	goto *MiscTweakMenu_loop
 
 *ZeomeCustomAI
 	if ( InitZeome == 0 ) {

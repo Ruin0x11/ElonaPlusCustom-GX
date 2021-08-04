@@ -2000,7 +2000,11 @@
 		if ( cc == CHARA_PLAYER ) {
 			if ( traveldone == 0 ) {
 				gosub *travel
-				keybd_wait = 1
+
+                if ( TweakData(TWEAK_CONVENIENCE_ALLOW_RUNNING_IN_WORLD_MAP, TWEAK_CATEGORY_CONVENIENCE) == FALSE ) {
+                    keybd_wait = 1
+                }
+
 				goto *turn_end
 			}
 			else {

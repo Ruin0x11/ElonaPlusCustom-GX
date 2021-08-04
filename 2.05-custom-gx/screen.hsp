@@ -5158,10 +5158,17 @@
 	scrollp = cfg_walkwait
 	if ( mdata(MDATA_TYPE) == MAP_TYPE_WORLD ) {
 		scrollp = 6
-		if ( cdata(CDATA_IN_TAGTEAM, CHARA_PLAYER) == 0 ) {
-			keybd_wait = 1000
-		}
-        if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) != 3 ) {
+        if ( TweakData(TWEAK_CONVENIENCE_ALLOW_RUNNING_IN_WORLD_MAP, TWEAK_CATEGORY_CONVENIENCE) == TRUE ) {
+            if ( keybd_wait >= 100000 ) {
+                scrollp = 1
+            }
+        } 
+        else {
+            if ( cdata(CDATA_IN_TAGTEAM, CHARA_PLAYER) == 0 ) {
+                keybd_wait = 1000
+            }
+        }
+        if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) != VEHICLE_MAGIC_LOCOMOTIVE ) {
             if ( chipm(CHIPM_ROLE, map(cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), MAP_TILE_ID)) == MAP_CHIP_ROLE_SNOW ) {
                 scrollp = 9
             }

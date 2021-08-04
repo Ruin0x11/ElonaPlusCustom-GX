@@ -7968,7 +7968,19 @@
 						gosub *act_melee
 						goto *effect_SWEND1
 					}
+
+                    /********** ORIGINAL - BEGINNING ********** 
+
 					if ( cbit(CHARA_BIT_SANDBAG, tc) == TRUE ) {
+
+                     ********** ORIGINAL - ENDING **********/
+
+                    /********** RUIN0X11 CUSTOM - BEGINNING **********/
+
+					if ( cbit(CHARA_BIT_SANDBAG, tc) == TRUE & TweakData(TWEAK_GAMEPLAY_SANDBAG_TRAINING, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
+
+                    /********** RUIN0X11 CUSTOM - ENDING **********/
+
 						txt lang(name(cc) + "は悪戦苦闘している。縄がきつくて財布が抜き取れないようだ。", name(cc) + " is struggling. The purse seems not pulled off because there is a tight rope.")
 						goto *effect_SWEND1
 					}
