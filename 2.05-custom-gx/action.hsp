@@ -2261,9 +2261,9 @@
 					txt lang("料理素材を置いておくと乾物に変わりそうだ。", "If cooking ingredients is left, it will turn into dry food.")
 				}
  			}
-			if ( mdata(MDATA_TYPE) == MAP_TYPE_WORLD & gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) > 0 ) {
+			if ( mdata(MDATA_TYPE) == MAP_TYPE_WORLD & gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) > VEHICLE_NONE ) {
 				snd SOUNDLIST_DRAG01
-				if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) == 3 ) {
+				if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) == VEHICLE_MAGIC_LOCOMOTIVE ) {
 					if ( cdata(CDATA_MP, CHARA_PLAYER) > (-9999) ) {
 						cdata(CDATA_MP, CHARA_PLAYER) -= limit(cdata(CDATA_MAX_MP, CHARA_PLAYER) / 200, 1, 100)
 					}
@@ -2348,16 +2348,26 @@
 				snd SOUNDLIST_PIANO24
 			}
 			if ( p == MAP_CHIP_ROLE_SNOW ) {
-				addefmap cdata(CDATA_X, cc), cdata(CDATA_Y, cc), 3, 10, dirsub, rnd(2)
-				if ( keybd_wait <= cfg_walkwait * cfg_startrun | cdata(CDATA_TURN, CHARA_PLAYER) \ 2 == 0 | mdata(MDATA_TYPE) == MAP_TYPE_WORLD ) {
-					snd SOUNDLIST_FOOT2A + foot \ 3
-					foot += 1 + rnd(2)
-				}
+                if ( mdata(MDATA_TYPE) == MAP_TYPE_WORLD & gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) > VEHICLE_NONE ) {
+                    ; pass
+                }
+                else {
+                    addefmap cdata(CDATA_X, cc), cdata(CDATA_Y, cc), 3, 10, dirsub, rnd(2)
+                    if ( keybd_wait <= cfg_walkwait * cfg_startrun | cdata(CDATA_TURN, CHARA_PLAYER) \ 2 == 0 | mdata(MDATA_TYPE) == MAP_TYPE_WORLD ) {
+                        snd SOUNDLIST_FOOT2A + foot \ 3
+                        foot += 1 + rnd(2)
+                    }
+                }
 			}
 			if ( p == MAP_CHIP_ROLE_SAND | p == MAP_CHIP_ROLE_SAND_HARD ) {
-				addefmap cdata(CDATA_X, cc), cdata(CDATA_Y, cc), 2, 10, dirsub
-				snd SOUNDLIST_FOOT2A + foot \ 3
-				foot += 1 + rnd(2)
+                if ( mdata(MDATA_TYPE) == MAP_TYPE_WORLD & gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) > VEHICLE_NONE ) {
+                    ; pass
+                }
+                else {
+                    addefmap cdata(CDATA_X, cc), cdata(CDATA_Y, cc), 2, 10, dirsub
+                    snd SOUNDLIST_FOOT2A + foot \ 3
+                    foot += 1 + rnd(2)
+                }
 			}
 		}
 		else {
