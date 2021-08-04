@@ -3607,7 +3607,7 @@
 				itemcreate -1, ITEM_ID_DUMMY, -1, -1, 0
 			loop
 		}
-		if ( encounter == 0 ) {
+		if ( encounter == ENCOUNTER_NONE ) {
 			if ( gdata(GDATA_WORLD) != AREA_AIMWELL ) {
 				repeat mdata(MDATA_MODERATE_CROWD) + 1
 					gosub *fltChara
@@ -3616,7 +3616,7 @@
 				loop
 			}
 		}
-		if ( encounter == 4 ) {
+		if ( encounter == ENCOUNTER_ROGUE ) {
 			mdata(MDATA_MODERATE_CROWD) = 0
 			flt
 			initlv = encounterlv
@@ -3637,7 +3637,7 @@
 			characreate -1, CREATURE_ID_CHESTNUT_GIANT, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER)
 			evadd EVENT_CHESTNUT_GIANT
 		}
-		if ( encounter == 3 ) {
+		if ( encounter == ENCOUNTER_ASSASSIN ) {
 			mdata(MDATA_MODERATE_CROWD) = 0
 			mdata(MDATA_TYPE) = MAP_TYPE_QUEST
 			rq = encounterref
@@ -3662,7 +3662,7 @@
 				txt lang("暗殺者につかまった。あなたはクライアントを守らなければならない。", "You are caught by assassins. You have to protect your client.")
 			}
 		}
-		if ( encounter == 2 ) {
+		if ( encounter == ENCOUNTER_MERCHANT ) {
 			flt
 			characreate -1, CREATURE_ID_SHOPKEEPER, 10, 11
 			cdata(CDATA_ROLE, rc) = ROLE_SHOP_WANDER, encounterlv
@@ -3683,7 +3683,7 @@
 				cdatan(CDATAN_NAME, rc) += " Lv" + cdata(CDATA_LEVEL, rc)
 			loop
 		}
-		if ( encounter == 1 ) {
+		if ( encounter == ENCOUNTER_ENEMY ) {
 			kaisuu = rnd(9)
 			if ( cdata(CDATA_LEVEL, CHARA_PLAYER) <= 5 ) {
 				kaisuu = rnd(3)
@@ -3708,7 +3708,7 @@
 				cdata(CDATA_AI_AGGRO, rc) = 30
 			loop
 		}
-		encounter = 0
+		encounter = ENCOUNTER_NONE
 	}
 	if ( gdata(GDATA_AREA) == AREA_VOID ) {
 		gosub *map_randomDungeon
@@ -4703,7 +4703,7 @@
 			cell_featset 26, 23, tile_upstairs, CELL_FEATURE_UPSTAIRS, 8
 		}
 	}
-	if ( gdata(GDATA_AREA) == (95 /*!!!@[AREA_RASKILIS @@@ AREA_SOUTH_RASKILIS]@!!! */) ) {
+	if ( gdata(GDATA_AREA) == AREA_SOUTH_RASKILIS ) {
 		map_initcustom "ras_south"
 		mdata(MDATA_MODERATE_CROWD) = 0
 		mdata(MDATA_MUSIC) = MUSICLIST_MCTOWN1
@@ -8885,7 +8885,7 @@
 						if ( gdata(GDATA_AREA) == AREA_SEBI ) {
 							map_reload "sebi"
 						}
-						if ( gdata(GDATA_AREA) == (95 /*!!!@[AREA_RASKILIS @@@ AREA_SOUTH_RASKILIS]@!!! */) ) {
+						if ( gdata(GDATA_AREA) == AREA_SOUTH_RASKILIS ) {
 							map_reload "ras_south"
 						}
 						if ( gdata(GDATA_AREA) == AREA_WEST_RASKILIS ) {
@@ -11661,7 +11661,7 @@
 			if ( mdata(MDATA_TYPE) == MAP_TYPE_VILLAGE ) {
 				p = rnd(p + 1)
 			}
-			if ( gdata(GDATA_AREA) == (95 /*!!!@[AREA_RASKILIS @@@ AREA_SOUTH_RASKILIS]@!!! */) ) {
+			if ( gdata(GDATA_AREA) == AREA_SOUTH_RASKILIS ) {
 				p = 40 + rnd(10)
 			}
 			if ( gdata(GDATA_AREA) == AREA_WEST_RASKILIS ) {
@@ -12200,7 +12200,7 @@
 	adata(ADATA_RESTORE_POS, p) = 1
 	adata(ADATA_PARENT, p) = AREA_AIMWELL
 	p = 95
-	adata(ADATA_ID, p) = (95 /*!!!@[AREA_RASKILIS @@@ AREA_SOUTH_RASKILIS]@!!! */)
+	adata(ADATA_ID, p) = AREA_SOUTH_RASKILIS
 	adata(ADATA_ICON, p) = xy2pic(21, 11)
 	adata(ADATA_TYPE, p) = MAP_TYPE_FIELD
 	adata(ADATA_X, p) = 25

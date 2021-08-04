@@ -1891,7 +1891,7 @@
 	if ( mdata(MDATA_TYPE) == MAP_TYPE_WORLD ) {
 		if ( gdata(GDATA_WORLD) != AREA_AIMWELL ) {
 			if ( cc == CHARA_PLAYER ) {
-				encounter = 0
+				encounter = ENCOUNTER_NONE
 				gdata(GDATA_WORLD_TILE) = map(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), MAP_TILE_ID)
 				if ( gdata(GDATA_FLAG_ENCOUNTER_CANCELLER_DISTANCE_REMAINING) > 0 ) {
 					gdata(GDATA_FLAG_ENCOUNTER_CANCELLER_DISTANCE_REMAINING)--
@@ -1911,16 +1911,16 @@
 					}
 					p = map(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), MAP_TILE_ID)
 					if ( rnd(30) == 0 ) {
-						encounter = 1
+						encounter = ENCOUNTER_ENEMY
 					}
 					if ( gdata(GDATA_WEATHER) == WEATHER_HARD_RAIN ) {
 						if ( rnd(10) == 0 ) {
-							encounter = 1
+							encounter = ENCOUNTER_ENEMY
 						}
 					}
 					if ( gdata(GDATA_WEATHER) == WEATHER_ETHER ) {
 						if ( rnd(13) == 0 ) {
-							encounter = 1
+							encounter = ENCOUNTER_ENEMY
 						}
 					}
 					if ( gdata(GDATA_FLAG_THROWN_CHESTNUTS) >= 100 ) {
@@ -1930,15 +1930,15 @@
 					}
 					if ( 33 <= p & p < 66 ) {
 						if ( rnd(2) == 0 ) {
-							encounter = 0
+							encounter = ENCOUNTER_NONE
 						}
 						if ( rnd(100) == 0 ) {
-							encounter = 2
+							encounter = ENCOUNTER_MERCHANT
 						}
 					}
 					plevel = limit(cdata(CDATA_LEVEL, CHARA_PLAYER) * 10, 1, 500)
 					if ( rnd(220 + plevel - limit(gdata(GDATA_CARGO_WEIGHT) * 150 / (gdata(GDATA_CARGO_LIMIT) + 1), 0, 210 + plevel)) == 0 ) {
-						encounter = 4
+						encounter = ENCOUNTER_ROGUE
 					}
 					if ( rnd(40) == 0 | 0 ) {
 						repeat 5
@@ -1947,7 +1947,7 @@
 								if ( qdata(QDATA_STATE, rq) == QUEST_STATE_ONGOING ) {
 									if ( qdata(QDATA_VAR, rq) == 0 ) {
 										if ( qdata((10 /*!!!@[QDATA_DEST_CLIENT @@@ QDATA_ENCOUNTER]@!!! */), rq) < 2 ) {
-											encounter = 3
+											encounter = ENCOUNTER_ASSASSIN
 											encounterref = rq
 											qdata((10 /*!!!@[QDATA_DEST_CLIENT @@@ QDATA_ENCOUNTER]@!!! */), rq)++
 											break
@@ -1958,17 +1958,17 @@
 						loop
 					}
 				}
-				if ( encounter == 4 ) {
+				if ( encounter == ENCOUNTER_ROGUE ) {
 					encounterlv = cdata(CDATA_FAME, CHARA_PLAYER) / 1000
 					levelexitby = MAP_EXIT_NORMAL
 					goto *map_exit
 				}
-				if ( encounter == 3 ) {
+				if ( encounter == ENCOUNTER_ASSASSIN ) {
 					gdata(GDATA_RETURN_AREA) = gdata(GDATA_AREA), gdata(GDATA_LEVEL), cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER)
 					levelexitby = MAP_EXIT_NORMAL
 					goto *map_exit
 				}
-				if ( encounter == 2 ) {
+				if ( encounter == ENCOUNTER_MERCHANT ) {
 					encounterlv = 10 + rnd(100)
 					levelexitby = MAP_EXIT_NORMAL
 					goto *map_exit
@@ -1979,7 +1979,7 @@
 					goto *map_exit
 				}
 				if ( dbg_freetravel == 0 & gdata(GDATA_FLAG_ENCOUNTER_CANCELLER_DISTANCE_REMAINING) <= 0 ) {
-					if ( encounter == 1 ) {
+					if ( encounter == ENCOUNTER_ENEMY ) {
 						p = rnd(gdata(GDATA_DEEPEST_LEVEL) + 1) + 50
 						if ( enarea == 1 ) {
 							p = limit(rnd(rnd(gdata(GDATA_DEEPEST_LEVEL) + 1) + 1), 1, 50)
@@ -2046,7 +2046,7 @@
 						goto *map_exit
 					}
 				}
-				encounter = 0
+				encounter = ENCOUNTER_NONE
 			}
 		}
 	}
