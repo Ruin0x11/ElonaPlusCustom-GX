@@ -1189,6 +1189,200 @@
 	loop
 	return
 
+*perform_begging
+	if ( cdata(CDATA_ROW_ACT, cc) == ACTION_NONE ) {
+		if ( synccheck(cc, -1) ) {
+			txt lang(name(cc) + "は物乞いを始めた。", name(cc) + " start" + _s(cc) + " begging.")
+		}
+		cdata(CDATA_ROW_ACT, cc) = ACTION_BEGGING
+		cdata(CDATA_ACTION_PERIOD, cc) = 61
+		cdata(CDATA_PERFORM_GOLD, cc) = 0
+		if ( cc == CHARA_PLAYER ) {
+			performtips = 0
+		}
+		return
+	}
+	if ( cdata(CDATA_ACTION_PERIOD, cc) > 0 ) {
+		if ( cdata(CDATA_ACTION_PERIOD, cc) \ 20 == 0 ) {
+			gold = 0
+			make_sound cdata(CDATA_X, cc), cdata(CDATA_Y, cc), 5, 1, 1, cc
+			repeat 245
+				if ( cdata(CDATA_EXIST, cnt) != CHAR_STATE_ALIVE ) {
+					continue
+				}
+				if ( gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 >= cdata(CDATA_INTEREST_RENEW, cnt) ) {
+					cdata(CDATA_INTEREST, cnt) = 100
+				}
+				if ( synccheck(cc, -1) ) {
+					if ( cdata(CDATA_SYNC, cnt) != msync ) {
+						continue
+					}
+				}
+				else {
+					if ( dist(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), cdata(CDATA_X, cnt), cdata(CDATA_Y, cnt)) > 3 ) {
+						continue
+					}
+				}
+				if ( cdata(CDATA_INTEREST, cnt) <= 0 ) {
+					continue
+				}
+				if ( cdata(CDATA_CONDITION_SLEEP, cnt) > 0 ) {
+					continue
+				}
+				if ( cdata(CDATA_CONDITION_DIM, cnt) >= 60 ) {
+					continue
+				}
+				if ( cbit(CHARA_BIT_NECRO, cnt) == TRUE ) {
+					continue
+				}
+				x = cdata(CDATA_X, cnt)
+				y = cdata(CDATA_Y, cnt)
+				if ( map(x, y, MAP_CHARA_INDEX_PLUS_ONE) == 0 ) {
+					continue
+				}
+				tc = cnt
+				if ( tc == cc ) {
+					continue
+				}
+				if ( cc == CHARA_PLAYER ) {
+					cdata(CDATA_INTEREST, tc) -= rnd(15)
+					cdata(CDATA_INTEREST_RENEW, tc) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 + 12
+				}
+				if ( cdata(CDATA_INTEREST, tc) <= 0 ) {
+					if ( synccheck(cc, -1) ) {
+						txtef COLOR_SKY_BLUE
+						if ( jp ) {
+							txt "「目障り」", "「あっちいけ！」", "「シッシッ！」"
+						}
+						if ( en ) {
+							txt cnvtalk("Go away!"), cnvtalk("You are an eyesore!")
+						}
+					}
+					cdata(CDATA_INTEREST, tc) = 0
+					continue
+				}
+				if ( cdata(CDATA_GOLD, cc) > cdata(CDATA_GOLD, tc) ) {
+					if ( tc >= MAX_CHARA_FOLLOWER ) {
+						if ( synccheck(cc, -1) ) {
+							txtef COLOR_SKY_BLUE
+							if ( jp ) {
+								txt "「" + _ore(3) + "よりお金持ってるみたい" + _dana(3) + "」"
+							}
+							if ( en ) {
+								txt cnvtalk("You have more money than me!")
+							}
+							if ( 0 ) {
+								if ( rnd(5) == 0 ) {
+									cdata(CDATA_GOLD, CHARA_PLAYER) = 0
+								}
+							}
+						}
+						continue
+					}
+				}
+				if ( rnd(3) == 0 ) {
+					if ( cdata(CDATA_INTEREST, tc) > 0 ) {
+						p = cdata(CDATA_LEVEL, tc) * 2 + 5
+						if ( tc < MAX_CHARA_FOLLOWER ) {
+							p = 1
+						}
+						if ( cdata(CDATA_ROLE, tc) >= (1000 /*!!!@[ROLE_SHOP_MIN @@@ ROLE_SHOP_WEAPON]@!!! */) & cdata(CDATA_ROLE, tc) < (2000 /*!!!@[ROLE_GUEST_BEGGAR @@@ ROLE_GUEST_MIN]@!!! */) | cdata(CDATA_ROLE, tc) == ROLE_GUEST_MERCHANT ) {
+							p /= 50
+						}
+						if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) == TRUE | cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) == TRUE | cbit(CHARA_BIT_SUMMONED, tc) == TRUE ) {
+							p = limit((p + 1) / 5 + 1, 1, 300)
+						}
+						if ( p > cdata(CDATA_GOLD, tc) ) {
+							p = cdata(CDATA_GOLD, tc)
+						}
+						cdata(CDATA_GOLD, tc) -= p
+						cdata(CDATA_GOLD, cc) += p
+						gold += p
+						if ( cc == CHARA_PLAYER ) {
+							cdata(CDATA_INTEREST, tc) -= 20
+							cdata(CDATA_INTEREST_RENEW, tc) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 + 12
+						}
+						if ( jp ) {
+							txt "「哀れな…」", "「すっごいかわいそ！」", "「みじめぇ！」"
+						}
+						if ( en ) {
+							txt cnvtalk("Pathetic!"), cnvtalk("Very pitiful...")
+						}
+					}
+				}
+				if ( cc == CHARA_PLAYER ) {
+					if ( tc >= MAX_CHARA_FOLLOWER ) {
+						if ( rnd(performtips * 2 + 4) == 0 ) {
+							x = limit(cdata(CDATA_X, cc) - 1 + rnd(3), 0, mdata(MDATA_WIDTH) - 1)
+							y = limit(cdata(CDATA_Y, cc) - 1 + rnd(3), 0, mdata(MDATA_HEIGHT) - 1)
+							cell_check x, y
+							if ( cellaccess == 0 ) {
+								continue
+							}
+							if ( fov_los(cdata(CDATA_X, tc), cdata(CDATA_Y, tc), x, y) == 0 ) {
+								continue
+							}
+							dbid = 0
+							if ( rnd(5) == 0 ) {
+								dbid = 187
+							}
+							if ( rnd(10) == 0 ) {
+								dbid = 258
+							}
+							if ( rnd(20) == 0 ) {
+								dbid = 812
+							}
+							if ( rnd(30) == 0 ) {
+								dbid = 571
+							}
+							if ( dbid != 0 ) {
+								flt
+								itemcreate -1, dbid, x, y, 1
+								inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_BLESSED
+							}
+							if ( dbid != 0 ) {
+								inv(INV_ITEM_NUM, ci)--
+								cell_refresh inv(INV_ITEM_X, ci), inv(INV_ITEM_Y, ci)
+								ccbk = cc
+								cc = tc
+								animeid = ANIMATION_THROW
+								aniref = inv(INV_ITEM_PIC, ci), inv(INV_ITEM_COL, ci)
+								anix = inv(INV_ITEM_X, ci)
+								aniy = inv(INV_ITEM_Y, ci)
+								gosub *anime
+								cc = ccbk
+								inv(INV_ITEM_NUM, ci)++
+								cell_refresh inv(INV_ITEM_X, ci), inv(INV_ITEM_Y, ci)
+								performtips++
+							}
+						}
+					}
+				}
+			loop
+			if ( gold > 0 ) {
+				cdata(CDATA_PERFORM_GOLD, cc) += gold
+				if ( synccheck(cc, -1) ) {
+					snd SOUNDLIST_GETGOLD1
+				}
+			}
+		}
+		return
+	}
+	if ( cdata(CDATA_PERFORM_GOLD, cc) != 0 ) {
+		if ( synccheck(cc, -1) ) {
+			txt lang(name(cc) + "は合計 " + cdata(CDATA_PERFORM_GOLD, cc) + strgold + "めぐんでもらった。", "The audience gives " + name(cc) + " total of " + cdata(CDATA_PERFORM_GOLD, cc) + " gold pieces.")
+		}
+		decfame cc, 40
+		p = stat
+		if ( cc < MAX_CHARA_FOLLOWER ) {
+			txtmore
+			txtef COLOR_RED
+			txt lang("名声値を" + p + "失った。", name(cc) + " lose " + p + " fame.")
+		}
+	}
+	rowactend cc
+	return
+
 *perform_preach
 	if ( cdata(CDATA_ROW_ACT, cc) == ACTION_NONE ) {
 		if ( synccheck(cc, -1) ) {
@@ -2139,6 +2333,82 @@
 	modgrowth cc, SKILL_ATTR_SPD, gdata(GDATA_FLAG_PICNIC_MULTIPLIER) * 3 + 5
 	modgrowth cc, SKILL_ATTR_LUC, gdata(GDATA_FLAG_PICNIC_MULTIPLIER) * 3 + 5
 	chara_anorexia cc
+	rowactend cc
+	return
+
+*row_act_work
+	if ( cdata(CDATA_ACTION_PERIOD, cc) > 0 ) {
+		dmgsp CHARA_PLAYER, rnd(2)
+		seikou = 1
+		if ( cdata(CDATA_ROW_ACT, cc) == ACTION_WORK_A ) {
+			if ( rnd(sdata(SKILL_ATTR_LER, CHARA_PLAYER) + 100) + rnd(sdata(SKILL_ATTR_DEX, CHARA_PLAYER) + 100) < rnd(200) ) {
+				seikou = 0
+				txt lang("失敗した。", "You have failed.")
+			}
+			if ( seikou == 1 ) {
+				if ( gdata(GDATA_FLAG_WORK_B_REMAINING) > 500 | cdata(CDATA_SP, CHARA_PLAYER) < cdata(CDATA_MAX_SP, CHARA_PLAYER) / 2 ) {
+					seikou = 0
+					if ( cdata(CDATA_ACTION_PERIOD, cc) \ 51 == 0 ) {
+						txt lang("…駄目だ、何かが足りていない！", "...Something is missing!")
+						rowactend cc
+						return
+					}
+				}
+			}
+			if ( seikou == 1 ) {
+				gdata(GDATA_FLAG_WORK_A_REMAINING) -= 1 + rnd(2)
+			}
+			if ( gdata(GDATA_FLAG_WORK_A_REMAINING) < 0 ) {
+				gdata(GDATA_FLAG_WORK_A_REMAINING) = 0
+			}
+		}
+		if ( cdata(CDATA_ROW_ACT, cc) == ACTION_WORK_B ) {
+			if ( rnd(sdata(SKILL_ATTR_LER, CHARA_PLAYER) + 100) + rnd(sdata(SKILL_ATTR_DEX, CHARA_PLAYER) + 100) < rnd(200) ) {
+				seikou = 0
+				txt lang("失敗した。", "You have failed.")
+			}
+			if ( seikou == 1 ) {
+				if ( gdata(GDATA_FLAG_WORK_C_REMAINING) \ 2 == 1 | gdata(GDATA_SLEEP) >= 30 ) {
+					seikou = 0
+					if ( cdata(CDATA_ACTION_PERIOD, cc) \ 51 == 0 ) {
+						txt lang("…駄目だ、何かが足りていない！", "...Something is missing!")
+						rowactend cc
+						return
+					}
+				}
+			}
+			if ( seikou == 1 ) {
+				gdata(GDATA_FLAG_WORK_B_REMAINING) -= 1 + rnd(2)
+			}
+			if ( gdata(GDATA_FLAG_WORK_B_REMAINING) < 0 ) {
+				gdata(GDATA_FLAG_WORK_B_REMAINING) = 0
+			}
+		}
+		if ( cdata(CDATA_ROW_ACT, cc) == ACTION_WORK_C ) {
+			if ( rnd(sdata(SKILL_ATTR_LER, CHARA_PLAYER) + 100) + rnd(sdata(SKILL_ATTR_DEX, CHARA_PLAYER) + 100) < rnd(200) ) {
+				seikou = 0
+				txt lang("失敗した。", "You have failed.")
+			}
+			if ( seikou == 1 ) {
+				if ( seiton < 3 | gdata(GDATA_HOUR) < 8 | gdata(GDATA_HOUR) > 17 ) {
+					seikou = 0
+					if ( cdata(CDATA_ACTION_PERIOD, cc) \ 51 == 0 ) {
+						txt lang("…駄目だ、何かが足りていない！", "...Something is missing!")
+						rowactend cc
+						return
+					}
+				}
+			}
+			if ( seikou == 1 ) {
+				gdata(GDATA_FLAG_WORK_C_REMAINING) -= 1 + rnd(2)
+			}
+			if ( gdata(GDATA_FLAG_WORK_C_REMAINING) < 0 ) {
+				gdata(GDATA_FLAG_WORK_C_REMAINING) = 0
+			}
+		}
+		return
+	}
+	txt lang(name(cc) + "は一息ついた。", name(cc) + " was a little break.")
 	rowactend cc
 	return
 

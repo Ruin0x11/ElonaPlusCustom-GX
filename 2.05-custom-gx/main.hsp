@@ -123,6 +123,7 @@
         dbg_extraSkills = 1
         dbg_evolution = 0
         dbg_advTalkLine = 0
+		dbg_quickStart = 1
         dbg_luaConsole = 1
 	}
 
@@ -245,7 +246,7 @@
 		goto *mapEditor_init
 	}
 
-    if ( develop == 1 & dbg_skipCm != 1 ) {
+    if ( dbg_quickStart ) {
 	    mode = MODELIST_QUICK_START
 	    goto *world_init
     }
@@ -862,6 +863,10 @@
 			flt
 			itemcreate 0, ITEM_ID_RED_BOOK, -1, -1, 0
 		loop
+        inv_getheader 0
+		repeat invrange, invhead
+			item_identify cnt, ITEM_KNOWN_FULL
+        loop
 		cbitmod CHARA_BIT_RAPID_MAGIC, 0, 1
 		mode = MODELIST_MAIN
 		gosub *calcBurdenPc
@@ -1712,7 +1717,7 @@
 		if ( gdata(GDATA_RETURN) != 0 ) {
 *game_main_redo_WHILE1
 			gdata(GDATA_RETURN)--
-+			if ( mdata(MDATA_TYPE) == MAP_TYPE_QUEST | gdata(GDATA_AREA) == AREA_SHELTER | gdata(GDATA_AREA) == AREA_JAIL | (gdata(GDATA_AREA) == AREA_AMUR_CAGE & gdata(GDATA_LEVEL) >= 10) ) {
+			if ( mdata(MDATA_TYPE) == MAP_TYPE_QUEST | gdata(GDATA_AREA) == AREA_SHELTER | gdata(GDATA_AREA) == AREA_JAIL | (gdata(GDATA_AREA) == AREA_AMUR_CAGE & gdata(GDATA_LEVEL) >= 10) ) {
 				gdata(GDATA_RETURN) = 0
 				txt lang("不思議な力が帰還を阻止した。", "A mysterious power prevents you from returning.")
 				goto *game_main_redo_WEND1
@@ -3201,7 +3206,7 @@
 			}
 			else {
 				snd SOUNDLIST_SPELL
-				goto *label_5450
+				goto *com_spell
 			}
 		}
 		if ( key == key_skill ) {
