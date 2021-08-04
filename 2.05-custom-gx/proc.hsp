@@ -4303,7 +4303,7 @@
 			gosub *insta_eat
 		}
 	}
-	if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) != VEHICLE_LOCOMOTIVE ) {
+	if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) != VEHICLE_MAGIC_LOCOMOTIVE ) {
         if ( gdata(GDATA_WEATHER) == WEATHER_SNOW | chipm(CHIPM_ROLE, map(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), 0)) == MAP_CHIP_ROLE_SNOW ) {
             if ( gdata(GDATA_RES_WEATHER) == 0 ) {
                 if ( rnd(100) == 0 ) {
@@ -4339,7 +4339,7 @@
         if ( chipm(CHIPM_ROLE, map(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), 0)) == MAP_CHIP_ROLE_SAND ) {
             if ( rnd(15) == 0 ) {
                 if ( cbit(CHARA_BIT_FLOAT, CHARA_PLAYER) == 0 | cdata(CDATA_CONDITION_GRAVITY, CHARA_PLAYER) > 0 ) {
-                    if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) != VEHICLE_LOCOMOTIVE ) {
+                    if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) != VEHICLE_MAGIC_LOCOMOTIVE ) {
                         txtef COLOR_SKY_BLUE
                         if ( jp ) {
                             txt " *ずぶっ* ", " *ザシュ* ", " *ズボ* ", " *ズサッ* "
@@ -13336,7 +13336,7 @@
 		if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) == VEHICLE_TRUCK ) {
 			gdata(GDATA_CARGO_LIMIT) -= 20 * 1000
 		}
-		if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) == VEHICLE_LOCOMOTIVE ) {
+		if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) == VEHICLE_MAGIC_LOCOMOTIVE ) {
 			gdata(GDATA_CARGO_LIMIT) -= 30 * 1000
 		}
 		if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) == VEHICLE_LAND_BATTLESHIP ) {
@@ -13353,7 +13353,7 @@
 		if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) == VEHICLE_TRUCK ) {
 			gdata(GDATA_CARGO_LIMIT) += 20 * 1000
 		}
-		if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) == VEHICLE_LOCOMOTIVE ) {
+		if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) == VEHICLE_MAGIC_LOCOMOTIVE ) {
 			gdata(GDATA_CARGO_LIMIT) += 30 * 1000
 		}
 		if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) == VEHICLE_LAND_BATTLESHIP ) {
