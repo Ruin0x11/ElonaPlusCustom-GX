@@ -418,7 +418,7 @@
 
 #defcfunc findcharawork int findcharawork_charaid
 	locvar_findchara_p = 0
-	repeat 245 - 57, 57
+	repeat MAX_CHARA_TOTAL - MAX_CHARA_SAVE, MAX_CHARA_SAVE
 		if ( cdata(CDATA_EXIST, cnt) != CHAR_STATE_ALIVE ) {
 			continue
 		}
@@ -469,7 +469,7 @@
 
 #defcfunc findunique int findunique_arg1
 	locvar_findchara_p = 0
-	repeat 245
+	repeat MAX_CHARA_TOTAL
 		if ( cdata(CDATA_QUALITY, cnt) != FIX_QUALITY_UNIQUE ) {
 			continue
 		}

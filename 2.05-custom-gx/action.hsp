@@ -7709,7 +7709,7 @@
 		if ( cbit(CHARA_BIT_MARRIED, tc) == FALSE ) {
 			txt lang("あなたは特殊重婚許可証を提示した。", "You have presented the Bigamy Permit.")
 			if ( cdata(CDATA_ID, tc) == CREATURE_ID_JURE | cdata(CDATA_ID, tc) == CREATURE_ID_JURE ) {
-				repeat 245
+				repeat MAX_CHARA_TOTAL
 					if ( cdata(CDATA_EXIST, cnt) != CHAR_STATE_ALIVE ) {
 						continue
 					}
@@ -7737,7 +7737,7 @@
 			goto *turn_end
 		}
 		else {
-			txt lang("何もおきない… ", "Nothing happens...")
+            txt_nothinghappens
 		}
 		goto *act_use_SWEND1
 		_switch_sw++
@@ -7814,7 +7814,7 @@
 			}
 		loop
 		if ( zouka == 0 ) {
-			txt lang("何もおきない… ", "Nothing happens...")
+            txt_nothinghappens
 		}
 		if ( zouka == 1 ) {
 			txtef COLOR_GREEN
