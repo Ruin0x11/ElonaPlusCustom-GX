@@ -13817,6 +13817,87 @@
 		loop
 		goto *effect_end
 	}
+	if ( _switch_val == SKILL_SPACT_OVER_LONG_THROW | _switch_sw ) {
+		_switch_sw = 0
+		if ( cbit(CHARA_BIT_AWAKE_MAGIC_ATTACK, cc) ) {
+			tc = cdata(CDATA_TARGET, cc)
+			gosub *act_melee
+			goto *effect_end
+		}
+		tcbk = tc
+		gosub *label_5612
+		if ( stat == 1 ) {
+			if ( ammo != (-1) ) {
+				goto *effect_end
+			}
+			longthrow = 100
+			attackitem = cw
+			attackrange = 1
+			extraattack = 0
+			gosub *act_attack
+		}
+		longthrow = 0
+		goto *effect_end
+		_switch_sw++
+	}
+	if ( _switch_val == 738 | _switch_sw ) {
+		_switch_sw = 0
+		if ( cbit(CHARA_BIT_AWAKE_MAGIC_ATTACK, cc) ) {
+			tc = cdata(CDATA_TARGET, cc)
+			gosub *act_melee
+			goto *effect_end
+		}
+		txtef COLOR_BLUE
+		txt lang("ストラックアウト！", "Struck Out!")
+		tcbk = tc
+		gosub *label_5612
+		if ( stat == 1 ) {
+			if ( ammo != (-1) ) {
+				goto *effect_end
+			}
+			repeat MAX_CHARA_TOTAL
+				gdata(GDATA_TEMPORARY_FLAGS) = 0
+				if ( cdata(CDATA_EXIST, cc) != CHAR_STATE_ALIVE ) {
+					continue
+				}
+				if ( cdata(CDATA_EXIST, cnt) != CHAR_STATE_ALIVE ) {
+					continue
+				}
+				if ( cc == cnt ) {
+					continue
+				}
+				if ( cnt != tcbk ) {
+					if ( cc < MAX_CHARA_FOLLOWER ) {
+						if ( cdata(CDATA_RELATION, cnt) != RELATION_ENEMY ) {
+							continue
+						}
+					}
+					if ( cc >= MAX_CHARA_FOLLOWER ) {
+						if ( cdata(CDATA_RELATION_ORG, cnt) == cdata(CDATA_RELATION_ORG, cc) | cdata(CDATA_RELATION, cnt) == cdata(CDATA_RELATION, cc) | (cdata(CDATA_RELATION, cc) >= RELATION_DISLIKE & cdata(CDATA_RELATION, cnt) >= RELATION_DISLIKE) ) {
+							continue
+						}
+					}
+				}
+				tc = cnt
+				dx = cdata(CDATA_X, tc)
+				dy = cdata(CDATA_Y, tc)
+				if ( dist(cdata(CDATA_X, tcbk), cdata(CDATA_Y, tcbk), dx, dy) > sdataref(SKILL_DATAREF_TG, SKILL_SPACT_SWARM) \ 1000 + 1 ) {
+					continue
+				}
+				if ( fov_los(cdata(CDATA_X, tcbk), cdata(CDATA_Y, tcbk), dx, dy) == 0 ) {
+					continue
+				}
+				ele = SKILL_NONE
+				gdata(GDATA_TEMPORARY_FLAGS) = 300
+				attackrange = 1
+				extraattack = 0
+				gosub *act_fire
+			loop
+		}
+		gdata(GDATA_TEMPORARY_FLAGS) = 0
+		goto *effect_end
+		_switch_sw++
+	}
 	if ( _switch_val == SKILL_SPACT_SMASH_GROUND | _switch_sw ) {
 		_switch_sw = 0
 		if ( synccheck(cc, -1) ) {
@@ -16016,6 +16097,27 @@
 		_switch_sw++
 	}
 	if ( _switch_val == 822 | _switch_sw ) {
+		_switch_sw = 0
+		if ( findbuff(tc, BUFF_OVERLIMIT_THROW) != (-1) ) {
+			repeat 8 + 8
+				if ( cdata(STARTING_CDATA_BUFF + cnt * ARRAY_CDATA_BUFF, tc) == BUFF_NONE ) {
+					break
+				}
+				if ( cdata(STARTING_CDATA_BUFF + cnt * ARRAY_CDATA_BUFF, tc) == BUFF_OVERLIMIT_THROW ) {
+					delbuff tc, cnt
+					continue cnt
+				}
+			loop
+		}
+		else {
+			snd SOUNDLIST_BOLT1
+			animeload 20, tc
+			addbuff tc, BUFF_OVERLIMIT_THROW, 25, 25
+		}
+		goto *effect_end
+		_switch_sw++
+	}
+	if ( _switch_val == SKILL_SPACT_OVERLIMIT_THROW | _switch_sw ) {
 		_switch_sw = 0
 		if ( findbuff(tc, BUFF_OVERLIMIT_THROW) != (-1) ) {
 			repeat 8 + 8
@@ -19718,7 +19820,7 @@
 				gdata(GDATA_FLAG_SCROLL_OF_WITCHCRAFT_TOTAL_SKILL_BONUS) += 95
 				cdata(CDATA_SKILLPOINT, CHARA_PLAYER) += 95
 				gdata(GDATA_FLAG_DESTINY_LETTERS) = 7
-				repeat 245
+				repeat MAX_CHARA_TOTAL
 					cdata(CDATA_POWER_GAUGE, cnt) += 52
 					cdata(CDATA_WEIGHT, cnt) = 15000
 					if ( cnt != 0 ) {
