@@ -4620,7 +4620,7 @@
 		}
 	}
 	efp = calcspellpower(efid, cc)
-	if ( cdata(CDATA_EQUIP_WEIGHT, cc) < 35000 & cdata(CDATA_EQUIP_WEIGHT, cc) >= 15000 & findbuff(cc, BUFF_MAGIC_EQUIP) != (-1) ) {
+	if ( cdata(CDATA_EQUIP_WEIGHT, cc) < EQUIP_WEIGHT_CLASS_HEAVY & cdata(CDATA_EQUIP_WEIGHT, cc) >= EQUIP_WEIGHT_CLASS_MEDIUM & findbuff(cc, BUFF_MAGIC_EQUIP) != (-1) ) {
 		efp = efp * 120 / 100
 	}
 	if ( cdata(CDATA_ENHANCE_SPELL, cc) == 0 ) {
@@ -14754,17 +14754,17 @@
 				continue
 			}
 			if ( efid == SKILL_SPACT_EMERGENCY_EVASION ) {
-				if ( cdata(CDATA_EQUIP_WEIGHT, tc) < 15000 ) {
+				if ( cdata(CDATA_EQUIP_WEIGHT, tc) < EQUIP_WEIGHT_CLASS_MEDIUM ) {
 					addbuff tc, BUFF_EMERGENCY_EVASION, 10, 10
 				}
 			}
 			if ( efid == SKILL_SPACT_MAGIC_EQUIP ) {
-				if ( cdata(CDATA_EQUIP_WEIGHT, tc) < 35000 & cdata(CDATA_EQUIP_WEIGHT, tc) >= 15000 ) {
+				if ( cdata(CDATA_EQUIP_WEIGHT, tc) < EQUIP_WEIGHT_CLASS_HEAVY & cdata(CDATA_EQUIP_WEIGHT, tc) >= EQUIP_WEIGHT_CLASS_MEDIUM ) {
 					addbuff tc, BUFF_MAGIC_EQUIP, 15, 15
 				}
 			}
 			if ( efid == SKILL_SPACT_SUPER_ARMOR ) {
-				if ( cdata(CDATA_EQUIP_WEIGHT, tc) >= 35000 ) {
+				if ( cdata(CDATA_EQUIP_WEIGHT, tc) >= EQUIP_WEIGHT_CLASS_HEAVY ) {
 					addbuff tc, BUFF_SUPER_ARMOR, 20, 20
 				}
 			}

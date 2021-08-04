@@ -4935,11 +4935,11 @@
 	goto *label_3686
 
 #defcfunc carmor int carmor_arg1
-	if ( cdata(CDATA_EQUIP_WEIGHT, carmor_arg1) >= 35000 ) {
+	if ( cdata(CDATA_EQUIP_WEIGHT, carmor_arg1) >= EQUIP_WEIGHT_CLASS_HEAVY ) {
 		return 169
 	}
 	else {
-		if ( cdata(CDATA_EQUIP_WEIGHT, carmor_arg1) >= 15000 ) {
+		if ( cdata(CDATA_EQUIP_WEIGHT, carmor_arg1) >= EQUIP_WEIGHT_CLASS_MEDIUM ) {
 			return 170
 		}
 		else {
@@ -4948,11 +4948,11 @@
 	}
 
 #defcfunc cnveqweight int cnveqweight_arg1
-	if ( cdata(CDATA_EQUIP_WEIGHT, cnveqweight_arg1) >= 35000 ) {
+	if ( cdata(CDATA_EQUIP_WEIGHT, cnveqweight_arg1) >= EQUIP_WEIGHT_CLASS_HEAVY ) {
 		return lang("(重装備)", "(Heavy)")
 	}
 	else {
-		if ( cdata(CDATA_EQUIP_WEIGHT, cnveqweight_arg1) >= 15000 ) {
+		if ( cdata(CDATA_EQUIP_WEIGHT, cnveqweight_arg1) >= EQUIP_WEIGHT_CLASS_MEDIUM ) {
 			return lang("(中装備)", "(Medium)")
 		}
 		else {
@@ -5330,13 +5330,13 @@
 			return
 		}
 	}
-	if ( cdata(CDATA_EQUIP_WEIGHT, r1) >= 35000 ) {
+	if ( cdata(CDATA_EQUIP_WEIGHT, r1) >= EQUIP_WEIGHT_CLASS_HEAVY ) {
 		skillexp SKILL_NORMAL_HEAVY_ARMOR, r1, 20, 0, 1000
 	}
-	if ( cdata(CDATA_EQUIP_WEIGHT, r1) < 35000 & cdata(CDATA_EQUIP_WEIGHT, r1) >= 15000 ) {
+	if ( cdata(CDATA_EQUIP_WEIGHT, r1) < EQUIP_WEIGHT_CLASS_HEAVY & cdata(CDATA_EQUIP_WEIGHT, r1) >= EQUIP_WEIGHT_CLASS_MEDIUM ) {
 		skillexp SKILL_NORMAL_MEDIUM_ARMOR, r1, 20, 0, 1000
 	}
-	if ( cdata(CDATA_EQUIP_WEIGHT, r1) < 15000 ) {
+	if ( cdata(CDATA_EQUIP_WEIGHT, r1) < EQUIP_WEIGHT_CLASS_MEDIUM ) {
 		skillexp SKILL_NORMAL_LIGHT_ARMOR, r1, 20, 0, 1000
 	}
 	return
@@ -5437,14 +5437,14 @@
 			if ( cdata(CDATA_ATTACK_STYLE, cc) & 4 ) {
 				if ( attacknum == 1 ) {
 					if ( inv(INV_ITEM_WEIGHT, cw) >= 4000 ) {
-						if ( findbuff(cc, BUFF_SUPER_ARMOR) == (-1) | cdata(CDATA_EQUIP_WEIGHT, cc) < 35000 ) {
+						if ( findbuff(cc, BUFF_SUPER_ARMOR) == (-1) | cdata(CDATA_EQUIP_WEIGHT, cc) < EQUIP_WEIGHT_CLASS_HEAVY ) {
 							tohit -= (inv(INV_ITEM_WEIGHT, cw) - 4000 + 400) / (10 + sdata(SKILL_NORMAL_DUAL_WIELD, cc) / 5)
 						}
 					}
 				}
 				else {
 					if ( inv(INV_ITEM_WEIGHT, cw) > 1500 ) {
-						if ( findbuff(cc, BUFF_SUPER_ARMOR) == (-1) | cdata(CDATA_EQUIP_WEIGHT, cc) < 35000 ) {
+						if ( findbuff(cc, BUFF_SUPER_ARMOR) == (-1) | cdata(CDATA_EQUIP_WEIGHT, cc) < EQUIP_WEIGHT_CLASS_HEAVY ) {
 							tohit -= (inv(INV_ITEM_WEIGHT, cw) - 1500 + 100) / (10 + sdata(SKILL_NORMAL_DUAL_WIELD, cc) / 5)
 						}
 					}
@@ -5459,7 +5459,7 @@
 				if ( attackskill != SKILL_WEAPON_MARTIAL_ARTS ) {
 					if ( attackrange == 0 ) {
 						if ( inv(INV_ITEM_WEIGHT, cw) >= 4000 ) {
-							if ( findbuff(cc, BUFF_SUPER_ARMOR) == (-1) | cdata(CDATA_EQUIP_WEIGHT, cc) < 35000 ) {
+							if ( findbuff(cc, BUFF_SUPER_ARMOR) == (-1) | cdata(CDATA_EQUIP_WEIGHT, cc) < EQUIP_WEIGHT_CLASS_HEAVY ) {
 								tohit -= (limit(inv(INV_ITEM_WEIGHT, cw), 1, 10000) - 4000 + 100) / (100 + sdata(SKILL_ACTIVE_RIDING, cc) * 2)
 							}
 						}
@@ -5483,7 +5483,7 @@
 				if ( attackskill != SKILL_WEAPON_MARTIAL_ARTS ) {
 					if ( attackrange == 0 ) {
 						if ( inv(INV_ITEM_WEIGHT, cw) >= 4000 ) {
-							if ( findbuff(cc, BUFF_SUPER_ARMOR) == (-1) | cdata(CDATA_EQUIP_WEIGHT, cc) < 35000 ) {
+							if ( findbuff(cc, BUFF_SUPER_ARMOR) == (-1) | cdata(CDATA_EQUIP_WEIGHT, cc) < EQUIP_WEIGHT_CLASS_HEAVY ) {
 								tohit -= (inv(INV_ITEM_WEIGHT, cw) - 4000 + 400) / (10 + sdata(SKILL_ACTIVE_RIDING, cc) / 5)
 							}
 						}
@@ -5639,7 +5639,7 @@
 		}
 	}
 	if ( rnd(5000) * (extraattack + 1) < sdata(SKILL_ATTR_PER, cc) + 50 ) {
-		if ( findbuff(tc, BUFF_EMERGENCY_EVASION) != (-1) & cdata(CDATA_EQUIP_WEIGHT, tc) < 15000 ) {
+		if ( findbuff(tc, BUFF_EMERGENCY_EVASION) != (-1) & cdata(CDATA_EQUIP_WEIGHT, tc) < EQUIP_WEIGHT_CLASS_MEDIUM ) {
 			if ( synccheck(cc, -1) ) {
 				txtef COLOR_YELLOW
 				txt lang("*緊急回避*", "*Emergency Evade*.")
@@ -5677,7 +5677,7 @@
 		}
 	}
 	if ( cdata(CDATA_CRIT_CHANCE, cc) * 4 + cr + 10 > (rnd(400) + rnd(creva + 2) + cdata(CDATA_DEC_ENEMY_CRIT_CHANCE, tc) * 2) * (extraattack + 1) ) {
-		if ( findbuff(tc, BUFF_EMERGENCY_EVASION) != (-1) & cdata(CDATA_EQUIP_WEIGHT, tc) < 15000 ) {
+		if ( findbuff(tc, BUFF_EMERGENCY_EVASION) != (-1) & cdata(CDATA_EQUIP_WEIGHT, tc) < EQUIP_WEIGHT_CLASS_MEDIUM ) {
 			if ( synccheck(cc, -1) ) {
 				txtef COLOR_YELLOW
 				txt lang("*緊急回避*", "*Emergency Evade*.")
@@ -5927,7 +5927,7 @@
 				atkomosa = inv(INV_ITEM_WEIGHT, cw) * 2
 			}
 		}
-		if ( cdata(CDATA_EQUIP_WEIGHT, tc) >= 15000 ) {
+		if ( cdata(CDATA_EQUIP_WEIGHT, tc) >= EQUIP_WEIGHT_CLASS_MEDIUM ) {
 			dmgmulti = dmgmulti * (sqrt(limit(atkomosa - cdata(CDATA_EQUIP_WEIGHT, tc), 1, 360000)) / 3 + 100) / 100
 		}
 		else {
@@ -6067,7 +6067,7 @@
 			damage = damage * 6 / 5
 		}
 	}
-	if ( findbuff(tc, BUFF_SUPER_ARMOR) != (-1) & cdata(CDATA_EQUIP_WEIGHT, tc) >= 35000 ) {
+	if ( findbuff(tc, BUFF_SUPER_ARMOR) != (-1) & cdata(CDATA_EQUIP_WEIGHT, tc) >= EQUIP_WEIGHT_CLASS_HEAVY ) {
 		if ( damage < cdata(CDATA_MAX_HP, tc) / 10 & damage > cdata(CDATA_MAX_HP, tc) / 20 ) {
 			damage = cdata(CDATA_MAX_HP, tc) / 20
 		}
@@ -6084,7 +6084,7 @@
 			damage = cdata(CDATA_MAX_HP, tc) * 3 / 4
 		}
 	}
-	if ( findbuff(tc, BUFF_EMERGENCY_EVASION) != (-1) & cdata(CDATA_EQUIP_WEIGHT, tc) < 15000 ) {
+	if ( findbuff(tc, BUFF_EMERGENCY_EVASION) != (-1) & cdata(CDATA_EQUIP_WEIGHT, tc) < EQUIP_WEIGHT_CLASS_MEDIUM ) {
 		damage = damage * 4 / 5
 	}
 	if ( cbit(CHARA_BIT_METAL, tc) ) {

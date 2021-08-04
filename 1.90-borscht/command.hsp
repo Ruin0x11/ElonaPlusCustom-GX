@@ -9390,14 +9390,14 @@
 		if ( cdata(CDATA_ATTACK_STYLE, cc) & 4 ) {
 			if ( attacknum == 1 ) {
 				if ( inv(INV_ITEM_WEIGHT, cw) >= 4000 ) {
-					if ( findbuff(cc, BUFF_SUPER_ARMOR) == (-1) | cdata(CDATA_EQUIP_WEIGHT, cc) < 35000 ) {
+					if ( findbuff(cc, BUFF_SUPER_ARMOR) == (-1) | cdata(CDATA_EQUIP_WEIGHT, cc) < EQUIP_WEIGHT_CLASS_HEAVY ) {
 						txt lang("装備中の" + itemname(cw) + "は利手で扱うにも重すぎる。", itemname(cw) + " is too heavy for two-wield fighting style.")
 					}
 				}
 			}
 			else {
 				if ( inv(INV_ITEM_WEIGHT, cw) > 1500 ) {
-					if ( findbuff(cc, BUFF_SUPER_ARMOR) == (-1) | cdata(CDATA_EQUIP_WEIGHT, cc) < 35000 ) {
+					if ( findbuff(cc, BUFF_SUPER_ARMOR) == (-1) | cdata(CDATA_EQUIP_WEIGHT, cc) < EQUIP_WEIGHT_CLASS_HEAVY ) {
 						txt lang("装備中の" + itemname(cw) + "は片手で扱うには重すぎる。", itemname(cw) + " is too heavy for two-wield fighting style.")
 					}
 				}
@@ -9406,7 +9406,7 @@
 	loop
 	if ( cc == CHARA_PLAYER ) {
 		if ( gdata(GDATA_RIDER) != 0 ) {
-			if ( findbuff(cc, BUFF_SUPER_ARMOR) == (-1) | cdata(CDATA_EQUIP_WEIGHT, cc) < 35000 ) {
+			if ( findbuff(cc, BUFF_SUPER_ARMOR) == (-1) | cdata(CDATA_EQUIP_WEIGHT, cc) < EQUIP_WEIGHT_CLASS_HEAVY ) {
 				if ( inv(INV_ITEM_WEIGHT, cw) >= 4000 ) {
 					txt lang("装備中の" + itemname(cw) + "は乗馬中に扱うには重過ぎる。", itemname(cw) + " is too heavy to use when riding.")
 				}

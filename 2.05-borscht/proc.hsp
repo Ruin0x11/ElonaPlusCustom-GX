@@ -5575,7 +5575,7 @@
 		hoseim = limit(cdata(CDATA_ENHANCE_SPELL, cc) * 2 / 3, 0, 1000) / 10 + limit(sdata(SKILL_ATTR_MAG, cc) / 5, 0, 300)
 	}
 	efp = efp * (100 + hoseim) / 100
-	if ( cdata(CDATA_EQUIP_WEIGHT, cc) < 35000 & cdata(CDATA_EQUIP_WEIGHT, cc) >= 15000 & findbuff(cc, BUFF_MAGIC_EQUIP) != (-1) ) {
+	if ( cdata(CDATA_EQUIP_WEIGHT, cc) < EQUIP_WEIGHT_CLASS_HEAVY & cdata(CDATA_EQUIP_WEIGHT, cc) >= EQUIP_WEIGHT_CLASS_MEDIUM & findbuff(cc, BUFF_MAGIC_EQUIP) != (-1) ) {
 		efp = efp * 6 / 5
 	}
 	rapidmagic = 0
@@ -5982,7 +5982,7 @@
 	efp = efp * (100 + sdata(SKILL_NORMAL_MAGIC_DEVICE, cc) * 16 + sdata(SKILL_NORMAL_MAGIC_CAPACITY, cc) * 6 + sdata(SKILL_ATTR_LER, cc) / 2) / 220
 	hoseim = limit(cdata(CDATA_ENHANCE_SPELL, cc) * 2 / 3, 0, 1000) / 10 + limit(sdata(SKILL_ATTR_MAG, cc) / 5, 0, 300)
 	efp = efp * (100 + hoseim) / 100
-	if ( cdata(CDATA_EQUIP_WEIGHT, cc) < 35000 & cdata(CDATA_EQUIP_WEIGHT, cc) >= 15000 & findbuff(cc, BUFF_MAGIC_EQUIP) != (-1) ) {
+	if ( cdata(CDATA_EQUIP_WEIGHT, cc) < EQUIP_WEIGHT_CLASS_HEAVY & cdata(CDATA_EQUIP_WEIGHT, cc) >= EQUIP_WEIGHT_CLASS_MEDIUM & findbuff(cc, BUFF_MAGIC_EQUIP) != (-1) ) {
 		efp = efp * 6 / 5
 	}
 	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_ROD_LIGHTNING_BALL | inv(INV_ITEM_ID, ci) == ITEM_ID_ROD_ECLIPSE | inv(INV_ITEM_ID, ci) == ITEM_ID_ROD_FIRE_WALL | inv(INV_ITEM_ID, ci) == ITEM_ID_ROD_ACID_GROUND | inv(INV_ITEM_ID, ci) == ITEM_ID_ROD_LIGHTNING_BOLT | inv(INV_ITEM_ID, ci) == ITEM_ID_ROD_FIRE_BOLT | inv(INV_ITEM_ID, ci) == ITEM_ID_ROD_ICE_BOLT | inv(INV_ITEM_ID, ci) == ITEM_ID_ROD_MAGIC_MISSILE | inv(INV_ITEM_ID, ci) == ITEM_ID_ROD_POISON_BALL | inv(INV_ITEM_ID, ci) == ITEM_ID_ROD_MAGIC_LASER | inv(INV_ITEM_ID, ci) == ITEM_ID_ROD_BUBBLE_BALL ) {
@@ -16292,17 +16292,17 @@
 				continue
 			}
 			if ( efid == SKILL_SPACT_EMERGENCY_EVASION ) {
-				if ( cdata(CDATA_EQUIP_WEIGHT, tc) < 15000 ) {
+				if ( cdata(CDATA_EQUIP_WEIGHT, tc) < EQUIP_WEIGHT_CLASS_MEDIUM ) {
 					addbuff tc, BUFF_EMERGENCY_EVASION, 15, 15
 				}
 			}
 			if ( efid == SKILL_SPACT_MAGIC_EQUIP ) {
-				if ( cdata(CDATA_EQUIP_WEIGHT, tc) < 35000 & cdata(CDATA_EQUIP_WEIGHT, tc) >= 15000 ) {
+				if ( cdata(CDATA_EQUIP_WEIGHT, tc) < EQUIP_WEIGHT_CLASS_HEAVY & cdata(CDATA_EQUIP_WEIGHT, tc) >= EQUIP_WEIGHT_CLASS_MEDIUM ) {
 					addbuff tc, BUFF_MAGIC_EQUIP, 15, 15
 				}
 			}
 			if ( efid == SKILL_SPACT_SUPER_ARMOR ) {
-				if ( cdata(CDATA_EQUIP_WEIGHT, tc) >= 35000 ) {
+				if ( cdata(CDATA_EQUIP_WEIGHT, tc) >= EQUIP_WEIGHT_CLASS_HEAVY ) {
 					addbuff tc, BUFF_SUPER_ARMOR, 20, 20
 				}
 			}
