@@ -1967,6 +1967,15 @@
 		gzoom windoww, windowh - 88, selbufh, 0, 0, 640, 480
 		gsel 0
 	}
+
+    /********** RUIN0X11 CUSTOM - BEGINNING **********/
+
+    if ( cfg_dmgpopups == 1 ) {
+        gosub *DamagePopupsDraw
+    }
+
+    /********** RUIN0X11 CUSTOM - ENDING **********/
+
 	return
 
 *autoTurn_pic
@@ -4703,8 +4712,8 @@
 *los
 	memset slight, 0, (inf_screenw + 4) * (inf_screenh + 4) * 4
 	msync++
-	sy(2) = cdata(CDATA_Y, CHARA_PLAYER) - 17 / 2, cdata(CDATA_Y, CHARA_PLAYER) + 17 / 2, 17 / 2 - cdata(CDATA_Y, CHARA_PLAYER)
-	sx(3) = cdata(CDATA_X, CHARA_PLAYER) - 17 / 2
+	sy(2) = cdata(CDATA_Y, CHARA_PLAYER) - MAX_FOV / 2, cdata(CDATA_Y, CHARA_PLAYER) + MAX_FOV / 2, MAX_FOV / 2 - cdata(CDATA_Y, CHARA_PLAYER)
+	sx(3) = cdata(CDATA_X, CHARA_PLAYER) - MAX_FOV / 2
 	if ( cfg_scroll ) {
 		repw = inf_screenw + 2, scx - 1
 		reph = inf_screenh + 2, scy - 1

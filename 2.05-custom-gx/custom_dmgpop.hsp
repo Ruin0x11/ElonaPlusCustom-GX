@@ -1,0 +1,76 @@
+// Ports oom's damage popups.
+
+#define MAX_DAMAGE_POPUPS 20
+
+*DamagePopupsInit
+    dim DmgPopups, 16, MAX_DAMAGE_POPUPS
+    sdim DmgPopupTexts, 20, MAX_DAMAGE_POPUPS
+    DmgPopupNext = 0
+    cfg_dmgpopups = 1
+    cfg_dmgspeed = 20
+    cfg_dmgfont = 11
+
+    return
+
+#deffunc DamagePopupAdd str prm_text, int prm_cc, int prm_type
+    if ( FALSE ) {
+        return
+    }
+
+    DmgPopupTexts(DmgPopupNext) = prm_text
+    DmgPopups(0, DmgPopupNext) = timeGetTime(), prm_cc, 255, 255, 255, 0, 0, 0
+    DmgPopupNext = (DmgPopupNext + 1) \ length2(DmgPopups)
+
+    return
+
+*DamagePopupsDraw
+    if ( cdata(CDATA_CONDITION_BLIND, tc) != 0 ) {
+        return
+    }
+
+    t@DP = timeGetTime()
+    font lang(cfg_font1, cfg_font2), 2 + cfg_dmgfont - en * 2, 0
+    repeat length2(DmgPopups)
+        i@DP = (DmgPopupNext + cnt) \ length2(DmgPopups)
+        j@DP = cnt + 1
+
+        dt@DP = DmgPopups(0, i@DP)
+        cc@DP = DmgPopups(1, i@DP)
+
+        if ( gdata(GDATA_AREA) != AREA_PET_ARENA ) {
+            if (fov_los(cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), cdata(CDATA_X, cc@DP), cdata(CDATA_Y, cc@DP)) == 0) {
+                continue
+            }
+            if (dist(cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), cdata(CDATA_X, cc@DP), cdata(CDATA_Y, cc@DP)) > MAX_FOV / 2) {
+                continue
+            }
+        }
+        if (dt@DP + cfg_dmgspeed * 150 > t@DP) {
+            popupY@DP = 0
+            repeat length2(DmgPopups) - j@DP
+                otheri@DP = (i@DP + cnt) \ length2(DmgPopups)
+                if (DmgPopups(0, otheri@DP) + cfg_dmgspeed * 300 > t@DP) {
+                    if (cdata(CDATA_X, cc@DP) == cdata(CDATA_X, DmgPopups(1, otheri@DP)) & cdata(CDATA_Y, cc@DP) == cdata(CDATA_Y, DmgPopups(1, otheri@DP))) {
+                        popupY@DP++
+                    }
+                }
+            loop
+
+            s = DmgPopupTexts(i@DP)
+
+            DmgPopupX = (cdata(CDATA_X, cc@DP) - scx) * inf_tiles + inf_screenx - strlen(s) * (2 + cfg_dmgfont + 1) / 2 / 2 + inf_tiles / 2
+            DmgPopupY = (cdata(CDATA_Y, cc@DP) - scy) * inf_tiles + inf_screeny - popupY@DP * (2 + cfg_dmgfont + 3) - (t@DP - dt@DP) / (cfg_dmgspeed * 5 + 1)
+            DmgPopupX += (scx != scxbk) * sxfix
+            DmgPopupY += (scy != scybk) * syfix
+            if (DmgPopupY < 0 | DmgPopupY + (2 + cfg_dmgfont + 3) > inf_ver | DmgPopupY < 0 | DmgPopupY + strlen(s) * (2 + cfg_dmgfont + 1) > windoww) {
+                continue
+            }
+            pos DmgPopupX, DmgPopupY
+            color DmgPopups(5, i@DP), DmgPopups(6, i@DP), DmgPopups(7, i@DP)
+            bmes s, DmgPopups(2, i@DP), DmgPopups(3, i@DP), DmgPopups(4, i@DP)
+            color 0, 0, 0
+        }
+    loop
+    font lang(cfg_font1, cfg_font2), 13 - en * 2, 0
+
+    return

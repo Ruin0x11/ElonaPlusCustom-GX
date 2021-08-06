@@ -38902,19 +38902,6 @@
 	return
 
 *db_item_set
-
-	/********** ANNA CUSTOM - BEGINNING **********/
-
-	if ( dbmode == DBMODE_DESC & dirinfo(4) != "export" ) {
-		description(0) = AddTabs(AddLineBreaks(GetTabbedParameter("externalize\\Items\\" + dbid + ".txt", "item_desc1" + lang("JP.", "EN."))))
-				description(0) = "\t\t金ぴかな像。大変リアルな造形であり、まるで本物がそのまま金に変えられたかのようだ。\n#〜ルミエスト美術目録〜\n"
-				description(1) = ""
-				description(2) = ""
-				description(3) = "\t\t高価だが重い像だ。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-	}
-
-	/********** ANNA CUSTOM - ENDING **********/
-
 	if ( dbid == ITEM_ID_GOLDEN_DOLL ) {
 		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
 			inv(INV_ITEM_VALUE, ci) = 10000

@@ -33302,57 +33302,6 @@
 	return
 
 *db_creature2
-
-	/********** ANNA CUSTOM - BEGINNING **********/
-
-	if ( (dbmode >= DBMODE_FLAVOR_PASSIVE & dbmode <= DBMODE_FLAVOR_WELCOME) & dirinfo(4) != "export" ) {
-		LangStr = lang("JP", "EN")
-		switch dbmode
-			case DBMODE_FLAVOR_PASSIVE:
-				FlavorCount = int(GetTabbedParameter("externalize\\NPCData\\" + dbid + ".txt", "numflavor_passive" + LangStr + "."))
-				swbreak
-			case DBMODE_FLAVOR_ANGERED:
-				FlavorCount = int(GetTabbedParameter("externalize\\NPCData\\" + dbid + ".txt", "numflavor_angered" + LangStr + "."))
-				swbreak
-			case DBMODE_FLAVOR_DEATH:
-				FlavorCount = int(GetTabbedParameter("externalize\\NPCData\\" + dbid + ".txt", "numflavor_death" + LangStr + "."))
-				swbreak
-			case DBMODE_FLAVOR_KILL:
-				FlavorCount = int(GetTabbedParameter("externalize\\NPCData\\" + dbid + ".txt", "numflavor_kill" + LangStr + "."))
-				swbreak
-			case DBMODE_FLAVOR_WELCOME:
-				FlavorCount = int(GetTabbedParameter("externalize\\NPCData\\" + dbid + ".txt", "numflavor_welcome" + LangStr + "."))
-				swbreak
-		swend
-
-		if ( FlavorCount > 0 ) {
-			txtmore
-			txtef COLOR_SKY_BLUE
-
-			switch dbmode
-				case DBMODE_FLAVOR_PASSIVE:
-					txt ParseString(GetTabbedParameter("externalize\\NPCData\\" + dbid + ".txt", "flavorpassive_" + LangStr + "." + rnd(FlavorCount)))
-					swbreak
-				case DBMODE_FLAVOR_ANGERED:
-					txt ParseString(GetTabbedParameter("externalize\\NPCData\\" + dbid + ".txt", "flavorangered_" + LangStr + "." + rnd(FlavorCount)))
-					swbreak
-				case DBMODE_FLAVOR_DEATH:
-					txt ParseString(GetTabbedParameter("externalize\\NPCData\\" + dbid + ".txt", "flavordeath_" + LangStr + "." + rnd(FlavorCount)))
-					swbreak
-				case DBMODE_FLAVOR_KILL:
-					txt ParseString(GetTabbedParameter("externalize\\NPCData\\" + dbid + ".txt", "flavorkill_" + LangStr + "." + rnd(FlavorCount)))
-					swbreak
-				case DBMODE_FLAVOR_WELCOME:
-					txt ParseString(GetTabbedParameter("externalize\\NPCData\\" + dbid + ".txt", "flavorwelcome_" + LangStr + "." + rnd(FlavorCount)))
-					swbreak
-			swend
-
-			return 1
-		}
-	}
-
-	/********** ANNA CUSTOM - ENDING **********/
-
 	if ( dbid == CREATURE_ID_HELLABYRINTH_RULER ) {
 		if ( dbmode == DBMODE_FLAVOR_DEATH ) {
 			if ( jp ) {

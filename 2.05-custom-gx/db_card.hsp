@@ -1,29 +1,4 @@
 *db_card
-
-	/********** ANNA CUSTOM - BEGINNING **********/
-
-	if ( dbid < maxnpcid - 2 & dirinfo(4) != "export" ) {
-		cardreftype = int( GetTabbedParameter("externalize\\Cards\\" + dbid + ".txt", "card_type.") )
-		cardrefdomain = int( GetTabbedParameter("externalize\\Cards\\" + dbid + ".txt", "card_domain.") )
-		cardrefrare = int( GetTabbedParameter("externalize\\Cards\\" + dbid + ".txt", "card_rarity.") )
-		cardrefcost = int( GetTabbedParameter("externalize\\Cards\\" + dbid + ".txt", "card_rank.") )
-		cardrefattack = int( GetTabbedParameter("externalize\\Cards\\" + dbid + ".txt", "card_attack.") )
-		cardrefhp = int( GetTabbedParameter("externalize\\Cards\\" + dbid + ".txt", "card_health.") )
-		cardrefpic = int( GetTabbedParameter("externalize\\Cards\\" + dbid + ".txt", "npc_sprite.") ) + int( GetTabbedParameter("externalize\\Cards\\" + dbid + ".txt", "npc_tint.") ) * COLOR_TINT_MULT
-		cardrefrace = GetTabbedParameter("externalize\\Cards\\" + dbid + ".txt", "effect_line.")
-		if ( jp ) {
-			cardrefskill = GetTabbedParameter("externalize\\Cards\\" + dbid + ".txt", "desc_JP.")
-			cardrefn = GetTabbedParameter("externalize\\Cards\\" + dbid + ".txt", "name_JP.")
-		}
-		else {
-			cardrefskill = GetTabbedParameter("externalize\\Cards\\" + dbid + ".txt", "desc_EN.")
-			cardrefn = GetTabbedParameter("externalize\\Cards\\" + dbid + ".txt", "name_EN.")
-		}
-		return
-	}
-
-	/********** ANNA CUSTOM - ENDING **********/
-
 	if ( dbid == CREATURE_ID_HELLABYRINTH_RULER	) {
 		cardreftype = 10
 		cardrefskill = lang("とても性格の悪い魔物。冥宮を作り出し、本来別の所に行くべき魂を騙して引きずり込んでいる犯人。抵抗のできない相手にとことん嫌がらせをしてニヤニヤしている。", "")

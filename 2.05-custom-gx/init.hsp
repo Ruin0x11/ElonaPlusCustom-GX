@@ -71,6 +71,12 @@ if instr(s,0,%1)!-1{	%c\
 
 /********** ANNA CUSTOM - ENDING **********/
 
+/********** RUIN0X11 CUSTOM - BEGINNING **********/
+
+#include "custom_dmgpop.hsp"
+
+/********** RUIN0X11 CUSTOM - ENDING **********/
+
 #defcfunc hantozen str hantozen_arg1, var hantozen_arg2, int hantozen_arg3
 	return LCMapStringA(GetUserDefaultLCID(), 8388608, hantozen_arg1, -1, hantozen_arg2, hantozen_arg3)
 
@@ -1756,6 +1762,7 @@ if instr(s,0,%1)!-1{	%c\
 	gosub *config_loadCore
 	gosub *config_load
 	gosub *screen_init
+    gosub *DamagePopupsInit
 	if ( cfg_fullscreen ) {
 		chgdisp 1, windoww, windowh
 		bgscr 0, windoww, windowh, 0, 0

@@ -1900,7 +1900,7 @@
 
 #defcfunc GetTabbedParameter str FilePath, str SearchString
 	exist exedir + FilePath
-	if ( strsize == (-1) ) {
+	if ( strsize == (-1) & exporting != 1 ) {
 		dialog "The file " + exedir + FilePath + " does not exist."
 		return "-1"
 	}
@@ -2093,78 +2093,6 @@
 		loop
 		LoopCount++
 	wend
-	return
-
-*ExportItemDB
-	repeat maxitemid - 2
-		buf = ""
-		notesel buf
-
-		jp = 1
-		en = 0
-		gosub *db_setItem
-		noteadd "item_id.\t" + cnt
-		noteadd "name_identJP.\t" + ioriginalnameref(cnt)
-
-		jp = 0
-		en = 1
-		gosub *db_setItem
-		noteadd "name_identEN.\t" + ioriginalnameref(cnt)
-
-		dbmode = DBMODE_DESC
-		dbid = cnt
-		description = "", "", "", ""
-		jp = 1
-		en = 0
-		gosub *db_item_set
-		noteadd "item_desc1JP.\t" + RemoveLineBreaks(RemoveTabs(description(0)))
-		noteadd "item_desc2JP.\t" + RemoveLineBreaks(RemoveTabs(description(1)))
-		noteadd "item_desc3JP.\t" + RemoveLineBreaks(RemoveTabs(description(2)))
-		noteadd "item_desc4JP.\t" + RemoveLineBreaks(RemoveTabs(description(3)))
-		description = "", "", "", ""
-
-		jp = 0
-		en = 1
-		gosub *db_item_set
-		noteadd "item_desc1EN.\t" + RemoveLineBreaks(RemoveTabs(description(0)))
-		noteadd "item_desc2EN.\t" + RemoveLineBreaks(RemoveTabs(description(1)))
-		noteadd "item_desc3EN.\t" + RemoveLineBreaks(RemoveTabs(description(2)))
-		noteadd "item_desc4EN.\t" + RemoveLineBreaks(RemoveTabs(description(3)))
-
-		notesave exedir + "\\externalize\\Items\\" + cnt + ".txt"
-	loop
-
-	return
-
-*ExportCardDescriptions
-	repeat maxnpcid - 2
-		buf = ""
-		notesel buf
-		dbid = cnt
-		jp = 1
-		en = 0
-		gosub *db_card
-		noteadd "npc_ID.\t" + cnt
-		noteadd "npc_sprite.\t" + cardrefpic \ COLOR_TINT_MULT
-		noteadd "npc_tint.\t" + cardrefpic / COLOR_TINT_MULT
-		noteadd "card_domain.\t" + cardrefdomain
-		noteadd "card_type.\t" + cardreftype
-		noteadd "card_rank.\t" + cardrefcost
-		noteadd "card_rarity.\t" + cardrefrare
-		noteadd "card_health.\t" + cardrefhp
-		noteadd "card_attack.\t" + cardrefattack
-		noteadd "effect_line.\t" + cardrefrace
-		noteadd "name_JP.\t" + cardrefn
-		noteadd "desc_JP.\t" + cardrefskill
-
-		jp = 0
-		en = 1
-		gosub *db_card
-		noteadd "name_EN.\t" + cardrefn
-		noteadd "desc_EN.\t" + cardrefskill
-		notesave exedir + "\\externalize\\Cards\\" + cnt + ".txt"
-	loop
-
 	return
 
 /*

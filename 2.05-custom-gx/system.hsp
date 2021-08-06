@@ -2759,11 +2759,6 @@
 
 	/********** ANNA CUSTOM - BEGINNING **********/
 
-	if ( dirinfo(4) == "export" ) {
-		gosub *ExportCardDescriptions
-		gosub *ExportItemDB
-	}
-
 	gosub *Load_Item_Highlights
 
 	/********** ANNA CUSTOM - ENDING **********/
@@ -3116,27 +3111,27 @@
 	goto *game_title_selectGen_WHILE1
 
 *define_los
-	dim fovlist, 2, 17
-	dim fovmap, 17 * 2 + 4, 17 * 2
+	dim fovlist, 2, MAX_FOV
+	dim fovmap, MAX_FOV * 2 + 4, MAX_FOV * 2
 	if ( cdata(CDATA_FOV, CHARA_PLAYER) < 1 ) {
 		cdata(CDATA_FOV, CHARA_PLAYER) = 1
 	}
-	if ( cdata(CDATA_FOV, CHARA_PLAYER) >= 17 ) {
-		cdata(CDATA_FOV, CHARA_PLAYER) = 17 - 1
+	if ( cdata(CDATA_FOV, CHARA_PLAYER) >= MAX_FOV ) {
+		cdata(CDATA_FOV, CHARA_PLAYER) = MAX_FOV - 1
 	}
-	repeat 17
+	repeat MAX_FOV
 		y = cnt
-		repeat 17
+		repeat MAX_FOV
 			x = cnt
-			if ( dist(x, y, 17 / 2, 17 / 2) < (17 - 2) / 2 + 1 ) {
+			if ( dist(x, y, MAX_FOV / 2, MAX_FOV / 2) < (MAX_FOV - 2) / 2 + 1 ) {
 				fovmap(x, y) = 1
 			}
 		loop
 	loop
-	repeat 17
+	repeat MAX_FOV
 		y = cnt
 		p(1) = 0
-		repeat 17
+		repeat MAX_FOV
 			x = cnt
 			p = fovmap(x, y)
 			if ( p != 0 & p(1) == 0 ) {
@@ -4072,7 +4067,7 @@
     noteadd "\tclient\t\tLists all the clients."
     noteadd "\texitroom\tLeaves current show-room."
     noteadd "\twizard\t\tEnables wizard mode."
-    noteadd "\tdump_buffers\t\tDump the graphics buffers to .bmp files."
+    noteadd "\tdump_buffers\tDump the graphics buffers to .bmp files."
     noteadd "\tlua\t\tToggles Lua console mode."
     noteadd ""
     noteadd "\tThe commands below can be used in the Wizard mode."
