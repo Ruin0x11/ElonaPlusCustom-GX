@@ -36,6 +36,8 @@
 
 #define global	MAX_DB	1499
 
+#define global	MAX_FOV	17
+
 // Buffs
 #define global	BUFF_TYPE_BUFF	1
 #define global	BUFF_TYPE_HEX	2
@@ -3548,7 +3550,13 @@
 #define global	CDATA_DRAIN_HP	60
 #define global	CDATA_GOD	61
 #define global	CDATA_PIETY	62
+
+// NOTE: This was reused for the precious ally designation sometime after 1.90,
+// since the limit of cdata slots was reached. It only makes sense for the player
+// to have a prayer charge, and for allies to be marked as precious.
 #define global	CDATA_PRAY	63
+#define global	CDATA_PRECIOUS_ALLY	63
+
 #define global	CDATA_EQUIP_WEIGHT	64
 #define global	CDATA_CAST_STYLE	65
 #define global	CDATA_PIERCING_CHANCE	66
@@ -3584,7 +3592,9 @@
 #define global	CDATA_SHIELD_STYLE_TYPE	96
 #define global	CDATA_WEAPON_STYLE_TYPE	97
 #define global	CDATA_ENHANCE_SPELL	98
-#define global	CDATA_PRECIOUS_ALLY	99
+
+// NOTE: Was precious ally flag in 1.90.
+#define global	CDATA_MARK_ITEM_ADJUST_L	99
 
 #define global	CDATA_STARTING_EQUIP_SLOTS	100
 
@@ -3787,11 +3797,6 @@
 #define global	CDATA_MARK_ITEM_Y	449
 
 #define global	STARTING_CDATA_CHARA_BIT	450
-
-// TODO: We've reached the limit of available cdata slots (500). Slots 450-500
-// are used for character bits. This should go in slot 501, but that would
-// require messing with the save format.
-#define global	CDATA_MARK_ITEM_ADJUST_L	CDATA_MARK_ITEM_ADJUST_W
 
 #define global	CDATAN_NAME	0
 #define global	CDATAN_AKA	1
