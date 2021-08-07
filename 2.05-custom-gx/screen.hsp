@@ -826,8 +826,8 @@
 	pos inf_clockw - 3, inf_clocky + 17 + vfix
 	mes "" + gdata(GDATA_YEAR) + "/" + gdata(GDATA_MONTH) + "/" + gdata(GDATA_DAY)
 	if ( gdata(GDATA_AREA) == AREA_AMUR_CAGE & gdata(GDATA_LEVEL) >= 20 ) {
-        pos inf_clockw + 6, inf_clocky + 35
-        bmes lang("赤い雨", "Blood"), 235, 35, 35
+		pos inf_clockw + 6, inf_clocky + 35
+		bmes lang("赤い雨", "Blood"), 235, 35, 35
 	}
 	else {
 		pos inf_clockw + 6, inf_clocky + 35
@@ -1968,13 +1968,13 @@
 		gsel 0
 	}
 
-    /********** RUIN0X11 CUSTOM - BEGINNING **********/
+	/********** RUIN0X11 CUSTOM - BEGINNING **********/
 
-    if ( cfg_dmgpopups == 1 ) {
-        gosub *DamagePopupsDraw
-    }
+	if ( cfg_dmgpopups == 1 ) {
+		gosub *DamagePopupsDraw
+	}
 
-    /********** RUIN0X11 CUSTOM - ENDING **********/
+	/********** RUIN0X11 CUSTOM - ENDING **********/
 
 	return
 
@@ -2133,7 +2133,7 @@
 			goto *anime_SWEND1
 		}
 
-        preparePicItem 10, anicol
+		preparePicItem 10, anicol
 
 		anidx = (cdata(CDATA_X, cc) - scx) * inf_tiles + inf_screenx
 		anidy = (cdata(CDATA_Y, cc) - scy) * inf_tiles + inf_screeny
@@ -2246,7 +2246,7 @@
 	if ( _switch_val == ANIMATION_BREATH | _switch_sw ) {
 		_switch_sw = 0
 
-        preparePicItem 5, anicol
+		preparePicItem 5, anicol
 
 		snd SOUNDLIST_BREATH1
 		gsel 7
@@ -2290,7 +2290,7 @@
 	if ( _switch_val == ANIMATION_MP_BREATH | _switch_sw ) {
 		_switch_sw = 0
 
-        preparePicItem 5, anicol
+		preparePicItem 5, anicol
 
 		snd SOUNDLIST_BREATH1
 		if ( ele != SKILL_NONE ) {
@@ -2441,7 +2441,7 @@
 			anicol = 22
 		}
 
-        preparePicItem 3, anicol
+		preparePicItem 3, anicol
 
 		if ( zannku != 100 ) {
 			snd SOUNDLIST_BOLT1
@@ -2695,50 +2695,50 @@
 			goto *anime_SWEND1
 		}
 
-        preparePicItem 6, anicol
+		preparePicItem 6, anicol
 
 		if ( animeid == ANIMATION_BURN_SCROLLS ) {
-            preparePicItem xy2pic(22, 36), 0
-            snd SOUNDLIST_ATK_FIRE
+			preparePicItem xy2pic(22, 36), 0
+			snd SOUNDLIST_ATK_FIRE
 		}
 		if ( animeid == ANIMATION_GOLDENSTORM ) {
-            preparePicItem xy2pic(5, 0), 0
+			preparePicItem xy2pic(5, 0), 0
 			snd SOUNDLIST_GETGOLD1
 		}
 		if ( animeid == ANIMATION_SPORE ) {
-            preparePicItem xy2pic(23, 0), 0
+			preparePicItem xy2pic(23, 0), 0
 			snd SOUNDLIST_BOW1
 		}
 		if ( animeid == ANIMATION_INNERVATION ) {
-            preparePicItem xy2pic(31, 33), 0
+			preparePicItem xy2pic(31, 33), 0
 			snd SOUNDLIST_SWING39
 		}
 		if ( animeid == ANIMATION_DISTANT_ATK ) {
-            preparePicItem xy2pic(32, 33), 0
+			preparePicItem xy2pic(32, 33), 0
 			snd SOUNDLIST_BOW1
 		}
 		if ( animeid == ANIMATION_POTION_PLUG_1 ) {
-            preparePicItem xy2pic(25, 36), 0
-            snd SOUNDLIST_TM2_HIT000
+			preparePicItem xy2pic(25, 36), 0
+			snd SOUNDLIST_TM2_HIT000
 		}
 		if ( animeid == ANIMATION_POTION_PLUG_2 ) {
-            preparePicItem xy2pic(26, 36), 0
-            snd SOUNDLIST_TM2_HIT000
+			preparePicItem xy2pic(26, 36), 0
+			snd SOUNDLIST_TM2_HIT000
 		}
 		if ( animeid == ANIMATION_POTION_PLUG_3 ) {
-            preparePicItem xy2pic(25, 36), potionc
-            snd SOUNDLIST_BOLT1
+			preparePicItem xy2pic(25, 36), potionc
+			snd SOUNDLIST_BOLT1
 		}
 		if ( animeid == ANIMATION_POTION_PLUG_4 ) {
-            preparePicItem xy2pic(26, 36), potionc
-            snd SOUNDLIST_BOLT1
+			preparePicItem xy2pic(26, 36), potionc
+			snd SOUNDLIST_BOLT1
 		}
 		if ( animeid == ANIMATION_POTION_PLUG_5 ) {
-            preparePicItem xy2pic(27, 36), potionc
-            snd SOUNDLIST_BOLT1
+			preparePicItem xy2pic(27, 36), potionc
+			snd SOUNDLIST_BOLT1
 		}
 		if ( animeid == ANIMATION_UNUSED1 ) {
-            preparePicItem xy2pic(1, 0), aniciol
+			preparePicItem xy2pic(1, 0), aniciol
 			snd SOUNDLIST_BOW1
 		}
 		if ( animeid == ANIMATION_UNUSED2 ) {
@@ -2747,17 +2747,17 @@
 				stype = 1
 			}
 			if ( stype == 0 ) {
-                preparePicItem xy2pic(1, 0), anicol
+				preparePicItem xy2pic(1, 0), anicol
 			}
 			if ( stype == 1 ) {
-                preparePicItem xy2pic(21, 35), anicol
+				preparePicItem xy2pic(21, 35), anicol
 			}
 			snd SOUNDLIST_BOW1
 		}
 		if ( animeid == ANIMATION_UNUSED3 ) {
 			ap = refitem(inv(INV_ITEM_ID, aniref), DBSPEC_TYPE_MINOR)
 			if ( ap == FILTER_RANGE_LASER ) {
-                preparePicItem xy2pic(13, 0), anicol
+				preparePicItem xy2pic(13, 0), anicol
 				snd SOUNDLIST_LASER1
 			}
 			if ( ap == FILTER_RANGE_PISTOL ) {
@@ -2772,26 +2772,26 @@
 					stype = 3
 				}
 				if ( stype == 0 ) {
-                    preparePicItem xy2pic(2, 0), anicol
+					preparePicItem xy2pic(2, 0), anicol
 				}
 				if ( stype == 1 ) {
-                    preparePicItem xy2pic(22, 35), anicol
+					preparePicItem xy2pic(22, 35), anicol
 				}
 				if ( stype == 2 ) {
-                    preparePicItem xy2pic(23, 35), anicol
+					preparePicItem xy2pic(23, 35), anicol
 				}
 				if ( stype == 3 ) {
-                    preparePicItem xy2pic(24, 35), anicol
+					preparePicItem xy2pic(24, 35), anicol
 				}
 				snd SOUNDLIST_GUN1
 			}
 		}
 		if ( animeid == ANIMATION_UNUSED4 ) {
 			if ( inv(INV_ITEM_PIC, aniref) / COLOR_TINT_MULT < 1 ) {
-                preparePicItem inv(INV_ITEM_PIC, aniref) \ COLOR_TINT_MULT, inv(INV_ITEM_COL, aniref)
+				preparePicItem inv(INV_ITEM_PIC, aniref) \ COLOR_TINT_MULT, inv(INV_ITEM_COL, aniref)
 			}
 			if ( inv(INV_ITEM_PIC, aniref) / COLOR_TINT_MULT >= 1 ) {
-                preparePicItem inv(INV_ITEM_PIC, aniref), inv(INV_ITEM_COL, aniref)
+				preparePicItem inv(INV_ITEM_PIC, aniref), inv(INV_ITEM_COL, aniref)
 			}
 			kaiten = 0
 			if ( inv(INV_ITEM_ID, aniref) == ITEM_ID_ION_CAKRAM | inv(INV_ITEM_ID, aniref) == ITEM_ID_SLASH_JOKER | inv(INV_ITEM_ID, aniref) == ITEM_ID_GERBERA_CROSS | inv(INV_ITEM_ID, aniref) == ITEM_ID_SHENAS_PANTY | inv(INV_ITEM_ID, aniref) == ITEM_ID_SHURIKEN | inv(INV_ITEM_ID, aniref) == ITEM_ID_PANTY ) {
@@ -3156,7 +3156,7 @@
 			goto *anime_SWEND1
 		}
 
-        preparePicItem xy2pic(32, 35), 0
+		preparePicItem xy2pic(32, 35), 0
 
 		anix = cdata(CDATA_X, tc)
 		aniy = cdata(CDATA_Y, tc)
@@ -3203,7 +3203,7 @@
 			goto *anime_SWEND1
 		}
 
-        preparePicItem xy2pic(23, 33), 0
+		preparePicItem xy2pic(23, 33), 0
 
 		anix = cdata(CDATA_X, tc)
 		aniy = cdata(CDATA_Y, tc)
@@ -4616,11 +4616,11 @@
 		ax = (sx - scx) * inf_tiles + inf_screenx
 		ay = (sy - scy) * inf_tiles + inf_screeny
 		if ( animeid == ANIMATION_CRUSH ) {
-            preparePicItem xy2pic(17, 0), 0
-        }
-        else {
-            preparePicItem xy2pic(18, 0), 0
-        }
+			preparePicItem xy2pic(17, 0), 0
+		}
+		else {
+			preparePicItem xy2pic(18, 0), 0
+		}
 		repeat aniref
 			sx(cnt) = rnd(24) - 12
 			sy(cnt) = rnd(8)
@@ -5167,20 +5167,16 @@
 	scrollp = cfg_walkwait
 	if ( mdata(MDATA_TYPE) == MAP_TYPE_WORLD ) {
 		scrollp = 6
-        if ( TweakData(TWEAK_CONVENIENCE_ALLOW_RUNNING_IN_WORLD_MAP, TWEAK_CATEGORY_CONVENIENCE) == TRUE ) {
-            if ( keybd_wait >= 100000 ) {
-                scrollp = 1
-            }
-        } 
-        else {
-            if ( cdata(CDATA_IN_TAGTEAM, CHARA_PLAYER) == 0 ) {
-                keybd_wait = 1000
-            }
-        }
-        if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) != VEHICLE_MAGIC_LOCOMOTIVE ) {
-            if ( chipm(CHIPM_ROLE, map(cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), MAP_TILE_ID)) == MAP_CHIP_ROLE_SNOW ) {
-                scrollp = 9
-            }
+		if ( TweakData(TWEAK_CONVENIENCE_ALLOW_RUNNING_IN_WORLD_MAP, TWEAK_CATEGORY_CONVENIENCE) == FALSE & cdata(CDATA_IN_TAGTEAM, CHARA_PLAYER) == 0 ) {
+			keybd_wait = 1000
+		}
+		if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) != VEHICLE_MAGIC_LOCOMOTIVE ) {
+			if ( chipm(CHIPM_ROLE, map(cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), MAP_TILE_ID)) == MAP_CHIP_ROLE_SNOW ) {
+				scrollp = 9
+			}
+		}
+		if ( keybd_wait >= 100000 ) {
+			scrollp = 1
 		}
 	}
 	else {
@@ -5259,8 +5255,8 @@
 
 	/********** RUIN0X11 - BEGINNING **********/ // Prevent glitches with Jaldabaoth's special graphics.
 
-    // This has the potential to blit into a frame of Jaldabaoth's wings and
-    // the enrage emote, so limit the manipulated area.
+	// This has the potential to blit into a frame of Jaldabaoth's wings and
+	// the enrage emote, so limit the manipulated area.
 	gfini limit(raderw * mdata(MDATA_WIDTH), 0, 212), limit(raderh * mdata(MDATA_HEIGHT), 0, 96)
 
 	/********** RUIN0X11 - ENDING **********/
@@ -5658,7 +5654,7 @@
 		p = limit(5 * (100 + sorg(SKILL_ATTR_LER, r1) * 10) / (300 + cdata(CDATA_LEVEL, r1) * 15) + 1, 5, 15)
 		if ( r1 == CHARA_PLAYER ) {
 
-            /********** ORIGINAL - BEGINNING ********** // Remove skill bonus limit.
+			/********** ORIGINAL - BEGINNING ********** // Remove skill bonus limit.
    
 			if ( gdata(GDATA_FLAG_SCROLL_OF_WITCHCRAFT_TOTAL_SKILL_BONUS) >= 100 ) {
 				if ( gdata(GDATA_FLAG_GAME_MODE) != 2 & gdata(GDATA_FLAG_GAME_MODE) != 5 ) {
@@ -5667,12 +5663,12 @@
 				}
 			}
 
-             ********** ORIGINAL - ENDING **********/
+			 ********** ORIGINAL - ENDING **********/
 
 			gdata(GDATA_FLAG_SCROLL_OF_WITCHCRAFT_TOTAL_SKILL_BONUS) += p
 			gdata(GDATA_FLAG_SKILL_BONUS_OBTAINED) += p
 
-            /********** ORIGINAL - BEGINNING ********** // Remove skill bonus limit.
+			/********** ORIGINAL - BEGINNING ********** // Remove skill bonus limit.
 
 			if ( gdata(GDATA_FLAG_SCROLL_OF_WITCHCRAFT_TOTAL_SKILL_BONUS) >= 100 ) {
 				if ( gdata(GDATA_FLAG_GAME_MODE) != 2 & gdata(GDATA_FLAG_GAME_MODE) != 5 ) {
@@ -5682,7 +5678,7 @@
 				}
 			}
 
-             ********** ORIGINAL - ENDING **********/
+			 ********** ORIGINAL - ENDING **********/
 
 			if ( gdata(STARTING_GDATA_FLAG + 362) < 10 ) {
 				gdata(STARTING_GDATA_FLAG + 362)++
