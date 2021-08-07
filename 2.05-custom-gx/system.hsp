@@ -3942,10 +3942,28 @@
 		if ( instr(buff, 0, "spawn") != (-1) ) {
 			if ( instr(buff, 0, " ") != (-1) ) {
 				characreate -1, int(strmid(buff, instr(buff, 0, " "), strlen(buff) - instr(buff, 0, " "))), cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER)
+				noteadd "Done. (" + rc + ")"
 				goto *console_write
 			}
 			else {
 				noteadd "Must add a NPC ID e.g. spawn 2"
+				goto *console_write
+			}
+		}
+
+		/********** ANNA CUSTOM - ENDING **********/
+
+		/********** RUIN0X11 CUSTOM - BEGINNING **********/ // Add ally command
+
+		if ( instr(buff, 0, "add_ally") != (-1) ) {
+			if ( instr(buff, 0, " ") != (-1) ) {
+                rc = int(strmid(buff, instr(buff, 0, " "), strlen(buff) - instr(buff, 0, " ")))
+                gosub *add_ally
+				noteadd "Done."
+				goto *console_write
+			}
+			else {
+				noteadd "Must add a NPC ID e.g. add_ally 2"
 				goto *console_write
 			}
 		}
@@ -4031,6 +4049,7 @@
     noteadd "\tgain_fame\tPC gains fame."
     noteadd "\tallinv\t\tDisplays all the items in the map."
     noteadd "\tspawn\t\tSpawns a character by numeric ID."
+    noteadd "\tadd_ally\tAdds an ally by character index."
     noteadd ""
     noteadd "\tThe commands below should be only used to deal with certain problems."
     noteadd "\t108fix\t\tTurns all the NPCs in the map hostile."
