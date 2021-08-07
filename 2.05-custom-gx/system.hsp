@@ -3926,6 +3926,12 @@
         noteadd "Done."
         goto *console_write
     }
+    if ( instr(buff, 0, "export_itemlist") != (-1) ) {
+        gosub *Save_Item_Highlights
+        notesel dbm
+        noteadd "Done."
+        goto *console_write
+    }
 
     /********** RUIN0X11 CUSTOM - ENDING **********/
 
@@ -4016,6 +4022,7 @@
     noteadd "\texitroom\tLeaves current show-room."
     noteadd "\twizard\t\tEnables wizard mode."
     noteadd "\tdump_buffers\tDump the graphics buffers to .bmp files."
+    noteadd "\texport_itemlist\tCreates a default ItemList.txt file."
     noteadd ""
     noteadd "\tThe commands below can be used in the Wizard mode."
     noteadd "\tgain_spell\tPC gains all spells."
@@ -4023,6 +4030,7 @@
     noteadd "\tgain_exp\tPC gains a billion of exp."
     noteadd "\tgain_fame\tPC gains fame."
     noteadd "\tallinv\t\tDisplays all the items in the map."
+    noteadd "\tspawn\t\tSpawns a character by numeric ID."
     noteadd ""
     noteadd "\tThe commands below should be only used to deal with certain problems."
     noteadd "\t108fix\t\tTurns all the NPCs in the map hostile."
