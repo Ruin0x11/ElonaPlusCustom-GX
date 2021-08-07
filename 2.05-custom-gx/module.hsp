@@ -3667,9 +3667,12 @@
 	loop
 	return rtval
 
-#defcfunc fov_los int fov_los_arg1, int fov_los_arg2, int fov_los_arg3, int fov_los_arg4
-	dy@modfov = fov_los_arg4 - fov_los_arg2
-	dx@modfov = fov_los_arg3 - fov_los_arg1
+#defcfunc fov_los int fov_los_x1, int fov_los_y1, int fov_los_x2, int fov_los_y2
+	if (fov_los_x1 >= mdata(MDATA_WIDTH) | fov_los_y1 >= mdata(MDATA_HEIGHT) | fov_los_x2 >= mdata(MDATA_WIDTH) | fov_los_y2 >= mdata(MDATA_HEIGHT) ) {
+		return 0
+	}
+	dy@modfov = fov_los_y2 - fov_los_y1
+	dx@modfov = fov_los_x2 - fov_los_x1
 	ay@modfov = abs(dy@modfov)
 	ax@modfov = abs(dx@modfov)
 	if ( ax@modfov < 2 & ay@modfov < 2 ) {
@@ -3677,14 +3680,14 @@
 	}
 	if ( dx@modfov == 0 ) {
 		if ( dy@modfov > 0 ) {
-			ty@modfov = fov_los_arg2 + 1
+			ty@modfov = fov_los_y1 + 1
 *fov_los_WHILE1
-			if ( ty@modfov < fov_los_arg4 == 0 ) {
+			if ( ty@modfov < fov_los_y2 == 0 ) {
 				goto *fov_los_WEND1
 			}
 			if ( gdata(GDATA_SENSE_OBJECT) != 10 ) {
-				if ( map(fov_los_arg1, ty@modfov, 8) != 0 ) {
-					if ( mef(0, map(fov_los_arg1, ty@modfov, 8) - 1) == 9 ) {
+				if ( map(fov_los_x1, ty@modfov, 8) != 0 ) {
+					if ( mef(0, map(fov_los_x1, ty@modfov, 8) - 1) == 9 ) {
 						if ( gdata(STARTING_GDATA_FLAG + 348) == 0 ) {
 							return 0
 						}
@@ -3696,14 +3699,14 @@
 *fov_los_WEND1
 		}
 		else {
-			ty@modfov = fov_los_arg2 - 1
+			ty@modfov = fov_los_y1 - 1
 *fov_los_WHILE2
-			if ( ty@modfov > fov_los_arg4 == 0 ) {
+			if ( ty@modfov > fov_los_y2 == 0 ) {
 				goto *fov_los_WEND2
 			}
 			if ( gdata(GDATA_SENSE_OBJECT) != 10 ) {
-				if ( map(fov_los_arg1, ty@modfov, 8) != 0 ) {
-					if ( mef(0, map(fov_los_arg1, ty@modfov, 8) - 1) == 9 ) {
+				if ( map(fov_los_x1, ty@modfov, 8) != 0 ) {
+					if ( mef(0, map(fov_los_x1, ty@modfov, 8) - 1) == 9 ) {
 						if ( gdata(STARTING_GDATA_FLAG + 348) == 0 ) {
 							return 0
 						}
@@ -3717,14 +3720,14 @@
 *fov_los_WEND2
 	if ( dy@modfov == 0 ) {
 		if ( dx@modfov > 0 ) {
-			tx@modfov = fov_los_arg1 + 1
+			tx@modfov = fov_los_x1 + 1
 *fov_los_WHILE3
-			if ( tx@modfov < fov_los_arg3 == 0 ) {
+			if ( tx@modfov < fov_los_x2 == 0 ) {
 				goto *fov_los_WEND3
 			}
 			if ( gdata(GDATA_SENSE_OBJECT) != 10 ) {
-				if ( map(tx@modfov, fov_los_arg2, 8) != 0 ) {
-					if ( mef(0, map(tx@modfov, fov_los_arg2, 8) - 1) == 9 ) {
+				if ( map(tx@modfov, fov_los_y1, 8) != 0 ) {
+					if ( mef(0, map(tx@modfov, fov_los_y1, 8) - 1) == 9 ) {
 						if ( gdata(STARTING_GDATA_FLAG + 348) == 0 ) {
 							return 0
 						}
@@ -3736,14 +3739,14 @@
 *fov_los_WEND3
 		}
 		else {
-			tx@modfov = fov_los_arg1 - 1
+			tx@modfov = fov_los_x1 - 1
 *fov_los_WHILE4
-			if ( tx@modfov > fov_los_arg3 == 0 ) {
+			if ( tx@modfov > fov_los_x2 == 0 ) {
 				goto *fov_los_WEND4
 			}
 			if ( gdata(GDATA_SENSE_OBJECT) != 10 ) {
-				if ( map(tx@modfov, fov_los_arg2, 8) != 0 ) {
-					if ( mef(0, map(tx@modfov, fov_los_arg2, 8) - 1) == 9 ) {
+				if ( map(tx@modfov, fov_los_y1, 8) != 0 ) {
+					if ( mef(0, map(tx@modfov, fov_los_y1, 8) - 1) == 9 ) {
 						if ( gdata(STARTING_GDATA_FLAG + 348) == 0 ) {
 							return 0
 						}
@@ -3757,18 +3760,18 @@
 *fov_los_WEND4
 	if ( dx@modfov == 0 ) {
 		if ( dy@modfov > 0 ) {
-			ty@modfov = fov_los_arg2 + 1
+			ty@modfov = fov_los_y1 + 1
 *fov_los_WHILE5
-			if ( ty@modfov < fov_los_arg4 == 0 ) {
+			if ( ty@modfov < fov_los_y2 == 0 ) {
 				goto *fov_los_WEND5
 			}
 			if ( gdata(GDATA_SENSE_OBJECT) != 10 ) {
-				if ( chipm(CHIPM_ATTRIB, map(fov_los_arg1, ty@modfov, 0)) & CHIPM_ATTRIB_CANT_SEE ) {
+				if ( chipm(CHIPM_ATTRIB, map(fov_los_x1, ty@modfov, 0)) & CHIPM_ATTRIB_CANT_SEE ) {
 					return 0
 				}
 			}
 			if ( gdata(GDATA_SENSE_OBJECT) != 10 ) {
-				if ( chipm(CHIPM_ATTRIB, map(fov_los_arg1, ty@modfov, 6) \ 1000) & CHIPM_ATTRIB_CANT_SEE ) {
+				if ( chipm(CHIPM_ATTRIB, map(fov_los_x1, ty@modfov, 6) \ 1000) & CHIPM_ATTRIB_CANT_SEE ) {
 					return 0
 				}
 			}
@@ -3777,18 +3780,18 @@
 *fov_los_WEND5
 		}
 		else {
-			ty@modfov = fov_los_arg2 - 1
+			ty@modfov = fov_los_y1 - 1
 *fov_los_WHILE6
-			if ( ty@modfov > fov_los_arg4 == 0 ) {
+			if ( ty@modfov > fov_los_y2 == 0 ) {
 				goto *fov_los_WEND6
 			}
 			if ( gdata(GDATA_SENSE_OBJECT) != 10 ) {
-				if ( chipm(CHIPM_ATTRIB, map(fov_los_arg1, ty@modfov, 0)) & CHIPM_ATTRIB_CANT_SEE ) {
+				if ( chipm(CHIPM_ATTRIB, map(fov_los_x1, ty@modfov, 0)) & CHIPM_ATTRIB_CANT_SEE ) {
 					return 0
 				}
 			}
 			if ( gdata(GDATA_SENSE_OBJECT) != 10 ) {
-				if ( chipm(CHIPM_ATTRIB, map(fov_los_arg1, ty@modfov, 6) \ 1000) & CHIPM_ATTRIB_CANT_SEE ) {
+				if ( chipm(CHIPM_ATTRIB, map(fov_los_x1, ty@modfov, 6) \ 1000) & CHIPM_ATTRIB_CANT_SEE ) {
 					return 0
 				}
 			}
@@ -3800,18 +3803,18 @@
 	}
 	if ( dy@modfov == 0 ) {
 		if ( dx@modfov > 0 ) {
-			tx@modfov = fov_los_arg1 + 1
+			tx@modfov = fov_los_x1 + 1
 *fov_los_WHILE7
-			if ( tx@modfov < fov_los_arg3 == 0 ) {
+			if ( tx@modfov < fov_los_x2 == 0 ) {
 				goto *fov_los_WEND7
 			}
 			if ( gdata(GDATA_SENSE_OBJECT) != 10 ) {
-				if ( chipm(CHIPM_ATTRIB, map(tx@modfov, fov_los_arg2, 0)) & CHIPM_ATTRIB_CANT_SEE ) {
+				if ( chipm(CHIPM_ATTRIB, map(tx@modfov, fov_los_y1, 0)) & CHIPM_ATTRIB_CANT_SEE ) {
 					return 0
 				}
 			}
 			if ( gdata(GDATA_SENSE_OBJECT) != 10 ) {
-				if ( chipm(CHIPM_ATTRIB, map(tx@modfov, fov_los_arg2, 6) \ 1000) & CHIPM_ATTRIB_CANT_SEE ) {
+				if ( chipm(CHIPM_ATTRIB, map(tx@modfov, fov_los_y1, 6) \ 1000) & CHIPM_ATTRIB_CANT_SEE ) {
 					return 0
 				}
 			}
@@ -3820,18 +3823,18 @@
 *fov_los_WEND7
 		}
 		else {
-			tx@modfov = fov_los_arg1 - 1
+			tx@modfov = fov_los_x1 - 1
 *fov_los_WHILE8
-			if ( tx@modfov > fov_los_arg3 == 0 ) {
+			if ( tx@modfov > fov_los_x2 == 0 ) {
 				goto *fov_los_WEND8
 			}
 			if ( gdata(GDATA_SENSE_OBJECT) != 10 ) {
-				if ( chipm(CHIPM_ATTRIB, map(tx@modfov, fov_los_arg2, 0)) & CHIPM_ATTRIB_CANT_SEE ) {
+				if ( chipm(CHIPM_ATTRIB, map(tx@modfov, fov_los_y1, 0)) & CHIPM_ATTRIB_CANT_SEE ) {
 					return 0
 				}
 			}
 			if ( gdata(GDATA_SENSE_OBJECT) != 10 ) {
-				if ( chipm(CHIPM_ATTRIB, map(tx@modfov, fov_los_arg2, 6) \ 1000) & CHIPM_ATTRIB_CANT_SEE ) {
+				if ( chipm(CHIPM_ATTRIB, map(tx@modfov, fov_los_y1, 6) \ 1000) & CHIPM_ATTRIB_CANT_SEE ) {
 					return 0
 				}
 			}
@@ -3856,8 +3859,8 @@
 	if ( ax@modfov == 1 ) {
 		if ( ay@modfov == 2 ) {
 			if ( gdata(GDATA_SENSE_OBJECT) != 10 ) {
-				if ( map(fov_los_arg1, fov_los_arg2 + sy@modfov, 8) != 0 ) {
-					if ( mef(0, map(fov_los_arg1, fov_los_arg2 + sy@modfov, 8) - 1) == 9 ) {
+				if ( map(fov_los_x1, fov_los_y1 + sy@modfov, 8) != 0 ) {
+					if ( mef(0, map(fov_los_x1, fov_los_y1 + sy@modfov, 8) - 1) == 9 ) {
 						if ( gdata(STARTING_GDATA_FLAG + 348) == 0 ) {
 							return 0
 						}
@@ -3865,8 +3868,8 @@
 				}
 			}
 			if ( gdata(GDATA_SENSE_OBJECT) != 10 ) {
-				if ( (chipm(CHIPM_ATTRIB, map(fov_los_arg1, fov_los_arg2 + sy@modfov, 0)) & CHIPM_ATTRIB_CANT_SEE) == 0 ) {
-					if ( (chipm(CHIPM_ATTRIB, map(fov_los_arg1, fov_los_arg2 + sy@modfov, 6) \ 1000) & CHIPM_ATTRIB_CANT_SEE) == 0 ) {
+				if ( (chipm(CHIPM_ATTRIB, map(fov_los_x1, fov_los_y1 + sy@modfov, 0)) & CHIPM_ATTRIB_CANT_SEE) == 0 ) {
+					if ( (chipm(CHIPM_ATTRIB, map(fov_los_x1, fov_los_y1 + sy@modfov, 6) \ 1000) & CHIPM_ATTRIB_CANT_SEE) == 0 ) {
 						return 1
 					}
 				}
@@ -3877,8 +3880,8 @@
 		if ( ay@modfov == 1 ) {
 			if ( ax@modfov == 2 ) {
 				if ( gdata(GDATA_SENSE_OBJECT) != 10 ) {
-					if ( map(fov_los_arg1 + sx@modfov, fov_los_arg2, 8) != 0 ) {
-						if ( mef(0, map(fov_los_arg1 + sx@modfov, fov_los_arg2, 8) - 1) == 9 ) {
+					if ( map(fov_los_x1 + sx@modfov, fov_los_y1, 8) != 0 ) {
+						if ( mef(0, map(fov_los_x1 + sx@modfov, fov_los_y1, 8) - 1) == 9 ) {
 							if ( gdata(STARTING_GDATA_FLAG + 348) == 0 ) {
 								return 0
 							}
@@ -3886,8 +3889,8 @@
 					}
 				}
 				if ( gdata(GDATA_SENSE_OBJECT) != 10 ) {
-					if ( (chipm(CHIPM_ATTRIB, map(fov_los_arg1 + sx@modfov, fov_los_arg2, 0)) & CHIPM_ATTRIB_CANT_SEE) == 0 ) {
-						if ( (chipm(CHIPM_ATTRIB, map(fov_los_arg1 + sx@modfov, fov_los_arg2, 6) \ 1000) & CHIPM_ATTRIB_CANT_SEE) == 0 ) {
+					if ( (chipm(CHIPM_ATTRIB, map(fov_los_x1 + sx@modfov, fov_los_y1, 0)) & CHIPM_ATTRIB_CANT_SEE) == 0 ) {
+						if ( (chipm(CHIPM_ATTRIB, map(fov_los_x1 + sx@modfov, fov_los_y1, 6) \ 1000) & CHIPM_ATTRIB_CANT_SEE) == 0 ) {
 							return 1
 						}
 					}
@@ -3900,16 +3903,16 @@
 	if ( ax@modfov >= ay@modfov ) {
 		qy@modfov = ay@modfov * ay@modfov
 		m@modfov = qy@modfov << 1
-		tx@modfov = fov_los_arg1 + sx@modfov
+		tx@modfov = fov_los_x1 + sx@modfov
 		if ( qy@modfov == f2@modfov ) {
-			ty@modfov = fov_los_arg2 + sy@modfov
+			ty@modfov = fov_los_y1 + sy@modfov
 			qy@modfov -= f1@modfov
 		}
 		else {
-			ty@modfov = fov_los_arg2
+			ty@modfov = fov_los_y1
 		}
 *fov_los_WHILE9
-		if ( fov_los_arg3 - tx@modfov == 0 ) {
+		if ( fov_los_x2 - tx@modfov == 0 ) {
 			goto *fov_los_WEND9
 		}
 		if ( gdata(GDATA_SENSE_OBJECT) != 10 ) {
@@ -3972,16 +3975,16 @@
 	else {
 		qx@modfov = ax@modfov * ax@modfov
 		m@modfov = qx@modfov << 1
-		ty@modfov = fov_los_arg2 + sy@modfov
+		ty@modfov = fov_los_y1 + sy@modfov
 		if ( qx@modfov == f2@modfov ) {
-			tx@modfov = fov_los_arg1 + sx@modfov
+			tx@modfov = fov_los_x1 + sx@modfov
 			qx@modfov -= f1@modfov
 		}
 		else {
-			tx@modfov = fov_los_arg1
+			tx@modfov = fov_los_x1
 		}
 *fov_los_WHILE10
-		if ( fov_los_arg4 - ty@modfov == 0 ) {
+		if ( fov_los_y2 - ty@modfov == 0 ) {
 			goto *fov_los_WEND10
 		}
 		if ( gdata(GDATA_SENSE_OBJECT) != 10 ) {
