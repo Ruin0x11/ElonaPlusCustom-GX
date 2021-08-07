@@ -36,7 +36,7 @@
 	DmgPopupColors(0, DMGPOPUP_REMOVE_CONDITION)    = 255, 255, 255, 0,   0,   0
 
     repeat MAX_SKILL_RESIST - STARTING_SKILL_RESIST
-        locvar_colorres_i = cnt
+        locvar_colorres_i = cnt + STARTING_SKILL_RESIST
         colorres
         DmgPopupColorsResist(0, cnt) = 255, 255, 255, ginfo(16), ginfo(17), ginfo(18)
     loop
@@ -86,12 +86,13 @@
     DmgPopups(0, DmgPopupNext) = timeGetTime(), prm_cc, 255, 255, 255, 0, 0, 0
 
     if ( prm_type == DMGPOPUP_ELEM_DAMAGE ) {
-        DmgPopups(2, DmgPopupNext) = DmgPopupColorsResist(0, prm_extra)
-        DmgPopups(3, DmgPopupNext) = DmgPopupColorsResist(1, prm_extra)
-        DmgPopups(4, DmgPopupNext) = DmgPopupColorsResist(2, prm_extra)
-        DmgPopups(5, DmgPopupNext) = DmgPopupColorsResist(3, prm_extra)
-        DmgPopups(6, DmgPopupNext) = DmgPopupColorsResist(4, prm_extra)
-        DmgPopups(7, DmgPopupNext) = DmgPopupColorsResist(5, prm_extra)
+        res@DP = prm_extra - STARTING_SKILL_RESIST
+        DmgPopups(2, DmgPopupNext) = DmgPopupColorsResist(0, res@DP)
+        DmgPopups(3, DmgPopupNext) = DmgPopupColorsResist(1, res@DP)
+        DmgPopups(4, DmgPopupNext) = DmgPopupColorsResist(2, res@DP)
+        DmgPopups(5, DmgPopupNext) = DmgPopupColorsResist(3, res@DP)
+        DmgPopups(6, DmgPopupNext) = DmgPopupColorsResist(4, res@DP)
+        DmgPopups(7, DmgPopupNext) = DmgPopupColorsResist(5, res@DP)
     }
     else {
         if ( prm_type == DMGPOPUP_ADD_CONDITION ) {

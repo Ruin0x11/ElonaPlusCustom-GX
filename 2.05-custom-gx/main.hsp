@@ -152,7 +152,12 @@
 #endif
 	devfile = ""
 
+    ; HSP only provides the name of the file an error occurred in if it crashes
+    ; with its default error handler. (Did I mention that HSP sucks?)
+#ifndef _DEBUG
 	onerror goto *exit_game_error
+#endif
+
 	randomize
 	randseed = rnd(2000)
 	randomize randseed
