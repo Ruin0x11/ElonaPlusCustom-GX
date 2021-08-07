@@ -3625,7 +3625,11 @@
 	    	_break
 	    }
 	    if ( a == 32 ) {
-            gosub *dbg_GetInfo
+            if ( dbg_luaConsole ) {
+                gosub *dbg_lua_GetInfo
+            } else {
+                gosub *dbg_GetInfo
+            }
             gosub *screen_draw
 	    }
     wend
@@ -3641,6 +3645,11 @@
 *dbg_GetInfo
 	if ( instr(buff, 0, "?") != (-1) ) {
         goto *dbg_ShowHelp
+	}
+	if ( buff == "lua\n" ) {
+        noteadd "Lua mode activated."
+        dbg_luaConsole = 1
+        goto *console_write
 	}
 	if ( int(buff) == 1 ) {
 		repeat MAX_CHARA_TOTAL
@@ -4028,6 +4037,49 @@
 	noteadd "Unknown command. Type \"?\" for help. Hit ESC to exit."
 	goto *console_write
 
+*dbg_lua_GetInfo
+	if ( buff == "?\n" ) {
+        goto *dbg_ShowHelp
+	}
+	if ( buff == "lua\n" ) {
+        noteadd "Lua mode deactivated."
+        dbg_luaConsole = 0
+        goto *console_write
+	}
+
+    buff = strmid(buff, 0, strlen(buff) - 2)
+
+    noteadd "> " + buff
+
+    ret = hl_dostring("return " + buff)
+    if ( ret == 1 ) {
+        e = hl_tostring(-1)
+        if ( instr(e, 0, "<eof>") ) {
+            hl_pop
+            ret = hl_dostring(buff)
+        }
+    }
+
+    if ( ret == 1 ) {
+        s = "*** Lua Error: " + hl_tostring(-1)
+    } else {
+        retvals = hl_gettop()
+        s = ""
+        repeat retvals
+            s += "" + (cnt + 1) + ") " + hl_tolstring(cnt + 1) + "\n"
+        loop
+    }
+
+    hl_settop 0
+
+    sdim lines
+	split s, "\n", lines
+	repeat stat
+		noteadd lines(cnt)
+	loop
+
+	goto *console_write
+
 *dbg_ShowHelp
     noteadd "\t1\t\tShows charainfo."
     noteadd "\t2\t\tShows pc equipment."
@@ -4041,6 +4093,7 @@
     noteadd "\twizard\t\tEnables wizard mode."
     noteadd "\tdump_buffers\tDump the graphics buffers to .bmp files."
     noteadd "\texport_itemlist\tCreates a default ItemList.txt file."
+    noteadd "\tlua\t\tToggles Lua console mode."
     noteadd ""
     noteadd "\tThe commands below can be used in the Wizard mode."
     noteadd "\tgain_spell\tPC gains all spells."
