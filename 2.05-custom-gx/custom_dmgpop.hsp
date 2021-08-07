@@ -59,6 +59,10 @@
         return
     }
 
+    if ( prm_type < DMGPOPUP_NONE | prm_type >= MAX_DAMAGE_POPUP_KINDS ) {
+        return
+    }
+
     if ( cfg_dmgpopup_buffhex == FALSE ) {
         if ( prm_type == DMGPOPUP_ADD_HEX | prm_type == DMGPOPUP_ADD_BUFF | prm_type == DMGPOPUP_REMOVE_HEX | prm_type == DMGPOPUP_REMOVE_BUFF ) {
             return
@@ -78,7 +82,7 @@
     DmgPopupTexts(DmgPopupNext) = prm_text
     DmgPopups(0, DmgPopupNext) = timeGetTime(), prm_cc, 255, 255, 255, 0, 0, 0
 
-    if ( prm_type == DMGPOPUP_ELEM_DAMAGE ) {
+    if ( prm_type == DMGPOPUP_ELEM_DAMAGE & prm_extra >= STARTING_SKILL_RESIST & prm_extra < MAX_SKILL_RESIST ) {
         res@DP = prm_extra - STARTING_SKILL_RESIST
         DmgPopups(2, DmgPopupNext) = DmgPopupColorsResist(0, res@DP)
         DmgPopups(3, DmgPopupNext) = DmgPopupColorsResist(1, res@DP)
@@ -88,7 +92,7 @@
         DmgPopups(7, DmgPopupNext) = DmgPopupColorsResist(5, res@DP)
     }
     else {
-        if ( prm_type == DMGPOPUP_ADD_CONDITION ) {
+        if ( prm_type == DMGPOPUP_ADD_CONDITION & prm_extra >= 0 & prm_extra < MAX_CONDITION ) {
             DmgPopups(2, DmgPopupNext) = DmgPopupColorsCondition(0, prm_extra)
             DmgPopups(3, DmgPopupNext) = DmgPopupColorsCondition(1, prm_extra)
             DmgPopups(4, DmgPopupNext) = DmgPopupColorsCondition(2, prm_extra)
