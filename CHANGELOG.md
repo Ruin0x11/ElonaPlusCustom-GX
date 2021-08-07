@@ -2,7 +2,7 @@
 
 ## Added 
 - Add "Allow running in world map" custom tweak.
-- Port omake overhaul modify's damage popup feature, configurable in tweaks menu.
+- Port omake overhaul modify's damage popup feature, configurable in the options menu.
 - Add a limited Lua console for debugging purposes.
 
 ## Changed

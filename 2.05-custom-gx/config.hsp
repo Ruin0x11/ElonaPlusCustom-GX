@@ -1,0 +1,1627 @@
+#define setOption(%1, %2, %3, %4) \
+	%1 = limit(%1 + p, %3, %4)%c\
+    saveOption %2, %1
+
+#define setBoolOption(%1, %2) \
+	%1 = limit(%1 + p, 0, 1)%c\
+    saveOption %2, %1
+
+#deffunc saveOption str prm_saveOption_name, int prm_saveOption_value
+    valn = prm_saveOption_name + ".", str(prm_saveOption_value)
+    gosub *cfg_write
+    return
+
+*cfg_write
+	notesel note_buff
+	noteload exedir + "\\config.txt"
+	f = 0
+	repeat noteinfo(0)
+		noteget s, cnt
+		if ( instr(s, 0, valn) == (-1) ) {
+			continue
+		}
+		i = 1
+		p = 0
+		repeat
+			p(2) = instr(s, p, "\"")
+			if ( p(2) == (-1) ) {
+				break
+			}
+			p += p(2)
+			p(1) = instr(s, p + 1, "\"") + p + 1
+			if ( p(1) == (-1) ) {
+				break
+			}
+			s = strmid(s, 0, p + 1) + valn(i) + strmid(s, p(1), 999)
+			p += strlen(valn(i)) + 2
+			i++
+		loop
+		noteadd s, cnt, 1
+		f = 1
+		break
+	loop
+	if ( f == 0 ) {
+		noteadd "" + valn + " \"" + valn(1) + "\""
+	}
+	notesave exedir + "\\config.txt"
+	return
+
+*config_init
+	sdim key_buff, 4, 65
+	dup key_identify, key_buff(2)
+	dup key_pageup, key_buff(3)
+	dup key_pagedown, key_buff(4)
+	dup key_cancel, key_buff(5)
+	dup key_help, key_buff(6)
+	dup key_msglog, key_buff(7)
+	dup key_enter, key_buff(8)
+	dup key_save, key_buff(9)
+	dup key_north, key_buff(10)
+	dup key_northeast, key_buff(11)
+	dup key_east, key_buff(12)
+	dup key_southeast, key_buff(13)
+	dup key_south, key_buff(14)
+	dup key_southwest, key_buff(15)
+	dup key_west, key_buff(16)
+	dup key_northwest, key_buff(17)
+	dup key_skill, key_buff(18)
+	dup key_close, key_buff(19)
+	dup key_cast, key_buff(20)
+	dup key_drink, key_buff(22)
+	dup key_read, key_buff(23)
+	dup key_zap, key_buff(24)
+	dup key_fire, key_buff(25)
+	dup key_search, key_buff(26)
+	dup key_target, key_buff(27)
+	dup key_dig, key_buff(28)
+	dup key_wait, key_buff(30)
+	dup key_inventory, key_buff(31)
+	dup key_drop, key_buff(32)
+	dup key_get, key_buff(33)
+	dup key_wipe, key_buff(34)
+	dup key_charainfo, key_buff(35)
+	dup key_eat, key_buff(36)
+	dup key_wear, key_buff(37)
+	dup key_godown, key_buff(38)
+	dup key_goup, key_buff(39)
+	dup key_interact, key_buff(40)
+	dup key_rest, key_buff(41)
+	dup key_use, key_buff(42)
+	dup key_bash, key_buff(43)
+	dup key_open, key_buff(44)
+	dup key_dip, key_buff(45)
+	dup key_pray, key_buff(46)
+	dup key_offer, key_buff(47)
+	dup key_journal, key_buff(48)
+	dup key_material, key_buff(49)
+	dup key_quick, key_buff(50)
+	dup key_get2, key_buff(51)
+	dup key_trait, key_buff(52)
+	dup key_look, key_buff(53)
+	dup key_give, key_buff(54)
+	dup key_prev, key_buff(55)
+	dup key_next, key_buff(56)
+	dup key_quickinv, key_buff(57)
+	dup key_throw, key_buff(58)
+	dup key_esc, key_buff(59)
+	dup key_alt, key_buff(60)
+	dup key_mode, key_buff(61)
+	dup key_ammo, key_buff(62)
+	dup key_mode2, key_buff(63)
+	dup key_itemstack, key_buff(64)
+	sdim jkey, 2, 12
+	return
+
+*config_loadCore
+	key_select = "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s"
+	notesel note_buff
+	noteload exedir + "\\config.txt"
+	repeat noteinfo(0)
+		noteget s, cnt
+
+		cfgRead "language.", cfg_language = int(rtvaln)
+		cfgRead "fullscreen.", cfg_fullscreen = int(rtvaln)
+		cfgRead "music.", cfg_music = int(rtvaln)
+		cfgRead "sound.", cfg_sound = int(rtvaln)
+		cfgRead "extraRace.", cfg_extrarace = int(rtvaln)
+		cfgRead "joypad.", cfg_joypad = int(rtvaln)
+		cfgRead "msg_box.", cfg_msg_box = int(rtvaln)
+		cfgRead "msgLine.", inf_msgline = int(rtvaln)
+		cfgRead "tileSize.", inf_tiles = int(rtvaln)
+		cfgRead "fontSize.", inf_mesfont = int(rtvaln)
+		cfgRead "infVerType.", inf_vertype = int(rtvaln)
+		cfgRead "windowX.", windowx = int(rtvaln)
+		cfgRead "windowY.", windowy = int(rtvaln)
+		cfgRead "windowW.", windoww = int(rtvaln)
+		cfgRead "windowH.", windowh = int(rtvaln)
+		cfgRead "clockX.", inf_clockx = int(rtvaln)
+		cfgRead "clockW.", inf_clockw = int(rtvaln)
+		cfgRead "clockH.", inf_clockh = int(rtvaln)
+		cfgRead "defLoadFolder.", defload = rtvaln
+		cfgRead "charamake_wiz.", cfg_wizard = int(rtvaln)
+	loop
+	return
+
+*config_load
+	procid = (procid + 1) \ 4
+	proclist(procid) = "Load config" + " ct:" + ct
+	notesel note_buff
+	noteload exedir + "\\config.txt"
+	repeat noteinfo(0)
+		noteget s, cnt
+
+		cfgRead "key_sCancel.", cfg_scancel = int(rtvaln)
+		cfgRead "alert_wait.", cfg_alert = int(rtvaln)
+		cfgRead "anime_wait.", cfg_animewait = int(rtvaln)
+		cfgRead "ignoreDislike.", cfg_ignoredislike = int(rtvaln)
+		cfgRead "wait1.", cfg_wait1 = int(rtvaln)
+		cfgRead "font1.", cfg_font1 = rtvaln
+		cfgRead "font2.", cfg_font2 = rtvaln
+		cfgRead "fontVfix1.", vfix = int(rtvaln)
+		cfgRead "fontSfix1.", sizefix = int(rtvaln)
+		cfgRead "story.", cfg_story = int(rtvaln)
+		cfgRead "heartbeat.", cfg_heart = int(rtvaln)
+		cfgRead "extraHelp.", cfg_extrahelp = int(rtvaln)
+		cfgRead "alwaysCenter.", cfg_alwayscenter = int(rtvaln)
+		cfgRead "scroll.", cfg_scroll = int(rtvaln)
+		cfgRead "startRun.", cfg_startrun = int(rtvaln)
+		cfgRead "walkWait.", cfg_walkwait = int(rtvaln)
+		cfgRead "runWait.", cfg_runwait = int(rtvaln)
+		cfgRead "autoTurnType.", cfg_autoturn = int(rtvaln)
+		cfgRead "autoNumlock.", cfg_autonumlock = int(rtvaln)
+		cfgRead "attackWait.", cfg_attackwait = int(rtvaln)
+		cfgRead "attackAnime.", cfg_attackanime = int(rtvaln)
+		cfgRead "envEffect.", cfg_env = int(rtvaln)
+		cfgRead "titleEffect.", cfg_titleeffect = int(rtvaln)
+		cfgRead "net.", cfg_net = int(rtvaln)
+		cfgRead "netWish.", cfg_netwish = int(rtvaln)
+		cfgRead "netChat.", cfg_netchat = int(rtvaln)
+		cfgRead "serverList.", cfg_serverlist = int(rtvaln)
+		cfgRead "shadow.", cfg_shadow = int(rtvaln)
+		cfgRead "objectShadow.", cfg_objectshadow = int(rtvaln)
+		cfgRead "windowAnime.", cfg_windowanime = int(rtvaln)
+		cfgRead "exAnime.", cfg_exanime = int(rtvaln)
+		cfgRead "showSkillMod.", cfg_showskillmod = int(rtvaln)
+		cfgRead "hide_autoIdentify.", cfg_hideautoidentify = int(rtvaln)
+		cfgRead "hide_shopResult.", cfg_hideshopresult = int(rtvaln)
+		cfgRead "msg_trans.", cfg_msgtrans = int(rtvaln)
+		cfgRead "msg_addTime.", cfg_msgaddtime = int(rtvaln)
+		cfgRead "title_dialog.", cfg_titledialog = int(rtvaln)
+		cfgRead "key_cancel.", key_cancel = rtvaln, jkey(int(rtvaln(1))) = key_cancel
+		cfgRead "key_esc.", key_esc = rtvaln, jkey(int(rtvaln(1))) = key_esc
+		cfgRead "key_alter.", key_alter = rtvaln, jkey(int(rtvaln(1))) = key_alter
+		cfgRead "key_north.", key_north = rtvaln
+		cfgRead "key_south.", key_south = rtvaln
+		cfgRead "key_west.", key_west = rtvaln
+		cfgRead "key_east.", key_east = rtvaln
+		cfgRead "key_northwest.", key_northwest = rtvaln
+		cfgRead "key_northeast.", key_northeast = rtvaln
+		cfgRead "key_southwest.", key_southwest = rtvaln
+		cfgRead "key_southeast.", key_southeast = rtvaln
+		cfgRead "key_wait.", key_wait = rtvaln
+		cfgRead "key_inventory.", key_inventory = rtvaln
+		cfgRead "key_help.", key_help = rtvaln, jkey(int(rtvaln(1))) = key_help
+		cfgRead "key_msglog.", key_msglog = rtvaln
+		cfgRead "key_pageup.", key_pageup = rtvaln
+		cfgRead "key_pagedown.", key_pagedown = rtvaln
+		cfgRead "key_get.", key_get = rtvaln, jkey(int(rtvaln(1))) = key_get
+		cfgRead "key_get2.", key_get2 = rtvaln
+		cfgRead "key_drop.", key_drop = rtvaln
+		cfgRead "key_charainfo.", key_charainfo = rtvaln, jkey(int(rtvaln(1))) = key_charainfo
+		cfgRead "key_enter.", key_enter = rtvaln, jkey(int(rtvaln(1))) = key_enter
+		cfgRead "key_eat.", key_eat = rtvaln
+
+		/********** ANNA CUSTOM - BEGINNING **********/ // Feed option for pets
+
+		cfgRead "key_feed.", key_feed = rtvaln
+
+		/********** ANNA CUSTOM - ENDING **********/
+
+		cfgRead "key_wear.", key_wear = rtvaln
+		cfgRead "key_cast.", key_cast = rtvaln
+		cfgRead "key_drink.", key_drink = rtvaln
+		cfgRead "key_read.", key_read = rtvaln
+		cfgRead "key_zap.", key_zap = rtvaln
+		cfgRead "key_fire.", key_fire = rtvaln, jkey(int(rtvaln(1))) = key_fire
+		cfgRead "key_goDown.", key_godown = rtvaln
+		cfgRead "key_goUp.", key_goup = rtvaln
+		cfgRead "key_save.", key_save = rtvaln
+		cfgRead "key_search.", key_search = rtvaln
+		cfgRead "key_interact.", key_interact = rtvaln
+		cfgRead "key_itemstack.", key_itemstack = rtvaln
+		cfgRead "key_identify.", key_identify = rtvaln
+		cfgRead "key_skill.", key_skill = rtvaln
+		cfgRead "key_wipe.", key_wipe = rtvaln
+		cfgRead "key_close.", key_close = rtvaln
+		cfgRead "key_rest.", key_rest = rtvaln
+		cfgRead "key_target.", key_target = rtvaln, jkey(int(rtvaln(1))) = key_target
+		cfgRead "key_dig.", key_dig = rtvaln
+		cfgRead "key_use.", key_use = rtvaln
+		cfgRead "key_bash.", key_bash = rtvaln
+		cfgRead "key_open.", key_open = rtvaln
+		cfgRead "key_dip.", key_dip = rtvaln
+		cfgRead "key_pray.", key_pray = rtvaln
+		cfgRead "key_offer.", key_offer = rtvaln
+		cfgRead "key_journal.", key_journal = rtvaln
+		cfgRead "key_material.", key_material = rtvaln
+		cfgRead "key_quick.", key_quick = rtvaln, jkey(int(rtvaln(1))) = key_quick
+		cfgRead "key_trait.", key_trait = rtvaln
+		cfgRead "key_look.", key_look = rtvaln
+		cfgRead "key_give.", key_give = rtvaln
+		cfgRead "key_throw.", key_throw = rtvaln
+		cfgRead "key_mode.", key_mode = rtvaln
+		cfgRead "key_mode2.", key_mode2 = rtvaln
+		cfgRead "key_ammo.", key_ammo = rtvaln, jkey(int(rtvaln(1))) = key_ammo
+		cfgRead "key_quickinv.", key_quickinv = rtvaln, jkey(int(rtvaln(1))) = key_quickinv
+		cfgRead "zkey.", cfg_zkey = int(rtvaln)
+		cfgRead "xkey.", cfg_xkey = int(rtvaln)
+		cfgRead "scr_sync.", cfg_scrsync = int(rtvaln)
+		cfgRead "scroll_run.", cfg_runscroll = int(rtvaln)
+		cfgRead "skipRandEvents.", cfg_skiprandevents = int(rtvaln)
+		cfgRead "damage_show.", cfg_dhyouji = int(rtvaln)
+		cfgRead "Pcc_show.", cfg_pcc_show = int(rtvaln)
+		cfgRead "record.", cfg_record = int(rtvaln)
+		cfgRead "atk_select.", cfg_atk_select = int(rtvaln)
+		cfgRead "dust_select.", cfg_dust_select = int(rtvaln)
+
+		/********** RUIN0X11 CUSTOM - BEGINNING **********/ // Damage popup options
+
+		cfgRead "dmgPopups.", cfg_dmgpopups = int(rtvaln)
+		cfgRead "dmgPopupBuffHex.", cfg_dmgpopup_buffhex = int(rtvaln)
+		cfgRead "dmgPopupCon.", cfg_dmgpopup_con = int(rtvaln)
+		cfgRead "dmgPopupEvade.", cfg_dmgpopup_evade = int(rtvaln)
+		cfgRead "dmgPopupFontSize.", cfg_dmgfont = int(rtvaln)
+		cfgRead "dmgPopupSpeed.", cfg_dmgspeed = int(rtvaln)
+
+		/********** RUIN0X11 CUSTOM - ENDING **********/
+
+		key_prev = key_northwest
+		key_next = key_northeast
+		if ( instr(s, 0, "key_set.") != (-1) ) {
+			p = 0
+			p(1) = 0
+			repeat
+				await
+				if ( instr(s, p, ",") == (-1) ) {
+					break
+				}
+				p += instr(s, p, ",") + 1
+				key_select(p(1)) = strmid(s, p, 1)
+				p(1)++
+			loop
+		}
+	loop
+	f = 0
+	if ( cfg_zkey == 0 ) {
+		key_quick = "z"
+		key_zap = "Z"
+	}
+	else {
+		if ( cfg_zkey == 1 ) {
+			key_zap = "z"
+			key_quick = "Z"
+		}
+	}
+	if ( cfg_xkey == 0 ) {
+		key_quickinv = "x"
+		key_inventory = "X"
+	}
+	else {
+		if ( cfg_xkey == 1 ) {
+			key_inventory = "x"
+			key_quickinv = "X"
+		}
+	}
+	if ( cfg_scrsync == 0 ) {
+		cfg_scrsync = 3
+	}
+	if ( cfg_walkwait == 0 ) {
+		cfg_walkwait = 5
+	}
+	if ( cfg_runwait < 1 ) {
+		cfg_runwait = 1
+	}
+	if ( cfg_attackwait < 1 ) {
+		cfg_attackwait = 1
+	}
+	if ( cfg_startrun >= 20 ) {
+		cfg_startrun = 1000
+	}
+	if ( cfg_language == (-1) ) {
+		redraw 0
+		buffer 4
+		picload exedir + "graphic\\lang.bmp"
+		gsel 0
+		gmode 0
+		p = 0
+*config_load_WHILE1
+		redraw 0
+		color 0, 0, 0
+		boxf
+		pos 160, 170
+		gcopy 4, 0, 0, 340, 100
+		pos 180, 220 + p * 20
+		gcopy 4, 360, 6, 20, 18
+		redraw 1
+		await 30
+		getkey a, 40
+		if ( a ) {
+			p = 1
+		}
+		getkey a, 98
+		if ( a ) {
+			p = 1
+		}
+		getkey a, 38
+		if ( a ) {
+			p = 0
+		}
+		getkey a, 104
+		if ( a ) {
+			p = 0
+		}
+		getkey a, 13
+		if ( a ) {
+			goto *config_load_WEND1
+		}
+		getkey a, 32
+		if ( a ) {
+			goto *config_load_WEND1
+		}
+		goto *config_load_WHILE1
+*config_load_WEND1
+		cfg_language = p
+		valn = "language.", "" + p
+		gosub *cfg_write
+		redraw 0
+	}
+	procid = (procid + 1) \ 4
+	proclist(procid) = "Fix config" + " ct:" + ct
+	if ( cfg_language == 0 ) {
+		jp = 1
+		vfix = 0
+		sizefix = 0
+	}
+	else {
+		en = 1
+	}
+	if ( key_mode == "" ) {
+		key_mode = "z"
+		f = 1
+		noteadd "key_mode.\t\"z\""
+	}
+	if ( key_mode2 == "" ) {
+		key_mode2 = "*"
+		f = 1
+		noteadd "key_mode2.\t\"*\""
+	}
+	if ( key_ammo == "" ) {
+		key_ammo = "A"
+		f = 1
+		noteadd "key_ammo.\t\"A\""
+	}
+	if ( f ) {
+		notesave exedir + "\\config.txt"
+	}
+	return
+
+*dump_config
+	notesel note_buff
+	noteload exedir + "\\user\\export.txt"
+	usertitle = ""
+	usermsg = ""
+	userpassword = "nyaa"
+	repeat noteinfo(0)
+		noteget s, cnt
+
+		cfgRead "room_title.", usertitle = rtvaln
+		cfgRead "welcome_msg.", usermsg = rtvaln
+		cfgRead "pet_relation.", userrelation = int(rtvaln)
+		cfgRead "password.", userpassword = rtvaln
+	loop
+	return
+
+*dump_config_import
+	notesel headtemp
+	noteget s, 1
+	username = "" + s
+	noteget s, 5
+	usermsg = "" + s
+	noteget s, 6
+	userrelation = int(s)
+	return
+
+#defcfunc cnvjkey str cnvjkey_arg1
+	locvar_cnvjkey_p = -2
+	repeat 12
+		if ( cnvjkey_arg1 == jkey(cnt) ) {
+			locvar_cnvjkey_p = cnt
+			break
+		}
+	loop
+	return locvar_cnvjkey_p + 1
+
+*com_config
+	listmax = 0
+	page = 0
+	pagesize = 18
+	cs = 0
+	cc = CHARA_PLAYER
+	cs_bk = -1
+	page_bk = 0
+	cs_bk2 = 0
+	cfg_sound2 = cfg_sound
+	cfg_music2 = cfg_music
+	cfg_fullscreen2 = cfg_fullscreen
+	windoww2 = windoww
+	windowh2 = windowh
+	if ( mode == MODELIST_TITLE ) {
+		sel = 2
+	}
+	else {
+		sel = 4
+	}
+	gsel sel
+	repeat 8
+		pos cnt \ 4 * 180, cnt / 4 * 300
+		picload exedir + "\\graphic\\g" + (cnt + 1) + ".bmp", 1
+	loop
+	gsel 0
+	redraw 0
+	if ( mode == MODELIST_MAIN ) {
+		screenupdate = -1
+		gosub *screen_draw
+	}
+	if ( mode == MODELIST_TITLE ) {
+		gsel 4
+		gmode 0
+		pos 0, 0
+		picload exedir + "\\graphic\\title" + devfile + ".bmp", 1
+		gzoom windoww, windowh, 4, 0, 0, 800, 600
+		gsel 0
+		gmode 0
+		pos 0, 0
+		gcopy 4, 0, 0, windoww, windowh
+		gmode 2
+	}
+	if ( submenu == 0 ) {
+		q = lang("オプション", "Option")
+		s = lang("ゲームの設定", "Game Setting"), lang("画面と音の設定", "Screen & Sound"), lang("ネット機能の設定", "Network Setting"), lang("詳細な設定", "Detailed Setting"), lang("ゲームパッド", "Game Pad"), lang("メッセージとログ", "Message & Log"), lang("言語(Language)", "Language"), lang("拡張設定1(表示)", "EX Setting 1 (Display)"), ""
+
+		dx = 370
+		dy = 290
+	}
+	if ( submenu == 1 ) {
+		q = lang("ゲームの設定", "Game Setting")
+		s = lang("ノルンの冒険ガイド", "Extra Help"), lang("非好戦的NPCを無視", "Neutral Npcs"), lang("zキーの割当て", "Assign z key"), lang("xキーの割当て", "Assign x key"), lang("走り始める歩数", "Start Running After"), lang("歩きの速さ", "Walk Speed"), lang("攻撃の間隔", "Attack Interval"), lang("レコード表示", "Record"), lang("「攻撃する」選択肢", "Attack Select"), lang("汚物生成の阻止", "Block dust generation"), ""
+		dx = 440
+		dy = 370
+	}
+	if ( submenu == 2 ) {
+		q = lang("画面と音の設定", "Screen & Sound")
+		s = lang("サウンドの再生*", "Sound*"), lang("midiの再生*", "Music*"), lang("画面モード*", "Screen Mode*"), lang("画面の大きさ*", "Screen Resolution*"), lang("スクロール", "Smooth Scroll"), lang("主人公中心に描写", "Always Center"), lang("心臓の音", "Heartbeat Sound"), lang("攻撃時アニメ", "Attack Animation"), lang("天候エフェクト", "Weather Effect"), lang("光源の描写", "Lighting"), lang("アイテムの影描写", "Object Shadow"), lang("PCC表示", "PCC show"), ""
+		dx = 440
+		dy = 370
+	}
+	if ( submenu == 3 ) {
+		q = lang("ネット機能の設定", "Network Setting")
+		s = lang("ネットの使用", "Use Network"), lang("定期的に接続", "Constantly Connect"), lang("チャットをフィルタ", "Filter Chat"), ""
+		dx = 440
+		dy = 300
+	}
+	if ( submenu == 4 ) {
+		q = lang("詳細な設定", "Detailed Setting")
+		s = lang("走りの速さ", "Run Speed"), lang("numlockを自動制御", "Auto Numlock"), lang("タイトルの水の波紋", "Title Water Effect"), lang("画面の更新頻度", "Screen Refresh"), lang("走り時スクロール", "Scroll When Run"), lang("オートターンの挙動", "Auto Turn Speed"), lang("イベントの短縮", "Skip Random Events"), lang("ダメージ表示", "Damage show"), lang("エフェクトの速さ", "Effect Speed"), ""
+		dx = 440
+		dy = 350
+	}
+	if ( submenu == 5 ) {
+		q = lang("ゲームパッド", "Game Pad")
+		s = lang("ゲームパッド", "Game Pad"), lang("決定キー", "Enter/Ok"), lang("キャンセルキー", "Cancel"), lang("所持品", "Inventory"), lang("行動", "Action"), lang("斜め移動(L)", "diagonal Move/(L)"), lang("拾う(R)", "Pick/(R)"), lang("射撃(R)", "Shoot/(R)"), lang("目標(L)", "Target/(L)"), lang("ポーズメニュー", "Pause/Menu"), lang("ヘルプ", "Help"), lang("キャラ情報", "Chara-sheet"), lang("装填", "Reload"), ""
+		dx = 440
+		dy = 430
+	}
+	if ( submenu == 6 ) {
+		q = lang("メッセージとログ", "Message&Log")
+		s = lang("ﾒｯｾｰｼﾞに分表示追加", "Add time info"), lang("過去のﾒｯｾｰｼﾞの透過", "Transparency"), lang("起動時の注意書き", "Disclaimer at startup"), ""
+		dx = 440
+		dy = 300
+	}
+	if ( submenu == 7 ) {
+		q = lang("言語(Language)", "Language")
+		s = lang("言語*", "Language*"), ""
+		dx = 440
+		dy = 300
+	}
+	if ( submenu == 8 ) {
+        q = lang("拡張設定1(表示)", "EX Setting 1 (Display)")
+        s = lang("ダメージ表示", "Damage Popups"), lang("　HEX+バフ", "  Hexes/Buffs"), lang("　状態異常", "  Ailments"), lang("　回避", "  Evade"), lang("　フォントサイズ", "  Font Size"), lang("　表示速度", "  Display Duration"), ""
+		dx = 440
+		dy = 300
+	}
+	repeat 20
+		if ( s(cnt) == "" ) {
+			break
+		}
+		chatList cnt, s(cnt)
+	loop
+	windowshadow = 1
+*com_config_loop
+	if ( cfg_zkey == 0 ) {
+		key_quick = "z"
+		key_zap = "Z"
+	}
+	else {
+		if ( cfg_zkey == 1 ) {
+			key_zap = "z"
+			key_quick = "Z"
+		}
+	}
+	if ( cfg_xkey == 0 ) {
+		key_quickinv = "x"
+		key_inventory = "X"
+	}
+	else {
+		if ( cfg_xkey == 1 ) {
+			key_inventory = "x"
+			key_quickinv = "X"
+		}
+	}
+	redraw 0
+	page_check
+*com_config_loop_WHILE1
+	redraw 0
+	s = q, strhint3
+	pagesize = 0
+	if ( mode == MODELIST_CHARA_CREATION ) {
+		display_window (windoww - dx) / 2 + inf_screenx, winposy(dy, 1), dx, dy
+	}
+	else {
+		display_window (windoww - dx) / 2 + inf_screenx, winposy(dy) - 12, dx, dy
+	}
+	pagesize = listmax
+	display_topic lang("項目", "Menu"), wx + 34, wy + 36
+	if ( mode == MODELIST_TITLE ) {
+		p = 2
+	}
+	else {
+		p = 4
+	}
+	x = ww / 5 * 3
+	y = wh - 80
+	gmode 4, 180, 300, 50
+	pos wx + ww / 3, wy + wh / 2
+	grotate p, cmbg / 4 \ 4 * 180, cmbg / 4 / 4 \ 2 * 300, 0, x, y
+	gmode 2
+	keyrange = 0
+	repeat pagesize
+		p = pagesize * page + cnt
+		if ( p >= listmax ) {
+			break
+		}
+		if ( submenu == 0 ) {
+			key_list(cnt) = key_select(cnt)
+			keyrange++
+			display_key wx + 32, wy + 66 + cnt * 19 - 2, cnt
+		}
+		else {
+			key_list(cnt) = key_cancel
+			keyrange++
+		}
+	loop
+	if ( submenu == 5 ) {
+		p = 0, cnvjkey(key_enter), cnvjkey(key_cancel), cnvjkey(key_quickinv), cnvjkey(key_quick), cnvjkey(key_alter), cnvjkey(key_get), cnvjkey(key_fire), cnvjkey(key_target), cnvjkey(key_esc), cnvjkey(key_help), cnvjkey(key_charainfo), cnvjkey(key_ammo)
+		repeat 19, 1
+			list(1, cnt) = p(cnt)
+		loop
+	}
+	font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
+	cs_listbk
+	repeat pagesize
+		p = pagesize * page + cnt
+		if ( p >= listmax ) {
+			break
+		}
+		i = list(0, p)
+		s = listn(0, p)
+		if ( submenu == 0 ) {
+			x = 8
+		}
+		else {
+			x = 0
+		}
+		if ( submenu == 3 ) {
+			if ( cfg_net == 0 ) {
+				if ( cnt >= 1 ) {
+					continue
+				}
+			}
+		}
+		cs_list s, wx + 56 + x, wy + 66 + cnt * 19 - 1, 19, 0
+		if ( submenu != 5 | cnt <= 0 ) {
+			if ( submenu != 0 ) {
+				pos wx + 220, wy + 66 + cnt * 19 - 5
+				gcopy 3, 312, 336, 24, 24
+				pos wx + 358, wy + 66 + cnt * 19 - 5
+				gcopy 3, 336, 336, 24, 24
+			}
+		}
+		pos wx + 250, wy + 66 + cnt * 19
+		color 0, 0, 0
+		if ( submenu == 1 ) {
+			if ( cnt == 0 ) {
+				s = lang("なし", "Don't show"), lang("あり", "Show")
+				mes s(cfg_extrahelp)
+			}
+			if ( cnt == 1 ) {
+				s = lang("しない", "Attack"), lang("する", "Ignore")
+				mes s(cfg_ignoredislike)
+			}
+			if ( cnt == 2 ) {
+				s = lang("ｸｨｯｸﾒﾆｭｰ", "Quick menu"), lang("道具を振る", "Zap"), lang("割当なし", "Don't assign")
+				mes s(cfg_zkey)
+			}
+			if ( cnt == 3 ) {
+				s = lang("ｸｲｯｸｲﾝﾍﾞﾝﾄﾘ", "Quick Inv"), lang("道具を調べる", "Identify"), lang("割当なし", "Don't assign")
+				mes s(cfg_xkey)
+			}
+			if ( cnt == 4 ) {
+				if ( cfg_startrun >= 20 ) {
+					s = lang("走らない", "Don't run")
+					mes s
+				}
+				else {
+					s = lang("" + (cfg_startrun + 1) + "歩目から", "After " + (cfg_startrun + 1) + " steps")
+					mes s
+				}
+			}
+			if ( cnt == 5 ) {
+				mes "" + cfg_walkwait + " wait"
+			}
+			if ( cnt == 6 ) {
+				mes "" + cfg_attackwait + " wait"
+			}
+			if ( cnt == 7 ) {
+				s = lang("なし", "Don't show"), lang("一部表示", "Show"), lang("全表示", "Show Max")
+				mes s(cfg_record)
+			}
+			if ( cnt == 8 ) {
+				s = lang("全表示", "Show"), lang("味方以外", "Neutral"), lang("全非表示", "Don't show")
+				mes s(cfg_atk_select)
+			}
+			if ( cnt == 9 ) {
+				s = lang("特になし", "No Block"), lang("阻止あり", "Block")
+				mes s(cfg_dust_select)
+			}
+		}
+		if ( submenu == 2 ) {
+			if ( cnt == 0 ) {
+				s = lang("なし", "None"), lang("direct sound", "Direct sound"), "MCI"
+				mes s(cfg_sound2)
+			}
+			if ( cnt == 1 ) {
+				s = lang("なし", "None"), lang("direct music", "Direct music"), "MCI"
+				mes s(cfg_music2)
+			}
+			if ( cnt == 2 ) {
+				s = lang("ウィンドウ", "Window mode"), lang("フルスクリーン", "Full screen")
+				mes s(cfg_fullscreen2)
+			}
+			if ( cnt == 3 ) {
+				mes "" + windoww2 + " * " + windowh2
+			}
+			if ( cnt == 4 ) {
+				s = lang("しない", "No"), lang("する", "Yes")
+				mes s(cfg_scroll)
+			}
+			if ( cnt == 5 ) {
+				s = lang("しない", "No"), lang("する", "Yes")
+				mes s(cfg_alwayscenter)
+			}
+			if ( cnt == 6 ) {
+				s = lang("再生しない", "Don't play"), lang("再生する", "Play")
+				mes s(cfg_heart)
+			}
+			if ( cnt == 7 ) {
+				s = lang("アニメなし", "No"), lang("主人公のみ", "Only PC"), lang("味方側のみ", "Only Ally"), lang("全員あり", "All")
+				mes s(cfg_attackanime)
+			}
+			if ( cnt == 8 ) {
+				s = lang("アニメなし", "No animation"), lang("アニメあり", "Always")
+				mes s(cfg_env)
+			}
+			if ( cnt == 9 ) {
+				s = lang("高画質", "High"), lang("低画質", "Low")
+				mes s(cfg_shadow)
+			}
+			if ( cnt == 10 ) {
+				s = lang("なし（高速）", "No(Fast)"), lang("あり（低速）", "Yes(Slow)")
+				mes s(cfg_objectshadow)
+			}
+			if ( cnt == 11 ) {
+				s = lang("原寸表示", "Full-size"), lang("縮小表示", "Reduced")
+				mes s(cfg_pcc_show)
+			}
+		}
+		if ( submenu == 3 ) {
+			if ( cnt == 0 ) {
+				s = lang("しない", "No"), lang("する", "Yes")
+				mes s(cfg_net)
+			}
+			if ( cnt == 1 ) {
+				s = lang("しない", "No"), lang("する", "Yes")
+				mes s(cfg_netwish)
+			}
+			if ( cnt == 2 ) {
+				s = lang("しない", "No"), lang("する", "Yes")
+				mes s(cfg_netchat)
+			}
+		}
+		if ( submenu == 4 ) {
+			if ( cnt == 0 ) {
+				mes "" + cfg_runwait + " wait"
+			}
+			if ( cnt == 1 ) {
+				s = lang("しない", "No"), lang("する", "Yes")
+				mes s(cfg_autonumlock)
+			}
+			if ( cnt == 2 ) {
+				s = lang("オフ", "No"), lang("オン", "Yes")
+				mes s(cfg_titleeffect)
+			}
+			if ( cnt == 3 ) {
+				s = lang("オフ", "No"), lang("オン", "Yes")
+				mes "" + cfg_scrsync + " wait"
+			}
+			if ( cnt == 4 ) {
+				s = lang("しない", "No"), lang("する", "Yes")
+				mes s(cfg_runscroll)
+			}
+			if ( cnt == 5 ) {
+				s = lang("普通", "Normal"), lang("速め", "High"), lang("省略", "Highest")
+				mes s(cfg_autoturn)
+			}
+			if ( cnt == 6 ) {
+				s = lang("しない", "No"), lang("する", "Yes")
+				mes s(cfg_skiprandevents)
+			}
+			if ( cnt == 7 ) {
+				s = lang("しない", "No"), lang("する", "Yes"), lang("吊るし時のみ", "Sandbag")
+				mes s(cfg_dhyouji)
+			}
+			if ( cnt == 8 ) {
+				mes "" + cfg_animewait + " wait"
+			}
+		}
+		if ( submenu == 5 ) {
+			if ( cnt == 0 ) {
+				s = lang("使用しない", "Don't use"), lang("使用する", "Use")
+				mes s(cfg_joypad)
+			}
+			else {
+				if ( list(1, cnt) == (-1) ) {
+					mes lang("未設定", "Unassigned")
+				}
+				else {
+					mes lang("ボタン", "Button") + list(1, cnt)
+				}
+			}
+		}
+		if ( submenu == 6 ) {
+			if ( cnt == 2 ) {
+				s = lang("非表示", "No"), lang("表示", "Yes")
+				mes s(cfg_titledialog)
+			}
+			if ( cnt == 0 ) {
+				s = lang("しない", "No"), lang("する", "Yes")
+				mes s(cfg_msgaddtime)
+			}
+			if ( cnt == 1 ) {
+				mes "" + cfg_msgtrans * 10 + " %"
+			}
+		}
+		if ( submenu == 7 ) {
+			if ( cnt == 0 ) {
+				s = "Japanese", "English"
+				mes s(cfg_language)
+			}
+		}
+		if ( submenu == 8 ) {
+			if ( cnt == 0 ) {
+				s = lang("しない", "Off"), lang("する", "On")
+				mes s(cfg_dmgpopups)
+			}
+			if ( cnt == 1 ) {
+				s = lang("なし", "Don't show"), lang("あり", "Show")
+				mes s(cfg_dmgpopup_buffhex)
+			}
+			if ( cnt == 2 ) {
+				s = lang("なし", "Don't show"), lang("あり", "Show")
+				mes s(cfg_dmgpopup_con)
+			}
+			if ( cnt == 3 ) {
+				s = lang("なし", "Don't show"), lang("あり", "Show")
+				mes s(cfg_dmgpopup_evade)
+			}
+			if ( cnt == 4 ) {
+				mes "" + cfg_dmgfont
+			}
+			if ( cnt == 5 ) {
+				mes "" + cfg_dmgspeed
+			}
+		}
+	loop
+	if ( submenu != 0 ) {
+		if ( submenu != 5 ) {
+			pos wx + 40, wy + wh - 70
+			font lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0
+			color 0, 0, 0
+			s = lang("* 印のついた項目は、ゲームの再起動後に適用されます", "Items marked with * require a restart to apply changes.")
+			mes s
+		}
+	}
+	if ( submenu == 5 ) {
+		pos wx + 40, wy + wh - 110
+		font lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0
+		color 0, 0, 0
+		s = lang("ボタンを割り当てたい項目にカーソルをあわせて\nゲームパッドのボタンを押してください。(L),(R)の付いている\n項目は、メニュー画面でタブの移動に使われます。", "To assign a button, move the cursor to\nan item and press the button.")
+		mes s
+	}
+	if ( keyrange != 0 ) {
+		cs_bk = cs
+	}
+	redraw 1
+	await cfg_wait1
+	key_check
+	cursor_check
+	p = -1
+	repeat keyrange
+		if ( key == key_select(cnt) ) {
+			p = list(0, pagesize * page + cnt)
+			cs = cnt
+			break
+		}
+	loop
+	if ( p != (-1) ) {
+		if ( submenu == 0 ) {
+			submenu = p + 1
+			snd SOUNDLIST_OK1
+			goto *com_config
+		}
+	}
+	if ( submenu == 5 ) {
+		if ( cs > 0 ) {
+			DIGETJOYSTATE j, 0
+			f = 0
+			repeat 12
+				HMMBITCHECK j, 4 + cnt
+				if ( stat ) {
+					p = cnt
+					valn = ""
+					repeat 12
+						jkey(cnt) = ""
+					loop
+					list(1, cs) = p
+					repeat 19, 1
+						if ( cs == cnt ) {
+							continue
+						}
+						list(1, cnt)--
+						if ( list(1, cnt) == p | list(1, cnt) <= (-1) ) {
+							list(1, cnt) = 12
+						}
+					loop
+					valn = "key_enter.", key_enter, "" + list(1, 1), ""
+					jkey(list(1, 1)) = "" + key_enter
+					gosub *cfg_write
+					valn = "key_cancel.", key_cancel, "" + list(1, 2), ""
+					jkey(list(1, 2)) = "" + key_cancel
+					gosub *cfg_write
+					valn = "key_quickinv.", key_quickinv, "" + list(1, 3), ""
+					jkey(list(1, 3)) = "" + key_quickinv
+					gosub *cfg_write
+					valn = "key_quick.", key_quick, "" + list(1, 4), ""
+					jkey(list(1, 4)) = "" + key_quick
+					gosub *cfg_write
+					valn = "key_alter.", key_alter, "" + list(1, 5), ""
+					jkey(list(1, 5)) = "" + key_alter
+					gosub *cfg_write
+					valn = "key_get.", key_get, "" + list(1, 6), ""
+					jkey(list(1, 6)) = "" + key_get
+					gosub *cfg_write
+					valn = "key_fire.", key_fire, "" + list(1, 7), ""
+					jkey(list(1, 7)) = "" + key_fire
+					gosub *cfg_write
+					valn = "key_target.", key_target, "" + list(1, 8), ""
+					jkey(list(1, 8)) = "" + key_target
+					gosub *cfg_write
+					valn = "key_esc.", key_esc, "" + list(1, 9), ""
+					jkey(list(1, 9)) = "" + key_esc
+					gosub *cfg_write
+					valn = "key_help.", key_help, "" + list(1, 10), ""
+					jkey(list(1, 10)) = "" + key_help
+					gosub *cfg_write
+					valn = "key_charainfo.", key_charainfo, "" + list(1, 11), ""
+					jkey(list(1, 11)) = "" + key_charainfo
+					gosub *cfg_write
+					valn = "key_ammo.", key_ammo, "" + list(1, 12), ""
+					jkey(list(1, 12)) = "" + key_ammo
+					gosub *cfg_write
+					p = 0, cnvjkey(key_enter), cnvjkey(key_cancel), cnvjkey(key_quickinv), cnvjkey(key_quick), cnvjkey(key_alter), cnvjkey(key_get), cnvjkey(key_fire), cnvjkey(key_target), cnvjkey(key_esc), cnvjkey(key_help), cnvjkey(key_charainfo), cnvjkey(key_ammo)
+					repeat 19, 1
+						list(1, cnt) = p(cnt)
+					loop
+					f = 1
+					break
+				}
+			loop
+			if ( f ) {
+				snd SOUNDLIST_OK1
+				await 200
+				goto *com_config_loop
+			}
+		}
+	}
+	if ( key == key_pageup | key == key_pagedown ) {
+		if ( key == key_pageup ) {
+			p = 1
+		}
+		else {
+			p = -1
+		}
+		if ( submenu == 1 ) {
+			if ( cs == 0 ) {
+				cfg_extrahelp += p
+				if ( cfg_extrahelp > 1 ) {
+					cfg_extrahelp = 1
+				}
+				else {
+					if ( cfg_extrahelp < 0 ) {
+						cfg_extrahelp = 0
+					}
+				}
+				snd SOUNDLIST_OK1
+				valn = "extraHelp.", str(cfg_extrahelp)
+				gosub *cfg_write
+				goto *com_config_loop
+			}
+			if ( cs == 1 ) {
+				cfg_ignoredislike += p
+				if ( cfg_ignoredislike > 1 ) {
+					cfg_ignoredislike = 1
+				}
+				else {
+					if ( cfg_ignoredislike < 0 ) {
+						cfg_ignoredislike = 0
+					}
+				}
+				snd SOUNDLIST_OK1
+				valn = "ignoreDislike.", str(cfg_ignoredislike)
+				gosub *cfg_write
+				goto *com_config_loop
+			}
+			if ( cs == 2 ) {
+				cfg_zkey += p
+				if ( cfg_zkey > 2 ) {
+					cfg_zkey = 2
+				}
+				else {
+					if ( cfg_zkey < 0 ) {
+						cfg_zkey = 0
+					}
+				}
+				snd SOUNDLIST_OK1
+				valn = "zkey.", str(cfg_zkey)
+				gosub *cfg_write
+				goto *com_config_loop
+			}
+			if ( cs == 3 ) {
+				cfg_xkey += p
+				if ( cfg_xkey > 2 ) {
+					cfg_xkey = 2
+				}
+				else {
+					if ( cfg_xkey < 0 ) {
+						cfg_xkey = 0
+					}
+				}
+				snd SOUNDLIST_OK1
+				valn = "xkey.", str(cfg_xkey)
+				gosub *cfg_write
+				goto *com_config_loop
+			}
+			if ( cs == 4 ) {
+				cfg_startrun += p
+				if ( cfg_startrun > 20 ) {
+					cfg_startrun = 20
+				}
+				else {
+					if ( cfg_startrun < 0 ) {
+						cfg_startrun = 0
+					}
+				}
+				snd SOUNDLIST_OK1
+				valn = "startRun.", str(cfg_startrun)
+				gosub *cfg_write
+				goto *com_config_loop
+			}
+			if ( cs == 5 ) {
+				cfg_walkwait += p
+				if ( cfg_walkwait > 10 ) {
+					cfg_walkwait = 10
+				}
+				else {
+					if ( cfg_walkwait < 1 ) {
+						cfg_walkwait = 1
+					}
+				}
+				snd SOUNDLIST_OK1
+				valn = "walkWait.", str(cfg_walkwait)
+				gosub *cfg_write
+				goto *com_config_loop
+			}
+			if ( cs == 6 ) {
+				cfg_attackwait += p
+				if ( cfg_attackwait > 20 ) {
+					cfg_attackwait = 20
+				}
+				else {
+					if ( cfg_attackwait < 1 ) {
+						cfg_attackwait = 1
+					}
+				}
+				snd SOUNDLIST_OK1
+				valn = "attackWait.", str(cfg_attackwait)
+				gosub *cfg_write
+				goto *com_config_loop
+			}
+			if ( cs == 7 ) {
+				cfg_record += p
+				if ( cfg_record > 2 ) {
+					cfg_record = 2
+				}
+				else {
+					if ( cfg_record < 0 ) {
+						cfg_record = 0
+					}
+				}
+				snd SOUNDLIST_OK1
+				valn = "record.", str(cfg_record)
+				gosub *cfg_write
+				goto *com_config_loop
+			}
+			if ( cs == 8 ) {
+				cfg_atk_select += p
+				if ( cfg_atk_select > 2 ) {
+					cfg_atk_select = 2
+				}
+				else {
+					if ( cfg_atk_select < 0 ) {
+						cfg_atk_select = 0
+					}
+				}
+				snd SOUNDLIST_OK1
+				valn = "atk_select.", str(cfg_atk_select)
+				gosub *cfg_write
+				goto *com_config_loop
+			}
+			if ( cs == 9 ) {
+				cfg_dust_select += p
+				if ( cfg_dust_select > 1 ) {
+					cfg_dust_select = 1
+				}
+				else {
+					if ( cfg_dust_select < 0 ) {
+						cfg_dust_select = 0
+					}
+				}
+				snd SOUNDLIST_OK1
+				valn = "dust_select.", str(cfg_dust_select)
+				gosub *cfg_write
+				goto *com_config_loop
+			}
+		}
+		if ( submenu == 2 ) {
+			if ( cs == 0 ) {
+				cfg_sound2 += p
+				if ( cfg_sound2 > 2 ) {
+					cfg_sound2 = 2
+				}
+				else {
+					if ( cfg_sound2 < 0 ) {
+						cfg_sound2 = 0
+					}
+				}
+				snd SOUNDLIST_OK1
+				valn = "sound.", str(cfg_sound2)
+				gosub *cfg_write
+				goto *com_config_loop
+			}
+			if ( cs == 1 ) {
+				cfg_music2 += p
+				if ( cfg_music2 > 2 ) {
+					cfg_music2 = 2
+				}
+				else {
+					if ( cfg_music2 < 0 ) {
+						cfg_music2 = 0
+					}
+				}
+				snd SOUNDLIST_OK1
+				valn = "music.", str(cfg_music2)
+				gosub *cfg_write
+				goto *com_config_loop
+			}
+			if ( cs == 2 ) {
+				cfg_fullscreen2 += p
+				if ( cfg_fullscreen2 > 1 ) {
+					cfg_fullscreen2 = 1
+				}
+				else {
+					if ( cfg_fullscreen2 < 0 ) {
+						cfg_fullscreen2 = 0
+					}
+				}
+				snd SOUNDLIST_OK1
+				valn = "fullscreen.", str(cfg_fullscreen2)
+				gosub *cfg_write
+				goto *com_config_loop
+			}
+			if ( cs == 4 ) {
+				cfg_scroll += p
+				if ( cfg_scroll > 1 ) {
+					cfg_scroll = 1
+				}
+				else {
+					if ( cfg_scroll < 0 ) {
+						cfg_scroll = 0
+					}
+				}
+				snd SOUNDLIST_OK1
+				valn = "scroll.", str(cfg_scroll)
+				gosub *cfg_write
+				goto *com_config_loop
+			}
+			if ( cs == 5 ) {
+				cfg_alwayscenter += p
+				if ( cfg_alwayscenter > 1 ) {
+					cfg_alwayscenter = 1
+				}
+				else {
+					if ( cfg_alwayscenter < 0 ) {
+						cfg_alwayscenter = 0
+					}
+				}
+				snd SOUNDLIST_OK1
+				valn = "alwaysCenter.", str(cfg_alwayscenter)
+				gosub *cfg_write
+				goto *com_config_loop
+			}
+			if ( cs == 6 ) {
+				cfg_heart += p
+				if ( cfg_heart > 1 ) {
+					cfg_heart = 1
+				}
+				else {
+					if ( cfg_heart < 0 ) {
+						cfg_heart = 0
+					}
+				}
+				snd SOUNDLIST_OK1
+				valn = "heartbeat.", str(cfg_heart)
+				gosub *cfg_write
+				goto *com_config_loop
+			}
+			if ( cs == 7 ) {
+				cfg_attackanime += p
+				if ( cfg_attackanime > 3 ) {
+					cfg_attackanime = 3
+				}
+				else {
+					if ( cfg_attackanime < 0 ) {
+						cfg_attackanime = 0
+					}
+				}
+				snd SOUNDLIST_OK1
+				valn = "attackAnime.", str(cfg_attackanime)
+				gosub *cfg_write
+				goto *com_config_loop
+			}
+			if ( cs == 8 ) {
+				cfg_env += p
+				if ( cfg_env > 1 ) {
+					cfg_env = 1
+				}
+				else {
+					if ( cfg_env < 0 ) {
+						cfg_env = 0
+					}
+				}
+				snd SOUNDLIST_OK1
+				valn = "envEffect.", str(cfg_env)
+				gosub *cfg_write
+				goto *com_config_loop
+			}
+			if ( cs == 9 ) {
+				cfg_shadow += p
+				if ( cfg_shadow > 1 ) {
+					cfg_shadow = 1
+				}
+				else {
+					if ( cfg_shadow < 0 ) {
+						cfg_shadow = 0
+					}
+				}
+				snd SOUNDLIST_OK1
+				valn = "shadow.", str(cfg_shadow)
+				gosub *cfg_write
+				goto *com_config_loop
+			}
+			if ( cs == 10 ) {
+				cfg_objectshadow += p
+				if ( cfg_objectshadow > 1 ) {
+					cfg_objectshadow = 1
+				}
+				else {
+					if ( cfg_objectshadow < 0 ) {
+						cfg_objectshadow = 0
+					}
+				}
+				snd SOUNDLIST_OK1
+				valn = "objectShadow.", str(cfg_objectshadow)
+				gosub *cfg_write
+				goto *com_config_loop
+			}
+			if ( cs == 11 ) {
+				cfg_pcc_show += p
+				if ( cfg_pcc_show > 1 ) {
+					cfg_pcc_show = 1
+				}
+				else {
+					if ( cfg_pcc_show < 0 ) {
+						cfg_pcc_show = 0
+					}
+				}
+				snd SOUNDLIST_OK1
+				valn = "Pcc_show.", str(cfg_pcc_show)
+				gosub *cfg_write
+				goto *com_config_loop
+			}
+			if ( cs == 3 ) {
+                dim x, 20
+                dim y, 20
+                x = 800, 1024, 1152, 1280, 1280, 1280, 1280, 1280, 1360, 1366, 1440, 1600, 1600, 1600, 1680, 1920, 1920
+                y = 600, 768,  864,  720,  768,  800,  960,  1024, 768,  768,  900,  900,  1024, 1200, 1050, 1080, 1200
+				i = 0
+				repeat 17
+					if ( windoww2 == x(cnt) ) {
+						if ( windowh2 == y(cnt) ) {
+							i = cnt
+							break
+						}
+					}
+				loop
+				i += p
+				if ( i < 0 ) {
+					i = 0
+				}
+				else {
+					if ( i > 16 ) {
+						i = 16
+					}
+				}
+				windoww2 = x(i)
+				windowh2 = y(i)
+				valn = "windowW.", "" + windoww2
+				gosub *cfg_write
+				valn = "windowH.", "" + windowh2
+				gosub *cfg_write
+				snd SOUNDLIST_OK1
+				goto *com_config_loop
+			}
+		}
+		if ( submenu == 3 ) {
+			if ( cs == 0 ) {
+				cfg_net += p
+				if ( cfg_net > 1 ) {
+					cfg_net = 1
+				}
+				else {
+					if ( cfg_net < 0 ) {
+						cfg_net = 0
+					}
+				}
+				snd SOUNDLIST_OK1
+				valn = "net.", str(cfg_net)
+				gosub *cfg_write
+				goto *com_config_loop
+			}
+			if ( cs == 1 ) {
+				cfg_netwish += p
+				if ( cfg_netwish > 1 ) {
+					cfg_netwish = 1
+				}
+				else {
+					if ( cfg_netwish < 0 ) {
+						cfg_netwish = 0
+					}
+				}
+				snd SOUNDLIST_OK1
+				valn = "netWish.", str(cfg_netwish)
+				gosub *cfg_write
+				goto *com_config_loop
+			}
+			if ( cs == 2 ) {
+				cfg_netchat += p
+				if ( cfg_netchat > 1 ) {
+					cfg_netchat = 1
+				}
+				else {
+					if ( cfg_netchat < 0 ) {
+						cfg_netchat = 0
+					}
+				}
+				snd SOUNDLIST_OK1
+				valn = "netChat.", str(cfg_netchat)
+				gosub *cfg_write
+				goto *com_config_loop
+			}
+		}
+		if ( submenu == 4 ) {
+			if ( cs == 0 ) {
+				cfg_runwait += p
+				if ( cfg_runwait > 5 ) {
+					cfg_runwait = 5
+				}
+				else {
+					if ( cfg_runwait < 2 ) {
+						cfg_runwait = 2
+					}
+				}
+				snd SOUNDLIST_OK1
+				valn = "runWait.", str(cfg_runwait)
+				gosub *cfg_write
+				goto *com_config_loop
+			}
+			if ( cs == 1 ) {
+				cfg_autonumlock += p
+				if ( cfg_autonumlock > 1 ) {
+					cfg_autonumlock = 1
+				}
+				else {
+					if ( cfg_autonumlock < 0 ) {
+						cfg_autonumlock = 0
+					}
+				}
+				snd SOUNDLIST_OK1
+				valn = "autoNumlock.", str(cfg_autonumlock)
+				gosub *cfg_write
+				goto *com_config_loop
+			}
+			if ( cs == 2 ) {
+				cfg_titleeffect += p
+				if ( cfg_titleeffect > 1 ) {
+					cfg_titleeffect = 1
+				}
+				else {
+					if ( cfg_titleeffect < 0 ) {
+						cfg_titleeffect = 0
+					}
+				}
+				snd SOUNDLIST_OK1
+				valn = "titleEffect.", str(cfg_titleeffect)
+				gosub *cfg_write
+				goto *com_config_loop
+			}
+			if ( cs == 3 ) {
+				cfg_scrsync += p
+				if ( cfg_scrsync > 25 ) {
+					cfg_scrsync = 25
+				}
+				else {
+					if ( cfg_scrsync < 2 ) {
+						cfg_scrsync = 2
+					}
+				}
+				snd SOUNDLIST_OK1
+				valn = "scr_sync.", str(cfg_scrsync)
+				gosub *cfg_write
+				goto *com_config_loop
+			}
+			if ( cs == 4 ) {
+				cfg_runscroll += p
+				if ( cfg_runscroll > 1 ) {
+					cfg_runscroll = 1
+				}
+				else {
+					if ( cfg_runscroll < 0 ) {
+						cfg_runscroll = 0
+					}
+				}
+				snd SOUNDLIST_OK1
+				valn = "scroll_run.", str(cfg_runscroll)
+				gosub *cfg_write
+				goto *com_config_loop
+			}
+			if ( cs == 5 ) {
+				cfg_autoturn += p
+				if ( cfg_autoturn > 2 ) {
+					cfg_autoturn = 2
+				}
+				else {
+					if ( cfg_autoturn < 0 ) {
+						cfg_autoturn = 0
+					}
+				}
+				snd SOUNDLIST_OK1
+				valn = "autoTurnType.", str(cfg_autoturn)
+				gosub *cfg_write
+				goto *com_config_loop
+			}
+			if ( cs == 6 ) {
+				cfg_skiprandevents += p
+				if ( cfg_skiprandevents > 1 ) {
+					cfg_skiprandevents = 1
+				}
+				else {
+					if ( cfg_skiprandevents < 0 ) {
+						cfg_skiprandevents = 0
+					}
+				}
+				snd SOUNDLIST_OK1
+				valn = "skipRandEvents.", str(cfg_skiprandevents)
+				gosub *cfg_write
+				goto *com_config_loop
+			}
+			if ( cs == 7 ) {
+				cfg_dhyouji += p
+				if ( cfg_dhyouji > 2 ) {
+					cfg_dhyouji = 2
+				}
+				else {
+					if ( cfg_dhyouji < 0 ) {
+						cfg_dhyouji = 0
+					}
+				}
+				snd SOUNDLIST_OK1
+				valn = "damage_show.", str(cfg_dhyouji)
+				gosub *cfg_write
+				goto *com_config_loop
+			}
+			if ( cs == 8 ) {
+				cfg_animewait += p
+				if ( cfg_animewait > 20 ) {
+					cfg_animewait = 20
+				}
+				else {
+					if ( cfg_animewait < 0 ) {
+						cfg_animewait = 0
+					}
+				}
+				snd SOUNDLIST_OK1
+				valn = "anime_wait.", str(cfg_animewait)
+				gosub *cfg_write
+				goto *com_config_loop
+			}
+		}
+		if ( submenu == 5 ) {
+			if ( cs == 0 ) {
+				cfg_joypad += p
+				if ( cfg_joypad > 1 ) {
+					cfg_joypad = 1
+				}
+				else {
+					if ( cfg_joypad < 0 ) {
+						cfg_joypad = 0
+					}
+				}
+				snd SOUNDLIST_OK1
+				valn = "joypad.", str(cfg_joypad)
+				gosub *cfg_write
+				goto *com_config_loop
+			}
+		}
+		if ( submenu == 6 ) {
+			if ( cs == 0 ) {
+				cfg_msgaddtime += p
+				if ( cfg_msgaddtime > 1 ) {
+					cfg_msgaddtime = 1
+				}
+				else {
+					if ( cfg_msgaddtime < 0 ) {
+						cfg_msgaddtime = 0
+					}
+				}
+				snd SOUNDLIST_OK1
+				valn = "msg_addTime.", str(cfg_msgaddtime)
+				gosub *cfg_write
+				goto *com_config_loop
+			}
+			if ( cs == 1 ) {
+				cfg_msgtrans += p
+				if ( cfg_msgtrans > 5 ) {
+					cfg_msgtrans = 5
+				}
+				else {
+					if ( cfg_msgtrans < 0 ) {
+						cfg_msgtrans = 0
+					}
+				}
+				snd SOUNDLIST_OK1
+				valn = "msg_trans.", str(cfg_msgtrans)
+				gosub *cfg_write
+				goto *com_config_loop
+			}
+			if ( cs == 2 ) {
+				cfg_titledialog += p
+				if ( cfg_titledialog > 1 ) {
+					cfg_titledialog = 1
+				}
+				else {
+					if ( cfg_titledialog < 0 ) {
+						cfg_titledialog = 0
+					}
+				}
+				snd SOUNDLIST_OK1
+				valn = "title_dialog.", str(cfg_titledialog)
+				gosub *cfg_write
+				goto *com_config_loop
+			}
+		}
+		if ( submenu == 7 ) {
+			if ( cs == 0 ) {
+				cfg_language += p
+				if ( cfg_language > 1 ) {
+					cfg_language = 1
+				}
+				else {
+					if ( cfg_language < 0 ) {
+						cfg_language = 0
+					}
+				}
+				snd SOUNDLIST_OK1
+				valn = "language.", str(cfg_language)
+				gosub *cfg_write
+				goto *com_config_loop
+			}
+		}
+		if ( submenu == 8 ) {
+            snd SOUNDLIST_OK1
+			if ( cs == 0 ) {
+				setBoolOption cfg_dmgpopups, "dmgPopups"
+			}
+			if ( cs == 1 ) {
+				setBoolOption cfg_dmgpopup_buffhex, "dmgPopupBuffHex"
+			}
+			if ( cs == 2 ) {
+				setBoolOption cfg_dmgpopup_con, "dmgPopupCon"
+			}
+			if ( cs == 3 ) {
+				setBoolOption cfg_dmgpopup_evade, "dmgPopupEvade"
+			}
+			if ( cs == 4 ) {
+				setOption cfg_dmgfont, "dmgPopupFontSize", 8, 30
+			}
+			if ( cs == 5 ) {
+				setOption cfg_dmgspeed, "dmgPopupSpeed", 1, 50
+			}
+		}
+	}
+	if ( key == key_cancel ) {
+		if ( submenu != 0 ) {
+			submenu = 0
+			goto *com_config
+		}
+		gosub *config_load
+		if ( mode == MODELIST_MAIN ) {
+			if ( cfg_net ) {
+				gosub *net_init
+			}
+			gosub *screen_draw
+			goto *pc_turn
+		}
+		else {
+			goto *game_title
+		}
+	}
+	goto *com_config_loop_WHILE1
