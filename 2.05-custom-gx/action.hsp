@@ -4983,6 +4983,15 @@
 				else {
 					txt lang(aln(cc) + "攻撃をかわされた。", name(cc) + " miss" + _s(cc, 1) + " " + name(tc) + ".")
 				}
+
+                /********** RUIN0X11 CUSTOM - BEGINNING **********/
+
+                if ( synccheck(tc, -1) ) {
+                    DamagePopupAdd "Miss", tc, DMGPOPUP_MISS, 0
+                }
+
+                /********** RUIN0X11 CUSTOM - ENDING **********/
+
 			}
 		}
 		if ( hit == (-2) ) {
@@ -4997,6 +5006,15 @@
 				else {
 					txt lang(aln(cc) + "攻撃を華麗にかわされた。", name(tc) + " skillfully evade" + _s(tc) + " " + name(cc) + ".")
 				}
+
+                /********** RUIN0X11 CUSTOM - BEGINNING **********/
+
+                if ( synccheck(tc, -1) ) {
+                    DamagePopupAdd "Evade", tc, DMGPOPUP_EVADE, 0
+                }
+
+                /********** RUIN0X11 CUSTOM - ENDING **********/
+
 			}
 		}
 	}

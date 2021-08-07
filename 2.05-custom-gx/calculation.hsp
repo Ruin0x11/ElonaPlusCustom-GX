@@ -1569,8 +1569,8 @@
 		if ( cdata(CDATA_CONDITION_SLEEP, r1) > 0 ) {
 			cdata(CDATA_EMO_ICON, r1) = 14 + 100
 		}
-		healhp r1, 1
-		healmp r1, 1
+		healhp r1, 1, FALSE
+		healmp r1, 1, FALSE
 	}
 	if ( cdata(CDATA_CONDITION_POISON, r1) > 0 ) {
 		dmghp r1, rnd(2 + sdata(SKILL_ATTR_CON, r1) / 10), DAMAGE_FROM_POISON
@@ -2081,13 +2081,13 @@
 				}
 			}
 			if ( rnd(6) == 0 | findbuff(r1, BUFF_REGENERATION) != (-1) ) {
-				healhp r1, iyasi
+				healhp r1, iyasi, FALSE
 			}
 			if ( rnd(6) == 0 & cdata(CDATA_HUNGER, r1) >= 10000 ) {
-				healhp r1, iyasi
+				healhp r1, iyasi, FALSE
 			}
 			if ( rnd(5) == 0 ) {
-				healmp r1, rnd(sdata(SKILL_NORMAL_MEDITATION, r1) / 2 + 1) + 1
+				healmp r1, rnd(sdata(SKILL_NORMAL_MEDITATION, r1) / 2 + 1) + 1, FALSE
 			}
 			if ( rnd(1000) == 0 ) {
 				if ( cdata(CDATA_QUALITY, r1) >= FIX_QUALITY_MIRACLE ) {
@@ -2102,7 +2102,7 @@
 		if ( cdata(CDATA_GOD, CHARA_PLAYER) == GOD_KUMIROMI ) {
 			if ( cdata(CDATA_TURN, CHARA_PLAYER) \ 2 == 0 ) {
 				if ( cdata(CDATA_ROW_ACT, CHARA_PLAYER) == ACTION_NONE ) {
-					healsp CHARA_PLAYER, 1
+					healsp CHARA_PLAYER, 1, FALSE
 				}
 			}
 		}

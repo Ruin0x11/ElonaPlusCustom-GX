@@ -1772,6 +1772,18 @@
 
 		/********** BLOODYSHADE CUSTOM - ENDING **********/
 
+		/********** RUIN0X11 CUSTOM - BEGINNING **********/
+
+        if ( bufftxt(0, addbuff_buffid) != "" & synccheck(addbuff_charid, -1) ) {
+            buff_popup_type = DMGPOPUP_ADD_BUFF
+            if ( bdataref(BDATAREF_BUFF_TYPE, addbuff_buffid) == BUFF_TYPE_HEX ) {
+                buff_popup_type = DMGPOPUP_ADD_HEX
+            }
+            DamagePopupAdd buffname(addbuff_buffid), addbuff_charid, buff_popup_type, addbuff_buffid
+        }
+
+		/********** RUIN0X11 CUSTOM - ENDING **********/
+
 	}
 	cdata(STARTING_CDATA_BUFF + locvar_addbuff_p * ARRAY_CDATA_BUFF, addbuff_charid) = addbuff_buffid, addbuff_arg3, locvar_addbuff_fixeddur
 	r1 = addbuff_charid
@@ -1812,6 +1824,19 @@
 			}
 		}
 	loop
+
+    /********** RUIN0X11 CUSTOM - BEGINNING **********/
+
+    if ( bufftxt(0, delbuff_buffid) != "" & synccheck(delbuff_charid, -1) ) {
+        buff_popup_type = DMGPOPUP_REMOVE_BUFF
+        if ( bdataref(BDATAREF_BUFF_TYPE, delbuff_buffid) == BUFF_TYPE_HEX ) {
+            buff_popup_type = DMGPOPUP_REMOVE_HEX
+        }
+        DamagePopupAdd buffname(delbuff_buffid), delbuff_charid, buff_popup_type, delbuff_buffid
+    }
+
+    /********** RUIN0X11 CUSTOM - ENDING **********/
+
 	r1 = delbuff_charid
 	gosub *charaRefresh
 	return
@@ -2398,6 +2423,7 @@
 					txtmore
 					txtef COLOR_PURPLE
 					txt lang(name(dmgcon_charid) + "は盲目になった。", name(dmgcon_charid) + " " + is(dmgcon_charid) + " blinded.")
+                    DamagePopupAdd "" + _conblind, dmgcon_charid, DMGPOPUP_ADD_CONDITION, CONDITION_BLIND
 				}
 			}
 			rowactend dmgcon_charid
@@ -2426,6 +2452,7 @@
 					txtmore
 					txtef COLOR_PURPLE
 					txt lang(name(dmgcon_charid) + "は怯んだ。", name(dmgcon_charid) + " " + is(dmgcon_charid) + " faltered.")
+                    DamagePopupAdd "" + _conkaen, dmgcon_charid, DMGPOPUP_ADD_CONDITION, CONDITION_ASH_BODY
 				}
 			}
 			rowactend dmgcon_charid
@@ -2454,6 +2481,7 @@
 					txtmore
 					txtef COLOR_PURPLE
 					txt lang(name(dmgcon_charid) + "は震え始めた。", name(dmgcon_charid) + " began trembling.")
+                    DamagePopupAdd "" + _conovergods, dmgcon_charid, DMGPOPUP_ADD_CONDITION, CONDITION_OVERGODS
 				}
 			}
 			rowactend dmgcon_charid
@@ -2469,6 +2497,7 @@
 					txtmore
 					txtef COLOR_PURPLE
 					txt lang(name(dmgcon_charid) + "は転倒した。", name(dmgcon_charid) + " " + was(dmgcon_charid) + " knocked down.")
+                    DamagePopupAdd "" + _coninvert, dmgcon_charid, DMGPOPUP_ADD_CONDITION, CONDITION_INVERT
 				}
 			}
 			rowactend dmgcon_charid
@@ -2509,6 +2538,7 @@
 					txtmore
 					txtef COLOR_PURPLE
 					txt lang(name(dmgcon_charid) + "は混乱した。", name(dmgcon_charid) + " " + is(dmgcon_charid) + " confused.")
+                    DamagePopupAdd "" + _conconfuse, dmgcon_charid, DMGPOPUP_ADD_CONDITION, CONDITION_CONFUSE
 				}
 			}
 			rowactend dmgcon_charid
@@ -2540,6 +2570,7 @@
 					txtmore
 					txtef COLOR_PURPLE
 					txt lang(name(dmgcon_charid) + "は麻痺した。", name(dmgcon_charid) + " " + is(dmgcon_charid) + " paralyzed.")
+                    DamagePopupAdd "" + _conparalyze, dmgcon_charid, DMGPOPUP_ADD_CONDITION, CONDITION_PARALYZE
 				}
 			}
 			rowactend dmgcon_charid
@@ -2562,6 +2593,7 @@
 					txtmore
 					txtef COLOR_PURPLE
 					txt lang(name(dmgcon_charid) + "は魔力を漏らし始めた。", name(dmgcon_charid) + " began to leak MP.")
+                    DamagePopupAdd "" + _conmpoison, dmgcon_charid, DMGPOPUP_ADD_CONDITION, CONDITION_MPOISON
 				}
 			}
 			else {
@@ -2596,6 +2628,7 @@
 					txtmore
 					txtef COLOR_PURPLE
 					txt lang(name(dmgcon_charid) + "は毒におかされた。", name(dmgcon_charid) + " " + is(dmgcon_charid) + " poisoned.")
+                    DamagePopupAdd "" + _conpoison, dmgcon_charid, DMGPOPUP_ADD_CONDITION, CONDITION_POISON
 				}
 			}
 			else {
@@ -2630,6 +2663,7 @@
 					txtmore
 					txtef COLOR_PURPLE
 					txt lang(name(dmgcon_charid) + "は眠りにおちた。", name(dmgcon_charid) + " fall" + _s(dmgcon_charid) + " asleep.")
+                    DamagePopupAdd "" + _consleep, dmgcon_charid, DMGPOPUP_ADD_CONDITION, CONDITION_SLEEP
 				}
 			}
 			rowactend dmgcon_charid
@@ -2664,6 +2698,7 @@
 			if ( synccheck(dmgcon_charid, -1) ) {
 				txtmore
 				txt lang(name(dmgcon_charid) + "は恐怖に侵された。", name(dmgcon_charid) + " " + is(dmgcon_charid) + " frightened.")
+                DamagePopupAdd "" + _confear, dmgcon_charid, DMGPOPUP_ADD_CONDITION, CONDITION_FEAR
 			}
 		}
 		return 1
@@ -2693,6 +2728,7 @@
 					txtmore
 					txtef COLOR_PURPLE
 					txt lang(name(dmgcon_charid) + "は朦朧とした。", name(dmgcon_charid) + " " + is(dmgcon_charid) + " dimmed.")
+                    DamagePopupAdd "" + _condim, dmgcon_charid, DMGPOPUP_ADD_CONDITION, CONDITION_DIM
 				}
 			}
 			rowactend dmgcon_charid
@@ -2711,6 +2747,7 @@
 					txtmore
 					txtef COLOR_PURPLE
 					txt lang(name(dmgcon_charid) + "は血を流し始めた。", name(dmgcon_charid) + " begin" + _s(dmgcon_charid) + " to bleed.")
+                    DamagePopupAdd "" + _conbleed, dmgcon_charid, DMGPOPUP_ADD_CONDITION, CONDITION_BLEED
 				}
 			}
 			else {
@@ -2729,6 +2766,7 @@
 				if ( synccheck(dmgcon_charid, -1) ) {
 					txtmore
 					txt lang(name(dmgcon_charid) + "は酔っ払った。", name(dmgcon_charid) + " get" + _s(dmgcon_charid) + " drunk.")
+                    DamagePopupAdd "" + _condrunk, dmgcon_charid, DMGPOPUP_ADD_CONDITION, CONDITION_DRUNK
 				}
 			}
 			else {
@@ -2755,6 +2793,7 @@
 					txtmore
 					txtef COLOR_PURPLE
 					txt lang(name(dmgcon_charid) + "は気が狂った。", name(dmgcon_charid) + " become" + _s(dmgcon_charid) + " insane.")
+                    DamagePopupAdd "" + _coninsane, dmgcon_charid, DMGPOPUP_ADD_CONDITION, CONDITION_INSANE
 				}
 			}
 			else {
@@ -2773,6 +2812,7 @@
 					txtmore
 					txtef COLOR_PURPLE
 					txt lang(name(dmgcon_charid) + "は病気になった。", name(dmgcon_charid) + " get" + _s(dmgcon_charid) + " sick.")
+                    DamagePopupAdd "" + _consick, dmgcon_charid, DMGPOPUP_ADD_CONDITION, CONDITION_SICK
 				}
 				if ( dmgcon_charid == CHARA_PLAYER ) {
 					item_find ITEM_ID_AMULET_OF_JURE, 3, 1
@@ -2783,6 +2823,7 @@
 								txtef COLOR_GREEN
 								txt lang("しかし健康のお守りが輝き、瞬く間に病気が完治した。", "But the Amulet of Jure shines brightly for a moment, instantly curing the sickness.")
 								cdata(CDATA_CONDITION_SICK, dmgcon_charid) = 0
+                                DamagePopupAdd "" + _consick, dmgcon_charid, DMGPOPUP_REMOVE_CONDITION, CONDITION_SICK
 							}
 						}
 					}
@@ -2807,14 +2848,25 @@
 	}
 	return
 
-#deffunc healhp int healhp_charid, int healhp_amount
+#define global healhp(%1,%2,%3=1) _healhp %1, %2, %3
+#deffunc _healhp int healhp_charid, int healhp_amount, int healhp_showpopup
 	cdata(CDATA_HP, healhp_charid) += healhp_amount
 	if ( cdata(CDATA_HP, healhp_charid) > cdata(CDATA_MAX_HP, healhp_charid) ) {
 		cdata(CDATA_HP, healhp_charid) = cdata(CDATA_MAX_HP, healhp_charid)
 	}
+
+    /********** RUIN0X11 CUSTOM - BEGINNING **********/
+
+    if ( healhp_showpopup & synccheck(healhp_charid, -1) ) {
+        DamagePopupAdd "" + healhp_amount, healhp_charid, DMGPOPUP_HEAL, 0
+    }
+
+    /********** RUIN0X11 CUSTOM - ENDING **********/
+
 	return
 
-#deffunc healmp int healmp_charid, int healmp_amount
+#define global healmp(%1,%2,%3=1) _healmp %1, %2, %3
+#deffunc _healmp int healmp_charid, int healmp_amount, int healmp_showpopup
 	cdata(CDATA_MP, healmp_charid) += healmp_amount
 	if ( cdata(CDATA_MP, healmp_charid) > cdata(CDATA_MAX_MP, healmp_charid) ) {
 		cdata(CDATA_MP, healmp_charid) = cdata(CDATA_MAX_MP, healmp_charid)
@@ -2825,9 +2877,19 @@
 			cdata(CDATA_CONDITION_MPOISON, healmp_charid) = 1
 		}
 	}
+
+    /********** RUIN0X11 CUSTOM - BEGINNING **********/
+
+    if ( healmp_showpopup & synccheck(healmp_charid, -1) ) {
+        DamagePopupAdd "" + healmp_amount, healmp_charid, DMGPOPUP_HEAL_MP, 0
+    }
+
+    /********** RUIN0X11 CUSTOM - ENDING **********/
+
 	return
 
-#deffunc healsp int healsp_charid, int healsp_amount
+#define global healsp(%1,%2,%3=1) _healsp %1, %2, %3
+#deffunc _healsp int healsp_charid, int healsp_amount, int healsp_showpopup
 	cdata(CDATA_SP, healsp_charid) += healsp_amount
 	if ( cdata(CDATA_SP, healsp_charid) > cdata(CDATA_MAX_SP, healsp_charid) ) {
 		cdata(CDATA_SP, healsp_charid) = cdata(CDATA_MAX_SP, healsp_charid)
@@ -2835,6 +2897,15 @@
 	if ( cdata(CDATA_SP, healsp_charid) < cdata(CDATA_MAX_SP, healsp_charid) ) {
 		refreshspeed healsp_charid
 	}
+
+    /********** RUIN0X11 CUSTOM - BEGINNING **********/
+
+    if ( healsp_showpopup & synccheck(healsp_charid, -1) ) {
+        DamagePopupAdd "" + healsp_amount, healsp_charid, DMGPOPUP_HEAL_SP, 0
+    }
+
+    /********** RUIN0X11 CUSTOM - ENDING **********/
+
 	return
 
 #deffunc healcon int healcon_charid, int healcon_cond, int healcon_arg3
@@ -2850,6 +2921,8 @@
 				cdata(CDATA_CONDITION_WINCE, healcon_charid) = 0
 				if ( synccheck(healcon_charid, -1) ) {
 					txt lang(name(healcon_charid) + "は怯みから回復した。", name(healcon_charid) + " recover" + _s(healcon_charid) + " from wince.")
+
+                    DamagePopupAdd "" + _conkaen, dmgcon_charid, DMGPOPUP_REMOVE_CONDITION, CONDITION_ASH_BODY
 				}
 			}
 			return
@@ -2867,6 +2940,7 @@
 				cdata(CDATA_CONDITION_CHILLS, healcon_charid) = 0
 				if ( synccheck(healcon_charid, -1) ) {
 					txt lang(name(healcon_charid) + "の震えが止まった。", name(healcon_charid) + " suppressed " + his(healcon_charid) + " trembling.")
+                    DamagePopupAdd "" + _conovergods, dmgcon_charid, DMGPOPUP_REMOVE_CONDITION, CONDITION_OVERGODS
 				}
 			}
 			return
@@ -2884,6 +2958,7 @@
 				cdata(CDATA_CONDITION_FEAR, healcon_charid) = 0
 				if ( synccheck(healcon_charid, -1) ) {
 					txt lang(name(healcon_charid) + "は恐怖から立ち直った。", name(healcon_charid) + " shake" + _s(healcon_charid) + " off " + his(healcon_charid) + " fear.")
+                    DamagePopupAdd "" + _confear, dmgcon_charid, DMGPOPUP_REMOVE_CONDITION, CONDITION_FEAR
 				}
 			}
 			return
@@ -2901,6 +2976,7 @@
 				cdata(CDATA_CONDITION_BLIND, healcon_charid) = 0
 				if ( synccheck(healcon_charid, -1) ) {
 					txt lang(name(healcon_charid) + "は盲目から回復した。", name(healcon_charid) + " can see again.")
+                    DamagePopupAdd "" + _conblind, dmgcon_charid, DMGPOPUP_REMOVE_CONDITION, CONDITION_BLIND
 				}
 			}
 			return
@@ -2918,6 +2994,7 @@
 				cdata(CDATA_CONDITION_CONFUSE, healcon_charid) = 0
 				if ( synccheck(healcon_charid, -1) ) {
 					txt lang(name(healcon_charid) + "は混乱から回復した。", name(healcon_charid) + " recover" + _s(healcon_charid) + " from confusion.")
+                    DamagePopupAdd "" + _conconfuse, dmgcon_charid, DMGPOPUP_REMOVE_CONDITION, CONDITION_CONFUSE
 				}
 			}
 			return
@@ -2935,6 +3012,7 @@
 				cdata(CDATA_CONDITION_PARALYZE, healcon_charid) = -1
 				if ( synccheck(healcon_charid, -1) ) {
 					txt lang(name(healcon_charid) + "は麻痺から回復した。", name(healcon_charid) + " recover" + _s(healcon_charid) + " from paralysis.")
+                    DamagePopupAdd "" + _conparalyze, dmgcon_charid, DMGPOPUP_REMOVE_CONDITION, CONDITION_PARALYZE
 				}
 			}
 			return
@@ -2952,6 +3030,7 @@
 				cdata(CDATA_CONDITION_OIL, healcon_charid) = 0
 				if ( synccheck(healcon_charid, -1) ) {
 					txt lang(name(healcon_charid) + "のオイルが全て蒸発した。", name(healcon_charid) + " recover" + _s(healcon_charid) + " from oil.")
+                    DamagePopupAdd "" + _conoil, dmgcon_charid, DMGPOPUP_REMOVE_CONDITION, CONDITION_OIL
 				}
 			}
 			return
@@ -2969,6 +3048,7 @@
 				cdata(CDATA_CONDITION_MPOISON, healcon_charid) = 0
 				if ( synccheck(healcon_charid, -1) ) {
 					txt lang(name(healcon_charid) + "の魔力の漏れが収まった。", name(healcon_charid) + " recover" + _s(healcon_charid) + " from MP leak.")
+                    DamagePopupAdd "" + _conmpoison, dmgcon_charid, DMGPOPUP_REMOVE_CONDITION, CONDITION_MPOISON
 				}
 			}
 			return
@@ -2986,6 +3066,7 @@
 				cdata(CDATA_CONDITION_POISON, healcon_charid) = 0
 				if ( synccheck(healcon_charid, -1) ) {
 					txt lang(name(healcon_charid) + "は毒から回復した。", name(healcon_charid) + " recover" + _s(healcon_charid) + " from poison.")
+                    DamagePopupAdd "" + _conpoison, dmgcon_charid, DMGPOPUP_REMOVE_CONDITION, CONDITION_POISON
 				}
 			}
 			return
@@ -3003,6 +3084,7 @@
 				cdata(CDATA_CONDITION_SLEEP, healcon_charid) = 0
 				if ( synccheck(healcon_charid, -1) ) {
 					txt lang(name(healcon_charid) + "は心地よい眠りから覚めた。", name(healcon_charid) + " awake" + _s(healcon_charid) + " from " + his(healcon_charid) + " sleep.")
+                    DamagePopupAdd "" + _consleep, dmgcon_charid, DMGPOPUP_REMOVE_CONDITION, CONDITION_SLEEP
 				}
 			}
 			return
@@ -3019,7 +3101,8 @@
 			if ( cdata(CDATA_CONDITION_DIM, healcon_charid) <= 0 ) {
 				cdata(CDATA_CONDITION_DIM, healcon_charid) = 0
 				if ( synccheck(healcon_charid, -1) ) {
-					txt lang(name(healcon_charid) + "の意識ははっきりした。", name(healcon_charid) + " recover" + _s(healcon_charid) + " from ambiguous.")
+					txt lang(name(healcon_charid) + "の意識ははっきりした。", name(healcon_charid) + your(healcon_charid) + " conciousness becomes clear.")
+                    DamagePopupAdd "" + _condim, dmgcon_charid, DMGPOPUP_REMOVE_CONDITION, CONDITION_DIM
 				}
 			}
 		}
@@ -3036,6 +3119,7 @@
 				cdata(CDATA_CONDITION_BLEED, healcon_charid) = 0
 				if ( synccheck(healcon_charid, -1) ) {
 					txt lang(name(healcon_charid) + "の出血は止まった。", name(healcon_charid) + your(healcon_charid) + " bleeding stops.")
+                    DamagePopupAdd "" + _conbleed, dmgcon_charid, DMGPOPUP_REMOVE_CONDITION, CONDITION_BLEED
 				}
 			}
 		}
@@ -3052,6 +3136,7 @@
 				cdata(CDATA_CONDITION_DRUNK, healcon_charid) = 0
 				if ( synccheck(healcon_charid, -1) ) {
 					txt lang(name(healcon_charid) + "の酔いは覚めた。", name(healcon_charid) + " get" + _s(healcon_charid) + " sober.")
+                    DamagePopupAdd "" + _condrunk, dmgcon_charid, DMGPOPUP_REMOVE_CONDITION, CONDITION_DRUNK
 				}
 			}
 		}
@@ -3068,6 +3153,7 @@
 				cdata(CDATA_CONDITION_INSANE, healcon_charid) = 0
 				if ( synccheck(healcon_charid, -1) ) {
 					txt lang(name(healcon_charid) + "は正気に戻った。", name(healcon_charid) + " come" + _s(healcon_charid) + " to " + yourself(healcon_charid) + " again.")
+                    DamagePopupAdd "" + _coninsane, dmgcon_charid, DMGPOPUP_REMOVE_CONDITION, CONDITION_INSANE
 				}
 			}
 		}
@@ -3085,6 +3171,7 @@
 				cdata(CDATA_CONDITION_SICK, healcon_charid) = 0
 				if ( synccheck(healcon_charid, -1) ) {
 					txt lang(name(healcon_charid) + "の病気は治った。", name(healcon_charid) + " recover" + _s(healcon_charid) + " from " + his(healcon_charid) + " illness.")
+                    DamagePopupAdd "" + _consick, dmgcon_charid, DMGPOPUP_REMOVE_CONDITION, CONDITION_SICK
 				}
 			}
 		}
@@ -5317,9 +5404,20 @@
 			}
 		}
 	}
+
+    /********** RUIN0X11 CUSTOM - BEGINNING **********/
+
     if ( cfg_dmgpopups == 1 & synccheck(dmghp_charid, -1) ) {
-        DamagePopupAdd "" + locvar_dmghp_dmg, dmghp_charid, 1
+        if ( locvar_dmghp_ele == 0 ) {
+            DamagePopupAdd "" + locvar_dmghp_dmg, dmghp_charid, DMGPOPUP_NORMAL_DAMAGE, 0
+        }
+        else {
+            DamagePopupAdd "" + locvar_dmghp_dmg, dmghp_charid, DMGPOPUP_ELEM_DAMAGE, locvar_dmghp_ele
+        }
     }
+
+    /********** RUIN0X11 CUSTOM - ENDING **********/
+
 	if ( locvar_dmghp_ele == SKILL_RES_NETHER ) {
 		if ( dmghp_source >= DAMAGE_FROM_CHARA ) {
 			if ( locvar_dmghp_dmg > 0 ) {

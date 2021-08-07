@@ -2,23 +2,116 @@
 
 #define MAX_DAMAGE_POPUPS 20
 
+#define DefineDmgConCol(%1,%2) locvar_colorres_i = %2%c\
+    colorres%c\
+    DmgPopupColorsCondition(0, %1) = 255, 255, 255, ginfo(16), ginfo(17), ginfo(18)
+
 *DamagePopupsInit
     dim DmgPopups, 16, MAX_DAMAGE_POPUPS
     sdim DmgPopupTexts, 20, MAX_DAMAGE_POPUPS
+    dim DmgPopupColors, 6, MAX_DAMAGE_POPUP_KINDS
+    dim DmgPopupColorsResist, 6, MAX_SKILL_RESIST - STARTING_SKILL_RESIST
+    dim DmgPopupColorsCondition, 6, MAX_CONDITION
     DmgPopupNext = 0
-    cfg_dmgpopups = 1
+    cfg_dmgpopups = 1        // 0
+    cfg_dmgpopup_buffhex = 1 // 1
+    cfg_dmgpopup_con = 1     // 2
+    cfg_dmgpopup_evade = 1   // 3
+    cfg_dmgpopup_proc = 1    // 4
     cfg_dmgspeed = 20
     cfg_dmgfont = 11
 
+	DmgPopupColors(0, DMGPOPUP_ADD_HEX)             = 255, 255, 255, 150, 0,   0
+	DmgPopupColors(0, DMGPOPUP_ADD_BUFF)            = 255, 255, 255, 0,   150, 150
+	DmgPopupColors(0, DMGPOPUP_REMOVE_HEX)          = 255, 255, 255, 0,   150, 0
+	DmgPopupColors(0, DMGPOPUP_REMOVE_BUFF)         = 255, 255, 255, 150, 150, 150
+	DmgPopupColors(0, DMGPOPUP_MISS)                = 255, 255, 255, 0,   0,   0
+	DmgPopupColors(0, DMGPOPUP_EVADE)               = 255, 255, 255, 0,   0,   0
+	DmgPopupColors(0, DMGPOPUP_NORMAL_DAMAGE)       = 255, 255, 255, 0,   0,   0
+	DmgPopupColors(0, DMGPOPUP_ELEM_DAMAGE)         = 255, 255, 255, 0,   0,   0
+	DmgPopupColors(0, DMGPOPUP_HEAL)                = 0,   255, 0,   0,   0,   0
+	DmgPopupColors(0, DMGPOPUP_HEAL_MP)             = 0,   128, 255, 0,   0,   0
+	DmgPopupColors(0, DMGPOPUP_HEAL_SP)             = 255, 255, 0,   0,   0,   0
+	DmgPopupColors(0, DMGPOPUP_ADD_CONDITION)       = 255, 255, 255, 0,   0,   0
+	DmgPopupColors(0, DMGPOPUP_REMOVE_CONDITION)    = 255, 255, 255, 0,   0,   0
+
+    repeat MAX_SKILL_RESIST - STARTING_SKILL_RESIST
+        locvar_colorres_i = cnt
+        colorres
+        DmgPopupColorsResist(0, cnt) = 255, 255, 255, ginfo(16), ginfo(17), ginfo(18)
+    loop
+
+	DefineDmgConCol CONDITION_POISON, SKILL_RES_POISON
+	DefineDmgConCol CONDITION_SLEEP, SKILL_RES_NERVE
+	DefineDmgConCol CONDITION_PARALYZE, SKILL_RES_NERVE
+	DefineDmgConCol CONDITION_BLIND, SKILL_RES_DARKNESS
+	DefineDmgConCol CONDITION_CONFUSE, SKILL_RES_MIND
+	DefineDmgConCol CONDITION_FEAR, SKILL_RES_MIND
+	DefineDmgConCol CONDITION_DIM, SKILL_RES_SOUND
+	DefineDmgConCol CONDITION_DRUNK, 0
+	DefineDmgConCol CONDITION_BLEED, 0
+	DefineDmgConCol CONDITION_WET, 0
+	DefineDmgConCol CONDITION_INSANE, 0
+	DefineDmgConCol CONDITION_SICK, 0
+	DefineDmgConCol CONDITION_OIL, 0
+	DefineDmgConCol CONDITION_INVERT, 0
+	DefineDmgConCol CONDITION_MPOISON, 0
+	DefineDmgConCol CONDITION_ASH_BODY, SKILL_RES_FIRE
+	DefineDmgConCol CONDITION_OVERGODS, SKILL_RES_COLD
+
     return
 
-#deffunc DamagePopupAdd str prm_text, int prm_cc, int prm_type
-    if ( FALSE ) {
+#deffunc DamagePopupAdd str prm_text, int prm_cc, int prm_type, int prm_extra
+    if ( cfg_dmgpopups == FALSE ) {
         return
+    }
+
+    if ( cfg_dmgpopup_buffhex == FALSE ) {
+        if ( prm_type == DMGPOPUP_ADD_HEX | prm_type == DMGPOPUP_ADD_BUFF | prm_type == DMGPOPUP_REMOVE_HEX | prm_type == DMGPOPUP_REMOVE_BUFF ) {
+            return
+        }
+    }
+    if ( cfg_dmgpopup_con == FALSE ) {
+        if ( prm_type == DMGPOPUP_ADD_CONDITION | prm_type == DMGPOPUP_REMOVE_CONDITION ) {
+            return
+        }
+    }
+    if ( cfg_dmgpopup_evade == FALSE ) {
+        if ( prm_type == DMGPOPUP_MISS | prm_type == DMGPOPUP_EVADE ) {
+            return
+        }
     }
 
     DmgPopupTexts(DmgPopupNext) = prm_text
     DmgPopups(0, DmgPopupNext) = timeGetTime(), prm_cc, 255, 255, 255, 0, 0, 0
+
+    if ( prm_type == DMGPOPUP_ELEM_DAMAGE ) {
+        DmgPopups(2, DmgPopupNext) = DmgPopupColorsResist(0, prm_extra)
+        DmgPopups(3, DmgPopupNext) = DmgPopupColorsResist(1, prm_extra)
+        DmgPopups(4, DmgPopupNext) = DmgPopupColorsResist(2, prm_extra)
+        DmgPopups(5, DmgPopupNext) = DmgPopupColorsResist(3, prm_extra)
+        DmgPopups(6, DmgPopupNext) = DmgPopupColorsResist(4, prm_extra)
+        DmgPopups(7, DmgPopupNext) = DmgPopupColorsResist(5, prm_extra)
+    }
+    else {
+        if ( prm_type == DMGPOPUP_ADD_CONDITION ) {
+            DmgPopups(2, DmgPopupNext) = DmgPopupColorsCondition(0, prm_extra)
+            DmgPopups(3, DmgPopupNext) = DmgPopupColorsCondition(1, prm_extra)
+            DmgPopups(4, DmgPopupNext) = DmgPopupColorsCondition(2, prm_extra)
+            DmgPopups(5, DmgPopupNext) = DmgPopupColorsCondition(3, prm_extra)
+            DmgPopups(6, DmgPopupNext) = DmgPopupColorsCondition(4, prm_extra)
+            DmgPopups(7, DmgPopupNext) = DmgPopupColorsCondition(5, prm_extra)
+        }
+        else {
+            DmgPopups(2, DmgPopupNext) = DmgPopupColors(0, prm_type)
+            DmgPopups(3, DmgPopupNext) = DmgPopupColors(1, prm_type)
+            DmgPopups(4, DmgPopupNext) = DmgPopupColors(2, prm_type)
+            DmgPopups(5, DmgPopupNext) = DmgPopupColors(3, prm_type)
+            DmgPopups(6, DmgPopupNext) = DmgPopupColors(4, prm_type)
+            DmgPopups(7, DmgPopupNext) = DmgPopupColors(5, prm_type)
+        }
+    }
+
     DmgPopupNext = (DmgPopupNext + 1) \ length2(DmgPopups)
 
     return
