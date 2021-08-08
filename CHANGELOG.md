@@ -1,9 +1,10 @@
-# 2.05.1
+# 2.05.1.0
 
 ## Added 
-- Add "Allow running in world map" custom tweak.
-- Port omake overhaul modify's damage popup feature, configurable in the options menu.
-- Add a limited Lua console for debugging purposes.
+- Ported all changes from Elona+ 2.05, using Elona+ Custom-G 1.90.2.4 as a base.
+- Ported omake overhaul modify's damage popup feature, configurable in the options menu.
+- Added "Allow running in world map" custom tweak.
+- Added a limited Lua console for debugging purposes.
 
 ## Changed
 - Uncap the screen resolution limit.
@@ -11,8 +12,8 @@
 - Allow usage of Suspicious Hand if the target is sandbagged and "Sandbag Training" is enabled.
 
 ## Removed
-- Remove the 100 skill point/platinum cap.
-- Remove the NPC/card/item externalize feature.
+- Removed the 100 skill point/platinum cap.
+- Removed the NPC/card/item externalize feature.
 
 ## Fixed
-- Fix a bug causing Jaldabaoth's wing animation to glitch.
+- Fixed a bug causing Jaldabaoth's wing animation to glitch.
