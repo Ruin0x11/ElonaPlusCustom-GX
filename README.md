@@ -4,6 +4,8 @@
 
 Elona+ Custom-GX is a new variant of Elona+ based on Elona+ Custom-G, updated with the changes in Elona+ up to version 2.05.
 
+### **[Download the latest release here.](https://github.com/Ruin0x11/ElonaPlusCustom-GX/releases/)**
+
 ## Installation
 
 1. Download Elona+ 2.05 from [here](https://drive.google.com/file/d/1kb8wfLCkw_cGgWrbUNzdugH71OYQIYUT/view?usp=sharing). Extract it to `elonaplus2.05`.
