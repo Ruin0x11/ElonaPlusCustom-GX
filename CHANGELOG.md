@@ -17,4 +17,4 @@
 
 ## Fixed
 - Fixed a bug causing Jaldabaoth's wing animation to glitch.
-- Fixed a bug causing certain portraits to be cut off when running at 800x600 resolution resolution.
+- Fixed a bug causing certain portraits to be cut off when running at 800x600 resolution.
