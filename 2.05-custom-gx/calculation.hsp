@@ -1981,16 +1981,32 @@
 			}
 		}
 		if ( rnd(5) == 0 ) {
+			f = cdata(CDATA_CONDITION_CONFUSE, r1)
 			cdata(CDATA_CONDITION_CONFUSE, r1) += rnd(10)
+			if ( f <= 0 & cdata(CDATA_CONDITION_CONFUSE, r1) > 0 ) {
+				DamagePopupAdd "" + _conconfuse, r1, DMGPOPUP_ADD_CONDITION, CONDITION_CONFUSE
+			}
 		}
 		if ( rnd(5) == 0 ) {
+			f = cdata(CDATA_CONDITION_DIM, r1)
 			cdata(CDATA_CONDITION_DIM, r1) += rnd(10)
+			if ( f <= 0 & cdata(CDATA_CONDITION_DIM, r1) > 0 ) {
+				DamagePopupAdd "" + _condim, r1, DMGPOPUP_ADD_CONDITION, CONDITION_DIM
+			}
 		}
 		if ( rnd(5) == 0 ) {
+			f = cdata(CDATA_CONDITION_SLEEP, r1)
 			cdata(CDATA_CONDITION_SLEEP, r1) += rnd(5)
+			if ( f <= 0 & cdata(CDATA_CONDITION_SLEEP, r1) > 0 ) {
+				DamagePopupAdd "" + _consleep, r1, DMGPOPUP_ADD_CONDITION, CONDITION_SLEEP
+			}
 		}
 		if ( rnd(5) == 0 ) {
+			f = cdata(CDATA_CONDITION_FEAR, r1)
 			cdata(CDATA_CONDITION_FEAR, r1) += rnd(10)
+			if ( f <= 0 & cdata(CDATA_CONDITION_FEAR, r1) > 0 ) {
+				DamagePopupAdd "" + _confear, r1, DMGPOPUP_ADD_CONDITION, CONDITION_FEAR
+			}
 		}
 		if ( cdata(CDATA_CONDITION_FEAR, r1) > 0 ) {
 			if ( cdata(CDATA_THIRST, r1) > 12000 ) {
