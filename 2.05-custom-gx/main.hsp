@@ -8,10 +8,14 @@
 #func exrand_randomize "_exrand_randomize@16" int, int, int, int
 #func exrand_rnd "_exrand_rnd@16" var, int, int, int
 
+; No idea why this is necessary, but otherwise it crashes when calling xnotesel
+; in debug mode, but not from an .exe or vice versa.
+#ifndef _DEBUG
 #uselib "hspda.dll"
 #func sortnote "_sortnote@16" pexinfo, nullptr, nullptr, nullptr
 #func xnotesel "_xnotesel@16" pval, int, int, int
 #func xnoteadd "_xnoteadd@16" bmscr, str, int, int
+#endif
 
 #uselib "hspext_ext.dll"
 #func gfini "_gfini@16" bmscr, int, int, int
@@ -168,7 +172,11 @@
 
 	goto *system_init
 
-	; #include "hspda.as"
+; No idea why this is necessary, but otherwise it crashes when calling xnotesel
+; in debug mode, but not from an .exe or vice versa.
+#ifdef _DEBUG
+	#include "hspda.as"
+#endif
 	; #include "hspext_ext.as"
 	; #include "elonadll.as"
 	; #include "z.as"	
@@ -5714,6 +5722,7 @@
 		gosub *screen_draw
 		gosub *screen_fade
 		gsel BUFFER_BUF
+		buffer 4, FACE_SIZE_WIDTH, FACE_SIZE_HEIGHT
 		pos 0, 0
 		picload exedir + "graphic\\face1" + devfile + ".bmp", 1
 		gsel BUFFER_SCREEN
