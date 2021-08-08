@@ -1074,7 +1074,7 @@
 			gdata(GDATA_TIME_LIMIT) -= gdata(GDATA_SEC) / 60
 			if ( gdata(GDATA_COUNT_NOTICE) > gdata(GDATA_TIME_LIMIT) / 10 ) {
 				txtef COLOR_SKY_BLUE
-				txt lang("ã‚¯ã‚¨ã‚¹ãƒˆ[æ®‹ã‚Š" + (gdata(GDATA_TIME_LIMIT) + 1) + "åˆ†]", "" + (gdata(GDATA_TIME_LIMIT) + 1) + " min left for the quest.")
+				txt lang("ƒNƒGƒXƒg[c‚è" + (gdata(GDATA_TIME_LIMIT) + 1) + "•ª]", "" + (gdata(GDATA_TIME_LIMIT) + 1) + " min left for the quest.")
 				gdata(GDATA_COUNT_NOTICE) = gdata(GDATA_TIME_LIMIT) / 10
 			}
 			if ( gdata(GDATA_TIME_LIMIT) <= 0 ) {
@@ -1149,7 +1149,7 @@
 	if ( gdata(STARTING_GDATA_FLAG + 353) == 100 ) {
 		if ( gdata(STARTING_GDATA_FLAG + 355) <= 0 | gdata(STARTING_GDATA_FLAG + 354) != gdata(GDATA_MONTH) ) {
 			gdata(STARTING_GDATA_FLAG + 353) = 0
-			txt lang("ãƒãƒ•ã‚£ã‚¢ã¯é™ã¾ã£ãŸã€‚", "Nefia got quiet.")
+			txt lang("ƒlƒtƒBƒA‚ÍÃ‚Ü‚Á‚½B", "Nefia got quiet.")
 		}
 	}
 	if ( gdata(GDATA_MONTH) \ 3 != 0 ) {
@@ -1162,7 +1162,7 @@
 					snd SOUNDLIST_FIRE1
 					snd SOUNDLIST_ATK_FIRE
 					txtef COLOR_GREEN
-					txt lang("ãƒ©ãƒ³ãƒ€ãƒ ãƒãƒ•ã‚£ã‚¢ãŒç†±ç‹‚çŠ¶æ…‹ã«çªå…¥ã—ãŸï¼", "Nefia have entered fever!")
+					txt lang("ƒ‰ƒ“ƒ_ƒ€ƒlƒtƒBƒA‚ª”M‹¶ó‘Ô‚É“Ë“ü‚µ‚½I", "Nefia have entered fever!")
 					if ( cfg_extrahelp ) {
 						if ( gdata(STARTING_GDATA_HELP + 18) == 0 ) {
 							if ( mode == MODELIST_MAIN ) {
@@ -1190,7 +1190,7 @@
 						if ( gdata(GDATA_LAST_ETHER) != gdata(GDATA_MONTH) ) {
 							gdata(GDATA_WEATHER) = WEATHER_ETHER
 							txtef COLOR_RED
-							txt lang("ã‚¨ãƒ¼ãƒ†ãƒ«ã®é¢¨ãŒå¹ãå§‹ã‚ãŸã€‚ã™ãã«é¿é›£ã—ãªãã¦ã¯ã€‚", "Etherwind starts to blow. You need to find a shelter!")
+							txt lang("ƒG[ƒeƒ‹‚Ì•—‚ª‚«n‚ß‚½B‚·‚®‚É”ğ“ï‚µ‚È‚­‚Ä‚ÍB", "Etherwind starts to blow. You need to find a shelter!")
 							gdata(GDATA_LAST_ETHER) = gdata(GDATA_MONTH)
 							gdata(GDATA_NEXT_WEATHER) = rnd(24) + limit(24 - gdata(GDATA_YEARS_AFTER_VICTORY) * 2, 1, 24)
 							break
@@ -1203,31 +1203,31 @@
 				if ( trait(TRAIT_ETHER_RAIN_CLOUD) != 0 ) {
 					if ( rnd(4) == 0 ) {
 						gdata(GDATA_WEATHER) = WEATHER_RAIN
-						txt lang("ã‚ãªãŸã¯é›¨é›²ã‚’å¼•ãå¯„ã›ãŸã€‚", "You draw a rain cloud.")
+						txt lang("‚ ‚È‚½‚Í‰J‰_‚ğˆø‚«Šñ‚¹‚½B", "You draw a rain cloud.")
 						break
 					}
 				}
 				if ( gdata(GDATA_WORLD_X) > 65 | gdata(GDATA_WORLD_Y) < 10 ) {
 					if ( rnd(2) == 0 ) {
 						gdata(GDATA_WEATHER) = WEATHER_SNOW
-						txt lang("é›ªãŒé™ã£ã¦ããŸã€‚", "It starts to snow.")
+						txt lang("á‚ª~‚Á‚Ä‚«‚½B", "It starts to snow.")
 						break
 					}
 				}
 				else {
 					if ( rnd(10) == 0 ) {
 						gdata(GDATA_WEATHER) = WEATHER_RAIN
-						txt lang("é›¨ãŒé™ã‚Šå‡ºã—ãŸã€‚", "It starts to rain.")
+						txt lang("‰J‚ª~‚èo‚µ‚½B", "It starts to rain.")
 						break
 					}
 					if ( rnd(40) == 0 ) {
 						gdata(GDATA_WEATHER) = WEATHER_HARD_RAIN
-						txt lang("çªç„¶ã©ã—ã‚ƒã¶ã‚Šã«ãªã£ãŸã€‚", "Suddenly, rain begins to pour down from the sky.")
+						txt lang("“Ë‘R‚Ç‚µ‚á‚Ô‚è‚É‚È‚Á‚½B", "Suddenly, rain begins to pour down from the sky.")
 						break
 					}
 					if ( rnd(60) == 0 ) {
 						gdata(GDATA_WEATHER) = WEATHER_SNOW
-						txt lang("é›ªãŒé™ã£ã¦ããŸã€‚", "It starts to snow.")
+						txt lang("á‚ª~‚Á‚Ä‚«‚½B", "It starts to snow.")
 						break
 					}
 				}
@@ -1235,33 +1235,33 @@
 			if ( p == WEATHER_RAIN ) {
 				if ( rnd(4) == 0 ) {
 					gdata(GDATA_WEATHER) = WEATHER_CLEAR
-					txt lang("é›¨ã¯æ­¢ã‚“ã ã€‚", "It stops raining.")
+					txt lang("‰J‚Í~‚ñ‚¾B", "It stops raining.")
 					break
 				}
 				if ( rnd(15) == 0 ) {
 					gdata(GDATA_WEATHER) = WEATHER_HARD_RAIN
-					txt lang("é›¨ãŒæœ¬æ ¼çš„ã«é™ã‚Šå‡ºã—ãŸã€‚", "The rain becomes heavier.")
+					txt lang("‰J‚ª–{Ši“I‚É~‚èo‚µ‚½B", "The rain becomes heavier.")
 					break
 				}
 			}
 			if ( p == WEATHER_HARD_RAIN ) {
 				if ( rnd(3) == 0 ) {
 					gdata(GDATA_WEATHER) = WEATHER_RAIN
-					txt lang("é›¨ã¯å°é™ã‚Šã«ãªã£ãŸã€‚", "The rain becomes lighter.")
+					txt lang("‰J‚Í¬~‚è‚É‚È‚Á‚½B", "The rain becomes lighter.")
 					break
 				}
 			}
 			if ( p == WEATHER_ETHER ) {
 				if ( rnd(2) == 0 ) {
 					gdata(GDATA_WEATHER) = WEATHER_CLEAR
-					txt lang("ã‚¨ãƒ¼ãƒ†ãƒ«ã®é¢¨ã¯æ­¢ã‚“ã ã€‚", "The Etherwind dissipates.")
+					txt lang("ƒG[ƒeƒ‹‚Ì•—‚Í~‚ñ‚¾B", "The Etherwind dissipates.")
 					break
 				}
 			}
 			if ( p == WEATHER_SNOW ) {
 				if ( rnd(3) == 0 ) {
 					gdata(GDATA_WEATHER) = WEATHER_CLEAR
-					txt lang("é›ªã¯æ­¢ã‚“ã ã€‚", "It stops raining.")
+					txt lang("á‚Í~‚ñ‚¾B", "It stops raining.")
 					break
 				}
 			}
@@ -1319,7 +1319,7 @@
 		}
 		if ( TweakData(53, 2) == 0 & rnd(15) == 0 ) {
 			if ( mode == MODELIST_MAIN ) {
-				txt lang("ä»®çœ ã‚’ã¨ã£ãŸã€‚", "You take a nap.")
+				txt lang("‰¼–°‚ğ‚Æ‚Á‚½B", "You take a nap.")
 				gdata(GDATA_SLEEP) -= 3
 				if ( gdata(GDATA_SLEEP) < 0 ) {
 					gdata(GDATA_SLEEP) = 0
@@ -1334,7 +1334,7 @@
 	}
 	if ( gdata(GDATA_HOUR) == 6 ) {
 		txtef COLOR_YELLOW
-		txt lang("å¤œãŒæ˜ã‘ãŸã€‚", "Day breaks.")
+		txt lang("–é‚ª–¾‚¯‚½B", "Day breaks.")
 	}
 	if ( gdata(GDATA_SLEEP) >= 15 ) {
 		if ( cfg_extrahelp ) {
@@ -1388,7 +1388,7 @@
 			}
 		}
 		txtef COLOR_YELLOW
-		txt lang("ä¸€æ—¥ãŒçµ‚ã‚ã‚Šã€æ—¥ä»˜ãŒå¤‰ã‚ã£ãŸã€‚", "A day passes and a new day begins.")
+		txt lang("ˆê“ú‚ªI‚í‚èA“ú•t‚ª•Ï‚í‚Á‚½B", "A day passes and a new day begins.")
 		repeat 2
 			if ( gdata(GDATA_FLAG_STUDY_BONUS_KIND) == 0 ) {
 				if ( gdata(GDATA_FLAG_STUDY_BONUS_TRAINING_EXP) >= 15000 ) {
@@ -1424,23 +1424,23 @@
 		loop
 		if ( gdata(GDATA_FLAG_STUDY_BONUS_KIND) == 0 ) {
 			txtef COLOR_YELLOW
-			txt lang("ä»Šæ—¥ã¯çµ¶å¥½ã®ä¿®è¡Œæ—¥å’Œã ã€‚", "Training will progress today.")
+			txt lang("¡“ú‚ÍâD‚ÌCs“ú˜a‚¾B", "Training will progress today.")
 		}
 		if ( gdata(GDATA_FLAG_STUDY_BONUS_KIND) == 1 ) {
 			txtef COLOR_YELLOW
-			txt lang("ä»Šæ—¥ã¯çµ¶å¥½ã®æˆ¦é—˜æ—¥å’Œã ã€‚", "Combat will progress today.")
+			txt lang("¡“ú‚ÍâD‚Ìí“¬“ú˜a‚¾B", "Combat will progress today.")
 		}
 		if ( gdata(GDATA_FLAG_STUDY_BONUS_KIND) == 2 ) {
 			txtef COLOR_YELLOW
-			txt lang("ä»Šæ—¥ã¯çµ¶å¥½ã®ä»•äº‹æ—¥å’Œã ã€‚", "Jobs will progress today.")
+			txt lang("¡“ú‚ÍâD‚Ìd–“ú˜a‚¾B", "Jobs will progress today.")
 		}
 		if ( gdata(GDATA_FLAG_STUDY_BONUS_KIND) == 3 ) {
 			txtef COLOR_YELLOW
-			txt lang("ä»Šæ—¥ã¯çµ¶å¥½ã®æ¢ç´¢æ—¥å’Œã ã€‚", "Exploration will progress today.")
+			txt lang("¡“ú‚ÍâD‚Ì’Tõ“ú˜a‚¾B", "Exploration will progress today.")
 		}
 		if ( gdata(GDATA_FLAG_STUDY_BONUS_KIND) == 4 ) {
 			txtef COLOR_YELLOW
-			txt lang("ä»Šæ—¥ã¯çµ¶å¥½ã®å‹‰å¼·æ—¥å’Œã ã€‚", "Study will progress today.")
+			txt lang("¡“ú‚ÍâD‚Ì•×‹­“ú˜a‚¾B", "Study will progress today.")
 		}
 		if ( rnd(10) == 0 ) {
 			gdata(GDATA_FLAG_NEGATE_SPAWN_FRON) = 0
@@ -1480,7 +1480,7 @@
 				if ( detect < 2 ) {
 					if ( rnd(2) == 0 ) {
 						txtef COLOR_YELLOW
-						txt lang("æ¢åµãŒã‚„ã£ã¦ããŸã‚ˆã†ã ã€‚ã€Œã‚¯ãƒ³â€¦ã“ã€ã“ã‚Œã¯äº‹ä»¶ã®åŒ‚ã„ï¼ï¼ï¼ã€", "A detective seems to have come." + cnvtalk("*Sniff*... I smell a case!!"))
+						txt lang("’T’ã‚ª‚â‚Á‚Ä‚«‚½‚æ‚¤‚¾BuƒNƒ“c‚±A‚±‚ê‚Í–Œ‚Ì“õ‚¢IIIv", "A detective seems to have come." + cnvtalk("*Sniff*... I smell a case!!"))
 						if ( rnd(3) == 0 ) {
 							flt
 							characreate -1, CREATURE_ID_WEREWOLF_DETECTIVE, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER)
@@ -1576,7 +1576,7 @@
 				chara_vanquish MAX_CHARA_NC
 				txt_questupdate
 				txtef COLOR_PURPLE
-				txt lang("ãƒ©ã‚·ã‚¨ãƒ«ã®æ°—ãŒå¤‰ã‚ã£ãŸã‚ˆã†ã ã€‚", "It seems that the mind of <Arasiel> has changed.")
+				txt lang("ƒ‰ƒVƒGƒ‹‚Ì‹C‚ª•Ï‚í‚Á‚½‚æ‚¤‚¾B", "It seems that the mind of <Arasiel> has changed.")
 			}
 		}
 		if ( gdata(GDATA_FLAG_SUB_MISSION_FROM_GARZIEM) >= 10 ) {
@@ -1590,9 +1590,9 @@
 						gdata(GDATA_FLAG_SUB_MISSION_FROM_GARZIEM)++
 						snd SOUNDLIST_WRITE1
 						txtef COLOR_GREEN
-						txt lang("ã‚¸ãƒ£ãƒ¼ãƒŠãƒ«ãŒæ›´æ–°ã•ã‚ŒãŸã€‚", "Your journal has been updated.")
+						txt lang("ƒWƒƒ[ƒiƒ‹‚ªXV‚³‚ê‚½B", "Your journal has been updated.")
 						txtef COLOR_RED
-						txt lang("ã‚¬ãƒ«ã‚¸ã‚¨ãƒ ã‹ã‚‰ã®æ•‘æ´è¦è«‹ãŒå…¥ã£ãŸã€‚", "You have received a rescue request from <Garziem>.")
+						txt lang("ƒKƒ‹ƒWƒGƒ€‚©‚ç‚Ì‹~‰‡—v¿‚ª“ü‚Á‚½B", "You have received a rescue request from <Garziem>.")
 					}
 				}
 			}
@@ -1607,9 +1607,9 @@
 					gdata(GDATA_FLAG_SUB_AMURDAD)++
 					snd SOUNDLIST_WRITE1
 					txtef COLOR_GREEN
-					txt lang("ã‚¸ãƒ£ãƒ¼ãƒŠãƒ«ãŒæ›´æ–°ã•ã‚ŒãŸã€‚", "Your journal has been updated.")
+					txt lang("ƒWƒƒ[ƒiƒ‹‚ªXV‚³‚ê‚½B", "Your journal has been updated.")
 					txtef COLOR_GREEN
-					txt lang("ãƒãƒ˜ãƒ«ã‚¿ãƒ¼ãƒ‰ã‹ã‚‰ä¾é ¼ã®é›»æ³¢ã‚’å—ã‘ãŸã€‚", "You have received a rescue request from <Amurdad>.")
+					txt lang("ƒlƒwƒ‹ƒ^[ƒh‚©‚çˆË—Š‚Ì“d”g‚ğó‚¯‚½B", "You have received a rescue request from <Amurdad>.")
 				}
 			}
 		}
@@ -1729,7 +1729,7 @@
 			gdata(GDATA_RETURN)--
 			if ( mdata(MDATA_TYPE) == MAP_TYPE_QUEST | gdata(GDATA_AREA) == AREA_SHELTER | gdata(GDATA_AREA) == AREA_JAIL | (gdata(GDATA_AREA) == AREA_AMUR_CAGE & gdata(GDATA_LEVEL) >= 10) ) {
 				gdata(GDATA_RETURN) = 0
-				txt lang("ä¸æ€è­°ãªåŠ›ãŒå¸°é‚„ã‚’é˜»æ­¢ã—ãŸã€‚", "A mysterious power prevents you from returning.")
+				txt lang("•sv‹c‚È—Í‚ª‹AŠÒ‚ğ‘j~‚µ‚½B", "A mysterious power prevents you from returning.")
 				goto *game_main_redo_WEND1
 			}
 			if ( gdata(GDATA_RETURN) <= 0 & evnum == 0 ) {
@@ -1745,11 +1745,11 @@
 					}
 				loop
 				if ( f ) {
-					txt lang("ä»Šã¯å¸°é‚„ã§ããªã„ä»²é–“ã‚’é€£ã‚Œã¦ã„ã‚‹ã€‚", "One of your allies prevents you from returning.")
+					txt lang("¡‚Í‹AŠÒ‚Å‚«‚È‚¢’‡ŠÔ‚ğ˜A‚ê‚Ä‚¢‚éB", "One of your allies prevents you from returning.")
 					goto *game_main_redo_WEND1
 				}
 				if ( cdata(CDATA_BURDEN, CHARA_PLAYER) >= 4 ) {
-					txt lang("ã©ã“ã‹ã‚‰ã‹å£°ãŒèã“ãˆãŸã€‚ã€Œæ‚ªã„ãŒé‡é‡ã‚ªãƒ¼ãƒãƒ¼ã ã€", "Someone shouts, \"Sorry, overweight.\"")
+					txt lang("‚Ç‚±‚©‚ç‚©º‚ª•·‚±‚¦‚½Buˆ«‚¢‚ªd—ÊƒI[ƒo[‚¾v", "Someone shouts, \"Sorry, overweight.\"")
 					goto *game_main_redo_WEND1
 				}
 				if ( gdata(GDATA_TELEPORT_AREA) == gdata(GDATA_WORLD) ) {
@@ -1761,22 +1761,22 @@
 				gosub *check_return
 				if ( stat == 1 ) {
 					txtmore
-					txt lang("ã‚ãªãŸã¯æ³•ã‚’çŠ¯ã—ãŸã€‚", "You commit a crime.")
+					txt lang("‚ ‚È‚½‚Í–@‚ğ”Æ‚µ‚½B", "You commit a crime.")
 					modkarma CHARA_PLAYER, -10
 				}
 				snd SOUNDLIST_TELEPORT1
-				txt lang("ã‚ãªãŸã¯æ¬¡å…ƒã®æ‰‰ã‚’é–‹ã‘ãŸã€‚", "A dimensional door opens in front of you.")
+				txt lang("‚ ‚È‚½‚ÍŸŒ³‚Ì”à‚ğŠJ‚¯‚½B", "A dimensional door opens in front of you.")
 				if ( gdata(GDATA_FLAG_DUEL_TARGET) > 0 ) {
 					snd SOUNDLIST_FAIL1
 					txt_duel2
 					goto *game_main_redo_WEND1
 				}
 				if ( gdata(GDATA_CARGO_WEIGHT) > gdata(GDATA_CARGO_LIMIT) ) {
-					txt lang("ã ãŒè·è»ŠãŒé‡ã™ãã¦å¸°é‚„ã§ããªã‹ã£ãŸã€‚", "Return failed because your cargo is too heavy.")
+					txt lang("‚¾‚ª‰×Ô‚ªd‚·‚¬‚Ä‹AŠÒ‚Å‚«‚È‚©‚Á‚½B", "Return failed because your cargo is too heavy.")
 					goto *game_main_redo_WEND1
 				}
 				if ( gdata(GDATA_TELEPORT_AREA) == AREA_JAIL ) {
-					txt lang("æ°—ã¾ãã‚Œãªæ™‚ã®ç®¡ç†è€…ã«ã‚ˆã‚Šæ¬¡å…ƒã¯æ­ªã‚ã‚‰ã‚ŒãŸï¼", "The capricious controller of time has changed your destination!")
+					txt lang("‹C‚Ü‚®‚ê‚È‚ÌŠÇ—Ò‚É‚æ‚èŸŒ³‚Í˜c‚ß‚ç‚ê‚½I", "The capricious controller of time has changed your destination!")
 				}
 				msg_halt
 				gosub *screen_draw
@@ -1829,7 +1829,7 @@
 					if ( sdata(SKILL_RESDMG_ACID, tc) / 50 < 7 ) {
 						if ( synccheck(tc, -1) ) {
 							snd SOUNDLIST_WATER2
-							txt lang(name(tc) + "ã¯é…¸ã«ç„¼ã‹ã‚ŒãŸã€‚", name(tc) + " melt" + _s(tc) + ".")
+							txt lang(name(tc) + "‚Í_‚ÉÄ‚©‚ê‚½B", name(tc) + " melt" + _s(tc) + ".")
 						}
 						if ( mef(6, ef) == 0 ) {
 							if ( tc != CHARA_PLAYER ) {
@@ -1847,7 +1847,7 @@
 		if ( mef(0, ef) == 5 ) {
 			if ( synccheck(tc, -1) ) {
 				snd SOUNDLIST_FIRE1
-				txt lang(name(tc) + "ã¯ç‡ƒãˆãŸã€‚", name(tc) + " " + is(tc) + " burnt.")
+				txt lang(name(tc) + "‚Í”R‚¦‚½B", name(tc) + " " + is(tc) + " burnt.")
 			}
 			if ( mef(6, ef) == 0 ) {
 				if ( tc != CHARA_PLAYER ) {
@@ -1869,7 +1869,7 @@
 				if ( findbuff(tc, BUFF_GRAVITY_ACCEL) == (-1) ) {
 					if ( synccheck(tc, -1) ) {
 						snd SOUNDLIST_WATER2
-						txt lang(name(tc) + "ã¯åœ°é¢ã®æ¶²ä½“ã‚’æµ´ã³ãŸã€‚", name(tc) + " step" + _s(tc) + " in the pool.")
+						txt lang(name(tc) + "‚Í’n–Ê‚Ì‰t‘Ì‚ğ—‚Ñ‚½B", name(tc) + " step" + _s(tc) + " in the pool.")
 						txtmore
 					}
 					wet tc, 25
@@ -1943,29 +1943,29 @@
 					cdata(CDATA_EMO_ICON, cc) = 20 + 100
 					kaiwa = rnd(3)
 					if ( kaiwa == 0 ) {
-						txt lang("ã€Œã†ã‚â€¦ã“ã‚Œå¤§ä¸ˆå¤«ãªã®" + _kana(3) + "ï¼Ÿã€", cnvtalk("Wow... Is this really okay?"))
+						txt lang("u‚¤‚íc‚±‚ê‘åä•v‚È‚Ì" + _kana(3) + "Hv", cnvtalk("Wow... Is this really okay?"))
 					}
 					if ( kaiwa == 1 ) {
-						txt lang("ã€Œéæ¿€" + _dana(3) + "â€¦ã€", cnvtalk("Too extreme..."))
+						txt lang("u‰ßŒƒ" + _dana(3) + "cv", cnvtalk("Too extreme..."))
 					}
 					if ( kaiwa == 2 ) {
-						txt lang("ã€Œã“ã€ã“ã‚Œã¯ï¼ï¼Ÿã€", cnvtalk("C-could this be!?"))
+						txt lang("u‚±A‚±‚ê‚ÍIHv", cnvtalk("C-could this be!?"))
 					}
 					txtef COLOR_PURPLE
-					txt lang(name(cc) + "ã¯ãƒšãƒ¼ã‚¸ã‚’ã‚ãã£ã¦ã„ã‚‹â€¦ã€‚", name(cc) + " turn" + _s(cc) + " the page...")
+					txt lang(name(cc) + "‚Íƒy[ƒW‚ğ‚ß‚­‚Á‚Ä‚¢‚écB", name(cc) + " turn" + _s(cc) + " the page...")
 					snd SOUNDLIST_BOOK1
 					goto *turn_end
 				}
 				if ( rnd(10) == 0 ) {
 					kaiwa = rnd(3)
 					if ( kaiwa == 0 ) {
-						txt lang("ã€Œã‚ã‘ãŒã‚ã‹ã‚‰ãªã„" + _yo(3) + "ã€", cnvtalk("I don't get it!"))
+						txt lang("u‚í‚¯‚ª‚í‚©‚ç‚È‚¢" + _yo(3) + "v", cnvtalk("I don't get it!"))
 					}
 					if ( kaiwa == 1 ) {
-						txt lang("ã€Œå…¨è£¸ãŒäº›ç´°ãªã“ã¨ã«æ€ãˆã‚‹ãƒ¬ãƒ™ãƒ«" + _dana(3) + "â€¦ã€", cnvtalk("This seems like a trivial level of nudity..."))
+						txt lang("u‘S—‡‚ª±×‚È‚±‚Æ‚Év‚¦‚éƒŒƒxƒ‹" + _dana(3) + "cv", cnvtalk("This seems like a trivial level of nudity..."))
 					}
 					if ( kaiwa == 2 ) {
-						txt lang("ã€Œãªãã«ã“ã‚Œã‡â€¦ã€", cnvtalk("What's this?"))
+						txt lang("u‚È‚Ÿ‚É‚±‚ê‚¥cv", cnvtalk("What's this?"))
 					}
 					dmgcon cc, CONDITION_CONFUSE, 100 + gdata(GDATA_LEVEL) * 2
 				}
@@ -1991,15 +1991,15 @@
 					tc = cnt
 					if ( synccheck(cc, -1) | synccheck(tc, -1) ) {
 						txtef COLOR_SKY_BLUE
-						txt lang(name(cc) + "ã¯é…”ã£æ‰•ã£ã¦" + name(tc) + "ã«ã‹ã‚‰ã‚“ã ã€‚", name(cc) + " gets the worse for drink and catches " + name(tc) + ".")
-						txt lang("ã€Œä¸€æ¯ã©ã†ã ã„ï¼Ÿã€", cnvtalk("Have a drink baby.")), lang("ã€Œé£²ã‚“ã§ãªã„ã‚ˆã€", cnvtalk("What are you looking at?")), lang("ã€Œä½•è¦‹ã¦ã‚‹ã®ã•ã€", cnvtalk("I ain't drunk.")), lang("ã€ŒéŠã¼ã†ãœã€", cnvtalk("Let's have fun."))
+						txt lang(name(cc) + "‚ÍŒ‚Á•¥‚Á‚Ä" + name(tc) + "‚É‚©‚ç‚ñ‚¾B", name(cc) + " gets the worse for drink and catches " + name(tc) + ".")
+						txt lang("uˆê”t‚Ç‚¤‚¾‚¢Hv", cnvtalk("Have a drink baby.")), lang("uˆù‚ñ‚Å‚È‚¢‚æv", cnvtalk("What are you looking at?")), lang("u‰½Œ©‚Ä‚é‚Ì‚³v", cnvtalk("I ain't drunk.")), lang("u—V‚Ú‚¤‚ºv", cnvtalk("Let's have fun."))
 					}
 					if ( rnd(4) == 0 ) {
 						if ( tc != CHARA_PLAYER ) {
 							if ( synccheck(cc, -1) | synccheck(tc, -1) ) {
 								txtef COLOR_SKY_BLUE
-								txt lang(name(tc) + "ã¯ã‚«ãƒãƒ³ã¨ããŸã€‚", name(tc) + " is pretty annoyed with the drunkard.")
-								txt lang("ã€Œé…”ã£æ‰•ã„ã«ã¯ã†ã‚“ã–ã‚Šï¼ã€", cnvtalk("Your time is over, drunk!"))
+								txt lang(name(tc) + "‚ÍƒJƒ`ƒ“‚Æ‚«‚½B", name(tc) + " is pretty annoyed with the drunkard.")
+								txt lang("uŒ‚Á•¥‚¢‚É‚Í‚¤‚ñ‚´‚èIv", cnvtalk("Your time is over, drunk!"))
 							}
 							cdata(CDATA_AI_AGGRO, tc) = 20
 							cdata(CDATA_TARGET, tc) = cc
@@ -2037,7 +2037,7 @@
 			if ( cc != CHARA_PLAYER | rtval == 0 ) {
 				if ( rtval != 2 ) {
 					if ( synccheck(cc, -1) ) {
-						txt lang(name(cc) + "ã¯" + actlistn(cdata(CDATA_ROW_ACT, cc)) + "ã‚’ä¸­æ–­ã—ãŸã€‚", name(cc) + " stop" + _s(cc) + " " + actlistn(cdata(CDATA_ROW_ACT, cc)) + ".")
+						txt lang(name(cc) + "‚Í" + actlistn(cdata(CDATA_ROW_ACT, cc)) + "‚ğ’†’f‚µ‚½B", name(cc) + " stop" + _s(cc) + " " + actlistn(cdata(CDATA_ROW_ACT, cc)) + ".")
 					}
 					if ( cdata(CDATA_ID, cc) == CREATURE_ID_KARAVIKA ) {
 						if ( cc >= MAX_CHARA_FOLLOWER ) {
@@ -2288,7 +2288,7 @@
 		}
 		if ( cdata(CDATA_BURDEN, CHARA_PLAYER) >= 3 ) {
 			if ( rnd(20) == 0 ) {
-				txt lang(name(CHARA_PLAYER) + "ã¯è·ç‰©ã«åœ§è¿«ã•ã‚Œã‚‚ãŒã„ãŸã€‚", "Your backpack is squashing you!")
+				txt lang(name(CHARA_PLAYER) + "‚Í‰×•¨‚Éˆ³”—‚³‚ê‚à‚ª‚¢‚½B", "Your backpack is squashing you!")
 				dmghp cc, cdata(CDATA_MAX_HP, cc) * (cdata(CDATA_INV_WEIGHT, CHARA_PLAYER) * 10 / cdata(CDATA_CARRY_LIMIT, CHARA_PLAYER) + 10) / 200 + 1, DAMAGE_FROM_BURDEN
 			}
 		}
@@ -2314,7 +2314,7 @@
 				snd SOUNDLIST_ATK_DARK
 				animeload 42, cc
 				txtef COLOR_SKY_BLUE
-				txt lang("æ™‚ã¯å†ã³å‹•ãå‡ºã—ãŸã€‚", "Time starts to run again.")
+				txt lang("‚ÍÄ‚Ñ“®‚«o‚µ‚½B", "Time starts to run again.")
 			}
 		}
 		else {
@@ -2362,7 +2362,7 @@
 				snd SOUNDLIST_ATK_DARK
 				animeload 42, cc
 				txtef COLOR_SKY_BLUE
-				txt lang("æ™‚ã¯å†ã³å‹•ãå‡ºã—ãŸã€‚", "Time starts to run again.")
+				txt lang("‚ÍÄ‚Ñ“®‚«o‚µ‚½B", "Time starts to run again.")
 			}
 			else {
 				if ( cc != CHARA_PLAYER ) {
@@ -2698,14 +2698,14 @@
 		if ( gdata(STARTING_GDATA_FLAG + 373) > 999 ) {
 			snd SOUNDLIST_GONG
 			txtef COLOR_RED2
-			txt lang("*åˆ¤å®šè² ã‘*", "*Loss on points*")
+			txt lang("*”»’è•‰‚¯*", "*Loss on points*")
 			gdata(STARTING_GDATA_FLAG + 373) = 0
 			await 1000
 			petarenawin = 2
 			goto *turn_end
 		}
 		if ( key == key_goup | key_escape == 1 ) {
-			txt lang("è©¦åˆã‚’æ”¾æ£„ã™ã‚‹ï¼Ÿ", "Do you want to give up the game?")
+			txt lang("‡‚ğ•úŠü‚·‚éH", "Do you want to give up the game?")
 			promptYesNo
 			if ( rtval == 0 ) {
 				petarenawin = 2
@@ -2767,7 +2767,7 @@
 	}
 	if ( gdata(GDATA_EQUIP_CHANGE) ) {
 		if ( cdata(CDATA_CONDITION_BRAINWASH, CHARA_PLAYER) == 0 ) {
-			txt lang("è£…å‚™ã‚’å¤‰æ›´ã—ãŸã€‚", "You change your equipment.")
+			txt lang("‘•”õ‚ğ•ÏX‚µ‚½B", "You change your equipment.")
 		}
 		goto *turn_end
 	}
@@ -2805,7 +2805,7 @@
 		time_warn = timeGetTime() / 1000
 		wishfilter = 0
 		hour_played++
-		s = lang("ElonaPlusã‚’ã¯ã˜ã‚ã¦ã‹ã‚‰" + hour_played + "æ™‚é–“ãŒçµŒéã—ã¦ã„ã¾ã™ã€‚", "You have been playing ElonaPlus for " + hour_played + " hour" + _s3(hour_played) + ". ")
+		s = lang("ElonaPlus‚ğ‚Í‚¶‚ß‚Ä‚©‚ç" + hour_played + "ŠÔ‚ªŒo‰ß‚µ‚Ä‚¢‚Ü‚·B", "You have been playing ElonaPlus for " + hour_played + " hour" + _s3(hour_played) + ". ")
 		gosub *time_warn_talk
 		txtmore
 		txtef COLOR_YELLOW
@@ -3494,7 +3494,7 @@
 			if ( key != key_cancel ) {
 				if ( key != key_alter ) {
 					msgdup++
-					txt lang("?ã‚­ãƒ¼ã‚’æŠ¼ã™ã¨ã€ã‚³ãƒãƒ³ãƒ‰ã®ä¸€è¦§ãŒè¦‹ã‚‰ã‚Œã‚‹ã€‚", "Hit ? key to display help.")
+					txt lang("?ƒL[‚ğ‰Ÿ‚·‚ÆAƒRƒ}ƒ“ƒh‚Ìˆê——‚ªŒ©‚ç‚ê‚éB", "Hit ? key to display help.")
 					gosub *screen_draw
 				}
 			}
@@ -3507,7 +3507,7 @@
 		if ( mdata(MDATA_TYPE) != MAP_TYPE_WORLD ) {
 			if ( gdata(GDATA_QUIT_Y) == 0 ) {
 				if ( key == "Q" ) {
-					txt lang("ãˆâ€¦", "What...")
+					txt lang("‚¦c", "What...")
 					gdata(GDATA_QUIT_Y)++
 					gosub *screen_draw
 					goto *pc_turn
@@ -3516,7 +3516,7 @@
 			else {
 				if ( gdata(GDATA_QUIT_Y) == 1 ) {
 					if ( key == "y" ) {
-						txt lang("ã¾ã•ã‹â€¦", "No... no...")
+						txt lang("‚Ü‚³‚©c", "No... no...")
 						gdata(GDATA_QUIT_Y)++
 						gosub *screen_draw
 						goto *pc_turn
@@ -3534,7 +3534,7 @@
 					else {
 						if ( gdata(GDATA_QUIT_Y) == 3 ) {
 							if ( key == "sc" ) {
-								txt lang("ã†ã‚ãããï¼ï¼", "Ahhhhh!!")
+								txt lang("‚¤‚í‚Ÿ‚Ÿ‚ŸII", "Ahhhhh!!")
 								repeat 10
 									flt
 									characreate -1, CREATURE_ID_AT_SIGN, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER)
@@ -3556,7 +3556,7 @@
 	snd SOUNDLIST_COMPLETE1
 	music = -1
 	gosub *music_play
-	txt lang("ä¿¡ã˜ã‚‰ã‚Œãªã„ï¼ã‚ãªãŸã¯ãƒãƒ•ã‚£ã‚¢ã®è¿·å®®ã€Œãƒ¬ã‚·ãƒã‚¹ã€ã‚’åˆ¶è¦‡ã—ãŸï¼", "Unbelievable! You conquered Lesimas!")
+	txt lang("M‚¶‚ç‚ê‚È‚¢I‚ ‚È‚½‚ÍƒlƒtƒBƒA‚Ì–À‹{uƒŒƒVƒ}ƒXv‚ğ§”e‚µ‚½I", "Unbelievable! You conquered Lesimas!")
 	gosub *screen_draw
 	txtsetwinword 3
 	repeat 3
@@ -3569,39 +3569,39 @@
 	screenupdate = -1
 	gosub *screen_draw
 	msg_clear
-	txt lang("ãŠå‰ãŒã“ã“ã«è¾¿ã‚Šç€ãã“ã¨ã¯ã€å°åº§ã‹ã‚‰ã€ä½•ã‹ã®å£°ãŒèã“ãˆã‚‹ã€‚", "From the pedestal, you can hear a voice.")
+	txt lang("‚¨‘O‚ª‚±‚±‚É’H‚è’…‚­‚±‚Æ‚Ív‘äÀ‚©‚çA‰½‚©‚Ìº‚ª•·‚±‚¦‚éB", "From the pedestal, you can hear a voice.")
 	flt
 	characreate -1, CREATURE_ID_ORPHE_THE_CHAOS_CHILD, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER)
 	music = MUSICLIST_MCCHAOS
 	gosub *music_play
 	msg_halt
 	msg_clear
-	txt lang("ã€Œæ±ºã¾ã£ã¦ã„ãŸã“ã¨ãªã®ã â€¦é…ã‹ã‚Œæ—©ã‹ã‚Œãªã€", cnvtalk("Your arrival here was inevitable... sooner or later."))
-	txt lang("éƒ¨å±‹ã®ç©ºæ°—ãŒçªç„¶ç·Šå¼µã—ã€ã‚ãªãŸã®å‰ã«ç«¯éº—ãªé’å¹´ãŒç¾ã‚ŒãŸã€‚", "Space within the room distorts, and an elegant young man appears before you.")
-	txt lang("ã€Œæˆ‘ã€…ã‹ã‚‰ã™ã‚Œã°ã€è¤‡é›‘æ€§ã®ä¸€é¢ã«éããªã„ãŒã€äººé–“ã¯é‹å‘½ã¨ã§ã‚‚å‘¼ã¶ã®ã ã‚ã†ï¼Ÿã€", cnvtalk("For us, it's merely one facet of a vast, complex system, but I believe you humans know it as 'fate'?"))
+	txt lang("uŒˆ‚Ü‚Á‚Ä‚¢‚½‚±‚Æ‚È‚Ì‚¾c’x‚©‚ê‘‚©‚ê‚Èv", cnvtalk("Your arrival here was inevitable... sooner or later."))
+	txt lang("•”‰®‚Ì‹ó‹C‚ª“Ë‘R‹Ù’£‚µA‚ ‚È‚½‚Ì‘O‚É’[—í‚ÈÂ”N‚ªŒ»‚ê‚½B", "Space within the room distorts, and an elegant young man appears before you.")
+	txt lang("u‰äX‚©‚ç‚·‚ê‚ÎA•¡G«‚Ìˆê–Ê‚É‰ß‚¬‚È‚¢‚ªAlŠÔ‚Í‰^–½‚Æ‚Å‚àŒÄ‚Ô‚Ì‚¾‚ë‚¤Hv", cnvtalk("For us, it's merely one facet of a vast, complex system, but I believe you humans know it as 'fate'?"))
 	msg_halt
 	msg_clear
-	txt lang("ã‚ãªãŸã¯æ‡¸å‘½ã«è„šã®éœ‡ãˆã‚’æŠ‘ãˆã‚ˆã†ã¨ã—ãŸãŒã€é›£ã—ã‹ã£ãŸã€‚", "You earnestly attempt to suppress the shaking in your legs, but it proves difficult.")
-	txt lang("è¯å¥¢ã«è¦‹ãˆã‚‹å¹¼é¡”ã®ç”·ã®å½±ã¯ã€äººã®ã‚‚ã®ã§ã¯ãªã„ã€‚", "The shadow of the young man with an elegant face is not a man's shadow.")
-	txt lang("ã‚ã©ã‘ãªã„ç³ã®å¥¥ã«ã€ã‚ãªãŸã¯åº•çŸ¥ã‚Œãªã„åŠ›ã¨é—‡ã‚’æ„Ÿã˜ãŸã€‚", "From the depths of his innocent eyes, you feel immeasurable strength and darkness.")
+	txt lang("‚ ‚È‚½‚ÍŒœ–½‚É‹r‚Ìk‚¦‚ğ—}‚¦‚æ‚¤‚Æ‚µ‚½‚ªA“ï‚µ‚©‚Á‚½B", "You earnestly attempt to suppress the shaking in your legs, but it proves difficult.")
+	txt lang("‰Øšø‚ÉŒ©‚¦‚é—cŠç‚Ì’j‚Ì‰e‚ÍAl‚Ì‚à‚Ì‚Å‚Í‚È‚¢B", "The shadow of the young man with an elegant face is not a man's shadow.")
+	txt lang("‚ ‚Ç‚¯‚È‚¢“µ‚Ì‰œ‚ÉA‚ ‚È‚½‚Í’ê’m‚ê‚È‚¢—Í‚ÆˆÅ‚ğŠ´‚¶‚½B", "From the depths of his innocent eyes, you feel immeasurable strength and darkness.")
 	msg_halt
 	msg_clear
-	txt lang("ã€Œãƒãƒ•ã‚£ã‚¢ã®æ°¸é ã®ç›Ÿç´„ã«åŸºã¥ãã€é’å¹´ã¯å°åº§ã®æ¨ªã®æ­»ä½“ã‚’æŒ‡ã—ã€çš®è‚‰ãªå¾®ç¬‘ã‚’é€ã£ãŸã€‚", "The young man gestures at the corpse of Zeome with an ironic smile.")
-	txt lang("ã€Œã“ã®å“€ã‚Œãªè€äººãŒå®ˆã£ã¦ã„ãŸã‚‚ã®ã¯ã€ä»Šã‹ã‚‰ãŠå‰ã®ã‚‚ã®ã ã€", cnvtalk("In accordance with the oath of the Eternal League of Nefia, the item that was guarded by this pathetic old man is now yours."))
+	txt lang("uƒlƒtƒBƒA‚Ì‰i‰“‚Ì–¿–ñ‚ÉŠî‚Ã‚«vÂ”N‚Í‘äÀ‚Ì‰¡‚Ì€‘Ì‚ğw‚µA”ç“÷‚È”÷Î‚ğ‘—‚Á‚½B", "The young man gestures at the corpse of Zeome with an ironic smile.")
+	txt lang("u‚±‚Ìˆ£‚ê‚È˜Vl‚ªç‚Á‚Ä‚¢‚½‚à‚Ì‚ÍA¡‚©‚ç‚¨‘O‚Ì‚à‚Ì‚¾v", cnvtalk("In accordance with the oath of the Eternal League of Nefia, the item that was guarded by this pathetic old man is now yours."))
 	msg_halt
 	msg_clear
-	txt lang("ã‚ãªãŸã¯ã€å°åº§ã®ä¸Šã«ç½®ã‹ã‚Œã¦ã„ã‚‹çµ¢çˆ›ãªè£…é£¾ã®æœ¬ã‚’ã€ã„ã¶ã‹ã—ã’ã«çœºã‚ãŸã€‚", "You cast a suspicious gaze at the gorgeously adorned book resting on the pedestal as the man begins to speak to it...")
+	txt lang("‚ ‚È‚½‚ÍA‘äÀ‚Ìã‚É’u‚©‚ê‚Ä‚¢‚éˆºà£‚È‘•ü‚Ì–{‚ğA‚¢‚Ô‚©‚µ‚°‚É’­‚ß‚½B", "You cast a suspicious gaze at the gorgeously adorned book resting on the pedestal as the man begins to speak to it...")
 	msg_halt
 	tc = findchara(CREATURE_ID_ORPHE_THE_CHAOS_CHILD)
 	gosub *chat
 	msg_clear
-	txt lang("é’å¹´ã¯æ‚ªæˆ¯ã£ã½ããƒ‹ãƒ¤ãƒªã¨ç¬‘ã„ã€å£ã«å¯„ã‚Šã‹ã‹ã£ãŸã€‚", "The young man laughs and leans against the wall, wearing a mischievous smile.")
+	txt lang("Â”N‚Íˆ«‹Y‚Á‚Û‚­ƒjƒ„ƒŠ‚ÆÎ‚¢A•Ç‚ÉŠñ‚è‚©‚©‚Á‚½B", "The young man laughs and leans against the wall, wearing a mischievous smile.")
 	msg_halt
 	msg_clear
 	chara_vanquish findchara(CREATURE_ID_ORPHE_THE_CHAOS_CHILD)
 	screenupdate = -1
 	gosub *screen_draw
-	txt lang("â€¦ã©ã‚Œãã‚‰ã„æ™‚é–“ãŒãŸã£ãŸã ã‚ã†ã€‚æ°·ã®ç³ã®ç”·ã¯ã€ã„ã¤ã®é–“ã«ã‹å§¿ã‚’æ¶ˆã—ã¦ã„ãŸã€‚ã‚ãªãŸã¯ä¸å®‰ã‚’æŒ¯ã‚Šæ‰•ã„ã€ã‚†ã£ãã‚Šã¨æœ¬ã«æ‰‹ã‚’ä¼¸ã°ã—ãŸâ€¦ã€‚", "...An unknown amount of time passes. The man with the terrifying eyes vanished while you weren't looking. You shake off your uncertainty, slowly reaching your hand out to the book...")
+	txt lang("c‚Ç‚ê‚­‚ç‚¢ŠÔ‚ª‚½‚Á‚½‚¾‚ë‚¤B•X‚Ì“µ‚Ì’j‚ÍA‚¢‚Â‚ÌŠÔ‚É‚©p‚ğÁ‚µ‚Ä‚¢‚½B‚ ‚È‚½‚Í•sˆÀ‚ğU‚è•¥‚¢A‚ä‚Á‚­‚è‚Æ–{‚Éè‚ğL‚Î‚µ‚½cB", "...An unknown amount of time passes. The man with the terrifying eyes vanished while you weren't looking. You shake off your uncertainty, slowly reaching your hand out to the book...")
 	msg_halt
 	mode = MODELIST_MAIN
 	music = MUSICLIST_MCMARCH2
@@ -3618,9 +3618,9 @@
 	pos 0, 0
 	picload exedir + "\\graphic\\g1.bmp", 1
 	gsel 0
-	s = lang("" + cdatan(CDATAN_AKA, CHARA_PLAYER) + cdatan(CDATAN_NAME, CHARA_PLAYER) + "ã«ç¥ç¦ã‚ã‚Œï¼ã‚ãªãŸã¯é‚ã«ãƒ¬ã‚·ãƒã‚¹ã®ç§˜å®ã‚’æ‰‹ã«ã„ã‚ŒãŸï¼", "Blessing to " + cdatan(CDATAN_NAME, CHARA_PLAYER) + ", " + cdatan(CDATAN_AKA, CHARA_PLAYER) + "! You've finally acquired the codex!")
+	s = lang("" + cdatan(CDATAN_AKA, CHARA_PLAYER) + cdatan(CDATAN_NAME, CHARA_PLAYER) + "‚Éj•Ÿ‚ ‚êI‚ ‚È‚½‚Í‹‚ÉƒŒƒVƒ}ƒX‚Ì”é•ó‚ğè‚É‚¢‚ê‚½I", "Blessing to " + cdatan(CDATAN_NAME, CHARA_PLAYER) + ", " + cdatan(CDATAN_AKA, CHARA_PLAYER) + "! You've finally acquired the codex!")
 	gosub *screen_drawMsg2
-	s = lang("*å‹åˆ©*", "*Win*"), "" + strhint3
+	s = lang("*Ÿ—˜*", "*Win*"), "" + strhint3
 	windowshadow = 1
 	display_window 60, 70, 680, 488
 	cmbg = 0
@@ -3630,20 +3630,20 @@
 	pos wx + ww - 120, wy + wh / 2
 	grotate 4, cmbg / 4 \ 4 * 180, cmbg / 4 / 4 \ 2 * 300, 0, x, y
 	gmode 2
-	display_topic lang("åˆ¶è¦‡ã¾ã§ã®è»Œè·¡", "Trace"), wx + 28, wy + 40
+	display_topic lang("§”e‚Ü‚Å‚Ì‹OÕ", "Trace"), wx + 28, wy + 40
 	font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
 	color 0, 0, 0
 	color 0, 0
 	pos wx + 40, wy + 76
-	mes lang("" + 517 + "å¹´" + 8 + "æœˆ" + 12 + "æ—¥ã«ã€ã‚ãªãŸã¯ãƒãƒ¼ã‚¹ãƒ†ã‚£ãƒªã‚¹ã«åˆ°ç€ã—ãŸã€‚", "In the year " + 517 + ", " + 12 + "/" + 8 + ", you arrived at North Tyris.")
+	mes lang("" + 517 + "”N" + 8 + "Œ" + 12 + "“ú‚ÉA‚ ‚È‚½‚Íƒm[ƒXƒeƒBƒŠƒX‚É“’…‚µ‚½B", "In the year " + 517 + ", " + 12 + "/" + 8 + ", you arrived at North Tyris.")
 	mes ""
-	mes lang("æœ€æ·±ã§" + gdata(GDATA_DEEPEST) + "éšç›¸å½“ã¾ã§åˆ°é”ã—ã€" + gdata(GDATA_KILLED) + "åŒ¹ã®æ•µã‚’æ®ºã—ã¦ã€", "You've killed " + gdata(GDATA_KILLED) + " creatures and reached\nmaximum of " + cnvrank(gdata(GDATA_DEEPEST)) + " level of dungeons.")
-	mes lang("ç¾åœ¨" + calcscore() + "ç‚¹ã®ã‚¹ã‚³ã‚¢ã‚’å©ãå‡ºã—ã¦ã„ã‚‹ã€‚", "Your score is " + calcscore() + " points now.")
+	mes lang("Å[‚Å" + gdata(GDATA_DEEPEST) + "ŠK‘Š“–‚Ü‚Å“’B‚µA" + gdata(GDATA_KILLED) + "•C‚Ì“G‚ğE‚µ‚ÄA", "You've killed " + gdata(GDATA_KILLED) + " creatures and reached\nmaximum of " + cnvrank(gdata(GDATA_DEEPEST)) + " level of dungeons.")
+	mes lang("Œ»İ" + calcscore() + "“_‚ÌƒXƒRƒA‚ğ’@‚«o‚µ‚Ä‚¢‚éB", "Your score is " + calcscore() + " points now.")
 	mes ""
-	mes lang("" + gdata(GDATA_YEAR) + "å¹´" + gdata(GDATA_MONTH) + "æœˆ" + gdata(GDATA_DAY) + "æ—¥ã«ãƒ¬ã‚·ãƒã‚¹ã‚’åˆ¶è¦‡ã—ã¦ã€", "In the year " + gdata(GDATA_YEAR) + ", " + gdata(GDATA_DAY) + "/" + gdata(GDATA_MONTH) + ", you conquered Lesimas.")
-	mes lang("ã‚ãªãŸã¯ã€Œ" + wincomment + "ã€ã¨ã‚³ãƒ¡ãƒ³ãƒˆã—ãŸã€‚", "Upon killing Zeome, you said, " + cnvtalk("" + wincomment))
+	mes lang("" + gdata(GDATA_YEAR) + "”N" + gdata(GDATA_MONTH) + "Œ" + gdata(GDATA_DAY) + "“ú‚ÉƒŒƒVƒ}ƒX‚ğ§”e‚µ‚ÄA", "In the year " + gdata(GDATA_YEAR) + ", " + gdata(GDATA_DAY) + "/" + gdata(GDATA_MONTH) + ", you conquered Lesimas.")
+	mes lang("‚ ‚È‚½‚Íu" + wincomment + "v‚ÆƒRƒƒ“ƒg‚µ‚½B", "Upon killing Zeome, you said, " + cnvtalk("" + wincomment))
 	mes ""
-	mes lang("â€¦ã‚ãªãŸã®æ—…ã¯ã¾ã çµ‚ã‚ã‚‰ãªã„ã€‚", "Your journey continues...")
+	mes lang("c‚ ‚È‚½‚Ì—·‚Í‚Ü‚¾I‚í‚ç‚È‚¢B", "Your journey continues...")
 	redraw 1
 	key_list = key_enter
 	keyrange = 0
@@ -3657,7 +3657,7 @@
 	goto *game_win_WHILE1
 *game_win_WEND1
 	gosub *screen_refreshFull
-	txt lang("é”æˆã®ã‚·ãƒ¼ãƒ³ã‚’ã‚‚ã†ä¸€åº¦å†ç¾ã™ã‚‹ï¼Ÿ", "Do you want to watch this event again?")
+	txt lang("’B¬‚ÌƒV[ƒ“‚ğ‚à‚¤ˆê“xÄŒ»‚·‚éH", "Do you want to watch this event again?")
 	promptYesNo
 	if ( rtval == 0 ) {
 		goto *game_win
@@ -3670,7 +3670,7 @@
 	snd SOUNDLIST_COMPLETE1
 	music = -1
 	gosub *music_play
-	txt lang("ä¿¡ã˜ã‚‰ã‚Œãªã„ï¼ã‚ãªãŸã¯å¤ä»£éºè·¡ã€Œãƒ¬ãƒŸãƒ¼ãƒ‰ã€ã‚’åˆ¶åœ§ã—ãŸï¼", "Unbelievable! You conquered Remido!")
+	txt lang("M‚¶‚ç‚ê‚È‚¢I‚ ‚È‚½‚ÍŒÃ‘ãˆâÕuƒŒƒ~[ƒhv‚ğ§ˆ³‚µ‚½I", "Unbelievable! You conquered Remido!")
 	gosub *screen_draw
 	txtsetwinword 3
 	repeat 3
@@ -3693,9 +3693,9 @@
 	pos 0, 0
 	picload exedir + "\\graphic\\g1.bmp", 1
 	gsel 0
-	s = lang("" + cdatan(CDATAN_AKA, CHARA_PLAYER) + cdatan(CDATAN_NAME, CHARA_PLAYER) + "ã«ç¥ç¦ã‚ã‚Œï¼ã‚ãªãŸã¯é‚ã«ç½å„ã®æ ¹æºã‚’æ»…ã¼ã—ãŸï¼", "Blessing to " + cdatan(CDATAN_NAME, CHARA_PLAYER) + ", " + cdatan(CDATAN_AKA, CHARA_PLAYER) + "! You've finally destroyed the source of disaster!")
+	s = lang("" + cdatan(CDATAN_AKA, CHARA_PLAYER) + cdatan(CDATAN_NAME, CHARA_PLAYER) + "‚Éj•Ÿ‚ ‚êI‚ ‚È‚½‚Í‹‚ÉĞ–ï‚ÌªŒ¹‚ğ–Å‚Ú‚µ‚½I", "Blessing to " + cdatan(CDATAN_NAME, CHARA_PLAYER) + ", " + cdatan(CDATAN_AKA, CHARA_PLAYER) + "! You've finally destroyed the source of disaster!")
 	gosub *screen_drawMsg2
-	s = lang("*å‹åˆ©*", "*Win*"), "" + strhint3
+	s = lang("*Ÿ—˜*", "*Win*"), "" + strhint3
 	windowshadow = 1
 	display_window 60, 70, 680, 488
 	cmbg = 0
@@ -3705,20 +3705,20 @@
 	pos wx + ww - 120, wy + wh / 2
 	grotate 4, cmbg / 4 \ 4 * 180, cmbg / 4 / 4 \ 2 * 300, 0, x, y
 	gmode 2
-	display_topic lang("åˆ¶è¦‡ã¾ã§ã®è»Œè·¡", "Trace"), wx + 28, wy + 40
+	display_topic lang("§”e‚Ü‚Å‚Ì‹OÕ", "Trace"), wx + 28, wy + 40
 	font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
 	color 0, 0, 0
 	color 0, 0
 	pos wx + 40, wy + 76
-	mes lang("" + 517 + "å¹´" + 8 + "æœˆ" + 12 + "æ—¥ã«ã€ã‚ãªãŸã¯ãƒãƒ¼ã‚¹ãƒ†ã‚£ãƒªã‚¹ã«åˆ°ç€ã—ãŸã€‚", "In the year " + 517 + ", " + 12 + "/" + 8 + ", you arrived at North Tyris.")
+	mes lang("" + 517 + "”N" + 8 + "Œ" + 12 + "“ú‚ÉA‚ ‚È‚½‚Íƒm[ƒXƒeƒBƒŠƒX‚É“’…‚µ‚½B", "In the year " + 517 + ", " + 12 + "/" + 8 + ", you arrived at North Tyris.")
 	mes ""
-	mes lang("æœ€æ·±ã§" + gdata(GDATA_DEEPEST) + "éšç›¸å½“ã¾ã§åˆ°é”ã—ã€" + gdata(GDATA_KILLED) + "åŒ¹ã®æ•µã‚’æ®ºã—ã¦ã€", "You've killed " + gdata(GDATA_KILLED) + " creatures and reached\nmaximum of " + cnvrank(gdata(GDATA_DEEPEST)) + " level of dungeons.")
-	mes lang("ç¾åœ¨" + calcscore() + "ç‚¹ã®ã‚¹ã‚³ã‚¢ã‚’å©ãå‡ºã—ã¦ã„ã‚‹ã€‚", "Your score is " + calcscore() + " points now.")
+	mes lang("Å[‚Å" + gdata(GDATA_DEEPEST) + "ŠK‘Š“–‚Ü‚Å“’B‚µA" + gdata(GDATA_KILLED) + "•C‚Ì“G‚ğE‚µ‚ÄA", "You've killed " + gdata(GDATA_KILLED) + " creatures and reached\nmaximum of " + cnvrank(gdata(GDATA_DEEPEST)) + " level of dungeons.")
+	mes lang("Œ»İ" + calcscore() + "“_‚ÌƒXƒRƒA‚ğ’@‚«o‚µ‚Ä‚¢‚éB", "Your score is " + calcscore() + " points now.")
 	mes ""
-	mes lang("" + gdata(GDATA_YEAR) + "å¹´" + gdata(GDATA_MONTH) + "æœˆ" + gdata(GDATA_DAY) + "æ—¥ã«ãƒ¬ãƒŸãƒ¼ãƒ‰ã‚’åˆ¶è¦‡ã—ã¦ã€", "In the year " + gdata(GDATA_YEAR) + ", " + gdata(GDATA_DAY) + "/" + gdata(GDATA_MONTH) + ", you conquered Remido.")
-	mes lang("ã‚ãªãŸã¯ã€Œ" + wincomment + "ã€ã¨ã‚³ãƒ¡ãƒ³ãƒˆã—ãŸã€‚", "Upon killing Meshera Alpha, you said, " + cnvtalk("" + wincomment))
+	mes lang("" + gdata(GDATA_YEAR) + "”N" + gdata(GDATA_MONTH) + "Œ" + gdata(GDATA_DAY) + "“ú‚ÉƒŒƒ~[ƒh‚ğ§”e‚µ‚ÄA", "In the year " + gdata(GDATA_YEAR) + ", " + gdata(GDATA_DAY) + "/" + gdata(GDATA_MONTH) + ", you conquered Remido.")
+	mes lang("‚ ‚È‚½‚Íu" + wincomment + "v‚ÆƒRƒƒ“ƒg‚µ‚½B", "Upon killing Meshera Alpha, you said, " + cnvtalk("" + wincomment))
 	mes ""
-	mes lang("â€¦ã‚ãªãŸã®æ—…ã¯ã¾ã çµ‚ã‚ã‚‰ãªã„ã€‚", "Your journey continues...")
+	mes lang("c‚ ‚È‚½‚Ì—·‚Í‚Ü‚¾I‚í‚ç‚È‚¢B", "Your journey continues...")
 	redraw 1
 	key_list = key_enter
 	keyrange = 0
@@ -3732,7 +3732,7 @@
 	goto *game_win2_WHILE1
 *game_win2_WEND1
 	gosub *screen_refreshFull
-	txt lang("é”æˆã®ã‚·ãƒ¼ãƒ³ã‚’ã‚‚ã†ä¸€åº¦å†ç¾ã™ã‚‹ï¼Ÿ", "Do you want to watch this event again?")
+	txt lang("’B¬‚ÌƒV[ƒ“‚ğ‚à‚¤ˆê“xÄŒ»‚·‚éH", "Do you want to watch this event again?")
 	promptYesNo
 	if ( rtval == 0 ) {
 		goto *game_win2
@@ -3746,7 +3746,7 @@
 	snd SOUNDLIST_COMPLETE1
 	music = -1
 	gosub *music_play
-	txt lang("ä¿¡ã˜ã‚‰ã‚Œãªã„ï¼ã‚ãªãŸã¯ç¥ã®é–“ã‚’åˆ¶åœ§ã—ãŸï¼", "Unbelievable! You conquered God's Prison!")
+	txt lang("M‚¶‚ç‚ê‚È‚¢I‚ ‚È‚½‚Í_‚ÌŠÔ‚ğ§ˆ³‚µ‚½I", "Unbelievable! You conquered God's Prison!")
 	gosub *screen_draw
 	txtsetwinwordc 3
 	repeat 3
@@ -3769,9 +3769,9 @@
 	pos 0, 0
 	picload exedir + "\\graphic\\g1.bmp", 1
 	gsel 0
-	s = lang("" + cdatan(CDATAN_AKA, CHARA_PLAYER) + cdatan(CDATAN_NAME, CHARA_PLAYER) + "ã«ç¥ç¦ã‚ã‚Œï¼ã‚ãªãŸã¯é‚ã«æ··æ²Œã®ç¥ã‚’è¨ä¼ã—ãŸï¼", "Blessing to " + cdatan(CDATAN_NAME, CHARA_PLAYER) + ", " + cdatan(CDATAN_AKA, CHARA_PLAYER) + "! You've finally beat the god of chaos!")
+	s = lang("" + cdatan(CDATAN_AKA, CHARA_PLAYER) + cdatan(CDATAN_NAME, CHARA_PLAYER) + "‚Éj•Ÿ‚ ‚êI‚ ‚È‚½‚Í‹‚É¬“×‚Ì_‚ğ“¢”°‚µ‚½I", "Blessing to " + cdatan(CDATAN_NAME, CHARA_PLAYER) + ", " + cdatan(CDATAN_AKA, CHARA_PLAYER) + "! You've finally beat the god of chaos!")
 	gosub *screen_drawMsg2
-	s = lang("*å‹åˆ©*", "*Win*"), "" + strhint3
+	s = lang("*Ÿ—˜*", "*Win*"), "" + strhint3
 	windowshadow = 1
 	display_window 60, 70, 680, 488
 	cmbg = 0
@@ -3781,20 +3781,20 @@
 	pos wx + ww - 120, wy + wh / 2
 	grotate 4, cmbg / 4 \ 4 * 180, cmbg / 4 / 4 \ 2 * 300, 0, x, y
 	gmode 2
-	display_topic lang("åˆ¶è¦‡ã¾ã§ã®è»Œè·¡", "Trace"), wx + 28, wy + 40
+	display_topic lang("§”e‚Ü‚Å‚Ì‹OÕ", "Trace"), wx + 28, wy + 40
 	font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
 	color 0, 0, 0
 	color 0, 0
 	pos wx + 40, wy + 76
-	mes lang("" + 517 + "å¹´" + 8 + "æœˆ" + 12 + "æ—¥ã«ã€ã‚ãªãŸã¯ãƒãƒ¼ã‚¹ãƒ†ã‚£ãƒªã‚¹ã«åˆ°ç€ã—ãŸã€‚", "In the year " + 517 + ", " + 12 + "/" + 8 + ", you arrived at North Tyris.")
+	mes lang("" + 517 + "”N" + 8 + "Œ" + 12 + "“ú‚ÉA‚ ‚È‚½‚Íƒm[ƒXƒeƒBƒŠƒX‚É“’…‚µ‚½B", "In the year " + 517 + ", " + 12 + "/" + 8 + ", you arrived at North Tyris.")
 	mes ""
-	mes lang("æœ€æ·±ã§" + gdata(GDATA_DEEPEST) + "éšç›¸å½“ã¾ã§åˆ°é”ã—ã€" + gdata(GDATA_KILLED) + "åŒ¹ã®æ•µã‚’æ®ºã—ã¦ã€", "You've killed " + gdata(GDATA_KILLED) + " creatures and reached\nmaximum of " + cnvrank(gdata(GDATA_DEEPEST)) + " level of dungeons.")
-	mes lang("ç¾åœ¨" + calcscore() + "ç‚¹ã®ã‚¹ã‚³ã‚¢ã‚’å©ãå‡ºã—ã¦ã„ã‚‹ã€‚", "Your score is " + calcscore() + " points now.")
+	mes lang("Å[‚Å" + gdata(GDATA_DEEPEST) + "ŠK‘Š“–‚Ü‚Å“’B‚µA" + gdata(GDATA_KILLED) + "•C‚Ì“G‚ğE‚µ‚ÄA", "You've killed " + gdata(GDATA_KILLED) + " creatures and reached\nmaximum of " + cnvrank(gdata(GDATA_DEEPEST)) + " level of dungeons.")
+	mes lang("Œ»İ" + calcscore() + "“_‚ÌƒXƒRƒA‚ğ’@‚«o‚µ‚Ä‚¢‚éB", "Your score is " + calcscore() + " points now.")
 	mes ""
-	mes lang("" + gdata(GDATA_YEAR) + "å¹´" + gdata(GDATA_MONTH) + "æœˆ" + gdata(GDATA_DAY) + "æ—¥ã«ç¥ã®é–“ã‚’åˆ¶è¦‡ã—ã¦ã€", "In the year " + gdata(GDATA_YEAR) + ", " + gdata(GDATA_DAY) + "/" + gdata(GDATA_MONTH) + ", you conquered God's Prison.")
-	mes lang("ã‚ãªãŸã¯ã€Œ" + wincomment + "ã€ã¨ã‚³ãƒ¡ãƒ³ãƒˆã—ãŸã€‚", "Upon killing Enthumesis, you said, " + cnvtalk("" + wincomment))
+	mes lang("" + gdata(GDATA_YEAR) + "”N" + gdata(GDATA_MONTH) + "Œ" + gdata(GDATA_DAY) + "“ú‚É_‚ÌŠÔ‚ğ§”e‚µ‚ÄA", "In the year " + gdata(GDATA_YEAR) + ", " + gdata(GDATA_DAY) + "/" + gdata(GDATA_MONTH) + ", you conquered God's Prison.")
+	mes lang("‚ ‚È‚½‚Íu" + wincomment + "v‚ÆƒRƒƒ“ƒg‚µ‚½B", "Upon killing Enthumesis, you said, " + cnvtalk("" + wincomment))
 	mes ""
-	mes lang("â€¦ã‚ãªãŸã®æ—…ã¯ã¾ã çµ‚ã‚ã‚‰ãªã„ã€‚", "Your journey continues...")
+	mes lang("c‚ ‚È‚½‚Ì—·‚Í‚Ü‚¾I‚í‚ç‚È‚¢B", "Your journey continues...")
 	redraw 1
 	key_list = key_enter
 	keyrange = 0
@@ -3808,7 +3808,7 @@
 	goto *game_win3_WHILE1
 *game_win3_WEND1
 	gosub *screen_refreshFull
-	txt lang("é”æˆã®ã‚·ãƒ¼ãƒ³ã‚’ã‚‚ã†ä¸€åº¦å†ç¾ã™ã‚‹ï¼Ÿ", "Do you want to watch this event again?")
+	txt lang("’B¬‚ÌƒV[ƒ“‚ğ‚à‚¤ˆê“xÄŒ»‚·‚éH", "Do you want to watch this event again?")
 	promptYesNo
 	if ( rtval == 0 ) {
 		goto *game_win3
@@ -3827,9 +3827,9 @@
 	if ( gdata(GDATA_QUEST) ) {
 		goto *quest_death
 	}
-	txt lang("ã•ã‚ˆã†ãªã‚‰â€¦ ", "Good bye... ")
+	txt lang("‚³‚æ‚¤‚È‚çc ", "Good bye... ")
 	txtmore
-	txt lang("éºè¨€ã¯ï¼Ÿ", "You leave a dying message.")
+	txt lang("ˆâŒ¾‚ÍH", "You leave a dying message.")
 	val = (windoww - 310) / 2 + inf_screenx, winposy(90), 16, 1, 0
 	inputlog = ""
 	gosub *prompt_word
@@ -3837,7 +3837,7 @@
 		txtsetlastword
 	}
 	else {
-		lastword = lang("ã€Œ", "\"") + inputlog + lang("ã€", "\"")
+		lastword = lang("u", "\"") + inputlog + lang("v", "\"")
 	}
 	buff = ""
 	notesel buff
@@ -3848,10 +3848,10 @@
 	}
 	s = cdatan(CDATAN_AKA, cc) + " " + cdatan(CDATAN_NAME, cc) + lang("", " ") + lastword
 	lenfix s, 60
-	s += lang("" + gdata(GDATA_YEAR) + "å¹´" + gdata(GDATA_MONTH) + "æœˆ" + gdata(GDATA_DAY) + "æ—¥", "" + gdata(GDATA_YEAR) + "/" + gdata(GDATA_MONTH) + "/" + gdata(GDATA_DAY))
+	s += lang("" + gdata(GDATA_YEAR) + "”N" + gdata(GDATA_MONTH) + "Œ" + gdata(GDATA_DAY) + "“ú", "" + gdata(GDATA_YEAR) + "/" + gdata(GDATA_MONTH) + "/" + gdata(GDATA_DAY))
 	noteadd "", 0
 	noteadd s, 1
-	s = lang(mdatan(MDATAN_NAME) + "ã§" + ndeathcause, cnven(ndeathcause) + " in " + mdatan(MDATAN_NAME) + ".")
+	s = lang(mdatan(MDATAN_NAME) + "‚Å" + ndeathcause, cnven(ndeathcause) + " in " + mdatan(MDATAN_NAME) + ".")
 	noteadd s, 2
 	s = "" + calcscore() + "," + cdata(CDATA_PIC, cc)
 	noteadd s, 3
@@ -3894,7 +3894,7 @@
 		}
 	loop
 	repeat noteinfo(0) / 4
-		noteadd "" + cnvrank(cnt + 1) + lang("ä½", ""), cnt * 4, 1
+		noteadd "" + cnvrank(cnt + 1) + lang("ˆÊ", ""), cnt * 4, 1
 	loop
 	notesave file + ".txt"
 	redraw 0
@@ -3903,31 +3903,31 @@
 	picload exedir + "graphic\\void.bmp", 1
 	gsel 0
 	gosub *dead_draw
-	s = lang("ã‚ã¨ã‚‚ã†å°‘ã—ã§åŸ‹è‘¬ã•ã‚Œã‚‹â€¦", "You are about to be buried...")
+	s = lang("‚ ‚Æ‚à‚¤­‚µ‚Å–„‘’‚³‚ê‚éc", "You are about to be buried...")
 	gosub *screen_drawMsg2
 	if ( gdata(GDATA_FLAG_GAME_MODE) == GAMEMODE_LOSS | (gdata(GDATA_FLAG_MAIN) >= 715 & gdata(GDATA_FLAG_MAIN) < 760 & gdata(GDATA_AREA) == AREA_CHAOS_CRADLE) ) {
 		gosub *dead_draw
-		s = lang("ã‚ãªãŸã¯åŸ‹ã‚ã‚‰ã‚ŒãŸã€‚ã•ã‚ˆã†ãªã‚‰â€¦ï¼ˆã‚­ãƒ¼ã‚’æŠ¼ã™ã¨çµ‚äº†ã—ã¾ã™ï¼‰", "You have been buried. Bye...(Hit any key to exit)")
+		s = lang("‚ ‚È‚½‚Í–„‚ß‚ç‚ê‚½B‚³‚æ‚¤‚È‚çciƒL[‚ğ‰Ÿ‚·‚ÆI—¹‚µ‚Ü‚·j", "You have been buried. Bye...(Hit any key to exit)")
 		gosub *screen_drawMsg2
 		redraw 1
 		press
 		goto *exit_game
 	}
-	promptAdd lang("é€™ã„ä¸ŠãŒã‚‹(ï¾ï¾Ÿï¾…ï¾™ï¾ƒï½¨ã‚ã‚Šå¾©æ´»)", "Crawl up"), "a"
+	promptAdd lang("”‡‚¢ã‚ª‚é(ÍßÅÙÃ¨‚ ‚è•œŠˆ)", "Crawl up"), "a"
 	if ( gdata(GDATA_FLAG_GAME_MODE) != GAMEMODE_ABNORMAL ) {
-		promptAdd lang("åŸ‹ã¾ã‚‹(ä¿å­˜ã—ãŸã¨ã“ã‚ã‹ã‚‰)", "Lie on your back"), "b"
+		promptAdd lang("–„‚Ü‚é(•Û‘¶‚µ‚½‚Æ‚±‚ë‚©‚ç)", "Lie on your back"), "b"
 	}
 	val = promptx, 100, 300, 1
 	gosub *prompt_key
 	if ( rtval == 1 ) {
 		gosub *dead_draw
-		s = lang("ã‚ãªãŸã¯åŸ‹ã‚ã‚‰ã‚ŒãŸã€‚ã•ã‚ˆã†ãªã‚‰â€¦ï¼ˆã‚­ãƒ¼ã‚’æŠ¼ã™ã¨çµ‚äº†ã—ã¾ã™ï¼‰", "You have been buried. Bye...(Hit any key to exit)")
+		s = lang("‚ ‚È‚½‚Í–„‚ß‚ç‚ê‚½B‚³‚æ‚¤‚È‚çciƒL[‚ğ‰Ÿ‚·‚ÆI—¹‚µ‚Ü‚·j", "You have been buried. Bye...(Hit any key to exit)")
 		gosub *screen_drawMsg2
 		redraw 1
 		press
 		goto *exit_game
 	}
-	s = "dead" + lang(cdatan(CDATAN_AKA, CHARA_PLAYER) + cdatan(CDATAN_NAME, CHARA_PLAYER) + "ã¯" + mdatan(MDATAN_NAME) + "ã§" + ndeathcause + lastword, cdatan(CDATAN_AKA, CHARA_PLAYER) + " " + cdatan(CDATAN_NAME, CHARA_PLAYER) + " " + ndeathcause + " in " + mdatan(MDATAN_NAME) + " " + lastword)
+	s = "dead" + lang(cdatan(CDATAN_AKA, CHARA_PLAYER) + cdatan(CDATAN_NAME, CHARA_PLAYER) + "‚Í" + mdatan(MDATAN_NAME) + "‚Å" + ndeathcause + lastword, cdatan(CDATAN_AKA, CHARA_PLAYER) + " " + cdatan(CDATAN_NAME, CHARA_PLAYER) + " " + ndeathcause + " in " + mdatan(MDATAN_NAME) + " " + lastword)
 	screenupdate = -1
 	gosub *screen_refreshFull
 	levelexitby = 3
@@ -3958,7 +3958,7 @@
 			s = "New!"
 		}
 		else {
-			s = " " + cnvrank(cnt + 1) + lang("ä½", "")
+			s = " " + cnvrank(cnt + 1) + lang("ˆÊ", "")
 		}
 		pos x - 80, y + 10
 		color 10, 10, 10
@@ -3983,7 +3983,7 @@
 		csvsort s, s(10), 44
 		pos x + 480, y + 20
 		color 10, 10, 10
-		mes "" + s + lang("ç‚¹", "")
+		mes "" + s + lang("“_", "")
 		p = int(s(1)) \ 1000
 		chara_preparepic p
 		pos x - 22, y + 12
@@ -4036,7 +4036,7 @@
 		if ( gdata(GDATA_QUEST) == QUEST_TYPE_PARTY ) {
 			calcpartyscore
 			calcpartyscore2
-			txt lang("æœ€çµ‚å¾—ç‚¹ã¯" + qdata(QDATA_PARAM2, gdata(GDATA_QUEST_REF)) + "ãƒã‚¤ãƒ³ãƒˆã ã£ãŸï¼", "Your final score is " + qdata(QDATA_PARAM2, gdata(GDATA_QUEST_REF)) + " points!")
+			txt lang("ÅI“¾“_‚Í" + qdata(QDATA_PARAM2, gdata(GDATA_QUEST_REF)) + "ƒ|ƒCƒ“ƒg‚¾‚Á‚½I", "Your final score is " + qdata(QDATA_PARAM2, gdata(GDATA_QUEST_REF)) + " points!")
 
 			/********** ANNA CUSTOM - BEGINNING **********/ // Gather Items At End Of Party Time.
 
@@ -4052,12 +4052,12 @@
 				gdata(GDATA_QUEST_STATUS) = QUEST_STATE_SUCCESS
 				qdata(QDATA_STATUS, gdata(GDATA_QUEST_REF)) = QUEST_STATE_SUCCESS
 				txtef COLOR_GREEN
-				txt lang("ãƒ‘ãƒ¼ãƒ†ã‚£ãƒ¼ã¯å¤§ç››æ³ã ã£ãŸï¼", "People had a hell of a good time!")
+				txt lang("ƒp[ƒeƒB[‚Í‘å·‹µ‚¾‚Á‚½I", "People had a hell of a good time!")
 				msg_halt
 			}
 			else {
 				txtef COLOR_PURPLE
-				txt lang("ãƒ‘ãƒ¼ãƒ†ã‚£ãƒ¼ã¯ãã ãã ã«ãªã£ãŸâ€¦", "The party turned out to be a big flop...")
+				txt lang("ƒp[ƒeƒB[‚Í‚®‚¾‚®‚¾‚É‚È‚Á‚½c", "The party turned out to be a big flop...")
 			}
 		}
 		if ( gdata(GDATA_QUEST) == QUEST_TYPE_HARVEST ) {
@@ -4065,12 +4065,12 @@
 				gdata(GDATA_QUEST_STATUS) = QUEST_STATE_SUCCESS
 				qdata(QDATA_STATUS, gdata(GDATA_QUEST_REF)) = QUEST_STATE_SUCCESS
 				txtef COLOR_GREEN
-				txt lang("ç„¡äº‹ã«ç´å…¥ã‚’çµ‚ãˆãŸï¼", "You complete the task!")
+				txt lang("–³–‚É”[“ü‚ğI‚¦‚½I", "You complete the task!")
 				msg_halt
 			}
 			else {
 				txtef COLOR_PURPLE
-				txt lang("ç´å…¥ã¯é–“ã«åˆã‚ãªã‹ã£ãŸâ€¦", "You fail to fulfill your task...")
+				txt lang("”[“ü‚ÍŠÔ‚É‡‚í‚È‚©‚Á‚½c", "You fail to fulfill your task...")
 			}
 		}
 		if ( gdata(GDATA_QUEST) == QUEST_TYPE_MINEFIELD ) {
@@ -4078,17 +4078,17 @@
 				gdata(GDATA_QUEST_STATUS) = QUEST_STATE_SUCCESS
 				qdata(QDATA_STATUS, gdata(GDATA_QUEST_REF)) = QUEST_STATE_SUCCESS
 				txtef COLOR_GREEN
-				txt lang("ç„¡äº‹ã«æ’¤å»ã‚’çµ‚ãˆãŸï¼", "You complete the task!")
+				txt lang("–³–‚É“P‹‚ğI‚¦‚½I", "You complete the task!")
 				msg_halt
 			}
 			else {
 				txtef COLOR_PURPLE
-				txt lang("æ’¤å»ã¯é–“ã«åˆã‚ãªã‹ã£ãŸâ€¦", "You fail to fulfill your task...")
+				txt lang("“P‹‚ÍŠÔ‚É‡‚í‚È‚©‚Á‚½c", "You fail to fulfill your task...")
 			}
 		}
 		if ( gdata(GDATA_QUEST) == QUEST_TYPE_CONQUER ) {
 			txtef COLOR_PURPLE
-			txt lang("è¨ä¼ã«å¤±æ•—ã—ãŸâ€¦", "You failed to slay the target...")
+			txt lang("“¢”°‚É¸”s‚µ‚½c", "You failed to slay the target...")
 		}
 		qexit = 0
 		levelexitby = 4
@@ -4132,13 +4132,13 @@
 		novoidlv = 1
 		characreate -1, CREATURE_ID_LITTLE_SISTER, evdata1(evnum - (evnum != 0) * 1), evdata2(evnum - (evnum != 0) * 1)
 		txtef COLOR_BLUE
-		txt lang("ãƒ“ãƒƒã‚°ãƒ€ãƒ‡ã‚£ã®è‚©ã‹ã‚‰ã€ãƒªãƒˆãƒ«ã‚·ã‚¹ã‚¿ãƒ¼ãŒæ»‘ã‚Šè½ã¡ãŸã€‚ã€ŒMr Bubblesï¼ï¼ã€", "The Little Sister slips from the Big Daddy's shoulder. \"Mr. Bubbles!\"")
+		txt lang("ƒrƒbƒOƒ_ƒfƒB‚ÌŒ¨‚©‚çAƒŠƒgƒ‹ƒVƒXƒ^[‚ªŠŠ‚è—‚¿‚½BuMr BubblesIIv", "The Little Sister slips from the Big Daddy's shoulder. \"Mr. Bubbles!\"")
 		goto *event_SWEND1
 	}
 	if ( _switch_val == EVENT_GOD_INSIDE_LULWY | _switch_sw ) {
 		_switch_sw = 0
 		txtef COLOR_YELLOW
-		txt lang("æ„šã‹ã­â€¦æ­»ã¬æº–å‚™ã‚’ã—ãªã•ã„ï¼ï¼ï¼", "Fool... Prepare to die!!!")
+		txt lang("‹ğ‚©‚Ëc€‚Ê€”õ‚ğ‚µ‚È‚³‚¢III", "Fool... Prepare to die!!!")
 		msg_halt
 		animeid = ANIMATION_RAGNA
 		gosub *anime
@@ -4168,7 +4168,7 @@
 	if ( _switch_val == EVENT_GOD_INSIDE_EHEKATL | _switch_sw ) {
 		_switch_sw = 0
 		txtef COLOR_YELLOW
-		txt lang("â€¦ã…ã£ã…ã…â€¦ã£ã…ã…ã£ã…ã†ã†ã†ã†ã¿ã¿ã‚ƒãï¼ï¼ï¼", "memememw...MEMEMEM...MEWWWWWW!")
+		txt lang("c‚£‚Á‚£‚£c‚Á‚£‚£‚Á‚£‚¤‚¤‚¤‚¤‚İ‚İ‚á‚ŸIII", "memememw...MEMEMEM...MEWWWWWW!")
 		msg_halt
 		animeid = ANIMATION_RAGNA
 		gosub *anime
@@ -4180,7 +4180,7 @@
 	if ( _switch_val == EVENT_GOD_INSIDE_OPATOS | _switch_sw ) {
 		_switch_sw = 0
 		txtef COLOR_YELLOW
-		txt lang("â€¦ãƒƒãƒãƒãƒâ€¦ãƒ•ãƒãƒãƒãƒƒãƒ„ãƒƒãƒãƒãƒãƒãƒ¼ï¼ï¼ï¼", "...Muwahahaha...wahahahaha!")
+		txt lang("cƒbƒnƒnƒncƒtƒnƒnƒnƒbƒcƒbƒnƒnƒnƒn[III", "...Muwahahaha...wahahahaha!")
 		msg_halt
 		animeid = ANIMATION_RAGNA
 		gosub *anime
@@ -4192,7 +4192,7 @@
 	if ( _switch_val == EVENT_GOD_INSIDE_KUMIROMI | _switch_sw ) {
 		_switch_sw = 0
 		txtef COLOR_YELLOW
-		txt lang("è¨±ã•ãªã„â€¦çµ¶å¯¾ã«â€¦ï¼ï¼ï¼", "I absolutely... can't forgive...!!!")
+		txt lang("‹–‚³‚È‚¢câ‘Î‚ÉcIII", "I absolutely... can't forgive...!!!")
 		msg_halt
 		animeid = ANIMATION_RAGNA
 		gosub *anime
@@ -4204,7 +4204,7 @@
 	if ( _switch_val == EVENT_GOD_INSIDE_MANI | _switch_sw ) {
 		_switch_sw = 0
 		txtef COLOR_YELLOW
-		txt lang("ã•ãã€çµ‚å¹•ã¨ã„ã“ã†ã‹ï¼ï¼ï¼", "Come, let us bring this farce to a close!!!")
+		txt lang("‚³‚ŸAI–‹‚Æ‚¢‚±‚¤‚©III", "Come, let us bring this farce to a close!!!")
 		msg_halt
 		animeid = ANIMATION_RAGNA
 		gosub *anime
@@ -4216,7 +4216,7 @@
 	if ( _switch_val == EVENT_GOD_INSIDE_JURE | _switch_sw ) {
 		_switch_sw = 0
 		txtef COLOR_YELLOW
-		txt lang("ãƒã€ãƒã‚«ã¯æ­»ãªãªãã‚ƒæ²»ã‚‰ãªã„ã‚“ã ã‹ã‚‰ï¼ï¼ï¼", "I-if you won't die, then my only choice is to heal your foolishness!!!")
+		txt lang("ƒoAƒoƒJ‚Í€‚È‚È‚«‚á¡‚ç‚È‚¢‚ñ‚¾‚©‚çIII", "I-if you won't die, then my only choice is to heal your foolishness!!!")
 		msg_halt
 		animeid = ANIMATION_RAGNA
 		gosub *anime
@@ -4228,7 +4228,7 @@
 	if ( _switch_val == EVENT_GOD_INSIDE_ITZPALT | _switch_sw ) {
 		_switch_sw = 0
 		txtef COLOR_YELLOW
-		txt lang("æ¸¦å·»ã‘ç‚ã‚ˆï¼å–å·»ã‘å†·æ°—ã‚ˆï¼ãã—ã¦ç¬ã‘é›»å…‰ã‚ˆï¼ä»Šã“ãã€ã‚ã‚‹ã¹ãå§¿ã¸ã¨é‚„ã‚‹ã®ã ï¼", "Roaring flames! Biting cold! Savage lightning! Return this fool to the dust from whence " + he(cc) + " came!")
+		txt lang("‰QŠª‚¯‰Š‚æIæŠª‚¯—â‹C‚æI‚»‚µ‚Äu‚¯“dŒõ‚æI¡‚±‚»A‚ ‚é‚×‚«p‚Ö‚ÆŠÒ‚é‚Ì‚¾I", "Roaring flames! Biting cold! Savage lightning! Return this fool to the dust from whence " + he(cc) + " came!")
 		msg_halt
 		animeid = ANIMATION_RAGNA
 		gosub *anime
@@ -4240,7 +4240,7 @@
 	if ( _switch_val == EVENT_GOD_INSIDE_YACATECT | _switch_sw ) {
 		_switch_sw = 0
 		txtef COLOR_YELLOW
-		txt lang("è¨±ã•ã¸ã‚“â€¦ä»Šã®ã¯é«˜ãã¤ãã§ï¼ï¼ï¼", "Unacceptable... Now you shall pay!")
+		txt lang("‹–‚³‚Ö‚ñc¡‚Ì‚Í‚‚­‚Â‚­‚ÅIII", "Unacceptable... Now you shall pay!")
 		msg_halt
 		animeid = ANIMATION_RAGNA
 		gosub *anime
@@ -4253,9 +4253,9 @@
 		_switch_sw = 0
 		if ( gdata(GDATA_FLAG_MAIN) >= 325 ) {
 			txtef COLOR_YELLOW
-			txt lang("ã‚ãªãŸãŒè‚‰å¡Šã«å‘ã‘ã¦ã‚¨ãƒ¼ãƒ†ãƒ«ãƒ–ãƒ©ã‚¹ã‚¿ãƒ¼ã‚’æ”¾ã¤ã¨ã€è‚‰å¡Šã®å†ç”ŸãŒæ­¢ã¾ã‚Šå´©å£Šã‚’å§‹ã‚ãŸã€‚", "You fire the ether blaster into the mass of flesh. Its regeneration stops and it begins to collapse.")
+			txt lang("‚ ‚È‚½‚ª“÷‰ò‚ÉŒü‚¯‚ÄƒG[ƒeƒ‹ƒuƒ‰ƒXƒ^[‚ğ•ú‚Â‚ÆA“÷‰ò‚ÌÄ¶‚ª~‚Ü‚è•ö‰ó‚ğn‚ß‚½B", "You fire the ether blaster into the mass of flesh. Its regeneration stops and it begins to collapse.")
 			txtef COLOR_RED
-			txt lang("å´©å£Šã—ã¦ã„ãè‚‰å¡Šã®ä¸­ã‹ã‚‰ä½•ã‹ãŒé£›ã³å‡ºã—ã¦ããŸï¼", "Something suddenly emerges from the mass of flesh as it collapses!")
+			txt lang("•ö‰ó‚µ‚Ä‚¢‚­“÷‰ò‚Ì’†‚©‚ç‰½‚©‚ª”ò‚Ño‚µ‚Ä‚«‚½I", "Something suddenly emerges from the mass of flesh as it collapses!")
 			msg_halt
 			flt
 			characreate -1, CREATURE_ID_MESHERA_ALPHA_THE_DEFORMED_ANGEL, evdata1(evnum - (evnum != 0) * 1), evdata2(evnum - (evnum != 0) * 1)
@@ -4275,14 +4275,14 @@
 				if ( cdata(CDATA_ID, tc) == CREATURE_ID_INFECTED_YERLES_SOLDIER ) {
 					if ( tc != CHARA_PLAYER ) {
 						cdata(CDATA_RELATION, tc) = 10
-						txt lang(name(tc) + "ã¯æŸã®é–“ã®è‡ªæˆ‘ã‚’å–ã‚Šæˆ»ã—ãŸï¼", name(tc) + " momentarily regained consciousness!")
+						txt lang(name(tc) + "‚Í‘©‚ÌŠÔ‚Ì©‰ä‚ğæ‚è–ß‚µ‚½I", name(tc) + " momentarily regained consciousness!")
 					}
 				}
 			loop
 		}
 		if ( gdata(GDATA_FLAG_MAIN) < 325 ) {
 			txtef COLOR_RED
-			txt lang("å€’ã—ãŸã¯ãšã®æ€ªç‰©ãŒã¿ã‚‹ã¿ã‚‹å†ç”Ÿã—ã¦ã„ãï¼ã“ã‚Œã§ã¯ã‚­ãƒªãŒãªã„ï¼ä¸€æ™‚æ’¤é€€ã—ã€å¯¾ç­–ã‚’ç·´ã£ãŸæ–¹ãŒã„ã„ã ã‚ã†ã€‚", "The enemy you thought you had struck down revives instantly before your eyes! There's no way to defeat it! You should withdraw for now and develop countermeasures to its regeneration.")
+			txt lang("“|‚µ‚½‚Í‚¸‚Ì‰ö•¨‚ª‚İ‚é‚İ‚éÄ¶‚µ‚Ä‚¢‚­I‚±‚ê‚Å‚ÍƒLƒŠ‚ª‚È‚¢Iˆê“P‘Ş‚µA‘Îô‚ğ—û‚Á‚½•û‚ª‚¢‚¢‚¾‚ë‚¤B", "The enemy you thought you had struck down revives instantly before your eyes! There's no way to defeat it! You should withdraw for now and develop countermeasures to its regeneration.")
 			msg_halt
 			flt
 			characreate -1, CREATURE_ID_MESHERA_PLANT, evdata1(evnum - (evnum != 0) * 1), evdata2(evnum - (evnum != 0) * 1)
@@ -4336,12 +4336,12 @@
 			ci = stat
 			if ( inv(INV_ITEM_NUM, ci) >= 1 ) {
 				inv(INV_ITEM_NUM, ci) = 0
-				txt lang("çªç„¶ã€æ‰‹æŒã¡ã®æ —ã‚’ã²ã£ãŸãã‚‰ã‚ŒãŸï¼", "Suddenly, a chestnut was snatched from the stores.")
+				txt lang("“Ë‘RAè‚¿‚ÌŒI‚ğ‚Ğ‚Á‚½‚­‚ç‚ê‚½I", "Suddenly, a chestnut was snatched from the stores.")
 			}
 		}
 		txtef COLOR_RED
 		txtmore
-		txt lang("ã€Œæ —ã‚’ç²—æœ«ã«ã—ãŸã®ã¯â€¦ãŠå‰ã ãªã‚ã‚ã£ï¼ï¼ã€", "Chestnut giant yells, " + cnvtalk("You idiot!"))
+		txt lang("uŒI‚ğ‘e––‚É‚µ‚½‚Ì‚Íc‚¨‘O‚¾‚È‚ ‚ ‚ÁIIv", "Chestnut giant yells, " + cnvtalk("You idiot!"))
 		goto *event_SWEND1
 	}
 	if ( _switch_val == EVENT_H_SISTER | _switch_sw ) {
@@ -4468,7 +4468,7 @@
 			}
 			snd SOUNDLIST_TELEPORT1
 			txtef COLOR_YELLOW
-			txt lang("ã€Œã©ã†ã‚„ã‚‰é–“ã«åˆã£ãŸã‚ˆã†ã ãªï¼ã€", cnvtalk("Apparently that went well!"))
+			txt lang("u‚Ç‚¤‚â‚çŠÔ‚É‡‚Á‚½‚æ‚¤‚¾‚ÈIv", cnvtalk("Apparently that went well!"))
 			msg_halt
 			tc = findchara(CREATURE_ID_THE_CHAOS_CHILD)
 			if ( tc != CHARA_PLAYER ) {
@@ -4499,7 +4499,7 @@
 				await 50
 			loop
 			txtef COLOR_YELLOW
-			txt lang("ã€Œã“ã“ãŒç¥ã®é–“ã‹ï¼ï¼Ÿã€", cnvtalk("Is this God's Prison!?"))
+			txt lang("u‚±‚±‚ª_‚ÌŠÔ‚©IHv", cnvtalk("Is this God's Prison!?"))
 			msg_halt
 			tc = findchara(CREATURE_ID_THE_CHAOS_CHILD)
 			if ( tc != CHARA_PLAYER ) {
@@ -4524,10 +4524,10 @@
 		gdata(STARTING_GDATA_FLAG + 360) = 100
 		if ( gdata(GDATA_FLAG_MAIN) == 715 ) {
 			txtef COLOR_YELLOW
-			txt lang("æ¥å…‰ã®ç‰™ãŒã‚¢ã‚¹ãƒˆãƒ©ãƒ«å…‰ã‚’æ”¾ã¡å§‹ã‚ãŸâ€¦ã€‚", "The Origin of Light began to release astral light...")
+			txt lang("—ˆŒõ‚Ì‰å‚ªƒAƒXƒgƒ‰ƒ‹Œõ‚ğ•ú‚¿n‚ß‚½cB", "The Origin of Light began to release astral light...")
 			msg_halt
 			txtef COLOR_YELLOW
-			txt lang("æ”¾ãŸã‚ŒãŸå…‰ãŒç¥ã®é–“ã‚’åŒ…ã¿è¾¼ã‚€ï¼", "The light emitted enveloped God's Prison!!")
+			txt lang("•ú‚½‚ê‚½Œõ‚ª_‚ÌŠÔ‚ğ•ï‚İ‚ŞI", "The light emitted enveloped God's Prison!!")
 			animeid = ANIMATION_GAMEWIN3
 			gosub *anime
 			gosub *game_win3
@@ -4544,7 +4544,7 @@
 			tc = findchara(CREATURE_ID_BLACK_GAUNTLET_LEOLD)
 			gosub *chat
 			txtef COLOR_RED
-			txt lang("ä½•ã‹ãŒã‚¨ãƒ³ãƒ†ãƒ¥ãƒ¡ã‚¤ã‚·ã‚¹ã®è…¹ã‹ã‚‰é£›ã³å‡ºã—ã¦ããŸï¼ç£ã®å’†å“®ãŒè¾ºã‚Šã«éŸ¿ãâ€¦ã€‚", "Something splits <Enthumesis> body and breaks out!")
+			txt lang("‰½‚©‚ªƒGƒ“ƒeƒ…ƒƒCƒVƒX‚Ì• ‚©‚ç”ò‚Ño‚µ‚Ä‚«‚½Ib‚Ì™ôšK‚ª•Ó‚è‚É‹¿‚­cB", "Something splits <Enthumesis> body and breaks out!")
 			snd SOUNDLIST_BEAST02
 			snd SOUNDLIST_BEAST02
 			snd SOUNDLIST_BEAST02
@@ -4622,7 +4622,7 @@
 		if ( gdata(GDATA_LEVEL) == 20 ) {
 			snd SOUNDLIST_BASH1
 			txtef COLOR_YELLOW
-			txt lang("ã€Œãƒ¬ã‚·ãƒã‚¹ã®çœŸå®Ÿã®æ›¸ã«è¿‘ã¥ãè€…ã¯æ®ºã™ã€", cnvtalk("You can not reach the bottom of Lesimas."))
+			txt lang("uƒŒƒVƒ}ƒX‚Ì^À‚Ì‘‚É‹ß‚Ã‚­Ò‚ÍE‚·v", cnvtalk("You can not reach the bottom of Lesimas."))
 			repeat 3
 				flt
 				characreate -1, CREATURE_ID_ZANAN_ASSASSIN, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER)
@@ -4635,7 +4635,7 @@
 		if ( gdata(GDATA_LEVEL) == 25 ) {
 			snd SOUNDLIST_BASH1
 			txtef COLOR_YELLOW
-			txt lang("ã€Œã€Šå¸¸é—‡ã®çœ¼ã€‹ã‚’ç‹™ã†å†’é™ºè€…ã ãªï¼Ÿæ­»ã‚“ã§ã‚‚ã‚‰ãŠã†ã‹ï¼ã€", cnvtalk("An adventurer seeking the <Origin of Vice>? You seek your own death?!"))
+			txt lang("usíˆÅ‚ÌŠát‚ğ‘_‚¤–`Œ¯Ò‚¾‚ÈH€‚ñ‚Å‚à‚ç‚¨‚¤‚©Iv", cnvtalk("An adventurer seeking the <Origin of Vice>? You seek your own death?!"))
 			repeat 6
 				flt
 				characreate -1, CREATURE_ID_ZANAN_ASSASSIN, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER)
@@ -4665,7 +4665,7 @@
 		if ( gdata(GDATA_LEVEL) == 34 ) {
 			snd SOUNDLIST_CURSE2
 			txtef COLOR_PURPLE
-			txt lang("è¶³ã‚’è¸ã¿å…¥ã‚ŒãŸç¬é–“ã€å‘¨å›²ã®å±ãŒä¸€æ–‰ã«èµ·ãä¸ŠãŒã£ãŸï¼", "The moment you set foot on this floor, a dozen corpses rise up and attack!")
+			txt lang("‘«‚ğ“¥‚İ“ü‚ê‚½uŠÔAüˆÍ‚Ìr‚ªˆêÄ‚É‹N‚«ã‚ª‚Á‚½I", "The moment you set foot on this floor, a dozen corpses rise up and attack!")
 			repeat 12
 				flt
 				characreate -1, CREATURE_ID_SKELETON_MAGICIAN, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER)
@@ -4790,7 +4790,7 @@
 		flt
 		itemcreate -1, ITEM_ID_PRESENT, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
 		inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_BLESSED
-		txt lang("ã¸ã‡ã€ä»Šæ—¥èª•ç”Ÿæ—¥ãªã‚“ã ï¼ŸãŠã‚ã§ã¨ã†ï¼", "Happy birthday!")
+		txt lang("‚Ö‚¥A¡“ú’a¶“ú‚È‚ñ‚¾H‚¨‚ß‚Å‚Æ‚¤I", "Happy birthday!")
 		txtmore
 		await 2000
 		txtsetbirth 2
@@ -4830,7 +4830,7 @@
 		characreate -1, CREATURE_ID_MARKA_THE_SILVER_BEAR, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER)
 		snd SOUNDLIST_BASH1
 		snd SOUNDLIST_BASH1
-		txt lang("éšæ®µã‚’ä¸‹ã‚ŠãŸç¬é–“ã€ã‚ãªãŸã¯éŠ€é«ªã®å†’é™ºè€…ã¨ã¶ã¤ã‹ã£ãŸã€‚", "So you are also of the same genus as the others...")
+		txt lang("ŠK’i‚ğ‰º‚è‚½uŠÔA‚ ‚È‚½‚Í‹â”¯‚Ì–`Œ¯Ò‚Æ‚Ô‚Â‚©‚Á‚½B", "So you are also of the same genus as the others...")
 		tc = findchara(CREATURE_ID_MARKA_THE_SILVER_BEAR)
 		gosub *chat
 		if ( tc > MAX_CHARA_FOLLOWER ) {
@@ -4929,7 +4929,7 @@
 				}
 			}
 		loop
-		txt lang("ã‚ãªãŸé”ã¯ç›®çš„åœ°ã¾ã§è¾¿ã‚Šç€ã„ãŸâ€¦ã€‚", "You arrive at your destination...")
+		txt lang("‚ ‚È‚½’B‚Í–Ú“I’n‚Ü‚Å’H‚è’…‚¢‚½cB", "You arrive at your destination...")
 		if ( gdata(GDATA_AREA) == AREA_NT_SOUTH_BORDER ) {
 			if ( gdata(GDATA_FLAG_SUB_REGULUS_ZANAN) < 5 ) {
 				tc = findchara(CREATURE_ID_REGULUS_THE_ALTERED)
@@ -5105,18 +5105,18 @@
 	if ( _switch_val == EVENT_SECRET_CHAR | _switch_sw ) {
 		_switch_sw = 0
 		gosub *screen_draw
-		s = lang("éš ã‚Œã¦ã„ãŸã‚‚ã®", "Reunion with your pet")
+		s = lang("‰B‚ê‚Ä‚¢‚½‚à‚Ì", "Reunion with your pet")
 		file = "bg_re13"
-		buff = lang("ã‚ãªãŸã¯èƒŒå¾Œã®æ°—é…ã«æ°—ä»˜ã„ã¦ã€ãµã¨æ­©ã¿ã‚’æ­¢ã‚ãŸã€‚æŒ¯ã‚Šå‘ã„ãŸå…ˆã«ã„ãŸã®ã¯â€¦", "As you approach the mining town, you notice a familiar call and stop walking. Your old pet who got separated from you during the shipwreck is now running towards you joyfully! Your pet is...")
+		buff = lang("‚ ‚È‚½‚Í”wŒã‚Ì‹C”z‚É‹C•t‚¢‚ÄA‚Ó‚Æ•à‚İ‚ğ~‚ß‚½BU‚èŒü‚¢‚½æ‚É‚¢‚½‚Ì‚Íc", "As you approach the mining town, you notice a familiar call and stop walking. Your old pet who got separated from you during the shipwreck is now running towards you joyfully! Your pet is...")
 		listmax = 0
-		chatList 1, lang("å¦¹ã ï¼", "a sister!")
-		chatList 2, lang("ãŠå¬¢æ§˜ã ï¼", "a young lady!")
-		chatList 3, lang("å§‰ã ï¼", "an older sister!")
-		chatList 4, lang("å°‘å¥³ã ï¼", "a little girl!")
-		chatList 5, lang("å°‘å¹´ã ï¼", "a little boy!")
-		chatList 6, lang("å¼Ÿã ï¼", "a brother!")
-		chatList 7, lang("åŸ·äº‹ã ï¼", "a butler!")
-		chatList 8, lang("å…„ã ï¼", "an older brother!")
+		chatList 1, lang("–…‚¾I", "a sister!")
+		chatList 2, lang("‚¨ì—l‚¾I", "a young lady!")
+		chatList 3, lang("o‚¾I", "an older sister!")
+		chatList 4, lang("­—‚¾I", "a little girl!")
+		chatList 5, lang("­”N‚¾I", "a little boy!")
+		chatList 6, lang("’í‚¾I", "a brother!")
+		chatList 7, lang("·–‚¾I", "a butler!")
+		chatList 8, lang("ŒZ‚¾I", "an older brother!")
 		gosub *re_select
 		p = 3
 		if ( rtval == 1 ) {
@@ -5154,14 +5154,14 @@
 	if ( _switch_val == EVENT_FIRST_ALLY | _switch_sw ) {
 		_switch_sw = 0
 		gosub *screen_draw
-		s = lang("ãƒšãƒƒãƒˆã¨ã®å†ä¼š", "Reunion with your pet")
+		s = lang("ƒyƒbƒg‚Æ‚ÌÄ‰ï", "Reunion with your pet")
 		file = "bg_re13"
-		buff = lang("ã‚ãªãŸã¯æ‡ã‹ã—ã„é³´ãå£°ã«æ°—ä»˜ã„ã¦ã€ãµã¨æ­©ã¿ã‚’æ­¢ã‚ãŸã€‚ãªã‚“ã¨ã€èˆ¹ãŒé›£ç ´ã—ãŸæ™‚ã«å±…ãªããªã£ãŸã‚ãªãŸã®ãƒšãƒƒãƒˆãŒã€å¬‰ã—ãã†ã«èµ°ã£ã¦ãã‚‹ï¼ã‚ãªãŸã®ãƒšãƒƒãƒˆã¯â€¦", "As you approach the mining town, you notice a familiar call and stop walking. Your old pet who got separated from you during the shipwreck is now running towards you joyfully! Your pet is...")
+		buff = lang("‚ ‚È‚½‚Í‰ù‚©‚µ‚¢–Â‚«º‚É‹C•t‚¢‚ÄA‚Ó‚Æ•à‚İ‚ğ~‚ß‚½B‚È‚ñ‚ÆA‘D‚ª“ï”j‚µ‚½‚É‹‚È‚­‚È‚Á‚½‚ ‚È‚½‚Ìƒyƒbƒg‚ªAŠğ‚µ‚»‚¤‚É‘–‚Á‚Ä‚­‚éI‚ ‚È‚½‚Ìƒyƒbƒg‚Íc", "As you approach the mining town, you notice a familiar call and stop walking. Your old pet who got separated from you during the shipwreck is now running towards you joyfully! Your pet is...")
 		listmax = 0
-		chatList 1, lang("çŠ¬ã ï¼", "a dog!")
-		chatList 2, lang("çŒ«ã ï¼", "a cat!")
-		chatList 3, lang("ã‚¯ãƒã ï¼", "a bear!")
-		chatList 4, lang("å°‘å¥³ã ï¼", "a little girl!")
+		chatList 1, lang("Œ¢‚¾I", "a dog!")
+		chatList 2, lang("”L‚¾I", "a cat!")
+		chatList 3, lang("ƒNƒ}‚¾I", "a bear!")
+		chatList 4, lang("­—‚¾I", "a little girl!")
 		gosub *re_select
 		p = 3
 		if ( rtval == 1 ) {
@@ -5197,10 +5197,10 @@
 	if ( _switch_val == EVENT_JOIN_GODA | _switch_sw ) {
 		_switch_sw = 0
 		rc = tc
-		txt lang("å€’ã—ãŸã‚ªãƒ¼ã‚¯ãŒèµ·ãä¸ŠãŒã‚Šä»²é–“ã«ãªã‚ŠãŸãã†ã«ã“ã¡ã‚‰ã‚’è¦‹ã¦ã„ã‚‹ã€‚ä»²é–“ã«ã—ã¾ã™ã‹ï¼Ÿ", "This monster seems to want to be friends. Do you want to befriend them?")
+		txt lang("“|‚µ‚½ƒI[ƒN‚ª‹N‚«ã‚ª‚è’‡ŠÔ‚É‚È‚è‚½‚»‚¤‚É‚±‚¿‚ç‚ğŒ©‚Ä‚¢‚éB’‡ŠÔ‚É‚µ‚Ü‚·‚©H", "This monster seems to want to be friends. Do you want to befriend them?")
 		promptYesNo
 		if ( rtval != 0 ) {
-			txt lang("ã‚ãªãŸã¯ã‚ªãƒ¼ã‚¯ã«ãƒˆãƒ‰ãƒ¡ã‚’åˆºã—ãŸã€‚", "You stabbed the monster in the coffin.")
+			txt lang("‚ ‚È‚½‚ÍƒI[ƒN‚Éƒgƒhƒ‚ğh‚µ‚½B", "You stabbed the monster in the coffin.")
 			goto *event_SWEND1
 		}
 		if ( rtval == 0 ) {
@@ -5214,10 +5214,10 @@
 	if ( _switch_val == EVENT_JOIN_MAD_SCIENTIST | _switch_sw ) {
 		_switch_sw = 0
 		rc = tc
-		txt lang("å€’ã—ãŸç§‘å­¦è€…ãŒèµ·ãä¸ŠãŒã‚Šä»²é–“ã«ãªã‚ŠãŸãã†ã«ã“ã¡ã‚‰ã‚’è¦‹ã¦ã„ã‚‹ã€‚ä»²é–“ã«ã—ã¾ã™ã‹ï¼Ÿ", "This monster seems to want to be friends. Do you want to befriend them?")
+		txt lang("“|‚µ‚½‰ÈŠwÒ‚ª‹N‚«ã‚ª‚è’‡ŠÔ‚É‚È‚è‚½‚»‚¤‚É‚±‚¿‚ç‚ğŒ©‚Ä‚¢‚éB’‡ŠÔ‚É‚µ‚Ü‚·‚©H", "This monster seems to want to be friends. Do you want to befriend them?")
 		promptYesNo
 		if ( rtval != 0 ) {
-			txt lang("ã‚ãªãŸã¯ç§‘å­¦è€…ã«ãƒˆãƒ‰ãƒ¡ã‚’åˆºã—ãŸã€‚", "You stabbed the monster in the coffin.")
+			txt lang("‚ ‚È‚½‚Í‰ÈŠwÒ‚Éƒgƒhƒ‚ğh‚µ‚½B", "You stabbed the monster in the coffin.")
 			goto *event_SWEND1
 		}
 		if ( rtval == 0 ) {
@@ -5231,10 +5231,10 @@
 	if ( _switch_val == EVENT_JOIN_ISCA | _switch_sw ) {
 		_switch_sw = 0
 		rc = tc
-		txt lang("å€’ã—ãŸå •å¤©ä½¿ãŒèµ·ãä¸ŠãŒã‚Šä»²é–“ã«ãªã‚ŠãŸãã†ã«ã“ã¡ã‚‰ã‚’è¦‹ã¦ã„ã‚‹ã€‚ä»²é–“ã«ã—ã¾ã™ã‹ï¼Ÿ", "This monster seems to want to be friends. Do you want to befriend them?")
+		txt lang("“|‚µ‚½‘Â“Vg‚ª‹N‚«ã‚ª‚è’‡ŠÔ‚É‚È‚è‚½‚»‚¤‚É‚±‚¿‚ç‚ğŒ©‚Ä‚¢‚éB’‡ŠÔ‚É‚µ‚Ü‚·‚©H", "This monster seems to want to be friends. Do you want to befriend them?")
 		promptYesNo
 		if ( rtval != 0 ) {
-			txt lang("ã‚ãªãŸã¯å •å¤©ä½¿ã«ãƒˆãƒ‰ãƒ¡ã‚’åˆºã—ãŸã€‚", "You stabbed the monster in the coffin.")
+			txt lang("‚ ‚È‚½‚Í‘Â“Vg‚Éƒgƒhƒ‚ğh‚µ‚½B", "You stabbed the monster in the coffin.")
 			goto *event_SWEND1
 		}
 		if ( rtval == 0 ) {
@@ -5248,10 +5248,10 @@
 	if ( _switch_val == EVENT_JOIN_DUNGEON_CLEANER | _switch_sw ) {
 		_switch_sw = 0
 		rc = tc
-		txt lang("å€’ã—ãŸãƒ€ãƒ³ã‚¸ãƒ§ãƒ³ã‚¯ãƒªãƒ¼ãƒŠãƒ¼ãŒèµ·ãä¸ŠãŒã‚Šä»²é–“ã«ãªã‚ŠãŸãã†ã«ã“ã¡ã‚‰ã‚’è¦‹ã¦ã„ã‚‹ã€‚ä»²é–“ã«ã—ã¾ã™ã‹ï¼Ÿ", "This monster seems to want to be friends. Do you want to befriend them?")
+		txt lang("“|‚µ‚½ƒ_ƒ“ƒWƒ‡ƒ“ƒNƒŠ[ƒi[‚ª‹N‚«ã‚ª‚è’‡ŠÔ‚É‚È‚è‚½‚»‚¤‚É‚±‚¿‚ç‚ğŒ©‚Ä‚¢‚éB’‡ŠÔ‚É‚µ‚Ü‚·‚©H", "This monster seems to want to be friends. Do you want to befriend them?")
 		promptYesNo
 		if ( rtval != 0 ) {
-			txt lang("ã‚ãªãŸã¯ãƒ€ãƒ³ã‚¸ãƒ§ãƒ³ã‚¯ãƒªãƒ¼ãƒŠãƒ¼ã«ãƒˆãƒ‰ãƒ¡ã‚’åˆºã—ãŸã€‚", "You stabbed the monster in the coffin.")
+			txt lang("‚ ‚È‚½‚Íƒ_ƒ“ƒWƒ‡ƒ“ƒNƒŠ[ƒi[‚Éƒgƒhƒ‚ğh‚µ‚½B", "You stabbed the monster in the coffin.")
 			goto *event_SWEND1
 		}
 		if ( rtval == 0 ) {
@@ -5265,10 +5265,10 @@
 	if ( _switch_val == EVENT_JOIN_LITYOU | _switch_sw ) {
 		_switch_sw = 0
 		rc = tc
-		txt lang("å€’ã—ãŸç™½è™ãŒèµ·ãä¸ŠãŒã‚Šä»²é–“ã«ãªã‚ŠãŸãã†ã«ã“ã¡ã‚‰ã‚’è¦‹ã¦ã„ã‚‹ã€‚ä»²é–“ã«ã—ã¾ã™ã‹ï¼Ÿ", "This monster seems to want to be friends. Do you want to befriend them?")
+		txt lang("“|‚µ‚½”’ŒÕ‚ª‹N‚«ã‚ª‚è’‡ŠÔ‚É‚È‚è‚½‚»‚¤‚É‚±‚¿‚ç‚ğŒ©‚Ä‚¢‚éB’‡ŠÔ‚É‚µ‚Ü‚·‚©H", "This monster seems to want to be friends. Do you want to befriend them?")
 		promptYesNo
 		if ( rtval != 0 ) {
-			txt lang("ã‚ãªãŸã¯ç™½è™ã«ãƒˆãƒ‰ãƒ¡ã‚’åˆºã—ãŸã€‚", "You stabbed the monster in the coffin.")
+			txt lang("‚ ‚È‚½‚Í”’ŒÕ‚Éƒgƒhƒ‚ğh‚µ‚½B", "You stabbed the monster in the coffin.")
 			goto *event_SWEND1
 		}
 		if ( rtval == 0 ) {
@@ -5282,10 +5282,10 @@
 	if ( _switch_val == EVENT_JOIN_MUDER_KNIGHT | _switch_sw ) {
 		_switch_sw = 0
 		rc = tc
-		txt lang("å€’ã—ãŸé¨å£«ãŒèµ·ãä¸ŠãŒã‚Šä»²é–“ã«ãªã‚ŠãŸãã†ã«ã“ã¡ã‚‰ã‚’è¦‹ã¦ã„ã‚‹ã€‚ä»²é–“ã«ã—ã¾ã™ã‹ï¼Ÿ", "This monster seems to want to be friends. Do you want to befriend them?")
+		txt lang("“|‚µ‚½‹Rm‚ª‹N‚«ã‚ª‚è’‡ŠÔ‚É‚È‚è‚½‚»‚¤‚É‚±‚¿‚ç‚ğŒ©‚Ä‚¢‚éB’‡ŠÔ‚É‚µ‚Ü‚·‚©H", "This monster seems to want to be friends. Do you want to befriend them?")
 		promptYesNo
 		if ( rtval != 0 ) {
-			txt lang("ã‚ãªãŸã¯é¨å£«ã«ãƒˆãƒ‰ãƒ¡ã‚’åˆºã—ãŸã€‚", "You stabbed the monster in the coffin.")
+			txt lang("‚ ‚È‚½‚Í‹Rm‚Éƒgƒhƒ‚ğh‚µ‚½B", "You stabbed the monster in the coffin.")
 			goto *event_SWEND1
 		}
 		if ( rtval == 0 ) {
@@ -5299,10 +5299,10 @@
 	if ( _switch_val == EVENT_JOIN_SUNRISE | _switch_sw ) {
 		_switch_sw = 0
 		rc = tc
-		txt lang("å€’ã—ãŸé¾ãŒèµ·ãä¸ŠãŒã‚Šä»²é–“ã«ãªã‚ŠãŸãã†ã«ã“ã¡ã‚‰ã‚’è¦‹ã¦ã„ã‚‹ã€‚ä»²é–“ã«ã—ã¾ã™ã‹ï¼Ÿ", "This monster seems to want to be friends. Do you want to befriend them?")
+		txt lang("“|‚µ‚½—´‚ª‹N‚«ã‚ª‚è’‡ŠÔ‚É‚È‚è‚½‚»‚¤‚É‚±‚¿‚ç‚ğŒ©‚Ä‚¢‚éB’‡ŠÔ‚É‚µ‚Ü‚·‚©H", "This monster seems to want to be friends. Do you want to befriend them?")
 		promptYesNo
 		if ( rtval != 0 ) {
-			txt lang("ã‚ãªãŸã¯é¾ã«ãƒˆãƒ‰ãƒ¡ã‚’åˆºã—ãŸã€‚", "You stabbed the monster in the coffin.")
+			txt lang("‚ ‚È‚½‚Í—´‚Éƒgƒhƒ‚ğh‚µ‚½B", "You stabbed the monster in the coffin.")
 			goto *event_SWEND1
 		}
 		if ( rtval == 0 ) {
@@ -5316,10 +5316,10 @@
 	if ( _switch_val == EVENT_JOIN_WING_SNAIL | _switch_sw ) {
 		_switch_sw = 0
 		rc = tc
-		txt lang("å€’ã—ãŸã‹ãŸã¤ã‚€ã‚ŠãŒèµ·ãä¸ŠãŒã‚Šä»²é–“ã«ãªã‚ŠãŸãã†ã«ã“ã¡ã‚‰ã‚’è¦‹ã¦ã„ã‚‹ã€‚ä»²é–“ã«ã—ã¾ã™ã‹ï¼Ÿ", "This monster seems to want to be friends. Do you want to befriend them?")
+		txt lang("“|‚µ‚½‚©‚½‚Â‚Ş‚è‚ª‹N‚«ã‚ª‚è’‡ŠÔ‚É‚È‚è‚½‚»‚¤‚É‚±‚¿‚ç‚ğŒ©‚Ä‚¢‚éB’‡ŠÔ‚É‚µ‚Ü‚·‚©H", "This monster seems to want to be friends. Do you want to befriend them?")
 		promptYesNo
 		if ( rtval != 0 ) {
-			txt lang("ã‚ãªãŸã¯ã‹ãŸã¤ã‚€ã‚Šã«ãƒˆãƒ‰ãƒ¡ã‚’åˆºã—ãŸã€‚", "You stabbed the monster in the coffin.")
+			txt lang("‚ ‚È‚½‚Í‚©‚½‚Â‚Ş‚è‚Éƒgƒhƒ‚ğh‚µ‚½B", "You stabbed the monster in the coffin.")
 			goto *event_SWEND1
 		}
 		if ( rtval == 0 ) {
@@ -5333,14 +5333,14 @@
 	if ( _switch_val == EVENT_JOIN_PASCAL | _switch_sw ) {
 		_switch_sw = 0
 		rc = tc
-		txt lang("å€’ã—ãŸã‚¤ãƒŒãŒèµ·ãä¸ŠãŒã‚Šä»²é–“ã«ãªã‚ŠãŸãã†ã«ã“ã¡ã‚‰ã‚’è¦‹ã¦ã„ã‚‹ã€‚ä»²é–“ã«ã—ã¾ã™ã‹ï¼Ÿ", "This monster seems to want to be friends. Do you want to befriend them?")
+		txt lang("“|‚µ‚½ƒCƒk‚ª‹N‚«ã‚ª‚è’‡ŠÔ‚É‚È‚è‚½‚»‚¤‚É‚±‚¿‚ç‚ğŒ©‚Ä‚¢‚éB’‡ŠÔ‚É‚µ‚Ü‚·‚©H", "This monster seems to want to be friends. Do you want to befriend them?")
 		promptYesNo
 		if ( rtval != 0 ) {
-			txt lang("ã‚ãªãŸã¯ã‚¤ãƒŒã«ãƒˆãƒ‰ãƒ¡ã‚’åˆºã—ãŸã€‚", "You stabbed the monster in the coffin.")
+			txt lang("‚ ‚È‚½‚ÍƒCƒk‚Éƒgƒhƒ‚ğh‚µ‚½B", "You stabbed the monster in the coffin.")
 			goto *event_SWEND1
 		}
 		if ( rtval == 0 ) {
-			txt lang("ã“ã‚“ã”ã¨ã‚‚ã‚ˆã‚ã—ãâ€¦ã€‚", "Thanks in advance.")
+			txt lang("‚±‚ñ‚²‚Æ‚à‚æ‚ë‚µ‚­cB", "Thanks in advance.")
 			flt
 			novoidlv = 1
 			characreate -1, CREATURE_ID_PASCAL, evdata1(evnum - (evnum != 0) * 1), evdata2(evnum - (evnum != 0) * 1)
@@ -5352,11 +5352,11 @@
 		_switch_sw = 0
 		music = MUSICLIST_MCWEDDING
 		gosub *music_play
-		s = lang("çµå©š", "Marriage")
+		s = lang("Œ‹¥", "Marriage")
 		file = "bg_re14"
-		buff = lang("é•·ã„äº¤éš›ã®æœ«ã€é‚ã«ã‚ãªãŸã¨" + name(marry) + "ã¯å›ºã„çµ†ã§çµã°ã‚ŒãŸã€‚å©šå„€ã®å¾Œã€ã‚ãªãŸã®å…ƒã«å¹¾ã¤ã‹ç¥å„€å“ãŒå±Šã‘ã‚‰ã‚ŒãŸã€‚", "At last, you and " + name(marry) + " are united in marriage! After the wedding ceremony, you receive some gifts.")
+		buff = lang("’·‚¢ŒğÛ‚Ì––A‹‚É‚ ‚È‚½‚Æ" + name(marry) + "‚ÍŒÅ‚¢ãJ‚ÅŒ‹‚Î‚ê‚½B¥‹V‚ÌŒãA‚ ‚È‚½‚ÌŒ³‚ÉŠô‚Â‚©j‹V•i‚ª“Í‚¯‚ç‚ê‚½B", "At last, you and " + name(marry) + " are united in marriage! After the wedding ceremony, you receive some gifts.")
 		listmax = 0
-		chatList 1, lang("ç”Ÿæ¶¯ã‚’ã‚ãªãŸã«æ§ã’ã‚‹", "Without you, life has no meaning.")
+		chatList 1, lang("¶ŠU‚ğ‚ ‚È‚½‚É•ù‚°‚é", "Without you, life has no meaning.")
 		gosub *re_select
 		repeat 3
 			flt calcobjlv(cdata(CDATA_LEVEL, marry) + 5), calcfixlv(FIX_QUALITY_GREAT)
@@ -5387,7 +5387,7 @@
 			haretu = 0
 			snd SOUNDLIST_STAB
 			if ( jp ) {
-				txt "ã€Œã€œã€œã€œã€œã€œã€œã€œã€œã€œã£ï¼ï¼ï¼ï¼ï¼ï¼Ÿï¼Ÿã€", "ã€Œè€³ãŒã€è€³ãŒãã€œï¼ï¼ã€"
+				txt "u`````````‚ÁIIIIIHHv", "u¨‚ªA¨‚ª‚Ÿ`IIv"
 			}
 			if ( en ) {
 				txt cnvtalk("!!!???"), cnvtalk("Eeeeeeeeeek!")
@@ -5402,7 +5402,7 @@
 			haretu = 0
 			snd SOUNDLIST_BALL1
 			if ( jp ) {
-				txt "ã€Œã²ããƒï¼ï¼Ÿã€", "ã€Œã‚‚ã†ã‚¤ãƒ¤ãƒ¼ï¼ã€"
+				txt "u‚Ğ‚¬‚¡IHv", "u‚à‚¤ƒCƒ„[Iv"
 			}
 			if ( en ) {
 				txt cnvtalk("What are you doing!?"), cnvtalk("No...No...!")
@@ -5412,41 +5412,41 @@
 			goto *event_SWEND1
 		}
 		if ( mimikaki < 3 ) {
-			s = lang("è€³æƒé™¤", "Mimikaki")
+			s = lang("¨‘|œ", "Mimikaki")
 			file = "bg40"
-			buff = lang("è€³ã®ä¸­ã¯è¦‹ãˆã¥ã‚‰ã„â€¦ã€‚", "It's hard to see in the ear...")
+			buff = lang("¨‚Ì’†‚ÍŒ©‚¦‚Ã‚ç‚¢cB", "It's hard to see in the ear...")
 			listmax = 0
 			if ( rnd(sdata(SKILL_ATTR_DEX, CHARA_PLAYER) + sdata(SKILL_ATTR_PER, CHARA_PLAYER) + sdata(SKILL_ATTR_CON, tc) + sdata(SKILL_ATTR_WIL, tc)) > rnd(sorg(SKILL_ATTR_SPD, tc) + 10) ) {
 				if ( mimikaki == 0 ) {
-					chatList 1, lang("æ…é‡ã«å…¥ã‚Œã‚‹", "Put in carefully") 
+					chatList 1, lang("Td‚É“ü‚ê‚é", "Put in carefully") 
 				}
 				if ( mimikaki == 1 ) {
-					chatList 2, lang("å¥¥ã¾ã§å…¥ã‚Œã‚‹", "Put in all the way") 
+					chatList 2, lang("‰œ‚Ü‚Å“ü‚ê‚é", "Put in all the way") 
 				}
 				if ( mimikaki == 2 ) {
-					chatList 3, lang("ä¸¹å¿µã«æ»ãå‡ºã™", "Carefully scrape") 
+					chatList 3, lang("’O”O‚É‘~‚«o‚·", "Carefully scrape") 
 				}
 			}
 			if ( rnd(sdata(SKILL_ATTR_WIL, CHARA_PLAYER) + 10) > rnd(sdata(SKILL_ATTR_WIL, tc) + 10) ) {
-				chatList 4, lang("ã‚µã‚¤ã‚ºã®èª¿æ•´", "Size adjustment") 
+				chatList 4, lang("ƒTƒCƒY‚Ì’²®", "Size adjustment") 
 			}
 			if ( haretu == 0 ) {
-				chatList 8, lang("ã‚µã‚¤ã‚ºè†¨å¼µ", "Size expansion") 
+				chatList 8, lang("ƒTƒCƒY–c’£", "Size expansion") 
 			}
 			if ( haretu == 1 ) {
-				chatList 9, lang("ã‚µã‚¤ã‚ºå¤§è†¨å¼µ", "Size large expansion") 
+				chatList 9, lang("ƒTƒCƒY‘å–c’£", "Size large expansion") 
 			}
 			if ( haretu == 2 ) {
-				chatList 10, lang("è€³ç©´ç ´è£‚", "Rupture of ear canal") 
+				chatList 10, lang("¨ŒŠ”j—ô", "Rupture of ear canal") 
 			}
 			if ( komaku == 0 ) {
-				chatList 5, lang("çªãå…¥ã‚Œã‚‹", "Thrust") 
+				chatList 5, lang("“Ë‚«“ü‚ê‚é", "Thrust") 
 			}
 			if ( komaku == 1 ) {
-				chatList 6, lang("å¥¥ã¾ã§çªãåˆºã™", "Stick in the ear") 
+				chatList 6, lang("‰œ‚Ü‚Å“Ë‚«h‚·", "Stick in the ear") 
 			}
 			if ( komaku == 2 ) {
-				chatList 7, lang("é¼“è†œã‚’ã¶ã¡ç ´ã‚‹", "Break through the eardrum") 
+				chatList 7, lang("ŒÛ–Œ‚ğ‚Ô‚¿”j‚é", "Break through the eardrum") 
 			}
 			gosub *re_select
 			p = rtval
@@ -5455,7 +5455,7 @@
 				snd SOUNDLIST_SNOW
 				if ( mimikaki == 1 ) {
 					if ( jp ) {
-						txt "ã€Œãªã‚“ã ã‹å¤‰ãªæ„Ÿã˜" + _da(3) + "ã€", "ã€Œå°‘ã—ã“ã‚ã„" + _na(3) + "ã€", "ã€Œå„ªã—ãã—ã¦" + _kure(3) + "â€¦ã€"
+						txt "u‚È‚ñ‚¾‚©•Ï‚ÈŠ´‚¶" + _da(3) + "v", "u­‚µ‚±‚í‚¢" + _na(3) + "v", "u—D‚µ‚­‚µ‚Ä" + _kure(3) + "cv"
 					}
 				}
 				if ( mimikaki == 1 ) {
@@ -5465,12 +5465,12 @@
 				}
 				if ( mimikaki == 2 ) {
 					if ( jp ) {
-						txt "ã€Œãã£â€¦â™ªã€", "ã€Œæ°—æŒã¡ã„ã„" + _na(3) + "â™ªã€", "ã€Œãã™ãã£ãŸã„" + _yo(3) + "â™ªã€"
+						txt "u‚­‚Ácôv", "u‹C‚¿‚¢‚¢" + _na(3) + "ôv", "u‚­‚·‚®‚Á‚½‚¢" + _yo(3) + "ôv"
 					}
 				}
 				if ( mimikaki == 2 ) {
 					if ( en ) {
-						txt cnvtalk("Ohâ€¦"), cnvtalk("It feels good...!"), cnvtalk("It's tickling!")
+						txt cnvtalk("Ohc"), cnvtalk("It feels good...!"), cnvtalk("It's tickling!")
 					}
 				}
 			}
@@ -5483,7 +5483,7 @@
 				snd SOUNDLIST_CRACK
 				if ( komaku < 3 ) {
 					if ( jp ) {
-						txt "ã€Œç—›ã£ï¼ã€", "ã€Œé¼“è†œã«å½“ãŸã£ãŸ" + _yo(3) + "ï¼ï¼Ÿã€", "ã€Œä¹±æš´ã«ã—ãªã„ã§" + _kure(3) + "ï¼ã€"
+						txt "u’É‚ÁIv", "uŒÛ–Œ‚É“–‚½‚Á‚½" + _yo(3) + "IHv", "u—–\‚É‚µ‚È‚¢‚Å" + _kure(3) + "Iv"
 					}
 				}
 				if ( komaku < 3 ) {
@@ -5497,7 +5497,7 @@
 				snd SOUNDLIST_CRACK2
 				if ( haretu < 3 ) {
 					if ( jp ) {
-						txt "ã€Œãªã‚“ã‹è†¨ã‚‰ã‚“ã§ããŸ" + _yo(3) + "ï¼ï¼Ÿã€", "ã€Œ" + _ore(3) + "ã«ã¯å¤§ãã™ãã‚‹" + _na(3) + "â€¦ã€", "ã€Œã¡ã‚‡ã£ã¨è½ã¡ç€ã„ã¦" + _kure(3) + "ï¼ã€"
+						txt "u‚È‚ñ‚©–c‚ç‚ñ‚Å‚«‚½" + _yo(3) + "IHv", "u" + _ore(3) + "‚É‚Í‘å‚«‚·‚¬‚é" + _na(3) + "cv", "u‚¿‚å‚Á‚Æ—‚¿’…‚¢‚Ä" + _kure(3) + "Iv"
 					}
 				}
 				if ( haretu < 3 ) {
@@ -5512,35 +5512,35 @@
 				snd SOUNDLIST_DING3
 				mimikaki = rnd(sqrt(sdata(SKILL_ATTR_DEX, CHARA_PLAYER) + 1) + 10)
 				if ( mimikaki < 5 ) {
-					txt lang("ç²‰æœ«ã¿ã¿ãããŒã¨ã‚ŒãŸï¼", "The powdered earwax has been removed!")
+					txt lang("•²––‚İ‚İ‚­‚»‚ª‚Æ‚ê‚½I", "The powdered earwax has been removed!")
 					skillexp SKILL_ATTR_DEX, CHARA_PLAYER, 5000
 					skillexp SKILL_ATTR_PER, CHARA_PLAYER, 5000
 					skillexp SKILL_ATTR_CON, tc, 5000
 					skillexp SKILL_ATTR_WIL, tc, 5000
 				}
 				if ( mimikaki >= 5 & mimikaki < 15 ) {
-					txt lang("æ¬ ç‰‡ã¿ã¿ãããŒã¨ã‚ŒãŸï¼", "The debris of the earwax has been removed!")
+					txt lang("Œ‡•Ğ‚İ‚İ‚­‚»‚ª‚Æ‚ê‚½I", "The debris of the earwax has been removed!")
 					skillexp SKILL_ATTR_DEX, CHARA_PLAYER, 6000
 					skillexp SKILL_ATTR_PER, CHARA_PLAYER, 6000
 					skillexp SKILL_ATTR_CON, tc, 6000
 					skillexp SKILL_ATTR_WIL, tc, 6000
 				}
 				if ( mimikaki >= 15 & mimikaki < 20 ) {
-					txt lang("è†œçŠ¶ã¿ã¿ãããŒã¨ã‚ŒãŸï¼", "The membranous earwax has been removed!")
+					txt lang("–Œó‚İ‚İ‚­‚»‚ª‚Æ‚ê‚½I", "The membranous earwax has been removed!")
 					skillexp SKILL_ATTR_DEX, CHARA_PLAYER, 7000
 					skillexp SKILL_ATTR_PER, CHARA_PLAYER, 7000
 					skillexp SKILL_ATTR_CON, tc, 7000
 					skillexp SKILL_ATTR_WIL, tc, 7000
 				}
 				if ( mimikaki >= 20 & mimikaki < 25 ) {
-					txt lang("å¡Šã¿ã¿ãããŒã¨ã‚ŒãŸï¼", "The lump of earwax has been removed!")
+					txt lang("‰ò‚İ‚İ‚­‚»‚ª‚Æ‚ê‚½I", "The lump of earwax has been removed!")
 					skillexp SKILL_ATTR_DEX, CHARA_PLAYER, 8000
 					skillexp SKILL_ATTR_PER, CHARA_PLAYER, 8000
 					skillexp SKILL_ATTR_CON, tc, 8000
 					skillexp SKILL_ATTR_WIL, tc, 8000
 				}
 				if ( mimikaki >= 25 ) {
-					txt lang("ã²ã¨ã¤ãªãã®ã¿ã¿ãããŒã¨ã‚ŒãŸï¼", "All the earwax was connected and removed!")
+					txt lang("‚Ğ‚Æ‚Â‚È‚¬‚Ì‚İ‚İ‚­‚»‚ª‚Æ‚ê‚½I", "All the earwax was connected and removed!")
 					skillexp SKILL_ATTR_DEX, CHARA_PLAYER, 9000
 					skillexp SKILL_ATTR_PER, CHARA_PLAYER, 9000
 					skillexp SKILL_ATTR_CON, tc, 9000
@@ -5551,41 +5551,41 @@
 			evadd EVENT_EAR_CLEANING
 		}
 		if ( mimikaki >= 3 & mimikaki < 10 ) {
-			s = lang("åå¯¾å´ã®è€³", "Opposite ear")
+			s = lang("”½‘Î‘¤‚Ì¨", "Opposite ear")
 			file = "bg41"
-			buff = lang("æ§‹é€ ãŒåè»¢ã—ã¦ã„ã¦ã‚„ã‚Šã¥ã‚‰ã„â€¦ã€‚", "The structure is inverted and difficult to do...")
+			buff = lang("\‘¢‚ª”½“]‚µ‚Ä‚¢‚Ä‚â‚è‚Ã‚ç‚¢cB", "The structure is inverted and difficult to do...")
 			listmax = 0
 			if ( rnd(sdata(SKILL_ATTR_DEX, CHARA_PLAYER) + sdata(SKILL_ATTR_PER, CHARA_PLAYER) + sdata(SKILL_ATTR_CON, tc) + sdata(SKILL_ATTR_WIL, tc)) > rnd(sorg(SKILL_ATTR_SPD, tc) + 10) ) {
 				if ( mimikaki == 3 ) {
-					chatList 1, lang("æ…é‡ã«å…¥ã‚Œã‚‹", "Put in carefully") 
+					chatList 1, lang("Td‚É“ü‚ê‚é", "Put in carefully") 
 				}
 				if ( mimikaki == 4 ) {
-					chatList 2, lang("å¥¥ã¾ã§å…¥ã‚Œã‚‹", "Put in all the way") 
+					chatList 2, lang("‰œ‚Ü‚Å“ü‚ê‚é", "Put in all the way") 
 				}
 				if ( mimikaki == 5 ) {
-					chatList 3, lang("ä¸¹å¿µã«æ»ãå‡ºã™", "Carefully scrape") 
+					chatList 3, lang("’O”O‚É‘~‚«o‚·", "Carefully scrape") 
 				}
 			}
 			if ( rnd(sdata(SKILL_ATTR_WIL, CHARA_PLAYER) + 10) > rnd(sdata(SKILL_ATTR_WIL, tc) + 10) ) {
-				chatList 4, lang("ã‚µã‚¤ã‚ºã®èª¿æ•´", "Size adjustment") 
+				chatList 4, lang("ƒTƒCƒY‚Ì’²®", "Size adjustment") 
 			}
 			if ( haretu == 0 ) {
-				chatList 8, lang("ã‚µã‚¤ã‚ºè†¨å¼µ", "Size expansion") 
+				chatList 8, lang("ƒTƒCƒY–c’£", "Size expansion") 
 			}
 			if ( haretu == 1 ) {
-				chatList 9, lang("ã‚µã‚¤ã‚ºå¤§è†¨å¼µ", "Size large expansion") 
+				chatList 9, lang("ƒTƒCƒY‘å–c’£", "Size large expansion") 
 			}
 			if ( haretu == 2 ) {
-				chatList 10, lang("è€³ç©´ç ´è£‚", "Rupture of ear canal") 
+				chatList 10, lang("¨ŒŠ”j—ô", "Rupture of ear canal") 
 			}
 			if ( komaku == 0 ) {
-				chatList 5, lang("çªãå…¥ã‚Œã‚‹", "Thrust") 
+				chatList 5, lang("“Ë‚«“ü‚ê‚é", "Thrust") 
 			}
 			if ( komaku == 1 ) {
-				chatList 6, lang("å¥¥ã¾ã§çªãåˆºã™", "Stick in the ear") 
+				chatList 6, lang("‰œ‚Ü‚Å“Ë‚«h‚·", "Stick in the ear") 
 			}
 			if ( komaku == 2 ) {
-				chatList 7, lang("é¼“è†œã‚’ã¶ã¡ç ´ã‚‹", "Break through the eardrum") 
+				chatList 7, lang("ŒÛ–Œ‚ğ‚Ô‚¿”j‚é", "Break through the eardrum") 
 			}
 			gosub *re_select
 			p = rtval
@@ -5594,7 +5594,7 @@
 				snd SOUNDLIST_SNOW
 				if ( mimikaki == 4 ) {
 					if ( jp ) {
-						txt "ã€Œãªã‚“ã ã‹å¤‰ãªæ„Ÿã˜" + _da(3) + "ã€", "ã€Œå°‘ã—ã“ã‚ã„" + _na(3) + "ã€", "ã€Œå„ªã—ãã—ã¦" + _kure(3) + "â€¦ã€"
+						txt "u‚È‚ñ‚¾‚©•Ï‚ÈŠ´‚¶" + _da(3) + "v", "u­‚µ‚±‚í‚¢" + _na(3) + "v", "u—D‚µ‚­‚µ‚Ä" + _kure(3) + "cv"
 					}
 				}
 				if ( mimikaki == 4 ) {
@@ -5604,12 +5604,12 @@
 				}
 				if ( mimikaki == 5 ) {
 					if ( jp ) {
-						txt "ã€Œãã£â€¦â™ªã€", "ã€Œæ°—æŒã¡ã„ã„" + _na(3) + "â™ªã€", "ã€Œãã™ãã£ãŸã„" + _yo(3) + "â™ªã€"
+						txt "u‚­‚Ácôv", "u‹C‚¿‚¢‚¢" + _na(3) + "ôv", "u‚­‚·‚®‚Á‚½‚¢" + _yo(3) + "ôv"
 					}
 				}
 				if ( mimikaki == 5 ) {
 					if ( en ) {
-						txt cnvtalk("Ohâ€¦"), cnvtalk("It feels good...!"), cnvtalk("It's tickling!")
+						txt cnvtalk("Ohc"), cnvtalk("It feels good...!"), cnvtalk("It's tickling!")
 					}
 				}
 			}
@@ -5622,7 +5622,7 @@
 				snd SOUNDLIST_CRACK
 				if ( komaku < 3 ) {
 					if ( jp ) {
-						txt "ã€Œç—›ã£ï¼ã€", "ã€Œé¼“è†œã«å½“ãŸã£ãŸ" + _yo(3) + "ï¼ï¼Ÿã€", "ã€Œä¹±æš´ã«ã—ãªã„ã§" + _kure(3) + "ï¼ã€"
+						txt "u’É‚ÁIv", "uŒÛ–Œ‚É“–‚½‚Á‚½" + _yo(3) + "IHv", "u—–\‚É‚µ‚È‚¢‚Å" + _kure(3) + "Iv"
 					}
 				}
 				if ( komaku < 3 ) {
@@ -5636,7 +5636,7 @@
 				snd SOUNDLIST_CRACK2
 				if ( haretu < 3 ) {
 					if ( jp ) {
-						txt "ã€Œãªã‚“ã‹è†¨ã‚‰ã‚“ã§ããŸ" + _yo(3) + "ï¼ï¼Ÿã€", "ã€Œ" + _ore(3) + "ã«ã¯å¤§ãã™ãã‚‹" + _na(3) + "â€¦ã€", "ã€Œã¡ã‚‡ã£ã¨è½ã¡ç€ã„ã¦" + _kure(3) + "ï¼ã€"
+						txt "u‚È‚ñ‚©–c‚ç‚ñ‚Å‚«‚½" + _yo(3) + "IHv", "u" + _ore(3) + "‚É‚Í‘å‚«‚·‚¬‚é" + _na(3) + "cv", "u‚¿‚å‚Á‚Æ—‚¿’…‚¢‚Ä" + _kure(3) + "Iv"
 					}
 				}
 				if ( haretu < 3 ) {
@@ -5651,42 +5651,42 @@
 				snd SOUNDLIST_COMPLETE1
 				mimikaki = rnd(sqrt(sdata(SKILL_ATTR_DEX, CHARA_PLAYER) + 1) + 10)
 				if ( mimikaki < 5 ) {
-					txt lang("ç²‰æœ«ã¿ã¿ãããŒã¨ã‚ŒãŸï¼", "The powdered earwax has been removed!")
+					txt lang("•²––‚İ‚İ‚­‚»‚ª‚Æ‚ê‚½I", "The powdered earwax has been removed!")
 					skillexp SKILL_ATTR_DEX, CHARA_PLAYER, 5000
 					skillexp SKILL_ATTR_PER, CHARA_PLAYER, 5000
 					skillexp SKILL_ATTR_CON, tc, 5000
 					skillexp SKILL_ATTR_WIL, tc, 5000
 				}
 				if ( mimikaki >= 5 & mimikaki < 15 ) {
-					txt lang("æ¬ ç‰‡ã¿ã¿ãããŒã¨ã‚ŒãŸï¼", "The debris of the earwax has been removed!")
+					txt lang("Œ‡•Ğ‚İ‚İ‚­‚»‚ª‚Æ‚ê‚½I", "The debris of the earwax has been removed!")
 					skillexp SKILL_ATTR_DEX, CHARA_PLAYER, 6000
 					skillexp SKILL_ATTR_PER, CHARA_PLAYER, 6000
 					skillexp SKILL_ATTR_CON, tc, 6000
 					skillexp SKILL_ATTR_WIL, tc, 6000
 				}
 				if ( mimikaki >= 15 & mimikaki < 20 ) {
-					txt lang("è†œçŠ¶ã¿ã¿ãããŒã¨ã‚ŒãŸï¼", "The membranous earwax has been removed!")
+					txt lang("–Œó‚İ‚İ‚­‚»‚ª‚Æ‚ê‚½I", "The membranous earwax has been removed!")
 					skillexp SKILL_ATTR_DEX, CHARA_PLAYER, 7000
 					skillexp SKILL_ATTR_PER, CHARA_PLAYER, 7000
 					skillexp SKILL_ATTR_CON, tc, 7000
 					skillexp SKILL_ATTR_WIL, tc, 7000
 				}
 				if ( mimikaki >= 20 & mimikaki < 25 ) {
-					txt lang("å¡Šã¿ã¿ãããŒã¨ã‚ŒãŸï¼", "The lump of earwax has been removed!")
+					txt lang("‰ò‚İ‚İ‚­‚»‚ª‚Æ‚ê‚½I", "The lump of earwax has been removed!")
 					skillexp SKILL_ATTR_DEX, CHARA_PLAYER, 8000
 					skillexp SKILL_ATTR_PER, CHARA_PLAYER, 8000
 					skillexp SKILL_ATTR_CON, tc, 8000
 					skillexp SKILL_ATTR_WIL, tc, 8000
 				}
 				if ( mimikaki >= 25 ) {
-					txt lang("ã²ã¨ã¤ãªãã®ã¿ã¿ãããŒã¨ã‚ŒãŸï¼", "All the earwax was connected and removed!")
+					txt lang("‚Ğ‚Æ‚Â‚È‚¬‚Ì‚İ‚İ‚­‚»‚ª‚Æ‚ê‚½I", "All the earwax was connected and removed!")
 					skillexp SKILL_ATTR_DEX, CHARA_PLAYER, 9000
 					skillexp SKILL_ATTR_PER, CHARA_PLAYER, 9000
 					skillexp SKILL_ATTR_CON, tc, 9000
 					skillexp SKILL_ATTR_WIL, tc, 9000
 				}
 				if ( jp ) {
-					txt "ã€Œã“ã‚“ãªã«å‡ºãŸ" + _noka(3) + "ï¼Ÿã€", "ã€Œæ°—æŒã¡ã‚ˆã‹ã£ãŸ" + _yo(3) + "ã€", "ã€Œã¾ãŸã—ã¦" + _kure(3) + "â€¦ã€"
+					txt "u‚±‚ñ‚È‚Éo‚½" + _noka(3) + "Hv", "u‹C‚¿‚æ‚©‚Á‚½" + _yo(3) + "v", "u‚Ü‚½‚µ‚Ä" + _kure(3) + "cv"
 				}
 				if ( en ) {
 					txt cnvtalk("Is it over?"), cnvtalk("It was comfortable!"), cnvtalk("Please do more...!")
@@ -5702,13 +5702,13 @@
 	}
 	if ( _switch_val == EVENT_ARTIFACT_LOTTERY | _switch_sw ) {
 		_switch_sw = 0
-		s = lang("ãã˜å¼•ã", "Lottery")
+		s = lang("‚­‚¶ˆø‚«", "Lottery")
 		file = "bg38"
-		buff = lang("ã‚ãªãŸã®ç›®ã®å‰ã«å¯Œã®å¥³ç¥ãŒç¾ã‚Œã€ãã˜å¼•ãã®ç®±ã‚’ç½®ã„ãŸã€‚", "The goddess of wealth appears in front of you and places a lottery box.")
+		buff = lang("‚ ‚È‚½‚Ì–Ú‚Ì‘O‚É•x‚Ì—_‚ªŒ»‚êA‚­‚¶ˆø‚«‚Ì” ‚ğ’u‚¢‚½B", "The goddess of wealth appears in front of you and places a lottery box.")
 		listmax = 0
-		chatList 1, lang("ç¥ˆã‚ŠãªãŒã‚‰ãã˜ã‚’é¸ã¶", "Good luck to me.") 
-		chatList 2, lang("æœ€åˆã«æ‰‹ã«è§¦ã‚ŒãŸãã˜ã‚’é¸ã¶", "First lottery that touched my hand would be fate.") 
-		chatList 3, lang("æ¼ã‚ŠãªãŒã‚‰ã€ã“ã‚Œã ï¼ã¨æ„Ÿã˜ãŸãã˜ã‚’é¸ã¶", "I leave it to my intuition!") 
+		chatList 1, lang("‹F‚è‚È‚ª‚ç‚­‚¶‚ğ‘I‚Ô", "Good luck to me.") 
+		chatList 2, lang("Å‰‚Éè‚ÉG‚ê‚½‚­‚¶‚ğ‘I‚Ô", "First lottery that touched my hand would be fate.") 
+		chatList 3, lang("‹™‚è‚È‚ª‚çA‚±‚ê‚¾I‚ÆŠ´‚¶‚½‚­‚¶‚ğ‘I‚Ô", "I leave it to my intuition!") 
 		gosub *re_select
 		redraw 0
 		gosub *screen_draw
@@ -5722,13 +5722,13 @@
 		snd SOUNDLIST_CHIME
 		await 300
 		snd SOUNDLIST_CHIME
-		s = lang("æ˜Ÿã®å…‰", "Result")
+		s = lang("¯‚ÌŒõ", "Result")
 		file = "bg39"
-		buff = lang("æ‰‹ã«ã—ãŸãã˜ãŒå…‰ã®ç²’å­ã«å¤‰ã‚ã‚Šã€ã‚ãªãŸã®è¶³å…ƒã«é›†ã¾ã£ã¦ã„ãâ€¦ã€‚", "The lottery you get turns into particles of light and gathers at your feet...")
+		buff = lang("è‚É‚µ‚½‚­‚¶‚ªŒõ‚Ì—±q‚É•Ï‚í‚èA‚ ‚È‚½‚Ì‘«Œ³‚ÉW‚Ü‚Á‚Ä‚¢‚­cB", "The lottery you get turns into particles of light and gathers at your feet...")
 		listmax = 0
-		chatList 1, lang("ä½•ã ã‚ã†ï¼Ÿ", "what?") 
-		chatList 2, lang("ã“ã‚Œã¯â€¦ï¼", "Yeah!") 
-		chatList 3, lang("æ¥ã„ãƒƒï¼", "Come on!") 
+		chatList 1, lang("‰½‚¾‚ë‚¤H", "what?") 
+		chatList 2, lang("‚±‚ê‚ÍcI", "Yeah!") 
+		chatList 3, lang("—ˆ‚¢ƒbI", "Come on!") 
 		gosub *re_select
 		snd SOUNDLIST_OFFER2
 		animeload 32, 0
@@ -5811,7 +5811,7 @@
 		flt
 		itemcreate -1, id, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
 		inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
-		txt lang("ä½•ã‹ãŒè¶³å…ƒã«è»¢ãŒã£ã¦ããŸã€‚", "Something is put on the ground.")
+		txt lang("‰½‚©‚ª‘«Œ³‚É“]‚ª‚Á‚Ä‚«‚½B", "Something is put on the ground.")
 		autosave = 1 * (gdata(GDATA_AREA) != AREA_SHOW_HOUSE)
 		goto *event_SWEND1
 		_switch_sw++
@@ -5840,7 +5840,7 @@
 		adata(ADATA_BOSS, gdata(GDATA_AREA)) = tc
 		txtef COLOR_RED
 		txtmore
-		txt lang("æ°—ã‚’ã¤ã‘ã‚ï¼ã“ã®éšã¯" + mapname(gdata(GDATA_AREA)) + "ã®å®ˆè­·è€…ã€" + cdatan(CDATAN_NAME, tc) + "ã«ã‚ˆã£ã¦å®ˆã‚‰ã‚Œã¦ã„ã‚‹ã€‚", "Be aware! This level is guarded by the lord of " + mapname(gdata(GDATA_AREA)) + ", " + cdatan(CDATAN_NAME, tc) + ".")
+		txt lang("‹C‚ğ‚Â‚¯‚ëI‚±‚ÌŠK‚Í" + mapname(gdata(GDATA_AREA)) + "‚ÌçŒìÒA" + cdatan(CDATAN_NAME, tc) + "‚É‚æ‚Á‚Äç‚ç‚ê‚Ä‚¢‚éB", "Be aware! This level is guarded by the lord of " + mapname(gdata(GDATA_AREA)) + ", " + cdatan(CDATAN_NAME, tc) + ".")
 		goto *event_SWEND1
 	}
 	if ( _switch_val == EVENT_BOSS_RANDOM | _switch_sw ) {
@@ -5878,10 +5878,10 @@
 		tc = rc
 		adata(ADATA_BOSS, gdata(GDATA_AREA)) = tc
 		cdatan(CDATAN_NAME, rc) += " Lv" + cdata(CDATA_LEVEL, rc)
-		txt lang("ã©ã†ã‚„ã‚‰æœ€æ·±å±¤ã¾ã§è¾¿ã‚Šç€ã„ãŸã‚‰ã—ã„â€¦", "It seems you have reached the deepest level of this dungeon.")
+		txt lang("‚Ç‚¤‚â‚çÅ[‘w‚Ü‚Å’H‚è’…‚¢‚½‚ç‚µ‚¢c", "It seems you have reached the deepest level of this dungeon.")
 		txtef COLOR_RED
 		txtmore
-		txt lang("æ°—ã‚’ã¤ã‘ã‚ï¼ã“ã®éšã¯" + mapname(gdata(GDATA_AREA)) + "ã®å®ˆè­·è€…ã€" + cdatan(CDATAN_NAME, tc) + "ã«ã‚ˆã£ã¦å®ˆã‚‰ã‚Œã¦ã„ã‚‹ã€‚", "Be aware! This level is guarded by the lord of " + mapname(gdata(GDATA_AREA)) + ", " + cdatan(CDATAN_NAME, tc) + ".")
+		txt lang("‹C‚ğ‚Â‚¯‚ëI‚±‚ÌŠK‚Í" + mapname(gdata(GDATA_AREA)) + "‚ÌçŒìÒA" + cdatan(CDATAN_NAME, tc) + "‚É‚æ‚Á‚Äç‚ç‚ê‚Ä‚¢‚éB", "Be aware! This level is guarded by the lord of " + mapname(gdata(GDATA_AREA)) + ", " + cdatan(CDATAN_NAME, tc) + ".")
 		goto *event_SWEND1
 	}
 	if ( _switch_val == EVENT_WIN_BOSS_RANDOM | _switch_sw ) {
@@ -6193,12 +6193,12 @@
 		gdata(GDATA_QUEST_FAME) = calcfame(0, gdata(GDATA_LEVEL) * 30 + 200)
 		txtef COLOR_GREEN
 		txtmore
-		txt lang("" + gdata(GDATA_QUEST_FAME) + "ã®åå£°å€¤ã‚’æ‰‹ã«å…¥ã‚ŒãŸã€‚", "You gain " + gdata(GDATA_QUEST_FAME) + " fame.")
+		txt lang("" + gdata(GDATA_QUEST_FAME) + "‚Ì–¼º’l‚ğè‚É“ü‚ê‚½B", "You gain " + gdata(GDATA_QUEST_FAME) + " fame.")
 		cdata(CDATA_FAME, CHARA_PLAYER) += gdata(GDATA_QUEST_FAME)
 		if ( gdata(GDATA_AREA) == AREA_VOID ) {
 			adata(ADATA_BOSS, gdata(GDATA_AREA)) = 0
 			gdata(GDATA_VOID_BOSS) = gdata(GDATA_VOID_BOSS) + 5
-			txt lang("ã“ã®éšã®å°å°ãŒè§£ã‘ãŸã‚ˆã†ã ï¼", "The seal of this level is now broken!")
+			txt lang("‚±‚ÌŠK‚Ì••ˆó‚ª‰ğ‚¯‚½‚æ‚¤‚¾I", "The seal of this level is now broken!")
 		}
 		else {
 			gdata(GDATA_FLAG_NEFIA_CONQUERED)++
@@ -6208,7 +6208,7 @@
 	}
 	if ( _switch_val == EVENT_CLIENT_REACHED | _switch_sw ) {
 		_switch_sw = 0
-		txt lang("ã‚ãªãŸã¯ç„¡äº‹ã«è­·è¡›ã®ä»»å‹™ã‚’çµ‚ãˆãŸã€‚", "You complete the escort.")
+		txt lang("‚ ‚È‚½‚Í–³–‚ÉŒì‰q‚Ì”C–±‚ğI‚¦‚½B", "You complete the escort.")
 		tc = evdata2(evnum - (evnum != 0) * 1)
 		gosub *chat
 		rq = evdata1(evnum - (evnum != 0) * 1)
@@ -6250,7 +6250,7 @@
 			}
 		}
 		else {
-			txt lang("ãƒ¬ãƒ™ãƒ«10ã«é”ã—ã¦ã„ãªã„ã®ã§èƒ½åŠ›å€¤ã®æ¸›å°‘ã¯ãªã„ã€‚", "Death penalty won't be applied until you hit Lv 10.")
+			txt lang("ƒŒƒxƒ‹10‚É’B‚µ‚Ä‚¢‚È‚¢‚Ì‚Å”\—Í’l‚ÌŒ¸­‚Í‚È‚¢B", "Death penalty won't be applied until you hit Lv 10.")
 		}
 		if ( gdata(GDATA_CORRUPTION) >= 20000 ) {
 			modcorrupt -2000
@@ -6260,7 +6260,7 @@
 
 		/********** ORIGINAL - BEGINNING **********
 
-		txt lang("é‡‘è²¨ã‚’å¹¾ã‚‰ã‹å¤±ã£ãŸâ€¦", "You lost some money.")
+		txt lang("‹à‰İ‚ğŠô‚ç‚©¸‚Á‚½c", "You lost some money.")
 		cdata(CDATA_GOLD, CHARA_PLAYER) -= cdata(CDATA_GOLD, CHARA_PLAYER) / 3
 
 		 ********** ORIGINAL - ENDING **********/
@@ -6270,7 +6270,7 @@
 		msg_newline
 		if ( items_lost_on_death != "" ) {
 			txtef COLOR_RED
-			txt lang("è½ã¨ã—ãŸã‚¢ã‚¤ãƒ†ãƒ : ", "Dropped items: ") + items_lost_on_death
+			txt lang("—‚Æ‚µ‚½ƒAƒCƒeƒ€: ", "Dropped items: ") + items_lost_on_death
 			msg_newline
 		}
 
@@ -6279,7 +6279,7 @@
 			cdata(CDATA_GOLD, CHARA_PLAYER) -= gold_lost_on_death
 
 			txtef COLOR_RED
-			txt lang("è½ã¨ã—ãŸé‡‘è²¨: ", "Dropped gold: ") + gold_lost_on_death + "gp."
+			txt lang("—‚Æ‚µ‚½‹à‰İ: ", "Dropped gold: ") + gold_lost_on_death + "gp."
 		}
 
 		/********** BLOODYSHADE CUSTOM - ENDING **********/
@@ -6302,7 +6302,7 @@
 		if ( tc != CHARA_PLAYER ) {
 			if ( cdata(CDATA_EXIST, tc) == CHAR_STATE_ALIVE ) {
 				txtef COLOR_BLUE
-				txt lang("ãƒ‘ã‚¨ãƒ«ã€ŒãŠã‹ã‚ã•ã‚“ãƒ¼ãƒ¼ï¼ï¼ã€", cnvtalk("M-mom...!!"))
+				txt lang("ƒpƒGƒ‹u‚¨‚©‚ ‚³‚ñ[[IIv", cnvtalk("M-mom...!!"))
 				cdata(CDATA_RELATION, tc) = -3
 				cdata(CDATA_AI_AGGRO, tc) = 1000
 				cdata(CDATA_TARGET, tc) = 0
@@ -6329,13 +6329,13 @@
 		msg_halt
 		msg_clear
 		txtef COLOR_YELLOW
-		txt lang("ã€Œåˆæ ¼ã ï¼ã€", cnvtalk("You passed!"))
+		txt lang("u‡Ši‚¾Iv", cnvtalk("You passed!"))
 		msg_halt
 		txtef COLOR_YELLOW
-		txt lang("ã€ŒãŠå‰ã¯æ±ºæˆ¦å› å­ã¨ã—ã¦ãµã•ã‚ã—ã„åŠ›ã‚’ç¤ºã—ãŸã€", cnvtalk("You've shown you have suitable strength to be considered a deciding factor in a decisive battle."))
+		txt lang("u‚¨‘O‚ÍŒˆíˆöq‚Æ‚µ‚Ä‚Ó‚³‚í‚µ‚¢—Í‚ğ¦‚µ‚½v", cnvtalk("You've shown you have suitable strength to be considered a deciding factor in a decisive battle."))
 		msg_halt
 		txtef COLOR_YELLOW
-		txt lang("ã€Œã“ã‚Œãªã‚‰æ··æ²Œã®ç¥ã‚‚å€’ã›ã‚‹ã‹ã‚‚ã—ã‚Œã‚“â€¦ã„ã‚„ã€ãã£ã¨å€’ã›ã‚‹ï¼ã€", cnvtalk("As you are now, you might even be able to defeat the God of Chaos... No, I'm certain you can!"))
+		txt lang("u‚±‚ê‚È‚ç¬“×‚Ì_‚à“|‚¹‚é‚©‚à‚µ‚ê‚ñc‚¢‚âA‚«‚Á‚Æ“|‚¹‚éIv", cnvtalk("As you are now, you might even be able to defeat the God of Chaos... No, I'm certain you can!"))
 		msg_halt
 		repeat 2
 			tc = findchara(CREATURE_ID_TALON_SOLDIER)
@@ -6349,7 +6349,7 @@
 		_switch_sw = 0
 		chara_vanquish findchara(CREATURE_ID_BLACK_GAUNTLET_LEOLD)
 		txtef COLOR_YELLOW
-		txt lang("ã€Œæœ›ã¿é€šã‚Šæˆ¦ã£ã¦ã‚„ã‚ã†ï¼ã€", cnvtalk("Let's fight as you wish!!"))
+		txt lang("u–]‚İ’Ê‚èí‚Á‚Ä‚â‚ë‚¤Iv", cnvtalk("Let's fight as you wish!!"))
 		flt
 		novoidlv = 1
 		characreate -1, CREATURE_ID_TEZCATLIPOCA, cdata(CDATA_X, tc), cdata(CDATA_Y, tc)
@@ -6383,7 +6383,7 @@
 		val = promptx, prompty, 250, 0
 		gosub *prompt_key
 		txtef COLOR_YELLOW
-		txt lang("ã€Œã“ã‚ŒãŒè¿”äº‹ã ã€", cnvtalk("This is my reply!!"))
+		txt lang("u‚±‚ê‚ª•Ô–‚¾v", cnvtalk("This is my reply!!"))
 		snd SOUNDLIST_PUNISH1
 		if ( cfg_attackanime ) {
 			animeload ANIMATION_UNISON_IMPACT1, CHARA_PLAYER
@@ -6420,7 +6420,7 @@
 		flt
 		itemcreate -1, ITEM_ID_GERBERA_CROSS, cdata(CDATA_X, evdata1(evnum - (evnum != 0) * 1)), cdata(CDATA_Y, evdata1(evnum - (evnum != 0) * 1)), 0
 		txtef COLOR_BLUE
-		txt lang("ï¼Ÿï¼Ÿï¼Ÿã€Œæœ¬å½“ã«å¿ã‚’ã‚„ã‚ãŸã‘ã‚Œã°æ­»ã¬ã—ã‹ãªã„ã€‚ã“ã‚ŒãŒå¿ã®æŸã ã€", "??? says: \"If you truly wish to no longer be a ninja, then you must die. This is the law of ninjas.\"")
+		txt lang("HHHu–{“–‚É”E‚ğ‚â‚ß‚½‚¯‚ê‚Î€‚Ê‚µ‚©‚È‚¢B‚±‚ê‚ª”E‚Ì|‚¾v", "??? says: \"If you truly wish to no longer be a ninja, then you must die. This is the law of ninjas.\"")
 		goto *event_SWEND1
 	}
 	if ( _switch_val == EVENT_SPECIAL_SPAWN_COND | _switch_sw ) {
@@ -6448,35 +6448,35 @@
 				gdata(GDATA_TEMPORARY_FLAGS2) = 10
 				if ( gdata(GDATA_FLAG_INVITED_GOD) == CREATURE_ID_MANI ) {
 					dbid = CREATURE_ID_MANI
-					txt lang("æ©Ÿæ¢°ã®ãƒãƒ‹ã€Œã“ã‚ŒãŒå®šå‘½ã®ä½å±…ã‹ã€‚è¨˜éŒ²ã—ã¦ãŠã“ã†ã€", cnvtalk("Well done. After all, you might be useful than I thought."))
+					txt lang("‹@ŠB‚Ìƒ}ƒju‚±‚ê‚ª’è–½‚ÌZ‹‚©B‹L˜^‚µ‚Ä‚¨‚±‚¤v", cnvtalk("Well done. After all, you might be useful than I thought."))
 				}
 				if ( gdata(GDATA_FLAG_INVITED_GOD) == CREATURE_ID_LULWY ) {
 					dbid = CREATURE_ID_LULWY
-					txt lang("é¢¨ã®ãƒ«ãƒ«ã‚¦ã‚£ã€Œã“ã®ä¸­ã§åµã‚’èµ·ã“ã—ãŸã‚‰ã•ãã‹ã—çˆ½å¿«ã§ã—ã‚‡ã†ã­â€¦å†—è«‡ã‚ˆã€", cnvtalk("Oh my little puppet, you serve me well."))
+					txt lang("•—‚Ìƒ‹ƒ‹ƒEƒBu‚±‚Ì’†‚Å—’‚ğ‹N‚±‚µ‚½‚ç‚³‚¼‚©‚µ‘u‰õ‚Å‚µ‚å‚¤‚Ëcç’k‚æv", cnvtalk("Oh my little puppet, you serve me well."))
 				}
 				if ( gdata(GDATA_FLAG_INVITED_GOD) == CREATURE_ID_ITZPALT ) {
 					dbid = CREATURE_ID_ITZPALT
-					txt lang("å…ƒç´ ã®ã‚¤ãƒ„ãƒ‘ãƒ­ãƒˆãƒ«ã€Œæ¥½åœ’ã‹â€¦æ‡ã‹ã—ã„éŸ¿ãã ã€", cnvtalk("Impressive. Your action shall be remembered."))
+					txt lang("Œ³‘f‚ÌƒCƒcƒpƒƒgƒ‹uŠy‰€‚©c‰ù‚©‚µ‚¢‹¿‚«‚¾v", cnvtalk("Impressive. Your action shall be remembered."))
 				}
 				if ( gdata(GDATA_FLAG_INVITED_GOD) == CREATURE_ID_EHEKATL ) {
 					dbid = CREATURE_ID_EHEKATL
-					txt lang("å¹¸é‹ã®ã‚¨ãƒ˜ã‚«ãƒˆãƒ«ã€Œã†ã¿ã¿ã‚ƒï¼ãŸã‚‰ã°ãŒã«ï¼ãŸã‚‰ã°ãŒã«ã©ã“ï¼Ÿã€", cnvtalk("Wheeee! I'm so happy. I like you! I like you!"))
+					txt lang("K‰^‚ÌƒGƒwƒJƒgƒ‹u‚¤‚İ‚İ‚áI‚½‚ç‚Î‚ª‚ÉI‚½‚ç‚Î‚ª‚É‚Ç‚±Hv", cnvtalk("Wheeee! I'm so happy. I like you! I like you!"))
 				}
 				if ( gdata(GDATA_FLAG_INVITED_GOD) == CREATURE_ID_OPATOS ) {
 					dbid = CREATURE_ID_OPATOS
-					txt lang("åœ°ã®ã‚ªãƒ‘ãƒ¼ãƒˆã‚¹ã€Œãƒ•ãƒƒãƒãƒãƒãƒãƒ¼ï¼ãƒ•ãƒãƒãƒãƒ¼ï¼ãŠé‚ªé­”ã™ã‚‹ãï¼ã€", cnvtalk("Muwahaha muwaha. Good. Good!"))
+					txt lang("’n‚ÌƒIƒp[ƒgƒXuƒtƒbƒnƒnƒnƒn[Iƒtƒnƒnƒn[I‚¨×–‚‚·‚é‚¼Iv", cnvtalk("Muwahaha muwaha. Good. Good!"))
 				}
 				if ( gdata(GDATA_FLAG_INVITED_GOD) == CREATURE_ID_JURE ) {
 					dbid = CREATURE_ID_JURE
-					txt lang("ç™’ã—ã®ã‚¸ãƒ¥ã‚¢ã€ŒãŠã€ãŠé‚ªé­”ã—ã¾ã™â€¦ã†ã£ï¼ç§ã®éƒ¨å±‹ã‚ˆã‚Šç‰‡ä»˜ã„ã¦ã‚‹â€¦ã€", cnvtalk("W-What? I-I'm not gonna praise you. I'm not!"))
+					txt lang("–ü‚µ‚ÌƒWƒ…ƒAu‚¨A‚¨×–‚‚µ‚Ü‚·c‚¤‚ÁI„‚Ì•”‰®‚æ‚è•Ğ•t‚¢‚Ä‚écv", cnvtalk("W-What? I-I'm not gonna praise you. I'm not!"))
 				}
 				if ( gdata(GDATA_FLAG_INVITED_GOD) == CREATURE_ID_KUMIROMI ) {
 					dbid = CREATURE_ID_KUMIROMI
-					txt lang("åç©«ã®ã‚¯ãƒŸãƒ­ãƒŸã€Œã“ã“ãŒå›ã®å®¶ãªã‚“ã ã­â€¦ã€‚éš…ã€…ã¾ã§è¦‹ã¦ã‚‚â€¦ã„ã„ã‹ãªâ€¦ï¼Ÿã€", cnvtalk("Good work... truly..."))
+					txt lang("ûŠn‚ÌƒNƒ~ƒƒ~u‚±‚±‚ªŒN‚Ì‰Æ‚È‚ñ‚¾‚ËcB‹÷X‚Ü‚ÅŒ©‚Ä‚àc‚¢‚¢‚©‚ÈcHv", cnvtalk("Good work... truly..."))
 				}
 				if ( gdata(GDATA_FLAG_INVITED_GOD) == CREATURE_ID_YACATECT ) {
 					dbid = CREATURE_ID_YACATECT
-					txt lang("å¯Œã®ãƒ¤ã‚«ãƒ†ã‚¯ãƒˆã€Œã¸ã‡ã‡ã€ã“ã‚Œã§å…¥å ´æ–™ã‚¿ãƒ€ãªã‚“ï¼Ÿã‚‚ã£ãŸã„ãªã„ã‚ãâ€¦ã€", cnvtalk("Good job, just like that! Keep it up!"))
+					txt lang("•x‚Ìƒ„ƒJƒeƒNƒgu‚Ö‚¥‚¥A‚±‚ê‚Å“üê—¿ƒ^ƒ_‚È‚ñH‚à‚Á‚½‚¢‚È‚¢‚í‚Ÿcv", cnvtalk("Good job, just like that! Keep it up!"))
 				}
 				flt
 				novoidlv = 1
@@ -7219,16 +7219,16 @@
 				inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_CURSED
 				kaiwa = rnd(4)
 				if ( kaiwa == 0 ) {
-					txt lang("ã€Œå®³ç£â€¦è¨±ã•ãªã„ã€", cnvtalk("A vermin... I can't... tolerate..."))
+					txt lang("uŠQbc‹–‚³‚È‚¢v", cnvtalk("A vermin... I can't... tolerate..."))
 				}
 				if ( kaiwa == 1 ) {
-					txt lang("ã€Œæ‚ªã„è™«ã¯â€¦æ®ºã•ãªãã‚ƒâ€¦ã€", cnvtalk("I... will have no mercy... for vermin..."))
+					txt lang("uˆ«‚¢’‚ÍcE‚³‚È‚«‚ácv", cnvtalk("I... will have no mercy... for vermin..."))
 				}
 				if ( kaiwa == 2 ) {
-					txt lang("ã€Œæ—©ãâ€¦é§†é™¤â€¦ã—ãªã„ã¨â€¦ã€", cnvtalk("I have to... get rid of it..."))
+					txt lang("u‘‚­c‹ìœc‚µ‚È‚¢‚Æcv", cnvtalk("I have to... get rid of it..."))
 				}
 				if ( kaiwa == 3 ) {
-					txt lang("ã€Œãšã£ã¨â€¦è¦‹å®ˆã£ã¦ã‚ã’ã‚‹ã‹ã‚‰ã­â€¦ï¼Ÿã€", cnvtalk("I always... watch over you..."))
+					txt lang("u‚¸‚Á‚ÆcŒ©ç‚Á‚Ä‚ ‚°‚é‚©‚ç‚ËcHv", cnvtalk("I always... watch over you..."))
 				}
 				if ( rc > MAX_CHARA_FOLLOWER ) {
 					dmghp rc, 99999, DAMAGE_FROM_UNSEEN
@@ -7361,23 +7361,23 @@
 	if ( _switch_val == EVENT_VISITOR | _switch_sw ) {
 		_switch_sw = 0
 		if ( get_freechara() == (-1) | gdata(GDATA_GUEST) <= 0 ) {
-			txt lang("ã‚²ã‚¹ãƒˆã¯è¡Œæ–¹ä¸æ˜ã«ãªã£ãŸã€‚", "The guest lost his way.")
+			txt lang("ƒQƒXƒg‚Ís•û•s–¾‚É‚È‚Á‚½B", "The guest lost his way.")
 			goto *event_SWEND1
 		}
 		ehemeka = 0
 		if ( allitemfind(ITEM_ID_PAINTING_OF_EHEKATL_AND_SWORDFISH) != (-1) ) {
 			kaiwa = rnd(4)
 			if ( kaiwa == 0 ) {
-				txt lang("ã€Œã†ã¿ã‚…ã€œ!ã€", cnvtalk("Meow!"))
+				txt lang("u‚¤‚İ‚ã`!v", cnvtalk("Meow!"))
 			}
 			if ( kaiwa == 1 ) {
-				txt lang("ã€Œã†ã£ã¿ã‚…!ã€", cnvtalk("Mew mew!"))
+				txt lang("u‚¤‚Á‚İ‚ã!v", cnvtalk("Mew mew!"))
 			}
 			if ( kaiwa == 2 ) {
-				txt lang("ã€Œæ‹›ãã‚ˆ!ã‚ˆï¼ã€", cnvtalk("I invite guests! guests!"))
+				txt lang("uµ‚­‚æ!‚æIv", cnvtalk("I invite guests! guests!"))
 			}
 			if ( kaiwa == 3 ) {
-				txt lang("ã€Œã‚ã‹ã˜ã!ã€", cnvtalk("Swordfish!"))
+				txt lang("u‚ß‚©‚¶‚«!v", cnvtalk("Swordfish!"))
 			}
 			ehemeka = 100
 		}
@@ -7422,7 +7422,7 @@
 				}
 			loop
 			if ( tc == CHARA_PLAYER ) {
-				txt lang("ã‚²ã‚¹ãƒˆã¯ã™ã§ã«å±…ãªããªã£ã¦ã„ãŸã€‚", "It seems the guest has already left your house.")
+				txt lang("ƒQƒXƒg‚Í‚·‚Å‚É‹‚È‚­‚È‚Á‚Ä‚¢‚½B", "It seems the guest has already left your house.")
 				goto *event_SWEND1
 			}
 			cdata(CDATA_EXIST, tc) = CHAR_STATE_ALIVE
@@ -7575,7 +7575,7 @@
 			if ( cdata(CDATA_ROLE, cnt) != ROLE_ADVENTURER ) {
 				if ( cdata(CDATA_ROLE, cnt) != ROLE_SPECIAL ) {
 					cdata(CDATA_EMO_ICON, cnt) = 10 + 100 * 20
-					txt lang(name(cnt) + "ã€Œç›®ãŒï¼ç›®ãŒãƒ¼ï¼ï¼ã€", name(cnt) + " shout" + _s(cnt) + " " + cnvtalk("Eyes! My eyes!"))
+					txt lang(name(cnt) + "u–Ú‚ªI–Ú‚ª[IIv", name(cnt) + " shout" + _s(cnt) + " " + cnvtalk("Eyes! My eyes!"))
 				}
 			}
 		loop
@@ -7583,7 +7583,7 @@
 	}
 	if ( _switch_val == EVENT_RETURN_FROM_CHAOS_CRADLE | _switch_sw ) {
 		_switch_sw = 0
-		txt lang("ãŠã‹ãˆã‚Šã€‚", "Welcome back.")
+		txt lang("‚¨‚©‚¦‚èB", "Welcome back.")
 		snd SOUNDLIST_DING3
 		repeat MAX_CHARA_TOTAL
 			if ( cdata(CDATA_EXIST, cnt) != CHAR_STATE_ALIVE ) {
@@ -7621,7 +7621,7 @@
 		repeat limit(i, 0, 5)
 			txtef COLOR_SKY_BLUE
 			if ( jp ) {
-				txt "ã€ŒãŠã‹ãˆã‚Šã€", "ã€ŒãŠã‹ãˆã‚Šãªã•ã„ã€", "ã€ŒãŠç–²ã‚Œã•ã¾ã€", "ã€Œã‚ˆã‹ã£ãŸâ€¦ã€", "ã€Œãšã£ã¨å¾…ã£ã¦ãŸã‚ˆã€", "ã€ŒãŠã‹ãˆã‚Šãªã•ã„ã€", "ã€ŒãŠã‹ãˆã‚Šã€", "ã€Œæ³£ããã†â€¦ã€"
+				txt "u‚¨‚©‚¦‚èv", "u‚¨‚©‚¦‚è‚È‚³‚¢v", "u‚¨”æ‚ê‚³‚Üv", "u‚æ‚©‚Á‚½cv", "u‚¸‚Á‚Æ‘Ò‚Á‚Ä‚½‚æv", "u‚¨‚©‚¦‚è‚È‚³‚¢v", "u‚¨‚©‚¦‚èv", "u‹ƒ‚«‚»‚¤cv"
 			}
 			if ( en ) {
 				txt cnvtalk("Welcome back!!"), cnvtalk("Hey, dear..."), cnvtalk("You're back!"), cnvtalk("I was waiting for you."), cnvtalk("Nice to see you again."), cnvtalk("I'm about to cry..."), cnvtalk("Cheers for good work.")
@@ -7667,7 +7667,7 @@
 		loop
 		repeat limit(i, 0, 3)
 			txtef COLOR_SKY_BLUE
-			txt lang("ã€ŒãŠã‹ãˆã‚Šã€", cnvtalk("Welcome home!")), lang("ã€Œã‚ˆã†æˆ»ã£ãŸã‹ã€", cnvtalk("Hey, dear.")), lang("ã€Œç„¡äº‹ã§ä½•ã‚ˆã‚Šã§ã™ã€", cnvtalk("You're back safely!")), lang("ã€ŒãŠã‹ã‹â™ªã€", cnvtalk("Welcome backâ™ª")), lang("ã€Œå¾…ã£ã¦ãŸã‚ˆã€", cnvtalk("I was waiting for you.")), lang("ã€ŒãŠã‹ãˆã‚Šãªã•ã„ï¼ã€", cnvtalk("Nice to see you again."))
+			txt lang("u‚¨‚©‚¦‚èv", cnvtalk("Welcome home!")), lang("u‚æ‚¤–ß‚Á‚½‚©v", cnvtalk("Hey, dear.")), lang("u–³–‚Å‰½‚æ‚è‚Å‚·v", cnvtalk("You're back safely!")), lang("u‚¨‚©‚©ôv", cnvtalk("Welcome backô")), lang("u‘Ò‚Á‚Ä‚½‚æv", cnvtalk("I was waiting for you.")), lang("u‚¨‚©‚¦‚è‚È‚³‚¢Iv", cnvtalk("Nice to see you again."))
 		loop
 		if ( gdata(GDATA_GUEST) > 0 ) {
 			tc = CHARA_PLAYER
@@ -7693,7 +7693,7 @@
 		}
 		gdata(GDATA_FLAG_NUCLEAR_EXPLOSIONS)++
 		txtef COLOR_RED
-		txt lang(" *ã‚´ã‚´ã‚´ã‚´ã‚´ã‚´* ", " *RRROOM-KABOOOOM* ")
+		txt lang(" *ƒSƒSƒSƒSƒSƒS* ", " *RRROOM-KABOOOOM* ")
 		msg_halt
 		gsel 7
 		pos 0, 0
@@ -7845,7 +7845,7 @@
 		gdata(GDATA_WEATHER) = WEATHER_ETHER
 		envonly = 1
 		gosub *music_play
-		txt lang("çµ‚æœ«ã®æ—¥ãŒè¨ªã‚ŒãŸã€‚", "Let's Ragnarok!")
+		txt lang("I––‚Ì“ú‚ª–K‚ê‚½B", "Let's Ragnarok!")
 		msg_halt
 		animeid = ANIMATION_RAGNA
 		gosub *anime
@@ -7916,7 +7916,7 @@
 		_switch_sw = 0
 		if ( evdata1(evnum - (evnum != 0) * 1) == 0 ) {
 			txtef COLOR_RED
-			txt lang("ã‘ãŸãŸã¾ã—ã„è­¦å ±ãŒé³´ã‚ŠéŸ¿ã„ãŸï¼", "*beeeeeep* An alarm sounds loudly!")
+			txt lang("‚¯‚½‚½‚Ü‚µ‚¢Œx•ñ‚ª–Â‚è‹¿‚¢‚½I", "*beeeeeep* An alarm sounds loudly!")
 			repeat MAX_CHARA_TOTAL - MAX_CHARA_SAVE, MAX_CHARA_SAVE
 				if ( cdata(CDATA_ID, cnt) == CREATURE_ID_MELUGAST_TYPE0_THE_DIMENSION_DRIVER ) {
 					continue
@@ -7953,7 +7953,7 @@
 	if ( _switch_val == EVENT_SLEEP_AMBUSH | _switch_sw ) {
 		_switch_sw = 0
 		if ( mdata(MDATA_TYPE) != MAP_TYPE_WORLD ) {
-			txt lang("å¼·ç›—ãŒã‚ãªãŸã«ç›®ã‚’ã¤ã‘ãŸï¼", "The robber turns their attention to you!")
+			txt lang("‹­“‚ª‚ ‚È‚½‚É–Ú‚ğ‚Â‚¯‚½I", "The robber turns their attention to you!")
 			repeat 3
 				flt
 				initlv = limit(cdata(CDATA_LEVEL, CHARA_PLAYER), 1, 50)

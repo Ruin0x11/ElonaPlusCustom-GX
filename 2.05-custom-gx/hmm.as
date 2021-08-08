@@ -1,0 +1,21 @@
+#uselib "hmm.dll"
+#func DSINIT "_DSINIT@16" bmscr, int, int, int
+#func DSEND "_DSEND@16" int, int, int, int
+#func DSRELEASE "_DSRELEASE@16" int, int, int, int
+#func DSLOADFNAME "_DSLOADFNAME@16" pexinfo, nullptr, nullptr, nullptr
+#func DSPLAY "_DSPLAY@16" int, int, int, int
+#func DSSTOP "_DSSTOP@16" int, int, int, int
+#func DSSETVOLUME "_DSSETVOLUME@16" int, int, int, int
+#func DSGETMASTERVOLUME "_DSGETMASTERVOLUME@16" int, int, int, int
+#func CHECKPLAY "_CHECKPLAY@16" int, int, int, int
+#func DMINIT "_DMINIT@16" bmscr, int, int, int
+#func DMEND "_DMEND@16" int, int, int, int
+#func DMLOADFNAME "_DMLOADFNAME@16" bmscr, str, int, int
+#func DMPLAY "_DMPLAY@16" int, int, int, int
+#func DMSTOP "_DMSTOP@16" bmscr, int, int, int
+#func DIINIT "_DIINIT@16" bmscr, int, int, int
+#func DIGETJOYNUM "_DIGETJOYNUM@16" int, int, int, int
+#func DIGETJOYSTATE "_DIGETJOYSTATE@16" var, int, int, int
+#func HMMBITON "_HMMBITON@16" var, int, int, int
+#func HMMBITOFF "_HMMBITOFF@16" var, int, int, int
+#func HMMBITCHECK "_HMMBITCHECK@16" int, int, int, int
