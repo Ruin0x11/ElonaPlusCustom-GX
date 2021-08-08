@@ -2,18 +2,20 @@
 
 *\~Believe in Jure and hold a determination to mince.\~*
 
-Elona+ Custom-GX is a new variant of Elona+ based on Elona+ Custom-G, to be updated with the changes in Elona+ up to version 2.05.
+Elona+ Custom-GX is a new variant of Elona+ based on Elona+ Custom-G, updated with the changes in Elona+ up to version 2.05.
 
-**NOTE**: Development is still in progress!
+## Installation
+
+1. Download Elona+ 2.05 from [here](https://drive.google.com/file/d/1kb8wfLCkw_cGgWrbUNzdugH71OYQIYUT/view?usp=sharing). Extract it to `elonaplus2.05`.
+2. Extract the contents of Custom-GX's archive to the `elonaplus2.05` folder, overwriting all existing files.
+3. Run `elonapluscgx.exe`.
 
 ## Building
 
-1. Download Elona+ 1.90, Elona+ Custom 1.90.2 and Elona+ Custom-G 1.90.2.4 from [here](https://elona.fandom.com/f/p/3340109923483964385).
-2. Extract `elonaplus1.90` somewhere. Extract Elona+ Custom over the existing files, then do the same for Elona+ Custom-G. Copy the files in the install to the folder `assets/2.05-custom-gx` in this repository.
-3. Download the HSP3.4 SDK (`hsp34a.zip`) from [here](http://hsp.tv/make/downlist.html) and extract it somewhere.
-4. Open `main.hsp` with `hsed3.exe` from the HSP3.4 SDK folder. Press <kbd>F5</kbd> to compile and run under debug mode.
-5. Press <kbd>Ctrl+F9</kbd> to create the executable, `elonacgx.exe`.
-6. Copy `elonacgx.exe` and `hsplua.dll` from the source directory to your Elona+ Custom-G install from earlier and run it.
+1. Follow the installation instructions above. Rename the `elonaplus2.05` folder to `2.05-custom-gx` and move it to the `assets/` folder of this repository.
+2. Download the HSP3.4 SDK (`hsp34a.zip`) from [here](http://hsp.tv/make/downlist.html) and extract it somewhere.
+3. Open `2.05-custom-gx/main.hsp` with `hsed3.exe` from the HSP3.4 SDK folder. Press <kbd>F5</kbd> to compile and run under debug mode.
+4. Press <kbd>Ctrl+F9</kbd> to create an executable named `elonapluscgx.exe`. You can then copy it to your Custom-GX install folder.
 
 **Warning**: If you make any changes to the code, *always make sure the file encoding is set to SHIFT_JIS!* Otherwise, you'll get a lot of cryptic compiler errors.
 
