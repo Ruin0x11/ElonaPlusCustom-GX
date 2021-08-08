@@ -2430,7 +2430,7 @@
 		}
 		return 1
 	}
-	if ( dmgcon_cond == CONDITION_ASH_BODY ) {
+	if ( dmgcon_cond == CONDITION_WINCE ) {
 		if ( findbuff(dmgcon_charid, BUFF_HOLY_VEIL) != (-1) ) {
 			f@con = 0
 		}
@@ -2452,7 +2452,7 @@
 					txtmore
 					txtef COLOR_PURPLE
 					txt lang(name(dmgcon_charid) + "は怯んだ。", name(dmgcon_charid) + " " + is(dmgcon_charid) + " faltered.")
-                    DamagePopupAdd "" + _conkaen, dmgcon_charid, DMGPOPUP_ADD_CONDITION, CONDITION_ASH_BODY
+                    DamagePopupAdd "" + _conkaen, dmgcon_charid, DMGPOPUP_ADD_CONDITION, CONDITION_WINCE
 				}
 			}
 			rowactend dmgcon_charid
@@ -2909,7 +2909,7 @@
 	return
 
 #deffunc healcon int healcon_charid, int healcon_cond, int healcon_arg3
-	if ( healcon_cond == CONDITION_ASH_BODY ) {
+	if ( healcon_cond == CONDITION_WINCE ) {
 		if ( cdata(CDATA_CONDITION_WINCE, healcon_charid) > 0 ) {
 			if ( healcon_arg3 == 0 ) {
 				cdata(CDATA_CONDITION_WINCE, healcon_charid) = 0
@@ -2921,7 +2921,7 @@
 				cdata(CDATA_CONDITION_WINCE, healcon_charid) = 0
 				if ( synccheck(healcon_charid, -1) ) {
 					txt lang(name(healcon_charid) + "は怯みから回復した。", name(healcon_charid) + " recover" + _s(healcon_charid) + " from wince.")
-                    DamagePopupAdd "" + _conkaen, healcon_charid, DMGPOPUP_REMOVE_CONDITION, CONDITION_ASH_BODY
+                    DamagePopupAdd "" + _conkaen, healcon_charid, DMGPOPUP_REMOVE_CONDITION, CONDITION_WINCE
 				}
 			}
 			return
@@ -5794,7 +5794,7 @@
  				}
 			}
 			if ( locvar_dmghp_ele == SKILL_RES_FIRE ) {
-				dmgcon dmghp_charid, CONDITION_ASH_BODY, rnd(dmghp_power + 1)
+				dmgcon dmghp_charid, CONDITION_WINCE, rnd(dmghp_power + 1)
 			}
 			if ( locvar_dmghp_ele == SKILL_RES_COLD ) {
 				dmgcon dmghp_charid, CONDITION_CHILLS, rnd(dmghp_power + 1)
