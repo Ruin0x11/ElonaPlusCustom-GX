@@ -1,7 +1,5 @@
 #include "db_card.hsp"
 
-#module tcg
-
 #defcfunc cdbit int cdbit_bit, int cdbit_charid
 	HMMBITCHECK@ card@tcg(30 + cdbit_bit / 32, cdbit_charid), cdbit_bit \ 32
 	return abs(stat)
@@ -1060,7 +1058,7 @@
 		if ( strsize != (-1) ) {
 			promptAdd lang("デッキの構築", "Edit Deck")
 			promptAdd lang("メインデッキに設定", "Set as Main Deck")
-			val = 400, basey@tcg + 230, 240, 1
+			val = basex@tcg + 400, basey@tcg + 230, 240, 1
 			gosub *prompt_key@
 			if ( rtval == (-1) ) {
 				goto *tcgDeck_loop
@@ -2052,5 +2050,3 @@
 	return
 
 #include "tcg_ai.hsp"
-
-#global
