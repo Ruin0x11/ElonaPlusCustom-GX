@@ -3096,26 +3096,22 @@
 					}
 				}
  			}
-			flt
-			itemcreate -1, ITEM_ID_CARD, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
-			inv(INV_ITEM_SUB_NAME, ci) = cardno
-			cell_refresh inv(INV_ITEM_X, ci), inv(INV_ITEM_Y, ci)
-			flt
-			itemcreate -1, ITEM_ID_CARD, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
-			inv(INV_ITEM_SUB_NAME, ci) = cardno + 1
-			cell_refresh inv(INV_ITEM_X, ci), inv(INV_ITEM_Y, ci)
-			flt
-			itemcreate -1, ITEM_ID_CARD, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
-			inv(INV_ITEM_SUB_NAME, ci) = cardno + 2
-			cell_refresh inv(INV_ITEM_X, ci), inv(INV_ITEM_Y, ci)
-			flt
-			itemcreate -1, ITEM_ID_CARD, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
-			inv(INV_ITEM_SUB_NAME, ci) = cardno + 3
-			cell_refresh inv(INV_ITEM_X, ci), inv(INV_ITEM_Y, ci)
-			flt
-			itemcreate -1, ITEM_ID_CARD, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
-			inv(INV_ITEM_SUB_NAME, ci) = cardno + 4
-			cell_refresh inv(INV_ITEM_X, ci), inv(INV_ITEM_Y, ci)
+
+#define spawnCard(%1) flt%c\
+	itemcreate -1, ITEM_ID_CARD, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0%c\
+	dbid = %1%c\
+	dbmode = DBMODE_REF%c\
+	gosub *db_creature%c\
+	inv(INV_ITEM_SUB_NAME, ci) = %1%c\
+	inv(INV_ITEM_COL, ci) = cpicref \ COLOR_TINT_MULT%c\
+	cell_refresh inv(INV_ITEM_X, ci), inv(INV_ITEM_Y, ci)
+
+			spawnCard cardno
+			spawnCard cardno + 1
+			spawnCard cardno + 2
+			spawnCard cardno + 3
+			spawnCard cardno + 4
+
 			autosave = 1 * (gdata(GDATA_AREA) != AREA_SHOW_HOUSE)
 			goto *act_open_SWEND1
 		}
