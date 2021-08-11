@@ -1790,30 +1790,31 @@
 	gosub *charaRefresh
 	return
 
-#deffunc delbuff int delbuff_charid, int delbuff_buffid
+#deffunc delbuff int delbuff_charid, int delbuff_buffindex
+	delbuff_buffid = cdata(STARTING_CDATA_BUFF + delbuff_buffindex * ARRAY_CDATA_BUFF, delbuff_charid)
 	if ( delbuff_charid == CHARA_PLAYER ) {
 		txtef COLOR_PURPLE
-		txt lang("" + buffname(cdata(STARTING_CDATA_BUFF + delbuff_buffid * ARRAY_CDATA_BUFF, delbuff_charid)) + "の効果が切れた。", "The effect of " + buffname(cdata(STARTING_CDATA_BUFF + delbuff_buffid * ARRAY_CDATA_BUFF, delbuff_charid)) + " ends.")
+		txt lang("" + buffname(delbuff_buffid) + "の効果が切れた。", "The effect of " + buffname(delbuff_buffid) + " ends.")
 	}
-	if ( cdata(STARTING_CDATA_BUFF + delbuff_buffid * ARRAY_CDATA_BUFF, delbuff_charid) == BUFF_INCOGNITO ) {
+	if ( cdata(STARTING_CDATA_BUFF + delbuff_buffindex * ARRAY_CDATA_BUFF, delbuff_charid) == BUFF_INCOGNITO ) {
 		if ( delbuff_charid == CHARA_PLAYER ) {
 			incognitoend
 		}
 	}
-	if ( cdata(STARTING_CDATA_BUFF + delbuff_buffid * ARRAY_CDATA_BUFF, delbuff_charid) == BUFF_DEATH_WORD ) {
+	if ( cdata(STARTING_CDATA_BUFF + delbuff_buffindex * ARRAY_CDATA_BUFF, delbuff_charid) == BUFF_DEATH_WORD ) {
 		cbitmod CHARA_BIT_DEATH_COUNT, delbuff_charid, 0
 	}
-	if ( cdata(STARTING_CDATA_BUFF + delbuff_buffid * ARRAY_CDATA_BUFF, delbuff_charid) == BUFF_CONTINGENCY ) {
+	if ( cdata(STARTING_CDATA_BUFF + delbuff_buffindex * ARRAY_CDATA_BUFF, delbuff_charid) == BUFF_CONTINGENCY ) {
 		cbitmod CHARA_BIT_CONTINGENCY, delbuff_charid, 0
 	}
-	if ( cdata(STARTING_CDATA_BUFF + delbuff_buffid * ARRAY_CDATA_BUFF, delbuff_charid) == BUFF_ATTRIBUTE ) {
+	if ( cdata(STARTING_CDATA_BUFF + delbuff_buffindex * ARRAY_CDATA_BUFF, delbuff_charid) == BUFF_ATTRIBUTE ) {
 		cdata(CDATA_ATTRIBUTE_ELE, delbuff_charid) = 0
 	}
-	if ( cdata(STARTING_CDATA_BUFF + delbuff_buffid * ARRAY_CDATA_BUFF, delbuff_charid) == BUFF_DATA_SCAN ) {
+	if ( cdata(STARTING_CDATA_BUFF + delbuff_buffindex * ARRAY_CDATA_BUFF, delbuff_charid) == BUFF_DATA_SCAN ) {
 		gdata(GDATA_FLAG_DATA_SCAN_CHARA_INDEX) = 0
 	}
-	cdata(STARTING_CDATA_BUFF + delbuff_buffid * ARRAY_CDATA_BUFF, delbuff_charid) = 0
-	repeat MAX_BLESSINGS + MAX_HEXES - delbuff_buffid - 1, delbuff_buffid
+	cdata(STARTING_CDATA_BUFF + delbuff_buffindex * ARRAY_CDATA_BUFF, delbuff_charid) = 0
+	repeat MAX_BLESSINGS + MAX_HEXES - delbuff_buffindex - 1, delbuff_buffindex
 		if ( cdata(STARTING_CDATA_BUFF + cnt * ARRAY_CDATA_BUFF, delbuff_charid) == 0 ) {
 			if ( cdata(STARTING_CDATA_BUFF + (cnt + 1) * ARRAY_CDATA_BUFF, delbuff_charid) != 0 ) {
 				cdata(STARTING_CDATA_BUFF + cnt * ARRAY_CDATA_BUFF, delbuff_charid) = cdata(STARTING_CDATA_BUFF + (cnt + 1) * ARRAY_CDATA_BUFF, delbuff_charid), cdata(STARTING_CDATA_BUFF + (cnt + 1) * ARRAY_CDATA_BUFF + 1, delbuff_charid), cdata(STARTING_CDATA_BUFF + (cnt + 1) * ARRAY_CDATA_BUFF + 2, delbuff_charid)
