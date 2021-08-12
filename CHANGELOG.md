@@ -10,6 +10,7 @@
 - Fixed a bug causing PCC eyes to be set incorrectly.
 - Fixed an issue causing the Japanese description for Harvest Time quests to become blank.
 - Fixed the popup for expiring buffs not appearing or being incorrect.
+- Fixed the pet arena win streak not incrementing.
 
 # 2.05.1.0
 
