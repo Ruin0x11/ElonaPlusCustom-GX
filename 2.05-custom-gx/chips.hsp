@@ -58,8 +58,10 @@
 	return
 
 *create_pcpic_normal
+	; Copy the colors for main hair/body to sub hair/eyes.
 	pcc(PCC_SUB_HAIR, prm_cc) = pcc(PCC_HAIR, prm_cc) / COLOR_TINT_MULT * COLOR_TINT_MULT + pcc(PCC_SUB_HAIR, prm_cc) \ COLOR_TINT_MULT
 	pcc(PCC_EYE, prm_cc) = pcc(PCC_BODY, prm_cc) / COLOR_TINT_MULT * COLOR_TINT_MULT + pcc(PCC_EYE, prm_cc) \ COLOR_TINT_MULT
+
 	if ( prm_show_equip != 0 ) {
 		if ( pcc(PCC_HIDE_MANTLE, prm_cc) == 0 ) {
 	        pccSet("mantle", pcc(PCC_MANTLE, prm_cc))

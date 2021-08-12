@@ -1,3 +1,16 @@
+# 2.05.1.1
+
+## Added 
+- Added back the "special drink" dialog option for bartenders.
+
+## Fixed
+- Corrected the buff duration of Killing Dance to be 13 turns instead of 44.
+- Fixed character images not being set on cards spawned by opening card packs.
+- Fixed a crash that occurred when using the deck.
+- Fixed a bug causing PCC eyes to be set incorrectly.
+- Fixed an issue causing the Japanese description for Harvest Time quests to become blank.
+- Fixed the popup for expiring buffs not appearing or being incorrect.
+
 # 2.05.1.0
 
 ## Added 
