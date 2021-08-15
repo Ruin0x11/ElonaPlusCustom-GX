@@ -2439,25 +2439,25 @@
 				txt lang("色んな植物が生えている。", "You can collect materials from plants here.")
 			}
 			if ( feat(1) == CELL_FEATURE_PLANTED_SEED ) {
-				if ( feat(2) \ 10 == CELL_SUB_FEATURE_SEED_VEGETABLE ) {
+				if ( feat(FEAT_CELL_SUB_FEATURE_ID) \ 10 == SEED_TYPE_VEGETABLE ) {
 					s = lang("野菜", "vegetable")
 				}
-				if ( feat(2) \ 10 == CELL_SUB_FEATURE_SEED_FRUIT ) {
+				if ( feat(FEAT_CELL_SUB_FEATURE_ID) \ 10 == SEED_TYPE_FRUIT ) {
 					s = lang("果物", "fruit")
 				}
-				if ( feat(2) \ 10 == CELL_SUB_FEATURE_SEED_HERB ) {
+				if ( feat(FEAT_CELL_SUB_FEATURE_ID) \ 10 == SEED_TYPE_HERB ) {
 					s = lang("ハーブ", "herb")
 				}
-				if ( feat(2) \ 10 == CELL_SUB_FEATURE_SEED_STRANGE ) {
+				if ( feat(FEAT_CELL_SUB_FEATURE_ID) \ 10 == SEED_TYPE_STRANGE ) {
 					s = lang("何か", "strange")
 				}
-				if ( feat(2) \ 10 == CELL_SUB_FEATURE_SEED_ARTIFACT ) {
+				if ( feat(FEAT_CELL_SUB_FEATURE_ID) \ 10 == SEED_TYPE_ARTIFACT ) {
 					s = lang("アーティファクト", "artifact")
 				}
-				if ( feat(2) \ 10 == CELL_SUB_FEATURE_SEED_GEM ) {
+				if ( feat(FEAT_CELL_SUB_FEATURE_ID) \ 10 == SEED_TYPE_GEM ) {
 					s = lang("宝石", "gem")
 				}
-				if ( feat(2) \ 10 == CELL_SUB_FEATURE_SEED_MAGIC ) {
+				if ( feat(FEAT_CELL_SUB_FEATURE_ID) \ 10 == SEED_TYPE_MAGIC ) {
 					s = lang("魔法の木", "magic")
 				}
 				if ( feat == tile_plant ) {
@@ -16578,19 +16578,19 @@
 	}
 	feat(3) = 4 + rnd(4 + 1)
 	p = 10
-	if ( feat(2) \ 10 == CELL_SUB_FEATURE_SEED_GEM ) {
+	if ( feat(FEAT_CELL_SUB_FEATURE_ID) \ 10 == SEED_TYPE_GEM ) {
 		p = 15
 	}
-	if ( feat(2) \ 10 == CELL_SUB_FEATURE_SEED_MAGIC ) {
+	if ( feat(FEAT_CELL_SUB_FEATURE_ID) \ 10 == SEED_TYPE_MAGIC ) {
 		p = 25
 	}
-	if ( feat(2) \ 10 == CELL_SUB_FEATURE_SEED_HERB ) {
+	if ( feat(FEAT_CELL_SUB_FEATURE_ID) \ 10 == SEED_TYPE_HERB ) {
 		p = 30
 	}
-	if ( feat(2) \ 10 == CELL_SUB_FEATURE_SEED_STRANGE ) {
+	if ( feat(FEAT_CELL_SUB_FEATURE_ID) \ 10 == SEED_TYPE_STRANGE ) {
 		p = 25
 	}
-	if ( feat(2) \ 10 == CELL_SUB_FEATURE_SEED_ARTIFACT ) {
+	if ( feat(FEAT_CELL_SUB_FEATURE_ID) \ 10 == SEED_TYPE_ARTIFACT ) {
 		p = 40
 	}
 	if ( val == 0 ) {
@@ -16611,16 +16611,16 @@
 
 *item_seedRegrowth
 	p = 15
-	if ( feat(2) \ 10 == CELL_SUB_FEATURE_SEED_GEM ) {
+	if ( feat(FEAT_CELL_SUB_FEATURE_ID) \ 10 == SEED_TYPE_GEM ) {
 		p = 25
 	}
-	if ( feat(2) \ 10 == CELL_SUB_FEATURE_SEED_MAGIC ) {
+	if ( feat(FEAT_CELL_SUB_FEATURE_ID) \ 10 == SEED_TYPE_MAGIC ) {
 		p = 30
 	}
-	if ( feat(2) \ 10 == CELL_SUB_FEATURE_SEED_HERB ) {
+	if ( feat(FEAT_CELL_SUB_FEATURE_ID) \ 10 == SEED_TYPE_HERB ) {
 		p = 40
 	}
-	if ( feat(2) \ 10 == CELL_SUB_FEATURE_SEED_STRANGE ) {
+	if ( feat(FEAT_CELL_SUB_FEATURE_ID) \ 10 == SEED_TYPE_STRANGE ) {
 		p = 35
 	}
 	if ( val == 0 ) {
@@ -16639,12 +16639,33 @@
 			saibai = 100
 		}
 	}
-	if ( sdata(SKILL_NORMAL_GARDENING, CHARA_PLAYER) < rnd(p + 1) | rnd(200) < p - saibai | feat(2) \ 10 == CELL_SUB_FEATURE_SEED_ARTIFACT ) {
+	if ( sdata(SKILL_NORMAL_GARDENING, CHARA_PLAYER) < rnd(p + 1) | rnd(200) < p - saibai | feat(FEAT_CELL_SUB_FEATURE_ID) \ 10 == SEED_TYPE_ARTIFACT ) {
 		map(cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 6) = 0
 		return
 	}
 	saibai = 0
 	feat = tile_plant
+	if ( feat(FEAT_CELL_SUB_FEATURE_ID) \ 10 == SEED_TYPE_VEGETABLE ) {
+		feat(FEAT_CELL_SUB_FEATURE_ID) = CELL_SUB_FEATURE_SEED_VEGETABLE
+	}
+	if ( feat(FEAT_CELL_SUB_FEATURE_ID) \ 10 == SEED_TYPE_FRUIT ) {
+		feat(FEAT_CELL_SUB_FEATURE_ID) = CELL_SUB_FEATURE_SEED_FRUIT
+	}
+	if ( feat(FEAT_CELL_SUB_FEATURE_ID) \ 10 == SEED_TYPE_HERB ) {
+		feat(FEAT_CELL_SUB_FEATURE_ID) = CELL_SUB_FEATURE_SEED_HERB
+	}
+	if ( feat(FEAT_CELL_SUB_FEATURE_ID) \ 10 == SEED_TYPE_STRANGE ) {
+		feat(FEAT_CELL_SUB_FEATURE_ID) = CELL_SUB_FEATURE_SEED_STRANGE
+	}
+	if ( feat(FEAT_CELL_SUB_FEATURE_ID) \ 10 == SEED_TYPE_ARTIFACT ) {
+		feat(FEAT_CELL_SUB_FEATURE_ID) = CELL_SUB_FEATURE_SEED_ARTIFACT
+	}
+	if ( feat(FEAT_CELL_SUB_FEATURE_ID) \ 10 == SEED_TYPE_GEM ) {
+		feat(FEAT_CELL_SUB_FEATURE_ID) = CELL_SUB_FEATURE_SEED_GEM
+	}
+	if ( feat(FEAT_CELL_SUB_FEATURE_ID) \ 10 == SEED_TYPE_MAGIC ) {
+		feat(FEAT_CELL_SUB_FEATURE_ID) = CELL_SUB_FEATURE_SEED_MAGIC
+	}
 	gosub *item_seedNextGrowth
 	cell_featset cdata(CDATA_X, cc), cdata(CDATA_Y, cc), feat, feat(1), feat(2), feat(3)
 	txtef COLOR_GREEN
@@ -16653,16 +16674,16 @@
 
 *item_seedRegrowth_custom
 	p = 15
-	if ( feat(2) \ 10 == CELL_SUB_FEATURE_SEED_GEM ) {
+	if ( feat(FEAT_CELL_SUB_FEATURE_ID) \ 10 == SEED_TYPE_GEM ) {
 		p = 25
 	}
-	if ( feat(2) \ 10 == CELL_SUB_FEATURE_SEED_MAGIC ) {
+	if ( feat(FEAT_CELL_SUB_FEATURE_ID) \ 10 == SEED_TYPE_MAGIC ) {
 		p = 30
 	}
-	if ( feat(2) \ 10 == CELL_SUB_FEATURE_SEED_HERB ) {
+	if ( feat(FEAT_CELL_SUB_FEATURE_ID) \ 10 == SEED_TYPE_HERB ) {
 		p = 40
 	}
-	if ( feat(2) \ 10 == CELL_SUB_FEATURE_SEED_STRANGE ) {
+	if ( feat(FEAT_CELL_SUB_FEATURE_ID) \ 10 == SEED_TYPE_STRANGE ) {
 		p = 35
 	}
 	if ( val == 0 ) {
@@ -16681,7 +16702,7 @@
 			saibai = 100
 		}
 	}
-	if ( sdata(SKILL_NORMAL_GARDENING, CHARA_PLAYER) < rnd(p + 1) | rnd(200) < p - saibai | feat(2) \ 10 == CELL_SUB_FEATURE_SEED_ARTIFACT ) {
+	if ( sdata(SKILL_NORMAL_GARDENING, CHARA_PLAYER) < rnd(p + 1) | rnd(200) < p - saibai | feat(FEAT_CELL_SUB_FEATURE_ID) \ 10 == SEED_TYPE_ARTIFACT ) {
 		map(x, y, 6) = 0
 		return
 	}
@@ -16701,8 +16722,8 @@
 
 	flt (sdata(SKILL_NORMAL_GARDENING, CHARA_PLAYER) + 1) / 2 + 15, 2
 	dbid = 0
-	if ( feat(2) \ 10 == 9 ) {
-		if ( feat(FEAT_CELL_SUB_FEATURE_ID) == 50 + CELL_SUB_FEATURE_SEED_ARTIFACT ) {
+	if ( feat(FEAT_CELL_SUB_FEATURE_ID) \ 10 == SEED_TYPE_STRANGE ) {
+		if ( feat(FEAT_CELL_SUB_FEATURE_ID) == 50 + CELL_SUB_FEATURE_SEED_STRANGE ) {
 			flttypemajor = fsetplantunknown(rnd(length(fsetplantunknowns)))
 		}
 		else {
@@ -16761,7 +16782,7 @@
 			gardenlv = 0
 		}
 	}
-    if ( feat(FEAT_CELL_SUB_FEATURE_ID) \ 10 == 0 ) {
+    if ( feat(FEAT_CELL_SUB_FEATURE_ID) \ 10 == SEED_TYPE_ARTIFACT ) {
 		if ( gdata(GDATA_MONTH) >= 3 & gdata(GDATA_MONTH) <= 5 ) {
 			dbid = isetplantartifacth(rnd(length(isetplantartifacth)))
 			if ( feat(FEAT_CELL_SUB_FEATURE_ID) == 10 + CELL_SUB_FEATURE_SEED_ARTIFACT | feat(FEAT_CELL_SUB_FEATURE_ID) == 40 + CELL_SUB_FEATURE_SEED_ARTIFACT ) {
@@ -16831,7 +16852,7 @@
  			autosave = 1 * (gdata(GDATA_AREA) != AREA_SHOW_HOUSE)
 		}
 	}
-	if ( feat(2) \ 10 == 6 ) {
+	if ( feat(FEAT_CELL_SUB_FEATURE_ID) \ 10 == SEED_TYPE_VEGETABLE ) {
 		gardenlv = 10
 		if ( gdata(GDATA_MONTH) >= 3 & gdata(GDATA_MONTH) <= 5 ) {
 			dbid = isetplantvegeh(rnd(length(isetplantvegeh)))
@@ -16897,7 +16918,7 @@
 			}
 		}
 	}
-	if ( feat(FEAT_CELL_SUB_FEATURE_ID) \ 10 == 7 ) {
+	if ( feat(FEAT_CELL_SUB_FEATURE_ID) \ 10 == SEED_TYPE_FRUIT ) {
 		gardenlv = 10
 		if ( gdata(GDATA_MONTH) >= 3 & gdata(GDATA_MONTH) <= 5 ) {
 			dbid = isetplantfruith(rnd(length(isetplantfruith)))
@@ -16951,7 +16972,7 @@
 			}
 		}
 	}
-	if ( feat(FEAT_CELL_SUB_FEATURE_ID) \ 10 == 8 ) {
+	if ( feat(FEAT_CELL_SUB_FEATURE_ID) \ 10 == SEED_TYPE_HERB ) {
 		if ( gdata(GDATA_MONTH) >= 3 & gdata(GDATA_MONTH) <= 5 ) {
 			dbid = isetplantherbh(rnd(length(isetplantherbh)))
 			if ( feat(FEAT_CELL_SUB_FEATURE_ID) == 10 + CELL_SUB_FEATURE_SEED_HERB | feat(FEAT_CELL_SUB_FEATURE_ID) == 40 + CELL_SUB_FEATURE_SEED_HERB ) {
@@ -17001,7 +17022,7 @@
 			}
 		}
  	}
-	if ( feat(FEAT_CELL_SUB_FEATURE_ID) \ 10 == 1 ) {
+	if ( feat(FEAT_CELL_SUB_FEATURE_ID) \ 10 == SEED_TYPE_GEM ) {
  		flttypeminor = FILTER_ORE_GEM
 		if ( feat(FEAT_CELL_SUB_FEATURE_ID) == 10 + CELL_SUB_FEATURE_SEED_GEM | feat(FEAT_CELL_SUB_FEATURE_ID) == 50 + CELL_SUB_FEATURE_SEED_GEM ) {
 			dbid = ITEM_ID_RAW_DIAMOND_ORE
@@ -17016,7 +17037,7 @@
 			dbid = ITEM_ID_RAW_RUBYNUS_ORE
 		}
  	}
-	if ( feat(2) \ 10 == CELL_SUB_FEATURE_SEED_MAGIC ) {
+	if ( feat(FEAT_CELL_SUB_FEATURE_ID) \ 10 == SEED_TYPE_MAGIC ) {
 		if ( gdata(GDATA_MONTH) >= 3 & gdata(GDATA_MONTH) <= 5 ) {
  			flttypeminor = FILTER_ITEM_ROD_HEALING
 			if ( feat(FEAT_CELL_SUB_FEATURE_ID) == 10 + CELL_SUB_FEATURE_SEED_MAGIC ) {
