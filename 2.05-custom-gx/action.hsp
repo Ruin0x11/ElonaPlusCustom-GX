@@ -7133,14 +7133,10 @@
 		if ( gdata(GDATA_FLAG_MANUSCRIPT_IDEAS) <= 0 ) {
 			gdata(GDATA_FLAG_MANUSCRIPT_IDEAS) = 0
 		}
-		promptl(0, promptmax) = lang("何もしない", "Cancel"), "null", "" + 0
-		promptmax++
-		promptl(0, promptmax) = lang("原稿の制作(ネタ：" + gdata(GDATA_FLAG_MANUSCRIPT_IDEAS) + ")", "Manuscript production (" + gdata(GDATA_FLAG_MANUSCRIPT_IDEAS) + " ideas) "), "null", "" + 1
-		promptmax++
-		promptl(0, promptmax) = lang("限定自費出版(指定原稿＋30000gold)", "Self-publishing (30000 gold) "), "null", "" + 2
-		promptmax++
-		promptl(0, promptmax) = lang("魔法書変換(指定ストック半減)", "Spellbook conversion (stock halve) "), "null", "" + 3
-		promptmax++
+		promptAdd lang("何もしない", "Cancel"), "null", 0
+		promptAdd lang("原稿の制作(ネタ：" + gdata(GDATA_FLAG_MANUSCRIPT_IDEAS) + ")", "Manuscript production (" + gdata(GDATA_FLAG_MANUSCRIPT_IDEAS) + " ideas) "), "null", 1
+		promptAdd lang("限定自費出版(指定原稿＋30000gold)", "Self-publishing (30000 gold) "), "null", 2
+		promptAdd lang("魔法書変換(指定ストック半減)", "Spellbook conversion (stock halve) "), "null", 3
 		val = promptx, prompty, 350, 1
 		gosub *prompt_key
 		if ( stat == 0 ) {
@@ -7209,7 +7205,7 @@
 		}
 		if ( rtval == 3 ) {
 			efid = -1
-			gosub *com_spell
+			gosub *com_spellbook
 			if ( efid > 0 ) {
 				num = spell(efid - 400) / 2000
 				spell(efid - 400) /= 2

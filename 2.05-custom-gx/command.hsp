@@ -7090,6 +7090,9 @@
 	if ( key == key_mode2 ) {
 		p = list(0, pagesize * page + cs)
 		snd SOUNDLIST_LOCKED1
+		if ( p <= 0 ) {
+			goto *com_spell
+		}
 		txtef COLOR_YELLOW
 		txt lang("【非表示：" + skillname(p) + "】", "[Hidden: " + skillname(p) + "]")
 		spells(p - STARTING_SKILL_SPELL) = 2
