@@ -157,6 +157,9 @@
     hl_pushfunction *lua_elona_add_ally
     hl_setfield -2, "add_ally"
 
+    hl_pushfunction *lua_elona_advance_hour
+    hl_setfield -2, "advance_hour"
+
     pushDim(cdata)
     pushDim(mdata)
     pushDim(cdataN)
@@ -358,18 +361,6 @@
     hl_pushinteger(rc)
     return 1
 
-*lua_elona_add_ally
-    if hl_gettop() < 1 {
-        luaError("Wrong number of arguments")
-    }
-    if hl_isinteger(1) {
-        rc = hl_tointeger(1)
-    } else {
-        luaError("Invalid arguments")
-    }
-    gosub *add_ally
-    return 0
-
 *lua_elona_itemcreate
     if hl_gettop() < 1 {
         luaError("Wrong number of arguments")
@@ -402,3 +393,27 @@
     itemcreate rc, dbid, x, y, amount
     hl_pushinteger(ci)
     return 1
+
+*lua_elona_add_ally
+    if hl_gettop() < 1 {
+        luaError("Wrong number of arguments")
+    }
+    if hl_isinteger(1) {
+        rc = hl_tointeger(1)
+    } else {
+        luaError("Invalid arguments")
+    }
+    gosub *add_ally
+    return 0
+
+*lua_elona_advance_hour
+    if hl_gettop() >= 1 & hl_isinteger(1) {
+        i = limit(hl_tointeger(1), 1, 10000)
+    } else {
+        i = 1
+    }
+	repeat i
+		gdata(GDATA_HOUR)++
+		gosub *advance_hour
+	loop
+	return 0
