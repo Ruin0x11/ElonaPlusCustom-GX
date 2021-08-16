@@ -17,6 +17,7 @@ TweakData(2, 1) = "Highlight/Filter Items."
 TweakData(3, 1) = "Re-parse ItemList.txt values."
 TweakData(50,1) = "Throw potion at self with [t]."
 TweakData(51,1) = "Allow running in world map."
+TweakData(52,1) = "Option to reload last save after death."
 
 TweakData(x, 2) = "Gameplay Tweaks"
 TweakData(0, 2) = "Gather Items At End Of Party Time."
@@ -317,10 +318,11 @@ TweakData(51, 4) = "Disable cicada noises."
 	listn(0, TWEAK_CONVENIENCE_REPARSE_ITEMLIST) = "Re-parse ItemList.txt."
 	listn(0, 4) = "Throw potion at self with [t]." + GetTStatus(TWEAK_CATEGORY_CONVENIENCE, TWEAK_CONVENIENCE_THROW_POTION_AT_SELF)
 	listn(0, 5) = "Allow running in world map." + GetTStatus(TWEAK_CATEGORY_CONVENIENCE, TWEAK_CONVENIENCE_ALLOW_RUNNING_IN_WORLD_MAP)
-	listn(0, 6) = "Return."
+	listn(0, 6) = "Option to reload last save after death." + GetTStatus(TWEAK_CATEGORY_CONVENIENCE, TWEAK_CONVENIENCE_RELOAD_AFTER_DEATH_OPTION)
+	listn(0, 7) = "Return."
 	font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
 
-	repeat 7
+	repeat 8
 		key_list(cnt) = key_select(cnt)
 		keyrange = cnt + 1
 		pos wx + 38, wy + 40 + cnt * 19 - 2
@@ -330,7 +332,7 @@ TweakData(51, 4) = "Disable cicada noises."
 
 	font lang(cfg_font1, cfg_font2), 13 - en * 2, 0
 
-	repeat 7
+	repeat 8
 		if ( listn(0, cs) == listn(0, cnt) ) {
 			if ( cnt == TWEAK_CONVENIENCE_FEED_OPTION_PETS ) {
 				s = "Adds a Feed option that works like Give but that filters out non-food items when\ninteracting with pets. Also allows for feeding pets raw equipment."
@@ -351,6 +353,9 @@ TweakData(51, 4) = "Disable cicada noises."
 				s = "Allows running in the world map by holding Shift."
 			}
 			if ( cnt == 6 ) {
+				s = "Adds an option to the death menu for reloading from the previous save.\nIf \"Confirm Reload With F2\" is enabled, you will be warned when playing in a mode\nwith a save penalty."
+			}
+			if ( cnt == 7 ) {
 				s = "Return to the previous menu."
 			}
 			pos wx + 38, wy + 343
@@ -395,6 +400,11 @@ TweakData(51, 4) = "Disable cicada noises."
 		gosub *ToggleTweak
 	}
 	if ( key == key_select(6) ) {
+		tc = TWEAK_CATEGORY_CONVENIENCE
+		tn = TWEAK_CONVENIENCE_RELOAD_AFTER_DEATH_OPTION
+		gosub *ToggleTweak
+	}
+	if ( key == key_select(7) ) {
 		snd SOUNDLIST_OK1
         return
 	}

@@ -3915,6 +3915,7 @@
 	pos 0, 0
 	picload exedir + "graphic\\void.bmp", 1
 	gsel 0
+*pc_dead_loop
 	gosub *dead_draw
 	s = lang("あともう少しで埋葬される…", "You are about to be buried...")
 	gosub *screen_drawMsg2
@@ -3926,9 +3927,14 @@
 		press
 		goto *exit_game
 	}
-	promptAdd lang("這い上がる(ﾍﾟﾅﾙﾃｨあり復活)", "Crawl up"), "a"
 	if ( gdata(GDATA_FLAG_GAME_MODE) != GAMEMODE_ABNORMAL ) {
-		promptAdd lang("埋まる(保存したところから)", "Lie on your back"), "b"
+		if ( TweakData(TWEAK_CONVENIENCE_RELOAD_AFTER_DEATH_OPTION, TWEAK_CATEGORY_CONVENIENCE) == 1 ) {
+			promptAdd lang("前回のセーブをリロードする", "Reload last save"), "null", 3
+		}
+	}
+	promptAdd lang("這い上がる(ﾍﾟﾅﾙﾃｨあり復活)", "Crawl up"), "null", 2
+	if ( gdata(GDATA_FLAG_GAME_MODE) != GAMEMODE_ABNORMAL ) {
+		promptAdd lang("埋まる(保存したところから)", "Lie on your back"), "null", 1
 	}
 	val = promptx, 100, 300, 1
 	gosub *prompt_key
@@ -3939,6 +3945,28 @@
 		redraw 1
 		press
 		goto *exit_game
+	}
+	if ( rtval == 3 ) {
+		if ( ( gdata(GDATA_FLAG_GAME_MODE) == GAMEMODE_ABNORMAL | gdata(GDATA_FLAG_GAME_MODE) == GAMEMODE_LOSS | gdata(GDATA_FLAG_GAME_MODE) == GAMEMODE_NATURAL ) & TweakData(TWEAK_MISC_CONFIRM_RELOAD_F2, TWEAK_CATEGORY_MISC) == 1 ) {
+			dialog "Perform a quickload? You are playing in a mode where no-save penalties apply.", 3
+			if ( stat == 6 ) {
+				msg_newline
+				msgtemp = "  "
+				firstturn = 1
+				gosub *game_load
+				mode = MODELIST_CONTINUE
+				goto *map_init
+			}
+		}
+		else {
+			msg_newline
+			msgtemp = "  "
+			firstturn = 1
+			gosub *game_load
+			mode = MODELIST_CONTINUE
+			goto *map_init
+		}
+		goto *pc_dead_loop
 	}
 	s = "dead" + lang(cdatan(CDATAN_AKA, CHARA_PLAYER) + cdatan(CDATAN_NAME, CHARA_PLAYER) + "は" + mdatan(MDATAN_NAME) + "で" + ndeathcause + lastword, cdatan(CDATAN_AKA, CHARA_PLAYER) + " " + cdatan(CDATAN_NAME, CHARA_PLAYER) + " " + ndeathcause + " in " + mdatan(MDATAN_NAME) + " " + lastword)
 	if ( gdata(GDATA_WIZARD) == FALSE ) {
