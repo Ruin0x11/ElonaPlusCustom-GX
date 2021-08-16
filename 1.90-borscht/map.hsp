@@ -1100,7 +1100,7 @@
 		}
 		map(cdata(CDATA_X, cnt), cdata(CDATA_Y, cnt), MAP_CHARA_INDEX_PLUS_ONE) = 0
 		if ( cnt != 0 ) {
-			if ( cdata(CDATA_AREA, cnt) != 0 ) {
+			if ( cdata(CDATA_AREA, cnt) != AREA_NONE ) {
 				cdata(CDATA_EXIST, cnt) = CHAR_STATE_ALLY_WORK
 			}
 		}
@@ -1187,14 +1187,14 @@
 		if ( cnt == 0 ) {
 			continue
 		}
-		if ( cdata(CDATA_AREA, cnt) != 0 ) {
+		if ( cdata(CDATA_AREA, cnt) != AREA_NONE ) {
 			if ( cdata(CDATA_AREA, cnt) == gdata(GDATA_AREA) ) {
 				if ( cdata(CDATA_EXIST, cnt) == CHAR_STATE_ALLY_WORK ) {
 					cdata(CDATA_EXIST, cnt) = CHAR_STATE_ALIVE
 				}
 			}
 		}
-		if ( cdata(CDATA_AREA, cnt) == 7 & gdata(GDATA_LEVEL) != cdata(CDATA_HOME, cnt) ) {
+		if ( cdata(CDATA_AREA, cnt) == AREA_HOME & gdata(GDATA_LEVEL) != cdata(CDATA_HOME, cnt) ) {
 			cdata(CDATA_EXIST, cnt) = CHAR_STATE_ALLY_WORK
 		}
 	loop

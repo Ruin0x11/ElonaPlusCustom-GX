@@ -16,7 +16,7 @@
 		txt_nodrop
 		goto *pc_turn
 	}
-	if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_ITEM_POTION | inv(INV_ITEM_ID, ci) == ITEM_ID_TOMATO | inv(INV_ITEM_ID, ci) == ITEM_ID_BUTTER | inv(INV_ITEM_ID, ci) == ITEM_ID_YOGURT | inv(INV_ITEM_ID, ci) == ITEM_ID_NATTO ) {
+	if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_ITEM_POTION | inv(INV_ITEM_ID, ci) == ITEM_ID_TOMATO | inv(INV_ITEM_ID, ci) == ITEM_ID_BUTTER | inv(INV_ITEM_ID, ci) == ITEM_ID_YOGURT | inv(INV_ITEM_ID, ci) == ITEM_ID_NATTO | inv(INV_ITEM_ID, ci) == ITEM_ID_DYING_CICADA ) {
 		if ( inv(INV_ITEM_ID, ci) != ITEM_ID_EMPTY_BOTTLE ) {
 			stc = -1
 			if ( map(tlocx, tlocy, 1) != 0 ) {
@@ -149,14 +149,14 @@
 		}
 		goto *turn_end
 	}
-	if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_ITEM_POTION | inv(INV_ITEM_ID, ci) == ITEM_ID_TOMATO | inv(INV_ITEM_ID, ci) == ITEM_ID_BUTTER | inv(INV_ITEM_ID, ci) == ITEM_ID_YOGURT | inv(INV_ITEM_ID, ci) == ITEM_ID_NATTO | inv(INV_ITEM_ID, ci) == ITEM_ID_KEMURIDAMA ) {
+	if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_ITEM_POTION | inv(INV_ITEM_ID, ci) == ITEM_ID_TOMATO | inv(INV_ITEM_ID, ci) == ITEM_ID_BUTTER | inv(INV_ITEM_ID, ci) == ITEM_ID_YOGURT | inv(INV_ITEM_ID, ci) == ITEM_ID_NATTO | inv(INV_ITEM_ID, ci) == ITEM_ID_KEMURIDAMA | inv(INV_ITEM_ID, ci) == ITEM_ID_DYING_CICADA ) {
 		if ( inv(INV_ITEM_ID, ci) != ITEM_ID_EMPTY_BOTTLE ) {
 			if ( synccheck(tlocx, tlocy) ) {
 				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_HANDFUL_SNOW ) {
 					snd SOUNDLIST_SNOW
 				}
 				else {
-					if ( inv(INV_ITEM_ID, ci) != ITEM_ID_NATTO & inv(INV_ITEM_ID, ci) != ITEM_ID_KEMURIDAMA ) {
+					if ( inv(INV_ITEM_ID, ci) != ITEM_ID_NATTO & inv(INV_ITEM_ID, ci) != ITEM_ID_KEMURIDAMA & inv(INV_ITEM_ID, ci) != ITEM_ID_DYING_CICADA ) {
 						snd SOUNDLIST_CRUSH2
 					}
 					if ( inv(INV_ITEM_ID, ci) == ITEM_ID_NATTO ) {
@@ -164,6 +164,9 @@
 					}
 					if ( inv(INV_ITEM_ID, ci) == ITEM_ID_KEMURIDAMA ) {
 						snd SOUNDLIST_OFFER1
+					}
+					if ( inv(INV_ITEM_ID, ci) == ITEM_ID_DYING_CICADA ) {
+						snd SOUNDLIST_CRACK
 					}
 				}
 			}
@@ -179,7 +182,7 @@
 					if ( kakeru != 0 ) {
 						kakeru = 0
 					}
-					if ( inv(INV_ITEM_ID, ci) != ITEM_ID_MOLOTOV & inv(INV_ITEM_ID, ci) != ITEM_ID_BOTTLE_SULFURIC & inv(INV_ITEM_ID, ci) != ITEM_ID_HANDFUL_SNOW & inv(INV_ITEM_ID, ci) != ITEM_ID_TOMATO & inv(INV_ITEM_ID, ci) != ITEM_ID_ESSENTIAL_OIL & inv(INV_ITEM_ID, ci) != ITEM_ID_GASOLINE & inv(INV_ITEM_ID, ci) != ITEM_ID_BUTTER & inv(INV_ITEM_ID, ci) != ITEM_ID_YOGURT & inv(INV_ITEM_ID, ci) != ITEM_ID_NATTO & inv(INV_ITEM_ID, ci) != ITEM_ID_KEMURIDAMA ) {
+					if ( inv(INV_ITEM_ID, ci) != ITEM_ID_MOLOTOV & inv(INV_ITEM_ID, ci) != ITEM_ID_BOTTLE_SULFURIC & inv(INV_ITEM_ID, ci) != ITEM_ID_HANDFUL_SNOW & inv(INV_ITEM_ID, ci) != ITEM_ID_TOMATO & inv(INV_ITEM_ID, ci) != ITEM_ID_ESSENTIAL_OIL & inv(INV_ITEM_ID, ci) != ITEM_ID_GASOLINE & inv(INV_ITEM_ID, ci) != ITEM_ID_BUTTER & inv(INV_ITEM_ID, ci) != ITEM_ID_YOGURT & inv(INV_ITEM_ID, ci) != ITEM_ID_NATTO & inv(INV_ITEM_ID, ci) != ITEM_ID_KEMURIDAMA & inv(INV_ITEM_ID, ci) != ITEM_ID_DYING_CICADA ) {
 						wet tc, 25
 					}
 					rowact_check tc
@@ -208,6 +211,41 @@
 							}
 						}
 						inv(INV_ITEM_NUM, ci)--
+						cell_refresh inv(INV_ITEM_X, ci), inv(INV_ITEM_Y, ci)
+						goto *turn_end
+					}
+					if ( inv(INV_ITEM_ID, ci) == ITEM_ID_DYING_CICADA ) {
+						kaiwa = rnd(2)
+						txtef COLOR_BLUE
+						txt lang(" *必殺セミファイナル！* ", "*cicada*")
+						if ( kaiwa == 0 ) {
+							txt lang("「ジジジジジジジジッッッ！！！！！」", "Ziiziziziiiii!!!!")
+						}
+						if ( kaiwa == 1 ) {
+							txt lang("「死ぬなら…前のめりで…！」", "Bzzzzzzzzzz!!!")
+						}
+						if ( cdata(CDATA_CONDITION_WINCE, tc) < 5 ) {
+							cdata(CDATA_CONDITION_WINCE, tc) = 5
+							if ( synccheck(tc, -1) ) {
+								txtmore
+								txtef COLOR_PURPLE
+								txt lang(name(tc) + "は怯んだ。", name(tc) + " " + is(tc) + " faltered.")
+							}
+						}
+						if ( cdata(CDATA_CONDITION_ATROPHY, tc) < 2 ) {
+							cdata(CDATA_CONDITION_ATROPHY, tc) = 2
+							if ( synccheck(tc, -1) ) {
+								txtmore
+								txtef COLOR_PURPLE
+								txt lang(name(tc) + "は戦慄した。", name(tc) + " was overwhelmed.")
+							}
+						}
+						inv(INV_ITEM_NUM, ci)--
+						flt
+						itemcreate -1, ITEM_ID_BAIT, cdata(CDATA_X, tc), cdata(CDATA_Y, tc), 0
+						inv(INV_ITEM_PARAM1, ci) = 4
+						inv(INV_ITEM_PIC, ci) = xy2pic(26, 11)
+						inv(INV_ITEM_VALUE, ci) = 4 * 4 * 500 + 200
 						cell_refresh inv(INV_ITEM_X, ci), inv(INV_ITEM_Y, ci)
 						goto *turn_end
 					}
@@ -306,20 +344,38 @@
 					}
 				}
 				else {
+					if ( inv(INV_ITEM_ID, ci) != ITEM_ID_KEMURIDAMA & inv(INV_ITEM_ID, ci) != ITEM_ID_DYING_CICADA ) {
+						if ( synccheck(tlocx, tlocy) ) {
+							txtmore
+							txt lang("それは地面に落ちて砕けた。", "It falls on the ground and shatters.")
+						}
+					}
 					if ( inv(INV_ITEM_ID, ci) == ITEM_ID_KEMURIDAMA ) {
 						if ( synccheck(tlocx, tlocy) ) {
 							txtmore
 							txt lang("それは地面に落ちて炸裂した。", "It falls on the ground and explodes.")
 						}
 					}
-					if ( inv(INV_ITEM_ID, ci) != ITEM_ID_KEMURIDAMA ) {
+					if ( inv(INV_ITEM_ID, ci) == ITEM_ID_DYING_CICADA ) {
 						if ( synccheck(tlocx, tlocy) ) {
 							txtmore
-							txt lang("それは地面に落ちて砕けた。", "It falls on the ground and shatters.")
+							txt lang("それは地面に落ちて絶命した。", "It falls on the ground and died.")
 						}
-	 				}
+					}
+				}
+				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_DYING_CICADA ) {
+					inv(INV_ITEM_NUM, ci)--
+					flt
+					itemcreate -1, ITEM_ID_BAIT, tlocx, tlocy, 0
+					inv(INV_ITEM_PARAM1, ci) = 4
+					inv(INV_ITEM_PIC, ci) = xy2pic(26, 11)
+					inv(INV_ITEM_VALUE, ci) = 4 * 4 * 500 + 200
+					cell_refresh tlocx, tlocy
+					goto *turn_end
 				}
 				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_YOGURT | inv(INV_ITEM_ID, ci) == ITEM_ID_BUTTER | inv(INV_ITEM_ID, ci) == ITEM_ID_NATTO ) {
+					inv(INV_ITEM_NUM, ci)--
+					cell_refresh tlocx, tlocy
 					if ( synccheck(tlocx, tlocy) ) {
 						txtef COLOR_BLUE
 						txt lang(" *べちゃ* ", " *crumble* ")
@@ -327,6 +383,8 @@
 					goto *turn_end
 				}
 				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_TOMATO ) {
+					inv(INV_ITEM_NUM, ci)--
+					cell_refresh tlocx, tlocy
 					if ( synccheck(tlocx, tlocy) ) {
 						txtef COLOR_BLUE
 						txt lang(" *ぷちゅ* ", " *crumble* ")
@@ -1605,6 +1663,10 @@
 			if ( cbit(CHARA_BIT_SANDBAG, tc) == 0 ) {
 				if ( mdata(MDATA_TYPE) == MAP_TYPE_WORLD ) {
 					goto *move_skip
+				}
+				if ( chipm(CHIPM_ATTRIB, map(cdata(CDATA_X, tc), cdata(CDATA_Y, tc), MAP_TILE_ID)) & CHIPM_ATTRIB_CANT_PASS ) {
+					gosub *screen_draw
+					goto *pc_turn
 				}
 				if ( cfg_scroll ) {
 					cdata(CDATA_X_NEW, CHARA_PLAYER) = cdata(CDATA_X, tc)
@@ -3059,7 +3121,7 @@
 				}
 			}
 			if ( gdata(GDATA_FLAG_MAIN) >= 715 ) {
-				cardno = rnd(1023) + 1
+				cardno = rnd(1044) + 1
 				if ( gdata(GDATA_FLAG_MAIN) < 760 ) {
 					if ( cardno <= 923 & cardno > 918 ) {
 						cardno = CREATURE_ID_LIVING_BLOOD
@@ -3653,6 +3715,13 @@
 						snd SOUNDLIST_AMMO
 					}
 				}
+			}
+		}
+	}
+	if ( ammo != (-1) ) {
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_AUTO_AIM_CHEATAH ) {
+			if ( ammoproc == ENCHANT_AMMO_NONE ) {
+				ammoproc = ENCHANT_AMMO_MAGIC
 			}
 		}
 	}

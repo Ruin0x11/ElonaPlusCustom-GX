@@ -44,6 +44,14 @@
 				break
 			}
 		}
+		if ( cellchara == (-1) ) {
+			if ( cdata(CDATA_ID, cc) == CREATURE_ID_WALL_HACK_CHEATAH ) {
+				if ( cellaccessover == 1 ) {
+					cellaccess = 1
+					break
+				}
+			}
+		}
 	loop
 	if ( cellaccess == 1 ) {
 		return 1
@@ -1917,6 +1925,15 @@
 			}
 		}
 	}
+	if ( cdata(CDATA_ID, cc) >= CREATURE_ID_WALL_HACK_CHEATAH & cdata(CDATA_ID, cc) <= CREATURE_ID_SPEED_HACK_CHEATAH ) {
+		if ( rnd(100) == 0 ) {
+			txtef COLOR_RED
+			txt lang(" *BAN* ", " *BAN* ")
+			cdata(CDATA_HP, cc) = 0
+			dmghp cc, 99999, DAMAGE_FROM_UNSEEN
+			goto *turn_end
+		}
+	}
 	if ( cdata(CDATA_TARGET, cc) != 0 ) {
 		if ( cdata(CDATA_NECRO_FORCE, cc) == 10 ) {
 			efid = SKILL_SPACT_CLOSE_SUICIDE
@@ -2439,11 +2456,9 @@
 			}
 		}
 		if ( cdata(CDATA_ID, cc) == CREATURE_ID_CTHULHICK ) {
-			if ( cdata(CDATA_CONDITION_WET, tc) == 0 ) {
-				if ( cbit(CHARA_BIT_SANDBAG, tc) == FALSE ) {
-					if ( rnd(5) == 0 ) {
-						act = SKILL_SPACT_ALCHEMICAL_RAIN
-					}
+			if ( cdata(CDATA_CONDITION_WET, cc) == 0 ) {
+				if ( rnd(5) == 0 ) {
+					act = SKILL_SPACT_ALCHEMICAL_RAIN
 				}
 			}
 		}
@@ -2994,6 +3009,13 @@
 				if ( rnd(10) == 0 ) {
 					act = SKILL_SPACT_EXTERMINATION_BREATH
 				}
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, cc) == CREATURE_ID_MAGIC_BEE ) {
+		if ( cdata(CDATA_CONDITION_ANGRY, cc) > 0 ) {
+			if ( rnd(3) == 0 ) {
+				act = SKILL_SPACT_FLAME_OF_RAGE
 			}
 		}
 	}
@@ -3645,6 +3667,12 @@
 				goto *ai_actMain
 			}
 		}
+		if ( act == SKILL_SPELL_HEAL_LIGHT | act == SKILL_SPELL_HEAL_CRITICAL | act == SKILL_SPELL_CURE_OF_ERIS | act == SKILL_SPELL_CURE_OF_JURE | act == SKILL_SPELL_HEALING_TOUCH ) {
+			if ( cdata(CDATA_HP, cc) == cdata(CDATA_MAX_HP, cc) ) {
+				buffact++
+				goto *ai_actMain
+ 			}
+ 		}
 	}
 	buffact = 0
 	if ( cdata(CDATA_ID, cc) == CREATURE_ID_BLACK_GAUNTLET_LEOLD ) {

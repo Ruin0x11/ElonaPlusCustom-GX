@@ -488,24 +488,30 @@
 	await cfg_wait1
 	key_check
 	if ( homemapmode == 1 ) {
-		if ( key == key_enter ) {
-			gosub *com_mapset
-			keyrelease
-			goto *findLocation_WHILE1_CONTINUE
-		}
-		stick a, 768
-		if ( a == 256 ) {
-			key = key_enter
-		}
-		if ( a == 512 ) {
-			if ( chipm(CHIPM_ROLE, map(tlocx, tlocy, 0)) == MAP_CHIP_ROLE_CROP | chipm(CHIPM_ROLE, map(tlocx, tlocy, 0)) == MAP_CHIP_ROLE_DRYROCK | chipm(CHIPM_ROLE, map(tlocx, tlocy, 0)) == MAP_CHIP_ROLE_COMPOST ) {
-				snd SOUNDLIST_FAIL1
+		if ( meadmap == 0 ) {
+			if ( key == key_enter ) {
+				gosub *com_mapset
 				keyrelease
 				goto *findLocation_WHILE1_CONTINUE
 			}
-			tile = map(tlocx, tlocy, 0)
-			snd SOUNDLIST_CURSOR1
-			keyrelease
+		}
+		stick a, 768
+		if ( meadmap == 0 ) {
+			if ( a == 256 ) {
+				key = key_enter
+			}
+		}
+		if ( meadmap == 0 ) {
+			if ( a == 512 ) {
+				if ( chipm(CHIPM_ROLE, map(tlocx, tlocy, MAP_TILE_ID)) == MAP_CHIP_ROLE_CROP | chipm(CHIPM_ROLE, map(tlocx, tlocy, MAP_TILE_ID)) == MAP_CHIP_ROLE_DRYROCK | chipm(CHIPM_ROLE, map(tlocx, tlocy, MAP_TILE_ID)) == MAP_CHIP_ROLE_COMPOST ) {
+					snd SOUNDLIST_FAIL1
+					keyrelease
+					goto *findLocation_WHILE1_CONTINUE
+				}
+				tile = map(tlocx, tlocy, MAP_TILE_ID)
+				snd SOUNDLIST_CURSOR1
+				keyrelease
+			}
 		}
 		tx = limit(mousex - inf_screenx, 0, windoww) / 48
 		ty = limit(mousey - inf_screeny, 0, windowh - inf_verh) / 48
@@ -5104,6 +5110,44 @@
 		}
 	}
 	txt lang(name(tc) + "に何をする？ ", "What action do you want to perform to " + him(tc) + "? ")
+	if ( cdata(CDATA_PV_FIX, tc) == 100 & cdata(CDATA_DV_FIX, tc) == 100 ) {
+		if ( cdatan(CDATAN_RACE, tc) == "slime" ) {
+			cdata(CDATA_PV_FIX, tc) = 200
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "sheep" ) {
+			cdata(CDATA_PV_FIX, tc) = 120
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "zombie" ) {
+			cdata(CDATA_PV_FIX, tc) = 150
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "ent" ) {
+			cdata(CDATA_PV_FIX, tc) = 140
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "armor" ) {
+			cdata(CDATA_PV_FIX, tc) = 200
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "skeleton" ) {
+			cdata(CDATA_PV_FIX, tc) = 120
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "wisp" ) {
+			cdata(CDATA_PV_FIX, tc) = 150
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "rabbit" ) {
+			cdata(CDATA_DV_FIX, tc) = 120
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "cat" ) {
+			cdata(CDATA_DV_FIX, tc) = 200
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "dog" ) {
+			cdata(CDATA_DV_FIX, tc) = 200
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "rat" ) {
+			cdata(CDATA_DV_FIX, tc) = 250
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "catsister" ) {
+			cdata(CDATA_DV_FIX, tc) = 200
+		}
+ 	}
 	if ( cdata(CDATA_ID, tc) == CREATURE_ID_POPPY_THE_LITTLE_DOG ) {
 		if ( gdata(GDATA_FLAG_SUB_DOG) >= 1000 ) {
 			if ( cbit(CHARA_BIT_GUARD_TEMP, tc) ) {
@@ -10268,6 +10312,8 @@
 	gcopy 3, 960, 96, 96, 120
 	pos wx, wy + wh - 164
 	gcopy 3, 960, 216, 72, 144
+	dvr1 = cdata(CDATA_DV, cc) * cdata(CDATA_DV_FIX, cc) / 100 + cdata(CDATA_DV_FIX, cc) - 100
+	pvr1 = (cdata(CDATA_PV, cc) + cdata(CDATA_PV_FIX, cc) / 25) * cdata(CDATA_PV_FIX, cc) / 100
 	if ( showresist ) {
 		pos wx + 320, wy + 40
 		color 0, 0, 0
@@ -10310,7 +10356,7 @@
 		/********** ANNA CUSTOM - ENDING **********/
 
 	}
-	display_note lang("装備重量: ", "Equip weight: ") + cnvweight(cdata(CDATA_EQUIP_WEIGHT, cc)) + cnveqweight(cc) + lang(" 命中修正:", " Hit Bonus:") + cdata(CDATA_ATTACK, cc) + lang(" ダメージ修正:", " Damage Bonus:") + cdata(CDATA_DAMAGE, cc) + "  DV/PV:" + cdata(CDATA_DV, cc) + "/" + cdata(CDATA_PV, cc)
+	display_note lang("装備重量: ", "Equip weight: ") + cnvweight(cdata(CDATA_EQUIP_WEIGHT, cc)) + cnveqweight(cc) + lang(" 命中修正:", " Hit Bonus:") + cdata(CDATA_ATTACK, cc) + lang(" ダメージ修正:", " Damage Bonus:") + cdata(CDATA_DAMAGE, cc) + "  DV/PV:" + dvr1 + "/" + pvr1
 	color 0, 0, 0
 	font lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 1
 	gmode 2
@@ -11707,6 +11753,21 @@
 		s = ""
 	}
 	display_note s
+	if ( invctrl == INVCTRL_PICKPOCKET ) {
+		x = (windoww - 640) / 2 + inf_screenx + 455
+		y = winposy(432) - 32
+		w = 200
+		h = 102
+		window x + 4, y + 4, w, h - h \ 8, 0, -1
+		window x, y, w, h - h \ 8, 0, 0
+		dvr1 = cdata(CDATA_DV, tc) * cdata(CDATA_DV_FIX, tc) / 100 + cdata(CDATA_DV_FIX, tc) - 100
+		pvr1 = (cdata(CDATA_PV, tc) + cdata(CDATA_PV_FIX, tc) / 25) * cdata(CDATA_PV_FIX, tc) / 100
+		font lang(cfg_font1, cfg_font2), 12 + en - en * 2, 0
+		pos x + 16, y + 17
+		mes "Dv:" + dvr1 + " Pv:" + pvr1
+		pos x + 16, y + 35
+		mes lang("装備重量:", "EquipWt:") + cnvweight(cdata(CDATA_EQUIP_WEIGHT, tc)) + "" + cnveqweight(tc)
+	}
 	if ( invctrl == 25 ) {
 		x = (windoww - 640) / 2 + inf_screenx + 455
 		y = winposy(432) - 32
@@ -11714,9 +11775,11 @@
 		h = 102
 		window x + 4, y + 4, w, h - h \ 8, 0, -1
 		window x, y, w, h - h \ 8, 0, 0
+		dvr1 = cdata(CDATA_DV, tc) * cdata(CDATA_DV_FIX, tc) / 100 + cdata(CDATA_DV_FIX, tc) - 100
+		pvr1 = (cdata(CDATA_PV, tc) + cdata(CDATA_PV_FIX, tc) / 25) * cdata(CDATA_PV_FIX, tc) / 100
 		font lang(cfg_font1, cfg_font2), 12 + en - en * 2, 0
 		pos x + 16, y + 17
-		mes "Dv:" + cdata(CDATA_DV, tc) + " Pv:" + cdata(CDATA_PV, tc)
+		mes "Dv:" + dvr1 + " Pv:" + pvr1
 		pos x + 16, y + 35
 		mes lang("装備重量:", "EquipWt:") + cnvweight(cdata(CDATA_EQUIP_WEIGHT, tc)) + "" + cnveqweight(tc)
 		x = wx + 40
@@ -12348,6 +12411,77 @@
 				else {
 					txt lang("「友情、ねぇ…」", cnvtalk("Hmm..."))
 				}
+				goto *com_inventory
+			}
+			if ( inv(INV_ITEM_ID, ci) <= ITEM_ID_M01_GARNET & inv(INV_ITEM_ID, ci) >= ITEM_ID_M12_LAPIS_LAZULI ) {
+				snd SOUNDLIST_EQUIP1
+				txt lang("あなたは" + name(tc) + "に" + itemname(ci, 1) + "を渡した。", "You give " + name(tc) + " " + itemname(ci, 1) + ".")
+				txtvalid = 0
+				txt lang("「綺麗" + _dana(3) + "…」", cnvtalk("Beautiful..."))
+				modimp tc, 40
+				cdata(CDATA_EMO_ICON, tc) = 6 + 100 * 3
+				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_M01_GARNET ) {
+					if ( cdata(CDATA_JOIN_DATE_MONTH, tc) == 1 ) {
+						modimp tc, 20
+					}
+				}
+				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_M02_AMETHYST ) {
+					if ( cdata(CDATA_JOIN_DATE_MONTH, tc) == 2 ) {
+						modimp tc, 20
+					}
+				}
+				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_M03_AQUAMARINE ) {
+					if ( cdata(CDATA_JOIN_DATE_MONTH, tc) == 3 ) {
+						modimp tc, 20
+					}
+				}
+				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_M04_DIAMOND ) {
+					if ( cdata(CDATA_JOIN_DATE_MONTH, tc) == 4 ) {
+						modimp tc, 20
+					}
+				}
+				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_M05_EMERALD ) {
+					if ( cdata(CDATA_JOIN_DATE_MONTH, tc) == 5 ) {
+						modimp tc, 20
+					}
+				}
+				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_M06_ALEXANDRITE ) {
+					if ( cdata(CDATA_JOIN_DATE_MONTH, tc) == 6 ) {
+						modimp tc, 20
+					}
+				}
+				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_M07_RUBY ) {
+					if ( cdata(CDATA_JOIN_DATE_MONTH, tc) == 7 ) {
+						modimp tc, 20
+					}
+				}
+				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_M08_SARDONYX ) {
+					if ( cdata(CDATA_JOIN_DATE_MONTH, tc) == 8 ) {
+						modimp tc, 20
+					}
+				}
+				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_M09_SAPPHIRE ) {
+					if ( cdata(CDATA_JOIN_DATE_MONTH, tc) == 9 ) {
+						modimp tc, 20
+					}
+				}
+				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_M10_OPAL ) {
+					if ( cdata(CDATA_JOIN_DATE_MONTH, tc) == 10 ) {
+						modimp tc, 20
+					}
+				}
+				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_M11_TOPAZ ) {
+					if ( cdata(CDATA_JOIN_DATE_MONTH, tc) == 11 ) {
+						modimp tc, 20
+					}
+				}
+				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_M12_LAPIS_LAZULI ) {
+					if ( cdata(CDATA_JOIN_DATE_MONTH, tc) == 12 ) {
+						modimp tc, 20
+					}
+				}
+				inv(INV_ITEM_NUM, ci)--
+				gosub *calcBurdenPc
 				goto *com_inventory
 			}
 			if ( inv(INV_ITEM_ID, ci) == ITEM_ID_LOVELY_BOUQUET ) {

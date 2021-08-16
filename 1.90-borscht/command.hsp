@@ -955,7 +955,7 @@
 				continue
 			}
 		}
-		if ( cdata(CDATA_AREA, cnt) != 0 ) {
+		if ( cdata(CDATA_AREA, cnt) != AREA_NONE ) {
 			if ( allyctrl == 1 | allyctrl == 2 ) {
 				continue
 			}
@@ -1138,7 +1138,7 @@
 		}
 		if ( allyctrl == 0 | allyctrl == 2 | allyctrl == 3 | allyctrl == 4 | allyctrl == 5 | allyctrl == 6 | allyctrl == 7 ) {
 			s = "" + cdatan(CDATAN_AKA, i) + " " + cdatan(CDATAN_NAME, i)
-			if ( cdata(CDATA_AREA, i) != 0 ) {
+			if ( cdata(CDATA_AREA, i) != AREA_NONE ) {
 				s = s + "(" + mapname(cdata(CDATA_AREA, i)) + ")"
 			}
 			if ( cbit(CHARA_BIT_RIDE, i) ) {
@@ -5414,7 +5414,7 @@
 	if ( cbit(CHARA_BIT_BODYGUARD, tc) == FALSE & cbit(CHARA_BIT_GUARD_TEMP, tc) == FALSE ) {
 		if ( tc < MAX_CHARA_FOLLOWER ) {
 			if ( cdata(CDATA_IN_TAGTEAM, tc) != 1 ) {
-				if ( cdata(CDATA_AREA, tc) == 0 | tc == CHARA_PLAYER ) {
+				if ( cdata(CDATA_AREA, tc) == AREA_NONE | tc == CHARA_PLAYER ) {
 					promptl(0, promptmax) = lang("タッグ編成", "Tag organization."), "null", "" + 16
 					promptmax++
 					if ( cdata(CDATA_TAGTEAM_PARTNER, tc) > 0 ) {
@@ -5509,7 +5509,7 @@
 		}
 		rc = tc
 		gosub *add_ally
-		cdata(CDATA_AREA, rc) = 0
+		cdata(CDATA_AREA, rc) = AREA_NONE
 		gosub *screen_draw
 		goto *turn_end
 	}
@@ -5768,7 +5768,7 @@
 				goto *pc_turn
 			}
 			if ( tc != CHARA_PLAYER ) {
-				if ( cdata(CDATA_AREA, ttc) != 0 | cdata(CDATA_AREA, tc) != 0 ) {
+				if ( cdata(CDATA_AREA, ttc) != AREA_NONE | cdata(CDATA_AREA, tc) != AREA_NONE ) {
 					txt lang("滞在中の仲間はタッグを組めない。", "The ally currently stays in this area.")
 					goto *pc_turn
 				}

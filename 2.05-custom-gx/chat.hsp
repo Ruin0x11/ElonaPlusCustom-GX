@@ -726,6 +726,84 @@
 		chatMore lang("ふん！", "Hump!")
 		goto *chat_event_SWEND1
 	}
+	if ( _switch_val == ROLE_GUEST_HOUSEMATE | _switch_sw ) {
+		_switch_sw = 0
+		if ( cdata(CDATA_ID, tc) == CREATURE_ID_SCARD_THE_HAPPY_SWALLOW ) {
+			chatList 0, lang("いいよ", "Welcome!")
+			chatList 1, lang("駄目だよ", "Get out!")
+			chatList 2, lang("家賃は払ってよ", "You have to pay the rent.")
+			buff = lang("妻が猫パンチで殺され住んでいた家も人間パンチで壊され、現在は路頭に迷っています。どうか、軒先に住まわせていただけないでしょうか？", "Let we live here! My wife was killed by the cat punch and our house was destroyed by the human punch...")
+			gosub *chat_select
+			if ( chatval == 0 | chatval == 2 ) {
+				chatMore lang("ありがとうございます。あああ、私はなんて幸福なんだ。これで仕事と育児に専念できます。私の子供たちもきっと絶対必ず幸福になるでしょう。", "Thanks! I and my children are happy.")
+				repeat 5
+					flt
+					characreate -1, CREATURE_ID_YOUNG_SWALLOW, cdata(CDATA_X, tc), cdata(CDATA_Y, tc)
+				loop
+			}
+			else {
+				chatMore lang("ああ、これも天の与えた試練なのですね！ならば、その先にある本当の幸福を求め彷徨い続けましょう…。", "Oh...Where is happiness?"), strbye
+				chara_vanquish tc
+				goto *chat_event_SWEND1
+			}
+		}
+		if ( cdata(CDATA_ID, tc) == CREATURE_ID_OXODE_THE_QUEEN_BEE ) {
+			chatList 0, lang("いいね", "Welcome!")
+			chatList 1, lang("駄目だね", "Get out!")
+			chatList 2, lang("謝礼、待っていますね", "I expect it.")
+			buff = lang("主人が腹上死して何年かが過ぎました。いきなりの相談失礼します。お互いのニーズに合致しそうだと思い、訪問してみました。謝礼は幾らかは出きますので、私と娘たちを住まわせて欲しいのです。", "Let we live here! It's been a few years since my husband died of sex. I will give you a monthly reward, so please let me and my daughters live here...")
+			gosub *chat_select
+			if ( chatval == 0 | chatval == 2 ) {
+				chatMore lang("助かります。これで娘たちが外敵と戦うことも減るでしょう…。", "Thanks to you, my daughters will be less likely to fight enemies...")
+				repeat 3
+					flt
+					characreate -1, CREATURE_ID_MAGIC_BEE, cdata(CDATA_X, tc), cdata(CDATA_Y, tc)
+					cbitmod CHARA_BIT_GUEST, rc, TRUE
+				loop
+			}
+			else {
+				chatMore lang("甘い蜜はお嫌いでしたか…？", "Oh...Do you hate sweet honey?"), strbye
+				chara_vanquish tc
+				goto *chat_event_SWEND1
+			}
+		}
+		if ( cdata(CDATA_ID, tc) == CREATURE_ID_IMARITUKA_THE_ZASIKI_WARAI ) {
+			chatList 0, lang("そんなぁ", "Welcome!")
+			chatList 1, lang("出ていけクソガキ", "Get out!")
+			chatList 2, lang("わからせてやる…", "You will regret it.")
+			buff = lang("くすくすっ！うっわぁ〜なんですかこのセンスのない座敷ｗｗｗダッサダサじゃないですか〜。本当に笑えるのでぇ、しばらくはこの家に住んであげますねｗｗｗ", "Hehehe! This house is too nonsense and nonsense and interestiiiiing! I decided to live here！")
+			gosub *chat_select
+			if ( chatval == 0 | chatval == 2 ) {
+				chatMore lang("ちゃんと家具の配置とか考えてくださいよ〜？あっｗｗｗｗ家具って何か分かってます？？？", "Hehehe! Think about the arrangement of furniture properly...Oooooh, do you know what the furniture is???")
+				skillmod SKILL_ATTR_LUC, CHARA_PLAYER, 1000 * 50
+			}
+			else {
+				chatMore lang("はぁい、いいですよ〜。また来ますけどねｗｗｗｗｗあはははは！", "I will come agaaaaain! Hehehe!"), strbye
+				chara_vanquish tc
+				goto *chat_event_SWEND1
+			}
+		}
+		if ( cdata(CDATA_ID, tc) == CREATURE_ID_TELHUREZA_THE_HOUSE_GUARD ) {
+			chatList 0, lang("これからよろしく", "Welcome!")
+			chatList 1, lang("キモい", "Get out!")
+			chatList 2, lang("こんな家でよければ…", "If you like this kind of house...")
+			buff = lang("はっ…初めて見た時から、こ、この家のことがずっと好きでした！私にこの家を守らせてくださいぃぃっ…！", "I...I've always liked t...this house since I first saw it! Let me protect this house...Please!")
+			gosub *chat_select
+			if ( chatval == 0 | chatval == 2 ) {
+				chatMore lang("やったぁ…夢みたい！この家に近づく悪い虫はぁ、私がぜぇぇぇんぶ排除してあげますねぇ…ぐへっ、ぐへへへ♪", "I'm happy...like a dream! Pests approaching this house, I'll get rid of them...!")
+			}
+			else {
+				chatMore lang("私…まだあきらめませんからっ！ずっと見守っていきます！", "I...I haven't given up yet!"), strbye
+				chara_vanquish tc
+				goto *chat_event_SWEND1
+			}
+		}
+		cbitmod CHARA_BIT_GUEST, tc, FALSE
+		cdata(CDATA_ROLE, tc) = ROLE_NONE
+		cdata(CDATA_AREA, tc) = AREA_HOME
+		goto *chat_event_SWEND1
+		_switch_sw++
+	}
 	if ( _switch_val == ROLE_GUEST_MERCHANT | _switch_sw ) {
 		_switch_sw = 0
 		chatList 0, lang("買いたい", "I want to buy something.")
@@ -9287,10 +9365,10 @@
 			snd SOUNDLIST_COMPLETE1
 			txtmore
 			txt lang("何かが足元に転がってきた。", "Something is put on the ground.")
-			if ( gdata(GDATA_FLAG_SUB_AMURDAD) == 2 ) {
+			if ( gdata(GDATA_FLAG_SUB_AMURDAD) < 100 ) {
 				flt
 				itemcreate -1, ITEM_ID_ASTRAL_SICKLE, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
-				gdata(GDATA_FLAG_SUB_AMURDAD) = 10
+				gdata(GDATA_FLAG_SUB_AMURDAD) = 100
 			}
 			else {
 				if ( gdata(GDATA_MIN) >= 0 & gdata(GDATA_MIN) < 15 ) {
@@ -13963,6 +14041,201 @@
 		goto *chat_unique_SWEND1
 		_switch_sw++
 	}
+	if ( _switch_val == CREATURE_ID_TELHUREZA_THE_HOUSE_GUARD | _switch_sw ) {
+		_switch_sw = 0
+		chatList 0, lang("今は大丈夫", "It's okay now.")
+		chatList 1, lang("そんなにこの家が好きなの？", "Do you like this house so much?")
+		chatList 2, lang("害虫はあいつ！", "Please be getting rid of pests!")
+		buff = lang("あ、あのっ…！もしもこの家を荒らす害虫がいたら、遠慮せずに教えてくださいねっ？殺すので。", "Ah, that...! If there are any pests that are ruining this house, don't hesitate to let me know, right? Because I will kill them all.")
+		gosub *chat_select
+		if ( chatval == 0 ) {
+			chatMore lang("ほ、本当に…？害虫どもを庇っていませんか？優しいんですね？でも生かしておいたらこの家が駄目になっちゃいます…そんなの…許せるわけ、ないじゃないですか。", "Hmm, really...? Do you protect the pests of your house? That's right, right? But if you keep it alive, this house will be ruined...! I can't forgive that."), strbye
+			goto *chat_end
+		}
+		if ( chatval == 1 ) {
+			chatMore lang("はい、なんだか守ってあげたくなっちゃうと言いますか…。最初は、ただ見ているだけで満足だったんです。でも毎日見ている内に身体が熱くなってきてしまって…うひひひっ！これも家守の血ですかねぇえ！？", "Yes, I want to protect this house for some reason...At first, I was happy just looking at it. But as I watched it every day, my body got hot...Uhihihi!"), strbye
+			goto *chat_end
+		}
+		if ( chatval == 2 ) {
+			dani = 0
+			chatMore lang("へぇ…どいつですか？", "Who is it?")
+*label_6450
+			if ( 1 == 0 ) {
+				goto *label_6452
+			}
+			txtnew
+			txt lang("誰と戦わせる？", "Who do you want her to hit?")
+			allyctrl = 3
+			gosub *com_listNpc
+			if ( stat == (-1) ) {
+				goto *label_6452
+			}
+			hometc = stat
+			if ( hometc == tc ) {
+				txtef COLOR_YELLOW
+				txt cdatan(CDATAN_NAME, tc) + lang("「やだなぁ…この家を守る私が害虫なわけないじゃないですか」", " " + cnvtalk("I am protecting this house. I'm not a pest."))
+				goto *label_6452
+			}
+			cdata(CDATA_AI_AGGRO, tc) = 200
+			cdata(CDATA_EMO_ICON, tc) = 18 + 100 * 2
+			cdata(CDATA_TARGET, tc) = hometc
+			txtef COLOR_YELLOW
+			txt cdatan(CDATAN_NAME, tc) + lang("「害虫ゥゥゥゥ！！」", " " + cnvtalk("Kiiiiiill!!!"))
+			goto *label_6452
+			goto *label_6450
+*label_6452
+			goto *chat_end
+		}
+		goto *chat_end
+		goto *chat_unique_SWEND1
+		_switch_sw++
+	}
+	if ( _switch_val == CREATURE_ID_IMARITUKA_THE_ZASIKI_WARAI | _switch_sw ) {
+		_switch_sw = 0
+		chatList 0, lang("善処します…", "I will do my best...")
+		chatList 1, lang("今に見ていろ！", "I will make you understand my awesomeness!")
+		chatList 2, lang("笑われるほど酷くない！", "My house is not badly!")
+		buff = lang("センスないですよｗｗｗｗセ・ン・ス！ほらほら考えて〜考えればもっとマシにできるはずですからｗｗｗｗくっ、あはははは！", "You have no sense...se-n-se! Look, look, think about it-if you think about it, you should be able to do better! Hehehe!")
+		gosub *chat_select
+		if ( chatval == 0 ) {
+			chatMore lang("まぁまぁｗｗｗ私も細かい所の埃程度は掃除してあげますけど〜そもそもの配置や片づけは" + _onii(cdata(CDATA_SEX, CHARA_PLAYER)) + "さんが自分でやってくださいねぇｗｗｗ", "Well, Well, I'll clean up the dust in small areas, but please do the basic arrangement and tidying up yourself! Hehe, can you do it?"), strbye
+			goto *chat_end
+		}
+		if ( chatval == 1 ) {
+			chatMore lang("ぷっ！いいんですかぁ〜そんな台詞ｗｗｗ吐いちゃってぇｗｗｗちゃーんと評価を改めさせてくれるんですよね？くくくっ…無理だと思いますけどｗｗｗ", "Wow! Are you okay to say that? Can you change my rating? Kukuku...I don't think you can."), strbye
+			goto *chat_end
+		}
+		if ( chatval == 2 ) {
+			chatMore lang("えっ、自覚なかったんですかｗｗｗそれともぉ〜もしかして家のランクなんか鵜呑みにしちゃってます？あ、ごめんなさいｗｗｗさすがの" + _onii(cdata(CDATA_SEX, CHARA_PLAYER)) + "さんでも、高い家具置いてるかだけのカッスカスな評価ごときでイキってるワケないですよねｗｗｗ", "Well, didn't you realize it? Or did you believe in the rank of the house?...Oh, I'm sorry! Even you don't believe in a sloppy assessment of the presence or absence of expensive furniture, right?")
+			goto *chat_end
+		}
+		goto *chat_end
+		goto *chat_unique_SWEND1
+		_switch_sw++
+	}
+	if ( _switch_val == CREATURE_ID_OXODE_THE_QUEEN_BEE | _switch_sw ) {
+		_switch_sw = 0
+		chatList 0, lang("お疲れ様です", "It's tiring but fun.")
+		chatList 1, lang("ぐへへ", "Guhehe...")
+		chatList 2, lang("そろそろ謝礼が欲しいな", "Rather than that, you have to pay the rent.")
+		buff = lang("ああ、大家さん。お仕事お疲れ様です。", "Oh, landlord. Do not you tired to continue the adventure?")
+		gosub *chat_select
+		if ( chatval == 0 ) {
+			chatMore lang("そうそう、娘たちもこの家と大家さんが気に入ったみたいで。よく楽しそうに話をしているんですよ。うふふ。", "Oh yeah, my daughters seem to like this house and you. We often talk happily. Ufufu."), strbye
+			goto *chat_end
+		}
+		if ( chatval == 1 ) {
+			chatMore lang("ほ、本当にお疲れのようですね…大丈夫ですか？もう少し、休憩していきませんか？", "Y...You look strange...are you okay? Would you like to take a break a little longer?"), strbye
+			goto *chat_end
+		}
+		if ( chatval == 2 ) {
+			if ( gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 < cdata(CDATA_CAN_REVIVE, tc) ) {
+				snd SOUNDLIST_FAIL1
+				txt lang("次に徴収できるのは" + cnvdate(cdata(CDATA_CAN_REVIVE, tc), 1) + "だ。", "The next time is " + cnvdate(cdata(CDATA_CAN_REVIVE, tc), 1) + ".")
+				goto *chat_end
+			}
+			chatMore lang("まぁ、気づかずにすみません。こちらを受け取ってください。娘たちと一緒に作ったんですよ。", "Well, please receive this. I made it with my daughters.")
+			cdata(CDATA_CAN_REVIVE, tc) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 + 24 * 30
+			txt lang("何かが足元に転がってきた。", "Something is put on the ground.")
+			flt
+			itemcreate -1, ITEM_ID_GOLDEN_MEAD, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 4
+			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+			goto *chat_end
+		}
+		goto *chat_end
+		goto *chat_unique_SWEND1
+		_switch_sw++
+	}
+	if ( _switch_val == CREATURE_ID_SCARD_THE_HAPPY_SWALLOW | _switch_sw ) {
+		_switch_sw = 0
+		chatList 0, lang("幸福だよ", "Yes.")
+		chatList 1, lang("不幸だよ", "No.")
+		chatList 2, lang("そんなことより家賃払ってよ", "Rather than that, you have to pay the rent.")
+		buff = lang("家主さん、あなたは幸福ですか？", "Are you happy?")
+		gosub *chat_select
+		if ( chatval == 0 ) {
+			chatMore lang("幸福は義務ですよね！！どんなに身体が痛くても、どんなに心が苦しくても、生きていればそれだけで幸福なのは疑う余地もありませんね！！！", "Happiness is a duty! Happiness is a duty!"), strbye
+			goto *chat_end
+		}
+		if ( chatval == 1 ) {
+			chatMore lang("生きている者は、死んだ者のためにも幸福でなければいけないのです。あああああああああ！ほら！！見て！！！私はこんなにも幸福ですよ！！！！", "The living must be happy for the dead. Ah ah ah ah! Look! Loooook!! I'm so happppppppy!!!"), strbye
+			goto *chat_end
+		}
+		if ( chatval == 2 ) {
+			if ( gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 < cdata(CDATA_CAN_REVIVE, tc) ) {
+				snd SOUNDLIST_FAIL1
+				txt lang("次に徴収できるのは" + cnvdate(cdata(CDATA_CAN_REVIVE, tc), 1) + "だ。", "The next time is " + cnvdate(cdata(CDATA_CAN_REVIVE, tc), 1) + ".")
+				goto *chat_end
+			}
+			chatMore lang("あっ、はい。", "Oh yes.")
+			cdata(CDATA_CAN_REVIVE, tc) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 + 24 * 30
+			txt lang("何かが足元に転がってきた。", "Something is put on the ground.")
+			if ( gdata(GDATA_MONTH) == 1 ) {
+				flt
+				itemcreate -1, ITEM_ID_M01_GARNET, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 3
+				inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+			}
+			if ( gdata(GDATA_MONTH) == 2 ) {
+				flt
+				itemcreate -1, ITEM_ID_M02_AMETHYST, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 3
+				inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+			}
+			if ( gdata(GDATA_MONTH) == 3 ) {
+				flt
+				itemcreate -1, ITEM_ID_M03_AQUAMARINE, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 3
+				inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+			}
+			if ( gdata(GDATA_MONTH) == 4 ) {
+				flt
+				itemcreate -1, ITEM_ID_M04_DIAMOND, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 3
+				inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+			}
+			if ( gdata(GDATA_MONTH) == 5 ) {
+				flt
+				itemcreate -1, ITEM_ID_M05_EMERALD, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 3
+				inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+			}
+			if ( gdata(GDATA_MONTH) == 6 ) {
+				flt
+				itemcreate -1, ITEM_ID_M06_ALEXANDRITE, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 3
+				inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+			}
+			if ( gdata(GDATA_MONTH) == 7 ) {
+				flt
+				itemcreate -1, ITEM_ID_M07_RUBY, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 3
+				inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+			}
+			if ( gdata(GDATA_MONTH) == 8 ) {
+				flt
+				itemcreate -1, ITEM_ID_M08_SARDONYX, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 3
+				inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+			}
+			if ( gdata(GDATA_MONTH) == 9 ) {
+				flt
+				itemcreate -1, ITEM_ID_M09_SAPPHIRE, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 3
+				inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+			}
+			if ( gdata(GDATA_MONTH) == 10 ) {
+				flt
+				itemcreate -1, ITEM_ID_M10_OPAL, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 3
+				inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+			}
+			if ( gdata(GDATA_MONTH) == 11 ) {
+				flt
+				itemcreate -1, ITEM_ID_M11_TOPAZ, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 3
+				inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+			}
+			if ( gdata(GDATA_MONTH) == 12 ) {
+				flt
+				itemcreate -1, ITEM_ID_M12_LAPIS_LAZULI, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 3
+				inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+			}
+			goto *chat_end
+		}
+		goto *chat_end
+		goto *chat_unique_SWEND1
+		_switch_sw++
+	}
 	if ( _switch_val == CREATURE_ID_AIME_THE_STORY_TELLER | _switch_sw ) {
 		_switch_sw = 0
 		if ( gdata(GDATA_FLAG_MAIN) < 1000 ) {
@@ -18170,6 +18443,9 @@
 		hometc = stat
 		txt lang(cdatan(CDATAN_NAME, hometc) + "を追い出した。", cdatan(CDATAN_NAME, hometc) + " " + is(tc) + " moved to the location.")
 		snd SOUNDLIST_BASH1
+		if ( cdata(CDATA_ID, hometc) == CREATURE_ID_IMARITUKA_THE_ZASIKI_WARAI ) {
+			skillmod SKILL_ATTR_LUC, CHARA_PLAYER, (-1000) * 51
+		}
 		chara_vanquish hometc
 		kaiwa = rnd(4)
 		if ( kaiwa == 0 ) {
@@ -21973,7 +22249,7 @@
 	if ( cdata(CDATA_TAGTEAM_PARTNER, tc) > 0 ) {
 		ttc = cdata(CDATA_TAGTEAM_PARTNER, tc)
 	}
-	if ( cdata(CDATA_PORTRAIT, tc) >= 0 & cdata(CDATA_FACE, tc) == 0 & evochat < 2 | scenemode ) {
+	if ( cdata(CDATA_PORTRAIT, tc) != (-1) & cdata(CDATA_FACE, tc) == 0 & evochat < 2 | scenemode ) {
 		if ( cdata(CDATA_PORTRAIT, tc) < 80 ) {
 			p = cdata(CDATA_SEX, tc) * 80 + cdata(CDATA_PORTRAIT, tc)
 		}
@@ -21986,9 +22262,23 @@
 				p = p - 160
 			}
 		}
-		if ( evochat < 2 ) {
-			pos wx + 42, wy + 42
-			gzoom 80, 112, 4, p \ 16 * 48, p / 16 * 72, 48, 72
+		if ( cdata(CDATA_PORTRAIT, tc) >= 0 ) {
+			if ( evochat < 2 ) {
+				pos wx + 42, wy + 42
+				gzoom 80, 112, 4, p \ 16 * 48, p / 16 * 72, 48, 72
+			}
+		}
+		if ( cdata(CDATA_PORTRAIT, tc) < 0 ) {
+			s = exedir + "user\\graphic\\face" + abs(cdata(CDATA_PORTRAIT, tc) + 1) + ".bmp"
+			exist s
+			if ( cdata(CDATA_PORTRAIT, tc) != (-1) ) {
+				if ( strsize != (-1) ) {
+					if ( evochat < 2 ) {
+						pos wx + 42, wy + 42
+						picload s, 1
+					}
+				}
+			}
 		}
 	}
 	else {
@@ -22437,12 +22727,7 @@
 	if ( scenemode == 0 & evochat < 2 ) {
 		if ( chatval(2) == 1 ) {
 			s = _impression(implevel(cdata(CDATA_IMPRESSION, tc)))
-			if ( cdata(CDATA_IMPRESSION, tc) < 150 ) {
-				s(1) = "" + cdata(CDATA_IMPRESSION, tc)
-			}
-			else {
-				s(1) = "???"
-			}
+			s(1) = "" + cdata(CDATA_IMPRESSION, tc)
 			pos wx + 32, wy + 198
 			mes "(" + s(1) + ")" + s
 			if ( cbit(CHARA_BIT_HIRED, tc) != FALSE ) {

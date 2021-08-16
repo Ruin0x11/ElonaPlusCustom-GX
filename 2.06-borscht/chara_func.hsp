@@ -434,7 +434,7 @@
 #defcfunc findcharahome int findcharahome_charaid
 	locvar_findchara_p = 0
 	repeat 245 - 57, 57
-		if ( cdata(CDATA_AREA, cnt) != 7 ) {
+		if ( cdata(CDATA_AREA, cnt) != AREA_HOME ) {
 			continue
 		}
 		if ( cdata(CDATA_ID, cnt) == findcharahome_charaid ) {
@@ -6485,7 +6485,7 @@
 			if ( dmghp_charid < MAX_CHARA_FOLLOWER ) {
 				modimp dmghp_charid, -10
 				cdata(CDATA_EXIST, dmghp_charid) = CHAR_STATE_ALLY_DEAD
-				cdata(CDATA_AREA, dmghp_charid) = 0
+				cdata(CDATA_AREA, dmghp_charid) = AREA_NONE
 				if ( cbit(CHARA_BIT_BODYGUARD, dmghp_charid) == TRUE ) {
 					evadd EVENT_CLIENT_DEAD, cdata(CDATA_ID, dmghp_charid)
 					cdata(CDATA_EXIST, dmghp_charid) = CHAR_STATE_DEAD

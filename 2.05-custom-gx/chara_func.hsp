@@ -416,6 +416,20 @@
 	loop
 	return locvar_findchara_p
 
+#defcfunc findcharahome int findcharahome_charaid
+	locvar_findchara_p = 0
+	repeat 245 - 57, 57
+		if ( cdata(CDATA_AREA, cnt) != 7 ) {
+			continue
+		}
+		if ( cdata(CDATA_ID, cnt) == findcharahome_charaid ) {
+			locvar_findchara_p = cnt
+			break
+		}
+	loop
+	return locvar_findchara_p
+
+
 #defcfunc findcharawork int findcharawork_charaid
 	locvar_findchara_p = 0
 	repeat MAX_CHARA_TOTAL - MAX_CHARA_SAVE, MAX_CHARA_SAVE
@@ -553,8 +567,8 @@
 		}
 	}
 	cdata(CDATA_IMPRESSION, modimp_charid) += locvar_modimp_i
-	if ( cdata(CDATA_IMPRESSION, modimp_charid) > 350 ) {
-		cdata(CDATA_IMPRESSION, modimp_charid) = 350
+	if ( cdata(CDATA_IMPRESSION, modimp_charid) > 400 ) {
+		cdata(CDATA_IMPRESSION, modimp_charid) = 400
 	}
 	locvar_modimp_p(1) = implevel(cdata(CDATA_IMPRESSION, modimp_charid))
 	if ( locvar_modimp_p > locvar_modimp_p(1) ) {
@@ -4478,7 +4492,6 @@
 	if ( cdata(CDATA_CONDITION_WET, dmghp_charid) > 0 ) {
 		if ( locvar_dmghp_ele == SKILL_RES_FIRE | dmghp_source == DAMAGE_FROM_FIRE ) {
 			locvar_dmghp_dmg = locvar_dmghp_dmg / 2
-			locvar_dmghp_ele = SKILL_NONE
 		}
 		if ( locvar_dmghp_ele == SKILL_RES_LIGHTNING ) {
 			locvar_dmghp_dmg = locvar_dmghp_dmg * 3 / 2
@@ -4488,7 +4501,7 @@
 		}
 	}
 	if ( cdata(CDATA_CONDITION_OIL, dmghp_charid) > 0 ) {
-		if ( locvar_dmghp_ele == SKILL_RES_FIRE ) {
+		if ( locvar_dmghp_ele == SKILL_RES_FIRE | dmghp_source == DAMAGE_FROM_FIRE ) {
 			locvar_dmghp_dmg = locvar_dmghp_dmg * 7 / 4
 		}
 	}
@@ -4894,9 +4907,6 @@
 		if ( locvar_dmghp_dmg > 0 ) {
 			if ( cdata(CDATA_QUALITY, dmghp_charid) >= FIX_QUALITY_MIRACLE ) {
 				locvar_dmghp_dmg = locvar_dmghp_dmg * 10 / limit(sdata(SKILL_ATTR_SPD, dmghp_source) * 10 / sdata(SKILL_ATTR_SPD, dmghp_charid), 10, 50)
-			}
-			if ( cdata(CDATA_QUALITY, dmghp_source) >= FIX_QUALITY_MIRACLE ) {
-				locvar_dmghp_dmg = locvar_dmghp_dmg * limit(sdata(SKILL_ATTR_SPD, dmghp_charid) * 10 / sdata(SKILL_ATTR_SPD, dmghp_source), 10, 50) / 10
 			}
 		}
 	}
@@ -6451,6 +6461,9 @@
 							}
 							if ( cdata(CDATA_ID, dmghp_charid) == CREATURE_ID_ITZPALT ) {
 								evadd EVENT_GOD_INSIDE_ITZPALT, cdata(CDATA_X, dmghp_charid), cdata(CDATA_Y, dmghp_charid)
+							}
+							if ( cdata(CDATA_ID, dmghp_charid) == CREATURE_ID_IMARITUKA_THE_ZASIKI_WARAI ) {
+								skillmod SKILL_ATTR_LUC, CHARA_PLAYER, (-1000) * 51
 							}
 							if ( cdata(CDATA_ID, dmghp_charid) == CREATURE_ID_TEZCATLIPOCA ) {
 								if ( gdata(GDATA_AREA) == AREA_CHAOS_CRADLE ) {

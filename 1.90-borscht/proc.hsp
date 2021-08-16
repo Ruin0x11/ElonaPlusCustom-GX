@@ -8252,7 +8252,7 @@
 			}
 			goto *effect_end
 		}
-		if ( cdata(CDATA_AREA, tc) != 0 ) {
+		if ( cdata(CDATA_AREA, tc) != AREA_NONE ) {
 			txt lang("その仲間はこの場所に滞在中だ。", "The ally currently stays in this area.")
 			goto *effect_end
 		}
@@ -8889,7 +8889,7 @@
 		cxinit = cdata(CDATA_X, cc)
 		cyinit = cdata(CDATA_Y, cc)
 		gosub *place_chara
-		cdata(CDATA_AREA, rc) = 0
+		cdata(CDATA_AREA, rc) = AREA_NONE
 		txtef COLOR_YELLOW
 		txt cnven(cdatan(CDATAN_NAME, rc)) + lang("は復活した！", " " + have(rc) + " been resurrected!")
 		txtvalid = 0
@@ -14869,7 +14869,7 @@
 				}
 				map(cdata(CDATA_X, rc), cdata(CDATA_Y, rc), MAP_CHARA_INDEX_PLUS_ONE) = 0
 				cdata(CDATA_EXIST, rc) = CHAR_STATE_ALLY_WAIT
-				cdata(CDATA_AREA, rc) = 0
+				cdata(CDATA_AREA, rc) = AREA_NONE
 				if ( cdata(CDATA_IN_TAGTEAM, rc) == (-1) ) {
 					ttc = cdata(CDATA_TAGTEAM_PARTNER, rc)
 					cell_setchara ttc, cdata(CDATA_X, rc), cdata(CDATA_Y, rc)
@@ -14905,7 +14905,7 @@
 			cxinit = cdata(CDATA_X, CHARA_PLAYER)
 			cyinit = cdata(CDATA_Y, CHARA_PLAYER)
 			gosub *place_chara
-			cdata(CDATA_AREA, rc) = 0
+			cdata(CDATA_AREA, rc) = AREA_NONE
 		}
 		gosub *screen_draw
 		return 0

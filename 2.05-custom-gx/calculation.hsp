@@ -2052,6 +2052,29 @@
 				regen = 0
  			}
 		}
+
+		/********** ORIGINAL - BEGINNING ********** // Remove thirst mechanic.
+
+		if ( cdata(CDATA_THIRST, r1) < 2000 ) {
+			if ( cdata(CDATA_CONDITION_WET, r1) <= 0 ) {
+				if ( gdata(GDATA_FLAG_GAME_MODE) != 5 ) {
+					if ( cdata(CDATA_THIRST, r1) < 1000 ) {
+						if ( cdata(CDATA_SP, r1) > (-100) ) {
+							if ( tc == CHARA_PLAYER ) {
+								dmgsp CHARA_PLAYER, rnd(10) + 10
+							}
+							if ( tc != CHARA_PLAYER ) {
+								dmgspt tc, rnd(10) + 10
+							}
+						}
+					}
+					regen = 0
+				}
+			}
+		}
+
+		 ********** ORIGINAL - ENDING **********/
+
 		if ( gdata(GDATA_SLEEP) >= 30 ) {
 			if ( gdata(GDATA_TURN) \ 100 == 0 ) {
 				txt lang("あなたは眠りを必要としている。", "You need to sleep.")
@@ -2060,8 +2083,10 @@
 				regen = 0
 			}
 			if ( gdata(GDATA_SLEEP) >= 50 ) {
-				regen = 0
-				dmgsp r1, 1
+				if ( cdata(CDATA_SP, r1) > (-100) ) {
+					regen = 0
+					dmgsp r1, 1
+				}
 			}
 		}
 	}
