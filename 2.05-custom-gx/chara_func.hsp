@@ -4910,6 +4910,21 @@
 			}
 		}
 	}
+
+	/********** ORIGINAL - BEGINNING ********** // Remove chain attacks.
+
+	if ( cdata(CDATA_CHAIN_ATTACK_COUNT, dmghp_charid) >= 50 ) {
+		locvar_dmghp_dmg = locvar_dmghp_dmg / 10 * (10 - cdata(CDATA_CHAIN_ATTACK_COUNT, dmghp_charid) / 20)
+		if ( cdata(CDATA_CHAIN_ATTACK_COUNT, dmghp_charid) >= 200 ) {
+			locvar_dmghp_dmg = 1
+		}
+	}
+	if ( gdata(GDATA_TEMPORARY_FLAGS2) == 0 ) {
+		cdata(CDATA_CHAIN_ATTACK_COUNT, dmghp_charid)++
+	}
+
+	 ********** ORIGINAL - ENDING **********/
+
 	if ( cbit(CHARA_BIT_CONTINGENCY, dmghp_charid) ) {
 		if ( cdata(CDATA_HP, dmghp_charid) - locvar_dmghp_dmg <= 0 ) {
 			if ( limit(25 + cdata(STARTING_CDATA_BUFF + findbuff(dmghp_charid, BUFF_CONTINGENCY) * ARRAY_CDATA_BUFF + 1, dmghp_charid) / 17, 25, 80) >= rnd(100) ) {
