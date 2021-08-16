@@ -1,7 +1,6 @@
+#define NET_PORT 9292
+
 #deffunc net_send str net_send_arg1, int net_send_arg2
-	if ( locvar_net_send_jp ) {
-		return 0
-	}
 	if ( cfg_net == 0 ) {
 		return 0
 	}
@@ -19,7 +18,7 @@
 			return 1
 		}
 	}
-	locvar_net_send_conurl = "hpcgi3.nifty.com"
+	locvar_net_send_conurl = cgiurl2
 	if ( net_send_arg2 == 1 ) {
 		locvar_net_send_conurl = cgiurl3
 		locvar_net_send_url = votesendurl
@@ -33,7 +32,10 @@
 	if ( net_send_arg2 == 0 ) {
 		locvar_net_send_conurl = cgiurl2
 	}
-	sockopen 0, locvar_net_send_conurl, 80
+	if ( dbg_net ) {
+		dialog "OPEN " + locvar_net_send_conurl + " " + net_send_arg2
+	}
+	sockopen 0, locvar_net_send_conurl, NET_PORT
 	if ( stat ) {
 		sockclose
 		txt "[" + stat + "]" + lang("ネットに繋がっていない。", "You need an internet connection.")
@@ -75,14 +77,14 @@
 		locvar_net_send_conurl = "homepage3.nifty.com"
 	}
 	if ( net_read_arg1 == 4 ) {
-		locvar_net_send_url = "http://homepage3.nifty.com/rfish/file/server.txt"
-		locvar_net_send_conurl = "homepage3.nifty.com"
+		locvar_net_send_url = "http://www.noaneko.squares.net/file/server.txt"
+		locvar_net_send_conurl = "noaneko.squares.net"
 	}
 	if ( net_read_arg1 == 6 ) {
 		locvar_net_send_url = "/rfish/userfile/cliplog.txt"
 		locvar_net_send_conurl = "homepage3.nifty.com"
 	}
-	sockopen 0, locvar_net_send_conurl, 80
+	sockopen 0, locvar_net_send_conurl, NET_PORT
 	if ( stat ) {
 		sockclose
 		return 0
@@ -296,44 +298,38 @@
 	sdim cgiurl3
 	sdim serverlist, 200
 	notesel serverlist
-	net_read 4
-	if ( stat == 1 & cfg_serverlist == 0 ) {
-		serverlist = netbuf
-	}
-	else {
+	; net_read 4
+	; if ( cfg_serverlist == 0 ) {
+	; 	serverlist = "elochat.nori.agency%elochat.nori.agency%"
+	; }
+	; else {
 		noteload exedir + "server.txt"
 		netbuf = serverlist
-	}
-	if ( serverlist == "noaneko.squares.net%elona.squares.net%" | serverlist == "noaneko.squares.net%noaneko.squares.net%" ) {
-		serverlist = "That server setting is disabled"
-		netbuf = "That server setting is disabled"
-		dialog "" + serverlist
-		return
-	}
+	; }
 	p = instr(netbuf, 0, "%")
 	cgiurl2 = strmid(netbuf, 0, p)
 	cgiurl3 = strmid(netbuf, p + 1, instr(netbuf, p + 1, "%"))
+	if ( dbg_net ) {
+		dialog "SERVER " + cgiurl2 + " " + cgiurl3
+	}
 	notesave exedir + "server.txt"
 	if ( jp ) {
-		chatreadurl = "http://www." + cgiurl2 + "/log.txt"
-		chatsendurl = "http://www." + cgiurl2 + "/cgi-bin/wtalk/wtalk2.cgi?mode=regist"
-		votesendurl = "http://www." + cgiurl3 + "/cgi-bin/vote/votec.cgi?no=1&mode=wri"
-		votereadurl = "http://www." + cgiurl3 + "/vote.txt"
+		chatreadurl = "http://" + cgiurl2 + "/log.txt"
+		chatsendurl = "http://" + cgiurl2 + "/cgi-bin/wtalk/wtalk2.cgi?mode=regist"
+		votesendurl = "http://" + cgiurl3 + "/cgi-bin/vote/votec.cgi?no=1&mode=wri"
+		votereadurl = "http://" + cgiurl3 + "/vote.txt"
 	}
 	else {
-		chatreadurl = "http://www." + cgiurl2 + "/logen.txt"
-		chatsendurl = "http://www." + cgiurl2 + "/cgi-bin/wtalken/wtalk2.cgi?mode=regist"
-		votesendurl = "http://www." + cgiurl3 + "/cgi-bin/vote/votec.cgi?no=0&mode=wri"
-		votereadurl = "http://www." + cgiurl3 + "/voteen.txt"
+		chatreadurl = "http://" + cgiurl2 + "/logen.txt"
+		chatsendurl = "http://" + cgiurl2 + "/cgi-bin/wtalken/wtalk2.cgi?mode=regist"
+		votesendurl = "http://" + cgiurl3 + "/cgi-bin/vote/votec.cgi?no=0&mode=wri"
+		votereadurl = "http://" + cgiurl3 + "/voteen.txt"
 	}
-	textreadurl = "http://www." + cgiurl3 + "/text.txt"
+	textreadurl = "http://" + cgiurl3 + "/text.txt"
 	return
 
 *net_chat
-	if ( jp ) {
-		return 0
-	}
-	if ( chatdeny == 1 ) {
+	if ( develop == 0 & chatdeny == 1 ) {
 		if ( chatturn > 20 ) {
 			chatdeny = 0
 		}
