@@ -993,7 +993,7 @@
 	}
 	if ( gdata(GDATA_RIDER) != 0 ) {
 		if ( cdata(CDATA_RIDING, gdata(GDATA_RIDER)) == 0 ) {
-			cdata(CDATA_SPEED, CHARA_PLAYER) = sdata(SKILL_ATTR_SPD, gdata(GDATA_RIDER)) * 100 / limit(100 + sdata(SKILL_ATTR_SPD, gdata(GDATA_RIDER)) - sdata(SKILL_ATTR_STR, gdata(GDATA_RIDER)) * 3 / 2 - sdata(SKILL_ACTIVE_RIDING, gdata(GDATA_RIDER)) * 1 / 2 - sdata(SKILL_ACTIVE_RIDING, CHARA_PLAYER) * 2 - (cbit(CHARA_BIT_SUPERIOR_RIDING, gdata(GDATA_RIDER)) == 1) * 50, 100, 1000)
+			cdata(CDATA_SPEED, CHARA_PLAYER) = sdata(SKILL_ATTR_SPD, gdata(GDATA_RIDER)) * 100 / limit(100 + sdata(SKILL_ATTR_SPD, gdata(GDATA_RIDER)) - sdata(SKILL_ATTR_STR, gdata(GDATA_RIDER)) * 3 / 2 - sdata(SKILL_ACTIVE_RIDING, gdata(GDATA_RIDER)) * 1 / 2 - sdata(SKILL_ACTIVE_RIDING, CHARA_PLAYER) * 2 - (cbit(CHARA_BIT_SUPERIOR_RIDING, gdata(GDATA_RIDER)) == TRUE) * 50, 100, 1000000)
 			if ( cbit(CHARA_BIT_INFERIOR_RIDING, gdata(GDATA_RIDER)) ) {
 				cdata(CDATA_SPEED, CHARA_PLAYER) /= 10
 			}
@@ -1005,7 +1005,7 @@
 		if ( cdata(CDATA_RIDING, gdata(GDATA_RIDER)) == 1 ) {
 			cdata(CDATA_SPEED, CHARA_PLAYER) = limit(sdata(SKILL_ATTR_STR, CHARA_PLAYER) + sdata(SKILL_ACTIVE_RIDING, gdata(GDATA_RIDER)), 10, sdata(SKILL_ATTR_SPD, CHARA_PLAYER))
 			if ( gdata(GDATA_RIDER) == refreshspeed_arg1 ) {
-				cdata(CDATA_SPEED, refreshspeed_arg1) = sdata(SKILL_ATTR_SPD, CHARA_PLAYER) * 100 / limit(100 + sdata(SKILL_ATTR_SPD, CHARA_PLAYER) - sdata(SKILL_ATTR_STR, CHARA_PLAYER) * 3 / 2 - sdata(SKILL_ACTIVE_RIDING, CHARA_PLAYER) * 1 / 2 - sdata(SKILL_ACTIVE_RIDING, refreshspeed_arg1) * 2, 100, 1000)
+				cdata(CDATA_SPEED, refreshspeed_arg1) = sdata(SKILL_ATTR_SPD, CHARA_PLAYER) * 100 / limit(100 + sdata(SKILL_ATTR_SPD, CHARA_PLAYER) - sdata(SKILL_ATTR_STR, CHARA_PLAYER) * 3 / 2 - sdata(SKILL_ACTIVE_RIDING, CHARA_PLAYER) * 1 / 2 - sdata(SKILL_ACTIVE_RIDING, refreshspeed_arg1) * 2, 100, 1000000)
 				if ( cdata(CDATA_SPEED, refreshspeed_arg1) > sdata(SKILL_ATTR_SPD, refreshspeed_arg1) * 3 ) {
 					cdata(CDATA_SPEED, refreshspeed_arg1) = sdata(SKILL_ATTR_SPD, refreshspeed_arg1) * 3
 				}

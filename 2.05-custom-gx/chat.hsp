@@ -22261,21 +22261,27 @@
 			if ( p >= 160 ) {
 				p = p - 160
 			}
+			pos wx + 42, wy + 42
+			gzoom 80, 112, 4, p \ 16 * 48, p / 16 * 72, 48, 72
 		}
-		if ( cdata(CDATA_PORTRAIT, tc) >= 0 ) {
-			if ( evochat < 2 ) {
-				pos wx + 42, wy + 42
-				gzoom 80, 112, 4, p \ 16 * 48, p / 16 * 72, 48, 72
+		if ( scenemode == FALSE ) {
+			if ( cdata(CDATA_PORTRAIT, tc) >= 0 ) {
+				if ( evochat < 2 ) {
+					pos wx + 42, wy + 42
+					gzoom 80, 112, 4, p \ 16 * 48, p / 16 * 72, 48, 72
+				}
 			}
 		}
-		if ( cdata(CDATA_PORTRAIT, tc) < 0 ) {
-			s = exedir + "user\\graphic\\face" + abs(cdata(CDATA_PORTRAIT, tc) + 1) + ".bmp"
-			exist s
-			if ( cdata(CDATA_PORTRAIT, tc) != (-1) ) {
-				if ( strsize != (-1) ) {
-					if ( evochat < 2 ) {
-						pos wx + 42, wy + 42
-						picload s, 1
+		if ( scenemode == FALSE ) {
+			if ( cdata(CDATA_PORTRAIT, tc) < 0 ) {
+				s = exedir + "user\\graphic\\face" + abs(cdata(CDATA_PORTRAIT, tc) + 1) + ".bmp"
+				exist s
+				if ( cdata(CDATA_PORTRAIT, tc) != (-1) ) {
+					if ( strsize != (-1) ) {
+						if ( evochat < 2 ) {
+							pos wx + 42, wy + 42
+							picload s, 1
+						}
 					}
 				}
 			}

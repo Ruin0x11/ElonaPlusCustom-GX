@@ -6114,7 +6114,8 @@
 	if ( gdata(GDATA_TEMPORARY_FLAGS2) == 1200 ) {
 		tohit = tohit * 2
 	}
-	evade = sdata(SKILL_ATTR_PER, tc) / 6 + sdata(SKILL_NORMAL_EVASION, tc) + cdata(CDATA_DV, tc) * 2 * 7 / 4 + 25 - cdata(CDATA_EVASION_PENALTY, tc) * 100
+	hoseidv = cdata(CDATA_DV, tc) * cdata(CDATA_DV_FIX, tc) / 100 + cdata(CDATA_DV_FIX, tc) - 100
+	evade = sdata(SKILL_ATTR_PER, tc) / 6 + sdata(SKILL_NORMAL_EVASION, tc) + hoseidv * 2 * 7 / 4 + 25 - cdata(CDATA_EVASION_PENALTY, tc) * 100
 	if ( cdata(CDATA_DIRECTIVE_MODE, tc) == DIRECTIVE_MODE_DEFENSIVE ) {
 		evade += sdata(SKILL_NORMAL_SHIELD, tc) + sdata(SKILL_ATTR_CON, tc) / 6
 	}
@@ -6518,7 +6519,8 @@
 	if ( calcattackdmg_arg1 == 1 ) {
 		return damage
 	}
-	prot = cdata(CDATA_PV, tc) + limit(limit(sdata(carmor(tc), tc), 0, 300) - cdata(CDATA_PROT_PENALTY, tc) * 100, 0, 300) + sdata(SKILL_ATTR_DEX, tc) / 10
+	hoseipv = (cdata(CDATA_PV, tc) + cdata(CDATA_PV_FIX, tc) / 25) * cdata(CDATA_PV_FIX, tc) / 100
+	prot = hoseipv + limit(limit(sdata(carmor(tc), tc), 0, 300) - cdata(CDATA_PROT_PENALTY, tc) * 100, 0, 300) + sdata(SKILL_ATTR_DEX, tc) / 10
 	if ( calcattackdmg_arg1 == 0 ) {
 		if ( cdata(CDATA_CONDITION_JIU_JITSU, cc) != 0 ) {
 			prot = cdata(CDATA_DV, tc) + limit(limit(sdata(SKILL_NORMAL_LIGHT_ARMOR, tc), 0, 300) - cdata(CDATA_PROT_PENALTY, tc) * 100, 0, 300) + sdata(SKILL_ATTR_DEX, tc) / 10
@@ -7251,9 +7253,9 @@
 	if ( cdata(CDATA_MAX_HP, r1) < 1 ) {
 		cdata(CDATA_MAX_HP, r1) = 1
 	}
-	if ( r1 >= 57 ) {
-		cdata(CDATA_DV, r1) = cdata(CDATA_DV, r1) * cdata(CDATA_DV_FIX, r1) / 100 + cdata(CDATA_DV_FIX, r1) - 100
-		cdata(CDATA_PV, r1) = (cdata(CDATA_PV, r1) + cdata(CDATA_PV_FIX, r1) / 25) * cdata(CDATA_PV_FIX, r1) / 100
+	if ( r1 >= 57 & cdata(CDATA_ALLIED, r1) == 0 & rc != CHARA_PLAYER ) {
+		cdata(CDATA_DV, r1) += limit(cdata(CDATA_LEVEL, r1) / 2, 1, 200)
+		cdata(CDATA_PV, r1) += limit(cdata(CDATA_LEVEL, r1) / 2, 1, 200)
 		if ( cdata(CDATA_QUALITY, r1) == FIX_QUALITY_GREAT ) {
 			cdata(CDATA_MAX_HP, r1) = cdata(CDATA_MAX_HP, r1) * 3 / 2
 		}
