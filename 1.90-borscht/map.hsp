@@ -3598,7 +3598,7 @@
 			gdatan(GDATAN_TEAM2) = random_title(2)
 			evadd EVENT_ROGUE
 		}
-		if ( encounter == 5 ) {
+		if ( encounter == ENCOUNTER_CHESTNUT_GIANT ) {
 			flt
 			initlv = encounterlv
 			characreate -1, CREATURE_ID_CHESTNUT_GIANT, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER)
@@ -8169,7 +8169,7 @@
 				}
 			if ( cdata(cnt, r1) \ EXT_EQUIP_SLOTS != 0 ) {
 					if ( p == 5 ) {
-						if ( refitem(inv(INV_ITEM_ID, cdata(cnt, r1) \ EXT_EQUIP_SLOTS - 1), DBSPEC_ITEM_TYPE) != FILTER_WEAPON ) {
+						if ( refitem(inv(INV_ITEM_ID, cdata(cnt, r1) \ EXT_EQUIP_SLOTS - 1), DBSPEC_TYPE) != FILTER_WEAPON ) {
 							inv(INV_ITEM_EQUIP, cdata(cnt, r1) \ EXT_EQUIP_SLOTS - 1) = 0
 						}
 					}

@@ -10046,7 +10046,7 @@
 			inv_getheader 0
 			repeat invrange, invhead
 				if ( inv(INV_ITEM_NUM, cnt) > 0 ) {
-					if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_ITEM_CARGO) == 1 ) {
+					if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_CARGO) == 1 ) {
 						txtmore
 						txt lang(itemname(cnt) + "を渡した。", "You hand over " + itemname(cnt) + ".")
 						inv(INV_ITEM_NUM, cnt) = 0
@@ -38583,7 +38583,7 @@
 						continue
 					}
 					if ( qdata(QDATA_EXIST, rq) == QUEST_TYPE_COOK ) {
-						if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_ITEM_TYPE) == FILTER_ITEM_FOOD ) {
+						if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_TYPE) == FILTER_ITEM_FOOD ) {
 							if ( inv(INV_ITEM_PARAM1, cnt) / 1000 == qdata(QDATA_PARAM1, rq) ) {
 								if ( inv(INV_ITEM_PARAM2, cnt) == qdata(QDATA_PARAM2, rq) ) {
 									supply = cnt
@@ -43449,7 +43449,7 @@
 			}
 			inv(INV_ITEM_NUM, ci) = inv(INV_ITEM_NUM, ci) * (100 + cdata(CDATA_ROLE_SHOP_LEVEL, tc)) / 75 + 1
 		}
-		p = refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE)
+		p = refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE)
 		if ( inv(INV_ITEM_STATUS, ci) == ITEM_STATUS_CURSED | inv(INV_ITEM_STATUS, ci) == ITEM_STATUS_DOOMED ) {
 			inv(INV_ITEM_NUM, ci) = 0
 			continue
@@ -43463,7 +43463,7 @@
 			}
 		}
 		if ( p == 57000 ) {
-			if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE_MINOR) == FILTER_ITEM_SEED ) {
+			if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE_MINOR) == FILTER_ITEM_SEED ) {
 				if ( rnd(5) ) {
 					inv(INV_ITEM_NUM, ci) = 0
 				}
@@ -43514,8 +43514,8 @@
 	return
 
 *item_quantity
-	p = refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE)
-	i = refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_RARE_LEVEL)
+	p = refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE)
+	i = refitem(inv(INV_ITEM_ID, ci), DBSPEC_RARE_LEVEL)
 	rtval = 1
 	repeat 1
 		if ( i <= 100 ) {

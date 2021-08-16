@@ -290,7 +290,7 @@
 	repeat invrange, invhead
 		p(2)++
 		if ( inv(INV_ITEM_NUM, cnt) != 0 ) {
-			if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_ITEM_TYPE) != FILTER_FURNITURE ) {
+			if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_TYPE) != FILTER_FURNITURE ) {
 				p++
 			}
 			else {
@@ -1647,7 +1647,7 @@
 				continue
 			}
 		}
-		a = refitem(inv(INV_ITEM_ID, cnt), DBSPEC_ITEM_TYPE)
+		a = refitem(inv(INV_ITEM_ID, cnt), DBSPEC_TYPE)
 		if ( a == 60000 & inv(INV_ITEM_ID, cnt) != ITEM_ID_WILD_FLOWER ) {
 			continue
 		}
@@ -1669,22 +1669,22 @@
 			}
 		}
 		if ( adata(ADATA_SHOP_TYPE, area) == SHOP_TYPE_FOOD ) {
-			if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_ITEM_FOOD ) {
+			if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_ITEM_FOOD ) {
 				val = val * 6 / 5
 			}
 		}
 		if ( adata(ADATA_SHOP_TYPE, area) == SHOP_TYPE_MAGIC ) {
-			if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_ITEM_SCROLL | refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_ITEM_SPELLBOOK | refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_ITEM_ROD | inv(INV_ITEM_ID, ci) == ITEM_ID_OHUDA ) {
+			if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_ITEM_SCROLL | refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_ITEM_SPELLBOOK | refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_ITEM_ROD | inv(INV_ITEM_ID, ci) == ITEM_ID_OHUDA ) {
 				val = val * 6 / 5
 			}
 		}
 		if ( adata(ADATA_SHOP_TYPE, area) == SHOP_TYPE_BLACKSMITH ) {
-			if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_WEAPON | refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_RANGE | refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_AMMO | refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_HELM | refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_ARMOR | refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_CLOAK | refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_GIRDLE | refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_BOOTS | refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_GLOVES | refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_SHIELD | refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_ACCESSORY_RING | refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_ACCESSORY_AMULET ) {
+			if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_WEAPON | refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_RANGE | refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_AMMO | refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_HELM | refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_ARMOR | refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_CLOAK | refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_GIRDLE | refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_BOOTS | refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_GLOVES | refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_SHIELD | refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_ACCESSORY_RING | refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_ACCESSORY_AMULET ) {
 				val = val * 6 / 5
 			}
 		}
 		if ( adata(ADATA_SHOP_TYPE, area) == SHOP_TYPE_INN ) {
-			if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_CONTAINER | refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_ITEM_POTION ) {
+			if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_CONTAINER | refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_ITEM_POTION ) {
 				val = val * 6 / 5
 			}
 		}
@@ -1703,28 +1703,28 @@
 			}
 		}
 		if ( adata(ADATA_SHOP_TYPE, area) == SHOP_TYPE_FOOD ) {
-			if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) != FILTER_ITEM_FOOD ) {
+			if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) != FILTER_ITEM_FOOD ) {
 				if ( rnd(5) ) {
 					continue
 				}
 			}
 		}
 		if ( adata(ADATA_SHOP_TYPE, area) == SHOP_TYPE_MAGIC ) {
-			if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) != FILTER_ITEM_SCROLL & refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) != FILTER_ITEM_SPELLBOOK & refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) != FILTER_ITEM_ROD & inv(INV_ITEM_ID, ci) != ITEM_ID_OHUDA ) {
+			if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) != FILTER_ITEM_SCROLL & refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) != FILTER_ITEM_SPELLBOOK & refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) != FILTER_ITEM_ROD & inv(INV_ITEM_ID, ci) != ITEM_ID_OHUDA ) {
 				if ( rnd(5) ) {
 					continue
 				}
 			}
 		}
 		if ( adata(ADATA_SHOP_TYPE, area) == SHOP_TYPE_BLACKSMITH ) {
-			if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) != FILTER_WEAPON & refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) != FILTER_RANGE & refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) != FILTER_AMMO & refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) != FILTER_HELM & refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) != FILTER_ARMOR & refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) != FILTER_CLOAK & refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) != FILTER_GIRDLE & refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) != FILTER_BOOTS & refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) != FILTER_GLOVES & refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) != FILTER_SHIELD & refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) != FILTER_ACCESSORY_RING & refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) != FILTER_ACCESSORY_AMULET ) {
+			if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) != FILTER_WEAPON & refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) != FILTER_RANGE & refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) != FILTER_AMMO & refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) != FILTER_HELM & refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) != FILTER_ARMOR & refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) != FILTER_CLOAK & refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) != FILTER_GIRDLE & refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) != FILTER_BOOTS & refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) != FILTER_GLOVES & refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) != FILTER_SHIELD & refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) != FILTER_ACCESSORY_RING & refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) != FILTER_ACCESSORY_AMULET ) {
 				if ( rnd(5) ) {
 					continue
 				}
 			}
 		}
 		if ( adata(ADATA_SHOP_TYPE, area) == SHOP_TYPE_INN ) {
-			if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) != FILTER_CONTAINER & refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) != FILTER_ITEM_POTION ) {
+			if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) != FILTER_CONTAINER & refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) != FILTER_ITEM_POTION ) {
 				if ( rnd(5) ) {
 					continue
 				}
@@ -1750,7 +1750,7 @@
 		sold += in
 		val = val * in
 		if ( rnd(4) == 0 ) {
-			list(0, listmax) = refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_OBJ_LEVEL), inv(INV_ITEM_QUALITY, ci)
+			list(0, listmax) = refitem(inv(INV_ITEM_ID, ci), DBSPEC_OBJ_LEVEL), inv(INV_ITEM_QUALITY, ci)
 			listn(0, listmax) = str(a), str(val)
 			listmax++
 		}
@@ -2116,7 +2116,7 @@
 	return
 
 *house_value
-	a = refitem(inv(INV_ITEM_ID, val), DBSPEC_ITEM_TYPE)
+	a = refitem(inv(INV_ITEM_ID, val), DBSPEC_TYPE)
 	if ( a == 60000 ) {
 		gdata(GDATA_HOME_FURNITURE) += limit(inv(INV_ITEM_VALUE, val) / 50, 50, 500)
 	}

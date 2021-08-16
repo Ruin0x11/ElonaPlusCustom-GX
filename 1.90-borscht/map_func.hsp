@@ -413,7 +413,7 @@
 	repeat invrange, invhead
 		if ( inv(INV_ITEM_NUM, cnt) > 0 ) {
 			if ( inv(INV_ITEM_PROPERTY, cnt) == PROPERTY_NPC ) {
-				if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_ITEM_TYPE) == FILTER_ITEM_FOOD ) {
+				if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_TYPE) == FILTER_ITEM_FOOD ) {
 					inv(INV_ITEM_NUM, cnt) = 0
 					cell_refresh inv(INV_ITEM_X, cnt), inv(INV_ITEM_Y, cnt)
 				}
@@ -2510,7 +2510,7 @@
 			}
 		}
 		if ( meditfilterlist(meditfilter) != 0 ) {
-			if ( refitem(cnt, DBSPEC_ITEM_TYPE) != meditfilterlist(meditfilter) ) {
+			if ( refitem(cnt, DBSPEC_TYPE) != meditfilterlist(meditfilter) ) {
 				continue
 			}
 		}

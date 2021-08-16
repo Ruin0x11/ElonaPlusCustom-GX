@@ -1,5 +1,5 @@
 #deffunc convertartifact int convertartifact_arg1, int convertartifact_arg2
-	if ( refitem(inv(INV_ITEM_ID, convertartifact_arg1), DBSPEC_ITEM_TYPE) >= FILTER_ITEM_MIN ) {
+	if ( refitem(inv(INV_ITEM_ID, convertartifact_arg1), DBSPEC_TYPE) >= FILTER_ITEM_MIN ) {
 		return convertartifact_arg1
 	}
 	if ( inv(INV_ITEM_QUALITY, convertartifact_arg1) != FIX_QUALITY_UNIQUE ) {
@@ -161,7 +161,7 @@
 					}
 				}
 			}
-			if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_CARGO) == 1 ) {
+			if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_CARGO) == 1 ) {
 				if ( mdata(MDATA_TYPE) != MAP_TYPE_WORLD & mdata(MDATA_TYPE) != MAP_TYPE_HOME & mdata(MDATA_TYPE) != MAP_TYPE_TOWN & mdata(MDATA_TYPE) != MAP_TYPE_LOCAL & mdata(MDATA_TYPE) != MAP_TYPE_FIELD & mdata(MDATA_TYPE) != MAP_TYPE_VILLAGE ) {
 					continue
 				}
@@ -472,12 +472,12 @@
 		}
 		if ( catitem > 0 ) {
 			if ( ibit(ITEM_BIT_REMAKE, ci) == FALSE ) {
-				if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) < FILTER_ITEM_MIN ) {
+				if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) < FILTER_ITEM_MIN ) {
 					if ( inv(INV_ITEM_QUALITY, ci) >= FIX_QUALITY_GREAT ) {
 						txtef COLOR_SKY_BLUE
 						txt name(catitem) + "は" + itemname(ci) + "をぺろぺろと舐めた。"
 						ibitmod ITEM_BIT_REMAKE, ci, TRUE
-						reftype = refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE)
+						reftype = refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE)
 						if ( (sdata(SKILL_ATTR_MAG, rc) + sdata(SKILL_ATTR_MAG, catitem)) \ 2 == 0 ) {
 							if ( (sdata(SKILL_ATTR_MAG, rc) + sdata(SKILL_ATTR_LUC, CHARA_PLAYER)) \ 10 == 0 ) {
 								encadd ci, ENCHANT_RESISTANCE * EXT_ENCHANTMENT + SKILL_RES_FIRE, 101, 0, 1
@@ -1902,7 +1902,7 @@
 			continue
 		}
 		if ( sensep > 5 | cdata(CDATA_ROW_ACT, CHARA_PLAYER) == ACTION_NONE ) {
-			if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_ITEM_TYPE) >= FILTER_ITEM_MIN ) {
+			if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_TYPE) >= FILTER_ITEM_MIN ) {
 				continue
 			}
 		}
@@ -1912,18 +1912,18 @@
 			s = itemname(ci)
 			item_identify ci, ITEM_KNOWN_FULL
 			itemmemory(0, inv(INV_ITEM_ID, ci)) = 1
-			if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_ITEM_TYPE) < FILTER_ITEM_MIN ) {
+			if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_TYPE) < FILTER_ITEM_MIN ) {
 				if ( cfg_hideautoidentify <= 1 ) {
 					txt lang("バックパックの中の" + s + "は" + itemname(ci) + "だと判明した。", "You appraise " + s + " as " + itemname(ci) + ".")
 				}
 			}
-			if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_ITEM_TYPE) >= FILTER_ITEM_MIN ) {
+			if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_TYPE) >= FILTER_ITEM_MIN ) {
 				sensep++
 				item_stack CHARA_PLAYER, ci, 1
 			}
 			skillexp SKILL_NORMAL_SENSE_QUALITY, CHARA_PLAYER, 50
 		}
-		if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_ITEM_TYPE) < FILTER_ITEM_MIN ) {
+		if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_TYPE) < FILTER_ITEM_MIN ) {
 			if ( inv(INV_ITEM_KNOWN, ci) < ITEM_KNOWN_QUALITY ) {
 				if ( p > rnd(p(1)) ) {
 					if ( cfg_hideautoidentify == 0 ) {
@@ -1948,7 +1948,7 @@
 		}
 		if ( rnd(13) == 0 ) {
 			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_CURSED
-			if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) < FILTER_ITEM_MIN ) {
+			if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) < FILTER_ITEM_MIN ) {
 				if ( rnd(4) == 0 ) {
 					inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_DOOMED
 				}
@@ -2773,7 +2773,7 @@
 		fdlist(0, cnt) = 0, 0
 	loop
 	nutrition = 2500
-	if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_CARGO) == 1 ) {
+	if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_CARGO) == 1 ) {
 		nutrition += 2500
 	}
 	if ( ibit(ITEM_BIT_HERBED_IN, ci) == TRUE ) {
@@ -3450,7 +3450,7 @@
 		}
 	}
 	cdata(CDATA_HUNGER, cc) += nutrition
-	if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_ITEM_FOOD ) {
+	if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_ITEM_FOOD ) {
 		if ( cc == CHARA_PLAYER ) {
 			if ( inv(INV_ITEM_PARAM2, ci) >= 3 ) {
 				healsp CHARA_PLAYER, limit(inv(INV_ITEM_LEVEL, ci) * 3 / 2 + inv(INV_ITEM_PARAM2, ci), 3, 31)

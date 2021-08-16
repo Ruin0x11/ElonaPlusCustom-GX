@@ -110,7 +110,7 @@
 				}
 			}
 			if ( item_find_mode == ITEM_FIND_MODE_TYPE ) {
-				if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_ITEM_TYPE) == item_find_query ) {
+				if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_TYPE) == item_find_query ) {
 					locvar_item_find_p = cnt
 				}
 			}
@@ -122,7 +122,7 @@
 				}
 			}
 			if ( item_find_mode == ITEM_FIND_MODE_TYPE_MINOR ) {
-				if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_ITEM_TYPE_MINOR) == item_find_query ) {
+				if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_TYPE_MINOR) == item_find_query ) {
 					locvar_item_find_p = cnt
 				}
 			}
@@ -266,7 +266,7 @@
 			if ( inv(INV_ITEM_NUM, cnt) == 0 ) {
 				continue
 			}
-			if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_ITEM_TYPE_MINOR) == itemfind_y ) {
+			if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_TYPE_MINOR) == itemfind_y ) {
 				locvar_itemusingfind_f = cnt
 				break
 			}
@@ -661,7 +661,7 @@
 		}
 	}
 	if ( locvar_item_identify_idlv >= 2 ) {
-		if ( refitem(inv(INV_ITEM_ID, item_identify_itemid), DBSPEC_ITEM_TYPE) >= FILTER_ITEM_MIN ) {
+		if ( refitem(inv(INV_ITEM_ID, item_identify_itemid), DBSPEC_TYPE) >= FILTER_ITEM_MIN ) {
 			locvar_item_identify_idlv = 3
 		}
 	}
@@ -912,7 +912,7 @@
 	else {
 		locvar_itemname_num2 = itemname_arg2
 	}
-	locvar_itemowner_a = refitem(inv(INV_ITEM_ID, itemname_itemid), DBSPEC_ITEM_TYPE)
+	locvar_itemowner_a = refitem(inv(INV_ITEM_ID, itemname_itemid), DBSPEC_TYPE)
 	if ( jp ) {
 		if ( locvar_itemname_num2 > 1 ) {
 			locvar_itemname_s2 = "個の"
@@ -1522,7 +1522,7 @@
 		if ( ibit(ITEM_BIT_CHARGE_ITEM, itemname_itemid) == TRUE ) {
 			locvar_itemowner_s += lang("(残り" + inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), itemname_itemid) + "回)", "(Charges: " + inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), itemname_itemid) + ")")
 		}
-		if ( refitem(inv(INV_ITEM_ID, itemname_itemid), DBSPEC_ITEM_TYPE) == FILTER_ITEM_FOOD ) {
+		if ( refitem(inv(INV_ITEM_ID, itemname_itemid), DBSPEC_TYPE) == FILTER_ITEM_FOOD ) {
 			if ( inv(INV_ITEM_PARAM1, itemname_itemid) != 0 ) {
 				if ( inv(INV_ITEM_PARAM2, itemname_itemid) != 0 ) {
 					locvar_itemowner_s += "(Rank" + inv(INV_ITEM_PARAM2, itemname_itemid) + ")"
@@ -1769,7 +1769,7 @@
 	inv_getheader item_stack_charid
 	locvar_item_stack_p = 0
 	if ( inv(INV_ITEM_QUALITY, item_stack_itemid) == FIX_QUALITY_UNIQUE ) {
-		if ( refitem(inv(INV_ITEM_ID, item_stack_itemid), DBSPEC_ITEM_TYPE) < FILTER_ITEM_MIN ) {
+		if ( refitem(inv(INV_ITEM_ID, item_stack_itemid), DBSPEC_TYPE) < FILTER_ITEM_MIN ) {
 			return locvar_item_stack_p
 		}
 	}
@@ -1804,7 +1804,7 @@
 			}
 			if ( mode != MODELIST_SHOP ) {
 				if ( cnt == 9 ) {
-					if ( refitem(inv(INV_ITEM_ID, item_stack_itemid), DBSPEC_ITEM_TYPE) == FILTER_JUNK | refitem(inv(INV_ITEM_ID, item_stack_itemid), DBSPEC_ITEM_TYPE) == FILTER_FURNITURE | refitem(inv(INV_ITEM_ID, item_stack_itemid), DBSPEC_ITEM_TYPE) == FILTER_ITEM_FOOD | refitem(inv(INV_ITEM_ID, item_stack_itemid), DBSPEC_ITEM_TYPE) == FILTER_ORE ) {
+					if ( refitem(inv(INV_ITEM_ID, item_stack_itemid), DBSPEC_TYPE) == FILTER_JUNK | refitem(inv(INV_ITEM_ID, item_stack_itemid), DBSPEC_TYPE) == FILTER_FURNITURE | refitem(inv(INV_ITEM_ID, item_stack_itemid), DBSPEC_TYPE) == FILTER_ITEM_FOOD | refitem(inv(INV_ITEM_ID, item_stack_itemid), DBSPEC_TYPE) == FILTER_ORE ) {
 						continue
 					}
 				}
@@ -1842,7 +1842,7 @@
 						}
 					}
 					if ( cnt == 27 ) {
-						if ( refitem(inv(INV_ITEM_ID, item_stack_itemid), DBSPEC_ITEM_TYPE) == FILTER_ITEM_FOOD ) {
+						if ( refitem(inv(INV_ITEM_ID, item_stack_itemid), DBSPEC_TYPE) == FILTER_ITEM_FOOD ) {
 							if ( inv(INV_ITEM_PARAM3, item_stack_itemid) > inv(INV_ITEM_PARAM3, locvar_item_stack_p(1)) ) {
 								inv(INV_ITEM_PARAM3, item_stack_itemid) = inv(INV_ITEM_PARAM3, locvar_item_stack_p(1))
 							}

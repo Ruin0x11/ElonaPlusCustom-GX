@@ -2534,7 +2534,7 @@
 		}
 		return 1
 	}
-	if ( dmgcon_cond == CONDITION_ASH_BODY ) {
+	if ( dmgcon_cond == CONDITION_WINCE ) {
 		if ( findbuff(dmgcon_charid, BUFF_HOLY_VEIL) != (-1) ) {
 			locvar_dmgcon_f = 0
 		}
@@ -2562,7 +2562,7 @@
 		}
 		return 1
 	}
-	if ( dmgcon_cond == CONDITION_OVERGODS ) {
+	if ( dmgcon_cond == CONDITION_CHILLS ) {
 		if ( findbuff(dmgcon_charid, BUFF_REGENERATION) != (-1) ) {
 			locvar_dmgcon_f = 0
 		}
@@ -2993,7 +2993,7 @@
 	return
 
 #deffunc healcon int healcon_charid, int healcon_cond, int healcon_arg3
-	if ( healcon_cond == CONDITION_ASH_BODY ) {
+	if ( healcon_cond == CONDITION_WINCE ) {
 		if ( cdata(CDATA_CONDITION_WINCE, healcon_charid) > 0 ) {
 			if ( healcon_arg3 == 0 ) {
 				cdata(CDATA_CONDITION_WINCE, healcon_charid) = 0
@@ -3010,7 +3010,7 @@
 			return
 		}
 	}
-	if ( healcon_cond == CONDITION_OVERGODS ) {
+	if ( healcon_cond == CONDITION_CHILLS ) {
 		if ( cdata(CDATA_CONDITION_CHILLS, healcon_charid) > 0 ) {
 			if ( healcon_arg3 == 0 ) {
 				cdata(CDATA_CONDITION_CHILLS, healcon_charid) = 0
@@ -3920,7 +3920,7 @@
 	if ( locvar_item_acid_ci == (-1) ) {
 		return
 	}
-	if ( refitem(inv(INV_ITEM_ID, locvar_item_acid_ci), DBSPEC_ITEM_TYPE) >= FILTER_ITEM_MIN ) {
+	if ( refitem(inv(INV_ITEM_ID, locvar_item_acid_ci), DBSPEC_TYPE) >= FILTER_ITEM_MIN ) {
 		return
 	}
 	txtmore
@@ -3994,7 +3994,7 @@
 		rowact_item locvar_item_acid_ci
 		if ( ibit(ITEM_BIT_FIREPROOF, locvar_item_acid_ci) == FALSE ) {
 			if ( ibit(ITEM_BIT_PRECIOUS, locvar_item_acid_ci) == FALSE ) {
-				locvar_item_fire_a = refitem(inv(INV_ITEM_ID, locvar_item_acid_ci), DBSPEC_ITEM_TYPE)
+				locvar_item_fire_a = refitem(inv(INV_ITEM_ID, locvar_item_acid_ci), DBSPEC_TYPE)
 				if ( locvar_item_fire_a == 57000 ) {
 					if ( inv(INV_ITEM_PARAM2, locvar_item_acid_ci) == 0 ) {
 						if ( item_fire_arg1 == (-1) ) {
@@ -4183,7 +4183,7 @@
 		rowact_item locvar_item_acid_ci
 		txtmore
 		if ( ibit(ITEM_BIT_PRECIOUS, locvar_item_acid_ci) == FALSE ) {
-			locvar_item_fire_a = refitem(inv(INV_ITEM_ID, locvar_item_acid_ci), DBSPEC_ITEM_TYPE)
+			locvar_item_fire_a = refitem(inv(INV_ITEM_ID, locvar_item_acid_ci), DBSPEC_TYPE)
 			if ( item_cold_arg1 == (-1) ) {
 				locvar_item_cold_s = ""
 			}
@@ -5949,10 +5949,10 @@
 				}
 			}
 			if ( locvar_dmghp_ele == 50 ) {
-				dmgcon dmghp_charid, CONDITION_ASH_BODY, rnd(dmghp_element_power + 1)
+				dmgcon dmghp_charid, CONDITION_WINCE, rnd(dmghp_element_power + 1)
 			}
 			if ( locvar_dmghp_ele == 51 ) {
-				dmgcon dmghp_charid, CONDITION_OVERGODS, rnd(dmghp_element_power + 1)
+				dmgcon dmghp_charid, CONDITION_CHILLS, rnd(dmghp_element_power + 1)
 			}
 			if ( locvar_dmghp_ele == 53 ) {
 				dmgcon dmghp_charid, CONDITION_BLIND, rnd(dmghp_element_power + 1)

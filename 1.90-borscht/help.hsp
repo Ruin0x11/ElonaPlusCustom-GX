@@ -5293,7 +5293,7 @@
 		if ( inv(INV_ITEM_NUM, cnt) == 0 ) {
 			continue
 		}
-		i = refitem(inv(INV_ITEM_ID, cnt), DBSPEC_ITEM_TYPE)
+		i = refitem(inv(INV_ITEM_ID, cnt), DBSPEC_TYPE)
 		if ( i != 53000 & i != 52000 & i != 56000 & i != 54000 & i >= 50000 ) {
 			continue
 		}
@@ -7570,7 +7570,7 @@
 			inv_getheader 0
 			ci = rnd(invrange) + invhead
 			if ( inv(INV_ITEM_NUM, ci) > 0 ) {
-				if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_ITEM_POTION ) {
+				if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_ITEM_POTION ) {
 					dbmode = DBMODE_ON_DRINK
 					dbid = inv(INV_ITEM_ID, ci)
 					gosub *db_item
@@ -7809,19 +7809,19 @@
 			if ( inv(INV_ITEM_X, cnt) != cdata(CDATA_X, cc) | inv(INV_ITEM_Y, cnt) != cdata(CDATA_Y, cc) ) {
 				continue
 			}
-			if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_ITEM_TYPE) == FILTER_CONTAINER ) {
+			if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_TYPE) == FILTER_CONTAINER ) {
 				p = 1
 			}
-			if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_ITEM_TYPE_MINOR) == FILTER_FURNITURE_WELL ) {
+			if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_TYPE_MINOR) == FILTER_FURNITURE_WELL ) {
 				p = 2
 			}
-			if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_ITEM_TYPE) == FILTER_FURNITURE_ALTAR ) {
+			if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_TYPE) == FILTER_FURNITURE_ALTAR ) {
 				p = 3, cnt
 			}
-			if ( inv(INV_ITEM_EFFECT, cnt) != EFFECT_NONE | refitem(inv(INV_ITEM_ID, cnt), DBSPEC_ITEM_CAN_USE) != FALSE ) {
+			if ( inv(INV_ITEM_EFFECT, cnt) != EFFECT_NONE | refitem(inv(INV_ITEM_ID, cnt), DBSPEC_CAN_USE) != FALSE ) {
 				p = 4
 			}
-			if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_ITEM_CAN_READ) != FALSE ) {
+			if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_CAN_READ) != FALSE ) {
 				p = 5
 			}
 			if ( inv(INV_ITEM_ID, cnt) == ITEM_ID_MOON_GATE ) {

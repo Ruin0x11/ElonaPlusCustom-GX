@@ -4491,7 +4491,7 @@
 				txt lang("あ、それ在庫切れ。", "It's sold out.")
 				txtmore
 			}
-			if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_ITEM_POTION | refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_ITEM_SCROLL ) {
+			if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_ITEM_POTION | refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_ITEM_SCROLL ) {
 				inv(INV_ITEM_NUM, ci) = 3 + rnd(2)
 				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_POTION_CURE_CORRUPTION ) {
 					inv(INV_ITEM_NUM, ci) = 2 + rnd(2)
@@ -9336,7 +9336,7 @@
 		mes s(1)
 	}
 	attackrange = 0
-	if ( refitem(inv(INV_ITEM_ID, cw), DBSPEC_ITEM_TYPE) == FILTER_RANGE ) {
+	if ( refitem(inv(INV_ITEM_ID, cw), DBSPEC_TYPE) == FILTER_RANGE ) {
 		attackrange = 1
 	}
 	attackvar = 0
@@ -10017,7 +10017,7 @@
 			}
 			if ( mdata(MDATA_TYPE) == MAP_TYPE_WORLD ) {
 				if ( invctrl == INVCTRL_READ ) {
-					if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_ITEM_TYPE_MINOR) != FILTER_ITEM_DEED & inv(INV_ITEM_ID, cnt) != ITEM_ID_TREASURE_MAP ) {
+					if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_TYPE_MINOR) != FILTER_ITEM_DEED & inv(INV_ITEM_ID, cnt) != ITEM_ID_TREASURE_MAP ) {
 						continue
 					}
 				}
@@ -10037,7 +10037,7 @@
 				}
 			}
 			item_checkknown cnt
-			reftype = refitem(inv(INV_ITEM_ID, cnt), DBSPEC_ITEM_TYPE)
+			reftype = refitem(inv(INV_ITEM_ID, cnt), DBSPEC_TYPE)
 			if ( inv(INV_ITEM_PROPERTY, cnt) == PROPERTY_SPECIAL ) {
 				if ( ibit(ITEM_BIT_GUEST_USE, cnt) == FALSE | invctrl != INVCTRL_USE ) {
 					if ( invctrl != INVCTRL_INFO ) {
@@ -10068,17 +10068,17 @@
 				}
 			}
 			if ( invctrl == INVCTRL_READ ) {
-				if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_ITEM_CAN_READ) == FALSE ) {
+				if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_CAN_READ) == FALSE ) {
 					continue
 				}
 			}
 			if ( invctrl == INVCTRL_DRINK ) {
-				if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_ITEM_CAN_DRINK) == FALSE ) {
+				if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_CAN_DRINK) == FALSE ) {
 					continue
 				}
 			}
 			if ( invctrl == INVCTRL_ZAP ) {
-				if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_ITEM_CAN_ZAP) == FALSE ) {
+				if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_CAN_ZAP) == FALSE ) {
 					continue
 				}
 			}
@@ -10127,7 +10127,7 @@
 				}
 			}
 			if ( invctrl == INVCTRL_USE ) {
-				if ( inv(INV_ITEM_EFFECT, cnt) == EFFECT_NONE & refitem(inv(INV_ITEM_ID, cnt), DBSPEC_ITEM_CAN_USE) == FALSE & ibit(ITEM_BIT_ALIVE, cnt) == FALSE & ibit(ITEM_BIT_ULTIMATE, cnt) == FALSE & refitem(inv(INV_ITEM_ID, cnt), DBSPEC_ITEM_TYPE) != FILTER_ITEM_POTION ) {
+				if ( inv(INV_ITEM_EFFECT, cnt) == EFFECT_NONE & refitem(inv(INV_ITEM_ID, cnt), DBSPEC_CAN_USE) == FALSE & ibit(ITEM_BIT_ALIVE, cnt) == FALSE & ibit(ITEM_BIT_ULTIMATE, cnt) == FALSE & refitem(inv(INV_ITEM_ID, cnt), DBSPEC_TYPE) != FILTER_ITEM_POTION ) {
 					continue
 				}
 			}
@@ -10176,7 +10176,7 @@
 				}
 			}
 			if ( invctrl == INVCTRL_OFFER ) {
-				if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_ITEM_OFFER) == 0 ) {
+				if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_OFFER) == 0 ) {
 					continue
 				}
 			}
@@ -10250,7 +10250,7 @@
 					}
 					if ( inv(INV_ITEM_ID, cnt) == ITEM_ID_TEAR_OF_GOD ) {
 						if ( inv(INV_ITEM_PARAM1, cnt) <= 25 & inv(INV_ITEM_PARAM1, cnt) != 10 & inv(INV_ITEM_PARAM1, cnt) != 11 & inv(INV_ITEM_PARAM1, cnt) != 16 & inv(INV_ITEM_PARAM1, cnt) != 19 & inv(INV_ITEM_PARAM1, cnt) != 23 ) {
-							if ( refitem(inv(INV_ITEM_ID, cibk), DBSPEC_ITEM_TYPE) != FILTER_WEAPON & refitem(inv(INV_ITEM_ID, cibk), DBSPEC_ITEM_TYPE) != FILTER_RANGE ) {
+							if ( refitem(inv(INV_ITEM_ID, cibk), DBSPEC_TYPE) != FILTER_WEAPON & refitem(inv(INV_ITEM_ID, cibk), DBSPEC_TYPE) != FILTER_RANGE ) {
 								continue
 							}
 						}
@@ -10591,7 +10591,7 @@
 				txt lang("そのアイテムは存在しない。", "The item doesn't exist.")
 			}
 			else {
-				if ( inv(INV_ITEM_PARAM1, stat) == 0 & refitem(inv(INV_ITEM_ID, stat), DBSPEC_ITEM_TYPE) == FILTER_CONTAINER ) {
+				if ( inv(INV_ITEM_PARAM1, stat) == 0 & refitem(inv(INV_ITEM_ID, stat), DBSPEC_TYPE) == FILTER_CONTAINER ) {
 					txt lang("そのアイテムはもう空っぽだ。", "The item is empty!")
 				}
 				else {
@@ -10963,7 +10963,7 @@
 			}
 			if ( mdata(MDATA_MAX_INV) != 0 ) {
 				if ( inv_sum(-1) > mdata(MDATA_MAX_INV) ) {
-					if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) != FILTER_FURNITURE ) {
+					if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) != FILTER_FURNITURE ) {
 						txt lang("これ以上は置けない。", "You can't drop items any more.")
 						snd SOUNDLIST_FAIL1
 						goto *com_inventory_loop
@@ -11295,7 +11295,7 @@
 				snd SOUNDLIST_FAIL1
 				goto *com_inventory_loop
 			}
-			reftype = refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE)
+			reftype = refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE)
 			if ( inv(INV_ITEM_ID, ci) == ITEM_ID_GIFT ) {
 				snd SOUNDLIST_EQUIP1
 				txt lang("あなたは" + name(tc) + "に" + itemname(ci, 1) + "をプレゼントした。", "You give " + name(tc) + " " + itemname(ci, 1) + ".")
@@ -11511,7 +11511,7 @@
 				}
 				if ( reftype == FILTER_ITEM_POTION ) {
 					f = 1
-					if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE_MINOR) == FILTER_ITEM_POTION_ALE ) {
+					if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE_MINOR) == FILTER_ITEM_POTION_ALE ) {
 						if ( cdata(CDATA_CONDITION_DRUNK, tc) ) {
 							snd SOUNDLIST_FAIL1
 							txt lang("「もう飲めない" + _yo() + "」", cnvtalk("Enough for me."))
@@ -11575,7 +11575,7 @@
 				ci = ti
 				rc = tc
 				gosub *chara_item
-				if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_ITEM_ROD ) {
+				if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_ITEM_ROD ) {
 					cdata(CDATA_AI_ITEM, tc) = ci
 				}
 				if ( inv(INV_ITEM_KNOWN, ci) == ITEM_KNOWN_FULL ) {
@@ -11842,7 +11842,7 @@
 				}
 			}
 			f = 0
-			if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_ORE ) {
+			if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_ORE ) {
 				f = 2
 			}
 			if ( f != 0 ) {
@@ -12247,7 +12247,7 @@
 	listmax = 0
 	p = 0
 	s = ""
-	reftype = refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE)
+	reftype = refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE)
 	getinheritance ci, inhlist, inhmax
 	dbid = inv(INV_ITEM_ID, ci)
 	dbmode = DBMODE_REF
@@ -12488,7 +12488,7 @@
 			p++
 		}
 		if ( ibit(ITEM_BIT_ACIDPROOF, ci) ) {
-			if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) != FILTER_ITEM_POTION ) {
+			if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) != FILTER_ITEM_POTION ) {
 				list(0, p) = 7
 				listn(0, p) = lang("それは酸では傷つかない", "It is acidproof.")
 				p++

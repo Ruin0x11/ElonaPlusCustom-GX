@@ -3542,7 +3542,7 @@
 					f = 1
 				}
 			}
-			if ( itemusingfind(ci, TRUE) != (-1) | (refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_AMMO & inv(INV_ITEM_EQUIP, ci) != 0) ) {
+			if ( itemusingfind(ci, TRUE) != (-1) | (refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_AMMO & inv(INV_ITEM_EQUIP, ci) != 0) ) {
 				if ( f != 1 ) {
 					txt lang("そのアイテムは他の誰かが使用中だ。", "Someone else is using the item.")
 					f = 1
@@ -3850,7 +3850,7 @@
 	}
 	else {
 		ci = cdata(CDATA_ITEM_USING, CHARA_PLAYER)
-		if ( inv(INV_ITEM_PARAM1, ci) == 0 | inv(INV_ITEM_NUM, ci) == 0 | refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE_MINOR) != FILTER_FURNITURE_BED ) {
+		if ( inv(INV_ITEM_PARAM1, ci) == 0 | inv(INV_ITEM_NUM, ci) == 0 | refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE_MINOR) != FILTER_FURNITURE_BED ) {
 			f = 1
 		}
 	}
@@ -4251,7 +4251,7 @@
 			if ( inv(INV_ITEM_NUM, cnt) == 0 ) {
 				continue
 			}
-			if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_ITEM_TYPE) == FILTER_CARGO_FOOD ) {
+			if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_TYPE) == FILTER_CARGO_FOOD ) {
 				f = 1
 				ci = cnt
 				break
@@ -5026,7 +5026,7 @@
 	if ( synccheck(cc, -1) ) {
 		txt lang(npcn(cc) + itemname(ci, 1) + "を食べ終えた。", name(cc) + " " + have(cc) + " finished eating " + itemname(ci, 1) + ".")
 	}
-	if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_CARGO) == 1 ) {
+	if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_CARGO) == 1 ) {
 		if ( cdata(CDATA_THIRST, cc) < 12000 ) {
 			if ( synccheck(cc, -1) ) {
 				txt lang("さらに、付属していた飲み物も飲んだ。", name(cc) + " also drank the beverage that came with the food.")
@@ -13183,40 +13183,40 @@
 		inv(INV_ITEM_QUALITY, ci) = FIX_QUALITY_MIRACLE
 		randomize inv(INV_ITEM_PARAM1, efcibk)
 		inv(INV_ITEM_SUB_NAME, ci) = 40000 + rnd(30000)
-		if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_HELM ) {
+		if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_HELM ) {
 			encadd ci, ENCHANT_IMMUNE_DAMAGE, 250, 0, 1, 0, 1
 		}
-		if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_ACCESSORY_AMULET ) {
+		if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_ACCESSORY_AMULET ) {
 			encadd ci, ENCHANT_ENHANCE_BREATH, 400, 0, 1, 0, 1
 		}
-		if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_CLOAK ) {
+		if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_CLOAK ) {
 			encadd ci, ENCHANT_ENHANCE_SPELL, 300, 0, 1, 0, 1
 		}
-		if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_ARMOR ) {
+		if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_ARMOR ) {
 			encadd ci, ENCHANT_REFLECT_MAGIC, 250, 0, 1, 0, 1
 		}
-		if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_ACCESSORY_RING ) {
+		if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_ACCESSORY_RING ) {
 			encadd ci, ENCHANT_FAST_TRAVEL, 400, 0, 1, 0, 1
 		}
-		if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_GLOVES ) {
+		if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_GLOVES ) {
 			encadd ci, ENCHANT_RES_PHYSICAL, 250, 0, 1, 0, 1
 		}
-		if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_GIRDLE ) {
+		if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_GIRDLE ) {
 			encadd ci, ENCHANT_PIERCING_CHANCE, 250, 0, 1, 0, 1
 		}
-		if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_BOOTS ) {
+		if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_BOOTS ) {
 			encadd ci, ENCHANT_SHOOTING_MECHANISM, 300, 0, 1, 0, 1
 		}
-		if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_WEAPON ) {
+		if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_WEAPON ) {
 			encadd ci, ENCHANT_EXTRA_MELEE, 250, 0, 1, 0, 1
 		}
-		if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_RANGE ) {
+		if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_RANGE ) {
 			encadd ci, ENCHANT_EXTRA_RANGED, 250, 0, 1, 0, 1
 		}
-		if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_SHIELD ) {
+		if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_SHIELD ) {
 			encadd ci, ENCHANT_PROXIMITY_ASSIST, 250, 0, 1, 0, 1
 		}
-		if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_AMMO ) {
+		if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_AMMO ) {
 			encadd ci, ENCHANT_CRIT_CHANCE, 600, 0, 1, 0, 1
 		}
 		txt lang("それは" + itemname(ci, 1) + "になった。", "It becomes " + itemname(ci, 1) + ".")
@@ -13591,7 +13591,7 @@
 			if ( rnd(efp / 25 + 1) == 0 ) {
 				f = 0
 			}
-			if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_ITEM_SPELLBOOK ) {
+			if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_ITEM_SPELLBOOK ) {
 				if ( rnd(4) == 0 ) {
 					f = 0
 				}
@@ -13607,7 +13607,7 @@
 				if ( p + inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) > ichargelevel ) {
 					p = ichargelevel - inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) + 1
 				}
-				if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_ITEM_SPELLBOOK ) {
+				if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_ITEM_SPELLBOOK ) {
 					p = 1
 					if ( rnd(sdata(SKILL_NORMAL_MAGIC_CAPACITY, CHARA_PLAYER) + 2) >= rnd(100) + 1 ) {
 						p++
@@ -13786,7 +13786,7 @@
 				f = 0
 			}
 		}
-		if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_CONTAINER ) {
+		if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_CONTAINER ) {
 			f = 0
 		}
 		if ( ibit(ITEM_BIT_NO_DROP, ci) ) {
@@ -13797,7 +13797,7 @@
 		if ( f == 1 ) {
 			autosave = 1 * (gdata(GDATA_AREA) != AREA_SHOW_HOUSE)
 			animeload 8, cc
-			fltbk = refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE)
+			fltbk = refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE)
 			valuebk = calcitemvalue(ci, 0)
 			inv(INV_ITEM_NUM, ci) = 0
 			repeat
@@ -21847,7 +21847,7 @@
 				if ( ibit(ITEM_BIT_PRECIOUS, cnt) ) {
 					continue
 				}
-				if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_ITEM_TYPE) != FILTER_ITEM_FOOD ) {
+				if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_TYPE) != FILTER_ITEM_FOOD ) {
 					continue
 				}
 				p = cnt

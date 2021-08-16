@@ -216,7 +216,7 @@
 					}
 					continue
 				}
-				if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_ITEM_TYPE) == locvar_blendcheckmat_id ) {
+				if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_TYPE) == locvar_blendcheckmat_id ) {
 					locvar_blendcheckmat_f = 1
 					break
 				}
@@ -292,7 +292,7 @@
 				}
 				continue
 			}
-			if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_ITEM_TYPE) == blendmatnum_arg1 ) {
+			if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_TYPE) == blendmatnum_arg1 ) {
 				locvar_blendmatnum_m += inv(INV_ITEM_NUM, cnt)
 				continue
 			}
@@ -347,7 +347,7 @@
 					continue
 				}
 			}
-			locvar_blendlist_reftype = refitem(inv(INV_ITEM_ID, cnt), DBSPEC_ITEM_TYPE)
+			locvar_blendlist_reftype = refitem(inv(INV_ITEM_ID, cnt), DBSPEC_TYPE)
 			if ( rpdata(RPDATA_MAT_EXT + blendlist_arg2, rpid) ) {
 				blendcheckext cnt, blendlist_arg2
 				if ( stat == 0 ) {
@@ -594,7 +594,7 @@
 			if ( inv(40 + locvar_window_recipe_cnt2 * 2, window_recipe_itemid) == 0 ) {
 				break
 			}
-			val = inv(40 + locvar_window_recipe_cnt2 * 2, window_recipe_itemid), inv(40 + locvar_window_recipe_cnt2 * 2 + 1, window_recipe_itemid), 0, refitem(inv(INV_ITEM_ID, window_recipe_itemid), DBSPEC_ITEM_TYPE)
+			val = inv(40 + locvar_window_recipe_cnt2 * 2, window_recipe_itemid), inv(40 + locvar_window_recipe_cnt2 * 2 + 1, window_recipe_itemid), 0, refitem(inv(INV_ITEM_ID, window_recipe_itemid), DBSPEC_TYPE)
 			gosub *item_encdetail
 			color 0, 0, 100
 			if ( inv(40 + locvar_window_recipe_cnt2 * 2 + 1, window_recipe_itemid) < 0 ) {

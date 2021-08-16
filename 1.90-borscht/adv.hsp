@@ -376,7 +376,7 @@
 	return
 
 *chara_item
-	a = refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE)
+	a = refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE)
 	if ( a == 57000 | a == 52000 | a == 53000 ) {
 		cdata(CDATA_AI_ITEM, rc) = ci
 	}
@@ -419,7 +419,7 @@
 	}
 	inv(INV_ITEM_KNOWN, ci) = ITEM_KNOWN_FULL
 	if ( inv(INV_ITEM_QUALITY, ci) >= FIX_QUALITY_MIRACLE ) {
-		if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) < FILTER_ITEM_MIN ) {
+		if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) < FILTER_ITEM_MIN ) {
 			valn = itemname(ci)
 			addnews 1, rc
 		}
@@ -571,7 +571,7 @@
 			if ( cdata(cnt, rc) \ EXT_EQUIP_SLOTS != 0 ) {
 				if ( p == 5 ) {
 					if ( haveweapon == FALSE ) {
-						if ( refitem(inv(INV_ITEM_ID, cdata(cnt, rc) \ EXT_EQUIP_SLOTS - 1), DBSPEC_ITEM_TYPE) == FILTER_WEAPON ) {
+						if ( refitem(inv(INV_ITEM_ID, cdata(cnt, rc) \ EXT_EQUIP_SLOTS - 1), DBSPEC_TYPE) == FILTER_WEAPON ) {
 							haveweapon = TRUE
 						}
 					}
@@ -615,7 +615,7 @@
 		}
 		inv(INV_ITEM_KNOWN, ci) = ITEM_KNOWN_FULL
 		if ( inv(INV_ITEM_QUALITY, ci) >= FIX_QUALITY_MIRACLE ) {
-			if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) < FILTER_ITEM_MIN ) {
+			if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) < FILTER_ITEM_MIN ) {
 				if ( cdata(CDATA_ROLE, rc) == ROLE_ADVENTURER ) {
 					valn = itemname(ci)
 					addnews 1, rc

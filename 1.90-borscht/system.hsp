@@ -812,7 +812,7 @@
 		if ( inv(INV_ITEM_ID, cnt) == ITEM_ID_SECRET_EXP_LOMIAS ) {
 			lomiaseaster = 1
 		}
-		if ( inv(INV_ITEM_ID, cnt) == ITEM_ID_DEED_HEIRSHIP | refitem(inv(INV_ITEM_ID, cnt), DBSPEC_ITEM_TYPE_MINOR) == FILTER_ITEM_DEED ) {
+		if ( inv(INV_ITEM_ID, cnt) == ITEM_ID_DEED_HEIRSHIP | refitem(inv(INV_ITEM_ID, cnt), DBSPEC_TYPE_MINOR) == FILTER_ITEM_DEED ) {
 			continue
 		}
 		if ( inv(INV_ITEM_ID, cnt) == ITEM_ID_KITTY_BANK ) {
@@ -824,7 +824,7 @@
 		if ( ibit(ITEM_BIT_PRECIOUS, cnt) ) {
 			continue
 		}
-		if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_ITEM_TYPE) == FILTER_AMMO ) {
+		if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_TYPE) == FILTER_AMMO ) {
 			inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), cnt) = -1
 		}
 		inv(INV_ITEM_EQUIP, cnt) = 0

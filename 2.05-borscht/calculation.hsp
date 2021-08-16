@@ -131,7 +131,7 @@
 	return 1
 
 #defcfunc calcitemvalue int calcitemvalue_itemid, int calcitemvalue_mode
-	locvar_calcitemvalue_reftype = refitem(inv(INV_ITEM_ID, calcitemvalue_itemid), DBSPEC_ITEM_TYPE)
+	locvar_calcitemvalue_reftype = refitem(inv(INV_ITEM_ID, calcitemvalue_itemid), DBSPEC_TYPE)
 	if ( inv(INV_ITEM_KNOWN, calcitemvalue_itemid) == ITEM_KNOWN_NONE ) {
 		if ( calcitemvalue_mode == 2 ) {
 			locvar_calcitemvalue_value = inv(INV_ITEM_VALUE, calcitemvalue_itemid) * 4 / 10
@@ -351,7 +351,7 @@
 				locvar_calcitemvalue_value = locvar_calcitemvalue_value / 3 * 2
 			}
 		}
-		if ( refitem(inv(INV_ITEM_ID, calcitemvalue_itemid), DBSPEC_ITEM_TYPE) == FILTER_ITEM_FOOD ) {
+		if ( refitem(inv(INV_ITEM_ID, calcitemvalue_itemid), DBSPEC_TYPE) == FILTER_ITEM_FOOD ) {
 			if ( inv(INV_ITEM_MATERIAL, calcitemvalue_itemid) == ITEM_MATERIAL_RAW ) {
 				if ( inv(INV_ITEM_PARAM3, calcitemvalue_itemid) < 0 ) {
 					locvar_calcitemvalue_value = 1
@@ -583,7 +583,7 @@
 		if ( inv(INV_ITEM_NUM, cnt) == 0 ) {
 			continue
 		}
-		if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_ITEM_TYPE) != FILTER_AMMO ) {
+		if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_TYPE) != FILTER_AMMO ) {
 			continue
 		}
 		locvar_calccostreload_ci = cnt
@@ -618,7 +618,7 @@
 			if ( inv(INV_ITEM_NUM, cnt) == 0 ) {
 				continue
 			}
-			if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_ITEM_TYPE) != FILTER_AMMO ) {
+			if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_TYPE) != FILTER_AMMO ) {
 				continue
 			}
 			locvar_calccostreload_ci = cnt
@@ -1902,13 +1902,13 @@
 		refreshspeed r1
 	}
 	if ( cdata(CDATA_CONDITION_WINCE, r1) > 0 ) {
-		healcon r1, CONDITION_ASH_BODY, 1
+		healcon r1, CONDITION_WINCE, 1
 		if ( cdata(CDATA_CONDITION_WINCE, r1) > 0 ) {
 			cdata(CDATA_EMO_ICON, r1) = 28 + 100
 		}
 	}
 	if ( cdata(CDATA_CONDITION_CHILLS, r1) > 0 ) {
-		healcon r1, CONDITION_OVERGODS, 1
+		healcon r1, CONDITION_CHILLS, 1
 		if ( cdata(CDATA_CONDITION_CHILLS, r1) > 0 ) {
 			cdata(CDATA_EMO_ICON, r1) = 29 + 100
 		}

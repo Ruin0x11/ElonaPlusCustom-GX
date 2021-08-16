@@ -1,0 +1,1024 @@
+#deffunc atxinit
+	if ( atxthrough == 0 ) {
+		notesel atbuff
+		atbuff = ""
+	}
+	atxthrough = 0
+	listmax = 0
+	cs = 0
+	page = 0
+	cc = CHARA_PLAYER
+	cs_bk = -1
+	pagesize = 16
+	chatesc = -1
+	if ( atxbg != atxbgbk ) {
+		mode = MODELIST_MAIN
+		screenupdate = -1
+		gosub *screen_draw
+		mode = MODELIST_TXT_ADV
+		atxbgbk = atxbg
+		gsel BUFFER_BUF
+		gmode 0
+		pos 0, 0
+		picload exedir + "\\graphic\\" + atxbg + ".bmp", 1
+		pos 0, inf_msgh
+		gzoom windoww, windowh - inf_verh - inf_msgh, 4, 0, 0, 240, 160
+		gmode 2
+		p = windoww / 192
+		repeat p + 1
+			if ( cnt == p ) {
+				sx = windoww \ 192
+			}
+			else {
+				sx = 192
+			}
+			pos cnt * 192, 0
+			gcopy BUFFER_INF, 496, 528, sx, inf_msgh
+		loop
+		window2 windoww - 208, 0, 208, 98, 0, 0
+		pos windoww - 204, 4
+		gzoom 200, 90, 0, 120, 88, windoww - 120, windowh - inf_verh - 112, 1
+		gsel BUFFER_SCREEN
+	}
+	return
+
+#deffunc begintempinv
+	file = "shoptmp.s2"
+	fmode = 4
+	gosub *game_ctrlFile
+	inv_getheader -1
+	repeat invrange, invhead
+		inv(INV_ITEM_NUM, cnt) = 0
+	loop
+	return
+
+#deffunc exittempinv
+	file = "shoptmp.s2"
+	fmode = 3
+	gosub *game_ctrlFile
+	return
+
+*com_txtadv
+	begintempinv
+	atxthrough = 0
+	atxpic = 0
+	snd SOUNDLIST_POP3
+	mode = MODELIST_TXT_ADV
+	atxbg = "bg13"
+	atxbgbk = ""
+	sdim atxinfon, 80, 5
+	redraw 0
+	if ( atxid == 2 ) {
+		goto *atx_RE
+	}
+	if ( atxid == 1 ) {
+		txt lang("ディーラーに話しかけた。", "You talk to the dealer.")
+		music = MUSICLIST_MCCASINO
+		gosub *music_play
+		goto *adv_casinoCard
+	}
+	if ( atxid == 4 ) {
+		music = MUSICLIST_MCCASINO
+		gosub *music_play
+		goto *adv_casinoCard
+	}
+	goto *com_txtAdvQuit
+
+*com_txtadv_loop
+	redraw 0
+	screenupdate = -1
+	gosub *screen_draw
+	if ( atxid >= 2 ) {
+		txtadvmsgfix = 20 + 116
+	}
+	repeat noteinfo(0)
+		noteget s, cnt
+		if ( strmid(s, 0, 1) == "@" ) {
+			s(1) = strmid(s, 1, 2)
+			s = strmid(s, 3, strlen(s) - 3)
+			font lang(cfg_font1, cfg_font2), 16 - en * 2, 0
+			color 250, 240, 230
+			if ( s(1) == "BL" ) {
+				color 130, 130, 250
+			}
+			if ( s(1) == "GR" ) {
+				color 130, 250, 130
+			}
+			if ( s(1) == "QM" ) {
+				color 0, 100, 0
+			}
+		}
+		else {
+			font lang(cfg_font1, cfg_font2), 16 - en * 2, 0
+			color 250, 240, 230
+		}
+		pos 170, cnt * 20 + 120 + txtadvmsgfix
+		mes s
+	loop
+	cs_bk = -1
+	pagemax = (listmax - 1) / pagesize
+	if ( page < 0 ) {
+		page = pagemax
+	}
+	else {
+		if ( page > pagemax ) {
+			page = 0
+		}
+	}
+	gsel BUFFER_MAP
+	gmode 0
+	pos 0, 0
+	gcopy BUFFER_SCREEN, 0, 0, windoww, windowh
+	gsel BUFFER_SCREEN
+	gmode 2
+	keyrange = 0
+	repeat pagesize
+		p = pagesize * page + cnt
+		if ( p >= listmax ) {
+			break
+		}
+		key_list(cnt) = key_select(cnt)
+		keyrange++
+	loop
+	gosub *com_adv_anime1
+
+*com_txtadv_loop_WHILE1
+	if ( 1 == 0 ) {
+		goto *com_adv_anime1
+	}
+	redraw 0
+	x = 170, 400
+	y = noteinfo(0) * 20 + 120 + txtadvmsgfix + 16, 20 * listmax
+	gmode 0
+	pos x, y
+	gcopy BUFFER_MAP, x, y, x(1), y(1)
+	gmode 2
+	font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
+	cs_listbk
+	repeat pagesize
+		p = pagesize * page + cnt
+		if ( p >= listmax ) {
+			break
+		}
+		i = list(0, p)
+		display_key 170, noteinfo(0) * 20 + 120 + txtadvmsgfix + 16 + cnt * 20, cnt
+		s = listn(0, p)
+		cs_list s, 170 + 30, noteinfo(0) * 20 + 120 + txtadvmsgfix + 16 + cnt * 20, 19, 0, 2
+	loop
+	if ( keyrange != 0 ) {
+		cs_bk = cs
+	}
+	redraw 1
+	await cfg_wait1
+	key_check
+	cursor_check
+	rtval = -1
+	repeat keyrange
+		if ( key == key_select(cnt) ) {
+			rtval = list(0, pagesize * page + cnt)
+			snd SOUNDLIST_CLICK1
+			break
+		}
+	loop
+	if ( chatesc != (-1) ) {
+		if ( key == key_cancel ) {
+			snd SOUNDLIST_CLICK1
+			rtval = chatesc
+		}
+	}
+	if ( rtval != (-1) ) {
+		gosub *com_adv_anime2
+		atxpic = 0
+		return
+	}
+	if ( key == key_pageup ) {
+		if ( pagemax != 0 ) {
+			snd SOUNDLIST_POP1
+			page++
+			goto *com_txtadv_loop
+		}
+	}
+	if ( key == key_pagedown ) {
+		if ( pagemax != 0 ) {
+			snd SOUNDLIST_POP1
+			page--
+			goto *com_txtadv_loop
+		}
+	}
+	goto *com_txtadv_loop_WHILE1
+
+*com_adv_anime1
+	gosub *com_adv_animeSub
+	if ( mattile != (-1) ) {
+		mattile = rnd(mattile(2)) + mattile(1)
+	}
+	repeat 12
+		x = 170, 300
+		y = noteinfo(0) * 20 + 120 + txtadvmsgfix + 16, 20 * listmax
+		redraw 0
+		gmode 0
+		pos x - 50, y - 50
+		gcopy BUFFER_MAP, x - 50, y - 50, 100 + x(1), y(1) + 100
+		if ( cnt == 11 ) {
+			break
+		}
+		color 0, 0, 0
+		gmode 4, x(1), y(1), cnt * 25
+		pos x + x(1) / 2 - 10 + cnt, y + y(1) / 2
+		grotate BUFFER_MAP, 0, 0, 0, x(1), y(1)
+		if ( atxpic != 0 ) {
+			x = 170 + 175, atxpic(2) + 120
+			y = 170, atxpic(3)
+			gmode 0
+			pos x - atxpic(2) / 2, y - atxpic(3) / 2
+			gcopy BUFFER_MAP, x - atxpic(2) / 2, y - atxpic(3) / 2, x(1), y(1)
+			pos x, y
+			gmode 2, inf_tiles, inf_tiles
+			if ( cnt == 10 ) {
+				p_double = 0
+			}
+			else {
+				p_double = 0.6222 * cnt
+			}
+			p(1) = 1
+			if ( atxpic == 2 ) {
+				p(1) = 5
+			}
+			grotate p(1), atxpic(1) \ 33 * 32, atxpic(1) / 33 * 32, p_double, cnt * (atxpic(2) / 10), cnt * (atxpic(3) / 10)
+		}
+		if ( mattile != (-1) ) {
+			cnt2 = cnt
+			repeat 2
+				x = cnt * 250 + 170, 96
+				y = 120, 96
+				gmode 0
+				pos x, y
+				gcopy BUFFER_MAP, x, y, x(1), y(1)
+				pos x + x(1) / 2, y + y(1) / 2
+				gmode 2, inf_tiles, inf_tiles
+				grotate BUFFER_ITEM, mattile \ 33 * 32, mattile / 33 * 32, 0, cnt2 * (96 / 10), cnt2 * (96 / 10)
+			loop
+		}
+		await 20
+		redraw 1
+	loop
+	gmode 2
+	atxpic = 0
+	return
+
+*com_adv_anime2
+	gosub *com_adv_animeSub
+	repeat 11
+		x = 170
+		y = noteinfo(0) * 20 + 120 + txtadvmsgfix + 16, 20 * listmax
+		redraw 0
+		gmode 0
+		pos x - 50, y - 50
+		gcopy BUFFER_MAP, x - 50, y - 50, 100 + x(1), y(1) + 100
+		color 0, 0, 0
+		gmode 4, x(1), y(1), 250 - cnt * 25
+		pos x + x(1) / 2 - 2 * cnt, y + y(1) / 2
+		grotate BUFFER_MAP, 0, 0, 0, x(1), y(1)
+		await 15
+		redraw 1
+	loop
+	return
+
+*com_adv_animeSub
+	x(1) = 300
+	cs = -1
+	redraw 0
+	color 0, 0, 0
+	boxf 170, noteinfo(0) * 20 + 120 + txtadvmsgfix + 16, 170 + x(1), noteinfo(0) * 20 + 120 + txtadvmsgfix + 16 + 20 * listmax
+	font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
+	cs_listbk
+	repeat pagesize
+		p = pagesize * page + cnt
+		if ( p >= listmax ) {
+			break
+		}
+		i = list(0, p)
+		display_key 170, noteinfo(0) * 20 + 120 + txtadvmsgfix + 16 + cnt * 20, cnt
+		s = listn(0, p)
+		gmode 2
+		color 0, 0, 0
+		cs_list s, 170 + 30, noteinfo(0) * 20 + 120 + txtadvmsgfix + 16 + cnt * 20, 19, 0, 2
+	loop
+	if ( keyrange != 0 ) {
+		cs_bk = cs
+	}
+	gsel BUFFER_MAP
+	gmode 0
+	pos 0, 0
+	gcopy BUFFER_SCREEN, 170, noteinfo(0) * 20 + 120 + txtadvmsgfix + 16, x(1), 20 * listmax
+	gsel BUFFER_SCREEN
+	gmode 2
+	cs = 0
+	return
+
+*com_txtAdvQuit
+	mtilefilecur = -1
+	gosub *map_prepareTile
+	f = 0
+	inv_getheader -1
+	repeat invrange, invhead
+		if ( inv(INV_ITEM_NUM, cnt) != 0 ) {
+			f = 1
+		}
+	loop
+	if ( f == 1 ) {
+		if ( cdata(CDATA_HP, CHARA_PLAYER) >= 0 ) {
+			txt lang("幾つかの戦利品がある。", "There're some items you can aquire.")
+			screenupdate = -1
+			gosub *screen_draw
+			invsubroutine = 1
+			invctrl = INVCTRL_INV_FILE_GET, 0
+			gosub *com_inventory
+		}
+	}
+	mode = MODELIST_MAIN
+	atxid = 0
+	exittempinv
+	await 100
+	snd SOUNDLIST_POP3
+	gosub *music_play
+	return
+
+*atx_RE
+	atxap = 10
+	atxspot = ATX_GENERAL1
+	atxinfon(0) = "ランダムサイト"
+	atxinit
+	atxthrough = 1
+	if ( atxid(1) == ATX_RANDOM ) {
+		atxid(1) = ATX_FIELD
+		atxlv = gdata(GDATA_LEVEL)
+		if ( mdata(MDATA_TYPE) == (20 /*!!!@[MAP_TYPE_DUNGEON @@@ MAP_TYPE_DUNGEON_MIN]@!!! */) ) {
+			atxid(1) = ATX_DUNGEON
+		}
+		if ( mdata(MDATA_TYPE) == MAP_TYPE_TOWER ) {
+			atxid(1) = ATX_BUILDING
+		}
+		if ( mdata(MDATA_TYPE) == MAP_TYPE_FOREST ) {
+			atxid(1) = ATX_FOREST
+		}
+		if ( mdata(MDATA_TYPE) == MAP_TYPE_FORT ) {
+			atxid(1) = ATX_BUILDING
+		}
+		if ( mdata(MDATA_TYPE) == MAP_TYPE_WORLD ) {
+			atxlv = cdata(CDATA_LEVEL, CHARA_PLAYER)
+			if ( 4 <= gdata(GDATA_WORLD_TILE) & gdata(GDATA_WORLD_TILE) < 9 ) {
+				atxid(1) = ATX_FOREST
+			}
+			if ( 264 <= gdata(GDATA_WORLD_TILE) & gdata(GDATA_WORLD_TILE) < 363 ) {
+				atxid(1) = ATX_FIELD
+			}
+			if ( 9 <= gdata(GDATA_WORLD_TILE) & gdata(GDATA_WORLD_TILE) < 13 ) {
+				atxid(1) = ATX_FOREST
+			}
+			if ( 13 <= gdata(GDATA_WORLD_TILE) & gdata(GDATA_WORLD_TILE) < 17 ) {
+				atxid(1) = ATX_FIELD
+			}
+		}
+	}
+	if ( atxid(1) == ATX_REMAIN ) {
+		atxbg = "bg21"
+		mattile = 0, 495, 3
+		atxspot = ATX_REMAIN1
+		noteadd "この辺りは残骸やら遺品やらでごちゃごちゃだ。"
+	}
+	if ( atxid(1) == ATX_BUSH ) {
+		atxbg = "bg20"
+		mattile = 0, 495, 3
+		atxspot = ATX_BUSH1
+		noteadd "この辺りには見たこともない植物がたくさんある。"
+	}
+	if ( atxid(1) == ATX_MINE ) {
+		atxbg = "bg19"
+		mattile = 0, 495, 3
+		atxspot = ATX_MINE1
+		noteadd "天然の鉱石の宝庫だ。"
+	}
+	if ( atxid(1) == ATX_WATER ) {
+		atxbg = "bg18"
+		mattile = 0, 495, 3
+		atxspot = ATX_WATER1
+		noteadd "綺麗な泉がある。"
+	}
+	if ( atxid(1) == ATX_DUNGEON ) {
+		atxbg = "bg13"
+		mattile = 0, 495, 3
+		atxspot = ATX_DUNGEON1
+	}
+	if ( atxid(1) == ATX_BUILDING ) {
+		atxbg = "bg17"
+		mattile = 0, 495, 3
+		atxspot = ATX_BUILDING1
+	}
+	if ( atxid(1) == ATX_FOREST ) {
+		atxbg = "bg15"
+		mattile = 0, 495, 3
+		atxspot = ATX_FOREST1
+	}
+	if ( atxid(1) == ATX_FIELD ) {
+		atxbg = "bg16"
+		mattile = 0, 495, 3
+		atxspot = ATX_FIELD1
+	}
+
+*atx_RE_main
+	if ( atxap <= 0 | cdata(CDATA_HP, CHARA_PLAYER) < 0 ) {
+		goto *atx_RE_end
+	}
+	atxinit
+	noteadd "何をしよう？"
+	list(0, listmax) = 1
+	listn(0, listmax) = "探索"
+	listmax++
+	list(0, listmax) = 3
+	listn(0, listmax) = "去る"
+	listmax++
+	atxinfon(1) = "行動回数残り " + atxap + "回\n"
+	chatesc = 3
+	txtadvmsgfix = 0
+	txtadvscreenupdate = 1
+	gosub *com_txtadv_loop
+	if ( rtval == 1 ) {
+		goto *atx_RE_search
+	}
+	if ( rtval == 2 ) {
+		goto *atx_RE_search
+	}
+	if ( rtval == 3 ) {
+		goto *atx_RE_end
+	}
+	goto *atx_RE_main
+
+*atx_RE_search
+	atxap--
+	atxinit
+	if ( rnd(1) == 0 ) {
+		atxrefval1 = -1
+		if ( atxid(1) == ATX_BUSH ) {
+			atxpic = 1, 171, 96, 96
+			noteadd "茂みを見つけた。"
+			list(0, listmax) = 1
+			listn(0, listmax) = "調べる"
+			listmax++
+			list(0, listmax) = 2
+			listn(0, listmax) = "採取する" + "(" + skillname(SKILL_NORMAL_GARDENING) + ": " + sdata(SKILL_NORMAL_GARDENING, CHARA_PLAYER) + ")"
+			listmax++
+			atxrefval1 = 7
+		}
+		if ( atxid(1) == ATX_MINE ) {
+			atxpic = 1, 219, 96, 96
+			noteadd "鉱石の岩がある。"
+			list(0, listmax) = 1
+			listn(0, listmax) = "調べる"
+			listmax++
+			list(0, listmax) = 2
+			listn(0, listmax) = "掘る" + "(" + skillname(SKILL_NORMAL_MINING) + ": " + sdata(SKILL_NORMAL_MINING, CHARA_PLAYER) + ")"
+			listmax++
+			atxrefval1 = 7
+		}
+		if ( atxid(1) == ATX_WATER ) {
+			atxpic = 1, 439, 96, 96
+			noteadd "泉がある。"
+			list(0, listmax) = 1
+			listn(0, listmax) = "飲む"
+			listmax++
+			list(0, listmax) = 2
+			listn(0, listmax) = "釣る" + "(" + skillname(SKILL_NORMAL_FISHING) + ": " + sdata(SKILL_NORMAL_FISHING, CHARA_PLAYER) + ")"
+			listmax++
+			atxrefval1 = 7
+		}
+		if ( atxid(1) == ATX_REMAIN ) {
+			atxpic = 1, 199, 96, 96
+			noteadd "残骸を見つけた。"
+			list(0, listmax) = 1
+			listn(0, listmax) = "あさる"
+			listmax++
+			list(0, listmax) = 2
+			listn(0, listmax) = "解剖する" + "(" + skillname(SKILL_NORMAL_ANATOMY) + ": " + sdata(SKILL_NORMAL_ANATOMY, CHARA_PLAYER) + ")"
+			listmax++
+			atxrefval1 = 7
+		}
+		if ( atxrefval1 == (-1) ) {
+			noteadd "壁に何やら怪しいひび割れがある…"
+			list(0, listmax) = 1
+			listn(0, listmax) = "叩く(筋力)"
+			listmax++
+			list(0, listmax) = 2
+			listn(0, listmax) = "調べる(感知)"
+			listmax++
+		}
+		atxinfon(1) = "行動回数残り " + atxap + "回\n"
+		chatesc = 1
+		txtadvmsgfix = 0
+		txtadvscreenupdate = 1
+		gosub *com_txtadv_loop
+		atxinit
+		if ( rtval == 1 ) {
+			repeat 3
+				p = random_material(atxlv)
+				atxpic = 1, matref(MATREF_PIC, p), 96, 96
+				snd SOUNDLIST_GET3
+				mat(p) += 1
+				noteadd lang("@BL" + matname(p) + "を" + 1 + "個手に入れた！(所持数:" + mat(p) + "個)", "@BLYou get " + 1 + " " + matname(p) + "(s)! (Total:" + mat(p) + ")")
+			loop
+			atxthrough = 1
+			goto *atx_RE_main
+		}
+		if ( rtval == 2 ) {
+			atxthrough = 1
+			goto *atx_RE_main
+		}
+	}
+	if ( rnd(8) == 0 ) {
+		if ( rnd(4) == 0 ) {
+			noteadd "あれ…？"
+			noteadd "道に迷った！ (行動回数-2)"
+			atxap -= 2
+			atxthrough = 1
+			goto *atx_RE_main
+		}
+		if ( rnd(2) == 0 ) {
+			atxpic = 2, 205, 96, 96
+			noteadd "幽霊に脅かされた！ (行動回数-1)"
+			snd SOUNDLIST_TRAP1
+			atxap -= 1
+			atxthrough = 1
+			goto *atx_RE_main
+		}
+		if ( rnd(2) == 0 ) {
+			atxpic = 1, 424, 96, 96
+			noteadd "小石につまづいてころんでしまった！ (行動回数-1)"
+			snd SOUNDLIST_TRAP1
+			atxap -= 1
+			atxthrough = 1
+			goto *atx_RE_main
+		}
+	}
+	if ( rnd(8) == 0 ) {
+		if ( rnd(4) == 0 ) {
+			atxpic = 1, 200, 96, 96
+			noteadd "ふかふかの藁を見つけた。"
+			noteadd "ふかふかして気持ちいい。（行動回数+3)"
+			atxap += 2
+			atxthrough = 1
+			goto *atx_RE_main
+		}
+		if ( rnd(2) == 0 ) {
+			atxpic = 1, 294, 96, 96
+			noteadd "切り株がある。"
+			noteadd "腰を下ろして疲れを癒した。（行動回数+2)"
+			atxap += 2
+			atxthrough = 1
+			goto *atx_RE_main
+		}
+		if ( rnd(2) == 0 ) {
+			atxpic = 1, 127, 96, 96
+			noteadd "綺麗な花を見つけた。"
+			noteadd "心がなごんだ…（行動回数+2)"
+			atxap += 2
+			atxthrough = 1
+			goto *atx_RE_main
+		}
+	}
+	if ( rnd(7) == 0 ) {
+		if ( rnd(3) ) {
+			atxpic = 2, 210, 96, 96
+			noteadd "痛っ！蚊に刺された。"
+			snd SOUNDLIST_ATK1
+			dmghp CHARA_PLAYER, cdata(CDATA_MAX_HP, CHARA_PLAYER) * 5 / 100, DAMAGE_FROM_ATX
+		}
+		else {
+			atxpic = 2, 216, 96, 96
+			noteadd "うっ！ヘビに噛まれた。"
+			snd SOUNDLIST_ATK1
+			dmghp CHARA_PLAYER, cdata(CDATA_MAX_HP, CHARA_PLAYER) * 10 / 100, DAMAGE_FROM_ATX
+		}
+		atxthrough = 1
+		goto *atx_RE_main
+	}
+	if ( rnd(3) == 0 ) {
+		if ( rnd(3) ) {
+			atxpic = 2, 210, 96, 96
+			noteadd "痛っ！蚊に刺された。"
+			snd SOUNDLIST_ATK1
+			dmghp CHARA_PLAYER, cdata(CDATA_MAX_HP, CHARA_PLAYER) * 5 / 100, DAMAGE_FROM_ATX
+		}
+		else {
+			atxpic = 2, 216, 96, 96
+			noteadd "うっ！ヘビに噛まれた。"
+			snd SOUNDLIST_ATK1
+			dmghp CHARA_PLAYER, cdata(CDATA_MAX_HP, CHARA_PLAYER) * 10 / 100, DAMAGE_FROM_ATX
+		}
+		atxthrough = 1
+		goto *atx_RE_main
+	}
+	if ( rnd(2) == 0 ) {
+		atxpic = 1, 220, 96, 96
+		noteadd "宝箱がある。"
+		list(0, listmax) = 1
+		listn(0, listmax) = "錠を解体する" + "(" + skillname(SKILL_NORMAL_LOCK_PICKING) + ": " + sdata(SKILL_NORMAL_LOCK_PICKING, CHARA_PLAYER) + ")"
+		listmax++
+		list(0, listmax) = 3
+		listn(0, listmax) = "叩き割る" + "(筋力: " + sdata(SKILL_ATTR_STR, CHARA_PLAYER) + ")"
+		listmax++
+		atxinfon(1) = "行動回数残り " + atxap + "回\n"
+		chatesc = 1
+		txtadvmsgfix = 0
+		txtadvscreenupdate = 1
+		gosub *com_txtadv_loop
+		atxinit
+		goto *atx_RE_main
+	}
+	if ( rnd(2) == 0 ) {
+		p = random_material(atxlv)
+		atxpic = 1, matref(MATREF_PIC, p), 96, 96
+		snd SOUNDLIST_GET3
+		mat(p) += 1
+		noteadd lang("@BL" + matname(p) + "を" + 1 + "個手に入れた！(所持数:" + mat(p) + "個)", "@BLYou get " + 1 + " " + matname(p) + "(s)! (Total:" + mat(p) + ")")
+		atxthrough = 1
+		goto *atx_RE_main
+	}
+	if ( rnd(3) == 0 ) {
+		noteadd "何も見つからなかった…"
+		atxthrough = 1
+		goto *atx_RE_main
+	}
+	noteadd "何も見つからなかった…"
+	atxthrough = 1
+	goto *atx_RE_main
+
+*atx_RE_end
+	atxinit
+	if ( cdata(CDATA_HP, CHARA_PLAYER) >= 0 ) {
+		noteadd "探索を終えた。"
+		list(0, listmax) = 0
+		listn(0, listmax) = "戻る"
+		listmax++
+	}
+	else {
+		noteadd "ぐふ…"
+		list(0, listmax) = 0
+		listn(0, listmax) = "(断末魔の叫び)"
+		listmax++
+	}
+	atxinfon(1) = "行動回数残り " + atxap + "回\n"
+	chatesc = 0
+	txtadvmsgfix = 0
+	txtadvscreenupdate = 1
+	gosub *com_txtadv_loop
+	goto *com_txtAdvQuit
+
+*adv_casinoCard
+	atxbg = "bg14"
+	mattile = -1
+	atxinfon(0) = lang("カジノ《フォーチュンクッキー》", "Casino <<Fortune Cookie>>")
+	atxinit
+	noteadd lang("カジノ《フォーチュンクッキー》へようこそ。", "Welcome to the casino, Fortune cookie!")
+	noteadd lang("チップマテリアルと引き換えにゲームをすることができます。", "You can bet the casino chips you have and play some games.")
+	noteadd lang("ごゆっくりお楽しみ下さい。", "Enjoy your stay.")
+	if ( gdata(GDATA_FLAG_CASINO) == 0 ) {
+		noteadd ""
+		noteadd lang("お客様は初めてのご利用のようですね。", "Looks like you play for the first time, sir.")
+		noteadd lang("当店からチップマテリアルを10枚進呈します。", "We're offering you 10 free casino chips to try our games.")
+		gdata(GDATA_FLAG_CASINO) = 1
+		snd SOUNDLIST_GET3
+		mat(1) += 10
+		noteadd lang("@BL" + matname(MATERIAL_CASINO_CHIP) + "を" + 10 + "個手に入れた！(所持数:" + mat(1) + "個)", "@BLYou get " + 10 + " " + matname(MATERIAL_CASINO_CHIP) + "(s)! (Total:" + mat(1) + ")")
+	}
+	atxinfon(1) = lang("カジノチップ残り " + mat(1) + "枚\n", "Casino chips left: " + mat(1) + "\n")
+	atxinfon(2) = ""
+	list(0, listmax) = 0
+	listn(0, listmax) = lang("店を出る", "Later.")
+	listmax++
+	list(0, listmax) = 1
+	listn(0, listmax) = lang("ブラックジャック", "I want to play Blackjack.")
+	listmax++
+	chatesc = 0
+	txtadvmsgfix = 0
+	txtadvscreenupdate = 1
+	gosub *com_txtadv_loop
+	if ( rtval == 0 ) {
+		goto *com_txtAdvQuit
+	}
+	if ( rtval == 1 ) {
+		goto *adv_casinoBlackJack
+	}
+	goto *adv_casinoCard
+
+*adv_casinoBlackJack
+	atxinit
+	noteadd lang("ブラックジャックは、カードの合計を21に近づけるゲームです。", "In Blackjack, the hand with the highest total wins as long as it")
+	noteadd lang("J,Q,Kは10に、Aは1または11に数えられます。21を越えると負けです。", "doesn't exceed 21. J,Q,K are counted as 10 and A is counted as 1 or 11.")
+	noteadd lang("では、賭けるチップを宣言してください。", "More bets means better rewards.")
+	noteadd lang("チップが多いほど、景品の質があがります。", "How many tips would you like to bet?")
+	atxinfon(1) = lang("カジノチップ残り " + mat(1) + "枚\n", "Casino chips left: " + mat(1) + "\n")
+	atxinfon(2) = ""
+	if ( mat(1) <= 0 ) {
+		noteadd ""
+		noteadd lang("お客様はチップをもっていません。", "Sorry sir, you don't seem to have casino chips.")
+	}
+	list(0, listmax) = 0
+	listn(0, listmax) = lang("やめる", "I quit.")
+	listmax++
+	if ( mat(1) >= 1 ) {
+		list(0, listmax) = 1
+		listn(0, listmax) = lang("" + 1 + "枚賭ける", "Bet " + 1 + " chips.")
+		listmax++
+	}
+	if ( mat(1) >= 5 ) {
+		list(0, listmax) = 5
+		listn(0, listmax) = lang("" + 5 + "枚賭ける", "Bet " + 5 + " chips.")
+		listmax++
+	}
+	if ( mat(1) >= 10 ) {
+		list(0, listmax) = 10
+		listn(0, listmax) = lang("" + 10 + "枚賭ける", "Bet " + 10 + " chips.")
+		listmax++
+	}
+	if ( mat(1) >= 20 ) {
+		list(0, listmax) = 20
+		listn(0, listmax) = lang("" + 20 + "枚賭ける", "Bet " + 20 + " chips.")
+		listmax++
+	}
+	chatesc = 0
+	txtadvmsgfix = 0
+	txtadvscreenupdate = 1
+	gosub *com_txtadv_loop
+	if ( rtval == 0 ) {
+		goto *adv_casinoCard
+	}
+	stake = rtval
+	winrow = 0
+	cardround = 0
+	autosave = 1 * (gdata(GDATA_AREA) != AREA_SHOW_HOUSE)
+	repeat
+		screenupdate = -1
+		gosub *screen_draw
+		atxinit
+		if ( cnt == 0 ) {
+			mat(1) -= stake
+			txt lang(matname(MATERIAL_CASINO_CHIP) + "を" + stake + "個失った(残り:" + mat(1) + "個)", "You lose " + stake + " " + matname(MATERIAL_CASINO_CHIP) + "(s). (Total:" + mat(1) + ")")
+		}
+		if ( cardround == 0 ) {
+			nojoker = 1
+			initcard 60, 160
+			cardplayerinit 2, 5
+			cardplayeradd 0, 220, 124
+			cardplayeradd 1, 220, 240
+		}
+		font lang(cfg_font1, cfg_font2), 14 - en * 2, 1
+		color 255, 255, 255
+		pos 152, 154
+		mes lang("　親", "Dealer")
+		pos 152, 270
+		mes lang("あなた", "   You")
+		showcardpile
+		showcardholder
+		showcard
+		if ( cardround == 0 ) {
+			repeat 4
+				servecard cnt \ 2
+				if ( cnt != 2 ) {
+					opencard2 stat
+				}
+			loop
+			repeat 1
+				if ( cpcardnum(0) >= 5 ) {
+					break
+				}
+				if ( cpscore(0) < cpscore(1) | cpscore(0) - rnd(5) <= 11 ) {
+					servecard 0
+					opencard2 stat
+					continue cnt
+				}
+			loop
+		}
+		noteadd lang("あなたの合計は" + cpscore(1) + "です。", "Your hand is " + cpscore(1) + ".")
+		if ( cardround == (-1) ) {
+			noteadd lang("親の合計は" + cpscore(0) + "です。", "The dealer's hand is " + cpscore(0) + ".")
+			winner = -1
+			if ( cpscore(0) <= 21 ) {
+				if ( cpscore(1) > 21 | cpscore(0) > cpscore(1) ) {
+					winner = 0
+				}
+			}
+			if ( cpscore(1) <= 21 ) {
+				if ( cpscore(0) > 21 | cpscore(1) > cpscore(0) ) {
+					winner = 1
+				}
+			}
+			if ( winner == (-1) ) {
+				noteadd lang("勝負は引き分けです。", "The match is a draw.")
+			}
+			if ( winner == 0 ) {
+				noteadd lang("あなたの負けです。", "You lose.")
+			}
+			if ( winner == 1 ) {
+				noteadd lang("おめでとうございます。あなたの勝ちです。", "Congratulations, you win.")
+			}
+		}
+		atxinfon(1) = lang("カジノチップ残り " + mat(1) + "枚\n", "Casino chips left: " + mat(1) + "\n")
+		atxinfon(2) = lang("賭けチップ " + stake + "枚 現在" + winrow + "連勝中", "Bets: " + stake + " Wins: " + winrow + "")
+		if ( cardround == (-1) ) {
+			if ( winner == 1 ) {
+				winrow++
+			}
+			if ( winner != 0 ) {
+				list(0, listmax) = 0
+				listn(0, listmax) = lang("次の勝負へ", "To the next round.")
+				listmax++
+			}
+			if ( winner == 0 ) {
+				list(0, listmax) = 0
+				listn(0, listmax) = lang("戻る", "Bah...!")
+				listmax++
+			}
+			chatesc = -1
+			txtadvmsgfix = 240
+			txtadvscreenupdate = 0
+			gosub *com_txtadv_loop
+			if ( winner == 0 ) {
+				break
+			}
+			cardround = 0
+			continue
+		}
+		list(0, listmax) = 0
+		listn(0, listmax) = lang("これに決める", "Stay.")
+		listmax++
+		if ( pileremain() > 10 ) {
+			if ( cpcardnum(1) < 5 ) {
+				list(0, listmax) = 1
+				listn(0, listmax) = lang("もう一枚引く(運)", "Hit me. (Luck)")
+				listmax++
+			}
+			list(0, listmax) = 2
+			listn(0, listmax) = lang("イカサマ(器用", "Cheat. (Dex:") + sdata(SKILL_ATTR_DEX, CHARA_PLAYER) + ")"
+			listmax++
+			if ( stake >= 2 ) {
+				list(0, listmax) = 3
+				listn(0, listmax) = lang("降りる(賭けチップ1枚減少)", "Im out.(1 chip decrease)")
+				listmax++
+			}
+		}
+		chatesc = -1
+		txtadvmsgfix = 240
+		txtadvscreenupdate = 0
+		gosub *com_txtadv_loop
+		if ( rtval == 0 ) {
+			opencard2 cpblackcard(0)
+			cardround = -1
+			continue
+		}
+		if ( rtval == 1 ) {
+			servecard 1
+			p = stat
+			repeat 3
+				if ( cpscore(1) >= 22 ) {
+					if ( pileremain() > 10 ) {
+						if ( rnd(sdata(SKILL_ATTR_LUC, CHARA_PLAYER)) > 40 ) {
+							txt lang("このカードは悪い予感がする…", "I have a bad feeling about this card...")
+							trashcard p
+							servecard 1
+							p = stat
+						}
+					}
+				}
+			loop
+			opencard2 p
+		}
+		if ( rtval == 2 ) {
+			trashcard lastcard(1)
+			servecard 1
+			opencard2 stat
+			p = 20
+			if ( stake >= 5 ) {
+				p = 40
+			}
+			if ( stake >= 10 ) {
+				p = 50
+			}
+			if ( stake >= 20 ) {
+				p = 60
+			}
+			if ( rnd(sdata(SKILL_ATTR_DEX, CHARA_PLAYER)) < rnd(p) ) {
+				atxinit
+				noteadd lang("イカサマだ！", "Cheater!")
+				atxinfon(1) = lang("カジノチップ残り " + mat(1) + "枚\n", "Casino chips left: " + mat(1) + "\n")
+				atxinfon(2) = lang("賭けチップ " + stake + "枚 現在" + winrow + "連勝中", "Bets: " + stake + " Wins: " + winrow + "")
+				winrow = 0
+				txt lang("イカサマが見つかってしまった…", "You are caught in cheating...")
+				modkarma 0, -5
+				list(0, listmax) = 0
+				listn(0, listmax) = lang("濡れ衣だ！", "I didn't do it!")
+				listmax++
+				chatesc = -1
+				txtadvmsgfix = 0
+				txtadvscreenupdate = 1
+				gosub *com_txtadv_loop
+				break
+			}
+		}
+		if ( rtval == 3 ) {
+			stake--
+			cardround = 0
+			continue
+		}
+		cardround++
+	loop
+	if ( winrow > 0 ) {
+		atxinit
+		noteadd lang("おめでとうございます。あなたは" + winrow + "連勝しました。", "Congratulations! You've won " + winrow + " times in a row.")
+		repeat 1
+			i = 2
+			if ( winrow > 2 ) {
+				i = 3
+			}
+			if ( winrow > 7 ) {
+				if ( stake >= 5 ) {
+					i = 4
+				}
+			}
+			if ( winrow > 5 ) {
+				if ( stake >= 10 ) {
+					i = 4
+				}
+			}
+			if ( winrow > 15 ) {
+				if ( stake >= 15 ) {
+					i = 5
+				}
+			}
+			if ( winrow > 10 ) {
+				if ( stake >= 20 ) {
+					i = 5
+				}
+			}
+			flt calcobjlv(rnd(stake + winrow * 2) + winrow * 3 / 2 + stake / 2), i
+			flttypemajor = fsetwear(rnd(length(fsetwear)))
+			itemcreate -1, ITEM_ID_DUMMY, -1, -1, 0
+			if ( inv(INV_ITEM_NUM, ci) == 0 ) {
+				continue cnt
+			}
+		loop
+		snd SOUNDLIST_GET3
+		noteadd lang("@GRアイテム：" + itemname(ci, inv(INV_ITEM_NUM, ci)) + "を戦利品に加えた！", "@GR" + itemname(ci, inv(INV_ITEM_NUM, ci)) + " has been added to your loot list!")
+		if ( stake + winrow * 3 >= 25 ) {
+			flt
+			itemcreate -1, ITEM_ID_SCROLL_FAITH, -1, -1, 0
+			snd SOUNDLIST_GET3
+			noteadd lang("@GRアイテム：" + itemname(ci, inv(INV_ITEM_NUM, ci)) + "を戦利品に加えた！", "@GR" + itemname(ci, inv(INV_ITEM_NUM, ci)) + " has been added to your loot list!")
+		}
+		if ( stake + winrow * 3 >= 35 ) {
+			flt
+			itemcreate -1, ITEM_ID_BLANK_BUSINESS_CARD, -1, -1, 0
+			snd SOUNDLIST_GET3
+			noteadd lang("@GRアイテム：" + itemname(ci, inv(INV_ITEM_NUM, ci)) + "を戦利品に加えた！", "@GR" + itemname(ci, inv(INV_ITEM_NUM, ci)) + " has been added to your loot list!")
+		}
+		if ( stake + winrow * 3 >= 40 ) {
+			flt
+			itemcreate -1, ITEM_ID_POTION_POTENTIAL, -1, -1, 0
+			snd SOUNDLIST_GET3
+			noteadd lang("@GRアイテム：" + itemname(ci, inv(INV_ITEM_NUM, ci)) + "を戦利品に加えた！", "@GR" + itemname(ci, inv(INV_ITEM_NUM, ci)) + " has been added to your loot list!")
+		}
+		if ( winrow > 3 ) {
+			if ( rnd(50) < winrow * 5 + 20 ) {
+				flt
+				itemcreate -1, ITEM_ID_POTION_CURE_CORRUPTION, -1, -1, 0
+				snd SOUNDLIST_GET3
+				noteadd lang("@GRアイテム：" + itemname(ci, inv(INV_ITEM_NUM, ci)) + "を戦利品に加えた！", "@GR" + itemname(ci, inv(INV_ITEM_NUM, ci)) + " has been added to your loot list!")
+			}
+		}
+		list(0, listmax) = 0
+		listn(0, listmax) = lang("戻る", "Great.")
+		listmax++
+		chatesc = 0
+		txtadvmsgfix = 0
+		txtadvscreenupdate = 1
+		gosub *com_txtadv_loop
+		winrow = 0
+	}
+	goto *adv_casinoBlackJack
+	goto *set_npcGod
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -4,7 +4,7 @@
 		txt lang("それはあなたの物ではない。", "It's not your property."), lang("盗むなんてとんでもない。", "You can't just take it."), lang("それは拾えない。", "It's not yours.")
 		goto *pc_turn
 	}
-	if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_FURNITURE | refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_JUNK | refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_ENVIRONMENT ) {
+	if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_FURNITURE | refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_JUNK | refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_ENVIRONMENT ) {
 		if ( limit(inv(INV_ITEM_WEIGHT, ci) / 1000, 0, 1000) > sdata(SKILL_NORMAL_WEIGHT_LIFTING, CHARA_PLAYER) + 5 ) {
 			txt lang("重すぎて投げられない…！", "It is too heavy!")
 			snd SOUNDLIST_FAIL1
@@ -16,7 +16,7 @@
 		txt lang("それはあなたの大事なものだ。<調べる>メニューから解除できる。", "It's set as no-drop. You can reset it from the <examine> menu.")
 		goto *pc_turn
 	}
-	if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_ITEM_POTION | inv(INV_ITEM_ID, ci) == ITEM_ID_TOMATO | inv(INV_ITEM_ID, ci) == ITEM_ID_BUTTER | inv(INV_ITEM_ID, ci) == ITEM_ID_YOGURT | inv(INV_ITEM_ID, ci) == ITEM_ID_NATTO ) {
+	if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_ITEM_POTION | inv(INV_ITEM_ID, ci) == ITEM_ID_TOMATO | inv(INV_ITEM_ID, ci) == ITEM_ID_BUTTER | inv(INV_ITEM_ID, ci) == ITEM_ID_YOGURT | inv(INV_ITEM_ID, ci) == ITEM_ID_NATTO ) {
 		if ( inv(INV_ITEM_ID, ci) != ITEM_ID_EMPTY_BOTTLE ) {
 			stc = -1
 			if ( map(tlocx, tlocy, MAP_CHARA_INDEX_PLUS_ONE) != 0 ) {
@@ -84,7 +84,7 @@
 	gosub *anime
 	ti = inv_getfreeid(-1)
 	removeitem ci, 1
-	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_MONSTER_BALL | (inv(INV_ITEM_ID, ci) == ITEM_ID_CHESTNUT & inv(INV_ITEM_PARAM2, ci) == 0) | inv(INV_ITEM_ID, ci) == ITEM_ID_DUEL_GLOVE | inv(INV_ITEM_ID, ci) == ITEM_ID_LULWYS_PHOTO_COLLECTION | refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_FURNITURE | refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_JUNK | refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_ENVIRONMENT | refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_ITEM_FOOD ) {
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_MONSTER_BALL | (inv(INV_ITEM_ID, ci) == ITEM_ID_CHESTNUT & inv(INV_ITEM_PARAM2, ci) == 0) | inv(INV_ITEM_ID, ci) == ITEM_ID_DUEL_GLOVE | inv(INV_ITEM_ID, ci) == ITEM_ID_LULWYS_PHOTO_COLLECTION | refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_FURNITURE | refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_JUNK | refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_ENVIRONMENT | refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_ITEM_FOOD ) {
 		if ( ti != (-1) ) {
 			item_copy ci, ti
 			inv(INV_ITEM_NUM, ti) = 1
@@ -157,7 +157,7 @@
 		}
 		goto *turn_end
 	}
-	if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_ITEM_POTION | inv(INV_ITEM_ID, ci) == ITEM_ID_TOMATO | inv(INV_ITEM_ID, ci) == ITEM_ID_BUTTER | inv(INV_ITEM_ID, ci) == ITEM_ID_YOGURT | inv(INV_ITEM_ID, ci) == ITEM_ID_NATTO | inv(INV_ITEM_ID, ci) == ITEM_ID_KEMURIDAMA ) {
+	if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_ITEM_POTION | inv(INV_ITEM_ID, ci) == ITEM_ID_TOMATO | inv(INV_ITEM_ID, ci) == ITEM_ID_BUTTER | inv(INV_ITEM_ID, ci) == ITEM_ID_YOGURT | inv(INV_ITEM_ID, ci) == ITEM_ID_NATTO | inv(INV_ITEM_ID, ci) == ITEM_ID_KEMURIDAMA ) {
 		if ( inv(INV_ITEM_ID, ci) != ITEM_ID_EMPTY_BOTTLE ) {
 			if ( synccheck(tlocx, tlocy) ) {
 				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_HANDFUL_SNOW ) {
@@ -529,7 +529,7 @@
 		}
 		goto *turn_end
 	}
-	if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_ITEM_FOOD | refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_FURNITURE | refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_JUNK | refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_ENVIRONMENT ) {
+	if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_ITEM_FOOD | refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_FURNITURE | refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_JUNK | refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_ENVIRONMENT ) {
 		if ( map(tlocx, tlocy, MAP_CHARA_INDEX_PLUS_ONE) != 0 ) {
 			tc = map(tlocx, tlocy, MAP_CHARA_INDEX_PLUS_ONE) - 1
 			if ( cdata(CDATA_IN_TAGTEAM, tc) != 0 ) {
@@ -540,7 +540,7 @@
 					txt lang(name(tc) + "は" + name(cdata(CDATA_TAGTEAM_PARTNER, tc)) + "をかばった！", name(tc) + " guarded " + name(cdata(CDATA_TAGTEAM_PARTNER, tc)) + ".")
 				}
 			}
-			if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) != FILTER_ITEM_FOOD ) {
+			if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) != FILTER_ITEM_FOOD ) {
 				if ( synccheck(tc, -1) ) {
 					txt lang(name(tc) + "に見事に命中した！", "It hits " + name(tc) + "!")
 				}
@@ -556,7 +556,7 @@
 			if ( tc >= MAX_CHARA_FOLLOWER ) {
 				hostileaction cc, tc
 			}
-			if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_ITEM_FOOD & cdata(CDATA_HUNGER, tc) < 10000 & cdata(CDATA_CONDITION_SLEEP, tc) == 0 & cdata(CDATA_CONDITION_DIM, tc) < 60 ) {
+			if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_ITEM_FOOD & cdata(CDATA_HUNGER, tc) < 10000 & cdata(CDATA_CONDITION_SLEEP, tc) == 0 & cdata(CDATA_CONDITION_DIM, tc) < 60 ) {
 				cc = tc
 				txt lang(name(tc) + "は思わず" + itemname(ci, 1) + "に食いついた！", "It hits " + name(tc) + "!")
 				gosub *insta_eat
@@ -764,7 +764,7 @@
 				}
 			}
 		}
-		if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_ITEM_FOOD ) {
+		if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_ITEM_FOOD ) {
 			if ( inv(INV_ITEM_PROPERTY, ci) == PROPERTY_QUEST ) {
 				if ( cdata(CDATA_ROW_ACT, CHARA_PLAYER) == ACTION_NONE ) {
 					if ( inv_getspace(CHARA_PLAYER) == 0 ) {
@@ -819,7 +819,7 @@
 	inv(INV_ITEM_NUM, ci) = in
 	if ( cc == CHARA_PLAYER ) {
 		if ( trait(TRAIT_ETHER_ABSORB_ROD) != 0 ) {
-			if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_ITEM_ROD ) {
+			if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_ITEM_ROD ) {
 				if ( inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) > 0 ) {
 					dbmode = DBMODE_ON_ZAP
 					dbid = inv(INV_ITEM_ID, ci)
@@ -839,7 +839,7 @@
 			}
 		}
 		if ( trait(TRAIT_ETHER_POISON_HANDS) != 0 ) {
-			if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_ITEM_POTION ) {
+			if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_ITEM_POTION ) {
 				if ( inv(INV_ITEM_ID, ci) != ITEM_ID_POISON & inv(INV_ITEM_ID, ci) != ITEM_ID_POTION_CURE_CORRUPTION ) {
 					if ( rnd(5) == 0 ) {
 						txt lang("あなたの手から毒が滴った。", "Poison drips from your hands.")
@@ -877,7 +877,7 @@
 	}
 	inv(INV_ITEM_NUM, ci) = inumbk
 	if ( mode == MODELIST_SHOP ) {
-		if ( refitem(inv(INV_ITEM_ID, ti), DBSPEC_ITEM_TYPE) == FILTER_ITEM_FOOD ) {
+		if ( refitem(inv(INV_ITEM_ID, ti), DBSPEC_TYPE) == FILTER_ITEM_FOOD ) {
 			if ( invctrl == INVCTRL_SHOP_BUY | invctrl == INVCTRL_INV_FILE_GET ) {
 				if ( invctrl == INVCTRL_INV_FILE_GET & invctrl(1) == 3 ) {
 					if ( inv(INV_ITEM_PARAM3, ti) > 0 ) {
@@ -887,7 +887,7 @@
 				else {
 					if ( inv(INV_ITEM_MATERIAL, ci) == ITEM_MATERIAL_RAW ) {
 						if ( inv(INV_ITEM_PARAM3, ti) != 0 ) {
-							inv(INV_ITEM_PARAM3, ti) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 + refitem(inv(INV_ITEM_ID, ti), DBSPEC_ITEM_PARAM3_ORG)
+							inv(INV_ITEM_PARAM3, ti) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 + refitem(inv(INV_ITEM_ID, ti), DBSPEC_PARAM3_ORG)
 							if ( inv(INV_ITEM_PARAM2, ti) != 0 ) {
 								inv(INV_ITEM_PARAM3, ti) += 72
 							}
@@ -921,7 +921,7 @@
 					cdata(CDATA_SHOP_INVEST, tc) = p
 				}
 			}
-			if ( refitem(inv(INV_ITEM_ID, ti), DBSPEC_ITEM_TYPE) == FILTER_CARGO_TRADE ) {
+			if ( refitem(inv(INV_ITEM_ID, ti), DBSPEC_TYPE) == FILTER_CARGO_TRADE ) {
 				inv(INV_ITEM_PARAM2, ti) = calcitemvalue(ti, 0)
 				inv(INV_ITEM_PARAM3, ti) = gdata(GDATA_AREA)
 			}
@@ -1995,7 +1995,7 @@
 					}
 					if ( gdata(GDATA_FLAG_THROWN_CHESTNUTS) >= 100 ) {
 						if ( rnd(5) == 0 ) {
-							encounter = 5
+							encounter = ENCOUNTER_CHESTNUT_GIANT
 						}
 					}
 					if ( 33 <= p & p < 57 & p != 44 ) {
@@ -2058,7 +2058,7 @@
 					levelexitby = MAP_EXIT_NORMAL
 					goto *map_exit
 				}
-				if ( encounter == 5 ) {
+				if ( encounter == ENCOUNTER_CHESTNUT_GIANT ) {
 					encounterlv = 111 + sdata(SKILL_WEAPON_THROWING, CHARA_PLAYER)
 					levelexitby = MAP_EXIT_NORMAL
 					goto *map_exit
@@ -5644,7 +5644,7 @@
 	goto *act_dip
 
 #deffunc dipcursed int dipcursed_item, int dipcursed_arg1
-	if ( refitem(inv(INV_ITEM_ID, dipcursed_item), DBSPEC_ITEM_TYPE) == FILTER_ITEM_FOOD ) {
+	if ( refitem(inv(INV_ITEM_ID, dipcursed_item), DBSPEC_TYPE) == FILTER_ITEM_FOOD ) {
 		if ( inv(INV_ITEM_MATERIAL, dipcursed_item) == ITEM_MATERIAL_RAW ) {
 			txt lang(itemname(dipcursed_item) + "は腐ってしまった…", "" + itemname(dipcursed_item) + " rots.")
 			inv(INV_ITEM_PARAM3, dipcursed_item) = -1
@@ -5657,7 +5657,7 @@
 			return
 		}
 	}
-	if ( refitem(inv(INV_ITEM_ID, dipcursed_item), DBSPEC_ITEM_TYPE) < FILTER_ITEM_MIN ) {
+	if ( refitem(inv(INV_ITEM_ID, dipcursed_item), DBSPEC_TYPE) < FILTER_ITEM_MIN ) {
 		inv(INV_ITEM_LEVEL, dipcursed_item)--
 		snd SOUNDLIST_CRACK
 		if ( gdata(GDATA_FLAG_GAME_MODE) == 1 ) {
@@ -5709,8 +5709,8 @@
 		goto *turn_end
 	}
 	snd SOUNDLIST_DRINK1
-	if ( refitem(inv(INV_ITEM_ID, cidip), DBSPEC_ITEM_TYPE) == FILTER_ITEM_POTION ) {
-		if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE_MINOR) == FILTER_FURNITURE_WELL ) {
+	if ( refitem(inv(INV_ITEM_ID, cidip), DBSPEC_TYPE) == FILTER_ITEM_POTION ) {
+		if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE_MINOR) == FILTER_FURNITURE_WELL ) {
 			item_separate ci
 			item_num cidip, -1
 			if ( inv(INV_ITEM_ID, cidip) != ITEM_ID_EMPTY_BOTTLE ) {
@@ -5779,7 +5779,7 @@
 		}
 	}
 	if ( inv(INV_ITEM_ID, cidip) == ITEM_ID_POISON ) {
-		if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_ITEM_FOOD ) {
+		if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_ITEM_FOOD ) {
 			item_num cidip, -1
 			item_separate ci
 			txt lang(itemname(ci) + "に" + itemname(cidip, 1) + "を混入した！あなたはにやりと笑った。", "You made aphrodisiac food! You grin.")
@@ -5809,7 +5809,7 @@
 		}
 	}
 	if ( inv(INV_ITEM_ID, cidip) == ITEM_ID_LOVE_POTION ) {
-		if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_ITEM_FOOD ) {
+		if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_ITEM_FOOD ) {
 			item_num cidip, -1
 			item_separate ci
 			txt lang(itemname(ci) + "に媚薬を混入した！あなたはうしろめたさを感じた…", "You made aphrodisiac food! You kind of feel guilty...")
@@ -5820,7 +5820,7 @@
 			goto *turn_end
 		}
 	}
-	if ( refitem(inv(INV_ITEM_ID, cidip), DBSPEC_ITEM_TYPE) == FILTER_ITEM_POTION ) {
+	if ( refitem(inv(INV_ITEM_ID, cidip), DBSPEC_TYPE) == FILTER_ITEM_POTION ) {
 		if ( inv(INV_ITEM_ID, ci) == ITEM_ID_CF_POTIOMAN | inv(INV_ITEM_ID, ci) == ITEM_ID_CRUSH_POTIOMAN | inv(INV_ITEM_ID, ci) == ITEM_ID_BATTLE_POTIOMAN | inv(INV_ITEM_ID, ci) == ITEM_ID_SUPER_POTIOMAN ) {
 			item_num cidip, -1
 			if ( inv(INV_ITEM_ID, ci) == ITEM_ID_CF_POTIOMAN & inv(INV_ITEM_LEVEL, ci) >= 4 | (inv(INV_ITEM_ID, ci) != ITEM_ID_CF_POTIOMAN & inv(INV_ITEM_LEVEL, ci) >= 3) ) {
@@ -5886,7 +5886,7 @@
 		goto *turn_end
 	}
 	if ( inv(INV_ITEM_ID, cidip) == ITEM_ID_BOTTLE_ANTISEPTIC ) {
-		if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_ITEM_FOOD ) {
+		if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_ITEM_FOOD ) {
 			item_num cidip, -1
 			item_separate ci
 			txt lang(itemname(ci) + "に永久防腐剤を混ぜた。", "You made Incorruptible food!")
@@ -5917,7 +5917,7 @@
 		goto *turn_end
 	}
 	if ( inv(INV_ITEM_ID, cidip) == ITEM_ID_ACIDPROOF_LIQUID ) {
-		if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) != FILTER_ITEM_POTION ) {
+		if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) != FILTER_ITEM_POTION ) {
 			if ( inv(INV_ITEM_STATUS, cidip) == ITEM_STATUS_BLESSED ) {
 				in = inv(INV_ITEM_NUM, cidip)
 			}
@@ -5991,7 +5991,7 @@
 	tc = cc
 	tlocx = cdata(CDATA_X, cc)
 	tlocy = cdata(CDATA_Y, cc)
-	if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE) == FILTER_ITEM_POTION & inv(INV_ITEM_ID, ci) != ITEM_ID_ENCOUNTER_CANCELLER & inv(INV_ITEM_ID, ci) != ITEM_ID_HANDFUL_SNOW ) {
+	if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_ITEM_POTION & inv(INV_ITEM_ID, ci) != ITEM_ID_ENCOUNTER_CANCELLER & inv(INV_ITEM_ID, ci) != ITEM_ID_HANDFUL_SNOW ) {
 		kakeru = 100
 		goto *act_throw
 	}
@@ -6029,10 +6029,10 @@
 		item_separate ci
 		inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci)--
 	}
-	if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE_MINOR) == FILTER_ITEM_SEED ) {
+	if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE_MINOR) == FILTER_ITEM_SEED ) {
 		goto *item_seed
 	}
-	if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE_MINOR) == FILTER_ITEM_TOOL_BLEND ) {
+	if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE_MINOR) == FILTER_ITEM_TOOL_BLEND ) {
 		if ( gdata(GDATA_AREA) == AREA_SHOW_HOUSE | (gdata(GDATA_AREA) == AREA_CHAOS_CRADLE & gdata(GDATA_LEVEL) == 179) ) {
 			txt lang("ここでは使えない。", "You can't place it here.")
 			gosub *screen_draw
@@ -6041,7 +6041,7 @@
 		blendtool = ci
 		goto *com_blend
 	}
-	if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE_MINOR) == FILTER_FURNITURE_BED ) {
+	if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE_MINOR) == FILTER_FURNITURE_BED ) {
 		if ( gdata(GDATA_SLEEP) < 15 ) {
 			if ( 0 == 0 ) {
 				txt lang("まだ眠たくない。", "You don't feel sleepy yet.")
@@ -6188,7 +6188,7 @@
 				txt lang("しかし、なんだか様子がおかしい…", "But you sense something weird.")
 			}
 			txt lang("それは…", "It...")
-			reftype = refitem(inv(INV_ITEM_ID, ci), DBSPEC_ITEM_TYPE)
+			reftype = refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE)
 			listmax = 0
 			taisei = inv(INV_ITEM_DICE2, ci) + inv(INV_ITEM_LEVEL, ci) + gdata(GDATA_MONTH)
 			list(0, listmax) = rtval, rtval(1)
@@ -9481,7 +9481,7 @@
 					if ( inv(INV_ITEM_NUM, cnt) == 0 ) {
 						continue
 					}
-					if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_ITEM_TYPE) != FILTER_AMMO ) {
+					if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_TYPE) != FILTER_AMMO ) {
 						continue
 					}
 					ci = cnt
