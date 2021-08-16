@@ -1,5 +1,5 @@
 *act_throw
-	if ( inv(INV_ITEM_PROPERTY, ci) == PROPERTY_NPC | inv(INV_ITEM_PROPERTY, ci) == PROPERTY_SPECIAL ) {
+	if ( inv(INV_ITEM_PROPERTY, ci) == PROP_NPC | inv(INV_ITEM_PROPERTY, ci) == PROP_SPECIAL ) {
 		snd SOUNDLIST_FAIL1
 		txt lang("それはあなたの物ではない。", "It's not your property."), lang("盗むなんてとんでもない。", "You can't just take it."), lang("それは拾えない。", "It's not yours.")
 		goto *pc_turn
@@ -624,7 +624,7 @@
 		snd SOUNDLIST_CRUSH2
 	}
 	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_KITTY_BANK ) {
-		if ( inv(INV_ITEM_PROPERTY, ci) != PROPERTY_SPECIAL ) {
+		if ( inv(INV_ITEM_PROPERTY, ci) != PROP_SPECIAL ) {
 			flt
 			itemcreate -1, ITEM_ID_GOLD_PIECE, tlocx, tlocy, inv(INV_ITEM_PARAM1, ci)
 		}
@@ -704,7 +704,7 @@
 			}
 		}
 		if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_ITEM_FOOD ) {
-			if ( inv(INV_ITEM_PROPERTY, ci) == PROPERTY_QUEST ) {
+			if ( inv(INV_ITEM_PROPERTY, ci) == PROP_QUEST ) {
 				if ( cdata(CDATA_ROW_ACT, CHARA_PLAYER) == ACTION_NONE ) {
 					if ( inv_getspace(CHARA_PLAYER) == 0 ) {
 						txt lang("バックパックが一杯だ。", "Your inventory is full.")
@@ -716,7 +716,7 @@
 				}
 			}
 		}
-		if ( inv(INV_ITEM_PROPERTY, ci) == PROPERTY_CONSTRUCT ) {
+		if ( inv(INV_ITEM_PROPERTY, ci) == PROP_CONSTRUCT ) {
 			txt lang(itemname(ci) + "を撤去する？ ", "Do you want to remove " + itemname(ci) + "? ")
 			promptl(0, 0) = stryes, "y", "0"
 			promptl(0, 1) = strno, "n", "1"
@@ -736,7 +736,7 @@
 					mid = midbk
 					inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) = 0
 					inv(INV_ITEM_PARAM2, ci) = 100
-					inv(INV_ITEM_PROPERTY, ci) = PROPERTY_NONE
+					inv(INV_ITEM_PROPERTY, ci) = PROP_NONE
 				}
 			}
 			else {
@@ -794,8 +794,8 @@
 			}
 		}
 	}
-	if ( inv(INV_ITEM_PROPERTY, ci) < PROPERTY_NONE ) {
-		inv(INV_ITEM_PROPERTY, ci) = PROPERTY_NONE
+	if ( inv(INV_ITEM_PROPERTY, ci) < PROP_NONE ) {
+		inv(INV_ITEM_PROPERTY, ci) = PROP_NONE
 	}
 	ibitmod ITEM_BIT_DROP, ci, FALSE
 	item_stack cc, ci
@@ -985,7 +985,7 @@
 		item_copy ci, ti
 	}
 	if ( dropval == 1 ) {
-		inv(INV_ITEM_PROPERTY, ti) = PROPERTY_CONSTRUCT
+		inv(INV_ITEM_PROPERTY, ti) = PROP_CONSTRUCT
 		inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ti) = gdata(GDATA_COUNT_SHELTER) + 5
 		gdata(GDATA_COUNT_SHELTER)++
 		if ( inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ti) > 50 ) {
@@ -1182,7 +1182,7 @@
 			item_separate ci
 			snd SOUNDLIST_BASH1
 			txt lang(itemname(ci) + "に体当たりした。", "You throw your weight against " + itemname(ci) + ".")
-			if ( inv(INV_ITEM_PROPERTY, ci) == PROPERTY_SPECIAL | inv(INV_ITEM_PARAM1, ci) <= 0 ) {
+			if ( inv(INV_ITEM_PROPERTY, ci) == PROP_SPECIAL | inv(INV_ITEM_PARAM1, ci) <= 0 ) {
 				txtmore
 				txt lang("もう実はないようだ… ", "It seems there are no fruits left on the tree.")
 				goto *turn_end
@@ -1209,7 +1209,7 @@
 			item_separate ci
 			snd SOUNDLIST_BASH1
 			txt lang(itemname(ci) + "に体当たりした。", "You throw your weight against " + itemname(ci) + ".")
-			if ( inv(INV_ITEM_PROPERTY, ci) != PROPERTY_SPECIAL ) {
+			if ( inv(INV_ITEM_PROPERTY, ci) != PROP_SPECIAL ) {
 				okane = inv(INV_ITEM_PARAM1, ci)
 				inv(INV_ITEM_NUM, ci)--
 				snd SOUNDLIST_CRUSH2
@@ -5192,7 +5192,7 @@
 			if ( inv(INV_ITEM_NUM, cnt) == 0 ) {
 				continue
 			}
-			if ( inv(INV_ITEM_PROPERTY, cnt) != PROPERTY_SPECIAL ) {
+			if ( inv(INV_ITEM_PROPERTY, cnt) != PROP_SPECIAL ) {
 				continue
 			}
 			if ( inv(INV_ITEM_ID, cnt) != ITEM_ID_SUMMONING_CRYSTAL ) {
@@ -9854,7 +9854,7 @@
 	}
 	if ( _switch_val == 7 | _switch_sw ) {
 		_switch_sw = 0
-		if ( inv(INV_ITEM_PROPERTY, ci) != PROPERTY_CONSTRUCT ) {
+		if ( inv(INV_ITEM_PROPERTY, ci) != PROP_CONSTRUCT ) {
 			if ( mdata(MDATA_CAN_SAVE) == 0 | gdata(GDATA_AREA) == AREA_QUEST | gdata(GDATA_AREA) == AREA_SHELTER ) {
 				if ( gdata(GDATA_AREA) == AREA_WILDERNESS ) {
 					txt lang("ワールドマップで建設するべきだ。", "You can only build it in the world map.")
@@ -10042,7 +10042,7 @@
 			txt lang("それは鈍く輝いた。", "It glows dully.")
 			goto *act_use_SWEND1
 		}
-		if ( inv(INV_ITEM_PROPERTY, ci) != PROPERTY_SPECIAL ) {
+		if ( inv(INV_ITEM_PROPERTY, ci) != PROP_SPECIAL ) {
 			txt lang("水晶には領域の記憶が宿っていない。この場所の所有者が配置した水晶を探す必要がある。", "The crystal isn't filled with the memory fo this place. You need to find ones placed by the owner of this area.")
 			goto *act_use_SWEND1
 		}

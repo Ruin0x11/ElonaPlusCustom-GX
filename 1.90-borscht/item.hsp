@@ -244,7 +244,7 @@
 					break
 				}
 				item_copy ci, ti
-				inv(INV_ITEM_PROPERTY, ti) = PROPERTY_INHERITED
+				inv(INV_ITEM_PROPERTY, ti) = PROP_INHERITED
 			}
 			inv(INV_ITEM_NUM, ci) = 0
 		loop
@@ -963,7 +963,7 @@
 		flt
 		itemcreate -1, ITEM_ID_SHOPKEEPERS_TRUNK, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
 		inv(INV_ITEM_PARAM1, ci) = cdata(CDATA_ROLE_FILE_ID, rc)
-		inv(INV_ITEM_PROPERTY, ci) = PROPERTY_SHOP
+		inv(INV_ITEM_PROPERTY, ci) = PROP_SHOP
 	}
 	if ( rc >= MAX_CHARA_FOLLOWER ) {
 		if ( gdata(GDATA_FLAG_FLESH_DOLL_LOOT_SPAWN) == 0 & gdata(GDATA_FLAG_TALKING_USED) == 0 ) {
@@ -1629,7 +1629,7 @@
 			if ( p == (-1) ) {
 				if ( inv(INV_ITEM_MATERIAL, cnt) == ITEM_MATERIAL_RAW ) {
 					if ( inv(INV_ITEM_PARAM3, cnt) > 0 ) {
-						if ( inv(INV_ITEM_PROPERTY, cnt) <= PROPERTY_NONE ) {
+						if ( inv(INV_ITEM_PROPERTY, cnt) <= PROP_NONE ) {
 							if ( inv(INV_ITEM_PARAM1, cnt) / 1000 == 6 & inv(INV_ITEM_PARAM2, cnt) == 0 ) {
 								if ( chipm(CHIPM_ROLE, map(inv(INV_ITEM_X, cnt), inv(INV_ITEM_Y, cnt), MAP_TILE_ID)) == MAP_CHIP_ROLE_WATER ) {
 									inv(INV_ITEM_PARAM3, cnt) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 + 72
@@ -1643,7 +1643,7 @@
 			if ( inv(INV_ITEM_MATERIAL, cnt) == ITEM_MATERIAL_RAW ) {
 				if ( inv(INV_ITEM_PARAM3, cnt) > 0 ) {
 					if ( inv(INV_ITEM_PARAM3, cnt) <= i ) {
-						if ( inv(INV_ITEM_PROPERTY, cnt) <= PROPERTY_NONE ) {
+						if ( inv(INV_ITEM_PROPERTY, cnt) <= PROP_NONE ) {
 							if ( ibit(ITEM_BIT_ANTISEPTIC, cnt) == TRUE ) {
 								continue
 							}

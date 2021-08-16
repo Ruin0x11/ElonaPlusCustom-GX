@@ -1355,7 +1355,7 @@
 				continue
 			}
 			if ( inv(INV_ITEM_NUM, cnt) > 0 ) {
-				inv(INV_ITEM_PROPERTY, cnt) = PROPERTY_SPECIAL
+				inv(INV_ITEM_PROPERTY, cnt) = PROP_SPECIAL
 			}
 		loop
 		gosub *del_userTemp
@@ -1524,35 +1524,35 @@
 		flt
 		itemcreate -1, ITEM_ID_ALTAR, 10, 8, 0
 		inv(INV_ITEM_PARAM1, ci) = 1
-		inv(INV_ITEM_PROPERTY, ci) = PROPERTY_NPC
+		inv(INV_ITEM_PROPERTY, ci) = PROP_NPC
 		flt
 		itemcreate -1, ITEM_ID_ALTAR, 13, 8, 0
 		inv(INV_ITEM_PARAM1, ci) = 2
-		inv(INV_ITEM_PROPERTY, ci) = PROPERTY_NPC
+		inv(INV_ITEM_PROPERTY, ci) = PROP_NPC
 		flt
 		itemcreate -1, ITEM_ID_ALTAR, 10, 13, 0
 		inv(INV_ITEM_PARAM1, ci) = 5
-		inv(INV_ITEM_PROPERTY, ci) = PROPERTY_NPC
+		inv(INV_ITEM_PROPERTY, ci) = PROP_NPC
 		flt
 		itemcreate -1, ITEM_ID_ALTAR, 13, 13, 0
 		inv(INV_ITEM_PARAM1, ci) = 4
-		inv(INV_ITEM_PROPERTY, ci) = PROPERTY_NPC
+		inv(INV_ITEM_PROPERTY, ci) = PROP_NPC
 		flt
 		itemcreate -1, ITEM_ID_ALTAR, 20, 8, 0
 		inv(INV_ITEM_PARAM1, ci) = 3
-		inv(INV_ITEM_PROPERTY, ci) = PROPERTY_NPC
+		inv(INV_ITEM_PROPERTY, ci) = PROP_NPC
 		flt
 		itemcreate -1, ITEM_ID_ALTAR, 23, 8, 0
 		inv(INV_ITEM_PARAM1, ci) = 7
-		inv(INV_ITEM_PROPERTY, ci) = PROPERTY_NPC
+		inv(INV_ITEM_PROPERTY, ci) = PROP_NPC
 		flt
 		itemcreate -1, ITEM_ID_ALTAR, 20, 13, 0
 		inv(INV_ITEM_PARAM1, ci) = 6
-		inv(INV_ITEM_PROPERTY, ci) = PROPERTY_NPC
+		inv(INV_ITEM_PROPERTY, ci) = PROP_NPC
 		flt
 		itemcreate -1, ITEM_ID_ALTAR, 23, 13, 0
 		inv(INV_ITEM_PARAM1, ci) = 8
-		inv(INV_ITEM_PROPERTY, ci) = PROPERTY_NPC
+		inv(INV_ITEM_PROPERTY, ci) = PROP_NPC
 		mdata(MDATA_MUSIC) = MUSICLIST_MCRUIN
 		map_placeplayer
 		repeat mdata(MDATA_MODERATE_CROWD) / 2
@@ -1912,7 +1912,7 @@
 		flt
 		itemcreate -1, ITEM_ID_ALTAR, 19, 5, 0
 		inv(INV_ITEM_PARAM1, ci) = 1
-		inv(INV_ITEM_PROPERTY, ci) = PROPERTY_NPC
+		inv(INV_ITEM_PROPERTY, ci) = PROP_NPC
 		flt
 		characreate -1, CREATURE_ID_SALES_PERSON, 9, 16
 		cdata(CDATA_ROLE, rc) = ROLE_SHOP_SALESPERSON, 10
@@ -3398,7 +3398,7 @@
 				flt
 				flttypemajor = FILTER_ENVIRONMENT
 				itemcreate -1, ITEM_ID_DUMMY, -1, -1, 0
-				inv(INV_ITEM_PROPERTY, ci) = PROPERTY_NPC
+				inv(INV_ITEM_PROPERTY, ci) = PROP_NPC
 				map(inv(INV_ITEM_X, ci), inv(INV_ITEM_Y, ci), MAP_TILE_ID) = xy2pic(0, 0)
 			loop
 		}
@@ -3419,7 +3419,7 @@
 				flt
 				flttypemajor = FILTER_ENVIRONMENT
 				itemcreate -1, ITEM_ID_DUMMY, -1, -1, 0
-				inv(INV_ITEM_PROPERTY, ci) = PROPERTY_NPC
+				inv(INV_ITEM_PROPERTY, ci) = PROP_NPC
 			loop
 		}
 		if ( 13 <= gdata(GDATA_WORLD_TILE) & gdata(GDATA_WORLD_TILE) < 17 ) {
@@ -3432,7 +3432,7 @@
 			repeat 4 + rnd(4)
 				flt
 				itemcreate -1, ITEM_ID_TREE_DEAD_TREE, -1, -1, 0
-				inv(INV_ITEM_PROPERTY, ci) = PROPERTY_NPC
+				inv(INV_ITEM_PROPERTY, ci) = PROP_NPC
 			loop
 		}
 		if ( chipm(CHIPM_ROLE, gdata(GDATA_WORLD_TILE)) == MAP_CHIP_ROLE_SAND | chipm(CHIPM_ROLE, gdata(GDATA_WORLD_TILE)) == MAP_CHIP_ROLE_SAND_HARD ) {
@@ -3453,7 +3453,7 @@
 			repeat 4 + rnd(4)
 				flt
 				itemcreate -1, ITEM_ID_GIANT_CACTUS, -1, -1, 0
-				inv(INV_ITEM_PROPERTY, ci) = PROPERTY_NPC
+				inv(INV_ITEM_PROPERTY, ci) = PROP_NPC
 			loop
 		}
 		if ( chipm(CHIPM_ROLE, gdata(GDATA_WORLD_TILE)) == MAP_CHIP_ROLE_WATER ) {
@@ -3474,7 +3474,7 @@
 			repeat 4 + rnd(4)
 				flt
 				itemcreate -1, ITEM_ID_TREE_ZELKOVA, -1, -1, 0
-				inv(INV_ITEM_PROPERTY, ci) = PROPERTY_NPC
+				inv(INV_ITEM_PROPERTY, ci) = PROP_NPC
 			loop
 		}
 		if ( gdata(GDATA_WORLD) == AREA_AIMWELL ) {
@@ -3529,7 +3529,7 @@
 				flt
 				flttypemajor = FILTER_ENVIRONMENT
 				itemcreate -1, ITEM_ID_DUMMY, -1, -1, 0
-				inv(INV_ITEM_PROPERTY, ci) = PROPERTY_NPC
+				inv(INV_ITEM_PROPERTY, ci) = PROP_NPC
 			loop
 		}
 		if ( chipm(CHIPM_ROLE, gdata(GDATA_WORLD_TILE)) == MAP_CHIP_ROLE_SNOW ) {
@@ -3546,7 +3546,7 @@
 				flttypemajor = FILTER_ENVIRONMENT
 				fltselect = 8
 				itemcreate -1, ITEM_ID_DUMMY, -1, -1, 0
-				inv(INV_ITEM_PROPERTY, ci) = PROPERTY_NPC
+				inv(INV_ITEM_PROPERTY, ci) = PROP_NPC
 			loop
 		}
 		if ( mdatan(0) == "" ) {
@@ -3561,7 +3561,7 @@
 				flt
 				flttypemajor = FILTER_ENVIRONMENT
 				itemcreate -1, ITEM_ID_DUMMY, -1, -1, 0
-				inv(INV_ITEM_PROPERTY, ci) = PROPERTY_NPC
+				inv(INV_ITEM_PROPERTY, ci) = PROP_NPC
 			loop
 		}
 		map_placeplayer
@@ -6786,7 +6786,7 @@
 			flt
 			itemcreate -1, ITEM_ID_ALTAR, 15, 17, 0
 			inv(INV_ITEM_PARAM1, ci) = 8
-			inv(INV_ITEM_PROPERTY, ci) = PROPERTY_NPC
+			inv(INV_ITEM_PROPERTY, ci) = PROP_NPC
 			flt
 			characreate -1, CREATURE_ID_ROGUE, 29, 20
 			cbitmod CHARA_BIT_SANDBAG, rc, TRUE
@@ -6971,7 +6971,7 @@
 			flt
 			itemcreate -1, ITEM_ID_ALTAR, 35, 1, 0
 			inv(INV_ITEM_PARAM1, ci) = 4
-			inv(INV_ITEM_PROPERTY, ci) = PROPERTY_NPC
+			inv(INV_ITEM_PROPERTY, ci) = PROP_NPC
 			if ( gdata(GDATA_FLAG_VISITED_VALM) > 0 ) {
 				flt
 				characreate -1, CREATURE_ID_RATIN_THE_FIGHTER_REPORTER, 8, 13
@@ -10327,10 +10327,10 @@
 						}
 					}
 					if ( mdata(MDATA_TYPE) == MAP_TYPE_TOWN | mdata(MDATA_TYPE) == MAP_TYPE_VILLAGE ) {
-						if ( inv(INV_ITEM_PROPERTY, cnt) < PROPERTY_NONE ) {
+						if ( inv(INV_ITEM_PROPERTY, cnt) < PROP_NONE ) {
 							inv(INV_ITEM_PROPERTY, cnt)++
 						}
-						if ( inv(INV_ITEM_PROPERTY, cnt) == PROPERTY_NONE ) {
+						if ( inv(INV_ITEM_PROPERTY, cnt) == PROP_NONE ) {
 							inv(INV_ITEM_NUM, cnt) = 0
 							cell_refresh inv(INV_ITEM_X, cnt), inv(INV_ITEM_Y, cnt)
 						}
@@ -13214,23 +13214,23 @@
 		flt
 		itemcreate -1, ITEM_ID_PEDESTAL, 29, 16, 0
 		if ( stat != 0 ) {
-			inv(INV_ITEM_PROPERTY, ci) = PROPERTY_NPC
+			inv(INV_ITEM_PROPERTY, ci) = PROP_NPC
 		}
 		flt
 		itemcreate -1, ITEM_ID_STATUE_JURE, 29, 16, 0
 		if ( stat != 0 ) {
-			inv(INV_ITEM_PROPERTY, ci) = PROPERTY_NPC
+			inv(INV_ITEM_PROPERTY, ci) = PROP_NPC
 		}
 		flt
 		itemcreate -1, ITEM_ID_ALTAR, 29, 17, 0
 		if ( stat != 0 ) {
 			inv(INV_ITEM_PARAM1, ci) = 6
-			inv(INV_ITEM_PROPERTY, ci) = PROPERTY_NPC
+			inv(INV_ITEM_PROPERTY, ci) = PROP_NPC
 		}
 		flt
 		itemcreate -1, ITEM_ID_MOCHI, 29, 17, 0
 		if ( stat != 0 ) {
-			inv(INV_ITEM_PROPERTY, ci) = PROPERTY_SPECIAL
+			inv(INV_ITEM_PROPERTY, ci) = PROP_SPECIAL
 		}
 		flt
 		characreate -1, CREATURE_ID_KANEDA_BIKE, 48, 19

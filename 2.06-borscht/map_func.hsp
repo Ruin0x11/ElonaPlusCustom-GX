@@ -420,7 +420,7 @@
 	inv_getheader -1
 	repeat invrange, invhead
 		if ( inv(INV_ITEM_NUM, cnt) > 0 ) {
-			if ( inv(INV_ITEM_PROPERTY, cnt) == PROPERTY_NPC ) {
+			if ( inv(INV_ITEM_PROPERTY, cnt) == PROP_NPC ) {
 				if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_TYPE) == FILTER_ITEM_FOOD ) {
 					inv(INV_ITEM_NUM, cnt) = 0
 					cell_refresh inv(INV_ITEM_X, cnt), inv(INV_ITEM_Y, cnt)
@@ -1500,13 +1500,13 @@
 			if ( rnd(25) == 0 ) {
 				flt
 				itemcreate -1, ITEM_ID_FOUNTAIN, locvar_map_placeupstairs_x, locvar_map_placeupstairs_y, 0
-				inv(INV_ITEM_PROPERTY, ci) = PROPERTY_NPC
+				inv(INV_ITEM_PROPERTY, ci) = PROP_NPC
 				return
 			}
 			if ( rnd(100) == 0 ) {
 				flt
 				itemcreate -1, ITEM_ID_CEREMONY_ALTAR, locvar_map_placeupstairs_x, locvar_map_placeupstairs_y, 0
-				inv(INV_ITEM_PROPERTY, ci) = PROPERTY_NPC
+				inv(INV_ITEM_PROPERTY, ci) = PROP_NPC
 				inv(INV_ITEM_PARAM1, ci) = isetgod(rnd(length(isetgod)))
 				return
 			}
@@ -1644,7 +1644,7 @@
 			if ( rnd(100) == 0 ) {
 				flt
 				itemcreate -1, ITEM_ID_CEREMONY_ALTAR, locvar_map_placeupstairs_x, locvar_map_placeupstairs_y, 0
-				inv(INV_ITEM_PROPERTY, ci) = PROPERTY_NPC
+				inv(INV_ITEM_PROPERTY, ci) = PROP_NPC
 				inv(INV_ITEM_PARAM1, ci) = isetgod(rnd(length(isetgod)))
 				return
 			}

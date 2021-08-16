@@ -19,11 +19,11 @@
 		else {
 			rtvaln = itemname(rtval(1))
 		}
-		if ( inv(INV_ITEM_PROPERTY, rtval(1)) <= PROPERTY_NONE ) {
+		if ( inv(INV_ITEM_PROPERTY, rtval(1)) <= PROP_NONE ) {
 			bedtxt = lang(rtvaln + "が落ちている。", "You see " + rtvaln + " here.")
 		}
 		else {
-			if ( inv(INV_ITEM_PROPERTY, rtval(1)) == PROPERTY_CONSTRUCT ) {
+			if ( inv(INV_ITEM_PROPERTY, rtval(1)) == PROP_CONSTRUCT ) {
 				bedtxt = lang(rtvaln + "が設置されている。", "" + rtvaln + " is constructed here.")
 			}
 			else {
@@ -10869,13 +10869,13 @@
 		snd SOUNDLIST_INV
 		goto *com_inventory
 	}
-	if ( inv(INV_ITEM_PROPERTY, ci) > PROPERTY_NONE & inv(INV_ITEM_PROPERTY, ci) < PROPERTY_CONSTRUCT | inv(INV_ITEM_PROPERTY, ci) == PROPERTY_SPECIAL ) {
+	if ( inv(INV_ITEM_PROPERTY, ci) > PROP_NONE & inv(INV_ITEM_PROPERTY, ci) < PROP_CONSTRUCT | inv(INV_ITEM_PROPERTY, ci) == PROP_SPECIAL ) {
 		snd SOUNDLIST_FAIL1
 		msgdup++
-		if ( inv(INV_ITEM_PROPERTY, ci) == PROPERTY_SHOP ) {
+		if ( inv(INV_ITEM_PROPERTY, ci) == PROP_SHOP ) {
 			txt lang("それは持ち運べない。", "You can't carry it.")
 		}
-		if ( inv(INV_ITEM_PROPERTY, ci) == PROPERTY_NPC | inv(INV_ITEM_PROPERTY, ci) == PROPERTY_SPECIAL ) {
+		if ( inv(INV_ITEM_PROPERTY, ci) == PROP_NPC | inv(INV_ITEM_PROPERTY, ci) == PROP_SPECIAL ) {
 			txt lang("それはあなたの物ではない。", "It's not your property."), lang("盗むなんてとんでもない。", "You can't just take it."), lang("それは拾えない。", "It's not yours.")
 		}
 		gosub *screen_draw
@@ -11067,7 +11067,7 @@
 			}
 			item_checkknown cnt
 			reftype = refitem(inv(INV_ITEM_ID, cnt), DBSPEC_TYPE)
-			if ( inv(INV_ITEM_PROPERTY, cnt) == PROPERTY_SPECIAL ) {
+			if ( inv(INV_ITEM_PROPERTY, cnt) == PROP_SPECIAL ) {
 				if ( ibit(ITEM_BIT_GUEST_USE, cnt) == FALSE | invctrl != INVCTRL_USE ) {
 					if ( invctrl != INVCTRL_INFO ) {
 						continue
@@ -11286,7 +11286,7 @@
 					}
 				}
 				if ( invctrl(1) == 10 ) {
-					if ( inv(INV_ITEM_ID, cnt) == ITEM_ID_FISHING_POLE | inv(INV_ITEM_ID, cnt) == ITEM_ID_GIFT | (inv(INV_ITEM_PROPERTY, cnt) >= PROPERTY_NPC & inv(INV_ITEM_PROPERTY, cnt) <= PROPERTY_SPECIAL) | inv(INV_ITEM_ID, cnt) == ITEM_ID_SHELTER ) {
+					if ( inv(INV_ITEM_ID, cnt) == ITEM_ID_FISHING_POLE | inv(INV_ITEM_ID, cnt) == ITEM_ID_GIFT | (inv(INV_ITEM_PROPERTY, cnt) >= PROP_NPC & inv(INV_ITEM_PROPERTY, cnt) <= PROP_SPECIAL) | inv(INV_ITEM_ID, cnt) == ITEM_ID_SHELTER ) {
 						continue
 					}
 				}
@@ -11419,13 +11419,13 @@
 						}
 					}
 					else {
-						if ( inv(INV_ITEM_PROPERTY, cnt) != PROPERTY_QUEST ) {
+						if ( inv(INV_ITEM_PROPERTY, cnt) != PROP_QUEST ) {
 							continue
 						}
 					}
 				}
 				else {
-					if ( inv(INV_ITEM_PROPERTY, cnt) == PROPERTY_QUEST ) {
+					if ( inv(INV_ITEM_PROPERTY, cnt) == PROP_QUEST ) {
 						continue
 					}
 				}
@@ -11464,7 +11464,7 @@
 				}
 			}
 			else {
-				if ( inv(INV_ITEM_PROPERTY, cnt) == PROPERTY_QUEST ) {
+				if ( inv(INV_ITEM_PROPERTY, cnt) == PROP_QUEST ) {
 					if ( invctrl != INVCTRL_INFO & invctrl != INVCTRL_DROP & invctrl != INVCTRL_GET & invctrl != INVCTRL_EAT ) {
 						continue
 					}
@@ -11482,7 +11482,7 @@
 			}
 			if ( invctrl == INVCTRL_PICKPOCKET ) {
 				if ( cnt2 == 0 ) {
-					if ( inv(INV_ITEM_PROPERTY, cnt) != PROPERTY_NPC ) {
+					if ( inv(INV_ITEM_PROPERTY, cnt) != PROP_NPC ) {
 						continue
 					}
 				}
@@ -12136,13 +12136,13 @@
 					}
 				}
 			}
-			if ( inv(INV_ITEM_PROPERTY, ci) > PROPERTY_NONE & inv(INV_ITEM_PROPERTY, ci) < PROPERTY_CONSTRUCT ) {
+			if ( inv(INV_ITEM_PROPERTY, ci) > PROP_NONE & inv(INV_ITEM_PROPERTY, ci) < PROP_CONSTRUCT ) {
 				snd SOUNDLIST_FAIL1
 				msgdup++
-				if ( inv(INV_ITEM_PROPERTY, ci) == PROPERTY_SHOP ) {
+				if ( inv(INV_ITEM_PROPERTY, ci) == PROP_SHOP ) {
 					txt lang("それは持ち運べない。", "You can't carry it.")
 				}
-				if ( inv(INV_ITEM_PROPERTY, ci) == PROPERTY_NPC ) {
+				if ( inv(INV_ITEM_PROPERTY, ci) == PROP_NPC ) {
 					txt lang("それはあなたの物ではない。", "It's not your property."), lang("盗むなんてとんでもない。", "You can't just take it."), lang("それは拾えない。", "It's not yours.")
 				}
 				gosub *screen_draw

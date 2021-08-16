@@ -3593,7 +3593,7 @@
 		item_copy ci, ti
 		inv(INV_ITEM_NUM, ti) = in
 		ibitmod ITEM_BIT_STOLEN, ti, TRUE
-		inv(INV_ITEM_PROPERTY, ti) = PROPERTY_NONE
+		inv(INV_ITEM_PROPERTY, ti) = PROP_NONE
 		inv(INV_ITEM_NUM, ci) -= in
 		if ( inv(INV_ITEM_NUM, ci) <= 0 ) {
 			cell_refresh inv(INV_ITEM_X, ci), inv(INV_ITEM_Y, ci)
@@ -5002,7 +5002,7 @@
 		cdata(CDATA_ITEM_USING, cc) = ci
 		if ( synccheck(cc, -1) ) {
 			snd SOUNDLIST_EAT1
-			if ( inv(INV_ITEM_PROPERTY, ci) == PROPERTY_NPC & cc < MAX_CHARA_FOLLOWER ) {
+			if ( inv(INV_ITEM_PROPERTY, ci) == PROP_NPC & cc < MAX_CHARA_FOLLOWER ) {
 				gdata(GDATA_FLAG_TIMES_EATEN_IN_SECRET)++
 				txt lang(name(cc) + "は" + itemname(ci, 1) + "をこっそりと口に運んだ。", name(cc) + " start" + _s(cc) + " to eat " + itemname(ci, 1) + " in secret.")
 			}

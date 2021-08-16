@@ -74,8 +74,8 @@
 			continue
 		}
 		if ( inv(INV_ITEM_ID, cnt) == ITEM_ID_SHELTER ) {
-			if ( inv(INV_ITEM_PROPERTY, cnt) == PROPERTY_CONSTRUCT ) {
-				inv(INV_ITEM_PROPERTY, cnt) = PROPERTY_NONE
+			if ( inv(INV_ITEM_PROPERTY, cnt) == PROP_CONSTRUCT ) {
+				inv(INV_ITEM_PROPERTY, cnt) = PROP_NONE
 				inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), cnt) = 0
 				inv(INV_ITEM_PARAM2, cnt) = 100
 				snd SOUNDLIST_AMMO
@@ -928,7 +928,7 @@
 				return
 			}
 		}
-		if ( inv(INV_ITEM_PROPERTY, itemowner_itemid) == PROPERTY_QUEST ) {
+		if ( inv(INV_ITEM_PROPERTY, itemowner_itemid) == PROP_QUEST ) {
 			locvar_itemowner_s += lang("", " grown ") + _weight(inv(INV_ITEM_SUB_NAME, itemowner_itemid)) + lang("育った", "")
 		}
 	}
@@ -955,7 +955,7 @@
 						locvar_itemowner_s += "/bugged/"
 						return
 					}
-					if ( inv(INV_ITEM_PROPERTY, itemowner_itemid) != PROPERTY_QUEST ) {
+					if ( inv(INV_ITEM_PROPERTY, itemowner_itemid) != PROP_QUEST ) {
 						locvar_itemowner_s += lang("", " of ") + refchara(inv(INV_ITEM_SUB_NAME, itemowner_itemid), DBSPEC_CHARA_NAME_ORG, 1)
 						if ( jp ) {
 							locvar_itemowner_s += "との"
@@ -967,7 +967,7 @@
 						locvar_itemowner_s += "/bugged/"
 						return
 					}
-					if ( inv(INV_ITEM_PROPERTY, itemowner_itemid) != PROPERTY_QUEST ) {
+					if ( inv(INV_ITEM_PROPERTY, itemowner_itemid) != PROP_QUEST ) {
 						locvar_itemowner_s += lang("", " of ") + refchara(inv(INV_ITEM_SUB_NAME, itemowner_itemid), DBSPEC_CHARA_NAME_ORG, 1)
 						if ( jp ) {
 							locvar_itemowner_s += "の"
