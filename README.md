@@ -1,20 +1,20 @@
-# Elona+ Custom-GX 2.05
+# Elona+ Custom-GX 2.06
 
 *\~Believe in Jure and hold a determination to mince.\~*
 
-Elona+ Custom-GX is a new variant of Elona+ based on Elona+ Custom-G, updated with the changes in Elona+ up to version 2.05.
+Elona+ Custom-GX is a new variant of Elona+ based on Elona+ Custom-G, updated with the changes in Elona+ up to version 2.06.
 
 ### **[Download the latest release here.](https://github.com/Ruin0x11/ElonaPlusCustom-GX/releases/)**
 
 ## Installation
 
-1. Download Elona+ 2.05 from [here](https://mega.nz/file/x2JnFIKR#9WW8H_S1gz3xJeGpD6_-jW-UYPbwe-B5IKIsaRI08M4). Extract it to `elonaplus2.05`.
-2. Extract the contents of Custom-GX's archive to the `elonaplus2.05` folder, overwriting all existing files.
+1. Download Elona+ 2.06 from [here](https://mega.nz/file/x2JnFIKR#9WW8H_S1gz3xJeGpD6_-jW-UYPbwe-B5IKIsaRI08M4). Extract it to `elonaplus2.06`.
+2. Extract the contents of Custom-GX's archive to the `elonaplus2.06` folder, overwriting all existing files.
 3. Run `elonapluscgx.exe`.
 
 ## Building
 
-1. Follow the installation instructions above. Rename the `elonaplus2.05` folder to `2.05-custom-gx` and move it to the `assets/` folder of this repository.
+1. Follow the installation instructions above. Rename the `elonaplus2.06` folder to `2.05-custom-gx` and move it to the `assets/` folder of this repository.
 2. Download the HSP3.4 SDK (`hsp34a.zip`) from [here](http://hsp.tv/make/downlist.html) and extract it somewhere.
 3. Open `2.05-custom-gx/main.hsp` with `hsed3.exe` from the HSP3.4 SDK folder. Press <kbd>F5</kbd> to compile and run under debug mode.
 4. Press <kbd>Ctrl+F9</kbd> to create an executable named `elonapluscgx.exe`. You can then copy it to your Custom-GX install folder.
