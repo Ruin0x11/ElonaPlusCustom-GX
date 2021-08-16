@@ -122,7 +122,7 @@
 
 	if ( develop ) {
 		dbg_titleinfo = 1
-		dbg_hpAlwaysFull = 1
+		dbg_hpAlwaysFull = 0
 		dbg_skipCm = 0
         dbg_figure = 1
         dbg_extraSkills = 1
@@ -2816,7 +2816,7 @@
 	}
 	if ( timeGetTime() / 1000 - time_warn > 3600 ) {
 		time_warn = timeGetTime() / 1000
-		wishfilter = 0
+		wishfilter = FALSE
 		hour_played++
 		s = lang("ElonaPlusをはじめてから" + hour_played + "時間が経過しています。", "You have been playing ElonaPlus for " + hour_played + " hour" + _s3(hour_played) + ". ")
 		gosub *time_warn_talk
@@ -3941,6 +3941,9 @@
 		goto *exit_game
 	}
 	s = "dead" + lang(cdatan(CDATAN_AKA, CHARA_PLAYER) + cdatan(CDATAN_NAME, CHARA_PLAYER) + "は" + mdatan(MDATAN_NAME) + "で" + ndeathcause + lastword, cdatan(CDATAN_AKA, CHARA_PLAYER) + " " + cdatan(CDATAN_NAME, CHARA_PLAYER) + " " + ndeathcause + " in " + mdatan(MDATAN_NAME) + " " + lastword)
+	if ( gdata(GDATA_WIZARD) == FALSE ) {
+		net_send s
+	}
 	screenupdate = -1
 	gosub *screen_refreshFull
 	levelexitby = 3
@@ -5363,6 +5366,10 @@
 	}
 	if ( _switch_val == EVENT_MARRY | _switch_sw ) {
 		_switch_sw = 0
+		if ( gdata(GDATA_WIZARD) == FALSE ) {
+			s = lang(cdatan(CDATAN_AKA, CHARA_PLAYER) + cdatan(CDATAN_NAME, CHARA_PLAYER) + "は" + name(marry) + "に永遠の愛を誓った。", cdatan(CDATAN_AKA, CHARA_PLAYER) + " " + cdatan(CDATAN_NAME, CHARA_PLAYER) + " pledged " + his3(CHARA_PLAYER) + " eternal love to " + name(marry) + ".")
+			net_send "marr" + s
+		}
 		music = MUSICLIST_MCWEDDING
 		gosub *music_play
 		s = lang("結婚", "Marriage")

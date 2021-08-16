@@ -153,17 +153,22 @@
 			if ( listmax > 100 ) {
 				break
 			}
+			; index
 			list(0, listmax) = int(strmid(netbuf, locvar_net_read_header, locvar_net_read_tail))
 			locvar_net_read_header += locvar_net_read_tail + 2
 			locvar_net_read_tail = instr(netbuf, locvar_net_read_header, "<>")
+			; alias
 			listn(0, listmax) = "" + strmid(netbuf, locvar_net_read_header, locvar_net_read_tail)
 			locvar_net_read_header += locvar_net_read_tail + 2
 			locvar_net_read_tail = instr(netbuf, locvar_net_read_header, "<>")
+			; votes
 			list(1, listmax) = int(strmid(netbuf, locvar_net_read_header, locvar_net_read_tail))
 			locvar_net_read_header += locvar_net_read_tail + 2
 			listn(1, listmax) = "" + list(1, listmax)
+			; IP address
 			locvar_net_read_tail = instr(netbuf, locvar_net_read_header, "<>")
 			locvar_net_read_header += locvar_net_read_tail + 2
+			; timestamp reset at#total votes#rank?
 			locvar_net_read_tail = instr(netbuf, locvar_net_read_header, "<>")
 			locvar_net_read_header += locvar_net_read_tail + 3
 			listmax++
@@ -682,7 +687,7 @@
 			promptOk
 			goto *com_vote
 		}
-		if ( gdata(GDATA_NEXT_VOTE) > gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 ) {
+		if ( develop == FALSE & gdata(GDATA_NEXT_VOTE) > gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 ) {
 			snd SOUNDLIST_FAIL1
 			txt lang("まだ投票権が復活していない。", "You need to wait before submitting a new vote.")
 			goto *com_vote_loop_pgchk

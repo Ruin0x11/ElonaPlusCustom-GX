@@ -3795,6 +3795,12 @@
 
 *com_wish_end
 	s = lang(cdatan(CDATAN_AKA, CHARA_PLAYER) + cdatan(CDATAN_NAME, CHARA_PLAYER) + "は狂喜して叫んだ。「" + inputlog + "！！」" + txtcopy, cdatan(CDATAN_AKA, CHARA_PLAYER) + " " + cdatan(CDATAN_NAME, CHARA_PLAYER) + " goes wild with joy, \"" + inputlog + "!!\" " + cnven(txtcopy))
+	if ( gdata(GDATA_WIZARD) == FALSE ) {
+		if ( wishfilter == FALSE | develop ) {
+			net_send "wish" + s
+			wishfilter = TRUE
+		}
+	}
 	return
 
 *com_wish

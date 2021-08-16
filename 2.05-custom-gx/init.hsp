@@ -1355,6 +1355,41 @@ if instr(s,0,%1)!-1{	%c\
 
 	return name(EntityID)
 
+#defcfunc his3 int his3_EntityID
+	his3_entity_sex = cdata(CDATA_SEX, his3_EntityID)
+	his3_entity_sexadv = cdatan(CDATAN_NEWSEX, his3_EntityID)
+
+	switch his3_entity_sexadv
+		case "男性"
+		case "male"
+		case "なし"
+		case "none"
+			return "his"
+			swbreak
+		case "女性"
+		case "female"
+		case "両性具有"
+		case "hermaphrodite"
+			return "her"
+			swbreak
+		case "自称男性"
+		case "trans-male"
+			return "his?"
+			swbreak
+		case "自称女性"
+		case "trans-female"
+			return "her?"
+			swbreak
+		default
+			swbreak
+	swend
+
+	if ( his3_entity_sex == 0 ) {
+		return "his"
+	}
+
+	return "her"
+
 #defcfunc him2 int him2_EntityID
 	him2_entity_sex = cdata(CDATA_SEX, him2_EntityID)
 	him2_entity_sexadv = cdatan(CDATAN_NEWSEX, him2_EntityID)

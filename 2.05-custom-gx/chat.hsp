@@ -19850,6 +19850,9 @@
 		cdata(CDATA_JOIN_DATE_YEAR, tc) = gdata(GDATA_YEAR)
 		marry = tc
 		evadd EVENT_MARRY
+		if ( gdata(GDATA_WIZARD) == FALSE ) {
+			net_send "marr" + cdata(CDATAN_AKA, CHARA_PLAYER) + cdatan(CDATAN_NAME, CHARA_PLAYER) + "は" + name(marry) + "に永遠の愛を誓った。"
+		}
 		goto *chat_end
 	}
 	if ( chatval == 39 ) {

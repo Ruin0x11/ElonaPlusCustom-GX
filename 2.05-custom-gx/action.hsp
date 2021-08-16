@@ -1948,8 +1948,26 @@
 			goto *com_quest
 		}
 		if ( cellfeat == 31 ) {
-			snd SOUNDLIST_CHAT
-			gosub *com_vote_new
+			promptAdd lang("異名の投票", "Vote for an alias"), "null", 0
+			promptAdd lang("処刑の投票", "Vote for execution"), "null", 1
+			promptAdd lang("何もしない", "Cancel"), "null", 2
+
+			val = promptx, prompty, 260, 1
+			gosub *prompt_key
+
+			if ( stat == 0 | rtval == 2 ) {
+				goto *turn_end
+			}
+			if ( rtval == 0 ) {
+				snd SOUNDLIST_CHAT
+				gosub *com_vote
+				goto *turn_end
+			}
+			if ( rtval == 1 ) {
+				snd SOUNDLIST_CHAT
+				gosub *com_vote_new
+				goto *turn_end
+			}
 			goto *turn_end
 		}
 		if ( cellfeat == 33 ) {
