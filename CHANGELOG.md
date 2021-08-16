@@ -1,3 +1,8 @@
+# 2.06fix.1.0
+
+## Added
+- Ported all changes from Elona+ 2.06fix.
+
 # 2.06.1.0
 
 ## Added
