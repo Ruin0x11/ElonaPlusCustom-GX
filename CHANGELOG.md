@@ -1,6 +1,12 @@
 # 2.06.1.0
 
+## Added
+- Ported all changes from Elona+ 2.06.
+- Added "Disable cicada noises" custom tweak.
+
 ## Fixed
+- Fixed tables not having the manuscript writing item effect.
+- Fixed spell stock conversion by using tables causing spells to be casted instead.
 - Fixed planted seeds not showing the correct text when walked over.
 - Fixed a crash caused by casting Meteor.
 - Fixed oblivion rude beasts being unable to cast Summon Chaos (as stated in the Elona+ changelog).
