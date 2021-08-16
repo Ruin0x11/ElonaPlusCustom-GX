@@ -2,7 +2,457 @@
 	if ( dbmode != DBMODE_FIND ) {
 		goto *db_item_set
 	}
-//*db_item_GOLDEN_DOLL
+//*db_item_DYING_CICADA
+	dbmax = 0
+	dbsum = 0
+	if ( 1 > objlv ) {
+		goto *db_item_M01_GARNET
+	}
+	if ( fltselect != 1 ) {
+		goto *db_item_M01_GARNET
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_JUNK ) {
+			goto *db_item_M01_GARNET
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_NONE ) {
+			goto *db_item_M01_GARNET
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_DYING_CICADA), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_M01_GARNET
+		}
+	}
+	dbsum += 500000 / (1000 + abs(objlv - 1) * 10) + 1
+	dblist(0, dbmax) = ITEM_ID_DYING_CICADA, dbsum
+	dbmax++
+*db_item_M01_GARNET
+	if ( 50 > objlv ) {
+		goto *db_item_M02_AMETHYST
+	}
+	if ( fltselect != 1 ) {
+		goto *db_item_M02_AMETHYST
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_ORE ) {
+			goto *db_item_M02_AMETHYST
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_ORE_GEM ) {
+			goto *db_item_M02_AMETHYST
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_M01_GARNET), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_M02_AMETHYST
+		}
+	}
+	dbsum += 1000 / (1000 + abs(objlv - 50) * 10) + 1
+	dblist(0, dbmax) = ITEM_ID_M01_GARNET, dbsum
+	dbmax++
+*db_item_M02_AMETHYST
+	if ( 50 > objlv ) {
+		goto *db_item_M03_AQUAMARINE
+	}
+	if ( fltselect != 1 ) {
+		goto *db_item_M03_AQUAMARINE
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_ORE ) {
+			goto *db_item_M03_AQUAMARINE
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_ORE_GEM ) {
+			goto *db_item_M03_AQUAMARINE
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_M02_AMETHYST), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_M03_AQUAMARINE
+		}
+	}
+	dbsum += 1000 / (1000 + abs(objlv - 50) * 10) + 1
+	dblist(0, dbmax) = ITEM_ID_M02_AMETHYST, dbsum
+	dbmax++
+*db_item_M03_AQUAMARINE
+	if ( 50 > objlv ) {
+		goto *db_item_M04_DIAMOND
+	}
+	if ( fltselect != 1 ) {
+		goto *db_item_M04_DIAMOND
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_ORE ) {
+			goto *db_item_M04_DIAMOND
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_ORE_GEM ) {
+			goto *db_item_M04_DIAMOND
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_M03_AQUAMARINE), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_M04_DIAMOND
+		}
+	}
+	dbsum += 1000 / (1000 + abs(objlv - 50) * 10) + 1
+	dblist(0, dbmax) = ITEM_ID_M03_AQUAMARINE, dbsum
+	dbmax++
+*db_item_M04_DIAMOND
+	if ( 50 > objlv ) {
+		goto *db_item_M05_EMERALD
+	}
+	if ( fltselect != 1 ) {
+		goto *db_item_M05_EMERALD
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_ORE ) {
+			goto *db_item_M05_EMERALD
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_ORE_GEM ) {
+			goto *db_item_M05_EMERALD
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_M04_DIAMOND), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_M05_EMERALD
+		}
+	}
+	dbsum += 1000 / (1000 + abs(objlv - 50) * 10) + 1
+	dblist(0, dbmax) = ITEM_ID_M04_DIAMOND, dbsum
+	dbmax++
+*db_item_M05_EMERALD
+	if ( 50 > objlv ) {
+		goto *db_item_M06_ALEXANDRITE
+	}
+	if ( fltselect != 1 ) {
+		goto *db_item_M06_ALEXANDRITE
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_ORE ) {
+			goto *db_item_M06_ALEXANDRITE
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_ORE_GEM ) {
+			goto *db_item_M06_ALEXANDRITE
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_M05_EMERALD), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_M06_ALEXANDRITE
+		}
+	}
+	dbsum += 1000 / (1000 + abs(objlv - 50) * 10) + 1
+	dblist(0, dbmax) = ITEM_ID_M05_EMERALD, dbsum
+	dbmax++
+*db_item_M06_ALEXANDRITE
+	if ( 50 > objlv ) {
+		goto *db_item_M07_RUBY
+	}
+	if ( fltselect != 1 ) {
+		goto *db_item_M07_RUBY
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_ORE ) {
+			goto *db_item_M07_RUBY
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_ORE_GEM ) {
+			goto *db_item_M07_RUBY
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_M06_ALEXANDRITE), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_M07_RUBY
+		}
+	}
+	dbsum += 1000 / (1000 + abs(objlv - 50) * 10) + 1
+	dblist(0, dbmax) = ITEM_ID_M06_ALEXANDRITE, dbsum
+	dbmax++
+*db_item_M07_RUBY
+	if ( 50 > objlv ) {
+		goto *db_item_M08_SARDONYX
+	}
+	if ( fltselect != 1 ) {
+		goto *db_item_M08_SARDONYX
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_ORE ) {
+			goto *db_item_M08_SARDONYX
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_ORE_GEM ) {
+			goto *db_item_M08_SARDONYX
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_M07_RUBY), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_M08_SARDONYX
+		}
+	}
+	dbsum += 1000 / (1000 + abs(objlv - 50) * 10) + 1
+	dblist(0, dbmax) = ITEM_ID_M07_RUBY, dbsum
+	dbmax++
+*db_item_M08_SARDONYX
+	if ( 50 > objlv ) {
+		goto *db_item_M09_SAPPHIRE
+	}
+	if ( fltselect != 1 ) {
+		goto *db_item_M09_SAPPHIRE
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_ORE ) {
+			goto *db_item_M09_SAPPHIRE
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_ORE_GEM ) {
+			goto *db_item_M09_SAPPHIRE
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_M08_SARDONYX), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_M09_SAPPHIRE
+		}
+	}
+	dbsum += 1000 / (1000 + abs(objlv - 50) * 10) + 1
+	dblist(0, dbmax) = ITEM_ID_M08_SARDONYX, dbsum
+	dbmax++
+*db_item_M09_SAPPHIRE
+	if ( 50 > objlv ) {
+		goto *db_item_M10_OPAL
+	}
+	if ( fltselect != 1 ) {
+		goto *db_item_M10_OPAL
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_ORE ) {
+			goto *db_item_M10_OPAL
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_ORE_GEM ) {
+			goto *db_item_M10_OPAL
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_M09_SAPPHIRE), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_M10_OPAL
+		}
+	}
+	dbsum += 1000 / (1000 + abs(objlv - 50) * 10) + 1
+	dblist(0, dbmax) = ITEM_ID_M09_SAPPHIRE, dbsum
+	dbmax++
+*db_item_M10_OPAL
+	if ( 50 > objlv ) {
+		goto *db_item_M11_TOPAZ
+	}
+	if ( fltselect != 1 ) {
+		goto *db_item_M11_TOPAZ
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_ORE ) {
+			goto *db_item_M11_TOPAZ
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_ORE_GEM ) {
+			goto *db_item_M11_TOPAZ
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_M10_OPAL), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_M11_TOPAZ
+		}
+	}
+	dbsum += 1000 / (1000 + abs(objlv - 50) * 10) + 1
+	dblist(0, dbmax) = ITEM_ID_M10_OPAL, dbsum
+	dbmax++
+*db_item_M11_TOPAZ
+	if ( 50 > objlv ) {
+		goto *db_item_M12_LAPIS_LAZULI
+	}
+	if ( fltselect != 1 ) {
+		goto *db_item_M12_LAPIS_LAZULI
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_ORE ) {
+			goto *db_item_M12_LAPIS_LAZULI
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_ORE_GEM ) {
+			goto *db_item_M12_LAPIS_LAZULI
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_M11_TOPAZ), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_M12_LAPIS_LAZULI
+		}
+	}
+	dbsum += 1000 / (1000 + abs(objlv - 50) * 10) + 1
+	dblist(0, dbmax) = ITEM_ID_M11_TOPAZ, dbsum
+	dbmax++
+*db_item_M12_LAPIS_LAZULI
+	if ( 50 > objlv ) {
+		goto *db_item_GOLDEN_MEAD
+	}
+	if ( fltselect != 1 ) {
+		goto *db_item_GOLDEN_MEAD
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_ORE ) {
+			goto *db_item_GOLDEN_MEAD
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_ORE_GEM ) {
+			goto *db_item_GOLDEN_MEAD
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_M12_LAPIS_LAZULI), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_GOLDEN_MEAD
+		}
+	}
+	dbsum += 1000 / (1000 + abs(objlv - 50) * 10) + 1
+	dblist(0, dbmax) = ITEM_ID_M12_LAPIS_LAZULI, dbsum
+	dbmax++
+*db_item_GOLDEN_MEAD
+	if ( 1 > objlv ) {
+		goto *db_item_GOLDEN_DOLL
+	}
+	if ( fltselect != 1 ) {
+		goto *db_item_GOLDEN_DOLL
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_ITEM_POTION ) {
+			goto *db_item_GOLDEN_DOLL
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_ITEM_POTION_ALE ) {
+			goto *db_item_GOLDEN_DOLL
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_GOLDEN_MEAD), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_GOLDEN_DOLL
+		}
+	}
+	dbsum += 1000000 / (1000 + abs(objlv - 1) * 10) + 1
+	dblist(0, dbmax) = ITEM_ID_GOLDEN_MEAD, dbsum
+	dbmax++
+*db_item_GOLDEN_DOLL
 	dbmax = 0
 	dbsum = 0
 	if ( 5 > objlv ) {
@@ -1346,7 +1796,7 @@
 		}
 	}
 	dbsum += 150000 / (1000 + abs(objlv - 30) * 0) + 1
-	dblist(0, dbmax) = 1173, dbsum
+	dblist(0, dbmax) = ITEM_ID_SCROLL_OF_WITCHCRAFT, dbsum
 	dbmax++
 *db_item_MAGAICE
 	if ( 1 > objlv ) {
@@ -38902,6 +39352,965 @@
 	return
 
 *db_item_set
+	if ( dbid == ITEM_ID_DYING_CICADA ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 10
+			inv(INV_ITEM_WEIGHT, ci) = 10
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_DYING_CICADA
+			inv(INV_ITEM_PIC, ci) = xy2pic(29, 10)
+			reftype = FILTER_JUNK
+			reftypeminor = (0 /*!!!@[FILTER_NOTHING @@@ FILTER_NOTHING]@!!! */)
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_JUNK
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == DBSPEC_TYPE ) {
+				return FILTER_JUNK
+			}
+			if ( dbspec == DBSPEC_TYPE_MINOR ) {
+				return FILTER_NONE
+			}
+			if ( dbspec == DBSPEC_VALUE_ORG ) {
+				return 10
+			}
+			if ( dbspec == DBSPEC_PARAM3_ORG ) {
+				return
+			}
+			if ( dbspec == DBSPEC_PCC ) {
+				return 0
+			}
+			if ( dbspec == DBSPEC_OBJ_LEVEL ) {
+				return 1
+			}
+			if ( dbspec == DBSPEC_RARE_LEVEL ) {
+				return 500
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t一生に一度もモテなかったセミ。土の中に何年も引きこもっていたが、このままではいけないと意を決して街コンに参加。慣れないなりに求愛に挑戦し続けたが、報われることなく力尽きてしまった。どうせ死ぬなら最期まで前のめりでありたい、と必死に足掻いている。\n#〜イルヴァ昆虫大百科〜\n"
+				description(1) = ""
+				description(2) = "\t\t「夕暮れの　暑さ残りし　道端に　のたうつ蝉の　声が消えゆく」\n#〜無名吟遊詩人の短歌〜\n"
+				description(3) = "\t\tぶつけると相手が怯む虫だ。\n#〜鑑定報告書：＜廃品＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == ITEM_ID_M01_GARNET ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 30300
+			inv(INV_ITEM_WEIGHT, ci) = 50
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_M01_GARNET
+			inv(INV_ITEM_PIC, ci) = xy2pic(17, 36)
+			reftype = FILTER_ORE
+			reftypeminor = FILTER_ORE_GEM
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_ORE
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == DBSPEC_TYPE ) {
+				return FILTER_ORE
+			}
+			if ( dbspec == DBSPEC_TYPE_MINOR ) {
+				return FILTER_ORE_GEM
+			}
+			if ( dbspec == DBSPEC_VALUE_ORG ) {
+				return 30300
+			}
+			if ( dbspec == DBSPEC_PARAM3_ORG ) {
+				return
+			}
+			if ( dbspec == DBSPEC_PCC ) {
+				return 0
+			}
+			if ( dbspec == DBSPEC_OBJ_LEVEL ) {
+				return 50
+			}
+			if ( dbspec == DBSPEC_RARE_LEVEL ) {
+				return 1
+			}
+			if ( dbspec == DBSPEC_OFFER ) {
+				if ( cdata(CDATA_GOD, CHARA_PLAYER) == GOD_JURE | cdata(CDATA_GOD, CHARA_PLAYER) == GOD_OPATOS ) {
+					return 1
+				}
+				else {
+					return 0
+				}
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t芸術的に加工されたザクロ石。１月を代表とする宝石であり、記念日が１月の相手にプレゼントすると特に喜ばれるだろう。\n#〜ヴェルニース鉱物図鑑〜\n"
+				description(1) = ""
+				description(2) = ""
+				description(3) = "\t\t贈り物に適した宝石だ。\n#〜鑑定報告書：＜鉱物＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == ITEM_ID_M02_AMETHYST ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 30600
+			inv(INV_ITEM_WEIGHT, ci) = 50
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_M02_AMETHYST
+			inv(INV_ITEM_PIC, ci) = xy2pic(17, 36)
+			reftype = FILTER_ORE
+			reftypeminor = FILTER_ORE_GEM
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_ORE
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == DBSPEC_TYPE ) {
+				return FILTER_ORE
+			}
+			if ( dbspec == DBSPEC_TYPE_MINOR ) {
+				return FILTER_ORE_GEM
+			}
+			if ( dbspec == DBSPEC_VALUE_ORG ) {
+				return 30600
+			}
+			if ( dbspec == DBSPEC_PARAM3_ORG ) {
+				return
+			}
+			if ( dbspec == DBSPEC_PCC ) {
+				return 0
+			}
+			if ( dbspec == DBSPEC_OBJ_LEVEL ) {
+				return 50
+			}
+			if ( dbspec == DBSPEC_RARE_LEVEL ) {
+				return 1
+			}
+			if ( dbspec == DBSPEC_OFFER ) {
+				if ( cdata(CDATA_GOD, CHARA_PLAYER) == GOD_JURE | cdata(CDATA_GOD, CHARA_PLAYER) == GOD_OPATOS ) {
+					return 1
+				}
+				else {
+					return 0
+				}
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t芸術的に加工された紫水晶。２月を代表とする宝石であり、記念日が２月の相手にプレゼントすると特に喜ばれるだろう。\n#〜ヴェルニース鉱物図鑑〜\n"
+				description(1) = ""
+				description(2) = ""
+				description(3) = "\t\t贈り物に適した宝石だ。\n#〜鑑定報告書：＜鉱物＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == ITEM_ID_M03_AQUAMARINE ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 30900
+			inv(INV_ITEM_WEIGHT, ci) = 50
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_M03_AQUAMARINE
+			inv(INV_ITEM_PIC, ci) = xy2pic(17, 36)
+			reftype = FILTER_ORE
+			reftypeminor = FILTER_ORE_GEM
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_ORE
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == DBSPEC_TYPE ) {
+				return FILTER_ORE
+			}
+			if ( dbspec == DBSPEC_TYPE_MINOR ) {
+				return FILTER_ORE_GEM
+			}
+			if ( dbspec == DBSPEC_VALUE_ORG ) {
+				return 30900
+			}
+			if ( dbspec == DBSPEC_PARAM3_ORG ) {
+				return
+			}
+			if ( dbspec == DBSPEC_PCC ) {
+				return 0
+			}
+			if ( dbspec == DBSPEC_OBJ_LEVEL ) {
+				return 50
+			}
+			if ( dbspec == DBSPEC_RARE_LEVEL ) {
+				return 1
+			}
+			if ( dbspec == DBSPEC_OFFER ) {
+				if ( cdata(CDATA_GOD, CHARA_PLAYER) == GOD_JURE | cdata(CDATA_GOD, CHARA_PLAYER) == GOD_OPATOS ) {
+					return 1
+				}
+				else {
+					return 0
+				}
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t芸術的に加工された藍玉。３月を代表とする宝石であり、記念日が３月の相手にプレゼントすると特に喜ばれるだろう。\n#〜ヴェルニース鉱物図鑑〜\n"
+				description(1) = ""
+				description(2) = ""
+				description(3) = "\t\t贈り物に適した宝石だ。\n#〜鑑定報告書：＜鉱物＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == ITEM_ID_M04_DIAMOND ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 31200
+			inv(INV_ITEM_WEIGHT, ci) = 50
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_M04_DIAMOND
+			inv(INV_ITEM_PIC, ci) = xy2pic(17, 36)
+			reftype = FILTER_ORE
+			reftypeminor = FILTER_ORE_GEM
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_ORE
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == DBSPEC_TYPE ) {
+				return FILTER_ORE
+			}
+			if ( dbspec == DBSPEC_TYPE_MINOR ) {
+				return FILTER_ORE_GEM
+			}
+			if ( dbspec == DBSPEC_VALUE_ORG ) {
+				return 31200
+			}
+			if ( dbspec == DBSPEC_PARAM3_ORG ) {
+				return
+			}
+			if ( dbspec == DBSPEC_PCC ) {
+				return 0
+			}
+			if ( dbspec == DBSPEC_OBJ_LEVEL ) {
+				return 50
+			}
+			if ( dbspec == DBSPEC_RARE_LEVEL ) {
+				return 1
+			}
+			if ( dbspec == DBSPEC_OFFER ) {
+				if ( cdata(CDATA_GOD, CHARA_PLAYER) == GOD_JURE | cdata(CDATA_GOD, CHARA_PLAYER) == GOD_OPATOS ) {
+					return 1
+				}
+				else {
+					return 0
+				}
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t芸術的に加工された金剛石。４月を代表とする宝石であり、記念日が４月の相手にプレゼントすると特に喜ばれるだろう。\n#〜ヴェルニース鉱物図鑑〜\n"
+				description(1) = ""
+				description(2) = ""
+				description(3) = "\t\t贈り物に適した宝石だ。\n#〜鑑定報告書：＜鉱物＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == ITEM_ID_M05_EMERALD ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 31500
+			inv(INV_ITEM_WEIGHT, ci) = 50
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_M05_EMERALD
+			inv(INV_ITEM_PIC, ci) = xy2pic(17, 36)
+			reftype = FILTER_ORE
+			reftypeminor = FILTER_ORE_GEM
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_ORE
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == DBSPEC_TYPE ) {
+				return FILTER_ORE
+			}
+			if ( dbspec == DBSPEC_TYPE_MINOR ) {
+				return FILTER_ORE_GEM
+			}
+			if ( dbspec == DBSPEC_VALUE_ORG ) {
+				return 31500
+			}
+			if ( dbspec == DBSPEC_PARAM3_ORG ) {
+				return
+			}
+			if ( dbspec == DBSPEC_PCC ) {
+				return 0
+			}
+			if ( dbspec == DBSPEC_OBJ_LEVEL ) {
+				return 50
+			}
+			if ( dbspec == DBSPEC_RARE_LEVEL ) {
+				return 1
+			}
+			if ( dbspec == DBSPEC_OFFER ) {
+				if ( cdata(CDATA_GOD, CHARA_PLAYER) == GOD_JURE | cdata(CDATA_GOD, CHARA_PLAYER) == GOD_OPATOS ) {
+					return 1
+				}
+				else {
+					return 0
+				}
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t芸術的に加工された翠玉。５月を代表とする宝石であり、記念日が５月の相手にプレゼントすると特に喜ばれるだろう。\n#〜ヴェルニース鉱物図鑑〜\n"
+				description(1) = ""
+				description(2) = ""
+				description(3) = "\t\t贈り物に適した宝石だ。\n#〜鑑定報告書：＜鉱物＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == ITEM_ID_M06_ALEXANDRITE ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 31800
+			inv(INV_ITEM_WEIGHT, ci) = 50
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_M06_ALEXANDRITE
+			inv(INV_ITEM_PIC, ci) = xy2pic(17, 36)
+			reftype = FILTER_ORE
+			reftypeminor = FILTER_ORE_GEM
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_ORE
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == DBSPEC_TYPE ) {
+				return FILTER_ORE
+			}
+			if ( dbspec == DBSPEC_TYPE_MINOR ) {
+				return FILTER_ORE_GEM
+			}
+			if ( dbspec == DBSPEC_VALUE_ORG ) {
+				return 31800
+			}
+			if ( dbspec == DBSPEC_PARAM3_ORG ) {
+				return
+			}
+			if ( dbspec == DBSPEC_PCC ) {
+				return 0
+			}
+			if ( dbspec == DBSPEC_OBJ_LEVEL ) {
+				return 50
+			}
+			if ( dbspec == DBSPEC_RARE_LEVEL ) {
+				return 1
+			}
+			if ( dbspec == DBSPEC_OFFER ) {
+				if ( cdata(CDATA_GOD, CHARA_PLAYER) == GOD_JURE | cdata(CDATA_GOD, CHARA_PLAYER) == GOD_OPATOS ) {
+					return 1
+				}
+				else {
+					return 0
+				}
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t芸術的に加工された金緑石。６月を代表とする宝石であり、記念日が６月の相手にプレゼントすると特に喜ばれるだろう。\n#〜ヴェルニース鉱物図鑑〜\n"
+				description(1) = ""
+				description(2) = ""
+				description(3) = "\t\t贈り物に適した宝石だ。\n#〜鑑定報告書：＜鉱物＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == ITEM_ID_M07_RUBY ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 32100
+			inv(INV_ITEM_WEIGHT, ci) = 50
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_M07_RUBY
+			inv(INV_ITEM_PIC, ci) = xy2pic(17, 36)
+			reftype = FILTER_ORE
+			reftypeminor = FILTER_ORE_GEM
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_ORE
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == DBSPEC_TYPE ) {
+				return FILTER_ORE
+			}
+			if ( dbspec == DBSPEC_TYPE_MINOR ) {
+				return FILTER_ORE_GEM
+			}
+			if ( dbspec == DBSPEC_VALUE_ORG ) {
+				return 32100
+			}
+			if ( dbspec == DBSPEC_PARAM3_ORG ) {
+				return
+			}
+			if ( dbspec == DBSPEC_PCC ) {
+				return 0
+			}
+			if ( dbspec == DBSPEC_OBJ_LEVEL ) {
+				return 50
+			}
+			if ( dbspec == DBSPEC_RARE_LEVEL ) {
+				return 1
+			}
+			if ( dbspec == DBSPEC_OFFER ) {
+				if ( cdata(CDATA_GOD, CHARA_PLAYER) == GOD_JURE | cdata(CDATA_GOD, CHARA_PLAYER) == GOD_OPATOS ) {
+					return 1
+				}
+				else {
+					return 0
+				}
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t芸術的に加工された紅玉。７月を代表とする宝石であり、記念日が７月の相手にプレゼントすると特に喜ばれるだろう。\n#〜ヴェルニース鉱物図鑑〜\n"
+				description(1) = ""
+				description(2) = ""
+				description(3) = "\t\t贈り物に適した宝石だ。\n#〜鑑定報告書：＜鉱物＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == ITEM_ID_M08_SARDONYX ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 32400
+			inv(INV_ITEM_WEIGHT, ci) = 50
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_M08_SARDONYX
+			inv(INV_ITEM_PIC, ci) = xy2pic(17, 36)
+			reftype = FILTER_ORE
+			reftypeminor = FILTER_ORE_GEM
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_ORE
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == DBSPEC_TYPE ) {
+				return FILTER_ORE
+			}
+			if ( dbspec == DBSPEC_TYPE_MINOR ) {
+				return FILTER_ORE_GEM
+			}
+			if ( dbspec == DBSPEC_VALUE_ORG ) {
+				return 32400
+			}
+			if ( dbspec == DBSPEC_PARAM3_ORG ) {
+				return
+			}
+			if ( dbspec == DBSPEC_PCC ) {
+				return 0
+			}
+			if ( dbspec == DBSPEC_OBJ_LEVEL ) {
+				return 50
+			}
+			if ( dbspec == DBSPEC_RARE_LEVEL ) {
+				return 1
+			}
+			if ( dbspec == DBSPEC_OFFER ) {
+				if ( cdata(CDATA_GOD, CHARA_PLAYER) == GOD_JURE | cdata(CDATA_GOD, CHARA_PLAYER) == GOD_OPATOS ) {
+					return 1
+				}
+				else {
+					return 0
+				}
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t芸術的に加工されたメノウ。８月を代表とする宝石であり、記念日が８月の相手にプレゼントすると特に喜ばれるだろう。\n#〜ヴェルニース鉱物図鑑〜\n"
+				description(1) = ""
+				description(2) = ""
+				description(3) = "\t\t贈り物に適した宝石だ。\n#〜鑑定報告書：＜鉱物＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == ITEM_ID_M09_SAPPHIRE ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 32700
+			inv(INV_ITEM_WEIGHT, ci) = 50
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_M09_SAPPHIRE
+			inv(INV_ITEM_PIC, ci) = xy2pic(17, 36)
+			reftype = FILTER_ORE
+			reftypeminor = FILTER_ORE_GEM
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_ORE
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == DBSPEC_TYPE ) {
+				return FILTER_ORE
+			}
+			if ( dbspec == DBSPEC_TYPE_MINOR ) {
+				return FILTER_ORE_GEM
+			}
+			if ( dbspec == DBSPEC_VALUE_ORG ) {
+				return 32700
+			}
+			if ( dbspec == DBSPEC_PARAM3_ORG ) {
+				return
+			}
+			if ( dbspec == DBSPEC_PCC ) {
+				return 0
+			}
+			if ( dbspec == DBSPEC_OBJ_LEVEL ) {
+				return 50
+			}
+			if ( dbspec == DBSPEC_RARE_LEVEL ) {
+				return 1
+			}
+			if ( dbspec == DBSPEC_OFFER ) {
+				if ( cdata(CDATA_GOD, CHARA_PLAYER) == GOD_JURE | cdata(CDATA_GOD, CHARA_PLAYER) == GOD_OPATOS ) {
+					return 1
+				}
+				else {
+					return 0
+				}
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t芸術的に加工された青玉。９月を代表とする宝石であり、記念日が９月の相手にプレゼントすると特に喜ばれるだろう。\n#〜ヴェルニース鉱物図鑑〜\n"
+				description(1) = ""
+				description(2) = ""
+				description(3) = "\t\t贈り物に適した宝石だ。\n#〜鑑定報告書：＜鉱物＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == ITEM_ID_M10_OPAL ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 33000
+			inv(INV_ITEM_WEIGHT, ci) = 50
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_M10_OPAL
+			inv(INV_ITEM_PIC, ci) = xy2pic(17, 36)
+			reftype = FILTER_ORE
+			reftypeminor = FILTER_ORE_GEM
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_ORE
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == DBSPEC_TYPE ) {
+				return FILTER_ORE
+			}
+			if ( dbspec == DBSPEC_TYPE_MINOR ) {
+				return FILTER_ORE_GEM
+			}
+			if ( dbspec == DBSPEC_VALUE_ORG ) {
+				return 33000
+			}
+			if ( dbspec == DBSPEC_PARAM3_ORG ) {
+				return
+			}
+			if ( dbspec == DBSPEC_PCC ) {
+				return 0
+			}
+			if ( dbspec == DBSPEC_OBJ_LEVEL ) {
+				return 50
+			}
+			if ( dbspec == DBSPEC_RARE_LEVEL ) {
+				return 1
+			}
+			if ( dbspec == DBSPEC_OFFER ) {
+				if ( cdata(CDATA_GOD, CHARA_PLAYER) == GOD_JURE | cdata(CDATA_GOD, CHARA_PLAYER) == GOD_OPATOS ) {
+					return 1
+				}
+				else {
+					return 0
+				}
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t芸術的に加工されたタンパク石。１０月を代表とする宝石であり、記念日が１０月の相手にプレゼントすると特に喜ばれるだろう。\n#〜ヴェルニース鉱物図鑑〜\n"
+				description(1) = ""
+				description(2) = ""
+				description(3) = "\t\t贈り物に適した宝石だ。\n#〜鑑定報告書：＜鉱物＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == ITEM_ID_M11_TOPAZ ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 33300
+			inv(INV_ITEM_WEIGHT, ci) = 50
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_M11_TOPAZ
+			inv(INV_ITEM_PIC, ci) = xy2pic(17, 36)
+			reftype = FILTER_ORE
+			reftypeminor = FILTER_ORE_GEM
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_ORE
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == DBSPEC_TYPE ) {
+				return FILTER_ORE
+			}
+			if ( dbspec == DBSPEC_TYPE_MINOR ) {
+				return FILTER_ORE_GEM
+			}
+			if ( dbspec == DBSPEC_VALUE_ORG ) {
+				return 33300
+			}
+			if ( dbspec == DBSPEC_PARAM3_ORG ) {
+				return
+			}
+			if ( dbspec == DBSPEC_PCC ) {
+				return 0
+			}
+			if ( dbspec == DBSPEC_OBJ_LEVEL ) {
+				return 50
+			}
+			if ( dbspec == DBSPEC_RARE_LEVEL ) {
+				return 1
+			}
+			if ( dbspec == DBSPEC_OFFER ) {
+				if ( cdata(CDATA_GOD, CHARA_PLAYER) == GOD_JURE | cdata(CDATA_GOD, CHARA_PLAYER) == GOD_OPATOS ) {
+					return 1
+				}
+				else {
+					return 0
+				}
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t芸術的に加工された黄玉。１１月を代表とする宝石であり、記念日が１１月の相手にプレゼントすると特に喜ばれるだろう。\n#〜ヴェルニース鉱物図鑑〜\n"
+				description(1) = ""
+				description(2) = ""
+				description(3) = "\t\t贈り物に適した宝石だ。\n#〜鑑定報告書：＜鉱物＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == ITEM_ID_M12_LAPIS_LAZULI ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 33600
+			inv(INV_ITEM_WEIGHT, ci) = 50
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_M12_LAPIS_LAZULI
+			inv(INV_ITEM_PIC, ci) = xy2pic(17, 36)
+			reftype = FILTER_ORE
+			reftypeminor = FILTER_ORE_GEM
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_ORE
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == DBSPEC_TYPE ) {
+				return FILTER_ORE
+			}
+			if ( dbspec == DBSPEC_TYPE_MINOR ) {
+				return FILTER_ORE_GEM
+			}
+			if ( dbspec == DBSPEC_VALUE_ORG ) {
+				return 33600
+			}
+			if ( dbspec == DBSPEC_PARAM3_ORG ) {
+				return
+			}
+			if ( dbspec == DBSPEC_PCC ) {
+				return 0
+			}
+			if ( dbspec == DBSPEC_OBJ_LEVEL ) {
+				return 50
+			}
+			if ( dbspec == DBSPEC_RARE_LEVEL ) {
+				return 1
+			}
+			if ( dbspec == DBSPEC_OFFER ) {
+				if ( cdata(CDATA_GOD, CHARA_PLAYER) == GOD_JURE | cdata(CDATA_GOD, CHARA_PLAYER) == GOD_OPATOS ) {
+					return 1
+				}
+				else {
+					return 0
+				}
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t芸術的に加工された瑠璃。１２月を代表とする宝石であり、記念日が１２月の相手にプレゼントすると特に喜ばれるだろう。\n#〜ヴェルニース鉱物図鑑〜\n"
+				description(1) = ""
+				description(2) = ""
+				description(3) = "\t\t贈り物に適した宝石だ。\n#〜鑑定報告書：＜鉱物＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == ITEM_ID_GOLDEN_MEAD ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 18000
+			inv(INV_ITEM_WEIGHT, ci) = 100
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_GOLDEN_MEAD
+			inv(INV_ITEM_PIC, ci) = xy2pic(12, 6)
+			reftype = FILTER_ITEM_POTION
+			reftypeminor = FILTER_ITEM_POTION_ALE
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_ITEM_POTION
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == DBSPEC_TYPE ) {
+				return FILTER_ITEM_POTION
+			}
+			if ( dbspec == DBSPEC_TYPE_MINOR ) {
+				return FILTER_ITEM_POTION_ALE
+			}
+			if ( dbspec == DBSPEC_VALUE_ORG ) {
+				return 18000
+			}
+			if ( dbspec == DBSPEC_PARAM3_ORG ) {
+				return
+			}
+			if ( dbspec == DBSPEC_CAN_DRINK ) {
+				return 1
+			}
+			if ( dbspec == DBSPEC_PCC ) {
+				return 0
+			}
+			if ( dbspec == DBSPEC_OBJ_LEVEL ) {
+				return 1
+			}
+			if ( dbspec == DBSPEC_RARE_LEVEL ) {
+				return 1000
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_ON_DRINK ) {
+			efid = SKILL_EFFECT_GOLDEN_MEAD
+			efp = 100
+			gosub *drinkPotion
+			return -1
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t蜂蜜から造られた、上品な黄金色の酒。飲むと肉体から精神が一時的に分離し、辺りを自在に散策できるようになる。\n#〜奥深い酒の世界〜\n"
+				description(1) = ""
+				description(2) = ""
+				description(3) = "\t\t飲むと幽体離脱する飲み物だ。\n#〜鑑定報告書：＜液体＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
 	if ( dbid == ITEM_ID_GOLDEN_DOLL ) {
 		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
 			inv(INV_ITEM_VALUE, ci) = 10000
@@ -55261,7 +56670,7 @@
 		}
 		if ( dbmode == DBMODE_SET ) {
 			inv(INV_ITEM_ID, ci) = ITEM_ID_E_G_G
-			inv(INV_ITEM_PIC, ci) = xy2pic(29, 10)
+			inv(INV_ITEM_PIC, ci) = xy2pic(16, 36)
 			reftype = FILTER_JUNK
 			reftypeminor = FILTER_NOTHING
 			inv(INV_ITEM_NUM, ci) = 1
@@ -119164,10 +120573,10 @@
 		}
 		if ( dbmode == DBMODE_REF_SPEC ) {
 			if ( dbspec == DBSPEC_TYPE ) {
-				return 99999999
+				return FILTER_NONE2
 			}
 			if ( dbspec == DBSPEC_TYPE_MINOR ) {
-				return 99999999
+				return FILTER_NONE2
 			}
 			if ( dbspec == DBSPEC_VALUE_ORG ) {
 				return 1
@@ -119205,6 +120614,62 @@
 	return -999
 
 *db_setFilterItem
+	filter_item(ITEM_ID_DYING_CICADA) = ""
+	rffilter_item(ITEM_ID_DYING_CICADA) = ""
+	filter_item(ITEM_ID_M01_GARNET) = ""
+	rffilter_item(ITEM_ID_M01_GARNET) = "/ore/"
+	filter_item(ITEM_ID_M02_AMETHYST) = ""
+	rffilter_item(ITEM_ID_M02_AMETHYST) = "/ore/"
+	filter_item(ITEM_ID_M03_AQUAMARINE) = ""
+	rffilter_item(ITEM_ID_M03_AQUAMARINE) = "/ore/"
+	filter_item(ITEM_ID_M04_DIAMOND) = ""
+	rffilter_item(ITEM_ID_M04_DIAMOND) = "/ore/"
+	filter_item(ITEM_ID_M05_EMERALD) = ""
+	rffilter_item(ITEM_ID_M05_EMERALD) = "/ore/"
+	filter_item(ITEM_ID_M06_ALEXANDRITE) = ""
+	rffilter_item(ITEM_ID_M06_ALEXANDRITE) = "/ore/"
+	filter_item(ITEM_ID_M07_RUBY) = ""
+	rffilter_item(ITEM_ID_M07_RUBY) = "/ore/"
+	filter_item(ITEM_ID_M08_SARDONYX) = ""
+	rffilter_item(ITEM_ID_M08_SARDONYX) = "/ore/"
+	filter_item(ITEM_ID_M09_SAPPHIRE) = ""
+	rffilter_item(ITEM_ID_M09_SAPPHIRE) = "/ore/"
+	filter_item(ITEM_ID_M10_OPAL) = ""
+	rffilter_item(ITEM_ID_M10_OPAL) = "/ore/"
+	filter_item(ITEM_ID_M11_TOPAZ) = ""
+	rffilter_item(ITEM_ID_M11_TOPAZ) = "/ore/"
+	filter_item(ITEM_ID_M12_LAPIS_LAZULI) = ""
+	rffilter_item(ITEM_ID_M12_LAPIS_LAZULI) = "/ore/"
+	filter_item(ITEM_ID_GOLDEN_MEAD) = ""
+	rffilter_item(ITEM_ID_GOLDEN_MEAD) = "/ale/"
+	filter_item(ITEM_ID_DYING_CICADA) = ""
+	rffilter_item(ITEM_ID_DYING_CICADA) = ""
+	filter_item(ITEM_ID_M01_GARNET) = ""
+	rffilter_item(ITEM_ID_M01_GARNET) = "/ore/"
+	filter_item(ITEM_ID_M02_AMETHYST) = ""
+	rffilter_item(ITEM_ID_M02_AMETHYST) = "/ore/"
+	filter_item(ITEM_ID_M03_AQUAMARINE) = ""
+	rffilter_item(ITEM_ID_M03_AQUAMARINE) = "/ore/"
+	filter_item(ITEM_ID_M04_DIAMOND) = ""
+	rffilter_item(ITEM_ID_M04_DIAMOND) = "/ore/"
+	filter_item(ITEM_ID_M05_EMERALD) = ""
+	rffilter_item(ITEM_ID_M05_EMERALD) = "/ore/"
+	filter_item(ITEM_ID_M06_ALEXANDRITE) = ""
+	rffilter_item(ITEM_ID_M06_ALEXANDRITE) = "/ore/"
+	filter_item(ITEM_ID_M07_RUBY) = ""
+	rffilter_item(ITEM_ID_M07_RUBY) = "/ore/"
+	filter_item(ITEM_ID_M08_SARDONYX) = ""
+	rffilter_item(ITEM_ID_M08_SARDONYX) = "/ore/"
+	filter_item(ITEM_ID_M09_SAPPHIRE) = ""
+	rffilter_item(ITEM_ID_M09_SAPPHIRE) = "/ore/"
+	filter_item(ITEM_ID_M10_OPAL) = ""
+	rffilter_item(ITEM_ID_M10_OPAL) = "/ore/"
+	filter_item(ITEM_ID_M11_TOPAZ) = ""
+	rffilter_item(ITEM_ID_M11_TOPAZ) = "/ore/"
+	filter_item(ITEM_ID_M12_LAPIS_LAZULI) = ""
+	rffilter_item(ITEM_ID_M12_LAPIS_LAZULI) = "/ore/"
+	filter_item(ITEM_ID_GOLDEN_MEAD) = ""
+	rffilter_item(ITEM_ID_GOLDEN_MEAD) = "/ale/"
 	filter_item(ITEM_ID_GOLDEN_DOLL) = ""
 	rffilter_item(ITEM_ID_GOLDEN_DOLL) = ""
 	filter_item(ITEM_ID_FILTRATION_BOTTLE) = ""
@@ -121638,6 +123103,188 @@
 	return
 
 *db_setItem
+	ilight(ITEM_ID_DYING_CICADA) = LIGHT_TYPE_NONE
+	ialphanameref(ITEM_ID_DYING_CICADA) = ""
+	iorgweight(ITEM_ID_DYING_CICADA) = 10
+	if ( jp ) {
+		ioriginalnameref(ITEM_ID_DYING_CICADA) = "喪蝉"
+	}
+	else {
+		ioriginalnameref(ITEM_ID_DYING_CICADA) = "dying cicada"
+		ioriginalnameref2(ITEM_ID_DYING_CICADA) = ""
+	}
+	ipicref(ITEM_ID_DYING_CICADA) = xy2pic(29, 10)
+	iknownnameref(ITEM_ID_DYING_CICADA) = ioriginalnameref(ITEM_ID_DYING_CICADA)
+	icolref(ITEM_ID_DYING_CICADA) = COLOR_DEFAULT
+	ilight(ITEM_ID_M01_GARNET) = LIGHT_TYPE_CRYSTAL
+	ialphanameref(ITEM_ID_M01_GARNET) = ""
+	iorgweight(ITEM_ID_M01_GARNET) = 50
+	if ( jp ) {
+		ioriginalnameref(ITEM_ID_M01_GARNET) = "M01-真実のガーネット"
+	}
+	else {
+		ioriginalnameref(ITEM_ID_M01_GARNET) = "M01-Garnet"
+		ioriginalnameref2(ITEM_ID_M01_GARNET) = "jewel"
+	}
+	ipicref(ITEM_ID_M01_GARNET) = xy2pic(17, 36)
+	iknownnameref(ITEM_ID_M01_GARNET) = ioriginalnameref(ITEM_ID_M01_GARNET)
+	icolref(ITEM_ID_M01_GARNET) = COLOR_BROWN
+	ilight(ITEM_ID_M02_AMETHYST) = LIGHT_TYPE_CRYSTAL
+	ialphanameref(ITEM_ID_M02_AMETHYST) = ""
+	iorgweight(ITEM_ID_M02_AMETHYST) = 50
+	if ( jp ) {
+		ioriginalnameref(ITEM_ID_M02_AMETHYST) = "M02-高貴のアメジスト"
+	}
+	else {
+		ioriginalnameref(ITEM_ID_M02_AMETHYST) = "M02-Amethyst"
+		ioriginalnameref2(ITEM_ID_M02_AMETHYST) = "jewel"
+	}
+	ipicref(ITEM_ID_M02_AMETHYST) = xy2pic(17, 36)
+	iknownnameref(ITEM_ID_M02_AMETHYST) = ioriginalnameref(ITEM_ID_M02_AMETHYST)
+	icolref(ITEM_ID_M02_AMETHYST) = COLOR_PURPLE
+	ilight(ITEM_ID_M03_AQUAMARINE) = LIGHT_TYPE_CRYSTAL
+	ialphanameref(ITEM_ID_M03_AQUAMARINE) = ""
+	iorgweight(ITEM_ID_M03_AQUAMARINE) = 50
+	if ( jp ) {
+		ioriginalnameref(ITEM_ID_M03_AQUAMARINE) = "M03-聡明のアクアマリン"
+	}
+	else {
+		ioriginalnameref(ITEM_ID_M03_AQUAMARINE) = "M03-Aquamarine"
+		ioriginalnameref2(ITEM_ID_M03_AQUAMARINE) = "jewel"
+	}
+	ipicref(ITEM_ID_M03_AQUAMARINE) = xy2pic(17, 36)
+	iknownnameref(ITEM_ID_M03_AQUAMARINE) = ioriginalnameref(ITEM_ID_M03_AQUAMARINE)
+	icolref(ITEM_ID_M03_AQUAMARINE) = COLOR_LIGHT_BLUE
+	ilight(ITEM_ID_M04_DIAMOND) = LIGHT_TYPE_CRYSTAL
+	ialphanameref(ITEM_ID_M04_DIAMOND) = ""
+	iorgweight(ITEM_ID_M04_DIAMOND) = 50
+	if ( jp ) {
+		ioriginalnameref(ITEM_ID_M04_DIAMOND) = "M04-無垢のダイヤモンド"
+	}
+	else {
+		ioriginalnameref(ITEM_ID_M04_DIAMOND) = "M04-Diamond"
+		ioriginalnameref2(ITEM_ID_M04_DIAMOND) = "jewel"
+	}
+	ipicref(ITEM_ID_M04_DIAMOND) = xy2pic(17, 36)
+	iknownnameref(ITEM_ID_M04_DIAMOND) = ioriginalnameref(ITEM_ID_M04_DIAMOND)
+	icolref(ITEM_ID_M04_DIAMOND) = COLOR_WHITE
+	ilight(ITEM_ID_M05_EMERALD) = LIGHT_TYPE_CRYSTAL
+	ialphanameref(ITEM_ID_M05_EMERALD) = ""
+	iorgweight(ITEM_ID_M05_EMERALD) = 50
+	if ( jp ) {
+		ioriginalnameref(ITEM_ID_M05_EMERALD) = "M05-誠実のエメラルド"
+	}
+	else {
+		ioriginalnameref(ITEM_ID_M05_EMERALD) = "M05-Emerald"
+		ioriginalnameref2(ITEM_ID_M05_EMERALD) = "jewel"
+	}
+	ipicref(ITEM_ID_M05_EMERALD) = xy2pic(17, 36)
+	iknownnameref(ITEM_ID_M05_EMERALD) = ioriginalnameref(ITEM_ID_M05_EMERALD)
+	icolref(ITEM_ID_M05_EMERALD) = COLOR_DARK_GREEN
+	ilight(ITEM_ID_M06_ALEXANDRITE) = LIGHT_TYPE_CRYSTAL
+	ialphanameref(ITEM_ID_M06_ALEXANDRITE) = ""
+	iorgweight(ITEM_ID_M06_ALEXANDRITE) = 50
+	if ( jp ) {
+		ioriginalnameref(ITEM_ID_M06_ALEXANDRITE) = "M06-情熱のアレキサンドライト"
+	}
+	else {
+		ioriginalnameref(ITEM_ID_M06_ALEXANDRITE) = "M06-Alexandrite"
+		ioriginalnameref2(ITEM_ID_M06_ALEXANDRITE) = "jewel"
+	}
+	ipicref(ITEM_ID_M06_ALEXANDRITE) = xy2pic(17, 36)
+	iknownnameref(ITEM_ID_M06_ALEXANDRITE) = ioriginalnameref(ITEM_ID_M06_ALEXANDRITE)
+	icolref(ITEM_ID_M06_ALEXANDRITE) = COLOR_SKY_BLUE
+	ilight(ITEM_ID_M07_RUBY) = LIGHT_TYPE_CRYSTAL
+	ialphanameref(ITEM_ID_M07_RUBY) = ""
+	iorgweight(ITEM_ID_M07_RUBY) = 50
+	if ( jp ) {
+		ioriginalnameref(ITEM_ID_M07_RUBY) = "M07-威厳のルビー"
+	}
+	else {
+		ioriginalnameref(ITEM_ID_M07_RUBY) = "M07-Ruby"
+		ioriginalnameref2(ITEM_ID_M07_RUBY) = "jewel"
+	}
+	ipicref(ITEM_ID_M07_RUBY) = xy2pic(17, 36)
+	iknownnameref(ITEM_ID_M07_RUBY) = ioriginalnameref(ITEM_ID_M07_RUBY)
+	icolref(ITEM_ID_M07_RUBY) = COLOR_RED2
+	ilight(ITEM_ID_M08_SARDONYX) = LIGHT_TYPE_CRYSTAL
+	ialphanameref(ITEM_ID_M08_SARDONYX) = ""
+	iorgweight(ITEM_ID_M08_SARDONYX) = 50
+	if ( jp ) {
+		ioriginalnameref(ITEM_ID_M08_SARDONYX) = "M08-円満のサードニクス"
+	}
+	else {
+		ioriginalnameref(ITEM_ID_M08_SARDONYX) = "M08-Sardonyx"
+		ioriginalnameref2(ITEM_ID_M08_SARDONYX) = "jewel"
+	}
+	ipicref(ITEM_ID_M08_SARDONYX) = xy2pic(17, 36)
+	iknownnameref(ITEM_ID_M08_SARDONYX) = ioriginalnameref(ITEM_ID_M08_SARDONYX)
+	icolref(ITEM_ID_M08_SARDONYX) = COLOR_RED
+	ilight(ITEM_ID_M09_SAPPHIRE) = LIGHT_TYPE_CRYSTAL
+	ialphanameref(ITEM_ID_M09_SAPPHIRE) = ""
+	iorgweight(ITEM_ID_M09_SAPPHIRE) = 50
+	if ( jp ) {
+		ioriginalnameref(ITEM_ID_M09_SAPPHIRE) = "M09-慈愛のサファイア"
+	}
+	else {
+		ioriginalnameref(ITEM_ID_M09_SAPPHIRE) = "M09-Sapphire"
+		ioriginalnameref2(ITEM_ID_M09_SAPPHIRE) = "jewel"
+	}
+	ipicref(ITEM_ID_M09_SAPPHIRE) = xy2pic(17, 36)
+	iknownnameref(ITEM_ID_M09_SAPPHIRE) = ioriginalnameref(ITEM_ID_M09_SAPPHIRE)
+	icolref(ITEM_ID_M09_SAPPHIRE) = COLOR_BLUE
+	ilight(ITEM_ID_M10_OPAL) = LIGHT_TYPE_CRYSTAL
+	ialphanameref(ITEM_ID_M10_OPAL) = ""
+	iorgweight(ITEM_ID_M10_OPAL) = 50
+	if ( jp ) {
+		ioriginalnameref(ITEM_ID_M10_OPAL) = "M10-希望のオパール"
+	}
+	else {
+		ioriginalnameref(ITEM_ID_M10_OPAL) = "M10-Opal"
+		ioriginalnameref2(ITEM_ID_M10_OPAL) = "jewel"
+	}
+	ipicref(ITEM_ID_M10_OPAL) = xy2pic(17, 36)
+	iknownnameref(ITEM_ID_M10_OPAL) = ioriginalnameref(ITEM_ID_M10_OPAL)
+	icolref(ITEM_ID_M10_OPAL) = COLOR_PURPLE2
+	ilight(ITEM_ID_M11_TOPAZ) = LIGHT_TYPE_CRYSTAL
+	ialphanameref(ITEM_ID_M11_TOPAZ) = ""
+	iorgweight(ITEM_ID_M11_TOPAZ) = 50
+	if ( jp ) {
+		ioriginalnameref(ITEM_ID_M11_TOPAZ) = "M11-友情のトパーズ"
+	}
+	else {
+		ioriginalnameref(ITEM_ID_M11_TOPAZ) = "M11-Topaz"
+		ioriginalnameref2(ITEM_ID_M11_TOPAZ) = "jewel"
+	}
+	ipicref(ITEM_ID_M11_TOPAZ) = xy2pic(17, 36)
+	iknownnameref(ITEM_ID_M11_TOPAZ) = ioriginalnameref(ITEM_ID_M11_TOPAZ)
+	icolref(ITEM_ID_M11_TOPAZ) = COLOR_PINK
+	ilight(ITEM_ID_M12_LAPIS_LAZULI) = LIGHT_TYPE_CRYSTAL
+	ialphanameref(ITEM_ID_M12_LAPIS_LAZULI) = ""
+	iorgweight(ITEM_ID_M12_LAPIS_LAZULI) = 50
+	if ( jp ) {
+		ioriginalnameref(ITEM_ID_M12_LAPIS_LAZULI) = "M12-成功のラピスラズリ"
+	}
+	else {
+		ioriginalnameref(ITEM_ID_M12_LAPIS_LAZULI) = "M12-Lapis Lazuli"
+		ioriginalnameref2(ITEM_ID_M12_LAPIS_LAZULI) = "jewel"
+	}
+	ipicref(ITEM_ID_M12_LAPIS_LAZULI) = xy2pic(17, 36)
+	iknownnameref(ITEM_ID_M12_LAPIS_LAZULI) = ioriginalnameref(ITEM_ID_M12_LAPIS_LAZULI)
+	icolref(ITEM_ID_M12_LAPIS_LAZULI) = COLOR_LIGHT_BLUE2
+	ilight(ITEM_ID_GOLDEN_MEAD) = LIGHT_TYPE_ITEM
+	ialphanameref(ITEM_ID_GOLDEN_MEAD) = ""
+	iorgweight(ITEM_ID_GOLDEN_MEAD) = 100
+	if ( jp ) {
+		ioriginalnameref(ITEM_ID_GOLDEN_MEAD) = "黄金蜂蜜酒"
+	}
+	else {
+		ioriginalnameref(ITEM_ID_GOLDEN_MEAD) = "golden mead"
+		ioriginalnameref2(ITEM_ID_GOLDEN_MEAD) = ""
+	}
+	ipicref(ITEM_ID_GOLDEN_MEAD) = xy2pic(12, 6)
+	iknownnameref(ITEM_ID_GOLDEN_MEAD) = ioriginalnameref(ITEM_ID_GOLDEN_MEAD)
+	icolref(ITEM_ID_GOLDEN_MEAD) = COLOR_YELLOW
 	ilight(ITEM_ID_GOLDEN_DOLL) = LIGHT_TYPE_CRYSTAL
 	ialphanameref(ITEM_ID_GOLDEN_DOLL) = ""
 	iorgweight(ITEM_ID_GOLDEN_DOLL) = 10000
@@ -125216,7 +126863,7 @@
 		ioriginalnameref(ITEM_ID_E_G_G) = "E.G.G"
 		ioriginalnameref2(ITEM_ID_E_G_G) = ""
 	}
-	ipicref(ITEM_ID_E_G_G) = xy2pic(29, 10)
+	ipicref(ITEM_ID_E_G_G) = xy2pic(16, 36)
 	iknownnameref(ITEM_ID_E_G_G) = ioriginalnameref(ITEM_ID_E_G_G)
 	icolref(ITEM_ID_E_G_G) = COLOR_DEFAULT
 	ilight(ITEM_ID_ANGEL_STATUE) = LIGHT_TYPE_NONE
