@@ -16,7 +16,7 @@
 		txt lang("それはあなたの大事なものだ。<調べる>メニューから解除できる。", "It's set as no-drop. You can reset it from the <examine> menu.")
 		goto *pc_turn
 	}
-	if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_ITEM_POTION | inv(INV_ITEM_ID, ci) == ITEM_ID_TOMATO | inv(INV_ITEM_ID, ci) == ITEM_ID_BUTTER | inv(INV_ITEM_ID, ci) == ITEM_ID_YOGURT | inv(INV_ITEM_ID, ci) == ITEM_ID_NATTO | inv(INV_ITEM_ID, ci) == 1228 ) {
+	if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_ITEM_POTION | inv(INV_ITEM_ID, ci) == ITEM_ID_TOMATO | inv(INV_ITEM_ID, ci) == ITEM_ID_BUTTER | inv(INV_ITEM_ID, ci) == ITEM_ID_YOGURT | inv(INV_ITEM_ID, ci) == ITEM_ID_NATTO | inv(INV_ITEM_ID, ci) == ITEM_ID_DYING_CICADA ) {
 		if ( inv(INV_ITEM_ID, ci) != ITEM_ID_EMPTY_BOTTLE ) {
 			stc = -1
 			if ( map(tlocx, tlocy, MAP_CHARA_INDEX_PLUS_ONE) != 0 ) {
@@ -157,14 +157,14 @@
 		}
 		goto *turn_end
 	}
-	if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_ITEM_POTION | inv(INV_ITEM_ID, ci) == ITEM_ID_TOMATO | inv(INV_ITEM_ID, ci) == ITEM_ID_BUTTER | inv(INV_ITEM_ID, ci) == ITEM_ID_YOGURT | inv(INV_ITEM_ID, ci) == ITEM_ID_NATTO | inv(INV_ITEM_ID, ci) == ITEM_ID_KEMURIDAMA | inv(INV_ITEM_ID, ci) == 1228 ) {
+	if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_ITEM_POTION | inv(INV_ITEM_ID, ci) == ITEM_ID_TOMATO | inv(INV_ITEM_ID, ci) == ITEM_ID_BUTTER | inv(INV_ITEM_ID, ci) == ITEM_ID_YOGURT | inv(INV_ITEM_ID, ci) == ITEM_ID_NATTO | inv(INV_ITEM_ID, ci) == ITEM_ID_KEMURIDAMA | inv(INV_ITEM_ID, ci) == ITEM_ID_DYING_CICADA ) {
 		if ( inv(INV_ITEM_ID, ci) != ITEM_ID_EMPTY_BOTTLE ) {
 			if ( synccheck(tlocx, tlocy) ) {
 				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_HANDFUL_SNOW ) {
 					snd SOUNDLIST_SNOW
 				}
 				else {
-					if ( inv(INV_ITEM_ID, ci) != ITEM_ID_NATTO & inv(INV_ITEM_ID, ci) != ITEM_ID_KEMURIDAMA & inv(INV_ITEM_ID, ci) != 1228 ) {
+					if ( inv(INV_ITEM_ID, ci) != ITEM_ID_NATTO & inv(INV_ITEM_ID, ci) != ITEM_ID_KEMURIDAMA & inv(INV_ITEM_ID, ci) != ITEM_ID_DYING_CICADA ) {
 						snd SOUNDLIST_CRUSH2
 					}
 					if ( inv(INV_ITEM_ID, ci) == ITEM_ID_NATTO ) {
@@ -173,7 +173,7 @@
 					if ( inv(INV_ITEM_ID, ci) == ITEM_ID_KEMURIDAMA ) {
 						snd SOUNDLIST_OFFER1
 					}
-					if ( inv(INV_ITEM_ID, ci) == 1228 ) {
+					if ( inv(INV_ITEM_ID, ci) == ITEM_ID_DYING_CICADA ) {
 						snd SOUNDLIST_CRACK
 					}
 				}
@@ -190,7 +190,7 @@
 					if ( kakeru != 0 ) {
 						kakeru = 0
 					}
-					if ( inv(INV_ITEM_ID, ci) != ITEM_ID_MOLOTOV & inv(INV_ITEM_ID, ci) != ITEM_ID_BOTTLE_SULFURIC & inv(INV_ITEM_ID, ci) != ITEM_ID_HANDFUL_SNOW & inv(INV_ITEM_ID, ci) != ITEM_ID_TOMATO & inv(INV_ITEM_ID, ci) != ITEM_ID_ESSENTIAL_OIL & inv(INV_ITEM_ID, ci) != ITEM_ID_GASOLINE & inv(INV_ITEM_ID, ci) != ITEM_ID_BUTTER & inv(INV_ITEM_ID, ci) != ITEM_ID_YOGURT & inv(INV_ITEM_ID, ci) != ITEM_ID_NATTO & inv(INV_ITEM_ID, ci) != ITEM_ID_KEMURIDAMA & inv(INV_ITEM_ID, ci) != 1228 ) {
+					if ( inv(INV_ITEM_ID, ci) != ITEM_ID_MOLOTOV & inv(INV_ITEM_ID, ci) != ITEM_ID_BOTTLE_SULFURIC & inv(INV_ITEM_ID, ci) != ITEM_ID_HANDFUL_SNOW & inv(INV_ITEM_ID, ci) != ITEM_ID_TOMATO & inv(INV_ITEM_ID, ci) != ITEM_ID_ESSENTIAL_OIL & inv(INV_ITEM_ID, ci) != ITEM_ID_GASOLINE & inv(INV_ITEM_ID, ci) != ITEM_ID_BUTTER & inv(INV_ITEM_ID, ci) != ITEM_ID_YOGURT & inv(INV_ITEM_ID, ci) != ITEM_ID_NATTO & inv(INV_ITEM_ID, ci) != ITEM_ID_KEMURIDAMA & inv(INV_ITEM_ID, ci) != ITEM_ID_DYING_CICADA ) {
 						wet tc, 25
 					}
 					rowact_check tc
@@ -222,7 +222,7 @@
 						cell_refresh inv(INV_ITEM_X, ci), inv(INV_ITEM_Y, ci)
 						goto *turn_end
 					}
-					if ( inv(INV_ITEM_ID, ci) == 1228 ) {
+					if ( inv(INV_ITEM_ID, ci) == ITEM_ID_DYING_CICADA ) {
 						kaiwa = rnd(2)
 						txtef COLOR_BLUE
 						txt lang(" *必殺セミファイナル！* ", "*cicada*")
@@ -353,7 +353,7 @@
 				}
 			}
 			else {
-				if ( inv(INV_ITEM_ID, ci) != ITEM_ID_KEMURIDAMA & inv(INV_ITEM_ID, ci) != 1228 ) {
+				if ( inv(INV_ITEM_ID, ci) != ITEM_ID_KEMURIDAMA & inv(INV_ITEM_ID, ci) != ITEM_ID_DYING_CICADA ) {
 					if ( synccheck(tlocx, tlocy) ) {
 						txtmore
 						txt lang("それは地面に落ちて砕けた。", "It falls on the ground and shatters.")
@@ -365,14 +365,14 @@
 						txt lang("それは地面に落ちて炸裂した。", "It falls on the ground and explodes.")
 					}
 				}
-				if ( inv(INV_ITEM_ID, ci) == 1228 ) {
+				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_DYING_CICADA ) {
 					if ( synccheck(tlocx, tlocy) ) {
 						txtmore
 						txt lang("それは地面に落ちて絶命した。", "It falls on the ground and died.")
 					}
 				}
 			}
-			if ( inv(INV_ITEM_ID, ci) == 1228 ) {
+			if ( inv(INV_ITEM_ID, ci) == ITEM_ID_DYING_CICADA ) {
 				inv(INV_ITEM_NUM, ci)--
 				flt
 				itemcreate -1, ITEM_ID_BAIT, tlocx, tlocy, 0
@@ -3688,7 +3688,7 @@
 		}
 	}
 	if ( ammo != (-1) ) {
-		if ( cdata(CDATA_ID, cc) == 1039 ) {
+		if ( cdata(CDATA_ID, cc) == CREATURE_ID_AUTO_AIM_CHEATAH ) {
 			if ( ammoproc == ENCHANT_AMMO_NONE ) {
 				ammoproc = ENCHANT_AMMO_MAGIC
 			}
@@ -7312,7 +7312,7 @@
 		}
 		if ( rtval == 3 ) {
 			efid = -1
-			gosub *com_spell
+			gosub *com_spellbook_loop_pgchk
 			if ( efid > (0 /*!!!@[BUFF_NONE @@@ SKILL_NONE]@!!! */) ) {
 				num = spell(efid - 400) / 2000
 				spell(efid - 400) /= 2

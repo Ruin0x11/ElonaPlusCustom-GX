@@ -1,3 +1,9 @@
+# 2.06.1.0
+
+## Fixed
+- Fixed planted seeds not showing the correct text when walked over.
+- Fixed a crash caused by casting Meteor.
+
 # 2.05.1.1
 
 ## Added 

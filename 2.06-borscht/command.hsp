@@ -4857,7 +4857,7 @@
 			gosub *screen_draw
 			goto *pc_turn
 		}
-		goto *label_5478
+		goto *com_spell
 	}
 	goto *pc_turn
 
@@ -5109,7 +5109,7 @@
 				gosub *screen_draw
 				if ( curmenu == 0 ) {
 					snd SOUNDLIST_SPELL
-					goto *label_5480
+					goto *com_spell_loop
 				}
 				if ( curmenu == 1 ) {
 					snd SOUNDLIST_SKILL
@@ -5321,7 +5321,7 @@
 				gosub *screen_draw
 				if ( curmenu == 0 ) {
 					snd SOUNDLIST_SPELL
-					goto *label_5480
+					goto *com_spell_loop
 				}
 				if ( curmenu == 1 ) {
 					snd SOUNDLIST_SKILL
@@ -6861,7 +6861,7 @@
 
 *com_book_loop_pgchg
 	if ( 1 == 0 ) {
-		goto *com_spellcast
+		goto *com_spellbook
 	}
 	redraw 1
 	await cfg_wait1
@@ -6887,9 +6887,9 @@
 	}
 	goto *com_book_loop_pgchg
 
-*com_spellcast
+*com_spellbook
 
-*com_spell
+*com_spellbook_loop_pgchk
 	listmax = 0
 	page = 0
 	pagesize = 16
@@ -6915,7 +6915,7 @@
 	gsel BUFFER_SCREEN
 	windowshadow = 1
 
-*com_spell_loop_pgchk
+*com_spellbook_loop
 	redraw 0
 	cs_bk = -1
 	pagemax = (listmax - 1) / pagesize
@@ -6929,9 +6929,9 @@
 	}
 	drawmenu 1
 
-*com_spell_loop
+*com_spellcast
 	if ( 1 == 0 ) {
-		goto *label_5478
+		goto *com_spell_loop_pgchk
 	}
 	redraw 0
 	s = lang("魔法書の作成", "Spellbook make"), strhint2 + strhint3 + strhint7 + strhint8
@@ -7157,7 +7157,7 @@
 				gosub *screen_draw
 				if ( curmenu == 0 ) {
 					snd SOUNDLIST_SPELL
-					goto *label_5480
+					goto *com_spell_loop
 				}
 				if ( curmenu == 1 ) {
 					snd SOUNDLIST_SKILL
@@ -7174,14 +7174,14 @@
 		if ( pagemax != 0 ) {
 			snd SOUNDLIST_POP1
 			page++
-			goto *com_spell_loop_pgchk
+			goto *com_spellbook_loop
 		}
 	}
 	if ( key == key_pagedown ) {
 		if ( pagemax != 0 ) {
 			snd SOUNDLIST_POP1
 			page--
-			goto *com_spell_loop_pgchk
+			goto *com_spellbook_loop
 		}
 	}
 	if ( key == key_cancel ) {
@@ -7189,9 +7189,11 @@
 		efid = -1
 		return
 	}
-	goto *com_spell_loop
+	goto *com_spellcast
 
-*label_5478
+*com_spell
+
+*com_spell_loop_pgchk
 	tc = cc
 	gosub *cast
 	if ( stat == 0 ) {
@@ -7199,7 +7201,7 @@
 	}
 	goto *turn_end
 
-*label_5480
+*com_spell_loop
 	listmax = 0
 	page = 0
 	pagesize = 16
@@ -7321,7 +7323,7 @@
 	if ( p != (-1) ) {
 		menucycle = 0
 		efid = p
-		goto *label_5478
+		goto *com_spell
 	}
 	if ( key == "sc" ) {
 		snd SOUNDLIST_OK1
@@ -7344,13 +7346,13 @@
 		p = 0
 		p = list(0, pagesize * page + cs)
 		if ( p <= 0 ) {
-			goto *label_5480
+			goto *com_spell_loop
 		}
 		snd SOUNDLIST_LOCKED1
 		txtef COLOR_YELLOW
 		txt lang("【非表示：" + skillname(p) + "】", "[Seal :" + skillname(p) + "]")
 		spells(p - 400) = 2
-		goto *label_5480
+		goto *com_spell_loop
 	}
 	if ( key == key_msglog ) {
 		snd SOUNDLIST_CHEST1
@@ -7361,7 +7363,7 @@
 				spells(cnt) = 0
 			}
 		loop
-		goto *label_5480
+		goto *com_spell_loop
 	}
 	if ( menucycle == 1 ) {
 		if ( key == key_next | key == key_prev ) {
@@ -7384,7 +7386,7 @@
 				gosub *screen_draw
 				if ( curmenu == 0 ) {
 					snd SOUNDLIST_SPELL
-					goto *label_5480
+					goto *com_spell_loop
 				}
 				if ( curmenu == 1 ) {
 					snd SOUNDLIST_SKILL
@@ -12458,69 +12460,69 @@
 				}
 				goto *com_inventory
 			}
-			if ( inv(INV_ITEM_ID, ci) <= 1227 & inv(INV_ITEM_ID, ci) >= 1216 ) {
+			if ( inv(INV_ITEM_ID, ci) <= ITEM_ID_M01_GARNET & inv(INV_ITEM_ID, ci) >= ITEM_ID_M12_LAPIS_LAZULI ) {
 				snd SOUNDLIST_EQUIP1
 				txt lang("あなたは" + name(tc) + "に" + itemname(ci, 1) + "を渡した。", "You give " + name(tc) + " " + itemname(ci, 1) + ".")
 				txtvalid = 0
 				txt lang("「綺麗" + _dana(3) + "…」", cnvtalk("Beautiful..."))
 				modimp tc, 40
 				cdata(CDATA_EMO_ICON, tc) = 6 + 100 * 3
-				if ( inv(INV_ITEM_ID, ci) == 1227 ) {
+				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_M01_GARNET ) {
 					if ( cdata(CDATA_JOIN_DATE_MONTH, tc) == 1 ) {
 						modimp tc, 20
 					}
 				}
-				if ( inv(INV_ITEM_ID, ci) == 1226 ) {
+				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_M02_AMETHYST ) {
 					if ( cdata(CDATA_JOIN_DATE_MONTH, tc) == 2 ) {
 						modimp tc, 20
 					}
 				}
-				if ( inv(INV_ITEM_ID, ci) == 1225 ) {
+				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_M03_AQUAMARINE ) {
 					if ( cdata(CDATA_JOIN_DATE_MONTH, tc) == 3 ) {
 						modimp tc, 20
 					}
 				}
-				if ( inv(INV_ITEM_ID, ci) == 1224 ) {
+				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_M04_DIAMOND ) {
 					if ( cdata(CDATA_JOIN_DATE_MONTH, tc) == 4 ) {
 						modimp tc, 20
 					}
 				}
-				if ( inv(INV_ITEM_ID, ci) == 1223 ) {
+				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_M05_EMERALD ) {
 					if ( cdata(CDATA_JOIN_DATE_MONTH, tc) == 5 ) {
 						modimp tc, 20
 					}
 				}
-				if ( inv(INV_ITEM_ID, ci) == 1222 ) {
+				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_M06_ALEXANDRITE ) {
 					if ( cdata(CDATA_JOIN_DATE_MONTH, tc) == 6 ) {
 						modimp tc, 20
 					}
 				}
-				if ( inv(INV_ITEM_ID, ci) == 1221 ) {
+				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_M07_RUBY ) {
 					if ( cdata(CDATA_JOIN_DATE_MONTH, tc) == 7 ) {
 						modimp tc, 20
 					}
 				}
-				if ( inv(INV_ITEM_ID, ci) == 1220 ) {
+				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_M08_SARDONYX ) {
 					if ( cdata(CDATA_JOIN_DATE_MONTH, tc) == 8 ) {
 						modimp tc, 20
 					}
 				}
-				if ( inv(INV_ITEM_ID, ci) == 1219 ) {
+				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_M09_SAPPHIRE ) {
 					if ( cdata(CDATA_JOIN_DATE_MONTH, tc) == 9 ) {
 						modimp tc, 20
 					}
 				}
-				if ( inv(INV_ITEM_ID, ci) == 1218 ) {
+				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_M10_OPAL ) {
 					if ( cdata(CDATA_JOIN_DATE_MONTH, tc) == 10 ) {
 						modimp tc, 20
 					}
 				}
-				if ( inv(INV_ITEM_ID, ci) == 1217 ) {
+				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_M11_TOPAZ ) {
 					if ( cdata(CDATA_JOIN_DATE_MONTH, tc) == 11 ) {
 						modimp tc, 20
 					}
 				}
-				if ( inv(INV_ITEM_ID, ci) == 1216 ) {
+				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_M12_LAPIS_LAZULI ) {
 					if ( cdata(CDATA_JOIN_DATE_MONTH, tc) == 12 ) {
 						modimp tc, 20
 					}
@@ -15178,6 +15180,7 @@
 		txt " " + s
 	loop
 	goto *pc_turn
+
 
 
 

@@ -1,6 +1,6 @@
 diff -U5 --recursive ../2.05-borscht/action.hsp ../2.06-borscht/action.hsp
 --- ../2.05-borscht/action.hsp	2021-08-15 17:43:01.281927200 -0700
-+++ ../2.06-borscht/action.hsp	2021-08-15 17:43:07.562042000 -0700
++++ ../2.06-borscht/action.hsp	2021-08-15 18:12:32.686299900 -0700
 @@ -14,11 +14,11 @@
  	if ( ibit(ITEM_BIT_NO_DROP, ci) ) {
  		snd SOUNDLIST_FAIL1
@@ -8,7 +8,7 @@ diff -U5 --recursive ../2.05-borscht/action.hsp ../2.06-borscht/action.hsp
  		goto *pc_turn
  	}
 -	if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_ITEM_POTION | inv(INV_ITEM_ID, ci) == ITEM_ID_TOMATO | inv(INV_ITEM_ID, ci) == ITEM_ID_BUTTER | inv(INV_ITEM_ID, ci) == ITEM_ID_YOGURT | inv(INV_ITEM_ID, ci) == ITEM_ID_NATTO ) {
-+	if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_ITEM_POTION | inv(INV_ITEM_ID, ci) == ITEM_ID_TOMATO | inv(INV_ITEM_ID, ci) == ITEM_ID_BUTTER | inv(INV_ITEM_ID, ci) == ITEM_ID_YOGURT | inv(INV_ITEM_ID, ci) == ITEM_ID_NATTO | inv(INV_ITEM_ID, ci) == 1228 ) {
++	if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_ITEM_POTION | inv(INV_ITEM_ID, ci) == ITEM_ID_TOMATO | inv(INV_ITEM_ID, ci) == ITEM_ID_BUTTER | inv(INV_ITEM_ID, ci) == ITEM_ID_YOGURT | inv(INV_ITEM_ID, ci) == ITEM_ID_NATTO | inv(INV_ITEM_ID, ci) == ITEM_ID_DYING_CICADA ) {
  		if ( inv(INV_ITEM_ID, ci) != ITEM_ID_EMPTY_BOTTLE ) {
  			stc = -1
  			if ( map(tlocx, tlocy, MAP_CHARA_INDEX_PLUS_ONE) != 0 ) {
@@ -21,7 +21,7 @@ diff -U5 --recursive ../2.05-borscht/action.hsp ../2.06-borscht/action.hsp
  		goto *turn_end
  	}
 -	if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_ITEM_POTION | inv(INV_ITEM_ID, ci) == ITEM_ID_TOMATO | inv(INV_ITEM_ID, ci) == ITEM_ID_BUTTER | inv(INV_ITEM_ID, ci) == ITEM_ID_YOGURT | inv(INV_ITEM_ID, ci) == ITEM_ID_NATTO | inv(INV_ITEM_ID, ci) == ITEM_ID_KEMURIDAMA ) {
-+	if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_ITEM_POTION | inv(INV_ITEM_ID, ci) == ITEM_ID_TOMATO | inv(INV_ITEM_ID, ci) == ITEM_ID_BUTTER | inv(INV_ITEM_ID, ci) == ITEM_ID_YOGURT | inv(INV_ITEM_ID, ci) == ITEM_ID_NATTO | inv(INV_ITEM_ID, ci) == ITEM_ID_KEMURIDAMA | inv(INV_ITEM_ID, ci) == 1228 ) {
++	if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_ITEM_POTION | inv(INV_ITEM_ID, ci) == ITEM_ID_TOMATO | inv(INV_ITEM_ID, ci) == ITEM_ID_BUTTER | inv(INV_ITEM_ID, ci) == ITEM_ID_YOGURT | inv(INV_ITEM_ID, ci) == ITEM_ID_NATTO | inv(INV_ITEM_ID, ci) == ITEM_ID_KEMURIDAMA | inv(INV_ITEM_ID, ci) == ITEM_ID_DYING_CICADA ) {
  		if ( inv(INV_ITEM_ID, ci) != ITEM_ID_EMPTY_BOTTLE ) {
  			if ( synccheck(tlocx, tlocy) ) {
  				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_HANDFUL_SNOW ) {
@@ -29,7 +29,7 @@ diff -U5 --recursive ../2.05-borscht/action.hsp ../2.06-borscht/action.hsp
  				}
  				else {
 -					if ( inv(INV_ITEM_ID, ci) != ITEM_ID_NATTO & inv(INV_ITEM_ID, ci) != ITEM_ID_KEMURIDAMA ) {
-+					if ( inv(INV_ITEM_ID, ci) != ITEM_ID_NATTO & inv(INV_ITEM_ID, ci) != ITEM_ID_KEMURIDAMA & inv(INV_ITEM_ID, ci) != 1228 ) {
++					if ( inv(INV_ITEM_ID, ci) != ITEM_ID_NATTO & inv(INV_ITEM_ID, ci) != ITEM_ID_KEMURIDAMA & inv(INV_ITEM_ID, ci) != ITEM_ID_DYING_CICADA ) {
  						snd SOUNDLIST_CRUSH2
  					}
  					if ( inv(INV_ITEM_ID, ci) == ITEM_ID_NATTO ) {
@@ -38,7 +38,7 @@ diff -U5 --recursive ../2.05-borscht/action.hsp ../2.06-borscht/action.hsp
  					if ( inv(INV_ITEM_ID, ci) == ITEM_ID_KEMURIDAMA ) {
  						snd SOUNDLIST_OFFER1
  					}
-+					if ( inv(INV_ITEM_ID, ci) == 1228 ) {
++					if ( inv(INV_ITEM_ID, ci) == ITEM_ID_DYING_CICADA ) {
 +						snd SOUNDLIST_CRACK
 +					}
  				}
@@ -53,7 +53,7 @@ diff -U5 --recursive ../2.05-borscht/action.hsp ../2.06-borscht/action.hsp
  						kakeru = 0
  					}
 -					if ( inv(INV_ITEM_ID, ci) != ITEM_ID_MOLOTOV & inv(INV_ITEM_ID, ci) != ITEM_ID_BOTTLE_SULFURIC & inv(INV_ITEM_ID, ci) != ITEM_ID_HANDFUL_SNOW & inv(INV_ITEM_ID, ci) != ITEM_ID_TOMATO & inv(INV_ITEM_ID, ci) != ITEM_ID_ESSENTIAL_OIL & inv(INV_ITEM_ID, ci) != ITEM_ID_GASOLINE & inv(INV_ITEM_ID, ci) != ITEM_ID_BUTTER & inv(INV_ITEM_ID, ci) != ITEM_ID_YOGURT & inv(INV_ITEM_ID, ci) != ITEM_ID_NATTO & inv(INV_ITEM_ID, ci) != ITEM_ID_KEMURIDAMA ) {
-+					if ( inv(INV_ITEM_ID, ci) != ITEM_ID_MOLOTOV & inv(INV_ITEM_ID, ci) != ITEM_ID_BOTTLE_SULFURIC & inv(INV_ITEM_ID, ci) != ITEM_ID_HANDFUL_SNOW & inv(INV_ITEM_ID, ci) != ITEM_ID_TOMATO & inv(INV_ITEM_ID, ci) != ITEM_ID_ESSENTIAL_OIL & inv(INV_ITEM_ID, ci) != ITEM_ID_GASOLINE & inv(INV_ITEM_ID, ci) != ITEM_ID_BUTTER & inv(INV_ITEM_ID, ci) != ITEM_ID_YOGURT & inv(INV_ITEM_ID, ci) != ITEM_ID_NATTO & inv(INV_ITEM_ID, ci) != ITEM_ID_KEMURIDAMA & inv(INV_ITEM_ID, ci) != 1228 ) {
++					if ( inv(INV_ITEM_ID, ci) != ITEM_ID_MOLOTOV & inv(INV_ITEM_ID, ci) != ITEM_ID_BOTTLE_SULFURIC & inv(INV_ITEM_ID, ci) != ITEM_ID_HANDFUL_SNOW & inv(INV_ITEM_ID, ci) != ITEM_ID_TOMATO & inv(INV_ITEM_ID, ci) != ITEM_ID_ESSENTIAL_OIL & inv(INV_ITEM_ID, ci) != ITEM_ID_GASOLINE & inv(INV_ITEM_ID, ci) != ITEM_ID_BUTTER & inv(INV_ITEM_ID, ci) != ITEM_ID_YOGURT & inv(INV_ITEM_ID, ci) != ITEM_ID_NATTO & inv(INV_ITEM_ID, ci) != ITEM_ID_KEMURIDAMA & inv(INV_ITEM_ID, ci) != ITEM_ID_DYING_CICADA ) {
  						wet tc, 25
  					}
  					rowact_check tc
@@ -65,7 +65,7 @@ diff -U5 --recursive ../2.05-borscht/action.hsp ../2.06-borscht/action.hsp
  						cell_refresh inv(INV_ITEM_X, ci), inv(INV_ITEM_Y, ci)
  						goto *turn_end
  					}
-+					if ( inv(INV_ITEM_ID, ci) == 1228 ) {
++					if ( inv(INV_ITEM_ID, ci) == ITEM_ID_DYING_CICADA ) {
 +						kaiwa = rnd(2)
 +						txtef COLOR_BLUE
 +						txt lang(" *必殺セミファイナル！* ", "*cicada*")
@@ -111,7 +111,7 @@ diff -U5 --recursive ../2.05-borscht/action.hsp ../2.06-borscht/action.hsp
  				}
  			}
  			else {
-+				if ( inv(INV_ITEM_ID, ci) != ITEM_ID_KEMURIDAMA & inv(INV_ITEM_ID, ci) != 1228 ) {
++				if ( inv(INV_ITEM_ID, ci) != ITEM_ID_KEMURIDAMA & inv(INV_ITEM_ID, ci) != ITEM_ID_DYING_CICADA ) {
 +					if ( synccheck(tlocx, tlocy) ) {
 +						txtmore
 +						txt lang("それは地面に落ちて砕けた。", "It falls on the ground and shatters.")
@@ -124,7 +124,7 @@ diff -U5 --recursive ../2.05-borscht/action.hsp ../2.06-borscht/action.hsp
  					}
  				}
 -				if ( inv(INV_ITEM_ID, ci) != ITEM_ID_KEMURIDAMA ) {
-+				if ( inv(INV_ITEM_ID, ci) == 1228 ) {
++				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_DYING_CICADA ) {
  					if ( synccheck(tlocx, tlocy) ) {
  						txtmore
 -						txt lang("それは地面に落ちて砕けた。", "It falls on the ground and shatters.")
@@ -132,7 +132,7 @@ diff -U5 --recursive ../2.05-borscht/action.hsp ../2.06-borscht/action.hsp
  					}
  				}
  			}
-+			if ( inv(INV_ITEM_ID, ci) == 1228 ) {
++			if ( inv(INV_ITEM_ID, ci) == ITEM_ID_DYING_CICADA ) {
 +				inv(INV_ITEM_NUM, ci)--
 +				flt
 +				itemcreate -1, ITEM_ID_BAIT, tlocx, tlocy, 0
@@ -194,7 +194,7 @@ diff -U5 --recursive ../2.05-borscht/action.hsp ../2.06-borscht/action.hsp
  		}
  	}
 +	if ( ammo != (-1) ) {
-+		if ( cdata(CDATA_ID, cc) == 1039 ) {
++		if ( cdata(CDATA_ID, cc) == CREATURE_ID_AUTO_AIM_CHEATAH ) {
 +			if ( ammoproc == ENCHANT_AMMO_NONE ) {
 +				ammoproc = ENCHANT_AMMO_MAGIC
 +			}
@@ -218,9 +218,22 @@ diff -U5 --recursive ../2.05-borscht/action.hsp ../2.06-borscht/action.hsp
  	if ( ibit(ITEM_BIT_ULTIMATE, ci) == TRUE ) {
  		if ( synccheck(tc, -1) ) {
  			txtef COLOR_RED
+@@ -7241,11 +7310,11 @@
+ 			}
+ 			goto *act_use_SWEND1
+ 		}
+ 		if ( rtval == 3 ) {
+ 			efid = -1
+-			gosub *com_spell
++			gosub *com_spellbook_loop_pgchk
+ 			if ( efid > (0 /*!!!@[BUFF_NONE @@@ SKILL_NONE]@!!! */) ) {
+ 				num = spell(efid - 400) / 2000
+ 				spell(efid - 400) /= 2
+ 				if ( efid == SKILL_SPELL_GEM_POWER ) {
+ 					dbid = 1076
 diff -U5 --recursive ../2.05-borscht/ai.hsp ../2.06-borscht/ai.hsp
 --- ../2.05-borscht/ai.hsp	2021-08-15 17:43:01.343590500 -0700
-+++ ../2.06-borscht/ai.hsp	2021-08-15 17:43:07.698719400 -0700
++++ ../2.06-borscht/ai.hsp	2021-08-15 18:12:32.764316800 -0700
 @@ -42,10 +42,18 @@
  			if ( cellfeat == 21 ) {
  				cellaccess = 1
@@ -228,7 +241,7 @@ diff -U5 --recursive ../2.05-borscht/ai.hsp ../2.06-borscht/ai.hsp
  			}
  		}
 +		if ( cellchara == (-1) ) {
-+			if ( cdata(CDATA_ID, cc) == 1038 ) {
++			if ( cdata(CDATA_ID, cc) == CREATURE_ID_WALL_HACK_CHEATAH ) {
 +				if ( cellaccessover == 1 ) {
 +					cellaccess = 1
 +					break
@@ -247,7 +260,7 @@ diff -U5 --recursive ../2.05-borscht/ai.hsp ../2.06-borscht/ai.hsp
  			}
  		}
 -		goto *label_8753
-+		goto *label_8810
++		goto *ai_actMain
  	}
  	if ( cdata(CDATA_RELATION, cc) < RELATION_ALLY ) {
  		if ( cbit(CHARA_BIT_SANDBAG, tc) ) {
@@ -286,7 +299,7 @@ diff -U5 --recursive ../2.05-borscht/ai.hsp ../2.06-borscht/ai.hsp
  			cdata(CDATA_TARGET, cc) = tc
  			cdata(CDATA_AI_AGGRO, cc) += 4
 -			goto *label_8753
-+			goto *label_8810
++			goto *ai_actMain
  		}
  		else {
  			if ( cdata(CDATA_QUALITY, cc) > FIX_QUALITY_GREAT | cdata(CDATA_ID, cc) == CREATURE_ID_AILE_THE_ATTENDANT & cdata(CDATA_LEVEL, cc) > cdata(CDATA_LEVEL, tc) & cc >= MAX_CHARA_FOLLOWER | cbit(CHARA_BIT_SANDBAG, tc) | (cbit(CHARA_BIT_SUMMONED, tc) == TRUE & gdata(GDATA_AREA) == AREA_PET_ARENA) ) {
@@ -299,7 +312,7 @@ diff -U5 --recursive ../2.05-borscht/ai.hsp ../2.06-borscht/ai.hsp
  	return 0
  
 -*label_8753
-+*label_8810
++*ai_actMain
  	if ( tc == CHARA_PLAYER ) {
  		pcattacker = cc
  	}
@@ -311,7 +324,7 @@ diff -U5 --recursive ../2.05-borscht/ai.hsp ../2.06-borscht/ai.hsp
  			}
  		}
  	}
-+	if ( cdata(CDATA_ID, cc) >= 1038 & cdata(CDATA_ID, cc) <= MAX_CREATURE_ID ) {
++	if ( cdata(CDATA_ID, cc) >= CREATURE_ID_WALL_HACK_CHEATAH & cdata(CDATA_ID, cc) <= CREATURE_ID_SPEED_HACK_CHEATAH ) {
 +		if ( rnd(100) == 0 ) {
 +			txtef COLOR_RED
 +			txt lang(" *BAN* ", " *BAN* ")
@@ -350,7 +363,7 @@ diff -U5 --recursive ../2.05-borscht/ai.hsp ../2.06-borscht/ai.hsp
  			}
  		}
  	}
-+	if ( cdata(CDATA_ID, cc) == 1047 ) {
++	if ( cdata(CDATA_ID, cc) == CREATURE_ID_MAGIC_BEE ) {
 +		if ( cdata(CDATA_CONDITION_ANGRY, cc) > 0 ) {
 +			if ( rnd(3) == 0 ) {
 +				act = SKILL_SPACT_FLAME_OF_RAGE
@@ -369,174 +382,174 @@ diff -U5 --recursive ../2.05-borscht/ai.hsp ../2.06-borscht/ai.hsp
  			if ( findbuff(cc, BUFF_HERO) != (-1) ) {
  				buffact++
 -				goto *label_8753
-+				goto *label_8810
++				goto *ai_actMain
  			}
  		}
  		if ( act == SKILL_SPELL_HOLY_SHIELD ) {
  			if ( findbuff(cc, BUFF_HOLY_SHIELD) != (-1) ) {
  				buffact++
 -				goto *label_8753
-+				goto *label_8810
++				goto *ai_actMain
  			}
  		}
  		if ( act == SKILL_SPELL_REGENERATION ) {
  			if ( findbuff(cc, BUFF_REGENERATION) != (-1) ) {
  				buffact++
 -				goto *label_8753
-+				goto *label_8810
++				goto *ai_actMain
  			}
  		}
  		if ( act == SKILL_SPELL_ATTRIBUTE_SHIELD ) {
  			if ( findbuff(cc, BUFF_ATTRIBUTE_SHIELD) != (-1) ) {
  				buffact++
 -				goto *label_8753
-+				goto *label_8810
++				goto *ai_actMain
  			}
  		}
  		if ( act == SKILL_SPELL_SPEED ) {
  			if ( findbuff(cc, BUFF_SPEED) != (-1) ) {
  				buffact++
 -				goto *label_8753
-+				goto *label_8810
++				goto *ai_actMain
  			}
  		}
  		if ( act == SKILL_SPELL_HOLY_VEIL ) {
  			if ( findbuff(cc, BUFF_HOLY_VEIL) != (-1) ) {
  				buffact++
 -				goto *label_8753
-+				goto *label_8810
++				goto *ai_actMain
  			}
  		}
  		if ( act == SKILL_SPELL_DIVINE_WISDOM ) {
  			if ( findbuff(cc, BUFF_DIVINE_WISDOM) != (-1) ) {
  				buffact++
 -				goto *label_8753
-+				goto *label_8810
++				goto *ai_actMain
  			}
  		}
  		if ( act == SKILL_SPACT_LULWYS_TRICK ) {
  			if ( findbuff(cc, BUFF_LULWYS_TRICK) != (-1) ) {
  				buffact++
 -				goto *label_8753
-+				goto *label_8810
++				goto *ai_actMain
  			}
  		}
  		if ( act == SKILL_SPACT_BOOST ) {
  			if ( findbuff(cc, BUFF_BOOST) != (-1) ) {
  				buffact++
 -				goto *label_8753
-+				goto *label_8810
++				goto *ai_actMain
  			}
  		}
  		if ( act == SKILL_SPELL_CONTINGENCY ) {
  			if ( findbuff(cc, BUFF_CONTINGENCY) != (-1) ) {
  				buffact++
 -				goto *label_8753
-+				goto *label_8810
++				goto *ai_actMain
  			}
  		}
  		if ( act == SKILL_SPACT_CLEAR_MIND ) {
  			if ( findbuff(cc, BUFF_CLEAR_MIND) != (-1) ) {
  				buffact++
 -				goto *label_8753
-+				goto *label_8810
++				goto *ai_actMain
  			}
  		}
  		if ( act == SKILL_SPELL_FEATHER ) {
  			if ( findbuff(cc, BUFF_FEATHER) != (-1) ) {
  				buffact++
 -				goto *label_8753
-+				goto *label_8810
++				goto *ai_actMain
  			}
  		}
  		if ( act == SKILL_SPACT_CHARGE ) {
  			if ( findbuff(cc, BUFF_CHARGE) != (-1) ) {
  				buffact++
 -				goto *label_8753
-+				goto *label_8810
++				goto *ai_actMain
  			}
  		}
  		if ( act == SKILL_SPACT_ATTRIBUTE ) {
  			if ( findbuff(cc, BUFF_ATTRIBUTE) != (-1) ) {
  				buffact++
 -				goto *label_8753
-+				goto *label_8810
++				goto *ai_actMain
  			}
  		}
  		if ( act == SKILL_SPACT_ABSOLUTE_PROTECT ) {
  			if ( findbuff(cc, BUFF_AUTO_GUARD) != (-1) ) {
  				buffact++
 -				goto *label_8753
-+				goto *label_8810
++				goto *ai_actMain
  			}
  		}
  		if ( act == SKILL_SPACT_SPACE_RETENTION ) {
  			if ( findbuff(cc, BUFF_RETENTION) != (-1) ) {
  				buffact++
 -				goto *label_8753
-+				goto *label_8810
++				goto *ai_actMain
  			}
  		}
  		if ( act == SKILL_SPELL_CONCENTRATION ) {
  			if ( findbuff(cc, BUFF_CONCENTRATION) != (-1) ) {
  				buffact++
 -				goto *label_8753
-+				goto *label_8810
++				goto *ai_actMain
  			}
  		}
  		if ( act == SKILL_SPELL_ELEMENT_SCAR ) {
  			if ( findbuff(tc, BUFF_ELEMENT_SCAR) != (-1) ) {
  				buffact++
 -				goto *label_8753
-+				goto *label_8810
++				goto *ai_actMain
  			}
  		}
  		if ( act == SKILL_SPELL_MIST_OF_SILENCE ) {
  			if ( findbuff(tc, BUFF_MIST_OF_SILENCE) != (-1) ) {
  				buffact++
 -				goto *label_8753
-+				goto *label_8810
++				goto *ai_actMain
  			}
  		}
  		if ( act == SKILL_SPELL_SLOW ) {
  			if ( findbuff(tc, BUFF_SLOW) != (-1) ) {
  				buffact++
 -				goto *label_8753
-+				goto *label_8810
++				goto *ai_actMain
  			}
  		}
  		if ( act == SKILL_SPELL_MIST_OF_FRAILNESS ) {
  			if ( findbuff(tc, BUFF_MIST_OF_FRAILNESS) != (-1) ) {
  				buffact++
 -				goto *label_8753
-+				goto *label_8810
++				goto *ai_actMain
  			}
  		}
  		if ( act == SKILL_SPELL_NIGHTMARE ) {
  			if ( findbuff(tc, BUFF_NIGHTMARE) != (-1) ) {
  				buffact++
 -				goto *label_8753
-+				goto *label_8810
++				goto *ai_actMain
  			}
  		}
  		if ( act == SKILL_SPACT_PUNISHMENT ) {
  			if ( findbuff(tc, BUFF_PUNISHMENT) != (-1) ) {
  				buffact++
 -				goto *label_8753
-+				goto *label_8810
++				goto *ai_actMain
  			}
  		}
  		if ( act == SKILL_SPACT_DEATH_WORD | act == SKILL_SPACT_DEATH_SONG ) {
  			if ( findbuff(tc, BUFF_DEATH_WORD) != (-1) | cdata(CDATA_QUALITY, tc) >= FIX_QUALITY_MIRACLE ) {
  				buffact++
 -				goto *label_8753
-+				goto *label_8810
++				goto *ai_actMain
 +			}
 +		}
 +		if ( act == SKILL_SPELL_HEAL_LIGHT | act == SKILL_SPELL_HEAL_CRITICAL | act == SKILL_SPELL_CURE_OF_ERIS | act == SKILL_SPELL_CURE_OF_JURE | act == SKILL_SPELL_HEALING_TOUCH ) {
 +			if ( cdata(CDATA_HP, cc) == cdata(CDATA_MAX_HP, cc) ) {
 +				buffact++
-+				goto *label_8810
++				goto *ai_actMain
  			}
  		}
  	}
@@ -544,7 +557,7 @@ diff -U5 --recursive ../2.05-borscht/ai.hsp ../2.06-borscht/ai.hsp
  	if ( cdata(CDATA_ID, cc) == CREATURE_ID_BLACK_GAUNTLET_LEOLD ) {
 diff -U5 --recursive ../2.05-borscht/blend.hsp ../2.06-borscht/blend.hsp
 --- ../2.05-borscht/blend.hsp	2021-08-15 17:43:01.407748100 -0700
-+++ ../2.06-borscht/blend.hsp	2021-08-15 17:43:07.782201400 -0700
++++ ../2.06-borscht/blend.hsp	2021-08-15 18:12:32.807985800 -0700
 @@ -23,12 +23,12 @@
  		locvar_rpmatname_s = refchara(locvar_rpmatname_p, DBSPEC_CHARA_NAME_ORG, 1) + lang("の死体", " corpse")
  		return locvar_rpmatname_s
@@ -689,7 +702,7 @@ diff -U5 --recursive ../2.05-borscht/blend.hsp ../2.06-borscht/blend.hsp
  
 diff -U5 --recursive ../2.05-borscht/calculation.hsp ../2.06-borscht/calculation.hsp
 --- ../2.05-borscht/calculation.hsp	2021-08-15 17:43:01.440907600 -0700
-+++ ../2.06-borscht/calculation.hsp	2021-08-15 17:43:07.819240500 -0700
++++ ../2.06-borscht/calculation.hsp	2021-08-15 18:12:32.844131000 -0700
 @@ -747,12 +747,12 @@
  	if ( gdata(GDATA_FLAG_GUILD_FIGHTER) ) {
  		locvar_calcitemvalue_value /= 2
@@ -820,7 +833,7 @@ diff -U5 --recursive ../2.05-borscht/calculation.hsp ../2.06-borscht/calculation
  		if ( cdata(CDATA_QUEST_NPC, r1) != 0 ) {
 diff -U5 --recursive ../2.05-borscht/chara.hsp ../2.06-borscht/chara.hsp
 --- ../2.05-borscht/chara.hsp	2021-08-15 17:43:01.495661500 -0700
-+++ ../2.06-borscht/chara.hsp	2021-08-15 17:43:07.872857200 -0700
++++ ../2.06-borscht/chara.hsp	2021-08-15 18:12:32.906489300 -0700
 @@ -2209,27 +2209,27 @@
  	}
  	if ( cdata(CDATA_ID, rc) == CREATURE_ID_GIRAFFE | cdata(CDATA_ID, rc) == CREATURE_ID_GI_ANT | cdata(CDATA_ID, rc) == CREATURE_ID_SAMURAI_ANT | cdata(CDATA_ID, rc) == CREATURE_ID_STEEL_ARMOR_SPIDER | cdata(CDATA_ID, rc) == CREATURE_ID_GOLD_ARMOR_ANT | cdata(CDATA_ID, rc) == CREATURE_ID_MEIDA | cdata(CDATA_ID, rc) == CREATURE_ID_OYAUKAMUI | cdata(CDATA_ID, rc) == CREATURE_ID_HAM_TAIROU | cdata(CDATA_ID, rc) == CREATURE_ID_DISASTER | cdata(CDATA_ID, rc) == CREATURE_ID_BLACK_WING | cdata(CDATA_ID, rc) == CREATURE_ID_SEA_FALLEN_ANGEL | cdata(CDATA_ID, rc) == CREATURE_ID_ROPER | cdata(CDATA_ID, rc) == CREATURE_ID_BEILGENA_THE_ARTIFICIAL_DRAGON | cdata(CDATA_ID, rc) == CREATURE_ID_UNIVERSE_INVADER | cdata(CDATA_ID, rc) == CREATURE_ID_HUNDRED_EYES ) {
@@ -828,7 +841,7 @@ diff -U5 --recursive ../2.05-borscht/chara.hsp ../2.06-borscht/chara.hsp
  		cdata(CDATA_WEIGHT, rc) = rnd(300) + 700
  	}
 -	if ( cdata(CDATA_ID, rc) == CREATURE_ID_CLOUDRAGON | cdata(CDATA_ID, rc) == CREATURE_ID_MOMOTUKA ) {
-+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_CLOUDRAGON | cdata(CDATA_ID, rc) == CREATURE_ID_MOMOTUKA | cdata(CDATA_ID, rc) == 1044 ) {
++	if ( cdata(CDATA_ID, rc) == CREATURE_ID_CLOUDRAGON | cdata(CDATA_ID, rc) == CREATURE_ID_MOMOTUKA | cdata(CDATA_ID, rc) == CREATURE_ID_OXODE_THE_QUEEN_BEE ) {
  		cdata(CDATA_HEIGHT, rc) = rnd(100) + 400
  		cdata(CDATA_WEIGHT, rc) = rnd(5) + 10
  	}
@@ -837,7 +850,7 @@ diff -U5 --recursive ../2.05-borscht/chara.hsp ../2.06-borscht/chara.hsp
  		cdata(CDATA_WEIGHT, rc) = rnd(5) + 10
  	}
 -	if ( cdata(CDATA_ID, rc) == CREATURE_ID_GRYFFON_CHILD | cdata(CDATA_ID, rc) == CREATURE_ID_FIRE_DRAGON_CHILD | cdata(CDATA_ID, rc) == CREATURE_ID_BLACK_CAT | cdata(CDATA_ID, rc) == CREATURE_ID_PUTIT_TANK | cdata(CDATA_ID, rc) == CREATURE_ID_CHILD_BOAR | cdata(CDATA_ID, rc) == CREATURE_ID_R_CLEANER | cdata(CDATA_ID, rc) == CREATURE_ID_SPACE_HORNED_OWL | cdata(CDATA_ID, rc) == CREATURE_ID_FLIGHT_FISH | cdata(CDATA_ID, rc) == CREATURE_ID_DARK_DOME | cdata(CDATA_ID, rc) == CREATURE_ID_BISQUE_DOLL ) {
-+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_GRYFFON_CHILD | cdata(CDATA_ID, rc) == CREATURE_ID_FIRE_DRAGON_CHILD | cdata(CDATA_ID, rc) == CREATURE_ID_BLACK_CAT | cdata(CDATA_ID, rc) == CREATURE_ID_PUTIT_TANK | cdata(CDATA_ID, rc) == CREATURE_ID_CHILD_BOAR | cdata(CDATA_ID, rc) == CREATURE_ID_R_CLEANER | cdata(CDATA_ID, rc) == CREATURE_ID_SPACE_HORNED_OWL | cdata(CDATA_ID, rc) == CREATURE_ID_FLIGHT_FISH | cdata(CDATA_ID, rc) == CREATURE_ID_DARK_DOME | cdata(CDATA_ID, rc) == CREATURE_ID_BISQUE_DOLL | cdata(CDATA_ID, rc) == 1047 ) {
++	if ( cdata(CDATA_ID, rc) == CREATURE_ID_GRYFFON_CHILD | cdata(CDATA_ID, rc) == CREATURE_ID_FIRE_DRAGON_CHILD | cdata(CDATA_ID, rc) == CREATURE_ID_BLACK_CAT | cdata(CDATA_ID, rc) == CREATURE_ID_PUTIT_TANK | cdata(CDATA_ID, rc) == CREATURE_ID_CHILD_BOAR | cdata(CDATA_ID, rc) == CREATURE_ID_R_CLEANER | cdata(CDATA_ID, rc) == CREATURE_ID_SPACE_HORNED_OWL | cdata(CDATA_ID, rc) == CREATURE_ID_FLIGHT_FISH | cdata(CDATA_ID, rc) == CREATURE_ID_DARK_DOME | cdata(CDATA_ID, rc) == CREATURE_ID_BISQUE_DOLL | cdata(CDATA_ID, rc) == CREATURE_ID_MAGIC_BEE ) {
  		cdata(CDATA_HEIGHT, rc) = rnd(20) + 30
  		cdata(CDATA_WEIGHT, rc) = rnd(2) + 2
  	}
@@ -846,7 +859,7 @@ diff -U5 --recursive ../2.05-borscht/chara.hsp ../2.06-borscht/chara.hsp
  		cdata(CDATA_WEIGHT, rc) = rnd(2) + 1
  	}
 -	if ( cdata(CDATA_ID, rc) == CREATURE_ID_LION | cdata(CDATA_ID, rc) == CREATURE_ID_CARBUNCLE | cdata(CDATA_ID, rc) == CREATURE_ID_MEGA_MOLE | cdata(CDATA_ID, rc) == CREATURE_ID_TALPIDAE | cdata(CDATA_ID, rc) == CREATURE_ID_SHINING_SILVER_WOLF | cdata(CDATA_ID, rc) == CREATURE_ID_BLAZE_LION | cdata(CDATA_ID, rc) == CREATURE_ID_CAPTAIN_SHARK | cdata(CDATA_ID, rc) == CREATURE_ID_RAGING_SHARK | cdata(CDATA_ID, rc) == CREATURE_ID_NIGHTMARE_SHARK | cdata(CDATA_ID, rc) == CREATURE_ID_LEGENDARY_WOLF | cdata(CDATA_ID, rc) == CREATURE_ID_DARK_RAIDER | cdata(CDATA_ID, rc) == CREATURE_ID_SEIASHIN | cdata(CDATA_ID, rc) == CREATURE_ID_SALAMANDER | cdata(CDATA_ID, rc) == CREATURE_ID_NUOU | cdata(CDATA_ID, rc) == CREATURE_ID_SIVA_THE_DESTRUCTION | cdata(CDATA_ID, rc) == CREATURE_ID_NAGAREW_THE_OBLIVION_BEAST | cdata(CDATA_ID, rc) == CREATURE_ID_LION2 | cdata(CDATA_ID, rc) == CREATURE_ID_FALLEN_BIRD ) {
-+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_LION | cdata(CDATA_ID, rc) == CREATURE_ID_CARBUNCLE | cdata(CDATA_ID, rc) == CREATURE_ID_MEGA_MOLE | cdata(CDATA_ID, rc) == CREATURE_ID_TALPIDAE | cdata(CDATA_ID, rc) == CREATURE_ID_SHINING_SILVER_WOLF | cdata(CDATA_ID, rc) == CREATURE_ID_BLAZE_LION | cdata(CDATA_ID, rc) == CREATURE_ID_CAPTAIN_SHARK | cdata(CDATA_ID, rc) == CREATURE_ID_RAGING_SHARK | cdata(CDATA_ID, rc) == CREATURE_ID_NIGHTMARE_SHARK | cdata(CDATA_ID, rc) == CREATURE_ID_LEGENDARY_WOLF | cdata(CDATA_ID, rc) == CREATURE_ID_DARK_RAIDER | cdata(CDATA_ID, rc) == CREATURE_ID_SEIASHIN | cdata(CDATA_ID, rc) == CREATURE_ID_SALAMANDER | cdata(CDATA_ID, rc) == CREATURE_ID_NUOU | cdata(CDATA_ID, rc) == CREATURE_ID_SIVA_THE_DESTRUCTION | cdata(CDATA_ID, rc) == CREATURE_ID_NAGAREW_THE_OBLIVION_BEAST | cdata(CDATA_ID, rc) == CREATURE_ID_LION2 | cdata(CDATA_ID, rc) == CREATURE_ID_FALLEN_BIRD | cdata(CDATA_ID, rc) == 1042 ) {
++	if ( cdata(CDATA_ID, rc) == CREATURE_ID_LION | cdata(CDATA_ID, rc) == CREATURE_ID_CARBUNCLE | cdata(CDATA_ID, rc) == CREATURE_ID_MEGA_MOLE | cdata(CDATA_ID, rc) == CREATURE_ID_TALPIDAE | cdata(CDATA_ID, rc) == CREATURE_ID_SHINING_SILVER_WOLF | cdata(CDATA_ID, rc) == CREATURE_ID_BLAZE_LION | cdata(CDATA_ID, rc) == CREATURE_ID_CAPTAIN_SHARK | cdata(CDATA_ID, rc) == CREATURE_ID_RAGING_SHARK | cdata(CDATA_ID, rc) == CREATURE_ID_NIGHTMARE_SHARK | cdata(CDATA_ID, rc) == CREATURE_ID_LEGENDARY_WOLF | cdata(CDATA_ID, rc) == CREATURE_ID_DARK_RAIDER | cdata(CDATA_ID, rc) == CREATURE_ID_SEIASHIN | cdata(CDATA_ID, rc) == CREATURE_ID_SALAMANDER | cdata(CDATA_ID, rc) == CREATURE_ID_NUOU | cdata(CDATA_ID, rc) == CREATURE_ID_SIVA_THE_DESTRUCTION | cdata(CDATA_ID, rc) == CREATURE_ID_NAGAREW_THE_OBLIVION_BEAST | cdata(CDATA_ID, rc) == CREATURE_ID_LION2 | cdata(CDATA_ID, rc) == CREATURE_ID_FALLEN_BIRD | cdata(CDATA_ID, rc) == CREATURE_ID_TELHUREZA_THE_HOUSE_GUARD ) {
  		cdata(CDATA_HEIGHT, rc) = rnd(100) + 200
  		cdata(CDATA_WEIGHT, rc) = rnd(100) + 150
  	}
@@ -859,7 +872,7 @@ diff -U5 --recursive ../2.05-borscht/chara.hsp ../2.06-borscht/chara.hsp
  		cdata(CDATA_WEIGHT, rc) = rnd(30) + 120
  	}
 -	if ( cdata(CDATA_ID, rc) == CREATURE_ID_CUTE_FAIRY | cdata(CDATA_ID, rc) == CREATURE_ID_YOKOSHIMA_ENAGA | cdata(CDATA_ID, rc) == CREATURE_ID_CTHULHICK ) {
-+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_CUTE_FAIRY | cdata(CDATA_ID, rc) == CREATURE_ID_YOKOSHIMA_ENAGA | cdata(CDATA_ID, rc) == CREATURE_ID_CTHULHICK | cdata(CDATA_ID, rc) == 1048 ) {
++	if ( cdata(CDATA_ID, rc) == CREATURE_ID_CUTE_FAIRY | cdata(CDATA_ID, rc) == CREATURE_ID_YOKOSHIMA_ENAGA | cdata(CDATA_ID, rc) == CREATURE_ID_CTHULHICK | cdata(CDATA_ID, rc) == CREATURE_ID_YOUNG_SWALLOW ) {
  		cdata(CDATA_HEIGHT, rc) = rnd(5) + 10
  		cdata(CDATA_WEIGHT, rc) = 1
  	}
@@ -872,7 +885,7 @@ diff -U5 --recursive ../2.05-borscht/chara.hsp ../2.06-borscht/chara.hsp
  		cdata(CDATA_WEIGHT, rc) = 1
  	}
 -	if ( cdata(CDATA_ID, rc) == CREATURE_ID_IMP | cdata(CDATA_ID, rc) == CREATURE_ID_NETHER_IMP | cdata(CDATA_ID, rc) == CREATURE_ID_CHAOS_IMP | cdata(CDATA_ID, rc) == CREATURE_ID_DEMONS_COMMANDER | cdata(CDATA_ID, rc) == CREATURE_ID_CHILD_WEL | cdata(CDATA_ID, rc) == CREATURE_ID_MIZUKI_THE_ABYSS_PRINCESS | cdata(CDATA_ID, rc) == CREATURE_ID_TOWN_CHILD | cdata(CDATA_ID, rc) == CREATURE_ID_NOBLE_CHILD | cdata(CDATA_ID, rc) == CREATURE_ID_LITTLE_SISTER | cdata(CDATA_ID, rc) == CREATURE_ID_CAPYBARA | cdata(CDATA_ID, rc) == CREATURE_ID_THOUSAND_HEDGEHOG | cdata(CDATA_ID, rc) == CREATURE_ID_SHOEBILL | cdata(CDATA_ID, rc) == CREATURE_ID_NERES_THE_AMNESIAC | cdata(CDATA_ID, rc) == CREATURE_ID_RYUTYE_THE_AMNESIAC | cdata(CDATA_ID, rc) == CREATURE_ID_BOYCIANA | cdata(CDATA_ID, rc) == CREATURE_ID_HALLOWEEN_CHILDREN | cdata(CDATA_ID, rc) == CREATURE_ID_HALLOWEEN_CHILDREN2 | cdata(CDATA_ID, rc) == CREATURE_ID_WANDERING_PENGUIN | cdata(CDATA_ID, rc) == CREATURE_ID_ARIBEL_THE_WHITE_ARMS | cdata(CDATA_ID, rc) == CREATURE_ID_PERFORMAID_BITCHIACK | cdata(CDATA_ID, rc) == CREATURE_ID_FOX_BROTHER | cdata(CDATA_ID, rc) == CREATURE_ID_SILVER_FOX_BROTHER | cdata(CDATA_ID, rc) == CREATURE_ID_FOX | cdata(CDATA_ID, rc) == CREATURE_ID_INCONEET | cdata(CDATA_ID, rc) == CREATURE_ID_KOBOLINA | cdata(CDATA_ID, rc) == CREATURE_ID_AIME_THE_STORY_TELLER | cdata(CDATA_ID, rc) == CREATURE_ID_STRAY_SOUL ) {
-+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_IMP | cdata(CDATA_ID, rc) == CREATURE_ID_NETHER_IMP | cdata(CDATA_ID, rc) == CREATURE_ID_CHAOS_IMP | cdata(CDATA_ID, rc) == CREATURE_ID_DEMONS_COMMANDER | cdata(CDATA_ID, rc) == CREATURE_ID_CHILD_WEL | cdata(CDATA_ID, rc) == CREATURE_ID_MIZUKI_THE_ABYSS_PRINCESS | cdata(CDATA_ID, rc) == CREATURE_ID_TOWN_CHILD | cdata(CDATA_ID, rc) == CREATURE_ID_NOBLE_CHILD | cdata(CDATA_ID, rc) == CREATURE_ID_LITTLE_SISTER | cdata(CDATA_ID, rc) == CREATURE_ID_CAPYBARA | cdata(CDATA_ID, rc) == CREATURE_ID_THOUSAND_HEDGEHOG | cdata(CDATA_ID, rc) == CREATURE_ID_SHOEBILL | cdata(CDATA_ID, rc) == CREATURE_ID_NERES_THE_AMNESIAC | cdata(CDATA_ID, rc) == CREATURE_ID_RYUTYE_THE_AMNESIAC | cdata(CDATA_ID, rc) == CREATURE_ID_BOYCIANA | cdata(CDATA_ID, rc) == CREATURE_ID_HALLOWEEN_CHILDREN | cdata(CDATA_ID, rc) == CREATURE_ID_HALLOWEEN_CHILDREN2 | cdata(CDATA_ID, rc) == CREATURE_ID_WANDERING_PENGUIN | cdata(CDATA_ID, rc) == CREATURE_ID_ARIBEL_THE_WHITE_ARMS | cdata(CDATA_ID, rc) == CREATURE_ID_PERFORMAID_BITCHIACK | cdata(CDATA_ID, rc) == CREATURE_ID_FOX_BROTHER | cdata(CDATA_ID, rc) == CREATURE_ID_SILVER_FOX_BROTHER | cdata(CDATA_ID, rc) == CREATURE_ID_FOX | cdata(CDATA_ID, rc) == CREATURE_ID_INCONEET | cdata(CDATA_ID, rc) == CREATURE_ID_KOBOLINA | cdata(CDATA_ID, rc) == CREATURE_ID_AIME_THE_STORY_TELLER | cdata(CDATA_ID, rc) == CREATURE_ID_STRAY_SOUL | cdata(CDATA_ID, rc) == 1043 ) {
++	if ( cdata(CDATA_ID, rc) == CREATURE_ID_IMP | cdata(CDATA_ID, rc) == CREATURE_ID_NETHER_IMP | cdata(CDATA_ID, rc) == CREATURE_ID_CHAOS_IMP | cdata(CDATA_ID, rc) == CREATURE_ID_DEMONS_COMMANDER | cdata(CDATA_ID, rc) == CREATURE_ID_CHILD_WEL | cdata(CDATA_ID, rc) == CREATURE_ID_MIZUKI_THE_ABYSS_PRINCESS | cdata(CDATA_ID, rc) == CREATURE_ID_TOWN_CHILD | cdata(CDATA_ID, rc) == CREATURE_ID_NOBLE_CHILD | cdata(CDATA_ID, rc) == CREATURE_ID_LITTLE_SISTER | cdata(CDATA_ID, rc) == CREATURE_ID_CAPYBARA | cdata(CDATA_ID, rc) == CREATURE_ID_THOUSAND_HEDGEHOG | cdata(CDATA_ID, rc) == CREATURE_ID_SHOEBILL | cdata(CDATA_ID, rc) == CREATURE_ID_NERES_THE_AMNESIAC | cdata(CDATA_ID, rc) == CREATURE_ID_RYUTYE_THE_AMNESIAC | cdata(CDATA_ID, rc) == CREATURE_ID_BOYCIANA | cdata(CDATA_ID, rc) == CREATURE_ID_HALLOWEEN_CHILDREN | cdata(CDATA_ID, rc) == CREATURE_ID_HALLOWEEN_CHILDREN2 | cdata(CDATA_ID, rc) == CREATURE_ID_WANDERING_PENGUIN | cdata(CDATA_ID, rc) == CREATURE_ID_ARIBEL_THE_WHITE_ARMS | cdata(CDATA_ID, rc) == CREATURE_ID_PERFORMAID_BITCHIACK | cdata(CDATA_ID, rc) == CREATURE_ID_FOX_BROTHER | cdata(CDATA_ID, rc) == CREATURE_ID_SILVER_FOX_BROTHER | cdata(CDATA_ID, rc) == CREATURE_ID_FOX | cdata(CDATA_ID, rc) == CREATURE_ID_INCONEET | cdata(CDATA_ID, rc) == CREATURE_ID_KOBOLINA | cdata(CDATA_ID, rc) == CREATURE_ID_AIME_THE_STORY_TELLER | cdata(CDATA_ID, rc) == CREATURE_ID_STRAY_SOUL | cdata(CDATA_ID, rc) == CREATURE_ID_IMARITUKA_THE_ZASIKI_WARAI ) {
  		cdata(CDATA_HEIGHT, rc) = rnd(30) + 110
  		cdata(CDATA_WEIGHT, rc) = rnd(10) + 25
  	}
@@ -885,7 +898,7 @@ diff -U5 --recursive ../2.05-borscht/chara.hsp ../2.06-borscht/chara.hsp
  		cdata(CDATA_WEIGHT, rc) = rnd(10) + 50
  	}
 -	if ( cdata(CDATA_ID, rc) == CREATURE_ID_ZISILION_THE_MINE_KING | cdata(CDATA_ID, rc) == CREATURE_ID_AJETALIO_THE_SEMINAR_LECTURER | cdata(CDATA_ID, rc) == CREATURE_ID_WOLF | cdata(CDATA_ID, rc) == CREATURE_ID_OLD_BUTLER | cdata(CDATA_ID, rc) == CREATURE_ID_MANSON_THE_CAREFUL_ADVENTURER ) {
-+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_ZISILION_THE_MINE_KING | cdata(CDATA_ID, rc) == CREATURE_ID_AJETALIO_THE_SEMINAR_LECTURER | cdata(CDATA_ID, rc) == CREATURE_ID_WOLF | cdata(CDATA_ID, rc) == CREATURE_ID_OLD_BUTLER | cdata(CDATA_ID, rc) == CREATURE_ID_MANSON_THE_CAREFUL_ADVENTURER | cdata(CDATA_ID, rc) == 1038 | cdata(CDATA_ID, rc) == 1039 | cdata(CDATA_ID, rc) == MAX_CREATURE_ID | cdata(CDATA_ID, rc) == 1041 ) {
++	if ( cdata(CDATA_ID, rc) == CREATURE_ID_ZISILION_THE_MINE_KING | cdata(CDATA_ID, rc) == CREATURE_ID_AJETALIO_THE_SEMINAR_LECTURER | cdata(CDATA_ID, rc) == CREATURE_ID_WOLF | cdata(CDATA_ID, rc) == CREATURE_ID_OLD_BUTLER | cdata(CDATA_ID, rc) == CREATURE_ID_MANSON_THE_CAREFUL_ADVENTURER | cdata(CDATA_ID, rc) == CREATURE_ID_WALL_HACK_CHEATAH | cdata(CDATA_ID, rc) == CREATURE_ID_AUTO_AIM_CHEATAH | cdata(CDATA_ID, rc) == CREATURE_ID_SPEED_HACK_CHEATAH | cdata(CDATA_ID, rc) == CREATURE_ID_ANOTHER_WORLD_CHEATAH ) {
  		cdata(CDATA_HEIGHT, rc) = rnd(15) + 165
  		cdata(CDATA_WEIGHT, rc) = rnd(15) + 60
  	}
@@ -898,29 +911,29 @@ diff -U5 --recursive ../2.05-borscht/chara.hsp ../2.06-borscht/chara.hsp
  		cdata(CDATA_WEIGHT, rc) = rnd(100) + 200
  	}
 -	if ( cdata(CDATA_ID, rc) == CREATURE_ID_SMALL_STONE_GOLEM | cdata(CDATA_ID, rc) == CREATURE_ID_SMALL_WOODEN_GOLEM | cdata(CDATA_ID, rc) == CREATURE_ID_SILVER_SKULL_MAJESTY | cdata(CDATA_ID, rc) == CREATURE_ID_CTHULHICK ) {
-+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_SMALL_STONE_GOLEM | cdata(CDATA_ID, rc) == CREATURE_ID_SMALL_WOODEN_GOLEM | cdata(CDATA_ID, rc) == CREATURE_ID_SILVER_SKULL_MAJESTY | cdata(CDATA_ID, rc) == CREATURE_ID_CTHULHICK | cdata(CDATA_ID, rc) == 1047 | cdata(CDATA_ID, rc) == 1048 ) {
++	if ( cdata(CDATA_ID, rc) == CREATURE_ID_SMALL_STONE_GOLEM | cdata(CDATA_ID, rc) == CREATURE_ID_SMALL_WOODEN_GOLEM | cdata(CDATA_ID, rc) == CREATURE_ID_SILVER_SKULL_MAJESTY | cdata(CDATA_ID, rc) == CREATURE_ID_CTHULHICK | cdata(CDATA_ID, rc) == CREATURE_ID_MAGIC_BEE | cdata(CDATA_ID, rc) == CREATURE_ID_YOUNG_SWALLOW ) {
  		cdata(CDATA_AGE, rc) = gdata(GDATA_YEAR)
  	}
  	if ( cdata(CDATA_ID, rc) == CREATURE_ID_CHILD_WEL | cdata(CDATA_ID, rc) == CREATURE_ID_NAIVE_KYLE | cdata(CDATA_ID, rc) == CREATURE_ID_RILIAN_THE_DOG_LOVER | cdata(CDATA_ID, rc) == CREATURE_ID_TOWN_CHILD | cdata(CDATA_ID, rc) == CREATURE_ID_NOBLE_CHILD | cdata(CDATA_ID, rc) == CREATURE_ID_LITTLE_SISTER | cdata(CDATA_ID, rc) == CREATURE_ID_HALLOWEEN_CHILDREN2 | cdata(CDATA_ID, rc) == CREATURE_ID_HALLOWEEN_CHILDREN | cdata(CDATA_ID, rc) == CREATURE_ID_GWEN_THE_INNOCENT | cdata(CDATA_ID, rc) == CREATURE_ID_GILPHEM_THE_MAGIC_STEEL | cdata(CDATA_ID, rc) == CREATURE_ID_BISQUE_DOLL | cdata(CDATA_ID, rc) == CREATURE_ID_GRYFFON_CHILD | cdata(CDATA_ID, rc) == CREATURE_ID_DESKTOP_NAVY | cdata(CDATA_ID, rc) == CREATURE_ID_DESKTOP_BIRDIE | cdata(CDATA_ID, rc) == CREATURE_ID_PALE_INVITER | cdata(CDATA_ID, rc) == CREATURE_ID_STRAY_SOUL | cdata(CDATA_ID, rc) == CREATURE_ID_CLINGHOST ) {
  		cdata(CDATA_AGE, rc) = gdata(GDATA_YEAR) - 5 - rnd(5)
  	}
 -	if ( cdata(CDATA_ID, rc) == CREATURE_ID_ARIBEL_THE_WHITE_ARMS | cdata(CDATA_ID, rc) == CREATURE_ID_RYUTYE_THE_AMNESIAC | cdata(CDATA_ID, rc) == CREATURE_ID_NERES_THE_AMNESIAC | cdata(CDATA_ID, rc) == CREATURE_ID_NEIN_THE_FLYING_WITCH | cdata(CDATA_ID, rc) == CREATURE_ID_FOX_BROTHER | cdata(CDATA_ID, rc) == CREATURE_ID_SILVER_FOX_BROTHER | cdata(CDATA_ID, rc) == CREATURE_ID_KOBOLINA ) {
-+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_ARIBEL_THE_WHITE_ARMS | cdata(CDATA_ID, rc) == CREATURE_ID_RYUTYE_THE_AMNESIAC | cdata(CDATA_ID, rc) == CREATURE_ID_NERES_THE_AMNESIAC | cdata(CDATA_ID, rc) == CREATURE_ID_NEIN_THE_FLYING_WITCH | cdata(CDATA_ID, rc) == CREATURE_ID_FOX_BROTHER | cdata(CDATA_ID, rc) == CREATURE_ID_SILVER_FOX_BROTHER | cdata(CDATA_ID, rc) == CREATURE_ID_KOBOLINA | cdata(CDATA_ID, rc) == 1043 ) {
++	if ( cdata(CDATA_ID, rc) == CREATURE_ID_ARIBEL_THE_WHITE_ARMS | cdata(CDATA_ID, rc) == CREATURE_ID_RYUTYE_THE_AMNESIAC | cdata(CDATA_ID, rc) == CREATURE_ID_NERES_THE_AMNESIAC | cdata(CDATA_ID, rc) == CREATURE_ID_NEIN_THE_FLYING_WITCH | cdata(CDATA_ID, rc) == CREATURE_ID_FOX_BROTHER | cdata(CDATA_ID, rc) == CREATURE_ID_SILVER_FOX_BROTHER | cdata(CDATA_ID, rc) == CREATURE_ID_KOBOLINA | cdata(CDATA_ID, rc) == CREATURE_ID_IMARITUKA_THE_ZASIKI_WARAI ) {
  		cdata(CDATA_AGE, rc) = gdata(GDATA_YEAR) - 10 - rnd(5)
  	}
 -	if ( cdata(CDATA_ID, rc) == CREATURE_ID_LITTLE_BOY | cdata(CDATA_ID, rc) == CREATURE_ID_S_BOY | cdata(CDATA_ID, rc) == CREATURE_ID_MONOEYE_GIRL ) {
-+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_LITTLE_BOY | cdata(CDATA_ID, rc) == CREATURE_ID_S_BOY | cdata(CDATA_ID, rc) == CREATURE_ID_MONOEYE_GIRL | cdata(CDATA_ID, rc) == 1046 ) {
++	if ( cdata(CDATA_ID, rc) == CREATURE_ID_LITTLE_BOY | cdata(CDATA_ID, rc) == CREATURE_ID_S_BOY | cdata(CDATA_ID, rc) == CREATURE_ID_MONOEYE_GIRL | cdata(CDATA_ID, rc) == CREATURE_ID_YONORNE_THE_ROOKIE_GUIDE ) {
  		cdata(CDATA_AGE, rc) = gdata(GDATA_YEAR) - 12 - rnd(5)
  	}
  	if ( cdata(CDATA_ID, rc) == CREATURE_ID_GWEN_THE_PITILESS | cdata(CDATA_ID, rc) == CREATURE_ID_EILA_THE_FUGITIVE_KUNOICHI | cdata(CDATA_ID, rc) == CREATURE_ID_NEW_CITIZEN | cdata(CDATA_ID, rc) == CREATURE_ID_FASHIONABLE_KUNOICHI | cdata(CDATA_ID, rc) == CREATURE_ID_ALCHEMIST_NAPLUS | cdata(CDATA_ID, rc) == CREATURE_ID_RECONCILED_CLEANER | cdata(CDATA_ID, rc) == CREATURE_ID_MICHES_THE_APPRENTICE | cdata(CDATA_ID, rc) == CREATURE_ID_NOEL_THE_BOMBER | cdata(CDATA_ID, rc) == CREATURE_ID_RENAI_THE_OVER_MESHERA | cdata(CDATA_ID, rc) == CREATURE_ID_RIANNA_THE_DAYDREAMER | cdata(CDATA_ID, rc) == CREATURE_ID_ALSAPIA_THE_MURDERER_MASK | cdata(CDATA_ID, rc) == CREATURE_ID_MARY_THE_FLOWER_PICKER ) {
  		cdata(CDATA_AGE, rc) = gdata(GDATA_YEAR) - 15 - rnd(5)
  	}
 -	if ( cdata(CDATA_ID, rc) == CREATURE_ID_SICKFULL_OLDER_BROTHER ) {
-+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_SICKFULL_OLDER_BROTHER | cdata(CDATA_ID, rc) == 1042 ) {
++	if ( cdata(CDATA_ID, rc) == CREATURE_ID_SICKFULL_OLDER_BROTHER | cdata(CDATA_ID, rc) == CREATURE_ID_TELHUREZA_THE_HOUSE_GUARD ) {
  		cdata(CDATA_AGE, rc) = gdata(GDATA_YEAR) - 18 - rnd(5)
  	}
 -	if ( cdata(CDATA_ID, rc) == CREATURE_ID_INQTUAL_THE_REVENGE | cdata(CDATA_ID, rc) == CREATURE_ID_REGULUS_THE_ALTERED | cdata(CDATA_ID, rc) == CREATURE_ID_FRON_THE_TOUR_PLANNER | cdata(CDATA_ID, rc) == CREATURE_ID_MARKA_THE_SILVER_BEAR | cdata(CDATA_ID, rc) == CREATURE_ID_SPIPHA_THE_DRAGON_HUNTER | cdata(CDATA_ID, rc) == CREATURE_ID_AILE_THE_ATTENDANT | cdata(CDATA_ID, rc) == CREATURE_ID_NAZUNA_THE_INSTRUCTOR | cdata(CDATA_ID, rc) == CREATURE_ID_GETUEI_THE_NINJA_MASTER | cdata(CDATA_ID, rc) == CREATURE_ID_SECURITY_OFFICER_ORVILLE | cdata(CDATA_ID, rc) == CREATURE_ID_MILIS_CAPTAIN_OF_THE_SPECIAL_FORCES | cdata(CDATA_ID, rc) == CREATURE_ID_SHENA_THE_DRAW | cdata(CDATA_ID, rc) == CREATURE_ID_SILVIA_THE_PRINCESS | cdata(CDATA_ID, rc) == CREATURE_ID_TAM_THE_CAT_HATER | cdata(CDATA_ID, rc) == CREATURE_ID_MIA_THE_CAT_FREAK | cdata(CDATA_ID, rc) == CREATURE_ID_FRAY_THE_FIGHTER_GUILDMASTER | cdata(CDATA_ID, rc) == CREATURE_ID_STRANGE_SCIENTIST | cdata(CDATA_ID, rc) == CREATURE_ID_SKOGSRA | cdata(CDATA_ID, rc) == CREATURE_ID_PART_TIME_WORKER_THE_RED_SWORD | cdata(CDATA_ID, rc) == CREATURE_ID_BUTLER | cdata(CDATA_ID, rc) == CREATURE_ID_NANCY_THE_WANDERLUST | cdata(CDATA_ID, rc) == CREATURE_ID_JENNA_THE_MYTHICAL_MANIAC | cdata(CDATA_ID, rc) == CREATURE_ID_PROVIDENCE_GAZE ) {
-+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_INQTUAL_THE_REVENGE | cdata(CDATA_ID, rc) == CREATURE_ID_REGULUS_THE_ALTERED | cdata(CDATA_ID, rc) == CREATURE_ID_FRON_THE_TOUR_PLANNER | cdata(CDATA_ID, rc) == CREATURE_ID_MARKA_THE_SILVER_BEAR | cdata(CDATA_ID, rc) == CREATURE_ID_SPIPHA_THE_DRAGON_HUNTER | cdata(CDATA_ID, rc) == CREATURE_ID_AILE_THE_ATTENDANT | cdata(CDATA_ID, rc) == CREATURE_ID_NAZUNA_THE_INSTRUCTOR | cdata(CDATA_ID, rc) == CREATURE_ID_GETUEI_THE_NINJA_MASTER | cdata(CDATA_ID, rc) == CREATURE_ID_SECURITY_OFFICER_ORVILLE | cdata(CDATA_ID, rc) == CREATURE_ID_MILIS_CAPTAIN_OF_THE_SPECIAL_FORCES | cdata(CDATA_ID, rc) == CREATURE_ID_SHENA_THE_DRAW | cdata(CDATA_ID, rc) == CREATURE_ID_SILVIA_THE_PRINCESS | cdata(CDATA_ID, rc) == CREATURE_ID_TAM_THE_CAT_HATER | cdata(CDATA_ID, rc) == CREATURE_ID_MIA_THE_CAT_FREAK | cdata(CDATA_ID, rc) == CREATURE_ID_FRAY_THE_FIGHTER_GUILDMASTER | cdata(CDATA_ID, rc) == CREATURE_ID_STRANGE_SCIENTIST | cdata(CDATA_ID, rc) == CREATURE_ID_SKOGSRA | cdata(CDATA_ID, rc) == CREATURE_ID_PART_TIME_WORKER_THE_RED_SWORD | cdata(CDATA_ID, rc) == CREATURE_ID_BUTLER | cdata(CDATA_ID, rc) == CREATURE_ID_NANCY_THE_WANDERLUST | cdata(CDATA_ID, rc) == CREATURE_ID_JENNA_THE_MYTHICAL_MANIAC | cdata(CDATA_ID, rc) == CREATURE_ID_PROVIDENCE_GAZE | cdata(CDATA_ID, rc) == 1044 ) {
++	if ( cdata(CDATA_ID, rc) == CREATURE_ID_INQTUAL_THE_REVENGE | cdata(CDATA_ID, rc) == CREATURE_ID_REGULUS_THE_ALTERED | cdata(CDATA_ID, rc) == CREATURE_ID_FRON_THE_TOUR_PLANNER | cdata(CDATA_ID, rc) == CREATURE_ID_MARKA_THE_SILVER_BEAR | cdata(CDATA_ID, rc) == CREATURE_ID_SPIPHA_THE_DRAGON_HUNTER | cdata(CDATA_ID, rc) == CREATURE_ID_AILE_THE_ATTENDANT | cdata(CDATA_ID, rc) == CREATURE_ID_NAZUNA_THE_INSTRUCTOR | cdata(CDATA_ID, rc) == CREATURE_ID_GETUEI_THE_NINJA_MASTER | cdata(CDATA_ID, rc) == CREATURE_ID_SECURITY_OFFICER_ORVILLE | cdata(CDATA_ID, rc) == CREATURE_ID_MILIS_CAPTAIN_OF_THE_SPECIAL_FORCES | cdata(CDATA_ID, rc) == CREATURE_ID_SHENA_THE_DRAW | cdata(CDATA_ID, rc) == CREATURE_ID_SILVIA_THE_PRINCESS | cdata(CDATA_ID, rc) == CREATURE_ID_TAM_THE_CAT_HATER | cdata(CDATA_ID, rc) == CREATURE_ID_MIA_THE_CAT_FREAK | cdata(CDATA_ID, rc) == CREATURE_ID_FRAY_THE_FIGHTER_GUILDMASTER | cdata(CDATA_ID, rc) == CREATURE_ID_STRANGE_SCIENTIST | cdata(CDATA_ID, rc) == CREATURE_ID_SKOGSRA | cdata(CDATA_ID, rc) == CREATURE_ID_PART_TIME_WORKER_THE_RED_SWORD | cdata(CDATA_ID, rc) == CREATURE_ID_BUTLER | cdata(CDATA_ID, rc) == CREATURE_ID_NANCY_THE_WANDERLUST | cdata(CDATA_ID, rc) == CREATURE_ID_JENNA_THE_MYTHICAL_MANIAC | cdata(CDATA_ID, rc) == CREATURE_ID_PROVIDENCE_GAZE | cdata(CDATA_ID, rc) == CREATURE_ID_OXODE_THE_QUEEN_BEE ) {
  		cdata(CDATA_AGE, rc) = gdata(GDATA_YEAR) - 20 - rnd(8)
  	}
  	if ( cdata(CDATA_ID, rc) == CREATURE_ID_AIKAGE_THE_SHINOBI_MASK | cdata(CDATA_ID, rc) == CREATURE_ID_BLACK_GAUNTLET_LEOLD | cdata(CDATA_ID, rc) == CREATURE_ID_LEAD_DEVELOPER_DR_GAVELA | cdata(CDATA_ID, rc) == CREATURE_ID_ARMA_THE_TOUR_GUIDE | cdata(CDATA_ID, rc) == CREATURE_ID_MURDER_KNIGHT | cdata(CDATA_ID, rc) == CREATURE_ID_MEFAN_THE_BARD | cdata(CDATA_ID, rc) == CREATURE_ID_RENTON_THE_SUFFERING_WIZARD | cdata(CDATA_ID, rc) == CREATURE_ID_MARKS_THE_GREAT_THIEF | cdata(CDATA_ID, rc) == CREATURE_ID_SIN_THE_THIEF_GUILDMASTER | cdata(CDATA_ID, rc) == CREATURE_ID_BETHEL_THE_WHITE_HAWK | cdata(CDATA_ID, rc) == CREATURE_ID_WHOM_DWELL_IN_THE_VANITY | cdata(CDATA_ID, rc) == CREATURE_ID_LOYTER_THE_CRIMSON_OF_ZANAN | cdata(CDATA_ID, rc) == CREATURE_ID_MAILE_THE_MARIONETTE_SHAMAN | cdata(CDATA_ID, rc) == CREATURE_ID_CRAY_THE_CURIOUS_ADVENTURER ) {
@@ -1022,7 +1035,7 @@ diff -U5 --recursive ../2.05-borscht/chara.hsp ../2.06-borscht/chara.hsp
  	}
 diff -U5 --recursive ../2.05-borscht/chara_func.hsp ../2.06-borscht/chara_func.hsp
 --- ../2.05-borscht/chara_func.hsp	2021-08-15 17:43:01.584537600 -0700
-+++ ../2.06-borscht/chara_func.hsp	2021-08-15 17:43:08.025144000 -0700
++++ ../2.06-borscht/chara_func.hsp	2021-08-15 18:12:32.997297500 -0700
 @@ -17,12 +17,12 @@
  			cdata(CDATA_ACT_HEAL, fixaiact_arg1) = 690
  		}
@@ -1584,7 +1597,7 @@ diff -U5 --recursive ../2.05-borscht/chara_func.hsp ../2.06-borscht/chara_func.h
  							if ( cdata(CDATA_ID, dmghp_charid) == CREATURE_ID_ITZPALT ) {
  								evadd EVENT_GOD_INSIDE_ITZPALT, cdata(CDATA_X, dmghp_charid), cdata(CDATA_Y, dmghp_charid)
  							}
-+							if ( cdata(CDATA_ID, dmghp_charid) == 1043 ) {
++							if ( cdata(CDATA_ID, dmghp_charid) == CREATURE_ID_IMARITUKA_THE_ZASIKI_WARAI ) {
 +								skillmod SKILL_ATTR_LUC, CHARA_PLAYER, (-1000) * 51
 +							}
  							if ( cdata(CDATA_ID, dmghp_charid) == CREATURE_ID_TEZCATLIPOCA ) {
@@ -1689,7 +1702,7 @@ diff -U5 --recursive ../2.05-borscht/chara_func.hsp ../2.06-borscht/chara_func.h
  
 diff -U5 --recursive ../2.05-borscht/chat.hsp ../2.06-borscht/chat.hsp
 --- ../2.05-borscht/chat.hsp	2021-08-15 17:43:02.209897700 -0700
-+++ ../2.06-borscht/chat.hsp	2021-08-15 17:43:08.758328400 -0700
++++ ../2.06-borscht/chat.hsp	2021-08-15 18:12:33.626280200 -0700
 @@ -1274,10 +1274,208 @@
  			}
  		}
@@ -1698,7 +1711,7 @@ diff -U5 --recursive ../2.05-borscht/chat.hsp ../2.06-borscht/chat.hsp
  	}
 +	if ( _switch_val == 2007 | _switch_sw ) {
 +		_switch_sw = 0
-+		if ( cdata(CDATA_ID, tc) == 1045 ) {
++		if ( cdata(CDATA_ID, tc) == CREATURE_ID_SCARD_THE_HAPPY_SWALLOW ) {
 +			list(0, listmax) = 0
 +			listn(0, listmax) = lang("いいよ", "Welcome!")
 +			listmax++
@@ -1726,7 +1739,7 @@ diff -U5 --recursive ../2.05-borscht/chat.hsp ../2.06-borscht/chat.hsp
 +				}
 +				repeat 5
 +					flt
-+					characreate -1, 1048, cdata(CDATA_X, tc), cdata(CDATA_Y, tc)
++					characreate -1, CREATURE_ID_YOUNG_SWALLOW, cdata(CDATA_X, tc), cdata(CDATA_Y, tc)
 +				loop
 +			}
 +			else {
@@ -1747,7 +1760,7 @@ diff -U5 --recursive ../2.05-borscht/chat.hsp ../2.06-borscht/chat.hsp
 +				goto *chat_event_SWEND1
 +			}
 +		}
-+		if ( cdata(CDATA_ID, tc) == 1044 ) {
++		if ( cdata(CDATA_ID, tc) == CREATURE_ID_OXODE_THE_QUEEN_BEE ) {
 +			list(0, listmax) = 0
 +			listn(0, listmax) = lang("いいね", "Welcome!")
 +			listmax++
@@ -1775,7 +1788,7 @@ diff -U5 --recursive ../2.05-borscht/chat.hsp ../2.06-borscht/chat.hsp
 +				}
 +				repeat 3
 +					flt
-+					characreate -1, 1047, cdata(CDATA_X, tc), cdata(CDATA_Y, tc)
++					characreate -1, CREATURE_ID_MAGIC_BEE, cdata(CDATA_X, tc), cdata(CDATA_Y, tc)
 +					cbitmod CHARA_BIT_GUEST, rc, TRUE
 +				loop
 +			}
@@ -1797,7 +1810,7 @@ diff -U5 --recursive ../2.05-borscht/chat.hsp ../2.06-borscht/chat.hsp
 +				goto *chat_event_SWEND1
 +			}
 +		}
-+		if ( cdata(CDATA_ID, tc) == 1043 ) {
++		if ( cdata(CDATA_ID, tc) == CREATURE_ID_IMARITUKA_THE_ZASIKI_WARAI ) {
 +			list(0, listmax) = 0
 +			listn(0, listmax) = lang("そんなぁ", "Welcome!")
 +			listmax++
@@ -1843,7 +1856,7 @@ diff -U5 --recursive ../2.05-borscht/chat.hsp ../2.06-borscht/chat.hsp
 +				goto *chat_event_SWEND1
 +			}
 +		}
-+		if ( cdata(CDATA_ID, tc) == 1042 ) {
++		if ( cdata(CDATA_ID, tc) == CREATURE_ID_TELHUREZA_THE_HOUSE_GUARD ) {
 +			list(0, listmax) = 0
 +			listn(0, listmax) = lang("これからよろしく", "Welcome!")
 +			listmax++
@@ -2160,7 +2173,7 @@ diff -U5 --recursive ../2.05-borscht/chat.hsp ../2.06-borscht/chat.hsp
 +			cdata(CDATA_CAN_REVIVE, tc) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 + 24 * 30
 +			txt lang("何かが足元に転がってきた。", "Something is put on the ground.")
 +			flt
-+			itemcreate -1, 1215, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 4
++			itemcreate -1, ITEM_ID_GOLDEN_MEAD, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 4
 +			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
 +			goto *chat_end
 +		}
@@ -2236,62 +2249,62 @@ diff -U5 --recursive ../2.05-borscht/chat.hsp ../2.06-borscht/chat.hsp
 +			txt lang("何かが足元に転がってきた。", "Something is put on the ground.")
 +			if ( gdata(GDATA_MONTH) == 1 ) {
 +				flt
-+				itemcreate -1, 1227, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 3
++				itemcreate -1, ITEM_ID_M01_GARNET, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 3
 +				inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
 +			}
 +			if ( gdata(GDATA_MONTH) == 2 ) {
 +				flt
-+				itemcreate -1, 1226, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 3
++				itemcreate -1, ITEM_ID_M02_AMETHYST, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 3
 +				inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
 +			}
 +			if ( gdata(GDATA_MONTH) == 3 ) {
 +				flt
-+				itemcreate -1, 1225, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 3
++				itemcreate -1, ITEM_ID_M03_AQUAMARINE, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 3
 +				inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
 +			}
 +			if ( gdata(GDATA_MONTH) == 4 ) {
 +				flt
-+				itemcreate -1, 1224, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 3
++				itemcreate -1, ITEM_ID_M04_DIAMOND, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 3
 +				inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
 +			}
 +			if ( gdata(GDATA_MONTH) == 5 ) {
 +				flt
-+				itemcreate -1, 1223, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 3
++				itemcreate -1, ITEM_ID_M05_EMERALD, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 3
 +				inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
 +			}
 +			if ( gdata(GDATA_MONTH) == 6 ) {
 +				flt
-+				itemcreate -1, 1222, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 3
++				itemcreate -1, ITEM_ID_M06_ALEXANDRITE, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 3
 +				inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
 +			}
 +			if ( gdata(GDATA_MONTH) == 7 ) {
 +				flt
-+				itemcreate -1, 1221, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 3
++				itemcreate -1, ITEM_ID_M07_RUBY, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 3
 +				inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
 +			}
 +			if ( gdata(GDATA_MONTH) == 8 ) {
 +				flt
-+				itemcreate -1, 1220, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 3
++				itemcreate -1, ITEM_ID_M08_SARDONYX, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 3
 +				inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
 +			}
 +			if ( gdata(GDATA_MONTH) == 9 ) {
 +				flt
-+				itemcreate -1, 1219, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 3
++				itemcreate -1, ITEM_ID_M09_SAPPHIRE, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 3
 +				inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
 +			}
 +			if ( gdata(GDATA_MONTH) == 10 ) {
 +				flt
-+				itemcreate -1, 1218, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 3
++				itemcreate -1, ITEM_ID_M10_OPAL, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 3
 +				inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
 +			}
 +			if ( gdata(GDATA_MONTH) == 11 ) {
 +				flt
-+				itemcreate -1, 1217, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 3
++				itemcreate -1, ITEM_ID_M11_TOPAZ, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 3
 +				inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
 +			}
 +			if ( gdata(GDATA_MONTH) == 12 ) {
 +				flt
-+				itemcreate -1, 1216, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 3
++				itemcreate -1, ITEM_ID_M12_LAPIS_LAZULI, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 3
 +				inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
 +			}
 +			goto *chat_end
@@ -2341,7 +2354,7 @@ diff -U5 --recursive ../2.05-borscht/chat.hsp ../2.06-borscht/chat.hsp
  		hometc = stat
  		txt lang(cdatan(CDATAN_NAME, hometc) + "を追い出した。", cdatan(CDATAN_NAME, hometc) + " " + is(tc) + " moved to the location.")
  		snd SOUNDLIST_BASH1
-+		if ( cdata(CDATA_ID, hometc) == 1043 ) {
++		if ( cdata(CDATA_ID, hometc) == CREATURE_ID_IMARITUKA_THE_ZASIKI_WARAI ) {
 +			skillmod SKILL_ATTR_LUC, CHARA_PLAYER, (-1000) * 51
 +		}
  		chara_vanquish hometc
@@ -2495,7 +2508,7 @@ diff -U5 --recursive ../2.05-borscht/chat.hsp ../2.06-borscht/chat.hsp
  
 diff -U5 --recursive ../2.05-borscht/chips.hsp ../2.06-borscht/chips.hsp
 --- ../2.05-borscht/chips.hsp	2021-08-15 17:43:02.292575400 -0700
-+++ ../2.06-borscht/chips.hsp	2021-08-15 17:43:08.827658400 -0700
++++ ../2.06-borscht/chips.hsp	2021-08-15 18:12:33.672567300 -0700
 @@ -1467,10 +1467,12 @@
  	chipc(CHIPC_HEIGHT, xy2pic(17, 31)) = inf_tiles * 2, inf_tiles + 16
  	chipc(CHIPC_HEIGHT, xy2pic(18, 31)) = inf_tiles * 2, inf_tiles + 16
@@ -2511,7 +2524,7 @@ diff -U5 --recursive ../2.05-borscht/chips.hsp ../2.06-borscht/chips.hsp
  		deco(0, 4 + cnt * 16) = 1, 0
 diff -U5 --recursive ../2.05-borscht/command.hsp ../2.06-borscht/command.hsp
 --- ../2.05-borscht/command.hsp	2021-08-15 17:43:02.504323200 -0700
-+++ ../2.06-borscht/command.hsp	2021-08-15 17:43:09.014351100 -0700
++++ ../2.06-borscht/command.hsp	2021-08-15 18:12:33.884326900 -0700
 @@ -52,12 +52,12 @@
  	}
  	else {
@@ -2595,7 +2608,7 @@ diff -U5 --recursive ../2.05-borscht/command.hsp ../2.06-borscht/command.hsp
  			goto *pc_turn
  		}
 -		goto *label_5448
-+		goto *label_5478
++		goto *com_spell
  	}
  	goto *pc_turn
  
@@ -2608,7 +2621,7 @@ diff -U5 --recursive ../2.05-borscht/command.hsp ../2.06-borscht/command.hsp
  				if ( curmenu == 0 ) {
  					snd SOUNDLIST_SPELL
 -					goto *label_5450
-+					goto *label_5480
++					goto *com_spell_loop
  				}
  				if ( curmenu == 1 ) {
  					snd SOUNDLIST_SKILL
@@ -2621,7 +2634,7 @@ diff -U5 --recursive ../2.05-borscht/command.hsp ../2.06-borscht/command.hsp
  				if ( curmenu == 0 ) {
  					snd SOUNDLIST_SPELL
 -					goto *label_5450
-+					goto *label_5480
++					goto *com_spell_loop
  				}
  				if ( curmenu == 1 ) {
  					snd SOUNDLIST_SKILL
@@ -2678,14 +2691,59 @@ diff -U5 --recursive ../2.05-borscht/command.hsp ../2.06-borscht/command.hsp
  		if ( gdata(GDATA_FLAG_SUB_DOG) >= 1000 ) {
  			if ( cbit(CHARA_BIT_GUARD_TEMP, tc) ) {
  				cbitmod CHARA_BIT_GUARD_TEMP, tc, FALSE
-@@ -6885,11 +6929,11 @@
+@@ -6815,11 +6859,11 @@
+ 		}
+ 	loop
+ 
+ *com_book_loop_pgchg
+ 	if ( 1 == 0 ) {
+-		goto *com_spellcast
++		goto *com_spellbook
+ 	}
+ 	redraw 1
+ 	await cfg_wait1
+ 	key_check
+ 	cursor_check
+@@ -6841,13 +6885,13 @@
+ 		gosub *screen_draw
+ 		return
+ 	}
+ 	goto *com_book_loop_pgchg
+ 
+-*com_spellcast
++*com_spellbook
+ 
+-*com_spell
++*com_spellbook_loop_pgchk
+ 	listmax = 0
+ 	page = 0
+ 	pagesize = 16
+ 	cs = 0
+ 	cc = CHARA_PLAYER
+@@ -6869,11 +6913,11 @@
+ 	pos 960, 96
+ 	picload exedir + "graphic\\deco_spell.bmp", 1
+ 	gsel BUFFER_SCREEN
+ 	windowshadow = 1
+ 
+-*com_spell_loop_pgchk
++*com_spellbook_loop
+ 	redraw 0
+ 	cs_bk = -1
+ 	pagemax = (listmax - 1) / pagesize
+ 	if ( page < 0 ) {
+ 		page = pagemax
+@@ -6883,13 +6927,13 @@
+ 			page = 0
+ 		}
  	}
  	drawmenu 1
  
- *com_spell_loop
+-*com_spell_loop
++*com_spellcast
  	if ( 1 == 0 ) {
 -		goto *label_5448
-+		goto *label_5478
++		goto *com_spell_loop_pgchk
  	}
  	redraw 0
  	s = lang("魔法書の作成", "Spellbook make"), strhint2 + strhint3 + strhint7 + strhint8
@@ -2698,20 +2756,42 @@ diff -U5 --recursive ../2.05-borscht/command.hsp ../2.06-borscht/command.hsp
  				if ( curmenu == 0 ) {
  					snd SOUNDLIST_SPELL
 -					goto *label_5450
-+					goto *label_5480
++					goto *com_spell_loop
  				}
  				if ( curmenu == 1 ) {
  					snd SOUNDLIST_SKILL
  					goto *com_applySkill
  				}
-@@ -7145,19 +7189,19 @@
+@@ -7128,36 +7172,38 @@
+ 	}
+ 	if ( key == key_pageup ) {
+ 		if ( pagemax != 0 ) {
+ 			snd SOUNDLIST_POP1
+ 			page++
+-			goto *com_spell_loop_pgchk
++			goto *com_spellbook_loop
+ 		}
+ 	}
+ 	if ( key == key_pagedown ) {
+ 		if ( pagemax != 0 ) {
+ 			snd SOUNDLIST_POP1
+ 			page--
+-			goto *com_spell_loop_pgchk
++			goto *com_spellbook_loop
+ 		}
+ 	}
+ 	if ( key == key_cancel ) {
+ 		gosub *screen_draw
  		efid = -1
  		return
  	}
- 	goto *com_spell_loop
+-	goto *com_spell_loop
++	goto *com_spellcast
++
++*com_spell
  
 -*label_5448
-+*label_5478
++*com_spell_loop_pgchk
  	tc = cc
  	gosub *cast
  	if ( stat == 0 ) {
@@ -2720,13 +2800,13 @@ diff -U5 --recursive ../2.05-borscht/command.hsp ../2.06-borscht/command.hsp
  	goto *turn_end
  
 -*label_5450
-+*label_5480
++*com_spell_loop
  	listmax = 0
  	page = 0
  	pagesize = 16
  	cs = 0
  	cc = CHARA_PLAYER
-@@ -7179,11 +7223,11 @@
+@@ -7179,11 +7225,11 @@
  	pos 960, 96
  	picload exedir + "graphic\\deco_spell.bmp", 1
  	gsel BUFFER_SCREEN
@@ -2739,7 +2819,7 @@ diff -U5 --recursive ../2.05-borscht/command.hsp ../2.06-borscht/command.hsp
  	pagemax = (listmax - 1) / pagesize
  	if ( page < 0 ) {
  		page = pagemax
-@@ -7193,11 +7237,11 @@
+@@ -7193,11 +7239,11 @@
  			page = 0
  		}
  	}
@@ -2752,14 +2832,14 @@ diff -U5 --recursive ../2.05-borscht/command.hsp ../2.06-borscht/command.hsp
  	}
  	redraw 0
  	s = lang("魔法の詠唱", "Spell"), strhint2 + strhint3 + strhint7 + strhint8
-@@ -7275,51 +7319,51 @@
+@@ -7275,51 +7321,51 @@
  		}
  	loop
  	if ( p != (-1) ) {
  		menucycle = 0
  		efid = p
 -		goto *label_5448
-+		goto *label_5478
++		goto *com_spell
  	}
  	if ( key == "sc" ) {
  		snd SOUNDLIST_OK1
@@ -2785,14 +2865,14 @@ diff -U5 --recursive ../2.05-borscht/command.hsp ../2.06-borscht/command.hsp
  		p = list(0, pagesize * page + cs)
  		if ( p <= 0 ) {
 -			goto *label_5450
-+			goto *label_5480
++			goto *com_spell_loop
  		}
  		snd SOUNDLIST_LOCKED1
  		txtef COLOR_YELLOW
  		txt lang("【非表示：" + skillname(p) + "】", "[Seal :" + skillname(p) + "]")
  		spells(p - 400) = 2
 -		goto *label_5450
-+		goto *label_5480
++		goto *com_spell_loop
  	}
  	if ( key == key_msglog ) {
  		snd SOUNDLIST_CHEST1
@@ -2804,26 +2884,26 @@ diff -U5 --recursive ../2.05-borscht/command.hsp ../2.06-borscht/command.hsp
  			}
  		loop
 -		goto *label_5450
-+		goto *label_5480
++		goto *com_spell_loop
  	}
  	if ( menucycle == 1 ) {
  		if ( key == key_next | key == key_prev ) {
  			p = curmenu
  			if ( key == key_next ) {
-@@ -7338,11 +7382,11 @@
+@@ -7338,11 +7384,11 @@
  			if ( p != curmenu ) {
  				screenupdate = -1
  				gosub *screen_draw
  				if ( curmenu == 0 ) {
  					snd SOUNDLIST_SPELL
 -					goto *label_5450
-+					goto *label_5480
++					goto *com_spell_loop
  				}
  				if ( curmenu == 1 ) {
  					snd SOUNDLIST_SKILL
  					goto *com_applySkill
  				}
-@@ -7355,25 +7399,25 @@
+@@ -7355,25 +7401,25 @@
  	}
  	if ( key == key_pageup ) {
  		if ( pagemax != 0 ) {
@@ -2852,7 +2932,7 @@ diff -U5 --recursive ../2.05-borscht/command.hsp ../2.06-borscht/command.hsp
  	s = ""
  	if ( sdataref(SKILL_DATAREF_TYPE, i) / 1000 == 1 ) {
  		p = sdataref(SKILL_DATAREF_TYPE, i) \ 1000
-@@ -9413,11 +9457,11 @@
+@@ -9413,11 +9459,11 @@
  	await 1000
  	p = 0
  
@@ -2865,7 +2945,7 @@ diff -U5 --recursive ../2.05-borscht/command.hsp ../2.06-borscht/command.hsp
  	getkey p, 13
  	if ( p ) {
  		snd SOUNDLIST_PORT
-@@ -9479,11 +9523,11 @@
+@@ -9479,11 +9525,11 @@
  	await cfg_wait1
  	key_check
  	cursor_check
@@ -2878,7 +2958,7 @@ diff -U5 --recursive ../2.05-borscht/command.hsp ../2.06-borscht/command.hsp
  
  *com_item_mark_adjust
  	bkiteml = cdata(CDATA_PRECIOUS_ALLY, tc)
-@@ -9497,11 +9541,11 @@
+@@ -9497,11 +9543,11 @@
  	await 1000
  	p = 0
  
@@ -2891,7 +2971,7 @@ diff -U5 --recursive ../2.05-borscht/command.hsp ../2.06-borscht/command.hsp
  	getkey p, 13
  	if ( p ) {
  		snd SOUNDLIST_PORT
-@@ -9565,11 +9609,11 @@
+@@ -9565,11 +9611,11 @@
  	await cfg_wait1
  	key_check
  	cursor_check
@@ -2904,7 +2984,7 @@ diff -U5 --recursive ../2.05-borscht/command.hsp ../2.06-borscht/command.hsp
  
  *com_tag_team
  	gosub *screen_draw
-@@ -10523,16 +10567,18 @@
+@@ -10523,16 +10569,18 @@
  	gcopy BUFFER_INF, 288 + 10 * 48, 48, 48, 48
  	pos wx + ww - 106, wy
  	gcopy BUFFER_INF, 960, 96, 96, 120
@@ -2924,7 +3004,7 @@ diff -U5 --recursive ../2.05-borscht/command.hsp ../2.06-borscht/command.hsp
  	gmode 2
  	keyrange = 0
  	f = 0
-@@ -11804,20 +11850,37 @@
+@@ -11804,20 +11852,37 @@
  	}
  	if ( invctrl == INVCTRL_ALLYGET ) {
  		s = ""
@@ -2963,75 +3043,75 @@ diff -U5 --recursive ../2.05-borscht/command.hsp ../2.06-borscht/command.hsp
  		x = wx + 40
  		y = wy + wh - 65 - wh \ 8
  		pos x, y
-@@ -12393,10 +12456,81 @@
+@@ -12393,10 +12458,81 @@
  				else {
  					txt lang("「友情、ねぇ…」", cnvtalk("Hmm..."))
  				}
  				goto *com_inventory
  			}
-+			if ( inv(INV_ITEM_ID, ci) <= 1227 & inv(INV_ITEM_ID, ci) >= 1216 ) {
++			if ( inv(INV_ITEM_ID, ci) <= ITEM_ID_M01_GARNET & inv(INV_ITEM_ID, ci) >= ITEM_ID_M12_LAPIS_LAZULI ) {
 +				snd SOUNDLIST_EQUIP1
 +				txt lang("あなたは" + name(tc) + "に" + itemname(ci, 1) + "を渡した。", "You give " + name(tc) + " " + itemname(ci, 1) + ".")
 +				txtvalid = 0
 +				txt lang("「綺麗" + _dana(3) + "…」", cnvtalk("Beautiful..."))
 +				modimp tc, 40
 +				cdata(CDATA_EMO_ICON, tc) = 6 + 100 * 3
-+				if ( inv(INV_ITEM_ID, ci) == 1227 ) {
++				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_M01_GARNET ) {
 +					if ( cdata(CDATA_JOIN_DATE_MONTH, tc) == 1 ) {
 +						modimp tc, 20
 +					}
 +				}
-+				if ( inv(INV_ITEM_ID, ci) == 1226 ) {
++				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_M02_AMETHYST ) {
 +					if ( cdata(CDATA_JOIN_DATE_MONTH, tc) == 2 ) {
 +						modimp tc, 20
 +					}
 +				}
-+				if ( inv(INV_ITEM_ID, ci) == 1225 ) {
++				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_M03_AQUAMARINE ) {
 +					if ( cdata(CDATA_JOIN_DATE_MONTH, tc) == 3 ) {
 +						modimp tc, 20
 +					}
 +				}
-+				if ( inv(INV_ITEM_ID, ci) == 1224 ) {
++				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_M04_DIAMOND ) {
 +					if ( cdata(CDATA_JOIN_DATE_MONTH, tc) == 4 ) {
 +						modimp tc, 20
 +					}
 +				}
-+				if ( inv(INV_ITEM_ID, ci) == 1223 ) {
++				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_M05_EMERALD ) {
 +					if ( cdata(CDATA_JOIN_DATE_MONTH, tc) == 5 ) {
 +						modimp tc, 20
 +					}
 +				}
-+				if ( inv(INV_ITEM_ID, ci) == 1222 ) {
++				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_M06_ALEXANDRITE ) {
 +					if ( cdata(CDATA_JOIN_DATE_MONTH, tc) == 6 ) {
 +						modimp tc, 20
 +					}
 +				}
-+				if ( inv(INV_ITEM_ID, ci) == 1221 ) {
++				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_M07_RUBY ) {
 +					if ( cdata(CDATA_JOIN_DATE_MONTH, tc) == 7 ) {
 +						modimp tc, 20
 +					}
 +				}
-+				if ( inv(INV_ITEM_ID, ci) == 1220 ) {
++				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_M08_SARDONYX ) {
 +					if ( cdata(CDATA_JOIN_DATE_MONTH, tc) == 8 ) {
 +						modimp tc, 20
 +					}
 +				}
-+				if ( inv(INV_ITEM_ID, ci) == 1219 ) {
++				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_M09_SAPPHIRE ) {
 +					if ( cdata(CDATA_JOIN_DATE_MONTH, tc) == 9 ) {
 +						modimp tc, 20
 +					}
 +				}
-+				if ( inv(INV_ITEM_ID, ci) == 1218 ) {
++				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_M10_OPAL ) {
 +					if ( cdata(CDATA_JOIN_DATE_MONTH, tc) == 10 ) {
 +						modimp tc, 20
 +					}
 +				}
-+				if ( inv(INV_ITEM_ID, ci) == 1217 ) {
++				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_M11_TOPAZ ) {
 +					if ( cdata(CDATA_JOIN_DATE_MONTH, tc) == 11 ) {
 +						modimp tc, 20
 +					}
 +				}
-+				if ( inv(INV_ITEM_ID, ci) == 1216 ) {
++				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_M12_LAPIS_LAZULI ) {
 +					if ( cdata(CDATA_JOIN_DATE_MONTH, tc) == 12 ) {
 +						modimp tc, 20
 +					}
@@ -3045,7 +3125,7 @@ diff -U5 --recursive ../2.05-borscht/command.hsp ../2.06-borscht/command.hsp
  				txt lang("あなたは" + name(tc) + "に" + itemname(ci, 1) + "を渡した。", "You give " + name(tc) + " " + itemname(ci, 1) + ".")
  				inv(INV_ITEM_NUM, ci)--
  				gosub *calcBurdenPc
-@@ -14751,11 +14885,11 @@
+@@ -14751,11 +14887,11 @@
  	gosub *db_class
  	buff = ""
  	notesel buff
@@ -3058,9 +3138,21 @@ diff -U5 --recursive ../2.05-borscht/command.hsp ../2.06-borscht/command.hsp
  	noteadd ""
  	noteadd fixtxt("種族       : " + racename, 30) + fixtxt("信仰      : " + godname(cdata(CDATA_GOD, CHARA_PLAYER)), 32)
  	noteadd fixtxt("職業       : " + classname, 30) + fixtxt("所属      : " + guildname(), 32)
+@@ -15047,10 +15183,11 @@
+ 
+ 
+ 
+ 
+ 
++
+ 
+ 
+ 
+ 
+ 
 diff -U5 --recursive ../2.05-borscht/db_card.hsp ../2.06-borscht/db_card.hsp
 --- ../2.05-borscht/db_card.hsp	2021-08-15 17:43:02.786512500 -0700
-+++ ../2.06-borscht/db_card.hsp	2021-08-15 17:43:09.340514700 -0700
++++ ../2.06-borscht/db_card.hsp	2021-08-15 18:12:34.344845000 -0700
 @@ -1,6 +1,149 @@
  *db_card
 +	if ( dbid == 1048 ) {
@@ -3223,7 +3315,7 @@ diff -U5 --recursive ../2.05-borscht/db_card.hsp ../2.06-borscht/db_card.hsp
  
 diff -U5 --recursive ../2.05-borscht/db_creature.hsp ../2.06-borscht/db_creature.hsp
 --- ../2.05-borscht/db_creature.hsp	2021-08-15 17:43:03.780280800 -0700
-+++ ../2.06-borscht/db_creature.hsp	2021-08-15 17:43:10.345041000 -0700
++++ ../2.06-borscht/db_creature.hsp	2021-08-15 18:12:35.704404100 -0700
 @@ -2,34291 +2,34654 @@
  	if ( dbmode != DBMODE_FIND ) {
  		goto *db_creature2
@@ -45225,7 +45317,7 @@ diff -U5 --recursive ../2.05-borscht/db_creature.hsp ../2.06-borscht/db_creature
 +			return
 +		}
 +		if ( dbmode == DBMODE_SET ) {
-+			cdata(CDATA_ID, rc) = 1048
++			cdata(CDATA_ID, rc) = CREATURE_ID_YOUNG_SWALLOW
 +			if ( initlv != 0 ) {
 +				cdata(CDATA_LEVEL, rc) = initlv
 +			}
@@ -45338,7 +45430,7 @@ diff -U5 --recursive ../2.05-borscht/db_creature.hsp ../2.06-borscht/db_creature
 +			return
 +		}
 +		if ( dbmode == DBMODE_SET ) {
-+			cdata(CDATA_ID, rc) = 1047
++			cdata(CDATA_ID, rc) = CREATURE_ID_MAGIC_BEE
 +			if ( initlv != 0 ) {
 +				cdata(CDATA_LEVEL, rc) = initlv
 +			}
@@ -45417,7 +45509,7 @@ diff -U5 --recursive ../2.05-borscht/db_creature.hsp ../2.06-borscht/db_creature
 +			return
 +		}
 +		if ( dbmode == DBMODE_SET ) {
-+			cdata(CDATA_ID, rc) = 1046
++			cdata(CDATA_ID, rc) = CREATURE_ID_YONORNE_THE_ROOKIE_GUIDE
 +			if ( initlv != 0 ) {
 +				cdata(CDATA_LEVEL, rc) = initlv
 +			}
@@ -45533,7 +45625,7 @@ diff -U5 --recursive ../2.05-borscht/db_creature.hsp ../2.06-borscht/db_creature
 +			return
 +		}
 +		if ( dbmode == DBMODE_SET ) {
-+			cdata(CDATA_ID, rc) = 1045
++			cdata(CDATA_ID, rc) = CREATURE_ID_SCARD_THE_HAPPY_SWALLOW
 +			if ( initlv != 0 ) {
 +				cdata(CDATA_LEVEL, rc) = initlv
 +			}
@@ -45653,7 +45745,7 @@ diff -U5 --recursive ../2.05-borscht/db_creature.hsp ../2.06-borscht/db_creature
 +			return
 +		}
 +		if ( dbmode == DBMODE_SET ) {
-+			cdata(CDATA_ID, rc) = 1044
++			cdata(CDATA_ID, rc) = CREATURE_ID_OXODE_THE_QUEEN_BEE
 +			if ( initlv != 0 ) {
 +				cdata(CDATA_LEVEL, rc) = initlv
 +			}
@@ -45773,7 +45865,7 @@ diff -U5 --recursive ../2.05-borscht/db_creature.hsp ../2.06-borscht/db_creature
 +			return
 +		}
 +		if ( dbmode == DBMODE_SET ) {
-+			cdata(CDATA_ID, rc) = 1043
++			cdata(CDATA_ID, rc) = CREATURE_ID_IMARITUKA_THE_ZASIKI_WARAI
 +			if ( initlv != 0 ) {
 +				cdata(CDATA_LEVEL, rc) = initlv
 +			}
@@ -45893,7 +45985,7 @@ diff -U5 --recursive ../2.05-borscht/db_creature.hsp ../2.06-borscht/db_creature
 +			return
 +		}
 +		if ( dbmode == DBMODE_SET ) {
-+			cdata(CDATA_ID, rc) = 1042
++			cdata(CDATA_ID, rc) = CREATURE_ID_TELHUREZA_THE_HOUSE_GUARD
 +			if ( initlv != 0 ) {
 +				cdata(CDATA_LEVEL, rc) = initlv
 +			}
@@ -46017,7 +46109,7 @@ diff -U5 --recursive ../2.05-borscht/db_creature.hsp ../2.06-borscht/db_creature
 +			return
 +		}
 +		if ( dbmode == DBMODE_SET ) {
-+			cdata(CDATA_ID, rc) = 1041
++			cdata(CDATA_ID, rc) = CREATURE_ID_ANOTHER_WORLD_CHEATAH
 +			if ( initlv != 0 ) {
 +				cdata(CDATA_LEVEL, rc) = initlv
 +			}
@@ -46140,7 +46232,7 @@ diff -U5 --recursive ../2.05-borscht/db_creature.hsp ../2.06-borscht/db_creature
 +			return
 +		}
 +		if ( dbmode == DBMODE_SET ) {
-+			cdata(CDATA_ID, rc) = MAX_CREATURE_ID
++			cdata(CDATA_ID, rc) = CREATURE_ID_SPEED_HACK_CHEATAH
 +			if ( initlv != 0 ) {
 +				cdata(CDATA_LEVEL, rc) = initlv
 +			}
@@ -46261,7 +46353,7 @@ diff -U5 --recursive ../2.05-borscht/db_creature.hsp ../2.06-borscht/db_creature
 +			return
 +		}
 +		if ( dbmode == DBMODE_SET ) {
-+			cdata(CDATA_ID, rc) = 1039
++			cdata(CDATA_ID, rc) = CREATURE_ID_AUTO_AIM_CHEATAH
 +			if ( initlv != 0 ) {
 +				cdata(CDATA_LEVEL, rc) = initlv
 +			}
@@ -46388,7 +46480,7 @@ diff -U5 --recursive ../2.05-borscht/db_creature.hsp ../2.06-borscht/db_creature
 +			return
 +		}
 +		if ( dbmode == DBMODE_SET ) {
-+			cdata(CDATA_ID, rc) = 1038
++			cdata(CDATA_ID, rc) = CREATURE_ID_WALL_HACK_CHEATAH
 +			if ( initlv != 0 ) {
 +				cdata(CDATA_LEVEL, rc) = initlv
 +			}
@@ -46443,39 +46535,34 @@ diff -U5 --recursive ../2.05-borscht/db_creature.hsp ../2.06-borscht/db_creature
  			if ( jp ) {
  				txtmore
  				txtef COLOR_SKY_BLUE
-@@ -130725,1895 +132366,1927 @@
- 		}
- 		return 0
- 	}
+@@ -130728,1892 +132369,1924 @@
  	return 0
  
--*db_setFilterCreature
--	maxnpcid = MAX_CREATURE_ID
-+*label_8710
-+	maxnpcid = 1051
+ *db_setFilterCreature
+ 	maxnpcid = MAX_CREATURE_ID
  	dim cbitorg, 30, maxnpcid
 -	filter_creature(2) = "/undead/nefia6/"
 +	filter_creature(2) = ""
 +	filter_creature(3) = ""
-+	HMMBITON cbitorg(CHARA_BIT_FLOAT / 32, 1047), CHARA_BIT_FLOAT \ 32
-+	HMMBITON cbitorg(CHARA_BIT_TEMPER / 32, 1047), CHARA_BIT_TEMPER \ 32
++	HMMBITON cbitorg(CHARA_BIT_FLOAT / 32, CREATURE_ID_MAGIC_BEE), CHARA_BIT_FLOAT \ 32
++	HMMBITON cbitorg(CHARA_BIT_TEMPER / 32, CREATURE_ID_MAGIC_BEE), CHARA_BIT_TEMPER \ 32
 +	filter_creature(4) = ""
-+	HMMBITON cbitorg(CHARA_BIT_FLOAT / 32, 1046), CHARA_BIT_FLOAT \ 32
++	HMMBITON cbitorg(CHARA_BIT_FLOAT / 32, CREATURE_ID_YONORNE_THE_ROOKIE_GUIDE), CHARA_BIT_FLOAT \ 32
 +	filter_creature(5) = ""
-+	HMMBITON cbitorg(CHARA_BIT_FLOAT / 32, 1045), CHARA_BIT_FLOAT \ 32
++	HMMBITON cbitorg(CHARA_BIT_FLOAT / 32, CREATURE_ID_SCARD_THE_HAPPY_SWALLOW), CHARA_BIT_FLOAT \ 32
 +	filter_creature(6) = ""
-+	HMMBITON cbitorg(CHARA_BIT_FLOAT / 32, 1044), CHARA_BIT_FLOAT \ 32
++	HMMBITON cbitorg(CHARA_BIT_FLOAT / 32, CREATURE_ID_OXODE_THE_QUEEN_BEE), CHARA_BIT_FLOAT \ 32
 +	filter_creature(7) = "/undead/"
-+	HMMBITON cbitorg(CHARA_BIT_FLOAT / 32, 1043), CHARA_BIT_FLOAT \ 32
++	HMMBITON cbitorg(CHARA_BIT_FLOAT / 32, CREATURE_ID_IMARITUKA_THE_ZASIKI_WARAI), CHARA_BIT_FLOAT \ 32
 +	filter_creature(8) = "/dragon/"
-+	HMMBITON cbitorg(CHARA_BIT_RES_FEAR / 32, 1042), CHARA_BIT_RES_FEAR \ 32
++	HMMBITON cbitorg(CHARA_BIT_RES_FEAR / 32, CREATURE_ID_TELHUREZA_THE_HOUSE_GUARD), CHARA_BIT_RES_FEAR \ 32
 +	filter_creature(9) = "/nefia6/"
-+	HMMBITON cbitorg(CHARA_BIT_RES_CONFUSE / 32, 1041), CHARA_BIT_RES_CONFUSE \ 32
++	HMMBITON cbitorg(CHARA_BIT_RES_CONFUSE / 32, CREATURE_ID_ANOTHER_WORLD_CHEATAH), CHARA_BIT_RES_CONFUSE \ 32
 +	filter_creature(10) = "/nefia6/"
-+	HMMBITON cbitorg(CHARA_BIT_RES_PARALYZE / 32, MAX_CREATURE_ID), CHARA_BIT_RES_PARALYZE \ 32
++	HMMBITON cbitorg(CHARA_BIT_RES_PARALYZE / 32, CREATURE_ID_SPEED_HACK_CHEATAH), CHARA_BIT_RES_PARALYZE \ 32
 +	filter_creature(11) = "/nefia6/"
 +	filter_creature(12) = "/nefia6/"
-+	HMMBITON cbitorg(CHARA_BIT_FLOAT / 32, 1038), CHARA_BIT_FLOAT \ 32
++	HMMBITON cbitorg(CHARA_BIT_FLOAT / 32, CREATURE_ID_WALL_HACK_CHEATAH), CHARA_BIT_FLOAT \ 32
 +	filter_creature(13) = "/undead/nefia6/"
  	HMMBITON cbitorg(CHARA_BIT_FLOAT / 32, CREATURE_ID_HELLABYRINTH_RULER), CHARA_BIT_FLOAT \ 32
  	HMMBITON cbitorg(CHARA_BIT_RES_FEAR / 32, CREATURE_ID_HELLABYRINTH_RULER), CHARA_BIT_RES_FEAR \ 32
@@ -49388,7 +49475,7 @@ diff -U5 --recursive ../2.05-borscht/db_creature.hsp ../2.06-borscht/db_creature
  
 diff -U5 --recursive ../2.05-borscht/db_item.hsp ../2.06-borscht/db_item.hsp
 --- ../2.05-borscht/db_item.hsp	2021-08-15 17:43:05.133442600 -0700
-+++ ../2.06-borscht/db_item.hsp	2021-08-15 17:43:11.727571500 -0700
++++ ../2.06-borscht/db_item.hsp	2021-08-15 18:12:37.477839400 -0700
 @@ -1,19 +1,19 @@
  *db_item
  	if ( dbmode != DBMODE_FIND ) {
@@ -49419,7 +49506,7 @@ diff -U5 --recursive ../2.05-borscht/db_item.hsp ../2.06-borscht/db_item.hsp
  		dbtmp = 1
  		repeat filtermax
 -			if ( instr(filter_item(ITEM_ID_GOLDEN_DOLL), 0, filtern(cnt)) == (-1) ) {
-+			if ( instr(filter_item(1228), 0, filtern(cnt)) == (-1) ) {
++			if ( instr(filter_item(ITEM_ID_DYING_CICADA), 0, filtern(cnt)) == (-1) ) {
  				dbtmp = 0
  				break
  			}
@@ -49459,7 +49546,7 @@ diff -U5 --recursive ../2.05-borscht/db_item.hsp ../2.06-borscht/db_item.hsp
  		dbtmp = 1
  		repeat filtermax
 -			if ( instr(filter_item(ITEM_ID_FILTRATION_BOTTLE), 0, filtern(cnt)) == (-1) ) {
-+			if ( instr(filter_item(1227), 0, filtern(cnt)) == (-1) ) {
++			if ( instr(filter_item(ITEM_ID_M01_GARNET), 0, filtern(cnt)) == (-1) ) {
  				dbtmp = 0
  				break
  			}
@@ -49499,7 +49586,7 @@ diff -U5 --recursive ../2.05-borscht/db_item.hsp ../2.06-borscht/db_item.hsp
  		dbtmp = 1
  		repeat filtermax
 -			if ( instr(filter_item(ITEM_ID_CHAOS_FRAGMENT), 0, filtern(cnt)) == (-1) ) {
-+			if ( instr(filter_item(1226), 0, filtern(cnt)) == (-1) ) {
++			if ( instr(filter_item(ITEM_ID_M02_AMETHYST), 0, filtern(cnt)) == (-1) ) {
  				dbtmp = 0
  				break
  			}
@@ -49539,7 +49626,7 @@ diff -U5 --recursive ../2.05-borscht/db_item.hsp ../2.06-borscht/db_item.hsp
  		dbtmp = 1
  		repeat filtermax
 -			if ( instr(filter_item(ITEM_ID_REMIDO_FRAGMENT), 0, filtern(cnt)) == (-1) ) {
-+			if ( instr(filter_item(1225), 0, filtern(cnt)) == (-1) ) {
++			if ( instr(filter_item(ITEM_ID_M03_AQUAMARINE), 0, filtern(cnt)) == (-1) ) {
  				dbtmp = 0
  				break
  			}
@@ -49579,7 +49666,7 @@ diff -U5 --recursive ../2.05-borscht/db_item.hsp ../2.06-borscht/db_item.hsp
  		dbtmp = 1
  		repeat filtermax
 -			if ( instr(filter_item(ITEM_ID_LESIMAS_FRAGMENT), 0, filtern(cnt)) == (-1) ) {
-+			if ( instr(filter_item(1224), 0, filtern(cnt)) == (-1) ) {
++			if ( instr(filter_item(ITEM_ID_M04_DIAMOND), 0, filtern(cnt)) == (-1) ) {
  				dbtmp = 0
  				break
  			}
@@ -49619,7 +49706,7 @@ diff -U5 --recursive ../2.05-borscht/db_item.hsp ../2.06-borscht/db_item.hsp
  		dbtmp = 1
  		repeat filtermax
 -			if ( instr(filter_item(ITEM_ID_G_FINGER), 0, filtern(cnt)) == (-1) ) {
-+			if ( instr(filter_item(1223), 0, filtern(cnt)) == (-1) ) {
++			if ( instr(filter_item(ITEM_ID_M05_EMERALD), 0, filtern(cnt)) == (-1) ) {
  				dbtmp = 0
  				break
  			}
@@ -49659,7 +49746,7 @@ diff -U5 --recursive ../2.05-borscht/db_item.hsp ../2.06-borscht/db_item.hsp
  		dbtmp = 1
  		repeat filtermax
 -			if ( instr(filter_item(ITEM_ID_PHOTON_FAIRY), 0, filtern(cnt)) == (-1) ) {
-+			if ( instr(filter_item(1222), 0, filtern(cnt)) == (-1) ) {
++			if ( instr(filter_item(ITEM_ID_M06_ALEXANDRITE), 0, filtern(cnt)) == (-1) ) {
  				dbtmp = 0
  				break
  			}
@@ -49699,7 +49786,7 @@ diff -U5 --recursive ../2.05-borscht/db_item.hsp ../2.06-borscht/db_item.hsp
  		dbtmp = 1
  		repeat filtermax
 -			if ( instr(filter_item(ITEM_ID_CONTRADCTION), 0, filtern(cnt)) == (-1) ) {
-+			if ( instr(filter_item(1221), 0, filtern(cnt)) == (-1) ) {
++			if ( instr(filter_item(ITEM_ID_M07_RUBY), 0, filtern(cnt)) == (-1) ) {
  				dbtmp = 0
  				break
  			}
@@ -49739,7 +49826,7 @@ diff -U5 --recursive ../2.05-borscht/db_item.hsp ../2.06-borscht/db_item.hsp
  		dbtmp = 1
  		repeat filtermax
 -			if ( instr(filter_item(ITEM_ID_BIGAMY_PERMIT), 0, filtern(cnt)) == (-1) ) {
-+			if ( instr(filter_item(1220), 0, filtern(cnt)) == (-1) ) {
++			if ( instr(filter_item(ITEM_ID_M08_SARDONYX), 0, filtern(cnt)) == (-1) ) {
  				dbtmp = 0
  				break
  			}
@@ -49779,7 +49866,7 @@ diff -U5 --recursive ../2.05-borscht/db_item.hsp ../2.06-borscht/db_item.hsp
  		dbtmp = 1
  		repeat filtermax
 -			if ( instr(filter_item(ITEM_ID_FLOATING_FORTRESS_KEY), 0, filtern(cnt)) == (-1) ) {
-+			if ( instr(filter_item(1219), 0, filtern(cnt)) == (-1) ) {
++			if ( instr(filter_item(ITEM_ID_M09_SAPPHIRE), 0, filtern(cnt)) == (-1) ) {
  				dbtmp = 0
  				break
  			}
@@ -49818,7 +49905,7 @@ diff -U5 --recursive ../2.05-borscht/db_item.hsp ../2.06-borscht/db_item.hsp
  		dbtmp = 1
  		repeat filtermax
 -			if ( instr(filter_item(ITEM_ID_MEMORY_CONVERTER), 0, filtern(cnt)) == (-1) ) {
-+			if ( instr(filter_item(1218), 0, filtern(cnt)) == (-1) ) {
++			if ( instr(filter_item(ITEM_ID_M10_OPAL), 0, filtern(cnt)) == (-1) ) {
  				dbtmp = 0
  				break
  			}
@@ -49858,7 +49945,7 @@ diff -U5 --recursive ../2.05-borscht/db_item.hsp ../2.06-borscht/db_item.hsp
  		dbtmp = 1
  		repeat filtermax
 -			if ( instr(filter_item(ITEM_ID_CF_POTIOMAN), 0, filtern(cnt)) == (-1) ) {
-+			if ( instr(filter_item(1217), 0, filtern(cnt)) == (-1) ) {
++			if ( instr(filter_item(ITEM_ID_M11_TOPAZ), 0, filtern(cnt)) == (-1) ) {
  				dbtmp = 0
  				break
  			}
@@ -49898,7 +49985,7 @@ diff -U5 --recursive ../2.05-borscht/db_item.hsp ../2.06-borscht/db_item.hsp
  		dbtmp = 1
  		repeat filtermax
 -			if ( instr(filter_item(ITEM_ID_CRUSH_POTIOMAN), 0, filtern(cnt)) == (-1) ) {
-+			if ( instr(filter_item(1216), 0, filtern(cnt)) == (-1) ) {
++			if ( instr(filter_item(ITEM_ID_M12_LAPIS_LAZULI), 0, filtern(cnt)) == (-1) ) {
  				dbtmp = 0
  				break
  			}
@@ -49937,7 +50024,7 @@ diff -U5 --recursive ../2.05-borscht/db_item.hsp ../2.06-borscht/db_item.hsp
  		dbtmp = 1
  		repeat filtermax
 -			if ( instr(filter_item(ITEM_ID_BATTLE_POTIOMAN), 0, filtern(cnt)) == (-1) ) {
-+			if ( instr(filter_item(1215), 0, filtern(cnt)) == (-1) ) {
++			if ( instr(filter_item(ITEM_ID_GOLDEN_MEAD), 0, filtern(cnt)) == (-1) ) {
  				dbtmp = 0
  				break
  			}
@@ -95296,7 +95383,7 @@ diff -U5 --recursive ../2.05-borscht/db_item.hsp ../2.06-borscht/db_item.hsp
 +			inv(INV_ITEM_WEIGHT, ci) = 10
 +		}
 +		if ( dbmode == DBMODE_SET ) {
-+			inv(INV_ITEM_ID, ci) = 1228
++			inv(INV_ITEM_ID, ci) = ITEM_ID_DYING_CICADA
 +			inv(INV_ITEM_PIC, ci) = xy2pic(29, 10)
 +			reftype = FILTER_JUNK
 +			reftypeminor = (0 /*!!!@[FILTER_NOTHING @@@ FILTER_NOTHING]@!!! */)
@@ -95357,7 +95444,7 @@ diff -U5 --recursive ../2.05-borscht/db_item.hsp ../2.06-borscht/db_item.hsp
 +			inv(INV_ITEM_WEIGHT, ci) = 50
 +		}
 +		if ( dbmode == DBMODE_SET ) {
-+			inv(INV_ITEM_ID, ci) = 1227
++			inv(INV_ITEM_ID, ci) = ITEM_ID_M01_GARNET
 +			inv(INV_ITEM_PIC, ci) = xy2pic(17, 36)
 +			reftype = FILTER_ORE
 +			reftypeminor = FILTER_ORE_GEM
@@ -95426,7 +95513,7 @@ diff -U5 --recursive ../2.05-borscht/db_item.hsp ../2.06-borscht/db_item.hsp
 +			inv(INV_ITEM_WEIGHT, ci) = 50
 +		}
 +		if ( dbmode == DBMODE_SET ) {
-+			inv(INV_ITEM_ID, ci) = 1226
++			inv(INV_ITEM_ID, ci) = ITEM_ID_M02_AMETHYST
 +			inv(INV_ITEM_PIC, ci) = xy2pic(17, 36)
 +			reftype = FILTER_ORE
 +			reftypeminor = FILTER_ORE_GEM
@@ -95495,7 +95582,7 @@ diff -U5 --recursive ../2.05-borscht/db_item.hsp ../2.06-borscht/db_item.hsp
 +			inv(INV_ITEM_WEIGHT, ci) = 50
 +		}
 +		if ( dbmode == DBMODE_SET ) {
-+			inv(INV_ITEM_ID, ci) = 1225
++			inv(INV_ITEM_ID, ci) = ITEM_ID_M03_AQUAMARINE
 +			inv(INV_ITEM_PIC, ci) = xy2pic(17, 36)
 +			reftype = FILTER_ORE
 +			reftypeminor = FILTER_ORE_GEM
@@ -95564,7 +95651,7 @@ diff -U5 --recursive ../2.05-borscht/db_item.hsp ../2.06-borscht/db_item.hsp
 +			inv(INV_ITEM_WEIGHT, ci) = 50
 +		}
 +		if ( dbmode == DBMODE_SET ) {
-+			inv(INV_ITEM_ID, ci) = 1224
++			inv(INV_ITEM_ID, ci) = ITEM_ID_M04_DIAMOND
 +			inv(INV_ITEM_PIC, ci) = xy2pic(17, 36)
 +			reftype = FILTER_ORE
 +			reftypeminor = FILTER_ORE_GEM
@@ -95633,7 +95720,7 @@ diff -U5 --recursive ../2.05-borscht/db_item.hsp ../2.06-borscht/db_item.hsp
 +			inv(INV_ITEM_WEIGHT, ci) = 50
 +		}
 +		if ( dbmode == DBMODE_SET ) {
-+			inv(INV_ITEM_ID, ci) = 1223
++			inv(INV_ITEM_ID, ci) = ITEM_ID_M05_EMERALD
 +			inv(INV_ITEM_PIC, ci) = xy2pic(17, 36)
 +			reftype = FILTER_ORE
 +			reftypeminor = FILTER_ORE_GEM
@@ -95702,7 +95789,7 @@ diff -U5 --recursive ../2.05-borscht/db_item.hsp ../2.06-borscht/db_item.hsp
 +			inv(INV_ITEM_WEIGHT, ci) = 50
 +		}
 +		if ( dbmode == DBMODE_SET ) {
-+			inv(INV_ITEM_ID, ci) = 1222
++			inv(INV_ITEM_ID, ci) = ITEM_ID_M06_ALEXANDRITE
 +			inv(INV_ITEM_PIC, ci) = xy2pic(17, 36)
 +			reftype = FILTER_ORE
 +			reftypeminor = FILTER_ORE_GEM
@@ -95771,7 +95858,7 @@ diff -U5 --recursive ../2.05-borscht/db_item.hsp ../2.06-borscht/db_item.hsp
 +			inv(INV_ITEM_WEIGHT, ci) = 50
 +		}
 +		if ( dbmode == DBMODE_SET ) {
-+			inv(INV_ITEM_ID, ci) = 1221
++			inv(INV_ITEM_ID, ci) = ITEM_ID_M07_RUBY
 +			inv(INV_ITEM_PIC, ci) = xy2pic(17, 36)
 +			reftype = FILTER_ORE
 +			reftypeminor = FILTER_ORE_GEM
@@ -95840,7 +95927,7 @@ diff -U5 --recursive ../2.05-borscht/db_item.hsp ../2.06-borscht/db_item.hsp
 +			inv(INV_ITEM_WEIGHT, ci) = 50
 +		}
 +		if ( dbmode == DBMODE_SET ) {
-+			inv(INV_ITEM_ID, ci) = 1220
++			inv(INV_ITEM_ID, ci) = ITEM_ID_M08_SARDONYX
 +			inv(INV_ITEM_PIC, ci) = xy2pic(17, 36)
 +			reftype = FILTER_ORE
 +			reftypeminor = FILTER_ORE_GEM
@@ -95909,7 +95996,7 @@ diff -U5 --recursive ../2.05-borscht/db_item.hsp ../2.06-borscht/db_item.hsp
 +			inv(INV_ITEM_WEIGHT, ci) = 50
 +		}
 +		if ( dbmode == DBMODE_SET ) {
-+			inv(INV_ITEM_ID, ci) = 1219
++			inv(INV_ITEM_ID, ci) = ITEM_ID_M09_SAPPHIRE
 +			inv(INV_ITEM_PIC, ci) = xy2pic(17, 36)
 +			reftype = FILTER_ORE
 +			reftypeminor = FILTER_ORE_GEM
@@ -95978,7 +96065,7 @@ diff -U5 --recursive ../2.05-borscht/db_item.hsp ../2.06-borscht/db_item.hsp
 +			inv(INV_ITEM_WEIGHT, ci) = 50
 +		}
 +		if ( dbmode == DBMODE_SET ) {
-+			inv(INV_ITEM_ID, ci) = 1218
++			inv(INV_ITEM_ID, ci) = ITEM_ID_M10_OPAL
 +			inv(INV_ITEM_PIC, ci) = xy2pic(17, 36)
 +			reftype = FILTER_ORE
 +			reftypeminor = FILTER_ORE_GEM
@@ -96047,7 +96134,7 @@ diff -U5 --recursive ../2.05-borscht/db_item.hsp ../2.06-borscht/db_item.hsp
 +			inv(INV_ITEM_WEIGHT, ci) = 50
 +		}
 +		if ( dbmode == DBMODE_SET ) {
-+			inv(INV_ITEM_ID, ci) = 1217
++			inv(INV_ITEM_ID, ci) = ITEM_ID_M11_TOPAZ
 +			inv(INV_ITEM_PIC, ci) = xy2pic(17, 36)
 +			reftype = FILTER_ORE
 +			reftypeminor = FILTER_ORE_GEM
@@ -96116,7 +96203,7 @@ diff -U5 --recursive ../2.05-borscht/db_item.hsp ../2.06-borscht/db_item.hsp
 +			inv(INV_ITEM_WEIGHT, ci) = 50
 +		}
 +		if ( dbmode == DBMODE_SET ) {
-+			inv(INV_ITEM_ID, ci) = 1216
++			inv(INV_ITEM_ID, ci) = ITEM_ID_M12_LAPIS_LAZULI
 +			inv(INV_ITEM_PIC, ci) = xy2pic(17, 36)
 +			reftype = FILTER_ORE
 +			reftypeminor = FILTER_ORE_GEM
@@ -96185,7 +96272,7 @@ diff -U5 --recursive ../2.05-borscht/db_item.hsp ../2.06-borscht/db_item.hsp
 +			inv(INV_ITEM_WEIGHT, ci) = 100
 +		}
 +		if ( dbmode == DBMODE_SET ) {
-+			inv(INV_ITEM_ID, ci) = 1215
++			inv(INV_ITEM_ID, ci) = ITEM_ID_GOLDEN_MEAD
 +			inv(INV_ITEM_PIC, ci) = xy2pic(12, 6)
 +			reftype = FILTER_ITEM_POTION
 +			reftypeminor = FILTER_ITEM_POTION_ALE
@@ -96273,34 +96360,34 @@ diff -U5 --recursive ../2.05-borscht/db_item.hsp ../2.06-borscht/db_item.hsp
  	return -999
  
  *db_setFilterItem
-+	filter_item(1228) = ""
-+	rffilter_item(1228) = ""
-+	filter_item(1227) = ""
-+	rffilter_item(1227) = "/ore/"
-+	filter_item(1226) = ""
-+	rffilter_item(1226) = "/ore/"
-+	filter_item(1225) = ""
-+	rffilter_item(1225) = "/ore/"
-+	filter_item(1224) = ""
-+	rffilter_item(1224) = "/ore/"
-+	filter_item(1223) = ""
-+	rffilter_item(1223) = "/ore/"
-+	filter_item(1222) = ""
-+	rffilter_item(1222) = "/ore/"
-+	filter_item(1221) = ""
-+	rffilter_item(1221) = "/ore/"
-+	filter_item(1220) = ""
-+	rffilter_item(1220) = "/ore/"
-+	filter_item(1219) = ""
-+	rffilter_item(1219) = "/ore/"
-+	filter_item(1218) = ""
-+	rffilter_item(1218) = "/ore/"
-+	filter_item(1217) = ""
-+	rffilter_item(1217) = "/ore/"
-+	filter_item(1216) = ""
-+	rffilter_item(1216) = "/ore/"
-+	filter_item(1215) = ""
-+	rffilter_item(1215) = "/ale/"
++	filter_item(ITEM_ID_DYING_CICADA) = ""
++	rffilter_item(ITEM_ID_DYING_CICADA) = ""
++	filter_item(ITEM_ID_M01_GARNET) = ""
++	rffilter_item(ITEM_ID_M01_GARNET) = "/ore/"
++	filter_item(ITEM_ID_M02_AMETHYST) = ""
++	rffilter_item(ITEM_ID_M02_AMETHYST) = "/ore/"
++	filter_item(ITEM_ID_M03_AQUAMARINE) = ""
++	rffilter_item(ITEM_ID_M03_AQUAMARINE) = "/ore/"
++	filter_item(ITEM_ID_M04_DIAMOND) = ""
++	rffilter_item(ITEM_ID_M04_DIAMOND) = "/ore/"
++	filter_item(ITEM_ID_M05_EMERALD) = ""
++	rffilter_item(ITEM_ID_M05_EMERALD) = "/ore/"
++	filter_item(ITEM_ID_M06_ALEXANDRITE) = ""
++	rffilter_item(ITEM_ID_M06_ALEXANDRITE) = "/ore/"
++	filter_item(ITEM_ID_M07_RUBY) = ""
++	rffilter_item(ITEM_ID_M07_RUBY) = "/ore/"
++	filter_item(ITEM_ID_M08_SARDONYX) = ""
++	rffilter_item(ITEM_ID_M08_SARDONYX) = "/ore/"
++	filter_item(ITEM_ID_M09_SAPPHIRE) = ""
++	rffilter_item(ITEM_ID_M09_SAPPHIRE) = "/ore/"
++	filter_item(ITEM_ID_M10_OPAL) = ""
++	rffilter_item(ITEM_ID_M10_OPAL) = "/ore/"
++	filter_item(ITEM_ID_M11_TOPAZ) = ""
++	rffilter_item(ITEM_ID_M11_TOPAZ) = "/ore/"
++	filter_item(ITEM_ID_M12_LAPIS_LAZULI) = ""
++	rffilter_item(ITEM_ID_M12_LAPIS_LAZULI) = "/ore/"
++	filter_item(ITEM_ID_GOLDEN_MEAD) = ""
++	rffilter_item(ITEM_ID_GOLDEN_MEAD) = "/ale/"
  	filter_item(ITEM_ID_GOLDEN_DOLL) = ""
  	rffilter_item(ITEM_ID_GOLDEN_DOLL) = ""
  	filter_item(ITEM_ID_FILTRATION_BOTTLE) = ""
@@ -96312,188 +96399,188 @@ diff -U5 --recursive ../2.05-borscht/db_item.hsp ../2.06-borscht/db_item.hsp
  	return
  
  *db_setItem
-+	ilight(1228) = LIGHT_TYPE_NONE
-+	ialphanameref(1228) = ""
-+	iorgweight(1228) = 10
++	ilight(ITEM_ID_DYING_CICADA) = LIGHT_TYPE_NONE
++	ialphanameref(ITEM_ID_DYING_CICADA) = ""
++	iorgweight(ITEM_ID_DYING_CICADA) = 10
 +	if ( jp ) {
-+		ioriginalnameref(1228) = "喪蝉"
++		ioriginalnameref(ITEM_ID_DYING_CICADA) = "喪蝉"
 +	}
 +	else {
-+		ioriginalnameref(1228) = "dying cicada"
-+		ioriginalnameref2(1228) = ""
++		ioriginalnameref(ITEM_ID_DYING_CICADA) = "dying cicada"
++		ioriginalnameref2(ITEM_ID_DYING_CICADA) = ""
 +	}
-+	ipicref(1228) = xy2pic(29, 10)
-+	iknownnameref(1228) = ioriginalnameref(1228)
-+	icolref(1228) = COLOR_DEFAULT
-+	ilight(1227) = LIGHT_TYPE_CRYSTAL
-+	ialphanameref(1227) = ""
-+	iorgweight(1227) = 50
++	ipicref(ITEM_ID_DYING_CICADA) = xy2pic(29, 10)
++	iknownnameref(ITEM_ID_DYING_CICADA) = ioriginalnameref(ITEM_ID_DYING_CICADA)
++	icolref(ITEM_ID_DYING_CICADA) = COLOR_DEFAULT
++	ilight(ITEM_ID_M01_GARNET) = LIGHT_TYPE_CRYSTAL
++	ialphanameref(ITEM_ID_M01_GARNET) = ""
++	iorgweight(ITEM_ID_M01_GARNET) = 50
 +	if ( jp ) {
-+		ioriginalnameref(1227) = "M01-真実のガーネット"
++		ioriginalnameref(ITEM_ID_M01_GARNET) = "M01-真実のガーネット"
 +	}
 +	else {
-+		ioriginalnameref(1227) = "M01-Garnet"
-+		ioriginalnameref2(1227) = "jewel"
++		ioriginalnameref(ITEM_ID_M01_GARNET) = "M01-Garnet"
++		ioriginalnameref2(ITEM_ID_M01_GARNET) = "jewel"
 +	}
-+	ipicref(1227) = xy2pic(17, 36)
-+	iknownnameref(1227) = ioriginalnameref(1227)
-+	icolref(1227) = COLOR_BROWN
-+	ilight(1226) = LIGHT_TYPE_CRYSTAL
-+	ialphanameref(1226) = ""
-+	iorgweight(1226) = 50
++	ipicref(ITEM_ID_M01_GARNET) = xy2pic(17, 36)
++	iknownnameref(ITEM_ID_M01_GARNET) = ioriginalnameref(ITEM_ID_M01_GARNET)
++	icolref(ITEM_ID_M01_GARNET) = COLOR_BROWN
++	ilight(ITEM_ID_M02_AMETHYST) = LIGHT_TYPE_CRYSTAL
++	ialphanameref(ITEM_ID_M02_AMETHYST) = ""
++	iorgweight(ITEM_ID_M02_AMETHYST) = 50
 +	if ( jp ) {
-+		ioriginalnameref(1226) = "M02-高貴のアメジスト"
++		ioriginalnameref(ITEM_ID_M02_AMETHYST) = "M02-高貴のアメジスト"
 +	}
 +	else {
-+		ioriginalnameref(1226) = "M02-Amethyst"
-+		ioriginalnameref2(1226) = "jewel"
++		ioriginalnameref(ITEM_ID_M02_AMETHYST) = "M02-Amethyst"
++		ioriginalnameref2(ITEM_ID_M02_AMETHYST) = "jewel"
 +	}
-+	ipicref(1226) = xy2pic(17, 36)
-+	iknownnameref(1226) = ioriginalnameref(1226)
-+	icolref(1226) = COLOR_PURPLE
-+	ilight(1225) = LIGHT_TYPE_CRYSTAL
-+	ialphanameref(1225) = ""
-+	iorgweight(1225) = 50
++	ipicref(ITEM_ID_M02_AMETHYST) = xy2pic(17, 36)
++	iknownnameref(ITEM_ID_M02_AMETHYST) = ioriginalnameref(ITEM_ID_M02_AMETHYST)
++	icolref(ITEM_ID_M02_AMETHYST) = COLOR_PURPLE
++	ilight(ITEM_ID_M03_AQUAMARINE) = LIGHT_TYPE_CRYSTAL
++	ialphanameref(ITEM_ID_M03_AQUAMARINE) = ""
++	iorgweight(ITEM_ID_M03_AQUAMARINE) = 50
 +	if ( jp ) {
-+		ioriginalnameref(1225) = "M03-聡明のアクアマリン"
++		ioriginalnameref(ITEM_ID_M03_AQUAMARINE) = "M03-聡明のアクアマリン"
 +	}
 +	else {
-+		ioriginalnameref(1225) = "M03-Aquamarine"
-+		ioriginalnameref2(1225) = "jewel"
++		ioriginalnameref(ITEM_ID_M03_AQUAMARINE) = "M03-Aquamarine"
++		ioriginalnameref2(ITEM_ID_M03_AQUAMARINE) = "jewel"
 +	}
-+	ipicref(1225) = xy2pic(17, 36)
-+	iknownnameref(1225) = ioriginalnameref(1225)
-+	icolref(1225) = COLOR_LIGHT_BLUE
-+	ilight(1224) = LIGHT_TYPE_CRYSTAL
-+	ialphanameref(1224) = ""
-+	iorgweight(1224) = 50
++	ipicref(ITEM_ID_M03_AQUAMARINE) = xy2pic(17, 36)
++	iknownnameref(ITEM_ID_M03_AQUAMARINE) = ioriginalnameref(ITEM_ID_M03_AQUAMARINE)
++	icolref(ITEM_ID_M03_AQUAMARINE) = COLOR_LIGHT_BLUE
++	ilight(ITEM_ID_M04_DIAMOND) = LIGHT_TYPE_CRYSTAL
++	ialphanameref(ITEM_ID_M04_DIAMOND) = ""
++	iorgweight(ITEM_ID_M04_DIAMOND) = 50
 +	if ( jp ) {
-+		ioriginalnameref(1224) = "M04-無垢のダイヤモンド"
++		ioriginalnameref(ITEM_ID_M04_DIAMOND) = "M04-無垢のダイヤモンド"
 +	}
 +	else {
-+		ioriginalnameref(1224) = "M04-Diamond"
-+		ioriginalnameref2(1224) = "jewel"
++		ioriginalnameref(ITEM_ID_M04_DIAMOND) = "M04-Diamond"
++		ioriginalnameref2(ITEM_ID_M04_DIAMOND) = "jewel"
 +	}
-+	ipicref(1224) = xy2pic(17, 36)
-+	iknownnameref(1224) = ioriginalnameref(1224)
-+	icolref(1224) = COLOR_WHITE
-+	ilight(1223) = LIGHT_TYPE_CRYSTAL
-+	ialphanameref(1223) = ""
-+	iorgweight(1223) = 50
++	ipicref(ITEM_ID_M04_DIAMOND) = xy2pic(17, 36)
++	iknownnameref(ITEM_ID_M04_DIAMOND) = ioriginalnameref(ITEM_ID_M04_DIAMOND)
++	icolref(ITEM_ID_M04_DIAMOND) = COLOR_WHITE
++	ilight(ITEM_ID_M05_EMERALD) = LIGHT_TYPE_CRYSTAL
++	ialphanameref(ITEM_ID_M05_EMERALD) = ""
++	iorgweight(ITEM_ID_M05_EMERALD) = 50
 +	if ( jp ) {
-+		ioriginalnameref(1223) = "M05-誠実のエメラルド"
++		ioriginalnameref(ITEM_ID_M05_EMERALD) = "M05-誠実のエメラルド"
 +	}
 +	else {
-+		ioriginalnameref(1223) = "M05-Emerald"
-+		ioriginalnameref2(1223) = "jewel"
++		ioriginalnameref(ITEM_ID_M05_EMERALD) = "M05-Emerald"
++		ioriginalnameref2(ITEM_ID_M05_EMERALD) = "jewel"
 +	}
-+	ipicref(1223) = xy2pic(17, 36)
-+	iknownnameref(1223) = ioriginalnameref(1223)
-+	icolref(1223) = COLOR_DARK_GREEN
-+	ilight(1222) = LIGHT_TYPE_CRYSTAL
-+	ialphanameref(1222) = ""
-+	iorgweight(1222) = 50
++	ipicref(ITEM_ID_M05_EMERALD) = xy2pic(17, 36)
++	iknownnameref(ITEM_ID_M05_EMERALD) = ioriginalnameref(ITEM_ID_M05_EMERALD)
++	icolref(ITEM_ID_M05_EMERALD) = COLOR_DARK_GREEN
++	ilight(ITEM_ID_M06_ALEXANDRITE) = LIGHT_TYPE_CRYSTAL
++	ialphanameref(ITEM_ID_M06_ALEXANDRITE) = ""
++	iorgweight(ITEM_ID_M06_ALEXANDRITE) = 50
 +	if ( jp ) {
-+		ioriginalnameref(1222) = "M06-情熱のアレキサンドライト"
++		ioriginalnameref(ITEM_ID_M06_ALEXANDRITE) = "M06-情熱のアレキサンドライト"
 +	}
 +	else {
-+		ioriginalnameref(1222) = "M06-Alexandrite"
-+		ioriginalnameref2(1222) = "jewel"
++		ioriginalnameref(ITEM_ID_M06_ALEXANDRITE) = "M06-Alexandrite"
++		ioriginalnameref2(ITEM_ID_M06_ALEXANDRITE) = "jewel"
 +	}
-+	ipicref(1222) = xy2pic(17, 36)
-+	iknownnameref(1222) = ioriginalnameref(1222)
-+	icolref(1222) = COLOR_SKY_BLUE
-+	ilight(1221) = LIGHT_TYPE_CRYSTAL
-+	ialphanameref(1221) = ""
-+	iorgweight(1221) = 50
++	ipicref(ITEM_ID_M06_ALEXANDRITE) = xy2pic(17, 36)
++	iknownnameref(ITEM_ID_M06_ALEXANDRITE) = ioriginalnameref(ITEM_ID_M06_ALEXANDRITE)
++	icolref(ITEM_ID_M06_ALEXANDRITE) = COLOR_SKY_BLUE
++	ilight(ITEM_ID_M07_RUBY) = LIGHT_TYPE_CRYSTAL
++	ialphanameref(ITEM_ID_M07_RUBY) = ""
++	iorgweight(ITEM_ID_M07_RUBY) = 50
 +	if ( jp ) {
-+		ioriginalnameref(1221) = "M07-威厳のルビー"
++		ioriginalnameref(ITEM_ID_M07_RUBY) = "M07-威厳のルビー"
 +	}
 +	else {
-+		ioriginalnameref(1221) = "M07-Ruby"
-+		ioriginalnameref2(1221) = "jewel"
++		ioriginalnameref(ITEM_ID_M07_RUBY) = "M07-Ruby"
++		ioriginalnameref2(ITEM_ID_M07_RUBY) = "jewel"
 +	}
-+	ipicref(1221) = xy2pic(17, 36)
-+	iknownnameref(1221) = ioriginalnameref(1221)
-+	icolref(1221) = COLOR_RED2
-+	ilight(1220) = LIGHT_TYPE_CRYSTAL
-+	ialphanameref(1220) = ""
-+	iorgweight(1220) = 50
++	ipicref(ITEM_ID_M07_RUBY) = xy2pic(17, 36)
++	iknownnameref(ITEM_ID_M07_RUBY) = ioriginalnameref(ITEM_ID_M07_RUBY)
++	icolref(ITEM_ID_M07_RUBY) = COLOR_RED2
++	ilight(ITEM_ID_M08_SARDONYX) = LIGHT_TYPE_CRYSTAL
++	ialphanameref(ITEM_ID_M08_SARDONYX) = ""
++	iorgweight(ITEM_ID_M08_SARDONYX) = 50
 +	if ( jp ) {
-+		ioriginalnameref(1220) = "M08-円満のサードニクス"
++		ioriginalnameref(ITEM_ID_M08_SARDONYX) = "M08-円満のサードニクス"
 +	}
 +	else {
-+		ioriginalnameref(1220) = "M08-Sardonyx"
-+		ioriginalnameref2(1220) = "jewel"
++		ioriginalnameref(ITEM_ID_M08_SARDONYX) = "M08-Sardonyx"
++		ioriginalnameref2(ITEM_ID_M08_SARDONYX) = "jewel"
 +	}
-+	ipicref(1220) = xy2pic(17, 36)
-+	iknownnameref(1220) = ioriginalnameref(1220)
-+	icolref(1220) = COLOR_RED
-+	ilight(1219) = LIGHT_TYPE_CRYSTAL
-+	ialphanameref(1219) = ""
-+	iorgweight(1219) = 50
++	ipicref(ITEM_ID_M08_SARDONYX) = xy2pic(17, 36)
++	iknownnameref(ITEM_ID_M08_SARDONYX) = ioriginalnameref(ITEM_ID_M08_SARDONYX)
++	icolref(ITEM_ID_M08_SARDONYX) = COLOR_RED
++	ilight(ITEM_ID_M09_SAPPHIRE) = LIGHT_TYPE_CRYSTAL
++	ialphanameref(ITEM_ID_M09_SAPPHIRE) = ""
++	iorgweight(ITEM_ID_M09_SAPPHIRE) = 50
 +	if ( jp ) {
-+		ioriginalnameref(1219) = "M09-慈愛のサファイア"
++		ioriginalnameref(ITEM_ID_M09_SAPPHIRE) = "M09-慈愛のサファイア"
 +	}
 +	else {
-+		ioriginalnameref(1219) = "M09-Sapphire"
-+		ioriginalnameref2(1219) = "jewel"
++		ioriginalnameref(ITEM_ID_M09_SAPPHIRE) = "M09-Sapphire"
++		ioriginalnameref2(ITEM_ID_M09_SAPPHIRE) = "jewel"
 +	}
-+	ipicref(1219) = xy2pic(17, 36)
-+	iknownnameref(1219) = ioriginalnameref(1219)
-+	icolref(1219) = COLOR_BLUE
-+	ilight(1218) = LIGHT_TYPE_CRYSTAL
-+	ialphanameref(1218) = ""
-+	iorgweight(1218) = 50
++	ipicref(ITEM_ID_M09_SAPPHIRE) = xy2pic(17, 36)
++	iknownnameref(ITEM_ID_M09_SAPPHIRE) = ioriginalnameref(ITEM_ID_M09_SAPPHIRE)
++	icolref(ITEM_ID_M09_SAPPHIRE) = COLOR_BLUE
++	ilight(ITEM_ID_M10_OPAL) = LIGHT_TYPE_CRYSTAL
++	ialphanameref(ITEM_ID_M10_OPAL) = ""
++	iorgweight(ITEM_ID_M10_OPAL) = 50
 +	if ( jp ) {
-+		ioriginalnameref(1218) = "M10-希望のオパール"
++		ioriginalnameref(ITEM_ID_M10_OPAL) = "M10-希望のオパール"
 +	}
 +	else {
-+		ioriginalnameref(1218) = "M10-Opal"
-+		ioriginalnameref2(1218) = "jewel"
++		ioriginalnameref(ITEM_ID_M10_OPAL) = "M10-Opal"
++		ioriginalnameref2(ITEM_ID_M10_OPAL) = "jewel"
 +	}
-+	ipicref(1218) = xy2pic(17, 36)
-+	iknownnameref(1218) = ioriginalnameref(1218)
-+	icolref(1218) = COLOR_PURPLE2
-+	ilight(1217) = LIGHT_TYPE_CRYSTAL
-+	ialphanameref(1217) = ""
-+	iorgweight(1217) = 50
++	ipicref(ITEM_ID_M10_OPAL) = xy2pic(17, 36)
++	iknownnameref(ITEM_ID_M10_OPAL) = ioriginalnameref(ITEM_ID_M10_OPAL)
++	icolref(ITEM_ID_M10_OPAL) = COLOR_PURPLE2
++	ilight(ITEM_ID_M11_TOPAZ) = LIGHT_TYPE_CRYSTAL
++	ialphanameref(ITEM_ID_M11_TOPAZ) = ""
++	iorgweight(ITEM_ID_M11_TOPAZ) = 50
 +	if ( jp ) {
-+		ioriginalnameref(1217) = "M11-友情のトパーズ"
++		ioriginalnameref(ITEM_ID_M11_TOPAZ) = "M11-友情のトパーズ"
 +	}
 +	else {
-+		ioriginalnameref(1217) = "M11-Topaz"
-+		ioriginalnameref2(1217) = "jewel"
++		ioriginalnameref(ITEM_ID_M11_TOPAZ) = "M11-Topaz"
++		ioriginalnameref2(ITEM_ID_M11_TOPAZ) = "jewel"
 +	}
-+	ipicref(1217) = xy2pic(17, 36)
-+	iknownnameref(1217) = ioriginalnameref(1217)
-+	icolref(1217) = COLOR_PINK
-+	ilight(1216) = LIGHT_TYPE_CRYSTAL
-+	ialphanameref(1216) = ""
-+	iorgweight(1216) = 50
++	ipicref(ITEM_ID_M11_TOPAZ) = xy2pic(17, 36)
++	iknownnameref(ITEM_ID_M11_TOPAZ) = ioriginalnameref(ITEM_ID_M11_TOPAZ)
++	icolref(ITEM_ID_M11_TOPAZ) = COLOR_PINK
++	ilight(ITEM_ID_M12_LAPIS_LAZULI) = LIGHT_TYPE_CRYSTAL
++	ialphanameref(ITEM_ID_M12_LAPIS_LAZULI) = ""
++	iorgweight(ITEM_ID_M12_LAPIS_LAZULI) = 50
 +	if ( jp ) {
-+		ioriginalnameref(1216) = "M12-成功のラピスラズリ"
++		ioriginalnameref(ITEM_ID_M12_LAPIS_LAZULI) = "M12-成功のラピスラズリ"
 +	}
 +	else {
-+		ioriginalnameref(1216) = "M12-Lapis Lazuli"
-+		ioriginalnameref2(1216) = "jewel"
++		ioriginalnameref(ITEM_ID_M12_LAPIS_LAZULI) = "M12-Lapis Lazuli"
++		ioriginalnameref2(ITEM_ID_M12_LAPIS_LAZULI) = "jewel"
 +	}
-+	ipicref(1216) = xy2pic(17, 36)
-+	iknownnameref(1216) = ioriginalnameref(1216)
-+	icolref(1216) = COLOR_LIGHT_BLUE2
-+	ilight(1215) = LIGHT_TYPE_ITEM
-+	ialphanameref(1215) = ""
-+	iorgweight(1215) = 100
++	ipicref(ITEM_ID_M12_LAPIS_LAZULI) = xy2pic(17, 36)
++	iknownnameref(ITEM_ID_M12_LAPIS_LAZULI) = ioriginalnameref(ITEM_ID_M12_LAPIS_LAZULI)
++	icolref(ITEM_ID_M12_LAPIS_LAZULI) = COLOR_LIGHT_BLUE2
++	ilight(ITEM_ID_GOLDEN_MEAD) = LIGHT_TYPE_ITEM
++	ialphanameref(ITEM_ID_GOLDEN_MEAD) = ""
++	iorgweight(ITEM_ID_GOLDEN_MEAD) = 100
 +	if ( jp ) {
-+		ioriginalnameref(1215) = "黄金蜂蜜酒"
++		ioriginalnameref(ITEM_ID_GOLDEN_MEAD) = "黄金蜂蜜酒"
 +	}
 +	else {
-+		ioriginalnameref(1215) = "golden mead"
-+		ioriginalnameref2(1215) = ""
++		ioriginalnameref(ITEM_ID_GOLDEN_MEAD) = "golden mead"
++		ioriginalnameref2(ITEM_ID_GOLDEN_MEAD) = ""
 +	}
-+	ipicref(1215) = xy2pic(12, 6)
-+	iknownnameref(1215) = ioriginalnameref(1215)
-+	icolref(1215) = COLOR_YELLOW
++	ipicref(ITEM_ID_GOLDEN_MEAD) = xy2pic(12, 6)
++	iknownnameref(ITEM_ID_GOLDEN_MEAD) = ioriginalnameref(ITEM_ID_GOLDEN_MEAD)
++	icolref(ITEM_ID_GOLDEN_MEAD) = COLOR_YELLOW
  	ilight(ITEM_ID_GOLDEN_DOLL) = LIGHT_TYPE_CRYSTAL
  	ialphanameref(ITEM_ID_GOLDEN_DOLL) = ""
  	iorgweight(ITEM_ID_GOLDEN_DOLL) = 10000
@@ -96554,7 +96641,7 @@ diff -U5 --recursive ../2.05-borscht/db_item.hsp ../2.06-borscht/db_item.hsp
  
 diff -U5 --recursive ../2.05-borscht/db_race.hsp ../2.06-borscht/db_race.hsp
 --- ../2.05-borscht/db_race.hsp	2021-08-15 17:43:05.300438200 -0700
-+++ ../2.06-borscht/db_race.hsp	2021-08-15 17:43:11.862388200 -0700
++++ ../2.06-borscht/db_race.hsp	2021-08-15 18:12:37.648906700 -0700
 @@ -1388,11 +1388,11 @@
  			if ( mode == MODELIST_CHARA_CREATION ) {
  				cdata(CDATA_SEX, rc) = cmsex
@@ -96740,7 +96827,7 @@ diff -U5 --recursive ../2.05-borscht/db_race.hsp ../2.06-borscht/db_race.hsp
 Only in ../2.05-borscht/: elonaplus
 diff -U5 --recursive ../2.05-borscht/event.hsp ../2.06-borscht/event.hsp
 --- ../2.05-borscht/event.hsp	2021-08-15 17:43:05.388972000 -0700
-+++ ../2.06-borscht/event.hsp	2021-08-15 17:43:11.951984900 -0700
++++ ../2.06-borscht/event.hsp	2021-08-15 18:12:37.747575100 -0700
 @@ -2461,11 +2461,11 @@
  				}
  			}
@@ -96756,7 +96843,7 @@ diff -U5 --recursive ../2.05-borscht/event.hsp ../2.06-borscht/event.hsp
  
 diff -U5 --recursive ../2.05-borscht/help.hsp ../2.06-borscht/help.hsp
 --- ../2.05-borscht/help.hsp	2021-08-15 17:43:05.594588000 -0700
-+++ ../2.06-borscht/help.hsp	2021-08-15 17:43:12.138195200 -0700
++++ ../2.06-borscht/help.hsp	2021-08-15 18:12:37.902008800 -0700
 @@ -5307,11 +5307,11 @@
  		}
  	loop
@@ -96895,7 +96982,7 @@ diff -U5 --recursive ../2.05-borscht/help.hsp ../2.06-borscht/help.hsp
  			else {
  				snd SOUNDLIST_SPELL
 -				goto *label_5450
-+				goto *label_5480
++				goto *com_spell_loop
  			}
  		}
  		if ( key == key_skill ) {
@@ -96948,62 +97035,62 @@ diff -U5 --recursive ../2.05-borscht/help.hsp ../2.06-borscht/help.hsp
  		loop
 +		if ( gdata(GDATA_MONTH) == 1 ) {
 +			flt
-+			itemcreate -1, 1227, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
++			itemcreate -1, ITEM_ID_M01_GARNET, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
 +			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_BLESSED
 +		}
 +		if ( gdata(GDATA_MONTH) == 2 ) {
 +			flt
-+			itemcreate -1, 1226, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
++			itemcreate -1, ITEM_ID_M02_AMETHYST, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
 +			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_BLESSED
 +		}
 +		if ( gdata(GDATA_MONTH) == 3 ) {
 +			flt
-+			itemcreate -1, 1225, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
++			itemcreate -1, ITEM_ID_M03_AQUAMARINE, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
 +			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_BLESSED
 +		}
 +		if ( gdata(GDATA_MONTH) == 4 ) {
 +			flt
-+			itemcreate -1, 1224, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
++			itemcreate -1, ITEM_ID_M04_DIAMOND, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
 +			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_BLESSED
 +		}
 +		if ( gdata(GDATA_MONTH) == 5 ) {
 +			flt
-+			itemcreate -1, 1223, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
++			itemcreate -1, ITEM_ID_M05_EMERALD, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
 +			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_BLESSED
 +		}
 +		if ( gdata(GDATA_MONTH) == 6 ) {
 +			flt
-+			itemcreate -1, 1222, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
++			itemcreate -1, ITEM_ID_M06_ALEXANDRITE, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
 +			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_BLESSED
 +		}
 +		if ( gdata(GDATA_MONTH) == 7 ) {
 +			flt
-+			itemcreate -1, 1221, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
++			itemcreate -1, ITEM_ID_M07_RUBY, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
 +			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_BLESSED
 +		}
 +		if ( gdata(GDATA_MONTH) == 8 ) {
 +			flt
-+			itemcreate -1, 1220, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
++			itemcreate -1, ITEM_ID_M08_SARDONYX, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
 +			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_BLESSED
 +		}
 +		if ( gdata(GDATA_MONTH) == 9 ) {
 +			flt
-+			itemcreate -1, 1219, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
++			itemcreate -1, ITEM_ID_M09_SAPPHIRE, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
 +			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_BLESSED
 +		}
 +		if ( gdata(GDATA_MONTH) == 10 ) {
 +			flt
-+			itemcreate -1, 1218, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
++			itemcreate -1, ITEM_ID_M10_OPAL, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
 +			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_BLESSED
 +		}
 +		if ( gdata(GDATA_MONTH) == 11 ) {
 +			flt
-+			itemcreate -1, 1217, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
++			itemcreate -1, ITEM_ID_M11_TOPAZ, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
 +			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_BLESSED
 +		}
 +		if ( gdata(GDATA_MONTH) == 12 ) {
 +			flt
-+			itemcreate -1, 1216, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
++			itemcreate -1, ITEM_ID_M12_LAPIS_LAZULI, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
 +			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_BLESSED
 +		}
  		picols = cdata(CDATA_CHARA_PIC, marry)
@@ -97021,28 +97108,28 @@ diff -U5 --recursive ../2.05-borscht/help.hsp ../2.06-borscht/help.hsp
 +					homeu++
 +					if ( (gdata(GDATA_DAY) + homeu) \ 4 == 0 ) {
 +						if ( findcharahome(1045) == 0 ) {
-+							characreate -1, 1045, -3, 0
++							characreate -1, CREATURE_ID_SCARD_THE_HAPPY_SWALLOW, -3, 0
 +							cdata(CDATA_ROLE, rc) = 2007
 +							break
 +						}
 +					}
 +					if ( (gdata(GDATA_DAY) + homeu) \ 4 == 1 ) {
 +						if ( findcharahome(1044) == 0 ) {
-+							characreate -1, 1044, -3, 0
++							characreate -1, CREATURE_ID_OXODE_THE_QUEEN_BEE, -3, 0
 +							cdata(CDATA_ROLE, rc) = 2007
 +							break
 +						}
 +					}
 +					if ( (gdata(GDATA_DAY) + homeu) \ 4 == 2 ) {
 +						if ( findcharahome(1043) == 0 ) {
-+							characreate -1, 1043, -3, 0
++							characreate -1, CREATURE_ID_IMARITUKA_THE_ZASIKI_WARAI, -3, 0
 +							cdata(CDATA_ROLE, rc) = 2007
 +							break
 +						}
 +					}
 +					if ( (gdata(GDATA_DAY) + homeu) \ 4 == 3 ) {
 +						if ( findcharahome(1042) == 0 ) {
-+							characreate -1, 1042, -3, 0
++							characreate -1, CREATURE_ID_TELHUREZA_THE_HOUSE_GUARD, -3, 0
 +							cdata(CDATA_ROLE, rc) = 2007
 +							break
 +						}
@@ -97055,7 +97142,7 @@ diff -U5 --recursive ../2.05-borscht/help.hsp ../2.06-borscht/help.hsp
  				}
 diff -U5 --recursive ../2.05-borscht/init.hsp ../2.06-borscht/init.hsp
 --- ../2.05-borscht/init.hsp	2021-08-15 17:43:05.799297300 -0700
-+++ ../2.06-borscht/init.hsp	2021-08-15 17:43:12.397569700 -0700
++++ ../2.06-borscht/init.hsp	2021-08-15 18:12:38.190670600 -0700
 @@ -716,10 +716,13 @@
  		return
  	}
@@ -97177,19 +97264,6 @@ diff -U5 --recursive ../2.05-borscht/init.hsp ../2.06-borscht/init.hsp
  	dim slightbk, inf_screenw + 4, inf_screenh + 4
  	gsel BUFFER_INF
  	gmode 0
-@@ -18587,11 +18629,11 @@
- 	sdim filter_creature
- 	sdim netbuf, 20000
- 	gosub *del_userNpc
- 	gosub *del_userTemp
- 	gosub *db_setFilterRace
--	gosub *db_setFilterCreature
-+	gosub *label_8710
- 	gosub *db_setFilterItem
- 	gosub *chip_init
- 	gosub *building_init
- 	gosub *setArea
- 	gosub *setCellObj
 @@ -18685,11 +18727,11 @@
  		goto *exit_game
  	}
@@ -97205,7 +97279,7 @@ diff -U5 --recursive ../2.05-borscht/init.hsp ../2.06-borscht/init.hsp
  		if ( ci >= 0 ) {
 diff -U5 --recursive ../2.05-borscht/item.hsp ../2.06-borscht/item.hsp
 --- ../2.05-borscht/item.hsp	2021-08-15 17:43:05.929792500 -0700
-+++ ../2.06-borscht/item.hsp	2021-08-15 17:43:12.508520200 -0700
++++ ../2.06-borscht/item.hsp	2021-08-15 18:12:38.316153200 -0700
 @@ -36,21 +36,21 @@
  	if ( locvar_convertartifact_f == 0 ) {
  		return convertartifact_arg1
@@ -97232,7 +97306,7 @@ diff -U5 --recursive ../2.05-borscht/item.hsp ../2.06-borscht/item.hsp
  
 diff -U5 --recursive ../2.05-borscht/item_func.hsp ../2.06-borscht/item_func.hsp
 --- ../2.05-borscht/item_func.hsp	2021-08-15 17:43:06.026107200 -0700
-+++ ../2.06-borscht/item_func.hsp	2021-08-15 17:43:12.601087200 -0700
++++ ../2.06-borscht/item_func.hsp	2021-08-15 18:12:38.419584500 -0700
 @@ -1797,11 +1797,11 @@
  			locvar_itemowner_s += "(Lost property)"
  		}
@@ -97248,7 +97322,7 @@ diff -U5 --recursive ../2.05-borscht/item_func.hsp ../2.06-borscht/item_func.hsp
  			locvar_itemowner_s += lang(" Lv", " Level ") + inv(INV_ITEM_PARAM2, itemname_itemid) + lang(" (空)", "(Empty)")
 diff -U5 --recursive ../2.05-borscht/main.hsp ../2.06-borscht/main.hsp
 --- ../2.05-borscht/main.hsp	2021-08-15 17:43:06.038632900 -0700
-+++ ../2.06-borscht/main.hsp	2021-08-15 17:43:12.612120600 -0700
++++ ../2.06-borscht/main.hsp	2021-08-15 18:12:38.431089100 -0700
 @@ -181,11 +181,11 @@
  	if ( dbg_randseed != 0 ) {
  		randseed = dbg_randseed
@@ -97264,7 +97338,7 @@ diff -U5 --recursive ../2.05-borscht/main.hsp ../2.06-borscht/main.hsp
  	netrequest netload_filename
 diff -U5 --recursive ../2.05-borscht/map.hsp ../2.06-borscht/map.hsp
 --- ../2.05-borscht/map.hsp	2021-08-15 17:43:06.173151100 -0700
-+++ ../2.06-borscht/map.hsp	2021-08-15 17:43:12.753429000 -0700
++++ ../2.06-borscht/map.hsp	2021-08-15 18:12:38.615308800 -0700
 @@ -11634,25 +11634,48 @@
  							cell_refresh inv(INV_ITEM_X, cnt), inv(INV_ITEM_Y, cnt)
  						}
@@ -97289,10 +97363,10 @@ diff -U5 --recursive ../2.05-borscht/map.hsp ../2.06-borscht/map.hsp
  					}
  				}
 +				if ( gdata(GDATA_AREA) == AREA_HOME ) {
-+					if ( cdata(CDATA_ID, cnt) == 1047 ) {
++					if ( cdata(CDATA_ID, cnt) == CREATURE_ID_MAGIC_BEE ) {
 +						p++
 +					}
-+					if ( cdata(CDATA_ID, cnt) == 1044 ) {
++					if ( cdata(CDATA_ID, cnt) == CREATURE_ID_OXODE_THE_QUEEN_BEE ) {
 +						if ( p <= 5 ) {
 +							hometc = cnt
 +						}
@@ -97301,13 +97375,13 @@ diff -U5 --recursive ../2.05-borscht/map.hsp ../2.06-borscht/map.hsp
  			loop
 +			if ( hometc != 0 ) {
 +				flt
-+				characreate -1, 1047, cdata(CDATA_X, hometc), cdata(CDATA_Y, hometc)
++				characreate -1, CREATURE_ID_MAGIC_BEE, cdata(CDATA_X, hometc), cdata(CDATA_Y, hometc)
 +				cbitmod CHARA_BIT_GUEST, rc, TRUE
 +				flt
-+				characreate -1, 1047, cdata(CDATA_X, hometc), cdata(CDATA_Y, hometc)
++				characreate -1, CREATURE_ID_MAGIC_BEE, cdata(CDATA_X, hometc), cdata(CDATA_Y, hometc)
 +				cbitmod CHARA_BIT_GUEST, rc, TRUE
 +				flt
-+				characreate -1, 1047, cdata(CDATA_X, hometc), cdata(CDATA_Y, hometc)
++				characreate -1, CREATURE_ID_MAGIC_BEE, cdata(CDATA_X, hometc), cdata(CDATA_Y, hometc)
 +				cbitmod CHARA_BIT_GUEST, rc, TRUE
 +			}
  			p = rnd(mdata(MDATA_HEIGHT) * mdata(MDATA_WIDTH) / 400 + 3)
@@ -97377,7 +97451,7 @@ diff -U5 --recursive ../2.05-borscht/map.hsp ../2.06-borscht/map.hsp
  			return
 diff -U5 --recursive ../2.05-borscht/map_func.hsp ../2.06-borscht/map_func.hsp
 --- ../2.05-borscht/map_func.hsp	2021-08-15 17:43:06.232875500 -0700
-+++ ../2.06-borscht/map_func.hsp	2021-08-15 17:43:12.793000000 -0700
++++ ../2.06-borscht/map_func.hsp	2021-08-15 18:12:38.675226900 -0700
 @@ -355,11 +355,11 @@
  		tile_default = xy2pic(12, 1)
  	}
@@ -97479,12 +97553,12 @@ diff -U5 --recursive ../2.05-borscht/map_func.hsp ../2.06-borscht/map_func.hsp
 +		if ( gdata(GDATA_MONTH) == 8 ) {
 +			if ( rnd(2) == 0 ) {
 +				flt
-+				itemcreate -1, 1228, locvar_map_placeupstairs_x, locvar_map_placeupstairs_y, 0
++				itemcreate -1, ITEM_ID_DYING_CICADA, locvar_map_placeupstairs_x, locvar_map_placeupstairs_y, 0
 +			}
 +		}
 +		if ( gdata(GDATA_MONTH) == 9 ) {
 +			flt
-+			itemcreate -1, 1228, locvar_map_placeupstairs_x, locvar_map_placeupstairs_y, 0
++			itemcreate -1, ITEM_ID_DYING_CICADA, locvar_map_placeupstairs_x, locvar_map_placeupstairs_y, 0
 +		}
 +		return
 +	}
@@ -97523,7 +97597,7 @@ diff -U5 --recursive ../2.05-borscht/map_func.hsp ../2.06-borscht/map_func.hsp
  *map_connectroom_FOR1
 diff -U5 --recursive ../2.05-borscht/map_user.hsp ../2.06-borscht/map_user.hsp
 --- ../2.05-borscht/map_user.hsp	2021-08-15 17:43:06.309422000 -0700
-+++ ../2.06-borscht/map_user.hsp	2021-08-15 17:43:12.890919800 -0700
++++ ../2.06-borscht/map_user.hsp	2021-08-15 18:12:38.778718800 -0700
 @@ -558,11 +558,11 @@
  			else {
  				inv(INV_ITEM_SHOP_SAMPLE, cnt) = 0
@@ -97965,7 +98039,7 @@ diff -U5 --recursive ../2.05-borscht/map_user.hsp ../2.06-borscht/map_user.hsp
  	goto *com_home
 diff -U5 --recursive ../2.05-borscht/material.hsp ../2.06-borscht/material.hsp
 --- ../2.05-borscht/material.hsp	2021-08-15 17:43:06.324465800 -0700
-+++ ../2.06-borscht/material.hsp	2021-08-15 17:43:12.906579600 -0700
++++ ../2.06-borscht/material.hsp	2021-08-15 18:12:38.795233300 -0700
 @@ -90,14 +90,14 @@
  	locvar_matgetmain_s = "マテリアル:" + matname(matdelmain_arg1) + "を" + locvar_matgetmain_n + "個失った"
  	txtef COLOR_BLUE
@@ -98037,7 +98111,7 @@ diff -U5 --recursive ../2.05-borscht/material.hsp ../2.06-borscht/material.hsp
  
 diff -U5 --recursive ../2.05-borscht/module.hsp ../2.06-borscht/module.hsp
 --- ../2.05-borscht/module.hsp	2021-08-15 17:43:06.480967100 -0700
-+++ ../2.06-borscht/module.hsp	2021-08-15 17:43:13.049039300 -0700
++++ ../2.06-borscht/module.hsp	2021-08-15 18:12:38.907670100 -0700
 @@ -800,15 +800,17 @@
  #deffunc cell_featclear int cell_featclear_arg1, int cell_featclear_arg2
  	map(cell_featclear_arg1, cell_featclear_arg2, MAP_FEATS_ON_TILE) = 0
@@ -98071,7 +98145,7 @@ diff -U5 --recursive ../2.05-borscht/module.hsp ../2.06-borscht/module.hsp
  
 diff -U5 --recursive ../2.05-borscht/proc.hsp ../2.06-borscht/proc.hsp
 --- ../2.05-borscht/proc.hsp	2021-08-15 17:43:06.762822800 -0700
-+++ ../2.06-borscht/proc.hsp	2021-08-15 17:43:13.300431300 -0700
++++ ../2.06-borscht/proc.hsp	2021-08-15 18:12:39.213106900 -0700
 @@ -1127,11 +1127,11 @@
  			}
  		}
@@ -98105,7 +98179,7 @@ diff -U5 --recursive ../2.05-borscht/proc.hsp ../2.06-borscht/proc.hsp
  				}
  			}
 -			dmgmp cc, mp
-+			if ( cdata(CDATA_ID, cc) != 1041 ) {
++			if ( cdata(CDATA_ID, cc) != CREATURE_ID_ANOTHER_WORLD_CHEATAH ) {
 +				dmgmp cc, mp
 +			}
  			if ( cdata(CDATA_EXIST, cc) != CHAR_STATE_ALIVE ) {
@@ -98229,7 +98303,7 @@ diff -U5 --recursive ../2.05-borscht/proc.hsp ../2.06-borscht/proc.hsp
  			animeload 46, tc
  			snd SOUNDLIST_ATK_MIND
 -			cdata(CDATA_MP, tc) -= cdata(CDATA_MAX_MP, tc) / 10 + 1
-+			if ( cdata(CDATA_ID, tc) != 1041 ) {
++			if ( cdata(CDATA_ID, tc) != CREATURE_ID_ANOTHER_WORLD_CHEATAH ) {
 +				cdata(CDATA_MP, tc) -= cdata(CDATA_MAX_MP, tc) / 10 + 1
 +			}
  			malm += sdata(SKILL_ATTR_MAG, tc) + 10
@@ -98288,29 +98362,29 @@ diff -U5 --recursive ../2.05-borscht/proc.hsp ../2.06-borscht/proc.hsp
 -					inv(INV_ITEM_COL, ci) = cnt
 -				loop
 +				flt
-+				itemcreate -1, 1227, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
++				itemcreate -1, ITEM_ID_M01_GARNET, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
 +				flt
-+				itemcreate -1, 1226, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
++				itemcreate -1, ITEM_ID_M02_AMETHYST, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
 +				flt
-+				itemcreate -1, 1225, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
++				itemcreate -1, ITEM_ID_M03_AQUAMARINE, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
 +				flt
-+				itemcreate -1, 1224, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
++				itemcreate -1, ITEM_ID_M04_DIAMOND, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
 +				flt
-+				itemcreate -1, 1223, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
++				itemcreate -1, ITEM_ID_M05_EMERALD, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
 +				flt
-+				itemcreate -1, 1222, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
++				itemcreate -1, ITEM_ID_M06_ALEXANDRITE, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
 +				flt
-+				itemcreate -1, 1221, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
++				itemcreate -1, ITEM_ID_M07_RUBY, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
 +				flt
-+				itemcreate -1, 1220, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
++				itemcreate -1, ITEM_ID_M08_SARDONYX, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
 +				flt
-+				itemcreate -1, 1219, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
++				itemcreate -1, ITEM_ID_M09_SAPPHIRE, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
 +				flt
-+				itemcreate -1, 1218, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
++				itemcreate -1, ITEM_ID_M10_OPAL, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
 +				flt
-+				itemcreate -1, 1217, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
++				itemcreate -1, ITEM_ID_M11_TOPAZ, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
 +				flt
-+				itemcreate -1, 1216, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
++				itemcreate -1, ITEM_ID_M12_LAPIS_LAZULI, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
  				gdata(GDATA_FLAG_SUB_SLIME) = 1000
  				gdata(GDATA_FLAG_SUB_ROGUE) = 1000
  				gdata(GDATA_FLAG_SUB_NIGHTMARE) = 1000
@@ -98320,7 +98394,7 @@ Only in ../2.05-borscht/: scene1.hsp
 Only in ../2.05-borscht/: scene2.hsp
 diff -U5 --recursive ../2.05-borscht/screen.hsp ../2.06-borscht/screen.hsp
 --- ../2.05-borscht/screen.hsp	2021-08-15 17:43:07.152892700 -0700
-+++ ../2.06-borscht/screen.hsp	2021-08-15 17:43:13.583481000 -0700
++++ ../2.06-borscht/screen.hsp	2021-08-15 18:12:39.596876300 -0700
 @@ -301,11 +301,13 @@
  			}
  			else {
@@ -98407,7 +98481,7 @@ diff -U5 --recursive ../2.05-borscht/screen.hsp ../2.06-borscht/screen.hsp
  			sdata(SKILL_ATTR_SPD, r1) = 666666
  		}
  	}
-+	if ( cdata(CDATA_ID, r1) == MAX_CREATURE_ID ) {
++	if ( cdata(CDATA_ID, r1) == CREATURE_ID_SPEED_HACK_CHEATAH ) {
 +		if ( sdata(SKILL_ATTR_SPD, r1) < 1000000 ) {
 +			sdata(SKILL_ATTR_SPD, r1) = 1000000
 +		}
@@ -98432,7 +98506,7 @@ diff -U5 --recursive ../2.05-borscht/screen.hsp ../2.06-borscht/screen.hsp
  
 diff -U5 --recursive ../2.05-borscht/system.hsp ../2.06-borscht/system.hsp
 --- ../2.05-borscht/system.hsp	2021-08-15 17:43:07.218132200 -0700
-+++ ../2.06-borscht/system.hsp	2021-08-15 17:43:13.644601700 -0700
++++ ../2.06-borscht/system.hsp	2021-08-15 18:12:39.654373400 -0700
 @@ -38,11 +38,11 @@
  	}
  	gdata(GDATA_TEMPORARY_FLAGS2) = 0
@@ -98596,7 +98670,7 @@ diff -U5 --recursive ../2.05-borscht/system.hsp ../2.06-borscht/system.hsp
  		end
 diff -U5 --recursive ../2.05-borscht/tcg.hsp ../2.06-borscht/tcg.hsp
 --- ../2.05-borscht/tcg.hsp	2021-08-15 17:43:07.289746500 -0700
-+++ ../2.06-borscht/tcg.hsp	2021-08-15 17:43:13.701004800 -0700
++++ ../2.06-borscht/tcg.hsp	2021-08-15 18:12:39.723620800 -0700
 @@ -836,11 +836,11 @@
  	snd SOUNDLIST_CARD1
  	cdbitmod 1, opencard_arg1, 1
@@ -98625,7 +98699,7 @@ diff -U5 --recursive ../2.05-borscht/tcg.hsp ../2.06-borscht/tcg.hsp
  	dim locvar_tcginit_elist, 10, 8 * 2 + 7
 diff -U5 --recursive ../2.05-borscht/tcg_ai.hsp ../2.06-borscht/tcg_ai.hsp
 --- ../2.05-borscht/tcg_ai.hsp	2021-08-15 17:43:07.311894900 -0700
-+++ ../2.06-borscht/tcg_ai.hsp	2021-08-15 17:43:13.728191000 -0700
++++ ../2.06-borscht/tcg_ai.hsp	2021-08-15 18:12:39.752290600 -0700
 @@ -178,12 +178,12 @@
  	if ( gameover() ) {
  		return

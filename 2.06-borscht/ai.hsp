@@ -45,7 +45,7 @@
 			}
 		}
 		if ( cellchara == (-1) ) {
-			if ( cdata(CDATA_ID, cc) == 1038 ) {
+			if ( cdata(CDATA_ID, cc) == CREATURE_ID_WALL_HACK_CHEATAH ) {
 				if ( cellaccessover == 1 ) {
 					cellaccess = 1
 					break
@@ -930,7 +930,7 @@
 				goto *ai_followMove
 			}
 		}
-		goto *label_8810
+		goto *ai_actMain
 	}
 	if ( cdata(CDATA_RELATION, cc) < RELATION_ALLY ) {
 		if ( cbit(CHARA_BIT_SANDBAG, tc) ) {
@@ -1597,7 +1597,7 @@
 		if ( relationbetween(cc, tc) == (-3) ) {
 			cdata(CDATA_TARGET, cc) = tc
 			cdata(CDATA_AI_AGGRO, cc) += 4
-			goto *label_8810
+			goto *ai_actMain
 		}
 		else {
 			if ( cdata(CDATA_QUALITY, cc) > FIX_QUALITY_GREAT | cdata(CDATA_ID, cc) == CREATURE_ID_AILE_THE_ATTENDANT & cdata(CDATA_LEVEL, cc) > cdata(CDATA_LEVEL, tc) & cc >= MAX_CHARA_FOLLOWER | cbit(CHARA_BIT_SANDBAG, tc) | (cbit(CHARA_BIT_SUMMONED, tc) == TRUE & gdata(GDATA_AREA) == AREA_PET_ARENA) ) {
@@ -1826,7 +1826,7 @@
 	}
 	return 0
 
-*label_8810
+*ai_actMain
 	if ( tc == CHARA_PLAYER ) {
 		pcattacker = cc
 	}
@@ -1841,7 +1841,7 @@
 			}
 		}
 	}
-	if ( cdata(CDATA_ID, cc) >= 1038 & cdata(CDATA_ID, cc) <= MAX_CREATURE_ID ) {
+	if ( cdata(CDATA_ID, cc) >= CREATURE_ID_WALL_HACK_CHEATAH & cdata(CDATA_ID, cc) <= CREATURE_ID_SPEED_HACK_CHEATAH ) {
 		if ( rnd(100) == 0 ) {
 			txtef COLOR_RED
 			txt lang(" *BAN* ", " *BAN* ")
@@ -2933,7 +2933,7 @@
 			}
 		}
 	}
-	if ( cdata(CDATA_ID, cc) == 1047 ) {
+	if ( cdata(CDATA_ID, cc) == CREATURE_ID_MAGIC_BEE ) {
 		if ( cdata(CDATA_CONDITION_ANGRY, cc) > 0 ) {
 			if ( rnd(3) == 0 ) {
 				act = SKILL_SPACT_FLAME_OF_RAGE
@@ -3449,151 +3449,151 @@
 		if ( act == SKILL_SPELL_HERO ) {
 			if ( findbuff(cc, BUFF_HERO) != (-1) ) {
 				buffact++
-				goto *label_8810
+				goto *ai_actMain
 			}
 		}
 		if ( act == SKILL_SPELL_HOLY_SHIELD ) {
 			if ( findbuff(cc, BUFF_HOLY_SHIELD) != (-1) ) {
 				buffact++
-				goto *label_8810
+				goto *ai_actMain
 			}
 		}
 		if ( act == SKILL_SPELL_REGENERATION ) {
 			if ( findbuff(cc, BUFF_REGENERATION) != (-1) ) {
 				buffact++
-				goto *label_8810
+				goto *ai_actMain
 			}
 		}
 		if ( act == SKILL_SPELL_ATTRIBUTE_SHIELD ) {
 			if ( findbuff(cc, BUFF_ATTRIBUTE_SHIELD) != (-1) ) {
 				buffact++
-				goto *label_8810
+				goto *ai_actMain
 			}
 		}
 		if ( act == SKILL_SPELL_SPEED ) {
 			if ( findbuff(cc, BUFF_SPEED) != (-1) ) {
 				buffact++
-				goto *label_8810
+				goto *ai_actMain
 			}
 		}
 		if ( act == SKILL_SPELL_HOLY_VEIL ) {
 			if ( findbuff(cc, BUFF_HOLY_VEIL) != (-1) ) {
 				buffact++
-				goto *label_8810
+				goto *ai_actMain
 			}
 		}
 		if ( act == SKILL_SPELL_DIVINE_WISDOM ) {
 			if ( findbuff(cc, BUFF_DIVINE_WISDOM) != (-1) ) {
 				buffact++
-				goto *label_8810
+				goto *ai_actMain
 			}
 		}
 		if ( act == SKILL_SPACT_LULWYS_TRICK ) {
 			if ( findbuff(cc, BUFF_LULWYS_TRICK) != (-1) ) {
 				buffact++
-				goto *label_8810
+				goto *ai_actMain
 			}
 		}
 		if ( act == SKILL_SPACT_BOOST ) {
 			if ( findbuff(cc, BUFF_BOOST) != (-1) ) {
 				buffact++
-				goto *label_8810
+				goto *ai_actMain
 			}
 		}
 		if ( act == SKILL_SPELL_CONTINGENCY ) {
 			if ( findbuff(cc, BUFF_CONTINGENCY) != (-1) ) {
 				buffact++
-				goto *label_8810
+				goto *ai_actMain
 			}
 		}
 		if ( act == SKILL_SPACT_CLEAR_MIND ) {
 			if ( findbuff(cc, BUFF_CLEAR_MIND) != (-1) ) {
 				buffact++
-				goto *label_8810
+				goto *ai_actMain
 			}
 		}
 		if ( act == SKILL_SPELL_FEATHER ) {
 			if ( findbuff(cc, BUFF_FEATHER) != (-1) ) {
 				buffact++
-				goto *label_8810
+				goto *ai_actMain
 			}
 		}
 		if ( act == SKILL_SPACT_CHARGE ) {
 			if ( findbuff(cc, BUFF_CHARGE) != (-1) ) {
 				buffact++
-				goto *label_8810
+				goto *ai_actMain
 			}
 		}
 		if ( act == SKILL_SPACT_ATTRIBUTE ) {
 			if ( findbuff(cc, BUFF_ATTRIBUTE) != (-1) ) {
 				buffact++
-				goto *label_8810
+				goto *ai_actMain
 			}
 		}
 		if ( act == SKILL_SPACT_ABSOLUTE_PROTECT ) {
 			if ( findbuff(cc, BUFF_AUTO_GUARD) != (-1) ) {
 				buffact++
-				goto *label_8810
+				goto *ai_actMain
 			}
 		}
 		if ( act == SKILL_SPACT_SPACE_RETENTION ) {
 			if ( findbuff(cc, BUFF_RETENTION) != (-1) ) {
 				buffact++
-				goto *label_8810
+				goto *ai_actMain
 			}
 		}
 		if ( act == SKILL_SPELL_CONCENTRATION ) {
 			if ( findbuff(cc, BUFF_CONCENTRATION) != (-1) ) {
 				buffact++
-				goto *label_8810
+				goto *ai_actMain
 			}
 		}
 		if ( act == SKILL_SPELL_ELEMENT_SCAR ) {
 			if ( findbuff(tc, BUFF_ELEMENT_SCAR) != (-1) ) {
 				buffact++
-				goto *label_8810
+				goto *ai_actMain
 			}
 		}
 		if ( act == SKILL_SPELL_MIST_OF_SILENCE ) {
 			if ( findbuff(tc, BUFF_MIST_OF_SILENCE) != (-1) ) {
 				buffact++
-				goto *label_8810
+				goto *ai_actMain
 			}
 		}
 		if ( act == SKILL_SPELL_SLOW ) {
 			if ( findbuff(tc, BUFF_SLOW) != (-1) ) {
 				buffact++
-				goto *label_8810
+				goto *ai_actMain
 			}
 		}
 		if ( act == SKILL_SPELL_MIST_OF_FRAILNESS ) {
 			if ( findbuff(tc, BUFF_MIST_OF_FRAILNESS) != (-1) ) {
 				buffact++
-				goto *label_8810
+				goto *ai_actMain
 			}
 		}
 		if ( act == SKILL_SPELL_NIGHTMARE ) {
 			if ( findbuff(tc, BUFF_NIGHTMARE) != (-1) ) {
 				buffact++
-				goto *label_8810
+				goto *ai_actMain
 			}
 		}
 		if ( act == SKILL_SPACT_PUNISHMENT ) {
 			if ( findbuff(tc, BUFF_PUNISHMENT) != (-1) ) {
 				buffact++
-				goto *label_8810
+				goto *ai_actMain
 			}
 		}
 		if ( act == SKILL_SPACT_DEATH_WORD | act == SKILL_SPACT_DEATH_SONG ) {
 			if ( findbuff(tc, BUFF_DEATH_WORD) != (-1) | cdata(CDATA_QUALITY, tc) >= FIX_QUALITY_MIRACLE ) {
 				buffact++
-				goto *label_8810
+				goto *ai_actMain
 			}
 		}
 		if ( act == SKILL_SPELL_HEAL_LIGHT | act == SKILL_SPELL_HEAL_CRITICAL | act == SKILL_SPELL_CURE_OF_ERIS | act == SKILL_SPELL_CURE_OF_JURE | act == SKILL_SPELL_HEALING_TOUCH ) {
 			if ( cdata(CDATA_HP, cc) == cdata(CDATA_MAX_HP, cc) ) {
 				buffact++
-				goto *label_8810
+				goto *ai_actMain
 			}
 		}
 	}
