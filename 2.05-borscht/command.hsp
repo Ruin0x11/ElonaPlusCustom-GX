@@ -4851,7 +4851,7 @@
 			gosub *screen_draw
 			goto *pc_turn
 		}
-		goto *label_5448
+		goto *com_spell
 	}
 	goto *pc_turn
 
@@ -5103,7 +5103,7 @@
 				gosub *screen_draw
 				if ( curmenu == 0 ) {
 					snd SOUNDLIST_SPELL
-					goto *label_5450
+					goto *com_spell_loop
 				}
 				if ( curmenu == 1 ) {
 					snd SOUNDLIST_SKILL
@@ -5315,7 +5315,7 @@
 				gosub *screen_draw
 				if ( curmenu == 0 ) {
 					snd SOUNDLIST_SPELL
-					goto *label_5450
+					goto *com_spell_loop
 				}
 				if ( curmenu == 1 ) {
 					snd SOUNDLIST_SKILL
@@ -6817,7 +6817,7 @@
 
 *com_book_loop_pgchg
 	if ( 1 == 0 ) {
-		goto *com_spellcast
+		goto *com_spellbook
 	}
 	redraw 1
 	await cfg_wait1
@@ -6843,9 +6843,9 @@
 	}
 	goto *com_book_loop_pgchg
 
-*com_spellcast
+*com_spellbook
 
-*com_spell
+*com_spellbook_loop_pgchk
 	listmax = 0
 	page = 0
 	pagesize = 16
@@ -6871,7 +6871,7 @@
 	gsel BUFFER_SCREEN
 	windowshadow = 1
 
-*com_spell_loop_pgchk
+*com_spellbook_loop
 	redraw 0
 	cs_bk = -1
 	pagemax = (listmax - 1) / pagesize
@@ -6885,9 +6885,9 @@
 	}
 	drawmenu 1
 
-*com_spell_loop
+*com_spellcast
 	if ( 1 == 0 ) {
-		goto *label_5448
+		goto *com_spell_loop_pgchk
 	}
 	redraw 0
 	s = lang("魔法書の作成", "Spellbook make"), strhint2 + strhint3 + strhint7 + strhint8
@@ -7113,7 +7113,7 @@
 				gosub *screen_draw
 				if ( curmenu == 0 ) {
 					snd SOUNDLIST_SPELL
-					goto *label_5450
+					goto *com_spell_loop
 				}
 				if ( curmenu == 1 ) {
 					snd SOUNDLIST_SKILL
@@ -7130,14 +7130,14 @@
 		if ( pagemax != 0 ) {
 			snd SOUNDLIST_POP1
 			page++
-			goto *com_spell_loop_pgchk
+			goto *com_spellbook_loop
 		}
 	}
 	if ( key == key_pagedown ) {
 		if ( pagemax != 0 ) {
 			snd SOUNDLIST_POP1
 			page--
-			goto *com_spell_loop_pgchk
+			goto *com_spellbook_loop
 		}
 	}
 	if ( key == key_cancel ) {
@@ -7145,9 +7145,11 @@
 		efid = -1
 		return
 	}
-	goto *com_spell_loop
+	goto *com_spellcast
 
-*label_5448
+*com_spell
+
+*com_spell_loop_pgchk
 	tc = cc
 	gosub *cast
 	if ( stat == 0 ) {
@@ -7155,7 +7157,7 @@
 	}
 	goto *turn_end
 
-*label_5450
+*com_spell_loop
 	listmax = 0
 	page = 0
 	pagesize = 16
@@ -7277,7 +7279,7 @@
 	if ( p != (-1) ) {
 		menucycle = 0
 		efid = p
-		goto *label_5448
+		goto *com_spell
 	}
 	if ( key == "sc" ) {
 		snd SOUNDLIST_OK1
@@ -7300,13 +7302,13 @@
 		p = 0
 		p = list(0, pagesize * page + cs)
 		if ( p <= 0 ) {
-			goto *label_5450
+			goto *com_spell_loop
 		}
 		snd SOUNDLIST_LOCKED1
 		txtef COLOR_YELLOW
 		txt lang("【非表示：" + skillname(p) + "】", "[Seal :" + skillname(p) + "]")
 		spells(p - 400) = 2
-		goto *label_5450
+		goto *com_spell_loop
 	}
 	if ( key == key_msglog ) {
 		snd SOUNDLIST_CHEST1
@@ -7317,7 +7319,7 @@
 				spells(cnt) = 0
 			}
 		loop
-		goto *label_5450
+		goto *com_spell_loop
 	}
 	if ( menucycle == 1 ) {
 		if ( key == key_next | key == key_prev ) {
@@ -7340,7 +7342,7 @@
 				gosub *screen_draw
 				if ( curmenu == 0 ) {
 					snd SOUNDLIST_SPELL
-					goto *label_5450
+					goto *com_spell_loop
 				}
 				if ( curmenu == 1 ) {
 					snd SOUNDLIST_SKILL
@@ -15044,6 +15046,7 @@
 		txt " " + s
 	loop
 	goto *pc_turn
+
 
 
 
