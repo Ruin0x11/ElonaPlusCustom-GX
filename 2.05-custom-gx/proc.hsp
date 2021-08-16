@@ -5509,7 +5509,9 @@
 					mp = rnd(mp * 140 / 100 + 1) + 1
 				}
 			}
-			dmgmp cc, mp
+			if ( cdata(CDATA_ID, cc) != CREATURE_ID_ANOTHER_WORLD_CHEATAH ) {
+				dmgmp cc, mp
+			}
 			if ( cdata(CDATA_EXIST, cc) != CHAR_STATE_ALIVE ) {
 				efsource = 0
 				return 1
@@ -5780,9 +5782,9 @@
 			autosave = 1 * (gdata(GDATA_AREA) != AREA_SHOW_HOUSE)
 		}
 		if ( p > 55 ) {
+			num = rnd(sdata(SKILL_NORMAL_DETECTION, cc) / 2 * 50 + 100) + 1
 			flt
-			itemcreate -1, ITEM_ID_GOLD_PIECE, cdata(CDATA_X, cc), cdata(CDATA_Y, cc), 0
-			inv(INV_ITEM_NUM, ci) = rnd(sdata(SKILL_NORMAL_DETECTION, cc) / 2 * 50 + 100) + 1
+			itemcreate -1, ITEM_ID_GOLD_PIECE, cdata(CDATA_X, cc), cdata(CDATA_Y, cc), num
 			txt lang(name(cc) + "は水の中に金貨を見つけた。", name(cc) + " find" + _s(cc) + " some gold pieces in water.")
 			break
 		}
@@ -7638,6 +7640,11 @@
 				if ( efid == SKILL_SPELL_SUMMON_SPIRIT ) {
 					efp = 2 + rnd(8)
 				}
+				if ( efid == SKILL_SPELL_SUMMON_MONSTERS ) {
+					if ( efp > cdata(CDATA_LEVEL, cc) + 5 ) {
+						efp = cdata(CDATA_LEVEL, cc) + rnd(5)
+					}
+				}
 				if ( cdata(CDATA_ID, cc) == CREATURE_ID_LULWY | cdata(CDATA_ID, cc) == CREATURE_ID_DEVASTATE_LULWY ) {
 					if ( efid == SKILL_SPACT_SUMMON_CHAOS ) {
 						if ( cdata(CDATA_RELATION, cc) >= (-1) ) {
@@ -8901,6 +8908,45 @@
 		cdata(CDATA_VOMIT, tc) = 0
 		dmgcon tc, CONDITION_DRUNK, rnd(1000) + 1000
 		goto *effect_end
+	}
+	if ( _switch_val == SKILL_EFFECT_GOLDEN_MEAD | _switch_sw ) {
+		_switch_sw = 0
+		if ( synccheck(tc, -1) ) {
+			txt lang(name(tc) + "は奇妙な感覚に襲われた…。", name(tc) + " became the oil covered.")
+		}
+		dmgcon tc, CONDITION_DRUNK, rnd(300) + 100
+		skillexp SKILL_ATTR_LER, tc, 500
+		if ( tc == CHARA_PLAYER ) {
+			snd SOUNDLIST_ATK_MIND
+			meadmap = 1
+			homemapmode = 1
+			cxbk = cdata(CDATA_X, CHARA_PLAYER)
+			cybk = cdata(CDATA_Y, CHARA_PLAYER)
+			gosub *home_setWallTile
+			n = 0
+			txtnew
+			txt lang("移動キーで幽体を移動、キャンセルキーで幽体離脱終了。", "Movement keys to move current position, hit the cancel key to exit.")
+			tlocinitx = cdata(CDATA_X, CHARA_PLAYER)
+			tlocinity = cdata(CDATA_Y, CHARA_PLAYER)
+			tile = 0
+			repeat
+				await
+				homemakewall = 1
+				gosub *findLocation
+				if ( stat == (-1) ) {
+					break
+				}
+				tlocinitx = tlocx
+				tlocinity = tlocy
+			loop
+			homemapmode = 0
+			cdata(CDATA_X, CHARA_PLAYER) = cxbk
+			cdata(CDATA_Y, CHARA_PLAYER) = cybk
+			meadmap = 0
+			goto *effect_end
+		}
+		goto *effect_end
+		_switch_sw++
 	}
 	if ( _switch_val == SKILL_EFFECT_POTION_ESSENTIAL_OIL | _switch_sw ) {
 		_switch_sw = 0
@@ -15246,7 +15292,9 @@
 			}
 			animeload 46, tc
 			snd SOUNDLIST_ATK_MIND
-			cdata(CDATA_MP, tc) -= cdata(CDATA_MAX_MP, tc) / 10 + 1
+			if ( cdata(CDATA_ID, tc) != CREATURE_ID_ANOTHER_WORLD_CHEATAH ) {
+				cdata(CDATA_MP, tc) -= cdata(CDATA_MAX_MP, tc) / 10 + 1
+			}
 			malm += sdata(SKILL_ATTR_MAG, tc) + 10
 		loop
 		cfg_animewait = waitbk
@@ -15830,7 +15878,7 @@
 				}
 			}
 			if ( cc >= MAX_CHARA_FOLLOWER ) {
-				if ( cdata(CDATA_RELATION_ORG, cnt) == cdata(CDATA_RELATION_ORG, cc) ) {
+				if ( cdata(CDATA_RELATION_ORG, cnt) == cdata(CDATA_RELATION_ORG, cc) | cdata(CDATA_RELATION, cnt) == cdata(CDATA_RELATION, cc) | (cdata(CDATA_RELATION, cc) >= RELATION_DISLIKE & cdata(CDATA_RELATION, cnt) >= RELATION_DISLIKE) ) {
 					continue
 				}
 			}
@@ -19757,24 +19805,30 @@
 				gdata(GDATA_FLAG_WORK_B_REMAINING) = 0
 				gdata(GDATA_FLAG_WORK_C_REMAINING) = 0
 				seiton = 4
-				repeat 31
-					flt
-					itemcreate -1, ITEM_ID_CF_POTIOMAN, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
-					inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
-					inv(INV_ITEM_COL, ci) = cnt
-					flt
-					itemcreate -1, ITEM_ID_CRUSH_POTIOMAN, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
-					inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
-					inv(INV_ITEM_COL, ci) = cnt
-					flt
-					itemcreate -1, ITEM_ID_BATTLE_POTIOMAN, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
-					inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
-					inv(INV_ITEM_COL, ci) = cnt
-					flt
-					itemcreate -1, ITEM_ID_SUPER_POTIOMAN, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
-					inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
-					inv(INV_ITEM_COL, ci) = cnt
-				loop
+				flt
+				itemcreate -1, ITEM_ID_M01_GARNET, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
+				flt
+				itemcreate -1, ITEM_ID_M02_AMETHYST, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
+				flt
+				itemcreate -1, ITEM_ID_M03_AQUAMARINE, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
+				flt
+				itemcreate -1, ITEM_ID_M04_DIAMOND, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
+				flt
+				itemcreate -1, ITEM_ID_M05_EMERALD, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
+				flt
+				itemcreate -1, ITEM_ID_M06_ALEXANDRITE, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
+				flt
+				itemcreate -1, ITEM_ID_M07_RUBY, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
+				flt
+				itemcreate -1, ITEM_ID_M08_SARDONYX, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
+				flt
+				itemcreate -1, ITEM_ID_M09_SAPPHIRE, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
+				flt
+				itemcreate -1, ITEM_ID_M10_OPAL, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
+				flt
+				itemcreate -1, ITEM_ID_M11_TOPAZ, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
+				flt
+				itemcreate -1, ITEM_ID_M12_LAPIS_LAZULI, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
 				gdata(GDATA_FLAG_SUB_SLIME) = 1000
 				gdata(GDATA_FLAG_SUB_ROGUE) = 1000
 				gdata(GDATA_FLAG_SUB_NIGHTMARE) = 1000

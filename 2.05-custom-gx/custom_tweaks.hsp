@@ -40,6 +40,7 @@ TweakData(0, 4) = "Enable Random Start For MP3."
 TweakData(1, 4) = "Display Weather Everywhere."
 TweakData(2, 4) = "Confirm Reload With F2."
 TweakData(50, 4) = "Fist of the North Star Mode."
+TweakData(51, 4) = "Disable cicada noises."
 */
 
 *TweakMenu
@@ -625,10 +626,11 @@ TweakData(50, 4) = "Fist of the North Star Mode."
 	listn(0, TWEAK_MISC_PREVENT_STAYER_MOVEMENT) = "Prevent home stayers from moving." + GetTStatus(TWEAK_CATEGORY_MISC, TWEAK_MISC_PREVENT_STAYER_MOVEMENT)
 	listn(0, TWEAK_MISC_PREVENT_BUMP_ATTACK) = "Prevent bump attack." + GetTStatus(TWEAK_CATEGORY_MISC, TWEAK_MISC_PREVENT_BUMP_ATTACK)
 	listn(0, 5) = "Fist of the North Star Mode." + GetTStatus(TWEAK_CATEGORY_MISC, TWEAK_MISC_HOKUTO_NO_KEN_MODE)
-	listn(0, 6) = "Return."
+	listn(0, 5) = "Fist of the North Star Mode." + GetTStatus(TWEAK_CATEGORY_MISC, TWEAK_MISC_HOKUTO_NO_KEN_MODE)
+	listn(0, 7) = "Return."
 	font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
 
-	repeat 7
+	repeat 8
 		key_list(cnt) = key_select(cnt)
 		keyrange = cnt + 1
 		pos wx + 38, wy + 40 + cnt * 19 - 2
@@ -638,7 +640,7 @@ TweakData(50, 4) = "Fist of the North Star Mode."
 
 	font lang(cfg_font1, cfg_font2), 13 - en * 2, 0
 
-	repeat 7
+	repeat 8
 		if ( listn(0, cs) == listn(0, cnt) ) {
 			if ( cnt == TWEAK_MISC_RANDOM_START_MP3 ) {
 				s = "Will make MP3s start playback from a random point.\nCould cause compatability issues."
@@ -659,6 +661,9 @@ TweakData(50, 4) = "Fist of the North Star Mode."
 				s = "Nani?!"
 			}
 			if ( cnt == 6 ) {
+				s = "Stops cicada noises from playing during the summer months."
+			}
+			if ( cnt == 7 ) {
 				s = "Return to the previous menu."
 			}
 			pos wx + 38, wy + 343
@@ -703,6 +708,10 @@ TweakData(50, 4) = "Fist of the North Star Mode."
 		gosub *IncrementTweak
 	}
 	if ( key == key_select(6) ) {
+		tc = TWEAK_CATEGORY_MISC
+		tn = TWEAK_MISC_DISABLE_CICADA_NOISES
+		gosub *ToggleTweak
+	if ( key == key_select(7) ) {
 		snd SOUNDLIST_OK1
         return
 	}

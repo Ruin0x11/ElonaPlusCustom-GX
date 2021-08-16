@@ -1542,6 +1542,19 @@
 		}
 		return
 	}
+	if ( mdata(MDATA_TYPE) == MAP_TYPE_TOWN & gdata(GDATA_AREA) != AREA_NOYEL ) {
+		if ( gdata(GDATA_MONTH) == 8 ) {
+			if ( rnd(2) == 0 ) {
+				flt
+				itemcreate -1, ITEM_ID_DYING_CICADA, locvar_map_placeupstairs_x, locvar_map_placeupstairs_y, 0
+			}
+		}
+		if ( gdata(GDATA_MONTH) == 9 ) {
+			flt
+			itemcreate -1, ITEM_ID_DYING_CICADA, locvar_map_placeupstairs_x, locvar_map_placeupstairs_y, 0
+		}
+		return
+	}
 	if ( mdata(MDATA_TYPE) == MAP_TYPE_TOWN | mdata(MDATA_TYPE) == MAP_TYPE_VILLAGE ) {
 		if ( gdata(GDATA_AREA) != AREA_AMUR_CAGE ) {
 			if ( rnd(3) == 0 ) {

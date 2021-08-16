@@ -722,6 +722,47 @@
 			kamen9 = 100
 		}
 	}
+	if ( gdata(GDATA_VERSION) < 6060 ) {
+		if ( gdata(GDATA_FLAG_SUB_AMURDAD) >= 10 ) {
+			gdata(GDATA_FLAG_SUB_AMURDAD) = 0
+		}
+		if ( cdatan(CDATAN_RACE, CHARA_PLAYER) == "slime" ) {
+			cdata(CDATA_PV_FIX, CHARA_PLAYER) = 200
+		}
+		if ( cdatan(CDATAN_RACE, CHARA_PLAYER) == "sheep" ) {
+			cdata(CDATA_PV_FIX, CHARA_PLAYER) = 120
+		}
+		if ( cdatan(CDATAN_RACE, CHARA_PLAYER) == "zombie" ) {
+			cdata(CDATA_PV_FIX, CHARA_PLAYER) = 150
+		}
+		if ( cdatan(CDATAN_RACE, CHARA_PLAYER) == "ent" ) {
+			cdata(CDATA_PV_FIX, CHARA_PLAYER) = 140
+		}
+		if ( cdatan(CDATAN_RACE, CHARA_PLAYER) == "armor" ) {
+			cdata(CDATA_PV_FIX, CHARA_PLAYER) = 200
+		}
+		if ( cdatan(CDATAN_RACE, CHARA_PLAYER) == "skeleton" ) {
+			cdata(CDATA_PV_FIX, CHARA_PLAYER) = 120
+		}
+		if ( cdatan(CDATAN_RACE, CHARA_PLAYER) == "wisp" ) {
+			cdata(CDATA_PV_FIX, CHARA_PLAYER) = 150
+		}
+		if ( cdatan(CDATAN_RACE, CHARA_PLAYER) == "rabbit" ) {
+			cdata(CDATA_DV_FIX, CHARA_PLAYER) = 120
+		}
+		if ( cdatan(CDATAN_RACE, CHARA_PLAYER) == "cat" ) {
+			cdata(CDATA_DV_FIX, CHARA_PLAYER) = 200
+		}
+		if ( cdatan(CDATAN_RACE, CHARA_PLAYER) == "dog" ) {
+			cdata(CDATA_DV_FIX, CHARA_PLAYER) = 200
+		}
+		if ( cdatan(CDATAN_RACE, CHARA_PLAYER) == "rat" ) {
+			cdata(CDATA_DV_FIX, CHARA_PLAYER) = 250
+		}
+		if ( cdatan(CDATAN_RACE, CHARA_PLAYER) == "catsister" ) {
+			cdata(CDATA_DV_FIX, CHARA_PLAYER) = 200
+		}
+	}
 	repeat 16
 		if ( cdata(CDATA_CHARA_PIC_ORG, cnt) == 1 ) {
 			cdata(CDATA_CHARA_PIC, cnt) = xy2pic(1, 0)

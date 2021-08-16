@@ -781,11 +781,13 @@
 	return
 
 #deffunc cell_check int cell_check_arg1, int cell_check_arg2
+	cellaccessover = 1
 	cellaccess = 1
 	cellchara = -1
 	cellfeat = -1
 	if ( cell_check_arg1 < 0 | cell_check_arg1 >= mdata(MDATA_WIDTH) | cell_check_arg2 < 0 | cell_check_arg2 >= mdata(MDATA_HEIGHT) ) {
 		cellaccess = 0
+		cellaccessover = 0
 		return
 	}
 	if ( map(cell_check_arg1, cell_check_arg2, 1) != 0 ) {

@@ -11579,6 +11579,8 @@
 					}
 				loop
 			}
+			p = 0
+			hometc = 0
 			repeat MAX_CHARA_TOTAL - MAX_CHARA_SAVE, MAX_CHARA_SAVE
 				rc = cnt
 				gosub *renewStatus
@@ -11587,13 +11589,34 @@
 				}
 				if ( cbit(CHARA_BIT_SUMMONED, cnt) == 1 & cdata(CDATA_RELATION, cnt) == (-3) | (cbit(CHARA_BIT_GUEST, cnt) == 1 & gdata(GDATA_AREA) == AREA_HOME) ) {
 					if ( cbit(CHARA_BIT_SANDBAG, cnt) == 0 ) {
-						if ( rnd(10) > 1 ) {
+						if ( rnd(2) == 0 ) {
 							cdata(CDATA_EXIST, cnt) = CHAR_STATE_DEAD
 							map(cdata(CDATA_X, cnt), cdata(CDATA_Y, cnt), 1) = 0
 						}
 					}
 				}
+				if ( gdata(GDATA_AREA) == AREA_HOME ) {
+					if ( cdata(CDATA_ID, cnt) == CREATURE_ID_MAGIC_BEE ) {
+						p++
+					}
+					if ( cdata(CDATA_ID, cnt) == CREATURE_ID_OXODE_THE_QUEEN_BEE ) {
+						if ( p <= 5 ) {
+							hometc = cnt
+						}
+					}
+				}
 			loop
+			if ( hometc != 0 ) {
+				flt
+				characreate -1, CREATURE_ID_MAGIC_BEE, cdata(CDATA_X, hometc), cdata(CDATA_Y, hometc)
+				cbitmod CHARA_BIT_GUEST, rc, TRUE
+				flt
+				characreate -1, CREATURE_ID_MAGIC_BEE, cdata(CDATA_X, hometc), cdata(CDATA_Y, hometc)
+				cbitmod CHARA_BIT_GUEST, rc, TRUE
+				flt
+				characreate -1, CREATURE_ID_MAGIC_BEE, cdata(CDATA_X, hometc), cdata(CDATA_Y, hometc)
+				cbitmod CHARA_BIT_GUEST, rc, TRUE
+			}
 			p = rnd(mdata(MDATA_HEIGHT) * mdata(MDATA_WIDTH) / 400 + 3)
 			if ( mdata(MDATA_TYPE) == MAP_TYPE_WORLD ) {
 				p = rnd(40)
@@ -11622,7 +11645,7 @@
 			}
 		}
 		mdata(MDATA_RENEW) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 + 120
-		if ( adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_RANCH | adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_CROP ) {
+		if ( adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_RANCH | adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_CROP | gdata(GDATA_AREA) == AREA_HOME ) {
 			mdata(MDATA_RENEW) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 + 24
 		}
 	}
@@ -14050,7 +14073,7 @@
 				}
 				evadd EVENT_KARAVIKA_SETUP_MAP, 0
 			}
-			if ( gdata(GDATA_FLAG_KAMIKAZE) \ 10 != 0 ) {
+			if ( gdata(GDATA_FLAG_KAMIKAZE) \ 20 != 0 ) {
 				return
 			}
 			spo = rnd(6)
@@ -14162,7 +14185,7 @@
 				cdata(CDATA_TARGET, rc) = qtc
 				cdatan(CDATAN_NAME, rc) = lang("カラヴィカのストーカー", "Stalker of Karavika")
 			}
-			if ( gdata(GDATA_FLAG_KAMIKAZE) > 400 ) {
+			if ( gdata(GDATA_FLAG_KAMIKAZE) >= 400 ) {
 				flt , 4
 				characreate -1, p, x, y
 				cdata(CDATA_AI_AGGRO, rc) = 3000
@@ -14209,11 +14232,15 @@
 			if ( gdata(GDATA_FLAG_KAMIKAZE) == 250 ) {
 				txt_questupdate
 				gdata(GDATA_FLAG_SUB_KAMIKAZE) = 3
+				snd SOUNDLIST_SIREN
 				txtef COLOR_SKY_BLUE
 				txt lang("伝令「パルミア軍の撤退が完了しました！これ以上ここに留まる必要はありません。機を見て地下から退却してください！」", "The messenger says: \"The retreat of our army is over now. You don't need to fight them any more. Please leave at once!\"")
 				txtmore
 				txt lang("階段が現れた。", "Suddenly, stairs appear.")
 				cell_featset 18, 9, tile_downstairs, CELL_FEATURE_DOWNSTAIRS, 1
+			}
+			if ( gdata(GDATA_FLAG_KAMIKAZE) \ 2 == 1 ) {
+				return
 			}
 			flt
 			characreate -1, p, x, y

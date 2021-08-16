@@ -298,7 +298,9 @@
 				color 0, 0, 0
 				pos sx + 14, sy
 				gcopy 3, 0, 440, 64, 16
-				mes "" + cdata(CDATA_DV, CHARA_PLAYER) + "/" + cdata(CDATA_PV, CHARA_PLAYER)
+				dvpc = cdata(CDATA_DV, CHARA_PLAYER) * cdata(CDATA_DV_FIX, CHARA_PLAYER) / 100 + cdata(CDATA_DV_FIX, CHARA_PLAYER) - 100
+				pvpc = (cdata(CDATA_PV, CHARA_PLAYER) + cdata(CDATA_PV_FIX, CHARA_PLAYER) / 25) * cdata(CDATA_PV_FIX, CHARA_PLAYER) / 100
+				mes "" + dvpc + "/" + pvpc
 			}
 		}
 	loop
@@ -7202,6 +7204,11 @@
 	if ( cdata(CDATA_ID, r1) == CREATURE_ID_JALDABAOTH_THE_CHAOS_CHILD ) {
 		if ( gdata(GDATA_FLAG_MAIN) == 860 ) {
 			sdata(SKILL_ATTR_SPD, r1) = 666666
+		}
+	}
+	if ( cdata(CDATA_ID, r1) == CREATURE_ID_SPEED_HACK_CHEATAH ) {
+		if ( sdata(SKILL_ATTR_SPD, r1) < 1000000 ) {
+			sdata(SKILL_ATTR_SPD, r1) = 1000000
 		}
 	}
 	if ( cdata(CDATA_ATTACK_STYLE, r1) & STYLE_SHIELD ) {
