@@ -3686,11 +3686,6 @@
 	if ( instr(buff, 0, "?") != (-1) ) {
         goto *dbg_ShowHelp
 	}
-	if ( buff == "lua\n" ) {
-        noteadd "Lua mode activated."
-        dbg_luaConsole = 1
-        goto *console_write
-	}
 	if ( int(buff) == 1 ) {
 		repeat MAX_CHARA_TOTAL
 			noteadd "" + cnt + "\t" + cdatan(CDATAN_NAME, cnt) + "\tExist:" + cdata(CDATA_EXIST, cnt) + "\tRespawn:" + cdata(CDATA_RESPAWN, cnt) + "\tRole:" + cdata(CDATA_ROLE, cnt)
@@ -3986,6 +3981,16 @@
 
 	if ( gdata(GDATA_WIZARD) ) {
 
+		/********** RUIN0X11 CUSTOM - BEGINNING **********/ 
+
+		if ( buff == "lua\n" ) {
+			noteadd "Lua mode activated."
+			dbg_luaConsole = 1
+			goto *console_write
+		}
+
+		/********** RUIN0X11 CUSTOM - ENDING **********/
+
 		/********** ANNA CUSTOM - BEGINNING **********/ // Spawn npc command
 
 		if ( instr(buff, 0, "spawn") != (-1) ) {
@@ -4133,7 +4138,6 @@
     noteadd "\twizard\t\tEnables wizard mode."
     noteadd "\tdump_buffers\tDump the graphics buffers to .bmp files."
     noteadd "\texport_itemlist\tCreates a default ItemList.txt file."
-    noteadd "\tlua\t\tToggles Lua console mode."
     noteadd ""
     noteadd "\tThe commands below can be used in the Wizard mode."
     noteadd "\tgain_spell\tPC gains all spells."
@@ -4143,6 +4147,7 @@
     noteadd "\tallinv\t\tDisplays all the items in the map."
     noteadd "\tspawn\t\tSpawns a character by numeric ID."
     noteadd "\tadd_ally\tAdds an ally by character index."
+    noteadd "\tlua\t\tToggles Lua console mode."
     noteadd ""
     noteadd "\tThe commands below should be only used to deal with certain problems."
     noteadd "\t108fix\t\tTurns all the NPCs in the map hostile."
