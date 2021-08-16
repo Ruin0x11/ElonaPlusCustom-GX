@@ -1,6 +1,6 @@
 diff -U5 --recursive ../2.05-borscht/action.hsp ../2.06-borscht/action.hsp
---- ../2.05-borscht/action.hsp	2021-08-15 17:43:01.281927200 -0700
-+++ ../2.06-borscht/action.hsp	2021-08-15 18:12:32.686299900 -0700
+--- ../2.05-borscht/action.hsp	2021-08-15 18:28:56.139859500 -0700
++++ ../2.06-borscht/action.hsp	2021-08-15 18:29:03.254329900 -0700
 @@ -14,11 +14,11 @@
  	if ( ibit(ITEM_BIT_NO_DROP, ci) ) {
  		snd SOUNDLIST_FAIL1
@@ -232,8 +232,8 @@ diff -U5 --recursive ../2.05-borscht/action.hsp ../2.06-borscht/action.hsp
  				if ( efid == SKILL_SPELL_GEM_POWER ) {
  					dbid = 1076
 diff -U5 --recursive ../2.05-borscht/ai.hsp ../2.06-borscht/ai.hsp
---- ../2.05-borscht/ai.hsp	2021-08-15 17:43:01.343590500 -0700
-+++ ../2.06-borscht/ai.hsp	2021-08-15 18:12:32.764316800 -0700
+--- ../2.05-borscht/ai.hsp	2021-08-15 18:28:56.214183200 -0700
++++ ../2.06-borscht/ai.hsp	2021-08-15 18:29:03.328865100 -0700
 @@ -42,10 +42,18 @@
  			if ( cellfeat == 21 ) {
  				cellaccess = 1
@@ -556,8 +556,8 @@ diff -U5 --recursive ../2.05-borscht/ai.hsp ../2.06-borscht/ai.hsp
  	buffact = 0
  	if ( cdata(CDATA_ID, cc) == CREATURE_ID_BLACK_GAUNTLET_LEOLD ) {
 diff -U5 --recursive ../2.05-borscht/blend.hsp ../2.06-borscht/blend.hsp
---- ../2.05-borscht/blend.hsp	2021-08-15 17:43:01.407748100 -0700
-+++ ../2.06-borscht/blend.hsp	2021-08-15 18:12:32.807985800 -0700
+--- ../2.05-borscht/blend.hsp	2021-08-15 18:28:56.265709400 -0700
++++ ../2.06-borscht/blend.hsp	2021-08-15 18:29:03.383351200 -0700
 @@ -23,12 +23,12 @@
  		locvar_rpmatname_s = refchara(locvar_rpmatname_p, DBSPEC_CHARA_NAME_ORG, 1) + lang("の死体", " corpse")
  		return locvar_rpmatname_s
@@ -701,8 +701,8 @@ diff -U5 --recursive ../2.05-borscht/blend.hsp ../2.06-borscht/blend.hsp
  
  
 diff -U5 --recursive ../2.05-borscht/calculation.hsp ../2.06-borscht/calculation.hsp
---- ../2.05-borscht/calculation.hsp	2021-08-15 17:43:01.440907600 -0700
-+++ ../2.06-borscht/calculation.hsp	2021-08-15 18:12:32.844131000 -0700
+--- ../2.05-borscht/calculation.hsp	2021-08-15 18:28:56.305408500 -0700
++++ ../2.06-borscht/calculation.hsp	2021-08-15 18:29:03.437846000 -0700
 @@ -747,12 +747,12 @@
  	if ( gdata(GDATA_FLAG_GUILD_FIGHTER) ) {
  		locvar_calcitemvalue_value /= 2
@@ -832,8 +832,8 @@ diff -U5 --recursive ../2.05-borscht/calculation.hsp ../2.06-borscht/calculation
  	else {
  		if ( cdata(CDATA_QUEST_NPC, r1) != 0 ) {
 diff -U5 --recursive ../2.05-borscht/chara.hsp ../2.06-borscht/chara.hsp
---- ../2.05-borscht/chara.hsp	2021-08-15 17:43:01.495661500 -0700
-+++ ../2.06-borscht/chara.hsp	2021-08-15 18:12:32.906489300 -0700
+--- ../2.05-borscht/chara.hsp	2021-08-15 18:28:56.365266600 -0700
++++ ../2.06-borscht/chara.hsp	2021-08-15 18:29:03.526507900 -0700
 @@ -2209,27 +2209,27 @@
  	}
  	if ( cdata(CDATA_ID, rc) == CREATURE_ID_GIRAFFE | cdata(CDATA_ID, rc) == CREATURE_ID_GI_ANT | cdata(CDATA_ID, rc) == CREATURE_ID_SAMURAI_ANT | cdata(CDATA_ID, rc) == CREATURE_ID_STEEL_ARMOR_SPIDER | cdata(CDATA_ID, rc) == CREATURE_ID_GOLD_ARMOR_ANT | cdata(CDATA_ID, rc) == CREATURE_ID_MEIDA | cdata(CDATA_ID, rc) == CREATURE_ID_OYAUKAMUI | cdata(CDATA_ID, rc) == CREATURE_ID_HAM_TAIROU | cdata(CDATA_ID, rc) == CREATURE_ID_DISASTER | cdata(CDATA_ID, rc) == CREATURE_ID_BLACK_WING | cdata(CDATA_ID, rc) == CREATURE_ID_SEA_FALLEN_ANGEL | cdata(CDATA_ID, rc) == CREATURE_ID_ROPER | cdata(CDATA_ID, rc) == CREATURE_ID_BEILGENA_THE_ARTIFICIAL_DRAGON | cdata(CDATA_ID, rc) == CREATURE_ID_UNIVERSE_INVADER | cdata(CDATA_ID, rc) == CREATURE_ID_HUNDRED_EYES ) {
@@ -1034,8 +1034,8 @@ diff -U5 --recursive ../2.05-borscht/chara.hsp ../2.06-borscht/chara.hsp
  		goto *cm_init
  	}
 diff -U5 --recursive ../2.05-borscht/chara_func.hsp ../2.06-borscht/chara_func.hsp
---- ../2.05-borscht/chara_func.hsp	2021-08-15 17:43:01.584537600 -0700
-+++ ../2.06-borscht/chara_func.hsp	2021-08-15 18:12:32.997297500 -0700
+--- ../2.05-borscht/chara_func.hsp	2021-08-15 18:28:56.501189100 -0700
++++ ../2.06-borscht/chara_func.hsp	2021-08-15 18:29:03.670815600 -0700
 @@ -17,12 +17,12 @@
  			cdata(CDATA_ACT_HEAL, fixaiact_arg1) = 690
  		}
@@ -1117,13 +1117,13 @@ diff -U5 --recursive ../2.05-borscht/chara_func.hsp ../2.06-borscht/chara_func.h
  	loop
  	return locvar_findchara_p
  
-+#defcfunc findcharahome int findcharahome_prm0
++#defcfunc findcharahome int findcharahome_charaid
 +	locvar_findchara_p = 0
 +	repeat 245 - 57, 57
 +		if ( cdata(CDATA_AREA, cnt) != 7 ) {
 +			continue
 +		}
-+		if ( cdata(CDATA_ID, cnt) == findcharahome_prm0 ) {
++		if ( cdata(CDATA_ID, cnt) == findcharahome_charaid ) {
 +			locvar_findchara_p = cnt
 +			break
 +		}
@@ -1701,8 +1701,8 @@ diff -U5 --recursive ../2.05-borscht/chara_func.hsp ../2.06-borscht/chara_func.h
  
  
 diff -U5 --recursive ../2.05-borscht/chat.hsp ../2.06-borscht/chat.hsp
---- ../2.05-borscht/chat.hsp	2021-08-15 17:43:02.209897700 -0700
-+++ ../2.06-borscht/chat.hsp	2021-08-15 18:12:33.626280200 -0700
+--- ../2.05-borscht/chat.hsp	2021-08-15 18:28:57.201195100 -0700
++++ ../2.06-borscht/chat.hsp	2021-08-15 18:29:04.394762600 -0700
 @@ -1274,10 +1274,208 @@
  			}
  		}
@@ -2507,8 +2507,8 @@ diff -U5 --recursive ../2.05-borscht/chat.hsp ../2.06-borscht/chat.hsp
  
  
 diff -U5 --recursive ../2.05-borscht/chips.hsp ../2.06-borscht/chips.hsp
---- ../2.05-borscht/chips.hsp	2021-08-15 17:43:02.292575400 -0700
-+++ ../2.06-borscht/chips.hsp	2021-08-15 18:12:33.672567300 -0700
+--- ../2.05-borscht/chips.hsp	2021-08-15 18:28:57.250711500 -0700
++++ ../2.06-borscht/chips.hsp	2021-08-15 18:29:04.437814800 -0700
 @@ -1467,10 +1467,12 @@
  	chipc(CHIPC_HEIGHT, xy2pic(17, 31)) = inf_tiles * 2, inf_tiles + 16
  	chipc(CHIPC_HEIGHT, xy2pic(18, 31)) = inf_tiles * 2, inf_tiles + 16
@@ -2523,8 +2523,8 @@ diff -U5 --recursive ../2.05-borscht/chips.hsp ../2.06-borscht/chips.hsp
  		deco(0, 2 + cnt * 16) = 1, 2
  		deco(0, 4 + cnt * 16) = 1, 0
 diff -U5 --recursive ../2.05-borscht/command.hsp ../2.06-borscht/command.hsp
---- ../2.05-borscht/command.hsp	2021-08-15 17:43:02.504323200 -0700
-+++ ../2.06-borscht/command.hsp	2021-08-15 18:12:33.884326900 -0700
+--- ../2.05-borscht/command.hsp	2021-08-15 18:28:57.444286600 -0700
++++ ../2.06-borscht/command.hsp	2021-08-15 18:29:04.598788700 -0700
 @@ -52,12 +52,12 @@
  	}
  	else {
@@ -3151,8 +3151,8 @@ diff -U5 --recursive ../2.05-borscht/command.hsp ../2.06-borscht/command.hsp
  
  
 diff -U5 --recursive ../2.05-borscht/db_card.hsp ../2.06-borscht/db_card.hsp
---- ../2.05-borscht/db_card.hsp	2021-08-15 17:43:02.786512500 -0700
-+++ ../2.06-borscht/db_card.hsp	2021-08-15 18:12:34.344845000 -0700
+--- ../2.05-borscht/db_card.hsp	2021-08-15 18:28:57.758216200 -0700
++++ ../2.06-borscht/db_card.hsp	2021-08-15 18:29:04.953654500 -0700
 @@ -1,6 +1,149 @@
  *db_card
 +	if ( dbid == 1048 ) {
@@ -3314,8 +3314,8 @@ diff -U5 --recursive ../2.05-borscht/db_card.hsp ../2.06-borscht/db_card.hsp
  
  
 diff -U5 --recursive ../2.05-borscht/db_creature.hsp ../2.06-borscht/db_creature.hsp
---- ../2.05-borscht/db_creature.hsp	2021-08-15 17:43:03.780280800 -0700
-+++ ../2.06-borscht/db_creature.hsp	2021-08-15 18:12:35.704404100 -0700
+--- ../2.05-borscht/db_creature.hsp	2021-08-15 18:28:58.964448900 -0700
++++ ../2.06-borscht/db_creature.hsp	2021-08-15 18:29:06.200081800 -0700
 @@ -2,34291 +2,34654 @@
  	if ( dbmode != DBMODE_FIND ) {
  		goto *db_creature2
@@ -49474,8 +49474,8 @@ diff -U5 --recursive ../2.05-borscht/db_creature.hsp ../2.06-borscht/db_creature
  
  
 diff -U5 --recursive ../2.05-borscht/db_item.hsp ../2.06-borscht/db_item.hsp
---- ../2.05-borscht/db_item.hsp	2021-08-15 17:43:05.133442600 -0700
-+++ ../2.06-borscht/db_item.hsp	2021-08-15 18:12:37.477839400 -0700
+--- ../2.05-borscht/db_item.hsp	2021-08-15 18:29:00.656948200 -0700
++++ ../2.06-borscht/db_item.hsp	2021-08-15 18:29:07.902953100 -0700
 @@ -1,19 +1,19 @@
  *db_item
  	if ( dbmode != DBMODE_FIND ) {
@@ -96315,7 +96315,7 @@ diff -U5 --recursive ../2.05-borscht/db_item.hsp ../2.06-borscht/db_item.hsp
 +			return 0
 +		}
 +		if ( dbmode == DBMODE_ON_DRINK ) {
-+			efid = 1174
++			efid = SKILL_EFFECT_GOLDEN_MEAD
 +			efp = 100
 +			gosub *drinkPotion
 +			return -1
@@ -96640,8 +96640,8 @@ diff -U5 --recursive ../2.05-borscht/db_item.hsp ../2.06-borscht/db_item.hsp
  
  
 diff -U5 --recursive ../2.05-borscht/db_race.hsp ../2.06-borscht/db_race.hsp
---- ../2.05-borscht/db_race.hsp	2021-08-15 17:43:05.300438200 -0700
-+++ ../2.06-borscht/db_race.hsp	2021-08-15 18:12:37.648906700 -0700
+--- ../2.05-borscht/db_race.hsp	2021-08-15 18:29:00.830963800 -0700
++++ ../2.06-borscht/db_race.hsp	2021-08-15 18:29:08.083057500 -0700
 @@ -1388,11 +1388,11 @@
  			if ( mode == MODELIST_CHARA_CREATION ) {
  				cdata(CDATA_SEX, rc) = cmsex
@@ -96826,8 +96826,8 @@ diff -U5 --recursive ../2.05-borscht/db_race.hsp ../2.06-borscht/db_race.hsp
  			skillinit SKILL_ATTR_CON, rc, 5
 Only in ../2.05-borscht/: elonaplus
 diff -U5 --recursive ../2.05-borscht/event.hsp ../2.06-borscht/event.hsp
---- ../2.05-borscht/event.hsp	2021-08-15 17:43:05.388972000 -0700
-+++ ../2.06-borscht/event.hsp	2021-08-15 18:12:37.747575100 -0700
+--- ../2.05-borscht/event.hsp	2021-08-15 18:29:00.938284500 -0700
++++ ../2.06-borscht/event.hsp	2021-08-15 18:29:08.191248600 -0700
 @@ -2461,11 +2461,11 @@
  				}
  			}
@@ -96842,8 +96842,8 @@ diff -U5 --recursive ../2.05-borscht/event.hsp ../2.06-borscht/event.hsp
  
  
 diff -U5 --recursive ../2.05-borscht/help.hsp ../2.06-borscht/help.hsp
---- ../2.05-borscht/help.hsp	2021-08-15 17:43:05.594588000 -0700
-+++ ../2.06-borscht/help.hsp	2021-08-15 18:12:37.902008800 -0700
+--- ../2.05-borscht/help.hsp	2021-08-15 18:29:01.104060700 -0700
++++ ../2.06-borscht/help.hsp	2021-08-15 18:29:08.346830300 -0700
 @@ -5307,11 +5307,11 @@
  		}
  	loop
@@ -97107,30 +97107,30 @@ diff -U5 --recursive ../2.05-borscht/help.hsp ../2.06-borscht/help.hsp
 +				if ( rnd(20) == 0 ) {
 +					homeu++
 +					if ( (gdata(GDATA_DAY) + homeu) \ 4 == 0 ) {
-+						if ( findcharahome(1045) == 0 ) {
++						if ( findcharahome(CREATURE_ID_SCARD_THE_HAPPY_SWALLOW) == 0 ) {
 +							characreate -1, CREATURE_ID_SCARD_THE_HAPPY_SWALLOW, -3, 0
-+							cdata(CDATA_ROLE, rc) = 2007
++							cdata(CDATA_ROLE, rc) = ROLE_GUEST_HOUSEMATE
 +							break
 +						}
 +					}
 +					if ( (gdata(GDATA_DAY) + homeu) \ 4 == 1 ) {
-+						if ( findcharahome(1044) == 0 ) {
++						if ( findcharahome(CREATURE_ID_OXODE_THE_QUEEN_BEE) == 0 ) {
 +							characreate -1, CREATURE_ID_OXODE_THE_QUEEN_BEE, -3, 0
-+							cdata(CDATA_ROLE, rc) = 2007
++							cdata(CDATA_ROLE, rc) = ROLE_GUEST_HOUSEMATE
 +							break
 +						}
 +					}
 +					if ( (gdata(GDATA_DAY) + homeu) \ 4 == 2 ) {
-+						if ( findcharahome(1043) == 0 ) {
++						if ( findcharahome(CREATURE_ID_IMARITUKA_THE_ZASIKI_WARAI) == 0 ) {
 +							characreate -1, CREATURE_ID_IMARITUKA_THE_ZASIKI_WARAI, -3, 0
-+							cdata(CDATA_ROLE, rc) = 2007
++							cdata(CDATA_ROLE, rc) = ROLE_GUEST_HOUSEMATE
 +							break
 +						}
 +					}
 +					if ( (gdata(GDATA_DAY) + homeu) \ 4 == 3 ) {
-+						if ( findcharahome(1042) == 0 ) {
++						if ( findcharahome(CREATURE_ID_TELHUREZA_THE_HOUSE_GUARD) == 0 ) {
 +							characreate -1, CREATURE_ID_TELHUREZA_THE_HOUSE_GUARD, -3, 0
-+							cdata(CDATA_ROLE, rc) = 2007
++							cdata(CDATA_ROLE, rc) = ROLE_GUEST_HOUSEMATE
 +							break
 +						}
 +					}
@@ -97141,8 +97141,8 @@ diff -U5 --recursive ../2.05-borscht/help.hsp ../2.06-borscht/help.hsp
  					break
  				}
 diff -U5 --recursive ../2.05-borscht/init.hsp ../2.06-borscht/init.hsp
---- ../2.05-borscht/init.hsp	2021-08-15 17:43:05.799297300 -0700
-+++ ../2.06-borscht/init.hsp	2021-08-15 18:12:38.190670600 -0700
+--- ../2.05-borscht/init.hsp	2021-08-15 18:29:01.381810400 -0700
++++ ../2.06-borscht/init.hsp	2021-08-15 18:29:08.608892300 -0700
 @@ -716,10 +716,13 @@
  		return
  	}
@@ -97205,11 +97205,11 @@ diff -U5 --recursive ../2.05-borscht/init.hsp ../2.06-borscht/init.hsp
  	sndload folder + "smoke03.wav", SOUNDLIST_SMOKE03
  	sndload folder + "tm2_river000.wav", SOUNDLIST_TM2_RIVER000
  	sndload folder + "tm2_river001.wav", SOUNDLIST_TM2_RIVER001
-+	sndload folder + "semi1.wav", 294
-+	sndload folder + "semi2.wav", 295
-+	sndload folder + "semi3.wav", 296
-+	sndload folder + "semi4.wav", 297
-+	sndload folder + "semi5.wav", 298
++	sndload folder + "semi1.wav", SOUNDLIST_SEMI1
++	sndload folder + "semi2.wav", SOUNDLIST_SEMI2
++	sndload folder + "semi3.wav", SOUNDLIST_SEMI3
++	sndload folder + "semi4.wav", SOUNDLIST_SEMI4
++	sndload folder + "semi5.wav", SOUNDLIST_SEMI5
  	folder = exedir + "user\\sound\\"
  	sndload folder + "se0.wav", SOUNDLIST_USER_SE00
  	sndload folder + "se1.wav", SOUNDLIST_USER_SE01
@@ -97225,22 +97225,22 @@ diff -U5 --recursive ../2.05-borscht/init.hsp ../2.06-borscht/init.hsp
 +		if ( gdata(GDATA_WEATHER) == WEATHER_CLEAR ) {
 +			if ( gdata(GDATA_MONTH) >= 7 & gdata(GDATA_MONTH) <= 9 ) {
 +				if ( gdata(GDATA_HOUR) >= 5 & gdata(GDATA_HOUR) < 10 ) {
-+					env = 296
++					env = SOUNDLIST_SEMI3
 +				}
 +				if ( gdata(GDATA_HOUR) >= 10 & gdata(GDATA_HOUR) < 15 ) {
 +					if ( gdata(GDATA_DAY) \ 2 == 0 ) {
-+						env = 294
++						env = SOUNDLIST_SEMI1
 +					}
 +					else {
-+						env = 297
++						env = SOUNDLIST_SEMI4
 +					}
 +				}
 +				if ( gdata(GDATA_HOUR) >= 15 & gdata(GDATA_HOUR) < 20 ) {
 +					if ( gdata(GDATA_DAY) \ 2 == 0 ) {
-+						env = 295
++						env = SOUNDLIST_SEMI2
 +					}
 +					else {
-+						env = 298
++						env = SOUNDLIST_SEMI5
 +					}
 +				}
 +			}
@@ -97278,8 +97278,8 @@ diff -U5 --recursive ../2.05-borscht/init.hsp ../2.06-borscht/init.hsp
  		buf += "0"
  		if ( ci >= 0 ) {
 diff -U5 --recursive ../2.05-borscht/item.hsp ../2.06-borscht/item.hsp
---- ../2.05-borscht/item.hsp	2021-08-15 17:43:05.929792500 -0700
-+++ ../2.06-borscht/item.hsp	2021-08-15 18:12:38.316153200 -0700
+--- ../2.05-borscht/item.hsp	2021-08-15 18:29:01.512952400 -0700
++++ ../2.06-borscht/item.hsp	2021-08-15 18:29:08.734426200 -0700
 @@ -36,21 +36,21 @@
  	if ( locvar_convertartifact_f == 0 ) {
  		return convertartifact_arg1
@@ -97305,8 +97305,8 @@ diff -U5 --recursive ../2.05-borscht/item.hsp ../2.06-borscht/item.hsp
  	return convertartifact_arg1
  
 diff -U5 --recursive ../2.05-borscht/item_func.hsp ../2.06-borscht/item_func.hsp
---- ../2.05-borscht/item_func.hsp	2021-08-15 17:43:06.026107200 -0700
-+++ ../2.06-borscht/item_func.hsp	2021-08-15 18:12:38.419584500 -0700
+--- ../2.05-borscht/item_func.hsp	2021-08-15 18:29:01.614301300 -0700
++++ ../2.06-borscht/item_func.hsp	2021-08-15 18:29:08.826924800 -0700
 @@ -1797,11 +1797,11 @@
  			locvar_itemowner_s += "(Lost property)"
  		}
@@ -97321,8 +97321,8 @@ diff -U5 --recursive ../2.05-borscht/item_func.hsp ../2.06-borscht/item_func.hsp
  		if ( inv(INV_ITEM_SUB_NAME, itemname_itemid) == 0 ) {
  			locvar_itemowner_s += lang(" Lv", " Level ") + inv(INV_ITEM_PARAM2, itemname_itemid) + lang(" (空)", "(Empty)")
 diff -U5 --recursive ../2.05-borscht/main.hsp ../2.06-borscht/main.hsp
---- ../2.05-borscht/main.hsp	2021-08-15 17:43:06.038632900 -0700
-+++ ../2.06-borscht/main.hsp	2021-08-15 18:12:38.431089100 -0700
+--- ../2.05-borscht/main.hsp	2021-08-15 18:29:01.627365800 -0700
++++ ../2.06-borscht/main.hsp	2021-08-15 18:29:08.841675000 -0700
 @@ -181,11 +181,11 @@
  	if ( dbg_randseed != 0 ) {
  		randseed = dbg_randseed
@@ -97337,8 +97337,8 @@ diff -U5 --recursive ../2.05-borscht/main.hsp ../2.06-borscht/main.hsp
  #deffunc netload str netload_filename
  	netrequest netload_filename
 diff -U5 --recursive ../2.05-borscht/map.hsp ../2.06-borscht/map.hsp
---- ../2.05-borscht/map.hsp	2021-08-15 17:43:06.173151100 -0700
-+++ ../2.06-borscht/map.hsp	2021-08-15 18:12:38.615308800 -0700
+--- ../2.05-borscht/map.hsp	2021-08-15 18:29:01.810749400 -0700
++++ ../2.06-borscht/map.hsp	2021-08-15 18:29:09.014936900 -0700
 @@ -11634,25 +11634,48 @@
  							cell_refresh inv(INV_ITEM_X, cnt), inv(INV_ITEM_Y, cnt)
  						}
@@ -97450,8 +97450,8 @@ diff -U5 --recursive ../2.05-borscht/map.hsp ../2.06-borscht/map.hsp
  			cdata(CDATA_TARGET, rc) = 0
  			return
 diff -U5 --recursive ../2.05-borscht/map_func.hsp ../2.06-borscht/map_func.hsp
---- ../2.05-borscht/map_func.hsp	2021-08-15 17:43:06.232875500 -0700
-+++ ../2.06-borscht/map_func.hsp	2021-08-15 18:12:38.675226900 -0700
+--- ../2.05-borscht/map_func.hsp	2021-08-15 18:29:01.856431400 -0700
++++ ../2.06-borscht/map_func.hsp	2021-08-15 18:29:09.069743400 -0700
 @@ -355,11 +355,11 @@
  		tile_default = xy2pic(12, 1)
  	}
@@ -97596,8 +97596,8 @@ diff -U5 --recursive ../2.05-borscht/map_func.hsp ../2.06-borscht/map_func.hsp
  
  *map_connectroom_FOR1
 diff -U5 --recursive ../2.05-borscht/map_user.hsp ../2.06-borscht/map_user.hsp
---- ../2.05-borscht/map_user.hsp	2021-08-15 17:43:06.309422000 -0700
-+++ ../2.06-borscht/map_user.hsp	2021-08-15 18:12:38.778718800 -0700
+--- ../2.05-borscht/map_user.hsp	2021-08-15 18:29:01.955642100 -0700
++++ ../2.06-borscht/map_user.hsp	2021-08-15 18:29:09.159289400 -0700
 @@ -558,11 +558,11 @@
  			else {
  				inv(INV_ITEM_SHOP_SAMPLE, cnt) = 0
@@ -98038,8 +98038,8 @@ diff -U5 --recursive ../2.05-borscht/map_user.hsp ../2.06-borscht/map_user.hsp
  	gosub *screen_draw
  	goto *com_home
 diff -U5 --recursive ../2.05-borscht/material.hsp ../2.06-borscht/material.hsp
---- ../2.05-borscht/material.hsp	2021-08-15 17:43:06.324465800 -0700
-+++ ../2.06-borscht/material.hsp	2021-08-15 18:12:38.795233300 -0700
+--- ../2.05-borscht/material.hsp	2021-08-15 18:29:01.972689000 -0700
++++ ../2.06-borscht/material.hsp	2021-08-15 18:29:09.175040100 -0700
 @@ -90,14 +90,14 @@
  	locvar_matgetmain_s = "マテリアル:" + matname(matdelmain_arg1) + "を" + locvar_matgetmain_n + "個失った"
  	txtef COLOR_BLUE
@@ -98110,8 +98110,8 @@ diff -U5 --recursive ../2.05-borscht/material.hsp ../2.06-borscht/material.hsp
  
  
 diff -U5 --recursive ../2.05-borscht/module.hsp ../2.06-borscht/module.hsp
---- ../2.05-borscht/module.hsp	2021-08-15 17:43:06.480967100 -0700
-+++ ../2.06-borscht/module.hsp	2021-08-15 18:12:38.907670100 -0700
+--- ../2.05-borscht/module.hsp	2021-08-15 18:29:02.106852500 -0700
++++ ../2.06-borscht/module.hsp	2021-08-15 18:29:09.309184200 -0700
 @@ -800,15 +800,17 @@
  #deffunc cell_featclear int cell_featclear_arg1, int cell_featclear_arg2
  	map(cell_featclear_arg1, cell_featclear_arg2, MAP_FEATS_ON_TILE) = 0
@@ -98144,8 +98144,8 @@ diff -U5 --recursive ../2.05-borscht/module.hsp ../2.06-borscht/module.hsp
  	goto *label_0892
  
 diff -U5 --recursive ../2.05-borscht/proc.hsp ../2.06-borscht/proc.hsp
---- ../2.05-borscht/proc.hsp	2021-08-15 17:43:06.762822800 -0700
-+++ ../2.06-borscht/proc.hsp	2021-08-15 18:12:39.213106900 -0700
+--- ../2.05-borscht/proc.hsp	2021-08-15 18:29:02.411814100 -0700
++++ ../2.06-borscht/proc.hsp	2021-08-15 18:29:09.593104500 -0700
 @@ -1127,11 +1127,11 @@
  			}
  		}
@@ -98393,8 +98393,8 @@ diff -U5 --recursive ../2.05-borscht/proc.hsp ../2.06-borscht/proc.hsp
 Only in ../2.05-borscht/: scene1.hsp
 Only in ../2.05-borscht/: scene2.hsp
 diff -U5 --recursive ../2.05-borscht/screen.hsp ../2.06-borscht/screen.hsp
---- ../2.05-borscht/screen.hsp	2021-08-15 17:43:07.152892700 -0700
-+++ ../2.06-borscht/screen.hsp	2021-08-15 18:12:39.596876300 -0700
+--- ../2.05-borscht/screen.hsp	2021-08-15 18:29:02.829624700 -0700
++++ ../2.06-borscht/screen.hsp	2021-08-15 18:29:09.935956700 -0700
 @@ -301,11 +301,13 @@
  			}
  			else {
@@ -98505,8 +98505,8 @@ diff -U5 --recursive ../2.05-borscht/screen.hsp ../2.06-borscht/screen.hsp
  
  
 diff -U5 --recursive ../2.05-borscht/system.hsp ../2.06-borscht/system.hsp
---- ../2.05-borscht/system.hsp	2021-08-15 17:43:07.218132200 -0700
-+++ ../2.06-borscht/system.hsp	2021-08-15 18:12:39.654373400 -0700
+--- ../2.05-borscht/system.hsp	2021-08-15 18:29:02.891228200 -0700
++++ ../2.06-borscht/system.hsp	2021-08-15 18:29:10.005015900 -0700
 @@ -38,11 +38,11 @@
  	}
  	gdata(GDATA_TEMPORARY_FLAGS2) = 0
@@ -98669,8 +98669,8 @@ diff -U5 --recursive ../2.05-borscht/system.hsp ../2.06-borscht/system.hsp
  		dialog lang("二重起動のため終了します。", "The program is already running."), 1
  		end
 diff -U5 --recursive ../2.05-borscht/tcg.hsp ../2.06-borscht/tcg.hsp
---- ../2.05-borscht/tcg.hsp	2021-08-15 17:43:07.289746500 -0700
-+++ ../2.06-borscht/tcg.hsp	2021-08-15 18:12:39.723620800 -0700
+--- ../2.05-borscht/tcg.hsp	2021-08-15 18:29:02.951098600 -0700
++++ ../2.06-borscht/tcg.hsp	2021-08-15 18:29:10.064160700 -0700
 @@ -836,11 +836,11 @@
  	snd SOUNDLIST_CARD1
  	cdbitmod 1, opencard_arg1, 1
@@ -98698,8 +98698,8 @@ diff -U5 --recursive ../2.05-borscht/tcg.hsp ../2.06-borscht/tcg.hsp
  	dim locvar_tcgdraw_efllist, 10, locvar_tcgdraw_efllistmax
  	dim locvar_tcginit_elist, 10, 8 * 2 + 7
 diff -U5 --recursive ../2.05-borscht/tcg_ai.hsp ../2.06-borscht/tcg_ai.hsp
---- ../2.05-borscht/tcg_ai.hsp	2021-08-15 17:43:07.311894900 -0700
-+++ ../2.06-borscht/tcg_ai.hsp	2021-08-15 18:12:39.752290600 -0700
+--- ../2.05-borscht/tcg_ai.hsp	2021-08-15 18:29:02.977490300 -0700
++++ ../2.06-borscht/tcg_ai.hsp	2021-08-15 18:29:10.089785300 -0700
 @@ -178,12 +178,12 @@
  	if ( gameover() ) {
  		return
