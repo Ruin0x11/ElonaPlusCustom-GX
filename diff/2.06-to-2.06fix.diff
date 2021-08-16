@@ -1,0 +1,231 @@
+diff -U5 --recursive ../2.06-borscht/chara_func.hsp ../2.06fix-borscht/chara_func.hsp
+--- ../2.06-borscht/chara_func.hsp	2021-08-15 19:53:14.240691900 -0700
++++ ../2.06fix-borscht/chara_func.hsp	2021-08-16 11:43:33.107943900 -0700
+@@ -1046,11 +1046,11 @@
+ 			return
+ 		}
+ 	}
+ 	if ( gdata(GDATA_RIDER) != 0 ) {
+ 		if ( cdata(CDATA_RIDING, gdata(GDATA_RIDER)) == 0 ) {
+-			cdata(CDATA_SPEED, CHARA_PLAYER) = sdata(SKILL_ATTR_SPD, gdata(GDATA_RIDER)) * 100 / limit(100 + sdata(SKILL_ATTR_SPD, gdata(GDATA_RIDER)) - sdata(SKILL_ATTR_STR, gdata(GDATA_RIDER)) * 3 / 2 - sdata(SKILL_ACTIVE_RIDING, gdata(GDATA_RIDER)) * 1 / 2 - sdata(SKILL_ACTIVE_RIDING, CHARA_PLAYER) * 2 - (cbit(CHARA_BIT_SUPERIOR_RIDING, gdata(GDATA_RIDER)) == TRUE) * 50, 100, 1000)
++			cdata(CDATA_SPEED, CHARA_PLAYER) = sdata(SKILL_ATTR_SPD, gdata(GDATA_RIDER)) * 100 / limit(100 + sdata(SKILL_ATTR_SPD, gdata(GDATA_RIDER)) - sdata(SKILL_ATTR_STR, gdata(GDATA_RIDER)) * 3 / 2 - sdata(SKILL_ACTIVE_RIDING, gdata(GDATA_RIDER)) * 1 / 2 - sdata(SKILL_ACTIVE_RIDING, CHARA_PLAYER) * 2 - (cbit(CHARA_BIT_SUPERIOR_RIDING, gdata(GDATA_RIDER)) == TRUE) * 50, 100, 1000000)
+ 			if ( cbit(CHARA_BIT_INFERIOR_RIDING, gdata(GDATA_RIDER)) ) {
+ 				cdata(CDATA_SPEED, CHARA_PLAYER) /= 10
+ 			}
+ 			if ( gdata(GDATA_RIDER) == refreshspeed_arg1 ) {
+ 				cdata(CDATA_SPEED, refreshspeed_arg1) = limit(sdata(SKILL_ATTR_STR, refreshspeed_arg1) + sdata(SKILL_ACTIVE_RIDING, CHARA_PLAYER), 10, sdata(SKILL_ATTR_SPD, refreshspeed_arg1))
+@@ -1058,11 +1058,11 @@
+ 			}
+ 		}
+ 		if ( cdata(CDATA_RIDING, gdata(GDATA_RIDER)) == 1 ) {
+ 			cdata(CDATA_SPEED, CHARA_PLAYER) = limit(sdata(SKILL_ATTR_STR, CHARA_PLAYER) + sdata(SKILL_ACTIVE_RIDING, gdata(GDATA_RIDER)), 10, sdata(SKILL_ATTR_SPD, CHARA_PLAYER))
+ 			if ( gdata(GDATA_RIDER) == refreshspeed_arg1 ) {
+-				cdata(CDATA_SPEED, refreshspeed_arg1) = sdata(SKILL_ATTR_SPD, CHARA_PLAYER) * 100 / limit(100 + sdata(SKILL_ATTR_SPD, CHARA_PLAYER) - sdata(SKILL_ATTR_STR, CHARA_PLAYER) * 3 / 2 - sdata(SKILL_ACTIVE_RIDING, CHARA_PLAYER) * 1 / 2 - sdata(SKILL_ACTIVE_RIDING, refreshspeed_arg1) * 2, 100, 1000)
++				cdata(CDATA_SPEED, refreshspeed_arg1) = sdata(SKILL_ATTR_SPD, CHARA_PLAYER) * 100 / limit(100 + sdata(SKILL_ATTR_SPD, CHARA_PLAYER) - sdata(SKILL_ATTR_STR, CHARA_PLAYER) * 3 / 2 - sdata(SKILL_ACTIVE_RIDING, CHARA_PLAYER) * 1 / 2 - sdata(SKILL_ACTIVE_RIDING, refreshspeed_arg1) * 2, 100, 1000000)
+ 				if ( cdata(CDATA_SPEED, refreshspeed_arg1) > sdata(SKILL_ATTR_SPD, refreshspeed_arg1) * 3 ) {
+ 					cdata(CDATA_SPEED, refreshspeed_arg1) = sdata(SKILL_ATTR_SPD, refreshspeed_arg1) * 3
+ 				}
+ 				return
+ 			}
+diff -U5 --recursive ../2.06-borscht/chat.hsp ../2.06fix-borscht/chat.hsp
+--- ../2.06-borscht/chat.hsp	2021-08-15 19:53:14.967791300 -0700
++++ ../2.06fix-borscht/chat.hsp	2021-08-16 11:43:33.541104700 -0700
+@@ -51787,25 +51787,31 @@
+ 		if ( scenemode ) {
+ 			p = int(actor(1, rc))
+ 			if ( p >= 160 ) {
+ 				p = p - 160
+ 			}
++			pos wx + 42, wy + 42
++			gzoom 80, 112, 4, p \ 16 * 48, p / 16 * 72, 48, 72
+ 		}
+-		if ( cdata(CDATA_PORTRAIT, tc) >= 0 ) {
+-			if ( evochat < 2 ) {
+-				pos wx + 42, wy + 42
+-				gzoom 80, 112, 4, p \ 16 * 48, p / 16 * 72, 48, 72
++		if ( scenemode == FALSE ) {
++			if ( cdata(CDATA_PORTRAIT, tc) >= 0 ) {
++				if ( evochat < 2 ) {
++					pos wx + 42, wy + 42
++					gzoom 80, 112, 4, p \ 16 * 48, p / 16 * 72, 48, 72
++				}
+ 			}
+ 		}
+-		if ( cdata(CDATA_PORTRAIT, tc) < 0 ) {
+-			s = exedir + "user\\graphic\\face" + abs(cdata(CDATA_PORTRAIT, tc) + 1) + ".bmp"
+-			exist s
+-			if ( cdata(CDATA_PORTRAIT, tc) != (-1) ) {
+-				if ( strsize != (-1) ) {
+-					if ( evochat < 2 ) {
+-						pos wx + 42, wy + 42
+-						picload s, 1
++		if ( scenemode == FALSE ) {
++			if ( cdata(CDATA_PORTRAIT, tc) < 0 ) {
++				s = exedir + "user\\graphic\\face" + abs(cdata(CDATA_PORTRAIT, tc) + 1) + ".bmp"
++				exist s
++				if ( cdata(CDATA_PORTRAIT, tc) != (-1) ) {
++					if ( strsize != (-1) ) {
++						if ( evochat < 2 ) {
++							pos wx + 42, wy + 42
++							picload s, 1
++						}
+ 					}
+ 				}
+ 			}
+ 		}
+ 	}
+diff -U5 --recursive ../2.06-borscht/command.hsp ../2.06fix-borscht/command.hsp
+--- ../2.06-borscht/command.hsp	2021-08-15 19:53:15.330057900 -0700
++++ ../2.06fix-borscht/command.hsp	2021-08-16 11:43:33.769613500 -0700
+@@ -5609,10 +5609,13 @@
+ 		}
+ 		if ( cdatan(CDATAN_RACE, tc) == "catsister" ) {
+ 			cdata(CDATA_DV_FIX, tc) = 200
+ 		}
+ 	}
++	if ( 0 ) {
++		txt lang(name(tc) + "のDV補正は" + cdata(CDATA_DV_FIX, tc) + "でPC補正は" + cdata(CDATA_PV_FIX, tc) + "。", name(cc) + " fainted after failing to suffer from severe pain.")
++	}
+ 	if ( cdata(CDATA_ID, tc) == CREATURE_ID_POPPY_THE_LITTLE_DOG ) {
+ 		if ( gdata(GDATA_FLAG_SUB_DOG) >= 1000 ) {
+ 			if ( cbit(CHARA_BIT_GUARD_TEMP, tc) ) {
+ 				cbitmod CHARA_BIT_GUARD_TEMP, tc, FALSE
+ 			}
+diff -U5 --recursive ../2.06-borscht/db_creature.hsp ../2.06fix-borscht/db_creature.hsp
+--- ../2.06-borscht/db_creature.hsp	2021-08-15 19:53:17.347251400 -0700
++++ ../2.06fix-borscht/db_creature.hsp	2021-08-16 11:43:34.993497400 -0700
+@@ -35972,11 +35972,11 @@
+ 			cdata(CDATA_PIC, rc) += 0 * 1000
+ 			cspecialeq = 1
+ 			return
+ 		}
+ 		if ( dbmode == DBMODE_INITIAL_EQUIP ) {
+-			eqrange = 514, 3
++			eqrange = 496, 3
+ 			eqammo = 62, 3
+ 			return
+ 		}
+ 		return 0
+ 	}
+diff -U5 --recursive ../2.06-borscht/help.hsp ../2.06fix-borscht/help.hsp
+--- ../2.06-borscht/help.hsp	2021-08-15 19:53:20.069012000 -0700
++++ ../2.06fix-borscht/help.hsp	2021-08-16 11:43:36.805649400 -0700
+@@ -7774,11 +7774,11 @@
+ 		goto *pc_turn_init_WHILE1
+ 	}
+ 
+ *pc_turn_init_WEND1
+ 	if ( dbg_titleinfo ) {
+-		title "ElonaPlus 2.06" + " ver " + "6.06" + " " + exedir + " Seed: " + randseed + "  Loop:" + looplev + " SubLoop:" + sublev + " x:" + cdata(CDATA_X, CHARA_PLAYER) + " y:" + cdata(CDATA_Y, CHARA_PLAYER) + " ev:" + evnum + " q:" + gdata(GDATA_QUEST) + " tile:" + map(cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), MAP_TILE_ID) + " unpc:" + usernpcmax + "/" + gdata(GDATA_USERNPC_COUNT)
++		title "ElonaPlus 2.06fix" + " ver " + "6.06" + " " + exedir + " Seed: " + randseed + "  Loop:" + looplev + " SubLoop:" + sublev + " x:" + cdata(CDATA_X, CHARA_PLAYER) + " y:" + cdata(CDATA_Y, CHARA_PLAYER) + " ev:" + evnum + " q:" + gdata(GDATA_QUEST) + " tile:" + map(cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), MAP_TILE_ID) + " unpc:" + usernpcmax + "/" + gdata(GDATA_USERNPC_COUNT)
+ 	}
+ 	if ( trait(TRAIT_ETHER_ADDICTED_POTION) != 0 ) {
+ 		if ( rnd(5) == 0 ) {
+ 			inv_getheader 0
+ 			ci = rnd(invrange) + invhead
+diff -U5 --recursive ../2.06-borscht/main.hsp ../2.06fix-borscht/main.hsp
+--- ../2.06-borscht/main.hsp	2021-08-15 19:53:20.684998500 -0700
++++ ../2.06fix-borscht/main.hsp	2021-08-16 11:43:37.234513000 -0700
+@@ -181,11 +181,11 @@
+ 	if ( dbg_randseed != 0 ) {
+ 		randseed = dbg_randseed
+ 	}
+ 	randomize randseed
+ 	exrand_randomize randseed
+-	title "ElonaPlus 2.06"
++	title "ElonaPlus 2.06fix"
+ 	goto *system_init
+ 	goto *label_0003
+ 
+ #deffunc netload str netload_filename
+ 	netrequest netload_filename
+diff -U5 --recursive ../2.06-borscht/screen.hsp ../2.06fix-borscht/screen.hsp
+--- ../2.06-borscht/screen.hsp	2021-08-15 19:53:21.868711300 -0700
++++ ../2.06fix-borscht/screen.hsp	2021-08-16 11:43:38.192861300 -0700
+@@ -7878,11 +7878,12 @@
+ 		}
+ 	}
+ 	if ( gdata(GDATA_TEMPORARY_FLAGS2) == 1200 ) {
+ 		tohit = tohit * 2
+ 	}
+-	evade = sdata(SKILL_ATTR_PER, tc) / 6 + sdata(SKILL_NORMAL_EVASION, tc) + cdata(CDATA_DV, tc) * 2 * 7 / 4 + 25 - cdata(CDATA_EVASION_PENALTY, tc) * 100
++	hoseidv = cdata(CDATA_DV, tc) * cdata(CDATA_DV_FIX, tc) / 100 + cdata(CDATA_DV_FIX, tc) - 100
++	evade = sdata(SKILL_ATTR_PER, tc) / 6 + sdata(SKILL_NORMAL_EVASION, tc) + hoseidv * 2 * 7 / 4 + 25 - cdata(CDATA_EVASION_PENALTY, tc) * 100
+ 	if ( cdata(CDATA_DIRECTIVE_MODE, tc) == DIRECTIVE_MODE_DEFENSIVE ) {
+ 		evade += sdata(SKILL_NORMAL_SHIELD, tc) + sdata(SKILL_ATTR_CON, tc) / 6
+ 	}
+ 	if ( cdata(CDATA_CONDITION_WET, tc) > 0 ) {
+ 		if ( chipm(CHIPM_ROLE, map(cdata(CDATA_X, tc), cdata(CDATA_Y, tc), MAP_TILE_ID)) == MAP_CHIP_ROLE_WATER ) {
+@@ -8288,11 +8289,12 @@
+ 		loop
+ 	}
+ 	if ( calcattackdmg_arg1 == 1 ) {
+ 		return damage
+ 	}
+-	prot = cdata(CDATA_PV, tc) + limit(limit(sdata(carmor(tc), tc), 0, 300) - cdata(CDATA_PROT_PENALTY, tc) * 100, 0, 300) + sdata(SKILL_ATTR_DEX, tc) / 10
++	hoseipv = (cdata(CDATA_PV, tc) + cdata(CDATA_PV_FIX, tc) / 25) * cdata(CDATA_PV_FIX, tc) / 100
++	prot = hoseipv + limit(limit(sdata(carmor(tc), tc), 0, 300) - cdata(CDATA_PROT_PENALTY, tc) * 100, 0, 300) + sdata(SKILL_ATTR_DEX, tc) / 10
+ 	if ( calcattackdmg_arg1 == 0 ) {
+ 		if ( cdata(CDATA_CONDITION_JIU_JITSU, cc) != 0 ) {
+ 			prot = cdata(CDATA_DV, tc) + limit(limit(sdata(SKILL_NORMAL_LIGHT_ARMOR, tc), 0, 300) - cdata(CDATA_PROT_PENALTY, tc) * 100, 0, 300) + sdata(SKILL_ATTR_DEX, tc) / 10
+ 		}
+ 	}
+@@ -9055,13 +9057,13 @@
+ 		cdata(CDATA_MAX_MP, r1) = 1
+ 	}
+ 	if ( cdata(CDATA_MAX_HP, r1) < 1 ) {
+ 		cdata(CDATA_MAX_HP, r1) = 1
+ 	}
+-	if ( r1 >= 57 | dbg_acemu & cdata(CDATA_ALLIED, r1) == 0 ) {
+-		cdata(CDATA_DV, r1) = cdata(CDATA_DV, r1) * cdata(CDATA_DV_FIX, r1) / 100 + cdata(CDATA_DV_FIX, r1) - 100
+-		cdata(CDATA_PV, r1) = (cdata(CDATA_PV, r1) + cdata(CDATA_PV_FIX, r1) / 25) * cdata(CDATA_PV_FIX, r1) / 100
++	if ( r1 >= 57 & cdata(CDATA_ALLIED, r1) == 0 & rc != CHARA_PLAYER ) {
++		cdata(CDATA_DV, r1) += limit(cdata(CDATA_LEVEL, r1) / 2, 1, 200)
++		cdata(CDATA_PV, r1) += limit(cdata(CDATA_LEVEL, r1) / 2, 1, 200)
+ 		if ( cdata(CDATA_QUALITY, r1) == FIX_QUALITY_GREAT ) {
+ 			cdata(CDATA_MAX_HP, r1) = cdata(CDATA_MAX_HP, r1) * 3 / 2
+ 		}
+ 		if ( cdata(CDATA_QUALITY, r1) >= FIX_QUALITY_MIRACLE | cdata(CDATA_ID, r1) == CREATURE_ID_AILE_THE_ATTENDANT ) {
+ 			cdata(CDATA_MAX_HP, r1) = cdata(CDATA_MAX_HP, r1) * 5
+diff -U5 --recursive ../2.06-borscht/system.hsp ../2.06fix-borscht/system.hsp
+--- ../2.06-borscht/system.hsp	2021-08-15 19:53:21.925412100 -0700
++++ ../2.06fix-borscht/system.hsp	2021-08-16 11:43:38.236373500 -0700
+@@ -3311,11 +3311,11 @@
+ 		pos x, y
+ 		mesbox inputlog, 600, 0, 5, val(2) * (1 + en)
+ 		pos x + 4, y + 4
+ 		gfini dx - 1, 35
+ 		gfdec 60, 60, 60
+-		aplsel "ElonaPlus 2.06"
++		aplsel "ElonaPlus 2.06fix"
+ 		if ( stat == 1 ) {
+ 			dialog "Failed to get WINDOW ID", 1
+ 			clrobj 1
+ 			cfg_msg_box = 0
+ 			goto *prompt_word
+@@ -3674,11 +3674,11 @@
+ 
+ *game_debug
+ 	notesel dbm
+ 	buff = ""
+ 	if ( dbm == "" ) {
+-		noteadd "ElonaPlus 2.06" + " v" + "6.06" + " Debug Console    Type \"?\" for help. Hit ESC to exit."
++		noteadd "ElonaPlus 2.06fix" + " v" + "6.06" + " Debug Console    Type \"?\" for help. Hit ESC to exit."
+ 		noteadd ""
+ 	}
+ 	font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
+ 	objmode 2
+ 	pos 0, 24
+@@ -4085,11 +4085,11 @@
+ 	objprm 1, dbm
+ 	objprm 2, ""
+ 	return
+ 
+ *mutexobj
+-	CreateMutexA 0, 0, "ElonaPlus 2.06"
++	CreateMutexA 0, 0, "ElonaPlus 2.06fix"
+ 	mutex_handle = stat
+ 	func_3
+ 	if ( stat == 183 ) {
+ 		dialog lang("二重起動のため終了します。", "The program is already running."), 1
+ 		end

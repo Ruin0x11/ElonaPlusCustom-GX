@@ -1,0 +1,79 @@
+#defcfunc randname int randname_arg0
+	locvar_randname_n = locvar_randname_noun(rnd(length(locvar_randname_noun)))
+	locvar_randname_s = locvar_randname_verbe(rnd(length(locvar_randname_verbe))) + locvar_randname_n
+	locvar_randname_s = locvar_randname_adv(rnd(length(locvar_randname_adv))) + locvar_randname_n
+	locvar_randname_s = locvar_randname_n + "を" + locvar_randname_verbwo(rnd(length(locvar_randname_verbwo))) + locvar_randname_noun(rnd(length(locvar_randname_noun)))
+	return locvar_randname_s
+
+#deffunc randnameinit
+	sdim locvar_randname_noun
+	sdim locvar_randnameinit_adj
+	sdim locvar_randname_verbe
+	sdim locvar_randname_verbwo
+	sdim locvar_randname_adv
+	locvar_randnameinit_c = 0
+	locvar_randnameinit_c = length(locvar_randname_noun) * (length(locvar_randname_noun) != 1)
+	locvar_randname_noun(locvar_randnameinit_c) = "戦士", "魔法使い"
+	locvar_randnameinit_c = length(locvar_randname_noun) * (length(locvar_randname_noun) != 1)
+	locvar_randname_noun(locvar_randnameinit_c) = "魔術師", "僧侶"
+	locvar_randnameinit_c = 0
+	locvar_randnameinit_c = length(locvar_randnameinit_adj) * (length(locvar_randnameinit_adj) != 1)
+	locvar_randnameinit_adj(locvar_randnameinit_c) = "美しい", "汚らわしい"
+	locvar_randnameinit_c = length(locvar_randnameinit_adj) * (length(locvar_randnameinit_adj) != 1)
+	locvar_randnameinit_adj(locvar_randnameinit_c) = "ひどい", "汚い"
+	locvar_randnameinit_c = 0
+	locvar_randnameinit_c = length(locvar_randname_verbe) * (length(locvar_randname_verbe) != 1)
+	locvar_randname_verbe(locvar_randnameinit_c) = "動く", "止まる"
+	locvar_randnameinit_c = length(locvar_randname_verbe) * (length(locvar_randname_verbe) != 1)
+	locvar_randname_verbe(locvar_randnameinit_c) = "襲う", "飛べ"
+	locvar_randnameinit_c = 0
+	locvar_randnameinit_c = length(locvar_randname_verbwo) * (length(locvar_randname_verbwo) != 1)
+	locvar_randname_verbwo(locvar_randnameinit_c) = "止める"
+	locvar_randnameinit_c = length(locvar_randname_verbwo) * (length(locvar_randname_verbwo) != 1)
+	locvar_randname_verbwo(locvar_randnameinit_c) = "狩る", "狩りし", "殺す", "飼う", "飼いならす", "手懐ける"
+	locvar_randnameinit_c = length(locvar_randname_verbwo) * (length(locvar_randname_verbwo) != 1)
+	locvar_randname_verbwo(locvar_randnameinit_c) = "まとう", "まといし", "まとった"
+	locvar_randnameinit_c = 0
+	locvar_randnameinit_c = length(locvar_randname_adv) * (length(locvar_randname_adv) != 1)
+	locvar_randname_adv(locvar_randnameinit_c) = "とても", "とてつもなく", "どうしようもなく", "凄く"
+	locvar_randnameinit_c = length(locvar_randname_adv) * (length(locvar_randname_adv) != 1)
+	locvar_randname_adv(locvar_randnameinit_c) = "激しく"
+	locvar_randnameinit_c = length(locvar_randname_adv) * (length(locvar_randname_adv) != 1)
+	locvar_randname_adv(locvar_randnameinit_c) = "危険な", "危険すぎる", "やばい", "やばすぎる"
+	locvar_randnameinit_c = length(locvar_randname_adv) * (length(locvar_randname_adv) != 1)
+	locvar_randname_adv(locvar_randnameinit_c) = "まるで", "まったく", "全然"
+	locvar_randnameinit_c = length(locvar_randname_adv) * (length(locvar_randname_adv) != 1)
+	locvar_randname_adv(locvar_randnameinit_c) = "それは", "これこそ", "そして", "しかし"
+	locvar_randnameinit_c = length(locvar_randname_adv) * (length(locvar_randname_adv) != 1)
+	locvar_randname_adv(locvar_randnameinit_c) = "絶対に", "必ず"
+	locvar_randnameinit_c = length(locvar_randname_adv) * (length(locvar_randname_adv) != 1)
+	locvar_randname_adv(locvar_randnameinit_c) = "かなり", "やや", "多少"
+	return
+
+*randname_test
+	randnameinit
+	screen 0, 800, 600
+	cls
+	font "", 15, 0
+	repeat
+		redraw 0
+		color 0
+		boxf
+		color 255, 255, 255
+		repeat 135
+			pos cnt / 34 * 190, cnt \ 34 * 17
+			mes randname()
+		loop
+		redraw 1
+		repeat
+			await
+			stick a
+			if ( a == 256 ) {
+				break
+			}
+		loop
+	loop
+
+
+
+

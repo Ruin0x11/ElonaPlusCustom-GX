@@ -1,0 +1,4146 @@
+*gene_itemfix
+	inv_getheader -1
+	repeat invrange, invhead
+		if ( inv(INV_ITEM_ID, cnt) == ITEM_ID_CARD | inv(INV_ITEM_ID, cnt) == ITEM_ID_FIGURINE ) {
+			inv(INV_ITEM_NUM, cnt) = 0
+		}
+	loop
+	return
+
+*fixOnMapEnter
+	procid = (procid + 1) \ 4
+	proclist(procid) = "fixOnMapEnter" + " ct:" + ct
+	repeat 245
+		if ( cdata(CDATA_EXIST, cnt) == CHAR_STATE_ALIVE ) {
+			if ( cdata(CDATA_X, cnt) < 0 | cdata(CDATA_X, cnt) >= mdata(MDATA_WIDTH) | cdata(CDATA_Y, cnt) < 0 | cdata(CDATA_Y, cnt) >= mdata(MDATA_HEIGHT) ) {
+				cdata(CDATA_X, cnt) = 0
+				cdata(CDATA_Y, cnt) = 0
+			}
+		}
+	loop
+	if ( mdata(MDATA_TYPE) != MAP_TYPE_HOME ) {
+		if ( mdata(MDATA_MAX_INV) != 0 ) {
+			mdata(MDATA_MAX_INV) = 0
+		}
+	}
+	if ( gdata(GDATA_AREA) == AREA_HOME ) {
+		if ( gdata(GDATA_FLAG_INVITED_GOD) != 0 ) {
+			evadd EVENT_SPAWN_EVENT_NPCS
+		}
+		adata(ADATA_MIN_LEVEL, gdata(GDATA_AREA)) = 0
+		adata(ADATA_MAX_LEVEL, gdata(GDATA_AREA)) = 10
+		adata(ADATA_RESTORE_POS, gdata(GDATA_AREA)) = 1
+		mdata(MDATA_RESTORE_POS) = 1
+		if ( gdata(GDATA_TEMPORARY_FLAGS2) == 0 ) {
+			evadd EVENT_WELCOME
+		}
+		calccosthire
+	}
+	gdata(GDATA_TEMPORARY_FLAGS2) = 0
+	return
+
+*fixSave
+	if ( gdata(GDATA_VERSION) != int(double("6.06") * 1000) ) {
+		dialog lang("Ver." + gdata(GDATA_VERSION) + "のセーブデータをアップデートします。", "Updating your save data from Ver." + gdata(GDATA_VERSION) + " now.")
+	}
+	if ( gdata(GDATA_HEIR_DEED) < 0 ) {
+		gdata(GDATA_HEIR_DEED) = 1
+	}
+	if ( gdata(GDATA_TRAVEL_TIME) == 0 ) {
+		gdata(GDATA_TRAVEL_TIME) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12
+	}
+	if ( gdata(GDATA_VERSION) == 940 ) {
+		if ( gdata(STARTING_GDATA_RANK + 4) != 0 ) {
+			gdata(STARTING_GDATA_RANK + 2) = gdata(STARTING_GDATA_RANK + 4)
+		}
+	}
+	repeat 20
+		if ( gdata(STARTING_GDATA_RANK + cnt) == 0 ) {
+			gdata(STARTING_GDATA_RANK + cnt) = 10000
+		}
+	loop
+	itemmemory(2, ITEM_ID_SPELLBOOK_WISHING) = 0
+	itemmemory(2, ITEM_ID_SPELLBOOK_HARVEST) = 0
+	if ( gdata(GDATA_VERSION) < 950 ) {
+		itemcreate CHARA_PLAYER, ITEM_ID_PLAYBACK_DISC, -1, -1, 0
+		itemcreate CHARA_PLAYER, ITEM_ID_FREEZER, -1, -1, 0
+		inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) = 6
+	}
+	if ( gdata(GDATA_VERSION) < 952 ) {
+		gdata(GDATA_WORLD_RENEW) = TRUE
+	}
+	if ( gdata(GDATA_VERSION) < 954 ) {
+		repeat 16
+			if ( cnt == 0 | cdata(CDATA_EXIST, cnt) == CHAR_STATE_DEAD ) {
+				continue
+			}
+			inv_getheader cnt
+			cnt2 = cnt
+			repeat invrange, invhead
+				if ( inv(INV_ITEM_NUM, cnt) != 0 ) {
+					if ( inv(INV_ITEM_ID, cnt) == ITEM_ID_GOLD_PIECE ) {
+						inv(INV_ITEM_WEIGHT, cnt) = 0
+					}
+					item_stack cnt2, cnt
+				}
+			loop
+		loop
+		gdata(GDATA_LIGHT) = 90
+	}
+	if ( gdata(GDATA_VERSION) < 960 ) {
+		gdata(GDATA_FLAG_HOLY_WELL) = 2
+	}
+	if ( gdata(GDATA_VERSION) < 973 ) {
+		gdata(GDATA_CORRUPTION) = 0
+		repeat 228
+			if ( trait(cnt) != 0 ) {
+				if ( cnt > 37 ) {
+					trait(cnt) = 0
+				}
+			}
+		loop
+		gosub *cm_putTrait
+	}
+	if ( gdata(GDATA_VERSION) < 975 ) {
+		file = exedir + "tmp\\"
+		existwrapper file + "mdata_5_103.s2"
+		if ( strsize != (-1) ) {
+			deletewrapper file + "mdata_5_103.s2"
+		}
+		if ( gdata(GDATA_AREA) == AREA_VERNIS ) {
+			dialog "マップをアップデートするため、一度ヴェルニースに出入りしてください。"
+		}
+	}
+	if ( gdata(GDATA_VERSION) < 1010 ) {
+		gdata(GDATA_SISTER_KILLED) = 0
+	}
+	if ( gdata(GDATA_VERSION) < 1060 ) {
+		repeat 57
+			cdata(CDATA_RELATION_ORG, cnt) = RELATION_ALLY
+		loop
+	}
+	if ( gdata(GDATA_VERSION) < 1070 ) {
+		repeat 57
+			cdata(CDATA_LEVEL_ORG, cnt) = cdata(CDATA_LEVEL, cnt)
+			if ( cnt >= 16 ) {
+				cdata(CDATA_RELATION, cnt) = RELATION_NEUTRAL
+				cdata(CDATA_RELATION_ORG, cnt) = RELATION_NEUTRAL
+			}
+			else {
+				cdata(CDATA_RELATION, cnt) = RELATION_ALLY
+				cdata(CDATA_RELATION_ORG, cnt) = RELATION_ALLY
+			}
+		loop
+	}
+	if ( gdata(GDATA_VERSION) < 1100 ) {
+		gdata(GDATA_WELL_WISH) = 0
+		gosub *cm_putTrait
+	}
+	if ( gdata(GDATA_VERSION) < 1110 ) {
+		gdata(GDATA_GUEST) = 0
+		gdata(GDATA_WORLD_RENEW) = TRUE
+		repeat 57
+			if ( cdata(CDATA_ROLE, cnt) == ROLE_ADVENTURER ) {
+				cdata(CDATA_AI_INT, cnt) = 100
+			}
+		loop
+	}
+	if ( gdata(GDATA_VERSION) < 1111 ) {
+		gdata(GDATA_WORLD_RENEW) = TRUE
+		dialog lang("ユーザー物件の情報をアップデートするため、ゲーム開始後一度ワールドマップに出てください。", "Please exit the current area and enter the world map once to update game data.")
+	}
+	if ( gdata(GDATA_VERSION) < 1130 ) {
+		cfg_net = 1
+		valn = "net.", "1"
+		gosub *cfg_write
+		cfg_netwish = 1
+		valn = "netWish.", "1"
+		gosub *cfg_write
+		cfg_netchat = 0
+		valn = "netChat.", "0"
+		gosub *cfg_write
+	}
+	if ( gdata(GDATA_VERSION) < 1140 ) {
+		cfg_exanime = 1
+		valn = "exAnime.", "1"
+		gosub *cfg_write
+		gdata(GDATA_WORLD_RENEW) = TRUE
+		gosub *mapReset
+	}
+	if ( gdata(GDATA_VERSION) < 1150 ) {
+		if ( gdata(GDATA_PLAY_TIME) < 0 ) {
+			gdata(GDATA_PLAY_TIME) = 600 * 60 * 60
+		}
+		else {
+			gdata(GDATA_PLAY_TIME) /= 1000
+		}
+	}
+	if ( gdata(GDATA_VERSION) < 1170 ) {
+		if ( 0 == 0 ) {
+			if ( adata(ADATA_TYPE, gdata(GDATA_AREA)) != MAP_TYPE_TOWN ) {
+				dialog lang("アップデートを行うには、街中でセーブしたセーブデータが必要です。", "To update your game, please save your game in a town in the previous version then retry.")
+				goto *exit_game
+			}
+		}
+		dialog lang("次のプロセスの完了までには、しばらく時間がかかることがあります。", "The next updating process may take a while to complete.")
+		memcpy adata(ADATA_TYPE, 300), adata(ADATA_TYPE, 100), 40 * (150 - 100) * 4
+		memcpy adata(ADATA_TYPE, 450), adata(ADATA_TYPE, 150), 40 * (200 - 150) * 4
+		repeat 200 - 100, 100
+			p = cnt
+			sdim file_cnv
+			repeat 40
+				adata(cnt, p) = 0
+			loop
+			folder = exedir + "tmp"
+			dirlistwrapper buff, folder + "\\*_" + p + "_*.*"
+			if ( stat != 0 ) {
+				notesel buff
+				repeat stat
+					noteget file, cnt
+					p1 = instr(file, 0, "_")
+					p2 = instr(file, p1 + 1, "_")
+					if ( p >= 150 ) {
+						p3 = p - 150 + 450
+					}
+					else {
+						p3 = p - 100 + 300
+					}
+					file_cnv = folder + "\\" + strmid(file, 0, p1 + 1) + p3 + strmid(file, p1 + p2 + 1, 20)
+					file = folder + "\\" + file
+					bcopy file, file_cnv
+					fileadd file_cnv
+					delete file
+					fileadd file, 1
+				loop
+			}
+		loop
+		repeat 500
+			if ( adata(ADATA_ID, cnt) != AREA_NONE ) {
+				if ( adata(ADATA_PARENT, cnt) == AREA_NONE ) {
+					adata(ADATA_PARENT, cnt) = AREA_NORTH_TYRIS
+				}
+			}
+		loop
+		gdata(GDATA_WORLD) = AREA_NORTH_TYRIS
+	}
+	if ( gdata(GDATA_VERSION) < 2130 ) {
+		if ( gdata(GDATA_QUEST) == QUEST_TYPE_THIEVES ) {
+			gdata(GDATA_QUEST) = QUEST_TYPE_NONE
+			dialog lang("盗賊団フラグ抹消。", "Death bug is corrected.")
+		}
+	}
+	if ( gdata(GDATA_VERSION) < 2160 ) {
+		repeat 57
+			aphantei = 0
+			if ( cbit(CHARA_BIT_AWAKE_DIM_ATTACKER, cnt) ) {
+				aphantei += 1
+			}
+			if ( cbit(CHARA_BIT_AWAKE_NEAR_DEATH_EVASION, cnt) ) {
+				aphantei += 1
+			}
+			if ( cbit(CHARA_BIT_AWAKE_NEAR_DEATH_DAMAGE, cnt) ) {
+				aphantei += 1
+			}
+			if ( cbit(CHARA_BIT_AWAKE_MP_BARRIER, cnt) ) {
+				aphantei += 1
+			}
+			if ( aphantei == 3 ) {
+				if ( cbit(CHARA_BIT_AWAKE_DIM_ATTACKER, cnt) != TRUE ) {
+					cbitmod CHARA_BIT_AWAKE_NEAR_DEATH_EVASION, cnt, FALSE
+					cdata(CDATA_AP_CURRENT, cnt) += 1800
+				}
+				if ( cbit(CHARA_BIT_AWAKE_NEAR_DEATH_EVASION, cnt) != TRUE ) {
+					cbitmod CHARA_BIT_AWAKE_NEAR_DEATH_DAMAGE, cnt, FALSE
+					cdata(CDATA_AP_CURRENT, cnt) += 2000
+				}
+				if ( cbit(CHARA_BIT_AWAKE_NEAR_DEATH_DAMAGE, cnt) != TRUE ) {
+					cbitmod CHARA_BIT_AWAKE_MP_BARRIER, cnt, FALSE
+					cdata(CDATA_AP_CURRENT, cnt) += 2000
+				}
+				if ( cbit(CHARA_BIT_AWAKE_MP_BARRIER, cnt) != TRUE ) {
+					cbitmod CHARA_BIT_AWAKE_DIM_ATTACKER, cnt, FALSE
+					cdata(CDATA_AP_CURRENT, cnt) += 1500
+				}
+			}
+			if ( aphantei == 4 ) {
+				cbitmod CHARA_BIT_AWAKE_DIM_ATTACKER, cnt, FALSE
+				cbitmod CHARA_BIT_AWAKE_NEAR_DEATH_EVASION, cnt, FALSE
+				cdata(CDATA_AP_CURRENT, cnt) += 3300
+			}
+			aphantei = 0
+		loop
+	}
+	if ( gdata(GDATA_VERSION) < 2180 ) {
+		repeat 57
+			if ( cdata(CDATA_ID, cnt) == CREATURE_ID_GALACTICA_PHANTOM | cdata(CDATA_ID, cnt) == CREATURE_ID_SHADOW | cdata(CDATA_ID, cnt) == CREATURE_ID_VOL_PHANTOM | cdata(CDATA_ID, cnt) == CREATURE_ID_LESSER_PHANTOM ) {
+				cdatan(CDATAN_RACE, cnt) = "ghost"
+			}
+			if ( cdata(CDATA_ID, cnt) == CREATURE_ID_HELL_CRAB | cdata(CDATA_ID, cnt) == CREATURE_ID_FIRE_CRAB ) {
+				cdatan(CDATAN_RACE, cnt) = "shell"
+			}
+			if ( cdata(CDATA_ID, cnt) == CREATURE_ID_BOMB_THROWER | cdata(CDATA_ID, cnt) == CREATURE_ID_MAD_SCIENTIST | cdata(CDATA_ID, cnt) == CREATURE_ID_WHOM_DWELL_IN_THE_VANITY | cdata(CDATA_ID, cnt) == CREATURE_ID_LOYTER_THE_CRIMSON_OF_ZANAN | cdata(CDATA_ID, cnt) == CREATURE_ID_NOBLE | cdata(CDATA_ID, cnt) == CREATURE_ID_GANGSTER | cdata(CDATA_ID, cnt) == CREATURE_ID_ROCK_THROWER | cdata(CDATA_ID, cnt) == CREATURE_ID_PUBLIC_PERFORMER | cdata(CDATA_ID, cnt) == CREATURE_ID_NURSE | cdata(CDATA_ID, cnt) == CREATURE_ID_RICH_PERSON | cdata(CDATA_ID, cnt) == CREATURE_ID_NOBLE_CHILD ) {
+				cdatan(CDATAN_RACE, cnt) = "zanan"
+			}
+			if ( cdata(CDATA_ID, cnt) == CREATURE_ID_PART_TIME_WORKER2 | cdata(CDATA_ID, cnt) == CREATURE_ID_TRAVELER | cdata(CDATA_ID, cnt) == CREATURE_ID_SWIMMER | cdata(CDATA_ID, cnt) == CREATURE_ID_KARAM_THE_LONELY_WOLF_OF_KARUNE | cdata(CDATA_ID, cnt) == CREATURE_ID_MERCENARY | cdata(CDATA_ID, cnt) == CREATURE_ID_FARMER | cdata(CDATA_ID, cnt) == CREATURE_ID_MINER | cdata(CDATA_ID, cnt) == CREATURE_ID_PART_TIME_WORKER | cdata(CDATA_ID, cnt) == CREATURE_ID_PRISONER ) {
+				cdatan(CDATAN_RACE, cnt) = "karune"
+			}
+		loop
+	}
+	if ( gdata(GDATA_VERSION) == 2170 ) {
+		repeat 57
+			if ( cnt == 0 ) {
+				continue
+			}
+			if ( cbit(CHARA_BIT_AWAKE_NEAR_DEATH_EVASION, cnt) == TRUE ) {
+				cbitmod CHARA_BIT_AWAKE_NEAR_DEATH_EVASION, cnt, FALSE
+				cdata(CDATA_AP_CURRENT, cnt) += 1800
+			}
+			if ( cbit(CHARA_BIT_AWAKE_NEAR_DEATH_DAMAGE, cnt) == TRUE ) {
+				cbitmod CHARA_BIT_AWAKE_NEAR_DEATH_DAMAGE, cnt, FALSE
+				cdata(CDATA_AP_CURRENT, cnt) += 2000
+			}
+			if ( cbit(CHARA_BIT_AWAKE_MP_BARRIER, cnt) == TRUE ) {
+				cbitmod CHARA_BIT_AWAKE_MP_BARRIER, cnt, FALSE
+				cdata(CDATA_AP_CURRENT, cnt) += 2000
+			}
+			if ( cbit(CHARA_BIT_AWAKE_DIM_ATTACKER, cnt) == TRUE ) {
+				cbitmod CHARA_BIT_AWAKE_DIM_ATTACKER, cnt, FALSE
+				cdata(CDATA_AP_CURRENT, cnt) += 1500
+			}
+			if ( cbit(CHARA_BIT_AWAKE_INSULT, cnt) == TRUE ) {
+				cbitmod CHARA_BIT_AWAKE_INSULT, cnt, FALSE
+				cdata(CDATA_AP_CURRENT, cnt) += 100
+			}
+			if ( cbit(CHARA_BIT_AWAKE_CRYSTAL_SPEAR, cnt) == TRUE ) {
+				cbitmod CHARA_BIT_AWAKE_CRYSTAL_SPEAR, cnt, FALSE
+				cdata(CDATA_AP_CURRENT, cnt) += 600
+			}
+			if ( cbit(CHARA_BIT_AWAKE_TACTICAL_HEAL, cnt) == TRUE ) {
+				cbitmod CHARA_BIT_AWAKE_TACTICAL_HEAL, cnt, FALSE
+				cdata(CDATA_AP_CURRENT, cnt) += 500
+			}
+			if ( cbit(CHARA_BIT_AWAKE_DIMENSIONAL_MOVE, cnt) == TRUE ) {
+				cbitmod CHARA_BIT_AWAKE_DIMENSIONAL_MOVE, cnt, FALSE
+				cdata(CDATA_AP_CURRENT, cnt) += 100
+			}
+			if ( cbit(CHARA_BIT_AWAKE_TACTICAL_ATTACK, cnt) == TRUE ) {
+				cbitmod CHARA_BIT_AWAKE_TACTICAL_ATTACK, cnt, FALSE
+				cdata(CDATA_AP_CURRENT, cnt) += 400
+			}
+			if ( cbit(CHARA_BIT_AWAKE_TACTICAL_MARTIAL_ARTS, cnt) == TRUE ) {
+				cbitmod CHARA_BIT_AWAKE_TACTICAL_MARTIAL_ARTS, cnt, FALSE
+				cdata(CDATA_AP_CURRENT, cnt) += 600
+			}
+			if ( cbit(CHARA_BIT_AWAKE_CHARGE_ATTACK, cnt) == TRUE ) {
+				cbitmod CHARA_BIT_AWAKE_CHARGE_ATTACK, cnt, FALSE
+				cdata(CDATA_AP_CURRENT, cnt) += 1000
+			}
+			if ( cbit(CHARA_BIT_AWAKE_PROVOKE, cnt) == TRUE ) {
+				cbitmod CHARA_BIT_AWAKE_PROVOKE, cnt, FALSE
+				cdata(CDATA_AP_CURRENT, cnt) += 200
+			}
+			if ( cbit(CHARA_BIT_AWAKE_TACTICAL_CURSE, cnt) == TRUE ) {
+				cbitmod CHARA_BIT_AWAKE_TACTICAL_CURSE, cnt, FALSE
+				cdata(CDATA_AP_CURRENT, cnt) += 500
+			}
+			if ( cbit(CHARA_BIT_AWAKE_VARIABLE_BREATH, cnt) == TRUE ) {
+				cbitmod CHARA_BIT_AWAKE_VARIABLE_BREATH, cnt, FALSE
+				cdata(CDATA_AP_CURRENT, cnt) += 400
+			}
+			if ( cbit(CHARA_BIT_AWAKE_VARIABLE_STORM, cnt) == TRUE ) {
+				cbitmod CHARA_BIT_AWAKE_VARIABLE_STORM, cnt, FALSE
+				cdata(CDATA_AP_CURRENT, cnt) += 800
+			}
+			if ( cdata(CDATA_AP_CURRENT, cnt) > 20000 ) {
+				cdata(CDATA_AP_CURRENT, cnt) = rnd(500)
+				cbitmod CHARA_BIT_UNKNOWN_1010, cnt, TRUE
+			}
+			if ( cdata(CDATA_AP_CURRENT, cnt) > 12000 ) {
+				cdata(CDATA_AP_CURRENT, cnt) = 3000 + rnd(500)
+			}
+			if ( cdata(CDATA_AP_CURRENT, cnt) > 11000 ) {
+				cdata(CDATA_AP_CURRENT, cnt) = 4000 + rnd(500)
+			}
+			if ( cdata(CDATA_AP_CURRENT, cnt) > 10000 ) {
+				cdata(CDATA_AP_CURRENT, cnt) = 5000 + rnd(500)
+			}
+			if ( cdata(CDATA_AP_CURRENT, cnt) > 9000 ) {
+				cdata(CDATA_AP_CURRENT, cnt) = 6000 + rnd(500)
+			}
+			if ( cdata(CDATA_AP_CURRENT, cnt) > 8000 ) {
+				cdata(CDATA_AP_CURRENT, cnt) = 7000 + rnd(500)
+			}
+		loop
+	}
+	if ( gdata(GDATA_VERSION) == 2180 ) {
+		dialog lang("アップデートを行うには、1.1555以外のセーブデータが必要です。", "To update your game, please save not 1.1555 version then retry.")
+		goto *exit_game
+	}
+	if ( gdata(GDATA_VERSION) < 2210 ) {
+		repeat 5480
+			inv(INV_ITEM_PARAM4, cnt) = 0
+		loop
+	}
+	if ( gdata(GDATA_VERSION) == 2220 ) {
+		dialog lang("1.18fix以外のセーブデータは使えません。", "To update your game, please save not 1.18fix version then retry.")
+		goto *exit_game
+	}
+	if ( gdata(GDATA_VERSION) < 2260 ) {
+		repeat 57
+			if ( cnt == 0 ) {
+				continue
+			}
+			if ( cdata(CDATA_DIRECTIVE_MODE, cnt) > DIRECTIVE_MODE_OFFENSIVE ) {
+				cdata(CDATA_DIRECTIVE_MODE, cnt) = DIRECTIVE_MODE_DEFENSIVE
+			}
+		loop
+	}
+	if ( gdata(GDATA_VERSION) < 2280 ) {
+		repeat 57
+			if ( cnt == 0 ) {
+				continue
+			}
+			if ( cdata(CDATA_SEX, cnt) == 0 ) {
+				cdata(CDATA_TONE_SEX, cnt) = 1
+			}
+			else {
+				cdata(CDATA_TONE_SEX, cnt) = 2
+			}
+		loop
+		repeat 5480
+			saiseiseimode = 0
+			ci = cnt
+			if ( inv(INV_ITEM_ATTACK, ci) == 0 & inv(INV_ITEM_DAMAGE, ci) == 0 & inv(INV_ITEM_DV, ci) == 0 & inv(INV_ITEM_PV, ci) == 0 ) {
+				continue
+			}
+			oldcol = inv(INV_ITEM_COL, ci)
+			oldweight = inv(INV_ITEM_WEIGHT, ci)
+			if ( inv(INV_ITEM_CHARA_PIC, ci) != xy2pic(0, 0) ) {
+				inv(INV_ITEM_PV, ci) = inv(INV_ITEM_CHARA_PIC, ci)
+			}
+			if ( inv(INV_ITEM_NEED_SLEEP, ci) != 0 ) {
+				inv(INV_ITEM_DV, ci) = inv(INV_ITEM_NEED_SLEEP, ci)
+			}
+			if ( inv(INV_ITEM_AMUR_CAGE, ci) != 0 ) {
+				inv(INV_ITEM_DAMAGE, ci) = inv(INV_ITEM_AMUR_CAGE, ci)
+			}
+			if ( inv(INV_ITEM_SHOP_SAMPLE, ci) != 0 ) {
+				inv(INV_ITEM_ATTACK, ci) = inv(INV_ITEM_SHOP_SAMPLE, ci)
+			}
+			if ( inv(INV_ITEM_QUALITY, ci) == FIX_QUALITY_UNIQUE ) {
+				saiseiseimode = 50
+			}
+			else {
+				saiseiseimode = 100
+			}
+			fixmaterial = inv(INV_ITEM_MATERIAL, ci)
+			gosub *remake_material
+			inv(INV_ITEM_WEIGHT, ci) = oldweight
+			inv(INV_ITEM_COL, ci) = oldcol
+			if ( ci >= 5080 ) {
+				cell_refresh inv(INV_ITEM_X, ci), inv(INV_ITEM_Y, ci)
+			}
+		loop
+		saiseiseimode = 0
+	}
+	if ( gdata(GDATA_VERSION) < 2300 ) {
+		gdata(GDATA_FLAG_PROSTITUTION_COUNTER) = 0
+	}
+	if ( gdata(GDATA_VERSION) < 2310 ) {
+		gdata(GDATA_FLAG_HIGHEST_NORMAL_DAMAGE) = 0
+	}
+	if ( gdata(GDATA_VERSION) == 2310 ) {
+		dialog lang("アップデートを行うには、1.25以外のセーブデータが必要です。", "To update your game, please save not 1.25 version then retry.")
+		goto *exit_game
+	}
+	if ( gdata(GDATA_VERSION) <= 2390 ) {
+		repeat 5
+			p = gdata(GDATA_QUEST_POOL + cnt)
+			qdata(QDATA_EXIST, p) = QUEST_TYPE_NONE
+			qdata(QDATA_STATE, p) = QUEST_STATE_NONE
+		loop
+		repeat 16
+			cdata(CDATA_ALLIED, cnt) = 100
+			if ( cnt != 0 ) {
+				if ( cbit(CHARA_BIT_BODYGUARD, cnt) == TRUE ) {
+					if ( qdata(QDATA_PARAM2, rq) == cdata(CDATA_ID, cnt) ) {
+						tc = cnt
+						cbitmod CHARA_BIT_BODYGUARD, cnt, FALSE
+						if ( cdata(CDATA_EXIST, tc) == CHAR_STATE_ALIVE ) {
+							s = lang("「おい、暗殺者が私の後ろにいるぞ」", cnvtalk("Hey, the assassins are killing me."))
+							p = -11
+							txtef COLOR_SKY_BLUE
+							txtmore
+							txt s
+							dmghp tc, 999999, p
+						}
+						cdata(CDATA_EXIST, tc) = CHAR_STATE_DEAD
+						break
+					}
+				}
+			}
+		loop
+		repeat 500
+			qdata(QDATA_CLIENT, cnt) = 0
+			qdata(QDATA_MAP, cnt) = 0
+			gdata(GDATA_CLIENT) = 0
+		loop
+	}
+	if ( gdata(GDATA_VERSION) < 2430 ) {
+		repeat 245
+			cdata(CDATA_CAN_REVIVE, cnt) = 1
+		loop
+	}
+	if ( gdata(GDATA_VERSION) < 2440 ) {
+		gdata(GDATA_FLAG_HIGHEST_NORMAL_DAMAGE) = 0
+	}
+	if ( gdata(GDATA_VERSION) < 2480 ) {
+		repeat 245
+			tc = cnt
+			if ( cdata(CDATA_ID, tc) == CREATURE_ID_WASP | cdata(CDATA_ID, tc) == CREATURE_ID_RED_WASP | cdata(CDATA_ID, tc) == CREATURE_ID_BLACK_HORNET ) {
+				if ( cdata(CDATA_EVOLUTION_STAGE, tc) != 0 ) {
+					resistmod tc, SKILL_RES_MAGIC, 50 * 10
+				}
+			}
+			if ( cdata(CDATA_ID, tc) == CREATURE_ID_RAT ) {
+				if ( cdata(CDATA_EVOLUTION_STAGE, tc) != 0 ) {
+					resistmod tc, SKILL_RES_FIRE, 50 * 10
+				}
+			}
+		loop
+	}
+	if ( gdata(GDATA_VERSION) == 2500 ) {
+		dialog lang("1.38のセーブデータはアップデートできません。", "To update your game, please save not 1.38 version then retry.")
+		goto *exit_game
+	}
+	if ( gdata(GDATA_VERSION) < 2510 ) {
+		repeat 57
+			if ( cdata(CDATA_AP_CURRENT, cnt) > 2000 ) {
+				cdata(CDATA_AP_CURRENT, cnt) = 2000
+			}
+			cdata(CDATA_INIT_LIFEMANA, cnt) = limit(sorg(SKILL_ATTR_LIFE, cnt), 50, 200) * 2 + limit(sorg(SKILL_ATTR_MANA, cnt), 50, 200) / 2
+			if ( cnt != 0 ) {
+				cdata(CDATA_SKILLPOINT, cnt) = 0
+			}
+		loop
+	}
+	if ( gdata(GDATA_VERSION) < 2530 ) {
+		kamen = 100
+	}
+	if ( gdata(GDATA_VERSION) < 2540 ) {
+		if ( spact(SKILL_SPACT_GAUGE_RELEASE - STARTING_SKILL_SPACT) == 0 ) {
+			spact(SKILL_SPACT_GAUGE_RELEASE - STARTING_SKILL_SPACT) = 1
+			txtmore
+			txtef COLOR_YELLOW
+			txt lang("あなたは「" + skillname(SKILL_SPACT_GAUGE_RELEASE) + "」の能力を得た。", "You have learned new ability, " + skillname(SKILL_SPACT_GAUGE_RELEASE) + ".")
+		}
+		repeat 57
+			if ( cbit(CHARA_BIT_AWAKE_NEAR_DEATH_DAMAGE, cnt) ) {
+				cdata(CDATA_AP_CURRENT, cnt) += 500
+			}
+		loop
+		if ( gdata(GDATA_DEEPEST_LEVEL) > gdata(GDATA_FLAG_MAIN) / 4 + 1 ) {
+			gdata(GDATA_DEEPEST_LEVEL) = gdata(GDATA_FLAG_MAIN) / 4 + 1
+		}
+	}
+	if ( gdata(GDATA_VERSION) <= 2550 & gdata(GDATA_VERSION) >= 2540 ) {
+		repeat 57
+			if ( cdata(CDATA_ALLIED, cnt) == 0 ) {
+				continue
+			}
+			tc = cnt
+			repeat 30, 100
+				if ( cnt != 120 & cnt != 121 & cnt != 122 ) {
+					continue
+				}
+				p = cdata(cnt, tc) \ EXT_EQUIP_SLOTS
+				if ( p == 0 ) {
+					continue
+				}
+				p--
+				inv(INV_ITEM_EQUIP, p) = 0
+				cdata(cnt, tc) = cdata(cnt, tc) / EXT_EQUIP_SLOTS * 10000
+			loop
+			cdata(CDATA_EQUIP_SLOT_21, tc) = 0
+			cdata(CDATA_EQUIP_SLOT_22, tc) = 0
+			cdata(CDATA_EQUIP_SLOT_23, tc) = 0
+			r1 = tc
+			gosub *charaRefresh
+		loop
+		tuikabui = 100
+	}
+	if ( gdata(GDATA_VERSION) <= 2570 & gdata(GDATA_VERSION) >= 2540 ) {
+		repeat 30, 100
+			if ( cnt != 120 & cnt != 121 & cnt != 122 ) {
+				continue
+			}
+			p = cdata(cnt, CHARA_PLAYER) \ EXT_EQUIP_SLOTS
+			if ( p == 0 ) {
+				continue
+			}
+			p--
+			inv(INV_ITEM_EQUIP, p) = 0
+			cdata(cnt, CHARA_PLAYER) = cdata(cnt, CHARA_PLAYER) / EXT_EQUIP_SLOTS * 10000
+		loop
+		cdata(CDATA_EQUIP_SLOT_21, CHARA_PLAYER) = 0
+		cdata(CDATA_EQUIP_SLOT_22, CHARA_PLAYER) = 0
+		cdata(CDATA_EQUIP_SLOT_23, CHARA_PLAYER) = 0
+		r1 = 0
+		gosub *charaRefresh
+		tuikabui = 100
+	}
+	if ( gdata(GDATA_VERSION) < 2620 ) {
+		kamen = 1000
+	}
+	if ( gdata(GDATA_VERSION) < 2670 ) {
+		gdata(GDATA_FLAG_SUB_THE_TRUE_APPEARANCE) = 0
+	}
+	if ( gdata(GDATA_VERSION) == 2710 ) {
+		if ( gdata(GDATA_FLAG_SUB_REGULUS_ZANAN) == 1002 ) {
+			gdata(GDATA_FLAG_SUB_REGULUS_ZANAN) = 1003
+		}
+	}
+	if ( gdata(GDATA_VERSION) < 2730 ) {
+		kamen2 = 100
+	}
+	if ( gdata(GDATA_VERSION) < 2750 ) {
+		gdata(GDATA_WORLD_RENEW) = TRUE
+	}
+	if ( gdata(GDATA_VERSION) < 2760 ) {
+		adata(ADATA_ECONOMY, 85) = 0
+		adata(ADATA_ECONOMY, 79) = 0
+		adata(ADATA_ECONOMY, 75) = 0
+		adata(ADATA_ECONOMY, 74) = 0
+		adata(ADATA_ECONOMY, 73) = 0
+		adata(ADATA_ECONOMY, 72) = 0
+		adata(ADATA_ECONOMY, 71) = 0
+		adata(ADATA_ECONOMY, 80) = 0
+		adata(ADATA_ECONOMY, 81) = 0
+		adata(ADATA_ECONOMY, 80) = 0
+	}
+	if ( gdata(GDATA_VERSION) < 2880 ) {
+		gdata(GDATA_FLAG_BIRTHDAY_CURRENT_YEAR) = int(gettime(0))
+	}
+	if ( gdata(GDATA_VERSION) < 2990 ) {
+		if ( int(gettime(1)) == 12 ) {
+			if ( int(gettime(3)) <= 25 ) {
+				kamen3 = 100
+			}
+		}
+	}
+	if ( gdata(GDATA_VERSION) < 3050 ) {
+		repeat 57
+			if ( cnt == 0 ) {
+				cdata(CDATA_THIRST, cnt) = 9000
+			}
+			else {
+				cdata(CDATA_THIRST, cnt) = 6000 - 1000 + rnd(4000)
+			}
+		loop
+	}
+	if ( gdata(GDATA_VERSION) < 3060 ) {
+		repeat 450 - 300, 300
+			if ( adata(ADATA_ID, cnt) != AREA_SHOP ) {
+				continue
+			}
+			adata((37 /*!!!@[ADATA_RANCH_BREED_RESTRICTION @@@ ADATA_SHOP_SALE_RESTRICTION]@!!! */), cnt) = 0
+			adata((39 /*!!!@[ADATA_RANCH_PRODUCE_RESTRICTION @@@ ADATA_SHOP_TYPE_CHANGE_COOLDOWN]@!!! */), cnt) = 0
+		loop
+	}
+	if ( gdata(GDATA_VERSION) < 3080 ) {
+		if ( gdata(GDATA_FLAG_GAME_MODE) == 5 ) {
+			kamen4 = 100
+		}
+	}
+	if ( gdata(GDATA_VERSION) < 3120 ) {
+		repeat 40 - 1, 16
+			if ( cdata(CDATA_HIRE_DATE, cnt) != 0 ) {
+				cdata(CDATA_AREA, cnt) = gdata(GDATA_AREA)
+				cdata(CDATA_EXIST, cnt) = CHAR_STATE_ALIVE
+			}
+		loop
+	}
+	if ( gdata(GDATA_VERSION) < 3140 ) {
+		if ( gdata(GDATA_DAY) > 31 ) {
+			gdata(GDATA_DAY) = 30
+		}
+	}
+	if ( gdata(GDATA_VERSION) < 3170 ) {
+		kamen5 = 100
+	}
+	if ( gdata(GDATA_VERSION) < 3180 ) {
+		kamen6 = 100
+	}
+	if ( gdata(GDATA_VERSION) < 3930 ) {
+		repeat 245
+			cdata(CDATA_CUSTOM_TALK_LINE, cnt) = 0
+		loop
+		gdata(GDATA_FLAG_SCROLL_OF_WITCHCRAFT_TOTAL_SKILL_BONUS) = cdata(CDATA_LEVEL, CHARA_PLAYER) * 5
+		if ( gdata(GDATA_FLAG_GAME_MODE) == 5 ) {
+			gdata(GDATA_FLAG_SCROLL_OF_WITCHCRAFT_TOTAL_SKILL_BONUS) += 10000
+		}
+		txt lang("あなたはスペルボーナスを獲得した。", "You gain spellbonus points.")
+	}
+	if ( gdata(GDATA_VERSION) < 3990 ) {
+		repeat 245
+			if ( cdata(CDATA_EVOLUTION_STAGE, cnt) != 1 ) {
+				continue
+			}
+			if ( cdata(CDATA_ID, cnt) == CREATURE_ID_FLOATING_EYE | cdata(CDATA_ID, cnt) == CREATURE_ID_CHAOS_EYE | cdata(CDATA_ID, cnt) == CREATURE_ID_MAD_GAZE | cdata(CDATA_ID, cnt) == CREATURE_ID_DEATH_GAZE | cdata(CDATA_ID, cnt) == CREATURE_ID_DEFORMED_EYE | cdata(CDATA_ID, cnt) == CREATURE_ID_IMPURE_EYE ) {
+				cdata(CDATA_CHARA_PIC, cnt) = xy2pic(1, 0)
+				txt lang("目系進化体グラフィック修正。", "The graphic of the eye evolution character have been corrected.")
+			}
+		loop
+		gdata(GDATA_CARGO_LIMIT) = gdata(GDATA_CARGO_LIMIT) / 10000 * 10000
+		if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) == 1 ) {
+			gdata(GDATA_CARGO_LIMIT) += 10 * 1000
+		}
+		if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) == 2 ) {
+			gdata(GDATA_CARGO_LIMIT) += 20 * 1000
+		}
+		if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) == 3 ) {
+			gdata(GDATA_CARGO_LIMIT) += 30 * 1000
+		}
+		if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) == 4 ) {
+			gdata(GDATA_CARGO_LIMIT) += 100 * 1000
+		}
+	}
+	if ( gdata(GDATA_VERSION) < 5980 ) {
+		gdata(GDATA_FLAG_PC_SKILL_BONUS_OBTAINED) = cdata(CDATA_SKILLPOINT, CHARA_PLAYER)
+		gdata(GDATA_FLAG_SKILL_BONUS_OBTAINED) = gdata(GDATA_FLAG_SCROLL_OF_WITCHCRAFT_TOTAL_SKILL_BONUS)
+		if ( gdata(GDATA_FLAG_SCROLL_OF_WITCHCRAFT_TOTAL_SKILL_BONUS) >= 100 | cdata(CDATA_SKILLPOINT, CHARA_PLAYER) >= 100 | cdata(CDATA_PLATINUM, CHARA_PLAYER) >= 100 ) {
+			if ( gdata(GDATA_FLAG_GAME_MODE) != 2 & gdata(GDATA_FLAG_GAME_MODE) != 5 ) {
+				dialog lang("注意！スペルボーナス、スキルボーナス、プラチナ硬貨は100以上所持していると新たに獲得できない。", "Caution! While the spell bonus is 100 or more, you cannot get new.")
+			}
+		}
+	}
+	if ( gdata(GDATA_VERSION) < 6020 ) {
+		gdata(GDATA_FLAG_SUB_MISSION_FROM_GARZIEM) = 0
+	}
+	if ( gdata(GDATA_VERSION) < 6050 ) {
+		if ( gdata(GDATA_FLAG_MAIN) >= 180 ) {
+			kamen7 = 100
+		}
+		if ( gdata(GDATA_FLAG_MAIN) >= 340 ) {
+			kamen8 = 100
+		}
+		if ( gdata(GDATA_FLAG_MAIN) >= 680 ) {
+			kamen9 = 100
+		}
+	}
+	if ( gdata(GDATA_VERSION) < 6060 ) {
+		if ( gdata(GDATA_FLAG_SUB_AMURDAD) >= 10 ) {
+			gdata(GDATA_FLAG_SUB_AMURDAD) = 0
+		}
+		if ( cdatan(CDATAN_RACE, CHARA_PLAYER) == "slime" ) {
+			cdata(CDATA_PV_FIX, CHARA_PLAYER) = 200
+		}
+		if ( cdatan(CDATAN_RACE, CHARA_PLAYER) == "sheep" ) {
+			cdata(CDATA_PV_FIX, CHARA_PLAYER) = 120
+		}
+		if ( cdatan(CDATAN_RACE, CHARA_PLAYER) == "zombie" ) {
+			cdata(CDATA_PV_FIX, CHARA_PLAYER) = 150
+		}
+		if ( cdatan(CDATAN_RACE, CHARA_PLAYER) == "ent" ) {
+			cdata(CDATA_PV_FIX, CHARA_PLAYER) = 140
+		}
+		if ( cdatan(CDATAN_RACE, CHARA_PLAYER) == "armor" ) {
+			cdata(CDATA_PV_FIX, CHARA_PLAYER) = 200
+		}
+		if ( cdatan(CDATAN_RACE, CHARA_PLAYER) == "skeleton" ) {
+			cdata(CDATA_PV_FIX, CHARA_PLAYER) = 120
+		}
+		if ( cdatan(CDATAN_RACE, CHARA_PLAYER) == "wisp" ) {
+			cdata(CDATA_PV_FIX, CHARA_PLAYER) = 150
+		}
+		if ( cdatan(CDATAN_RACE, CHARA_PLAYER) == "rabbit" ) {
+			cdata(CDATA_DV_FIX, CHARA_PLAYER) = 120
+		}
+		if ( cdatan(CDATAN_RACE, CHARA_PLAYER) == "cat" ) {
+			cdata(CDATA_DV_FIX, CHARA_PLAYER) = 200
+		}
+		if ( cdatan(CDATAN_RACE, CHARA_PLAYER) == "dog" ) {
+			cdata(CDATA_DV_FIX, CHARA_PLAYER) = 200
+		}
+		if ( cdatan(CDATAN_RACE, CHARA_PLAYER) == "rat" ) {
+			cdata(CDATA_DV_FIX, CHARA_PLAYER) = 250
+		}
+		if ( cdatan(CDATAN_RACE, CHARA_PLAYER) == "catsister" ) {
+			cdata(CDATA_DV_FIX, CHARA_PLAYER) = 200
+		}
+	}
+	repeat 16
+		if ( cdata(CDATA_CHARA_PIC_ORG, cnt) == 1 ) {
+			cdata(CDATA_CHARA_PIC, cnt) = xy2pic(1, 0)
+		}
+		if ( cnt == 0 ) {
+			continue
+		}
+		if ( gdata(GDATA_AREA) == AREA_ARENA ) {
+			continue
+		}
+		if ( cdata(CDATA_EXIST, cnt) != CHAR_STATE_SUSPEND ) {
+			continue
+		}
+		if ( cdata(CDATA_IN_TAGTEAM, cnt) != 0 ) {
+			map(cdata(CDATA_X, cnt), cdata(CDATA_Y, cnt), MAP_CHARA_INDEX_PLUS_ONE) = 0
+			cdata(CDATA_EXIST, cdata(CDATA_TAGTEAM_PARTNER, cnt)) = CHAR_STATE_SUSPEND
+			hagureta = 100
+		}
+	loop
+	if ( gdata(GDATA_VERSION) != int(double("6.06") * 1000) ) {
+		gdata(GDATA_WORLD_RENEW) = TRUE
+	}
+	del_chara 56
+	if ( gdata(GDATA_VERSION) > int(double("6.06") * 1000) ) {
+		dialog "invalid version"
+		goto *exit_game
+	}
+	if ( gdata(GDATA_PLAY_TIME) < 0 ) {
+		gdata(GDATA_PLAY_TIME) = 0
+	}
+	if ( gdata(GDATA_FLAG_GAME_MODE) == 3 ) {
+		if ( gdata(GDATA_GAMEMODE_PENALTY) == 4 ) {
+			dialog lang("その冒険者は蘇らない…。", "The adventurer is not revived again...")
+			goto *exit_game
+		}
+	}
+	ima = int(gettime(5)) + int(gettime(4)) * 60 + int(gettime(3)) * 24 * 60
+	if ( int(gettime(1)) == gdata(GDATA_FLAG_REALTIME_HOURS) & int(gettime(0)) == gdata(GDATA_FLAG_REALTIME_DAYS) | gdata(GDATA_FLAG_REALTIME_MINUTES) == 0 ) {
+		if ( ima >= gdata(GDATA_FLAG_REALTIME_MINUTES) + 10 ) {
+			gdata(GDATA_FLAG_RARE_DROP) = 100
+		}
+		else {
+			gdata(GDATA_FLAG_RARE_DROP) = 0
+		}
+	}
+	else {
+		if ( ima >= 1440 + 10 ) {
+			gdata(GDATA_FLAG_RARE_DROP) = 100
+		}
+		else {
+			gdata(GDATA_FLAG_RARE_DROP) = 0
+		}
+	}
+	ima = 0
+	gdata(GDATA_FLAG_REALTIME_MINUTES) = int(gettime(5)) + int(gettime(4)) * 60 + int(gettime(3)) * 24 * 60
+	gdata(GDATA_FLAG_REALTIME_HOURS) = int(gettime(1))
+	gdata(GDATA_FLAG_REALTIME_DAYS) = int(gettime(0))
+	deru = 44
+	if ( gdata(GDATA_FLAG_GAME_MODE) == 5 ) {
+		gdata(GDATA_FLAG_RARE_DROP) = 100
+		dbg_noautosave = 1
+	}
+	if ( gdata(GDATA_FLAG_GAME_MODE) == 1 | gdata(GDATA_FLAG_GAME_MODE) == 3 | gdata(GDATA_FLAG_GAME_MODE) == 4 ) {
+		if ( gdata(GDATA_GAMEMODE_PENALTY) == 0 ) {
+			dialog lang("Escキーでセーブ後自動終了せずに、強制終了したセーブデータにはペナルティが与えられます。", "It is a nosave penalty.")
+			modkarma 0, -100
+			skillmod SKILL_ATTR_LIFE, CHARA_PLAYER, -5000
+			skillmod SKILL_ATTR_MANA, CHARA_PLAYER, -5000
+			cdata(CDATA_GOLD, CHARA_PLAYER) = cdata(CDATA_GOLD, CHARA_PLAYER) / 2
+			cdata(CDATA_PLATINUM, CHARA_PLAYER) = cdata(CDATA_PLATINUM, CHARA_PLAYER) / 2
+			addbuff CHARA_PLAYER, BUFF_PUNISHMENT, 100000, 100
+		}
+		if ( gdata(GDATA_GAMEMODE_PENALTY) == 1 ) {
+			gdata(GDATA_GAMEMODE_PENALTY) = 0
+			snd SOUNDLIST_ENC
+		}
+	}
+	gdata(GDATA_VERSION) = int(double("6.06") * 1000)
+	cbitmod CHARA_BIT_PCC, CHARA_PLAYER, TRUE
+	gdata(GDATA_SPEEDSUM_RESET) = 1
+	gosub *initial_recipe
+	return
+
+*mapReset
+	gdata(GDATA_MAP_VERSION)++
+	dim qdata, 20, 500
+	sdim qname, 40, 500
+	gdata(GDATA_CLIENT) = 0
+	gosub *setArea
+	return
+
+*apply_gene
+	file = "shop" + 3 + ".s2"
+	fmode = 4
+	gosub *game_ctrlFile
+	pbigin = (pbigin - 250) / 7
+	if ( pbigin < 5 ) {
+		pbigin = 5
+	}
+	else {
+		if ( pbigin > 50 ) {
+			pbigin = 50
+		}
+	}
+	ibigin = (ibigin - 250) / 8
+	if ( ibigin < 5 ) {
+		ibigin = 5
+	}
+	else {
+		if ( ibigin > 40 ) {
+			ibigin = 40
+		}
+	}
+	cdata(CDATA_GOLD, CHARA_PLAYER) += goldbigin
+	cdata(CDATA_PLATINUM, CHARA_PLAYER) += pbigin
+	cdata(CDATA_SKILLPOINT, CHARA_PLAYER) += ibigin
+	repeat 400
+		mat(cnt) = mat(cnt) / 3
+	loop
+	return
+
+*load_gene
+	fmode = 15
+	gosub *game_ctrlFile
+	dim spell, 200
+	dim spact, 500
+	pbigin = 0
+	ibigin = 0
+	repeat 600
+		if ( cnt >= 10 & cnt < 20 ) {
+			pbigin += sorg(cnt, CHARA_PLAYER)
+		}
+		if ( cnt >= 100 & cnt < 400 ) {
+			ibigin += sorg(cnt, CHARA_PLAYER)
+		}
+	loop
+	goldbigin += limit(cdata(CDATA_GOLD, CHARA_PLAYER) / 100, 1000, 100000)
+	repeat 245
+		cdata(CDATA_EXIST, cnt) = CHAR_STATE_DEAD
+	loop
+	repeat 1200
+		sdata(cnt, MAX_CHARA_NC) = sdata(cnt, CHARA_PLAYER)
+		sdata(cnt, CHARA_PLAYER) = 0
+	loop
+	repeat 500
+		cdata(cnt, MAX_CHARA_NC) = cdata(cnt, CHARA_PLAYER)
+		cdata(cnt, CHARA_PLAYER) = 0
+	loop
+	inv_getheader -1
+	repeat invrange, invhead
+		inv(INV_ITEM_NUM, cnt) = 0
+	loop
+	inv_getheader 0
+	repeat invrange, invhead
+		if ( inv(INV_ITEM_NUM, cnt) == 0 ) {
+			continue
+		}
+		if ( inv(INV_ITEM_ID, cnt) == ITEM_ID_SECRET_EXP_LOMIAS ) {
+			lomiaseaster = 1
+		}
+		if ( inv(INV_ITEM_ID, cnt) == ITEM_ID_DEED_HEIRSHIP | refitem(inv(INV_ITEM_ID, cnt), DBSPEC_TYPE_MINOR) == FILTER_ITEM_DEED ) {
+			continue
+		}
+		if ( inv(INV_ITEM_ID, cnt) == ITEM_ID_KITTY_BANK ) {
+			continue
+		}
+		if ( inv(INV_ITEM_QUALITY, cnt) == FIX_QUALITY_UNIQUE ) {
+			continue
+		}
+		if ( ibit(ITEM_BIT_PRECIOUS, cnt) ) {
+			continue
+		}
+		if ( refitem(inv(INV_ITEM_ID, cnt), DBSPEC_TYPE) == FILTER_AMMO ) {
+			inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), cnt) = -1
+		}
+		inv(INV_ITEM_EQUIP, cnt) = 0
+		item_copy cnt, inv_getfreeid(-1)
+	loop
+	gdata(GDATA_FLAG_END_TAGTEAM) = 1000
+	repeat 245
+		del_chara cnt
+	loop
+	gdata(GDATA_FLAG_END_TAGTEAM) = 0
+	gdata(GDATA_PLAY_TIME) = genetemp(GDATA_PLAY_TIME)
+	return
+
+*generate_gene
+	fmode = 14
+	gosub *game_ctrlFile
+	return
+
+#deffunc zipadd str zipadd_arg1
+	p = 12
+	exist folder + zipadd_arg1
+	len = strsize + p * 2
+	lenhead = lensum
+	lensum += len
+	sdim ziptmp1, p
+	ziptmp1 += zipadd_arg1
+	sdim ziptmp2, p
+	ziptmp2 += str(len)
+	memexpand filebuff, lensum
+	memcpy filebuff, ziptmp1, p, lenhead
+	memcpy filebuff, ziptmp2, p, lenhead + p
+	sdim filetemp, len - p * 2
+	bload folder + zipadd_arg1, filetemp, , 0
+	memcpy filebuff, filetemp, len - p * 2, lenhead + p * 2
+	return
+
+*unzip
+	p = 12
+	folder = exedir + "user\\"
+	bload folder + file, headtemp, 1024
+	gosub *dump_config_import
+	exist folder + file
+	zipsize = strsize
+	sdim filebuff, zipsize
+	bload folder + file, filebuff, zipsize
+	lenhead = 1024
+	repeat 10000
+		sdim ziptmp1, p
+		sdim ziptmp2, p
+		memcpy ziptmp1, filebuff, p, 0, lenhead
+		memcpy ziptmp2, filebuff, p, 0, lenhead + p
+		len = int(ziptmp2)
+		sdim filetemp, len - p * 2
+		memcpy filetemp, filebuff, len - p * 2, 0, lenhead + p * 2
+		bsave folder + ziptmp1, filetemp
+		lenhead += len
+		if ( lenhead >= zipsize ) {
+			break
+		}
+	loop
+	return
+	goto *label_5731
+
+#deffunc zipinit2 str zipinit2_arg1, str zipinit2_arg2
+	locvar_zipinit2_lensum = 0
+	locvar_zipinit2_zipfolder = zipinit2_arg1
+	locvar_zipinit2_zipfinalfile = zipinit2_arg2
+	sdim locvar_zipinit2_filebuff
+	return
+
+#deffunc zipadd2 str zipadd2_arg1
+	locvar_zipadd2_p = 50, 40, 10
+	exist locvar_zipinit2_zipfolder + zipadd2_arg1
+	locvar_zipadd2_len = strsize + locvar_zipadd2_p
+	locvar_zipadd2_lenhead = locvar_zipinit2_lensum
+	locvar_zipinit2_lensum += locvar_zipadd2_len
+	sdim locvar_zipadd2_ziptmp1, locvar_zipadd2_p(1)
+	locvar_zipadd2_ziptmp1 += zipadd2_arg1
+	sdim locvar_zipadd2_ziptmp2, locvar_zipadd2_p(2)
+	locvar_zipadd2_ziptmp2 += str(locvar_zipadd2_len)
+	memexpand locvar_zipinit2_filebuff, locvar_zipinit2_lensum
+	memcpy locvar_zipinit2_filebuff, locvar_zipadd2_ziptmp1, locvar_zipadd2_p(1), locvar_zipadd2_lenhead
+	memcpy locvar_zipinit2_filebuff, locvar_zipadd2_ziptmp2, locvar_zipadd2_p(2), locvar_zipadd2_lenhead + locvar_zipadd2_p(1)
+	sdim locvar_zipadd2_filetemp, locvar_zipadd2_len - locvar_zipadd2_p
+	bload locvar_zipinit2_zipfolder + zipadd2_arg1, locvar_zipadd2_filetemp, , 0
+	memcpy locvar_zipinit2_filebuff, locvar_zipadd2_filetemp, locvar_zipadd2_len - locvar_zipadd2_p, locvar_zipadd2_lenhead + locvar_zipadd2_p
+	return
+
+#deffunc zipend2
+	bsave locvar_zipinit2_zipfolder + locvar_zipinit2_zipfinalfile, locvar_zipinit2_filebuff
+	return
+
+#deffunc unzip2 str unzip2_arg1, str unzip2_arg2
+	locvar_zipadd2_p = 50, 40, 10
+	exist unzip2_arg1 + unzip2_arg2
+	locvar_unzip2_zipsize = strsize
+	sdim locvar_zipinit2_filebuff, locvar_unzip2_zipsize
+	bload unzip2_arg1 + unzip2_arg2, locvar_zipinit2_filebuff, locvar_unzip2_zipsize
+	locvar_zipadd2_lenhead = 0
+	repeat 10000
+		sdim locvar_zipadd2_ziptmp1, locvar_zipadd2_p(1)
+		sdim locvar_zipadd2_ziptmp2, locvar_zipadd2_p(2)
+		memcpy locvar_zipadd2_ziptmp1, locvar_zipinit2_filebuff, locvar_zipadd2_p(1), 0, locvar_zipadd2_lenhead
+		memcpy locvar_zipadd2_ziptmp2, locvar_zipinit2_filebuff, locvar_zipadd2_p(2), 0, locvar_zipadd2_lenhead + locvar_zipadd2_p(1)
+		locvar_zipadd2_len = int(locvar_zipadd2_ziptmp2)
+		if ( locvar_zipadd2_len == 0 ) {
+			break
+		}
+		sdim locvar_zipadd2_filetemp, locvar_zipadd2_len - locvar_zipadd2_p
+		memcpy locvar_zipadd2_filetemp, locvar_zipinit2_filebuff, locvar_zipadd2_len - locvar_zipadd2_p, 0, locvar_zipadd2_lenhead + locvar_zipadd2_p
+		bsave unzip2_arg1 + locvar_zipadd2_ziptmp1, locvar_zipadd2_filetemp
+		locvar_zipadd2_lenhead += locvar_zipadd2_len
+		if ( locvar_zipadd2_lenhead >= locvar_unzip2_zipsize ) {
+			break
+		}
+	loop
+	return
+
+*label_5731
+	goto *set_userNpc
+
+#defcfunc getnpctxt str getnpctxt_arg1, str getnpctxt_arg2
+	locvar_getnpctxt_p = instr(txtbuff, 0, getnpctxt_arg1)
+	if ( locvar_getnpctxt_p == (-1) ) {
+		return getnpctxt_arg2
+	}
+	locvar_getnpctxt_p += instr(txtbuff, locvar_getnpctxt_p, "\"")
+	if ( locvar_getnpctxt_p == (-1) ) {
+		return getnpctxt_arg2
+	}
+	return strmid(txtbuff, locvar_getnpctxt_p + 1, limit(instr(txtbuff, locvar_getnpctxt_p + 1, "\""), 0, 70))
+
+#deffunc cnvvar var cnvvar_arg1, str cnvvar_arg2
+	locvar_cnvvar_ref = cnvvar_arg2
+	locvar_getnpctxt_p = 0
+	repeat
+		getstr cnvvar_arg1(cnt), locvar_cnvvar_ref, locvar_getnpctxt_p, 44
+		if ( cnvvar_arg1 == "" ) {
+			break
+		}
+		locvar_getnpctxt_p += strsize
+	loop
+	return
+
+*set_userNpc
+	if ( initunid ) {
+		cdata(CDATA_USERNPC_ID, rc) = initunid - 1
+		initunid = 0
+	}
+	cun = cdata(CDATA_USERNPC_ID, rc)
+	cdata(CDATA_ID, rc) = CREATURE_ID_USER
+	if ( initlv != 0 ) {
+		cdata(CDATA_LEVEL, rc) = initlv
+	}
+	else {
+		cdata(CDATA_LEVEL, rc) = limit(userdata(2, cun), 1, 350)
+	}
+	if ( cdata(CDATA_LEVEL, rc) > gdata(GDATA_DEEPEST_LEVEL) * 2 ) {
+		cdata(CDATA_LEVEL, rc) = limit(gdata(GDATA_DEEPEST_LEVEL) * 2, 1, 350)
+	}
+	cdata(CDATA_PORTRAIT, rc) = -1
+	creaturepack = FILTER_NOTHING
+	cdata(CDATA_ACT_INDEX, rc) = 55
+	cdata(CDATA_AI_SUB, rc) = unaiactsubfreq(cun)
+	repeat 5
+		cdata(STARTING_CDATA_ACT_MAIN + cnt, rc) = userdata(15 + cnt, cun)
+		cdata(STARTING_CDATA_ACT_SUB + cnt, rc) = userdata(20 + cnt, cun)
+	loop
+	if ( userdatan(5, cun) != "" ) {
+		sdim unres, 6, 32
+		csvstr2 unres, userdatan(5, cun)
+		repeat
+			if ( cnt > 15 | unres(cnt) == "" ) {
+				break
+			}
+			sdata(int(unres(cnt * 2)), rc) += int(unres(cnt * 2 + 1)) * 50
+		loop
+	}
+	cdata(CDATA_TXT, rc) = 1
+	cdata(CDATA_ALIGNMENT, rc) = -10000
+	cdatan(CDATAN_NAME, rc) = userdatan(1, cun)
+	cdatan(CDATAN_USER_NPC_TAG, rc) = userdatan(0, cun)
+	cdata(CDATA_RELATION, rc) = limit(userdata(4, cun), -3, 10)
+	cdata(CDATA_AI_CALM, rc) = limit(userdata(7, cun), 1, 4)
+	cdata(CDATA_AI_MOVE_FREQ, rc) = limit(userdata(8, cun), 0, 100)
+	cdata(CDATA_AI_DISTANCE, rc) = limit(userdata(9, cun), 1, 100)
+	if ( userdata(11, cun) ) {
+		cdata(CDATA_ELEMENT, rc) = limit(userdata(11, cun), SKILL_RES_FIRE * 100000, MAX_SKILL_RESDMG * 100000)
+	}
+	cdata(CDATA_ACT_HEAL, rc) = userdata(10, cun)
+	dbidn = userdatan(2, cun)
+	dbmode = DBMODE_SET
+	gosub *db_race
+	dbidn = userdatan(3, cun)
+	dbmode = DBMODE_SET
+	gosub *db_class
+	cdata(CDATA_SEX, rc) = userdata(3, cun)
+	if ( userdata(3, cun) != 0 ) {
+		if ( userdata(3, cun) != 1 ) {
+			cdata(CDATA_SEX, rc) = rnd(2)
+		}
+	}
+	if ( userdata(5, cun) ) {
+		fixlv = limit(userdata(5, cun), 0, 6)
+	}
+	cspecialeq = 0
+	cdata(CDATA_RELATION_ORG, rc) = cdata(CDATA_RELATION, rc)
+	fixaiact rc
+	setunid rc, cun
+	return
+
+*userNpc_update
+	procid = (procid + 1) \ 4
+	proclist(procid) = "userNpc_update" + " ct:" + ct
+	dirlist buff, exedir + "user\\*.npc"
+	notesel buff
+	usernpcmax = noteinfo(0)
+	if ( usernpcmax >= 240 ) {
+		usernpcmax = 240
+	}
+	dim userdata, 70, usernpcmax + 1
+	sdim userdatan, 40, 15, usernpcmax + 1
+	sdim usertxt, 80 * 100, usernpcmax + 1
+	sdim untaglist
+	gdata(GDATA_USERNPC_COUNT) = 0
+	buffer BUFFER_CHR, 33 * 48, (34 + (usernpcmax / 33 + 1) * 2) * 48
+	pos 0, 0
+	picload exedir + "\\graphic\\character" + devfile + ".bmp", 1
+	gmode 0
+	fread = 1
+	procid = (procid + 1) \ 4
+	proclist(procid) = "userNpc_update:1" + " ct:" + ct
+	func_1 buff, 1
+	tg = 0
+	repeat usernpcmax
+		procid = (procid + 1) \ 4
+		proclist(procid) = "userNpc_update:2" + " ct:" + ct
+		noteget s, cnt
+		cnt2 = tg
+		unzip2 exedir + "user\\", s
+		procid = (procid + 1) \ 4
+		proclist(procid) = "userNpc_update:2a" + " ct:" + ct
+		if ( fread == 0 ) {
+			zOpen hgz, exedir + "user\\npc1.t", 1, 3
+			zWrite userdata(0, tg), hgz, 70 * 4
+			zClose hgz
+		}
+		else {
+			zOpen hgz, exedir + "user\\npc1.t", 0
+			zRead userdata(0, tg), hgz, 70 * 4
+			zClose hgz
+		}
+		dim bmpbuff, userdata(0, tg)
+		sdim txtbuff, userdata(1, tg)
+		procid = (procid + 1) \ 4
+		proclist(procid) = "userNpc_update:2c" + " ct:" + ct
+		if ( fread == 0 ) {
+			zOpen hgz, exedir + "user\\npc2.t", 1, 3
+			zWrite bmpbuff, hgz, userdata(0, tg)
+			zClose hgz
+		}
+		else {
+			zOpen hgz, exedir + "user\\npc2.t", 0
+			zRead bmpbuff, hgz, userdata(0, tg)
+			zClose hgz
+		}
+		procid = (procid + 1) \ 4
+		proclist(procid) = "userNpc_update:2d" + " ct:" + ct
+		if ( fread == 0 ) {
+			zOpen hgz, exedir + "user\\npc3.t", 1, 3
+			zWrite txtbuff, hgz, userdata(1, tg)
+			zClose hgz
+		}
+		else {
+			zOpen hgz, exedir + "user\\npc3.t", 0
+			zRead txtbuff, hgz, userdata(1, tg)
+			zClose hgz
+		}
+		procid = (procid + 1) \ 4
+		proclist(procid) = "userNpc_update:2e" + " ct:" + ct
+		s = getnpctxt("name.", "unknown,unknown")
+		csvstr2 s, s
+		userdatan(0, tg) = s
+		userdatan(1, tg) = s(jp)
+		noteget s, cnt
+		userdatan(6, tg) = s
+		if ( instr(untaglist, 0, "/" + userdatan(0, tg) + "/") != (-1) ) {
+			usernpcmax--
+			if ( instr(s, 0, "_tmp_") == (-1) ) {
+				msgtemp += lang("同名NPCは読み込まれない。", "A npc of the same name exists.") + "(skipped:" + userdatan(0, tg) + "," + s + ") "
+			}
+			continue
+		}
+		untaglist += "/" + userdatan(0, tg) + "/"
+		if ( instr(s, 0, "_tmp_") != (-1) ) {
+			gdata(GDATA_USERNPC_COUNT)++
+		}
+		procid = (procid + 1) \ 4
+		proclist(procid) = "userNpc_update:set info" + " ct:" + ct
+		userdatan(2, tg) = getnpctxt("race.", "slime")
+		userdatan(3, tg) = getnpctxt("class.", "tourist")
+		userdatan(4, tg) = getnpctxt("filter.", "")
+		userdatan(5, tg) = getnpctxt("resist.", "")
+		s = getnpctxt("meleeElem.", "0,0")
+		csvstr2 s, s
+		userdata(11, tg) = int(s) * 100000 + int(s(1))
+		procid = (procid + 1) \ 4
+		proclist(procid) = "userNpc_update:set bits" + " ct:" + ct
+		s = getnpctxt("bitOn.", "0,0")
+		csvstr2 s, s
+		repeat
+			p = int(s(cnt))
+			if ( cnt > 20 | p == 0 ) {
+				break
+			}
+			HMMBITON userdata(40 + p / 32, cnt2), p \ 32
+		loop
+		procid = (procid + 1) \ 4
+		proclist(procid) = "userNpc_update:set actions" + " ct:" + ct
+		s = getnpctxt("aiAct.", "0,0,0,0,0")
+		csvstr2 s, s
+		repeat 5
+			userdata(15 + cnt, cnt2) = int(s(cnt))
+		loop
+		s = getnpctxt("aiActSub.", "0,0,0,0,0")
+		csvstr2 s, s
+		repeat 5
+			userdata(20 + cnt, cnt2) = int(s(cnt))
+		loop
+		procid = (procid + 1) \ 4
+		proclist(procid) = "userNpc_update:set ref" + " ct:" + ct
+		userdata(12, tg) = int(getnpctxt("select.", "0"))
+		userdata(2, tg) = int(getnpctxt("level.", "1"))
+		userdata(3, tg) = int(getnpctxt("sex.", "-1"))
+		userdata(4, tg) = int(getnpctxt("relation.", "-1"))
+		userdata(5, tg) = int(getnpctxt("fixLv.", "0"))
+		userdata(6, tg) = int(getnpctxt("rare.", "0"))
+		userdata(7, tg) = int(getnpctxt("aiCalm.", "1"))
+		userdata(8, tg) = int(getnpctxt("aiMove.", "50"))
+		userdata(9, tg) = int(getnpctxt("aiDist.", "1"))
+		userdata(10, tg) = int(getnpctxt("aiHeal.", "0"))
+		unaiactsubfreq(tg) = int(getnpctxt("aiActSubFreq.", "0"))
+		p = instr(txtbuff, 0, "%txt")
+		txtbuff = strmid(txtbuff, p, instr(txtbuff, 0, "%endTxt") - p)
+		usertxt(tg) = strmid(txtbuff, 0, 80 * 100 - 2)
+		procid = (procid + 1) \ 4
+		proclist(procid) = "userNpc_update:2.1" + " ct:" + ct
+		gsel BUFFER_PIC2
+		memfile bmpbuff
+		picload "MEM:temp.bmp"
+		if ( ginfo(13) > 50 ) {
+			chipc(CHIPC_X, 33 * 34 + tg) = tg \ 33 * inf_tiles, 34 * inf_tiles + tg / 33 * inf_tiles * 2, inf_tiles, inf_tiles * 2, inf_tiles + 8
+		}
+		else {
+			chipc(CHIPC_X, 33 * 34 + tg) = tg \ 33 * inf_tiles, 34 * inf_tiles + tg / 33 * inf_tiles * 2, inf_tiles, inf_tiles, 16
+		}
+		gsel BUFFER_CHR
+		pos tg \ 33 * 48, 34 * 48 + tg / 33 * 96
+		gcopy BUFFER_PIC2, 0, 0, 48, 96
+		tg++
+	loop
+	procid = (procid + 1) \ 4
+	proclist(procid) = "userNpc_update:3" + " ct:" + ct
+	gosub *del_userTemp
+	gosub *del_userNpc
+	procid = (procid + 1) \ 4
+	proclist(procid) = "userNpc_update:Replace bmp" + " ct:" + ct
+	gsel BUFFER_CHR
+	folder = exedir + "user\\graphic\\"
+	dirlist buff, folder + "chara_*.bmp"
+	notesel buff
+	repeat stat
+		noteget file, cnt
+		p = int(strmid(file, 6, instr(file, 6, ".")))
+		pos p \ 33 * inf_tiles, p / 33 * inf_tiles
+		picload folder + file, 1
+	loop
+	gsel BUFFER_SCREEN
+	gsel BUFFER_CHR
+	folder = exedir + "user\\graphic\\"
+	dirlist buff, folder + "Pic_*.bmp"
+	notesel buff
+	repeat stat
+		noteget file, cnt
+		p = int(strmid(file, 4, instr(file, 4, "."))) + 692
+		pos p \ 33 * inf_tiles, p / 33 * inf_tiles
+		picload folder + file, 1
+	loop
+	gsel BUFFER_SCREEN
+	gsel BUFFER_ITEM
+	folder = exedir + "user\\item\\"
+	dirlist buff, folder + "plan*.bmp"
+	notesel buff
+	repeat stat
+		noteget file, cnt
+		p = int(strmid(file, 4, instr(file, 4, "."))) + 890
+		pos p \ 33 * inf_tiles, p / 33 * inf_tiles
+		picload folder + file, 1
+	loop
+	gsel BUFFER_SCREEN
+	gsel BUFFER_ITEM
+	folder = exedir + "user\\graphic\\"
+	dirlist buff, folder + "item_*.bmp"
+	notesel buff
+	repeat stat
+		noteget file, cnt
+		p = int(strmid(file, 5, instr(file, 5, ".")))
+		pos p \ 33 * inf_tiles, p / 33 * inf_tiles
+		picload folder + file, 1
+	loop
+	gsel BUFFER_SCREEN
+	return
+	inv_getheader rc
+	repeat invrange, invhead
+		inv(INV_ITEM_EQUIP, cnt) = 0
+	loop
+	repeat 30, 100
+		cdata(cnt, rc) = cdata(cnt, rc) / EXT_EQUIP_SLOTS * 10000
+	loop
+	gosub *chara_equipFull
+	cdata(CDATA_AI_ITEM, rc) = 0
+	rowactend rc
+	cbitmod CHARA_BIT_PCC, rc, FALSE
+	cbitmod CHARA_BIT_LEASHED, rc, FALSE
+	cdata(CDATA_HP, rc) = cdata(CDATA_MAX_HP, rc)
+	cdata(CDATA_MP, rc) = cdata(CDATA_MAX_MP, rc)
+	cbitmod CHARA_BIT_LIVESTOCK, rc, FALSE
+	return
+
+*user_npc
+	fread = 0
+	cun = usernpcmax
+	if ( dbg_usernpc ) {
+	}
+	else {
+		txt lang("どのファイルからNPCを作成する？", "Choose the original file.")
+		redraw 1
+		fileext = "txt"
+		filedsc = "Custom Npc Text"
+		_fdialog fileext, 16, filedsc, exedir + "user", ""
+		if ( stat == 0 ) {
+			return
+		}
+		txtfile = refstr
+	}
+	exist txtfile
+	userdata(1, cun) = strsize
+	sdim txtbuff, strsize
+	bload txtfile, txtbuff
+	if ( instr(txtbuff, 0, "%Elona Custom Npc") == (-1) ) {
+		txt "Invalid File. Aborting."
+		return
+	}
+	if ( dbg_usernpc ) {
+	}
+	else {
+		txt lang("どの画像を埋め込む？", "Choose the graphic file.")
+		redraw 1
+		fileext = "bmp"
+		filedsc = "Bit Map File"
+		_fdialog fileext, 16, filedsc, exedir + "user", ""
+		if ( stat == 0 ) {
+			return
+		}
+		bmpfile = refstr
+	}
+	exist bmpfile
+	if ( strsize > 30000 ) {
+		txt "The file size must be lower than 30KB. Aborting."
+		return
+	}
+	userdata(0, cun) = strsize
+	dim bmpbuff, strsize
+	bload bmpfile, bmpbuff
+	if ( fread == 0 ) {
+		zOpen hgz, exedir + "user\\npc1.t", 1, 3
+		zWrite userdata(0, cun), hgz, 70 * 4
+		zClose hgz
+	}
+	else {
+		zOpen hgz, exedir + "user\\npc1.t", 0
+		zRead userdata(0, cun), hgz, 70 * 4
+		zClose hgz
+	}
+	if ( fread == 0 ) {
+		zOpen hgz, exedir + "user\\npc2.t", 1, 3
+		zWrite bmpbuff, hgz, userdata(0, cun)
+		zClose hgz
+	}
+	else {
+		zOpen hgz, exedir + "user\\npc2.t", 0
+		zRead bmpbuff, hgz, userdata(0, cun)
+		zClose hgz
+	}
+	if ( fread == 0 ) {
+		zOpen hgz, exedir + "user\\npc3.t", 1, 3
+		zWrite txtbuff, hgz, userdata(1, cun)
+		zClose hgz
+	}
+	else {
+		zOpen hgz, exedir + "user\\npc3.t", 0
+		zRead txtbuff, hgz, userdata(1, cun)
+		zClose hgz
+	}
+	s = getnpctxt("name.", "unknown,unknown")
+	csvstr2 s, s
+	cnv_filestr s
+	if ( instr(s, 0, "_tmp_") != (-1) ) {
+		dialog "The name contains an invalid word \"_tmp_\""
+		return
+	}
+	if ( peek(s) >= 65 & peek(s) <= 90 | (peek(s) >= 97 & peek(s) <= 122) ) {
+	}
+	else {
+		dialog "The first letter of the name must be alphabetic."
+		return
+	}
+	if ( strlen(s) >= 32 | strlen(s(1)) >= 32 ) {
+		dialog "The name is too long."
+		return
+	}
+	zipinit2 exedir + "user\\", s + ".npc"
+	zipadd2 "npc1.t"
+	zipadd2 "npc2.t"
+	zipadd2 "npc3.t"
+	zipend2
+	q = s
+	gosub *userNpc_update
+	initunid = findunid(q)
+	txt lang("カスタムNPCを作成した！", "A custom NPC has been successfully generated!")
+	if ( cdata(CDATA_X, CHARA_PLAYER) > 1 ) {
+		sux = cdata(CDATA_X, CHARA_PLAYER) - 1
+	}
+	flt
+	characreate -1, CREATURE_ID_USER, sux, cdata(CDATA_Y, CHARA_PLAYER)
+	repeat 245
+		if ( cdata(CDATA_ID, cnt) == CREATURE_ID_USER ) {
+			getunid cnt
+		}
+	loop
+	if ( dbg_usernpc ) {
+		cdata(CDATA_RELATION, rc) = RELATION_NEUTRAL
+	}
+	else {
+		cdata(CDATA_RELATION, rc) = RELATION_ENEMY
+		txt lang(name(rc) + "は興奮して襲い掛かってきた。", name(rc) + " is excited and attacks you.")
+	}
+	folder = exedir + "user\\"
+	gosub *del_userTemp
+	return
+
+*game_ctrlFile
+	notesel filemod
+	if ( timeGetTime() / 1000 - time_begin < 0 ) {
+		time_begin = timeGetTime() / 1000
+	}
+	gdata(GDATA_PLAY_TIME) = gdata(GDATA_PLAY_TIME) + timeGetTime() / 1000 - time_begin
+	time_begin = timeGetTime() / 1000
+	if ( fmode == 8 | fmode == 7 ) {
+		procid = (procid + 1) \ 4
+		proclist(procid) = "ctrlFile:game" + fread + " ct:" + ct
+		folder = exedir + "save\\" + playerid + "\\"
+		if ( fmode == 8 ) {
+			fread = 0
+		}
+		if ( fmode == 7 ) {
+			fread = 1
+		}
+		if ( fmode == 8 ) {
+			playerheader = "" + cdatan(CDATAN_NAME, CHARA_PLAYER) + " Lv:" + cdata(CDATA_LEVEL, CHARA_PLAYER) + " " + mdatan(0)
+			bsave folder + "header.txt", playerheader
+		}
+		repeat 16
+			procid = (procid + 1) \ 4
+			proclist(procid) = "ctrlFile:game" + fread + ":" + cnt + " ct:" + ct
+			file = folder
+			if ( cnt == 0 ) {
+				file += "gdata.s1"
+				fsize = 1000 * 4
+			}
+			if ( cnt == 1 ) {
+				file += "cdata.s1"
+				fsize = 114000
+			}
+			if ( cnt == 2 ) {
+				file += "sdata.s1"
+				fsize = 273600
+			}
+			if ( cnt == 3 ) {
+				file += "spell.s1"
+				fsize = 800
+			}
+			if ( cnt == 4 ) {
+				file += "inv.s1"
+				fsize = 369600
+			}
+			if ( cnt == 5 ) {
+				file += "kitem.s1"
+				fsize = 17988
+			}
+			if ( cnt == 6 ) {
+				file += "knpc.s1"
+				fsize = 11992
+			}
+			if ( cnt == 7 ) {
+				file += "adata.s1"
+				fsize = 80000
+			}
+			if ( cnt == 8 ) {
+				file += "spact.s1"
+				fsize = 2000
+			}
+			if ( cnt == 9 ) {
+				file += "qdata.s1"
+				fsize = 40000
+			}
+			if ( cnt == 10 ) {
+				file += "mat.s1"
+				fsize = 1600
+			}
+			if ( cnt == 11 ) {
+				file += "trait.s1"
+				fsize = 2000
+			}
+			if ( cnt == 12 ) {
+				file += "pcc.s1"
+				fsize = 2400
+			}
+			if ( cnt == 13 ) {
+				file += "card.s1"
+				fsize = 24000
+			}
+			if ( cnt == 14 ) {
+				file += "krecipe.s1"
+				fsize = 7596
+			}
+			if ( cnt == 15 ) {
+				file += "spells.s1"
+				fsize = 800
+			}
+			if ( cnt != 14 | gdata(GDATA_VERSION) >= 1200 ) {
+				if ( fread == 1 ) {
+					exist file
+					if ( strsize == (-1) ) {
+						if ( cnt != 15 ) {
+							dialog lang("セーブファイル：" + file + "が存在しません。ファイル移植ミスの可能性があるので該当フォルダ内を確認してください。", "Save file: " + file + " does not exist. Please check the appropriate folder.")
+							goto *exit_game
+						}
+					}
+				}
+			}
+			else {
+				if ( fread == 1 ) {
+					exist file
+					if ( strsize == (-1) ) {
+						continue
+					}
+				}
+			}
+			if ( fread == 0 ) {
+				zOpen hgz, file, 1, 3
+			}
+			if ( cnt != 14 | gdata(GDATA_VERSION) >= 1200 ) {
+				if ( fread == 1 ) {
+					zOpen hgz, file, 0
+					if ( stat != 0 ) {
+						if ( cnt != 15 ) {
+							dialog lang("セーブファイル：" + file + "が読み込めませんでした。該当のファイルが破損している可能性があります。", "Save file: " + file + " could not be read. There is a possibility that the file in question is corrupted.")
+							goto *exit_game
+						}
+					}
+				}
+			}
+			else {
+				if ( fread == 1 ) {
+					zOpen hgz, file, 0
+				}
+			}
+			if ( cnt == 0 ) {
+				if ( fread == 0 ) {
+					zWrite gdata, hgz, fsize
+				}
+				if ( fread == 1 ) {
+					zRead gdata, hgz, fsize
+				}
+			}
+			if ( cnt == 1 ) {
+				if ( fread == 0 ) {
+					zWrite cdata, hgz, fsize
+				}
+				if ( fread == 1 ) {
+					zRead cdata, hgz, fsize
+				}
+			}
+			if ( cnt == 2 ) {
+				if ( fread == 0 ) {
+					zWrite sdata, hgz, fsize
+				}
+				if ( fread == 1 ) {
+					zRead sdata, hgz, fsize
+				}
+			}
+			if ( cnt == 3 ) {
+				if ( fread == 0 ) {
+					zWrite spell, hgz, fsize
+				}
+				if ( fread == 1 ) {
+					zRead spell, hgz, fsize
+				}
+			}
+			if ( cnt == 4 ) {
+				if ( fread == 0 ) {
+					zWrite inv, hgz, fsize
+				}
+				if ( fread == 1 ) {
+					zRead inv, hgz, fsize
+				}
+			}
+			if ( cnt == 5 ) {
+				if ( fread == 0 ) {
+					zWrite itemmemory, hgz, fsize
+				}
+				if ( fread == 1 ) {
+					zRead itemmemory, hgz, fsize
+				}
+			}
+			if ( cnt == 6 ) {
+				if ( fread == 0 ) {
+					zWrite npcmemory, hgz, fsize
+				}
+				if ( fread == 1 ) {
+					zRead npcmemory, hgz, fsize
+				}
+			}
+			if ( cnt == 7 ) {
+				if ( fread == 0 ) {
+					zWrite adata, hgz, fsize
+				}
+				if ( fread == 1 ) {
+					zRead adata, hgz, fsize
+				}
+			}
+			if ( cnt == 8 ) {
+				if ( fread == 0 ) {
+					zWrite spact, hgz, fsize
+				}
+				if ( fread == 1 ) {
+					zRead spact, hgz, fsize
+				}
+			}
+			if ( cnt == 9 ) {
+				if ( fread == 0 ) {
+					zWrite qdata, hgz, fsize
+				}
+				if ( fread == 1 ) {
+					zRead qdata, hgz, fsize
+				}
+			}
+			if ( cnt == 10 ) {
+				if ( fread == 0 ) {
+					zWrite mat, hgz, fsize
+				}
+				if ( fread == 1 ) {
+					zRead mat, hgz, fsize
+				}
+			}
+			if ( cnt == 11 ) {
+				if ( fread == 0 ) {
+					zWrite trait, hgz, fsize
+				}
+				if ( fread == 1 ) {
+					zRead trait, hgz, fsize
+				}
+			}
+			if ( cnt == 12 ) {
+				if ( fread == 0 ) {
+					zWrite pcc, hgz, fsize
+				}
+				if ( fread == 1 ) {
+					zRead pcc, hgz, fsize
+				}
+			}
+			if ( cnt == 13 ) {
+				if ( fread == 0 ) {
+					zWrite card, hgz, fsize
+				}
+				if ( fread == 1 ) {
+					zRead card, hgz, fsize
+				}
+			}
+			if ( cnt == 14 ) {
+				if ( fread == 0 ) {
+					zWrite recipememory, hgz, fsize
+				}
+				if ( fread == 1 ) {
+					if ( gdata(GDATA_VERSION) >= 1200 ) {
+						zRead recipememory, hgz, fsize
+					}
+				}
+			}
+			if ( cnt == 15 ) {
+				if ( fread == 0 ) {
+					zWrite spells, hgz, fsize
+				}
+				if ( fread == 1 ) {
+					zRead spells, hgz, fsize
+				}
+			}
+			zClose hgz
+		loop
+		procid = (procid + 1) \ 4
+		proclist(procid) = "ctrlFile:game" + fread + ":logs" + " ct:" + ct
+		file = folder + "art.log"
+		notesel artifactlocation
+		if ( fread == 0 ) {
+			notesave file
+		}
+		if ( fread == 1 ) {
+			noteload file
+		}
+		file = folder + "news.log"
+		notesel newsbuff
+		if ( fread == 0 ) {
+			notesave file
+		}
+		if ( fread == 1 ) {
+			noteload file
+		}
+		procid = (procid + 1) \ 4
+		proclist(procid) = "ctrlFile:game" + fread + ":array" + " ct:" + ct
+		file = folder + "cdatan.s1"
+		fmode = "cdatan1"
+		arrayfile
+		file = folder + "qname.s1"
+		fmode = "qname"
+		arrayfile
+		file = folder + "gdatan.s1"
+		fmode = "gdatan"
+		arrayfile
+		procid = (procid + 1) \ 4
+		proclist(procid) = "ctrlFile:game" + fread + ":evs" + " ct:" + ct
+		if ( fread == 0 ) {
+			bsave folder + "evnum.s1", evnum
+			bsave folder + "evdata1.s1", evdata1
+			bsave folder + "evdata2.s1", evdata2
+			bsave folder + "evlist.s1", evlist
+		}
+		else {
+			exist folder + "evnum.s1"
+			if ( strsize != (-1) ) {
+				bload folder + "evnum.s1", evnum
+			}
+			exist folder + "evdata1.s1"
+			if ( strsize != (-1) ) {
+				bload folder + "evdata1.s1", evdata1
+			}
+			exist folder + "evdata2.s1"
+			if ( strsize != (-1) ) {
+				bload folder + "evdata2.s1", evdata2
+			}
+			exist folder + "evlist.s1"
+			if ( strsize != (-1) ) {
+				bload folder + "evlist.s1", evlist
+			}
+		}
+		procid = (procid + 1) \ 4
+		proclist(procid) = "ctrlFile:game" + fread + ":end" + " ct:" + ct
+	}
+	if ( fmode == 14 | fmode == 15 ) {
+		procid = (procid + 1) \ 4
+		proclist(procid) = "ctrlFile" + fmode + " ct:" + ct
+		if ( fmode == 14 ) {
+			fread = 0
+			folder = exedir + "tmp\\"
+		}
+		if ( fmode == 15 ) {
+			fread = 1
+			folder = exedir + "save\\" + geneuse + "\\"
+		}
+		if ( fmode == 14 ) {
+			playerheader = "" + cdatan(CDATAN_NAME, CHARA_PLAYER) + "(Lv" + cdata(CDATA_LEVEL, CHARA_PLAYER) + ")の遺伝子"
+			file = folder + "gene_header.txt"
+			bsave file, playerheader
+			fileadd file
+		}
+		repeat 9
+			file = folder
+			if ( cnt == 0 ) {
+				file += "gene.s1"
+				fsize = 100 * 4
+			}
+			if ( cnt == 1 ) {
+				file += "g_cdata.s1"
+				fsize = 114000
+			}
+			if ( cnt == 2 ) {
+				file += "g_sdata.s1"
+				fsize = 273600
+			}
+			if ( cnt == 3 ) {
+				file += "g_spell.s1"
+				fsize = 800
+			}
+			if ( cnt == 4 ) {
+				file += "g_inv.s1"
+				fsize = 369600
+			}
+			if ( cnt == 5 ) {
+				file += "g_spact.s1"
+				fsize = 2000
+			}
+			if ( cnt == 6 ) {
+				file += "g_mat.s1"
+				fsize = 1600
+			}
+			if ( cnt == 7 ) {
+				file += "g_card.s1"
+				fsize = 24000
+			}
+			if ( cnt == 8 ) {
+				file += "g_genetemp.s1"
+				fsize = 4000
+			}
+			if ( fread == 1 ) {
+				exist file
+				if ( strsize == (-1) ) {
+					continue
+				}
+			}
+			if ( fread == 0 ) {
+				zOpen hgz, file, 1, 3
+				fileadd "" + file
+			}
+			if ( fread == 1 ) {
+				zOpen hgz, file, 0
+			}
+			if ( cnt == 0 ) {
+			}
+			if ( cnt == 1 ) {
+				if ( fread == 0 ) {
+					zWrite cdata, hgz, fsize
+				}
+				if ( fread == 1 ) {
+					zRead cdata, hgz, fsize
+				}
+			}
+			if ( cnt == 2 ) {
+				if ( fread == 0 ) {
+					zWrite sdata, hgz, fsize
+				}
+				if ( fread == 1 ) {
+					zRead sdata, hgz, fsize
+				}
+			}
+			if ( cnt == 3 ) {
+				if ( fread == 0 ) {
+					zWrite spell, hgz, fsize
+				}
+				if ( fread == 1 ) {
+					zRead spell, hgz, fsize
+				}
+			}
+			if ( cnt == 4 ) {
+				if ( fread == 0 ) {
+					zWrite inv, hgz, fsize
+				}
+				if ( fread == 1 ) {
+					zRead inv, hgz, fsize
+				}
+			}
+			if ( cnt == 5 ) {
+				if ( fread == 0 ) {
+					zWrite spact, hgz, fsize
+				}
+				if ( fread == 1 ) {
+					zRead spact, hgz, fsize
+				}
+			}
+			if ( cnt == 6 ) {
+				if ( fread == 0 ) {
+					zWrite mat, hgz, fsize
+				}
+				if ( fread == 1 ) {
+					zRead mat, hgz, fsize
+				}
+			}
+			if ( cnt == 7 ) {
+				if ( fread == 0 ) {
+					zWrite card, hgz, fsize
+				}
+				if ( fread == 1 ) {
+					zRead card, hgz, fsize
+				}
+			}
+			if ( cnt == 8 ) {
+				if ( fread == 0 ) {
+					zWrite gdata, hgz, fsize
+				}
+				if ( fread == 1 ) {
+					zRead genetemp, hgz, fsize
+				}
+			}
+			zClose hgz
+		loop
+	}
+	if ( fmode == 2 | fmode == 1 ) {
+		procid = (procid + 1) \ 4
+		proclist(procid) = "ctrlFile" + fmode + " ct:" + ct
+		folder = exedir + "tmp\\"
+		if ( fmode == 2 ) {
+			fread = 0
+		}
+		if ( fmode == 1 ) {
+			fread = 1
+		}
+		repeat 5
+			file = folder
+			if ( cnt == 0 ) {
+				file += "mdata_" + mid + ".s2"
+				fsize = 400
+			}
+			if ( cnt == 1 ) {
+				if ( fread == 1 ) {
+					dim map, mdata(MDATA_WIDTH), mdata(MDATA_HEIGHT), 10
+					dim mapsync, mdata(MDATA_WIDTH), mdata(MDATA_HEIGHT)
+					dim mef, 9, 200
+				}
+				file += "map_" + mid + ".s2"
+				fsize = mdata(MDATA_WIDTH) * mdata(MDATA_HEIGHT) * 10 * 4
+			}
+			if ( cnt == 2 ) {
+				file += "cdata_" + mid + ".s2"
+				fsize = 376000
+			}
+			if ( cnt == 3 ) {
+				file += "sdata_" + mid + ".s2"
+				fsize = 902400
+			}
+			if ( cnt == 4 ) {
+				if ( fread ) {
+					if ( mdata(MDATA_VERSION_FIX1) == 0 ) {
+						repeat mdata(MDATA_HEIGHT)
+							cnt2 = cnt
+							repeat mdata(MDATA_WIDTH)
+								map(cnt, cnt2, MAP_MEF_INDEX_PLUS_ONE) = 0
+							loop
+						loop
+						mdata(MDATA_VERSION_FIX1) = 1
+						continue
+					}
+				}
+				file += "mef_" + mid + ".s2"
+				fsize = 7200
+			}
+			if ( fread == 0 ) {
+				zOpen hgz, file, 1, 3
+				fileadd "" + file
+			}
+			if ( fread == 1 ) {
+				zopenwrapper hgz, file, 0
+			}
+			if ( cnt == 0 ) {
+				if ( fread == 0 ) {
+					zWrite mdata, hgz, fsize
+				}
+				if ( fread == 1 ) {
+					zRead mdata, hgz, fsize
+				}
+			}
+			if ( cnt == 1 ) {
+				if ( fread == 0 ) {
+					zWrite map, hgz, fsize
+				}
+				if ( fread == 1 ) {
+					zRead map, hgz, fsize
+				}
+			}
+			if ( cnt == 2 ) {
+				if ( fread == 0 ) {
+					zWrite cdata(CDATA_EXIST, MAX_CHARA_SAVE), hgz, fsize
+				}
+				if ( fread == 1 ) {
+					zRead cdata(CDATA_EXIST, MAX_CHARA_SAVE), hgz, fsize
+				}
+			}
+			if ( cnt == 3 ) {
+				if ( fread == 0 ) {
+					zWrite sdata(SKILL_NONE, MAX_CHARA_SAVE), hgz, fsize
+				}
+				if ( fread == 1 ) {
+					zRead sdata(SKILL_NONE, MAX_CHARA_SAVE), hgz, fsize
+				}
+			}
+			if ( cnt == 4 ) {
+				if ( fread == 0 ) {
+					zWrite mef, hgz, fsize
+				}
+				if ( fread == 1 ) {
+					zRead mef, hgz, fsize
+				}
+			}
+			zClose hgz
+		loop
+		file = folder + "cdatan_" + mid + ".s2"
+		fmode = "cdatan2"
+		arrayfilewrapper
+		file = folder + "mdatan_" + mid + ".s2"
+		fmode = "mdatan"
+		arrayfilewrapper
+	}
+	if ( fmode == 20 | fmode == 19 ) {
+		procid = (procid + 1) \ 4
+		proclist(procid) = "ctrlFile" + fmode + " ct:" + ct
+		folder = exedir + "user\\"
+		if ( fmode == 20 ) {
+			fread = 0
+		}
+		if ( fmode == 19 ) {
+			fread = 1
+		}
+		repeat 3
+			file = folder
+			if ( cnt == 0 ) {
+				file += "m1_" + id + ".t"
+				fsize = 400
+			}
+			if ( cnt == 1 ) {
+				if ( fread == 1 ) {
+					dim map, mdata(MDATA_WIDTH), mdata(MDATA_HEIGHT), 10
+					dim mapsync, mdata(MDATA_WIDTH), mdata(MDATA_HEIGHT)
+					dim mef, 9, 200
+				}
+				file += "m2_" + id + ".t"
+				fsize = mdata(MDATA_WIDTH) * mdata(MDATA_HEIGHT) * 10 * 4
+			}
+			if ( cnt == 2 ) {
+				file += "m3_" + id + ".t"
+				fsize = 1164800
+			}
+			if ( fread == 0 ) {
+				zOpen hgz, file, 1, 3
+			}
+			if ( fread == 1 ) {
+				zOpen hgz, file, 0
+			}
+			if ( cnt == 0 ) {
+				if ( fread == 0 ) {
+					zWrite mdata, hgz, fsize
+				}
+				if ( fread == 1 ) {
+					zRead mdata, hgz, fsize
+				}
+			}
+			if ( cnt == 1 ) {
+				if ( fread == 0 ) {
+					zWrite map, hgz, fsize
+				}
+				if ( fread == 1 ) {
+					zRead map, hgz, fsize
+				}
+			}
+			if ( cnt == 2 ) {
+				if ( fread == 0 ) {
+					zWrite inv(INV_ITEM_NUM, 1320), hgz, fsize
+				}
+				if ( fread == 1 ) {
+					zRead inv(INV_ITEM_NUM, 1320), hgz, fsize
+				}
+			}
+			zClose hgz
+		loop
+		file = folder + "m4_" + id + ".t"
+		fmode = "mdatan"
+		export = 1
+		arrayfile
+		if ( fread == 0 ) {
+			zipadd "m1_" + id + ".t"
+			zipadd "m2_" + id + ".t"
+			zipadd "m3_" + id + ".t"
+			zipadd "m4_" + id + ".t"
+		}
+	}
+	if ( fmode == 22 | fmode == 21 ) {
+		procid = (procid + 1) \ 4
+		proclist(procid) = "ctrlFile" + fmode + " ct:" + ct
+		folder = exedir + "user\\"
+		if ( fmode == 22 ) {
+			fread = 0
+			tg = 1
+		}
+		if ( fmode == 21 ) {
+			fread = 1
+			tg = 0
+		}
+		enemyteam = -1
+		gdata(GDATA_USERNPC_COUNT) = 0
+		sdim untaglist
+		repeat 245
+			if ( fread == 0 ) {
+				if ( list(0, cnt) == 0 ) {
+					continue
+				}
+				tg = cnt
+			}
+			else {
+				exist folder + "c1_" + id + ".t"
+				if ( strsize == (-1) ) {
+					break
+				}
+				tg = 0
+				repeat 245 - 57, 57
+					if ( cdata(CDATA_EXIST, cnt) == CHAR_STATE_DEAD ) {
+						tg = cnt
+						break
+					}
+				loop
+				if ( tg == 0 ) {
+					break
+				}
+			}
+			repeat 3
+				file = folder
+				if ( cnt == 0 ) {
+					file += "c1_" + id + ".t"
+					fsize = 2000
+				}
+				if ( cnt == 1 ) {
+					file += "c2_" + id + ".t"
+					fsize = 4800
+				}
+				if ( cnt == 2 ) {
+					file += "c3_" + id + ".t"
+					inv_getheader tg
+					fsize = 70 * 4 * invrange
+				}
+				if ( fread == 0 ) {
+					zOpen hgz, file, 1, 3
+				}
+				if ( fread == 1 ) {
+					zOpen hgz, file, 0
+				}
+				if ( cnt == 0 ) {
+					if ( fread == 0 ) {
+						zWrite cdata(CDATA_EXIST, tg), hgz, fsize
+					}
+					if ( fread == 1 ) {
+						zRead cdata(CDATA_EXIST, tg), hgz, fsize
+					}
+				}
+				if ( cnt == 1 ) {
+					if ( fread == 0 ) {
+						zWrite sdata(SKILL_NONE, tg), hgz, fsize
+					}
+					if ( fread == 1 ) {
+						zRead sdata(SKILL_NONE, tg), hgz, fsize
+					}
+				}
+				if ( cnt == 2 ) {
+					if ( fread == 0 ) {
+						zWrite inv(INV_ITEM_NUM, invhead), hgz, fsize
+					}
+					if ( fread == 1 ) {
+						zRead inv(INV_ITEM_NUM, invhead), hgz, fsize
+					}
+				}
+				zClose hgz
+			loop
+			file = folder + "c4_" + id + ".t"
+			fmode = "cdatan3"
+			export = 1
+			arrayfile
+			if ( fread == 0 ) {
+				zipadd "c1_" + id + ".t"
+				zipadd "c2_" + id + ".t"
+				zipadd "c3_" + id + ".t"
+				zipadd "c4_" + id + ".t"
+				if ( cdata(CDATA_ID, tg) == CREATURE_ID_USER ) {
+					exist folder + userdatan(6, cdata(CDATA_USERNPC_ID, tg))
+					if ( strsize != (-1) ) {
+						if ( cdata(CDATA_USERNPC_ID, tg) != usernpcmax ) {
+							if ( instr(untaglist, 0, "/" + userdatan(0, cdata(CDATA_USERNPC_ID, tg)) + "/") == (-1) ) {
+								if ( gdata(GDATA_USERNPC_COUNT) < 10 ) {
+									bcopy folder + userdatan(6, cdata(CDATA_USERNPC_ID, tg)), folder + "_tmp_" + gdata(GDATA_USERNPC_COUNT) + ".npc"
+									zipadd "_tmp_" + gdata(GDATA_USERNPC_COUNT) + ".npc"
+									untaglist += "/" + userdatan(0, cdata(CDATA_USERNPC_ID, tg)) + "/"
+									gdata(GDATA_USERNPC_COUNT)++
+								}
+							}
+						}
+					}
+				}
+			}
+			else {
+				inv_getheader tg
+				repeat invrange, invhead
+					inv(INV_ITEM_EQUIP, cnt) = 0
+				loop
+				repeat 30, 100
+					cdata(cnt, tg) = cdata(cnt, tg) / EXT_EQUIP_SLOTS * 10000
+				loop
+				rc = tg
+				gosub *chara_equipFull
+				cdata(CDATA_AI_ITEM, rc) = 0
+				rowactend rc
+				cbitmod CHARA_BIT_PCC, rc, FALSE
+				cbitmod CHARA_BIT_LEASHED, rc, FALSE
+				cdata(CDATA_HP, rc) = cdata(CDATA_MAX_HP, rc)
+				cdata(CDATA_MP, rc) = cdata(CDATA_MAX_MP, rc)
+				cbitmod CHARA_BIT_LIVESTOCK, rc, FALSE
+				cbitmod CHARA_BIT_MSG_FILE, rc, FALSE
+				if ( importmode == 0 ) {
+					cdata(CDATA_ROLE, tg) = ROLE_USER
+					cdata(CDATA_GOLD, tg) = 0
+					if ( cdata(CDATA_RELATION, tg) >= RELATION_ALLY ) {
+						if ( userrelation == 0 ) {
+							cdata(CDATA_RELATION, tg) = RELATION_NEUTRAL
+							cdata(CDATA_RELATION_ORG, tg) = RELATION_NEUTRAL
+						}
+						else {
+							cdata(CDATA_RELATION, tg) = RELATION_ENEMY
+							cdata(CDATA_RELATION_ORG, tg) = RELATION_ENEMY
+						}
+					}
+					cxinit = cdata(CDATA_X, tg)
+					cyinit = cdata(CDATA_Y, tg)
+					gosub *place_chara
+				}
+				if ( importmode == 1 ) {
+					if ( enemyteam == (-1) ) {
+						enemyteam = rc
+					}
+					cdata(CDATA_RELATION, rc) = RELATION_ENEMY
+					cdata(CDATA_RELATION_ORG, rc) = RELATION_ENEMY
+					map_placearena rc, 1
+				}
+			}
+			id++
+		loop
+	}
+	if ( fmode == 16 ) {
+		procid = (procid + 1) \ 4
+		proclist(procid) = "ctrlFile" + fmode + " ct:" + ct
+		dim cmapdata, 5, 400
+		repeat 2
+			if ( cnt == 0 ) {
+				file = fmapfile + ".map"
+				fsize = mdata(MDATA_WIDTH) * mdata(MDATA_HEIGHT) * 3 * 4
+			}
+			if ( cnt == 1 ) {
+				file = fmapfile + ".obj"
+				fsize = 8000
+			}
+			if ( cnt == 1 ) {
+				exist file
+				if ( strsize == (-1) ) {
+					continue
+				}
+			}
+			zOpen hgz, file, 0
+			if ( cnt == 0 ) {
+				zRead map, hgz, fsize
+			}
+			if ( cnt == 1 ) {
+				zRead cmapdata, hgz, fsize
+			}
+			zClose hgz
+		loop
+	}
+	if ( fmode == 6 | fmode == 5 ) {
+		if ( fmode == 6 ) {
+			fread = 0
+		}
+		if ( fmode == 5 ) {
+			fread = 1
+			dim cmapdata, 5, 400
+		}
+		repeat 3
+			if ( cnt == 0 ) {
+				file = fmapfile + ".idx"
+				fsize = 400
+			}
+			if ( cnt == 1 ) {
+				if ( fread == 1 ) {
+					dim map, mdata(MDATA_WIDTH), mdata(MDATA_HEIGHT), 10
+					dim mapsync, mdata(MDATA_WIDTH), mdata(MDATA_HEIGHT)
+					dim mef, 9, 200
+				}
+				file = fmapfile + ".map"
+				fsize = mdata(MDATA_WIDTH) * mdata(MDATA_HEIGHT) * 10 * 4
+			}
+			if ( cnt == 2 ) {
+				file = fmapfile + ".obj"
+				fsize = 8000
+			}
+			if ( cnt == 2 & fread == 1 ) {
+				exist file
+				if ( strsize == (-1) ) {
+					continue
+				}
+			}
+			if ( fread == 0 ) {
+				zOpen hgz, file, 1, 3
+			}
+			if ( fread == 1 ) {
+				zOpen hgz, file, 0
+			}
+			if ( cnt == 0 ) {
+				if ( fread == 0 ) {
+					zWrite mdata, hgz, fsize
+				}
+				if ( fread == 1 ) {
+					zRead mdatatmp, hgz, fsize
+					repeat 5
+						mdata(cnt) = mdatatmp(cnt)
+					loop
+				}
+			}
+			if ( cnt == 1 ) {
+				if ( fread == 0 ) {
+					zWrite map, hgz, fsize
+				}
+				if ( fread == 1 ) {
+					zRead map, hgz, fsize
+				}
+			}
+			if ( cnt == 2 ) {
+				if ( fread == 0 ) {
+					zWrite cmapdata, hgz, fsize
+				}
+				if ( fread == 1 ) {
+					zRead cmapdata, hgz, fsize
+				}
+			}
+			zClose hgz
+		loop
+	}
+	if ( fmode == 4 | fmode == 3 ) {
+		procid = (procid + 1) \ 4
+		proclist(procid) = "ctrlFile" + fmode + " ct:" + ct
+		folder = exedir + "tmp\\"
+		if ( fmode == 4 ) {
+			fread = 0
+		}
+		if ( fmode == 3 ) {
+			fread = 1
+		}
+		file = folder + file
+		fsize = 1164800
+		if ( fread == 0 ) {
+			zOpen hgz, file, 1, 3
+			fileadd file
+		}
+		if ( fread == 1 ) {
+			zopenwrapper hgz, file, 0
+		}
+		if ( fread == 0 ) {
+			zWrite inv(INV_ITEM_NUM, 1320), hgz, fsize
+		}
+		if ( fread == 1 ) {
+			zRead inv(INV_ITEM_NUM, 1320), hgz, fsize
+		}
+		zClose hgz
+	}
+	if ( fmode == 23 | fmode == 24 ) {
+		procid = (procid + 1) \ 4
+		proclist(procid) = "ctrlFile" + fmode + " ct:" + ct
+		if ( fmode == 23 ) {
+			fread = 0
+		}
+		if ( fmode == 24 ) {
+			fread = 1
+		}
+		fsize = 6000
+		if ( fread == 0 ) {
+			zOpen hgz, file, 1, 3
+			fileadd "" + file
+		}
+		if ( fread == 1 ) {
+			zOpen hgz, file, 0
+		}
+		if ( fread == 0 ) {
+			zWrite deck, hgz, fsize
+		}
+		if ( fread == 1 ) {
+			zRead deck, hgz, fsize
+		}
+		zClose hgz
+	}
+	if ( fmode == 18 | fmode == 17 ) {
+		procid = (procid + 1) \ 4
+		proclist(procid) = "ctrlFile" + fmode + " ct:" + ct
+		folder = exedir + "tmp\\"
+		if ( fmode == 18 ) {
+			fread = 0
+		}
+		if ( fmode == 17 ) {
+			fread = 1
+		}
+		existwrapper folder + "cdata_" + mid + ".s2"
+		if ( strsize == (-1) ) {
+			return
+		}
+		repeat 5
+			file = folder
+			if ( cnt == 0 ) {
+				file += "cdata_" + mid + ".s2"
+				fsize = 376000
+			}
+			if ( cnt == 1 ) {
+				file += "sdata_" + mid + ".s2"
+				fsize = 902400
+			}
+			if ( fread == 0 ) {
+				zOpen hgz, file, 1, 3
+				fileadd "" + file
+			}
+			if ( fread == 1 ) {
+				zopenwrapper hgz, file, 0
+			}
+			if ( cnt == 0 ) {
+				if ( fread == 0 ) {
+					zWrite cdata(CDATA_EXIST, MAX_CHARA_SAVE), hgz, fsize
+				}
+				if ( fread == 1 ) {
+					zRead cdata(CDATA_EXIST, MAX_CHARA_SAVE), hgz, fsize
+				}
+			}
+			if ( cnt == 1 ) {
+				if ( fread == 0 ) {
+					zWrite sdata(SKILL_NONE, MAX_CHARA_SAVE), hgz, fsize
+				}
+				if ( fread == 1 ) {
+					zRead sdata(SKILL_NONE, MAX_CHARA_SAVE), hgz, fsize
+				}
+			}
+			zClose hgz
+		loop
+		file = folder + "cdatan_" + mid + ".s2"
+		fmode = "cdatan2"
+		arrayfilewrapper
+	}
+	if ( fmode == 10 ) {
+		procid = (procid + 1) \ 4
+		proclist(procid) = "ctrlFile" + fmode + " ct:" + ct
+		dirlist buff, exedir + "tmp\\*.*"
+		if ( stat == 0 ) {
+			return stat
+		}
+		notesel buff
+		repeat stat
+			noteget file, cnt
+			file = exedir + "tmp\\" + file
+			exist file
+			if ( strsize != (-1) ) {
+				delete file
+			}
+		loop
+	}
+	if ( fmode == 9 ) {
+		procid = (procid + 1) \ 4
+		proclist(procid) = "ctrlFile" + fmode + " ct:" + ct
+		folder = exedir + "save\\" + playerid
+		dirlist buff, folder + "\\*.*"
+		if ( stat != 0 ) {
+			notesel buff
+			repeat stat
+				noteget file, cnt
+				delete folder + "\\" + file
+			loop
+		}
+		RemoveDirectoryA folder
+	}
+	if ( fmode == 11 | fmode == 12 ) {
+		procid = (procid + 1) \ 4
+		proclist(procid) = "ctrlFile" + fmode + " ct:" + ct
+		if ( fmode == 12 ) {
+			existwrapper exedir + "tmp\\mdata_" + mid + ".s2"
+			if ( strsize == (-1) ) {
+				return
+			}
+		}
+		file = exedir + "tmp\\map_" + mid + ".s2"
+		existwrapper file
+		if ( strsize == (-1) ) {
+			return
+		}
+		deletewrapper file
+		fileadd file, 1
+		if ( fmode == 11 ) {
+			file = exedir + "tmp\\cdata_" + mid + ".s2"
+			deletewrapper file
+			fileadd file, 1
+			file = exedir + "tmp\\sdata_" + mid + ".s2"
+			deletewrapper file
+			fileadd file, 1
+			file = exedir + "tmp\\cdatan_" + mid + ".s2"
+			deletewrapper file
+			fileadd file, 1
+			file = exedir + "tmp\\inv_" + mid + ".s2"
+			deletewrapper file
+			fileadd file, 1
+		}
+		file = exedir + "tmp\\mdata_" + mid + ".s2"
+		deletewrapper file
+		fileadd file, 1
+		file = exedir + "tmp\\mdatan_" + mid + ".s2"
+		deletewrapper file
+		fileadd file, 1
+		file = exedir + "tmp\\mef_" + mid + ".s2"
+		deletewrapper file
+		fileadd file, 1
+	}
+	if ( fmode == 25 ) {
+	}
+	if ( fmode == 13 ) {
+		procid = (procid + 1) \ 4
+		proclist(procid) = "ctrlFile" + fmode + " ct:" + ct
+		repeat 40
+			adata(cnt, area) = 0
+		loop
+		fmode13replacer area
+	}
+	procid = (procid + 1) \ 4
+	proclist(procid) = "ctrlFile" + fmode + "/end" + " ct:" + ct
+	return
+
+*export_map
+	sdim headtemp, 1024
+	id = 0
+	lensum = 1024
+	sdim filebuff, lensum
+	if ( usertitle != "" ) {
+		headtemp = "[＋製]【" + usertitle + "】\n"
+	}
+	else {
+		headtemp = "[＋製]【" + mdatan(0) + "】\n"
+	}
+	headtemp += "" + cdatan(CDATAN_AKA, CHARA_PLAYER) + cdatan(CDATAN_NAME, CHARA_PLAYER) + "\n"
+	headtemp += "\n"
+	headtemp += "\n"
+	headtemp += "" + 100002 + "\n"
+	headtemp += "[＋製]" + usermsg + "\n"
+	headtemp += "" + userrelation + "\n"
+	memcpy filebuff, headtemp, 1024, 0
+	fmode = 20
+	gosub *game_ctrlFile
+	repeat 245
+		list(0, cnt) = 0
+		if ( cnt != 0 ) {
+			if ( cdata(CDATA_IN_TAGTEAM, cnt) != 1 ) {
+				if ( cdata(CDATA_ROLE, cnt) != ROLE_ADVENTURER ) {
+					if ( cdata(CDATA_EXIST, cnt) == CHAR_STATE_ALIVE ) {
+						if ( cbit(CHARA_BIT_RIDE, cnt) == FALSE ) {
+							list(0, cnt) = 1
+						}
+					}
+				}
+			}
+		}
+	loop
+	fmode = 22
+	gosub *game_ctrlFile
+	bsave userfile, filebuff
+	gosub *del_userTemp
+	return
+
+*export_chara
+	sdim headtemp, 1024
+	id = 0
+	lensum = 1024
+	sdim filebuff, lensum
+	headtemp = "【" + gdatan(GDATAN_TEAM1) + "】(" + n + "体) Lv" + lv + "\n"
+	headtemp += "" + cdatan(CDATAN_AKA, CHARA_PLAYER) + cdatan(CDATAN_NAME, CHARA_PLAYER) + "\n"
+	headtemp += "\n"
+	headtemp += "\n"
+	headtemp += "" + 100002 + "\n"
+	headtemp += "" + n + "\n"
+	headtemp += "" + lv + "\n"
+	memcpy filebuff, headtemp, 1024, 0
+	fmode = 22
+	gosub *game_ctrlFile
+	bsave userfile, filebuff
+	gosub *del_userTemp
+	return
+
+*del_userNpc
+	procid = (procid + 1) \ 4
+	proclist(procid) = "del_userNpc" + " ct:" + ct
+	dirlist buff, exedir + "user\\_tmp_*.npc"
+	notesel buff
+	repeat stat
+		noteget file, cnt
+		delete exedir + "user\\" + file
+	loop
+	dirlist buff, exedir + "user\\!tmp*.npc"
+	notesel buff
+	repeat stat
+		noteget file, cnt
+		delete exedir + "user\\" + file
+	loop
+	return
+
+*del_userTemp
+	procid = (procid + 1) \ 4
+	proclist(procid) = "del_userTemp" + " ct:" + ct
+	dirlist buff, exedir + "user\\*.t"
+	notesel buff
+	repeat stat
+		noteget file, cnt
+		delete exedir + "user\\" + file
+	loop
+	return
+	arenaop = 1, 2, (100 - gdata(GDATA_RANK_PET_ARENA) / 100) / 2 + 1
+	arenaop(1) = rnd(9 - 1) + 2
+	dim followerexist, 16
+	repeat 16
+		followerexist(cnt) = cdata(CDATA_EXIST, cnt)
+		if ( cdata(CDATA_EXIST, cnt) == CHAR_STATE_ALIVE ) {
+			followerin(cnt) = 1
+		}
+		else {
+			followerin(cnt) = 0
+		}
+	loop
+	gdata(GDATA_QUEST) = QUEST_SUBTYPE_DELIVER, 0, 0, 1
+	gdata(GDATA_RETURN_AREA) = gdata(GDATA_AREA), gdata(GDATA_LEVEL), cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER)
+	gdata(GDATA_TELEPORT_AREA) = AREA_PET_ARENA
+	gdata(GDATA_TELEPORT_LEVEL) = 1
+	levelexitby = MAP_EXIT_TELEPORT
+	arenaimport = 1
+	goto *map_exit
+
+*game_load
+	filemod = ""
+	fmode = 10
+	gosub *game_ctrlFile
+	folder = exedir + "save\\" + playerid + "\\"
+	exist folder + "filelist.txt"
+	if ( strsize != (-1) ) {
+		delete folder + "filelist.txt"
+	}
+	fmode = 7
+	gosub *game_ctrlFile
+	gosub *fixSave
+	gosub *db_setItem
+	repeat 16
+		if ( cbit(CHARA_BIT_PCC, cnt) == TRUE | cnt == 0 ) {
+			create_pcpic cnt, 1
+		}
+	loop
+	if ( gdata(GDATA_WIZARD) == 1 ) {
+		cdatan(CDATAN_AKA, CHARA_PLAYER) = "*Debug*"
+	}
+	refreshspeed 0
+	time_begin = timeGetTime() / 1000
+	return
+	procid = (procid + 1) \ 4
+	proclist(procid) = "generate_dump" + " ct:" + ct
+	file = exedir + "save\\" + playerid + "_html"
+	dirlist save_buff, file, 5
+	notesel save_buff
+	save_f = 0
+	repeat noteinfo(0)
+		noteget save_s, cnt
+		if ( save_s == playerid + "_html" ) {
+			save_f = 1
+			break
+		}
+	loop
+	if ( save_f == 0 ) {
+		mkdir file
+	}
+	else {
+	}
+	diaryhead = "<HTML><TITLE>" + cdatan(CDATAN_AKA, CHARA_PLAYER) + cdatan(CDATAN_NAME, CHARA_PLAYER) + "の冒険日誌</TITLE>"
+	diarystat = ""
+	diarylog = ""
+	diaryfoot = "</HTML>"
+	buff = diaryhead + diarystat + diarylog + diaryfoot
+	notesel buff
+	notesave exedir + "save\\" + playerid + "_html\\diary.html"
+	return
+
+*game_save
+	if ( gdata(GDATA_AREA) == AREA_SHOW_HOUSE | (gdata(GDATA_AREA) == AREA_CHAOS_CRADLE & gdata(GDATA_LEVEL) == 179) | (gdata(GDATA_AREA) == AREA_AMUR_CAGE & gdata(GDATA_LEVEL) >= 10) ) {
+		txtef COLOR_RED
+		txt lang("ここではセーブされない。", "The game is not saved in this map.")
+		gosub *screen_draw
+		return
+	}
+	procid = (procid + 1) \ 4
+	proclist(procid) = "game_save" + " ct:" + ct
+	fmode = 2
+	gosub *game_ctrlFile
+	file = "inv_" + mid + ".s2"
+	fmode = 4
+	gosub *game_ctrlFile
+	file = exedir + "save\\" + playerid
+	dirlist save_buff, file, 5
+	notesel save_buff
+	save_f = 0
+	repeat noteinfo(0)
+		noteget save_s, cnt
+		if ( save_s == playerid ) {
+			save_f = 1
+			break
+		}
+	loop
+	if ( save_f == 0 ) {
+		mkdir file
+	}
+	else {
+	}
+	file += "\\"
+	notesel filemod
+	repeat noteinfo(0)
+		noteget save_s, cnt
+		if ( strmid(save_s, 0, 1) == "*" ) {
+			save_p = 0
+		}
+		else {
+			save_p = 1
+		}
+		save_s = strmid(save_s, 1, strlen(save_s))
+		if ( save_p == 0 ) {
+			bcopy save_s, file + getpath(save_s, 8)
+		}
+		else {
+			exist file + getpath(save_s, 8)
+			if ( strsize != (-1) ) {
+				delete file + getpath(save_s, 8)
+			}
+		}
+	loop
+	fmode = 8
+	gosub *game_ctrlFile
+	filemod = ""
+	return
+
+*extract_map
+	snd SOUNDLIST_EXITMAP1
+	gdata(GDATA_RETURN_AREA) = gdata(GDATA_AREA), gdata(GDATA_LEVEL), cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER)
+	gdata(GDATA_TELEPORT_AREA) = AREA_SHOW_HOUSE
+	gdata(GDATA_TELEPORT_LEVEL) = 1
+	levelexitby = MAP_EXIT_TELEPORT
+	goto *map_exit
+
+*game_title
+	if ( cfg_titledialog ) {
+		dialog lang("＜利用規約＞\n\n elonaplusはフリーウェアであり、elonaの二次創作です。\n・本ソフトウェアは現在開発中です。不具合やバランスの急激な変動があります。\n・原作および他二次創作の作者・バランス・設定等を否定する意図はありません。\n・暴力的・性的・猟奇的な表現、描写が多数存在します。\n・本ソフトの利用によっていかなる不利益が発生した場合でも作者は一切の責任を負いません。自己責任で利用してください。\n・興味を持っていない人への過度の推薦や紹介は控え、wikiへの誘導程度に留めてください。\n・βテストプレイヤーとしてデバッグ義務なく普通に遊ぶことができますが、プレイ中にバグに遭遇した場合は報告していただけると助かります(任意)。\nただし、せっかく報告していただいても内容が不足しているとバグ修正に結びつかないため、テンプレートを用いた報告や検証にご協力ください。\n\n同梱の説明書(elona,elonaplus)にも目を通し、上記項目を含めて理解・承服できる方のみ利用できます。", "Elonaplus is a freeware, This is a secondary creation of elona. \n * This software is currently in development. There are defect and abrupt change of balance. \n * There is no intention to deny the author, balance, setting, of the other secondary creations and original creation. \n * There are many violent, sexual, bizarre, depictions. \n * Even if any disadvantage was caused by use of this software, the author does not take any responsibility. Please use at your own risk. \n * If you can comply the instructions and the above-mentioned items, you can use this software.")
+	}
+	mode = MODELIST_TITLE
+	lomiaseaster = 0
+	music = MUSICLIST_MCOPENING
+	gosub *music_play
+	cs = 0
+	cs_bk = -1
+	keyrange = 6
+	key_list = "a", "b", "c", "d", "e", "f"
+	pagesize = 0
+	redraw 0
+	gsel BUFFER_MAP
+	repeat 8
+		pos cnt \ 4 * 180, cnt / 4 * 300
+		picload exedir + "\\graphic\\g" + (cnt + 1) + ".bmp", 1
+	loop
+	gsel BUFFER_BUF
+	gmode 0
+	pos 0, 0
+	picload exedir + "\\graphic\\title" + devfile + ".bmp", 1
+	gzoom windoww, windowh, 4, 0, 0, 800, 600
+	gmode 2
+	font lang(cfg_font1, cfg_font2), 13 - en * 2, 0
+	color 255, 255, 255
+	pos 20, 2
+	mes "Elona  Developed by Noa"
+	pos 20, 20
+	mes "ElonaPlus  Developed by Ano"
+	pos 20, 38
+	if ( jp ) {
+		mes "Contributor MSL / View the credits for more"
+	}
+	else {
+		mes "Contributor f1r3fly, Sunstrike, Schmidt, Elvenspirit / View the credits for more"
+	}
+	if ( jp ) {
+		s = "冒険の道標", strhint1
+	}
+	else {
+		s = "Starting Menu", strhint1
+	}
+	windowshadow = 1
+	display_window 80, winposy(308, 1), 320, 320
+	cmbg = 4
+	x = ww / 5 * 4
+	y = wh - 80
+	gmode 4, 180, 300, 50
+	pos wx + 160, wy + wh / 2
+	grotate BUFFER_MAP, cmbg / 2 * 180, cmbg \ 2 * 300, 0, x, y
+	gmode 2
+	if ( jp ) {
+		s = "Restore an adventurer", "冒険を再開する", "Generate an adventurer", "新しい冒険者を作成する", "Incarnate an adventurer", "冒険者の引継ぎ", "View the homepage", "本家Elonaホームページ", "Configure", "設定の変更", "Exit", "終了"
+	}
+	if ( en ) {
+		s = "Restore an Adventurer", "Generate an Adventurer", "Incarnate an Adventurer", "View the Homepage", "Options", "Exit"
+	}
+	if ( water_debug == 0 ) {
+		water_getimage
+		water_debug = 1
+	}
+	gsel BUFFER_SCREEN
+	gmode 0
+	pos 0, 0
+	gcopy BUFFER_BUF, 0, 0, windoww, windowh
+	gmode 2
+
+*game_title_WHILE1
+	if ( 1 == 0 ) {
+		goto *game_title_selectID
+	}
+	if ( cfg_autonumlock ) {
+		GetKeyboardState keybd_st
+		if ( peek(keybd_st, 144) == 1 ) {
+			keybd_event 144
+			keybd_event 144, 0, 2
+		}
+	}
+	redraw 0
+	if ( cfg_titleeffect ) {
+		tx += (rnd(10) + 2) * p(1)
+		ty += (rnd(10) + 2) * p(2)
+		if ( rnd(10) == 0 ) {
+			tx = rnd(800)
+			ty = rnd(600)
+			p(1) = rnd(9) - 4, rnd(9) - 4
+		}
+		f = 0
+		if ( tx > 40 & tx < 500 & ty > 100 & ty < 450 ) {
+			f = 1
+		}
+		if ( f == 0 ) {
+			if ( rnd(10) == 0 ) {
+				f = 2
+			}
+		}
+		if ( f == 0 ) {
+			water_setripple tx, ty, rnd(300), rnd(4)
+		}
+		water_calc
+	}
+	else {
+		water_refresh
+	}
+	water_draw
+	cs_listbk
+	repeat 6
+		x = wx + 40
+		y = cnt * 35 + wy + 50
+		display_customkey key_list(cnt), x, y
+		if ( jp ) {
+			font lang(cfg_font1, cfg_font2), 11 - en * 2, 0
+			pos x + 40, y - 4
+			mes s(cnt * 2)
+			font lang(cfg_font1, cfg_font2), 13 - en * 2, 0
+			cs_list s(cnt * 2 + 1), x + 40, y + 8, 19
+		}
+		else {
+			font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
+			cs_list s(cnt), x + 40, y + 1, 19
+		}
+	loop
+	cs_bk = cs
+	redraw 1
+	await cfg_wait1
+	key_check
+	cursor_check
+	if ( key == "b" ) {
+		snd SOUNDLIST_OK1
+		geneuse = ""
+		goto *cm_init
+	}
+	if ( key == "a" ) {
+		snd SOUNDLIST_OK1
+		goto *game_title_selectID
+	}
+	if ( key == "c" ) {
+		snd SOUNDLIST_OK1
+		goto *game_title_selectGen
+	}
+	if ( key == "d" ) {
+		snd SOUNDLIST_OK1
+		exec homepage, 16
+	}
+	if ( key == "e" ) {
+		snd SOUNDLIST_OK1
+		goto *com_config
+	}
+	if ( key == "f" ) {
+		snd SOUNDLIST_OK1
+		await 400
+		goto *exit_game
+	}
+	goto *game_title_WHILE1
+
+*game_title_selectID
+	cs = 0
+	cs_bk = -1
+	redraw 0
+	gsel BUFFER_BUF
+	pos 0, 0
+	picload exedir + "\\graphic\\void.bmp", 1
+	gzoom windoww, windowh, 4, 0, 0, 800, 600
+	gsel BUFFER_SCREEN
+	gmode 0
+	pos 0, 0
+	gcopy BUFFER_BUF, 0, 0, windoww, windowh
+	gmode 2
+	if ( jp ) {
+		s = "どの冒険を再開するんだい？"
+	}
+	else {
+		s = "Which save game do you want to continue?"
+	}
+	gosub *screen_drawMsg2
+	file = exedir + "save\\*"
+	dirlist buff, file, 5
+	notesel buff
+	keyrange = 0
+	repeat noteinfo(0)
+		noteget s, cnt
+		file = exedir + "save\\" + s + "\\header.txt"
+		exist file
+		if ( strsize == (-1) ) {
+			notedel cnt
+			if ( cnt < noteinfo(0) ) {
+				continue cnt
+			}
+			else {
+				break
+			}
+		}
+		bload file, playerheader
+		list(0, cnt) = cnt
+		listn(0, cnt) = s, "" + playerheader
+		key_list(cnt) = key_select(cnt)
+		keyrange++
+	loop
+	windowshadow = 1
+
+*game_title_selectID_WHILE1
+	if ( 1 == 0 ) {
+		goto *game_title_selectGen
+	}
+	redraw 0
+	if ( jp ) {
+		s = "冒険者の選択", "BackSpace [削除]  " + strhint3b
+	}
+	else {
+		s = "Game Selection", "BackSpace [Delete]  " + strhint3b
+	}
+	display_window (windoww - 440) / 2 + inf_screenx, winposy(288, 1), 440, 288
+	cs_listbk
+	repeat noteinfo(0)
+		x = wx + 20
+		y = cnt * 40 + wy + 50
+		display_key x + 20, y - 2, cnt
+		font lang(cfg_font1, cfg_font2), 11 - en * 2, 0
+		pos x + 48, y - 4
+		mes listn(0, cnt)
+		font lang(cfg_font1, cfg_font2), 13 - en * 2, 0
+		cs_list listn(1, cnt), x + 48, y + 8, 19
+	loop
+	cs_bk = cs
+	if ( noteinfo(0) == 0 ) {
+		font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
+		color 0, 0, 0
+		pos wx + 140, wy + 120
+		mes "No save files found"
+	}
+	redraw 1
+	await cfg_wait1
+	key_check
+	cursor_check
+	p = -1
+	repeat keyrange
+		if ( key == key_select(cnt) ) {
+			p = list(0, cnt)
+			break
+		}
+	loop
+	if ( p != (-1) ) {
+		playerid = listn(0, p)
+		snd SOUNDLIST_OK1
+		await 200
+		mode = MODELIST_CONTINUE
+		music = MUSICLIST_NONE
+		goto *world_init
+	}
+	getkey a, 8
+	if ( ginfo(2) == 0 ) {
+		if ( noteinfo(0) != 0 ) {
+			if ( a == 1 ) {
+				p = list(0, cs)
+				playerid = listn(0, p)
+				if ( jp ) {
+					s = "本当に" + playerid + "を削除していいのかい？"
+				}
+				else {
+					s = "Do you really want to delete " + playerid + " ?"
+				}
+				gosub *screen_drawMsg2
+				promptl(0, 0) = stryes, "y", "0"
+				promptl(0, 1) = strno, "n", "1"
+				promptmax = 2
+				val = promptx, prompty, 200, 1
+				gosub *prompt_key
+				if ( rtval != 0 ) {
+					goto *game_title_selectID
+				}
+				if ( jp ) {
+					s = "本当の本当に" + playerid + "を削除していいのかい？"
+				}
+				else {
+					s = "Are you sure you really want to delete " + playerid + " ?"
+				}
+				gosub *screen_drawMsg2
+				promptl(0, 0) = stryes, "y", "0"
+				promptl(0, 1) = strno, "n", "1"
+				promptmax = 2
+				val = promptx, prompty, 200, 1
+				gosub *prompt_key
+				if ( rtval == 0 ) {
+					snd SOUNDLIST_OK1
+					fmode = 9
+					gosub *game_ctrlFile
+				}
+				goto *game_title_selectID
+			}
+		}
+	}
+	if ( key == key_cancel ) {
+		goto *game_title
+	}
+	goto *game_title_selectID_WHILE1
+
+*game_title_selectGen
+	cs = 0
+	cs_bk = -1
+	redraw 0
+	gsel BUFFER_BUF
+	pos 0, 0
+	picload exedir + "\\graphic\\void.bmp", 1
+	gzoom windoww, windowh, 4, 0, 0, 800, 600
+	gsel BUFFER_SCREEN
+	gmode 0
+	pos 0, 0
+	gcopy BUFFER_BUF, 0, 0, windoww, windowh
+	gmode 2
+	if ( jp ) {
+		s = "どの遺伝子を引き継ぐ？"
+	}
+	else {
+		s = "Which gene do you want to incarnate?"
+	}
+	gosub *screen_drawMsg2
+	file = exedir + "save\\*"
+	dirlist buff, file, 5
+	notesel buff
+	keyrange = 0
+	listmax = 0
+	repeat noteinfo(0)
+		noteget s, cnt
+		file = exedir + "save\\" + s + "\\gene_header.txt"
+		exist file
+		await
+		if ( strsize == (-1) ) {
+			continue
+		}
+		bload file, playerheader
+		list(0, listmax) = listmax
+		listn(0, listmax) = s, "" + playerheader
+		key_list(listmax) = key_select(listmax)
+		keyrange++
+		listmax++
+	loop
+	windowshadow = 1
+
+*game_title_selectGen_WHILE1
+	if ( 1 == 0 ) {
+		goto *define_los
+	}
+	redraw 0
+	if ( jp ) {
+		s = "遺伝子の選択", strhint3b
+	}
+	else {
+		s = "Gene Selection", strhint3b
+	}
+	display_window (windoww - 440) / 2 + inf_screenx, winposy(288, 1), 440, 288
+	cs_listbk
+	repeat listmax
+		x = wx + 20
+		y = cnt * 40 + wy + 50
+		display_key x + 20, y - 2, cnt
+		font lang(cfg_font1, cfg_font2), 11 - en * 2, 0
+		pos x + 48, y - 4
+		mes listn(0, cnt)
+		font lang(cfg_font1, cfg_font2), 13 - en * 2, 0
+		cs_list listn(1, cnt), x + 48, y + 8, 19
+	loop
+	cs_bk = cs
+	if ( listmax == 0 ) {
+		font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
+		color 0, 0, 0
+		pos wx + 140, wy + 120
+		mes "No gene files found"
+	}
+	redraw 1
+	await cfg_wait1
+	key_check
+	cursor_check
+	p = -1
+	repeat keyrange
+		if ( key == key_select(cnt) ) {
+			p = list(0, cnt)
+			break
+		}
+	loop
+	if ( p != (-1) ) {
+		snd SOUNDLIST_OK1
+		geneuse = listn(0, p)
+		playerid = listn(0, p)
+		goto *cm_init
+	}
+	if ( key == key_cancel ) {
+		goto *game_title
+	}
+	goto *game_title_selectGen_WHILE1
+
+*define_los
+	dim fovlist, 2, 17
+	dim fovmap, 17 * 2 + 4, 17 * 2
+	if ( cdata(CDATA_FOV, CHARA_PLAYER) < 1 ) {
+		cdata(CDATA_FOV, CHARA_PLAYER) = 1
+	}
+	if ( cdata(CDATA_FOV, CHARA_PLAYER) >= 17 ) {
+		cdata(CDATA_FOV, CHARA_PLAYER) = 17 - 1
+	}
+	repeat 17
+		y = cnt
+		repeat 17
+			x = cnt
+			if ( dist(x, y, 17 / 2, 17 / 2) < (17 - 2) / 2 + 1 ) {
+				fovmap(x, y) = 1
+			}
+		loop
+	loop
+	repeat 17
+		y = cnt
+		p(1) = 0
+		repeat 17
+			x = cnt
+			p = fovmap(x, y)
+			if ( p != 0 & p(1) == 0 ) {
+				fovlist(0, y) = x
+				p(1) = 1
+			}
+			if ( p == 0 & p(1) == 1 ) {
+				fovlist(1, y) = x
+				break
+			}
+		loop
+	loop
+	return
+
+*esc_check
+	if ( wparam == 27 ) {
+		if ( ginfo(2) == 0 ) {
+			ime_esc = 1
+		}
+	}
+	return
+
+*prompt_word
+	snd SOUNDLIST_POP2
+	x = val
+	y = val(1)
+	dx = val(2) * 16 + 60
+	font lang(cfg_font1, cfg_font2), 16 - en * 2, 0
+	inputfail = 0
+	sdim inputlog2
+	if ( val(4) != 0 ) {
+		val(5) = val(4)
+		if ( strlen(str(val(5))) >= 3 ) {
+			dx += strlen(str(val(5))) * 8
+		}
+		redraw 0
+		pos x + 24, y + 4
+		gfini dx - 42, 35
+		gfdec 60, 60, 60
+		repeat
+			redraw 0
+			window2 x + 20, y, dx - 40, 36, 0, 2
+			pos x + dx / 2 - 56, y - 32
+			gcopy BUFFER_INF, 128, 288, 128, 32
+			pos x + 28, y + 4
+			gcopy BUFFER_INF, 312, 336, 24, 24
+			pos x + dx - 51, y + 4
+			gcopy BUFFER_INF, 336, 336, 24, 24
+			inputlog2 = "" + int(inputlog) + "(" + val(5) + ")"
+			pos x + dx - 70 - strlen(inputlog2) * 8 + 8, y + 11
+			color 255, 255, 255
+			mes inputlog2
+			redraw 1
+			await cfg_wait1
+			key_check
+			if ( key == key_enter ) {
+				f = 1
+				break
+			}
+			if ( key == key_cancel ) {
+				if ( val(3) == 1 ) {
+					f = -1
+					break
+				}
+			}
+			if ( key == key_west ) {
+				snd SOUNDLIST_CURSOR1
+				val(4)--
+				if ( val(4) < 1 ) {
+					val(4) = val(5)
+				}
+			}
+			if ( key == key_east ) {
+				snd SOUNDLIST_CURSOR1
+				val(4)++
+				if ( val(4) > val(5) ) {
+					val(4) = 1
+				}
+			}
+			if ( key == key_south ) {
+				snd SOUNDLIST_CURSOR1
+				val(4) = 1
+			}
+			if ( key == key_north ) {
+				snd SOUNDLIST_CURSOR1
+				val(4) = val(5)
+			}
+			inputlog = "" + val(4)
+		loop
+		if ( f == (-1) ) {
+			inputlog = ""
+			rtval = -1
+		}
+		keywait = 1
+		key = ""
+		rtval = 0
+		return
+	}
+	redraw 0
+	objmode 2, 0
+	if ( cfg_msg_box == 0 ) {
+		pos x + 4, y + 4
+		mesbox inputlog, dx - 8, 26, 1, val(2) * (1 + en)
+	}
+	else {
+		pos x, y
+		mesbox inputlog, 600, 0, 5, val(2) * (1 + en)
+		pos x + 4, y + 4
+		gfini dx - 1, 35
+		gfdec 60, 60, 60
+		aplsel "ElonaPlus 2.06fix"
+		if ( stat == 1 ) {
+			dialog "Failed to get WINDOW ID", 1
+			clrobj 1
+			cfg_msg_box = 0
+			goto *prompt_word
+		}
+		aplobj "", 1
+		if ( stat == 1 ) {
+			dialog "Failed to get OBJECT ID", 1
+			clrobj 1
+			cfg_msg_box = 0
+			goto *prompt_word
+		}
+	}
+	notesel inputlog
+	p(1) = 2
+	ime_esc = 0
+	onkey 1
+	repeat
+		if ( ginfo(2) == 0 ) {
+			objsel 1
+		}
+		else {
+			objprm 1, ""
+			inputlog = ""
+			await 100
+			continue cnt
+		}
+		redraw 0
+		await 40
+		window2 x, y, dx, 36, 0, 2
+		pos x + dx / 2 - 60, y - 32
+		gcopy BUFFER_INF, 128, 288, 128, 32
+		if ( cfg_msg_box == 1 ) {
+			pos x + 8, y + 4
+			if ( imeget() != 0 ) {
+				gcopy BUFFER_INF, 48, 336, 24, 24
+			}
+			else {
+				gcopy BUFFER_INF, 24, 336, 24, 24
+			}
+			apledit p(2), 2, 0
+			if ( p(2) > val(2) * (1 + en) - 2 ) {
+				pos x + 8, y + 4
+				gcopy BUFFER_INF, 72, 336, 24, 24
+			}
+			if ( cnt \ 20 < 10 ) {
+				p(1) = p(1) * 2
+			}
+			else {
+				p(1) = p(1) / 2
+			}
+			apledit p(2), 0
+			p(4) = 0
+			repeat p(2)
+				p(3) = peek(inputlog, p(4))
+				if ( p(3) >= 129 & p(3) <= 159 | (p(3) >= 224 & p(3) <= 252) ) {
+					p(4) += 2
+				}
+				else {
+					p(4) += 1
+				}
+			loop
+			gmode 4, , , p(1) / 2 + 50
+			pos x + 34 + p(4) * 8, y + 5
+			color 0, 0, 0
+			gcopy BUFFER_INF, 0, 336, 12, 24
+			gmode 2
+			color 255, 255, 255
+			pos x + 36, y + 9
+			noteget s, 0
+			mes s
+		}
+		if ( instr(inputlog, 0, "\n") != (-1) ) {
+			rtval = 0
+			break
+		}
+		if ( instr(inputlog, 0, "\t") != (-1) ) {
+			objprm 1, ""
+			inputlog = ""
+			if ( val(3) == 1 ) {
+				ime_esc = 1
+			}
+		}
+		redraw 1
+		if ( val(3) == 1 ) {
+			if ( ime_esc == 1 ) {
+				inputlog = ""
+				keywait = 1
+				key = ""
+				break
+			}
+		}
+	loop
+	gmode 2
+	clrobj 1
+	if ( inputfail ) {
+		cfg_msg_box = 0
+		goto *prompt_word
+	}
+	if ( input_mode == 1 ) {
+		cnv_filestr inputlog
+	}
+	input_mode = 0
+	if ( en ) {
+		cnv_str inputlog, "\"", "'"
+	}
+	rm_crlf inputlog
+	onkey 0
+	return
+
+*prompt_direction
+	snd SOUNDLIST_POP2
+	redraw 0
+	gsel BUFFER_BUF
+	x = (cdata(CDATA_X, CHARA_PLAYER) - scx) * inf_tiles + inf_screenx - 48
+	y = (cdata(CDATA_Y, CHARA_PLAYER) - scy) * inf_tiles + inf_screeny - 48
+	gmode 0
+	pos 0, 0
+	gcopy BUFFER_SCREEN, x, y, 48 * 3, 48 * 3
+	gsel BUFFER_SCREEN
+	t = 0
+
+*prompt_direction_WHILE1
+	if ( 1 == 0 ) {
+		goto *prompt_key
+	}
+	t++
+	gmode 4, 28, 28, 200 - t / 2 \ 20 * (t / 2 \ 20)
+	color 0, 0, 0
+	x = (cdata(CDATA_X, CHARA_PLAYER) - scx) * inf_tiles + inf_screenx + 24
+	y = (cdata(CDATA_Y, CHARA_PLAYER) - scy) * inf_tiles + inf_screeny + 24
+	if ( key_alt == 0 ) {
+		pos x, y - 48
+		grotate BUFFER_INF, 212, 432, 0, 28, 28
+		pos x, y + 48
+		grotate BUFFER_INF, 212, 432, 1.0 * 3.14, 28, 28
+		pos x + 48, y
+		grotate BUFFER_INF, 212, 432, 0.5 * 3.14, 28, 28
+		pos x - 48, y
+		grotate BUFFER_INF, 212, 432, 1.5 * 3.14, 28, 28
+	}
+	pos x - 48, y - 48
+	grotate BUFFER_INF, 212, 432, 1.75 * 3.14, 28, 28
+	pos x + 48, y + 48
+	grotate BUFFER_INF, 212, 432, 0.75 * 3.14, 28, 28
+	pos x + 48, y - 48
+	grotate BUFFER_INF, 212, 432, 0.25 * 3.14, 28, 28
+	pos x - 48, y + 48
+	grotate BUFFER_INF, 212, 432, 1.25 * 3.14, 28, 28
+	redraw 1
+	redraw 0
+	gmode 0
+	pos x - 48 - 24, y - 48 - 24
+	gcopy BUFFER_BUF, 0, 0, 48 * 3, 48 * 3
+	gmode 2
+	await 30
+	key_check 1
+	x = cdata(CDATA_X, CHARA_PLAYER)
+	y = cdata(CDATA_Y, CHARA_PLAYER)
+	if ( key == key_alter ) {
+		goto *prompt_direction_WHILE1_CONTINUE
+	}
+	if ( key == key_wait | key == key_enter ) {
+		tlocx = x
+		tlocy = y
+		keyhalt = 1
+		return 1
+	}
+	if ( key == key_north ) {
+		if ( key_alt ) {
+			goto *prompt_direction_WHILE1_CONTINUE
+		}
+		else {
+			y -= 1
+		}
+	}
+	if ( key == key_south ) {
+		if ( key_alt ) {
+			goto *prompt_direction_WHILE1_CONTINUE
+		}
+		else {
+			y += 1
+		}
+	}
+	if ( key == key_west ) {
+		if ( key_alt ) {
+			goto *prompt_direction_WHILE1_CONTINUE
+		}
+		else {
+			x -= 1
+		}
+	}
+	if ( key == key_east ) {
+		if ( key_alt ) {
+			goto *prompt_direction_WHILE1_CONTINUE
+		}
+		else {
+			x += 1
+		}
+	}
+	if ( key == key_northwest ) {
+		x -= 1
+		y -= 1
+	}
+	if ( key == key_northeast ) {
+		x += 1
+		y -= 1
+	}
+	if ( key == key_southwest ) {
+		x -= 1
+		y += 1
+	}
+	if ( key == key_southeast ) {
+		x += 1
+		y += 1
+	}
+	if ( key != "" ) {
+		if ( x < 0 | y < 0 | x >= mdata(MDATA_WIDTH) | y >= mdata(MDATA_HEIGHT) ) {
+			x = cdata(CDATA_X, CHARA_PLAYER)
+			y = cdata(CDATA_Y, CHARA_PLAYER)
+			keyhalt = 1
+			return 0
+		}
+		if ( x == cdata(CDATA_X, CHARA_PLAYER) & y == cdata(CDATA_Y, CHARA_PLAYER) ) {
+			return 0
+		}
+		tlocx = x
+		tlocy = y
+		keyhalt = 1
+		return 1
+	}
+
+*prompt_direction_WHILE1_CONTINUE
+	goto *prompt_direction_WHILE1
+
+*prompt_key
+	snd SOUNDLIST_POP2
+	csprev = cs
+	cs = 0
+	cs_bk = -1
+	redraw 0
+	gsel BUFFER_INF
+	gmode 0
+	font lang(cfg_font1, cfg_font2), 15 - en * 2, 0
+	repeat promptmax
+		if ( promptl(1, cnt) == "null" ) {
+			promptl(1, cnt) = key_select(cnt)
+		}
+		pos cnt * 24 + 624, 30
+		gcopy BUFFER_INF, 0, 30, 24, 18
+		pos cnt * 24 + 629, 31
+		color 50, 60, 80
+		bmes promptl(1, cnt), 250, 240, 230
+	loop
+	gsel BUFFER_SCREEN
+	sx = val - val(2) / 2
+	sy = val(1) - promptmax * 10
+	pos sx + 12, sy + 12
+	gfini val(2) - 17, promptmax * 20 + 43 - 18
+	gfdec 60, 60, 60
+	keyhalt = 1
+	if ( val(3) == 2 ) {
+		dx = 200, 10
+		dy = sy + 140
+		val(5) = val(4)
+		val(4) = 1
+		val = 1
+		if ( strlen(str(val(5))) >= 3 ) {
+			dx += strlen(str(val(5))) * 8
+		}
+		pos dx(1) + sx + 24, dy + 4
+		gfini dx - 42, 35
+		gfdec 60, 60, 60
+	}
+
+*prompt_key_WHILE1
+	if ( 1 == 0 ) {
+		goto *game_debug
+	}
+	redraw 0
+	gmode 2
+	if ( val(3) == 2 ) {
+		window2 dx(1) + sx + 20, dy, dx - 40, 36, 0, 2
+		pos dx(1) + sx + dx / 2 - 56, dy - 32
+		gcopy BUFFER_INF, 128, 288, 128, 32
+		pos dx(1) + sx + 28, dy + 4
+		gcopy BUFFER_INF, 312, 336, 24, 24
+		pos dx(1) + sx + dx - 51, dy + 4
+		gcopy BUFFER_INF, 336, 336, 24, 24
+		inputlog2 = "" + int(inputlog) + "(" + val(5) + ")"
+		pos dx(1) + sx + dx - 70 - strlen(inputlog2) * 8 + 8, dy + 11
+		color 255, 255, 255
+		mes inputlog2
+		inputlog = "" + val(4)
+	}
+	window2 sx + 8, sy + 8, val(2) - 16, promptmax * 20 + 42 - 16, 0, 0
+	pos sx - 16, sy
+	gcopy BUFFER_INF, 64, 288, 50, 32
+	color 255, 255, 255
+	font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
+	keyrange = 0
+	cs_listbk
+	repeat promptmax
+		pos sx + 30, cnt * 20 + sy + 22
+		gcopy BUFFER_INF, cnt * 24 + 624, 30, 24, 24
+		cs_list promptl(0, cnt), sx + 56, cnt * 20 + sy + 21, 19
+		key_list(cnt) = promptl(1, cnt)
+		keyrange++
+	loop
+	cs_bk = cs
+	if ( rpmode ) {
+		window_recipe2
+		color 255, 255, 255
+		font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
+	}
+	redraw 1
+	await cfg_wait1
+	key_check
+	cursor_check
+	rtval = -1
+	repeat promptmax
+		if ( key == promptl(1, cnt) ) {
+			rtval = int(promptl(2, cnt))
+			break
+		}
+	loop
+	if ( val(3) == 2 ) {
+		val = int(inputlog)
+		if ( key == key_west | key == key_pagedown ) {
+			snd SOUNDLIST_CURSOR1
+			val(4)--
+			if ( val(4) < 1 ) {
+				val(4) = val(5)
+			}
+		}
+		if ( key == key_east | key == key_pageup ) {
+			snd SOUNDLIST_CURSOR1
+			val(4)++
+			if ( val(4) > val(5) ) {
+				val(4) = 1
+			}
+		}
+	}
+	if ( rtval != (-1) ) {
+		promptmax = 0
+		cs = csprev
+		return 1
+	}
+	if ( val(3) != 0 ) {
+		if ( key == key_cancel ) {
+			promptmax = 0
+			cs = csprev
+			return 0
+		}
+	}
+	goto *prompt_key_WHILE1
+
+*game_debug
+	notesel dbm
+	buff = ""
+	if ( dbm == "" ) {
+		noteadd "ElonaPlus 2.06fix" + " v" + "6.06" + " Debug Console    Type \"?\" for help. Hit ESC to exit."
+		noteadd ""
+	}
+	font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
+	objmode 2
+	pos 0, 24
+	mesbox dbm, 800, 576, 0
+	pos 0, 0
+	mesbox buff, 800, 24, 1
+	objsel 2
+
+*game_debug_WHILE1
+	if ( 1 == 0 ) {
+		goto *game_debug_WEND1
+	}
+	await 20
+	stick a
+	if ( a == 128 ) {
+		goto *game_debug_WEND1
+	}
+	if ( a == 32 ) {
+		gosub *dbg_GetInfo
+	}
+	goto *game_debug_WHILE1
+
+*game_debug_WEND1
+	clrobj 1
+	clrobj 2
+	if ( dbg_exitshowroom == 1 ) {
+		dbg_exitshowroom = 0
+		levelexitby = MAP_EXIT_NORMAL
+		goto *map_exit
+	}
+	goto *pc_turn
+
+*dbg_GetInfo
+	if ( 1 == 0 ) {
+		goto *console_write
+	}
+	if ( instr(buff, 0, "?") != (-1) ) {
+		noteadd "\t1\t\tShows charainfo."
+		noteadd "\t2\t\tShows pc equipment."
+		noteadd "\t3\t\tShows pc inventory."
+		noteadd "\t4\t\tBegin/end var-comparison."
+		noteadd "\t5\t\tShows core game data."
+		noteadd "\tdel\t\tDeletes current log."
+		noteadd "\tquest\t\tLists all the quests."
+		noteadd "\tclient\t\tLists all the clients."
+		noteadd "\texitroom\tLeaves current show-room."
+		noteadd "\twizard\t\tEnables wizard mode."
+		noteadd ""
+		noteadd "\tThe commands below can be used in the Wizard mode."
+		noteadd "\tgain_spell\tPC gains all spells."
+		noteadd "\tgain_spact\tPC gains all special actions."
+		noteadd "\tgain_exp\tPC gains a billion of exp."
+		noteadd "\tgain_fame\tPC gains fame."
+		noteadd "\tallinv\t\tDisplays all the items in the map."
+		noteadd ""
+		noteadd "\tThe commands below should be only used to deal with certain problems."
+		noteadd "\t108fix\t\tTurns all the NPCs in the map hostile."
+		noteadd "\tadvreset\tRemoves all items from adventureres."
+		noteadd "\tfixcorrupt1\tTries to fix corrputed save files."
+		noteadd "\tfreemove\tEnables freemove."
+		noteadd "\tresetmap\tResets towns and some areas."
+		noteadd "\tfixmap\t\tFixes possible bugs for current map."
+		noteadd "\tmapinfo\t\tShows map info."
+		goto *console_write
+	}
+	if ( int(buff) == 1 ) {
+		repeat 245
+			noteadd "" + cnt + "\t" + cdatan(CDATAN_NAME, cnt) + "\tExist:" + cdata(CDATA_EXIST, cnt) + "\tRespawn:" + cdata(CDATA_RESPAWN, cnt) + "\tRole:" + cdata(CDATA_ROLE, cnt)
+		loop
+		goto *console_write
+	}
+	if ( int(buff) == 2 ) {
+		repeat 30
+			p = 100 + cnt
+			if ( cdata(p, CHARA_PLAYER) != 0 ) {
+				p(1) = cdata(p, CHARA_PLAYER)
+				s = "" + p + "\t" + p(1) + "\t"
+				if ( p(1) \ 10000 > 0 ) {
+					s += itemname(p(1) \ 10000 - 1)
+				}
+				noteadd s
+			}
+		loop
+		goto *console_write
+	}
+	if ( int(buff) == 3 ) {
+		inv_getheader 0
+		repeat invrange, invhead
+			noteadd "" + cnt + "\t" + itemname(cnt) + "\t"
+		loop
+		goto *console_write
+	}
+	if ( int(buff) == 4 ) {
+		if ( dbg_compare == 0 ) {
+			sdim cdatan2, 40, 10, 245
+			dim cdata2, 500, 245
+			dim sdata2, 600 * 2, 245
+			dim inv2, 70, 5480
+		}
+		noteadd "cdata"
+		repeat 245
+			cnt2 = cnt
+			repeat 500
+				s = ""
+				if ( cnt == 6 | cnt == 10 ) {
+					s = "*"
+				}
+				if ( dbg_compare == 0 ) {
+					cdata2(cnt, cnt2) = cdata(cnt, cnt2)
+				}
+				if ( dbg_compare == 1 ) {
+					if ( cdata2(cnt, cnt2) != cdata(cnt, cnt2) ) {
+						noteadd s + "" + cnt2 + "\t" + cnt + "\t" + cdata2(cnt, cnt2) + "\t->" + cdata(cnt, cnt2)
+					}
+				}
+			loop
+		loop
+		noteadd "cdatan"
+		repeat 245
+			cnt2 = cnt
+			repeat 10
+				s = ""
+				if ( dbg_compare == 0 ) {
+					cdatan2(cnt, cnt2) = cdatan(cnt, cnt2)
+				}
+				if ( dbg_compare == 1 ) {
+					if ( cdatan2(cnt, cnt2) != cdatan(cnt, cnt2) ) {
+						noteadd s + "" + cnt2 + "\t" + cnt + "\t" + cdatan2(cnt, cnt2) + "\t->" + cdatan(cnt, cnt2)
+					}
+				}
+			loop
+		loop
+		noteadd "skill"
+		repeat 245
+			cnt2 = cnt
+			repeat 600 * 2
+				s = ""
+				if ( dbg_compare == 0 ) {
+					sdata2(cnt, cnt2) = sdata(cnt, cnt2)
+				}
+				if ( dbg_compare == 1 ) {
+					if ( sdata2(cnt, cnt2) != sdata(cnt, cnt2) ) {
+						noteadd s + "" + cnt2 + "\t" + cnt + "\t" + sdata2(cnt, cnt2) + "\t->" + sdata(cnt, cnt2)
+					}
+				}
+			loop
+		loop
+		noteadd "inv"
+		repeat 5480
+			cnt2 = cnt
+			repeat 70
+				s = ""
+				if ( dbg_compare == 0 ) {
+					inv2(cnt, cnt2) = inv(cnt, cnt2)
+				}
+				if ( dbg_compare == 1 ) {
+					if ( inv2(cnt, cnt2) != inv(cnt, cnt2) ) {
+						noteadd s + "" + cnt2 + "\t" + cnt + "\t" + inv2(cnt, cnt2) + "\t->" + inv(cnt, cnt2)
+					}
+				}
+			loop
+		loop
+		if ( dbg_compare == 0 ) {
+			dbg_compare = 1
+			noteadd "Var_comparison begins."
+		}
+		else {
+			dbg_compare = 0
+		}
+		goto *console_write
+	}
+	if ( int(buff) == 5 ) {
+		repeat 1000
+			noteadd "" + cnt + "\t" + gdata(cnt)
+		loop
+		goto *console_write
+	}
+	if ( instr(buff, 0, "del") != (-1) | buff == "\n" ) {
+		dbm = ""
+		goto *console_write
+	}
+	if ( instr(buff, 0, "freemove") != (-1) ) {
+		dbg_freemove = 1
+		noteadd "Done."
+		goto *console_write
+	}
+	if ( instr(buff, 0, "resetmap") != (-1) ) {
+		gosub *mapReset
+		noteadd "Done."
+		goto *console_write
+	}
+	if ( instr(buff, 0, "exitroom") != (-1) ) {
+		if ( gdata(GDATA_AREA) == AREA_SHOW_HOUSE ) {
+			dbg_exitshowroom = 1
+			noteadd "Done."
+		}
+		else {
+			noteadd "Wrong map."
+		}
+		goto *console_write
+	}
+	if ( instr(buff, 0, "removequest") != (-1) ) {
+		repeat gdata(GDATA_CLIENT)
+			if ( qdata(QDATA_STATE, cnt) != QUEST_STATE_NONE ) {
+				if ( qdata(QDATA_DEADLINE, cnt) == (-1) ) {
+					qdata(QDATA_STATE, cnt) = QUEST_STATE_NONE
+				}
+			}
+		loop
+		noteadd "Done."
+		goto *console_write
+	}
+	if ( instr(buff, 0, "fixmap") != (-1) ) {
+		repeat 245
+			if ( cdata(CDATA_EXIST, cnt) != CHAR_STATE_ALIVE ) {
+				continue
+			}
+			if ( cdata(CDATA_X, cnt) < 0 | cdata(CDATA_X, cnt) >= mdata(MDATA_WIDTH) | cdata(CDATA_Y, cnt) < 0 | cdata(CDATA_Y, cnt) >= mdata(MDATA_HEIGHT) ) {
+				cdata(CDATA_X, cnt) = 0
+				cdata(CDATA_Y, cnt) = 0
+			}
+		loop
+		repeat 400, 5080
+			if ( inv(INV_ITEM_NUM, cnt) <= 0 ) {
+				continue
+			}
+			if ( inv(INV_ITEM_X, cnt) < 0 | inv(INV_ITEM_X, cnt) >= mdata(MDATA_WIDTH) | inv(INV_ITEM_Y, cnt) < 0 | inv(INV_ITEM_Y, cnt) >= mdata(MDATA_HEIGHT) ) {
+				inv(INV_ITEM_X, cnt) = 0
+				inv(INV_ITEM_Y, cnt) = 0
+			}
+		loop
+		cell_refresh 0, 0
+		noteadd "Done."
+		goto *console_write
+	}
+	if ( instr(buff, 0, "advreset") != (-1) ) {
+		repeat 40 - 1, 16
+			rc = cnt
+			inv_getheader rc
+			repeat invrange, invhead
+				cnt2 = cnt
+				repeat 70
+					inv(cnt, cnt2) = 0
+				loop
+			loop
+			repeat 30, 100
+				cdata(cnt, rc) = 0
+			loop
+		loop
+		noteadd "Done."
+		goto *console_write
+	}
+	if ( instr(buff, 0, "fixcorrupt1") != (-1) ) {
+		repeat 57
+			rc = cnt
+			inv_getheader rc
+			repeat invrange, invhead
+				cnt2 = cnt
+				if ( inv(INV_ITEM_ID, cnt) >= MAX_ITEM_DBID | inv(INV_ITEM_ID, cnt) <= ITEM_ID_DUMMY | inv(INV_ITEM_NUM, cnt) <= 0 ) {
+					repeat 70
+						inv(cnt, cnt2) = 0
+					loop
+				}
+				if ( inv(INV_ITEM_EQUIP, cnt) != 0 ) {
+					inv(INV_ITEM_EQUIP, cnt) = 0
+				}
+			loop
+			repeat 30, 100
+				cdata(cnt, rc) = cdata(cnt, rc) / EXT_EQUIP_SLOTS * 10000
+			loop
+			if ( cnt >= 16 ) {
+				cdata(CDATA_EXIST, cnt) = CHAR_STATE_ADV_DEAD
+				gosub *adv_generate
+			}
+		loop
+		noteadd "Done."
+		goto *console_write
+	}
+	if ( instr(buff, 0, "client") != (-1) ) {
+		dim mapclient, 1000
+		repeat 500
+			if ( qdata(QDATA_CLIENT, cnt) == 0 ) {
+				i = cnt
+				continue
+			}
+			noteadd "id:" + cnt + " name:" + qname(cnt) + " map:" + mapname(qdata(QDATA_MAP, cnt))
+			mapclient(qdata(QDATA_MAP, cnt))++
+		loop
+		repeat 1000
+			if ( mapclient(cnt) != 0 ) {
+				noteadd "" + mapname(cnt) + ":" + mapclient(cnt), 1
+			}
+		loop
+		goto *console_write
+	}
+	if ( instr(buff, 0, "108fix") != (-1) ) {
+		repeat 245
+			if ( cnt < 57 ) {
+				continue
+			}
+			if ( cdata(CDATA_EXIST, cnt) == CHAR_STATE_ALIVE ) {
+				cdata(CDATA_RELATION, cnt) = RELATION_ENEMY
+				cdata(CDATA_RELATION_ORG, cnt) = RELATION_ENEMY
+			}
+		loop
+		noteadd "Done."
+		goto *console_write
+	}
+	if ( instr(buff, 0, "test") != (-1) ) {
+		repeat 500
+			noteadd "" + cnt + ":" + mapname(cnt) + "/" + adata(ADATA_ID, cnt)
+		loop
+		noteadd "Done."
+		goto *console_write
+	}
+	if ( instr(buff, 0, "mapinfo") != (-1) ) {
+		noteadd "gArea\t\t:" + gdata(GDATA_AREA)
+		noteadd "gLevel\t\t:" + gdata(GDATA_LEVEL)
+		noteadd "file\t\t:" + "mdata_" + mid + ".s2"
+		noteadd "pc x/y\t\t:" + cdata(CDATA_X, CHARA_PLAYER) + "/" + cdata(CDATA_Y, CHARA_PLAYER)
+		noteadd "map max w/h\t:" + mdata(MDATA_WIDTH) + "/" + mdata(MDATA_HEIGHT)
+		noteadd "Done."
+		goto *console_write
+	}
+	if ( instr(buff, 0, "quest") != (-1) ) {
+		noteadd "gQuest:" + gdata(GDATA_QUEST) + " gQuestRef:" + gdata(GDATA_QUEST_REF) + " gQuestStatus:" + gdata(GDATA_QUEST_STATE) + " rq:" + rq
+		repeat 5
+			p = gdata(GDATA_QUEST_POOL + cnt)
+			noteadd "quest" + cnt + " " + p + " exist" + qdata(QDATA_EXIST, p) + " status" + qdata(QDATA_STATE, p) + " var" + qdata(QDATA_VAR, p) + " encount" + qdata((10 /*!!!@[QDATA_DEST_CLIENT @@@ QDATA_ENCOUNTER]@!!! */), p)
+		loop
+		repeat gdata(GDATA_CLIENT)
+			noteadd "" + cnt + " " + qdata(QDATA_CLIENT, cnt) + "/" + qdata(QDATA_MAP, cnt)
+		loop
+		goto *console_write
+	}
+	if ( instr(buff, 0, "wizard") != (-1) ) {
+		gdata(GDATA_WIZARD) = 1
+		cdatan(CDATAN_AKA, CHARA_PLAYER) = "*Debug*"
+		noteadd "Wizard mode activated."
+		goto *console_write
+	}
+	if ( gdata(GDATA_WIZARD) | 0 ) {
+		if ( instr(buff, 0, "gain_spell") != (-1) ) {
+			repeat 478 - 400, 400
+				skillgain CHARA_PLAYER, cnt, cdata(CDATA_LEVEL, r1), 100 * 100
+			loop
+			noteadd "Done."
+			goto *console_write
+		}
+		if ( instr(buff, 0, "gain_spact") != (-1) ) {
+			repeat 832 - 600
+				spact(cnt + STARTING_SKILL_SPACT - STARTING_SKILL_SPACT) = 1
+			loop
+			noteadd "Done."
+			goto *console_write
+		}
+		if ( instr(buff, 0, "allinv") != (-1) ) {
+			repeat 5480
+				if ( cnt < 5080 ) {
+					if ( cnt >= 200 ) {
+						if ( (cnt - 200) \ 20 == 0 ) {
+							noteadd "-----------" + cdatan(CDATAN_NAME, (cnt - 200) / 20 + 1)
+						}
+					}
+				}
+				if ( cnt == 5080 ) {
+					noteadd "-----------------------MAP INV"
+				}
+				noteadd "" + cnt + "\t" + inv(INV_ITEM_NUM, cnt) + "\t" + itemname(cnt) + " it:" + inv(INV_ITEM_TURN, cnt)
+			loop
+			goto *console_write
+		}
+		if ( instr(buff, 0, "mapinv") != (-1) ) {
+			repeat 5480 - 5080
+				if ( cnt == 5080 ) {
+					noteadd "-----------------------MAP INV"
+				}
+				if ( inv(INV_ITEM_NUM, cnt) != 0 ) {
+					noteadd "" + cnt + "\t" + inv(INV_ITEM_NUM, cnt) + "\t" + itemname(cnt) + " it:" + inv(INV_ITEM_TURN, cnt)
+				}
+			loop
+			goto *console_write
+		}
+		if ( instr(buff, 0, "gain_exp") != (-1) ) {
+			cdata(CDATA_EXP, CHARA_PLAYER) += 1000000000
+			r1 = 0
+			r2 = 0
+			gosub *calcLevelUp
+			noteadd "Done."
+			goto *console_write
+		}
+		if ( instr(buff, 0, "gain_fame") != (-1) ) {
+			cdata(CDATA_FAME, CHARA_PLAYER) += 10000
+			noteadd "Done."
+			goto *console_write
+		}
+	}
+	noteadd "Unknown command. Type \"?\" for help. Hit ESC to exit."
+	goto *console_write
+	goto *dbg_GetInfo
+
+*console_write
+	noteadd ""
+	objprm 1, dbm
+	objprm 2, ""
+	return
+
+*mutexobj
+	CreateMutexA 0, 0, "ElonaPlus 2.06fix"
+	mutex_handle = stat
+	func_3
+	if ( stat == 183 ) {
+		dialog lang("二重起動のため終了します。", "The program is already running."), 1
+		end
+	}
+	return
+	goto *randomSite
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,674 @@
+*db_class
+	if ( dbmode == DBMODE_FIND ) {
+		listmax = 0
+		listn(1, listmax) = "warrior"
+		listmax++
+		listn(1, listmax) = "thief"
+		listmax++
+		listn(1, listmax) = "wizard"
+		listmax++
+		listn(1, listmax) = "farmer"
+		listmax++
+		listn(1, listmax) = "predator"
+		listmax++
+		listn(1, listmax) = "archer"
+		listmax++
+		listn(1, listmax) = "warmage"
+		listmax++
+		listn(1, listmax) = "tourist"
+		listmax++
+		listn(1, listmax) = "pianist"
+		listmax++
+		listn(1, listmax) = "gunner"
+		listmax++
+		listn(1, listmax) = "priest"
+		listmax++
+		listn(1, listmax) = "claymore"
+		listmax++
+		return
+	}
+	if ( dbidn == "" ) {
+		classname = "なし"
+		cequipment = 0
+		return
+	}
+	if ( dbidn == "warrior" ) {
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 4 ) {
+				return 1
+			}
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			classname = "戦士"
+		}
+		if ( dbmode == DBMODE_REF_CM ) {
+			classname = "戦士"
+			buff = lang("戦士は己の肉体を武器に、立ちはだかるものを破壊し突き進みます。魔法の扱いには向いていませんが、その高い戦闘能力には目を見張るものがあります。＊[猛攻] 追加打撃の発生率上昇。", "The Warrior. With working knowledge of all things stabby, bashy, choppy, and shooty, anything in a Warrior's hands is bad news for their enemies. No mere thug, they have knowledge of tactics to bring even the strongest down, and are trained early on to be comfortable in all kinds of armor and shields. Warriors are personifications of the adage \"If violence isn't working, you are obviously not using enough of it.\"")
+			p(0) = 10
+			p(1) = 10
+			p(2) = 2
+			p(3) = 0
+			p(4) = 0
+			p(5) = 3
+			p(6) = 0
+			p(7) = 0
+		}
+		if ( dbmode == DBMODE_REF_PLAYABLE ) {
+			return 1
+		}
+		if ( dbmode == DBMODE_SET ) {
+			cdatan(CDATAN_CLASS, rc) = "warrior"
+			cequipment = 1
+			skillinit SKILL_ATTR_STR, rc, 10
+			skillinit SKILL_ATTR_CON, rc, 10
+			skillinit SKILL_ATTR_DEX, rc, 2
+			skillinit SKILL_ATTR_PER, rc, 0
+			skillinit SKILL_ATTR_LER, rc, 0
+			skillinit SKILL_ATTR_WIL, rc, 3
+			skillinit SKILL_ATTR_MAG, rc, 0
+			skillinit SKILL_ATTR_CHA, rc, 0
+			skillinit SKILL_ATTR_SPD, rc, 0
+			skillinit SKILL_NORMAL_WEIGHT_LIFTING, rc, 5
+			skillinit SKILL_WEAPON_LONGSWORD, rc, 6
+			skillinit SKILL_WEAPON_SHORTSWORD, rc, 4
+			skillinit SKILL_WEAPON_BLUNT, rc, 6
+			skillinit SKILL_WEAPON_AXE, rc, 6
+			skillinit SKILL_WEAPON_POLEARM, rc, 4
+			skillinit SKILL_WEAPON_SCYTHE, rc, 5
+			skillinit SKILL_NORMAL_TWO_HAND, rc, 6
+			skillinit SKILL_NORMAL_TACTICS, rc, 4
+			skillinit SKILL_NORMAL_EVASION, rc, 5
+			skillinit SKILL_NORMAL_HEALING, rc, 5
+			skillinit SKILL_NORMAL_MEDIUM_ARMOR, rc, 4
+			skillinit SKILL_NORMAL_HEAVY_ARMOR, rc, 4
+			skillinit SKILL_NORMAL_SHIELD, rc, 5
+		}
+	}
+	if ( dbidn == "" ) {
+		classname = "なし"
+		cequipment = 0
+		return
+	}
+	if ( dbidn == "thief" ) {
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 4 ) {
+				return 7
+			}
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			classname = "遺跡荒らし"
+		}
+		if ( dbmode == DBMODE_REF_CM ) {
+			classname = "遺跡荒らし"
+			buff = lang("遺跡荒らしは、財宝を目当てに墓や遺跡から貴重品を持ち出すことで生計をたてています。彼らにはそこそこの戦闘能力と、商人と駆け引きをするために必要な才能があります。＊[奇襲] 戦闘態勢を取っていない敵対キャラクターへの攻撃が確実にクリティカル。", "The Thief. Good with swords and bows, though not a believer of a fair fight. Prefers to avoid taking hits if possible. Can dual wield if the weapons aren't too heavy. Years of dealing with fences have given the Thief skills with negotiating a better deal. A firm believer in the adage \"What's yours is mine, and what's mine is mine. See that guy over there, his stuff? Mine too.\"")
+			p(0) = 4
+			p(1) = 4
+			p(2) = 8
+			p(3) = 5
+			p(4) = 4
+			p(5) = 0
+			p(6) = 0
+			p(7) = 0
+		}
+		if ( dbmode == DBMODE_REF_PLAYABLE ) {
+			return 1
+		}
+		if ( dbmode == DBMODE_SET ) {
+			cdatan(CDATAN_CLASS, rc) = "thief"
+			cequipment = 7
+			skillinit SKILL_ATTR_STR, rc, 4
+			skillinit SKILL_ATTR_CON, rc, 4
+			skillinit SKILL_ATTR_DEX, rc, 8
+			skillinit SKILL_ATTR_PER, rc, 5
+			skillinit SKILL_ATTR_LER, rc, 4
+			skillinit SKILL_ATTR_WIL, rc, 0
+			skillinit SKILL_ATTR_MAG, rc, 0
+			skillinit SKILL_ATTR_CHA, rc, 0
+			skillinit SKILL_ATTR_SPD, rc, 0
+			skillinit SKILL_NORMAL_LOCK_PICKING, rc, 4
+			skillinit SKILL_WEAPON_SHORTSWORD, rc, 4
+			skillinit SKILL_WEAPON_LONGSWORD, rc, 3
+			skillinit SKILL_WEAPON_BOW, rc, 3
+			skillinit SKILL_NORMAL_EVASION, rc, 4
+			skillinit SKILL_NORMAL_DUAL_WIELD, rc, 4
+			skillinit SKILL_NORMAL_TACTICS, rc, 3
+			skillinit SKILL_NORMAL_NEGOTIATION, rc, 4
+			skillinit SKILL_ACTIVE_PICKPOCKET, rc, 4
+			skillinit SKILL_NORMAL_MAGIC_DEVICE, rc, 3
+			skillinit SKILL_NORMAL_MEDIUM_ARMOR, rc, 4
+		}
+	}
+	if ( dbidn == "" ) {
+		classname = "なし"
+		cequipment = 0
+		return
+	}
+	if ( dbidn == "wizard" ) {
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 4 ) {
+				return 2
+			}
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			classname = "魔法使い"
+		}
+		if ( dbmode == DBMODE_REF_CM ) {
+			classname = "魔法使い"
+			buff = lang("魔法使いは、その名のとおり魔法の知識に長けています。魔法使いの生死は、魔法書の取得と管理にかかっています。＊[魔力循環] 魔法の消費ＭＰを減少。", "The Wizard. Master of the Arcane, the Eldritch, and the Esoteric. A pity all those years have left little time to build muscles or quick reflexes. Still, they do have some small skill with staff and short sword. And while they start out so feeblePurits scare them, with a few books under their belt, and a little practice, a Wizard will soon decimate legions. Their motto: \"If it's not on fire now, it will be soon\".")
+			p(0) = 0
+			p(1) = 0
+			p(2) = 0
+			p(3) = 4
+			p(4) = 3
+			p(5) = 8
+			p(6) = 10
+			p(7) = 0
+		}
+		if ( dbmode == DBMODE_REF_PLAYABLE ) {
+			return 1
+		}
+		if ( dbmode == DBMODE_SET ) {
+			cdatan(CDATAN_CLASS, rc) = "wizard"
+			cequipment = 2
+			skillinit SKILL_ATTR_STR, rc, 0
+			skillinit SKILL_ATTR_CON, rc, 0
+			skillinit SKILL_ATTR_DEX, rc, 0
+			skillinit SKILL_ATTR_PER, rc, 4
+			skillinit SKILL_ATTR_LER, rc, 3
+			skillinit SKILL_ATTR_WIL, rc, 8
+			skillinit SKILL_ATTR_MAG, rc, 10
+			skillinit SKILL_ATTR_CHA, rc, 0
+			skillinit SKILL_ATTR_SPD, rc, 0
+			skillinit SKILL_NORMAL_JEWELER, rc, 3
+			skillinit SKILL_WEAPON_STAVE, rc, 3
+			skillinit SKILL_WEAPON_SHORTSWORD, rc, 2
+			skillinit SKILL_NORMAL_LITERACY, rc, 6
+			skillinit SKILL_NORMAL_MEMORIZATION, rc, 3
+			skillinit SKILL_NORMAL_MAGIC_CAPACITY, rc, 6
+			skillinit SKILL_NORMAL_MAGIC_DEVICE, rc, 5
+			skillinit SKILL_NORMAL_LIGHT_ARMOR, rc, 4
+			skillinit SKILL_NORMAL_ALCHEMY, rc, 4
+			skillinit SKILL_NORMAL_CASTING, rc, 5
+		}
+	}
+	if ( dbidn == "" ) {
+		classname = "なし"
+		cequipment = 0
+		return
+	}
+	if ( dbidn == "farmer" ) {
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 4 ) {
+				return 1
+			}
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			classname = "農民"
+		}
+		if ( dbmode == DBMODE_REF_CM ) {
+			classname = "農民"
+			buff = lang("農民は生産を得意とする職業です。彼らは我慢強く、またある程度の身体能力を持っています。＊[ハーヴェスト] 首狩りが発動しやすい。", "The Farmer. While not a steely-thewed Warrior or or well read Mage, the farmer is a Jack-of All-Trades. Good with a polearm from threshing grain, and good bargainers with their deals with merchants, they have working knowledge of just about every trade there is. As such, they never go hungry, as there's always something someone will pay dearly to get done. Their motto: \"Anything worth doing is best done yourself\".")
+			p(0) = 5
+			p(1) = 5
+			p(2) = 2
+			p(3) = 0
+			p(4) = 8
+			p(5) = 5
+			p(6) = 0
+			p(7) = 0
+		}
+		if ( dbmode == DBMODE_REF_PLAYABLE ) {
+			return 1
+		}
+		if ( dbmode == DBMODE_SET ) {
+			cdatan(CDATAN_CLASS, rc) = "farmer"
+			cequipment = 1
+			skillinit SKILL_ATTR_STR, rc, 5
+			skillinit SKILL_ATTR_CON, rc, 5
+			skillinit SKILL_ATTR_DEX, rc, 2
+			skillinit SKILL_ATTR_PER, rc, 0
+			skillinit SKILL_ATTR_LER, rc, 8
+			skillinit SKILL_ATTR_WIL, rc, 5
+			skillinit SKILL_ATTR_MAG, rc, 0
+			skillinit SKILL_ATTR_CHA, rc, 0
+			skillinit SKILL_ATTR_SPD, rc, 0
+			skillinit SKILL_WEAPON_POLEARM, rc, 4
+			skillinit SKILL_WEAPON_SCYTHE, rc, 3
+			skillinit SKILL_NORMAL_EVASION, rc, 3
+			skillinit SKILL_NORMAL_NEGOTIATION, rc, 5
+			skillinit SKILL_NORMAL_COOKING, rc, 6
+			skillinit SKILL_NORMAL_ANATOMY, rc, 7
+			skillinit SKILL_NORMAL_HEALING, rc, 5
+			skillinit SKILL_NORMAL_GARDENING, rc, 5
+			skillinit SKILL_NORMAL_TAILORING, rc, 5
+		}
+	}
+	if ( dbidn == "" ) {
+		classname = "なし"
+		cequipment = 0
+		return
+	}
+	if ( dbidn == "predator" ) {
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 4 ) {
+				return 0
+			}
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			classname = "プレデター"
+		}
+		if ( dbmode == DBMODE_REF_CM ) {
+			classname = "プレデター"
+			buff = lang("プレデターは基本的に装備品を身に付けず、格闘のみで戦う職業です。その洗練された動きから高い近接戦闘能力を誇ります。＊[強襲] クリティカル率上昇。", "This is untranslated sentence.")
+			p(0) = 8
+			p(1) = 11
+			p(2) = 8
+			p(3) = 0
+			p(4) = 0
+			p(5) = 0
+			p(6) = 0
+			p(7) = 0
+		}
+		if ( dbmode == DBMODE_REF_PLAYABLE ) {
+			return 1
+		}
+		if ( dbmode == DBMODE_SET ) {
+			cdatan(CDATAN_CLASS, rc) = "predator"
+			cequipment = 0
+			skillinit SKILL_ATTR_STR, rc, 8
+			skillinit SKILL_ATTR_CON, rc, 11
+			skillinit SKILL_ATTR_DEX, rc, 8
+			skillinit SKILL_ATTR_PER, rc, 0
+			skillinit SKILL_ATTR_LER, rc, 0
+			skillinit SKILL_ATTR_WIL, rc, 0
+			skillinit SKILL_ATTR_MAG, rc, 0
+			skillinit SKILL_ATTR_CHA, rc, 0
+			skillinit SKILL_ATTR_SPD, rc, 10
+			skillinit SKILL_NORMAL_TACTICS, rc, 4
+			skillinit SKILL_NORMAL_EYE_OF_MIND, rc, 5
+			skillinit SKILL_NORMAL_ANATOMY, rc, 5
+			skillinit SKILL_NORMAL_HEALING, rc, 4
+			skillinit SKILL_NORMAL_DETECTION, rc, 5
+			skillinit SKILL_NORMAL_STEALTH, rc, 6
+			skillinit SKILL_NORMAL_SENSE_QUALITY, rc, 3
+			skillinit SKILL_WEAPON_THROWING, rc, 4
+		}
+	}
+	if ( dbidn == "" ) {
+		classname = "なし"
+		cequipment = 0
+		return
+	}
+	if ( dbidn == "archer" ) {
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 4 ) {
+				return 3
+			}
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			classname = "狩人"
+		}
+		if ( dbmode == DBMODE_REF_CM ) {
+			classname = "狩人"
+			buff = lang("狩人は遠隔攻撃のスペシャリストです。多少の打撃能力もありますが、大抵は敵の接近を許さずに倒すことができるでしょう。＊[鷹の眼] 命中率上昇。", "The Archer. Skilled in the ways of the forest and hunting, they are master marksmen, and don't see why one should hunt monster any different than a deer. Skilled with the Short Sword, the axe, and of course all types of bows, plus a few skills they picked up on their long trips in the woods. Firm believers that \"Anything dead over THERE will not be bothering me HERE\".")
+			p(0) = 6
+			p(1) = 4
+			p(2) = 8
+			p(3) = 5
+			p(4) = 2
+			p(5) = 0
+			p(6) = 0
+			p(7) = 0
+		}
+		if ( dbmode == DBMODE_REF_PLAYABLE ) {
+			return 1
+		}
+		if ( dbmode == DBMODE_SET ) {
+			cdatan(CDATAN_CLASS, rc) = "archer"
+			cequipment = 3
+			skillinit SKILL_ATTR_STR, rc, 6
+			skillinit SKILL_ATTR_CON, rc, 4
+			skillinit SKILL_ATTR_DEX, rc, 8
+			skillinit SKILL_ATTR_PER, rc, 5
+			skillinit SKILL_ATTR_LER, rc, 2
+			skillinit SKILL_ATTR_WIL, rc, 0
+			skillinit SKILL_ATTR_MAG, rc, 0
+			skillinit SKILL_ATTR_CHA, rc, 0
+			skillinit SKILL_ATTR_SPD, rc, 0
+			skillinit SKILL_NORMAL_ANATOMY, rc, 3
+			skillinit SKILL_WEAPON_BOW, rc, 5
+			skillinit SKILL_WEAPON_CROSSBOW, rc, 5
+			skillinit SKILL_WEAPON_SHORTSWORD, rc, 4
+			skillinit SKILL_WEAPON_AXE, rc, 3
+			skillinit SKILL_NORMAL_EVASION, rc, 5
+			skillinit SKILL_NORMAL_MAGIC_DEVICE, rc, 3
+			skillinit SKILL_NORMAL_MEDIUM_ARMOR, rc, 3
+			skillinit SKILL_NORMAL_TAILORING, rc, 4
+			skillinit SKILL_ACTIVE_RIDING, rc, 4
+			skillinit SKILL_NORMAL_MARKSMAN, rc, 3
+		}
+	}
+	if ( dbidn == "" ) {
+		classname = "なし"
+		cequipment = 0
+		return
+	}
+	if ( dbidn == "warmage" ) {
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 4 ) {
+				return 5
+			}
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			classname = "魔法戦士"
+		}
+		if ( dbmode == DBMODE_REF_CM ) {
+			classname = "魔法戦士"
+			buff = lang("魔法戦士は戦士と魔法使いの中間的な職業で、より打撃に重点を置いています。魔法を使いこなすためにも、バランスをとり成長させることが必要でしょう。＊[精神統一] 詠唱ペナルティ緩和。", "The Warmage. Not really a Wizard, not really a Warrior, the Warmage is a believer that stabbing things that are on fire is better than just stabbing them or setting them on fire. Good with swords, armor, books and casting. Their only weakness is that without specialization, they won't truely excel in a field. Still when your motto is: \"Everything worth doing is worth overdoing\", you don't really care.")
+			p(0) = 6
+			p(1) = 6
+			p(2) = 2
+			p(3) = 0
+			p(4) = 0
+			p(5) = 4
+			p(6) = 7
+			p(7) = 0
+		}
+		if ( dbmode == DBMODE_REF_PLAYABLE ) {
+			return 1
+		}
+		if ( dbmode == DBMODE_SET ) {
+			cdatan(CDATAN_CLASS, rc) = "warmage"
+			cequipment = 5
+			skillinit SKILL_ATTR_STR, rc, 6
+			skillinit SKILL_ATTR_CON, rc, 6
+			skillinit SKILL_ATTR_DEX, rc, 2
+			skillinit SKILL_ATTR_PER, rc, 0
+			skillinit SKILL_ATTR_LER, rc, 0
+			skillinit SKILL_ATTR_WIL, rc, 4
+			skillinit SKILL_ATTR_MAG, rc, 7
+			skillinit SKILL_ATTR_CHA, rc, 0
+			skillinit SKILL_ATTR_SPD, rc, 0
+			skillinit SKILL_NORMAL_TWO_HAND, rc, 4
+			skillinit SKILL_WEAPON_LONGSWORD, rc, 4
+			skillinit SKILL_WEAPON_SHORTSWORD, rc, 3
+			skillinit SKILL_NORMAL_EVASION, rc, 3
+			skillinit SKILL_NORMAL_LITERACY, rc, 4
+			skillinit SKILL_NORMAL_MAGIC_CAPACITY, rc, 3
+			skillinit SKILL_NORMAL_MAGIC_DEVICE, rc, 5
+			skillinit SKILL_NORMAL_MEDIUM_ARMOR, rc, 4
+			skillinit SKILL_NORMAL_HEAVY_ARMOR, rc, 4
+			skillinit SKILL_NORMAL_CASTING, rc, 4
+			skillinit SKILL_NORMAL_TACTICS, rc, 3
+		}
+	}
+	if ( dbidn == "" ) {
+		classname = "なし"
+		cequipment = 0
+		return
+	}
+	if ( dbidn == "tourist" ) {
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 4 ) {
+				return 0
+			}
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			classname = "観光客"
+		}
+		if ( dbmode == DBMODE_REF_CM ) {
+			classname = "観光客"
+			buff = lang("観光客はこの世界における伝統的な職業で、予想を裏切らないほど軟弱です。＊[不用心] スリに奪われる金額が多い。", "The Tourist. They have no strengths, they have no weaknesses. They don't have anything really. Oh they can fish, I'll give you that, but if you want a real challenge to build something from the ground up, this is the way to go. After all, you have to teach them everything. Only for those who have a good amount of time to spare. You can even write your own motto if you want.")
+			p(0) = 0
+			p(1) = 0
+			p(2) = 0
+			p(3) = 0
+			p(4) = 0
+			p(5) = 0
+			p(6) = 0
+			p(7) = 0
+		}
+		if ( dbmode == DBMODE_REF_PLAYABLE ) {
+			return 1
+		}
+		if ( dbmode == DBMODE_SET ) {
+			cdatan(CDATAN_CLASS, rc) = "tourist"
+			cequipment = 0
+			skillinit SKILL_ATTR_STR, rc, 0
+			skillinit SKILL_ATTR_CON, rc, 0
+			skillinit SKILL_ATTR_DEX, rc, 0
+			skillinit SKILL_ATTR_PER, rc, 0
+			skillinit SKILL_ATTR_LER, rc, 0
+			skillinit SKILL_ATTR_WIL, rc, 0
+			skillinit SKILL_ATTR_MAG, rc, 0
+			skillinit SKILL_ATTR_CHA, rc, 0
+			skillinit SKILL_ATTR_SPD, rc, 0
+			skillinit SKILL_NORMAL_FISHING, rc, 5
+			skillinit SKILL_NORMAL_TRAVELING, rc, 3
+		}
+	}
+	if ( dbidn == "" ) {
+		classname = "なし"
+		cequipment = 0
+		return
+	}
+	if ( dbidn == "pianist" ) {
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 4 ) {
+				return 3
+			}
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			classname = "ピアニスト"
+		}
+		if ( dbmode == DBMODE_REF_CM ) {
+			classname = "ピアニスト"
+			buff = lang("ピアニストは演奏を生業とする孤高の職業です。彼らは常にピアノを背負っているため、重荷に耐える能力があります。＊[音楽干渉] 音属性の被ダメージを中確率で無効化。", "The Pianist. Where the Farmer has all the practical skills, the Pianist has all the impractical ones. Still, they can read a book, play a tune, make jewelry, and since they are expected to haul a piano around, they get real good with weight lifting. Their Motto: \"The whole world is my stage!\" And they believe it too.")
+			p(0) = 6
+			p(1) = 0
+			p(2) = 4
+			p(3) = 5
+			p(4) = 6
+			p(5) = 0
+			p(6) = 4
+			p(7) = 8
+		}
+		if ( dbmode == DBMODE_REF_PLAYABLE ) {
+			return 1
+		}
+		if ( dbmode == DBMODE_SET ) {
+			cdatan(CDATAN_CLASS, rc) = "pianist"
+			cequipment = 3
+			skillinit SKILL_ATTR_STR, rc, 6
+			skillinit SKILL_ATTR_CON, rc, 0
+			skillinit SKILL_ATTR_DEX, rc, 4
+			skillinit SKILL_ATTR_PER, rc, 5
+			skillinit SKILL_ATTR_LER, rc, 6
+			skillinit SKILL_ATTR_WIL, rc, 0
+			skillinit SKILL_ATTR_MAG, rc, 4
+			skillinit SKILL_ATTR_CHA, rc, 8
+			skillinit SKILL_ATTR_SPD, rc, 0
+			skillinit SKILL_NORMAL_PERFORMER, rc, 6
+			skillinit SKILL_NORMAL_WEIGHT_LIFTING, rc, 19
+			skillinit SKILL_NORMAL_LITERACY, rc, 4
+			skillinit SKILL_NORMAL_MEMORIZATION, rc, 6
+			skillinit SKILL_NORMAL_MAGIC_DEVICE, rc, 6
+			skillinit SKILL_NORMAL_JEWELER, rc, 5
+			skillinit SKILL_NORMAL_LIGHT_ARMOR, rc, 4
+			skillinit SKILL_ACTIVE_RIDING, rc, 3
+			skillinit SKILL_WEAPON_THROWING, rc, 3
+		}
+	}
+	if ( dbidn == "" ) {
+		classname = "なし"
+		cequipment = 0
+		return
+	}
+	if ( dbidn == "gunner" ) {
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 4 ) {
+				return 4
+			}
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			classname = "機工兵"
+		}
+		if ( dbmode == DBMODE_REF_CM ) {
+			classname = "機工兵"
+			buff = lang("機工兵は機械兵装の扱いに習熟した職業です。主に銃器を用いた遠隔戦闘を得意とします。＊[弾幕] 追加射撃の発動率上昇。", "This is untranslated sentence.")
+			p(0) = 0
+			p(1) = 2
+			p(2) = 5
+			p(3) = 8
+			p(4) = 5
+			p(5) = 4
+			p(6) = 3
+			p(7) = 0
+		}
+		if ( dbmode == DBMODE_REF_PLAYABLE ) {
+			return 1
+		}
+		if ( dbmode == DBMODE_SET ) {
+			cdatan(CDATAN_CLASS, rc) = "gunner"
+			cequipment = 4
+			skillinit SKILL_ATTR_STR, rc, 0
+			skillinit SKILL_ATTR_CON, rc, 2
+			skillinit SKILL_ATTR_DEX, rc, 5
+			skillinit SKILL_ATTR_PER, rc, 8
+			skillinit SKILL_ATTR_LER, rc, 5
+			skillinit SKILL_ATTR_WIL, rc, 4
+			skillinit SKILL_ATTR_MAG, rc, 3
+			skillinit SKILL_ATTR_CHA, rc, 0
+			skillinit SKILL_ATTR_SPD, rc, 0
+			skillinit SKILL_NORMAL_DETECTION, rc, 3
+			skillinit SKILL_NORMAL_NEGOTIATION, rc, 4
+			skillinit SKILL_WEAPON_FIREARM, rc, 5
+			skillinit SKILL_NORMAL_EVASION, rc, 4
+			skillinit SKILL_NORMAL_LITERACY, rc, 3
+			skillinit SKILL_NORMAL_HEALING, rc, 4
+			skillinit SKILL_NORMAL_MARKSMAN, rc, 5
+			skillinit SKILL_NORMAL_SHIELD, rc, 5
+			skillinit SKILL_NORMAL_DISARM_TRAP, rc, 5
+			skillinit SKILL_NORMAL_LOCK_PICKING, rc, 3
+		}
+	}
+	if ( dbidn == "" ) {
+		classname = "なし"
+		cequipment = 0
+		return
+	}
+	if ( dbidn == "priest" ) {
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 4 ) {
+				return 6
+			}
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			classname = "プリースト"
+		}
+		if ( dbmode == DBMODE_REF_CM ) {
+			classname = "プリースト"
+			buff = lang("プリーストは魔法の能力と供に、若干の肉弾戦への適正を持っています。彼らは信仰する神から、最大限の恩恵を受けることができるでしょう。＊[慈愛] ＨＰの回復効果上昇。", "The Priest. The Faithful, the devout. They bring the words of their God to the world, one battered heretic at a time. Good with all armors, shields, divine magic, blunt weapons, and reading. The Priest is a handful, though depending on their God, they may have hidden pratfalls as well. If the motto: \"A hymn a day,, will keep me away, Sinner!\" appeals to you, choose this.")
+			p(0) = 2
+			p(1) = 2
+			p(2) = 0
+			p(3) = 2
+			p(4) = 2
+			p(5) = 10
+			p(6) = 7
+			p(7) = 2
+		}
+		if ( dbmode == DBMODE_REF_PLAYABLE ) {
+			return 1
+		}
+		if ( dbmode == DBMODE_SET ) {
+			cdatan(CDATAN_CLASS, rc) = "priest"
+			cequipment = 6
+			skillinit SKILL_ATTR_STR, rc, 2
+			skillinit SKILL_ATTR_CON, rc, 2
+			skillinit SKILL_ATTR_DEX, rc, 0
+			skillinit SKILL_ATTR_PER, rc, 2
+			skillinit SKILL_ATTR_LER, rc, 2
+			skillinit SKILL_ATTR_WIL, rc, 10
+			skillinit SKILL_ATTR_MAG, rc, 7
+			skillinit SKILL_ATTR_CHA, rc, 2
+			skillinit SKILL_ATTR_SPD, rc, 0
+			skillinit SKILL_NORMAL_TACTICS, rc, 3
+			skillinit SKILL_WEAPON_BLUNT, rc, 3
+			skillinit SKILL_NORMAL_SHIELD, rc, 3
+			skillinit SKILL_NORMAL_LITERACY, rc, 5
+			skillinit SKILL_NORMAL_HEALING, rc, 5
+			skillinit SKILL_NORMAL_MAGIC_DEVICE, rc, 5
+			skillinit SKILL_NORMAL_MEDIUM_ARMOR, rc, 3
+			skillinit SKILL_NORMAL_HEAVY_ARMOR, rc, 4
+			skillinit SKILL_NORMAL_FAITH, rc, 5
+			skillinit SKILL_NORMAL_CASTING, rc, 5
+			skillinit SKILL_NORMAL_COOKING, rc, 3
+		}
+	}
+	if ( dbidn == "" ) {
+		classname = "なし"
+		cequipment = 0
+		return
+	}
+	if ( dbidn == "claymore" ) {
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 4 ) {
+				return 8
+			}
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			classname = "クレイモア"
+		}
+		if ( dbmode == DBMODE_REF_CM ) {
+			classname = "クレイモア"
+			buff = lang("クレイモアは半人半妖の血が流れる俊敏な剣士です。銀眼の斬殺者と呼ばれる彼女達は、身の丈ほどの長さの大剣を自在に扱います。耐久力は低めですが、軽いみのこなしと敏感な目で、相手の攻撃を軽々とかわすことができます。＊[旋空剣] 稀に完全貫通攻撃を発動。", "The Claymore. Half-human, with silver eyes and inhuman evasive capabilities, the Claymores are a mostly female class, as the males have… problems. Their weapon of choice is the Claymore, hence their name, and they prefer light armor, relying on their great speed and skills of evasion to protect them. They heal fast, but the healing comes at a price. Their bodies are unstable, their motto unknown.")
+			p(0) = 9
+			p(1) = 3
+			p(2) = 7
+			p(3) = 6
+			p(4) = 0
+			p(5) = 0
+			p(6) = 4
+			p(7) = 0
+		}
+		if ( dbmode == DBMODE_REF_PLAYABLE ) {
+			return 1
+		}
+		if ( dbmode == DBMODE_SET ) {
+			cdatan(CDATAN_CLASS, rc) = "claymore"
+			cequipment = 8
+			skillinit SKILL_ATTR_STR, rc, 9
+			skillinit SKILL_ATTR_CON, rc, 3
+			skillinit SKILL_ATTR_DEX, rc, 7
+			skillinit SKILL_ATTR_PER, rc, 6
+			skillinit SKILL_ATTR_LER, rc, 0
+			skillinit SKILL_ATTR_WIL, rc, 0
+			skillinit SKILL_ATTR_MAG, rc, 4
+			skillinit SKILL_ATTR_CHA, rc, 0
+			skillinit SKILL_ATTR_SPD, rc, 0
+			skillinit SKILL_WEAPON_LONGSWORD, rc, 6
+			skillinit SKILL_NORMAL_TWO_HAND, rc, 7
+			skillinit SKILL_NORMAL_TACTICS, rc, 5
+			skillinit SKILL_NORMAL_EVASION, rc, 7
+			skillinit SKILL_NORMAL_GREATER_EVASION, rc, 4
+			skillinit SKILL_NORMAL_HEALING, rc, 6
+			skillinit SKILL_NORMAL_LIGHT_ARMOR, rc, 5
+			skillinit SKILL_NORMAL_LITERACY, rc, 4
+		}
+	}
+	return
+
+

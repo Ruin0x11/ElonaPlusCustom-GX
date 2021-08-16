@@ -1,0 +1,618 @@
+#defcfunc random_material int random_material_matlv, int random_material_matrare
+	locvar_random_material_f = 0
+	matnum = 1
+	locvar_random_material_lv = random_material_matlv
+	locvar_random_material_rare = random_material_matrare
+	locvar_random_material_loc = atxspot
+	repeat 500
+		locvar_random_material_p = rnd(59)
+		if ( locvar_random_material_p == 0 ) {
+			continue
+		}
+		if ( cnt \ 10 == 0 ) {
+			locvar_random_material_lv++
+			locvar_random_material_rare++
+		}
+		if ( matref(MATREF_LEVEL, locvar_random_material_p) > locvar_random_material_lv ) {
+			continue
+		}
+		if ( matref(MATREF_RARITY, locvar_random_material_p) > locvar_random_material_rare * 10 ) {
+			continue
+		}
+		locvar_random_material_f2 = 0
+		repeat 5
+			locvar_random_material_p2 = matspot(cnt, locvar_random_material_p)
+			if ( locvar_random_material_p2 == 0 ) {
+				break
+			}
+			if ( locvar_random_material_p2 == locvar_random_material_loc | locvar_random_material_p2 == 18 ) {
+				locvar_random_material_f2 = 1
+				break
+			}
+		loop
+		if ( locvar_random_material_f2 == 0 ) {
+			continue
+		}
+		if ( rnd(matref(MATREF_RARITY, locvar_random_material_p)) == 0 ) {
+			locvar_random_material_f = locvar_random_material_p
+			break
+		}
+	loop
+	return locvar_random_material_f
+
+#deffunc matgetmain int matgetmain_matid, int matgetmain_amount, int matgetmain_message_type
+	locvar_matgetmain_n = matgetmain_amount
+	if ( locvar_matgetmain_n == 0 ) {
+		locvar_matgetmain_n = 1
+	}
+	mat(matgetmain_matid) += locvar_matgetmain_n
+	if ( matgetmain_message_type == MATGET_TYPE_RECEIVE ) {
+		return
+	}
+	if ( en ) {
+		locvar_matgetmain_s = "You get " + locvar_matgetmain_n + " " + matname(matgetmain_matid) + ". "
+	}
+	else {
+		locvar_matgetmain_s = "マテリアル:" + matname(matgetmain_matid) + "を" + locvar_matgetmain_n + "個"
+		snd SOUNDLIST_ALERT1
+		if ( matgetmain_message_type == MATGET_TYPE_DIG ) {
+			locvar_matgetmain_s += "掘り当てた。"
+		}
+		if ( matgetmain_message_type == MATGET_TYPE_FISH ) {
+			locvar_matgetmain_s += "釣り上げた。"
+		}
+		if ( matgetmain_message_type == MATGET_TYPE_HARVEST ) {
+			locvar_matgetmain_s += "採取した。"
+		}
+		if ( matgetmain_message_type == MATGET_TYPE_OBTAIN ) {
+			locvar_matgetmain_s += "回収した。"
+		}
+		if ( matgetmain_message_type == MATGET_TYPE_FIND ) {
+			locvar_matgetmain_s += "見つけた。"
+		}
+		if ( matgetmain_message_type == MATGET_TYPE_RECEIVE ) {
+			locvar_matgetmain_s += "受け取った。"
+		}
+		if ( matgetmain_message_type == 0 ) {
+			locvar_matgetmain_s += "入手した。"
+		}
+	}
+	txtef COLOR_BLUE
+	txt locvar_matgetmain_s + "(" + mat(matgetmain_matid) + ") "
+	return
+
+#deffunc matdelmain int matdelmain_arg1, int matdelmain_arg2
+	locvar_matgetmain_n = matdelmain_arg2
+	if ( locvar_matgetmain_n == 0 ) {
+		locvar_matgetmain_n = 1
+	}
+	mat(matdelmain_arg1) -= locvar_matgetmain_n
+	locvar_matgetmain_s = "マテリアル:" + matname(matdelmain_arg1) + "を" + locvar_matgetmain_n + "個失った"
+	txtef COLOR_BLUE
+	txt locvar_matgetmain_s + "(残り " + mat(matdelmain_arg1) + "個) "
+	return
+
+*label_5043
+	return
+
+*label_5045
+	listmax = 0
+	page = 0
+	pagesize = 10
+	cs = 0
+	cc = CHARA_PLAYER
+	cs_bk = -1
+	page_load
+	if ( invctrl == 0 ) {
+		repeat maxitemid
+			matid = cnt
+			gosub *recipe_ref
+			if ( stat == (-1) ) {
+				continue
+			}
+			if ( dbg_toolversatile != 1 ) {
+				if ( prodtype == 2 ) {
+					if ( matval != SKILL_NORMAL_ALCHEMY ) {
+						continue
+					}
+				}
+				if ( prodtype == 1 ) {
+					if ( matval != SKILL_NORMAL_CARPENTRY ) {
+						continue
+					}
+				}
+				if ( prodtype == 3 ) {
+					if ( matval != SKILL_NORMAL_JEWELER ) {
+						continue
+					}
+				}
+				if ( prodtype == 4 ) {
+					if ( matval != SKILL_NORMAL_TAILORING ) {
+						continue
+					}
+				}
+				if ( sdata(matval, CHARA_PLAYER) + 3 < matval(1) ) {
+					continue
+				}
+			}
+			listn(0, listmax) = "" + prodcheck()
+			list(0, listmax) = cnt, 0
+			listmax++
+		loop
+	}
+	else {
+		repeat 50
+			gosub *label_5043
+			listn(0, listmax) = "" + prodcheck()
+			list(0, listmax) = 630, cnt
+			listmax++
+		loop
+	}
+	windowshadow = 1
+
+*com_product
+	if ( 1 == 0 ) {
+		goto *com_product_loop
+	}
+	redraw 0
+	cs_bk = -1
+	pagemax = (listmax - 1) / pagesize
+	if ( page < 0 ) {
+		page = pagemax
+	}
+	else {
+		if ( page > pagemax ) {
+			page = 0
+		}
+	}
+	s = lang("生産品の選択", "Production"), strhint2 + strhint3b
+	display_window (windoww - 640) / 2 + inf_screenx, winposy(448), 640, 448
+	display_topic lang("生産品", "Product"), wx + 28, wy + 36
+	display_topic lang("説明", "Detail"), wx + 296, wy + 36
+	display_topic lang("詳細", "Requirement"), wx + 28, wy + 258
+	display_topic lang("必要素材", "Material"), wx + 28, wy + 304
+	keyrange = 0
+	repeat pagesize
+		p = pagesize * page + cnt
+		if ( p >= listmax ) {
+			break
+		}
+		key_list(cnt) = key_select(cnt)
+		keyrange++
+		if ( cnt \ 2 == 0 ) {
+			pos wx + 70, wy + 66 + cnt * 19
+			gfini 540, 18
+			gfdec2 12, 14, 16
+		}
+		display_key wx + 58, wy + 66 + cnt * 19 - 2, cnt
+	loop
+	cs_listbk
+	f = 0
+	repeat pagesize
+		p = pagesize * page + cnt
+		if ( p >= listmax ) {
+			break
+		}
+		i = list(0, p), list(1, p)
+		if ( cs == cnt ) {
+			matid = i
+			if ( invctrl == 0 ) {
+				gosub *recipe_ref
+				font lang(cfg_font1, cfg_font2), 13 - en * 2, 0
+				s = lang("必要スキル: ", "Skill needed: ")
+				if ( matval == SKILL_NORMAL_ALCHEMY ) {
+					s += lang("錬金術", "Alchemy")
+				}
+				if ( matval == SKILL_NORMAL_CARPENTRY ) {
+					s += lang("工作", "Carpentory")
+				}
+				if ( matval == SKILL_NORMAL_JEWELER ) {
+					s += lang("宝石細工", "Jewelling")
+				}
+				if ( matval == SKILL_NORMAL_TAILORING ) {
+					s += lang("裁縫", "Tailoring")
+				}
+				s += " " + matval(1) + "(" + sdata(matval, CHARA_PLAYER) + ")"
+				if ( matval(1) <= sdata(matval, CHARA_PLAYER) ) {
+					color 30, 30, 200
+				}
+				else {
+					color 200, 30, 30
+				}
+				pos wx + 37, wy + 288
+				mes s + " "
+			}
+			repeat 6
+				j = matneed(cnt * 2), matneed(cnt * 2 + 1)
+				if ( j == (-1) ) {
+					break
+				}
+				s = matname(j) + lang(" × ", " x ") + j(1) + "(" + mat(j) + ")"
+				if ( mat(j) >= j(1) ) {
+					color 30, 30, 200
+				}
+				else {
+					color 200, 30, 30
+				}
+				pos wx + 37 + cnt \ 3 * 192, wy + 334 + cnt / 3 * 16
+				mes s
+			loop
+			f = 1
+		}
+		s = ioriginalnameref(i)
+		p(1) = ipicref(i)
+		gsel BUFFER_ITEM
+		color 0
+		boxf 0, 960, chipi(CHIPI_WIDTH, p(1)), chipi(CHIPI_HEIGHT, p(1)) + 960
+		if ( p(1) == 528 ) {
+			gmode 2
+			pos 0, 960
+			gcopy BUFFER_ITEM, 0, 768, inf_tiles, inf_tiles
+			pos 0, 1008
+			gzoom 22, 20, 5, chipc(CHIPC_X, xy2pic(0, 0)) + 8, chipc(CHIPC_Y, xy2pic(0, 0)) + 4 + (chipc(CHIPC_HEIGHT, xy2pic(0, 0)) > inf_tiles) * 8, chipc(CHIPC_WIDTH, xy2pic(0, 0)) - 16, chipc(CHIPC_HEIGHT, xy2pic(0, 0)) - 8 - (chipc(CHIPC_HEIGHT, xy2pic(0, 0)) > inf_tiles) * 10, 1
+			pos 6, 974
+			gcopy BUFFER_ITEM, 0, 1008, 22, 20
+			gsel selcur
+		}
+		else {
+			if ( p(1) == 1119 ) {
+				pos 0, 1055 - chipc(CHIPC_HEIGHT, xy2pic(0, 0))
+				gcopy BUFFER_CHR, chipc(CHIPC_X, xy2pic(0, 0)), chipc(CHIPC_Y, xy2pic(0, 0)), chipc(CHIPC_WIDTH, xy2pic(0, 0)), chipc(CHIPC_HEIGHT, xy2pic(0, 0))
+				gmode 2
+				gsel selcur
+			}
+			else {
+				if ( p(1) == 1206 ) {
+					pos 0, 1055 - chipc(CHIPC_HEIGHT, xy2pic(0, 0))
+					gcopy BUFFER_CHR, chipc(CHIPC_X, xy2pic(0, 0)), chipc(CHIPC_Y, xy2pic(0, 0)), chipc(CHIPC_WIDTH, xy2pic(0, 0)), chipc(CHIPC_HEIGHT, xy2pic(0, 0))
+					gfini chipi(CHIPI_WIDTH, p(1)), chipi(CHIPI_HEIGHT, p(1))
+					gfdec2 0, 0, 255
+					gsel selcur
+				}
+				else {
+					if ( p(1) == 531 ) {
+						pos 8, 1058 - chipc(CHIPC_HEIGHT, xy2pic(0, 0))
+						gcopy BUFFER_CHR, chipc(CHIPC_X, xy2pic(0, 0)) + 8, chipc(CHIPC_Y, xy2pic(0, 0)) + 2, chipc(CHIPC_WIDTH, xy2pic(0, 0)) - 16, chipc(CHIPC_HEIGHT, xy2pic(0, 0)) - 8
+						gmode 4, , , 150
+						color 0, 0, 0
+						pos 0, 960 + (chipc(CHIPC_HEIGHT, xy2pic(0, 0)) == inf_tiles) * 48
+						gcopy BUFFER_ITEM, 144, 768 + (chipc(CHIPC_HEIGHT, xy2pic(0, 0)) > inf_tiles) * 48, inf_tiles, chipc(CHIPC_HEIGHT, xy2pic(0, 0)) + (chipc(CHIPC_HEIGHT, xy2pic(0, 0)) > inf_tiles) * 48 * 0
+						gmode 2
+						gsel selcur
+					}
+					else {
+						pos 0, 960
+						gcopy BUFFER_ITEM, chipi(CHIPI_X, p(1)), chipi(CHIPI_Y, p(1)), chipi(CHIPI_WIDTH, p(1)), chipi(CHIPI_HEIGHT, p(1))
+						gfini chipi(CHIPI_WIDTH, p(1)), chipi(CHIPI_HEIGHT, p(1))
+						gfdec2 c_col(0, COLOR_DEFAULT), c_col(1, COLOR_DEFAULT), c_col(2, COLOR_DEFAULT)
+						gsel selcur
+					}
+				}
+			}
+		}
+		s(1) = lang("アイテム[" + s + "]", "Make [" + s + "]")
+		font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
+		if ( int(listn(0, p)) == (-1) ) {
+			p(2) = 3
+		}
+		else {
+			p(2) = 0
+		}
+		cs_list cnven(s), wx + 86, wy + 66 + cnt * 19 - 1, 19, 0, p(2)
+		pos wx + 308, wy + 66 + cnt * 19 + 2
+		mes s(1)
+		pos wx + 37, wy + 69 + cnt * 19 + 2
+		gmode 2, inf_tiles, inf_tiles
+		grotate BUFFER_ITEM, 0, 960, 0, chipi(CHIPI_WIDTH, p(1)), chipi(CHIPI_HEIGHT, p(1))
+	loop
+	if ( keyrange != 0 ) {
+		cs_bk = cs
+	}
+	if ( f == 1 | listmax == 0 ) {
+		redraw 1
+	}
+	await cfg_wait1
+	key_check
+	cursor_check
+	p = -1
+	repeat keyrange
+		if ( key == key_select(cnt) ) {
+			p = list(0, pagesize * page + cnt)
+			break
+		}
+	loop
+	if ( p != (-1) ) {
+		matid = p
+		gosub *recipe_ref
+		s = ioriginalnameref(matid)
+		if ( dbg_toolversatile == 0 ) {
+			if ( prodcheck() == (-1) ) {
+				snd SOUNDLIST_FAIL1
+				txt lang("生産の条件を満たしてない。", "You don't meet requirements to create the item.")
+				goto *com_product
+			}
+		}
+		if ( inv_getspace() == 0 ) {
+			snd SOUNDLIST_FAIL1
+			txt lang("バックパックが一杯だ。", "Your inventory is full.")
+			goto *com_product
+		}
+		matuse = 0
+		repeat 6
+			j = matneed(cnt * 2), matneed(cnt * 2 + 1)
+			if ( j == (-1) ) {
+				break
+			}
+			mat(j) -= j(1)
+			matuse += j(1)
+		loop
+		snd SOUNDLIST_BUILD1
+		fixlv = FIX_QUALITY_GOOD
+		if ( rnd(100 + matval(1) * 2) < sdata(matval, CHARA_PLAYER) + 20 ) {
+			fixlv = FIX_QUALITY_GREAT
+		}
+		if ( rnd(200 + matval(1) * 2) < sdata(matval, CHARA_PLAYER) + 20 ) {
+			fixlv = FIX_QUALITY_MIRACLE
+		}
+		flt calcobjlv(sdata(matval, CHARA_PLAYER)), calcfixlv(fixlv)
+		itemcreate CHARA_PLAYER, p, -1, -1, 0
+		inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+		item_identify ci, ITEM_KNOWN_FULL
+		txt lang(itemname(ci, 1) + "を製造した。", "You producted " + itemname(ci, 1) + ".")
+		item_stack CHARA_PLAYER, ci, 1
+		if ( matval == SKILL_NORMAL_ALCHEMY ) {
+			gdata(GDATA_FLAG_CREATED_BY_ALCHEMY)++
+		}
+		if ( matval == SKILL_NORMAL_CARPENTRY ) {
+			gdata(GDATA_FLAG_CREATED_BY_CARPENTRY)++
+		}
+		if ( matval == SKILL_NORMAL_JEWELER ) {
+			gdata(GDATA_FLAG_CREATED_BY_JEWELRY)++
+		}
+		if ( matval == SKILL_NORMAL_TAILORING ) {
+			gdata(GDATA_FLAG_CREATED_BY_TAILORING)++
+		}
+		r1 = matval
+		r2 = matuse
+		gosub *expProduct
+		r1 = 0
+		gosub *charaRefresh
+		gosub *screen_drawStatus
+		page_save
+		goto *label_5045
+	}
+	if ( key == key_pageup ) {
+		if ( pagemax != 0 ) {
+			snd SOUNDLIST_POP1
+			page++
+			goto *com_product
+		}
+	}
+	if ( key == key_pagedown ) {
+		if ( pagemax != 0 ) {
+			snd SOUNDLIST_POP1
+			page--
+			goto *com_product
+		}
+	}
+	if ( key == key_cancel ) {
+		return
+	}
+	goto *com_product
+
+*com_product_loop
+
+*com_material
+	listmax = 0
+	page = 0
+	pagesize = 15
+	cs = 0
+	cc = CHARA_PLAYER
+	cs_bk = -1
+	curmenu = 3
+	repeat 400
+		if ( mat(cnt) != 0 ) {
+			list(0, listmax) = cnt
+			listmax++
+		}
+	loop
+	redraw 0
+	gsel BUFFER_PIC
+	pos 0, 0
+	picload exedir + "graphic\\ie_scroll.bmp"
+	gsel BUFFER_SCREEN
+	snd SOUNDLIST_SCROLL
+	drawmenu
+	wx = (windoww - 600) / 2 + inf_screenx
+	wy = winposy(430)
+	ww = 600
+	wh = 430
+	windowanime wx, wy, ww, wh, 10, 4
+	windowshadow = 1
+
+*com_material_loop_pgchk
+	redraw 0
+	cs_bk = -1
+	pagemax = (listmax - 1) / pagesize
+	if ( page < 0 ) {
+		page = pagemax
+	}
+	else {
+		if ( page > pagemax ) {
+			page = 0
+		}
+	}
+	drawmenu
+
+*com_material_loop
+	if ( 1 == 0 ) {
+		goto *label_5065
+	}
+	redraw 0
+	s = strhint2 + strhint3b
+	showscroll wx, wy, ww, wh
+	display_topic lang("所持マテリアル", "Name"), wx + 38, wy + 36
+	display_topic lang("説明", "Detail"), wx + 296, wy + 36
+	keyrange = 0
+	repeat pagesize
+		p = pagesize * page + cnt
+		if ( p >= listmax ) {
+			break
+		}
+		key_list(cnt) = key_select(cnt)
+		keyrange++
+		if ( cnt \ 2 == 0 ) {
+			pos wx + 70, wy + 66 + cnt * 19
+			gfini 490, 18
+			gfdec2 12, 14, 16
+		}
+		display_key wx + 68, wy + 66 + cnt * 19 - 2, cnt
+	loop
+	font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
+	cs_listbk
+	repeat pagesize
+		p = pagesize * page + cnt
+		if ( p >= listmax ) {
+			break
+		}
+		i = list(0, p)
+		s = "" + matname(i) + lang(" × ", " x ") + mat(i)
+		cs_list s, wx + 96, wy + 66 + cnt * 19 - 1, 19, 0, 0
+		s = matdesc(i)
+		pos wx + 308, wy + 66 + cnt * 19 + 2
+		mes s
+		p(1) = matref(MATREF_PIC, i)
+		gsel BUFFER_ITEM
+		color 0
+		boxf 0, 960, chipi(CHIPI_WIDTH, p(1)), chipi(CHIPI_HEIGHT, p(1)) + 960
+		if ( p(1) == 528 ) {
+			gmode 2
+			pos 0, 960
+			gcopy BUFFER_ITEM, 0, 768, inf_tiles, inf_tiles
+			pos 0, 1008
+			gzoom 22, 20, 5, chipc(CHIPC_X, xy2pic(0, 0)) + 8, chipc(CHIPC_Y, xy2pic(0, 0)) + 4 + (chipc(CHIPC_HEIGHT, xy2pic(0, 0)) > inf_tiles) * 8, chipc(CHIPC_WIDTH, xy2pic(0, 0)) - 16, chipc(CHIPC_HEIGHT, xy2pic(0, 0)) - 8 - (chipc(CHIPC_HEIGHT, xy2pic(0, 0)) > inf_tiles) * 10, 1
+			pos 6, 974
+			gcopy BUFFER_ITEM, 0, 1008, 22, 20
+			gsel selcur
+		}
+		else {
+			if ( p(1) == 1119 ) {
+				pos 0, 1055 - chipc(CHIPC_HEIGHT, xy2pic(0, 0))
+				gcopy BUFFER_CHR, chipc(CHIPC_X, xy2pic(0, 0)), chipc(CHIPC_Y, xy2pic(0, 0)), chipc(CHIPC_WIDTH, xy2pic(0, 0)), chipc(CHIPC_HEIGHT, xy2pic(0, 0))
+				gmode 2
+				gsel selcur
+			}
+			else {
+				if ( p(1) == 1206 ) {
+					pos 0, 1055 - chipc(CHIPC_HEIGHT, xy2pic(0, 0))
+					gcopy BUFFER_CHR, chipc(CHIPC_X, xy2pic(0, 0)), chipc(CHIPC_Y, xy2pic(0, 0)), chipc(CHIPC_WIDTH, xy2pic(0, 0)), chipc(CHIPC_HEIGHT, xy2pic(0, 0))
+					gfini chipi(CHIPI_WIDTH, p(1)), chipi(CHIPI_HEIGHT, p(1))
+					gfdec2 0, 0, 255
+					gsel selcur
+				}
+				else {
+					if ( p(1) == 531 ) {
+						pos 8, 1058 - chipc(CHIPC_HEIGHT, xy2pic(0, 0))
+						gcopy BUFFER_CHR, chipc(CHIPC_X, xy2pic(0, 0)) + 8, chipc(CHIPC_Y, xy2pic(0, 0)) + 2, chipc(CHIPC_WIDTH, xy2pic(0, 0)) - 16, chipc(CHIPC_HEIGHT, xy2pic(0, 0)) - 8
+						gmode 4, , , 150
+						color 0, 0, 0
+						pos 0, 960 + (chipc(CHIPC_HEIGHT, xy2pic(0, 0)) == inf_tiles) * 48
+						gcopy BUFFER_ITEM, 144, 768 + (chipc(CHIPC_HEIGHT, xy2pic(0, 0)) > inf_tiles) * 48, inf_tiles, chipc(CHIPC_HEIGHT, xy2pic(0, 0)) + (chipc(CHIPC_HEIGHT, xy2pic(0, 0)) > inf_tiles) * 48 * 0
+						gmode 2
+						gsel selcur
+					}
+					else {
+						pos 0, 960
+						gcopy BUFFER_ITEM, chipi(CHIPI_X, p(1)), chipi(CHIPI_Y, p(1)), chipi(CHIPI_WIDTH, p(1)), chipi(CHIPI_HEIGHT, p(1))
+						gfini chipi(CHIPI_WIDTH, p(1)), chipi(CHIPI_HEIGHT, p(1))
+						gfdec2 c_col(0, COLOR_DEFAULT), c_col(1, COLOR_DEFAULT), c_col(2, COLOR_DEFAULT)
+						gsel selcur
+					}
+				}
+			}
+		}
+		pos wx + 47, wy + 69 + cnt * 19 + 2
+		gmode 2, inf_tiles, inf_tiles
+		grotate BUFFER_ITEM, 0, 960, 0, chipi(CHIPI_WIDTH, p(1)), chipi(CHIPI_HEIGHT, p(1))
+	loop
+	if ( keyrange != 0 ) {
+		cs_bk = cs
+	}
+	redraw 1
+	await cfg_wait1
+	key_check
+	cursor_check
+	p = -1
+	repeat keyrange
+		if ( key == key_select(cnt) ) {
+			p = list(0, pagesize * page + cnt)
+			break
+		}
+	loop
+	if ( menucycle == 1 ) {
+		if ( key == key_next | key == key_prev ) {
+			p = curmenu
+			if ( key == key_next ) {
+				curmenu++
+				if ( curmenu > 3 ) {
+					curmenu = 0
+				}
+			}
+			if ( key == key_prev ) {
+				curmenu--
+				if ( curmenu < 0 ) {
+					curmenu = 3
+				}
+			}
+			if ( p != curmenu ) {
+				screenupdate = -1
+				gosub *screen_draw
+				if ( curmenu == 0 ) {
+					csctrl = 0
+					goto *com_charainfo
+				}
+				if ( curmenu == 1 ) {
+					goto *com_wear
+				}
+				if ( curmenu == 2 ) {
+					goto *com_trait
+				}
+				if ( curmenu == 3 ) {
+					goto *com_material
+				}
+			}
+		}
+	}
+	if ( key == key_pageup ) {
+		if ( pagemax != 0 ) {
+			snd SOUNDLIST_POP1
+			page++
+			goto *com_material_loop_pgchk
+		}
+	}
+	if ( key == key_pagedown ) {
+		if ( pagemax != 0 ) {
+			snd SOUNDLIST_POP1
+			page--
+			goto *com_material_loop_pgchk
+		}
+	}
+	if ( key == key_cancel ) {
+		gosub *screen_draw
+		goto *pc_turn
+	}
+	goto *com_material_loop
+
+*label_5065
+
+
+
+
+
+
+
+
+
+
+
+
