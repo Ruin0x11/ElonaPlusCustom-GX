@@ -3,6 +3,7 @@
 ## Fixed
 - Fixed planted seeds not showing the correct text when walked over.
 - Fixed a crash caused by casting Meteor.
+- Fixed oblivion rude beasts being unable to cast Summon Chaos (as stated in the Elona+ changelog).
 
 # 2.05.1.1
 
