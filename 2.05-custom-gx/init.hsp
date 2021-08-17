@@ -1348,6 +1348,24 @@ if instr(s,0,%1)!-1{	%c\
 
 	return ""
 
+#defcfunc _s4 int their_item_idx
+	if ( inv(INV_ITEM_NUM, their_item_idx) == 1 ) {
+		return "s"
+	}
+	return ""
+
+#defcfunc its int its_item_idx
+	if ( inv(INV_ITEM_NUM, its_item_idx) == 1 ) {
+		return "its"
+	}
+	return "their"
+
+#defcfunc its2 int its_item_idx
+	if ( inv(INV_ITEM_NUM, its_item_idx) == 1 ) {
+		return "'s"
+	}
+	return "'"
+
 #defcfunc his2 int EntityID
 	if ( EntityID == CHARA_PLAYER ) {
 		return "your"

@@ -2193,7 +2193,7 @@
 						snd SOUNDLIST_BALL1
 						encounter = 0
 						txtef COLOR_YELLOW
-						txt lang("モンスターが襲撃してきたが主砲で吹き飛ばした。", "You were attacked by monsters, but you have blasted monsters with the battleship's main gun.")
+						txt lang("モンスターが襲撃してきたが主砲で吹き飛ばした。", "You were ambushed by monsters, but you blasted them away with the battleship's main cannon.")
 					}
 				}
 				if ( encounter == 4 ) {
@@ -2203,7 +2203,7 @@
 				}
 				if ( encounter == 3 ) {
 		   	 		if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) == VEHICLE_LAND_BATTLESHIP ) {
-		   	 			txt lang("行商人に変装していた暗殺者が襲いかかってきた。あなたはクライアントを守らなければならない。", "You are caught by assassins disguised as a wandering vendor. You have to protect your client.")
+		   	 			txt lang("行商人に変装していた暗殺者が襲いかかってきた。あなたはクライアントを守らなければならない。", "You are caught by assassins disguised as a wandering merchant and their crew. You have to protect your client.")
 		   	 		}
 		   	 		if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) != VEHICLE_LAND_BATTLESHIP ) {
 		   	 			txt lang("暗殺者につかまった。あなたはクライアントを守らなければならない。", "You are caught by assassins. You have to protect your client.")
@@ -2318,7 +2318,7 @@
 		}
 		if ( map(x, y, MAP_TILE_ID) == xy2pic(3, 8) ) {
 			if ( mdata(MDATA_TILE_FILE) == 1 ) {
-				txt lang("完全に灰になっている…。", "It is completely ash...")
+				txt lang("完全に灰になっている…。", "It has completely turned to ash...")
 			}
 		}
 		if ( map(x, y, 4) != 0 ) {
@@ -2337,12 +2337,12 @@
 			}
 			if ( map(x, y, MAP_TILE_ID) == xy2pic(20, 10) ) {
 				if ( mdata(MDATA_TILE_FILE) == 1 | mdata(MDATA_TILE_FILE) == 3 ) {
-					txt lang("有機物を置いておくと肥料に変わりそうだ。", "If organic matter is left, it will turn into fertilizer.")
+					txt lang("有機物を置いておくと肥料に変わりそうだ。", "If organic matter is placed here, it will turn into fertilizer.")
 				}
  			}
 			if ( map(x, y, MAP_TILE_ID) == xy2pic(29, 0) ) {
 				if ( mdata(MDATA_TILE_FILE) == 1 | mdata(MDATA_TILE_FILE) == 3 ) {
-					txt lang("料理素材を置いておくと乾物に変わりそうだ。", "If cooking ingredients is left, it will turn into dry food.")
+					txt lang("料理素材を置いておくと乾物に変わりそうだ。", "If cooking ingredients are placed here, they will turn into dry food.")
 				}
  			}
 			if ( mdata(MDATA_TYPE) == MAP_TYPE_WORLD & gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) > VEHICLE_NONE ) {
@@ -2475,14 +2475,14 @@
 			cell_featread x, y
 			if ( feat(1) == CELL_FEATURE_UPSTAIRS ) {
 				if ( gdata(GDATA_AREA) == AREA_WEST_RASKILIS ) {
-					txt lang("空間の裂け目がある。", "There is a crevice of space.")
+					txt lang("空間の裂け目がある。", "There is a rift in space here.")
                 } else {
 					txt lang("昇り階段がある。", "There is a stair leading upwards here.")
                 }
 			}
 			if ( feat(1) == CELL_FEATURE_DOWNSTAIRS ) {
 				if ( gdata(GDATA_AREA) == AREA_WEST_RASKILIS ) {
-					txt lang("空間の裂け目がある。", "There is a crevice of space.")
+					txt lang("空間の裂け目がある。", "There is a rift in space here.")
                 } else {
 					txt lang("降り階段がある。", "There is a stair leading downwards here.")
                 }
@@ -2624,7 +2624,7 @@
 	}
 	if ( gdata(GDATA_FLAG_MAIN) >= 845 & gdata(GDATA_FLAG_MAIN) < 1000 & gdata(GDATA_AREA) == AREA_CHAOS_CRADLE & gdata(GDATA_LEVEL) == 179 ) {
 		snd SOUNDLIST_FAIL1
-		txt lang("最後まであきらめずに戦おう。", "I will fight until the end without giving up.")
+		txt lang("最後まであきらめずに戦おう。", "I shouldn't give up here. Let's finish this.")
 		goto *pc_turn
 	}
 	if ( gdata(GDATA_AREA) == AREA_HOME ) {
@@ -4805,7 +4805,7 @@
 				}
 			}
 			if ( bakuretu == 100 ) {
-				txt lang(name(cc) + "は爆裂拳を発動した。", name(cc) + "'s fist exploded the air.")
+				txt lang(name(cc) + "は爆裂拳を発動した。", name(cc) + "'s fist explode" + _s(cc) + " in the air.")
 				tcbk = tc
 				efid = SKILL_SPACT_GRENADE
 				efp = limit(sdata(SKILL_ATTR_STR, cc) + sdata(SKILL_WEAPON_MARTIAL_ARTS, cc) * 10 + 500, 800, 30000)
@@ -4817,7 +4817,7 @@
 			if ( bakuretu == 200 ) {
 				if ( cdata(CDATA_POWER_GAUGE, cc) >= 25 ) {
 					cdata(CDATA_POWER_GAUGE, cc) -= 25
-					txt lang(name(cc) + "は迅雷脚を発動した。", name(cc) + "'s kick discharge lightning.")
+					txt lang(name(cc) + "は迅雷脚を発動した。", name(cc) + "'s kick discharge" + _s(cc) + " lightning.")
 					tcbk = tc
 					if ( synccheck(tc, -1) ) {
 						efid = SKILL_SPACT_GRENADE
@@ -4832,7 +4832,7 @@
 			if ( bakuretu == 300 ) {
 				if ( cdata(CDATA_EXIST, tc) == CHAR_STATE_ALIVE ) {
 					tcbk = tc
-					txt lang(name(cc) + "は強烈なボディブローを叩き込んだ。", name(cc) + "'s fist exploded the air.")
+					txt lang(name(cc) + "は強烈なボディブローを叩き込んだ。", name(cc) + " hammers " + his(cc) + " target with a powerful body blow.")
 					snd SOUNDLIST_BASH1
 					dmghp tc, sdata(SKILL_ATTR_STR, cc) / 10 * (sdata(SKILL_WEAPON_MARTIAL_ARTS, cc) + 1) / 10 + 5, cc
 					if ( cdata(CDATA_HP, tc) >= 0 ) {
@@ -4902,7 +4902,7 @@
 		if ( trait(TRAIT_ETHER_TENTACLES) != 0 ) {
 			if ( cc == CHARA_PLAYER ) {
 				if ( cdata(CDATA_EXIST, tc) == CHAR_STATE_ALIVE & rnd(8) == 0 ) {
-					txt lang("さらに" + name(cc) + "の触手が襲いかかった！", "Furthermore, your tentacles have attacked!")
+					txt lang("さらに" + name(cc) + "の触手が襲いかかった！", "Furthermore, your tentacles attack!")
 					snd SOUNDLIST_ATTACK00
 					telv = limit(cdata(CDATA_LEVEL, cc), 1, 1000)
 					tdmg = (telv / 10 + 4) * (telv / 10 + 3) * 2 + rnd(telv + 5) + 1
@@ -5953,7 +5953,7 @@
 			item_num cidip, -1
 			if ( inv(INV_ITEM_ID, ci) == ITEM_ID_CF_POTIOMAN & inv(INV_ITEM_LEVEL, ci) >= 4 | (inv(INV_ITEM_ID, ci) != ITEM_ID_CF_POTIOMAN & inv(INV_ITEM_LEVEL, ci) >= 3) ) {
 				snd SOUNDLIST_FAIL1
-				txt lang("これ以上はチャージできない。", "You can't charge " + itemname(ci) + " anymore.")
+				txt lang("これ以上はチャージできない。", "You can't charge " + itemname(ci) + " any further.")
 				goto *turn_end
 			}
 			pcharge = calcitemvalue(cidip, 5)
@@ -5997,7 +5997,7 @@
 				item_separate ci
 			}
 			item_num cidip, -1
-			txt lang(itemname(ci) + "は輝きを失った…", "You removed the shine from " + itemname(ci) + ".")
+			txt lang(itemname(ci) + "は輝きを失った…", itemname(ci) + " lose" + _s4(ci) + " " + its(ci) + " shine...")
 			inv(INV_ITEM_STATUS, ci) = 0
 			if ( inv(INV_ITEM_STATUS, cidip) <= (-1) ) {
 				dipcursed ci
@@ -7223,7 +7223,7 @@
 		promptAdd lang("何もしない", "Cancel"), "null", 0
 		promptAdd lang("原稿の制作(ネタ：" + gdata(GDATA_FLAG_MANUSCRIPT_IDEAS) + ")", "Manuscript production (" + gdata(GDATA_FLAG_MANUSCRIPT_IDEAS) + " ideas) "), "null", 1
 		promptAdd lang("限定自費出版(指定原稿＋30000gold)", "Self-publishing (30000 gold) "), "null", 2
-		promptAdd lang("魔法書変換(指定ストック半減)", "Spellbook conversion (stock halve) "), "null", 3
+		promptAdd lang("魔法書変換(指定ストック半減)", "Spellbook conversion (halves stock) "), "null", 3
 		val = promptx, prompty, 350, 1
 		gosub *prompt_key
 		if ( stat == 0 ) {
@@ -7234,18 +7234,18 @@
 		}
 		if ( rtval == 1 ) {
 			if ( gdata(GDATA_FLAG_MANUSCRIPT_IDEAS) <= 0 ) {
-				txt lang("ネタが切れている…。", "You couldn't think of writing...")
+				txt lang("ネタが切れている…。", "You're out of ideas...")
 				goto *act_use_SWEND1
 			}
 			snd SOUNDLIST_ATK_FIRE
 			animeload 20, 0
 			gosub *start_writing
-			txt lang("何かが足元に転がってきた。", "Something is put on the ground.")
+			txt_questitem
 			goto *act_use_SWEND1
 		}
 		if ( rtval == 2 ) {
 			if ( cdata(CDATA_GOLD, CHARA_PLAYER) < 30000 ) {
-				txt lang("もっと資金が必要だ…。", "You need more money to make a book...")
+				txt lang("もっと資金が必要だ…。", "You need more money to publish a book...")
 				goto *act_use_SWEND1
 			}
 			txt lang("使用する原稿は？", "Which manuscripts?")
@@ -7255,7 +7255,7 @@
 			gosub *com_inventory
 			if ( stat == 1 ) {
 				if ( inv(INV_ITEM_NUM, ci) < 10 ) {
-					txt lang("もっと枚数が必要だ…。", "You need more manuscripts to make a book...")
+					txt lang("もっと枚数が必要だ…。", "You need more manuscripts to publish a book...")
 					goto *act_use_SWEND1
 				}
 				cdata(CDATA_GOLD, CHARA_PLAYER) -= 30000
@@ -7285,7 +7285,7 @@
 				p = stat
 				inv(INV_ITEM_SUB_NAME, ci) = list(1, p) + 40000
 				randomize
-				txt lang("何かが足元に転がってきた。", "Something is put on the ground.")
+				txt_questitem
 				snd SOUNDLIST_COMPLETE1
 			}
 			goto *act_use_SWEND1
@@ -7483,7 +7483,7 @@
 				itemcreate -1, dbid, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), num
 				inv(INV_ITEM_CHARGE, ci) = 1
 				item_identify ci, ITEM_KNOWN_FULL
-				txt lang("何かが足元に転がってきた。", "Something is put on the ground.")
+				txt_questitem
 			}
 			else {
 				snd SOUNDLIST_FAIL1
@@ -7535,30 +7535,30 @@
 				cdata(CDATA_ACTION_PERIOD, cc) = 500
 			}
 			if ( rtval == 6 ) {
-				txt lang("とりあえずなんか大量にあるメモやファイルを整理した…。", "For the time being, you've organized some files...")
+				txt lang("とりあえずなんか大量にあるメモやファイルを整理した…。", "You have finished organizing a huge pile of notes and files - for now, at least...")
 				gdata(GDATA_HOUR)++
 				gosub *advance_hour
 				seiton++
 				if ( seiton == 3 ) {
 					await 1000
 					snd SOUNDLIST_ENC
-					txt lang("…前任者が遺した仕事Ｃの重要ファイルを発見した！", "...You have found an important file of Work-C that your predecessor left behind in his lifetime!")
+					txt lang("…前任者が遺した仕事Ｃの重要ファイルを発見した！", "...You have found an important document about Job C that your predecessor left behind!")
 				}
 				if ( seiton == 5 ) {
 					await 1000
-					txt lang("…前任者の殴り書きを発見したが汚くて読めない！", "...You found the memo of your predecessor, but it's dirty and unreadable!")
+					txt lang("…前任者の殴り書きを発見したが汚くて読めない！", "...You found your predecessor's scribbled-up notes, but they're dirty and unreadable!")
 				}
 				if ( seiton == 6 ) {
 					await 1000
-					txt lang("…同名ファイルが複数出てきてどれが最新かわからない！", "...Multiple files with the same name appear and you don't know which one is the latest!")
+					txt lang("…同名ファイルが複数出てきてどれが最新かわからない！", "...You're seeing multiple files with the same name and you don't know which one is newest!")
 				}
 				if ( seiton == 9 ) {
 					await 1000
-					txt lang("…見てはいけないものを見てしまった。", "...You have seen something you shouldn't see.")
+					txt lang("…見てはいけないものを見てしまった。", "...You saw something you shouldn't have.")
 				}
 				if ( seiton == 10 ) {
 					await 1000
-					txt lang("…捨てていいのかわからないメモが大量に出てきた。", "...You found a lot of cryptic notes.")
+					txt lang("…捨てていいのかわからないメモが大量に出てきた。", "You found a pile of cryptic notes. ...You're not sure whether or not it's okay to throw them out.")
 				}
 			}
 		}
@@ -7615,14 +7615,14 @@
 		_switch_sw = 0
 		if ( chipm(CHIPM_ROLE, map(cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), MAP_TILE_ID)) == MAP_CHIP_ROLE_WATER ) {
 			snd SOUNDLIST_WATER
-			txt lang("あなたは浄水筒に水を入れた", "Who is user?")
+			txt lang("あなたは浄水筒に水を入れた。", "You filled the filtration bottle with water.")
 			inv(INV_ITEM_PARAM2, ci) = 5
 			goto *act_use_SWEND1
 		}
 		if ( inv(INV_ITEM_PARAM2, ci) > 0 ) {
 			if ( cdata(CDATA_THIRST, CHARA_PLAYER) > 10000 ) {
 				if ( gdata(GDATA_FLAG_GAME_MODE) != 5 ) {
-					txt lang("これ以上飲めない…。", "Your are too full to drink."), lang("膀胱がやぶける…", "You are too bloated to drink any more."), lang("まだ喉は渇いていない。", "Your stomach can't digest any more.")
+					txt lang("これ以上飲めない…。", "You can't drink any more."), lang("膀胱がやぶける…", "Your bladder is going to burst..."), lang("まだ喉は渇いていない。", "You aren't thirsty yet.")
 					goto *act_use_SWEND1
 				}
 			}
@@ -7639,12 +7639,12 @@
 		if ( mdata(MDATA_TYPE) == MAP_TYPE_WORLD ) {
 			goto *act_use_SWEND1
 		}
-		txt lang("誰に使用する？", "Who is target?")
+		txt lang("誰に使用する？", "Who is the target?")
 		gosub *screen_draw
 		val = 0
 		gosub *prompt_direction
 		if ( stat == 0 ) {
-			txt lang("それは無理だ。", "It's impossible.")
+			txt_impossible 
 			gosub *screen_draw
 			goto *pc_turn
 		}
@@ -7652,7 +7652,7 @@
 			tc = map(x, y, MAP_CHARA_INDEX_PLUS_ONE) - 1
 		}
 		else {
-			txt lang("それは無理だ。", "It's impossible.")
+			txt_impossible 
 			gosub *screen_draw
 			goto *pc_turn
 		}
@@ -7717,10 +7717,10 @@
 				if ( tc >= MAX_CHARA_FOLLOWER ) {
 					gdata(GDATA_DMG_TYPE) = 2
 					txt3rd = 1
-					txt lang(name(cc) + "は" + name(tc) + "を黄金に変えて事実上", name(cc) + " change" + _s(cc) + " " + name(tc) + " into a doll and")
+					txt lang(name(cc) + "は" + name(tc) + "を黄金に変えて事実上", name(cc) + " turn" + _s(cc) + " " + name(tc) + " to gold and effectively")
 				}
 				else {
-					txt lang(name(cc) + "は" + name(tc) + "の自由を奪い、黄金に変えた。", name(cc) + " change" + _s(cc) + " " + name(tc) + " into a doll.")
+					txt lang(name(cc) + "は" + name(tc) + "の自由を奪い、黄金に変えた。", name(cc) + " restrain" + _s(cc) + " " + name(tc) + " and turns " + him(tc) + " to gold.")
 				}
 			}
 			flt
@@ -7776,7 +7776,7 @@
 		snd SOUNDLIST_ATK_FIRE
 		animeload 20, 0
 		txtef COLOR_RED
-		txt lang(name(0) + "は覚悟を決めた！", name(0) + " was ready!")
+		txt lang(name(0) + "は覚悟を決めた！", name(0) + " " + is(0) + " ready to fight!")
 		cdata(CDATA_POWER_GAUGE, CHARA_PLAYER) -= 25
 		sutemi = 100
 		tc = tcbk
@@ -7791,12 +7791,12 @@
 		if ( mdata(MDATA_TYPE) == MAP_TYPE_WORLD ) {
 			goto *act_use_SWEND1
 		}
-		txt lang("誰に使用する？", "Who is target?")
+		txt lang("誰に使用する？", "Who is the target?")
 		gosub *screen_draw
 		val = 0
 		gosub *prompt_direction
 		if ( stat == 0 ) {
-			txt lang("それは無理だ。", "It's impossible.")
+			txt_impossible
 			gosub *screen_draw
 			goto *pc_turn
 		}
@@ -7804,7 +7804,7 @@
 			tc = map(x, y, MAP_CHARA_INDEX_PLUS_ONE) - 1
 		}
 		else {
-			txt lang("それは無理だ。", "It's impossible.")
+			txt_impossible
 			gosub *screen_draw
 			goto *pc_turn
 		}
@@ -7819,14 +7819,14 @@
 			}
 		}
 		if ( cbit(CHARA_BIT_MARRIED, tc) == FALSE ) {
-			txt lang("あなたは特殊重婚許可証を提示した。", "You have presented the Bigamy Permit.")
+			txt lang("あなたは特殊重婚許可証を提示した。", "You present the Bigamy Permit.")
 			if ( cdata(CDATA_ID, tc) == CREATURE_ID_JURE | cdata(CDATA_ID, tc) == CREATURE_ID_JURE ) {
 				repeat MAX_CHARA_TOTAL
 					if ( cdata(CDATA_EXIST, cnt) != CHAR_STATE_ALIVE ) {
 						continue
 					}
 					if ( cdata(CDATA_ID, cnt) == CREATURE_ID_ROVID ) {
-						txt lang(cdatan(CDATAN_NAME, cnt) + "「ぐぬぬ…」", "A growl leaked from " + cdatan(CDATAN_NAME, cnt) + ".")
+						txt lang(cdatan(CDATAN_NAME, cnt) + "「ぐぬぬ…」", cnven(cdatan(CDATAN_NAME, cnt)) + " growls in jealousy.")
 					}
 				loop
 			}
@@ -7867,12 +7867,12 @@
 		if ( mdata(MDATA_TYPE) == MAP_TYPE_WORLD ) {
 			goto *act_use_SWEND1
 		}
-		txt lang("誰に使用させる？", "Who is user?")
+		txt lang("誰に使用させる？", "Who will use it?")
 		gosub *screen_draw
 		val = 0
 		gosub *prompt_direction
 		if ( stat == 0 ) {
-			txt lang("それは無理だ。", "It's impossible.")
+			txt_impossible
 			gosub *screen_draw
 			goto *pc_turn
 		}
@@ -7880,7 +7880,7 @@
 			tc = map(x, y, MAP_CHARA_INDEX_PLUS_ONE) - 1
 		}
 		else {
-			txt lang("それは無理だ。", "It's impossible.")
+			txt_impossible
 			gosub *screen_draw
 			goto *pc_turn
 		}
@@ -7895,7 +7895,7 @@
 			}
 		}
 		if ( tc >= MAX_CHARA_FOLLOWER ) {
-			txt lang("それは無理だ。", "It's impossible.")
+			txt_impossible
 			gosub *screen_draw
 			goto *pc_turn
 		}
@@ -7944,12 +7944,12 @@
 		if ( mdata(MDATA_TYPE) == MAP_TYPE_WORLD ) {
 			goto *act_use_SWEND1
 		}
-		txt lang("誰に使用させる？", "Who is user?")
+		txt lang("誰に使用させる？", "Who will use it?")
 		gosub *screen_draw
 		val = 0
 		gosub *prompt_direction
 		if ( stat == 0 ) {
-			txt lang("それは無理だ。", "It's impossible.")
+			txt_impossible
 			gosub *screen_draw
 			goto *pc_turn
 		}
@@ -7957,7 +7957,7 @@
 			tc = map(x, y, MAP_CHARA_INDEX_PLUS_ONE) - 1
 		}
 		else {
-			txt lang("それは無理だ。", "It's impossible.")
+			txt_impossible
 			gosub *screen_draw
 			goto *pc_turn
 		}
@@ -7972,7 +7972,7 @@
 			}
 		}
 		if ( tc >= MAX_CHARA_FOLLOWER ) {
-			txt lang("それは無理だ。", "It's impossible.")
+			txt_impossible
 			gosub *screen_draw
 			goto *pc_turn
 		}
@@ -7992,14 +7992,14 @@
 		 ********** ORIGINAL - ENDING **********/
 
 		if ( sorg(inv(INV_ITEM_PARAM1, ci), tc) < 5 ) {
-			txt lang("対応するスキルのレベルが5は必要だ。", "It need 5Lv for the corresponding skill.")
+			txt lang("対応するスキルのレベルが5は必要だ。", "The corresponding skill needs to be at least level 5.")
 			gosub *screen_draw
 			goto *pc_turn
 		}
 		snd SOUNDLIST_OFFER2
 		animeload 23, tc
 		txtef COLOR_PINK
-		txt lang(name(tc) + "のスキルがボーナスに変換された。", "Skill memories have been converted to bonuses.")
+		txt lang(name(tc) + "のスキルがボーナスに変換された。", name(tc) + your(tc) + " skill memories have been converted to skill bonuses.")
 		sdata(inv(INV_ITEM_PARAM1, ci) + STARTING_SKILL_SPACT, tc) = sdata(inv(INV_ITEM_PARAM1, ci) + STARTING_SKILL_SPACT, tc) / 2
 		cdata(CDATA_SKILLPOINT, tc) += 3
 
@@ -8028,12 +8028,12 @@
 		if ( mdata(MDATA_TYPE) == MAP_TYPE_WORLD ) {
 			goto *act_use_SWEND1
 		}
-		txt lang("誰に使用させる？", "Who is user?")
+		txt lang("誰に使用させる？", "Who should use it?")
 		gosub *screen_draw
 		val = 0
 		gosub *prompt_direction
 		if ( stat == 0 ) {
-			txt lang("それは無理だ。", "It's impossible.")
+			txt_impossible
 			gosub *screen_draw
 			goto *pc_turn
 		}
@@ -8041,7 +8041,7 @@
 			tc = map(x, y, MAP_CHARA_INDEX_PLUS_ONE) - 1
 		}
 		else {
-			txt lang("それは無理だ。", "It's impossible.")
+			txt_impossible
 			gosub *screen_draw
 			goto *pc_turn
 		}
@@ -8056,24 +8056,24 @@
 			}
 		}
 		if ( tc >= MAX_CHARA_FOLLOWER ) {
-			txt lang("それは無理だ。", "It's impossible.")
+			txt_impossible
 			gosub *screen_draw
 			goto *pc_turn
 		}
 		if ( sorg(inv(INV_ITEM_PARAM1, ci), tc) == 0 ) {
-			txt lang(name(tc) + "は対応するスキルを持っていない。", name(tc) + " has no corresponding skill.")
+			txt lang(name(tc) + "は対応するスキルを持っていない。", name(tc) + " doesn't know the relevant skill.")
 			gosub *screen_draw
 			goto *pc_turn
 		}
 		if ( sgrowth(inv(INV_ITEM_PARAM1, ci), tc) < 50 ) {
-			txt lang("対応するスキルの潜在能力が50％は必要だ。", "It need 50% potential for the corresponding skill.")
+			txt lang("対応するスキルの潜在能力が50％は必要だ。", "The corresponding skill's potential needs to be at least 50%.")
 			gosub *screen_draw
 			goto *pc_turn
 		}
 		snd SOUNDLIST_OFFER2
 		animeload 23, tc
 		txtef COLOR_PINK
-		txt lang(name(tc) + "の頭に情報が流れ込んだ。", "Memories flow in!")
+		txt lang(name(tc) + "の頭に情報が流れ込んだ。", "Memories pour into " + name(tc) + your(tc) + " head!")
 		gdata(GDATA_SENSE_OBJECT) = 1
 		skillexp inv(INV_ITEM_PARAM1, ci), tc, 200 + (sqrt(inv(INV_ITEM_PARAM2, ci) * 2000) + limit(sdata(SKILL_NORMAL_MEMORIZATION, tc) / 2, 0, 500)) * 2
 		skillexp SKILL_NORMAL_MEMORIZATION, tc, 200 + sqrt(inv(INV_ITEM_PARAM2, ci) * 1000) * 2
@@ -8145,7 +8145,7 @@
 			if ( cdata(CDATA_CONDITION_BIND, tc) < 1 ) {
 				cdata(CDATA_CONDITION_BIND, tc) = 0
 				if ( synccheck(tc, -1) ) {
-					txt lang(name(tc) + "は束縛から解放された。", name(tc) + " released from bind.")
+					txt lang(name(tc) + "は束縛から解放された。", name(tc) + " " + was(tc) + " released from " + his(tc) + " bondage.")
 				}
 			}
 			r1 = tc
@@ -8525,13 +8525,13 @@
 		_switch_sw = 0
 		if ( inv(INV_ITEM_PARAM2, ci) == 0 ) {
 			if ( gdata(GDATA_FLAG_TOTAL_POTION_PLUGS) < 4 ) {
-				txt lang("ポーションの栓が足りない…。", "Not enough potion plugs...")
+				txt lang("ポーションの栓が足りない…。", "You don't have enough potion plugs...")
 				snd SOUNDLIST_FAIL1
 				goto *act_use_SWEND1
 			}
 			snd SOUNDLIST_TM2_SWITCH001
 			gdata(GDATA_FLAG_TOTAL_POTION_PLUGS) -= 4
-			txt lang(name(cc) + "はポーションの栓を込めた。[残り" + gdata(GDATA_FLAG_TOTAL_POTION_PLUGS) + "個]", name(cc) + " put potion plugs.[Remaining plug " + gdata(GDATA_FLAG_TOTAL_POTION_PLUGS) + "]")
+			txt lang(name(cc) + "はポーションの栓を込めた。[残り" + gdata(GDATA_FLAG_TOTAL_POTION_PLUGS) + "個]", name(cc) + " load the potion plugs.[Remaining plugs: " + gdata(GDATA_FLAG_TOTAL_POTION_PLUGS) + "]")
 			inv(INV_ITEM_PARAM2, ci) = 4
 			if ( inv(INV_ITEM_PARAM3, ci) \ 100 != 4 ) {
 				goto *act_use_SWEND1
@@ -9372,7 +9372,7 @@
 		_switch_sw = 0
 		snd SOUNDLIST_AMMO
 		txtef COLOR_GREEN
-		txt lang("制服が変化した！", "The uniform was changed!")
+		txt lang("制服が変化した！", "Your uniform was changed!")
 		if ( inv(INV_ITEM_PIC, ci) > xy2pic(0, 34) ) {
 			inv(INV_ITEM_PIC, ci)--
 		}
@@ -10304,7 +10304,7 @@
 									fgain = ITEM_ID_AQUATIC_PLANT
 									snd SOUNDLIST_FISH_GET
 									txtef COLOR_YELLOW
-									txt lang(itemname(ci) + "の身体に何か絡まっている…。", "Something tangled in " + itemname(ci) + " body...")
+									txt lang(itemname(ci) + "の身体に何か絡まっている…。", "Something is tangled in " + itemname(ci) + its2(ci) + " body...")
 								}
 							}
 							if ( inv(INV_ITEM_SUB_NAME, ci) >= 7 & inv(INV_ITEM_SUB_NAME, ci) <= 12 ) {
@@ -10320,7 +10320,7 @@
 									fgain = ITEM_ID_JEWEL_CORAL	
 									snd SOUNDLIST_FISH_GET
 									txtef COLOR_YELLOW
-									txt lang(itemname(ci) + "は何かを吐き出した！", itemname(ci) + " spit out something.")
+									txt lang(itemname(ci) + "は何かを吐き出した！", itemname(ci) + " spit something out!")
 								}
 							}
 							if ( inv(INV_ITEM_SUB_NAME, ci) >= 19 & inv(INV_ITEM_SUB_NAME, ci) <= 24 ) {
@@ -10328,7 +10328,7 @@
 									fgain = ITEM_ID_DEVIL_FRAGMENT	
 									snd SOUNDLIST_FISH_GET
 									txtef COLOR_YELLOW
-									txt lang(itemname(ci) + "は何かを吐き出した！", itemname(ci) + " spit out something.")
+									txt lang(itemname(ci) + "は何かを吐き出した！", itemname(ci) + " spit something out!")
 								}
 							}
 							if ( inv(INV_ITEM_SUB_NAME, ci) >= 25 & inv(INV_ITEM_SUB_NAME, ci) <= 30 ) {
@@ -10336,7 +10336,7 @@
 									fgain = ITEM_ID_SPOTTED_GARDEN_EEL
 									snd SOUNDLIST_FISH_GET
 									txtef COLOR_YELLOW
-									txt lang(itemname(ci) + "の開いた口から何かが這い出てきた！", "Something came out of open mouth!")
+									txt lang(itemname(ci) + "の開いた口から何かが這い出てきた！", "Something came crawling out of " + itemname(ci) + its2(ci) + " open mouth!")
 								}
 							}
 							if ( inv(INV_ITEM_SUB_NAME, ci) >= 31 & inv(INV_ITEM_SUB_NAME, ci) <= 36 ) {
@@ -10344,7 +10344,7 @@
 									fgain = CREATURE_ID_CTHULHICK
 									snd SOUNDLIST_FISH_GET
 									txtef COLOR_YELLOW
-									txt lang(itemname(ci) + "の開いた口から何かが這い出てきた！", "Something came out of open mouth!")
+									txt lang(itemname(ci) + "の開いた口から何かが這い出てきた！", "Something came crawling out of " + itemname(ci) + its2(ci) + " open mouth!")
 								}
 							}
 							if ( inv(INV_ITEM_SUB_NAME, ci) >= 37 & inv(INV_ITEM_SUB_NAME, ci) <= 40 ) {
@@ -10352,7 +10352,7 @@
 									fgain = ITEM_ID_DRAGONS_RED	
 									snd SOUNDLIST_FISH_GET
 									txtef COLOR_YELLOW
-									txt lang(itemname(ci) + "は何かを吐き出した！", itemname(ci) + " spit out something.")
+									txt lang(itemname(ci) + "は何かを吐き出した！", itemname(ci) + " spit something out!")
 								}
 							}
 						}
@@ -10361,7 +10361,7 @@
 								fgain = ITEM_ID_SOFT_MATERIUM + rnd(3) * 2
 								snd SOUNDLIST_FISH_GET
 								txtef COLOR_YELLOW
-								txt lang(itemname(ci) + "は何かを吐き出した！", itemname(ci) + " spit out something.")
+								txt lang(itemname(ci) + "は何かを吐き出した！", itemname(ci) + " spit something out!")
 							}
 						}
 						if ( fgain != 0 & fgain != CREATURE_ID_CTHULHICK & fgain != ITEM_ID_SPOTTED_GARDEN_EEL ) {
@@ -11119,13 +11119,13 @@
 				}
 				animeload ANIMATION_FIZZLE, tc
 				txtef COLOR_PURPLE
-				txt lang("「対象を複製しています…」", "Duplicating objects...")
+				txt lang("「対象を複製しています…」", cnvtalk("Duplicating objects..."))
 				hostileaction CHARA_PLAYER, tc
 				animeload ANIMATION_FIZZLE, CHARA_PLAYER
 				inv(INV_ITEM_NUM, ci)--
 				cell_refresh inv(INV_ITEM_X, ci), inv(INV_ITEM_Y, ci)
 				txtef COLOR_PURPLE
-				txt lang("「バイオネットワークに接続されていません。内部構成を中止しました」", "Not connected to the network. Internal configuration has been canceled.")
+				txt lang("「バイオネットワークに接続されていません。内部構成を中止しました」", cnvtalk("No connection to bionetwork. Internal configuration aborted."))
 				txt_questitem
 				hostileaction CHARA_PLAYER, tc
 				picols = cdata(CDATA_CHARA_PIC, tc)
@@ -11233,7 +11233,7 @@
 	}
 	if ( _switch_val == EFFECT_JUKE_BOX | _switch_sw ) {
 		_switch_sw = 0
-		txt lang("どの曲を再生しよう？", "Which music will you play.")
+		txt lang("どの曲を再生しよう？", "Which music will you play?")
 		gosub *com_jukebox
 		goto *act_use_SWEND1
 	}
@@ -11579,7 +11579,7 @@
 		txt_activateitem
 		snd SOUNDLIST_PRAY1
 		txtef COLOR_YELLOW
-		txt lang("エヘカトル「呼んだ？呼んだ？」", "Ehekatl: \"Did you call me? call me?\"")
+		txt lang("エヘカトル「呼んだ？呼んだ？」", "Ehekatl: \"Did you call me? Call me?\"")
 		addbuff tc, BUFF_LUCK, 77, 2500
 		goto *act_use_SWEND1
 	}
@@ -11587,7 +11587,7 @@
 		_switch_sw = 0
 		txt_activateitem
 		txtef COLOR_YELLOW
-		txt lang("ヤカテクト「ほな、今日のお小遣い！1goldも無駄にしたらあかんよ？」", "Yacatect: \"Here, today's allowance! Don't waste even 1 gold, okay?\"")
+		txt lang("ヤカテクト「ほな、今日のお小遣い！1goldも無駄にしたらあかんよ？」", "Yacatect: \"Here, today's allowance! Don't waste even a single gold coin, alright?\"")
 		gdata(GDATA_FLAG_STATUE_OF_YACATECT)++
 		efp = 100
 		animeload ANIMATION_BLOOD, tc
@@ -11775,12 +11775,12 @@
 	if ( _switch_val == EFFECT_YACA_POINT_CARD | _switch_sw ) {
 		_switch_sw = 0
 		if ( adata(ADATA_ID, gdata(GDATA_AREA)) != AREA_SHOP & gdata(GDATA_AREA) != AREA_HOME & gdata(GDATA_AREA) != AREA_MAID_MANSION ) {
-			txt lang("それは店か家の中でのみ使用できる。", "You can only use it at your shop or home.")
+			txt lang("それは店か家の中でのみ使用できる。", "You can only use it in your shop or home.")
 			gosub *screen_draw
 			goto *pc_turn
 		}
 		txtef COLOR_YELLOW
-		txt lang("ヤカテクト「今" + gdata(GDATA_FLAG_YACA_POINTS) + "ヤカポイント溜まっとるけど、どうするん？」", "A voice echos, " + cnvtalk("You have " + gdata(GDATA_FLAG_YACA_POINTS) + " YacaPoints! Mm, what do you want to exchange?"))
+		txt lang("ヤカテクト「今" + gdata(GDATA_FLAG_YACA_POINTS) + "ヤカポイント溜まっとるけど、どうするん？」", "A voice echoes, " + cnvtalk("You have " + gdata(GDATA_FLAG_YACA_POINTS) + " YacaPoints! So, what do you want in exchange?"))
 		txtsetypoint 8
 		repeat 8
 			promptl(0, promptmax) = s(cnt), key_select(cnt), "" + promptmax
@@ -11808,11 +11808,11 @@
 			}
 			if ( gdata(GDATA_FLAG_HANDSHAKE_RIGHTS) \ 2 == 1 ) {
 				snd SOUNDLIST_FAIL1
-				txt lang("「権利のストックはできないんよ」", cnvtalk("You cannot increase your rights!"))
+				txt lang("「権利のストックはできないんよ」", cnvtalk("Handshake rights aren't a think you can stockpile."))
 				goto *act_use_SWEND1
 			}
 			txtef COLOR_YELLOW
-			txt lang("「ウチの妹分を今後ともごひいきに！」", cnvtalk("Yeah, please support my subordinates!"))
+			txt lang("「ウチの妹分を今後ともごひいきに！」", cnvtalk("Please keep supporting my sister!"))
 			gdata(GDATA_FLAG_YACA_POINTS) -= 100
 			gdata(GDATA_FLAG_HANDSHAKE_RIGHTS)++
 		}
@@ -11822,7 +11822,7 @@
 				txt lang("「足りないんよ」", cnvtalk("Not enough!"))
 				goto *act_use_SWEND1
 			}
-			txt lang("何かが足元に転がってきた。", "Something is put on the ground.")
+			txt txt_questitem
 			gdata(GDATA_FLAG_YACA_POINTS) -= 300
 			flt
 			itemcreate -1, ITEM_ID_LONG_PILLAR, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 2
@@ -11855,7 +11855,7 @@
 				txt lang("「足りないんよ」", cnvtalk("Not enough!"))
 				goto *act_use_SWEND1
 			}
-			txt lang("何かが足元に転がってきた。", "Something is put on the ground.")
+			txt txt_questitem
 			gdata(GDATA_FLAG_YACA_POINTS) -= 500
 			flt
 			itemcreate -1, ITEM_ID_OLD_GRAVE, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
@@ -11888,7 +11888,7 @@
 				txt lang("「足りないんよ」", cnvtalk("Not enough!"))
 				goto *act_use_SWEND1
 			}
-			txt lang("何かが足元に転がってきた。", "Something is put on the ground.")
+			txt txt_questitem
 			gdata(GDATA_FLAG_YACA_POINTS) -= 1000
 			flt
 			itemcreate -1, ITEM_ID_RICE_BALL, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 360
@@ -11905,7 +11905,7 @@
 				txt lang("「足りないんよ」", cnvtalk("Not enough!"))
 				goto *act_use_SWEND1
 			}
-			txt lang("何かが足元に転がってきた。", "Something is put on the ground.")
+			txt txt_questitem
 			gdata(GDATA_FLAG_YACA_POINTS) -= 2000
 			flt
 			itemcreate -1, ITEM_ID_CEREMONY_ALTAR, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
@@ -11940,7 +11940,7 @@
 				txt lang("「足りないんよ」", cnvtalk("Not enough!"))
 				goto *act_use_SWEND1
 			}
-			txt lang("何かが足元に転がってきた。", "Something is put on the ground.")
+			txt txt_questitem
 			gdata(GDATA_FLAG_YACA_POINTS) -= 50000
 			flt
 			itemcreate -1, ITEM_ID_CURARIA, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 40
@@ -11969,7 +11969,7 @@
 		mimikaki = 0
 		komaku = 0
 		haretu = 0
-		txt lang("誰を対象にする？", "Who is target?")
+		txt_targetwho
 		gosub *screen_draw
 		val = 0
 		gosub *prompt_direction
@@ -12030,22 +12030,12 @@
 						tc = tcbk
 						if ( cdata(CDATA_RELATION, tc) == RELATION_ENEMY ) {
 							snd SOUNDLIST_STAB
-							if ( jp ) {
-								txt "「隙あり！」", "「馬鹿め！」"
-							}
-							if ( en ) {
-								txt cnvtalk("There is a chance!"), cnvtalk("You're an idiot!")
-							}
-							txt lang("あなたの鼓膜は" + name(tc) + "に破られた！", "Your eardrum has been torn by " + name(tc) + "!")
+							txt lang("「隙あり！」", cnvtalk("Now's my chance!")), lang("「馬鹿め！」", cnvtalk("You idiot!"))
+							txt lang("あなたの鼓膜は" + name(tc) + "に破られた！", name(tc) + " rams the mimikaki in, tearing your eardrum!")
 							dmghp CHARA_PLAYER, rnd(sdata(SKILL_ATTR_STR, CHARA_PLAYER) * sqrt(sdata(SKILL_ATTR_STR, CHARA_PLAYER)) + sdata(SKILL_ATTR_STR, CHARA_PLAYER)), tc, SKILL_RES_SOUND, 1000
 							goto *act_use_SWEND1
 						}
-						if ( jp ) {
-							txt "「上手くできる" + _kana(3) + "？」", "「全力を尽くす" + _yo(3) + "…」", "「痛かったら言って" + _kure(3) + "」"
-						}
-						if ( en ) {
-							txt cnvtalk("Can I do it well?"), cnvtalk("I'll do my best..."), cnvtalk("Tell me if it hurts.")
-						}
+						txt lang("「上手くできる" + _kana(3) + "？」", cnvtalk("Can I do this...?")), lang("「全力を尽くす" + _yo(3) + "…」", cnvtalk("I'll do my best...")), lang("「痛かったら言って" + _kure(3) + "」", cnvtalk("Let me know if it hurts."))
 						mimikaki = -1
 						gosub *screen_draw
 						txtnew
@@ -12068,14 +12058,9 @@
 					loop
 					if ( haretu >= 3 ) {
 						snd SOUNDLIST_BALL1
-						txt lang("耳掻棒が膨張し、あなたの耳穴が破裂した！", "The mimikaki swelled and your ear canal burst!")
+						txt lang("耳掻棒が膨張し、あなたの耳穴が破裂した！", "The mimikaki expands and your ear canal ruptures!")
 						if ( tc != CHARA_PLAYER ) {
-							if ( jp ) {
-								txt "「めんご」", "「手が滑った" + _nda(3) + "…」", "「許して" + _kure(3) + "！」"
-							}
-							if ( en ) {
-								txt cnvtalk("Forgive me."), cnvtalk("My hand slipped..."), cnvtalk("Sorry!")
-							}
+							txt lang("「めんご」", cnvtalk("Whoops.")), lang("「手が滑った" + _nda(3) + "…」", cnvtalk("My hand slipped...")), lang("「許して" + _kure(3) + "！」", cnvtalk("Forgive me!"))
 						}
 						dmgcon CHARA_PLAYER, CONDITION_BLEED, 100
 						goto *act_use_SWEND1
@@ -12083,47 +12068,42 @@
 					snd SOUNDLIST_DING3
 					mimikaki = rnd(sqrt(sdata(SKILL_ATTR_DEX, tc) + 1) + 10)
 					if ( mimikaki < 5 ) {
-						txt lang("粉末みみくそがとれた！", "The powdered earwax has been removed!")
+						txt lang("粉末みみくそがとれた！", "Some powdered earwax has been removed!")
 						skillexp SKILL_ATTR_DEX, tc, 5000
 						skillexp SKILL_ATTR_PER, tc, 5000
 						skillexp SKILL_ATTR_CON, CHARA_PLAYER, 5000
 						skillexp SKILL_ATTR_WIL, CHARA_PLAYER, 5000
 					}
 					if ( mimikaki >= 5 & mimikaki < 15 ) {
-						txt lang("欠片みみくそがとれた！", "The debris of the earwax has been removed!")
+						txt lang("欠片みみくそがとれた！", "Some shards of earwax have been removed!")
 						skillexp SKILL_ATTR_DEX, tc, 6000
 						skillexp SKILL_ATTR_PER, tc, 6000
 						skillexp SKILL_ATTR_CON, CHARA_PLAYER, 6000
 						skillexp SKILL_ATTR_WIL, CHARA_PLAYER, 6000
 					}
 					if ( mimikaki >= 15 & mimikaki < 20 ) {
-						txt lang("膜状みみくそがとれた！", "The membranous earwax has been removed!")
+						txt lang("膜状みみくそがとれた！", "Some membranous earwax has been removed!")
 						skillexp SKILL_ATTR_DEX, tc, 7000
 						skillexp SKILL_ATTR_PER, tc, 7000
 						skillexp SKILL_ATTR_CON, CHARA_PLAYER, 7000
 						skillexp SKILL_ATTR_WIL, CHARA_PLAYER, 7000
 					}
 					if ( mimikaki >= 20 & mimikaki < 25 ) {
-						txt lang("塊みみくそがとれた！", "The lump of earwax has been removed!")
+						txt lang("塊みみくそがとれた！", "A clump of earwax has been removed!")
 						skillexp SKILL_ATTR_DEX, tc, 8000
 						skillexp SKILL_ATTR_PER, tc, 8000
 						skillexp SKILL_ATTR_CON, CHARA_PLAYER, 8000
 						skillexp SKILL_ATTR_WIL, CHARA_PLAYER, 8000
 					}
 					if ( mimikaki >= 25 ) {
-						txt lang("ひとつなぎのみみくそがとれた！", "All the earwax was connected and removed!")
+						txt lang("ひとつなぎのみみくそがとれた！", "A mass of collected earwax was removed!")
 						skillexp SKILL_ATTR_DEX, tc, 9000
 						skillexp SKILL_ATTR_PER, tc, 9000
 						skillexp SKILL_ATTR_CON, CHARA_PLAYER, 9000
 						skillexp SKILL_ATTR_WIL, CHARA_PLAYER, 9000
 					}
 					if ( tc != CHARA_PLAYER ) {
-						if ( jp ) {
-							txt "「じゃあ次は反対の耳" + _da(3) + "」", "「まだ反対側もある" + _na(3) + "…」"
-						}
-						if ( en ) {
-							txt cnvtalk("Then next is the opposite ear."), cnvtalk("There is still the other side.")
-						}
+						txt lang("「じゃあ次は反対の耳" + _da(3) + "」", cnvtalk("Okay, now for the other ear.")), lang("「まだ反対側もある" + _na(3) + "…」", cnvtalk("There's more on the other side."))
 					}
 					gosub *screen_draw
 					txtnew
@@ -12143,14 +12123,9 @@
 					loop
 					if ( haretu >= 3 ) {
 						snd SOUNDLIST_BALL1
-						txt lang("耳掻棒が膨張し、あなたの耳穴が破裂した！", "The mimikaki swelled and your ear canal burst!")
+						txt lang("耳掻棒が膨張し、あなたの耳穴が破裂した！", "The mimikaki expands and your ear canal ruptures!")
 						if ( tc != CHARA_PLAYER ) {
-							if ( jp ) {
-								txt "「めんご」", "「手が滑った" + _nda(3) + "…」", "「許して" + _kure(3) + "！」"
-							}
-							if ( en ) {
-								txt cnvtalk("Forgive me."), cnvtalk("My hand slipped..."), cnvtalk("Sorry!")
-							}
+							txt lang("「めんご」", cnvtalk("Whoops.")), lang("「手が滑った" + _nda(3) + "…」", cnvtalk("My hand slipped...")), lang("「許して" + _kure(3) + "！」", cnvtalk("Forgive me!"))
 						}
 						dmgcon CHARA_PLAYER, CONDITION_BLEED, 100
 						goto *act_use_SWEND1
@@ -12158,47 +12133,42 @@
 					snd SOUNDLIST_COMPLETE1
 					mimikaki = rnd(sqrt(sdata(SKILL_ATTR_DEX, tc) + 1) + 10)
 					if ( mimikaki < 5 ) {
-						txt lang("粉末みみくそがとれた！", "The powdered earwax has been removed!")
+						txt lang("粉末みみくそがとれた！", "Some powdered earwax has been removed!")
 						skillexp SKILL_ATTR_DEX, tc, 5000
 						skillexp SKILL_ATTR_PER, tc, 5000
 						skillexp SKILL_ATTR_CON, CHARA_PLAYER, 5000
 						skillexp SKILL_ATTR_WIL, CHARA_PLAYER, 5000
 					}
 					if ( mimikaki >= 5 & mimikaki < 15 ) {
-						txt lang("欠片みみくそがとれた！", "The debris of the earwax has been removed!")
+						txt lang("欠片みみくそがとれた！", "Some shards of earwax have been removed!")
 						skillexp SKILL_ATTR_DEX, tc, 6000
 						skillexp SKILL_ATTR_PER, tc, 6000
 						skillexp SKILL_ATTR_CON, CHARA_PLAYER, 6000
 						skillexp SKILL_ATTR_WIL, CHARA_PLAYER, 6000
 					}
 					if ( mimikaki >= 15 & mimikaki < 20 ) {
-						txt lang("膜状みみくそがとれた！", "The membranous earwax has been removed!")
+						txt lang("膜状みみくそがとれた！", "Some membranous earwax has been removed!")
 						skillexp SKILL_ATTR_DEX, tc, 7000
 						skillexp SKILL_ATTR_PER, tc, 7000
 						skillexp SKILL_ATTR_CON, CHARA_PLAYER, 7000
 						skillexp SKILL_ATTR_WIL, CHARA_PLAYER, 7000
 					}
 					if ( mimikaki >= 20 & mimikaki < 25 ) {
-						txt lang("塊みみくそがとれた！", "The lump of earwax has been removed!")
+						txt lang("塊みみくそがとれた！", "A clump of earwax has been removed!")
 						skillexp SKILL_ATTR_DEX, tc, 8000
 						skillexp SKILL_ATTR_PER, tc, 8000
 						skillexp SKILL_ATTR_CON, CHARA_PLAYER, 8000
 						skillexp SKILL_ATTR_WIL, CHARA_PLAYER, 8000
 					}
 					if ( mimikaki >= 25 ) {
-						txt lang("ひとつなぎのみみくそがとれた！", "All the earwax was connected and removed!")
+						txt lang("ひとつなぎのみみくそがとれた！", "A mass of collected earwax was removed!")
 						skillexp SKILL_ATTR_DEX, tc, 9000
 						skillexp SKILL_ATTR_PER, tc, 9000
 						skillexp SKILL_ATTR_CON, CHARA_PLAYER, 9000
 						skillexp SKILL_ATTR_WIL, CHARA_PLAYER, 9000
 					}
 					if ( tc != CHARA_PLAYER ) {
-						if ( jp ) {
-							txt "「ちゃんと我慢できて偉い" + _yo(3) + "！」", "「痛くなかった" + _kana(3) + "？」", "「もっとほじくりたかった" + _na(3) + "…」"
-						}
-						if ( en ) {
-							txt cnvtalk("It's great to be able to put up with it properly!"), cnvtalk("Didn't it hurt?"), cnvtalk("I wanted to dig more into your ears...")
-						}
+						txt lang("「ちゃんと我慢できて偉い" + _yo(3) + "！」", cnvtalk("Great job! You were so patient.")), lang("「痛くなかった" + _kana(3) + "？」", cnvtalk("Did it hurt?")), lang("「もっとほじくりたかった" + _na(3) + "…」", cnvtalk("I wish I could clean your ears just a bit more..."))
 					}
 					mimikaki = 0
 					haretu = 0
@@ -16119,7 +16089,7 @@
 			if ( rnd(2) == 0 ) {
 				continue
 			}
-			txt lang("「ナイスハラキリ！」", cnvtalk("Nice harakiri!")), lang("「気が変わらないうちに早く行け」", cnvtalk("Leave before my mind changes!")), lang("「なんて無茶を…」", cnvtalk("Oh...!")), lang("「見事な切腹よ」", cnvtalk("It's a splendid seppuku!")), lang("「いいものを見せてもらった" + _yo(3) + "」", cnvtalk("You showed me wonderful things!")), lang("「腹筋キレてるー！いい血液出てる" + _yo(3) + "！」", cnvtalk("Beautiful blood is coming out!"))
+			txt lang("「ナイスハラキリ！」", cnvtalk("Nice harakiri!")), lang("「気が変わらないうちに早く行け」", cnvtalk("Leave before my mind changes!")), lang("「なんて無茶を…」", cnvtalk("Oh...!")), lang("「見事な切腹よ」", cnvtalk("What a splendid seppuku!")), lang("「いいものを見せてもらった" + _yo(3) + "」", cnvtalk("You've shown me some good stuff!")), lang("「腹筋キレてるー！いい血液出てる" + _yo(3) + "！」", cnvtalk("Those abs are RIPPED! Literally! You're pumping some good blood!"))
 		loop
 		goto *act_use_SWEND1
 	}
@@ -16182,15 +16152,15 @@
 		y = cdata(CDATA_Y, cc)
 		cell_featread x, y
 		if ( feat(FEAT_CELL_FEATURE_ID) != CELL_FEATURE_PLANTED_SEED ) {
-			txt lang("それは種を植えた場所で使わなければならない。", "You don't see any plant on the ground.")
+			txt lang("それは種を植えた場所で使わなければならない。", "You don't see anything planted here.")
 			goto *act_use_SWEND1
 		}
 		if ( feat != tile_plant + 1 ) {
-			txt lang("それは成長途中の作物にしか使えない。", "The plant has already grown full.")
+			txt lang("それは成長途中の作物にしか使えない。", "You can only use it on plants that are midway through their growth.")
 			goto *act_use_SWEND1
 		}
 		if ( feat(FEAT_CELL_PARAM_1) <= 1 ) {
-			txt lang("これ以上は必要なさそうだ。", "No more is needed.")
+			txt lang("これ以上は必要なさそうだ。", "You don't need do anything else to this plant.")
 			goto *act_use_SWEND1
 		}
 		if ( cdata(CDATA_SP, CHARA_PLAYER) < 0 ) {
@@ -16220,36 +16190,36 @@
 		syurui = rtval + 1
 		if ( gdata(GDATA_WEATHER) < WEATHER_RAIN ) {
 			if ( syurui == 1 ) {
-				txt lang("悪い虫がつかないよう、防虫剤を置いた。", "You put an insect repellent.")
+				txt lang("悪い虫がつかないよう、防虫剤を置いた。", "You sprayed some insect repellent to protect against pests.")
 			}
 			if ( syurui == 2 ) {
-				txt lang("病気にならないように傷を補修した。", "You repaired the wound.")
+				txt lang("病気にならないように傷を補修した。", "You repaired some wounds on the stem to prevent disease.")
 			}
 			if ( syurui == 3 ) {
-				txt lang("支柱を立てて茎を支えた。", "You made a strut and tied vines.")
+				txt lang("支柱を立てて茎を支えた。", "You put up some struts to support the stems.")
 			}
 			if ( syurui == 4 ) {
-				txt lang("土をほぐして通気性を改善した。", "You loosen the soil.")
+				txt lang("土をほぐして通気性を改善した。", "You loosen the soil to improve breathability.")
 			}
 			if ( syurui == 5 ) {
-				txt lang("排水性を良くするため、土を根元に寄せた。", "You brought soil to the root.")
+				txt lang("排水性を良くするため、土を根元に寄せた。", "You move some soil to the base of the plant to improve drainage.")
 			}
 		}
 		else {
 			if ( syurui == 1 ) {
-				txt lang("栄養を取られないよう、雑草を引き抜いた。", "You pulled out weeds.")
+				txt lang("栄養を取られないよう、雑草を引き抜いた。", "You pulled out some weeds so they won't sap nutrients.")
 			}
 			if ( syurui == 2 ) {
-				txt lang("余計な葉を切って風通しを良くした。", "You cut extra leaves.")
+				txt lang("余計な葉を切って風通しを良くした。", "You cut some extra leaves to improve air circulation.")
 			}
 			if ( syurui == 3 ) {
-				txt lang("保温のためシートで覆った。", "You covered with sheet.")
+				txt lang("保温のためシートで覆った。", "You covered it with a sheet to keep it warm.")
 			}
 			if ( syurui == 4 ) {
-				txt lang("栄養を集中させるため、脇芽を摘み取った。", "You picked out the side buds.")
+				txt lang("栄養を集中させるため、脇芽を摘み取った。", "You trimmed off the axillary buds to improve the concentration of nutrients.")
 			}
 			if ( syurui == 5 ) {
-				txt lang("魔力を吸わせて成長を促した。", "You gave magical power.")
+				txt lang("魔力を吸わせて成長を促した。", "You let the plant absorb some of your magical power to stimulate growth.")
 			}
 		}
 		if ( feat(FEAT_CELL_PARAM_1) >= 50 ) {
@@ -16258,7 +16228,7 @@
 		feat(FEAT_CELL_PARAM_1) /= 2
 		if ( feat(FEAT_CELL_PARAM_1) <= 1 ) {
 			feat(FEAT_CELL_PARAM_1) = 1
-			txt lang("これ以上は必要なさそうだ。", "No more is needed.")
+			txt lang("これ以上は必要なさそうだ。", "You don't need do anything else to this plant.")
 		}
 		if ( feat(FEAT_CELL_SUB_FEATURE_ID) <= MAX_CELL_SUB_FEATURE ) {
 			feat(FEAT_CELL_SUB_FEATURE_ID) += syurui * 10
@@ -16274,7 +16244,7 @@
 		y = cdata(CDATA_Y, cc)
 		cell_featread x, y
 		if ( feat(1) != CELL_FEATURE_PLANTED_SEED ) {
-			txt lang("それは種を植えた場所で使わなければならない。", "You don't see any plant on the ground.")
+			txt lang("それは種を植えた場所で使わなければならない。", "You don't see anything planted here.")
 			goto *act_use_SWEND1
 		}
 		if ( feat == tile_plant + 2 ) {
