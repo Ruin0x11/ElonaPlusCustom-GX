@@ -1,0 +1,391 @@
+#packopt type 0
+#packopt name "elochat"
+#cmpopt varname 1
+
+	goto *init
+	
+	#define serverListUrl "http://homepage3.nifty.com/rfish/file/server.txt"
+
+	#define global true	 1
+	#define global false	 0
+	#define global falseM	-1
+
+	#uselib "wininet"
+	#func InternetOpen "InternetOpenA" int,int,int,int,int
+	#func InternetOpenUrl "InternetOpenUrlA" int,int,int,int,int,int
+	#func InternetQueryDataAvailable "InternetQueryDataAvailable" int,int,int,int
+	#func InternetReadFile "InternetReadFile" int,int,int,int
+	#func InternetCloseHandle "InternetCloseHandle" int
+	#const null	0
+	#const INTERNET_OPEN_TYPE_PRECONFIG	$00000000
+	#const INTERNET_FLAG_DONT_CACHE	$04000000
+	#const INTERNET_FLAG_RELOAD	$80000000
+	
+	#deffunc netProcess str netUrlOrg
+	InternetOpen null, INTERNET_OPEN_TYPE_PRECONFIG, null, null, 0:if stat=false:return falseM
+	hSession=stat
+	netUrl=netUrlOrg
+	InternetOpenUrl hSession, varptr(netUrl), null, 0, INTERNET_FLAG_RELOAD, 0:if stat=false:InternetCloseHandle hSession::return falseM
+	hService=stat
+	InternetQueryDataAvailable hService, varptr(availableSize), 0, 0
+	sdim buf, availableSize + 1
+	netBuff=""
+	repeat	
+	InternetReadFile hService, varptr(buf), availableSize, varptr(done)
+	if stat & (done = 0) 	: netError=false:break
+	if cnt>100		: netError=true :break
+	netBuff += buf			
+	memset buf, 0, availableSize		
+	await 0
+	loop
+	internetCloseHandle hService
+	InternetCloseHandle hSession
+	if netError:return falseM
+	return true
+	
+	
+	#uselib "user32"	
+	#cfunc 	GetWindowLong "GetWindowLongA" int, int
+	#func 	SetWindowLong "SetWindowLongA" int, int, int
+	#func 	SetWindowPos "SetWindowPos" int, nullptr, nullptr, nullptr, nullptr, nullptr, int
+	#cfunc 	CreateMenu "CreateMenu"
+	#cfunc 	CreatePopupMenu "CreatePopupMenu"
+	#func 	AppendMenu "AppendMenuA" int, int, int, str
+	#func 	SetMenu "SetMenu" int, int
+	#func 	DrawMenuBar "DrawMenuBar" int
+	#func 	CheckMenuRadioItem "CheckMenuRadioItem" int, int, int, int, int
+	#func 	CheckMenuItem "CheckMenuItem" int, int, int
+	#func 	InvalidateRect "InvalidateRect" int,int,int
+	#cfunc  FindWindowA "FindWindowA" sptr,sptr
+	#cfunc	GetDC "GetDC" int
+	#func	ReleaseDC "ReleaseDC" int,int
+	#func	MoveWindow "MoveWindow" int,int,int,int,int,int
+
+
+	#uselib "kernel32.dll"
+	#func	LoadLibrary "LoadLibraryA" str
+
+	#uselib "gdi32.dll"
+	#cfunc	GetDeviceCaps "GetDeviceCaps" int,int
+
+	#define WM_SETREDRAW	$0000000B
+	#define EM_SETSEL		$000000B1
+	#define EM_SCROLLCARET	$000000B7
+	#define EM_LINEINDEX	$000000BB
+	#define EM_REPLACESEL	$000000C2
+	
+	#defcfunc fetchNo
+	if fetchLog=99:return "":else:if fetchLog!-1:return ""+fetchLog:else:return ""
+
+	#define cfgFile		"elochat.cfg"
+	#define _title		"Elona Chat Viewer"
+	#define logSplit1	30
+	#define logSplit2	4
+	
+	#define ctype filtered(%1) ( ( checkMenu(1) & %1="chat" ) or ( checkMenu(2) & %1="wish" ) or ( checkMenu(3) & %1="dead") )
+
+	#define global cfgWinW		config@(0)
+	#define global cfgWinH		config@(1)
+	#define global cfgWinX		config@(2)
+	#define global cfgWinY		config@(3)
+	#define global jp		config@(4)
+	#define global cfgBoth		config@(5)
+	#define global cfgFetch		config@(6)
+	#define global cfgFontSize	config@(7)
+	#define global cfgRefresh	config@(9)
+	#define global cfgMaxLog	config@(10)
+	#define global cfgShowNo	config@(11)
+	#define global cfgBoxType	config@(12)
+	#define global ctype checkMenu(%1)	config@(25+%1)
+
+	#module
+	#defcfunc lang str s1,str s2
+	if jp:return s1:else:return s2
+	#defcfunc langi int i1,int i2
+	if jp:return i1:else:return i2
+	#global
+
+	#module	
+	#defcfunc cnvCount int p
+	c=""+p
+	repeat 
+	if strlen(c)<8:c+=" ":else:break
+	loop
+	return c
+	#deffunc cnv_str val s,str s1,str s2
+	repeat
+	if instr(s,0,s1)=-1:break
+	s=strmid(s,0,instr(s,0,s1))+lang(s2,s2)+strmid(s,instr(s,0,s1)+strlen(s1),300)
+	loop
+	return s
+	#global
+	
+
+*Init
+
+;	LoadLibrary "riched32.dll"
+	
+	dim countLast,2
+	dim countNew,2
+	dim config,30
+
+	exist cfgFile:if strsize!-1:bload cfgFile,config:else{
+		cfgWinW=600
+		cfgWinH=480
+		cfgMaxLog=60
+		cfgRefresh=10
+		cfgFontSize=12
+		}
+		;fix
+	if cfgFontSize=0:cfgFontSize=12
+	sdim serverList,1000
+	sdim server1
+	notesel serverList
+	netProcess serverListUrl
+;	if stat=true{
+;		serverList=netBuff
+;		notesave "server.txt"
+;		}else{
+		noteload "server.txt"
+		netBuff = serverList
+;		}
+	p=instr(netBuff,0,"%"):server1=strmid(netBuff,0,p):server2=strmid(netBuff,p+1,instr(netBuff,p+1,"%"))
+	notesave "server.txt"
+	dialog netBuff
+	#define chatReadUrl	"http://"+server1+"/log"+lang("","en")+fetchNo()+".txt"
+
+	sdim mainBuff,cfgMaxLog*200
+	sdim chatBuff,2,cfgMaxLog*200*2
+
+	screen 1, ginfo (20), ginfo (21),2,limit(cfgWinX,0,ginfo(20)-100),limit(cfgWinY,0,ginfo(21)-100)
+	SetWindowLong hwnd, -16, GetWindowLong (hwnd, -16) | $10000 | $40000
+	if FindWindowA(lpClassName,_title)	:end
+	title _title
+
+	width cfgWinW, cfgWinH
+	oncmd gosub *jump, $111
+  	oncmd gosub *event_resize, 0x0005
+ 
+	
+	hMenu.6 = CreatePopupMenu ()
+		fontSize=10,11,12,13,14,15,16 :check=$40
+		repeat length(fontSize)
+		AppendMenu hMenu.6, 0, $40+cnt, ""+fontSize(cnt)+" Points" : if cfgFontSize=fontSize(cnt):check=$40+cnt
+		loop
+		CheckMenuRadioItem hMenu.6, $40, $40+length(fontSize), check, $100
+
+
+	hMenu.5 = CreatePopupMenu ()
+		logSize=30,60,100,150,300,1000 :check=$30
+		repeat length(logSize)
+		AppendMenu hMenu.5, 0, $30+cnt, ""+logSize(cnt)+" Lines" : if cfgMaxLog=logSize(cnt):check=$30+cnt
+		loop
+		CheckMenuRadioItem hMenu.5, $30, $30+length(logSize), check, $100
+
+	hMenu.4 = CreatePopupMenu ()
+		reloadTime=5,10,30,60,300,600 :check=$20
+		repeat length(reloadTime)
+		AppendMenu hMenu.4, 0, $20+cnt, "Every "+reloadTime(cnt)+" Sec" : if cfgRefresh=reloadTime(cnt):check=$20+cnt
+		loop
+		CheckMenuRadioItem hMenu.4, $20, $20+length(reloadTime), check, $100
+
+	hMenu.3 = CreatePopupMenu ()
+		AppendMenu hMenu.3, $10, hMenu.4, "Reload"
+		AppendMenu hMenu.3, $10, hMenu.5, "Max Log"
+		AppendMenu hMenu.3, $10, hMenu.6, "Font Size"
+		AppendMenu hMenu.3, 0, $9,  "Fetch Log"
+		AppendMenu hMenu.3, 0, $10, "Show No"
+	
+		CheckMenuRadioItem hMenu.1, $6, $7, langi($7,$6), $100
+		CheckMenuItem hMenu.3, $9, cfgFetch*$8
+		CheckMenuItem hMenu.3, $10, cfgShowNo*$8
+
+
+	hMenu.2 = CreatePopupMenu ()	
+		AppendMenu hMenu.2, 0, $1, "Filter Chat"
+		AppendMenu hMenu.2, 0, $2, "Filter Wish"
+		AppendMenu hMenu.2, 0, $3, "Filter Death"
+		repeat 3,1
+		CheckMenuItem hMenu.2, cnt, checkMenu(cnt)*$8
+		loop
+	
+	hMenu.1 = CreatePopupMenu ()
+		AppendMenu hMenu.1, 0, $6, "English"
+		AppendMenu hMenu.1, 0, $7, "Japanese"
+		AppendMenu hMenu.1, 0, $8, "Reload Both"
+		CheckMenuRadioItem hMenu.1, $6, $7, langi($7,$6), $100
+		CheckMenuItem hMenu.1, $8, cfgBoth*$8
+	
+	hMenu.0 = CreateMenu ()
+		AppendMenu hMenu.0, $10, hMenu.1, "Language"
+		AppendMenu hMenu.0, $10, hMenu.2, "Filter"
+		AppendMenu hMenu.0, $10 | $4000, hMenu.3, "Option"
+
+
+	SetMenu hwnd, hMenu.0
+	DrawMenuBar hwnd
+	gsel 1,1
+	gosub *showMainbox
+
+	if cfgFetch{
+		jpOrg=jp
+		repeat 1+cfgBoth
+		if cnt:refreshOther=true:if jp=0:jp=1:else:jp=0
+		fetchLog=99:gosub *read_chat:if stat=false:dialog "Failed to fetch log.":else{
+			p=chat_count\(logSplit1*logSplit2)/logSplit1+1
+			repeat 3
+			fetchLog=(cnt+p)\logSplit2:gosub *read_chat:if stat=false:dialog "Failed to fetch log"+fetchLog+"."
+			loop
+			}	
+		loop
+		jp=jpOrg:refreshOther=false
+		}
+	fetchLog=-1	: refresh=true
+	
+*Mainz
+	while
+	if t\100=0{
+		jpOrg=jp
+		if cfgBoth:if t/cfgRefresh\2=1:refreshOther=true:if jp=0:jp=1:else:jp=0
+		gosub *read_chat
+		jp=jpOrg:refreshOther=false
+		}
+	await 100:t++
+	wend
+
+*showMainBox
+	syscolor 15:objmode 2:font "",cfgFontSize
+	pos 0,0
+	if cfgBoxType=0{
+		mesbox mainBuff,0,0,2
+		}else{
+		winobj "RichEdit","",0,$50A00044, cfgWinW,cfgWinH, 0, 0
+		sendmsg hEdit,0x000C,0,varptr(mainBuff)
+		}
+	hEdit = objinfo(stat,2)
+	SetWindowLong objinfo (0, 2), -20, $0 
+	SetWindowPos objinfo (0, 2), $27 
+	gosub *event_resize
+	return
+
+*setMainBox
+	clrobj 0
+	gosub *showMainBox
+	return
+
+
+
+
+*read_chat
+	netProcess chatReadUrl : if stat=falseM:return false
+	
+	header=instr(netBuff,0,"<!--START-->")+13
+	notesel chatBuff(jp):last=noteMax
+	len = strlen(mainBuff) : msgNew=false		
+
+	repeat 
+	tail=instr(netBuff,header,"%") : if tail=-1:break
+	chat_count=int(strmid(netBuff,header,tail)) : header+=tail+1
+	if fetchLog=99:break
+	if cnt=0:countNew(jp)=chat_count
+	if chat_count<=countLast(jp):break
+	tail=instr(netBuff,header,"%")
+	chat_date=strmid(netBuff,header,tail) : header+=tail+1
+	tail=instr(netBuff,header,"%")
+	chat_msg=strmid(netBuff,header,tail) : header+=tail+1 : if jp=false: cnv_str chat_msg,"&quot;","\""
+	tail=instr(netBuff,header,"%")
+	chat_ip=strmid(netBuff,header,tail) : header+=tail+2
+	s=strmid(chat_msg,0,4):s2=cnvCount(chat_count)
+	msg=chat_date+" : "+strmid(chat_msg,4,999)
+	noteadd s+s2+msg,last :msgNew=true
+	if refreshOther:continue
+	if filtered(s)	:continue
+	if cfgShowNo=false:s2=""
+	sendmsg hEdit, WM_SETREDRAW, false, 0	
+	sendmsg hEdit, EM_SETSEL, len, len
+	sendmsg hEdit, EM_REPLACESEL, false, s2+msg+"\n"
+	loop
+	if fetchLog=99:return true
+
+	countLast(jp)=countNew(jp)
+	if notemax>cfgMaxLog{
+		repeat notemax-cfgMaxLog
+		notedel 0
+		loop
+		}
+	if refreshOther:return true
+	if refresh : gosub *refresh_log 
+	if (refresh)or(msgNew){
+		sendmsg hEdit, WM_SETREDRAW, true, 0
+		InvalidateRect hEdit, null, true
+		len = strlen(mainBuff)
+		sendmsg hEdit, EM_SETSEL, len, len
+		sendmsg hEdit, EM_SCROLLCARET, 0, 0
+		}
+	refresh=false
+	return true
+
+*refresh_log
+	mainBuff=""
+	repeat notemax
+	noteget s2,cnt:s=strmid(s2,0,4):if filtered(s):continue
+	mainBuff+=strmid(s2,12-cfgShowNo*8,999)+"\n"
+	loop
+	sendmsg hEdit,0x000C,0,varptr(mainBuff)
+	return
+
+	
+*jump
+	if lparam != 0 : return
+
+	wid = wparam & $FFFF
+
+	if wid >= $1 & wid <= $4 {
+		if checkMenu(wid)=true:uCheck=$0:checkMenu(wid)=false:else:uCheck=$8:checkMenu(wid)=true
+		CheckMenuItem hMenu.2, wid, uCheck
+		refresh=true:gosub *read_chat
+		}
+	if wid >= $6 & wid <= $7 {
+		if wid=$6:jp=false:else:jp=true
+		CheckMenuRadioItem hMenu.1, $6, $7, wid, $100
+		refresh=true:gosub *read_chat
+		}
+	if wid =$8{
+		if cfgBoth=true:uCheck=$0:cfgBoth=false:else:uCheck=$8:cfgBoth=true
+		CheckMenuItem hMenu.1, wid, uCheck
+		}
+	if wid =$9{
+		if cfgFetch=true:uCheck=$0:cfgFetch=false:else:uCheck=$8:cfgFetch=true
+		CheckMenuItem hMenu.3, wid, uCheck
+		}
+	if wid =$10{
+		if cfgShowNo=true:uCheck=$0:cfgShowNo=false:else:uCheck=$8:cfgShowNo=true
+		CheckMenuItem hMenu.3, wid, uCheck
+		refresh=true:gosub *read_chat
+		}
+	if wid >= $20 & wid <= $29 {
+		CheckMenuRadioItem hMenu.4, $20, $29, wid, $100
+		cfgRefresh=reloadTime(wid-$20)
+		}
+
+	if wid >= $30 & wid <= $39 {
+		CheckMenuRadioItem hMenu.5, $30, $39, wid, $100
+		cfgMaxLog=logSize(wid-$30)
+		dialog "Please restart the application now."
+		}
+
+	if wid >= $40 & wid <= $49 {
+		CheckMenuRadioItem hMenu.6, $40, $49, wid, $100
+		cfgFontSize=fontSize(wid-$40)
+		gosub *setMainBox
+		}
+	bsave cfgFile,config
+	return
+
+*event_resize
+	MoveWindow hEdit, 0, 0, ginfo_winx, ginfo_winy, 1
+	cfgWinX=ginfo(4)
+	cfgWinY=ginfo(5)
+	bsave cfgFile,config
+	return
+    
