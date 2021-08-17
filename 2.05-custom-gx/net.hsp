@@ -1,4 +1,4 @@
-#define NET_PORT 9292
+#define NET_PORT 80
 
 #deffunc net_send str net_send_arg1, int net_send_arg2
 	if ( cfg_net == 0 ) {
@@ -33,18 +33,20 @@
 		locvar_net_send_conurl = cgiurl2
 	}
 	if ( dbg_net ) {
-		dialog "OPEN " + locvar_net_send_conurl + " " + net_send_arg2
+		dialog "OPEN '" + locvar_net_send_conurl + "' " + net_send_arg2
 	}
 	sockopen 0, locvar_net_send_conurl, NET_PORT
 	if ( stat ) {
+		locvar_net_send_err = stat
 		sockclose
-		txt "[" + stat + "]" + lang("ネットに繋がっていない。", "You need an internet connection.")
+		txt "[" + locvar_net_send_err + "]" + lang("ネットに繋がっていない。", "You need an internet connection.")
 		return 0
 	}
 	sockput "GET " + locvar_net_send_url + locvar_net_send_msg + " HTTP/1.0\nHost:www.nifty.com???\nUser-Agent: Mozilla/4.0 (compatible; MSIE 6.0; Windows 98; Win 9x 4.90)\n\n"
 	if ( stat ) {
+		locvar_net_send_err = stat
 		sockclose
-		txt lang("送信に失敗した。", "Failed to send a message.")
+		txt "[" + locvar_net_send_err + "]" + lang("送信に失敗した。", "Failed to send a message.")
 		return 0
 	}
 	sockclose
@@ -319,18 +321,18 @@
 	}
 	notesave exedir + "server.txt"
 	if ( jp ) {
-		chatreadurl = "http://" + cgiurl2 + "/log.txt"
-		chatsendurl = "http://" + cgiurl2 + "/cgi-bin/wtalk/wtalk2.cgi?mode=regist"
-		votesendurl = "http://" + cgiurl3 + "/cgi-bin/vote/votec.cgi?no=1&mode=wri"
-		votereadurl = "http://" + cgiurl3 + "/vote.txt"
+		chatreadurl = "http://www." + cgiurl2 + "/log.txt"
+		chatsendurl = "http://www." + cgiurl2 + "/cgi-bin/wtalk/wtalk2.cgi?mode=regist"
+		votesendurl = "http://www." + cgiurl3 + "/cgi-bin/vote/votec.cgi?no=1&mode=wri"
+		votereadurl = "http://www." + cgiurl3 + "/vote.txt"
 	}
 	else {
-		chatreadurl = "http://" + cgiurl2 + "/logen.txt"
-		chatsendurl = "http://" + cgiurl2 + "/cgi-bin/wtalken/wtalk2.cgi?mode=regist"
-		votesendurl = "http://" + cgiurl3 + "/cgi-bin/vote/votec.cgi?no=0&mode=wri"
-		votereadurl = "http://" + cgiurl3 + "/voteen.txt"
+		chatreadurl = "http://www." + cgiurl2 + "/logen.txt"
+		chatsendurl = "http://www." + cgiurl2 + "/cgi-bin/wtalken/wtalk2.cgi?mode=regist"
+		votesendurl = "http://www." + cgiurl3 + "/cgi-bin/vote/votec.cgi?no=0&mode=wri"
+		votereadurl = "http://www." + cgiurl3 + "/voteen.txt"
 	}
-	textreadurl = "http://" + cgiurl3 + "/text.txt"
+	textreadurl = "http://www." + cgiurl3 + "/text.txt"
 	return
 
 *net_chat
