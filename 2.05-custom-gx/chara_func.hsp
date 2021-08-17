@@ -2935,7 +2935,7 @@
 			if ( cdata(CDATA_CONDITION_WINCE, healcon_charid) <= 0 ) {
 				cdata(CDATA_CONDITION_WINCE, healcon_charid) = 0
 				if ( synccheck(healcon_charid, -1) ) {
-					txt lang(name(healcon_charid) + "は怯みから回復した。", name(healcon_charid) + " recover" + _s(healcon_charid) + " from wince.")
+					txt lang(name(healcon_charid) + "は怯みから回復した。", name(healcon_charid) + " recover" + _s(healcon_charid) + " from faltering.")
                     DamagePopupAdd "" + _conkaen, healcon_charid, DMGPOPUP_REMOVE_CONDITION, CONDITION_WINCE
 				}
 			}
@@ -5553,7 +5553,7 @@
 		}
 		if ( cdata(CDATA_ID, dmghp_charid) == CREATURE_ID_JALDABAOTH_THE_CHAOS_CHILD ) {
 			if ( cdata(CDATA_ALLIED, dmghp_charid) == 0 & gdata(GDATA_AREA) == AREA_CHAOS_CRADLE & gdata(GDATA_FLAG_MAIN) < 900 ) {
-				txt lang(name(dmghp_charid) + "は再生した。", name(dmghp_charid) + " " + is(dmghp_charid) + " healed.")
+				txt lang(name(dmghp_charid) + "は再生した。", name(dmghp_charid) + " " + have(dmghp_charid) + " regenerated.")
 				cdata(CDATA_HP, dmghp_charid) = cdata(CDATA_MAX_HP, dmghp_charid) / 4
 			}
 		}
@@ -6132,13 +6132,13 @@
 			if ( dmghp_source == DAMAGE_FROM_JALDABAOTH_SHIELDED ) {
 				txt lang(cdatan(CDATAN_NAME, dmghp_charid) + "はあなたを庇って灰になった。", cdatan(CDATAN_NAME, dmghp_charid) + " shielded you and turned to ashes.")
 				if ( dmghp_charid == CHARA_PLAYER ) {
-					ndeathcause = lang("灰になって崩れ落ちた。", "turned to ashes and collapsed")
+					ndeathcause = lang("灰になって崩れ落ちた。", "crumbled to ashes")
 				}
 			}
 			if ( dmghp_source == DAMAGE_FROM_JALDABAOTH ) {
 				txt lang(name(dmghp_charid) + "は灰になって崩れ落ちた。", name(dmghp_charid) + " turned to ashes and collapsed.")
 				if ( dmghp_charid == CHARA_PLAYER ) {
-					ndeathcause = lang("灰になって崩れ落ちた。", "turned to ashes and collapsed")
+					ndeathcause = lang("灰になって崩れ落ちた。", "crumbled to ashes")
 				}
 			}
 			if ( dmghp_source == DAMAGE_FROM_OVERCAST ) {
@@ -6377,7 +6377,7 @@
 					}
 				}
 				gdata(GDATA_FLAG_SUB_AMURDAD) += 9
-				txt lang("ネヘルタード「もう駄目…残念…」", "You failed the quest.")
+				txt lang("ネヘルタード「もう駄目…残念…」", "Amurdad: " + cnvtalk("It's no use... Alas..."))
 				msg_halt
 				evadd EVENT_AMURDEAD_SUB_CREATE_STAIRS, 0
 			}
