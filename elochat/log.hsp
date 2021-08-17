@@ -141,7 +141,7 @@
 	sdim serverList,1000
 	sdim server1
 	notesel serverList
-	netProcess serverListUrl
+;	netProcess serverListUrl
 ;	if stat=true{
 ;		serverList=netBuff
 ;		notesave "server.txt"
@@ -150,8 +150,7 @@
 		netBuff = serverList
 ;		}
 	p=instr(netBuff,0,"%"):server1=strmid(netBuff,0,p):server2=strmid(netBuff,p+1,instr(netBuff,p+1,"%"))
-	notesave "server.txt"
-	dialog netBuff
+;	notesave "server.txt"
 	#define chatReadUrl	"http://"+server1+"/log"+lang("","en")+fetchNo()+".txt"
 
 	sdim mainBuff,cfgMaxLog*200
