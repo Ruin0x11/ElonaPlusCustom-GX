@@ -13682,33 +13682,33 @@
 	if ( _switch_val == CREATURE_ID_ALLEN_THE_RESEARCHER | _switch_sw ) {
 		_switch_sw = 0
 		if ( gdata(GDATA_FLAG_SUB_RESEARCH_DESTRUCTION_CRISIS) >= 900 ) {
-			chatList 0, lang("調査隊のこと？", "Don't want it.")
-			chatList 1, lang("きっと気のせいだ", "Taloned male.")
-			buff = lang("何か…頼み事があったような気がするけど思い出せない…。", "Sorry, this is untranslated sentence.")
+			chatList 0, lang("調査隊のこと？", "You mean the research team?")
+			chatList 1, lang("きっと気のせいだ", "It's probably your imagination.")
+			buff = lang("何か…頼み事があったような気がするけど思い出せない…。", "I think I asked you for something earlier, but I can't remember what...")
 			gosub *chat_select
 			if ( chatval == 0 ) {
-				chatMore lang("そういえば…調査隊なのになんで俺一人なんだ！？おかしいだろ。確かに仲間はいたはずだ…。", "Sorry, this is untranslated sentence.")
-				chatMore lang("駄目だ！存在はぼんやりと思い出せるけど、名前も人数も思い出せない！みんな同じ格好だったから…いや、隊長はなんか紫っぽい格好をしていた気がするな…。", "Sorry, this is untranslated sentence.")
-				chatMore lang("クソ、なんでこんな中途半端な忘れ方なんだ？？あの獣にただ喰われただけなら、もっと綺麗に忘れているはずなのに。", "Sorry, this is untranslated sentence.")
-				chatMore lang("思い出せ…そうだ。俺たちは元々、エーテルの風が谷の生態系にどんな影響を与えているかを調査しにきていた。だけどある日を境に、故郷のことがだんだん思い出せなくなっていって。", "Sorry, this is untranslated sentence.")
-				chatMore lang("ただ事じゃないってアイツが…誰だっけ？とにかく騒ぎになって。そうこうしているうちに谷に記憶を喰らう獣が現れたって聞いて。この街の住民のことも思い出せなくなってきて…。", "Sorry, this is untranslated sentence.")
-				chatMore lang("それから…。", "Sorry, this is untranslated sentence.")
-				chatMore lang("調査隊？は…。", "Sorry, this is untranslated sentence.")
-				chatMore lang("ええと…。", "Sorry, this is untranslated sentence.")
-				chatList 1, lang("怖っ", "Taloned male.")
-				chatList 0, lang("たいしたことじゃない", "Don't want it.")
-				buff = lang("すまん。何の話をしてたんだっけ？", "Sorry, this is untranslated sentence.")
+				chatMore lang("そういえば…調査隊なのになんで俺一人なんだ！？おかしいだろ。確かに仲間はいたはずだ…。", "Now that you mention it... why would you call it a research \"team\" if I'm the only person in it?! That's strange. I'm pretty sure I had some company...")
+				chatMore lang("駄目だ！存在はぼんやりと思い出せるけど、名前も人数も思い出せない！みんな同じ格好だったから…いや、隊長はなんか紫っぽい格好をしていた気がするな…。", "I can't remember! I can vaguely recall their existence, but I can't remember their names or how many there were! They were all dressed the same...no, I think the captain was dressed in something purple...")
+				chatMore lang("クソ、なんでこんな中途半端な忘れ方なんだ？？あの獣にただ喰われただけなら、もっと綺麗に忘れているはずなのに。", "Damn it, why do I have to forget in such a half-hearted way? If I'd just been devoured by that beast, I would have been able to forget them completely.")
+				chatMore lang("思い出せ…そうだ。俺たちは元々、エーテルの風が谷の生態系にどんな影響を与えているかを調査しにきていた。だけどある日を境に、故郷のことがだんだん思い出せなくなっていって。", "Let me try to remember... yes, that's right. We were originally here to investigate how the Etherwind was affecting the ecosystem of the valley. But one day, I started to have trouble remembering my hometown.")
+				chatMore lang("ただ事じゃないってアイツが…誰だっけ？とにかく騒ぎになって。そうこうしているうちに谷に記憶を喰らう獣が現れたって聞いて。この街の住民のことも思い出せなくなってきて…。", "Somebody had made a huge fuss about it to me, saying it was no laughing matter... who was it? Anyway, in the meantime I'd heard that a memory-eating beast had appeared in the valley. I couldn't even remember the people who lived in this town...")
+				chatMore lang("それから…。", "And then...")
+				chatMore lang("調査隊？は…。", "The research team - if it could be called that - they were...")
+				chatMore lang("ええと…。", "Umm...")
+				chatList 1, lang("怖っ", "Woah.")
+				chatList 0, lang("たいしたことじゃない", "It's not that big of a deal.")
+				buff = lang("すまん。何の話をしてたんだっけ？", "Sorry. What were we talking about again?")
 				gosub *chat_select
 				if ( chatval == 0 ) {
-					chatMore lang("だったらいいけどさ…。", "Sorry, this is untranslated sentence."), strbye
+					chatMore lang("だったらいいけどさ…。", "I can only hope so..."), strbye
 				}
 				else {
-					chatMore lang("？？？", "Sorry, this is untranslated sentence."), strbye
+					chatMore lang("？？？", "???"), strbye
 				}
 				goto *chat_end
 			}
 			if ( chatval == 1 ) {
-				chatMore lang("そうか？重要なことだったと思うんだけどな…。", "Sorry, this is untranslated sentence."), strbye
+				chatMore lang("そうか？重要なことだったと思うんだけどな…。", "Really? I think it was something important..."), strbye
 			}
 			goto *chat_end
 		}
@@ -13903,7 +13903,7 @@
 		buff = lang("魚の釣れる場所には目印にウキを浮かべているよ。参考にしてくれ。", "I'm floating over a place where you can fish. Please use that as a reference.")
 		gosub *chat_select
 		if ( chatval == 0 ) {
-			chatMore lang("いつも通りさ。変わりゆく世界の中でも、釣れる魚は変わらない。いいことだ。", "Sorry, this is untranslated sentence.")
+			chatMore lang("いつも通りさ。変わりゆく世界の中でも、釣れる魚は変わらない。いいことだ。", "Business as usual. In an ever-changing world, the fish you catch stay the same. That's a good thing.")
 			goto *chat_end
 		}
 		if ( chatval == 1 ) {
@@ -13914,34 +13914,34 @@
 	}
 	if ( _switch_val == CREATURE_ID_MANSON_THE_CAREFUL_ADVENTURER | _switch_sw ) {
 		_switch_sw = 0
-		chatList 0, lang("何が起きているの？", "Sorry, this is untranslated sentence.")
-		chatList 1, lang("ちょっと様子見てくる", "Sorry, this is untranslated sentence.")
-		buff = lang("谷の奥地は今、人間ではどうしようもないほどの超常現象に見舞われている…。長年の冒険で培った私の勘が、そう告げておりますぞ。", "I'm floating on the place where fish can catch. Us to reference.")
+		chatList 0, lang("何が起きているの？", "What's happening here?")
+		chatList 1, lang("ちょっと様子見てくる", "I'm gonna go check it out.")
+		buff = lang("谷の奥地は今、人間ではどうしようもないほどの超常現象に見舞われている…。長年の冒険で培った私の勘が、そう告げておりますぞ。", "The depths of the valley are now experiencing supernatural phenomena beyond the control of humans.... My intuition, cultivated through years of adventuring, tells me so.")
 		gosub *chat_select
 		if ( chatval == 0 ) {
-			chatMore lang("まず、時間感覚がおかしくなっていますな。獣の発生からそれほど経っていないはずなのに、もうここに10年以上いる気がしてなりませんぞ。", "Sorry, this is untranslated sentence.")
-			chatMore lang("それに谷にいた皆さんが聞いたという謎の声。続く空間の隔離。何者かの手によって時空が捻じ曲げられていることは間違いないでしょう。", "Sorry, this is untranslated sentence.")
+			chatMore lang("まず、時間感覚がおかしくなっていますな。獣の発生からそれほど経っていないはずなのに、もうここに10年以上いる気がしてなりませんぞ。", "First of all, your sense of time gets out of whack. It couldn't have been that long since the beasts started appearing, but I can't help but feel like I've been here for more than ten years.")
+			chatMore lang("それに谷にいた皆さんが聞いたという謎の声。続く空間の隔離。何者かの手によって時空が捻じ曲げられていることは間違いないでしょう。", "And then, there's that mysterious voice that everyone in the valley seems to hear. Those rifts in continuous space. There's no doubt that someone out there is tampering with time and space.")
 			goto *chat_end
 		}
 		if ( chatval == 1 ) {
-			chatMore lang("あなたが？ふむ…。どうにも不思議な雰囲気を感じますな。まるで…そう。この世界の人間ではないようだ。", "Sorry, this is untranslated sentence.")
-			chatMore lang("失礼。ともかく並の冒険家ではないとお見受けします。それでも谷に向かわれるのならお気をつけて。携帯旅糧はお持ちですかな？きっと長く険しい道のりになるでしょう。", "Sorry, this is untranslated sentence.")
+			chatMore lang("あなたが？ふむ…。どうにも不思議な雰囲気を感じますな。まるで…そう。この世界の人間ではないようだ。", "You? Hmm... I can't help but feel these strange vibes as I'm looking at you. It's like... yeah. Like you're not from this world.")
+			chatMore lang("失礼。ともかく並の冒険家ではないとお見受けします。それでも谷に向かわれるのならお気をつけて。携帯旅糧はお持ちですかな？きっと長く険しい道のりになるでしょう。", "Pardon me. Anyway, I can see that you are no ordinary adventurer. Still, if you're heading into the valley, do take care. Are you carrying enough supplies? It will be a long and arduous journey.")
 			goto *chat_end
 		}
 		goto *chat_end
 		goto *chat_unique_SWEND1
 		_switch_sw++
 	}
-	if ( _switch_val == CREATURE_ID_CRAY_THE_CURIOUS_ADVENTURER	| _switch_sw ) {
+	if ( _switch_val == CREATURE_ID_CRAY_THE_CURIOUS_ADVENTURER | _switch_sw ) {
 		_switch_sw = 0
 		if ( cray == 1 ) {
-			chatMore lang("冒険ってのは相応の準備をしたうえでそれでも危険を冒すこと。何も考えず、何も用意せずに危険に飛び込んでいくのは、冒険じゃなく自殺行為だ。", "Sorry, this is untranslated sentence.")
-			chatMore lang("…ってマンソンによく言われるんだ。そんなに危なっかしく思われてるのかな。", "Sorry, this is untranslated sentence.")
+			chatMore lang("冒険ってのは相応の準備をしたうえでそれでも危険を冒すこと。何も考えず、何も用意せずに危険に飛び込んでいくのは、冒険じゃなく自殺行為だ。", "Adventure is about making an appropriate plan before proceeding with your risky ventures. Jumping into danger without thinking or preparation is not an adventure - it's suicide.")
+			chatMore lang("…ってマンソンによく言われるんだ。そんなに危なっかしく思われてるのかな。", "...That's what Manson always tells me, at least. I wonder if he believes I'm in that much danger.")
 			goto *chat_end
 		}
 		if ( cray == 0 ) {
-			chatMore lang("くっそー。谷の奥地が今どうなってるのか気になってしょうがないよ。でもマンソンがあれだけ止めるってことは、タイタン退治とか比較にならないくらいに危険なんだろう。", "Sorry, this is untranslated sentence.")
-			chatMore lang("俺たちが止めるのを無視して、東にある裂け目に飛び込んでいった連中がいた気がする…。あいつらも冒険家だったのかな？もうよく思い出せないが。", "Sorry, this is untranslated sentence.")
+			chatMore lang("くっそー。谷の奥地が今どうなってるのか気になってしょうがないよ。でもマンソンがあれだけ止めるってことは、タイタン退治とか比較にならないくらいに危険なんだろう。", "Damn it. I can't help but wonder what's going on in the depths of the valley right now. But if Manson is that determined to stop me from going, whatever's out there must be way more dangerous than slaying some titans.")
+			chatMore lang("俺たちが止めるのを無視して、東にある裂け目に飛び込んでいった連中がいた気がする…。あいつらも冒険家だったのかな？もうよく思い出せないが。", "I think there were some people who ignored our attempts to ward them off and jumped into the rift to the east... I wonder if they were adventurers too. I don't remember much about them anymore.")
 			cray = 1
 			goto *chat_end
 		}
