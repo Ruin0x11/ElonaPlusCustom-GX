@@ -6448,8 +6448,8 @@
 			if ( strmid(cdatan(CDATAN_NAME, tc), 0, strlen(evold)) == evold ) {
 				cdatan(CDATAN_NAME, tc) = evname + strmid(cdatan(CDATAN_NAME, tc), strlen(evold), strlen(cdatan(CDATAN_NAME, tc)) - strlen(evold))
 			}
-			chatMore lang("私は後悔していない。あの日、生魂の儀を選択したことを。それが、運命の筋書きに定められたものだったかなんて関係なく、だ。", "Sorry, this is untranslated sentence.")
-			chatMore lang("エルシアの首飾りは由緒あるお守りだ。旅の安全を祈り、出会った人々の想いを繋げるとされている。…当時はただの気休めだと思っていたが、意外とそうでもなかったようだな。", "Sorry, this is untranslated sentence.")
+			chatMore lang("私は後悔していない。あの日、生魂の儀を選択したことを。それが、運命の筋書きに定められたものだったかなんて関係なく、だ。", "I carry no regrets since that day, when I chose to partake in the Healing Ceremony - even if it was an act predetermined by the thread of fate.")
+			chatMore lang("エルシアの首飾りは由緒あるお守りだ。旅の安全を祈り、出会った人々の想いを繋げるとされている。…当時はただの気休めだと思っていたが、意外とそうでもなかったようだな。", "The Elsian Necklace is an artifact that carries a storied history. It is said to act as a prayer for one's safe travels, and that it connects its owner with the memories of the people they meet along the way. ...At the time, I believed that was nothing more than a gesture of comfort, but to my surprise, it seems like that wasn't the case.")
 			goto *chat_end
 		}
 		if ( gdata(STARTING_GDATA_FLAG + 320) > 0 ) {
@@ -6480,32 +6480,32 @@
 				cdatan(CDATAN_NAME, tc) = evname + strmid(cdatan(CDATAN_NAME, tc), strlen(evold), strlen(cdatan(CDATAN_NAME, tc)) - strlen(evold))
 			}
 			if ( gdata(GDATA_FLAG_SUB_KARURA) == 1 ) {
-				chatMore lang("私…？ええ、少し考え事をしていたの。", "Sorry, this is untranslated sentence.")
-				chatMore lang("…。", "Sorry, this is untranslated sentence.")
-				chatList 0, lang("カルラに聞いた話だ", "I have some small medals.")
-				chatList 1, lang("ラーネイレに聞いた童話だ", "I have some small medals.")
-				chatList 2, lang("よくわからなかった話だ", "I have some small medals.")
-				buff = lang("あなたは、獣に変えられた王子の話を覚えているかしら。", "Sorry, this is untranslated sentence.")
+				chatMore lang("私…？ええ、少し考え事をしていたの。", "Me...? Well, I was just thinking about something.")
+				chatMore lang("…。", "...")
+				chatList 0, lang("カルラに聞いた話だ", "You told me about that story.")
+				chatList 1, lang("ラーネイレに聞いた童話だ", "That was a fairy-tale Larnneire told me about.")
+				chatList 2, lang("よくわからなかった話だ", "I didn't really understand that story.")
+				buff = lang("あなたは、獣に変えられた王子の話を覚えているかしら。", "Would you happen to remember the story of the prince who was turned into a beast?")
 				gosub *chat_select
 				if ( chatval == 0 ) {
-					chatMore lang("たとえ姿が…いえ、全てが変わったとしても。あなたが、あなたであったことには変わりない。今の私にはそう思えるの。", "Sorry, this is untranslated sentence.")
+					chatMore lang("たとえ姿が…いえ、全てが変わったとしても。あなたが、あなたであったことには変わりない。今の私にはそう思えるの。", "Even if my appearance... no, even if everything about me has changed, that will never change the fact that you were always you. That's what I believe now.")
 					goto *chat_end
 				}
 				if ( chatval == 1 ) {
-					chatMore lang("こちら側にも同じ話があるのね。いえ、彼女だからこそ、なのかしら。", "Sorry, this is untranslated sentence.")
+					chatMore lang("こちら側にも同じ話があるのね。いえ、彼女だからこそ、なのかしら。", "Yes, the same story is told in this land. Well, perhaps she is the very reason for that.")
 					goto *chat_end
 				}
 				if ( chatval == 2 ) {
-					chatMore lang("…ごめんなさい。あなたには、まだ、この意味はわからないわね。", "Sorry, this is untranslated sentence.")
+					chatMore lang("…ごめんなさい。あなたには、まだ、この意味はわからないわね。", "...My apologies. It seems that you have yet to grasp the meaning of this story.")
 					goto *chat_end
 				}
 				goto *chat_end
 			}
 			if ( gdata(GDATA_FLAG_SUB_KARURA) == 0 ) {
 				gdata(GDATA_FLAG_SUB_KARURA) = 1
-				chatMore lang("その首飾りは…。ちょっと見せてもらえるかしら。", "Sorry, this is untranslated sentence.")
-				chatMore lang("この傷、この彫刻…。間違いないわ、これはあの日助けた旅人に…いえ、「旅人たち」に渡してきた物。", "Sorry, this is untranslated sentence.")
-				chatMore lang("そう、あなたがそうだったのね。", "Sorry, this is untranslated sentence.")
+				chatMore lang("その首飾りは…。ちょっと見せてもらえるかしら。", "That necklace... May I see it for a moment?")
+				chatMore lang("この傷、この彫刻…。間違いないわ、これはあの日助けた旅人に…いえ、「旅人たち」に渡してきた物。", "These scratches, these engravings... There's no doubt about it. This is the very artifact I gave to that traveler... no, those \"travelers\" that saved me on that day.")
+				chatMore lang("そう、あなたがそうだったのね。", "That's right. It was you, wasn't it?")
 				goto *chat_end
 			}
 			goto *chat_end
@@ -6600,42 +6600,42 @@
 		if ( gdata(GDATA_FLAG_MAIN) >= 1010 ) {
 			if ( gdata(GDATA_FLAG_DIALOG_LEOLD) < 300 ) {
 				gdata(GDATA_FLAG_DIALOG_LEOLD) = 300
-				chatMore lang("…っ！！", "Sorry, this is untranslated sentence.")
-				chatMore lang("遅いぞ" + cdatan(CDATAN_NAME, CHARA_PLAYER) + "。無事だったなら、もっと早く顔を見せてくれ。こっちはお前が灰になるところまでしか見ていないんだからな。", "Sorry, this is untranslated sentence.")
-				chatMore lang("あんなボロボロになっても諦めず神に挑むなんて、お前は馬鹿だ。最高の馬鹿だよ全く。", "Sorry, this is untranslated sentence.")
-				chatMore lang("俺も諦めずにやってみるさ。AO-Iの有用性を示し、再生産の予算を勝ち取る！その暁にはお前に見せたいものもあるからな、気長に待っていてくれ。", "Sorry, this is untranslated sentence.")
+				chatMore lang("…っ！！", "*gasp*")
+				chatMore lang("遅いぞ" + cdatan(CDATAN_NAME, CHARA_PLAYER) + "。無事だったなら、もっと早く顔を見せてくれ。こっちはお前が灰になるところまでしか見ていないんだからな。", "Where the hell were you, " + cdatan(CDATAN_NAME, CHARA_PLAYER) + "? If you're safe, show your face sooner. The last time any of us saw you was the moment you turned to ashes.")
+				chatMore lang("あんなボロボロになっても諦めず神に挑むなんて、お前は馬鹿だ。最高の馬鹿だよ全く。", "You're a damn fool for challenging God to the end like that after nearly getting beaten to death. You're the greatest damn fool who ever lived, I tell you!")
+				chatMore lang("俺も諦めずにやってみるさ。AO-Iの有用性を示し、再生産の予算を勝ち取る！その暁にはお前に見せたいものもあるからな、気長に待っていてくれ。", "I'm not about to give up on my own ventures, either. I'm going to prove that AO-I is a useful invention and raise enough funding to produce a complete replica! And when I do, I'll have big something to show you, so look forward to it.")
 				goto *chat_end
 			}
 		}
 		if ( gdata(GDATA_FLAG_MAIN) >= 840 & gdata(GDATA_FLAG_MAIN) < 1010 ) {
 			if ( gdata(GDATA_FLAG_DIALOG_LEOLD) < 200 ) {
 				gdata(GDATA_FLAG_DIALOG_LEOLD) = 200
-				chatMore lang("すまん。お前に見せてやりたいものが…いや、見てもらいたいものがあったんだがな。おじゃんになってしまった。はぁ…思った以上にヘコむな、これは。戻し作業にどれだけの月日と予算がかかることやら。", "Sorry, this is untranslated sentence.")
-				chatMore lang("…なぁ、" + cdatan(CDATAN_NAME, CHARA_PLAYER) + "。神の間に行くのはやめておけ。", "Sorry, this is untranslated sentence.")
-				chatMore lang("お前が混沌と戦うことを、ノルンってやつから聞いたよ。だが、神の間は得体の知れない奴に掌握されてしまった。AO-Iがデータを収集する間もなくスクラップにされるとは、正直俺も思わなかった。危険度は計り知れない。", "Sorry, this is untranslated sentence.")
-				chatList 0, lang("心配いらない", "I think not.")
-				chatList 1, lang("危険を冒してこそ冒険だ", "Sorry, this is untranslated sentence.")
-				chatList 2, lang("ちょっとAO-Iの仇を討ってくる", "Sorry, this is untranslated sentence.")
-				chatList 3, lang("この戦いが終わったら結婚しよう", "Sorry, this is untranslated sentence.")
-				buff = lang("頼む。行かないでくれ。", "Sorry, this is untranslated sentence.")
+				chatMore lang("すまん。お前に見せてやりたいものが…いや、見てもらいたいものがあったんだがな。おじゃんになってしまった。はぁ…思った以上にヘコむな、これは。戻し作業にどれだけの月日と予算がかかることやら。", "Sorry. There was something I wanted to show you... no, rather, something I wanted you to see. But my hopes were dashed. *Sigh*... this was even more depressing than I thought it would be. I have no idea how much time and money it will take to make another one.")
+				chatMore lang("…なぁ、" + cdatan(CDATAN_NAME, CHARA_PLAYER) + "。神の間に行くのはやめておけ。", "...Hey, " + cdatan(CDATAN_NAME, CHARA_PLAYER) + ". Don't go to the Eternal Seal.")
+				chatMore lang("お前が混沌と戦うことを、ノルンってやつから聞いたよ。だが、神の間は得体の知れない奴に掌握されてしまった。AO-Iがデータを収集する間もなくスクラップにされるとは、正直俺も思わなかった。危険度は計り知れない。", "I heard that you were fighting against Chaos from this guy named Norn. But now, the Eternal Seal has been seized by this mysterious being that none of us understand. I honestly didn't think that AO-I would turn into scrap metal before it could collect enough data about this new foe. The amount of danger you'd be in is immeasurable.")
+				chatList 0, lang("心配いらない", "No need to worry.")
+				chatList 1, lang("危険を冒してこそ冒険だ", "Nothing ventured, nothing gained.")
+				chatList 2, lang("ちょっとAO-Iの仇を討ってくる", "I'm gonna go avenge AO-I.")
+				chatList 3, lang("この戦いが終わったら結婚しよう", "When this fight is over, I'll ask for your hand.")
+				buff = lang("頼む。行かないでくれ。", "Please, listen to me. Don't go.")
 				chatesc = 0
 				gosub *chat_select
 				if ( chatval == 0 ) {
-					chatMore lang("信じていいんだな？そうだよな、お前ならきっと…。", "Sorry, this is untranslated sentence."), strbye
+					chatMore lang("信じていいんだな？そうだよな、お前ならきっと…。", "Can I trust you? Yeah, I guess I can. If it's you, I'm sure..."), strbye
 					goto *chat_end
 				}
 				if ( chatval == 1 ) {
-					chatMore lang("やはり無理か。そりゃそうだ。冒険者が冒険をやめるわけないよな。まったく…。", "Sorry, this is untranslated sentence."), strbye
+					chatMore lang("やはり無理か。そりゃそうだ。冒険者が冒険をやめるわけないよな。まったく…。", "Of course. I knew I couldn't stop you. You can't call yourself an adventurer if you give up adventuring, huh? What the hell..."), strbye
 					goto *chat_end
 				}
 				if ( chatval == 2 ) {
-					chatMore lang("そういうノリでいくのか。わかったわかった。もういい。", "Sorry, this is untranslated sentence.")
-					chatMore lang("じゃあお前が駄目だった時は、俺がお前の分もまとめて仇を討ってやるからな。どんな手を使ってでもだ。", "Sorry, this is untranslated sentence."), strbye
+					chatMore lang("そういうノリでいくのか。わかったわかった。もういい。", "So that's how you're gonna play this, huh? Fine, I get it. That's enough.")
+					chatMore lang("じゃあお前が駄目だった時は、俺がお前の分もまとめて仇を討ってやるからな。どんな手を使ってでもだ。", "Then if you don't make it out, I'll go down there myself and avenge the both of you - no matter what it takes."), strbye
 					goto *chat_end
 				}
 				if ( chatval == 3 ) {
-					chatMore lang("嫌だ。", "Sorry, this is untranslated sentence.")
-					chatMore lang("そういう約束をした奴は大抵、帰ってこないらしいからな…。", "Sorry, this is untranslated sentence."), strbye
+					chatMore lang("嫌だ。", "Nope.")
+					chatMore lang("そういう約束をした奴は大抵、帰ってこないらしいからな…。", "The people that make those kinds of promises are the ones who are least likely to return in one piece..."), strbye
 					goto *chat_end
 				}
 				goto *chat_end
