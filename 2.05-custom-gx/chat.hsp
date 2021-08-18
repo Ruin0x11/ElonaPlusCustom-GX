@@ -6635,7 +6635,7 @@
 				}
 				if ( chatval == 3 ) {
 					chatMore lang("嫌だ。", "Nope.")
-					chatMore lang("そういう約束をした奴は大抵、帰ってこないらしいからな…。", "The people that make those kinds of promises are the ones who are least likely to return in one piece..."), strbye
+					chatMore lang("そういう約束をした奴は大抵、帰ってこないらしいからな…。", "The people that make those kinds of promises are the ones least likely to return in one piece..."), strbye
 					goto *chat_end
 				}
 				goto *chat_end
@@ -8110,17 +8110,17 @@
 	if ( _switch_val == CREATURE_ID_MIKRAANESIS	| _switch_sw ) {
 		_switch_sw = 0
 		if ( gdata(GDATA_FLAG_MAIN) == 820 ) {
-			chatMore lang("この分身体の役目は終わったね。君が望むのなら手合わせをしてもいい。", "Sorry, this is untranslated sentence.")
-			chatMore lang("腕試しには丁度いいんじゃないかな。なにせ君が見ているこの私達は、ソピアーよりやや強い程度でしかないからね。", "Sorry, this is untranslated sentence.")
+			chatMore lang("この分身体の役目は終わったね。君が望むのなら手合わせをしてもいい。", "This body has served its purpose. If you wish, you may have a bout of sparring with it.")
+			chatMore lang("腕試しには丁度いいんじゃないかな。なにせ君が見ているこの私達は、ソピアーよりやや強い程度でしかないからね。", "We think it might be a good way of testing your skills. After all, this incarnation of us in front of you is only slightly stronger than Sophia.")
 			gdata(GDATA_FLAG_MAIN) = 825
 		}
 		if ( gdata(GDATA_FLAG_MAIN) >= 825 ) {
-			chatList 0, lang("まだ見ていないところがある", "Yes.")
-			chatList 1, lang("外に出して", "No.")
-			chatList 2, lang("ソピアーをどう思う？", "No.")
-			chatList 3, lang("君を知りたい", "No.")
-			chatList 4, lang("聞き流したから何をすればいいかわからない", "No.")
-			buff = lang("ラスキリスの谷間から出たいなら私達が谷の外に飛ばしてあげてもいいよ。もちろん、谷の景色を見ながらかつての旅人の道を辿って出ていってもいい。", "Sorry, this is untranslated sentence.")
+			chatList 0, lang("まだ見ていないところがある", "There is something I haven't seen yet.")
+			chatList 1, lang("外に出して", "Let me out.")
+			chatList 2, lang("ソピアーをどう思う？", "What do you think of Sophia?")
+			chatList 3, lang("君を知りたい", "I want to know about you.")
+			chatList 4, lang("聞き流したから何をすればいいかわからない", "I wasn't paying attention.")
+			buff = lang("ラスキリスの谷間から出たいなら私達が谷の外に飛ばしてあげてもいいよ。もちろん、谷の景色を見ながらかつての旅人の道を辿って出ていってもいい。", "If you want to leave the valley of Raskilis, we can certainly fly you outside of its borders. Of course, you can also follow the path winding through the valley traced by many travelers past, taking in the scenery as you go.")
 			gosub *chat_select
 			if ( chatval == 1 ) {
 				if ( gdata(GDATA_FLAG_DUEL_TARGET) > 0 ) {
@@ -8128,7 +8128,7 @@
 					txt lang("決闘から逃げるわけにはいかない！", "You can not run away from the duel!")
 					goto *chat_end
 				}
-				chatMore lang("さようなら。君のことは忘れないよ。", "Sorry, this is untranslated sentence.")
+				chatMore lang("さようなら。君のことは忘れないよ。", "Farewell. We will never forget you.")
 				gdata(GDATA_TELEPORT_AREA) = gdata(GDATA_WORLD), 1
 				msg_halt
 				gosub *screen_draw
@@ -8137,22 +8137,22 @@
 				goto *chat_end
 			}
 			if ( chatval == 2 ) {
-				chatMore lang("昔のあの子は特に知識欲が強くてね。知られざる父のことを知ろうとしすぎて大失敗したのは聞いたかな？あの時はもう皆大慌てで天から落っこちたソピアーを探して、見つかったと思ったら歪んだ情熱で自分を見失ってたせいで天に戻れなくなってたりしていて大変だったんだからね。結局、歪んだ情熱をちぎり捨てて連れ帰ったんだけど、そしたら今度は捨てた部分が人型になって活動し始めてね。妹から生まれた分身を滅するのも忍びないから自由に生きさせてたんだけど、それがエンテュメイシスになっちゃって。戦ったから知ってるよね、あの神の間にいた混沌の女神だよ。本当に、手がかかる子。", "Sorry, this is untranslated sentence.")
-				chatMore lang("まぁ、お馬鹿な末っ子は可愛い、というのが私達の総意だよ。おっと、私達から聞いたことはソピアーに言わないでおいてね、機嫌が悪くなるから。別の世界だし黙っておけば常闇の杖でもわからないよ。", "Sorry, this is untranslated sentence.")
+				chatMore lang("昔のあの子は特に知識欲が強くてね。知られざる父のことを知ろうとしすぎて大失敗したのは聞いたかな？あの時はもう皆大慌てで天から落っこちたソピアーを探して、見つかったと思ったら歪んだ情熱で自分を見失ってたせいで天に戻れなくなってたりしていて大変だったんだからね。結局、歪んだ情熱をちぎり捨てて連れ帰ったんだけど、そしたら今度は捨てた部分が人型になって活動し始めてね。妹から生まれた分身を滅するのも忍びないから自由に生きさせてたんだけど、それがエンテュメイシスになっちゃって。戦ったから知ってるよね、あの神の間にいた混沌の女神だよ。本当に、手がかかる子。", "Long ago, that girl had an particularly strong thirst for knowledge. Have you heard of the time she attempted to learn too much about her unknown father, and failed miserably? At that time, everyone was frantically searching for Sophia, who had fallen from the heavens, and by the time they finally found her she could no longer return to where she had come from, having lost herself in her own twisted passions. In the end, we ripped those warped passions out of her and brought her back to the heavens ourselves, but the parts that we tore off took the form of a human and gained consciousness. We could not bear to destroy a being whom had once been a part of our sister, so we decided to let her roam freely, but in the end she became Enthumesis. You have fought her, deep inside the Eternal Seal, so you'd know: she was a god amongst gods, the Goddess of Chaos. She was quite a handful, that girl.")
+				chatMore lang("まぁ、お馬鹿な末っ子は可愛い、というのが私達の総意だよ。おっと、私達から聞いたことはソピアーに言わないでおいてね、機嫌が悪くなるから。別の世界だし黙っておけば常闇の杖でもわからないよ。", "Well, it's our collective opinion that silly young children are adorable, anyway. And don't tell Sophia what we have told you, or you'll put her in a bad mood. If you keep silent in this other world, not even the the wielder of the Vice Staff would be able to tell.")
 				goto *chat_end
 			}
 			if ( chatval == 3 ) {
-				chatMore lang("私達は28柱が結束して生まれた合体神だよ。交合のミクシスと相互混合のシュンクラーシスと統合のシュネシスの3柱が中心となっているね。", "Sorry, this is untranslated sentence.")
-				chatMore lang("その他の内訳は、思念のエンノイア、理法のヌース、真理のアレーテイア、言葉のロゴス、生命のゾーエー、人間のアントローポス、教会のエクレーシア。", "Sorry, this is untranslated sentence.")
-				chatMore lang("深みのビュテイオス、不壊のアゲーラトス、配慮のヘンノーシス、成長のアウトピュエース、快楽のヘードネー、不動のアキネートス、独り子のモノゲーネス、浄福のマカリア。", "Sorry, this is untranslated sentence.")
-				chatMore lang("仲介のパラクレートス、信仰のピスティス、父性のパトリコス、希望のエルピス、母性のメートリコス、愛のアガペー、永遠のアエイヌース、伝道のエクレーシアスティコス、幸福のマカリオーテス、意欲のテレートス。", "Sorry, this is untranslated sentence.")
-				chatMore lang("別に覚えてくれなくていいよ。名前が長くて多くて似ていて大変だろう。", "Sorry, this is untranslated sentence.")
+				chatMore lang("私達は28柱が結束して生まれた合体神だよ。交合のミクシスと相互混合のシュンクラーシスと統合のシュネシスの3柱が中心となっているね。", "We are collectively a singular god that was formed by combining together the gods of the twenty-eight pillars. The three most important pillars are Mixsis of Mixing, Shunkraasis of Intermixing, and Shunesis of Integration.")
+				chatMore lang("その他の内訳は、思念のエンノイア、理法のヌース、真理のアレーテイア、言葉のロゴス、生命のゾーエー、人間のアントローポス、教会のエクレーシア。", "The other pillars are: Ennoia of Thought, Nuus of Reason, Areteia of Truth, Logos of Language, Zoea of Life, Anthropos of Humanity, Ecclesia of Church...")
+				chatMore lang("深みのビュテイオス、不壊のアゲーラトス、配慮のヘンノーシス、成長のアウトピュエース、快楽のヘードネー、不動のアキネートス、独り子のモノゲーネス、浄福のマカリア。", "...Buteios of Depth, Ageratos of Unbreaking, Henosis of Consideration, Outpues of Growth, Hedonay of Pleasure, Aquinatos of Immobility, Monogenes of Solitude, Macalia of Beatitude...")
+				chatMore lang("仲介のパラクレートス、信仰のピスティス、父性のパトリコス、希望のエルピス、母性のメートリコス、愛のアガペー、永遠のアエイヌース、伝道のエクレーシアスティコス、幸福のマカリオーテス、意欲のテレートス。", "...Paracleteos of Mediation, Pistis of Faith, Patrikos of Fatherhood, Elpis of Hope, Maitrikos of Motherhood, Agape of Love, Aeneus of Eternity, Ecclesiasticus of Evangelism, Macarios of Happiness, and Teres of Ambition.")
+				chatMore lang("別に覚えてくれなくていいよ。名前が長くて多くて似ていて大変だろう。", "It's fine if you don't remember them all. It would be difficult with so many long and similar names.")
 				goto *chat_end
 			}
 			if ( chatval == 4 ) {
-				chatMore lang("…。", "Sorry, this is untranslated sentence.")
-				chatMore lang("この世界が忘れられないように、記憶を共有する処置をした。", "Sorry, this is untranslated sentence.")
-				chatMore lang("君には混沌の巨城の最深層で戦うべき相手がいる。いいね？", "Sorry, this is untranslated sentence.")
+				chatMore lang("…。", "...")
+				chatMore lang("この世界が忘れられないように、記憶を共有する処置をした。", "We took steps to share our memories so that this would would not be forgotten.")
+				chatMore lang("君には混沌の巨城の最深層で戦うべき相手がいる。いいね？", "You have an opponent you must fight at the bottom of the Cradle of Chaos. Understood?")
 				goto *chat_end
 			}
 		}
