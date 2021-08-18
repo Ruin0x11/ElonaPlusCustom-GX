@@ -8163,35 +8163,35 @@
 	if ( _switch_val == CREATURE_ID_NORNE_THE_GUIDE | _switch_sw ) {
 		_switch_sw = 0
 		if ( gdata(GDATA_FLAG_MAIN) == 820 | gdata(GDATA_FLAG_MAIN) == 825 ) {
-			chatMore lang("君に渡しておきたいものがあるんだ。", "Sorry, this is untranslated sentence.")
+			chatMore lang("君に渡しておきたいものがあるんだ。", "I've got something for you.")
 			txtef COLOR_GREEN
-			txt lang("[エルシアの首飾り]と[クイーン・セドナの乗船券]を手に入れた！", "You obtain Elsian Necklace and Boarding ticket of Queen Sedona!")
+			txt lang("[エルシアの首飾り]と[クイーン・セドナの乗船券]を手に入れた！", "You obtain the [Elsian Necklace] and a [Boarding Ticket for the Queen Sedona]!")
 			snd SOUNDLIST_COMPLETE1
-			chatMore lang("これらは、ボクがこの地でガイドした最後の旅人の持ち物だ。最後のループで、最期にボクに託された。", "Sorry, this is untranslated sentence.")
-			chatMore lang("何の役にも立たないだろう。それでも君に持っていてほしい。これらを持つにふさわしいのは、君しかいないと思うから。", "Sorry, this is untranslated sentence.")
-			chatList 0, lang("頑張って", "Yes.")
-			chatList 1, lang("なんか恥ずかしいな", "No.")
-			chatList 2, lang("おい馬鹿やめろ", "No.")
-			chatList 3, lang("無言で腹を殴る", "No.")
-			buff = lang("…じゃあボクはイルヴァの民達にガイアス・ヴィスの話をしてくるよ。ああ、そうだ！ついでに君が混沌と戦うことも君の知り合いたちに教えてあげよう！", "Sorry, this is untranslated sentence.")
+			chatMore lang("これらは、ボクがこの地でガイドした最後の旅人の持ち物だ。最後のループで、最期にボクに託された。", "These were the belongings of the last traveler I ever guided in this land. They were entrusted to me at the end of the final loop.")
+			chatMore lang("何の役にも立たないだろう。それでも君に持っていてほしい。これらを持つにふさわしいのは、君しかいないと思うから。", "They'll probably be of no use to you. Still, I want you to take them, because I believe you're the only person deserving of them.")
+			chatList 0, lang("頑張って", "Good luck.")
+			chatList 1, lang("なんか恥ずかしいな", "This is a bit embarassing.")
+			chatList 2, lang("おい馬鹿やめろ", "Knock it off, idiot.")
+			chatList 3, lang("無言で腹を殴る", "(Punch him in the gut without saying a word.)")
+			buff = lang("…じゃあボクはイルヴァの民達にガイアス・ヴィスの話をしてくるよ。ああ、そうだ！ついでに君が混沌と戦うことも君の知り合いたちに教えてあげよう！", "...I'll go tell the people of Ilva about Gaius Vis. Oh, yeah! And while I'm at it, I'll tell everyone you know about your fight against Chaos!")
 			gosub *chat_select
 			if ( chatval == 3 ) {
 				snd SOUNDLIST_BASH1
-				chatMore lang("ぶぎぇっ！？何するのさ" + cdatan(CDATAN_NAME, CHARA_PLAYER) + "！", "Sorry, this is untranslated sentence.")
+				chatMore lang("ぶぎぇっ！？何するのさ" + cdatan(CDATAN_NAME, CHARA_PLAYER) + "！", "Gurk! *cough* *cough*... What are you doing, " + cdatan(CDATAN_NAME, CHARA_PLAYER) + "?")
 			}
 			gdata(GDATA_FLAG_MAIN) = 830
 			goto *chat_end
 		}
 		if ( gdata(GDATA_AREA) == AREA_AIMWELL ) {
 			if ( gdata(GDATA_FLAG_MAIN) == 780 ) {
-				chatMore lang("君は今！ガイアス・ヴィスへの第一歩を踏み出した！", "You are now! I took the first step to Gaius Vis!")
-				chatMore lang("ここまで長かった…この世界ではまだ1年程度しか経っていないけれど、ボクはループ込みで10年以上対応にあたっていたんだ。ようやく君という因子を見つけて連れてくることができたよ。", "It was long so far... In this world it has only been about a year, but I have been in response for more than 10 years with loops. Finally I found the factor you and I was able to bring it.")
-				chatMore lang("うーん。でもまだ君の認識が次元を超えて追いついていないみたいだね。おそらく君の目には、多くのものがイルヴァのものに置き換わって見えるだろう。", "Hmm. But it seems that your perception has not overtaken the dimension yet. Probably you will see many things replaced by those of Irva in your eyes.")
-				chatMore lang("さて…見る限り、依然として廃忘獣がはびこっているようだね…。あのお方は大丈夫だろうか。一緒に探しに行こう！", "Well... as far as I can see, it seems that there are still wasted animals infested... I wonder if that man is okay. Let's go looking together!")
-				chatMore lang("えっ。あのお方が誰かって？ああ、まだ説明してなかったっけ。", "Eh. Who is that person? Oh, I have not explained it yet.")
-				chatMore lang("叡智を司る中級神であるソピアーは知っているよね。あのお方はソピアーの兄姉たち28柱が合神した、超越神だよ。幾多の神々を吸収した混沌の神に対抗するための措置だったらしいね。ちなみにソピアーは一回堕天している影響でうまく合神できなかったんだって。", "I know Sopia, an intermediate god who controls wisdom. That man is her transcendent god, with her brothers and sisters 28 pillars. It seems that it was a measure against the chaotic god who absorbed many gods. By the way, Sopia did not succeed together due to the influence that was once fallen.")
-				chatMore lang("あのお方はガイアス・ヴィスの実情を知って、色々と便宜を図ってくれた。今は直接、忘却の女神と戦っているはずだ。こうしてボクが覚えている以上、間違いなく無事なはずなんだけど…。", "He knew the realities of Gaius Vis, and made various things convenient. It should be directly fighting the goddess of oblivion now. That is why I should definitely be fine as I remember this...")
-				chatMore lang("一度引き返したい場合は、こちら側のロイターを経由してね。そこの炭鉱街…ザイールにいるはずだから。", "If you want to turn back, please go through Loyter on this side. There's a coal mine there... you should be in Zaile.")
+				chatMore lang("君は今！ガイアス・ヴィスへの第一歩を踏み出した！", "You have - right now! - taken the first step towards Gaius Vis!")
+				chatMore lang("ここまで長かった…この世界ではまだ1年程度しか経っていないけれど、ボクはループ込みで10年以上対応にあたっていたんだ。ようやく君という因子を見つけて連れてくることができたよ。", "It has taken so long... In this world it has only been about a year, but because of the loops, I've been dealing with this for over 10 years by now. Finally, I've managed to find you, the deciding factor, and have managed to bring you here.")
+				chatMore lang("うーん。でもまだ君の認識が次元を超えて追いついていないみたいだね。おそらく君の目には、多くのものがイルヴァのものに置き換わって見えるだろう。", "Hmmm... But it seems that your perception has not caught up with you across dimensions yet. Perhaps, in your eyes, many things here will appear to be replaced by things you've seen in Ilva.")
+				chatMore lang("さて…見る限り、依然として廃忘獣がはびこっているようだね…。あのお方は大丈夫だろうか。一緒に探しに行こう！", "Well... as far as I can see, it seems this place is still crawling with oblivion beasts... I wonder if that girl is okay. Let's go look for her together!")
+				chatMore lang("えっ。あのお方が誰かって？ああ、まだ説明してなかったっけ。", "Eh? Who's \"that girl,\" you say? Oh, right. I haven't explained that part yet.")
+				chatMore lang("叡智を司る中級神であるソピアーは知っているよね。あのお方はソピアーの兄姉たち28柱が合神した、超越神だよ。幾多の神々を吸収した混沌の神に対抗するための措置だったらしいね。ちなみにソピアーは一回堕天している影響でうまく合神できなかったんだって。", "You know Sophia, the mid-tier god who controls wisdom, right? The girl I'm talking about is a transcendent deity who is a combination of twenty-eight of Sophia's brothers and sisters. I heard that the reason for that was to be able to stand against the God of Chaos, who's absorbed many other gods himself. By the way, I also heard that Sophia couldn't combine all those gods properly because of her fall from the heavens.")
+				chatMore lang("あのお方はガイアス・ヴィスの実情を知って、色々と便宜を図ってくれた。今は直接、忘却の女神と戦っているはずだ。こうしてボクが覚えている以上、間違いなく無事なはずなんだけど…。", "That fine lady knew the actual situation of Gaius Vis, and did a lot to help us. She must be fighting the Goddess of Oblivion herself as we speak. As long as I can remember her like I'm doing right now, she should be safe, but....")
+				chatMore lang("一度引き返したい場合は、こちら側のロイターを経由してね。そこの炭鉱街…ザイールにいるはずだから。", "If you want to head back, you'll have to talk to the Loyter on this side. He should be in the coal mining town of Zaile just nearby.")
 				gdata(GDATA_FLAG_MAIN) = 790
 				goto *chat_end
 			}
@@ -8202,8 +8202,8 @@
 				txtef COLOR_GREEN
 				txt lang("[記憶の灯]を手に入れた！", "You obtain the [Light of Memory]!")
 				snd SOUNDLIST_COMPLETE1
-				chatMore lang("それは生命情報を記録するアストラル光の塊。記憶をバックアップしてくれるから、記憶消去攻撃を受けてもかなり軽減できるらしいよ。", "It is a mass of astral light that records life information. Because it backs up memory, it seems that it can be reduced considerably even if it receives a memory erasure attack.")
-				chatMore lang("さらに、世界を行き来するための道具でもあるんだ。ロイターに向かって使ってみて。現時点で、彼は誰よりもガイアス・ヴィスとの結びつきが強い。あちら側にも極めて近い存在がいるんだ。記憶の灯はその繋がりを照らして導いてくれるよ。", "Moreover, it is also a tool for traveling around the world. Try using it toward Loyter. At the present time, he is more tied to Gaius Vis than anyone. There is a very close existence to that side. Memory lights will guide you through the connection.")
+				chatMore lang("それは生命情報を記録するアストラル光の塊。記憶をバックアップしてくれるから、記憶消去攻撃を受けてもかなり軽減できるらしいよ。", "That's a mass of astral light that records life information. Because it backs up your memories, it seems that even if you suffer from a memory erasure attack, its effects should be considerably reduced.")
+				chatMore lang("さらに、世界を行き来するための道具でもあるんだ。ロイターに向かって使ってみて。現時点で、彼は誰よりもガイアス・ヴィスとの結びつきが強い。あちら側にも極めて近い存在がいるんだ。記憶の灯はその繋がりを照らして導いてくれるよ。", "Moreover, it's also a tool for traveling around the world. Try using it while facing Loyter. At the moment, he is more tied to Gaius Vis than anyone else. There is also a very similar existence to him on the other side. The light from your memories will illuminate that connection and guide you through.")
 				gdata(GDATA_FLAG_MAIN) = 780
 				txt_questupdate
 				goto *chat_end
@@ -8217,9 +8217,9 @@
 			buff = lang("ボクに協力してほしい。前に話したことは憶えているよね？", "I want you to cooperate with me. Do you remember what you said before?")
 			gosub *chat_select
 			if ( chatval == 1 ) {
-				chatMore lang("忘却の女神の力がここまで及んでいるなんて！もう、時間がないみたいだね…。", "Sorry, this is untranslated sentence.")
+				chatMore lang("忘却の女神の力がここまで及んでいるなんて！もう、時間がないみたいだね…。", "Even you've forgotten? I can't believe the power of the Goddess of Oblivion has reached this far! It looks like we don't have much time left...")
 			}
-			chatMore lang("ヴェルニースの酒場に来てほしい。今残っている場所では、あそこが一番つながりの強いところなんだ。", "I want you to come to the bar in Vernis. It is the place where the strongest connection is the strongest in the place left now.")
+			chatMore lang("ヴェルニースの酒場に来てほしい。今残っている場所では、あそこが一番つながりの強いところなんだ。", "I want you to come to the bar in Vernis. It's the one place with the strongest connection to the other side.")
 			goto *chat_end
 		}
 		if ( gdata(GDATA_AREA) == AREA_CHAOS_CRADLE ) {
@@ -8256,7 +8256,7 @@
 					txt_duel2
 					goto *chat_end
 				}
-				chatMore lang("はい、ノースティリスへご案内〜。", "Let me be your guide~")
+				chatMore lang("はい、ノースティリスへご案内〜。", "Right! Allow me to be your guide to North Tyris~.")
 				animeid = ANIMATION_GENE
 				anic = 0
 				gosub *anime
@@ -8285,7 +8285,7 @@
 					txt_duel2
 					goto *chat_end
 				}
-				chatMore lang("はい、ロストイルヴァへご案内〜。", "Let me be your guide~")
+				chatMore lang("はい、ロストイルヴァへご案内〜。", "Right! Allow me to be your guide to Lost Irva~.")
 				animeid = ANIMATION_GENE
 				anic = 0
 				gosub *anime
@@ -9082,7 +9082,7 @@
 					chatMore lang("はは、すまんのう…。最期くらい恰好をつけさせとくれ。", "I'm sorry... Let me make a lasting appearance.")
 				}
 				if ( chatval == 3 ) {
-					chatMore lang("世界が消える前兆として、忘却の女神の化身が現れる。奴らが人々から記憶を抹消することで、人も世界も完全に忘れ去られ本当の死を迎える…。その内の一匹が魔術で我が手の内にあるのじゃ。", "As a precursor to the disappearance of the world, the incarnation of the forgetful goddess appears. By erasing memory from people, people and the world are completely forgotten and they will have real death... One of them is magical in my hands.")
+					chatMore lang("世界が消える前兆として、忘却の女神の化身が現れる。奴らが人々から記憶を抹消することで、人も世界も完全に忘れ去られ本当の死を迎える…。その内の一匹が魔術で我が手の内にあるのじゃ。", "As a precursor to the disappearance of the world, the incarnation of the Goddess of Oblivion appears. By erasing memory from people, people and the world are completely forgotten and they will have real death... One of them is magical in my hands.")
 				}
 				chatMore lang("さぁ行け、ナゴレウ！わしの記憶を燃やし、奴を蝕め！", "Go on, Nagarew! Burn my memory and erase him!")
 				goto *chat_end
