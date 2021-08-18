@@ -10571,14 +10571,13 @@
 		_switch_sw = 0
 		if ( gdata(GDATA_FLAG_SUB_MISSION_FROM_GARZIEM) >= 10 ) {
 			if ( gdata(GDATA_FLAG_SUB_MISSION_FROM_GARZIEM) \ 10 == 0 ) {
-				chatMore lang("おかげで助かっている。再び貴君の助力が必要となった時は、また連絡するのでよろしく頼む。", "Sorry, this is untranslated sentence.")
+				chatMore lang("おかげで助かっている。再び貴君の助力が必要となった時は、また連絡するのでよろしく頼む。", "You've been a great help. If I ever need your assistance again, I'll contact you.")
 				goto *chat_end
 			}
 		}
 		if ( gdata(GDATA_FLAG_SUB_MISSION_FROM_GARZIEM) \ 10 == 6 ) {
-			chatMore lang("貴君に感謝する。検査の結果、数機が電子ウイルスに感染して狂っていたことが判明。他の者も電子頭脳が熱暴走しており、いつ爆発してもおかしくない状態であった。これは私からの礼だ。受け取ってくれ。", "Sorry, this is untranslated sentence.")
-			txt lang("クエストを達成した！", "You have completed the quest!")
-			snd SOUNDLIST_COMPLETE1
+			chatMore lang("貴君に感謝する。検査の結果、数機が電子ウイルスに感染して狂っていたことが判明。他の者も電子頭脳が熱暴走しており、いつ爆発してもおかしくない状態であった。これは私からの礼だ。受け取ってくれ。", "I thank you. The tests revealed that several of the machines had been infected by an electronic virus and were going crazy. Others were suffering from overheating that originated in their electronic brains, and could have exploded at any moment. This is my way of thanking you. Please accept it.")
+			txt_questcompleted
 			txtmore
 			txt_questitem
 			if ( gdata(GDATA_FLAG_SUB_MISSION_FROM_GARZIEM) == 6 ) {
@@ -10618,12 +10617,12 @@
 		}
 		if ( gdata(GDATA_FLAG_SUB_MISSION_FROM_GARZIEM) >= 10 ) {
 			if ( gdata(GDATA_FLAG_SUB_MISSION_FROM_GARZIEM) \ 10 == 1 ) {
-				chatList 0, lang("もうこりごりだよ〜", "I'm busy now.")
-				chatList 1, lang("次の区画はもっとうまくやれるでしょう", "I'll try to do.")
-				buff = lang("ログを見るに、他の区画でも暴走している作業機械がいるようなのだが…潜入して彼らにも精密検査を受けさせてくれないだろうか？各区画は独立していて、外部からでは指導はできても強制ができないのだ。", "Sorry, this is untranslated sentence.")
+				chatList 0, lang("もうこりごりだよ〜", "I'm sick of this.")
+				chatList 1, lang("次の区画はもっとうまくやれるでしょう", "I'll do even better this time.")
+				buff = lang("ログを見るに、他の区画でも暴走している作業機械がいるようなのだが…潜入して彼らにも精密検査を受けさせてくれないだろうか？各区画は独立していて、外部からでは指導はできても強制ができないのだ。", "Looking at the logs, it seems that there are some more runaway work machines in the other sectors... Can you infiltrate the affected areas, and have the machines undergo a thorough inspection as well? Each sector is independent, and while we can provide guidance from the outside, we have no control of the inside.")
 				gosub *chat_select
 				if ( chatval != 1 ) {
-					chatMore lang("そうか…すまない。", "Sorry, this is untranslated sentence."), strbye
+					chatMore lang("そうか…すまない。", "I see... Sorry for bothering you."), strbye
 					goto *chat_end
 				}
 				if ( gdata(GDATA_FLAG_DUEL_TARGET) > 0 ) {
@@ -10632,7 +10631,7 @@
 					goto *chat_end
 				}
 				txt_questupdate
-				chatMore lang("なんと頼もしい。貴君に託すぞ！", "Sorry, this is untranslated sentence."), strbye
+				chatMore lang("なんと頼もしい。貴君に託すぞ！", "How reassuring. I shall leave it to you!"), strbye
 				gdata(GDATA_FLAG_SUB_MISSION_FROM_GARZIEM)++
 				gdata(GDATA_FLAG_WORK_A_REMAINING) = 1000 + rnd(300)
 				gdata(GDATA_FLAG_WORK_B_REMAINING) = 2000 + rnd(400)
@@ -10649,12 +10648,12 @@
 			}
 		}
 		if ( gdata(GDATA_FLAG_SUB_MISSION_FROM_GARZIEM) \ 10 >= 2 & gdata(GDATA_FLAG_SUB_MISSION_FROM_GARZIEM) \ 10 < 6 ) {
-			chatList 0, lang("しばらく行きたくない…", "I'm busy now.")
-			chatList 1, lang("もうちょっとやってみる", "I'll try to do.")
-			buff = lang("潜入の方は上手くやれそうかね？", "Sorry, this is untranslated sentence.")
+			chatList 0, lang("しばらく行きたくない…", "I'm not up to it for now...")
+			chatList 1, lang("もうちょっとやってみる", "I'll keep working at it a bit longer.")
+			buff = lang("潜入の方は上手くやれそうかね？", "How's the infiltration coming along?")
 			gosub *chat_select
 			if ( chatval != 1 ) {
-				chatMore lang("…無理せず休んでくれたまえ。", "Sorry, this is untranslated sentence."), strbye
+				chatMore lang("…無理せず休んでくれたまえ。", "...Take it easy and get some rest."), strbye
 				goto *chat_end
 			}
 			if ( gdata(GDATA_FLAG_DUEL_TARGET) > 0 ) {
@@ -10662,7 +10661,7 @@
 				txt lang("決闘の呪いからは逃げられない！", "You can not run away from the duel!")
 				goto *chat_end
 			}
-			chatMore lang("了解した。無理せずじっくり取り組んでもらって構わない。健闘を祈っている。", "Sorry, this is untranslated sentence."), strbye
+			chatMore lang("了解した。無理せずじっくり取り組んでもらって構わない。健闘を祈っている。", "Understood. Take your time, and don't overdo things. I wish you luck."), strbye
 			kurikaesitaisaku = 1
 			mdata(MDATA_DOWNSTAIRS_POS) = cdata(CDATA_Y, CHARA_PLAYER) * 1000 + cdata(CDATA_X, CHARA_PLAYER)
 			gdata(GDATA_TELEPORT_AREA) = AREA_DOCK
@@ -10675,12 +10674,12 @@
 			goto *chat_end
 		}
 		if ( gdata(GDATA_FLAG_SUB_MISSION_FROM_GARZIEM) == 1 ) {
-			chatList 0, lang("今忙しいんだ", "I'm busy now.")
-			chatList 1, lang("暇だしやるよ", "I'll try to do.")
-			buff = lang("長期戦になるかもしれないが…やってくれるかね？", "Sorry, this is untranslated sentence.")
+			chatList 0, lang("今忙しいんだ", "I'm busy right now.")
+			chatList 1, lang("暇だしやるよ", "I have time, so I'll help.")
+			buff = lang("長期戦になるかもしれないが…やってくれるかね？", "I know it's a long shot, but... will you take the job?")
 			gosub *chat_select
 			if ( chatval != 1 ) {
-				chatMore lang("そうか。すまない。", "Sorry, this is untranslated sentence."), strbye
+				chatMore lang("そうか。すまない。", "I see. My apologies."), strbye
 				goto *chat_end
 			}
 			if ( gdata(GDATA_FLAG_DUEL_TARGET) > 0 ) {
@@ -10689,7 +10688,7 @@
 				goto *chat_end
 			}
 			txt_questupdate
-			chatMore lang("関係者以外は立ち入り禁止なのだが、わが権限で特別にＩＤと転送経路を用意した。怪しまれずに潜入できるだろう。健闘を祈っている！", "Sorry, this is untranslated sentence."), strbye
+			chatMore lang("関係者以外は立ち入り禁止なのだが、わが権限で特別にＩＤと転送経路を用意した。怪しまれずに潜入できるだろう。健闘を祈っている！", "The area is restricted to authorized personnel, but I have prepared a special ID and transfer route for you. I'm sure you can sneak in without attracting suspicion. I wish you luck!"), strbye
 			gdata(GDATA_FLAG_SUB_MISSION_FROM_GARZIEM) = 2
 			gdata(GDATA_FLAG_WORK_A_REMAINING) = 1000 + rnd(300)
 			gdata(GDATA_FLAG_WORK_B_REMAINING) = 2000 + rnd(400)
@@ -10705,13 +10704,13 @@
 			goto *chat_end
 		}
 		if ( gdata(GDATA_FLAG_SUB_MISSION_FROM_GARZIEM) == 0 ) {
-			chatList 0, lang("興味がない", "Good luck.")
-			chatList 1, lang("内容を知りたい", "I was looking for you.")
-			buff = lang("よくぞ来てくれた。貴君をわが艦に迎え入れたのは、協力を要請したいことがあるためだ。もちろん報酬は用意しているが、どうかね？", "Sorry, this is untranslated sentence.")
+			chatList 0, lang("興味がない", "Not interested.")
+			chatList 1, lang("内容を知りたい", "Tell me the details.")
+			buff = lang("よくぞ来てくれた。貴君をわが艦に迎え入れたのは、協力を要請したいことがあるためだ。もちろん報酬は用意しているが、どうかね？", "I'm glad you're here. The reason I've invited you aboard my ship is because I need your help with something. Of course, I've prepared a reward for your services. How about it?")
 			gosub *chat_select
 			if ( chatval == 1 ) {
-				chatMore lang("…とある区画で暴走している作業機械がいる。こちらからの指令も一切受け付けない状態だ。送り込んだ者たちは囚われ、1機たりとも帰ってこなかった。艦長である私は持ち場を離れるわけにはいかない…そこで、だ。", "Sorry, this is untranslated sentence.")
-				chatMore lang("貴君には該当区画に潜入し、作業機械の暴走を止めてもらいたいのだ。その気になったらまた話しかけてくれたまえ。", "Sorry, this is untranslated sentence.")
+				chatMore lang("…とある区画で暴走している作業機械がいる。こちらからの指令も一切受け付けない状態だ。送り込んだ者たちは囚われ、1機たりとも帰ってこなかった。艦長である私は持ち場を離れるわけにはいかない…そこで、だ。", "...There are some work machines running amok in a particular section of the ship. They're refusing to accept any orders from us. The people we sent there are trapped, and not a single machine has returned. As captain, I can't leave my post, so...")
+				chatMore lang("貴君には該当区画に潜入し、作業機械の暴走を止めてもらいたいのだ。その気になったらまた話しかけてくれたまえ。", "I need you to infiltrate the sector in question and put an end to the outbreak of rampant machines. Please talk to me again when you are ready.")
 				gdata(GDATA_FLAG_SUB_MISSION_FROM_GARZIEM) = 1
 			}
 			goto *chat_end
@@ -10726,7 +10725,7 @@
 			gdata(GDATA_FLAG_SUB_KARAVIKA_OF_SONG_AND_DANCE) = 2
 		}
 		if ( gdata(GDATA_FLAG_SUB_KARAVIKA_OF_SONG_AND_DANCE) \ 3 == 0 ) {
-			chatMore lang("限定コンサートは大成功ー♪キミが守ってくれたおかげだねっ！これはお礼！", "This limited-time concert was a huge success.♪ That was thanks to your protection! Here, this is for you!")
+			chatMore lang("限定コンサートは大成功ー♪キミが守ってくれたおかげだねっ！これはお礼！", "The limited-time concert was a huge success.♪ I made it to the end, thanks to you! Here, this is for you!")
 			txt_questcompleted
 			txtmore
 			txt_questitem
@@ -10774,10 +10773,10 @@
 					chatList 0, lang("断る", "No.")
 					chatList 1, lang("引き受ける", "OK.")
 					if ( gdata(GDATA_FLAG_SUB_KARAVIKA_OF_SONG_AND_DANCE) == 2 ) {
-						buff = lang("あっ、キミキミ！月末の限定コンサートなんだけど、会場内の警備に回す人員がいなくてさ。報酬は出すから引き受けてくれないかなー？ホント緊急なの！", "Hey, you there you! Even though this is a limited-time concern at the end of the month, we don't have enough security staff around here. Would you do that for some remuneration? It's really urgent!")
+						buff = lang("あっ、キミキミ！月末の限定コンサートなんだけど、会場内の警備に回す人員がいなくてさ。報酬は出すから引き受けてくれないかなー？ホント緊急なの！", "Hey, you there! Yes, you! I'm about to hold a limited-time concert for the end of this month, but we don't have the manpower to provide security for the venue. I can offer you a reward, so will you help us out? It's really urgent!")
 					}
 					if ( gdata(GDATA_FLAG_SUB_KARAVIKA_OF_SONG_AND_DANCE) != 2 ) {
-						buff = lang("あっ、いいところに！またキミに会場警備をお願いしたいんだけど、いいかな？", "Oh, that turned out nice! I'd like to have you do security here again, would that be fine?")
+						buff = lang("あっ、いいところに！またキミに会場警備をお願いしたいんだけど、いいかな？", "Ah, perfect timing! I'd like to have you do security here again, would that be alright?")
 					}
 					gosub *chat_select
 					if ( chatval == 1 ) {
@@ -10786,8 +10785,8 @@
 							txt_duel2
 							goto *chat_end
 						}
-						chatMore lang("やった！そうと決まれば急いで会場に向かうよ！", "Hooray! Since that is decided, let's go to the hall!")
-						chatMore lang("着いたらすぐに始めるから！私の演奏が中断されたりお客さんが死んだりしたら失敗だよ。外の警備を突破して会場にストーカーが押し入ってくると思うから、コンサートを守り抜いてね。", "I'll be starting as soon as I arrive! If my performance is interrupted or a customer dies, that would be a huge problem! I think the stalker will break through the outside guards, please defend this concert.")
+						chatMore lang("やった！そうと決まれば急いで会場に向かうよ！", "Hooray! With that decided, let's get over to the venue right away!")
+						chatMore lang("着いたらすぐに始めるから！私の演奏が中断されたりお客さんが死んだりしたら失敗だよ。外の警備を突破して会場にストーカーが押し入ってくると思うから、コンサートを守り抜いてね。", "We'll start as soon as we get there! If my performance is interrupted or the audience dies, that would be a huge problem! I'm sure there will be some stalkers trying to bypass the security detail outside and break into the venue, so please protect the concert to the end.")
 						txt_questupdate
 						mdata(MDATA_DOWNSTAIRS_POS) = cdata(CDATA_Y, CHARA_PLAYER) * 1000 + cdata(CDATA_X, CHARA_PLAYER)
 						gdata(GDATA_TELEPORT_AREA) = AREA_OL_DRAN
@@ -10800,16 +10799,16 @@
 						goto *chat_end
 					}
 					else {
-						chatMore lang("う〜ん。ファンには悪いけど安全対策ができないとやっぱり中止だよねぇ…。", "Well... I feel sorry for the fans, but with no security staff the concert is cancelled as expected..."), strbye
+						chatMore lang("う〜ん。ファンには悪いけど安全対策ができないとやっぱり中止だよねぇ…。", "Hmmm.... I feel sorry for the fans, but if we can't provide an appropriate level of safety, we'll have to cancel..."), strbye
 						goto *chat_end
 					}
 				}
 				if ( gdata(GDATA_LEVEL) == 5 ) {
-					chatMore lang("みんなお待たせ〜！さぁ、今日も歌って踊って奏でるよーっ！", "Sorry to keep you waiting, everybody! Well, let's sing, dance, and play today too!")
+					chatMore lang("みんなお待たせ〜！さぁ、今日も歌って踊って奏でるよーっ！", "Sorry to keep you waiting, everybody! Let's sing, dance, and have some fun 'till the sun comes up!")
 					snd SOUNDLIST_CHEER
 					snd SOUNDLIST_CHEER
 					snd SOUNDLIST_CHEER
-					chatMore lang("よーし、テンション上がってきた！！！愛してるぜベイベー！", "Alllright, tension is at MAX!!! I LOVE YOU BAAABY!"), strbaby
+					chatMore lang("よーし、テンション上がってきた！！！愛してるぜベイベー！", "Alllllright! I'm getting excited now!!! I LOVE YOU BAAABY!"), strbaby
 					cdata(CDATA_ROW_ACT, tc) = ACTION_PERFORM
 					cdata(CDATA_ACTION_PERIOD, tc) = 9999
 					ens = 1
@@ -10909,37 +10908,37 @@
 			goto *chat_end
 		}
 		if ( chatval == 3 ) {
-			chatMore lang("握手権？ちょっとまってね…。", "Sorry, this is untranslated sentence.")
-			chatMore lang("はい、オッケー！じゃあ手を出して！", "Sorry, this is untranslated sentence.")
+			chatMore lang("握手権？ちょっとまってね…。", "Handshake rights? Just a sec...")
+			chatMore lang("はい、オッケー！じゃあ手を出して！", "O-kay! Give me your hand!")
 			if ( gdata(GDATA_FLAG_HANDSHAKE_RIGHTS) == 1 ) {
-				chatMore lang("うーん、初めての人と握手するのは緊張するなぁ。…これからも応援してね！", "Sorry, this is untranslated sentence."), strthankyou
+				chatMore lang("うーん、初めての人と握手するのは緊張するなぁ。…これからも応援してね！", "Hmmmm... I tend to get nervous when shaking hands with someone new. ...Keep supporting me in the future!"), strthankyou
 			}
 			if ( gdata(GDATA_FLAG_HANDSHAKE_RIGHTS) == 3 ) {
-				chatMore lang("また握手に来てくれたんだ？ふふん。これでも、握手したファンの顔はちゃんと覚えているんだよっ。", "Sorry, this is untranslated sentence."), strthankyou
+				chatMore lang("また握手に来てくれたんだ？ふふん。これでも、握手したファンの顔はちゃんと覚えているんだよっ。", "You're here to shake my hand again? Hoho. You know, I can still remember the faces of all the fans I've shaken hands with."), strthankyou
 			}
 			if ( gdata(GDATA_FLAG_HANDSHAKE_RIGHTS) == 5 ) {
-				chatMore lang("まいどごひいきに！…ふふっ、ヤカ姐の真似しちゃった。無理には信仰しなくていいけど、富の女神もよろしくね！", "Sorry, this is untranslated sentence."), strthankyou
+				chatMore lang("まいどごひいきに！…ふふっ、ヤカ姐の真似しちゃった。無理には信仰しなくていいけど、富の女神もよろしくね！", "Thank you for your patronage! ...Heheh, I imitated big sis Yacatect. You don't have to believe in God, but please take care of the Goddess of Wealth!"), strthankyou
 			}
 			if ( gdata(GDATA_FLAG_HANDSHAKE_RIGHTS) == 7 ) {
-				chatMore lang("よーし、今日は一段と張り切っちゃうぞ。あたしの歌と踊りと演奏を楽しんでいってね！", "Sorry, this is untranslated sentence."), strthankyou
+				chatMore lang("よーし、今日は一段と張り切っちゃうぞ。あたしの歌と踊りと演奏を楽しんでいってね！", "Alright, today I'm going to kick things up a notch. I hope you'll enjoy my singing, dancing and performance!"), strthankyou
 			}
 			if ( gdata(GDATA_FLAG_HANDSHAKE_RIGHTS) == 9 ) {
-				chatMore lang("ここまで応援してくれる人がいると思うと、なんか感激しちゃうな。うん…素直に嬉しいよ！", "Sorry, this is untranslated sentence."), strthankyou
+				chatMore lang("ここまで応援してくれる人がいると思うと、なんか感激しちゃうな。うん…素直に嬉しいよ！", "It's kind of inspiring to think that there are people who support me so much. Yeah...Honestly, I'm flattered!"), strthankyou
 			}
 			if ( gdata(GDATA_FLAG_HANDSHAKE_RIGHTS) == 11 ) {
-				chatMore lang("キミは握手が好きだねー。…あたしも好きだけどね！なんだか、元気を貰える気がするの。捧げものから神力を貰うのもこんな感じなのかな？", "Sorry, this is untranslated sentence."), strthankyou
+				chatMore lang("キミは握手が好きだねー。…あたしも好きだけどね！なんだか、元気を貰える気がするの。捧げものから神力を貰うのもこんな感じなのかな？", "You like to shake hands, don't you? ...I like it too! It feels like being recharged. Is this what it's like to receive divine power from an offering?"), strthankyou
 			}
 			p = gdata(GDATA_FLAG_HANDSHAKE_RIGHTS) / 2
 			if ( gdata(GDATA_FLAG_HANDSHAKE_RIGHTS) >= 13 ) {
-				chatMore lang("これで握手に来てくれるの" + p + "回目だよね？今日も盛り上がっていくよベイベー！", "Sorry, this is untranslated sentence."), strbaby
+				chatMore lang("これで握手に来てくれるの" + p + "回目だよね？今日も盛り上がっていくよベイベー！", "This is the " + cnvrank(p) + " time we've shook hands, isn't it? Let's have another exciting day today, baby!"), strbaby
 			}
 			modimp tc, 10
 			gdata(GDATA_FLAG_HANDSHAKE_RIGHTS)++
 			goto *chat_end
 		}
 		if ( chatval == 1 ) {
-			chatMore lang("あー。サインについてはヤカ姐も教えてくれなかったっけ…。", "Oh. Big sis Yacatect didn't tell me anything about doing autographs...")
-			chatMore lang("練習しておくからまた今度、ね？", "Maybe next time, okay?"), strbye
+			chatMore lang("あー。サインについてはヤカ姐も教えてくれなかったっけ…。", "Oh. Big sis Yacatect didn't teach me how to sign autographs...")
+			chatMore lang("練習しておくからまた今度、ね？", "Maybe after I've practiced a bit, okay?"), strbye
 			goto *chat_end
 		}
 		if ( chatval == 2 ) {
