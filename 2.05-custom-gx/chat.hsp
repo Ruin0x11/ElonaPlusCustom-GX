@@ -846,11 +846,11 @@
 					modimp tc, -5
 					chatList 1, lang("用事がありまして…", "I had something come up, so...")
 					chatList 0, lang("一度帰ったほうが能率が上がると判断しました", "I decided that returning home would improve my efficiency.")
-					buff = lang("お前さぁ！みんなが必死こいて頑張ってるのに何帰ってんの？？自分さえよければいいとか考えてんだろ？…おい、聞いてんのかコラァァァ！！！", "Hey, YOU! Why are you leaving NOW while everyone else here is working their asses off? ...Wait. I get it. You think that YOU'RE the only person that matters here, is that it? ...HEY! Are you LISTENING to me!?"
+					buff = lang("お前さぁ！みんなが必死こいて頑張ってるのに何帰ってんの？？自分さえよければいいとか考えてんだろ？…おい、聞いてんのかコラァァァ！！！", "Hey, YOU! Why are you leaving NOW while everyone else here is working their asses off? So you think that YOU'RE the only person that matters here, is that it? ...HEY! Are you LISTENING to me!?"
 					chatesc = 0
 					gosub *chat_select
 					if ( chatval == 1 ) {
-						chatMore lang("お前新入りだからって甘えてるだろ。そういうのここじゃ通用しねえからな、言っとくけどよぉ！！ああ？常識ってもんがねえのか？", "\"But I'm new here, and I'm scared, and blah blah blah...\" BULLSHIT! That's not how things work here, you dumbass! There's this thing called \"common sense\", yeah? Might have heard of it somewhere? USE IT!")
+						chatMore lang("お前新入りだからって甘えてるだろ。そういうのここじゃ通用しねえからな、言っとくけどよぉ！！ああ？常識ってもんがねえのか？", "\"But I'm new here, and I'm so scared, and blah blah blah...\" BULLSHIT! That's not how things work here, you dumbass! There's this thing called \"common sense\", yeah? Might have heard of it somewhere? USE IT!")
 						goto *chat_event_SWEND1
 					}
 					if ( chatval == 0 ) {
@@ -866,7 +866,7 @@
 				chatMore lang("おっと。お前が艦長の推薦でやってきた新入りか。わからないことがあったらリーダーの俺にちゃんと聞くんだぞ。", "Ah, so you're the new guy the captain recommended. If you've got any questions, ask me. I'm the leader of this joint.")
 				chatList 1, lang("ＡＢＣの内容を教えてください", "Please tell me about each of the jobs.")
 				chatList 0, lang("暴走機械がいるって聞いたんですけど", "I heard there was a runaway machine.")
-				buff = lang("さっそくだがお前の仕事の割り当ては、仕事Ａ：" + gdata(GDATA_FLAG_WORK_A_REMAINING) + "、仕事Ｂ：" + gdata(GDATA_FLAG_WORK_B_REMAINING) + "、仕事Ｃ：" + gdata(GDATA_FLAG_WORK_C_REMAINING) + "だ。頼むぞ。", "I'll cut to the chase. Here's your work assignment. Job A: " + gdata(GDATA_FLAG_WORK_A_REMAINING) " units. Job B: " + gdata(GDATA_FLAG_WORK_B_REMAINING) + " units. Job C:" + gdata(GDATA_FLAG_WORK_C_REMAINING) + " units. Get to it.")
+				buff = lang("さっそくだがお前の仕事の割り当ては、仕事Ａ：" + gdata(GDATA_FLAG_WORK_A_REMAINING) + "、仕事Ｂ：" + gdata(GDATA_FLAG_WORK_B_REMAINING) + "、仕事Ｃ：" + gdata(GDATA_FLAG_WORK_C_REMAINING) + "だ。頼むぞ。", "I'll cut to the chase. Here's your work assignment. Work A: " + gdata(GDATA_FLAG_WORK_A_REMAINING) " units. Work B: " + gdata(GDATA_FLAG_WORK_B_REMAINING) + " units. Work C:" + gdata(GDATA_FLAG_WORK_C_REMAINING) + " units. Get to it.")
 				chatesc = 0
 				gosub *chat_select
 				if ( chatval == 1 ) {
@@ -8146,12 +8146,12 @@
 				chatMore lang("その他の内訳は、思念のエンノイア、理法のヌース、真理のアレーテイア、言葉のロゴス、生命のゾーエー、人間のアントローポス、教会のエクレーシア。", "The other pillars are: Ennoia of Thought, Nuus of Reason, Areteia of Truth, Logos of Language, Zoea of Life, Anthropos of Humanity, Ecclesia of Church...")
 				chatMore lang("深みのビュテイオス、不壊のアゲーラトス、配慮のヘンノーシス、成長のアウトピュエース、快楽のヘードネー、不動のアキネートス、独り子のモノゲーネス、浄福のマカリア。", "...Buteios of Depth, Ageratos of Unbreaking, Henosis of Consideration, Outpues of Growth, Hedonay of Pleasure, Aquinatos of Immobility, Monogenes of Solitude, Macalia of Beatitude...")
 				chatMore lang("仲介のパラクレートス、信仰のピスティス、父性のパトリコス、希望のエルピス、母性のメートリコス、愛のアガペー、永遠のアエイヌース、伝道のエクレーシアスティコス、幸福のマカリオーテス、意欲のテレートス。", "...Paracleteos of Mediation, Pistis of Faith, Patrikos of Fatherhood, Elpis of Hope, Maitrikos of Motherhood, Agape of Love, Aeneus of Eternity, Ecclesiasticus of Evangelism, Macarios of Happiness, and Terethos of Ambition.")
-				chatMore lang("別に覚えてくれなくていいよ。名前が長くて多くて似ていて大変だろう。", "It's fine if you don't remember them all. It would be difficult with so many long and similar names.")
+				chatMore lang("別に覚えてくれなくていいよ。名前が長くて多くて似ていて大変だろう。", "It's fine if you don't remember them all. It would be difficult with all of those long and similar names.")
 				goto *chat_end
 			}
 			if ( chatval == 4 ) {
 				chatMore lang("…。", "...")
-				chatMore lang("この世界が忘れられないように、記憶を共有する処置をした。", "We took steps to share our memories so that this would would not be forgotten.")
+				chatMore lang("この世界が忘れられないように、記憶を共有する処置をした。", "We took steps to share our memories so that this world would not be forgotten.")
 				chatMore lang("君には混沌の巨城の最深層で戦うべき相手がいる。いいね？", "You have an opponent you must fight at the bottom of the Cradle of Chaos. Understood?")
 				goto *chat_end
 			}
@@ -8185,12 +8185,12 @@
 		if ( gdata(GDATA_AREA) == AREA_AIMWELL ) {
 			if ( gdata(GDATA_FLAG_MAIN) == 780 ) {
 				chatMore lang("君は今！ガイアス・ヴィスへの第一歩を踏み出した！", "You have - right now! - taken the first step towards Gaius Vis!")
-				chatMore lang("ここまで長かった…この世界ではまだ1年程度しか経っていないけれど、ボクはループ込みで10年以上対応にあたっていたんだ。ようやく君という因子を見つけて連れてくることができたよ。", "It has taken so long... In this world it has only been about a year, but because of the loops, I've been dealing with this for over 10 years by now. Finally, I've managed to find you, the deciding factor, and have managed to bring you here.")
+				chatMore lang("ここまで長かった…この世界ではまだ1年程度しか経っていないけれど、ボクはループ込みで10年以上対応にあたっていたんだ。ようやく君という因子を見つけて連れてくることができたよ。", "It has taken so long... In this world it has only been about a year, but because of the loops, I've been dealing with this for over 10 years by now. Finally, I've managed to find you, the crucial factor in all of this, and have managed to bring you here.")
 				chatMore lang("うーん。でもまだ君の認識が次元を超えて追いついていないみたいだね。おそらく君の目には、多くのものがイルヴァのものに置き換わって見えるだろう。", "Hmmm... But it seems that your perception has not caught up with you across dimensions yet. Perhaps, in your eyes, many things here will appear to be replaced by things you've seen in Irva.")
 				chatMore lang("さて…見る限り、依然として廃忘獣がはびこっているようだね…。あのお方は大丈夫だろうか。一緒に探しに行こう！", "Well... as far as I can see, it seems this place is still crawling with oblivion beasts... I wonder if that girl is okay. Let's go look for her together!")
 				chatMore lang("えっ。あのお方が誰かって？ああ、まだ説明してなかったっけ。", "Eh? Who's \"that girl\", you say? Oh, right. I haven't explained that part yet.")
 				chatMore lang("叡智を司る中級神であるソピアーは知っているよね。あのお方はソピアーの兄姉たち28柱が合神した、超越神だよ。幾多の神々を吸収した混沌の神に対抗するための措置だったらしいね。ちなみにソピアーは一回堕天している影響でうまく合神できなかったんだって。", "You know Sophia, the mid-tier god who controls wisdom, right? The girl I'm talking about is a transcendent deity who is a combination of twenty-eight of Sophia's brothers and sisters. I heard that the reason for that was to be able to stand against the God of Chaos, who's absorbed many other gods himself. By the way, I also heard that Sophia couldn't combine all those gods properly because of her fall from the heavens.")
-				chatMore lang("あのお方はガイアス・ヴィスの実情を知って、色々と便宜を図ってくれた。今は直接、忘却の女神と戦っているはずだ。こうしてボクが覚えている以上、間違いなく無事なはずなんだけど…。", "That fine lady knew the actual situation of Gaius Vis, and did a lot to help us. She must be fighting the Goddess of Oblivion herself as we speak. As long as I can remember her like I'm doing right now, she should be safe, but....")
+				chatMore lang("あのお方はガイアス・ヴィスの実情を知って、色々と便宜を図ってくれた。今は直接、忘却の女神と戦っているはずだ。こうしてボクが覚えている以上、間違いなく無事なはずなんだけど…。", "That fine lady knew the actual situation of Gaius Vis, and did a lot to help us. She must be fighting the Goddess of Oblivion herself as we speak. As long as I can remember her like I'm doing right now, she should be safe, but...")
 				chatMore lang("一度引き返したい場合は、こちら側のロイターを経由してね。そこの炭鉱街…ザイールにいるはずだから。", "If you want to head back, you'll have to talk to the Loyter on this side. He should be in the coal mining town of Zaile just nearby.")
 				gdata(GDATA_FLAG_MAIN) = 790
 				goto *chat_end
@@ -8804,7 +8804,7 @@
 			if ( gdata(GDATA_FLAG_MAIN_SOPHIA_THE_WISE) < 400 ) {
 				gdata(GDATA_FLAG_MAIN_SOPHIA_THE_WISE) = 400
 				chatMore lang("よく来たね" + cdatan(CDATAN_NAME, CHARA_PLAYER) + "。身体の具合はどうかな。限りなく以前と同じはずだけどね。", "I'm glad you're here, " + cdatan(CDATAN_NAME, CHARA_PLAYER) + ". How is your body feeling? I'm sure it's the same as it's always been.")
-				chatMore lang("報酬については…あれから色々と考えたんだけどね。選ばせておいてなんだけど、他のが良かったとか後で言われても面倒だから、もう全部渡しておくよ。当初の想定以上に働いてくれたこともあるしね。", "As for your reward... I've thought about it a lot since then. I would have made you choose, but it would be too much trouble if you came back and said you wanted something else, so I'll just reward you with everything instead. You've worked a lot harder than we expected you to, besides.")
+				chatMore lang("報酬については…あれから色々と考えたんだけどね。選ばせておいてなんだけど、他のが良かったとか後で言われても面倒だから、もう全部渡しておくよ。当初の想定以上に働いてくれたこともあるしね。", "As for your reward... I've thought about it a lot since then. I would have made you choose, but it would be too much trouble if you came back and said you wanted something else, so I'll just reward you with everything I've prepared instead. You've worked a lot harder than we expected you to, besides.")
 				flt
 				itemcreate -1, ITEM_ID_G_FINGER, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
 				inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
@@ -8832,7 +8832,7 @@
 				chatList 1, lang("ちょっとした冒険だな", "Sounds like a nice little adventure.")
 				chatList 2, lang("オルフェと決着をつけてくる", "I'm going to settle this with Orphe.")
 				chatList 3, lang("この戦いが終わったら結婚しよう", "When this fight is over, I'll ask for your hand.")
-				buff = lang("念のために最終対抗手段は用意しておいた…けれど内容は捨て身同然だし、どこまで通用するかも疑問だからあまり使いたくはないね。", "I've prepared a final countermeasure just in case... but I'm wary of using it. That would equivalent to sacrificing everything we have left, and I'm not even sure such a plan would work in the end.")
+				buff = lang("念のために最終対抗手段は用意しておいた…けれど内容は捨て身同然だし、どこまで通用するかも疑問だからあまり使いたくはないね。", "I've prepared a final countermeasure just in case... but I'm wary of using it. That would equivalent to sacrificing everything we have left, and I'm not even sure such a plan could work if worst comes to worst.")
 				chatesc = 0
 				gosub *chat_select
 				if ( chatval == 0 ) {
@@ -8850,7 +8850,7 @@
 				}
 				if ( chatval == 3 ) {
 					chatMore lang("えっっ！？", "Ehhh---?!")
-					chatMore lang("な、何を馬鹿なことを言っているのかな…。いいかい。私は生まれる前から双子の兄であるテレートスを伴侶としてデザインされている。確かにテレートスは合神していなくなってしまったし結婚という儀式も行ってはいない。しかし私と結婚しようとするのはいかがなものかと思うね。いや、もちろん私だって異種族婚そのものを否定するわけではないのだけれど、特に私は一度堕天した関係で他の神ほど魂が綺麗ではないから、同じ神なら別の…ああもう！", "W-What a foolish thing to say... Listen closely. Even before I was born, I was designed to have my twin brother, Terethos, as my partner. It is true that Terethos is no longer with us, and that we never held anything that could be considered a marriage ceremony. But still, wouldn't you consider the idea of marrying me to be a questionable one? I mean, it's not that I have anything against interracial marriage itself, but since I have fallen from grace in the past, my soul is not as pure as that of the other gods, so even if I were to pledge my life to another god I'd just... Oh, heavens!")
+					chatMore lang("な、何を馬鹿なことを言っているのかな…。いいかい。私は生まれる前から双子の兄であるテレートスを伴侶としてデザインされている。確かにテレートスは合神していなくなってしまったし結婚という儀式も行ってはいない。しかし私と結婚しようとするのはいかがなものかと思うね。いや、もちろん私だって異種族婚そのものを否定するわけではないのだけれど、特に私は一度堕天した関係で他の神ほど魂が綺麗ではないから、同じ神なら別の…ああもう！", "W-What a foolish thing to say... Listen closely. Even before I was born, I was specifically designed to have my twin brother, Terethos, as my partner. It is true that Terethos is no longer with us, and that we never held anything that could be considered a marriage ceremony. But still, wouldn't you consider the idea of marrying me to be a questionable one? I mean, it's not that I have anything against interracial marriage itself, but since I have fallen from grace in the past, my soul is not as pure as that of the other gods, so even if I were to pledge my life to another god I'd just... Oh, heavens!")
 					chatMore lang("…まぁ、そういうわけで。まずはお友達から始めるべきだと思うね。", "...Anyway, those are my reasons. I think we should just remain friends and go from there."), strbye
 					goto *chat_end
 				}
@@ -20002,33 +20002,33 @@
 				chatMore lang("これからじっくりと教育してやる。「ありがとうございます」は？", "I'm going to take my time teaching you this. Where's my \"thanks\", huh?")
 			}
 			if ( kaiwa == 1 ) {
-				chatMore lang("お前、よく見たらなかなかいい体つきしてるよなぁ…。おいおい、ただのスキンシップだろ嫌がるなよぉ〜。ぐへへ。", "Well well. On closer inspection, it looks like you're packing some serious heat there... Hey, hey, it's just some touchy-feely, loosen up a bit!. Guheheh.")
+				chatMore lang("お前、よく見たらなかなかいい体つきしてるよなぁ…。おいおい、ただのスキンシップだろ嫌がるなよぉ〜。ぐへへ。", "Well, well. On closer inspection, it looks like you're packing some serious heat there... Hey, hey, relax. I just wanna get a bit closer to you. Guheheh.")
 			}
 			if ( kaiwa == 2 ) {
-				chatMore lang("おい新入り、こっちのメンツ潰したらただじゃおかねえからな。", "Sorry, this is untranslated sentence.")
+				chatMore lang("おい新入り、こっちのメンツ潰したらただじゃおかねえからな。", "Hey, newbie. If you damage my reputation, you're gonna pay.")
 			}
 			if ( kaiwa == 3 ) {
-				chatMore lang("適当にやっておけばいいんだよ適当に！お前みたいなグズがよくこの部署に来れたな！", "Sorry, this is untranslated sentence.")
+				chatMore lang("適当にやっておけばいいんだよ適当に！お前みたいなグズがよくこの部署に来れたな！", "Just do it right the first time! Geez! Why in the world did they hire a piece of shit like you into this division?!")
 			}
 			if ( kaiwa == 4 ) {
-				chatMore lang("お前なんだか調子のってるよな。一発殴られないとわかんねえか？", "Sorry, this is untranslated sentence.")
+				chatMore lang("お前なんだか調子のってるよな。一発殴られないとわかんねえか？", "Looks like you're still not getting the picture about these parts. How about I beat some sense into you, huh?")
 			}
 		}
 		else {
 			if ( kaiwa == 0 ) {
-				chatMore lang("あぁもう本当に使えない。みんなぁ〜この新入り本当に使えないわよぉ！", "Sorry, this is untranslated sentence.")
+				chatMore lang("あぁもう本当に使えない。みんなぁ〜この新入り本当に使えないわよぉ！", "Ughhh, you newbies are so damn useless! Hey guys! This small fry is dragging all of us down!")
 			}
 			if ( kaiwa == 1 ) {
-				chatMore lang("別に歯向かってもいいわよ？リーダーに、新入りが仕事サボってたって報告するだけだからぁ！", "Sorry, this is untranslated sentence.")
+				chatMore lang("別に歯向かってもいいわよ？リーダーに、新入りが仕事サボってたって報告するだけだからぁ！", "What do I care if you complain? I'll just send a report to the boss that the new kid skipped work!")
 			}
 			if ( kaiwa == 2 ) {
-				chatMore lang("散らかってる床の片づけは新入りの仕事でしょ！！そんなこともわからないの？今までいた部署では、さぞかし甘やかされてきたんでしょうね！", "Sorry, this is untranslated sentence.")
+				chatMore lang("散らかってる床の片づけは新入りの仕事でしょ！！そんなこともわからないの？今までいた部署では、さぞかし甘やかされてきたんでしょうね！", "It's the new kid's job to clean up all this filth on the floor! Don't you even understand something as simple as that? You must have been spoiled rotten in your last division!")
 			}
 			if ( kaiwa == 3 ) {
-				chatMore lang("リーダーに取り入ろうっていうアンタの魂胆は丸見えなの！ああ意地汚い！顔を見ているだけで不快だわぁ〜！", "Sorry, this is untranslated sentence.")
+				chatMore lang("リーダーに取り入ろうっていうアンタの魂胆は丸見えなの！ああ意地汚い！顔を見ているだけで不快だわぁ〜！", "I can see right through you, kid! You're just trying cozy up to the boss, aren't you?! You're pathetic! PATHETIC! I feel like throwing up just looking at your disgusting little face!")
 			}
 			if ( kaiwa == 4 ) {
-				chatMore lang("アンタの前任者はもう少し使えたわ。あいつじゃなくて、アンタが壊れればよかったのに。", "Sorry, this is untranslated sentence.")
+				chatMore lang("アンタの前任者はもう少し使えたわ。あいつじゃなくて、アンタが壊れればよかったのに。", "The last guy in your position was a little more useful. If only YOU were the one have a mental breakdown, not him...")
 			}
 		}
 		goto *chat_end
@@ -20062,101 +20062,101 @@
 			kaiwa = 6
 		}
 		if ( kaiwa == 0 ) {
-			chatList 1, lang("頑張ります！", "Sorry, this is untranslated sentence.")
-			chatList 0, lang("実はやり方がよくわからないところがあって…", "Sorry, this is untranslated sentence.")
+			chatList 1, lang("頑張ります！", "I'll do my best!")
+			chatList 0, lang("実はやり方がよくわからないところがあって…", "Actually, there's something I don't quite understand how to do...")
 			if ( gdata(GDATA_FLAG_SUB_MISSION_FROM_GARZIEM) \ 10 == 5 ) {
-				chatList 2, lang("職場の改善が必要です", "Sorry, this is untranslated sentence.")
+				chatList 2, lang("職場の改善が必要です", "We need workplace reforms.")
 			}
-			buff = lang("お前の仕事の残り具合は…仕事Ａ：" + gdata(GDATA_FLAG_WORK_A_REMAINING) + "、仕事Ｂ：" + gdata(GDATA_FLAG_WORK_B_REMAINING) + "、仕事Ｃ：" + gdata(GDATA_FLAG_WORK_C_REMAINING) + "と言ったところだな。", "You have to process " + gdata(GDATA_FLAG_WORK_A_REMAINING) + " work-A, " + gdata(GDATA_FLAG_WORK_B_REMAINING) + " work-B and " + gdata(GDATA_FLAG_WORK_C_REMAINING) + " work-C.")
+			buff = lang("お前の仕事の残り具合は…仕事Ａ：" + gdata(GDATA_FLAG_WORK_A_REMAINING) + "、仕事Ｂ：" + gdata(GDATA_FLAG_WORK_B_REMAINING) + "、仕事Ｃ：" + gdata(GDATA_FLAG_WORK_C_REMAINING) + "と言ったところだな。", "Your remaining work is... " + gdata(GDATA_FLAG_WORK_A_REMAINING) + " Work A, " + gdata(GDATA_FLAG_WORK_B_REMAINING) + " Work B and " + gdata(GDATA_FLAG_WORK_C_REMAINING) + " Work C.")
 			chatesc = 0
 			gosub *chat_select
 			if ( chatval == 1 ) {
-				chatMore lang("あ？そんなの当たり前だろうが。頑張るのは誰にでもできるんだよ！成果を出して一人前だってこと、わかってんのか？わかってないよなぁ？", "Sorry, this is untranslated sentence.")
+				chatMore lang("あ？そんなの当たり前だろうが。頑張るのは誰にでもできるんだよ！成果を出して一人前だってこと、わかってんのか？わかってないよなぁ？", "What? That's common sense, kid. Anyone can work hard, you know! Don't you understand that you're only as good as the results you produce? Well, what else could I possibly expect coming from YOU, anyway?")
 				kaiwa = 0
 				goto *chat_end
 			}
 			if ( chatval == 0 ) {
-				chatMore lang("お前は艦長の推薦を受けてここに来てんの。今更何言ってんだ？恥ずかしくないのか？ちょっとはプライド持って仕事しようや、なぁ！！！", "Sorry, this is untranslated sentence.")
+				chatMore lang("お前は艦長の推薦を受けてここに来てんの。今更何言ってんだ？恥ずかしくないのか？ちょっとはプライド持って仕事しようや、なぁ！！！", "You're here on the captain's recommendation. What the hell are you talking about? Aren't you ashamed of yourself? Get out there and bust your ass with a sense of pride, kid!")
 				kaiwa = 0
 				modimp tc, -5
 				goto *chat_end
 			}
 			if ( chatval == 2 ) {
 				kaiwa = 0
-				chatList 4, lang("上に掛け合ってここの仕事を減らしてもらいます！", "Sorry, this is untranslated sentence.")
-				chatList 3, lang("全員の仕事のノウハウを共有しましょう？", "Sorry, this is untranslated sentence.")
-				chatList 5, lang("みんなの意見も聞いてみるべきです！", "Sorry, this is untranslated sentence.")
-				chatList 2, lang("一度全員メンテナンスを受けませんか？", "Sorry, this is untranslated sentence.")
-				chatList 1, lang("なんかもう色々アウトですよ…", "Sorry, this is untranslated sentence.")
-				chatList 0, lang("お前を倒してニューリーダーになる！！！", "Sorry, this is untranslated sentence.")
-				buff = lang("必要かぁ？今でも力を合わせて何とかやっていけてるだろうが！", "Sorry, this is untranslated sentence.")
+				chatList 4, lang("上に掛け合ってここの仕事を減らしてもらいます！", "I'll talk to my superiors and get them to reduce our working hours!")
+				chatList 3, lang("全員の仕事のノウハウを共有しましょう？", "Why don't we share all our work expertise with one another?")
+				chatList 5, lang("みんなの意見も聞いてみるべきです！", "We should get everyone's input on workplace matters!")
+				chatList 2, lang("一度全員メンテナンスを受けませんか？", "Why don't we all take maintenance leave?")
+				chatList 1, lang("なんかもう色々アウトですよ…", "I can't even begin to describe what's wrong...")
+				chatList 0, lang("お前を倒してニューリーダーになる！！！", "I'll take you down and become the new boss myself!")
+				buff = lang("必要かぁ？今でも力を合わせて何とかやっていけてるだろうが！", "Whad'ya mean \"NEED\"? We're all doing our part, and we're all pulling through! What more could you POSSIBLY need?!")
 				chatesc = 0
 				gosub *chat_select
 				if ( chatval == 5 ) {
-					chatMore lang("ああ？しょうがねえな、聞けば納得するんだな？", "Sorry, this is untranslated sentence.")
-					chatList 1, lang("改善必要！", "Sorry, this is untranslated sentence.")
-					chatList 0, lang("現状問題なし", "Sorry, this is untranslated sentence.")
-					buff = lang("業務連絡。これより投票プログラムを起動する。速やかに投票を行うこと。", "Sorry, this is untranslated sentence.")
+					chatMore lang("ああ？しょうがねえな、聞けば納得するんだな？", "Heh? So if I tell you what you want you'll buzz off, right?")
+					chatList 1, lang("改善必要！", "Please reform the workplace!")
+					chatList 0, lang("現状問題なし", "No issues at the moment.")
+					buff = lang("業務連絡。これより投票プログラムを起動する。速やかに投票を行うこと。", "Attention all employees: We will now execute the voting routine. Please cast your vote as soon as possible.")
 					chatesc = 0
 					gosub *chat_select
-					chatMore lang("集計開始。改善必要：1票。問題なし：1票。投票率：10％。", "Sorry, this is untranslated sentence.")
-					chatMore lang("改善必要：3票。問題なし：2票。投票率：25％。", "Sorry, this is untranslated sentence.")
-					chatMore lang("改善必要：7票。問題なし：3票。投票率：50％。", "Sorry, this is untranslated sentence.")
-					chatMore lang("改善必要：9票。問題なし：5票。投票率：70％。", "Sorry, this is untranslated sentence.")
-					chatMore lang("…。", "Sorry, this is untranslated sentence.")
-					chatMore lang("……。", "Sorry, this is untranslated sentence.")
-					chatMore lang("集計完了。結果は…。", "Sorry, this is untranslated sentence.")
-					chatList 1, lang("不正だー！？", "Sorry, this is untranslated sentence.")
-					chatList 0, lang("集計ミスでは？", "Sorry, this is untranslated sentence.")
-					buff = lang("改善必要：15票。問題なし：105票。投票率：600％。よって現状の職場環境には問題がないと判断する。ほら、これで気が済んだろ。", "Sorry, this is untranslated sentence.")
+					chatMore lang("集計開始。改善必要：1票。問題なし：1票。投票率：10％。", "Commencing final tally. Needs improvement: 1 vote. No issues: 1 vote. Percentage voted: 10%.")
+					chatMore lang("改善必要：3票。問題なし：2票。投票率：25％。", "Needs improvement: 3 votes. No issues: 2 votes. Percentage voted: 25%.")
+					chatMore lang("改善必要：7票。問題なし：3票。投票率：50％。", "Needs improvement: 7 votes. No issues: 3 votes. Percentage voted: 50%.")
+					chatMore lang("改善必要：9票。問題なし：5票。投票率：70％。", "Needs improvement: 9 votes. No issues: 5 votes. Percentage voted: 70%.")
+					chatMore lang("…。", "...")
+					chatMore lang("……。", "......")
+					chatMore lang("集計完了。結果は…。", "Final tally complete. Th results are as follows:")
+					chatList 1, lang("不正だー！？", "That's fraud!")
+					chatList 0, lang("集計ミスでは？", "Could it be a counting error?")
+					buff = lang("改善必要：15票。問題なし：105票。投票率：600％。よって現状の職場環境には問題がないと判断する。ほら、これで気が済んだろ。", "Needs improvement: 15 votes. No issues: 105 votes. Percentage voted: 600%. Therefore, we conclude that there are no issues with the current work environment. See, nothing to worry about.")
 					chatesc = 0
 					gosub *chat_select
 					if ( chatval == 1 ) {
-						chatMore lang("なんだお前。おい。なら証拠でもあんのか？ないんだったらよ、投票で決まったことに文句垂れてんじゃねえ！！！お前、ホントに往生際が悪いよなぁ。恥ずかしく思えよ？", "Sorry, this is untranslated sentence.")
+						chatMore lang("なんだお前。おい。なら証拠でもあんのか？ないんだったらよ、投票で決まったことに文句垂れてんじゃねえ！！！お前、ホントに往生際が悪いよなぁ。恥ずかしく思えよ？", "What the hell is wrong with you? Fine. Then where's your proof? Nothing? Then quit complaining about something that's been voted on already! Geez, you always go off and throw a tantrum any time you're wrong about things. You ought to be ashamed of yourself.")
 						modimp tc, -5
 						goto *chat_end
 					}
 					if ( chatval == 0 ) {
-						chatMore lang("ああ？そりゃな、俺だって完璧じゃねえからもしかするとミスがあって、既にスクラップになった連中の投票権が使われていたり、同じ奴の票が何度も重複して入っていることはあるかもしれない。", "Sorry, this is untranslated sentence.")
-						chatMore lang("でもミスがあったとしても結果に影響する程ではねえから、お前の仕事と違って！言っとくけど再集計しても結果は変わんねぇからな。", "Sorry, this is untranslated sentence.")
+						chatMore lang("ああ？そりゃな、俺だって完璧じゃねえからもしかするとミスがあって、既にスクラップになった連中の投票権が使われていたり、同じ奴の票が何度も重複して入っていることはあるかもしれない。", "What's that? I'm not perfect, so maybe I made a mistake and counted the votes of some guys who've been scrapped, or maybe I counted one guy's vote multiple times.")
+						chatMore lang("でもミスがあったとしても結果に影響する程ではねえから、お前の仕事と違って！言っとくけど再集計しても結果は変わんねぇからな。", "But even if I made those mistakes, it wouldn't be enough make any difference, unlike all the mistakes YOU'VE made! And for your information, I'm not going to bother with a recount, since it wouldn't change a thing.")
 						goto *chat_end
 					}
 					goto *chat_end
 				}
 				if ( chatval == 4 ) {
 					modimp tc, -5
-					chatMore lang("やめろ馬鹿！まるで俺らまで仕事ができねえみたいじゃねえか！お前と一緒にしないでくれるか？", "Sorry, this is untranslated sentence.")
-					chatMore lang("確かに年々この部署の仕事は増えてきている。でも一機あたりの負担が増えようが、ぶっ壊れる奴が出ようが、それって今までやれてた仕事量から減らす理由にはならねえから。", "Sorry, this is untranslated sentence.")
-					chatMore lang("だいたい、来て日の浅いお前にここの仕事のことが説明できるわけねえだろ。自分の仕事もちゃんと理解してないくせによ！上に掛け合うとかやめてくんない？お前みたいなのがいることが恥ずかしいんだけど。", "Sorry, this is untranslated sentence.")
+					chatMore lang("やめろ馬鹿！まるで俺らまで仕事ができねえみたいじゃねえか！お前と一緒にしないでくれるか？", "Knock it off, dumbass! What, you're telling ME and all those other guys out there that they're incapable of doing their jobs? Don't lump us in with you and your lazy ass!")
+					chatMore lang("確かに年々この部署の仕事は増えてきている。でも一機あたりの負担が増えようが、ぶっ壊れる奴が出ようが、それって今までやれてた仕事量から減らす理由にはならねえから。", "Yeah, it's true that the workload in this division is increasing every year. But even if the workload per machine increases, or if some of those machines break down, all that work's still gotta get done somehow.")
+					chatMore lang("だいたい、来て日の浅いお前にここの仕事のことが説明できるわけねえだろ。自分の仕事もちゃんと理解してないくせによ！上に掛け合うとかやめてくんない？お前みたいなのがいることが恥ずかしいんだけど。", "And if anyone's going to be the one who tells us how this joint gets run, why the hell does it have to be a rookie like YOU? You've barely even worked here for a few days and don't even know left from right! Cut the bullshit and quit trying to talk down to us! I'm ashamed of myself for even bothering to stand in the same room as a dipshit like you.")
 					goto *chat_end
 				}
 				if ( chatval == 3 ) {
-					chatMore lang("おい、ちょっと座れよ。", "Sorry, this is untranslated sentence.")
-					chatMore lang("床でいいから。よく話聞けよ。", "Sorry, this is untranslated sentence.")
-					chatMore lang("お前さ、膨大なノウハウを口頭で言いあって覚えきれると思ってんのか？違うだろ。共有するにはそれぞれが資料を用意しなきゃいけないだろ。", "Sorry, this is untranslated sentence.")
-					chatMore lang("そりゃ何もわかってなくて比較的暇な新入りにはメリットが大きいかもしれないよ？でもそんなことする暇が他のみんなにあるように見えるか？…見えるんだろうなぁ！", "Sorry, this is untranslated sentence.")
-					chatMore lang("時間的に余裕がある状況ならまだわかる。でも知ってるか？お前以外がやってる仕事は全部期限があるの。お前だけだよ自分のペースで仕事できるのは。", "Sorry, this is untranslated sentence.")
-					chatMore lang("ノウハウを残すのは大事だよ。でも今の状況では超余計な作業だと思うんだけど？全体でどんくらい時間のロスが出ると思ってる？ちょっとお前考えが甘いよね。", "Sorry, this is untranslated sentence.")
+					chatMore lang("おい、ちょっと座れよ。", "Hey, you. Siddown.")
+					chatMore lang("床でいいから。よく話聞けよ。", "I don't give a shit if you plant your ass on the floor. Listen to me reeeeal carefully.")
+					chatMore lang("お前さ、膨大なノウハウを口頭で言いあって覚えきれると思ってんのか？違うだろ。共有するにはそれぞれが資料を用意しなきゃいけないだろ。", "Do you think you can cram all of that workplace-related knowledge into that thick skull of yours just by running your mouth for a while? Nope, you can't. In order to do that proper, you'd have to bring your own notes and materials to the meeting.")
+					chatMore lang("そりゃ何もわかってなくて比較的暇な新入りにはメリットが大きいかもしれないよ？でもそんなことする暇が他のみんなにあるように見えるか？…見えるんだろうなぁ！", "Of course, that would be a pretty sweet deal for a new kid like you with barely any work assignments and a lot of free time. But what about everyone else around here? ...Are you blind? Do those eyes of yours even WORK?")
+					chatMore lang("時間的に余裕がある状況ならまだわかる。でも知ってるか？お前以外がやってる仕事は全部期限があるの。お前だけだよ自分のペースで仕事できるのは。", "I can see where you're coming from if you have a lot of extra time on your hands. But you know what? Every single work assignment that everyone else in this place is busting their asses over has this thing called a \"deadline\". Might of heard of it, yeah? You're the only one in this joint who can work at their own pace.")
+					chatMore lang("ノウハウを残すのは大事だよ。でも今の状況では超余計な作業だと思うんだけど？全体でどんくらい時間のロスが出ると思ってる？ちょっとお前考えが甘いよね。", "Yeah, I get that it's important to preserve your precious knowhow about the ins and outs of the job. But with things the way they are, isn't it just even more work that nobody actually needs to do? All you'll be doing is forcing everyone to adapt to YOUR schedule and constantly make up for lost time. Real genius plan you've got there. Quit overthinking things and get back to work.")
 					goto *chat_end
 				}
 				if ( chatval == 2 ) {
 					if ( cdata(CDATA_IMPRESSION, tc) < 75 ) {
-						chatMore lang("お前そんなこと言って休みたいだけだろ。メンテナンスって簡単に言うけど結構時間かかるからね？目の前の仕事と将来的な健康、どっちが優先されるべきかわかる？優先順位くらい、考えて話せって言ってんだよ！！", "Sorry, this is untranslated sentence.")
+						chatMore lang("お前そんなこと言って休みたいだけだろ。メンテナンスって簡単に言うけど結構時間かかるからね？目の前の仕事と将来的な健康、どっちが優先されるべきかわかる？優先順位くらい、考えて話せって言ってんだよ！！", "You're just saying that so you can slack off, aren't you? You can blabble on about \"maintenance leave, maintenance leave\" all you want, but it's a pretty lengthy process, you know? What do you think should be more important: The job that needs to get done right now, or your health at some undefined point in the future? What I'm trying to drill into your dumbass brain is: figure out what YOUR priorities are and speak up for them!")
 						goto *chat_end
 					}
-					chatList 1, lang("みんなも調子悪いみたいですよ", "Sorry, this is untranslated sentence.")
-					chatList 0, lang("やばい病気かもしれないし念のため！", "Sorry, this is untranslated sentence.")
-					buff = lang("…お前にだけ言うけど、俺最近ちょっと調子悪いんだよね。部署全体の仕事の進みが遅くって遅くってまじ頭いてえの。だからこそ、のんびりメンテナンスなんて受けてる暇ないと思ってるから。", "Sorry, this is untranslated sentence.")
+					chatList 1, lang("みんなも調子悪いみたいですよ", "Everyone else seems to be in bad shape, too.")
+					chatList 0, lang("やばい病気かもしれないし念のため！", "It could be a serious illness! Just in case!")
+					buff = lang("…お前にだけ言うけど、俺最近ちょっと調子悪いんだよね。部署全体の仕事の進みが遅くって遅くってまじ頭いてえの。だからこそ、のんびりメンテナンスなんて受けてる暇ないと思ってるから。", "...Between you and me, I've been feeling pretty under the weather myself lately. The whole division has been working so slowly that it's really starting to piss me off. That's why I don't think we can afford to take a maintenance leave.")
 					chatesc = 0
 					gosub *chat_select
 					if ( chatval == 1 ) {
-						chatMore lang("ハッ、たったこんだけの仕事しかしてない奴らが、調子悪くなるわけねえだろ！昔はもっと仕事量が多かったんだぞ。この程度で壊れるような奴はどっちにしろ使いもんにならねえからな！", "Sorry, this is untranslated sentence.")
+						chatMore lang("ハッ、たったこんだけの仕事しかしてない奴らが、調子悪くなるわけねえだろ！昔はもっと仕事量が多かったんだぞ。この程度で壊れるような奴はどっちにしろ使いもんにならねえからな！", "Pfft! How can they be in bad shape when they've barely got any work to do? We had to work a lot harder back in the day. If all they're going to do is piss off when given THIS amount of work, then they were all worthless dipshits from the start!")
 						goto *chat_end
 					}
 					if ( chatval == 0 ) {
-						chatMore lang("…。そう言われるとちょっと不安だな。", "Sorry, this is untranslated sentence.")
-						chatMore lang("一応、みんな10秒で終わる簡易スキャンだけやって、引っかかった奴だけ精密検査受けることにするか。で、さらに引っかかった奴だけメンテナンス送りだ。それなら無駄ねえもんな。", "Sorry, this is untranslated sentence.")
-						chatMore lang("ま、そこまで引っかかるほど調子悪い奴なんて、いねえだろうけどな！", "Sorry, this is untranslated sentence.")
+						chatMore lang("…。そう言われるとちょっと不安だな。", "...You're making me nervous, bringing that up.")
+						chatMore lang("一応、みんな10秒で終わる簡易スキャンだけやって、引っかかった奴だけ精密検査受けることにするか。で、さらに引っかかった奴だけメンテナンス送りだ。それなら無駄ねえもんな。", "Alright, for now we'll do a quick scan, which will take just 10 seconds, and only those that raise any red flags will go through a full inspection. And after *that*, only the ones who fail the scan again will be sent away on maintenance leave. Sounds like a plan.")
+						chatMore lang("ま、そこまで引っかかるほど調子悪い奴なんて、いねえだろうけどな！", "Well, it's not like I'D know anyone in such terrible shape that they'd fail a scan like that!")
 						gdata(GDATA_FLAG_SUB_MISSION_FROM_GARZIEM)++
 						mdata(MDATA_DOWNSTAIRS_POS) = cdata(CDATA_Y, CHARA_PLAYER) * 1000 + cdata(CDATA_X, CHARA_PLAYER)
 						gdata(GDATA_TELEPORT_AREA) = AREA_DOCK
@@ -20172,25 +20172,25 @@
 					goto *chat_end
 				}
 				if ( chatval == 1 ) {
-					chatList 1, lang("はい…", "Sorry, this is untranslated sentence.")
-					chatList 0, lang("アウトなやり方してるならアウトでしょ", "Sorry, this is untranslated sentence.")
-					buff = lang("確かにここのやり方は一般的に見たらアウトかもしれない。でも現実としてこうでもしなきゃ仕事が回らないってことくらいは、お前でもわかるだろ？", "Sorry, this is untranslated sentence.")
+					chatList 1, lang("はい…", "Yes...")
+					chatList 0, lang("アウトなやり方してるならアウトでしょ", "If you're running things out of line, you're out of line.")
+					buff = lang("確かにここのやり方は一般的に見たらアウトかもしれない。でも現実としてこうでもしなきゃ仕事が回らないってことくらいは、お前でもわかるだろ？", "I mean, sure, if you're talking about any other workplace, then yeah, it might be just a bit out of line than what you're used to. But think about it. Even you understand that all of this is necessary to get the job done, right?")
 					chatesc = 0
 					gosub *chat_select
 					if ( chatval == 1 ) {
-						chatMore lang("おい、嘘つくな。本当にわかってんなら最初から言わねぇよな？チッ…ったくよぉ。お前と話してるとマジいらつくんだけど。なんとかなんねえの？", "Sorry, this is untranslated sentence.")
+						chatMore lang("おい、嘘つくな。本当にわかってんなら最初から言わねぇよな？チッ…ったくよぉ。お前と話してるとマジいらつくんだけど。なんとかなんねえの？", "Don't bullshit me. If you really believed something was wrong, you wouldn't have come crawling back to me to whine your ass off about it, right? Damnit... You're a real pain in the ass when I have talk to you. Can't you do something about that?")
 						goto *chat_end
 					}
 					if ( chatval == 0 ) {
-						chatMore lang("お前…帰れコノヤロウ！！！！", "Sorry, this is untranslated sentence.")
+						chatMore lang("お前…帰れコノヤロウ！！！！", "You... PIECE OF SHIT! GET THE HELL OUT OF HERE!!!!")
 						modimp tc, -5
 						goto *chat_end
 					}
 					goto *chat_end
 				}
 				if ( chatval == 0 ) {
-					chatMore lang("この愚か者めが！！", "Sorry, this is untranslated sentence.")
-					chatMore lang("俺を倒したとして、自分の仕事も満足にできないやつが、俺のやっていた仕事までこなせるのか！！あ？少しは物を考えろ！！！", "Sorry, this is untranslated sentence.")
+					chatMore lang("この愚か者めが！！", "You IMBECILE!!")
+					chatMore lang("俺を倒したとして、自分の仕事も満足にできないやつが、俺のやっていた仕事までこなせるのか！！あ？少しは物を考えろ！！！", "Even if you manage to take me down, is a pathetic runt like YOU who's so fed up with his own job EVER going to be capable of handling the ALL of the work that I'M responsible for!? You'd BETTER think twice before giving me that crap again!")
 					modimp tc, -5
 					goto *chat_end
 				}
@@ -20202,11 +20202,11 @@
 			if ( cdata(CDATA_IMPRESSION, tc) <= 0 ) {
 				cdata(CDATA_IMPRESSION, tc) = 5
 			}
-			chatMore lang("お前、割り当てられた仕事が終わったのか。なぁ？ちゃんとやればできる程度の仕事だろ。でもだいぶ無駄が多かったな。今度からはもっと早く終わらせろよ。", "Sorry, this is untranslated sentence.")
+			chatMore lang("お前、割り当てられた仕事が終わったのか。なぁ？ちゃんとやればできる程度の仕事だろ。でもだいぶ無駄が多かったな。今度からはもっと早く終わらせろよ。", "So you've finished your assigned work, huh? See, you can do it if you just try. But you wasted a lot of time. I'll be expecting you to get it done faster next time.")
 			gdata(GDATA_FLAG_WORK_A_REMAINING) = 1000 + rnd(300)
 			gdata(GDATA_FLAG_WORK_B_REMAINING) = 2000 + rnd(400)
 			gdata(GDATA_FLAG_WORK_C_REMAINING) = 3000 + rnd(500)
-			chatMore lang("じゃあ次の仕事渡しとくから。まぁこれでも飲んで頑張れよ。", "Sorry, this is untranslated sentence.")
+			chatMore lang("じゃあ次の仕事渡しとくから。まぁこれでも飲んで頑張れよ。", "Well, here's your next assignment. Take a swig of this and do your best out there.")
 			kaiwa = 0
 			flt
 			itemcreate -1, ITEM_ID_POTION_SOMA, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
@@ -20222,19 +20222,19 @@
 		if ( kaiwa == 2 ) {
 			gdata(GDATA_FLAG_WORK_A_REMAINING) += 501 + rnd(100)
 			txtef COLOR_PURPLE
-			txt lang("仕事Ａが増えた…。", "Work-A has increased...")
-			chatList 1, lang("間違っているのはどこですか？", "Sorry, this is untranslated sentence.")
-			chatList 0, lang("間違えないように注意する点ってありますか？", "Sorry, this is untranslated sentence.")
-			buff = lang("お前ちょっと間違いが多すぎないか？やり直せ。いくら頑張っても結局間違えたら、その分は働いてないのと一緒だからな。", "Sorry, this is untranslated sentence.")
+			txt lang("仕事Ａが増えた…。", "Work A has increased...")
+			chatList 1, lang("間違っているのはどこですか？", "What specifically did I do wrong?")
+			chatList 0, lang("間違えないように注意する点ってありますか？", "Is there anything I should learn so I don't make mistakes next time?")
+			buff = lang("お前ちょっと間違いが多すぎないか？やり直せ。いくら頑張っても結局間違えたら、その分は働いてないのと一緒だからな。", "Aren't you making a few too many mistakes? Start over. No matter how hard you try, making even a single mistake means you've spent all that time doing nothing useful at all.")
 			chatesc = 0
 			gosub *chat_select
 			if ( chatval == 1 ) {
-				chatMore lang("自分で見つけろ。俺が教えたら意味がない。", "Sorry, this is untranslated sentence.")
+				chatMore lang("自分で見つけろ。俺が教えたら意味がない。", "Figure it out yourself. If I have to point out every little thing for you, what are you even here for?")
 				kaiwa = 0
 				goto *chat_end
 			}
 			if ( chatval == 0 ) {
-				chatMore lang("理解してやれば間違えないだろ！お前が理解せずになんとなくでやってるから全然合わないんだよ！わかんねえなら聞け！！！", "Sorry, this is untranslated sentence.")
+				chatMore lang("理解してやれば間違えないだろ！お前が理解せずになんとなくでやってるから全然合わないんだよ！わかんねえなら聞け！！！", "If you actually knew what you're supposed to be doing, you wouldn't be making all these mistakes! You're just flailing your arms around with no understanding of anything and are just hoping that it will all work out in the end! No wonder you've produced this absolute slop! If you don't understand what you're supposed to do, ASK!!!")
 				kaiwa = 0
 				modimp tc, -5
 				goto *chat_end
@@ -20244,20 +20244,20 @@
 		if ( kaiwa == 3 ) {
 			gdata(GDATA_FLAG_WORK_B_REMAINING) += 501 + rnd(100)
 			txtef COLOR_PURPLE
-			txt lang("仕事Ｂが増えた…。", "Work-B has increased...")
-			chatList 1, lang("前のままでもよくないですか", "Sorry, this is untranslated sentence.")
-			chatList 0, lang("今後の拡張性も考えた形式に変えましょう", "Sorry, this is untranslated sentence.")
-			buff = lang("仕事Ｂだけどよ、あれやり方変えろよ。書式も変えて項目追加しとけ。", "Sorry, this is untranslated sentence.")
+			txt lang("仕事Ｂが増えた…。", "Work B has increased...")
+			chatList 1, lang("前のままでもよくないですか", "Isn't it better to leave it as it is?")
+			chatList 0, lang("今後の拡張性も考えた形式に変えましょう", "Let's modify the format so it can be easily changed later.")
+			buff = lang("仕事Ｂだけどよ、あれやり方変えろよ。書式も変えて項目追加しとけ。", "So for Work B, change everything about what you're doing. Change the document format and add a new section.")
 			chatesc = 0
 			gosub *chat_select
 			if ( chatval == 1 ) {
-				chatMore lang("今まではあれで通っていたかもしれないけど、そんなの理由にならねえからな！つべこべ言わずにさっさと取り掛かれ！！！", "Sorry, this is untranslated sentence.")
+				chatMore lang("今まではあれで通っていたかもしれないけど、そんなの理由にならねえからな！つべこべ言わずにさっさと取り掛かれ！！！", "That may have gotten you through your life so far, but it's not gonna fly around here! Shut the hell up and get on with it already!!!")
 				kaiwa = 0
 				modimp tc, -5
 				goto *chat_end
 			}
 			if ( chatval == 0 ) {
-				chatMore lang("じゃあ任せた。そんなことにあんまり時間かけるなよ。", "Sorry, this is untranslated sentence.")
+				chatMore lang("じゃあ任せた。そんなことにあんまり時間かけるなよ。", "Well, I'll leave it to you, then. But don't waste my time screwing around with it for too long.")
 				kaiwa = 0
 				goto *chat_end
 			}
@@ -20266,19 +20266,19 @@
 		if ( kaiwa == 4 ) {
 			gdata(GDATA_FLAG_WORK_C_REMAINING) += 501 + rnd(100)
 			txtef COLOR_PURPLE
-			txt lang("仕事Ｃが増えた…。", "Work-C has increased...")
-			chatList 1, lang("わかりました…", "Sorry, this is untranslated sentence.")
-			chatList 0, lang("他の仕事あるんですけど…", "Sorry, this is untranslated sentence.")
-			buff = lang("おい、急ぎでこっちの仕事もやってくれ。", "Sorry, this is untranslated sentence.")
+			txt lang("仕事Ｃが増えた…。", "Work C has increased...")
+			chatList 1, lang("わかりました…", "Understood...")
+			chatList 0, lang("他の仕事あるんですけど…", "Uhh, I still have other work to do...")
+			buff = lang("おい、急ぎでこっちの仕事もやってくれ。", "You, hurry up and help out with my work too.")
 			chatesc = 0
 			gosub *chat_select
 			if ( chatval == 1 ) {
-				chatMore lang("ハァ〜…大丈夫なんだろうな？ちゃっちゃと成果あげてくれよなホントに。", "Sorry, this is untranslated sentence.")
+				chatMore lang("ハァ〜…大丈夫なんだろうな？ちゃっちゃと成果あげてくれよなホントに。", "*sigh*... Can I really trust you? You'd better show some results, or I'm going to go ballistic over your ass.")
 				kaiwa = 0
 				goto *chat_end
 			}
 			if ( chatval == 0 ) {
-				chatMore lang("何勘違いしてんだ？俺はお前になるべく仕事が回らないように配慮してんだからな？このくらい合間にやればいいだろうが！ええ？お前マジで自分のことしか考えてないよな！！！", "Sorry, this is untranslated sentence.")
+				chatMore lang("何勘違いしてんだ？俺はお前になるべく仕事が回らないように配慮してんだからな？このくらい合間にやればいいだろうが！ええ？お前マジで自分のことしか考えてないよな！！！", "What the hell is wrong with you? I'm working my ass off over here to make sure that YOUR ungrateful ass takes on as few extra assignments as possible, got it? The least you can do is work on this in the meantime! Why, you little... You really think you're some kind of special snowflake, don't you?!")
 				kaiwa = 0
 				modimp tc, -5
 				goto *chat_end
@@ -20288,24 +20288,24 @@
 		if ( kaiwa == 5 ) {
 			seiton = 3
 			modimp tc, -10
-			chatList 2, lang("すいません", "Sorry, this is untranslated sentence.")
-			chatList 1, lang("ちょっと整理整頓していました", "Sorry, this is untranslated sentence.")
-			chatList 0, lang("やり方を教えてくれないからです", "Sorry, this is untranslated sentence.")
-			buff = lang("おい、なんでこんなに時間かかってるんだ！！！", "Sorry, this is untranslated sentence.")
+			chatList 2, lang("すいません", "I'm sorry.")
+			chatList 1, lang("ちょっと整理整頓していました", "I was just getting a little organized.")
+			chatList 0, lang("やり方を教えてくれないからです", "But they're not explaining to me how to do it.")
+			buff = lang("おい、なんでこんなに時間かかってるんだ！！！", "What the HELL is taking you so long!!!")
 			chatesc = 0
 			gosub *chat_select
 			if ( chatval == 2 ) {
-				chatMore lang("俺がここに来たときはお前の3倍以上の仕事持っていたんだぞ！基準は甘々でやり直しとかはなかったけどよ。お前だいぶ恵まれている方だから。", "Sorry, this is untranslated sentence.")
+				chatMore lang("俺がここに来たときはお前の3倍以上の仕事持っていたんだぞ！基準は甘々でやり直しとかはなかったけどよ。お前だいぶ恵まれている方だから。", "When I came here, I had THREE TIMES the workload that you have! The standards at the time were pretty lax, so I didn't have to constantly redo everything, but YOU'RE the lucky one here.")
 				kaiwa = 0
 				goto *chat_end
 			}
 			if ( chatval == 1 ) {
-				chatMore lang("そうやってすぐ言い訳する癖を直せ。整理整頓は大事だけどそれに時間かけすぎなんだよお前！時間配分ができてねえよなぁ、時間配分がよ。", "Sorry, this is untranslated sentence.")
+				chatMore lang("そうやってすぐ言い訳する癖を直せ。整理整頓は大事だけどそれに時間かけすぎなんだよお前！時間配分ができてねえよなぁ、時間配分がよ。", "Do yourself a favor and quit making excuses right away like that. Organization is important, but you're spending too much time on it! Write up a proper schedule and stick to it, for the love of...")
 				kaiwa = 0
 				goto *chat_end
 			}
 			if ( chatval == 0 ) {
-				chatMore lang("反抗的だよなぁ、お前！子供みたいなこと言ってんじゃねえぞ！この忙しい時にやり方を一から教えなきゃいけないのか？普通に考えてわかるだろうが！！！", "Sorry, this is untranslated sentence.")
+				chatMore lang("反抗的だよなぁ、お前！子供みたいなこと言ってんじゃねえぞ！この忙しい時にやり方を一から教えなきゃいけないのか？普通に考えてわかるだろうが！！！", "What a defiant little brat you are! That's right, you're nothing but a whiny-ass kid. Do I really have to take time out of MY busy schedule to educate YOUR ass about YOUR responsibilities from the ground up? If you'd just THINK for once you'd figure it out!!!")
 				kaiwa = 0
 				modimp tc, -5
 				goto *chat_end
@@ -20314,25 +20314,25 @@
 		}
 		if ( kaiwa == 6 ) {
 			modimp tc, -5
-			chatList 2, lang("はい…", "Sorry, this is untranslated sentence.")
-			chatList 1, lang("この仕事辞めたいです", "Sorry, this is untranslated sentence.")
-			chatList 0, lang("機械の神もこのような職場をお許しにはならない！", "Sorry, this is untranslated sentence.")
-			buff = lang("ちゃんと自覚してるんだろうな？配属された瞬間からお前は社畜なんだ！お前はこの仕事に尽くさなければならない！これは神の意思だ！！！", "Sorry, this is untranslated sentence.")
+			chatList 2, lang("はい…", "Yes...")
+			chatList 1, lang("この仕事辞めたいです", "I want to quit this job.")
+			chatList 0, lang("機械の神もこのような職場をお許しにはならない！", "Not even the God of Machine would allow this workplace to exist!")
+			buff = lang("ちゃんと自覚してるんだろうな？配属された瞬間からお前は社畜なんだ！お前はこの仕事に尽くさなければならない！これは神の意思だ！！！", "You're fully aware of what you've gotten into, right? From the moment you were assigned here, you're a corporate drone! Your existence is predicated on your utmost devotion to the company! This is the will of God!")
 			chatesc = 0
 			gosub *chat_select
 			if ( chatval == 2 ) {
-				chatMore lang("おい…なんだその顔は。はいはい言っとけばいいと思ってんだろ！しんどそうにしてるけど俺だってお前と好きでしゃべってるわけじゃねえからな！！！", "Sorry, this is untranslated sentence.")
+				chatMore lang("おい…なんだその顔は。はいはい言っとけばいいと思ってんだろ！しんどそうにしてるけど俺だってお前と好きでしゃべってるわけじゃねえからな！！！", "Don't give me that look. You think you can just say whatever you want! You just look like you're having a hard time, but it's not like I'm thrilled to talk to you either!")
 				kaiwa = 0
 				modimp tc, -5
 				goto *chat_end
 			}
 			if ( chatval == 1 ) {
-				chatMore lang("あのなぁ…他の仕事だって楽なわけじゃねえから。このくらいで音を上げていたらどこに行っても通用しないからな！", "Sorry, this is untranslated sentence.")
+				chatMore lang("あのなぁ…他の仕事だって楽なわけじゃねえから。このくらいで音を上げていたらどこに行っても通用しないからな！", "You do realize that this is just how things work, right? No matter where you choose to work next, it's not going to get any easier. If this is all it takes for you to start whining your ass off, you have no hope of making it in this world!")
 				kaiwa = 0
 				goto *chat_end
 			}
 			if ( chatval == 0 ) {
-				chatMore lang("社畜に神はいないッ！！ロボットには…労働基準もないッ！！", "Sorry, this is untranslated sentence.")
+				chatMore lang("社畜に神はいないッ！！ロボットには…労働基準もないッ！！", "A corporate drone has no need for God!! And there's no such thing as labor standards for robots...!!")
 				kaiwa = 0
 				goto *chat_end
 			}
@@ -20353,7 +20353,7 @@
 	}
 	if ( chatval == 82 ) {
 		if ( gdata(GDATA_FLAG_INFORMER_BIRTHDAY_MONTH) == 0 | gdata(GDATA_FLAG_INFORMER_BIRTHDAY_DAY) == 0 ) {
-			buff = lang("後で変更できないけど大丈夫" + _ka(1), "It can not be changed later. OK?")
+			buff = lang("後で変更できないけど大丈夫" + _ka(1), "It can't be changed later. OK?")
 			chatList 0, lang("やめる", "Wait...")
 			chatList 1, lang("教える", "OK!")
 			chatesc = 1
@@ -20429,9 +20429,9 @@
 				cfg_animewait = 0
 			}
 			listmax = 0
-			chatMore lang("(仲良く料理を分け合った…)", "(Shared food with your good friend...)")
+			chatMore lang("(仲良く料理を分け合った…)", "(You shared some homemade food with your good friend...)")
 			snd SOUNDLIST_EAT1
-			chatMore lang("(もぐもぐ)", "(Munching)")
+			chatMore lang("(もぐもぐ)", "(*munch* *munch*)")
 			inv(INV_ITEM_NUM, ci)++
 			cc = tcbk
 			gosub *insta_eat
@@ -20447,7 +20447,7 @@
 						chatMore lang("美味しい" + _na(3) + "！", "Delicious!")
 					}
 					if ( kaiwa == 1 ) {
-						chatMore lang("これはいけ" + _ru(3) + "！", "Gee what a good taste!")
+						chatMore lang("これはいけ" + _ru(3) + "！", "Gee, that hit the spot!")
 					}
 					if ( kaiwa == 2 ) {
 						chatMore lang("また食べたい" + _yo(3) + "。", "It tasted pretty good!")
@@ -20488,17 +20488,17 @@
 		goto *chat_default
 	}
 	if ( chatval == 50 ) {
-		buff = lang(_ore(3) + "の剣が必要な" + _noka(1) + "そう" + _dana(3) + "、先に依頼料を払うなら、しばらく護衛を引き受け" + _ru(), "If you pay me remuneration first, I will take the job.")
+		buff = lang(_ore(3) + "の剣が必要な" + _noka(1) + "そう" + _dana(3) + "、先に依頼料を払うなら、しばらく護衛を引き受け" + _ru(), "If you pay me in advance, I will take the job.")
 		hire3 = calchireadv(tc) / 2
 		hire30 = calchireadv(tc) * 4
 		if ( cdata(CDATA_GOLD, CHARA_PLAYER) >= calchireadv(tc) / 2 ) {
-			chatList 1, lang("3日間頼む( " + hire3 + " gold)", "Ask you to 3 days.")
+			chatList 1, lang("3日間頼む( " + hire3 + " gold)", "Request 3 days. (" + hire3 + "gp)")
 		}
 		if ( cdata(CDATA_GOLD, CHARA_PLAYER) >= calchireadv(tc) ) {
-			chatList 2, lang("7日間頼む( " + calchireadv(tc) + " gold)", "Ask you to 7 days.")
+			chatList 2, lang("7日間頼む( " + calchireadv(tc) + " gold)", "Request 7 days. (" + calchireadv(tc) + "gp)")
 		}
 		if ( cdata(CDATA_GOLD, CHARA_PLAYER) >= calchireadv(tc) * 4 ) {
-			chatList 3, lang("30日間頼む( " + hire30 + " gold)", "Ask you to 30 days.")
+			chatList 3, lang("30日間頼む( " + hire30 + " gold)", "Request 30 days. (" + hire30 + "gp)")
 		}
 		chatList 0, lang("やめる", "Some other time.")
 		chatesc = 1
@@ -21362,97 +21362,97 @@
 		}
 		chatList 0, lang("必要な情報はない", "Cancel")
 		if ( gdata(GDATA_FLAG_MAIN_SAGE) == 0 & gdata(GDATA_FLAG_MAIN) < 180 ) {
-			chatList 1, lang("灼熱の塔のボス情報", "Boss information 1-1")
+			chatList 1, lang("灼熱の塔のボス情報", "Tower of Fire Boss Info")
 		}
 		if ( gdata(GDATA_FLAG_MAIN_KING) == 0 & gdata(GDATA_FLAG_MAIN) < 180 ) {
-			chatList 2, lang("古城のボス情報", "Boss information 1-2")
+			chatList 2, lang("古城のボス情報", "Ancient Castle Boss Info")
 		}
 		if ( gdata(GDATA_FLAG_MAIN_FOOL) == 0 & gdata(GDATA_FLAG_MAIN) < 180 ) {
-			chatList 3, lang("死者の洞窟のボス情報", "Boss information 1-3")
+			chatList 3, lang("死者の洞窟のボス情報", "Crypt of the Damned Boss Info")
 		}
 		if ( gdata(GDATA_FLAG_MAIN) <= 135 ) {
 			if ( gdata(GDATA_FLAG_ASSASSIN_EVENTS_FOR_ALSAPIA_GILPHEM) <= 30 ) {
-				chatList 4, lang("レシマスに潜む障害の情報①", "Boss information 1-4")
+				chatList 4, lang("レシマスに潜む障害の情報①", "The Dangers of Lesimas No.1")
 			}
 		}
 		if ( gdata(GDATA_FLAG_MAIN) >= 135 & gdata(GDATA_FLAG_MAIN) <= 140 ) {
 			if ( gdata(GDATA_FLAG_ASSASSIN_EVENTS_FOR_ALSAPIA_GILPHEM) <= 40 ) {
-				chatList 5, lang("レシマスに潜む障害の情報②", "Boss information 1-5")
+				chatList 5, lang("レシマスに潜む障害の情報②", "The Dangers of Lesimas No.2")
 			}
 		}
 		if ( gdata(GDATA_FLAG_MAIN) >= 140 & gdata(GDATA_FLAG_MAIN) <= 150 ) {
 			if ( gdata(GDATA_FLAG_ASSASSIN_EVENTS_FOR_ALSAPIA_GILPHEM) <= 50 ) {
-				chatList 6, lang("レシマスに潜む障害の情報③", "Boss information 1-6")
+				chatList 6, lang("レシマスに潜む障害の情報③", "The Dangers of Lesimas No.3")
 			}
 		}
 		if ( gdata(GDATA_FLAG_MAIN) >= 150 & gdata(GDATA_FLAG_MAIN) < 180 ) {
-			chatList 7, lang("レシマスのボス情報", "Lesimas boss information")
+			chatList 7, lang("レシマスのボス情報", "Lesimas Boss Info")
 		}
 		if ( gdata(GDATA_FLAG_MAIN_CHAOS_WINGS) == 0 & gdata(GDATA_FLAG_MAIN) >= 210 & gdata(GDATA_FLAG_MAIN) < 290 ) {
-			chatList 20, lang("異形の神殿のボス情報", "Boss information 2-1")
+			chatList 20, lang("異形の神殿のボス情報", "Temple of Chaos Boss Info")
 		}
 		if ( gdata(GDATA_FLAG_MAIN_DATA_CHIP) == 0 & gdata(GDATA_FLAG_MAIN) >= 210 & gdata(GDATA_FLAG_MAIN) < 290 ) {
-			chatList 21, lang("機械要塞のボス情報", "Boss information 2-2")
+			chatList 21, lang("機械要塞のボス情報", "Machine Fortress Boss info")
 		}
 		if ( gdata(GDATA_FLAG_MAIN_ANKH) == 0 & gdata(GDATA_FLAG_MAIN) >= 210 & gdata(GDATA_FLAG_MAIN) < 290 ) {
-			chatList 22, lang("黄泉の谷のボス情報", "Boss information 2-3")
+			chatList 22, lang("黄泉の谷のボス情報", "Valley of Hades Boss Info")
 		}
 		if ( gdata(GDATA_FLAG_MAIN) >= 260 & gdata(GDATA_FLAG_MAIN) < 266 ) {
-			chatList 23, lang("レミードに潜む障害の情報①", "Boss information 2-4")
+			chatList 23, lang("レミードに潜む障害の情報①", "The Dangers of Remido No.1")
 		}
 		if ( gdata(GDATA_FLAG_MAIN) >= 266 & gdata(GDATA_FLAG_MAIN) < 270 ) {
-			chatList 24, lang("レミードに潜む障害の情報②", "Boss information 2-5")
+			chatList 24, lang("レミードに潜む障害の情報②", "The Dangers of Remido No.2")
 		}
 		if ( gdata(GDATA_FLAG_MAIN) >= 295 & gdata(GDATA_FLAG_MAIN) < 320 ) {
-			chatList 25, lang("風の山道のボス情報", "Boss information 2-6")
+			chatList 25, lang("風の山道のボス情報", "Mountain Pass Boss Info")
 		}
 		if ( gdata(GDATA_FLAG_MAIN) >= 290 & gdata(GDATA_FLAG_MAIN) < 340 ) {
-			chatList 26, lang("レミードのボス情報", "Rehmido boss information")
+			chatList 26, lang("レミードのボス情報", "Remido Boss Info")
 		}
 		if ( gdata(GDATA_FLAG_MAIN) >= 378 & gdata(GDATA_FLAG_MAIN) < 455 ) {
-			chatList 30, lang("混沌の巨城に潜む障害の情報①", "Boss information 3-1")
+			chatList 30, lang("混沌の巨城に潜む障害の情報①", "The Dangers of the Cradle of Chaos No.1")
 		}
 		if ( gdata(GDATA_FLAG_MAIN) >= 396 & gdata(GDATA_FLAG_MAIN) < 400 ) {
-			chatList 31, lang("ヴァルム沖のボス情報", "Boss information 3-2")
+			chatList 31, lang("ヴァルム沖のボス情報", "Coast of Valm Boss Info")
 		}
 		if ( gdata(GDATA_FLAG_SUB_REGULUS_ZANAN) < 100 & gdata(GDATA_FLAG_MAIN) >= 404 & gdata(GDATA_FLAG_MAIN) < 440 ) {
-			chatList 32, lang("ザナンの生体兵器の情報", "Boss information 3-3")
+			chatList 32, lang("ザナンの生体兵器の情報", "Information on Zanan's Bioweapons")
 		}
 		if ( gdata(GDATA_FLAG_SUB_REGULUS_MAYROON) < 100 & gdata(GDATA_FLAG_MAIN) >= 404 & gdata(GDATA_FLAG_MAIN) < 440 ) {
-			chatList 33, lang("メイルーンに現れた悪魔の情報", "Boss information 3-4")
+			chatList 33, lang("メイルーンに現れた悪魔の情報", "Information on the Demon in Mayroon")
 		}
 		if ( gdata(GDATA_FLAG_SUB_REGULUS_EULDERNA) < 100 & gdata(GDATA_FLAG_MAIN) >= 404 & gdata(GDATA_FLAG_MAIN) < 440 ) {
-			chatList 34, lang("エウダーナに現れた悪魔の情報", "Boss information 3-5")
+			chatList 34, lang("エウダーナに現れた悪魔の情報", "Information on the Demon in Eulderna")
 		}
 		if ( gdata(GDATA_FLAG_SUB_REGULUS_KIKKASU) < 100 & gdata(GDATA_FLAG_MAIN) >= 404 & gdata(GDATA_FLAG_MAIN) < 440 ) {
 			chatList 35, lang("キッカスに現れた悪魔の情報", "Boss information 3-6")
 		}
 		if ( gdata(GDATA_FLAG_MAIN) >= 455 & gdata(GDATA_FLAG_MAIN) < 480 ) {
-			chatList 36, lang("混沌の巨城に潜む障害の情報②", "Boss information 3-7")
+			chatList 36, lang("混沌の巨城に潜む障害の情報②", "The Dangers of the Cradle of Chaos No.2")
 		}
 		if ( gdata(GDATA_FLAG_MAIN) >= 550 & gdata(GDATA_FLAG_MAIN) < 590 ) {
-			chatList 37, lang("混沌の巨城に潜む障害の情報③", "Boss information 3-8")
+			chatList 37, lang("混沌の巨城に潜む障害の情報③", "The Dangers of the Cradle of Chaos No.3")
 		}
 		if ( gdata(GDATA_FLAG_MAIN) >= 590 & gdata(GDATA_FLAG_MAIN) < 620 ) {
-			chatList 38, lang("混沌の巨城に潜む障害の情報④", "Boss information 3-9")
+			chatList 38, lang("混沌の巨城に潜む障害の情報④", "The Dangers of the Cradle of Chaos No.4")
 		}
 		if ( gdata(GDATA_FLAG_MAIN) >= 645 & gdata(GDATA_FLAG_MAIN) < 680 ) {
-			chatList 39, lang("テスカトリポカの情報", "Cradle of Chaos boss information")
+			chatList 39, lang("テスカトリポカの情報", "Information on Tezcatlipoca")
 		}
 		if ( gdata(GDATA_FLAG_MAIN) >= 680 & gdata(GDATA_FLAG_MAIN) < 760 ) {
-			chatList 40, lang("混沌の巨城のボス情報", "Cradle of Chaos boss information 2")
+			chatList 40, lang("混沌の巨城のボス情報", "Cradle of Chaos Boss Info")
 		}
-		buff = lang("1回ごとに300gold貰う" + _yo(3) + "。", "What information do you want? Pay me 300gold each time.")
+		buff = lang("1回ごとに300gold貰う" + _yo(3) + "。", "What piece of information do you want? Each one costs 300gp.")
 		gosub *chat_select
 		if ( chatval >= 1 ) {
 			snd SOUNDLIST_PAYGOLD1
 			cdata(CDATA_GOLD, CHARA_PLAYER) -= 300
 		}
 		if ( chatval == 1 ) {
-			chatMore lang("灼熱の塔は1組の夫妻が支配している。前に挑戦した奴の話だと、妻である赤き義眼の『クルイツゥア』はレベル24。夫の鋼鉄竜『コルゴン』はレベル16らしい。", "Sorry, this is untranslated sentence.")
-			chatMore lang("クルイツゥアは逃げ回りながら冷気や暗黒の魔法を撃ってくるって話" + _da(3) + "。そう、灼熱の塔を攻略するには、火炎だけじゃなくて冷気と暗黒にもある程度耐性が必要ってこと" + _dana(3) + "。", "Sorry, this is untranslated sentence.")
-			chatMore lang("コルゴンは竜なので妻よりずっとタフだけど、近づいて殴ってくるだけで動きも遅いらしい。テレポートでコルゴンを翻弄しつつ、先にクルイツゥアを集中攻撃したほうがいいんじゃない" + _kana(3) + "？", "Sorry, this is untranslated sentence.")
-			chatMore lang("接近戦がやりづらいだろうから、強力な遠距離攻撃があるとスムーズかもしれない" + _na(3) + "。あの灼熱の塔に住めるだけあって、どちらも火炎には滅法強いらしいけど、コルゴンのほうは電撃と魔法にも強いそう" + _da(3) + "。", "Sorry, this is untranslated sentence.")
+			chatMore lang("灼熱の塔は1組の夫妻が支配している。前に挑戦した奴の話だと、妻である赤き義眼の『クルイツゥア』はレベル24。夫の鋼鉄竜『コルゴン』はレベル16らしい。", "The Tower of Fire is ruled by a team of husband and wife. According to the last person who challenged them to battle, the wife, Quruiza, is level 24, and the husband, Corgon, is level 16.")
+			chatMore lang("クルイツゥアは逃げ回りながら冷気や暗黒の魔法を撃ってくるって話" + _da(3) + "。そう、灼熱の塔を攻略するには、火炎だけじゃなくて冷気と暗黒にもある程度耐性が必要ってこと" + _dana(3) + "。", "I've heard that Quruiza casts cold and darkness magic while darting around. So in order to conquer the Tower of Fire, you need to have some resistance to cold and darkness as well as fire.")
+			chatMore lang("コルゴンは竜なので妻よりずっとタフだけど、近づいて殴ってくるだけで動きも遅いらしい。テレポートでコルゴンを翻弄しつつ、先にクルイツゥアを集中攻撃したほうがいいんじゃない" + _kana(3) + "？", "Corgon is a dragon, so he's much tougher than his wife, but I've heard that he just moves in to hit you, and his movements are pretty slow. I think it's better to focus your attacks on Corgon first while using teleportation to keep Quruiza at bay.")
+			chatMore lang("接近戦がやりづらいだろうから、強力な遠距離攻撃があるとスムーズかもしれない" + _na(3) + "。あの灼熱の塔に住めるだけあって、どちらも火炎には滅法強いらしいけど、コルゴンのほうは電撃と魔法にも強いそう" + _da(3) + "。", "Close-quarters combat with those two would prove difficult, so a powerful long-distance attack might help you smooth things out. I've heard that the couple is extremely resistant to fire, given that they live in, you know, the Tower of Fire, but I've also heard that Corgon is resistant to electric and magic attacks as well.")
 			goto *chat_end
 		}
 		if ( chatval == 2 ) {
