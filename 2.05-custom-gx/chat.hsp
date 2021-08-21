@@ -8933,7 +8933,7 @@
 				chatList 5, lang("これまでの経緯をまとめて知りたい", "I want to know the whole story up to this point.")
 			}
 			if ( gdata(GDATA_FLAG_MAIN) >= 695 & gdata(GDATA_FLAG_MAIN) < 760 ) {
-				chatList 6, lang("混沌の神を倒したらネフィアはどうなる？", "Once you defeat the God of Chaos, what happens to the Nefias?")
+				chatList 6, lang("混沌の神を倒したらネフィアはどうなる？", "Once we defeat the God of Chaos, what happens to Nefia?")
 			}
 			buff = lang("ネフィアの永遠の盟約により、全てを話すことはできないね。しかし、制限されていない情報に関しては君にも教えよう。", "To comply with the Eternal League of Nefia, I cannot tell you everything. However, I can give you information on unrestricted topics.")
 			gosub *chat_select
@@ -14223,37 +14223,37 @@
 	if ( _switch_val == CREATURE_ID_AIME_THE_STORY_TELLER | _switch_sw ) {
 		_switch_sw = 0
 		if ( gdata(GDATA_FLAG_MAIN) < 1000 ) {
-			chatMore lang("あはは。もし" + _onii(cdata(CDATA_SEX, CHARA_PLAYER)) + "さんが自分の物語を終わらせたら、アイメが楽しいお話をきかせてあげるねー。", "Sorry, this is untranslated sentence."), strbye
+			chatMore lang("あはは。もし" + _onii(cdata(CDATA_SEX, CHARA_PLAYER)) + "さんが自分の物語を終わらせたら、アイメが楽しいお話をきかせてあげるねー。", "Hahaha! " + _onii(cdata(CDATA_SEX, CHARA_PLAYER)) + ", if you can finish your story, Aime will let you listen to hers."), strbye
 			goto *chat_end
 		}
-		chatList 0, lang("気が向いたらね", "Sorry, this is untranslated sentence.")
-		chatList 1, lang("教えてほしいな", "Sorry, this is untranslated sentence.")
-		buff = lang("アイメはねぇ、いろんなお話を知ってるんだよ。スターダストを５個くれたらおしえてあげるー。", "Sorry, this is untranslated sentence.")
+		chatList 0, lang("気が向いたらね", "Maybe sometime soon.")
+		chatList 1, lang("教えてほしいな", "I'd like you to tell me.")
+		buff = lang("アイメはねぇ、いろんなお話を知ってるんだよ。スターダストを５個くれたらおしえてあげるー。", "Aime knows lots of stories. If you give Aime five pieces of stardust, she'll tell you a story!")
 		gosub *chat_select
 		if ( chatval == 1 ) {
 			item_find ITEM_ID_STARDUST, ITEM_FIND_MODE_DBID, ITEM_FIND_LOCATION_CHARAS
 			if ( stat != (-1) ) {
 				ci = stat
 				if ( inv(INV_ITEM_NUM, ci) >= 5 ) {
-					chatList 0, lang("《アイメの日記》（Lv???）", "Sorry, this is untranslated sentence.")
-					chatList 1, lang("仮面の下の笑顔（Lv200）", "Sorry, this is untranslated sentence.")
-					chatList 2, lang("夢を忘れた少年（Lv250）", "Sorry, this is untranslated sentence.")
-					chatList 3, lang("泥まみれの手（Lv300）", "Sorry, this is untranslated sentence.")
-					chatList 4, lang("銀涙（Lv400）", "Sorry, this is untranslated sentence.")
-					chatList 5, lang("巨神迷宮探検記（Lv500）", "Sorry, this is untranslated sentence.")
-					chatList 6, lang("カオスエンド（Lv600）", "Sorry, this is untranslated sentence.")
-					chatList 7, lang("イルヴァ学園七不思議（Lv700）", "Sorry, this is untranslated sentence.")
-					chatList 8, lang("トンファー怒りの大乱闘（Lv800）", "Sorry, this is untranslated sentence.")
-					chatList 9, lang("禁忌・天屍魔統（Lv900）", "Sorry, this is untranslated sentence.")
-					chatList 10, lang("イェルスード対ゼイレンオー（Lv1000）", "Sorry, this is untranslated sentence.")
-					chatList 11, lang("破壊神話（Lv1100）", "Sorry, this is untranslated sentence.")
-					chatList 12, lang("永遠の英雄（Lv1200）", "Sorry, this is untranslated sentence.")
-					buff = lang("まだぜんぶ未実装だけどね。", "Sorry, this is untranslated sentence.")
+					chatList 0, lang("《アイメの日記》（Lv???）", "《Aime's Diary》 (Lv???)")
+					chatList 1, lang("仮面の下の笑顔（Lv200）", "Smile Under The Mask (Lv200)")
+					chatList 2, lang("夢を忘れた少年（Lv250）", "The Boy Who Forgot His Dream (Lv250)")
+					chatList 3, lang("泥まみれの手（Lv300）", "The Muddy Hands (Lv250)")
+					chatList 4, lang("銀涙（Lv400）", "Silver Tears (Lv400)")
+					chatList 5, lang("巨神迷宮探検記（Lv500）", "The Giant God Labyrinth Expedition (Lv500)")
+					chatList 6, lang("カオスエンド（Lv600）", "Chaos End (Lv600)")
+					chatList 7, lang("イルヴァ学園七不思議（Lv700）", "Seven Mysteries of Irva High (Lv700)")
+					chatList 8, lang("トンファー怒りの大乱闘（Lv800）", "Big Brawl of the Furious Tonfa (Lv800)")
+					chatList 9, lang("禁忌・天屍魔統（Lv900）", "Abomination, Heavenly Corpse Demon Tong (Lv900)")
+					chatList 10, lang("イェルスード対ゼイレンオー（Lv1000）", "Yerleswood vs. Zeirennou (Lv1000)")
+					chatList 11, lang("破壊神話（Lv1100）", "Myth of Destruction (Lv1100)")
+					chatList 12, lang("永遠の英雄（Lv1200）", "The Eternal Hero (Lv1200)")
+					buff = lang("まだぜんぶ未実装だけどね。", "All of them are still unimplemented, though.")
 					gosub *chat_select
 					goto *chat_end
 				}
 			}
-			chatMore lang("ひやかし？スターダストを５個もってきてねぇ。", "Sorry, this is untranslated sentence."), strbye
+			chatMore lang("ひやかし？スターダストを５個もってきてねぇ。", "You kidding? Bring Aime five pieces of stardust."), strbye
 		}
 		goto *chat_end
 		goto *chat_unique_SWEND1
@@ -14262,10 +14262,10 @@
 	if ( _switch_val == CREATURE_ID_JALDABAOTH_THE_CHAOS_CHILD | _switch_sw ) {
 		_switch_sw = 0
 		if ( gdata(GDATA_FLAG_MAIN) == 990 ) {
-			chatMore lang("馬鹿な…力では完全にこちらが上だったはず…。", "Sorry, this is untranslated sentence.")
-			chatMore lang("だが…奇跡の代償は大きい…お前はあと数秒もせずに反動で崩壊し、自我も粉々になる…！", "Sorry, this is untranslated sentence.")
-			chatMore lang("ぐっ…お前の憎たらしい顔も…もう見飽きた。私は先に虚無へと還る…。", "Sorry, this is untranslated sentence.")
-			chatMore lang("まったく…こんな結末があるとは…。", "Sorry, this is untranslated sentence.")
+			chatMore lang("馬鹿な…力では完全にこちらが上だったはず…。", "It can't be... My powers were superior to yours... They had to have been...")
+			chatMore lang("だが…奇跡の代償は大きい…お前はあと数秒もせずに反動で崩壊し、自我も粉々になる…！", "However... A miracle carries a high price... In mere seconds, the reaction will destroy your body, and your ego will be smashed to pieces...!")
+			chatMore lang("ぐっ…お前の憎たらしい顔も…もう見飽きた。私は先に虚無へと還る…。", "Gh... I have grown tired of seeing your spiteful face. I shall return to the void...")
+			chatMore lang("まったく…こんな結末があるとは…。", "Never did I think... it would end like this...")
 			gdata(GDATA_FLAG_MAIN) = 995
 			gdata(GDATA_FLAG_COLLECTED_WISHES) = 0
 			gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) = 0
@@ -14281,16 +14281,16 @@
 			goto *chat_end
 		}
 		if ( gdata(GDATA_FLAG_MAIN) == 890 ) {
-			chatMore lang("まだ動けるのか…もういいだろう？お前は必要ないくらいに耐えてみせた。その執念だけは認めてやる。", "Sorry, this is untranslated sentence.")
-			chatList 0, lang("だからどうした！", "What do I have to do next?")
-			chatList 1, lang("諦めるわけにもいかなくてね", "Where is Orphe?")
-			chatList 2, lang("それでもお前を殺す", "Can't you return to Tezcatlipoca?")
-			buff = lang("大人しくそのまま散っておけ。無駄に苦しみ、頑張ったところでお前に勝ち目はない。", "Sorry, this is untranslated sentence.")
+			chatMore lang("まだ動けるのか…もういいだろう？お前は必要ないくらいに耐えてみせた。その執念だけは認めてやる。", "So you are still able to move about... Isn't that enough? You have needlessly persisted for this long. I shall at least recognize your tenacity.")
+			chatList 0, lang("だからどうした！", "And what of it?!")
+			chatList 1, lang("諦めるわけにもいかなくてね", "I just can't give up, you see.")
+			chatList 2, lang("それでもお前を殺す", "But I'm still going to end you.")
+			buff = lang("大人しくそのまま散っておけ。無駄に苦しみ、頑張ったところでお前に勝ち目はない。", "Let yourself disperse into nothingness. No matter how much you suffer, and no matter how hard you try, you have no hope of winning.")
 			chatesc = 0
 			gosub *chat_select
-			chatMore lang("まだ減らず口を叩けるのか。いいだろう。敬意を表して、最期は念入りに焼き散らしてやろう。", "Sorry, this is untranslated sentence.")
+			chatMore lang("まだ減らず口を叩けるのか。いいだろう。敬意を表して、最期は念入りに焼き散らしてやろう。", "So you still have enough impudence in you to talk back. Very well. At your insistence, I shall take my time in burning you to a crisp, before your ashes are scattered into nothingness.")
 			msg_clear
-			txt lang("炎が一点に収束していく…！", "Flame converge to one point...!")
+			txt lang("炎が一点に収束していく…！", "The flames are converging to a single point!")
 			txtef COLOR_YELLOW
 			txt lang("*滅火の神槍*", "<HOROBINOYARI>")
 			animeid = ANIMATION_HOROBINOYARI_2
@@ -14363,33 +14363,33 @@
 			music = MUSICLIST_MCLASTBOSS5
 			gosub *music_play
 			msg_clear
-			txt lang("立ちなさい！皆の願いを、力に換えて！", "Stand up! Convert the collected " + gdata(GDATA_FLAG_COLLECTED_WISHES) + " wishes into power!")
-			chatMore lang("何が起きた…！？", "Sorry, this is untranslated sentence.")
-			chatMore lang("主神級でも余裕で消滅するほどの火焔で貫いたはずだ。なぜ一介の定命が、これほどの奇跡に守られている？", "Sorry, this is untranslated sentence.")
-			chatList 0, lang("ただの冒険者だ", "Sorry, this is untranslated sentence.")
-			chatList 1, lang("これは願いだ！つながりが生んだ光だ！", "Sorry, this is untranslated sentence.")
-			chatList 2, lang("冒険者の恐ろしさを味わわせてやる…", "Sorry, this is untranslated sentence.")
-			chatList 3, lang("何だか知らんがお前を倒す！", "Sorry, this is untranslated sentence.")
-			buff = lang("わからん…何だその光は。お前は一体…。", "Sorry, this is untranslated sentence.")
+			txt lang("立ちなさい！皆の願いを、力に換えて！", "Get back up! Channel the power of everyone's " + gdata(GDATA_FLAG_COLLECTED_WISHES) + " wishes!")
+			chatMore lang("何が起きた…！？", "What is happening?")
+			chatMore lang("主神級でも余裕で消滅するほどの火焔で貫いたはずだ。なぜ一介の定命が、これほどの奇跡に守られている？", "That piercing flame should have been able to completely obliterate a deity-class being. Why is a single trifling fate being protected by a miracle of this much power?")
+			chatList 0, lang("ただの冒険者だ", "I'm just a humble adventurer.")
+			chatList 1, lang("これは願いだ！つながりが生んだ光だ！", "This is a wish! It's the light born from connection!")
+			chatList 2, lang("冒険者の恐ろしさを味わわせてやる…", "I'll show you just how awesome an adventurer can be...")
+			chatList 3, lang("何だか知らんがお前を倒す！", "I don't even know but I'm taking you down!")
+			buff = lang("わからん…何だその光は。お前は一体…。", "How can this be... What is that light? Just what are you...?")
 			chatesc = 0
 			gosub *chat_select
-			chatMore lang("く…はははははは！", "Sorry, this is untranslated sentence.")
-			chatMore lang("お前は本当に番狂わせだよ！だが、そう。所詮は死に損ないが一時の奇跡を掴んだに過ぎない！そんなもの、圧倒的な力で真っ向から打ち砕いてくれる！", "Sorry, this is untranslated sentence.")
-			chatMore lang("さぁ来い…イレギュラァァァァッ！！", "Sorry, this is untranslated sentence.")
+			chatMore lang("く…はははははは！", "Ku... Hahahahahaha!")
+			chatMore lang("お前は本当に番狂わせだよ！だが、そう。所詮は死に損ないが一時の奇跡を掴んだに過ぎない！そんなもの、圧倒的な力で真っ向から打ち砕いてくれる！", "You have truly made a mess of my plans! Truly, indeed! And yet, you are still nothing more than a mere mortal who's grasped a short-lived miracle! I shall small all of that to pieces with my overwhelming power!")
+			chatMore lang("さぁ来い…イレギュラァァァァッ！！", "Here I come... IRREGULAAAAAARRR!!!")
 			music = MUSICLIST_MCLASTBOSS5
 			gosub *music_play
 			goto *chat_end
 			goto *chat_unique_SWEND1
 		}
 		if ( gdata(GDATA_FLAG_MAIN) == 880 ) {
-			chatMore lang("…？おや。灰が舞っているのかと思えば、焼け残りがいたのか。", "Sorry, this is untranslated sentence.")
-			chatList 0, lang("だからどうした", "Sorry, this is untranslated sentence.")
-			chatList 1, lang("まだ勝負はついていない", "Sorry, this is untranslated sentence.")
-			chatList 2, lang("仇は討つ", "Sorry, this is untranslated sentence.")
-			buff = lang("燃えカスになってもまだ抗う気か？戦力の差は歴然だぞ。", "Sorry, this is untranslated sentence.")
+			chatMore lang("…？おや。灰が舞っているのかと思えば、焼け残りがいたのか。", "...? Oh. I thought there were merely some ashes fluttering about, but it appears that there are still some charred remains lying around.")
+			chatList 0, lang("だからどうした", "And what of it?")
+			chatList 1, lang("まだ勝負はついていない", "We're not done yet.")
+			chatList 2, lang("仇は討つ", "I will take my revenge.")
+			buff = lang("燃えカスになってもまだ抗う気か？戦力の差は歴然だぞ。", "You, reduced to nothing more than a burning husk, still have the audacity to challenge me? Our difference is strength is plainly obvious.")
 			chatesc = 0
 			gosub *chat_select
-			chatMore lang("いいや。終わりだ、イレギュラー。", "Sorry, this is untranslated sentence.")
+			chatMore lang("いいや。終わりだ、イレギュラー。", "I think not. This is your end, irregular.")
 			msg_clear
 			txtef COLOR_RED2
 			txt lang("*滅火*", "<HOROBI>")
@@ -14461,7 +14461,7 @@
 			animeid = ANIMATION_JALDABAOTH
 			gosub *anime
 			txtef COLOR_YELLOW
-			txt lang("テスカトリポカの遺した来光の牙が蒸発し、アカシックネットワークに溶けていった…。", "Sorry, this is untranslated sentence.")
+			txt lang("テスカトリポカの遺した来光の牙が蒸発し、アカシックネットワークに溶けていった…。", "The Origin of Light left behind by Tezcatlipoca evaporates, and melts into the Akashic Network...")
 			cdata(CDATA_HP, CHARA_PLAYER) = (-36456) + rnd(2189)
 			cdata(CDATA_MP, CHARA_PLAYER) = 0
 			if ( sdata(SKILL_ATTR_STR, CHARA_PLAYER) > 10 ) {
@@ -14492,7 +14492,7 @@
 				sdata(SKILL_ATTR_SPD, CHARA_PLAYER) = 10
 			}
 			gdata(GDATA_FLAG_MAIN) = 885
-			txt lang("声が聞こえる…。", "You heard someone's voice...")
+			txt lang("声が聞こえる…。", "You hear a voice...")
 			gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) = 500
 			animeid = ANIMATION_LASTBOSS_2
 			anic = 0
@@ -14557,32 +14557,32 @@
 			if ( gdata(GDATA_LEVEL) == 178 ) {
 				if ( gdata(GDATA_FLAG_MAIN) >= 1000 ) {
 					if ( gdata(GDATA_FLAG_MAIN) == 1010 ) {
-						chatMore lang("ようやくお目覚めか。本当に…本当に待たせやがって…。", "Sorry, this is untranslated sentence.")
-						chatMore lang("俺はここで修行しながら番をしていた。お前の復活に邪魔が入ってもいけないからな。", "Sorry, this is untranslated sentence.")
+						chatMore lang("ようやくお目覚めか。本当に…本当に待たせやがって…。", "You're finally awake, huh? You really... really, kept us waiting...")
+						chatMore lang("俺はここで修行しながら番をしていた。お前の復活に邪魔が入ってもいけないからな。", "I've been training and keeping watch down here. I didn't want anyone to get in the way of your recovery, you know.")
 					}
-					chatList 0, lang("次は何をすればいい？", "What do I have to do next?")
+					chatList 0, lang("次は何をすればいい？", "What should I do next?")
 					chatList 1, lang("オルフェはどうしてる？", "Where is Orphe?")
 					chatList 2, lang("テスカトリポカに戻らないの？", "Can't you return to Tezcatlipoca?")
 					if ( gdata(GDATA_FLAG_LEOLD_LOCATION_STATE) < 8 ) {
-						chatList 3, lang("まだ貰っていないご褒美がある", "I have not yet got the reward.")
+						chatList 3, lang("まだ貰っていないご褒美がある", "There's a reward I haven't received yet.")
 					}
-					buff = lang("ああ、そうそう。他の連中のクリア後会話はまだ開発中だ。気長に待ってくれ。", "Sorry, this is untranslated sentence.")
+					buff = lang("ああ、そうそう。他の連中のクリア後会話はまだ開発中だ。気長に待ってくれ。", "Ahh, that reminds me. The after-story scenarios for all the others are still under development. Please be patient for a while.")
 					if ( gdata(GDATA_FLAG_MAIN) == 1010 ) {
 						gdata(GDATA_FLAG_MAIN) = 1015
 					}
 					gosub *chat_select
 					if ( chatval == 0 ) {
-						chatMore lang("ノルンが言っていたが…お前は役割を全て果たしたらしい。もう運命に縛られることはないんだ…良かったじゃないか。この広い世界を飽きるまで冒険してくれ。", "Sorry, this is untranslated sentence.")
+						chatMore lang("ノルンが言っていたが…お前は役割を全て果たしたらしい。もう運命に縛られることはないんだ…良かったじゃないか。この広い世界を飽きるまで冒険してくれ。", "Norn told me that you have fulfilled all of your duties. You're no longer bound by destiny... and that's a good thing. Go on ahead and explore this vast world until you've had enough.")
 						goto *chat_end
 					}
 					if ( chatval == 1 ) {
-						chatMore lang("オルフェのやつは保護されて精密検査に回された。心身に細工されていないことが確認された後、監視付きでノースティリスに降ろされたよ。", "Sorry, this is untranslated sentence.")
-						chatMore lang("俺はロストイルヴァで共に働くことを提案したんだがな、会わせる顔がないとか言って断られてしまった。そういえば、冒険者になるつもりだとか言っていたな。おそらく、お前に触発されたんだろう。", "Sorry, this is untranslated sentence.")
+						chatMore lang("オルフェのやつは保護されて精密検査に回された。心身に細工されていないことが確認された後、監視付きでノースティリスに降ろされたよ。", "Orphe was taken into custody and sent off for a thorough examination. Once it was confirmed that his mind and body were intact, he was dropped off in North Tyris under supervision.")
+						chatMore lang("俺はロストイルヴァで共に働くことを提案したんだがな、会わせる顔がないとか言って断られてしまった。そういえば、冒険者になるつもりだとか言っていたな。おそらく、お前に触発されたんだろう。", "I suggested that we work together in Lost Irva, but he refused, saying that he didn't have the face to show me. By the way, he told me that he was planning to become an adventurer. Perhaps you're the one who inspired him.")
 						goto *chat_end
 					}
 					if ( chatval == 2 ) {
-						chatMore lang("力は取り戻したんだが、今更あの八柱と勢力争いをする気も起きなくてな。元は神の間で活動するためだったとはいえ、この姿にも随分と愛着が湧いた。これからも神であることを隠し、強者を鍛えていこうと思っている。", "Sorry, this is untranslated sentence.")
-						chatMore lang("そうそう。力を取り戻した影響で、ＡＰで速度や生命力をさらに上げられるようになったぞ。暇があったらウールム・レゾンに寄ってみてくれ。", "Sorry, this is untranslated sentence.")
+						chatMore lang("力は取り戻したんだが、今更あの八柱と勢力争いをする気も起きなくてな。元は神の間で活動するためだったとはいえ、この姿にも随分と愛着が湧いた。これからも神であることを隠し、強者を鍛えていこうと思っている。", "I got my powers back, but I didn't feel like fighting with those eight godly pillars for supremacy now. Even though I was originally meant to work among the gods, I've grown quite attached to this form. I'm going to continue to hide my divine identity and train the strong.")
+						chatMore lang("そうそう。力を取り戻した影響で、ＡＰで速度や生命力をさらに上げられるようになったぞ。暇があったらウールム・レゾンに寄ってみてくれ。", "That reminds me. Now that you've regained your powers, you can use AP to increase your speed and vitality even more. If you have time, stop by Ulm-Leson.")
 						goto *chat_end
 					}
 					if ( chatval == 3 ) {
@@ -14644,47 +14644,47 @@
 				}
 				if ( gdata(GDATA_FLAG_MAIN) >= 840 & gdata(GDATA_FLAG_MAIN) < 1000 ) {
 					if ( gdata(GDATA_FLAG_MAIN) == 840 ) {
-						chatMore lang("オルフェめ、やってくれたな。だが今度こそ止めてみせる…。", "Sorry, this is untranslated sentence.")
-						chatMore lang("おっと。待っていたぞ、" + cdatan(CDATAN_NAME, CHARA_PLAYER) + "。必要なんでな、来光の牙を返してもらうぞ。", "Sorry, this is untranslated sentence.")
+						chatMore lang("オルフェめ、やってくれたな。だが今度こそ止めてみせる…。", "You've done it now, Orphe. But this will be the time we finally stop you...")
+						chatMore lang("おっと。待っていたぞ、" + cdatan(CDATAN_NAME, CHARA_PLAYER) + "。必要なんでな、来光の牙を返してもらうぞ。", "Ah. I've been waiting for you, " + cdatan(CDATAN_NAME, CHARA_PLAYER) + ". I'll be taking the [Origin of Light], since I'll be needing it soon.")
 						txtef COLOR_BLUE
-						txt lang("[来光の牙]を失った。", "You have lost Origin of Light...")
+						txt lang("[来光の牙]を失った。", "You have lost the [Origin of Light]...")
 						gdata(GDATA_FLAG_MAIN) = 845
 						autosave = 1 * (gdata(GDATA_AREA) != AREA_SHOW_HOUSE)
 						goto *chat_end
 					}
-					chatList 0, lang("一緒に戦わせて", "I think not.")
-					chatList 1, lang("締めくくりに相応しい冒険だ", "Sorry, this is untranslated sentence.")
-					chatList 2, lang("相手の情報がほしい", "Sorry, this is untranslated sentence.")
-					chatList 3, lang("【神の間へ降りる】", "<Head down to God's prison>")
+					chatList 0, lang("一緒に戦わせて", "Let me fight by your side.")
+					chatList 1, lang("締めくくりに相応しい冒険だ", "A fitting end to an adventure.")
+					chatList 2, lang("相手の情報がほしい", "I want to know about what we're up against.")
+					chatList 3, lang("【神の間へ降りる】", "<Descend into the Eternal Seal>")
 					if ( leokaiwa == 0 ) {
-						buff = lang("後は俺が何とかする…いや、俺が何とかしなきゃいけない。神の間へ降りたら、もう何があっても逃げ帰れないからな。これ以上お前を巻き込みたくないんだ。", "Sorry, this is untranslated sentence.")
+						buff = lang("後は俺が何とかする…いや、俺が何とかしなきゃいけない。神の間へ降りたら、もう何があっても逃げ帰れないからな。これ以上お前を巻き込みたくないんだ。", "I'll be able to figure something out... no, I'll have to figure something out. Once I descend into the Eternal Seal, I won't be able to come back up, no matter what happens down there. I don't want to drag you into this any longer.")
 					}
 					if ( leokaiwa == 1 ) {
-						buff = lang("…もしお前が一緒に決戦に挑むつもりでも、だ。今まで世話になった連中に一度声をかけてきたらどうだ？心残りを確かめ、戦う覚悟を…いや、すまん。余計なお節介だったな。", "Sorry, this is untranslated sentence.")
+						buff = lang("…もしお前が一緒に決戦に挑むつもりでも、だ。今まで世話になった連中に一度声をかけてきたらどうだ？心残りを確かめ、戦う覚悟を…いや、すまん。余計なお節介だったな。", "Even if you're prepared to fight this fight with me, why not at least pay a visit to the all the people that have been there for you all this time? Understand their regrets, and their readiness to do battle... No, I'm sorry. I didn't mean to meddle in your own business.")
 					}
 					gosub *chat_select
 					leokaiwa = 1
 					if ( chatval == 0 ) {
-						chatMore lang("…なぜだろうな、心強く思えてしまうのは。お前に頼ってはいけないと、分かっているのだが。", "Sorry, this is untranslated sentence."), strbye
+						chatMore lang("…なぜだろうな、心強く思えてしまうのは。お前に頼ってはいけないと、分かっているのだが。", "...Why do I feel so reassured? I know I shouldn't rely on you, but I can't seem to help it."), strbye
 						goto *chat_end
 					}
 					if ( chatval == 1 ) {
-						chatMore lang("本当は、こんなところまで来させたくなかった。お前には、広い世界で普通に冒険をしていて欲しかった…。", "Sorry, this is untranslated sentence."), strbye
+						chatMore lang("本当は、こんなところまで来させたくなかった。お前には、広い世界で普通に冒険をしていて欲しかった…。", "I really didn't want you to come to this place. I wanted you to go on a normal adventure in this vast, open world..."), strbye
 						goto *chat_end
 					}
 					if ( chatval == 2 ) {
-						chatMore lang("俺がこのフロアで交戦した時点では、オルフェはレベル350程度。混沌の渦や衝撃波動を使ってきたから、混沌耐性やPVとDVが低いと致命的だろう。だがこれは最新の情報ではない。", "Sorry, this is untranslated sentence.")
-						chatMore lang("もし動けない混沌の超児からオルフェが全神力を吸収していた場合…とんでもないことになっているはず。そう、レベルは1200をゆうに超え、混沌のみならず他の神々から吸収したあらゆる属性で攻撃を仕掛けてくるだろう。", "Sorry, this is untranslated sentence.")
-						chatMore lang("もはや弱点は神に威力を発揮するエンチャントくらいのものだろう。それにしたって、物理攻撃は重力や束縛で回避率を落とさないとまず当たるまい。", "Sorry, this is untranslated sentence.")
-						chatMore lang("今の俺なら強化前のオルフェには余裕で勝てるだろう。だが強化されていた場合は…正直勝てる見込みは薄い。", "Sorry, this is untranslated sentence."), strbye
+						chatMore lang("俺がこのフロアで交戦した時点では、オルフェはレベル350程度。混沌の渦や衝撃波動を使ってきたから、混沌耐性やPVとDVが低いと致命的だろう。だがこれは最新の情報ではない。", "The last time I fought Orphe on this floor, Orphe was about level 350. He used Chaos Ball and Shining Wave, so having little resistance to chaos and a low PV or DV would prove fatal. But things may have changed since then.")
+						chatMore lang("もし動けない混沌の超児からオルフェが全神力を吸収していた場合…とんでもないことになっているはず。そう、レベルは1200をゆうに超え、混沌のみならず他の神々から吸収したあらゆる属性で攻撃を仕掛けてくるだろう。", "If Orphe has absorbed all of the divine power from the motionless Fledgling of Chaos... he would have become unimaginably more powerful by now. His level could be well over 1200, and he would likely attack with not only the element of chaos, but all the elements of the gods he's absorbed also.")
+						chatMore lang("もはや弱点は神に威力を発揮するエンチャントくらいのものだろう。それにしたって、物理攻撃は重力や束縛で回避率を落とさないとまず当たるまい。", "The only weakness he would have left would be toenchantments that deal increased damage to gods. Even then, physical attacks are unlikely to hit unless his evasion is reduced by gravity or binding.")
+						chatMore lang("今の俺なら強化前のオルフェには余裕で勝てるだろう。だが強化されていた場合は…正直勝てる見込みは薄い。", "In my current condition, I would have been able to defeat Orphe in his original form with ease. But with all of the power he's obtained... I honestly don't think we stand much of a chance of beating him."), strbye
 						goto *chat_end
 					}
 					if ( chatval == 3 ) {
-						chatMore lang("止めても無駄みたいだな。俺も行く。", "Sorry, this is untranslated sentence.")
-						chatMore lang("…なぁ、" + cdatan(CDATAN_NAME, CHARA_PLAYER) + "。最後の戦いに挑む前に、どうしてもお前に言っておかなきゃいけないことがある。", "Sorry, this is untranslated sentence.")
-						chatMore lang("じゃあ…言うぞ。", "Sorry, this is untranslated sentence.")
-						chatMore lang("実はな。俺はオルフェを戦友のように思っていた。あいつが混沌に魅入られた後でも、本心ではなんとか救ってやりたかったんだ。…だが、もはやそんな悠長なことを言ってる場合ではなくなってしまった。", "Sorry, this is untranslated sentence.")
-						chatMore lang("もしも俺が戦いの中で迷いを見せたら。その時はお前が俺の頬をひっぱたいてくれ。…それだけだ。行くぞ！", "Sorry, this is untranslated sentence.")
+						chatMore lang("止めても無駄みたいだな。俺も行く。", "Looks like I have no hope of stopping you. I'll come along.")
+						chatMore lang("…なぁ、" + cdatan(CDATAN_NAME, CHARA_PLAYER) + "。最後の戦いに挑む前に、どうしてもお前に言っておかなきゃいけないことがある。", "Hey, " + cdatan(CDATAN_NAME, CHARA_PLAYER) + ". Before we go into the final battle, there's something I really need to tell you.")
+						chatMore lang("じゃあ…言うぞ。", "So... here goes.")
+						chatMore lang("実はな。俺はオルフェを戦友のように思っていた。あいつが混沌に魅入られた後でも、本心ではなんとか救ってやりたかったんだ。…だが、もはやそんな悠長なことを言ってる場合ではなくなってしまった。", "I always thought of Orphe as a comrade in arms, actually. Even after he became entranced by Chaos, I desperately wanted to save him somehow. ...But this is no longer the time to be talking about such things.")
+						chatMore lang("もしも俺が戦いの中で迷いを見せたら。その時はお前が俺の頬をひっぱたいてくれ。…それだけだ。行くぞ！", "If I show any hesitation during this fight, do me a favor and smack me across the face. ...That's all. Let's roll!")
 						if ( gdata(GDATA_FLAG_DUEL_TARGET) > 0 ) {
 							snd SOUNDLIST_FAIL1
 							txt lang("決闘の呪いからは逃げられない！", "You can not run away from the duel!")
@@ -16575,7 +16575,7 @@
 	chatMore lang("そんな…。それじゃあガイアス・ヴィスはもうじき消えてなくなる…？何か手はないんですか！", "Sorry, this is untranslated sentence."), strmore, findchara(CREATURE_ID_NORNE_THE_GUIDE)
 	chatMore lang("手はあるさ。" + cdatan(CDATAN_NAME, CHARA_PLAYER) + "、これは他人事ではない。ここが完全に忘れられた世界となってしまえば次はイルヴァの番。何百年、いや何十年と持たないかもしれない。いずれイルヴァの景色を覚えている者は全宇宙上からいなくなってしまうだろう。だから君にこれを渡しておく。", "Sorry, this is untranslated sentence."), strmore, findchara(CREATURE_ID_MIKRAANESIS)
 	txtef COLOR_GREEN
-	txt lang("[アカシックネットワーク]を手に入れた！", "You obtain Akashic Network!")
+	txt lang("[アカシックネットワーク]を手に入れた！", "You obtain the [Akashic Network]!")
 	snd SOUNDLIST_COMPLETE1
 	chatMore lang("今のうちに別世界の観測者たちに記憶を刻み込むことができれば、相手の力を大きく抑制できる。今渡したのは、君が見てきたガイアス・ヴィスの姿を、アストラル光を介してアカシックレコード上に拡散するための干渉機構だ。ネットで公開して記憶保持者を増やし、世界の忘却を遅らせるわけだね。", "Sorry, this is untranslated sentence."), strmore, findchara(CREATURE_ID_MIKRAANESIS)
 	chatMore lang("しかしそれが使えるのは神ではなく使う世界に籍を置く定命だ。さらに効果はレコードの所在が近い者…つまり関わりの深い者たちにしか及ばない。だから" + cdatan(CDATAN_NAME, CHARA_PLAYER) + "のような存在が必要だったんだ。ガイアス・ヴィス出身ではなく、各地を渡り歩いていて、廃忘獣の群れを物理的に突破する力を持つ定命が。", "Sorry, this is untranslated sentence."), strmore, findchara(CREATURE_ID_MIKRAANESIS)
