@@ -565,8 +565,8 @@
 		// so we need to reallocate the buffer at scaled size
 		picload@HSP _p1, _p2
 		mref BMSCR, 67 // gmode 情報を取得
-		_gbuf = BMSCR.18
-		_gw = BMSCR.1
+		_gbuf = BMSCR.18 // get current buffer
+		_gw = BMSCR.1 // get image dimensions
 		_gh = BMSCR.2
 		buffer@HSP _gbuf, HIGHDPI_X(_gw), HIGHDPI_Y(_gh)
 		picload@HSP _p1, 1
@@ -575,7 +575,7 @@
 		buffer@HSP 100000 // scratch buffer for copying image
 		picload@HSP _p1, 0
 		mref BMSCR, 67 // gmode 情報を取得
-		_gw = BMSCR.1
+		_gw = BMSCR.1 // get image dimensions
 		_gh = BMSCR.2
 		gsel@HSP _gbuf
 		gzoom@HSP HIGHDPI_X(_gw), HIGHDPI_Y(_gh), 100000, 0, 0, _gw, _gh, HIGHDPI_SMOOTH_MODE

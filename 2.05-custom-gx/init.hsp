@@ -823,19 +823,20 @@ if instr(s,0,%1)!-1{	%c\
 	return
 
 #deffunc bmes str bmes_arg1, int bmes_arg2, int bmes_arg3, int bmes_arg4
-	locvar_bmes_pos_x = ginfo_cx
-	locvar_bmes_pos_y = ginfo_cy
+	; use the DPI-scaled positions
+	locvar_bmes_pos_x = ginfo(22)
+	locvar_bmes_pos_y = ginfo(23)
 	locvar_bmes_mes_color = bmes_arg2, bmes_arg3, bmes_arg4
 	repeat 3
 		locvar_bmes_mes_y = cnt + locvar_bmes_pos_y - 1
 		repeat 3
-			pos locvar_bmes_pos_x - 1 + cnt, locvar_bmes_mes_y
-			mes bmes_arg1
+			pos@HSP locvar_bmes_pos_x - 1 + cnt, locvar_bmes_mes_y
+			mes@HSP bmes_arg1
 		loop
 	loop
 	color locvar_bmes_mes_color(0), locvar_bmes_mes_color(1), locvar_bmes_mes_color(2)
-	pos locvar_bmes_pos_x, locvar_bmes_pos_y
-	mes bmes_arg1
+	pos@HSP locvar_bmes_pos_x, locvar_bmes_pos_y
+	mes@HSP bmes_arg1
 	return
 
 #deffunc talk_conv var talk_conv_arg1, int talk_conv_arg2
@@ -1765,9 +1766,7 @@ if instr(s,0,%1)!-1{	%c\
 	gosub *config_load
 	gosub *screen_init
     gosub *DamagePopupsInit
-	cfg_hidpi_scaling = 2.0
-	cfg_hidpi_smoothing = TRUE
-	HIGHDPI_Initialize cfg_hidpi_scaling, cfg_hidpi_smoothing
+	HIGHDPI_Initialize cfg_highdpi_scaling, cfg_highdpi_smoothing
 	if ( cfg_fullscreen ) {
 		chgdisp 1, windoww, windowh
 		bgscr 0, windoww, windowh, 0, 0
