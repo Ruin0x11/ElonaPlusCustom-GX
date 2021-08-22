@@ -125,6 +125,22 @@
 	HIGHDPI_setScreenDefaultFont
 	return
 
+#undef chgdisp
+#define global\
+	chgdisp(%1=HIGHDPI_DEF,%2=HIGHDPI_DEF,%3=HIGHDPI_DEF) \
+	HIGHDPI_chgdisp %1, %2, %3
+#deffunc HIGHDPI_chgdisp\
+	int p1, int p2, int p3,\
+	local _p1, local _p2, local _p3
+	_p1 = p1
+	_p2 = HIGHDPI_X(p2)
+	_p3 = HIGHDPI_Y(p3)
+	if(p1 == HIGHDPI_DEF) : _p1 = 0
+	if(p2 == HIGHDPI_DEF) : _p2 = HIGHDPI_X(640)
+	if(p3 == HIGHDPI_DEF) : _p3 = HIGHDPI_Y(480)
+	chgdisp@HSP _p1, _p2, _p3
+	return
+
 #undef bgscr
 #define global\
 	bgscr(%1=HIGHDPI_DEF,%2=HIGHDPI_DEF,%3=HIGHDPI_DEF,%4=HIGHDPI_DEF,%5=HIGHDPI_DEF,%6=HIGHDPI_DEF,%7=HIGHDPI_DEF,%8=HIGHDPI_DEF) \
@@ -545,7 +561,7 @@
 	if(p1 == HIGHDPI_DEF) : _p1 = _p1
 	if(p2 == HIGHDPI_DEF) : _p2 = 0
 	if ( _p2 == 0 | _p2 == 2 ) {
-		// window will be reinitialized with actual image size, 
+		// buffer will be reinitialized with actual image size,
 		// so we need to reallocate the buffer at scaled size
 		picload@HSP _p1, _p2
 		mref BMSCR, 67 // gmode 情報を取得
@@ -556,13 +572,13 @@
 		picload@HSP _p1, 1
 		gzoom@HSP HIGHDPI_X(_gw), HIGHDPI_Y(_gh), _gbuf, 0, 0, _gw, _gh, HIGHDPI_SMOOTH_MODE
 	} else {
-		buffer@HSP 50 // scratch buffer for copying image
+		buffer@HSP 100000 // scratch buffer for copying image
 		picload@HSP _p1, 0
 		mref BMSCR, 67 // gmode 情報を取得
 		_gw = BMSCR.1
 		_gh = BMSCR.2
 		gsel@HSP _gbuf
-		gzoom@HSP HIGHDPI_X(_gw), HIGHDPI_Y(_gh), 50, 0, 0, _gw, _gh, HIGHDPI_SMOOTH_MODE
+		gzoom@HSP HIGHDPI_X(_gw), HIGHDPI_Y(_gh), 100000, 0, 0, _gw, _gh, HIGHDPI_SMOOTH_MODE
 	}
 	return
 
