@@ -5227,6 +5227,7 @@
 	return
 
 #deffunc gmes str gmes_arg1
+	; This function now takes DPI-scaled coordinates.
 	locvar_gmes_m = ""
 	locvar_gmes_msg = "" + gmes_arg1 + "$end"
 	locvar_gmes_i = 0
@@ -5234,6 +5235,7 @@
 	locvar_gmes_size = 14
 	locvar_gmes_col = gmescol, gmescol(1), gmescol(2), 180, 160, 140
 	locvar_gmes_lim = gmesx + gmesw
+
 	font lang(cfg_font1, cfg_font2), locvar_gmes_size - en * 2, 0
 	repeat
 		locvar_gmes_p = peek(locvar_gmes_msg, locvar_gmes_i)
@@ -5281,11 +5283,11 @@
 				locvar_gmes_col = gmescol, gmescol(1), gmescol(2)
 			}
 			if ( locvar_gmes_s == "p" ) {
-				gmesy += 24
+				gmesy += HIGHDPI_Y(24)
 				gmesx = locvar_gmes_xorg
 			}
 			if ( locvar_gmes_s == "br" ) {
-				gmesy += 16
+				gmesy += HIGHDPI_Y(16)
 				gmesx = locvar_gmes_xorg
 			}
 			if ( locvar_gmes_s == "b" ) {
@@ -5309,21 +5311,21 @@
 		if ( locvar_gmes_brwait == 0 ) {
 			if ( gmesx >= locvar_gmes_lim ) {
 				gmesx = locvar_gmes_xorg
-				gmesy += locvar_gmes_size + 2
+				gmesy += HIGHDPI_Y(locvar_gmes_size + 2)
 			}
 		}
 		if ( gmestype == 1 ) {
 			color locvar_gmes_col(3), locvar_gmes_col(4), locvar_gmes_col(5)
-			pos gmesx + 1, gmesy + 1
+			pos@HSP gmesx + 1, gmesy + 1
 			mes locvar_gmes_m
 		}
 		color locvar_gmes_col(0), locvar_gmes_col(1), locvar_gmes_col(2)
-		pos gmesx, gmesy
+		pos@HSP gmesx, gmesy
 		mes locvar_gmes_m
-		gmesx += locvar_gmes_size / 2 * locvar_gmes_p
+		gmesx += HIGHDPI_Y(locvar_gmes_size) / 2 * locvar_gmes_p
 	loop
 	gmesx = locvar_gmes_xorg
-	gmesy += locvar_gmes_size + 4
+	gmesy += locvar_gmes_size + HIGHDPI_Y(4)
 	return
 
 #deffunc boxl int boxl_arg1, int boxl_arg2, int boxl_arg3, int boxl_arg4
