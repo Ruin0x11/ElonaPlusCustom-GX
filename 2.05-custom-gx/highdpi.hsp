@@ -42,7 +42,7 @@
 	}
 	return
 
-#deffunc HIGHDPI_Initialize double dpi, local HIGHDPI_STAT, local DPI_X, local DPI_Y
+#deffunc HIGHDPI_Initialize double dpi, int smooth_mode, local HIGHDPI_STAT, local DPI_X, local DPI_Y
 	HIGHDPI_callSetProcessDPIAware
 	if(dpi < 0.01) {
 		dpi = 1.0
@@ -55,6 +55,7 @@
 	HIGHDPI_RATE_IX = 1.0 / HIGHDPI_RATE_X
 	HIGHDPI_RATE_Y = double(DPI_Y) / DEFAULT_DPI
 	HIGHDPI_RATE_IY = 1.0 / HIGHDPI_RATE_Y
+	HIGHDPI_SMOOTH_MODE = smooth_mode
 	return
 
 #define global ctype HIGHDPI_X(%1) int(double(%1) * HIGHDPI_RATE_X@__HIGH_DPI__)
@@ -68,8 +69,12 @@
 #define global HIGHDPI_ginfo_cx ginfo(22)
 #define global HIGHDPI_ginfo_cy ginfo(23)
 #define global HIGHDPI_ginfo_sx ginfo(26)
-#define global HIGHDPI_ginfo_sy ginfo(27) 
+#define global HIGHDPI_ginfo_sy ginfo(27)
 
+#undef ginfo_winx
+#define global ginfo_winx HIGHDPI_X_INV(ginfo(12))
+#undef ginfo_winy
+#define global ginfo_winy HIGHDPI_Y_INV(ginfo(13))
 #undef ginfo_cx
 #define global ginfo_cx HIGHDPI_X_INV(ginfo(22))
 #undef ginfo_cy
@@ -285,6 +290,9 @@
 	if(fontname == HIGHDPI_DEF_STR) : lhdFontName = lfFaceName
 	if(p1 == HIGHDPI_DEF) : _p1 = HIGHDPI_Y(12) // lfHeight = BMSCR.32 で現在設定中のフォントサイズ
 	if(p2 == HIGHDPI_DEF) : _p2 = 0
+	if ( HIGHDPI_SMOOTH_MODE ) {
+		_p2 |= font_antialias
+	}
 	font@HSP fontname, _p1, _p2
 	return
 
@@ -455,7 +463,7 @@
 	grotate(%1=HIGHDPI_DEF,%2=HIGHDPI_DEF,%3=HIGHDPI_DEF,%4=HIGHDPI_DEF,%5=HIGHDPI_DEF,%6=HIGHDPI_DEF)\
 	HIGHDPI_grotate %1, %2, %3, %4, %5, %6
 #deffunc HIGHDPI_grotate\
-	int p1, int p2, int p3, int p4, int p5, int p6,\
+	int p1, int p2, int p3, double p4, int p5, int p6,\
 	local _p1, local _p2, local _p3, local _p4, local _p5, local _p6,\
 	local BMSCR, local _gx, local _gy, local _gw, local _gh
 	_p1 = p1
@@ -467,14 +475,12 @@
 	mref BMSCR, 67 // gmode 情報を取得
 	_gx = BMSCR.33
 	_gy = BMSCR.34
-	_gw = BMSCR.1
-	_gh = BMSCR.2
 	if(p1 == HIGHDPI_DEF) : _p1 = 0
 	if(p2 == HIGHDPI_DEF) : _p2 = 0
 	if(p3 == HIGHDPI_DEF) : _p3 = 0
 	if(p4 == HIGHDPI_DEF) : _p4 = 0.0
-	if(p5 == HIGHDPI_DEF) : _p5 = _gw
-	if(p6 == HIGHDPI_DEF) : _p6 = _gh
+	if(p5 == HIGHDPI_DEF) : _p5 = _gx
+	if(p6 == HIGHDPI_DEF) : _p6 = _gy
 	grotate@HSP _p1, _p2, _p3, _p4, _p5, _p6
 	return
 
@@ -483,7 +489,7 @@
 	_grotate(%1=HIGHDPI_DEF,%2=HIGHDPI_DEF,%3=HIGHDPI_DEF,%4=HIGHDPI_DEF,%5=HIGHDPI_DEF,%6=HIGHDPI_DEF)\
 	HIGHDPI__grotate %1, %2, %3, %4, %5, %6
 #deffunc HIGHDPI__grotate\
-	int p1, int p2, int p3, int p4, int p5, int p6,\
+	int p1, int p2, int p3, double p4, int p5, int p6,\
 	local _p1, local _p2, local _p3, local _p4, local _p5, local _p6,\
 	local BMSCR, local _gx, local _gy, local _gw, local _gh
 	_p1 = p1
@@ -546,10 +552,9 @@
 		_gbuf = BMSCR.18
 		_gw = BMSCR.1
 		_gh = BMSCR.2
-		logmes "picloadrewrite" + HIGHDPI_X(_gw) + " " + HIGHDPI_Y(_gh) + " " +  _gw + " " +  _gh
 		buffer@HSP _gbuf, HIGHDPI_X(_gw), HIGHDPI_Y(_gh)
 		picload@HSP _p1, 1
-		gzoom@HSP HIGHDPI_X(_gw), HIGHDPI_Y(_gh), _gbuf, 0, 0, _gw, _gh, 0
+		gzoom@HSP HIGHDPI_X(_gw), HIGHDPI_Y(_gh), _gbuf, 0, 0, _gw, _gh, HIGHDPI_SMOOTH_MODE
 	} else {
 		buffer@HSP 50 // scratch buffer for copying image
 		picload@HSP _p1, 0
@@ -557,8 +562,7 @@
 		_gw = BMSCR.1
 		_gh = BMSCR.2
 		gsel@HSP _gbuf
-		logmes "picloadover" + HIGHDPI_X(_gw) + " " + HIGHDPI_Y(_gh) + " " +  _gw + " " +  _gh
-		gzoom@HSP HIGHDPI_X(_gw), HIGHDPI_Y(_gh), 50, 0, 0, _gw, _gh, 0
+		gzoom@HSP HIGHDPI_X(_gw), HIGHDPI_Y(_gh), 50, 0, 0, _gw, _gh, HIGHDPI_SMOOTH_MODE
 	}
 	return
 

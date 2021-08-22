@@ -1765,6 +1765,9 @@ if instr(s,0,%1)!-1{	%c\
 	gosub *config_load
 	gosub *screen_init
     gosub *DamagePopupsInit
+	cfg_hidpi_scaling = 2.0
+	cfg_hidpi_smoothing = TRUE
+	HIGHDPI_Initialize cfg_hidpi_scaling, cfg_hidpi_smoothing
 	if ( cfg_fullscreen ) {
 		chgdisp 1, windoww, windowh
 		bgscr 0, windoww, windowh, 0, 0
