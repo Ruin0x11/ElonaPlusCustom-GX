@@ -31,7 +31,7 @@
 			}
 		}
 		if ( inv(INV_ITEM_ID, rtval(1)) == ITEM_ID_JURES_BODY_PILLOW ) {
-			bedtxt += lang("寝心地は悪そうだが、いい夢を見れそうだ。", "I don't feel comfortable sleeping, but I think I can have a good dream.")
+			bedtxt += lang("寝心地は悪そうだが、いい夢を見れそうだ。", "It looks uncomfortable to sleep on, but I'm sure I'll have good dreams.")
 		}
 		if ( inv(INV_ITEM_ID, rtval(1)) == ITEM_ID_SLEEPING_BAG | inv(INV_ITEM_ID, rtval(1)) == ITEM_ID_CHEAP_BED2 ) {
 			bedtxt += lang("地べたで寝るのと大差ないだろう。", "It wouldn't be much different from sleeping on the ground.")
@@ -43,10 +43,10 @@
 			bedtxt += lang("まぁまぁ休めそうだ。", "I think I can rest to some extent.")
 		}
 		if ( inv(INV_ITEM_ID, rtval(1)) == ITEM_ID_SLEEP_SHEEP | inv(INV_ITEM_ID, rtval(1)) == ITEM_ID_LUXURY_BED | inv(INV_ITEM_ID, rtval(1)) == ITEM_ID_DOUBLE_BED ) {
-			bedtxt += lang("寝心地が良さそうだ。", "I seem to be able to sleep comfortably.")
+			bedtxt += lang("寝心地が良さそうだ。", "I think I'll be able to sleep comfortably.")
 		}
 		if ( inv(INV_ITEM_ID, rtval(1)) == ITEM_ID_KINGS_BED | inv(INV_ITEM_ID, rtval(1)) == ITEM_ID_HAPPY_BED ) {
-			bedtxt += lang("とっても寝心地が良さそうだ！", "I seem to be able to sleep very comfortably!")
+			bedtxt += lang("とっても寝心地が良さそうだ！", "I think I'll be able to sleep very comfortably!")
 		}
 		return bedtxt
 	}
@@ -3675,7 +3675,7 @@
 				txt lang("「わかった" + _yo(3) + "」", " " + cnvtalk("Well noted!"))
 				return
 			}
-			txt lang("「こっちの情報網を使って、確実に伝えておく" + _yo(3) + "」", " " + cnvtalk("I will definitely deliver your message!"))
+			txt lang("「こっちの情報網を使って、確実に伝えておく" + _yo(3) + "」", " " + cnvtalk("I'll make sure that your message is delivered!"))
 			snd SOUNDLIST_PAYGOLD1
 			cdata(CDATA_GOLD, CHARA_PLAYER) -= 2000
 			tc = tcbk
@@ -3812,7 +3812,7 @@
 		}
 		if ( gdata(GDATA_FLAG_MAIN) >= 845 ) {
 			txtef COLOR_PURPLE
-			txt lang("願いの女神も、今は神力に余裕がないようだ…。", "Even the goddess of wishes can't afford now...")
+			txt lang("願いの女神も、今は神力に余裕がないようだ…。", "Not even the Wish Goddess can afford to use her powers now...")
 			return
 		}
 	}
@@ -5102,7 +5102,7 @@
 	if ( trait(TRAIT_ETHER_TENTACLES) != 0 ) {
 		if ( cc == CHARA_PLAYER ) {
 			if ( cdata(CDATA_EXIST, tc) == CHAR_STATE_ALIVE & rnd(50) == 0 ) {
-				txt lang("触手が勝手に" + name(tc) + "へ襲いかかった！", "Your tentacles have attacked to " + name(tc) + " without permission!")
+				txt lang("触手が勝手に" + name(tc) + "へ襲いかかった！", "Your tentacles attacked " + name(tc) + " against your will!")
 				snd SOUNDLIST_ATTACK00
 				telv = limit(cdata(CDATA_LEVEL, cc), 1, 1000)
 				tdmg = (telv / 10 + 4) * (telv / 10 + 3) * 2 + rnd(telv + 5) + 1
@@ -5179,11 +5179,11 @@
 			}
 		}
 		if ( cbit(CHARA_BIT_HAS_BEEN_CONFESSED_TO, tc) == FALSE ) {
-			promptAdd lang("気持ちを伝える", "Tell feelings"), "null", "" + 29
+			promptAdd lang("気持ちを伝える", "Confess feelings"), "null", "" + 29
 		}
 		if ( cbit(CHARA_BIT_BODYGUARD, tc) == 0 & cbit(CHARA_BIT_GUARD_TEMP, tc) == 0 ) {
 			if ( tc < MAX_CHARA_FOLLOWER | (cbit(CHARA_BIT_LIVESTOCK, tc) == 1 & gdata(GDATA_AREA) == AREA_DOJO) ) {
-				promptAdd lang("何かを渡す/もらう", "Give or Take"), "null", "" + 4
+				promptAdd lang("何かを渡す/もらう", "Give/Take"), "null", "" + 4
 			}
 			else {
 				promptAdd lang("何かを渡す", "Give"), "null", 2
@@ -5228,7 +5228,7 @@
 			}
 		}
 	}
-	promptAdd lang("立ち姿を変える", "Change Tatie"), "null", "" + 27
+	promptAdd lang("立ち姿を変える", "Change Tachi-e"), "null", "" + 27
 	promptAdd lang("アイテム画像の付与", "Item mark set"), "null", 23
 	if ( cdata(CDATA_MARK_ITEM_PIC, tc) > 0 ) {
 		promptAdd lang("アイテム画像の調整", "Item mark adjust"), "null", 26
@@ -5816,7 +5816,7 @@
 			goto *pc_turn
 		}
 		if ( rtval == 0 ) {
-			txt lang(cdatan(CDATAN_NAME, tc) + "はあなたが何を伝えようとしたのか、すごく気になっている…。", cdatan(CDATAN_NAME, tc) + " cares what you tried to tell.")
+			txt lang(cdatan(CDATAN_NAME, tc) + "はあなたが何を伝えようとしたのか、すごく気になっている…。", cdatan(CDATAN_NAME, tc) + " becomes very curious about what you were wanting to tell " + him(tc) + "...")
 			cdata(CDATA_EMO_ICON, tc) = 21 + 100 * 3
 		}
 		if ( rtval >= 1 & rtval <= 3 ) {
@@ -5834,14 +5834,14 @@
 				modimp tc, -5
 				snd SOUNDLIST_ATK_DARK
 				txtef COLOR_RED
-				txt lang(cdatan(CDATAN_NAME, tc) + "は気持ち悪そうにあなたを見ている…。", cdatan(CDATAN_NAME, tc) + " felt you creepy.")
+				txt lang(cdatan(CDATAN_NAME, tc) + "は気持ち悪そうにあなたを見ている…。", cdatan(CDATAN_NAME, tc) + " is looking at you like you're some kind of creep.")
 			}
 			cbitmod CHARA_BIT_HAS_BEEN_CONFESSED_TO, tc, TRUE
 		}
 		if ( rtval >= 4 & rtval <= 6 ) {
 			snd SOUNDLIST_DING2
 			txtef COLOR_YELLOW
-			txt lang(cdatan(CDATAN_NAME, tc) + "はまんざらでもないようだ。", cdatan(CDATAN_NAME, tc) + " felt it wasn't too bad.")
+			txt lang(cdatan(CDATAN_NAME, tc) + "はまんざらでもないようだ。", cdatan(CDATAN_NAME, tc) + " doesn't seem to be very happy about that.")
 			modimp tc, 7
 			cdata(CDATA_EMO_ICON, tc) = 6 + 100 * 3
 			cbitmod CHARA_BIT_HAS_BEEN_CONFESSED_TO, tc, TRUE
@@ -5850,13 +5850,13 @@
 			if ( cdata(CDATA_IMPRESSION, tc) >= 150 ) {
 				dmgcon tc, CONDITION_CONFUSE, 1000
 				cdata(CDATA_EMO_ICON, tc) = 21 + 100 * 3
-				txt lang(cdatan(CDATAN_NAME, tc) + "は何かの間違いではないかと耳を疑っている…。", cdatan(CDATAN_NAME, tc) + " can't believe the ear...")
+				txt lang(cdatan(CDATAN_NAME, tc) + "は何かの間違いではないかと耳を疑っている…。", cdatan(CDATAN_NAME, tc) + " couldn't believe " + his(tc) + " ears...")
 			}
 			if ( cdata(CDATA_IMPRESSION, tc) >= 75 & cdata(CDATA_IMPRESSION, tc) < 150 ) {
-				txt lang(cdatan(CDATAN_NAME, tc) + "は憐れむような目であなたを見た。", cdatan(CDATAN_NAME, tc) + " looked at you with merciful eyes.")
+				txt lang(cdatan(CDATAN_NAME, tc) + "は憐れむような目であなたを見た。", cdatan(CDATAN_NAME, tc) + " gives you a look of pity.")
 			}
 			if ( cdata(CDATA_IMPRESSION, tc) < 75 ) {
-				txt lang(cdatan(CDATAN_NAME, tc) + "はやれやれと肩をすくめた。", cdatan(CDATAN_NAME, tc) + " shrugged.")
+				txt lang(cdatan(CDATAN_NAME, tc) + "はやれやれと肩をすくめた。", cdatan(CDATAN_NAME, tc) + " shrugged " + his(tc) + " shoulders in relief.")
 			}
 			cbitmod CHARA_BIT_HAS_BEEN_CONFESSED_TO, tc, TRUE
 		}
@@ -5864,7 +5864,7 @@
 			if ( cbit(CHARA_BIT_MARRIED, tc) != FALSE ) {
 				if ( gdata(GDATA_FLAG_GAME_MODE) == GAMEMODE_OVERDOSE | gdata(GDATA_FLAG_GAME_MODE) == GAMEMODE_PURGE ) {
 					snd SOUNDLIST_FAIL1
-					txt lang("このゲームモードでは遺伝子を残せない。", "I do not make gene in this game mode.")
+					txt lang("このゲームモードでは遺伝子を残せない。", "You can't make a gene in this game mode.")
 					goto *turn_end
 				}
 				if ( gdata(GDATA_SLEEP) < 15 ) {
@@ -5874,7 +5874,7 @@
 				}
 				if ( gdata(GDATA_AREA) == AREA_SHELTER ) {
 					snd SOUNDLIST_FAIL1
-					txt lang("「こんな場所では嫌" + _yo(3) + "」", cdatan(CDATAN_NAME, tc) + " seems to want to get out of here.")
+					txt lang("「こんな場所では嫌" + _yo(3) + "」", "It seems that " + cdatan(CDATAN_NAME, tc) + " wants to get out of here.")
 					goto *turn_end
 				}
 				txt lang("「いやん、あなたったら…」", "*blush*")
@@ -5885,7 +5885,7 @@
 						}
 						if ( cdata(CDATA_ID, cnt) == CREATURE_ID_ROVID ) {
 							snd SOUNDLIST_AMMO
-							txt lang(cdatan(CDATAN_NAME, cnt) + "「やめなさい！ジュア様が嫌だと言っているでしょう！？」", "Action was arrested by " + cdatan(CDATAN_NAME, cnt) + ".")
+							txt lang(cdatan(CDATAN_NAME, cnt) + "「やめなさい！ジュア様が嫌だと言っているでしょう！？」", lang(cdatan(CDATAN_NAME, cnt) + ": \"Stop this at once! Lady Jua says she doesn't want to!\"")
 							goto *turn_end
 							break
 						}
@@ -5908,7 +5908,7 @@
 						}
 						if ( cdata(CDATA_ID, cnt) == CREATURE_ID_ROVID ) {
 							snd SOUNDLIST_AMMO
-							txt lang(cdatan(CDATAN_NAME, cnt) + "「私が許しませんよ！」", "Action was arrested by " + cdatan(CDATAN_NAME, cnt) + ".")
+							txt lang(cdatan(CDATAN_NAME, cnt) + "「私が許しませんよ！」", cdatan(CDATAN_NAME, cnt) + ": \"I won't forgive you for that.\"")
 							goto *turn_end
 							break
 						}
@@ -5945,42 +5945,42 @@
 	if ( p == 11 ) {
 		if ( cdata(CDATA_ID, tc) == CREATURE_ID_ITZPALT ) {
 			if ( synccheck(cc, -1) ) {
-				txt lang("「では我が本来住まうべき世界へ帰還するとしよう」", cnvtalk("See you again."))
+				txt lang("「では我が本来住まうべき世界へ帰還するとしよう」", cnvtalk("Then I shall return to the world where I belong."))
 			}
 		}
 		if ( cdata(CDATA_ID, tc) == CREATURE_ID_YACATECT ) {
 			if ( synccheck(cc, -1) ) {
-				txt lang("「ほなさいならー！」", cnvtalk("See you again."))
+				txt lang("「ほなさいならー！」", cnvtalk("See ya!"))
 			}
 		}
 		if ( cdata(CDATA_ID, tc) == CREATURE_ID_JURE ) {
 			if ( synccheck(cc, -1) ) {
-				txt lang("「ベ、別に寂しくなんかないんだから！」", cnvtalk("See you again."))
+				txt lang("「ベ、別に寂しくなんかないんだから！」", cnvtalk("I-I'm not lonely at all!"))
 			}
 		}
 		if ( cdata(CDATA_ID, tc) == CREATURE_ID_LULWY ) {
 			if ( synccheck(cc, -1) ) {
-				txt lang("「今回はこのくらいにしておいてあげるわ子猫ちゃん」", cnvtalk("See you again."))
+				txt lang("「今回はこのくらいにしておいてあげるわ子猫ちゃん」", cnvtalk("I'll let you off the hook this time, kitty."))
 			}
 		}
 		if ( cdata(CDATA_ID, tc) == CREATURE_ID_EHEKATL ) {
 			if ( synccheck(cc, -1) ) {
-				txt lang("「おうちかえるよ！よ！」", cnvtalk("See you again."))
+				txt lang("「おうちかえるよ！よ！」", cnvtalk("I'm going home! Home!"))
 			}
 		}
 		if ( cdata(CDATA_ID, tc) == CREATURE_ID_OPATOS ) {
 			if ( synccheck(cc, -1) ) {
-				txt lang("「フハハッハハハハフッハハハー！さらばだ」", cnvtalk("See you again."))
+				txt lang("「フハハッハハハハフッハハハー！さらばだ」", cnvtalk("Muwahahahahahahahahaha! Farewell."))
 			}
 		}
 		if ( cdata(CDATA_ID, tc) == CREATURE_ID_KUMIROMI ) {
 			if ( synccheck(cc, -1) ) {
-				txt lang("「忘れないで…いつも見守っているから…」", cnvtalk("See you again."))
+				txt lang("「忘れないで…いつも見守っているから…」", cnvtalk("Do not forget... I will always be watching over you..."))
 			}
 		}
 		if ( cdata(CDATA_ID, tc) == CREATURE_ID_MANI ) {
 			if ( synccheck(cc, -1) ) {
-				txt lang("「最後に見せてやろう、この空間転移装置の性能を！」", cnvtalk("See you again."))
+				txt lang("「最後に見せてやろう、この空間転移装置の性能を！」", cnvtalk("Allow me to demonstrate one last time what this spatial shifter can do!"))
 				animeid = ANIMATION_GENE
 				anic = tc
 				gosub *anime
@@ -6002,12 +6002,7 @@
 		customtalk tc, DBMODE_FLAVOR_CHOCO
 		gosub *convert_word
 		if ( gdata(GDATA_CUSTOM_TALK) == 100 ) {
-			if ( jp ) {
-				txt "「受け取って" + _kure() + "これが" + _ore(3) + "の気持ち" + _da(3) + "」", name(tc) + "はもじもじしながら懐から包みを取り出した。", name(tc) + "は赤面すると慌ててチョコを取り出し、あなたに突き出した。", name(tc) + "はにっこり微笑むと、後ろ手に隠していたチョコを見せた。", "「…本当に" + _ore(3) + "なんかのでいい" + _noka(1) + "」"
-			}
-			else {
-				txt cnvtalk("I want you to have this chocolate."), cnvtalk("Here you are.")
-			}
+			txt lang("「受け取って" + _kure() + "これが" + _ore(3) + "の気持ち" + _da(3) + "」", cnvtalk("Please take it. These are my true feelings.")), lang(name(tc) + "はもじもじしながら懐から包みを取り出した。", name(tc) + "fidgeted a bit before taking out a package from " + his(tc) + " pocket."), lang(name(tc) + "は赤面すると慌ててチョコを取り出し、あなたに突き出した。", name(tc) + " hastily takes out some chocolate and shoves it in your face, blushing."), lang(name(tc) + "はにっこり微笑むと、後ろ手に隠していたチョコを見せた。", name(tc) + " smiles and shows you the chocolate " + he(tc) + " hid behind " + his(tc) + " back."), lang("「…本当に" + _ore(3) + "なんかのでいい" + _noka(1) + "」", cnvtalk("Are you really okay with someone like me...?"))
 		}
 		txt_questitem
 		gdata(GDATA_FLAG_CAN_RECEIVE_CHOCOLATE) = 0
@@ -6734,7 +6729,7 @@
 
 *com_spellbook_loop
 	redraw 0
-	s = lang("魔法書の作成", "Spellbook make"), strhint2 + strhint3 + strhint7 + strhint8
+	s = lang("魔法書の作成", "Spellbook Production"), strhint2 + strhint3 + strhint7 + strhint8
 	display_window (windoww - 720) / 2 + inf_screenx, winposy(438), 720, 438
 	display_topic lang("魔法の名称", "Name"), wx + 28, wy + 36
 	display_topic lang("消費MP(ｽﾄｯｸ)　LV/成功　(潜在) ", "Cost(Stock) Lv/Chance"), wx + 190, wy + 36
@@ -6829,13 +6824,13 @@
 			satusuu = -1
 		}
 		if ( satusuu > 0 ) {
-			s = "" + satusuu + lang("冊作れる ", "books can be maked ")
+			s = "" + satusuu + lang("冊作れる ", "books can be produced ")
 		}
 		if ( satusuu == 0 ) {
-			s = lang("ストックが足りない ", "Not enough stock ")
+			s = lang("ストックが足りない ", "Not enough magic stock ")
 		}
 		if ( satusuu == (-1) ) {
-			s = lang("魔法書に変換できない ", "Can't make ")
+			s = lang("魔法書に変換できない ", "Can't produce ")
 		}
 		s = strmid(s, 0, 40)
 		pos wx + 305, wy + 66 + cnt * 19 + 2
@@ -8370,7 +8365,7 @@
 		s = ""
 		if ( csctrl == 0 | csctrl == 4 ) {
 			if ( page != 0 ) {
-				s = lang("残り " + cdata(CDATA_SKILLPOINT, cc) + " のボーナスをスキルに、残り " + gdata(GDATA_FLAG_SCROLL_OF_WITCHCRAFT_TOTAL_SKILL_BONUS) + " のボーナスをスペルに分配できる", "You can spend " + cdata(CDATA_SKILLPOINT, cc) + " bonus to skill / " + gdata(GDATA_FLAG_SCROLL_OF_WITCHCRAFT_TOTAL_SKILL_BONUS) + " bonus to spell.")
+				s = lang("残り " + cdata(CDATA_SKILLPOINT, cc) + " のボーナスをスキルに、残り " + gdata(GDATA_FLAG_SCROLL_OF_WITCHCRAFT_TOTAL_SKILL_BONUS) + " のボーナスをスペルに分配できる", "You can spend " + cdata(CDATA_SKILLPOINT, cc) + " bonus to skills / " + gdata(GDATA_FLAG_SCROLL_OF_WITCHCRAFT_TOTAL_SKILL_BONUS) + " bonus to spells.")
 			}
 		}
 	}
