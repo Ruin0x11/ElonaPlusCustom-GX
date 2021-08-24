@@ -2934,7 +2934,7 @@
 		}
 		return
 	}
-	txt lang(name(cc) + "は一息ついた。", name(cc) + " was a little break.")
+	txt lang(name(cc) + "は一息ついた。", name(cc) + " took a small break.")
 	rowactend cc
 	return
 
@@ -2958,7 +2958,7 @@
 		}
 		return
 	}
-	txt lang(name(cc) + "は食事を終えた。", name(cc) + " finished a meal.")
+	txt lang(name(cc) + "は食事を終えた。", name(cc) + " finished " + his(cc) + " meal.")
 	cdata(CDATA_HUNGER, cc) = 13000
 	if ( gdata(GDATA_MONTH) == 12 | int(gettime(1)) == 12 ) {
 		skillexp SKILL_NORMAL_FAITH, cc, 1000
@@ -3815,7 +3815,7 @@
 			spact(SKILL_SPACT_SERIOUS_BEGGING - STARTING_SKILL_SPACT) = 1
 			txtmore
 			txtef COLOR_YELLOW
-			txt lang("あなたは「" + skillname(SKILL_SPACT_SERIOUS_BEGGING) + "」の能力を得た。", "You have learned new ability, " + skillname(SKILL_SPACT_SERIOUS_BEGGING) + ".")
+			txt lang("あなたは「" + skillname(SKILL_SPACT_SERIOUS_BEGGING) + "」の能力を得た。", "You have learned a new ability, " + skillname(SKILL_SPACT_SERIOUS_BEGGING) + ".")
 		}
 	}
 	if ( gdata(GDATA_SLEEP_GENE) != 0 ) {
@@ -5348,25 +5348,25 @@
 	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_PRODUCED_BOOK ) {
 		snd SOUNDLIST_BOOK1
 		if ( inv(INV_ITEM_PARAM3, ci) <= 0 ) {
-			txt lang("どうして思った通りのものが作れないのだろう…。", "That's the exact opposite of the ideal...")
+			txt lang("どうして思った通りのものが作れないのだろう…。", "Why am I unable to express the ideas I have in my head...?")
 		}
 		if ( inv(INV_ITEM_PARAM3, ci) == 1 ) {
-			txt lang("今見ると痛々しい…。", "It's also painful to see it...")
+			txt lang("今見ると痛々しい…。", "Reading this now makes me cringe...")
 		}
 		if ( inv(INV_ITEM_PARAM3, ci) == 2 ) {
-			txt lang("…これは王道なんだ。誰が何を言おうと王道なんだ。", "...I want to think this is a royal road.")
+			txt lang("…これは王道なんだ。誰が何を言おうと王道なんだ。", "...I don't care if it's cliche. It's tried-and-true formula of storytelling.")
 		}
 		if ( inv(INV_ITEM_PARAM3, ci) == 3 ) {
-			txt lang("粗削りな部分も多いけれど…確かな魅力を感じる。", "It's a diamond in the rough.")
+			txt lang("粗削りな部分も多いけれど…確かな魅力を感じる。", "It has its flaws, but... it also carries its own unique charm.")
 		}
 		if ( inv(INV_ITEM_PARAM3, ci) == 4 ) {
-			txt lang("悪くないけど、もっともっと上達できるはず…！", "Not bad, but it should be able to progress more!")
+			txt lang("悪くないけど、もっともっと上達できるはず…！", "It's not bad, but it could have been so much better...!")
 		}
 		if ( inv(INV_ITEM_PARAM3, ci) == 5 ) {
-			txt lang("…普通にお気に入りだ！", "It's my favorite!")
+			txt lang("…普通にお気に入りだ！", "...This is my favorite work!")
 		}
 		if ( inv(INV_ITEM_PARAM3, ci) >= 6 ) {
-			txt lang("よくこんなの作れたな…。", "It is a surprise that was able to make it...")
+			txt lang("よくこんなの作れたな…。", "I'm surprised that I managed to write something *this* good...")
 		}
 		return 1
 	}
@@ -7988,7 +7988,7 @@
 
                     /********** RUIN0X11 CUSTOM - ENDING **********/
 
-						txt lang(name(cc) + "は悪戦苦闘している。縄がきつくて財布が抜き取れないようだ。", name(cc) + " is struggling. The purse seems not pulled off because there is a tight rope.")
+						txt lang(name(cc) + "は悪戦苦闘している。縄がきつくて財布が抜き取れないようだ。", name(cc) + " is struggling. It seems that the rope is so tight that you can't pull out " + his(cc) + " wallet.")
 						goto *effect_SWEND1
 					}
 					p = rnd(cdata(CDATA_GOLD, tc) / 10 + 1)
@@ -10185,7 +10185,7 @@
 			goto *effect_end
 		}
 		if ( gdata(GDATA_FLAG_SCROLL_OF_WITCHCRAFT_TOTAL_SKILL_BONUS) < 100 | gdata(GDATA_FLAG_GAME_MODE) == 2 | gdata(GDATA_FLAG_GAME_MODE) == 5 ) {
-			txt lang("あなたはスペルボーナスを獲得した。", "You gain 5 spellbonus points.")
+			txt lang("あなたはスペルボーナスを獲得した。", "You gain 5 spell bonus points.")
 		}
 
     	/********** ORIGINAL - BEGINNING ********** // Remove skill bonus limit.
@@ -11861,7 +11861,7 @@
 	if ( _switch_val == SKILL_SPACT_ACID_HURRICANE | _switch_sw ) {
 		_switch_sw = 0
 		txtef COLOR_GREEN
-		txt lang(name(cc) + "は風に乗せて酸を放った！", name(cc) + " cut" + _s(cc) + " " + name(tc) + your(tc) + " head and")
+		txt lang(name(cc) + "は風に乗せて酸を放った！", name(cc) + " send" + _s(cc) + " out a blast of acidic wind!")
 		animeid = ANIMATION_ACID_HURRICANE
 		gosub *anime
 		get_route cdata(CDATA_X, cc), cdata(CDATA_Y, cc), cdata(CDATA_X, tc), cdata(CDATA_Y, tc)
@@ -14841,13 +14841,13 @@
 		_switch_sw = 0
 		if ( cdata(CDATA_CONDITION_JIU_JITSU, cc) != 0 ) {
 			cdata(CDATA_CONDITION_JIU_JITSU, cc) = 0
-			txt lang(name(cc) + "は呼吸を整え、構えを変えた。", name(cc) + " established a breathing and changed the posture.")
+			txt lang(name(cc) + "は呼吸を整え、構えを変えた。", name(cc) + " steadied " + his(cc) + " breathing and changed " + his(cc) + " posture.")
 			goto *effect_end
 		}
 		if ( cdata(CDATA_CONDITION_JIU_JITSU, cc) == 0 ) {
 			snd SOUNDLIST_SWING
 			cdata(CDATA_CONDITION_JIU_JITSU, cc) = 100
-			txt lang(name(cc) + "は呼吸を整え、柔術の構えをとった。", name(cc) + " established a breathing and changed the posture.")
+			txt lang(name(cc) + "は呼吸を整え、柔術の構えをとった。", name(cc) + " steadied " + his(cc) + " breathing and changed " + his(cc) + " posture.")
 			goto *effect_end
 		}
 		goto *effect_end
@@ -15862,7 +15862,7 @@
 	if ( _switch_val == SKILL_SPACT_LOVE_CRAFTING | _switch_sw ) {
 		_switch_sw = 0
 		txtef COLOR_PURPLE
-		txt lang(name(cc) + "は秘めたる狂気を垣間見せた…あまりに冒涜的だ！", name(tc) + " gave off a horrifying madness!")
+		txt lang(name(cc) + "は秘めたる狂気を垣間見せた…あまりに冒涜的だ！", name(tc) + " showed off glimpses of a horrifying madness...how blasphemous!")
 		snd SOUNDLIST_CURSE2
 		animeload 30, tc
 		repeat MAX_CHARA_TOTAL
@@ -16123,7 +16123,7 @@
 		_switch_sw = 0
 		if ( cdata(CDATA_ALLIED, tc) == 0 & tc != CHARA_PLAYER ) {
 			snd SOUNDLIST_POWER07
-			txt lang(name(tc) + "は自分が分析されていることを逆に分析し、動きを変えた。", name(tc) + " noticed being analyzed and changed own movements.")
+			txt lang(name(tc) + "は自分が分析されていることを逆に分析し、動きを変えた。", name(tc) + " noticed " he(tc) + " was being analyzed and changed " his(tc) + " behavior.")
 			cdata(CDATA_PLATINUM, tc) = 0
 		}
 		else {
@@ -18210,7 +18210,7 @@
 	}
 	if ( _switch_val == SKILL_SPACT_TICKLING_HELL | _switch_sw ) {
 		_switch_sw = 0
-		txt lang(name(cc) + "は" + name(tc) + "の動きを封じ、全力でくすぐった！", name(cc) + " assembled with " + name(tc) + " and started to tickle.")
+		txt lang(name(cc) + "は" + name(tc) + "の動きを封じ、全力でくすぐった！", name(cc) + " held down " + name(tc) + " and started to tickle " + him(tc) + " at full power!")
 		if ( cc < MAX_CHARA_FOLLOWER ) {
 			hostileaction cc, tc
 		}
@@ -19178,7 +19178,7 @@
 		if ( saikoro == 2 ) {
 			txtef COLOR_GREEN
 		}
-		txt lang("出目は…" + sai1 + sai2 + "！", " Result is..." + sai1 + sai2 + "!")
+		txt lang("出目は…" + sai1 + sai2 + "！", " The total is..." + sai1 + sai2 + "!")
 		waitbk = cfg_animewait
 		if ( cfg_animewait > 0 ) {
 			cfg_animewait = 1
@@ -19270,7 +19270,7 @@
 			snd SOUNDLIST_BREATH1
 		}
 		txtef COLOR_YELLOW
-		txt lang(name(cc) + "は取り込んだ神の力を引き出した！", name(cc) + " brought out the accumulated power of gods!")
+		txt lang(name(cc) + "は取り込んだ神の力を引き出した！", name(cc) + " unleashed the accumulated power of gods!")
 		kamui++
 		if ( kamui \ 7 == 1 ) {
 			txtef COLOR_YELLOW
@@ -21413,7 +21413,7 @@
 		snd SOUNDLIST_WAVE
 		animeload 23, tc
 		txtef COLOR_GREEN
-		txt lang(name(cc) + "の声が" + name(tc) + "の心に響く！", "Voice of " + name(cc) + " echoes in mind of " + name(tc) + "!")
+		txt lang(name(cc) + "の声が" + name(tc) + "の心に響く！", "The voice of " + name(cc) + " echoes in the mind of " + name(tc) + "!")
 		inv_getheader cc
 		eqlv = 1
 		eqbui = 0
@@ -21459,7 +21459,7 @@
 				dmghp tc, 10, DAMAGE_FROM_PERSUASION_LOW
 				if ( cdata(CDATA_EXIST, tc) != CHAR_STATE_ALIVE ) {
 					txtef COLOR_GREEN
-					txt lang(name(tc) + "は戦いに疲れ、静かに去っていった。", name(tc) + " tired to fight and went away.")
+					txt lang(name(tc) + "は戦いに疲れ、静かに去っていった。", name(tc) + " became too tired to fight and quietly went away.")
 				}
 				snd SOUNDLIST_EXITMAP1
 				check_talk cc, tc

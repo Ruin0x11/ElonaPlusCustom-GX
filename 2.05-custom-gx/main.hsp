@@ -1434,23 +1434,23 @@
 		loop
 		if ( gdata(GDATA_FLAG_STUDY_BONUS_KIND) == 0 ) {
 			txtef COLOR_YELLOW
-			txt lang("今日は絶好の修行日和だ。", "Training will progress today.")
+			txt lang("今日は絶好の修行日和だ。", "It's a perfect day for training today.")
 		}
 		if ( gdata(GDATA_FLAG_STUDY_BONUS_KIND) == 1 ) {
 			txtef COLOR_YELLOW
-			txt lang("今日は絶好の戦闘日和だ。", "Combat will progress today.")
+			txt lang("今日は絶好の戦闘日和だ。", "It's a perfect day for combat today.")
 		}
 		if ( gdata(GDATA_FLAG_STUDY_BONUS_KIND) == 2 ) {
 			txtef COLOR_YELLOW
-			txt lang("今日は絶好の仕事日和だ。", "Jobs will progress today.")
+			txt lang("今日は絶好の仕事日和だ。", "It's a perfect day for work today.")
 		}
 		if ( gdata(GDATA_FLAG_STUDY_BONUS_KIND) == 3 ) {
 			txtef COLOR_YELLOW
-			txt lang("今日は絶好の探索日和だ。", "Exploration will progress today.")
+			txt lang("今日は絶好の探索日和だ。", "It's a perfect day for exploring today.")
 		}
 		if ( gdata(GDATA_FLAG_STUDY_BONUS_KIND) == 4 ) {
 			txtef COLOR_YELLOW
-			txt lang("今日は絶好の勉強日和だ。", "Study will progress today.")
+			txt lang("今日は絶好の勉強日和だ。", "It's a perfect day for studying today.")
 		}
 		if ( rnd(10) == 0 ) {
 			gdata(GDATA_FLAG_NEGATE_SPAWN_FRON) = 0
@@ -1602,7 +1602,7 @@
 						txtef COLOR_GREEN
 						txt lang("ジャーナルが更新された。", "Your journal has been updated.")
 						txtef COLOR_RED
-						txt lang("ガルジエムからの救援要請が入った。", "You have received a rescue request from <Garziem>.")
+						txt lang("ガルジエムからの救援要請が入った。", "You have received a request for help from <Garziem>.")
 					}
 				}
 			}
@@ -5494,12 +5494,7 @@
 			komaku = 0
 			haretu = 0
 			snd SOUNDLIST_STAB
-			if ( jp ) {
-				txt "「〜〜〜〜〜〜〜〜〜っ！！！！！？？」", "「耳が、耳がぁ〜！！」"
-			}
-			if ( en ) {
-				txt cnvtalk("!!!???"), cnvtalk("Eeeeeeeeeek!")
-			}
+			txt lang("「〜〜〜〜〜〜〜〜〜っ！！！！！？？」", cnvtalk("!!!???")), lang("「耳が、耳がぁ〜！！」", cnvtalk("Eeeeeeeeeek!"))
 			modimp tc, -20
 			dmghp tc, rnd(sdata(SKILL_ATTR_STR, CHARA_PLAYER) * sqrt(sdata(SKILL_ATTR_STR, CHARA_PLAYER)) + sdata(SKILL_ATTR_STR, CHARA_PLAYER)), tc, SKILL_RES_SOUND, 1000
 			goto *event_SWEND1
@@ -5509,12 +5504,7 @@
 			komaku = 0
 			haretu = 0
 			snd SOUNDLIST_BALL1
-			if ( jp ) {
-				txt "「ひぎぃ！？」", "「もうイヤー！」"
-			}
-			if ( en ) {
-				txt cnvtalk("What are you doing!?"), cnvtalk("No...No...!")
-			}
+			txt lang("「ひぎぃ！？」", cnvtalk("What are you doing!?")), lang("「もうイヤー！」", cnvtalk("No...No...!"))
 			modimp tc, -10
 			dmgcon tc, CONDITION_BLEED, 100
 			goto *event_SWEND1
@@ -5522,7 +5512,7 @@
 		if ( mimikaki < 3 ) {
 			s = lang("耳掃除", "Mimikaki")
 			file = "bg40"
-			buff = lang("耳の中は見えづらい…。", "It's hard to see in the ear...")
+			buff = lang("耳の中は見えづらい…。", "It's hard to see inside " + his(tc) + " ear...")
 			listmax = 0
 			if ( rnd(sdata(SKILL_ATTR_DEX, CHARA_PLAYER) + sdata(SKILL_ATTR_PER, CHARA_PLAYER) + sdata(SKILL_ATTR_CON, tc) + sdata(SKILL_ATTR_WIL, tc)) > rnd(sorg(SKILL_ATTR_SPD, tc) + 10) ) {
 				if ( mimikaki == 0 ) {
@@ -5542,16 +5532,16 @@
 				chatList 8, lang("サイズ膨張", "Size expansion") 
 			}
 			if ( haretu == 1 ) {
-				chatList 9, lang("サイズ大膨張", "Size large expansion") 
+				chatList 9, lang("サイズ大膨張", "Size expansion (large)") 
 			}
 			if ( haretu == 2 ) {
-				chatList 10, lang("耳穴破裂", "Rupture of ear canal") 
+				chatList 10, lang("耳穴破裂", "Rupture ear canal") 
 			}
 			if ( komaku == 0 ) {
-				chatList 5, lang("突き入れる", "Thrust") 
+				chatList 5, lang("突き入れる", "Shove in") 
 			}
 			if ( komaku == 1 ) {
-				chatList 6, lang("奥まで突き刺す", "Stick in the ear") 
+				chatList 6, lang("奥まで突き刺す", "Thrust in deeply") 
 			}
 			if ( komaku == 2 ) {
 				chatList 7, lang("鼓膜をぶち破る", "Break through the eardrum") 
@@ -5562,24 +5552,10 @@
 				mimikaki++
 				snd SOUNDLIST_SNOW
 				if ( mimikaki == 1 ) {
-					if ( jp ) {
-						txt "「なんだか変な感じ" + _da(3) + "」", "「少しこわい" + _na(3) + "」", "「優しくして" + _kure(3) + "…」"
-					}
-				}
-				if ( mimikaki == 1 ) {
-					if ( en ) {
-						txt cnvtalk("It is somehow strange feeling."), cnvtalk("A little scary."), cnvtalk("Please be gentle...")
-					}
+					txt lang("「なんだか変な感じ" + _da(3) + "」", cnvtalk("It is somehow strange feeling.")), lang("「少しこわい" + _na(3) + "」", cnvtalk("A little scary.")), lang("「優しくして" + _kure(3) + "…」", cnvtalk("Please be gentle..."))
 				}
 				if ( mimikaki == 2 ) {
-					if ( jp ) {
-						txt "「くっ…♪」", "「気持ちいい" + _na(3) + "♪」", "「くすぐったい" + _yo(3) + "♪」"
-					}
-				}
-				if ( mimikaki == 2 ) {
-					if ( en ) {
-						txt cnvtalk("Oh…"), cnvtalk("It feels good...!"), cnvtalk("It's tickling!")
-					}
+					txt lang("「くっ…♪」", cnvtalk("Oh…")), lang("「気持ちいい" + _na(3) + "♪」", cnvtalk("It feels good...!")), lang("「くすぐったい" + _yo(3) + "♪」", cnvtalk("That tickles!"))
 				}
 			}
 			if ( p == 4 ) {
@@ -5590,28 +5566,14 @@
 				komaku++
 				snd SOUNDLIST_CRACK
 				if ( komaku < 3 ) {
-					if ( jp ) {
-						txt "「痛っ！」", "「鼓膜に当たった" + _yo(3) + "！？」", "「乱暴にしないで" + _kure(3) + "！」"
-					}
-				}
-				if ( komaku < 3 ) {
-					if ( en ) {
-						txt cnvtalk("Ouch!"), cnvtalk("You are hurting my eardrum!"), cnvtalk("Don't be rough!")
-					}
+					txt lang("「痛っ！」", cnvtalk("Ouch!")), lang("「鼓膜に当たった" + _yo(3) + "！？」", cnvtalk("You are hurting my eardrum!")), lang("「乱暴にしないで" + _kure(3) + "！」", cnvtalk("Don't be rough!"))
 				}
 			}
 			if ( p == 8 | p == 9 | p == 10 ) {
 				haretu++
 				snd SOUNDLIST_CRACK2
 				if ( haretu < 3 ) {
-					if ( jp ) {
-						txt "「なんか膨らんできた" + _yo(3) + "！？」", "「" + _ore(3) + "には大きすぎる" + _na(3) + "…」", "「ちょっと落ち着いて" + _kure(3) + "！」"
-					}
-				}
-				if ( haretu < 3 ) {
-					if ( en ) {
-						txt cnvtalk("Something has swelled!?"), cnvtalk("It's too big for me..."), cnvtalk("Calm down a little!")
-					}
+					txt lang("「なんか膨らんできた" + _yo(3) + "！？」", cnvtalk("Something has swelled!?")), lang("「" + _ore(3) + "には大きすぎる" + _na(3) + "…」", cnvtalk("It's too big for me...")), lang("「ちょっと落ち着いて" + _kure(3) + "！」", cnvtalk("Calm down a little!"))
 				}
 			}
 			if ( mimikaki >= 3 ) {
@@ -5620,35 +5582,35 @@
 				snd SOUNDLIST_DING3
 				mimikaki = rnd(sqrt(sdata(SKILL_ATTR_DEX, CHARA_PLAYER) + 1) + 10)
 				if ( mimikaki < 5 ) {
-					txt lang("粉末みみくそがとれた！", "The powdered earwax has been removed!")
+					txt lang("粉末みみくそがとれた！", "Some powdered earwax has been removed!")
 					skillexp SKILL_ATTR_DEX, CHARA_PLAYER, 5000
 					skillexp SKILL_ATTR_PER, CHARA_PLAYER, 5000
 					skillexp SKILL_ATTR_CON, tc, 5000
 					skillexp SKILL_ATTR_WIL, tc, 5000
 				}
 				if ( mimikaki >= 5 & mimikaki < 15 ) {
-					txt lang("欠片みみくそがとれた！", "The debris of the earwax has been removed!")
+					txt lang("欠片みみくそがとれた！", "Some pieces of earwax have been removed!")
 					skillexp SKILL_ATTR_DEX, CHARA_PLAYER, 6000
 					skillexp SKILL_ATTR_PER, CHARA_PLAYER, 6000
 					skillexp SKILL_ATTR_CON, tc, 6000
 					skillexp SKILL_ATTR_WIL, tc, 6000
 				}
 				if ( mimikaki >= 15 & mimikaki < 20 ) {
-					txt lang("膜状みみくそがとれた！", "The membranous earwax has been removed!")
+					txt lang("膜状みみくそがとれた！", "Some membranous earwax has been removed!")
 					skillexp SKILL_ATTR_DEX, CHARA_PLAYER, 7000
 					skillexp SKILL_ATTR_PER, CHARA_PLAYER, 7000
 					skillexp SKILL_ATTR_CON, tc, 7000
 					skillexp SKILL_ATTR_WIL, tc, 7000
 				}
 				if ( mimikaki >= 20 & mimikaki < 25 ) {
-					txt lang("塊みみくそがとれた！", "The lump of earwax has been removed!")
+					txt lang("塊みみくそがとれた！", "A clump of earwax has been removed!")
 					skillexp SKILL_ATTR_DEX, CHARA_PLAYER, 8000
 					skillexp SKILL_ATTR_PER, CHARA_PLAYER, 8000
 					skillexp SKILL_ATTR_CON, tc, 8000
 					skillexp SKILL_ATTR_WIL, tc, 8000
 				}
 				if ( mimikaki >= 25 ) {
-					txt lang("ひとつなぎのみみくそがとれた！", "All the earwax was connected and removed!")
+					txt lang("ひとつなぎのみみくそがとれた！", "A mass of collected earwax was removed!")
 					skillexp SKILL_ATTR_DEX, CHARA_PLAYER, 9000
 					skillexp SKILL_ATTR_PER, CHARA_PLAYER, 9000
 					skillexp SKILL_ATTR_CON, tc, 9000
@@ -5661,7 +5623,7 @@
 		if ( mimikaki >= 3 & mimikaki < 10 ) {
 			s = lang("反対側の耳", "Opposite ear")
 			file = "bg41"
-			buff = lang("構造が反転していてやりづらい…。", "The structure is inverted and difficult to do...")
+			buff = lang("構造が反転していてやりづらい…。", "It's difficult to do the same thing with everything reversed...")
 			listmax = 0
 			if ( rnd(sdata(SKILL_ATTR_DEX, CHARA_PLAYER) + sdata(SKILL_ATTR_PER, CHARA_PLAYER) + sdata(SKILL_ATTR_CON, tc) + sdata(SKILL_ATTR_WIL, tc)) > rnd(sorg(SKILL_ATTR_SPD, tc) + 10) ) {
 				if ( mimikaki == 3 ) {
@@ -5684,13 +5646,13 @@
 				chatList 9, lang("サイズ大膨張", "Size large expansion") 
 			}
 			if ( haretu == 2 ) {
-				chatList 10, lang("耳穴破裂", "Rupture of ear canal") 
+				chatList 10, lang("耳穴破裂", "Rupture ear canal") 
 			}
 			if ( komaku == 0 ) {
-				chatList 5, lang("突き入れる", "Thrust") 
+				chatList 5, lang("突き入れる", "Shove in") 
 			}
 			if ( komaku == 1 ) {
-				chatList 6, lang("奥まで突き刺す", "Stick in the ear") 
+				chatList 6, lang("奥まで突き刺す", "Thrust in deeply") 
 			}
 			if ( komaku == 2 ) {
 				chatList 7, lang("鼓膜をぶち破る", "Break through the eardrum") 
@@ -5701,24 +5663,10 @@
 				mimikaki++
 				snd SOUNDLIST_SNOW
 				if ( mimikaki == 4 ) {
-					if ( jp ) {
-						txt "「なんだか変な感じ" + _da(3) + "」", "「少しこわい" + _na(3) + "」", "「優しくして" + _kure(3) + "…」"
-					}
-				}
-				if ( mimikaki == 4 ) {
-					if ( en ) {
-						txt cnvtalk("It is somehow strange feeling."), cnvtalk("A little scary."), cnvtalk("Please be gentle...")
-					}
+					txt lang("「なんだか変な感じ" + _da(3) + "」", cnvtalk("It is somehow strange feeling.")), lang("「少しこわい" + _na(3) + "」", cnvtalk("A little scary.")), lang("「優しくして" + _kure(3) + "…」", cnvtalk("Please be gentle..."))
 				}
 				if ( mimikaki == 5 ) {
-					if ( jp ) {
-						txt "「くっ…♪」", "「気持ちいい" + _na(3) + "♪」", "「くすぐったい" + _yo(3) + "♪」"
-					}
-				}
-				if ( mimikaki == 5 ) {
-					if ( en ) {
-						txt cnvtalk("Oh…"), cnvtalk("It feels good...!"), cnvtalk("It's tickling!")
-					}
+					txt lang("「くっ…♪」", cnvtalk("Oh…")), lang("「気持ちいい" + _na(3) + "♪」", cnvtalk("It feels good...!")), lang("「くすぐったい" + _yo(3) + "♪」", cnvtalk("That tickles!"))
 				}
 			}
 			if ( p == 4 ) {
@@ -5729,28 +5677,14 @@
 				komaku++
 				snd SOUNDLIST_CRACK
 				if ( komaku < 3 ) {
-					if ( jp ) {
-						txt "「痛っ！」", "「鼓膜に当たった" + _yo(3) + "！？」", "「乱暴にしないで" + _kure(3) + "！」"
-					}
-				}
-				if ( komaku < 3 ) {
-					if ( en ) {
-						txt cnvtalk("Ouch!"), cnvtalk("You are hurting my eardrum!"), cnvtalk("Don't be rough!")
-					}
+					txt lang("「痛っ！」", cnvtalk("Ouch!")), lang("「鼓膜に当たった" + _yo(3) + "！？」", cnvtalk("You are hurting my eardrum!")), lang("「乱暴にしないで" + _kure(3) + "！」", cnvtalk("Don't be rough!"))
 				}
 			}
 			if ( p == 8 | p == 9 | p == 10 ) {
 				haretu++
 				snd SOUNDLIST_CRACK2
 				if ( haretu < 3 ) {
-					if ( jp ) {
-						txt "「なんか膨らんできた" + _yo(3) + "！？」", "「" + _ore(3) + "には大きすぎる" + _na(3) + "…」", "「ちょっと落ち着いて" + _kure(3) + "！」"
-					}
-				}
-				if ( haretu < 3 ) {
-					if ( en ) {
-						txt cnvtalk("Something has swelled!?"), cnvtalk("It's too big for me..."), cnvtalk("Calm down a little!")
-					}
+					txt lang("「なんか膨らんできた" + _yo(3) + "！？」", cnvtalk("Something has swelled!?")), lang("「" + _ore(3) + "には大きすぎる" + _na(3) + "…」", cnvtalk("It's too big for me...")), lang("「ちょっと落ち着いて" + _kure(3) + "！」", cnvtalk("Calm down a little!"))
 				}
 			}
 			if ( mimikaki >= 6 ) {
@@ -5793,12 +5727,7 @@
 					skillexp SKILL_ATTR_CON, tc, 9000
 					skillexp SKILL_ATTR_WIL, tc, 9000
 				}
-				if ( jp ) {
-					txt "「こんなに出た" + _noka(3) + "？」", "「気持ちよかった" + _yo(3) + "」", "「またして" + _kure(3) + "…」"
-				}
-				if ( en ) {
-					txt cnvtalk("Is it over?"), cnvtalk("It was comfortable!"), cnvtalk("Please do more...!")
-				}
+				txt lang("「こんなに出た" + _noka(3) + "？」", cnvtalk("Is it over?")), lang("「気持ちよかった" + _yo(3) + "」", cnvtalk("It was comfortable!")), lang("「またして" + _kure(3) + "…」", cnvtalk("Please do more...!"))
 				mimikaki = 10
 				cdata(CDATA_EMO_ICON, tc) = 17 + 100 * 3
 				goto *event_SWEND1
@@ -5812,10 +5741,10 @@
 		_switch_sw = 0
 		s = lang("くじ引き", "Lottery")
 		file = "bg38"
-		buff = lang("あなたの目の前に富の女神が現れ、くじ引きの箱を置いた。", "The goddess of wealth appears in front of you and places a lottery box.")
+		buff = lang("あなたの目の前に富の女神が現れ、くじ引きの箱を置いた。", "The goddess of wealth appears in front of you and places down a lottery box.")
 		listmax = 0
 		chatList 1, lang("祈りながらくじを選ぶ", "Good luck to me.") 
-		chatList 2, lang("最初に手に触れたくじを選ぶ", "First lottery that touched my hand would be fate.") 
+		chatList 2, lang("最初に手に触れたくじを選ぶ", "First lottery ticket that touches my hand is fated.") 
 		chatList 3, lang("漁りながら、これだ！と感じたくじを選ぶ", "I leave it to my intuition!") 
 		gosub *re_select
 		redraw 0
@@ -5833,10 +5762,10 @@
 		snd SOUNDLIST_CHIME
 		s = lang("星の光", "Result")
 		file = "bg39"
-		buff = lang("手にしたくじが光の粒子に変わり、あなたの足元に集まっていく…。", "The lottery you get turns into particles of light and gathers at your feet...")
+		buff = lang("手にしたくじが光の粒子に変わり、あなたの足元に集まっていく…。", "The lottery ticket in your hand turns into light particles, which start to gather at your feet...")
 		listmax = 0
-		chatList 1, lang("何だろう？", "what?") 
-		chatList 2, lang("これは…！", "Yeah!") 
+		chatList 1, lang("何だろう？", "What could it be?") 
+		chatList 2, lang("これは…！", "This is...!") 
 		chatList 3, lang("来いッ！", "Come on!") 
 		gosub *re_select
 		snd SOUNDLIST_OFFER2
