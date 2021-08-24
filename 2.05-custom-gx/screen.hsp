@@ -888,7 +888,7 @@
 				soulimit--
 				if ( soulimit == 0 ) {
 					gdata(GDATA_FLAG_SUB_AMURDAD) += 9
-					txt lang("ネヘルタード「間に合わなかった…。救済するべき魂はもう助からない…。君だけでも逃げて…」", "You were forced to escape.")
+					txt lang("ネヘルタード「間に合わなかった…。救済するべき魂はもう助からない…。君だけでも逃げて…」", "Amurdad: " + cnvtalk("We couldn't make it in time... The souls that needed to be saved can no longer be saved.... Escape with your life... I can't lose you either..."))
 				}
 			}
 		}
@@ -900,986 +900,454 @@
 	}
 	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) >= 1 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) < 100 ) {
 		gdata(GDATA_FLAG_CUT_IN_MESSAGE_1)++
-		if ( jp ) {
-			pos inf_clockw + 80, inf_clocky + 50
-			color 0, 0, 0
-			bmes "ゼーム「さぁ、神との戦いを見せてもらおう！私の知的探求心を満たしてくれ！」", 235, 235, 35
-		}
-		if ( en ) {
-			pos inf_clockw + 80, inf_clocky + 50
-			color 0, 0, 0
-			bmes "Zeome laughs, " + cnvtalk("Show me the battle of the gods! Satisfy my intellectual curiosity!"), 235, 235, 35
-		}
+		pos inf_clockw + 80, inf_clocky + 50
+		color 0, 0, 0
+		bmes lang("ゼーム「さぁ、神との戦いを見せてもらおう！私の知的探求心を満たしてくれ！」", "Zeome laughs, " + cnvtalk("Show me the battle of the gods! Satisfy my intellectual curiosity!")), 235, 235, 35
 	}
 	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) >= 200 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) < 400 ) {
 		gdata(GDATA_FLAG_CUT_IN_MESSAGE_1)++
 		if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) >= 200 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) < 300 ) {
-			if ( jp ) {
-				pos inf_clockw + 80, inf_clocky + 50
-				color 0, 0, 0
-				bmes "エリステア「どうか、イルヴァの歴史を守って…！」", 235, 235, 35
-			}
-			if ( en ) {
-				pos inf_clockw + 80, inf_clocky + 50
-				color 0, 0, 0
-				bmes "Erystia prays, " + cnvtalk("Please protect the history of Irva!"), 235, 235, 35
-			}
+			pos inf_clockw + 80, inf_clocky + 50
+			color 0, 0, 0
+			bmes lang("エリステア「どうか、イルヴァの歴史を守って…！」", "Erystia prays, " + cnvtalk("Please protect the history of Irva!")), 235, 235, 35
 		}
 		if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) >= 250 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) < 350 ) {
-			if ( jp ) {
-				pos inf_clockw + 30, inf_clocky + 65
-				color 0, 0, 0
-				bmes "ガベラ「死ぬなよ" + cdatan(CDATAN_NAME, CHARA_PLAYER) + "…もう俺にあんな思いをさせないでくれ」", 235, 235, 35
-			}
-			if ( en ) {
-				pos inf_clockw + 30, inf_clocky + 65
-				color 0, 0, 0
-				bmes "Gavela mutters, " + cnvtalk("Do not die! I don't need tragedy anymore..."), 235, 235, 35
-			}
+			pos inf_clockw + 30, inf_clocky + 65
+			color 0, 0, 0
+			bmes lang("ガベラ「死ぬなよ" + cdatan(CDATAN_NAME, CHARA_PLAYER) + "…もう俺にあんな思いをさせないでくれ」", "Gavela mutters, " + cnvtalk("Do not die! I don't need tragedy anymore...")), 235, 235, 35
 		}
 		if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) >= 300 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) < 400 ) {
-			if ( jp ) {
-				pos inf_clockw + 80, inf_clocky + 80
-				color 0, 0, 0
-				bmes "ソピアー「アカシックネットワークに光が流れ込んでいる…？」", 235, 235, 35
-			}
-			if ( en ) {
-				pos inf_clockw + 80, inf_clocky + 80
-				color 0, 0, 0
-				bmes "Sophia wonders, " + cnvtalk("Light is flowing into the Akashic Network...?"), 235, 235, 35
-			}
+			pos inf_clockw + 80, inf_clocky + 80
+			color 0, 0, 0
+			bmes lang("ソピアー「アカシックネットワークに光が流れ込んでいる…？」", "Sophia wonders, " + cnvtalk("Light is flowing into the Akashic Network...?")), 235, 235, 35
 		}
 	}
 	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) >= 500 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) < 700 ) {
 		gdata(GDATA_FLAG_CUT_IN_MESSAGE_1)++
 		if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) >= 500 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) < 600 ) {
-			if ( jp ) {
-				pos inf_clockw + 80, inf_clocky + 50
-				color 0, 0, 0
-				bmes "ノルン「君の旅は…こんなところで終わっちゃいけない」", 235, 235, 35
-			}
-			if ( en ) {
-				pos inf_clockw + 80, inf_clocky + 50
-				color 0, 0, 0
-				bmes "Norne mutters, " + cnvtalk("Your journey... shouldn't end here..."), 235, 235, 35
-			}
+			pos inf_clockw + 80, inf_clocky + 50
+			color 0, 0, 0
+			bmes lang("ノルン「君の旅は…こんなところで終わっちゃいけない」", "Norne mutters, " + cnvtalk("Your journey... shouldn't end here...")), 235, 235, 35
 		}
 		if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) >= 550 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) < 650 ) {
-			if ( jp ) {
-				pos inf_clockw + 30, inf_clocky + 65
-				color 0, 0, 0
-				bmes "ヴェセル「希望はまだあるはずだ」", 235, 235, 35
-			}
-			if ( en ) {
-				pos inf_clockw + 30, inf_clocky + 65
-				color 0, 0, 0
-				bmes "Vessel says, " + cnvtalk("There should still be hope."), 235, 235, 35
-			}
+			pos inf_clockw + 30, inf_clocky + 65
+			color 0, 0, 0
+			bmes lang("ヴェセル「希望はまだあるはずだ」", "Vessel says, " + cnvtalk("There should still be hope.")), 235, 235, 35
 		}
 		if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) >= 600 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) < 700 ) {
-			if ( jp ) {
-				pos inf_clockw + 80, inf_clocky + 80
-				color 0, 0, 0
-				bmes "オルフェ「私が決戦因子として至らなかったばかりに、後任がこのような…」", 235, 235, 35
-			}
-			if ( en ) {
-				pos inf_clockw + 80, inf_clocky + 80
-				color 0, 0, 0
-				bmes "Orphe apologizes, " + cnvtalk("Because of my failure, my junior is suffering..."), 235, 235, 35
-			}
+			pos inf_clockw + 80, inf_clocky + 80
+			color 0, 0, 0
+			bmes lang("オルフェ「私が決戦因子として至らなかったばかりに、後任がこのような…」", "Orphe apologizes, " + cnvtalk("Because of my failure, my junior is suffering...")), 235, 235, 35
 		}
 	}
 	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) >= 850 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) < 900 ) {
 		gdata(GDATA_FLAG_CUT_IN_MESSAGE_1)++
-		if ( jp ) {
-			pos inf_clockw + 80, inf_clocky + 50
-			color 0, 0, 0
-			bmes "エヘカトル「死なにゃいで！死なにゃいって約束して！して！」", 235, 235, 35
-		}
-		if ( en ) {
-			pos inf_clockw + 80, inf_clocky + 50
-			color 0, 0, 0
-			bmes "Ehekatl shouts, " + cnvtalk("Don't die! Promise you don't die!"), 235, 235, 35
-		}
+		pos inf_clockw + 80, inf_clocky + 50
+		color 0, 0, 0
+		bmes lang("エヘカトル「死なにゃいで！死なにゃいって約束して！して！」", "Ehekatl shouts, " + cnvtalk("Don't die! Promise you don't die!")), 235, 235, 35
 	}
 	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) >= 900 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) < 1400 ) {
 		gdata(GDATA_FLAG_CUT_IN_MESSAGE_1)++
 		if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) >= 900 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) < 1000 ) {
-			if ( jp ) {
-				pos inf_clockw + 80, inf_clocky + 50
-				color 0, 0, 0
-				bmes "イツパロトル「願いの力が、回廊と来光の牙を通じて集いつつあるのか…？」", 235, 235, 35
-			}
-			if ( en ) {
-				pos inf_clockw + 80, inf_clocky + 50
-				color 0, 0, 0
-				bmes "Itzpalt mutters, " + cnvtalk("Is the light of wishes gathering to Origin of Light?"), 235, 235, 35
-			}
+			pos inf_clockw + 80, inf_clocky + 50
+			color 0, 0, 0
+			bmes lang("イツパロトル「願いの力が、回廊と来光の牙を通じて集いつつあるのか…？」", "Itzpalt mutters, " + cnvtalk("Is the light of wishes gathering to Origin of Light?")), 235, 235, 35
 		}
 		if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) >= 950 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) < 1050 ) {
-			if ( jp ) {
-				pos inf_clockw + 30, inf_clocky + 65
-				color 0, 0, 0
-				bmes "ヤカテクト「よっしゃ！ウチらの残りの神力もまとめて投資したるっ！」", 235, 235, 35
-			}
-			if ( en ) {
-				pos inf_clockw + 30, inf_clocky + 65
-				color 0, 0, 0
-				bmes "Yacatect says, " + cnvtalk("OK! OK! We will also invest the remaining power in you!"), 235, 235, 35
-			}
+			pos inf_clockw + 30, inf_clocky + 65
+			color 0, 0, 0
+			bmes lang("ヤカテクト「よっしゃ！ウチらの残りの神力もまとめて投資したるっ！」", "Yacatect says, " + cnvtalk("OK! OK! We will also invest the remaining power in you!")), 235, 235, 35
 		}
 		if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) >= 1000 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) < 1100 ) {
-			if ( jp ) {
-				pos inf_clockw + 80, inf_clocky + 80
-				color 0, 0, 0
-				bmes "オパートス「フハハハハッフハー！！！」", 235, 235, 35
-			}
-			if ( en ) {
-				pos inf_clockw + 80, inf_clocky + 80
-				color 0, 0, 0
-				bmes "Opatos laughs, " + cnvtalk("Muwahahahahahaha!"), 235, 235, 35
-			}
+			pos inf_clockw + 80, inf_clocky + 80
+			color 0, 0, 0
+			bmes lang("オパートス「フハハハハッフハー！！！」", "Opatos laughs, " + cnvtalk("Muwahahahahahaha!")), 235, 235, 35
 		}
 		if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) >= 1050 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) < 1150 ) {
-			if ( jp ) {
-				pos inf_clockw + 80, inf_clocky + 50
-				color 0, 0, 0
-				bmes "ルルウィ「戦いなさい、子猫ちゃん。今こそ私の役に立つ時よ」", 235, 235, 35
-			}
-			if ( en ) {
-				pos inf_clockw + 80, inf_clocky + 50
-				color 0, 0, 0
-				bmes "Lulwy sneers, " + cnvtalk("Fight, kitty. Now is the time to help me."), 235, 235, 35
-			}
+			pos inf_clockw + 80, inf_clocky + 50
+			color 0, 0, 0
+			bmes lang("ルルウィ「戦いなさい、子猫ちゃん。今こそ私の役に立つ時よ」", "Lulwy sneers, " + cnvtalk("Fight, kitty. Now is the time to help me.")), 235, 235, 35
 		}
 		if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) >= 1100 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) < 1200 ) {
-			if ( jp ) {
-				pos inf_clockw + 30, inf_clocky + 65
-				color 0, 0, 0
-				bmes "クミロミ「…大丈夫…だよね？」", 235, 235, 35
-			}
-			if ( en ) {
-				pos inf_clockw + 30, inf_clocky + 65
-				color 0, 0, 0
-				bmes "Kumiromi worries, " + cnvtalk("Are you...okay..?"), 235, 235, 35
-			}
+			pos inf_clockw + 30, inf_clocky + 65
+			color 0, 0, 0
+			bmes lang("クミロミ「…大丈夫…だよね？」", "Kumiromi worries, " + cnvtalk("Are you...okay..?")), 235, 235, 35
 		}
 		if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) >= 1150 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) < 1250 ) {
-			if ( jp ) {
-				pos inf_clockw + 80, inf_clocky + 80
-				color 0, 0, 0
-				bmes "マニ「長引かせるな。お前の身体は既に限界を超えている」", 235, 235, 35
-			}
-			if ( en ) {
-				pos inf_clockw + 80, inf_clocky + 80
-				color 0, 0, 0
-				bmes "Mani warns., " + cnvtalk("Hurry. Your body is already over the limit."), 235, 235, 35
-			}
+			pos inf_clockw + 80, inf_clocky + 80
+			color 0, 0, 0
+			bmes lang("マニ「長引かせるな。お前の身体は既に限界を超えている」", "Mani warns., " + cnvtalk("Hurry. Your body is already over the limit.")), 235, 235, 35
 		}
 		if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) >= 1200 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) < 1300 ) {
-			if ( jp ) {
-				pos inf_clockw + 80, inf_clocky + 50
-				color 0, 0, 0
-				bmes "ジュア「バカ！これで死んだりしたら許さないんだから…！」", 235, 235, 35
-			}
-			if ( en ) {
-				pos inf_clockw + 80, inf_clocky + 50
-				color 0, 0, 0
-				bmes "Jure cries, " + cnvtalk("Stupid! If you die then I will not forgive you...!"), 235, 235, 35
-			}
+			pos inf_clockw + 80, inf_clocky + 50
+			color 0, 0, 0
+			bmes lang("ジュア「バカ！これで死んだりしたら許さないんだから…！」", "Jure cries, " + cnvtalk("Stupid! If you die then I will not forgive you...!")), 235, 235, 35
 		}
 		if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) >= 1250 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) < 1350 ) {
-			if ( jp ) {
-				pos inf_clockw + 30, inf_clocky + 65
-				color 0, 0, 0
-				bmes "ミクラネシス「「「アカシックネットワークがこのように動作するとは想定外だね…」」」", 235, 235, 35
-			}
-			if ( en ) {
-				pos inf_clockw + 30, inf_clocky + 65
-				color 0, 0, 0
-				bmes "Mikraanesis says, " + cnvtalk("Akashic Network is unexpected to work this way."), 235, 235, 35
-			}
+			pos inf_clockw + 30, inf_clocky + 65
+			color 0, 0, 0
+			bmes lang("ミクラネシス「「「アカシックネットワークがこのように動作するとは想定外だね…」」」", "Mikraanesis says, " + cnvtalk("Akashic Network is unexpected to work this way.")), 235, 235, 35
 		}
 		if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) >= 1300 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) < 1400 ) {
-			if ( jp ) {
-				pos inf_clockw + 80, inf_clocky + 80
-				color 0, 0, 0
-				bmes "テスカトリポカ「我の魂もここにある。共に戦うぞ、" + cdatan(CDATAN_NAME, CHARA_PLAYER) + "！」", 235, 235, 35
-			}
-			if ( en ) {
-				pos inf_clockw + 80, inf_clocky + 80
-				color 0, 0, 0
-				bmes "Tezcatlipoca cheers, " + cnvtalk("My soul is also here. I will fight together!"), 235, 235, 35
-			}
+			pos inf_clockw + 80, inf_clocky + 80
+			color 0, 0, 0
+			bmes lang("テスカトリポカ「我の魂もここにある。共に戦うぞ、" + cdatan(CDATAN_NAME, CHARA_PLAYER) + "！」", "Tezcatlipoca cheers, " + cnvtalk("My soul is also here. I will fight together!")), 235, 235, 35
 		}
 	}
 	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) >= 1500 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) < 1650 ) {
 		gdata(GDATA_FLAG_CUT_IN_MESSAGE_1)++
 		if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) >= 1500 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) < 1600 ) {
-			if ( jp ) {
-				pos inf_clockw + 80, inf_clocky + 50
-				color 0, 0, 0
-				bmes "ラーネイレ「いけない。このままでは…手遅れになってしまうわ…！」", 235, 235, 35
-			}
-			if ( en ) {
-				pos inf_clockw + 80, inf_clocky + 50
-				color 0, 0, 0
-				bmes "Larneire cries, " + cnvtalk("No...before it is too late...!"), 235, 235, 35
-			}
+			pos inf_clockw + 80, inf_clocky + 50
+			color 0, 0, 0
+			bmes lang("ラーネイレ「いけない。このままでは…手遅れになってしまうわ…！」", "Larneire cries, " + cnvtalk("No...before it is too late...!")), 235, 235, 35
 		}
 		if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) >= 1550 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_1) < 1650 ) {
-			if ( jp ) {
-				pos inf_clockw + 30, inf_clocky + 65
-				color 0, 0, 0
-				bmes "ロミアス「まだまだ、これからだろう！？」", 235, 235, 35
-			}
-			if ( en ) {
-				pos inf_clockw + 30, inf_clocky + 65
-				color 0, 0, 0
-				bmes "Lomias encourages, " + cnvtalk("It hasn't even started yet... hasn't it!?"), 235, 235, 35
-			}
+			pos inf_clockw + 30, inf_clocky + 65
+			color 0, 0, 0
+			bmes lang("ロミアス「まだまだ、これからだろう！？」", "Lomias encourages, " + cnvtalk("It hasn't even started yet... hasn't it!?")), 235, 235, 35
 		}
 	}
 	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 100 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 190 ) {
 		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
-		if ( jp ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "シナア「この猫蛇野郎が生み出す不幸を、アタシは認めないのニャ！」", 235, 235, 35
-		}
-		if ( en ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "Sinaha growls, " + cnvtalk("I don't approve of the misery this cat-snake creates meow!"), 235, 235, 35
-		}
+		pos inf_clockw + 80, inf_clocky + 95
+		color 0, 0, 0
+		bmes lang("シナア「この猫蛇野郎が生み出す不幸を、アタシは認めないのニャ！」", "Sinaha growls, " + cnvtalk("I don't approve of the misery this cat-snake creates meow!")), 235, 235, 35
 	}
 	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 200 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 290 ) {
 		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
-		if ( jp ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "ラシエル「失敗したらお仕置きよ」", 235, 235, 35
-		}
-		if ( en ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "Arasiel laughs, " + cnvtalk("I will punish you if you fail!"), 235, 235, 35
-		}
+		pos inf_clockw + 80, inf_clocky + 95
+		color 0, 0, 0
+		bmes lang("ラシエル「失敗したらお仕置きよ」", "Arasiel laughs, " + cnvtalk("I will punish you if you fail!")), 235, 235, 35
 	}
 	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 300 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 390 ) {
 		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
-		if ( jp ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "ネヘルタード「今こそ、星の光の祝福を…」", 235, 235, 35
-		}
-		if ( en ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "Amurdad prays, " + cnvtalk("May you have the blessing of the Starlight..."), 235, 235, 35
-		}
+		pos inf_clockw + 80, inf_clocky + 95
+		color 0, 0, 0
+		bmes lang("ネヘルタード「今こそ、星の光の祝福を…」", "Amurdad prays, " + cnvtalk("May you have the blessing of the Starlight...")), 235, 235, 35
 	}
 	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 400 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 490 ) {
 		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
-		if ( jp ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "ウリカグアル「フハハ！根性見せな！」", 235, 235, 35
-		}
-		if ( en ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "Urcaguary laughs, " + cnvtalk("Muwahaha! Show your guts!"), 235, 235, 35
-		}
+		pos inf_clockw + 80, inf_clocky + 95
+		color 0, 0, 0
+		bmes lang("ウリカグアル「フハハ！根性見せな！」", "Urcaguary laughs, " + cnvtalk("Muwahaha! Show your guts!")), 235, 235, 35
 	}
 	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 500 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 590 ) {
 		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
-		if ( jp ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "カラヴィカ「イェーイ！愛してるぜベイベー！」", 235, 235, 35
-		}
-		if ( en ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "Karavika shouts, " + cnvtalk("Yeahhhhh! I love you, baby!!"), 235, 235, 35
-		}
+		pos inf_clockw + 80, inf_clocky + 95
+		color 0, 0, 0
+		bmes lang("カラヴィカ「イェーイ！愛してるぜベイベー！」", "Karavika shouts, " + cnvtalk("Yeahhhhh! I love you, baby!!")), 235, 235, 35
 	}
 	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 600 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 690 ) {
 		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
-		if ( jp ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "ガルジエム「貴君の戦いは勲章ものだ」", 235, 235, 35
-		}
-		if ( en ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "Garziem praises, " + cnvtalk("I want to give your battle a medal!"), 235, 235, 35
-		}
+		pos inf_clockw + 80, inf_clocky + 95
+		color 0, 0, 0
+		bmes lang("ガルジエム「貴君の戦いは勲章ものだ」", "Garziem praises, " + cnvtalk("I want to give your battle a medal!")), 235, 235, 35
 	}
 	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 700 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 790 ) {
 		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
-		if ( jp ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "ロヴィト「君は大勢の想いに守られているのですね…」", 235, 235, 35
-		}
-		if ( en ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "Rovid nods, " + cnvtalk("You are protected by many wishes..."), 235, 235, 35
-		}
+		pos inf_clockw + 80, inf_clocky + 95
+		color 0, 0, 0
+		bmes lang("ロヴィト「君は大勢の想いに守られているのですね…」", "Rovid nods, " + cnvtalk("You are protected by many wishes...")), 235, 235, 35
 	}
 	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 2000 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 2090 ) {
 		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
-		if ( jp ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "ミシェス「冒険者さん、お願いだから、負けないで」", 235, 235, 35
-		}
-		if ( en ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "Miches prays, " + cnvtalk("I beg of you adventurer, don't lose..."), 235, 235, 35
-		}
+		pos inf_clockw + 80, inf_clocky + 95
+		color 0, 0, 0
+		bmes lang("ミシェス「冒険者さん、お願いだから、負けないで」", "Miches prays, " + cnvtalk("I beg of you adventurer, don't lose...")), 235, 235, 35
 	}
 	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 2100 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 2190 ) {
 		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
-		if ( jp ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "シーナ「お客さま、大丈夫ですか？！」", 235, 235, 35
-		}
-		if ( en ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "Shena panics, " + cnvtalk("Ahhh! Are you alright sir?"), 235, 235, 35
-		}
+		pos inf_clockw + 80, inf_clocky + 95
+		color 0, 0, 0
+		bmes lang("シーナ「お客さま、大丈夫ですか？！」", "Shena panics, " + cnvtalk("Ahhh! Are you alright sir?")), 235, 235, 35
 	}
 	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 2200 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 2290 ) {
 		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
-		if ( jp ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "ロイター「おい。この脳裏に流れてくる悪夢を早く終わらせろ」", 235, 235, 35
-		}
-		if ( en ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "Loyter orders " + cnvtalk("Hey you! End the nightmare that runs through my brain early!"), 235, 235, 35
-		}
+		pos inf_clockw + 80, inf_clocky + 95
+		color 0, 0, 0
+		bmes lang("ロイター「おい。この脳裏に流れてくる悪夢を早く終わらせろ」", "Loyter orders " + cnvtalk("Hey you! End the nightmare that runs through my brain early!")), 235, 235, 35
 	}
 	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 2300 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 2390 ) {
 		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
-		if ( jp ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "パエル「悪い神様なんていらない！」", 235, 235, 35
-		}
-		if ( en ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "Pael cries, " + cnvtalk("I don't need a bad god!"), 235, 235, 35
-		}
+		pos inf_clockw + 80, inf_clocky + 95
+		color 0, 0, 0
+		bmes lang("パエル「悪い神様なんていらない！」", "Pael cries, " + cnvtalk("I don't need a bad god!")), 235, 235, 35
 	}
 	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 2400 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 2490 ) {
 		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
-		if ( jp ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "ラファエロ「負けるんじゃないぞ。お前さんから貰った嫁が悲しむからな」", 235, 235, 35
-		}
-		if ( en ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "Raphael worries, " + cnvtalk("The wife I got from you seems to cry..."), 235, 235, 35
-		}
+		pos inf_clockw + 80, inf_clocky + 95
+		color 0, 0, 0
+		bmes lang("ラファエロ「負けるんじゃないぞ。お前さんから貰った嫁が悲しむからな」", "Raphael worries, " + cnvtalk("The wife I got from you seems to cry...")), 235, 235, 35
 	}
 	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 2500 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 2590 ) {
 		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
-		if ( jp ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "リリアン「今、ポピーといっしょに冒険者さんを応援しているの！」", 235, 235, 35
-		}
-		if ( en ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "Rilian encourages, " + cnvtalk("I support adventurer with Poppy!"), 235, 235, 35
-		}
+		pos inf_clockw + 80, inf_clocky + 95
+		color 0, 0, 0
+		bmes lang("リリアン「今、ポピーといっしょに冒険者さんを応援しているの！」", "Rilian encourages, " + cnvtalk("I support adventurer with Poppy!")), 235, 235, 35
 	}
 	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 2600 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 2690 ) {
 		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
-		if ( jp ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "タム「こんな猫顔の怪物と戦ってくれていたんですね…」", 235, 235, 35
-		}
-		if ( en ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "Tam moans, " + cnvtalk("You were fighting a cat-faced monster like this!?"), 235, 235, 35
-		}
+		pos inf_clockw + 80, inf_clocky + 95
+		color 0, 0, 0
+		bmes lang("タム「こんな猫顔の怪物と戦ってくれていたんですね…」", "Tam moans, " + cnvtalk("You were fighting a cat-faced monster like this!?")), 235, 235, 35
 	}
 	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 2700 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 2790 ) {
 		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
-		if ( jp ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "ギルバート「おお、勇者よ！諦めないでくれ！フハハハア！」", 235, 235, 35
-		}
-		if ( en ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "Gilbert laughs, " + cnvtalk("Ah, the bravest of the brave! Don't give up! Muwahaha!"), 235, 235, 35
-		}
+		pos inf_clockw + 80, inf_clocky + 95
+		color 0, 0, 0
+		bmes lang("ギルバート「おお、勇者よ！諦めないでくれ！フハハハア！」", "Gilbert laughs, " + cnvtalk("Ah, the bravest of the brave! Don't give up! Muwahaha!")), 235, 235, 35
 	}
 	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 2800 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 2890 ) {
 		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
-		if ( jp ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "アインク「私にはできないことも、あなたならきっとできるはずです！」", 235, 235, 35
-		}
-		if ( en ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "Ainc encourages, " + cnvtalk("You can do things I can't do!"), 235, 235, 35
-		}
+		pos inf_clockw + 80, inf_clocky + 95
+		color 0, 0, 0
+		bmes lang("アインク「私にはできないことも、あなたならきっとできるはずです！」", "Ainc encourages, " + cnvtalk("You can do things I can't do!")), 235, 235, 35
 	}
 	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 2900 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 2990 ) {
 		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
-		if ( jp ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "アーノルド「どうか、この死地を切り抜けて生還してください！」", 235, 235, 35
-		}
-		if ( en ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "Arnord wishes, " + cnvtalk("Please survive this battlefield!"), 235, 235, 35
-		}
+		pos inf_clockw + 80, inf_clocky + 95
+		color 0, 0, 0
+		bmes lang("アーノルド「どうか、この死地を切り抜けて生還してください！」", "Arnord wishes, " + cnvtalk("Please survive this battlefield!")), 235, 235, 35
 	}
 	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 3000 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 3090 ) {
 		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
-		if ( jp ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "ミーア「にゃんこ溢れるこの世界を〜守ってほしいでありますぅ！」", 235, 235, 35
-		}
-		if ( en ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "Mia prays, " + cnvtalk("Mia want nyou to protect this world full of cats!"), 235, 235, 35
-		}
+		pos inf_clockw + 80, inf_clocky + 95
+		color 0, 0, 0
+		bmes lang("ミーア「にゃんこ溢れるこの世界を〜守ってほしいでありますぅ！」", "Mia prays, " + cnvtalk("Mia want nyou to protect this world full of cats!")), 235, 235, 35
 	}
 	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 3100 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 3190 ) {
 		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
-		if ( jp ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "レントン「君には生きる価値がある…私と違って」", 235, 235, 35
-		}
-		if ( en ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "Renton mutters, " + cnvtalk("You are worth living...unlike me..."), 235, 235, 35
-		}
+		pos inf_clockw + 80, inf_clocky + 95
+		color 0, 0, 0
+		bmes lang("レントン「君には生きる価値がある…私と違って」", "Renton mutters, " + cnvtalk("You are worth living...unlike me...")), 235, 235, 35
 	}
 	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 3200 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 3290 ) {
 		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
-		if ( jp ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "マークス「フッ。泥棒に応援される気分はどうです？」", 235, 235, 35
-		}
-		if ( en ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "Marks laughs, " + cnvtalk("Heh, how do you feel about being supported by a thief?"), 235, 235, 35
-		}
+		pos inf_clockw + 80, inf_clocky + 95
+		color 0, 0, 0
+		bmes lang("マークス「フッ。泥棒に応援される気分はどうです？」", "Marks laughs, " + cnvtalk("Heh, how do you feel about being supported by a thief?")), 235, 235, 35
 	}
 	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 3300 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 3390 ) {
 		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
-		if ( jp ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "ノエル「そいつに勝ったらカミゴロシくんって呼んであげるわ」", 235, 235, 35
-		}
-		if ( en ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "Noel laughs, " + cnvtalk("If you win, I'll call you god-killer!"), 235, 235, 35
-		}
+		pos inf_clockw + 80, inf_clocky + 95
+		color 0, 0, 0
+		bmes lang("ノエル「そいつに勝ったらカミゴロシくんって呼んであげるわ」", "Noel laughs, " + cnvtalk("If you win, I'll call you god-killer!")), 235, 235, 35
 	}
 	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 3400 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 3490 ) {
 		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
-		if ( jp ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "イコール「おうおう、諦めたらそこで実験終了じゃぞ」", 235, 235, 35
-		}
-		if ( en ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "Icolle yells, " + cnvtalk("Oh oh oh! If you give up, the experiment is over!"), 235, 235, 35
-		}
+		pos inf_clockw + 80, inf_clocky + 95
+		color 0, 0, 0
+		bmes lang("イコール「おうおう、諦めたらそこで実験終了じゃぞ」", "Icolle yells, " + cnvtalk("Oh oh oh! If you give up, the experiment is over!")), 235, 235, 35
 	}
 	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 3500 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 3590 ) {
 		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
-		if ( jp ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "バルザック「世界規模のゴミ野郎を片づけちまいな！」", 235, 235, 35
-		}
-		if ( en ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "Balzak shouts, " + cnvtalk("Clean up world-class trash!"), 235, 235, 35
-		}
+		pos inf_clockw + 80, inf_clocky + 95
+		color 0, 0, 0
+		bmes lang("バルザック「世界規模のゴミ野郎を片づけちまいな！」", "Balzak shouts, " + cnvtalk("Clean up world-class trash!")), 235, 235, 35
 	}
 	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 3600 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 3690 ) {
 		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
-		if ( jp ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "レヴラス「あなたなら勝ってくれると信じていますよ」", 235, 235, 35
-		}
-		if ( en ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "Revlus says, " + cnvtalk("I believe you will win!"), 235, 235, 35
-		}
+		pos inf_clockw + 80, inf_clocky + 95
+		color 0, 0, 0
+		bmes lang("レヴラス「あなたなら勝ってくれると信じていますよ」", "Revlus says, " + cnvtalk("I believe you will win!")), 235, 235, 35
 	}
 	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 3700 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 3790 ) {
 		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
-		if ( jp ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "フレイ「神だろうと鍛えれば打倒できる。そうだろう？」", 235, 235, 35
-		}
-		if ( en ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "Fray laughs, " + cnvtalk("You can kill even god if you train!"), 235, 235, 35
-		}
+		pos inf_clockw + 80, inf_clocky + 95
+		color 0, 0, 0
+		bmes lang("フレイ「神だろうと鍛えれば打倒できる。そうだろう？」", "Fray laughs, " + cnvtalk("You can kill even god if you train!")), 235, 235, 35
 	}
 	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 3800 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 3890 ) {
 		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
-		if ( jp ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "シン「生きろ。命を奪われるくらいなら先に奪え」", 235, 235, 35
-		}
-		if ( en ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "Sin orders, " + cnvtalk("Survive! Don't lose your life..."), 235, 235, 35
-		}
+		pos inf_clockw + 80, inf_clocky + 95
+		color 0, 0, 0
+		bmes lang("シン「生きろ。命を奪われるくらいなら先に奪え」", "Sin orders, " + cnvtalk("Survive! Don't lose your life...")), 235, 235, 35
 	}
 	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 4200 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 4290 ) {
 		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
-		if ( jp ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "コネリー「おぬしはわしらの誇りだ！」", 235, 235, 35
-		}
-		if ( en ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "Conery encourages, " + cnvtalk("You are our pride!"), 235, 235, 35
-		}
+		pos inf_clockw + 80, inf_clocky + 95
+		color 0, 0, 0
+		bmes lang("コネリー「おぬしはわしらの誇りだ！」", "Conery encourages, " + cnvtalk("You are our pride!")), 235, 235, 35
 	}
 	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 4300 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 4390 ) {
 		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
-		if ( jp ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "謎の科学者「お願い。あの子達には希望が必要なの」", 235, 235, 35
-		}
-		if ( en ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "Strange scientist says, " + cnvtalk("Little sisters need hope..."), 235, 235, 35
-		}
+		pos inf_clockw + 80, inf_clocky + 95
+		color 0, 0, 0
+		bmes lang("謎の科学者「お願い。あの子達には希望が必要なの」", "Strange scientist says, " + cnvtalk("Little sisters need hope...")), 235, 235, 35
 	}
 	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 4500 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 4590 ) {
 		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
-		if ( jp ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "犬のおまわりさん「この世界のためにも、どうかよろしくお願いなのです！」", 235, 235, 35
-		}
-		if ( en ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "Dog cop asks, " + cnvtalk("Good luck for this world!"), 235, 235, 35
-		}
+		pos inf_clockw + 80, inf_clocky + 95
+		color 0, 0, 0
+		bmes lang("犬のおまわりさん「この世界のためにも、どうかよろしくお願いなのです！」", "Dog cop asks, " + cnvtalk("Good luck for this world!")), 235, 235, 35
 	}
 	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 4600 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 4690 ) {
 		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
-		if ( jp ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "ミーリス「もはや軍では対処できない…！貴方に託します」", 235, 235, 35
-		}
-		if ( en ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "Milis laughs, " + cnvtalk("!!"), 235, 235, 35
-		}
+		pos inf_clockw + 80, inf_clocky + 95
+		color 0, 0, 0
+		bmes lang("ミーリス「もはや軍では対処できない…！貴方に託します」", "Milis exclaims, " + cnvtalk("The military is finding themselves in over their heads!! I leave this to you.")), 235, 235, 35
 	}
 	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 4700 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 4790 ) {
 		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
-		if ( jp ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "オービル「ちょっ、あんたならなんとかできるだろ？そう言ってくれ！」", 235, 235, 35
-		}
-		if ( en ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "Orville laughs, " + cnvtalk("!!"), 235, 235, 35
-		}
+		pos inf_clockw + 80, inf_clocky + 95
+		color 0, 0, 0
+		bmes lang("オービル「ちょっ、あんたならなんとかできるだろ？そう言ってくれ！」", "Orville asks, " + cnvtalk("Hey, you can handle this, can't you? Tell me!")), 235, 235, 35
 	}
 	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 4800 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 4890 ) {
 		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
-		if ( jp ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "ザナード「よう。俺様はお前を信じてるぜ！」", 235, 235, 35
-		}
-		if ( en ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "Zernard laughs, " + cnvtalk("!!"), 235, 235, 35
-		}
+		pos inf_clockw + 80, inf_clocky + 95
+		color 0, 0, 0
+		bmes lang("ザナード「よう。俺様はお前を信じてるぜ！」", "Zernard laughs, " + cnvtalk("Hey. I believe in you, man!")), 235, 235, 35
 	}
 	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 4900 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 4990 ) {
 		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
-		if ( jp ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "豹頭の戦士「俺などの力が何かになるものならば、いくらでも力になってやりたいと思う」", 235, 235, 35
-		}
-		if ( en ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "The leopard warrior laughs, " + cnvtalk("!!"), 235, 235, 35
-		}
+		pos inf_clockw + 80, inf_clocky + 95
+		color 0, 0, 0
+		bmes lang("豹頭の戦士「俺などの力が何かになるものならば、いくらでも力になってやりたいと思う」", "The leopard warrior says, " + cnvtalk("If I were able to, I would help in any way I could.")), 235, 235, 35
 	}
 	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 5000 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 5090 ) {
 		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
-		if ( jp ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "メファン「すまない！報酬は出せないが頑張ってほしい！」", 235, 235, 35
-		}
-		if ( en ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "Mefan laughs, " + cnvtalk("!!"), 235, 235, 35
-		}
+		pos inf_clockw + 80, inf_clocky + 95
+		color 0, 0, 0
+		bmes lang("メファン「すまない！報酬は出せないが頑張ってほしい！」", "Mefan laughs, " + cnvtalk("!!")), 235, 235, 35
 	}
 	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 5100 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 5190 ) {
 		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
-		if ( jp ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "ルーネ「ご主人様、メイドの皆で勝利を願っています！」", 235, 235, 35
-		}
-		if ( en ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "Lune laughs, " + cnvtalk("!!"), 235, 235, 35
-		}
+		pos inf_clockw + 80, inf_clocky + 95
+		color 0, 0, 0
+		bmes lang("ルーネ「ご主人様、メイドの皆で勝利を願っています！」", "Lune laughs, " + cnvtalk("!!")), 235, 235, 35
 	}
 	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 5200 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 5290 ) {
 		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
-		if ( jp ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "たけのこ「世界全土が焼き払われちゃかなわないからな！」", 235, 235, 35
-		}
-		if ( en ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "Bamboo Sprout laughs, " + cnvtalk("!!"), 235, 235, 35
-		}
+		pos inf_clockw + 80, inf_clocky + 95
+		color 0, 0, 0
+		bmes lang("たけのこ「世界全土が焼き払われちゃかなわないからな！」", "Bamboo Sprout laughs, " + cnvtalk("!!")), 235, 235, 35
 	}
 	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 5300 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 5390 ) {
 		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
-		if ( jp ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "カイル「父さま、冒険者さんの無事を一緒に祈ろう」", 235, 235, 35
-		}
-		if ( en ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "Kyle laughs, " + cnvtalk("!!"), 235, 235, 35
-		}
+		pos inf_clockw + 80, inf_clocky + 95
+		color 0, 0, 0
+		bmes lang("カイル「父さま、冒険者さんの無事を一緒に祈ろう」", "Kyle laughs, " + cnvtalk("!!")), 235, 235, 35
 	}
 	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 5400 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 5490 ) {
 		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
-		if ( jp ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "姉「お姉ちゃんを泣かせないでね？」", 235, 235, 35
-		}
-		if ( en ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "Older sister laughs, " + cnvtalk("!!"), 235, 235, 35
-		}
+		pos inf_clockw + 80, inf_clocky + 95
+		color 0, 0, 0
+		bmes lang("姉「お姉ちゃんを泣かせないでね？」", "Older sister laughs, " + cnvtalk("!!")), 235, 235, 35
 	}
 	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 6400 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 6490 ) {
 		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
-		if ( jp ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "ライエ「君が、平穏な生活を取り戻せますように…」", 235, 235, 35
-		}
-		if ( en ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "Eila laughs, " + cnvtalk("!!"), 235, 235, 35
-		}
+		pos inf_clockw + 80, inf_clocky + 95
+		color 0, 0, 0
+		bmes lang("ライエ「君が、平穏な生活を取り戻せますように…」", "Eila laughs, " + cnvtalk("!!")), 235, 235, 35
 	}
 	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 6600 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 6690 ) {
 		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
-		if ( jp ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "シラハ「" + _onii(cdata(CDATA_SEX, CHARA_PLAYER)) + "さん、負けないで！」", 235, 235, 35
-		}
-		if ( en ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "Siraha laughs, " + cnvtalk("!!"), 235, 235, 35
-		}
+		pos inf_clockw + 80, inf_clocky + 95
+		color 0, 0, 0
+		bmes lang("シラハ「" + _onii(cdata(CDATA_SEX, CHARA_PLAYER)) + "さん、負けないで！」", "Siraha laughs, " + cnvtalk("!!")), 235, 235, 35
 	}
 	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 7100 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 7190 ) {
 		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
-		if ( jp ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "ナプラス「私、あなたの持つ可能性を信じてるよ」", 235, 235, 35
-		}
-		if ( en ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "Naplus laughs, " + cnvtalk("!!"), 235, 235, 35
-		}
+		pos inf_clockw + 80, inf_clocky + 95
+		color 0, 0, 0
+		bmes lang("ナプラス「私、あなたの持つ可能性を信じてるよ」", "Naplus laughs, " + cnvtalk("!!")), 235, 235, 35
 	}
 	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 7300 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 7390 ) {
 		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
-		if ( jp ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "ナズナ「もっと鍛えておくべきだったな」", 235, 235, 35
-		}
-		if ( en ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "Nazuna laughs, " + cnvtalk("!!"), 235, 235, 35
-		}
+		pos inf_clockw + 80, inf_clocky + 95
+		color 0, 0, 0
+		bmes lang("ナズナ「もっと鍛えておくべきだったな」", "Nazuna laughs, " + cnvtalk("!!")), 235, 235, 35
 	}
 	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 7600 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 7690 ) {
 		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
-		if ( jp ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "アリス「死中ニ活アリッス」", 235, 235, 35
-		}
-		if ( en ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "Alice laughs, " + cnvtalk("!!"), 235, 235, 35
-		}
+		pos inf_clockw + 80, inf_clocky + 95
+		color 0, 0, 0
+		bmes lang("アリス「死中ニ活アリッス」", "Alice laughs, " + cnvtalk("!!")), 235, 235, 35
 	}
 	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 7700 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 7790 ) {
 		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
-		if ( jp ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "ネイン「よく分からないけど…負けるんじゃないわよ！」", 235, 235, 35
-		}
-		if ( en ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "Nein laughs, " + cnvtalk("!!"), 235, 235, 35
-		}
+		pos inf_clockw + 80, inf_clocky + 95
+		color 0, 0, 0
+		bmes lang("ネイン「よく分からないけど…負けるんじゃないわよ！」", "Nein laughs, " + cnvtalk("!!")), 235, 235, 35
 	}
 	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 7900 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 7990 ) {
 		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
-		if ( jp ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "ガージンド「この星にこんな怪物が潜んでいたとは…」", 235, 235, 35
-		}
-		if ( en ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "Jin laughs, " + cnvtalk("!!"), 235, 235, 35
-		}
+		pos inf_clockw + 80, inf_clocky + 95
+		color 0, 0, 0
+		bmes lang("ガージンド「この星にこんな怪物が潜んでいたとは…」", "Jin laughs, " + cnvtalk("!!")), 235, 235, 35
 	}
 	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 8000 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 8090 ) {
 		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
-		if ( jp ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "イルマ「どんな力も、どんな技術も、全ては使う者次第なんじゃ！」", 235, 235, 35
-		}
-		if ( en ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "Irma laughs, " + cnvtalk("!!"), 235, 235, 35
-		}
+		pos inf_clockw + 80, inf_clocky + 95
+		color 0, 0, 0
+		bmes lang("イルマ「どんな力も、どんな技術も、全ては使う者次第なんじゃ！」", "Irma laughs, " + cnvtalk("!!")), 235, 235, 35
 	}
 	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 8100 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 8190 ) {
 		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
-		if ( jp ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "スピファル「なんだ、半竜じゃなくて半蛇か…あなたに任せるね」", 235, 235, 35
-		}
-		if ( en ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "Spipha laughs, " + cnvtalk("!!"), 235, 235, 35
-		}
+		pos inf_clockw + 80, inf_clocky + 95
+		color 0, 0, 0
+		bmes lang("スピファル「なんだ、半竜じゃなくて半蛇か…あなたに任せるね」", "Spipha laughs, " + cnvtalk("!!")), 235, 235, 35
 	}
 	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 8400 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 8490 ) {
 		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
-		if ( jp ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "ミヅキ「わしは…おぬしに勝ってほしいっ！」", 235, 235, 35
-		}
-		if ( en ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "Abyss Princess laughs, " + cnvtalk("!!"), 235, 235, 35
-		}
+		pos inf_clockw + 80, inf_clocky + 95
+		color 0, 0, 0
+		bmes lang("ミヅキ「わしは…おぬしに勝ってほしいっ！」", "Abyss Princess laughs, " + cnvtalk("!!")), 235, 235, 35
 	}
 	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 9100 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 9190 ) {
 		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
-		if ( jp ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "エユル「横でレナイも応援しているよ」", 235, 235, 35
-		}
-		if ( en ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "Regulus laughs, " + cnvtalk("!!"), 235, 235, 35
-		}
+		pos inf_clockw + 80, inf_clocky + 95
+		color 0, 0, 0
+		bmes lang("エユル「横でレナイも応援しているよ」", "Regulus laughs, " + cnvtalk("!!")), 235, 235, 35
 	}
 	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 9200 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 9290 ) {
 		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
-		if ( jp ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "ライゼル「…！」", 235, 235, 35
-		}
-		if ( en ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "Raizel laughs, " + cnvtalk("!!"), 235, 235, 35
-		}
+		pos inf_clockw + 80, inf_clocky + 95
+		color 0, 0, 0
+		bmes lang("ライゼル「…！」", "Raizel laughs, " + cnvtalk("!!")), 235, 235, 35
 	}
 	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 9300 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 9390 ) {
 		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
-		if ( jp ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "シュライダ「忘れるな、生きて帰るまでが仕事だ」", 235, 235, 35
-		}
-		if ( en ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "Shuraida laughs, " + cnvtalk("!!"), 235, 235, 35
-		}
+		pos inf_clockw + 80, inf_clocky + 95
+		color 0, 0, 0
+		bmes lang("シュライダ「忘れるな、生きて帰るまでが仕事だ」", "Shuraida laughs, " + cnvtalk("!!")), 235, 235, 35
 	}
 	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 9400 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 9490 ) {
 		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
-		if ( jp ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "マルカ「そいつが何を企んでるのか知らないけど、やっちゃえ！」", 235, 235, 35
-		}
-		if ( en ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "Marka laughs, " + cnvtalk("!!"), 235, 235, 35
-		}
+		pos inf_clockw + 80, inf_clocky + 95
+		color 0, 0, 0
+		bmes lang("マルカ「そいつが何を企んでるのか知らないけど、やっちゃえ！」", "Marka laughs, " + cnvtalk("!!")), 235, 235, 35
 	}
 	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 10500 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 10590 ) {
 		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
-		if ( jp ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "シズル「いひひ…少しばかり介入させてもらいますのじゃ」", 235, 235, 35
-		}
-		if ( en ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "Ssil laughs, " + cnvtalk("!!"), 235, 235, 35
-		}
+		pos inf_clockw + 80, inf_clocky + 95
+		color 0, 0, 0
+		bmes lang("シズル「いひひ…少しばかり介入させてもらいますのじゃ」", "Ssil laughs, " + cnvtalk("!!")), 235, 235, 35
 	}
 	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 10900 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 10990 ) {
 		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
-		if ( jp ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "ベルファート「君はクロやんと再会させてくれた恩人だ！無事を祈っている！」", 235, 235, 35
-		}
-		if ( en ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "Belphat laughs, " + cnvtalk("!!"), 235, 235, 35
-		}
+		pos inf_clockw + 80, inf_clocky + 95
+		color 0, 0, 0
+		bmes lang("ベルファート「君はクロやんと再会させてくれた恩人だ！無事を祈っている！」", "Belphat laughs, " + cnvtalk("!!")), 235, 235, 35
 	}
 	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 11500 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 11590 ) {
 		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
-		if ( jp ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "ランカータ「母上…あの人をお守りください…！」", 235, 235, 35
-		}
-		if ( en ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "Lankata laughs, " + cnvtalk("!!"), 235, 235, 35
-		}
+		pos inf_clockw + 80, inf_clocky + 95
+		color 0, 0, 0
+		bmes lang("ランカータ「母上…あの人をお守りください…！」", "Lankata laughs, " + cnvtalk("!!")), 235, 235, 35
 	}
 	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 12600 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 12690 ) {
 		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
-		if ( jp ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "カラ太「ゼミでやったところを思い出して！」", 235, 235, 35
-		}
-		if ( en ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "Karata laughs, " + cnvtalk("!!"), 235, 235, 35
-		}
+		pos inf_clockw + 80, inf_clocky + 95
+		color 0, 0, 0
+		bmes lang("カラ太「ゼミでやったところを思い出して！」", "Karata laughs, " + cnvtalk("!!")), 235, 235, 35
 	}
 	if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) >= 13500 & gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 13590 ) {
 		gdata(GDATA_FLAG_CUT_IN_MESSAGE_2)++
-		if ( jp ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "カルラ「Etherwindの因果が、あなたの力になるわ」", 235, 235, 35
-		}
-		if ( en ) {
-			pos inf_clockw + 80, inf_clocky + 95
-			color 0, 0, 0
-			bmes "Karura laughs, " + cnvtalk("!!"), 235, 235, 35
- 		}
+		pos inf_clockw + 80, inf_clocky + 95
+		color 0, 0, 0
+		bmes lang("カルラ「Etherwindの因果が、あなたの力になるわ」", "Karura laughs, " + cnvtalk("!!")), 235, 235, 35
  	}
 
 	/********** ORIGINAL - BEGINNING ********** // Remove Curtain Call.
