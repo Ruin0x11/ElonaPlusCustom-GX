@@ -846,7 +846,7 @@
 					modimp tc, -5
 					chatList 1, lang("用事がありまして…", "I had something come up, so...")
 					chatList 0, lang("一度帰ったほうが能率が上がると判断しました", "I decided that returning home would improve my efficiency.")
-					buff = lang("お前さぁ！みんなが必死こいて頑張ってるのに何帰ってんの？？自分さえよければいいとか考えてんだろ？…おい、聞いてんのかコラァァァ！！！", "Hey, YOU! Why are you leaving NOW while everyone else here is working their asses off? So you think that YOU'RE the only person that matters here, is that it? ...HEY! Are you LISTENING to me!?"
+					buff = lang("お前さぁ！みんなが必死こいて頑張ってるのに何帰ってんの？？自分さえよければいいとか考えてんだろ？…おい、聞いてんのかコラァァァ！！！", "Hey, YOU! Why are you leaving NOW while everyone else here is working their asses off? So you think that YOU'RE the only person that matters here, is that it? ...HEY! Are you LISTENING to me!?")
 					chatesc = 0
 					gosub *chat_select
 					if ( chatval == 1 ) {
@@ -866,7 +866,7 @@
 				chatMore lang("おっと。お前が艦長の推薦でやってきた新入りか。わからないことがあったらリーダーの俺にちゃんと聞くんだぞ。", "Ah, so you're the new guy the captain recommended. If you've got any questions, ask me. I'm the leader of this joint.")
 				chatList 1, lang("ＡＢＣの内容を教えてください", "Please tell me about each of the jobs.")
 				chatList 0, lang("暴走機械がいるって聞いたんですけど", "I heard there was a runaway machine.")
-				buff = lang("さっそくだがお前の仕事の割り当ては、仕事Ａ：" + gdata(GDATA_FLAG_WORK_A_REMAINING) + "、仕事Ｂ：" + gdata(GDATA_FLAG_WORK_B_REMAINING) + "、仕事Ｃ：" + gdata(GDATA_FLAG_WORK_C_REMAINING) + "だ。頼むぞ。", "I'll cut to the chase. Here's your work assignment. Work A: " + gdata(GDATA_FLAG_WORK_A_REMAINING) " units. Work B: " + gdata(GDATA_FLAG_WORK_B_REMAINING) + " units. Work C:" + gdata(GDATA_FLAG_WORK_C_REMAINING) + " units. Get to it.")
+				buff = lang("さっそくだがお前の仕事の割り当ては、仕事Ａ：" + gdata(GDATA_FLAG_WORK_A_REMAINING) + "、仕事Ｂ：" + gdata(GDATA_FLAG_WORK_B_REMAINING) + "、仕事Ｃ：" + gdata(GDATA_FLAG_WORK_C_REMAINING) + "だ。頼むぞ。", "I'll cut to the chase. Here's your work assignment. Work A: " + gdata(GDATA_FLAG_WORK_A_REMAINING) + " units. Work B: " + gdata(GDATA_FLAG_WORK_B_REMAINING) + " units. Work C:" + gdata(GDATA_FLAG_WORK_C_REMAINING) + " units. Get to it.")
 				chatesc = 0
 				gosub *chat_select
 				if ( chatval == 1 ) {
@@ -1545,7 +1545,7 @@
 		if ( gdata(GDATA_FLAG_MAIN) >= 1010 ) {
 			if ( gdata(GDATA_FLAG_MAIN_CHAOS_CRADLE_4) < 300 ) {
 				gdata(GDATA_FLAG_MAIN_CHAOS_CRADLE_4) = 300
-				chatMore lang("生還、できたのですね" + cdatan(CDATAN_NAME, CHARA_PLAYER) + "。本当によかった…。どう見ても限界を超えた力を行使していたので、ずっと心配していました。", "You really made it back alive, " + cdatan(CDATAN_NAME, CHARA_PLAYER) ". I'm so glad... I was worried about you for the longest time. You must have been exercising your powers beyond the limit of what your body was capable of.")
+				chatMore lang("生還、できたのですね" + cdatan(CDATAN_NAME, CHARA_PLAYER) + "。本当によかった…。どう見ても限界を超えた力を行使していたので、ずっと心配していました。", "You really made it back alive, " + cdatan(CDATAN_NAME, CHARA_PLAYER) + ". I'm so glad... I was worried about you for the longest time. You must have been exercising your powers beyond the limit of what your body was capable of.")
 				chatMore lang("…私のほうは、今はＬＦ計画関係の手続きや情報整理をしています。歴史の謎の多い部分に迫るチャンスですからね。大変だけどやりがいがあります。", "...As for me, I've been steadily at work planning and organizing information related to Project LF. I believe this will be an excellent opportunity for us to come closer to uncovering the truth behind the most mysterious parts of our history. It's hard work, but certainly worth the effort.")
 				chatMore lang("もし興味があったら、ぜひパルミア所属で参加してください。あなたならきっとＬＦ計画を成功に導いてくれるでしょう。", "If you're interested, feel free to join us as a fellow of Palmia. I'm confident that you'll help us lead Project LF to success.")
 				goto *chat_end
@@ -14082,7 +14082,7 @@
 		buff = lang("センスないですよｗｗｗｗセ・ン・ス！ほらほら考えて〜考えればもっとマシにできるはずですからｗｗｗｗくっ、あはははは！", "lololol. where's your sense of aesthetic? ＡＥＳＴＨＥＴＩＣ. use that brain of yours, and you'll think of something that isn't so obviously shitty next time... probably. hahahaha")
 		gosub *chat_select
 		if ( chatval == 0 ) {
-			chatMore lang("まぁまぁｗｗｗ私も細かい所の埃程度は掃除してあげますけど〜そもそもの配置や片づけは" + _onii(cdata(CDATA_SEX, CHARA_PLAYER)) + "さんが自分でやってくださいねぇｗｗｗ", "just chill. lol. i can dust the tiny cracks and crevices for ya, but get off your ass and do the heavy lifting yourself, " + cdatan(CDATAN_NAME, CHARA_PLAYER) + "-san. hahaha", strbye
+			chatMore lang("まぁまぁｗｗｗ私も細かい所の埃程度は掃除してあげますけど?そもそもの配置や片づけは" + _onii(cdata(CDATA_SEX, CHARA_PLAYER)) + "さんが自分でやってくださいねぇｗｗｗ", "just chill. lol. i can dust the tiny cracks and crevices for ya, but get off your ass and do the heavy lifting yourself, " + cdatan(CDATAN_NAME, CHARA_PLAYER) + "-san. hahaha"), strbye
 			goto *chat_end
 		}
 		if ( chatval == 1 ) {
