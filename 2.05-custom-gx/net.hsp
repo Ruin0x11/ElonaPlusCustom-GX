@@ -305,14 +305,15 @@
 	sdim cgiurl3
 	sdim serverlist, 200
 	notesel serverlist
-	; net_read 4
-	; if ( cfg_serverlist == 0 ) {
-	; 	serverlist = "elochat.nori.agency%elochat.nori.agency%"
-	; }
-	; else {
+	exist exedir + "server.txt"
+	if ( strsize != (-1) ) {
 		noteload exedir + "server.txt"
 		netbuf = serverlist
-	; }
+	}
+	else {
+		serverlist = "elochat.nori.agency%elochat.nori.agency%"
+		netbuf = serverlist
+	}
 	p = instr(netbuf, 0, "%")
 	cgiurl2 = strmid(netbuf, 0, p)
 	cgiurl3 = strmid(netbuf, p + 1, instr(netbuf, p + 1, "%"))
