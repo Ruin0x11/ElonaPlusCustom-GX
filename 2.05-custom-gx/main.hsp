@@ -8,9 +8,9 @@
 #func exrand_randomize "_exrand_randomize@16" int, int, int, int
 #func exrand_rnd "_exrand_rnd@16" var, int, int, int
 
-; No idea why this is necessary, but otherwise it crashes when calling xnotesel
-; in debug mode, but not from an .exe or vice versa.
-
+; In HSP 3.6, sortnote was added as a standard library function. We need to
+; use the version in hspda.dll for compatability reasons, so rename it to
+; "func_1" to prevent name clashes.
 #uselib "hspda.dll"
 #func func_1 "_sortnote@16" pexinfo, nullptr, nullptr, nullptr
 #ifndef _DEBUG
@@ -156,6 +156,11 @@
 	}
 #else
 	exedir = dir_exe + "\\"
+	exist exedir + "elona.dll"
+	if ( strsize == (-1) ) {
+        dialog "Could not find an installation of Elona+. Please follow the install instructions to install Elona+ first before running this program."
+        end
+	}
 #endif
 	devfile = ""
 
