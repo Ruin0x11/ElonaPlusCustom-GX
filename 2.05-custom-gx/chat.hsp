@@ -1657,12 +1657,12 @@
 		}
 		if ( gdata(GDATA_FLAG_MAIN) >= 760 ) {
 			if ( gdata(GDATA_FLAG_MAIN_CHAOS_CRADLE_4) >= 100 ) {
-				chatMore lang("混沌の神が倒され、ロスリアに集まっていた混沌の精霊たちも各国の連合軍に鎮圧されました。事実上、混沌の軍勢は滅んだことになりますね。ロストイルヴァの情報も大体集まりましたし、ようやく私も落ち着けます。", "The chaotic gods were overthrown and the chaotic spirits that had gathered in Rosuria were also suppressed by their allied forces. In fact, the chaotic army is going to be destroyed. We gathered the information of Lost Irva, and finally I can calm down.")
+				chatMore lang("混沌の神が倒され、ロスリアに集まっていた混沌の精霊たちも各国の連合軍に鎮圧されました。事実上、混沌の軍勢は滅んだことになりますね。ロストイルヴァの情報も大体集まりましたし、ようやく私も落ち着けます。", "The God of Chaos has been defeated, and the spirits of chaos that had gathered in Rosuria have been overthrown by the combined forces of all the allied nations as well. That means the forces of Chaos have been effectively wiped out. Having gathered as much information on Lost Ilva as I could manage, I can settle down at last.")
 			}
 			if ( gdata(GDATA_FLAG_MAIN_CHAOS_CRADLE_4) < 100 ) {
-				chatMore lang("ええっ？混沌の神を倒した…のですか？あなたが？", "What? Defeated the God of Chaos...? You?")
+				chatMore lang("ええっ？混沌の神を倒した…のですか？あなたが？", "What? You defeated the God of Chaos? *You* did that?")
 				chatMore lang("…。", "...")
-				chatMore lang("…あまり、そのことは喋らない方がいいかもしれませんよ。邪神を殺した英雄がそれ以上の危険因子として迫害されることがあるのは、歴史が証明しています。", "...You may not want to talk about that too often. History proves that the hero who killed the evil spirit may be persecuted as a further risk factor.")
+				chatMore lang("…あまり、そのことは喋らない方がいいかもしれませんよ。邪神を殺した英雄がそれ以上の危険因子として迫害されることがあるのは、歴史が証明しています。", "... It might be best if you don't speak of it too much. History has proven that a hero who kills an evil god can be persecuted as an even greater threat to humankind.")
 				gdata(GDATA_FLAG_MAIN_CHAOS_CRADLE_4) = 100
 			}
 			goto *chat_end
@@ -6545,12 +6545,12 @@
 		_switch_sw = 0
 		if ( gdata(GDATA_AREA) == AREA_CHAOS_CRADLE ) {
 			if ( gdata(GDATA_FLAG_MAIN) >= 630 ) {
-				chatMore lang("今思うと、イトコのフロンとリアにも来てもらうべきでしたね。下見ついでに混沌の神も倒せて一石二鳥だったかもしれません。", "I thought now, I should have had it coming back to Flon and Lea of Itoko ne. In addition to the preliminary observation, the chaotic god could beat down and it might have been two stone."), strbye
+				chatMore lang("今思うと、イトコのフロンとリアにも来てもらうべきでしたね。下見ついでに混沌の神も倒せて一石二鳥だったかもしれません。", "Now that I think about it, I should have asked my cousins Fron and Leah to come too. We could have killed two birds with one stone by defeating the God of Chaos while also having ourselves a look around."), strbye
 				goto *chat_end
 			}
 			else {
-				chatMore lang("妹のエールと一緒にツアーの下見に来たんですが、ここで貧弱なお客様を守りながら戦うのは至難の業ですね…。", "I came to preview the tour with my sister Aile, but it is a difficult task to fight while protecting poor customers here...")
-				chatMore lang("というか、妹がどんどん先に行くのではぐれてしまいました。か弱い姉を置きざりにするなんてどんな判断だ！", "Or, since my sister goes ahead, I got stranded. What judgment is to leave behind a weaker older sister!"), strbye
+				chatMore lang("妹のエールと一緒にツアーの下見に来たんですが、ここで貧弱なお客様を守りながら戦うのは至難の業ですね…。", "I came here with my younger sister Yale to preview the tour in advance, but it's extremely difficult to fight while protecting these frail customers...")
+				chatMore lang("というか、妹がどんどん先に行くのではぐれてしまいました。か弱い姉を置きざりにするなんてどんな判断だ！", "In fact, I got separated from my sister because she kept going on ahead of me. What on earth was she thinking, leaving her weak and helpless big sis behind like that!"), strbye
 				gdata(GDATA_FLAG_MAIN) = 630
 				goto *chat_end
 			}
@@ -6570,7 +6570,7 @@
 			}
 			else {
 				chatMore lang("うーん。気が付いたらお姉ちゃんがいない…。", "Well when she notices it, she'll be gone already...")
-				chatMore lang("お姉ちゃんは昔から私達の中でもどんくさい感じでしたので。ちんたらしてて迷子になったんでしょうね。やれやれ。", "Because my older sister felt a little dull among us from long ago. I guess I bet you got lost. Whew."), strbye
+				chatMore lang("お姉ちゃんは昔から私達の中でもどんくさい感じでしたので。ちんたらしてて迷子になったんでしょうね。やれやれ。", "My sister has always been the dunce of our family. She must have gotten lost from lazing around somewhere. Oh, what a bother..."), strbye
 				gdata(GDATA_FLAG_MAIN) = 650
 				goto *chat_end
 			}
@@ -6643,10 +6643,10 @@
 		}
 		if ( gdata(GDATA_FLAG_MAIN) >= 760 & gdata(GDATA_FLAG_MAIN) < 840 ) {
 			if ( gdata(GDATA_FLAG_DIALOG_LEOLD) == 100 ) {
-				chatMore lang("実はAO-Iには隠された機能があったんだ。本当は時間がある時にでも見せたかったんだが…。ブツを神の間に置いておくことになってしまったから無理だ。悪いな。", "Actually, AO-I had a hidden function. Actually I wanted to show it even when I have time. It is impossible because it was decided to keep a pair among the gods. Sorry.")
+				chatMore lang("実はAO-Iには隠された機能があったんだ。本当は時間がある時にでも見せたかったんだが…。ブツを神の間に置いておくことになってしまったから無理だ。悪いな。", "Actually, the AO-I had a hidden function. I really wanted to show it to you when I had some time, but... now I can't, because I had to leave the thing behind deep in the Eternal Seal. Sorry about that.")
 			}
 			if ( gdata(GDATA_FLAG_DIALOG_LEOLD) < 100 ) {
-				chatMore lang("…うん。お前に気の利いたことでも言おうと考えていたんだが、特に思いつかなかったぞ。", "...Yup. I thought about saying something I wanted to say, but I could not think of it.")
+				chatMore lang("…うん。お前に気の利いたことでも言おうと考えていたんだが、特に思いつかなかったぞ。", "...Yup. I was trying to think of something clever to say to you, but I couldn't think of anything.")
 				gdata(GDATA_FLAG_DIALOG_LEOLD) = 100
 			}
 		}
@@ -7164,7 +7164,7 @@
 			buff = lang("ふーむ。エヘカトルの食べ残しやクミロミの抜け羽なんかを拾ってきたら売れるやろか？どうやろ？", "Hmm...I wonder if I could sell Ehekatl's leftovers or Kumiromi's shed feathers for cash. What do you think?")
 			gosub *chat_select
 			if ( chatval == 1 ) {
-				chatMore lang("よっしゃ、お宅拝見と行こか！ふっふっふ、今から片づけようとしても遅いでー？", "Okay, seeing you home and seeing! So fluffy, is it too late to try to clean up now?"), strbye
+				chatMore lang("よっしゃ、お宅拝見と行こか！ふっふっふ、今から片づけようとしても遅いでー？", "Alright, let's take a look at your house! Hehehe, it's too late to clean up now, you know?"), strbye
 				gdata(GDATA_FLAG_INVITED_GOD) = CREATURE_ID_YACATECT
 				cdata(CDATA_CHARACTER_TIER, tc) = CHARACTER_TIER_SUMMONED_GOD_HOME
 			}
@@ -7193,7 +7193,7 @@
 			buff = lang("先代のエヘカトルとテスカトリポカは大層仲が悪く、よく我が仲裁に入ったものだ。", "Ehekatl's and Tezcatlipoca's predecessors had a really bad relationship, so I have been acting as an arbiter.")
 			gosub *chat_select
 			if ( chatval == 1 ) {
-				chatMore lang("ふむ。汝の築き上げし楽園、我が双眸に刻むのもよいだろう。", "HM. It would be a good idea to build up in your twin sprouts, which you build up and paradise."), strbye
+				chatMore lang("ふむ。汝の築き上げし楽園、我が双眸に刻むのもよいだろう。", "Hmm. This paradise you have created appears to be worthy of engraving onto my eyes."), strbye
 				gdata(GDATA_FLAG_INVITED_GOD) = CREATURE_ID_ITZPALT
 				cdata(CDATA_CHARACTER_TIER, tc) = CHARACTER_TIER_SUMMONED_GOD_HOME
 			}
@@ -8203,7 +8203,7 @@
 				txt lang("[記憶の灯]を手に入れた！", "You obtain the [Light of Memory]!")
 				snd SOUNDLIST_COMPLETE1
 				chatMore lang("それは生命情報を記録するアストラル光の塊。記憶をバックアップしてくれるから、記憶消去攻撃を受けてもかなり軽減できるらしいよ。", "That's a mass of astral light that records life information. Because it backs up your memories, it seems that even if you suffer from a memory erasure attack, its effects should be considerably reduced.")
-				chatMore lang("さらに、世界を行き来するための道具でもあるんだ。ロイターに向かって使ってみて。現時点で、彼は誰よりもガイアス・ヴィスとの結びつきが強い。あちら側にも極めて近い存在がいるんだ。記憶の灯はその繋がりを照らして導いてくれるよ。", "Moreover, it's also a tool for traveling around the world. Try using it while facing Loyter. At the moment, he is more tied to Gaius Vis than anyone else. There is also a very similar existence to him on the other side. The light from your memories will illuminate that connection and guide you through.")
+				chatMore lang("さらに、世界を行き来するための道具でもあるんだ。ロイターに向かって使ってみて。現時点で、彼は誰よりもガイアス・ヴィスとの結びつきが強い。あちら側にも極めて近い存在がいるんだ。記憶の灯はその繋がりを照らして導いてくれるよ。", "Moreover, it's also a tool for traveling around the world. Try using it while facing Loyter. At the moment, he is more tied to Gaius Vis than anyone else. There is also a very similar existence to him on the other side. The light from your memories will illuminate that connection and guide you through to the other side.")
 				gdata(GDATA_FLAG_MAIN) = 780
 				txt_questupdate
 				goto *chat_end
@@ -8214,7 +8214,7 @@
 			gdata(GDATA_FLAG_MAIN) = 770
 			chatList 0, lang("ああ！", "Yes.")
 			chatList 1, lang("忘れたなぁ？", "No.")
-			buff = lang("ボクに協力してほしい。前に話したことは憶えているよね？", "I want you to cooperate with me. Do you remember what you said before?")
+			buff = lang("ボクに協力してほしい。前に話したことは憶えているよね？", "I need your help. You remember what we talked about earlier, right?")
 			gosub *chat_select
 			if ( chatval == 1 ) {
 				chatMore lang("忘却の女神の力がここまで及んでいるなんて！もう、時間がないみたいだね…。", "Even you've forgotten? I can't believe the power of the Goddess of Oblivion has reached this far! It looks like we don't have much time left...")
@@ -9068,23 +9068,23 @@
 		_switch_sw = 0
 		if ( gdata(GDATA_AREA) == AREA_CHAOS_CRADLE ) {
 			if ( gdata(GDATA_FLAG_MAIN) == 745 ) {
-				chatMore lang("お若いの、頑張ったのう。よくぞ、わしが到着するまで持ちこたえてくれた。後はこの老いぼれが引き受けよう。", "I was young, I worked hard. Oh, it endured until I arrived. Let's take care of this old man.")
-				chatMore lang("思えば、魔術に捧げた人生じゃった。才を活かすため師匠に背いて軍に入り、無我夢中で戦い続け…気づけば老いていた。", "If I think, it was a life I devoted to magic. In order to make full use of her talent she entered the army against her teacher and continued fighting under a chaotic situation... when he noticed he was old.")
-				chatList 1, lang("死なないで！", "Do not die!")
-				chatList 2, lang("美味しいところを持っていく気？", "Are you going to success than me?")
-				chatList 3, lang("化身？凶獣？", "What is oblivion beast?")
-				buff = lang("今こそ使おう…邪悪なる化身、凶獣の力を！", "Let's use it now... the evil incarnation, the power of the beast!")
+				chatMore lang("お若いの、頑張ったのう。よくぞ、わしが到着するまで持ちこたえてくれた。後はこの老いぼれが引き受けよう。", "Good job, youngster. You did well in holding out until I arrived. Now, let this old geezer take care of the rest.")
+				chatMore lang("思えば、魔術に捧げた人生じゃった。才を活かすため師匠に背いて軍に入り、無我夢中で戦い続け…気づけば老いていた。", "Looking back, my life was dedicated to magic. In order to make the most of my talent, I disobeyed my master and joined the army, fighting selflessly until I found myself growing old.")
+				chatList 1, lang("死なないで！", "Don't die!")
+				chatList 2, lang("美味しいところを持っていく気？", "So you're going to steal the spotlight?")
+				chatList 3, lang("化身？凶獣？", "\"Evil incarnate?\" \"The beast?\"")
+				buff = lang("今こそ使おう…邪悪なる化身、凶獣の力を！", "Now is the time... it is time to use the power of evil incarnate, the power of the beast!")
 				gosub *chat_select
 				if ( chatval == 1 ) {
-					chatMore lang("死なんよ。死ぬよりもっと酷い目に遭うだけじゃ。", "It's dead. Just getting more serious than dying.")
+					chatMore lang("死なんよ。死ぬよりもっと酷い目に遭うだけじゃ。", "I won't die, kid. All I'll suffer is a fate even worse than death.")
 				}
 				if ( chatval == 2 ) {
-					chatMore lang("はは、すまんのう…。最期くらい恰好をつけさせとくれ。", "I'm sorry... Let me make a lasting appearance.")
+					chatMore lang("はは、すまんのう…。最期くらい恰好をつけさせとくれ。", "Ha-ha, my apologies... Let this old man have his last few minutes of fame.")
 				}
 				if ( chatval == 3 ) {
-					chatMore lang("世界が消える前兆として、忘却の女神の化身が現れる。奴らが人々から記憶を抹消することで、人も世界も完全に忘れ去られ本当の死を迎える…。その内の一匹が魔術で我が手の内にあるのじゃ。", "As a precursor to the disappearance of the world, the incarnation of the Goddess of Oblivion appears. By erasing memory from people, people and the world are completely forgotten and they will have real death... One of them is magical in my hands.")
+					chatMore lang("世界が消える前兆として、忘却の女神の化身が現れる。奴らが人々から記憶を抹消することで、人も世界も完全に忘れ去られ本当の死を迎える…。その内の一匹が魔術で我が手の内にあるのじゃ。", "The incarnation of the Goddess of Oblivion appears as a premonition of the world's disappearance. They erase the memories of humankind, so that the world and its people are completely forgotten. That is death in its truest form. I have knowledge of a single type of magical spell in that domain.")
 				}
-				chatMore lang("さぁ行け、ナゴレウ！わしの記憶を燃やし、奴を蝕め！", "Go on, Nagarew! Burn my memory and erase him!")
+				chatMore lang("さぁ行け、ナゴレウ！わしの記憶を燃やし、奴を蝕め！", "Now go forth, Nagarew! Burn my memories and erase that thing!")
 				goto *chat_end
 			}
 			if ( gdata(GDATA_FLAG_MAIN) == 755 ) {
@@ -11118,7 +11118,7 @@
 		if ( gdata(GDATA_AREA) == AREA_CHAOS_CRADLE ) {
 			if ( gdata(GDATA_FLAG_SUB_BELPHAT_THE_COSMIC_SWORD) >= 1000 ) {
 				if ( gdata(GDATA_FLAG_MAIN) >= 575 ) {
-					chatMore lang("クロやんも腕を上げたものだ。昔ちょっと見せただけの宇宙剣術をしっかりものにしたうえで、独自のアレンジを加えているとは。", "Kuro-chan raised his arm. It is said that they have added their own arrangements after firmly making the space swordsmans who showed just a bit."), strbye
+					chatMore lang("クロやんも腕を上げたものだ。昔ちょっと見せただけの宇宙剣術をしっかりものにしたうえで、独自のアレンジを加えているとは。", "Kuroyan has improved his skills. I was surprised to see that he's mastered the space sword techniques that I'd shown him in the past, and he added his own unique twists on them."), strbye
 					goto *chat_end
 				}
 			}
@@ -11126,16 +11126,16 @@
 		if ( gdata(GDATA_FLAG_SUB_BELPHAT_THE_COSMIC_SWORD) == 1000 ) {
 			kaiwa = rnd(8)
 			if ( kaiwa == 0 ) {
-				chatMore lang("まじかよ、クロやん…うちの家宝の剣のイミテーション作ってるじゃないか。おそろいのつもりなんだろうけど…気まずいなぁ。前回勝手に家宝持ち出したこと親父に叱られたから、今回は持ってきてないんだよな。", "Mashitayo, Kurokan... I am making imitation of my sword of heirlooms. I wonder what they are supposed to be in a match, but... awkward. I was scolded by my father that he brought out heirlooms at my last visit, so I did not bring it this time."), strbye
+				chatMore lang("まじかよ、クロやん…うちの家宝の剣のイミテーション作ってるじゃないか。おそろいのつもりなんだろうけど…気まずいなぁ。前回勝手に家宝持ち出したこと親父に叱られたから、今回は持ってきてないんだよな。", "Seriously, that Kuroyan... He's making an imitation of our family's heirloom sword. I guess they're supposed to complement one another, but... this doesn't feel right. After all, I didn't bring the original with me this time, because last time my father scolded me for taking it without permission."), strbye
 			}
 			if ( kaiwa == 1 ) {
-				chatMore lang("惑星ユゴスを訪れた時、スペースハンターのボッヘリト星人が外来種であるミ=ゴの駆除をしていてね。抵抗するミ=ゴもいたが、訓練された犬の３倍の能力を持つボッヘリト星人には次々と狩られていった。その手伝いの後のミ=ゴ鍋は旨かったなぁ。", "When visiting the planet Yugos, the space hunter Bochelito star was disinfecting the exotic species mi-go. There were also mi-go resisting, but it was hunted one after another to the Bochelito star who had three times the ability of the trained dog. Mi-go pot after that help was delicious."), strbye
+				chatMore lang("惑星ユゴスを訪れた時、スペースハンターのボッヘリト星人が外来種であるミ=ゴの駆除をしていてね。抵抗するミ=ゴもいたが、訓練された犬の３倍の能力を持つボッヘリト星人には次々と狩られていった。その手伝いの後のミ=ゴ鍋は旨かったなぁ。", "When I visited the planet Yugos, the space hunter aliens called the Bohelito were exterminating an alien species called the Mi-Go. Some of the Mi-Go resisted, but they were hunted down one by one by the Bohelito aliens, who were three times more capable than trained dogs. They offered me some Mi-Go hot pot for helping them - it was delicious."), strbye
 			}
 			if ( kaiwa == 2 ) {
-				chatMore lang("バイアクヘー星間旅行サービスも利用したことがあるんだが、あれは精神しか旅行できないから食べ歩きに不向きなんだよなぁ。事前準備も色々と面倒だし。", "I have used Byakhee interstellar travel service, but I can only travel the spirit, so it is unsuitable for me to eat. Preliminary preparation is a lot of hassle."), strbye
+				chatMore lang("バイアクヘー星間旅行サービスも利用したことがあるんだが、あれは精神しか旅行できないから食べ歩きに不向きなんだよなぁ。事前準備も色々と面倒だし。", "I've also used the Bayakhae interstellar travel service, but that only allows you to travel through the mind, so it's not suitable for dining out. The preparations you have to do in advance are a lot of work, too."), strbye
 			}
 			if ( kaiwa == 3 ) {
-				chatMore lang("惑星サイクラノーシュを訪れた時は大変だった。現地のキノコ料理をご馳走になったまではいいんだが、勝手に彼らのボスの配偶者に選ばれてしまって。慌てて逃げ出したよ。", "It was serious when I visited the planetary cyclone. Until it was a delicious meal of the local mushroom dish, it was chosen as a spouse of their boss without permission. I hurried away."), strbye
+				chatMore lang("惑星サイクラノーシュを訪れた時は大変だった。現地のキノコ料理をご馳走になったまではいいんだが、勝手に彼らのボスの配偶者に選ばれてしまって。慌てて逃げ出したよ。", "My visit to the planet Cyclanorch was a wild one. It was going along smoothly until I was treated to a local mushroom feast, where I was chosen to be married to the group's leader. I ran out of there as fast as I could."), strbye
 			}
 			if ( kaiwa == 4 ) {
 				chatMore lang("惑星トゥンツァに行った時、ちょうどそこの神の生誕祭をやっていてな。ラッキーだと思ったら、振る舞われたのが亜硫酸スープ。一応飲んだけど、舌がピリピリして味わうどころじゃなかった。", "When I went to the planet Tunza, I was just doing the birth place of God there. When thinking that it was lucky, the sulphite soup that was acted was. I drank it at the time, but my tongue was irritated and I could not taste it."), strbye
