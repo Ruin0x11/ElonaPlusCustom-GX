@@ -448,7 +448,7 @@
 	if ( cbit(CHARA_BIT_SANDBAG, skillexp_charid) & TweakData(TWEAK_GAMEPLAY_SANDBAG_TRAINING, TWEAK_CATEGORY_GAMEPLAY) == 0 ) {
 		locvar_skillmod_exp = 0
 	}
-	if ( gdata(GDATA_SENSE_OBJECT) == 0 ) {
+	if ( gdata(GDATA_SENSE_OBJECT) == 0 & TweakData(TWEAK_GAMEPLAY_DISABLE_STUDY_DAYS, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
 		if ( skillexp_charid < MAX_CHARA_FOLLOWER ) {
 			if ( gdata(GDATA_FLAG_STUDY_BONUS_KIND) == 0 ) {
 				if ( skillexp_skillid == SKILL_NORMAL_WEIGHT_LIFTING | skillexp_skillid == SKILL_NORMAL_HEALING | skillexp_skillid == SKILL_NORMAL_MEDITATION | skillexp_skillid == SKILL_NORMAL_MAGIC_CAPACITY | skillexp_skillid == SKILL_NORMAL_HEAVY_ARMOR | skillexp_skillid == SKILL_NORMAL_MEDIUM_ARMOR | skillexp_skillid == SKILL_NORMAL_LIGHT_ARMOR | skillexp_skillid == SKILL_NORMAL_FAITH ) {
@@ -484,13 +484,13 @@
 			}
 		}
 	}
-	if ( cdata(STARTING_CDATA_FOOD_EXP + SKILL_ATTR_LUC - RANGE_CDATA_FOOD_EXP, skillexp_charid) > 0 ) {
+	if ( cdata(STARTING_CDATA_FOOD_EXP + SKILL_ATTR_LUC - RANGE_CDATA_FOOD_EXP, skillexp_charid) > 0 & TweakData(TWEAK_GAMEPLAY_REVERT_POST_190_EXP_CHANGES, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
 		if ( skillexp_skillid >= STARTING_SKILL_WEAPON & skillexp_skillid < MAX_SKILL_ACTIVE ) {
 			locvar_skillmod_exp = locvar_skillmod_exp * 11 / 10
 		}
 	}
 	if ( skillexp_skillid >= STARTING_SKILL_WEAPON ) {
-		if ( skillexp_charid == CHARA_PLAYER ) {
+		if ( skillexp_charid == CHARA_PLAYER & TweakData(TWEAK_GAMEPLAY_REVERT_POST_190_EXP_CHANGES, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
 			locvar_skillmod_exp = locvar_skillmod_exp * 3
 		}
 		if ( skillexp_charid != CHARA_PLAYER & skillexp_charid < MAX_CHARA_FOLLOWER ) {
@@ -517,52 +517,64 @@
 			}
 		}
 	}
-	if ( skillexp_skillid == SKILL_NORMAL_WEIGHT_LIFTING | skillexp_skillid == SKILL_NORMAL_HEALING | skillexp_skillid == SKILL_NORMAL_MEDITATION | skillexp_skillid == SKILL_NORMAL_MAGIC_CAPACITY | skillexp_skillid == SKILL_NORMAL_HEAVY_ARMOR | skillexp_skillid == SKILL_NORMAL_MEDIUM_ARMOR | skillexp_skillid == SKILL_NORMAL_LIGHT_ARMOR | skillexp_skillid == SKILL_NORMAL_FAITH ) {
-		if ( gdata(GDATA_FLAG_STUDY_BONUS_TRAINING_EXP) < 15000 ) {
-			gdata(GDATA_FLAG_STUDY_BONUS_TRAINING_EXP) += locvar_skillmod_exp
-			if ( gdata(GDATA_FLAG_STUDY_BONUS_TRAINING_EXP) >= 15000 ) {
-				if ( gdata(GDATA_FLAG_DESTINY_LETTERS) < 7 ) {
-					gdata(GDATA_FLAG_DESTINY_LETTERS)++
+	if ( TweakData(TWEAK_GAMEPLAY_DISABLE_STUDY_DAYS, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
+		if ( skillexp_skillid == SKILL_NORMAL_WEIGHT_LIFTING | skillexp_skillid == SKILL_NORMAL_HEALING | skillexp_skillid == SKILL_NORMAL_MEDITATION | skillexp_skillid == SKILL_NORMAL_MAGIC_CAPACITY | skillexp_skillid == SKILL_NORMAL_HEAVY_ARMOR | skillexp_skillid == SKILL_NORMAL_MEDIUM_ARMOR | skillexp_skillid == SKILL_NORMAL_LIGHT_ARMOR | skillexp_skillid == SKILL_NORMAL_FAITH ) {
+			if ( gdata(GDATA_FLAG_STUDY_BONUS_TRAINING_EXP) < 15000 ) {
+				gdata(GDATA_FLAG_STUDY_BONUS_TRAINING_EXP) += locvar_skillmod_exp
+				if ( gdata(GDATA_FLAG_STUDY_BONUS_TRAINING_EXP) >= 15000 ) {
+					if ( TweakData(TWEAK_GAMEPLAY_DISABLE_DESTINY, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
+						if ( gdata(GDATA_FLAG_DESTINY_LETTERS) < 7 ) {
+							gdata(GDATA_FLAG_DESTINY_LETTERS)++
+						}
+					}
 				}
 			}
 		}
-	}
-	if ( skillexp_skillid == SKILL_NORMAL_TACTICS | skillexp_skillid == SKILL_NORMAL_DUAL_WIELD | skillexp_skillid == SKILL_NORMAL_TWO_HAND | skillexp_skillid == SKILL_NORMAL_SHIELD | skillexp_skillid == SKILL_NORMAL_EVASION | skillexp_skillid == SKILL_NORMAL_EYE_OF_MIND | skillexp_skillid == SKILL_NORMAL_GREATER_EVASION | skillexp_skillid == SKILL_NORMAL_MARKSMAN | (skillexp_skillid >= SKILL_WEAPON_LONGSWORD & skillexp_skillid < MAX_SKILL_WEAPON) ) {
-		if ( gdata(GDATA_FLAG_STUDY_BONUS_COMBAT_EXP) < 15000 ) {
-			gdata(GDATA_FLAG_STUDY_BONUS_COMBAT_EXP) += locvar_skillmod_exp
-			if ( gdata(GDATA_FLAG_STUDY_BONUS_COMBAT_EXP) >= 15000 ) {
-				if ( gdata(GDATA_FLAG_DESTINY_LETTERS) < 7 ) {
-					gdata(GDATA_FLAG_DESTINY_LETTERS)++
+		if ( skillexp_skillid == SKILL_NORMAL_TACTICS | skillexp_skillid == SKILL_NORMAL_DUAL_WIELD | skillexp_skillid == SKILL_NORMAL_TWO_HAND | skillexp_skillid == SKILL_NORMAL_SHIELD | skillexp_skillid == SKILL_NORMAL_EVASION | skillexp_skillid == SKILL_NORMAL_EYE_OF_MIND | skillexp_skillid == SKILL_NORMAL_GREATER_EVASION | skillexp_skillid == SKILL_NORMAL_MARKSMAN | (skillexp_skillid >= SKILL_WEAPON_LONGSWORD & skillexp_skillid < MAX_SKILL_WEAPON) ) {
+			if ( gdata(GDATA_FLAG_STUDY_BONUS_COMBAT_EXP) < 15000 ) {
+				gdata(GDATA_FLAG_STUDY_BONUS_COMBAT_EXP) += locvar_skillmod_exp
+				if ( gdata(GDATA_FLAG_STUDY_BONUS_COMBAT_EXP) >= 15000 ) {
+					if ( TweakData(TWEAK_GAMEPLAY_DISABLE_DESTINY, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
+						if ( gdata(GDATA_FLAG_DESTINY_LETTERS) < 7 ) {
+							gdata(GDATA_FLAG_DESTINY_LETTERS)++
+						}
+					}
 				}
 			}
 		}
-	}
-	if ( skillexp_skillid == SKILL_NORMAL_NEGOTIATION | skillexp_skillid == SKILL_NORMAL_INVESTING | skillexp_skillid == SKILL_NORMAL_CARPENTRY | skillexp_skillid == SKILL_NORMAL_TAILORING | skillexp_skillid == SKILL_NORMAL_ALCHEMY | skillexp_skillid == SKILL_NORMAL_JEWELER | skillexp_skillid == SKILL_NORMAL_GARDENING | skillexp_skillid == SKILL_NORMAL_PERFORMER | skillexp_skillid == SKILL_NORMAL_COOKING | skillexp_skillid == SKILL_NORMAL_FISHING | skillexp_skillid == SKILL_ACTIVE_PICKPOCKET ) {
-		if ( gdata(GDATA_FLAG_STUDY_BONUS_JOB_EXP) < 15000 ) {
-			gdata(GDATA_FLAG_STUDY_BONUS_JOB_EXP) += locvar_skillmod_exp
-			if ( gdata(GDATA_FLAG_STUDY_BONUS_JOB_EXP) >= 15000 ) {
-				if ( gdata(GDATA_FLAG_DESTINY_LETTERS) < 7 ) {
-					gdata(GDATA_FLAG_DESTINY_LETTERS)++
+		if ( skillexp_skillid == SKILL_NORMAL_NEGOTIATION | skillexp_skillid == SKILL_NORMAL_INVESTING | skillexp_skillid == SKILL_NORMAL_CARPENTRY | skillexp_skillid == SKILL_NORMAL_TAILORING | skillexp_skillid == SKILL_NORMAL_ALCHEMY | skillexp_skillid == SKILL_NORMAL_JEWELER | skillexp_skillid == SKILL_NORMAL_GARDENING | skillexp_skillid == SKILL_NORMAL_PERFORMER | skillexp_skillid == SKILL_NORMAL_COOKING | skillexp_skillid == SKILL_NORMAL_FISHING | skillexp_skillid == SKILL_ACTIVE_PICKPOCKET ) {
+			if ( gdata(GDATA_FLAG_STUDY_BONUS_JOB_EXP) < 15000 ) {
+				gdata(GDATA_FLAG_STUDY_BONUS_JOB_EXP) += locvar_skillmod_exp
+				if ( gdata(GDATA_FLAG_STUDY_BONUS_JOB_EXP) >= 15000 ) {
+					if ( TweakData(TWEAK_GAMEPLAY_DISABLE_DESTINY, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
+						if ( gdata(GDATA_FLAG_DESTINY_LETTERS) < 7 ) {
+							gdata(GDATA_FLAG_DESTINY_LETTERS)++
+						}
+					}
 				}
 			}
 		}
-	}
-	if ( skillexp_skillid == SKILL_NORMAL_STEALTH | skillexp_skillid == SKILL_NORMAL_LOCK_PICKING | skillexp_skillid == SKILL_NORMAL_DETECTION | skillexp_skillid == SKILL_NORMAL_MINING | skillexp_skillid == SKILL_NORMAL_DISARM_TRAP | skillexp_skillid == SKILL_NORMAL_TRAVELING | skillexp_skillid == SKILL_NORMAL_SWIMMING | skillexp_skillid == SKILL_ACTIVE_RIDING ) {
-		if ( gdata(GDATA_FLAG_STUDY_BONUS_EXPLORATION_EXP) < 15000 ) {
-			gdata(GDATA_FLAG_STUDY_BONUS_EXPLORATION_EXP) += locvar_skillmod_exp
-			if ( gdata(GDATA_FLAG_STUDY_BONUS_EXPLORATION_EXP) >= 15000 ) {
-				if ( gdata(GDATA_FLAG_DESTINY_LETTERS) < 7 ) {
-					gdata(GDATA_FLAG_DESTINY_LETTERS)++
+		if ( skillexp_skillid == SKILL_NORMAL_STEALTH | skillexp_skillid == SKILL_NORMAL_LOCK_PICKING | skillexp_skillid == SKILL_NORMAL_DETECTION | skillexp_skillid == SKILL_NORMAL_MINING | skillexp_skillid == SKILL_NORMAL_DISARM_TRAP | skillexp_skillid == SKILL_NORMAL_TRAVELING | skillexp_skillid == SKILL_NORMAL_SWIMMING | skillexp_skillid == SKILL_ACTIVE_RIDING ) {
+			if ( gdata(GDATA_FLAG_STUDY_BONUS_EXPLORATION_EXP) < 15000 ) {
+				gdata(GDATA_FLAG_STUDY_BONUS_EXPLORATION_EXP) += locvar_skillmod_exp
+				if ( gdata(GDATA_FLAG_STUDY_BONUS_EXPLORATION_EXP) >= 15000 ) {
+					if ( TweakData(TWEAK_GAMEPLAY_DISABLE_DESTINY, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
+						if ( gdata(GDATA_FLAG_DESTINY_LETTERS) < 7 ) {
+							gdata(GDATA_FLAG_DESTINY_LETTERS)++
+						}
+					}
 				}
 			}
 		}
-	}
-	if ( skillexp_skillid == SKILL_NORMAL_LITERACY | skillexp_skillid == SKILL_NORMAL_GENE_ENGINEER | skillexp_skillid == SKILL_NORMAL_ANATOMY | skillexp_skillid == SKILL_NORMAL_SENSE_QUALITY | skillexp_skillid == SKILL_NORMAL_MEMORIZATION | skillexp_skillid == SKILL_NORMAL_CASTING | skillexp_skillid == SKILL_NORMAL_MAGIC_DEVICE | skillexp_skillid == SKILL_NORMAL_CONTROL_MAGIC ) {
-		if ( gdata(GDATA_FLAG_STUDY_BONUS_STUDY_EXP) < 15000 ) {
-			gdata(GDATA_FLAG_STUDY_BONUS_STUDY_EXP) += locvar_skillmod_exp
-			if ( gdata(GDATA_FLAG_STUDY_BONUS_STUDY_EXP) >= 15000 ) {
-				if ( gdata(GDATA_FLAG_DESTINY_LETTERS) < 7 ) {
-					gdata(GDATA_FLAG_DESTINY_LETTERS)++
+		if ( skillexp_skillid == SKILL_NORMAL_LITERACY | skillexp_skillid == SKILL_NORMAL_GENE_ENGINEER | skillexp_skillid == SKILL_NORMAL_ANATOMY | skillexp_skillid == SKILL_NORMAL_SENSE_QUALITY | skillexp_skillid == SKILL_NORMAL_MEMORIZATION | skillexp_skillid == SKILL_NORMAL_CASTING | skillexp_skillid == SKILL_NORMAL_MAGIC_DEVICE | skillexp_skillid == SKILL_NORMAL_CONTROL_MAGIC ) {
+			if ( gdata(GDATA_FLAG_STUDY_BONUS_STUDY_EXP) < 15000 ) {
+				gdata(GDATA_FLAG_STUDY_BONUS_STUDY_EXP) += locvar_skillmod_exp
+				if ( gdata(GDATA_FLAG_STUDY_BONUS_STUDY_EXP) >= 15000 ) {
+					if ( TweakData(TWEAK_GAMEPLAY_DISABLE_DESTINY, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
+						if ( gdata(GDATA_FLAG_DESTINY_LETTERS) < 7 ) {
+							gdata(GDATA_FLAG_DESTINY_LETTERS)++
+						}
+					}
 				}
 			}
 		}

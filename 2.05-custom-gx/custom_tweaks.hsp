@@ -32,6 +32,9 @@ TweakData(51, 2) = "Disable Deep-Sea Castle persistance."
 TweakData(52, 2) = "Sandbag training."
 TweakData(53, 2) = "No naps while traveling."
 TweakData(54, 2) = "Harvest Moon Mode for ranches."
+TweakData(55, 2) = "Revert post-1.90 experience formula changes."
+TweakData(56, 2) = "Disable study days."
+TweakData(57, 2) = "Disable DESTINY."
 
 TweakData(x, 3) = "AI Tweaks"
 TweakData(0, 3) = "Change Zeome's AI."
@@ -434,11 +437,14 @@ TweakData(51, 4) = "Disable cicada noises."
 	listn(0, 9) = "Sandbag training." + GetTStatus(TWEAK_CATEGORY_GAMEPLAY, TWEAK_GAMEPLAY_SANDBAG_TRAINING)
 	listn(0, 10) = "No naps while traveling." + GetTStatus(TWEAK_CATEGORY_GAMEPLAY, TWEAK_GAMEPLAY_NO_NAPS_WHILE_TRAVELING)
 	listn(0, 11) = "Harvest Moon Mode for ranches." + GetTStatus(TWEAK_CATEGORY_GAMEPLAY, TWEAK_GAMEPLAY_HARVEST_MOON_RANCH)
-	listn(0, 12) = "Return"
+	listn(0, 12) = "Revert post-1.90 experience formula changes." + GetTStatus(TWEAK_CATEGORY_GAMEPLAY, TWEAK_GAMEPLAY_REVERT_POST_190_EXP_CHANGES)
+	listn(0, 13) = "Disable study days." + GetTStatus(TWEAK_CATEGORY_GAMEPLAY, TWEAK_GAMEPLAY_DISABLE_STUDY_DAYS)
+	listn(0, 14) = "Disable DESTINY." + GetTStatus(TWEAK_CATEGORY_GAMEPLAY, TWEAK_GAMEPLAY_DISABLE_DESTINY)
+	listn(0, 15) = "Return"
 
 	font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
 
-	repeat 13
+	repeat 16
 		key_list(cnt) = key_select(cnt)
 		keyrange = cnt + 1
 		pos wx + 38, wy + 40 + cnt * 19 - 2
@@ -448,7 +454,7 @@ TweakData(51, 4) = "Disable cicada noises."
 
 	font lang(cfg_font1, cfg_font2), 13 - en * 2, 0
 
-	repeat 13
+	repeat 16
 		if ( listn(0, cs) == listn(0, cnt) ) {
 			if ( cnt == TWEAK_GAMEPLAY_GATHER_ITEM_PARTYTIME ) {
 				s = "When a Party Time! quest ends, you will be presented with a list of items on the\nfloor that you can take."
@@ -487,6 +493,15 @@ TweakData(51, 4) = "Disable cicada noises."
 				s = "Livestock can randomly become sick, are born unable to be milked, etc."
 			}
 			if ( cnt == 12 ) {
+				s = "Reverts changes to the experience formula after version 1.90.\nThis mostly addresses the three-fold increase in player experience gain."
+			}
+			if ( cnt == 13 ) {
+				s = "Disables the \"study day bonus\" feature.\nThis will prevent certain skills from gaining triple experience based on the\nstudy day type."
+			}
+			if ( cnt == 14 ) {
+				s = "Disables the \"DESTINY\" feature.\nThis restores the chances of godly equipment being generated, regardless of\nDESTINY triggers."
+			}
+			if ( cnt == 15 ) {
 				s = "Return to the previous menu."
 			}
 			pos wx + 38, wy + 343
@@ -559,6 +574,21 @@ TweakData(51, 4) = "Disable cicada noises."
 		gosub *ToggleTweak
 	}
 	if ( key == key_select(12) ) {
+		tc = TWEAK_CATEGORY_GAMEPLAY
+		tn = TWEAK_GAMEPLAY_REVERT_POST_190_EXP_CHANGES
+		gosub *ToggleTweak
+	}
+	if ( key == key_select(13) ) {
+		tc = TWEAK_CATEGORY_GAMEPLAY
+		tn = TWEAK_GAMEPLAY_DISABLE_STUDY_DAYS
+		gosub *ToggleTweak
+	}
+	if ( key == key_select(14) ) {
+		tc = TWEAK_CATEGORY_GAMEPLAY
+		tn = TWEAK_GAMEPLAY_DISABLE_DESTINY
+		gosub *ToggleTweak
+	}
+	if ( key == key_select(15) ) {
 		snd SOUNDLIST_OK1
         return
 	}

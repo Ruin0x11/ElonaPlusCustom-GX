@@ -1405,58 +1405,60 @@
 		}
 		txtef COLOR_YELLOW
 		txt lang("一日が終わり、日付が変わった。", "A day passes and a new day begins.")
-		repeat 2
-			if ( gdata(GDATA_FLAG_STUDY_BONUS_KIND) == 0 ) {
-				if ( gdata(GDATA_FLAG_STUDY_BONUS_TRAINING_EXP) >= 15000 ) {
-					gdata(GDATA_FLAG_STUDY_BONUS_KIND) = 1
-					break
+		if ( TweakData(TWEAK_GAMEPLAY_DISABLE_STUDY_DAYS, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
+			repeat 2
+				if ( gdata(GDATA_FLAG_STUDY_BONUS_KIND) == 0 ) {
+					if ( gdata(GDATA_FLAG_STUDY_BONUS_TRAINING_EXP) >= 15000 ) {
+						gdata(GDATA_FLAG_STUDY_BONUS_KIND) = 1
+						break
+					}
 				}
+				if ( gdata(GDATA_FLAG_STUDY_BONUS_KIND) == 1 ) {
+					if ( gdata(GDATA_FLAG_STUDY_BONUS_COMBAT_EXP) >= 15000 ) {
+						gdata(GDATA_FLAG_STUDY_BONUS_KIND) = 2
+						break
+					}
+				}
+				if ( gdata(GDATA_FLAG_STUDY_BONUS_KIND) == 2 ) {
+					if ( gdata(GDATA_FLAG_STUDY_BONUS_JOB_EXP) >= 15000 ) {
+						gdata(GDATA_FLAG_STUDY_BONUS_KIND) = 3
+						break
+					}
+				}
+				if ( gdata(GDATA_FLAG_STUDY_BONUS_KIND) == 3 ) {
+					if ( gdata(GDATA_FLAG_STUDY_BONUS_EXPLORATION_EXP) >= 15000 ) {
+						gdata(GDATA_FLAG_STUDY_BONUS_KIND) = 4
+						break
+					}
+				}
+				if ( gdata(GDATA_FLAG_STUDY_BONUS_KIND) == 4 ) {
+					if ( gdata(GDATA_FLAG_STUDY_BONUS_STUDY_EXP) >= 15000 ) {
+						gdata(GDATA_FLAG_STUDY_BONUS_KIND) = 0
+						break
+					}
+				}
+				gdata(GDATA_FLAG_STUDY_BONUS_KIND) = rnd(5)
+			loop
+			if ( gdata(GDATA_FLAG_STUDY_BONUS_KIND) == 0 ) {
+				txtef COLOR_YELLOW
+				txt lang("今日は絶好の修行日和だ。", "It's a perfect day for training today.")
 			}
 			if ( gdata(GDATA_FLAG_STUDY_BONUS_KIND) == 1 ) {
-				if ( gdata(GDATA_FLAG_STUDY_BONUS_COMBAT_EXP) >= 15000 ) {
-					gdata(GDATA_FLAG_STUDY_BONUS_KIND) = 2
-					break
-				}
+				txtef COLOR_YELLOW
+				txt lang("今日は絶好の戦闘日和だ。", "It's a perfect day for combat today.")
 			}
 			if ( gdata(GDATA_FLAG_STUDY_BONUS_KIND) == 2 ) {
-				if ( gdata(GDATA_FLAG_STUDY_BONUS_JOB_EXP) >= 15000 ) {
-					gdata(GDATA_FLAG_STUDY_BONUS_KIND) = 3
-					break
-				}
+				txtef COLOR_YELLOW
+				txt lang("今日は絶好の仕事日和だ。", "It's a perfect day for work today.")
 			}
 			if ( gdata(GDATA_FLAG_STUDY_BONUS_KIND) == 3 ) {
-				if ( gdata(GDATA_FLAG_STUDY_BONUS_EXPLORATION_EXP) >= 15000 ) {
-					gdata(GDATA_FLAG_STUDY_BONUS_KIND) = 4
-					break
-				}
+				txtef COLOR_YELLOW
+				txt lang("今日は絶好の探索日和だ。", "It's a perfect day for exploring today.")
 			}
 			if ( gdata(GDATA_FLAG_STUDY_BONUS_KIND) == 4 ) {
-				if ( gdata(GDATA_FLAG_STUDY_BONUS_STUDY_EXP) >= 15000 ) {
-					gdata(GDATA_FLAG_STUDY_BONUS_KIND) = 0
-					break
-				}
+				txtef COLOR_YELLOW
+				txt lang("今日は絶好の勉強日和だ。", "It's a perfect day for studying today.")
 			}
-			gdata(GDATA_FLAG_STUDY_BONUS_KIND) = rnd(5)
-		loop
-		if ( gdata(GDATA_FLAG_STUDY_BONUS_KIND) == 0 ) {
-			txtef COLOR_YELLOW
-			txt lang("今日は絶好の修行日和だ。", "It's a perfect day for training today.")
-		}
-		if ( gdata(GDATA_FLAG_STUDY_BONUS_KIND) == 1 ) {
-			txtef COLOR_YELLOW
-			txt lang("今日は絶好の戦闘日和だ。", "It's a perfect day for combat today.")
-		}
-		if ( gdata(GDATA_FLAG_STUDY_BONUS_KIND) == 2 ) {
-			txtef COLOR_YELLOW
-			txt lang("今日は絶好の仕事日和だ。", "It's a perfect day for work today.")
-		}
-		if ( gdata(GDATA_FLAG_STUDY_BONUS_KIND) == 3 ) {
-			txtef COLOR_YELLOW
-			txt lang("今日は絶好の探索日和だ。", "It's a perfect day for exploring today.")
-		}
-		if ( gdata(GDATA_FLAG_STUDY_BONUS_KIND) == 4 ) {
-			txtef COLOR_YELLOW
-			txt lang("今日は絶好の勉強日和だ。", "It's a perfect day for studying today.")
 		}
 		if ( rnd(10) == 0 ) {
 			gdata(GDATA_FLAG_NEGATE_SPAWN_FRON) = 0
@@ -5952,11 +5954,13 @@
 		itemcreate -1, ITEM_ID_BEJEWELED_CHEST, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
 		inv(INV_ITEM_PARAM2, ci) = 0
 		if ( gdata(GDATA_AREA) != AREA_VOID ) {
-			if ( gdata(GDATA_FLAG_DESTINY_NEFIA_BOSSES_DEFEATED) < 1 ) {
-				gdata(GDATA_FLAG_DESTINY_NEFIA_BOSSES_DEFEATED)++
-				if ( gdata(GDATA_FLAG_DESTINY_NEFIA_BOSSES_DEFEATED) >= 1 ) {
-					if ( gdata(GDATA_FLAG_DESTINY_LETTERS) < 7 ) {
-						gdata(GDATA_FLAG_DESTINY_LETTERS)++
+			if ( TweakData(TWEAK_GAMEPLAY_DISABLE_DESTINY, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
+				if ( gdata(GDATA_FLAG_DESTINY_NEFIA_BOSSES_DEFEATED) < 1 ) {
+					gdata(GDATA_FLAG_DESTINY_NEFIA_BOSSES_DEFEATED)++
+					if ( gdata(GDATA_FLAG_DESTINY_NEFIA_BOSSES_DEFEATED) >= 1 ) {
+						if ( gdata(GDATA_FLAG_DESTINY_LETTERS) < 7 ) {
+							gdata(GDATA_FLAG_DESTINY_LETTERS)++
+						}
 					}
 				}
 			}
