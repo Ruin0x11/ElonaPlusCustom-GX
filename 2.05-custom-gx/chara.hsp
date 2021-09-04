@@ -4152,9 +4152,9 @@
 	font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
 	s = lang("皆無", "None"), lang("最高", "Best"), lang("理想的", "Great"), lang("高い", "Good"), lang("やや高い", "Not bad"), lang("普通", "Normal"), lang("少し", "Little"), lang("微々", "Slight")
 	locvar_cm_refer_scale_attr = 0, 3, 5, 7, 9, 11, 13
-	locvar_cm_refer_scale_spd = 0, 20, 40, 60, 80, 100, 120
-	locvar_cm_refer_scale_spdadd = -20, -10, -1, 0, 1, 10, 20
-	locvar_cm_refer_scale_lifemana = 0, 30, 60, 90, 120, 150, 180
+	locvar_cm_refer_scale_spd = 0, 25, 50, 75, 100, 125, 150
+	locvar_cm_refer_scale_spdadd = 0, 3, 6, 9, 12, 15, 18
+	locvar_cm_refer_scale_lifemana = 0, 33, 66, 100, 133, 166, 200
 	locvar_cm_refer_rows = 3
 	if ( val == 0 ) { ; Races
 		locvar_cm_refer_rows = 4
@@ -4245,7 +4245,7 @@
 			}
 			grotate 1, locvar_cm_refer_icon * inf_tiles, 672, 0, inf_tiles, inf_tiles
 			pos cnt * 150 + tx + 32, ty
-			if ( r == SKILL_ATTR_SPD ) {
+			if ( cfg_cmPreciseStats ) {
 				if ( val == 0 ) { ; Races
 					mes strmid(skillname(r), 0, 4 - (jp == 0)) + ": " + sorg(r, CHARA_PLAYER)
 				}
@@ -4267,7 +4267,7 @@
 		font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
 		pos tx + 32, ty
 		mes bodyparts2string()
-		ty += 16
+		ty += 18
 	}
 	display_topic lang("獲得技能", "Trained Skill"), tx, ty
 	ty += 34
