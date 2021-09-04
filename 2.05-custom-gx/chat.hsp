@@ -17932,7 +17932,7 @@
 			if ( gdata(GDATA_AREA) != AREA_SHOW_HOUSE ) {
 				if ( tc >= MAX_CHARA_FOLLOWER ) {
 					if ( evid() == (-1) ) {
-						chatList 106, lang("そこをどいて", "Exchange for my place.")
+						chatList 106, lang("そこをどいて", "Move aside.")
 					}
 				}
 			}
@@ -20002,7 +20002,7 @@
 				chatMore lang("これからじっくりと教育してやる。「ありがとうございます」は？", "I'm going to take my time teaching you this. Where's my \"thanks\", huh?")
 			}
 			if ( kaiwa == 1 ) {
-				chatMore lang("お前、よく見たらなかなかいい体つきしてるよなぁ…。おいおい、ただのスキンシップだろ嫌がるなよぉ〜。ぐへへ。", "Well, well. On closer inspection, it looks like you're packing some serious heat there... Hey, hey, relax. I just wanna get a bit closer to you. Guheheh.")
+				chatMore lang("お前、よく見たらなかなかいい体つきしてるよなぁ…。おいおい、ただのスキンシップだろ嫌がるなよぉ〜。ぐへへ。", "Well, well. On closer inspection, it looks like you're packing some serious heat there... Hey, hey, relax. I just wanna get a bit closer to 'ya. Guheheh.")
 			}
 			if ( kaiwa == 2 ) {
 				chatMore lang("おい新入り、こっちのメンツ潰したらただじゃおかねえからな。", "Hey, newbie. If you damage my reputation, you're gonna pay.")
@@ -20011,7 +20011,7 @@
 				chatMore lang("適当にやっておけばいいんだよ適当に！お前みたいなグズがよくこの部署に来れたな！", "Just do it right the first time! Geez! Why in the world did they hire a piece of shit like you into this division?!")
 			}
 			if ( kaiwa == 4 ) {
-				chatMore lang("お前なんだか調子のってるよな。一発殴られないとわかんねえか？", "Looks like you're still not getting the picture about these parts. How about I beat some sense into you, huh?")
+				chatMore lang("お前なんだか調子のってるよな。一発殴られないとわかんねえか？", "Looks like you're still not getting the picture about how this place works. How about I beat some sense into you, huh?")
 			}
 		}
 		else {
@@ -20028,7 +20028,7 @@
 				chatMore lang("リーダーに取り入ろうっていうアンタの魂胆は丸見えなの！ああ意地汚い！顔を見ているだけで不快だわぁ〜！", "I can see right through you, kid! You're just trying cozy up to the boss, aren't you?! You're pathetic! PATHETIC! I feel like throwing up just looking at your disgusting little face!")
 			}
 			if ( kaiwa == 4 ) {
-				chatMore lang("アンタの前任者はもう少し使えたわ。あいつじゃなくて、アンタが壊れればよかったのに。", "The last guy in your position was a little more useful. If only YOU were the one have a mental breakdown, not him...")
+				chatMore lang("アンタの前任者はもう少し使えたわ。あいつじゃなくて、アンタが壊れればよかったのに。", "The last guy in your position was a little more useful. If only YOU were the one that had a mental breakdown, not him...")
 			}
 		}
 		goto *chat_end
@@ -20063,7 +20063,7 @@
 		}
 		if ( kaiwa == 0 ) {
 			chatList 1, lang("頑張ります！", "I'll do my best!")
-			chatList 0, lang("実はやり方がよくわからないところがあって…", "Actually, there's something I don't quite understand how to do...")
+			chatList 0, lang("実はやり方がよくわからないところがあって…", "Actually, there's something I don't quite understand...")
 			if ( gdata(GDATA_FLAG_SUB_MISSION_FROM_GARZIEM) \ 10 == 5 ) {
 				chatList 2, lang("職場の改善が必要です", "We need workplace reforms.")
 			}
@@ -20083,20 +20083,20 @@
 			}
 			if ( chatval == 2 ) {
 				kaiwa = 0
-				chatList 4, lang("上に掛け合ってここの仕事を減らしてもらいます！", "I'll talk to my superiors and get them to reduce our working hours!")
-				chatList 3, lang("全員の仕事のノウハウを共有しましょう？", "Why don't we share all our work expertise with one another?")
+				chatList 4, lang("上に掛け合ってここの仕事を減らしてもらいます！", "I'll get my superiors to reduce our working hours!")
+				chatList 3, lang("全員の仕事のノウハウを共有しましょう？", "Why don't we share our work expertise with one another?")
 				chatList 5, lang("みんなの意見も聞いてみるべきです！", "We should get everyone's input on workplace matters!")
 				chatList 2, lang("一度全員メンテナンスを受けませんか？", "Why don't we all take maintenance leave?")
 				chatList 1, lang("なんかもう色々アウトですよ…", "I can't even begin to describe what's wrong...")
 				chatList 0, lang("お前を倒してニューリーダーになる！！！", "I'll take you down and become the new boss myself!")
-				buff = lang("必要かぁ？今でも力を合わせて何とかやっていけてるだろうが！", "Whad'ya mean \"NEED\"? We're all doing our part, and we're all pulling through! What more could you POSSIBLY need?!")
+				buff = lang("必要かぁ？今でも力を合わせて何とかやっていけてるだろうが！", "Whaddya mean \"NEED\"? We're all doing our part, and we're all pulling through! What more could you POSSIBLY need?!")
 				chatesc = 0
 				gosub *chat_select
 				if ( chatval == 5 ) {
 					chatMore lang("ああ？しょうがねえな、聞けば納得するんだな？", "Heh? So if I tell you what you want you'll buzz off, right?")
 					chatList 1, lang("改善必要！", "Please reform the workplace!")
 					chatList 0, lang("現状問題なし", "No issues at the moment.")
-					buff = lang("業務連絡。これより投票プログラムを起動する。速やかに投票を行うこと。", "Attention all employees: We will now execute the voting routine. Please cast your vote as soon as possible.")
+					buff = lang("業務連絡。これより投票プログラムを起動する。速やかに投票を行うこと。", "Attention all employees: We will now execute a voting routine. Please cast your vote as soon as possible.")
 					chatesc = 0
 					gosub *chat_select
 					chatMore lang("集計開始。改善必要：1票。問題なし：1票。投票率：10％。", "Commencing final tally. Needs improvement: 1 vote. No issues: 1 vote. Percentage voted: 10%.")
@@ -20105,14 +20105,14 @@
 					chatMore lang("改善必要：9票。問題なし：5票。投票率：70％。", "Needs improvement: 9 votes. No issues: 5 votes. Percentage voted: 70%.")
 					chatMore lang("…。", "...")
 					chatMore lang("……。", "......")
-					chatMore lang("集計完了。結果は…。", "Final tally complete. Th results are as follows:")
+					chatMore lang("集計完了。結果は…。", "Final tally complete. The results are as follows:")
 					chatList 1, lang("不正だー！？", "That's fraud!")
 					chatList 0, lang("集計ミスでは？", "Could it be a counting error?")
 					buff = lang("改善必要：15票。問題なし：105票。投票率：600％。よって現状の職場環境には問題がないと判断する。ほら、これで気が済んだろ。", "Needs improvement: 15 votes. No issues: 105 votes. Percentage voted: 600%. Therefore, we conclude that there are no issues with the current work environment. See, nothing to worry about.")
 					chatesc = 0
 					gosub *chat_select
 					if ( chatval == 1 ) {
-						chatMore lang("なんだお前。おい。なら証拠でもあんのか？ないんだったらよ、投票で決まったことに文句垂れてんじゃねえ！！！お前、ホントに往生際が悪いよなぁ。恥ずかしく思えよ？", "What the hell is wrong with you? Fine. Then where's your proof? Nothing? Then quit complaining about something that's been voted on already! Geez, you always go off and throw a tantrum any time you're wrong about things. You ought to be ashamed of yourself.")
+						chatMore lang("なんだお前。おい。なら証拠でもあんのか？ないんだったらよ、投票で決まったことに文句垂れてんじゃねえ！！！お前、ホントに往生際が悪いよなぁ。恥ずかしく思えよ？", "...Did you just tell me that to my face? DID YOU?! So where's your proof? ...Nothing? Then SHUT UP! Quit complaining about something that's been voted on already! Holy SHIT! What is WRONG with you?! Going off and throwing a tantrum every single time you're wrong about something... You ought to be ashamed of yourself.")
 						modimp tc, -5
 						goto *chat_end
 					}
@@ -20127,13 +20127,13 @@
 					modimp tc, -5
 					chatMore lang("やめろ馬鹿！まるで俺らまで仕事ができねえみたいじゃねえか！お前と一緒にしないでくれるか？", "Knock it off, dumbass! What, you're telling ME and all those other guys out there that they're incapable of doing their jobs? Don't lump us in with you and your lazy ass!")
 					chatMore lang("確かに年々この部署の仕事は増えてきている。でも一機あたりの負担が増えようが、ぶっ壊れる奴が出ようが、それって今までやれてた仕事量から減らす理由にはならねえから。", "Yeah, it's true that the workload in this division is increasing every year. But even if the workload per machine increases, or if some of those machines break down, all that work's still gotta get done somehow.")
-					chatMore lang("だいたい、来て日の浅いお前にここの仕事のことが説明できるわけねえだろ。自分の仕事もちゃんと理解してないくせによ！上に掛け合うとかやめてくんない？お前みたいなのがいることが恥ずかしいんだけど。", "And if anyone's going to be the one who tells us how this joint gets run, why the hell does it have to be a rookie like YOU? You've barely even worked here for a few days and don't even know left from right! Cut the bullshit and quit trying to talk down to us! I'm ashamed of myself for even bothering to stand in the same room as a dipshit like you.")
+					chatMore lang("だいたい、来て日の浅いお前にここの仕事のことが説明できるわけねえだろ。自分の仕事もちゃんと理解してないくせによ！上に掛け合うとかやめてくんない？お前みたいなのがいることが恥ずかしいんだけど。", "And if anyone's going to be the one who tells us how this joint gets run, why the hell does it have to be YOU of all people? You've barely even worked here for a few days and don't even know left from right! Cut the bullshit and quit trying to talk down to us! I'm ashamed of myself for even bothering to stand in the same room as a dipshit like you.")
 					goto *chat_end
 				}
 				if ( chatval == 3 ) {
 					chatMore lang("おい、ちょっと座れよ。", "Hey, you. Siddown.")
 					chatMore lang("床でいいから。よく話聞けよ。", "I don't give a shit if you plant your ass on the floor. Listen to me reeeeal carefully.")
-					chatMore lang("お前さ、膨大なノウハウを口頭で言いあって覚えきれると思ってんのか？違うだろ。共有するにはそれぞれが資料を用意しなきゃいけないだろ。", "Do you think you can cram all of that workplace-related knowledge into that thick skull of yours just by running your mouth for a while? Nope, you can't. In order to do that proper, you'd have to bring your own notes and materials to the meeting.")
+					chatMore lang("お前さ、膨大なノウハウを口頭で言いあって覚えきれると思ってんのか？違うだろ。共有するにはそれぞれが資料を用意しなきゃいけないだろ。", "Do you think you can cram all of that workplace-related knowledge into that pathetic brain of yours just by running your mouth for a while? Nope, you can't. In order to do that proper, you'd have to bring your own notes and materials to the meeting.")
 					chatMore lang("そりゃ何もわかってなくて比較的暇な新入りにはメリットが大きいかもしれないよ？でもそんなことする暇が他のみんなにあるように見えるか？…見えるんだろうなぁ！", "Of course, that would be a pretty sweet deal for a new kid like you with barely any work assignments and a lot of free time. But what about everyone else around here? ...Are you blind? Do those eyes of yours even WORK?")
 					chatMore lang("時間的に余裕がある状況ならまだわかる。でも知ってるか？お前以外がやってる仕事は全部期限があるの。お前だけだよ自分のペースで仕事できるのは。", "I can see where you're coming from if you have a lot of extra time on your hands. But you know what? Every single work assignment that everyone else in this place is busting their asses over has this thing called a \"deadline\". Might of heard of it, yeah? You're the only one in this joint who can work at their own pace.")
 					chatMore lang("ノウハウを残すのは大事だよ。でも今の状況では超余計な作業だと思うんだけど？全体でどんくらい時間のロスが出ると思ってる？ちょっとお前考えが甘いよね。", "Yeah, I get that it's important to preserve your precious knowhow about the ins and outs of the job. But with things the way they are, isn't it just even more work that nobody actually needs to do? All you'll be doing is forcing everyone to adapt to YOUR schedule and constantly make up for lost time. Real genius plan you've got there. Quit overthinking things and get back to work.")
@@ -20146,7 +20146,7 @@
 					}
 					chatList 1, lang("みんなも調子悪いみたいですよ", "Everyone else seems to be in bad shape, too.")
 					chatList 0, lang("やばい病気かもしれないし念のため！", "It could be a serious illness! Just in case!")
-					buff = lang("…お前にだけ言うけど、俺最近ちょっと調子悪いんだよね。部署全体の仕事の進みが遅くって遅くってまじ頭いてえの。だからこそ、のんびりメンテナンスなんて受けてる暇ないと思ってるから。", "...Between you and me, I've been feeling pretty under the weather myself lately. The whole division has been working so slowly that it's really starting to piss me off. That's why I don't think we can afford to take a maintenance leave.")
+					buff = lang("…お前にだけ言うけど、俺最近ちょっと調子悪いんだよね。部署全体の仕事の進みが遅くって遅くってまじ頭いてえの。だからこそ、のんびりメンテナンスなんて受けてる暇ないと思ってるから。", "...Between you and me, I've been feeling pretty under the weather myself lately. The whole division's been working so slowly that it's really starting to piss me off. But that's exactly the reason why I don't think we can afford to take a maintenance leave.")
 					chatesc = 0
 					gosub *chat_select
 					if ( chatval == 1 ) {
@@ -20174,7 +20174,7 @@
 				if ( chatval == 1 ) {
 					chatList 1, lang("はい…", "Yes...")
 					chatList 0, lang("アウトなやり方してるならアウトでしょ", "If you're running things out of line, you're out of line.")
-					buff = lang("確かにここのやり方は一般的に見たらアウトかもしれない。でも現実としてこうでもしなきゃ仕事が回らないってことくらいは、お前でもわかるだろ？", "I mean, sure, if you're talking about any other workplace, then yeah, it might be just a bit out of line than what you're used to. But think about it. Even you understand that all of this is necessary to get the job done, right?")
+					buff = lang("確かにここのやり方は一般的に見たらアウトかもしれない。でも現実としてこうでもしなきゃ仕事が回らないってことくらいは、お前でもわかるだろ？", "I mean, sure, if you're comparing this place to your mommy's little old flower shop, then yeah, it might be just a bit out of line than what you're used to. But think about it. Even you understand that all of this is necessary to get the job done, right?")
 					chatesc = 0
 					gosub *chat_select
 					if ( chatval == 1 ) {
@@ -20190,7 +20190,7 @@
 				}
 				if ( chatval == 0 ) {
 					chatMore lang("この愚か者めが！！", "You IMBECILE!!")
-					chatMore lang("俺を倒したとして、自分の仕事も満足にできないやつが、俺のやっていた仕事までこなせるのか！！あ？少しは物を考えろ！！！", "Even if you manage to take me down, is a pathetic runt like YOU who's so fed up with his own job EVER going to be capable of handling the ALL of the work that I'M responsible for!? You'd BETTER think twice before giving me that crap again!")
+					chatMore lang("俺を倒したとして、自分の仕事も満足にできないやつが、俺のやっていた仕事までこなせるのか！！あ？少しは物を考えろ！！！", "Even if you manage to take me down, is a pathetic runt like YOU who's so fed up with his own job EVER going to be capable of handling the ALL of the work that I'M responsible for!? You'd BETTER think twice before giving me that shit again!")
 					modimp tc, -5
 					goto *chat_end
 				}
@@ -20206,7 +20206,7 @@
 			gdata(GDATA_FLAG_WORK_A_REMAINING) = 1000 + rnd(300)
 			gdata(GDATA_FLAG_WORK_B_REMAINING) = 2000 + rnd(400)
 			gdata(GDATA_FLAG_WORK_C_REMAINING) = 3000 + rnd(500)
-			chatMore lang("じゃあ次の仕事渡しとくから。まぁこれでも飲んで頑張れよ。", "Well, here's your next assignment. Take a swig of this and do your best out there.")
+			chatMore lang("じゃあ次の仕事渡しとくから。まぁこれでも飲んで頑張れよ。", "Well, here's your next assignment. Take a swig of this, then get out there and make me proud.")
 			kaiwa = 0
 			flt
 			itemcreate -1, ITEM_ID_POTION_SOMA, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
@@ -20224,7 +20224,7 @@
 			txtef COLOR_PURPLE
 			txt lang("仕事Ａが増えた…。", "Work A has increased...")
 			chatList 1, lang("間違っているのはどこですか？", "What specifically did I do wrong?")
-			chatList 0, lang("間違えないように注意する点ってありますか？", "Is there anything I should learn so I don't make mistakes next time?")
+			chatList 0, lang("間違えないように注意する点ってありますか？", "What should do next time so I don't make mistakes?")
 			buff = lang("お前ちょっと間違いが多すぎないか？やり直せ。いくら頑張っても結局間違えたら、その分は働いてないのと一緒だからな。", "Aren't you making a few too many mistakes? Start over. No matter how hard you try, making even a single mistake means you've spent all that time doing nothing useful at all.")
 			chatesc = 0
 			gosub *chat_select
@@ -20247,7 +20247,7 @@
 			txt lang("仕事Ｂが増えた…。", "Work B has increased...")
 			chatList 1, lang("前のままでもよくないですか", "Isn't it better to leave it as it is?")
 			chatList 0, lang("今後の拡張性も考えた形式に変えましょう", "Let's modify the format so it can be easily changed later.")
-			buff = lang("仕事Ｂだけどよ、あれやり方変えろよ。書式も変えて項目追加しとけ。", "So for Work B, change everything about what you're doing. Change the document format and add a new section.")
+			buff = lang("仕事Ｂだけどよ、あれやり方変えろよ。書式も変えて項目追加しとけ。", "So for Work B, forget everything about what you've done. Do it differently. Also, change the different document format and add another section.")
 			chatesc = 0
 			gosub *chat_select
 			if ( chatval == 1 ) {
@@ -20273,7 +20273,7 @@
 			chatesc = 0
 			gosub *chat_select
 			if ( chatval == 1 ) {
-				chatMore lang("ハァ〜…大丈夫なんだろうな？ちゃっちゃと成果あげてくれよなホントに。", "*sigh*... Can I really trust you? You'd better show some results, or I'm going to go ballistic over your ass.")
+				chatMore lang("ハァ〜…大丈夫なんだろうな？ちゃっちゃと成果あげてくれよなホントに。", "*sigh*... Can I really trust you? You'd better show some results, or I'm going to go ballistic on your ass.")
 				kaiwa = 0
 				goto *chat_end
 			}
@@ -20290,7 +20290,7 @@
 			modimp tc, -10
 			chatList 2, lang("すいません", "I'm sorry.")
 			chatList 1, lang("ちょっと整理整頓していました", "I was just getting a little organized.")
-			chatList 0, lang("やり方を教えてくれないからです", "But they're not explaining to me how to do it.")
+			chatList 0, lang("やり方を教えてくれないからです", "They're refusing to teach me what to do.")
 			buff = lang("おい、なんでこんなに時間かかってるんだ！！！", "What the HELL is taking you so long!!!")
 			chatesc = 0
 			gosub *chat_select
@@ -20300,7 +20300,7 @@
 				goto *chat_end
 			}
 			if ( chatval == 1 ) {
-				chatMore lang("そうやってすぐ言い訳する癖を直せ。整理整頓は大事だけどそれに時間かけすぎなんだよお前！時間配分ができてねえよなぁ、時間配分がよ。", "Do yourself a favor and quit making excuses right away like that. Organization is important, but you're spending too much time on it! Write up a proper schedule and stick to it, for the love of...")
+				chatMore lang("そうやってすぐ言い訳する癖を直せ。整理整頓は大事だけどそれに時間かけすぎなんだよお前！時間配分ができてねえよなぁ、時間配分がよ。", "Do yourself a favor and quit immediately making excuses like that. Organization is important, but you're spending too much time on it! Write up a proper schedule and stick to it, for the love of...")
 				kaiwa = 0
 				goto *chat_end
 			}

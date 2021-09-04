@@ -5051,6 +5051,10 @@
 			gosub *chat
 		}
 		tc = findcharawork(CREATURE_ID_WORKER_02)
+		if ( tc != 0 ) {
+			cdata(CDATA_CONDITION_SLEEP, tc) = 0
+			rowactend tc
+		}
 		gosub *chat
 		goto *event_SWEND1
 		_switch_sw++
