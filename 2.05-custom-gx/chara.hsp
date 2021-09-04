@@ -4151,12 +4151,18 @@
 	ty += 34
 	font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
 	s = lang("皆無", "None"), lang("最高", "Best"), lang("理想的", "Great"), lang("高い", "Good"), lang("やや高い", "Not bad"), lang("普通", "Normal"), lang("少し", "Little"), lang("微々", "Slight")
-	dim locvar_cm_refer_scale_attr, 7
-	dim locvar_cm_refer_scale_spd, 7
 	locvar_cm_refer_scale_attr = 0, 3, 5, 7, 9, 11, 13
 	locvar_cm_refer_scale_spd = 0, 20, 40, 60, 80, 100, 120
 	locvar_cm_refer_scale_spdadd = -20, -10, -1, 0, 1, 10, 20
-	repeat 3
+	locvar_cm_refer_scale_lifemana = 0, 30, 60, 90, 120, 150, 180
+	locvar_cm_refer_rows = 3
+	if ( val == 0 ) { ; Races
+		locvar_cm_refer_rows = 4
+	}
+	repeat locvar_cm_refer_rows
+		if ( val == 1 & cnt > 3 ) { ; Classes
+			break
+		}
 		cnt2 = cnt
 		repeat 3
 			if ( cnt2 == 2 & cnt == 2 ) {
@@ -4169,8 +4175,22 @@
 				}
 			}
 			else {
-				r = cnt2 * 3 + cnt + STARTING_SKILL_ATTR
-				dup locvar_cm_refer_scale, locvar_cm_refer_scale_attr
+				if ( cnt2 == 3 ) {
+					dup locvar_cm_refer_scale, locvar_cm_refer_scale_lifemana
+					if ( cnt == 0 ) {
+						r = SKILL_ATTR_LIFE
+					}
+					if ( cnt == 1 ) {
+						r = SKILL_ATTR_MANA
+					}
+					if ( cnt >= 2 ) {
+						break
+					}
+				}
+				else {
+					r = cnt2 * 3 + cnt + STARTING_SKILL_ATTR
+					dup locvar_cm_refer_scale, locvar_cm_refer_scale_attr
+				}
 			}
 			p = 0
 			repeat 1
@@ -4214,8 +4234,14 @@
 			pos cnt * 150 + tx + 13, ty + 7
 			gmode 2, inf_tiles, inf_tiles
 			locvar_cm_refer_icon = (cnt2 * 3 + cnt)
+			if ( r == SKILL_ATTR_LIFE ) {
+				locvar_cm_refer_icon = 10 ; Shield icon
+			}
+			if ( r == SKILL_ATTR_MANA ) {
+				locvar_cm_refer_icon = 15 ; Hat icon
+			}
 			if ( r == SKILL_ATTR_SPD ) {
-				locvar_cm_refer_icon += 3 ; Shoe icon
+				locvar_cm_refer_icon = 11 ; Shoe icon
 			}
 			grotate 1, locvar_cm_refer_icon * inf_tiles, 672, 0, inf_tiles, inf_tiles
 			pos cnt * 150 + tx + 32, ty
@@ -4233,14 +4259,15 @@
 		loop
 		ty += 16
 	loop
-	ty = wy + 260
+	ty = wy + 250
 	if ( val == 0 ) { ; Races
+		ty += 16 ; Extra row for life/mana
 		display_topic lang("獲得部位", "Body Parts"), tx, ty
 		ty += 34
 		font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
 		pos tx + 32, ty
 		mes bodyparts2string()
-		ty = wy + 322
+		ty += 16
 	}
 	display_topic lang("獲得技能", "Trained Skill"), tx, ty
 	ty += 34
