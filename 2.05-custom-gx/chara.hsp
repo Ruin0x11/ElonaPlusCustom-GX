@@ -4151,48 +4151,60 @@
 	ty += 34
 	font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
 	s = lang("皆無", "None"), lang("最高", "Best"), lang("理想的", "Great"), lang("高い", "Good"), lang("やや高い", "Not bad"), lang("普通", "Normal"), lang("少し", "Little"), lang("微々", "Slight")
+	dim locvar_cm_refer_scale_attr, 7
+	dim locvar_cm_refer_scale_spd, 7
+	locvar_cm_refer_scale_attr = 0, 3, 5, 7, 9, 11, 13
+	locvar_cm_refer_scale_spd = 0, 20, 40, 60, 80, 100, 120
+	locvar_cm_refer_scale_spdadd = -20, -10, -1, 0, 1, 10, 20
 	repeat 3
 		cnt2 = cnt
 		repeat 3
-			if ( cnt2 == 2 ) {
-				if ( cnt == 2 ) {
-					break
+			if ( cnt2 == 2 & cnt == 2 ) {
+				r = SKILL_ATTR_SPD
+				if ( val == 0 ) { ; Races
+					dup locvar_cm_refer_scale, locvar_cm_refer_scale_spd
+				}
+				else { ; Classes
+					dup locvar_cm_refer_scale, locvar_cm_refer_scale_spdadd
 				}
 			}
-			r = cnt2 * 3 + cnt + 10
+			else {
+				r = cnt2 * 3 + cnt + STARTING_SKILL_ATTR
+				dup locvar_cm_refer_scale, locvar_cm_refer_scale_attr
+			}
 			p = 0
 			repeat 1
-				if ( sorg(r, CHARA_PLAYER) > 13 ) {
+				if ( sorg(r, CHARA_PLAYER) > locvar_cm_refer_scale(6) ) {
 					p = 1
 					color 0, 0, 200
 					break
 				}
-				if ( sorg(r, CHARA_PLAYER) > 11 ) {
+				if ( sorg(r, CHARA_PLAYER) > locvar_cm_refer_scale(5) ) {
 					p = 2
 					color 0, 0, 200
 					break
 				}
-				if ( sorg(r, CHARA_PLAYER) > 9 ) {
+				if ( sorg(r, CHARA_PLAYER) > locvar_cm_refer_scale(4) ) {
 					p = 3
 					color 0, 0, 150
 					break
 				}
-				if ( sorg(r, CHARA_PLAYER) > 7 ) {
+				if ( sorg(r, CHARA_PLAYER) > locvar_cm_refer_scale(3) ) {
 					p = 4
 					color 0, 0, 150
 					break
 				}
-				if ( sorg(r, CHARA_PLAYER) > 5 ) {
+				if ( sorg(r, CHARA_PLAYER) > locvar_cm_refer_scale(2) ) {
 					p = 5
 					color 0, 0, 0
 					break
 				}
-				if ( sorg(r, CHARA_PLAYER) > 3 ) {
+				if ( sorg(r, CHARA_PLAYER) > locvar_cm_refer_scale(1) ) {
 					p = 6
 					color 150, 0, 0
 					break
 				}
-				if ( sorg(r, CHARA_PLAYER) > 0 ) {
+				if ( sorg(r, CHARA_PLAYER) > locvar_cm_refer_scale(0) ) {
 					p = 7
 					color 200, 0, 0
 					break
@@ -4201,13 +4213,35 @@
 			loop
 			pos cnt * 150 + tx + 13, ty + 7
 			gmode 2, inf_tiles, inf_tiles
-			grotate 1, (cnt2 * 3 + cnt) * inf_tiles, 672, 0, inf_tiles, inf_tiles
+			locvar_cm_refer_icon = (cnt2 * 3 + cnt)
+			if ( r == SKILL_ATTR_SPD ) {
+				locvar_cm_refer_icon += 3 ; Shoe icon
+			}
+			grotate 1, locvar_cm_refer_icon * inf_tiles, 672, 0, inf_tiles, inf_tiles
 			pos cnt * 150 + tx + 32, ty
-			mes strmid(skillname(r), 0, 4 - (jp == 0)) + ": " + s(p)
+			if ( r == SKILL_ATTR_SPD ) {
+				if ( val == 0 ) { ; Races
+					mes strmid(skillname(r), 0, 4 - (jp == 0)) + ": " + sorg(r, CHARA_PLAYER)
+				}
+				else { ; Classes
+					mes strmid(skillname(r), 0, 4 - (jp == 0)) + ": " + cnvfix(sorg(r, CHARA_PLAYER))
+				}
+			}
+			else {
+				mes strmid(skillname(r), 0, 4 - (jp == 0)) + ": " + s(p)
+			}
 		loop
 		ty += 16
 	loop
 	ty = wy + 260
+	if ( val == 0 ) { ; Races
+		display_topic lang("獲得部位", "Body Parts"), tx, ty
+		ty += 34
+		font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
+		pos tx + 32, ty
+		mes bodyparts2string()
+		ty = wy + 322
+	}
 	display_topic lang("獲得技能", "Trained Skill"), tx, ty
 	ty += 34
 	font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
@@ -4256,3 +4290,25 @@
 	loop
 	return
 
+#defcfunc bodyparts2string
+	dim locvar_bp2s_parts, MAX_EQUIP_SLOT
+	repeat MAX_EQUIP_SLOT_TOTAL, CDATA_STARTING_EQUIP_SLOTS
+		locvar_bp2s_part_type = cdata(cnt, CHARA_PLAYER) / 10000
+		if ( locvar_bp2s_part_type == EQUIP_SLOT_NONE | locvar_bp2s_part_type == EQUIP_SLOT_SHOOT | locvar_bp2s_part_type == EQUIP_SLOT_AMMO ) {
+			break
+		}
+		locvar_bp2s_parts(locvar_bp2s_part_type) += 1
+	loop
+	locvar_bp2s_result = ""
+	repeat length(locvar_bp2s_parts)
+		locvar_bp2s_count = locvar_bp2s_parts(cnt)
+		if ( locvar_bp2s_count == 0 ) {
+			continue
+		}
+		locvar_bp2s_result += bodyn(cnt)
+		if ( locvar_bp2s_count != 1 ) {
+			locvar_bp2s_result += "x" + locvar_bp2s_count
+		}
+		locvar_bp2s_result += " "
+	loop
+	return locvar_bp2s_result
