@@ -312,130 +312,130 @@
 					}
 					goto *turn_end
 				}
-				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_HANDFUL_SNOW ) {
-					if ( map(tlocx, tlocy, 4) != 0 ) {
-						cell_itemlist tlocx, tlocy
-						f = 0
-						repeat listmax
-							p = list(0, cnt)
-							if ( inv(INV_ITEM_ID, p) == ITEM_ID_SNOW_MAN ) {
-								if ( synccheck(tlocx, tlocy) ) {
-									txtmore
-									txt lang(itemname(p, 1) + "に命中して、雪だるまは崩れた。", "It hits " + itemname(p, 1) + " and breaks it.")
-								}
-								inv(INV_ITEM_NUM, p)--
-								f = 1
-								break
+			}
+			if ( inv(INV_ITEM_ID, ci) == ITEM_ID_HANDFUL_SNOW ) {
+				if ( map(tlocx, tlocy, 4) != 0 ) {
+					cell_itemlist tlocx, tlocy
+					f = 0
+					repeat listmax
+						p = list(0, cnt)
+						if ( inv(INV_ITEM_ID, p) == ITEM_ID_SNOW_MAN ) {
+							if ( synccheck(tlocx, tlocy) ) {
+								txtmore
+								txt lang(itemname(p, 1) + "に命中して、雪だるまは崩れた。", "It hits " + itemname(p, 1) + " and breaks it.")
 							}
-						loop
-						if ( f == 1 ) {
-							cell_refresh tlocx, tlocy
-							goto *turn_end
+							inv(INV_ITEM_NUM, p)--
+							f = 1
+							break
 						}
-					}
-				}
-				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_HANDFUL_SNOW ) {
-					if ( chipm(CHIPM_ROLE, map(tlocx, tlocy, 0)) == MAP_CHIP_ROLE_SNOW ) {
+					loop
+					if ( f == 1 ) {
+						cell_refresh tlocx, tlocy
 						goto *turn_end
 					}
+				}
+			}
+			if ( inv(INV_ITEM_ID, ci) == ITEM_ID_HANDFUL_SNOW ) {
+				if ( chipm(CHIPM_ROLE, map(tlocx, tlocy, 0)) == MAP_CHIP_ROLE_SNOW ) {
+					goto *turn_end
+				}
+				if ( synccheck(tlocx, tlocy) ) {
+					txtmore
+					txt lang("それは地面に落ちて溶けた。", "It falls on the ground and melts.")
+				}
+			}
+			else {
+				if ( inv(INV_ITEM_ID, ci) != ITEM_ID_KEMURIDAMA & inv(INV_ITEM_ID, ci) != ITEM_ID_DYING_CICADA ) {
 					if ( synccheck(tlocx, tlocy) ) {
 						txtmore
-						txt lang("それは地面に落ちて溶けた。", "It falls on the ground and melts.")
+						txt lang("それは地面に落ちて砕けた。", "It falls on the ground and shatters.")
 					}
 				}
-				else {
-					if ( inv(INV_ITEM_ID, ci) != ITEM_ID_KEMURIDAMA & inv(INV_ITEM_ID, ci) != ITEM_ID_DYING_CICADA ) {
-						if ( synccheck(tlocx, tlocy) ) {
-							txtmore
-							txt lang("それは地面に落ちて砕けた。", "It falls on the ground and shatters.")
-						}
-					}
-					if ( inv(INV_ITEM_ID, ci) == ITEM_ID_KEMURIDAMA ) {
-						if ( synccheck(tlocx, tlocy) ) {
-							txtmore
-							txt lang("それは地面に落ちて炸裂した。", "It falls on the ground and explodes.")
-						}
-					}
-					if ( inv(INV_ITEM_ID, ci) == ITEM_ID_DYING_CICADA ) {
-						if ( synccheck(tlocx, tlocy) ) {
-							txtmore
-							txt lang("それは地面に落ちて絶命した。", "It falls on the ground and died.")
-						}
+				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_KEMURIDAMA ) {
+					if ( synccheck(tlocx, tlocy) ) {
+						txtmore
+						txt lang("それは地面に落ちて炸裂した。", "It falls on the ground and explodes.")
 					}
 				}
 				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_DYING_CICADA ) {
-					inv(INV_ITEM_NUM, ci)--
-					flt
-					itemcreate -1, ITEM_ID_BAIT, tlocx, tlocy, 0
-					inv(INV_ITEM_PARAM1, ci) = 4
-					inv(INV_ITEM_PIC, ci) = xy2pic(26, 11)
-					inv(INV_ITEM_VALUE, ci) = 4 * 4 * 500 + 200
-					cell_refresh tlocx, tlocy
-					goto *turn_end
-				}
-				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_YOGURT | inv(INV_ITEM_ID, ci) == ITEM_ID_BUTTER | inv(INV_ITEM_ID, ci) == ITEM_ID_NATTO ) {
-					inv(INV_ITEM_NUM, ci)--
-					cell_refresh tlocx, tlocy
 					if ( synccheck(tlocx, tlocy) ) {
-						txtef COLOR_BLUE
-						txt lang(" *べちゃ* ", " *crumble* ")
+						txtmore
+						txt lang("それは地面に落ちて絶命した。", "It falls on the ground and died.")
 					}
-					goto *turn_end
 				}
-				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_TOMATO ) {
-					inv(INV_ITEM_NUM, ci)--
-					cell_refresh tlocx, tlocy
-					if ( synccheck(tlocx, tlocy) ) {
-						txtef COLOR_BLUE
-						txt lang(" *ぷちゅ* ", " *crumble* ")
-					}
-					goto *turn_end
-				}
-				efp = 50 + sdata(SKILL_WEAPON_THROWING, cc) * 10
-				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_BOTTLE_SULFURIC ) {
-					addmef tlocx, tlocy, 3, 19, rnd(15) + 5, efp, cc
-					goto *turn_end
-				}
-				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_MOLOTOV ) {
-					addmef tlocx, tlocy, 5, 24, rnd(15) + 25, efp, cc
-					mapitem_fire tlocx, tlocy
-					goto *turn_end
-				}
-				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_KEMURIDAMA ) {
-					p = 3
-					repeat 120
-						x = rnd(p) + tlocx - rnd(p)
-						y = rnd(p) + tlocy - rnd(p)
-						f = 1
-						if ( x < 0 | y < 0 | x >= mdata(MDATA_WIDTH) | y >= mdata(MDATA_HEIGHT) ) {
-							f = 0
-						}
-						else {
-							if ( chipm(CHIPM_ATTRIB, map(x, y, MAP_TILE_ID)) & CHIPM_ATTRIB_CANT_PASS ) {
-								f = 0
-							}
-						}
-						if ( dist(tlocx, tlocy, x, y) >= p ) {
-							f = 0
-						}
-						if ( f == 0 ) {
-							if ( rnd(2) == 0 ) {
-								continue
-							}
-							else {
-								continue cnt
-							}
-						}
-						addmef x, y, MEF_TYPE_KEMURIDAMA, xy2pic(6, 29), 30, 500
-					loop
-					goto *turn_end
-				}
-				addmef tlocx, tlocy, MEF_TYPE_POTION, xy2pic(27, 0), -1, efp, cc, inv(INV_ITEM_ID, ci), inv(INV_ITEM_STATUS, ci), inv(INV_ITEM_COL, ci)
-				if ( findbuff(cc, BUFF_POWER_ITEM) != (-1) ) {
-					modgauge cc, 5
+			}
+			if ( inv(INV_ITEM_ID, ci) == ITEM_ID_DYING_CICADA ) {
+				inv(INV_ITEM_NUM, ci)--
+				flt
+				itemcreate -1, ITEM_ID_BAIT, tlocx, tlocy, 0
+				inv(INV_ITEM_PARAM1, ci) = 4
+				inv(INV_ITEM_PIC, ci) = xy2pic(26, 11)
+				inv(INV_ITEM_VALUE, ci) = 4 * 4 * 500 + 200
+				cell_refresh tlocx, tlocy
+				goto *turn_end
+			}
+			if ( inv(INV_ITEM_ID, ci) == ITEM_ID_YOGURT | inv(INV_ITEM_ID, ci) == ITEM_ID_BUTTER | inv(INV_ITEM_ID, ci) == ITEM_ID_NATTO ) {
+				inv(INV_ITEM_NUM, ci)--
+				cell_refresh tlocx, tlocy
+				if ( synccheck(tlocx, tlocy) ) {
+					txtef COLOR_BLUE
+					txt lang(" *べちゃ* ", " *crumble* ")
 				}
 				goto *turn_end
-            }
+			}
+			if ( inv(INV_ITEM_ID, ci) == ITEM_ID_TOMATO ) {
+				inv(INV_ITEM_NUM, ci)--
+				cell_refresh tlocx, tlocy
+				if ( synccheck(tlocx, tlocy) ) {
+					txtef COLOR_BLUE
+					txt lang(" *ぷちゅ* ", " *crumble* ")
+				}
+				goto *turn_end
+			}
+			efp = 50 + sdata(SKILL_WEAPON_THROWING, cc) * 10
+			if ( inv(INV_ITEM_ID, ci) == ITEM_ID_BOTTLE_SULFURIC ) {
+				addmef tlocx, tlocy, 3, 19, rnd(15) + 5, efp, cc
+				goto *turn_end
+			}
+			if ( inv(INV_ITEM_ID, ci) == ITEM_ID_MOLOTOV ) {
+				addmef tlocx, tlocy, 5, 24, rnd(15) + 25, efp, cc
+				mapitem_fire tlocx, tlocy
+				goto *turn_end
+			}
+			if ( inv(INV_ITEM_ID, ci) == ITEM_ID_KEMURIDAMA ) {
+				p = 3
+				repeat 120
+					x = rnd(p) + tlocx - rnd(p)
+					y = rnd(p) + tlocy - rnd(p)
+					f = 1
+					if ( x < 0 | y < 0 | x >= mdata(MDATA_WIDTH) | y >= mdata(MDATA_HEIGHT) ) {
+						f = 0
+					}
+					else {
+						if ( chipm(CHIPM_ATTRIB, map(x, y, MAP_TILE_ID)) & CHIPM_ATTRIB_CANT_PASS ) {
+							f = 0
+						}
+					}
+					if ( dist(tlocx, tlocy, x, y) >= p ) {
+						f = 0
+					}
+					if ( f == 0 ) {
+						if ( rnd(2) == 0 ) {
+							continue
+						}
+						else {
+							continue cnt
+						}
+					}
+					addmef x, y, MEF_TYPE_KEMURIDAMA, xy2pic(6, 29), 30, 500
+				loop
+				goto *turn_end
+			}
+			addmef tlocx, tlocy, MEF_TYPE_POTION, xy2pic(27, 0), -1, efp, cc, inv(INV_ITEM_ID, ci), inv(INV_ITEM_STATUS, ci), inv(INV_ITEM_COL, ci)
+			if ( findbuff(cc, BUFF_POWER_ITEM) != (-1) ) {
+				modgauge cc, 5
+			}
+			goto *turn_end
 		}
 	}
 	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_SUIGARA ) {
