@@ -16696,7 +16696,14 @@
 		}
 	}
 	if ( sdata(SKILL_NORMAL_GARDENING, CHARA_PLAYER) < rnd(p + 1) | rnd(200) < p - saibai | feat(FEAT_CELL_SUB_FEATURE_ID) \ 10 == SEED_TYPE_ARTIFACT ) {
-		map(cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 6) = 0
+	
+	// Mod for collect yield with house board (usecustom = 1 when house board collection)
+		if ( usecustom ) {
+			map(x, y, 6) = 0
+		}
+		else {
+			map(cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 6) = 0
+		}
 		return
 	}
 	saibai = 0
@@ -16723,9 +16730,15 @@
 		feat(FEAT_CELL_SUB_FEATURE_ID) = CELL_SUB_FEATURE_SEED_MAGIC
 	}
 	gosub *item_seedNextGrowth
-	cell_featset cdata(CDATA_X, cc), cdata(CDATA_Y, cc), feat, feat(1), feat(2), feat(3)
-	txtef COLOR_GREEN
-	txt lang("新しい芽が息吹いている！", "A new plant grows!")
+	// Mod for collect yield with house board (usecustom = 1 when house board collection)
+	if ( usecustom ) {
+		cell_featset x, y, feat, feat(1), feat(2), feat(3)
+	}
+	else {
+		cell_featset cdata(CDATA_X, cc), cdata(CDATA_Y, cc), feat, feat(1), feat(2), feat(3)
+		txtef COLOR_GREEN
+		txt lang("新しい芽が息吹いている！", "A new plant grows!")
+	}
 	return
 
 *item_seedRegrowth_custom
