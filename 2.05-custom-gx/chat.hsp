@@ -250,7 +250,7 @@
 		music = MUSICLIST_MCOPENING3
 		gosub *music_play
 		chatMore lang("よく来てくれたね、" + cdatan(CDATAN_AKA, CHARA_PLAYER) + cdatan(CDATAN_NAME, CHARA_PLAYER) + "。私達はミクラネシス。ソピアーの姉であり兄であり、捉え方によっては父であり母でもあり祖母でもあり祖父でもある。その節はソピアーがお世話になったね。", "We are glad you've come, " + cdatan(CDATAN_NAME, CHARA_PLAYER) + ". We are Mikraanesis. We are at once Sophia's older sister, her older brother, and depending how you look at it, her father, mother, grandmother and grandfather as well. Sophia has expressed her utmost gratitude for your help on this occasion.")
-		chatMore lang("本当は迎えに行きたかったのだけど、予想以上に手一杯でそうもいかなかったよ。正直、連絡用にこの分身体を置くので限界だった。ノルン、よくここまでガイドしてくれたね。", "We were originally intending to come and see you ourselves, but due to unforeseen circumstances, that was not a possibility. To be honest, separating this single body from all of our selves to contact you was about all that we could manage. Norn, you have done well to guide them this far.")
+		chatMore lang("本当は迎えに行きたかったのだけど、予想以上に手一杯でそうもいかなかったよ。正直、連絡用にこの分身体を置くので限界だった。ノルン、よくここまでガイドしてくれたね。", "We were originally intending to come and see you ourselves, but due to unforeseen circumstances, that was not a possibility. To be honest, separating this single body from all of our selves to contact you was about all that we could manage. Norn, you have done well to guide your friend this far.")
 		goto *chat_unique_mikraanesis
 	}
 	if ( tc == CHARA_PLAYER ) {
@@ -6482,21 +6482,21 @@
 			if ( gdata(GDATA_FLAG_SUB_KARURA) == 1 ) {
 				chatMore lang("私…？ええ、少し考え事をしていたの。", "Me...? Well, I was just thinking about something.")
 				chatMore lang("…。", "...")
-				chatList 0, lang("カルラに聞いた話だ", "You told me about that story.")
-				chatList 1, lang("ラーネイレに聞いた童話だ", "That was a fairy-tale Larnneire told me about.")
+				chatList 0, lang("カルラに聞いた話だ", "You told me that story.")
+				chatList 1, lang("ラーネイレに聞いた童話だ", "That was a fairy-tale Larnneire told me.")
 				chatList 2, lang("よくわからなかった話だ", "I didn't really understand that story.")
 				buff = lang("あなたは、獣に変えられた王子の話を覚えているかしら。", "Would you happen to remember the story of the prince who was turned into a beast?")
 				gosub *chat_select
 				if ( chatval == 0 ) {
-					chatMore lang("たとえ姿が…いえ、全てが変わったとしても。あなたが、あなたであったことには変わりない。今の私にはそう思えるの。", "Even if my appearance... no, even if everything about me has changed, that will never change the fact that you were always you. That's what I believe now.")
+					chatMore lang("たとえ姿が…いえ、全てが変わったとしても。あなたが、あなたであったことには変わりない。今の私にはそう思えるの。", "Even if my appearance... no, even if everything about me has changed, that will never change the fact that you were always you. That is what I now believe.")
 					goto *chat_end
 				}
 				if ( chatval == 1 ) {
-					chatMore lang("こちら側にも同じ話があるのね。いえ、彼女だからこそ、なのかしら。", "Yes, the same story is told in this land. Well, perhaps she is the very reason for that.")
+					chatMore lang("こちら側にも同じ話があるのね。いえ、彼女だからこそ、なのかしら。", "Yes, that same story is also told in this land. Well, perhaps she is the very reason for that.")
 					goto *chat_end
 				}
 				if ( chatval == 2 ) {
-					chatMore lang("…ごめんなさい。あなたには、まだ、この意味はわからないわね。", "...My apologies. It seems that you have yet to grasp the meaning of this story.")
+					chatMore lang("…ごめんなさい。あなたには、まだ、この意味はわからないわね。", "...My apologies. It seems that you have yet to grasp the meaning of that story.")
 					goto *chat_end
 				}
 				goto *chat_end
@@ -8116,7 +8116,7 @@
 		}
 		if ( gdata(GDATA_FLAG_MAIN) >= 825 ) {
 			chatList 0, lang("まだ見ていないところがある", "There is something I haven't seen yet.")
-			chatList 1, lang("外に出して", "Let me out.")
+			chatList 1, lang("外に出して", "I want to leave this place.")
 			chatList 2, lang("ソピアーをどう思う？", "What do you think of Sophia?")
 			chatList 3, lang("君を知りたい", "I want to know about you.")
 			chatList 4, lang("聞き流したから何をすればいいかわからない", "I wasn't paying attention.")
@@ -8137,14 +8137,20 @@
 				goto *chat_end
 			}
 			if ( chatval == 2 ) {
-				chatMore lang("昔のあの子は特に知識欲が強くてね。知られざる父のことを知ろうとしすぎて大失敗したのは聞いたかな？あの時はもう皆大慌てで天から落っこちたソピアーを探して、見つかったと思ったら歪んだ情熱で自分を見失ってたせいで天に戻れなくなってたりしていて大変だったんだからね。結局、歪んだ情熱をちぎり捨てて連れ帰ったんだけど、そしたら今度は捨てた部分が人型になって活動し始めてね。妹から生まれた分身を滅するのも忍びないから自由に生きさせてたんだけど、それがエンテュメイシスになっちゃって。戦ったから知ってるよね、あの神の間にいた混沌の女神だよ。本当に、手がかかる子。", "Long ago, that girl had an particularly strong thirst for knowledge. Have you heard of the time she attempted to learn too much about her unknown father, and failed miserably? At that time, everyone was frantically searching for Sophia, who had fallen from the heavens, and by the time they finally found her she could no longer return to where she had come from, having lost herself in her own twisted passions. In the end, we ripped those warped passions out of her and brought her back to the heavens ourselves, but the parts that we tore off took the form of a human and gained consciousness. We could not bear to destroy a being whom had once been a part of our sister, so we decided to let them roam freely, but in the end they became Enthumesis. You have fought them, deep inside the Eternal Seal, so you'd know: they were a god amongst gods, the Goddess of Chaos. They were quite a handful, that child.")
+				if ( jp ) {
+					chatMore "昔のあの子は特に知識欲が強くてね。知られざる父のことを知ろうとしすぎて大失敗したのは聞いたかな？あの時はもう皆大慌てで天から落っこちたソピアーを探して、見つかったと思ったら歪んだ情熱で自分を見失ってたせいで天に戻れなくなってたりしていて大変だったんだからね。結局、歪んだ情熱をちぎり捨てて連れ帰ったんだけど、そしたら今度は捨てた部分が人型になって活動し始めてね。妹から生まれた分身を滅するのも忍びないから自由に生きさせてたんだけど、それがエンテュメイシスになっちゃって。戦ったから知ってるよね、あの神の間にいた混沌の女神だよ。本当に、手がかかる子。"
+				}
+				else {
+					chatMore "Long ago, that girl had an particularly strong thirst for knowledge. Have you heard of the time she attempted to learn too much about her unknown father and failed miserably? At the time, everyone was frantically searching for Sophia, who had fallen from the heavens, and by the time they finally found her she could no longer return to where she had come from, having lost herself in her own twisted passions."
+					chatMore "In the end, we ripped those warped passions out of her and brought her back to the heavens ourselves, but the parts that we tore off took the form of a human and gained consciousness. We could not bear to destroy a being who had once been a part of our sister, so we decided to let them roam freely, but in the end they became Enthumesis. You have fought them, deep inside the Eternal Seal, so you'd know: they were a god amongst gods, the Goddess of Chaos. Inquisitive bookworm or all-powerful goddess, that child has always been quite the handful."
+				}
 				chatMore lang("まぁ、お馬鹿な末っ子は可愛い、というのが私達の総意だよ。おっと、私達から聞いたことはソピアーに言わないでおいてね、機嫌が悪くなるから。別の世界だし黙っておけば常闇の杖でもわからないよ。", "Well, it's our collective opinion that silly young children are adorable, anyway. And don't tell Sophia what we have told you, or you'll put her in a bad mood. If you keep silent in this other world, not even the the wielder of the Vice Staff would be able to tell.")
 				goto *chat_end
 			}
 			if ( chatval == 3 ) {
 				chatMore lang("私達は28柱が結束して生まれた合体神だよ。交合のミクシスと相互混合のシュンクラーシスと統合のシュネシスの3柱が中心となっているね。", "We are collectively a singular god that was formed by combining together the gods of the twenty-eight pillars. The three most important pillars are Mixsis of Mixing, Shunkraasis of Intermixing, and Shunesis of Integration.")
 				chatMore lang("その他の内訳は、思念のエンノイア、理法のヌース、真理のアレーテイア、言葉のロゴス、生命のゾーエー、人間のアントローポス、教会のエクレーシア。", "The other pillars are: Ennoia of Thought, Nuus of Reason, Areteia of Truth, Logos of Language, Zoea of Life, Anthropos of Humanity, Ecclesia of Church...")
-				chatMore lang("深みのビュテイオス、不壊のアゲーラトス、配慮のヘンノーシス、成長のアウトピュエース、快楽のヘードネー、不動のアキネートス、独り子のモノゲーネス、浄福のマカリア。", "...Buteios of Depth, Ageratos of Unbreaking, Henosis of Consideration, Outpues of Growth, Hedonay of Pleasure, Aquinatos of Immobility, Monogenes of Solitude, Macalia of Beatitude...")
+				chatMore lang("深みのビュテイオス、不壊のアゲーラトス、配慮のヘンノーシス、成長のアウトピュエース、快楽のヘードネー、不動のアキネートス、独り子のモノゲーネス、浄福のマカリア。", "...Buteios of Depth, Ageratos of Unbreaking, Henosis of Consideration, Outpuece of Growth, Hedonay of Pleasure, Aquinatos of Immobility, Monogenes of Solitude, Macalia of Beatitude...")
 				chatMore lang("仲介のパラクレートス、信仰のピスティス、父性のパトリコス、希望のエルピス、母性のメートリコス、愛のアガペー、永遠のアエイヌース、伝道のエクレーシアスティコス、幸福のマカリオーテス、意欲のテレートス。", "...Paracleteos of Mediation, Pistis of Faith, Patrikos of Fatherhood, Elpis of Hope, Maitrikos of Motherhood, Agape of Love, Aeneus of Eternity, Ecclesiasticus of Evangelism, Macarios of Happiness, and Terethos of Ambition.")
 				chatMore lang("別に覚えてくれなくていいよ。名前が長くて多くて似ていて大変だろう。", "It's fine if you don't remember them all. It would be difficult with all of those long and similar names.")
 				goto *chat_end
@@ -8152,7 +8158,7 @@
 			if ( chatval == 4 ) {
 				chatMore lang("…。", "...")
 				chatMore lang("この世界が忘れられないように、記憶を共有する処置をした。", "We took steps to share our memories so that this world would not be forgotten.")
-				chatMore lang("君には混沌の巨城の最深層で戦うべき相手がいる。いいね？", "You have an opponent you must fight at the bottom of the Cradle of Chaos. Understood?")
+				chatMore lang("君には混沌の巨城の最深層で戦うべき相手がいる。いいね？", "There is a powerful foe you must fight at the bottom of the Cradle of Chaos. Understood?")
 				goto *chat_end
 			}
 		}
@@ -8184,12 +8190,12 @@
 		}
 		if ( gdata(GDATA_AREA) == AREA_AIMWELL ) {
 			if ( gdata(GDATA_FLAG_MAIN) == 780 ) {
-				chatMore lang("君は今！ガイアス・ヴィスへの第一歩を踏み出した！", "You have - right now! - taken the first step towards Gaius Vis!")
-				chatMore lang("ここまで長かった…この世界ではまだ1年程度しか経っていないけれど、ボクはループ込みで10年以上対応にあたっていたんだ。ようやく君という因子を見つけて連れてくることができたよ。", "It has taken so long... In this world it has only been about a year, but because of the loops, I've been dealing with this for over 10 years by now. Finally, I've managed to find you, the Decisive Factor, and have managed to bring you here.")
+				chatMore lang("君は今！ガイアス・ヴィスへの第一歩を踏み出した！", "You have - right now! - taken your first step into Gaius Vis!")
+				chatMore lang("ここまで長かった…この世界ではまだ1年程度しか経っていないけれど、ボクはループ込みで10年以上対応にあたっていたんだ。ようやく君という因子を見つけて連れてくることができたよ。", "It's taken me so long to get to this point... In this world it has only been about a year, but because of the loops, I've been dealing with this for over 10 years by now. Finally, I've managed to find you, the Decisive Factor, and brought you here.")
 				chatMore lang("うーん。でもまだ君の認識が次元を超えて追いついていないみたいだね。おそらく君の目には、多くのものがイルヴァのものに置き換わって見えるだろう。", "Hmmm... But it seems that your perception has not caught up with you across dimensions yet. Perhaps, in your eyes, many things here will appear to be replaced by things you've seen in Irva.")
 				chatMore lang("さて…見る限り、依然として廃忘獣がはびこっているようだね…。あのお方は大丈夫だろうか。一緒に探しに行こう！", "Well... as far as I can see, it seems this place is still crawling with oblivion beasts... I wonder if that girl is okay. Let's go look for her together!")
 				chatMore lang("えっ。あのお方が誰かって？ああ、まだ説明してなかったっけ。", "Eh? Who's \"that girl\", you say? Oh, right. I haven't explained that part yet.")
-				chatMore lang("叡智を司る中級神であるソピアーは知っているよね。あのお方はソピアーの兄姉たち28柱が合神した、超越神だよ。幾多の神々を吸収した混沌の神に対抗するための措置だったらしいね。ちなみにソピアーは一回堕天している影響でうまく合神できなかったんだって。", "You know Sophia, the mid-tier god who controls wisdom, right? The girl I'm talking about is a transcendent deity who is a combination of twenty-eight of Sophia's brothers and sisters. I heard that the reason for that was to be able to stand against the God of Chaos, who's absorbed many other gods himself. By the way, I also heard that Sophia couldn't combine all those gods properly because of her fall from the heavens.")
+				chatMore lang("叡智を司る中級神であるソピアーは知っているよね。あのお方はソピアーの兄姉たち28柱が合神した、超越神だよ。幾多の神々を吸収した混沌の神に対抗するための措置だったらしいね。ちなみにソピアーは一回堕天している影響でうまく合神できなかったんだって。", "You know Sophia, the mid-tier god who controls wisdom, right? The girl I'm talking about is a transcendent deity who is a combination of twenty-eight of Sophia's brothers and sisters. I heard that the reason for that was to be able to stand against the God of Chaos, who'd absorbed many other gods himself. By the way, I also heard that Sophia couldn't combine all those gods properly because of her fall from the heavens.")
 				chatMore lang("あのお方はガイアス・ヴィスの実情を知って、色々と便宜を図ってくれた。今は直接、忘却の女神と戦っているはずだ。こうしてボクが覚えている以上、間違いなく無事なはずなんだけど…。", "That fine lady knew the actual situation of Gaius Vis, and did a lot to help us. She must be fighting the Goddess of Oblivion herself as we speak. As long as I can remember her like I'm doing right now, she should be safe, but...")
 				chatMore lang("一度引き返したい場合は、こちら側のロイターを経由してね。そこの炭鉱街…ザイールにいるはずだから。", "If you want to head back, you'll have to talk to the Loyter on this side. He should be in the coal mining town of Zaile just nearby.")
 				gdata(GDATA_FLAG_MAIN) = 790
@@ -8202,8 +8208,8 @@
 				txtef COLOR_GREEN
 				txt lang("[記憶の灯]を手に入れた！", "You obtain the [Light of Memory]!")
 				snd SOUNDLIST_COMPLETE1
-				chatMore lang("それは生命情報を記録するアストラル光の塊。記憶をバックアップしてくれるから、記憶消去攻撃を受けてもかなり軽減できるらしいよ。", "That's a mass of astral light that records life information. Because it backs up your memories, it seems that even if you suffer from a memory erasure attack, its effects should be considerably reduced.")
-				chatMore lang("さらに、世界を行き来するための道具でもあるんだ。ロイターに向かって使ってみて。現時点で、彼は誰よりもガイアス・ヴィスとの結びつきが強い。あちら側にも極めて近い存在がいるんだ。記憶の灯はその繋がりを照らして導いてくれるよ。", "Moreover, it's also a tool for traveling around the world. Try using it while facing Loyter. At the moment, he is more tied to Gaius Vis than anyone else. There is also a very similar existence to him on the other side. The light from your memories will illuminate that connection and guide you through to the other side.")
+				chatMore lang("それは生命情報を記録するアストラル光の塊。記憶をバックアップしてくれるから、記憶消去攻撃を受けてもかなり軽減できるらしいよ。", "That's a mass of astral light that records life information. Because it backs up your memories, even if you suffer from a memory erasure attack, its effects should be considerably reduced.")
+				chatMore lang("さらに、世界を行き来するための道具でもあるんだ。ロイターに向かって使ってみて。現時点で、彼は誰よりもガイアス・ヴィスとの結びつきが強い。あちら側にも極めて近い存在がいるんだ。記憶の灯はその繋がりを照らして導いてくれるよ。", "Moreover, it's also a tool for traveling between worlds. Try using it while facing Loyter. At the moment, he is more tied to Gaius Vis than anyone else. There is also a very similar existence to him on the other side. The light from your memories will illuminate that connection and guide you through to the other world.")
 				gdata(GDATA_FLAG_MAIN) = 780
 				txt_questupdate
 				goto *chat_end
@@ -8832,7 +8838,7 @@
 				chatList 1, lang("ちょっとした冒険だな", "Sounds like a nice little adventure.")
 				chatList 2, lang("オルフェと決着をつけてくる", "I'm going to settle this with Orphe.")
 				chatList 3, lang("この戦いが終わったら結婚しよう", "When this fight is over, I'll ask for your hand.")
-				buff = lang("念のために最終対抗手段は用意しておいた…けれど内容は捨て身同然だし、どこまで通用するかも疑問だからあまり使いたくはないね。", "I've prepared a final countermeasure just in case... but I'm wary of using it. That would equivalent to sacrificing everything we have left, and I'm not even sure such a plan could work if worst comes to worst.")
+				buff = lang("念のために最終対抗手段は用意しておいた…けれど内容は捨て身同然だし、どこまで通用するかも疑問だからあまり使いたくはないね。", "I've prepared a final countermeasure just in case... but I'm wary of using it. That would be equivalent to sacrificing everything we have left, and I'm not even sure such a plan could work if worst comes to worst.")
 				chatesc = 0
 				gosub *chat_select
 				if ( chatval == 0 ) {
@@ -9068,8 +9074,8 @@
 		_switch_sw = 0
 		if ( gdata(GDATA_AREA) == AREA_CHAOS_CRADLE ) {
 			if ( gdata(GDATA_FLAG_MAIN) == 745 ) {
-				chatMore lang("お若いの、頑張ったのう。よくぞ、わしが到着するまで持ちこたえてくれた。後はこの老いぼれが引き受けよう。", "Good job, youngster. You did well in holding out until I arrived. Now, let this old geezer take care of the rest.")
-				chatMore lang("思えば、魔術に捧げた人生じゃった。才を活かすため師匠に背いて軍に入り、無我夢中で戦い続け…気づけば老いていた。", "Looking back, my life was dedicated to magic. In order to make the most of my talent, I disobeyed my master and joined the army, fighting selflessly until I found myself growing old.")
+				chatMore lang("お若いの、頑張ったのう。よくぞ、わしが到着するまで持ちこたえてくれた。後はこの老いぼれが引き受けよう。", "Good job, youngsters. You did well in holding out until I arrived. Now, let this old geezer take care of the rest.")
+				chatMore lang("思えば、魔術に捧げた人生じゃった。才を活かすため師匠に背いて軍に入り、無我夢中で戦い続け…気づけば老いていた。", "Looking back, my life was dedicated to magic. In order to make the most of my talent, I disobeyed my own master and joined the army, fighting selflessly until I found myself growing old.")
 				chatList 1, lang("死なないで！", "Don't die!")
 				chatList 2, lang("美味しいところを持っていく気？", "So you're going to steal the spotlight?")
 				chatList 3, lang("化身？凶獣？", "\"Evil incarnate?\" \"The beast?\"")
@@ -11728,9 +11734,9 @@
 		_switch_sw = 0
 		if ( gdata(GDATA_AREA) == AREA_CHAOS_CRADLE ) {
 			if ( gdata(GDATA_FLAG_MAIN) == 735 ) {
-				chatMore lang("どうだ、次元アンカーの威力は？物理的な力では絶対に抜け出せないぞ。", "What do you think of this dimensional anchor's power? You'll never get out of it with physical force.")
+				chatMore lang("どうだ、次元アンカーの威力は？物理的な力では絶対に抜け出せないぞ。", "So, what do you think of this dimensional anchor's power? You'll never get out of it with physical force.")
 				chatMore lang("こちらガベラだ。通信状況は良好のようだな。" + cdatan(CDATAN_NAME, CHARA_PLAYER) + "、あの怪物がテスカトリポカなのか？", "Gavela here. It seems that I'm getting a good signal from this place. " + cdatan(CDATAN_NAME, CHARA_PLAYER) + ", is that monster Tezcatlipoca?")
-				chatMore lang("えっ、違う？？まぁいい。ロスリアでの戦闘直後、急に心配になってな。こいつを飛ばして正解だった。", "What, he's not? Well, okay. Right after the battle in Rosalia, I got worried all of a sudden. It was a good thing I flew back in for this bout.")
+				chatMore lang("えっ、違う？？まぁいい。ロスリアでの戦闘直後、急に心配になってな。こいつを飛ばして正解だった。", "...What? He's not? Well, anyway. Right after the battle in Rosalia, I got worried all of a sudden. It was a good thing I flew this little guy back in for one last bout.")
 				chatList 1, lang("これなら勝てる！", "We can win this!")
 				chatList 2, lang("無理だ、下がれ！", "It's impossible, get back!")
 				chatList 3, lang("A0-Iって何？", "What is A0-I?")
@@ -11743,7 +11749,7 @@
 					chatMore lang("無理だのなんだの言ってたら科学は進歩しないんだよ！", "If we declared everything to be impossible, then we'd never make scientific progress!")
 				}
 				if ( chatval == 3 ) {
-					chatMore lang("よくぞ聞いてくれた。次元歪曲ユニットは勿論、重射撃装備、電子戦装備、増加装甲、追加推進装置、さらに自律戦闘通信機の特殊電波システム、イェルス超重力砲の小型改良版…束縛の悪魔との交戦データを参考に理論化した次元アンカー！その全てのオプションを実装したメルガストがA0-Iだ。これだけの同時装備を可能にしたのは生体ハードポイント理論からのデータ逆輸入によるところが大きく、俺の技術の集大成とも言える存在で特筆すべきは…おっと、解説している場合ではないな。", "I'm glad you asked. In addition to the dimensional distortion unit, it's also packing some heavy artillery, electronic warfare equipment, increased armor, additional propulsion, a special radio system for autonomous combat communications, a smaller and improved version of the Yerles super gravity cannon... and, using the data I obtained from our battle with the demon of bondage, a dimensional anchor! The A0-I is a Melugast with all of those options implemented. You could say that it's the grand culmination of my technological endeavours, and what's most noteworthy about it is... whoops, this is no time for me to rambling on.")
+					chatMore lang("よくぞ聞いてくれた。次元歪曲ユニットは勿論、重射撃装備、電子戦装備、増加装甲、追加推進装置、さらに自律戦闘通信機の特殊電波システム、イェルス超重力砲の小型改良版…束縛の悪魔との交戦データを参考に理論化した次元アンカー！その全てのオプションを実装したメルガストがA0-Iだ。これだけの同時装備を可能にしたのは生体ハードポイント理論からのデータ逆輸入によるところが大きく、俺の技術の集大成とも言える存在で特筆すべきは…おっと、解説している場合ではないな。", "I'm glad you asked. In addition to the dimensional distortion unit, this little guy's packing some heavy artillery, electronic warfare equipment, increased armor, additional propulsion, a special radio system for autonomous combat communications, a smaller and improved version of the Yerles super gravity cannon... and, using the data I obtained from our battle with the demon of bondage, a dimensional anchor! The A0-I is a Melugast with all of those options implemented. You could say that it's the grand culmination of my technological endeavours, and what's most noteworthy about it is... whoops, this is no time for me to rambling on.")
 				}
 				goto *chat_end
 			}
@@ -11766,11 +11772,11 @@
 		}
 		if ( gdata(GDATA_AREA) == AREA_CHAOS_CRADLE ) {
 			if ( gdata(GDATA_FLAG_MAIN) == 725 ) {
-				chatMore lang("ふと胸騒ぎがして降りてみたが、まさか目と鼻の先にあったとは。60層はあるものだと思っていた。", "I felt a stirring in my heart and came down, but I didn't realize it was right under my nose. I thought there would be 60 floors.")
+				chatMore lang("ふと胸騒ぎがして降りてみたが、まさか目と鼻の先にあったとは。60層はあるものだと思っていた。", "I felt a stirring in my heart and came down, but I didn't realize the Eternal Seal was right under my nose. I thought there would be at least 60 more floors.")
 				chatList 1, lang("助かる！", "I appreciate it!")
 				chatList 2, lang("危ないよ！", "This place is dangerous!")
 				chatList 3, lang("ラーネイレたちが探していたよ", "Larnneire was looking for you.")
-				buff = lang("…あれが噂に聞く混沌の神か？" + cdatan(CDATAN_AKA, CHARA_PLAYER) + "、加勢するぞ。", "...So that's the rumored God of Chaos?" + cdatan(CDATAN_AKA, CHARA_PLAYER) + ", I'll back you up.")
+				buff = lang("…あれが噂に聞く混沌の神か？" + cdatan(CDATAN_AKA, CHARA_PLAYER) + "、加勢するぞ。", "...So that's the rumored God of Chaos? " + cdatan(CDATAN_AKA, CHARA_PLAYER) + ", I'll back you up.")
 				gosub *chat_select
 				if ( chatval == 1 ) {
 					chatMore lang("猫の手ならぬ、鷹の翼も借りたい、といったところか。", "So I guess that makes you rather short-handed right now... although, all I have to offer are these talons of mine.")
@@ -11779,12 +11785,12 @@
 					chatMore lang("ふっ…危険は承知の上だ。私も今や冒険者の端くれだからな。", "...I'm well aware of the risks. By now I've become a bit of an adventurer myself, you know.")
 				}
 				if ( chatval == 3 ) {
-					chatMore lang("ラーネイレが？彼女には悪いが、こいつを片づけるまで辛抱してもらう！", "Larnneire? Sorry to break it to her, but she's going to have to be patient until we take care of this fellow!")
+					chatMore lang("ラーネイレが？彼女には悪いが、こいつを片づけるまで辛抱してもらう！", "Larnneire? Sorry to break it to her, but she's going to have to be patient until we take care of this guy!")
 				}
 				goto *chat_end
 			}
 			if ( gdata(GDATA_FLAG_MAIN) == 735 ) {
-				chatMore lang("今、奴が何かに拘束されたように見えたが…。", "Now it seems that he's been restrained by something...")
+				chatMore lang("今、奴が何かに拘束されたように見えたが…。", "Just a moment ago, it looked to me like its movements had been restrained by something...")
 				goto *chat_end
 			}
 			if ( gdata(GDATA_FLAG_MAIN) == 745 ) {
@@ -13629,7 +13635,7 @@
 	}
 	if ( _switch_val == CREATURE_ID_ENTHUMESIS | _switch_sw ) {
 		_switch_sw = 0
-		chatMore lang("お父さん…お父さん…。", "Daddy... Daddy...!")
+		chatMore lang("お父さん…お父さん…。", "Father... Father...!")
 		if ( gdata(GDATA_FLAG_MAIN) < 710 ) {
 			goto *chat_unique_enthumesis
 		}
@@ -13920,7 +13926,7 @@
 		gosub *chat_select
 		if ( chatval == 0 ) {
 			chatMore lang("まず、時間感覚がおかしくなっていますな。獣の発生からそれほど経っていないはずなのに、もうここに10年以上いる気がしてなりませんぞ。", "First of all, your sense of time gets out of whack. It couldn't have been that long since the beasts started appearing, but I can't help but feel like I've been here for more than ten years.")
-			chatMore lang("それに谷にいた皆さんが聞いたという謎の声。続く空間の隔離。何者かの手によって時空が捻じ曲げられていることは間違いないでしょう。", "And then, there's that mysterious voice that everyone in the valley seems to hear. Those rifts in continuous space. There's no doubt that someone out there is tampering with time and space.")
+			chatMore lang("それに谷にいた皆さんが聞いたという謎の声。続く空間の隔離。何者かの手によって時空が捻じ曲げられていることは間違いないでしょう。", "And then, there's that mysterious voice that everyone in the valley seems to hear. Those rifts in continuous space. There's no doubt that someone out there is tampering with space and time.")
 			goto *chat_end
 		}
 		if ( chatval == 1 ) {
@@ -13936,7 +13942,7 @@
 		_switch_sw = 0
 		if ( cray == 1 ) {
 			chatMore lang("冒険ってのは相応の準備をしたうえでそれでも危険を冒すこと。何も考えず、何も用意せずに危険に飛び込んでいくのは、冒険じゃなく自殺行為だ。", "Adventure is about making an appropriate plan before proceeding with your risky ventures. Jumping into danger without thinking or preparation is not an adventure - it's suicide.")
-			chatMore lang("…ってマンソンによく言われるんだ。そんなに危なっかしく思われてるのかな。", "...That's what Manson always tells me, at least. I wonder if he believes I'm in that much danger.")
+			chatMore lang("…ってマンソンによく言われるんだ。そんなに危なっかしく思われてるのかな。", "...That's what Manson always tells me, at least. I wonder if he really believes I'm in that much danger.")
 			goto *chat_end
 		}
 		if ( cray == 0 ) {
@@ -13956,8 +13962,8 @@
 			goto *chat_end
 		}
 		if ( mary == 0 ) {
-			chatMore lang("まさかボニャックさんがお店を離れないなんて。お店、獣の群れに囲まれていたけど大丈夫かな…？", "I could't believe Mr. Bonyak decided to stay behind to tend to his shop. It was surrounded by a herd of beasts. I wonder if he's okay...")
-			chatMore lang("谷にいた他の人たちも無事に脱出できているといいな。", "I hope the others who were in the valley made it out safely.")
+			chatMore lang("まさかボニャックさんがお店を離れないなんて。お店、獣の群れに囲まれていたけど大丈夫かな…？", "I can't believe Mr. Bonyak decided to stay behind to tend to his shop - it was surrounded by a herd of beasts. I wonder if he's okay...")
+			chatMore lang("谷にいた他の人たちも無事に脱出できているといいな。", "And I hope the others who were in the valley made it out safely, too.")
 			mary = 1
 			goto *chat_end
 		}
@@ -13973,9 +13979,9 @@
 		}
 		if ( jenna == 0 ) {
 			chatMore lang("いつものように谷で過ごしていたある日、それはどこからともなく聞こえてきたの。", "One day, as I was spending my time in the valley as usual, the voice came to me out of nowhere.")
-			chatMore lang("すぐに谷の入口まで退避しろという声。動物たちが次々に逃げ出すのを見て、さすがに危険を感じたわ。動物たちを追って移動する途中、ふと振り返ると、谷の奥から黒い獣が湧いてくるのが見えたの。恐ろしかったわ…。", "It said that we must evacuate to the entrance of the valley as soon as possible. When I started to notice the local wildlife fleeing the area one after another, I knew we were in danger. As we started running after the animals, I turned my head and looked back to see a black beast emerge from the depths of the valley. It was terrifying..")
-			chatMore lang("ここまで辿り着いた途端、空間が閉じて小さな裂け目だけが残ったわ。裂け目を覗くとね、谷の奥が見えるの。奥はもう、黒い獣でいっぱいよ。", "Right as we arrived here, the rift in space closed leaving only a tiny crevice. If you look through the crack, you can see that the depths of the valley are already swarming with those black beasts.")
-			chatMore lang("ああ、こんな…！", "Oh, why...")
+			chatMore lang("すぐに谷の入口まで退避しろという声。動物たちが次々に逃げ出すのを見て、さすがに危険を感じたわ。動物たちを追って移動する途中、ふと振り返ると、谷の奥から黒い獣が湧いてくるのが見えたの。恐ろしかったわ…。", "It said that we must evacuate to the entrance of the valley as soon as possible. When I started to notice the local wildlife fleeing the area one after another, I knew we were in danger. As we started running after the animals, I turned my head and looked back to see a black beast emerge from the depths of the valley. It was terrifying...")
+			chatMore lang("ここまで辿り着いた途端、空間が閉じて小さな裂け目だけが残ったわ。裂け目を覗くとね、谷の奥が見えるの。奥はもう、黒い獣でいっぱいよ。", "Right as we arrived here, the rift in space we passed through closed up, leaving only a tiny crevice. If you look through the crack, you can see that the depths of the valley are already swarming with those black beasts.")
+			chatMore lang("ああ、こんな…！", "Ohh, why...!")
 			chatMore lang("こんな神秘を体験できるなんて！！私は今、猛烈に感動しているわ！！！", "What a fascinating, mystical experience I've had!! I'm moved!!!")
 			jenna = 1
 			goto *chat_end
@@ -14007,8 +14013,8 @@
 		buff = lang("ラスキリスいらっしゃいませ。", "Welcome to Raskilis.")
 		gosub *chat_select
 		if ( chatval == 0 ) {
-			chatMore lang("ご冗談を。この店を捨てて逃げるなんてとんでもない。", "Oh, you must be joking. I wouldn't so much as think of abandoning my shop.")
-			chatMore lang("殺風景な店ですがね…。ここには色んなお客さんとの思い出が、いっぱい詰まっているんですよ。", "That said, it's a rather bleak storefront... This place is filled with the memories of my many customers."), strbye
+			chatMore lang("ご冗談を。この店を捨てて逃げるなんてとんでもない。", "You've got to be kidding me. I wouldn't so much as think of abandoning my shop.")
+			chatMore lang("殺風景な店ですがね…。ここには色んなお客さんとの思い出が、いっぱい詰まっているんですよ。", "That said, it's a rather barren storefront now... This place is filled with the memories of my many customers."), strbye
 			goto *chat_end
 		}
 		if ( chatval == 1 ) {
@@ -14512,9 +14518,9 @@
 					goto *chat_end
 				}
 				if ( gdata(GDATA_FLAG_MAIN) == 720 ) {
-					chatMore lang("まさか…エンテュメイシスが吸収していた神の一柱が、分離・復活したのか！？", "Is the a god that Enthumesis absorbed splitting away and reviving itself?!")
-					chatMore lang("…いや、違う。寄生していたんだ。こいつが、エンテュメイシスのため込んだ神力を吸収していたんだッ！", "No, that's not it. It's a parasite. It's absorbing all the divine power that was stored in Enthumesis!")
-					chatMore lang("来光の牙を使うにしても、枷をかけて閉じ込めるにしても、どうにか弱らせる必要がある。産まれたばかりでヨタヨタしているが、奴から感じる力は超神級だ。迂闊に近づくなよ" + cdatan(CDATAN_NAME, CHARA_PLAYER) + "！距離を取りながら突破口を見つけるんだ！", "We'll need to weaken it before using the Origin of Light or to trap it with a fetter. It's still clumsy because it's still a newborn, but the power coming off of it is definitely beyond that of a regular god. " + cdatan(CDATAN_NAME, CHARA_PLAYER) + "! Don't get too close to it! Find a solution while keeping the distance!")
+					chatMore lang("まさか…エンテュメイシスが吸収していた神の一柱が、分離・復活したのか！？", "It can't be... One of the divine pillars that Enthumesis had absorbed separated itself and came back to life!?")
+					chatMore lang("…いや、違う。寄生していたんだ。こいつが、エンテュメイシスのため込んだ神力を吸収していたんだッ！", "...No, that's not it. It's a parasite. It's absorbing all the divine power that was stored in Enthumesis!")
+					chatMore lang("来光の牙を使うにしても、枷をかけて閉じ込めるにしても、どうにか弱らせる必要がある。産まれたばかりでヨタヨタしているが、奴から感じる力は超神級だ。迂闊に近づくなよ" + cdatan(CDATAN_NAME, CHARA_PLAYER) + "！距離を取りながら突破口を見つけるんだ！", "We'll need to weaken it somehow, by using the Origin of Light or sealing its movements. It's still limping about because it's just been born, but the power coming off of it is far beyond that of a regular god. " + cdatan(CDATAN_NAME, CHARA_PLAYER) + "! Don't get too close to it! Figure something out while keeping your distance!")
 					cdata(CDATA_AI_DISTANCE, tc) = 3
 					goto *chat_end
 				}
@@ -14535,8 +14541,8 @@
 					goto *chat_end
 				}
 				if ( gdata(GDATA_FLAG_MAIN) >= 760 ) {
-					chatMore lang("再生能力まで消してくれれば、殺して来光の牙を使えたんだが…もう爺さんが限界のようだな。凶獣とやらも崩壊しかかっている。術者が行動不能になった時に自壊するよう、安全装置が組み込まれていたようだ。とりあえず爺さんについては、仲間のところまで俺の化身が送り届けるぞ。", "We might've been able to use the Origin of Light if we get rid of that regeneration, but it looks like that old man's reached his limit. That beast is also not going to last much longer. It was probably made to self-destruct when its user is incapacitated. For now, I'll just send that old man back with a servant of mine.")
-					chatMore lang("ノルンから連絡がいっているはずだが、俺からも他の神々に報告をしておきたい。もう動かなくなったとはいえ、こいつが何者なのか調べたり、今後どうするのか相談もしなきゃいけないしな。一度、神の間から出るぞ。", "Norne's going to report to the gods, but I'll have to do that too. We need to find out what that was even if it's not moving anymore, and we also need to decide what to do from now on. Come on, let's get out of here.")
+					chatMore lang("再生能力まで消してくれれば、殺して来光の牙を使えたんだが…もう爺さんが限界のようだな。凶獣とやらも崩壊しかかっている。術者が行動不能になった時に自壊するよう、安全装置が組み込まれていたようだ。とりあえず爺さんについては、仲間のところまで俺の化身が送り届けるぞ。", "We might've been able to use the Origin of Light if we'd just gotten rid of its regeneration, but it looks like that old man's reached his limit. That beast is also not going to last much longer. It was probably made to self-destruct when its user is incapacitated. For now, I'll just send that old man back with a servant of mine.")
+					chatMore lang("ノルンから連絡がいっているはずだが、俺からも他の神々に報告をしておきたい。もう動かなくなったとはいえ、こいつが何者なのか調べたり、今後どうするのか相談もしなきゃいけないしな。一度、神の間から出るぞ。", "Norne should be on his way to report to the gods, but I'm wanting to do the same. We need to find out just *what* that thing was even if it's not moving anymore, and we also need to decide what to do from here on. Come on, let's get out of here.")
 					if ( gdata(GDATA_FLAG_DUEL_TARGET) > 0 ) {
 						gdata(GDATA_FLAG_DUEL_TARGET) = 0
 					}
@@ -14711,8 +14717,8 @@
 						buff = lang("アクシデントもあったが、エンテュメイシスは倒せた。お前は決戦因子としてよくやってくれたよ。後は俺たちに任せてくれ。", "It didn't go without a hitch, but what matters is that Enthumesis has been defeated. You can leave the rest to me.")
 						gosub *chat_select
 						if ( chatval == 0 ) {
-							chatMore lang("お前は心配性だな…。大丈夫だ、やつは身体の動かし方すら概念レベルで忘れている。出てこられるわけがない。仮に、外側から出そうとする者が来ても、神の間と物理的につながっているのはこの扉のみ。そしてこの階層は神力が使える。つまりソピアーが常闇の杖で事前に感知してくれるのさ。", "You don't have to worry about that. It can't even move its body properly - there's no chance that it'll get out from here. Even if someone from the outside tried to bring it out, Sophia will know. The door here is the sole entryway into the Eternal Seal, and divine power can be use here perfectly well.")
-							chatMore lang("警備は完璧だ。お前はいつもの生活に戻ってくれ。", "You can leave the guarding to me. You go back to your stuff now.")
+							chatMore lang("お前は心配性だな…。大丈夫だ、やつは身体の動かし方すら概念レベルで忘れている。出てこられるわけがない。仮に、外側から出そうとする者が来ても、神の間と物理的につながっているのはこの扉のみ。そしてこの階層は神力が使える。つまりソピアーが常闇の杖で事前に感知してくれるのさ。", "You don't have to worry about that. It can't even move its body properly - there's no chance that it'll get out from here. Even if someone from the outside tried to bring it out, Sophia would know. The door here is the sole entryway into the Eternal Seal, and divine power can be used here perfectly well.")
+							chatMore lang("警備は完璧だ。お前はいつもの生活に戻ってくれ。", "I'll take care of guarding this place. You can go back to your normal life now.")
 						}
 						if ( chatval == 1 ) {
 							chatMore lang("褒美か。そうだな。", "A reward? Sure, I guess.")
@@ -16556,8 +16562,8 @@
 
 *chat_unique_enthumesis
 	chatMore lang("累計放出量から予測した状態を、ソピアーから聞いていたが…それよりもだいぶ弱っているようだ。", "Sophia told me about the condition of this thing that she predicted based on reading its cumulative emissions... but it seems to be much weaker than that."), strmore, findchara(CREATURE_ID_BLACK_GAUNTLET_LEOLD)
-	chatMore lang("一度でいいから会いたいよ…。どうすれば会えるの？こいつらの知識を取り込めばわかるの？", "I want to meet him... How can I meet him? If I take in all of the knowledge of these beings, will I find out?"), strmore, findchara(CREATURE_ID_ENTHUMESIS)
-	chatMore lang("情けをかけるのは危険だ。仕留めるぞ。", "Showing mercy for this thing is dangerous. Let's finish this."), strmore, findchara(CREATURE_ID_BLACK_GAUNTLET_LEOLD)
+	chatMore lang("一度でいいから会いたいよ…。どうすれば会えるの？こいつらの知識を取り込めばわかるの？", "Father... How I long to see him, even if it's only once... What is it I must do to see him? If I absorb the knowledge of these people, will I find out?"), strmore, findchara(CREATURE_ID_ENTHUMESIS)
+	chatMore lang("情けをかけるのは危険だ。仕留めるぞ。", "Don't make the mistake of showing mercy. Let's finish this."), strmore, findchara(CREATURE_ID_BLACK_GAUNTLET_LEOLD)
 	gdata(GDATA_FLAG_MAIN) = 710
 	txt_questupdate
 	goto *chat_end
@@ -16568,23 +16574,23 @@
 	novoidlv = 1
 	characreate -1, CREATURE_ID_NORNE_THE_GUIDE, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER)
 	chatMore lang("ミクラネシス様、いったい何があったのですか。", "Dearest Mikraanesis, what has happened here?"), strmore, findchara(CREATURE_ID_NORNE_THE_GUIDE)
-	chatMore lang("今我々の本体が忘却の女神を食い止めている。いや…戦ってわかった。あれは正確には忘却を司る女神ではない。", "Our main body is holding the Goddess of Oblivion at bay. No...We know this from fighting them. The one responsible isn't exactly the goddess who rules oblivion."), strmore, findchara(CREATURE_ID_MIKRAANESIS)
+	chatMore lang("今我々の本体が忘却の女神を食い止めている。いや…戦ってわかった。あれは正確には忘却を司る女神ではない。", "Our main body is holding the Goddess of Oblivion at bay.... No. We know this from fighting them: the one responsible isn't exactly the goddess who rules oblivion."), strmore, findchara(CREATURE_ID_MIKRAANESIS)
 	chatMore lang("あれは世界規模で忘却という現象を起こすための概念存在…神という形で忘却の一側面が具象化したものだ。この世に何らかの記憶がある限り忘却という概念も同時に存在し続けるため、女神の姿を何度滅ぼそうと根源を取り除くことはできない。", "It is a conceptual entity that is used to create the phenomenon of oblivion on a global scale... the very embodiment of oblivion, in the form of a god. As long as memories continue to exist in this world, the concept of oblivion will continue to exist alongside them, and no matter how many times we destroy its form of a goddess, its origin cannot be excised."), strmore, findchara(CREATURE_ID_MIKRAANESIS)
-	chatMore lang("もしも本体が完全体で降臨した場合、その世界のあらゆる存在は過去・未来に渡り完全に消滅する。" + cdatan(CDATAN_NAME, CHARA_PLAYER) + "、君にもあるはずだよ。もう内容はおろか題名すら思い出せない物語が。忘れてしまったことすら忘れている人物が。それが全世界・全宇宙規模で起こると思ってくれればいい。", "If its main body descends on the world in its complete form, all existence in that world will be completely annihilated in the past and future. " + cdatan(CDATAN_NAME, CHARA_PLAYER) + ", you must have one as well - a story that you can't even remember the title of anymore, let alone the content. A person who has forgotten that he or she has forgotten. Just think of those calamities as happening on a global and cosmic scale."), strmore, findchara(CREATURE_ID_MIKRAANESIS)
+	chatMore lang("もしも本体が完全体で降臨した場合、その世界のあらゆる存在は過去・未来に渡り完全に消滅する。" + cdatan(CDATAN_NAME, CHARA_PLAYER) + "、君にもあるはずだよ。もう内容はおろか題名すら思い出せない物語が。忘れてしまったことすら忘れている人物が。それが全世界・全宇宙規模で起こると思ってくれればいい。", "If its main body descends on the world in its complete form, all existence in that world will be completely annihilated in the past and future. " + cdatan(CDATAN_NAME, CHARA_PLAYER) + ", you must have one as well - a story that you can't even remember the title of anymore, let alone the content. A person who has forgotten that they have forgotten something. Just think of those calamities as happening on a global and cosmic scale."), strmore, findchara(CREATURE_ID_MIKRAANESIS)
 	chatMore lang("今は降臨する前の本体を攻撃して食い止めているが、端末である獣どもまでは抑えきれなかった。このまま獣どもが記憶を喰らって増殖すれば本体の力も大きくなり、私達も押し切られてしまうだろうね。", "At present, our main body is holding back the Goddess of Oblivion by attacking it before it descends, but we couldn't hold back the beasts that are its terminals. If the beasts continue to feed on our memories and multiply, the power of the main body will grow, and we will be overwhelmed."), strmore, findchara(CREATURE_ID_MIKRAANESIS)
 	chatMore lang("そんな…。それじゃあガイアス・ヴィスはもうじき消えてなくなる…？何か手はないんですか！", "Oh, no... Then Gaius Vis is about to disappear...? Isn't there anything we can do?!"), strmore, findchara(CREATURE_ID_NORNE_THE_GUIDE)
-	chatMore lang("手はあるさ。" + cdatan(CDATAN_NAME, CHARA_PLAYER) + "、これは他人事ではない。ここが完全に忘れられた世界となってしまえば次はイルヴァの番。何百年、いや何十年と持たないかもしれない。いずれイルヴァの景色を覚えている者は全宇宙上からいなくなってしまうだろう。だから君にこれを渡しておく。", "There is. " + cdatan(CDATAN_NAME, CHARA_PLAYER) + ", this is not personal matter. If this place becomes a completely forgotten world, then Irva is next. It may not last for another few centuries, perhaps not even a few decades. Sooner or later, there will be no one left in the entire universe who remembers the scenery of Irva. That's why I'm giving you this."), strmore, findchara(CREATURE_ID_MIKRAANESIS)
+	chatMore lang("手はあるさ。" + cdatan(CDATAN_NAME, CHARA_PLAYER) + "、これは他人事ではない。ここが完全に忘れられた世界となってしまえば次はイルヴァの番。何百年、いや何十年と持たないかもしれない。いずれイルヴァの景色を覚えている者は全宇宙上からいなくなってしまうだろう。だから君にこれを渡しておく。", "There is. " + cdatan(CDATAN_NAME, CHARA_PLAYER) + ", this is not a personal matter. If this world is completely forgotten, then Irva is next. At this rate, your own world may not last for another few centuries, perhaps not even a few decades. Sooner or later, there will be no one left in the entire universe who remembers the scenery of Irva. That's why I'm giving you this."), strmore, findchara(CREATURE_ID_MIKRAANESIS)
 	txtef COLOR_GREEN
 	txt lang("[アカシックネットワーク]を手に入れた！", "You obtain the [Akashic Network]!")
 	snd SOUNDLIST_COMPLETE1
-	chatMore lang("今のうちに別世界の観測者たちに記憶を刻み込むことができれば、相手の力を大きく抑制できる。今渡したのは、君が見てきたガイアス・ヴィスの姿を、アストラル光を介してアカシックレコード上に拡散するための干渉機構だ。ネットで公開して記憶保持者を増やし、世界の忘却を遅らせるわけだね。", "If you can imprint your memories on the observers of the other world while there's still time, you can greatly inhibit the Goddess' powers. What I've just given you is an interference mechanism to diffuse the image of Gaius Vis that you've seen onto the Akashic Records using astral light. You're going to publish it to the Network to increase the number of people who retain the memory, thereby delaying the world's oblivion."), strmore, findchara(CREATURE_ID_MIKRAANESIS)
-	chatMore lang("しかしそれが使えるのは神ではなく使う世界に籍を置く定命だ。さらに効果はレコードの所在が近い者…つまり関わりの深い者たちにしか及ばない。だから" + cdatan(CDATAN_NAME, CHARA_PLAYER) + "のような存在が必要だったんだ。ガイアス・ヴィス出身ではなく、各地を渡り歩いていて、廃忘獣の群れを物理的に突破する力を持つ定命が。", "However, it can only be used by those who are intertwined with fate in the world they use it, not by gods. Furthermore, it only affects those who are close to the location of the record - in other words, those who are deeply connected to it. That's why we needed someone like " + cdatan(CDATAN_NAME, CHARA_PLAYER) + ". Someone who is not from Gaius Vis, but has traveled all across the land, and who is destined to hold the power needed to physically break through the hordes of Oblivion Beasts."), strmore, findchara(CREATURE_ID_MIKRAANESIS)
-	chatMore lang("そうか。ああ、ボクはガイアス・ヴィスからイルヴァに渡ってきている立場だから使えないのか…。", "I see. Ahh, so I can't use it because I'm in a position where I've crossed over from Gaius Vis to Irva..."), strmore, findchara(CREATURE_ID_NORNE_THE_GUIDE)
+	chatMore lang("今のうちに別世界の観測者たちに記憶を刻み込むことができれば、相手の力を大きく抑制できる。今渡したのは、君が見てきたガイアス・ヴィスの姿を、アストラル光を介してアカシックレコード上に拡散するための干渉機構だ。ネットで公開して記憶保持者を増やし、世界の忘却を遅らせるわけだね。", "If you can imprint your memories on the observers of the other world while there's still time, you can greatly inhibit the Goddess' powers. What I've just given you is an interference mechanism to diffuse the imagery of Gaius Vis that you've seen onto the Akashic Records using astral light. You're going to publish it to the Network to increase the number of people who retain the memory, thereby delaying the world's oblivion."), strmore, findchara(CREATURE_ID_MIKRAANESIS)
+	chatMore lang("しかしそれが使えるのは神ではなく使う世界に籍を置く定命だ。さらに効果はレコードの所在が近い者…つまり関わりの深い者たちにしか及ばない。だから" + cdatan(CDATAN_NAME, CHARA_PLAYER) + "のような存在が必要だったんだ。ガイアス・ヴィス出身ではなく、各地を渡り歩いていて、廃忘獣の群れを物理的に突破する力を持つ定命が。", "However, it can only be used by those who are intertwined with fate in the world they use it, not by gods. Furthermore, it only affects those who are close to the location of the record - in other words, those who are deeply connected to it. That's why we needed someone like you, " + cdatan(CDATAN_NAME, CHARA_PLAYER) + " - someone who is not from Gaius Vis, but has traveled all across the land, and who is destined to hold the power needed to physically break through the hordes of oblivion beasts."), strmore, findchara(CREATURE_ID_MIKRAANESIS)
+	chatMore lang("そうか。ああ、ボクはガイアス・ヴィスからイルヴァに渡ってきている立場だから使えないのか…。", "I see. Ahh, so I can't use it because I crossed over from Gaius Vis to Irva a long time ago..."), strmore, findchara(CREATURE_ID_NORNE_THE_GUIDE)
 	chatMore lang("ノルンにもやってもらうことはあるよ。地道に、一人でも多く、あちら側の世界の人々に伝えるんだ。何度忘れ去られても伝え続けなさい、このガイアス・ヴィスの物語を。人々の記憶こそが世界を保つ力となるからね。", "There are still plenty of things I'll be having you do, Norn. You'll need to work hard at getting the word out to as many people in the other world as you can. Keep telling the story of Gaius Vis, no matter how many times it is forgotten. It is the memory of the people that will become the power to save the world."), strmore, findchara(CREATURE_ID_MIKRAANESIS)
 	chatMore lang("でもボクは、今までもイルヴァの人々に何度か話しています。それでも獣は侵攻を止めなかった…。", "But I've already told the people of Irva several times before. Even then, the beasts didn't stop their invasion..."), strmore, findchara(CREATURE_ID_NORNE_THE_GUIDE)
-	chatMore lang("効果が薄かったのは、今までアカシックネットワークの媒体がいなかったからね。大丈夫。君の頑張りは無駄にならないよ。", "The reason it wasn't as effective as it could have been is because we've never had a medium for the Akashic Network before. Do not worry. Your hard work will not be in vain."), strmore, findchara(CREATURE_ID_MIKRAANESIS)
-	chatMore lang("…さて、長話ですまなかったね" + cdatan(CDATAN_NAME, CHARA_PLAYER) + "。君には少し難解だったかな？それでも、もう一つだけ。別件だよ。", "...Anyway, I apologize for the long-winded explanation, " + cdatan(CDATAN_NAME, CHARA_PLAYER) + ". Perhaps it was a tad too difficult for you to understand. But besides that, I have one more thing to tell you. It's a different matter."), strmore, findchara(CREATURE_ID_MIKRAANESIS)
-	chatMore lang("混沌の真の目覚めが近づいているね。神の間に再び赴き、決着をつけるのが君の宿命だ。", "The true awakening of Chaos is upon us. It is your destiny to return to the Eternal Seal and settle the score."), strmore, findchara(CREATURE_ID_MIKRAANESIS)
+	chatMore lang("効果が薄かったのは、今までアカシックネットワークの媒体がいなかったからね。大丈夫。君の頑張りは無駄にならないよ。", "The reason it wasn't as effective as it could have been is because we've never had a proper medium for the Akashic Network before. Do not worry. Your hard work will not be in vain."), strmore, findchara(CREATURE_ID_MIKRAANESIS)
+	chatMore lang("…さて、長話ですまなかったね" + cdatan(CDATAN_NAME, CHARA_PLAYER) + "。君には少し難解だったかな？それでも、もう一つだけ。別件だよ。", "...Anyway, I apologize for the long-winded explanation, " + cdatan(CDATAN_NAME, CHARA_PLAYER) + ". Perhaps it was a little too difficult for you to understand. But besides that, I have one more thing to tell you. It concerns a different matter entirely."), strmore, findchara(CREATURE_ID_MIKRAANESIS)
+	chatMore lang("混沌の真の目覚めが近づいているね。神の間に再び赴き、決着をつけるのが君の宿命だ。", "The true awakening of Chaos is upon us. It is your destiny to return to the Eternal Seal and put an end to it, once and for all."), strmore, findchara(CREATURE_ID_MIKRAANESIS)
 	redraw 0
 	gosub *screen_draw
 	gosub *screen_fade
