@@ -19,7 +19,7 @@
 #endif
 
 #uselib "hspext_ext.dll"
-#func gfini "_gfini@16" bmscr, int, int, int
+#func _gfini "_gfini@16" bmscr, int, int, int
 #func gfdec "_gfdec@16" int, int, int, int
 #func gfdec2 "_gfdec2@16" int, int, int, int
 #func gfinc "_gfinc@16" int, int, int, int
@@ -29,7 +29,7 @@
 #func apledit "_apledit@16" var, int, int, prefstr
 
 #uselib "elona.dll"
-#func _grotate "_grotate@16" pexinfo, nullptr, nullptr, nullptr
+#func __grotate "_grotate@16" pexinfo, nullptr, nullptr, nullptr
 
 #uselib "z.hpi"
 #func zOpen "_zOpen@16" var, str, int, int
@@ -113,6 +113,8 @@
 #func ImmReleaseContext "ImmReleaseContext" sptr, sptr
 #func ImmSetOpenStatus "ImmSetOpenStatus" sptr, sptr
 #cfunc ImmGetOpenStatus "ImmGetOpenStatus" sptr
+
+#include "highdpi.hsp"
 
 #define global VARIANT_NAME "ElonaPlus Custom-GX 2.06fix.1.0"
 #define global VARIANT_TITLE "Elona+ Custom-GX 2.06fix.1.0"

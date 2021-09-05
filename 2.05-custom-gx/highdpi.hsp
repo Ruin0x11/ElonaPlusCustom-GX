@@ -1,0 +1,637 @@
+// HIGHDPI モジュール
+// by natade
+// license NYSL
+//
+// 解説
+//  高DPIのディスプレイでも、自動スケーリングされずに表示できるモジュールです。
+//  内部を見るとわかるとおり、既存の命令を置き換えて、位置、サイズの補正をしています。
+//  全ての、命令を置き換えているわけではないので、必要に応じて増やしてください。（適当）
+// 
+// 使い方
+//  出来る限り最初に、includeしてください。
+//  include すると、高DPIが有効化されます。
+//  起動時に最初に表示される「screen 0」も、必ずscreen命令で改めて初期化してください。
+//  ディスプレイの設定から、「拡大縮小とレイアウト」で「100%」から変更し、
+//  サインアウト、サインインで表示のテストができます。
+
+#ifndef HIGHDPI_Initialize
+
+#module __HIGH_DPI__
+
+#uselib "user32.dll"
+#cfunc HIGHDPI_SetProcessDPIAware "SetProcessDPIAware"
+
+#uselib "gdi32.dll"
+#cfunc HIGHDPI_GetDeviceCaps "GetDeviceCaps" int,int
+#define HIGHDPI_LOGPIXELSX 88
+#define HIGHDPI_LOGPIXELSY 90
+
+#uselib "kernel32.dll"
+#cfunc HIGHDPI_GetVersionEx "GetVersionExA" int
+
+#define DEFAULT_DPI	(96.0)
+
+#deffunc HIGHDPI_callSetProcessDPIAware local HIGHDPI_STAT, local tOSVERSIONINFO
+	dim tOSVERSIONINFO, 37
+	tOSVERSIONINFO.0 = 148
+	HIGHDPI_STAT = HIGHDPI_GetVersionEx(varptr(tOSVERSIONINFO))
+	// (少し荒い判定方法だが・・・)
+	if(tOSVERSIONINFO.1 >= 6) {
+		// Vista 以上
+		HIGHDPI_STAT = HIGHDPI_SetProcessDPIAware()
+	}
+	return
+
+#deffunc HIGHDPI_Initialize double dpi, int smooth_mode, local HIGHDPI_STAT, local DPI_X, local DPI_Y
+	HIGHDPI_callSetProcessDPIAware
+	if(dpi < 0.01) {
+		dpi = 1.0
+	}
+	DPI_X = HIGHDPI_GetDeviceCaps(hdc, HIGHDPI_LOGPIXELSX)
+	DPI_Y = HIGHDPI_GetDeviceCaps(hdc, HIGHDPI_LOGPIXELSY)
+	DPI_X = dpi * DPI_X
+	DPI_Y = dpi * DPI_Y
+	HIGHDPI_RATE_X = double(DPI_X) / DEFAULT_DPI
+	HIGHDPI_RATE_IX = 1.0 / HIGHDPI_RATE_X
+	HIGHDPI_RATE_Y = double(DPI_Y) / DEFAULT_DPI
+	HIGHDPI_RATE_IY = 1.0 / HIGHDPI_RATE_Y
+	HIGHDPI_SMOOTH_MODE = smooth_mode
+	return
+
+#define global ctype HIGHDPI_X(%1) int(double(%1) * HIGHDPI_RATE_X@__HIGH_DPI__)
+#define global ctype HIGHDPI_Y(%1) int(double(%1) * HIGHDPI_RATE_Y@__HIGH_DPI__)
+#define global ctype HIGHDPI_X_INV(%1) int(double(%1) * HIGHDPI_RATE_IX@__HIGH_DPI__)
+#define global ctype HIGHDPI_Y_INV(%1) int(double(%1) * HIGHDPI_RATE_IY@__HIGH_DPI__)
+
+#define global HIGHDPI_DEF_STR "def"
+#define global HIGHDPI_DEF 0xF1234567
+
+#define global HIGHDPI_ginfo_cx ginfo(22)
+#define global HIGHDPI_ginfo_cy ginfo(23)
+#define global HIGHDPI_ginfo_sx ginfo(26)
+#define global HIGHDPI_ginfo_sy ginfo(27)
+
+#undef ginfo_winx
+#define global ginfo_winx HIGHDPI_X_INV(ginfo(12))
+#undef ginfo_winy
+#define global ginfo_winy HIGHDPI_Y_INV(ginfo(13))
+#undef ginfo_cx
+#define global ginfo_cx HIGHDPI_X_INV(ginfo(22))
+#undef ginfo_cy
+#define global ginfo_cy HIGHDPI_Y_INV(ginfo(23))
+#undef ginfo_sx
+#define global ginfo_sx HIGHDPI_X_INV(ginfo(26))
+#undef ginfo_sy
+#define global ginfo_sy HIGHDPI_Y_INV(ginfo(27))
+
+#undef mousex
+#define global mousex HIGHDPI_X_INV(mousex@HSP)
+#undef mousey
+#define global mousey HIGHDPI_Y_INV(mousey@HSP)
+
+#defcfunc HIGHDPI_sizeof var soVar, local HSPCTX, local PVALptr, local PVAL, local sizeofval
+	// kz3さんのbufsize関数を参考
+	// http://hspwiki.tm.land.to/ 小ワザ/ポインタを使ってのあれこれ
+	mref HSPCTX,68
+	dupptr PVALptr,HSPCTX(207),4,4
+	dupptr PVAL,PVALptr,48,4
+	dupptr sizeofval,PVAL(7)-16,4,4
+	return sizeofval
+
+#undef screen
+#define global\
+	screen(%1=HIGHDPI_DEF,%2=HIGHDPI_DEF,%3=HIGHDPI_DEF,%4=HIGHDPI_DEF,%5=HIGHDPI_DEF,%6=HIGHDPI_DEF,%7=HIGHDPI_DEF,%8=HIGHDPI_DEF) \
+	HIGHDPI_screen %1, %2, %3, %4, %5, %6, %7, %8
+#deffunc HIGHDPI_screen\
+	int p1, int p2, int p3, int p4, int p5, int p6, int p7, int p8,\
+	local _p1, local _p2, local _p3, local _p4, local _p5, local _p6, local _p7, local _p8
+	_p1 = p1
+	_p2 = HIGHDPI_X(p2)
+	_p3 = HIGHDPI_Y(p3)
+	_p4 = p4
+	_p5 = HIGHDPI_X(p5)
+	_p6 = HIGHDPI_Y(p6)
+	_p7 = HIGHDPI_X(p7)
+	_p8 = HIGHDPI_Y(p8)
+	if(p1 == HIGHDPI_DEF) : _p1 = 0
+	if(p2 == HIGHDPI_DEF) : _p2 = HIGHDPI_X(640)
+	if(p3 == HIGHDPI_DEF) : _p3 = HIGHDPI_Y(480)
+	if(p4 == HIGHDPI_DEF) : _p4 = 0
+	if(p5 == HIGHDPI_DEF) : _p5 = -1
+	if(p6 == HIGHDPI_DEF) : _p6 = -1
+	if(p7 == HIGHDPI_DEF) : _p7 = _p2
+	if(p8 == HIGHDPI_DEF) : _p8 = _p3
+	screen@HSP _p1, _p2, _p3, _p4, _p5, _p6, _p7, _p8
+	HIGHDPI_setScreenDefaultFont
+	return
+
+#undef chgdisp
+#define global\
+	chgdisp(%1=HIGHDPI_DEF,%2=HIGHDPI_DEF,%3=HIGHDPI_DEF) \
+	HIGHDPI_chgdisp %1, %2, %3
+#deffunc HIGHDPI_chgdisp\
+	int p1, int p2, int p3,\
+	local _p1, local _p2, local _p3
+	_p1 = p1
+	_p2 = HIGHDPI_X(p2)
+	_p3 = HIGHDPI_Y(p3)
+	if(p1 == HIGHDPI_DEF) : _p1 = 0
+	if(p2 == HIGHDPI_DEF) : _p2 = HIGHDPI_X(640)
+	if(p3 == HIGHDPI_DEF) : _p3 = HIGHDPI_Y(480)
+	chgdisp@HSP _p1, _p2, _p3
+	return
+
+#undef bgscr
+#define global\
+	bgscr(%1=HIGHDPI_DEF,%2=HIGHDPI_DEF,%3=HIGHDPI_DEF,%4=HIGHDPI_DEF,%5=HIGHDPI_DEF,%6=HIGHDPI_DEF,%7=HIGHDPI_DEF,%8=HIGHDPI_DEF) \
+	HIGHDPI_bgscr %1, %2, %3, %4, %5, %6, %7, %8
+#deffunc HIGHDPI_bgscr\
+	int p1, int p2, int p3, int p4, int p5, int p6, int p7, int p8,\
+	local _p1, local _p2, local _p3, local _p4, local _p5, local _p6, local _p7, local _p8
+	_p1 = p1
+	_p2 = HIGHDPI_X(p2)
+	_p3 = HIGHDPI_Y(p3)
+	_p4 = p4
+	_p5 = HIGHDPI_X(p5)
+	_p6 = HIGHDPI_Y(p6)
+	_p7 = HIGHDPI_X(p7)
+	_p8 = HIGHDPI_Y(p8)
+	if(p1 == HIGHDPI_DEF) : _p1 = 0
+	if(p2 == HIGHDPI_DEF) : _p2 = HIGHDPI_X(640)
+	if(p3 == HIGHDPI_DEF) : _p3 = HIGHDPI_Y(480)
+	if(p4 == HIGHDPI_DEF) : _p4 = 0
+	if(p5 == HIGHDPI_DEF) : _p5 = -1
+	if(p6 == HIGHDPI_DEF) : _p6 = -1
+	if(p7 == HIGHDPI_DEF) : _p7 = _p2
+	if(p8 == HIGHDPI_DEF) : _p8 = _p3
+	bgscr@HSP _p1, _p2, _p3, _p4, _p5, _p6, _p7, _p8
+	HIGHDPI_setScreenDefaultFont
+	return
+
+#undef buffer
+#define global\
+	buffer(%1=HIGHDPI_DEF,%2=HIGHDPI_DEF,%3=HIGHDPI_DEF,%4=HIGHDPI_DEF)\
+	HIGHDPI_buffer %1, %2, %3, %4
+#deffunc HIGHDPI_buffer\
+	int p1, int p2, int p3, int p4,\
+	local _p1, local _p2, local _p3, local _p4
+	_p1 = p1
+	_p2 = HIGHDPI_X(p2)
+	if ( _p2 <= 0 ) {
+		_p2 = 1
+	}
+	_p3 = HIGHDPI_Y(p3)
+	if ( _p3 <= 0 ) {
+		_p3 = 1
+	}
+	_p4 = p4
+	if(p1 == HIGHDPI_DEF) : _p1 = 0
+	if(p2 == HIGHDPI_DEF) : _p2 = HIGHDPI_X(640)
+	if(p3 == HIGHDPI_DEF) : _p3 = HIGHDPI_Y(480)
+	if(p4 == HIGHDPI_DEF) : _p4 = 0
+	buffer@HSP _p1, _p2, _p3, _p4
+	HIGHDPI_setScreenDefaultFont
+	return
+
+#undef width
+#define global\
+	width(%1=HIGHDPI_DEF,%2=HIGHDPI_DEF,%3=HIGHDPI_DEF,%4=HIGHDPI_DEF)\
+	HIGHDPI_width %1, %2, %3, %4
+#deffunc HIGHDPI_width\
+	int p1, int p2, int p3, int p4,\
+	local _p1, local _p2, local _p3, local _p4
+	_p1 = HIGHDPI_X(p1)
+	_p2 = HIGHDPI_Y(p2)
+	_p3 = p3
+	_p4 = p4
+	if(p1 == HIGHDPI_DEF) : _p1 = -1
+	if(p2 == HIGHDPI_DEF) : _p2 = -1
+	if(p3 == HIGHDPI_DEF) : _p3 = -1
+	if(p4 == HIGHDPI_DEF) : _p4 = -1
+	width@HSP _p1, _p2, _p3, _p4
+	return
+
+#undef pos
+#define global\
+	pos(%1=HIGHDPI_DEF,%2=HIGHDPI_DEF)\
+	HIGHDPI_pos %1, %2
+#deffunc HIGHDPI_pos\
+	int p1, int p2,\
+	local _p1, local _p2
+	_p1 = HIGHDPI_X(p1)
+	_p2 = HIGHDPI_Y(p2)
+	if(p1 == HIGHDPI_DEF) : _p1 = HIGHDPI_ginfo_cx
+	if(p2 == HIGHDPI_DEF) : _p2 = HIGHDPI_ginfo_cy
+	pos@HSP _p1, _p2
+	return
+
+#undef pset
+#define global\
+	pset(%1=HIGHDPI_DEF,%2=HIGHDPI_DEF)\
+	HIGHDPI_pset %1, %2
+#deffunc HIGHDPI_pset\
+	int p1, int p2,\
+	local _p1, local _p2
+	_p1 = HIGHDPI_X(p1)
+	_p2 = HIGHDPI_Y(p2)
+	if(p1 == HIGHDPI_DEF) : _p1 = HIGHDPI_ginfo_cx
+	if(p2 == HIGHDPI_DEF) : _p2 = HIGHDPI_ginfo_cy
+	pset@HSP _p1, _p2
+	return
+
+#undef pget
+#define global\
+	pget(%1=HIGHDPI_DEF,%2=HIGHDPI_DEF)\
+	HIGHDPI_pget %1, %2
+#deffunc HIGHDPI_pget\
+	int p1, int p2,\
+	local _p1, local _p2
+	_p1 = HIGHDPI_X(p1)
+	_p2 = HIGHDPI_Y(p2)
+	if(p1 == HIGHDPI_DEF) : _p1 = HIGHDPI_ginfo_cx
+	if(p2 == HIGHDPI_DEF) : _p2 = HIGHDPI_ginfo_cy
+	pget@HSP _p1, _p2
+	return
+
+#undef boxf
+#define global\
+	boxf(%1=HIGHDPI_DEF,%2=HIGHDPI_DEF,%3=HIGHDPI_DEF,%4=HIGHDPI_DEF)\
+	HIGHDPI_boxf %1, %2, %3, %4
+#deffunc HIGHDPI_boxf\
+	int p1, int p2, int p3, int p4,\
+	local _p1, local _p2, local _p3, local _p4
+	_p1 = HIGHDPI_X(p1)
+	_p2 = HIGHDPI_Y(p2)
+	_p3 = HIGHDPI_X(p3)
+	_p4 = HIGHDPI_Y(p4)
+	if(p1 == HIGHDPI_DEF) : _p1 = 0
+	if(p2 == HIGHDPI_DEF) : _p2 = 0
+	if(p3 == HIGHDPI_DEF) : _p3 = HIGHDPI_ginfo_sx
+	if(p4 == HIGHDPI_DEF) : _p4 = HIGHDPI_ginfo_sy
+	boxf@HSP _p1, _p2, _p3, _p4
+	return
+
+#undef line
+#define global\
+	line(%1=HIGHDPI_DEF,%2=HIGHDPI_DEF,%3=HIGHDPI_DEF,%4=HIGHDPI_DEF)\
+	HIGHDPI_line %1, %2, %3, %4
+#deffunc HIGHDPI_line\
+	int p1, int p2, int p3, int p4,\
+	local _p1, local _p2, local _p3, local _p4
+	_p1 = HIGHDPI_X(p1)
+	_p2 = HIGHDPI_Y(p2)
+	_p3 = HIGHDPI_X(p3)
+	_p4 = HIGHDPI_Y(p4)
+	if(p1 == HIGHDPI_DEF) : _p1 = 0
+	if(p2 == HIGHDPI_DEF) : _p2 = 0
+	if(p3 == HIGHDPI_DEF) : _p3 = HIGHDPI_ginfo_cx
+	if(p4 == HIGHDPI_DEF) : _p4 = HIGHDPI_ginfo_cy
+	line@HSP _p1, _p2, _p3, _p4
+	return
+
+#undef font
+#define global\
+	font(%1=HIGHDPI_DEF_STR,%2=HIGHDPI_DEF,%3=HIGHDPI_DEF)\
+	HIGHDPI_font %1, %2, %3
+#deffunc HIGHDPI_font\
+	str fontname, int p1, int p2,\
+	local lhdFontName, local _p1, local _p2,\
+	local BMSCR, local lfFaceName
+	lhdFontName	= fontname
+	_p1 = HIGHDPI_Y(p1)
+	_p2 = p2
+	mref BMSCR, 67 // フォント名を取得
+	sdim lfFaceName, 64
+	dupptr lfFaceName, varptr(BMSCR.56), 32, vartype("str")
+	if(fontname == HIGHDPI_DEF_STR) : lhdFontName = lfFaceName
+	if(p1 == HIGHDPI_DEF) : _p1 = HIGHDPI_Y(12) // lfHeight = BMSCR.32 で現在設定中のフォントサイズ
+	if(p2 == HIGHDPI_DEF) : _p2 = 0
+	if ( HIGHDPI_SMOOTH_MODE ) {
+		_p2 |= font_antialias
+	}
+	font@HSP fontname, _p1, _p2
+	return
+
+#undef objsize
+#define global\
+	objsize(%1=HIGHDPI_DEF,%2=HIGHDPI_DEF,%3=HIGHDPI_DEF)\
+	HIGHDPI_objsize %1, %2, %3
+#deffunc HIGHDPI_objsize\
+	int p1, int p2, int p3,\
+	local _p1, local _p2, local _p3
+	_p1 = HIGHDPI_X(p1)
+	_p2 = HIGHDPI_Y(p2)
+	_p3 = HIGHDPI_Y(p3)
+	if(p1 == HIGHDPI_DEF) : _p1 = HIGHDPI_X(64)
+	if(p2 == HIGHDPI_DEF) : _p2 = HIGHDPI_Y(32)
+	if(p3 == HIGHDPI_DEF) : _p3 = 0
+	objsize@HSP _p1, _p2, _p3
+	return
+
+#undef input
+#define global\
+	input(%1,%2=HIGHDPI_DEF,%3=HIGHDPI_DEF,%4=HIGHDPI_DEF)\
+	HIGHDPI_input %1, %2, %3, %4
+#deffunc HIGHDPI_input\
+	var p1, int p2, int p3, int p4,\
+	local _p2, local _p3, local _p4,\
+	local BMSCR, local _ox, local _oy
+	_p2 = HIGHDPI_X(p2)
+	_p3 = HIGHDPI_Y(p3)
+	_p4 = p4
+	mref BMSCR, 67 // objsize 情報を取得
+	_ox = BMSCR.29
+	_oy = BMSCR.30
+	if(p2 == HIGHDPI_DEF) : _p2 = _ox
+	if(p3 == HIGHDPI_DEF) : _p3 = _oy
+	if(p4 == HIGHDPI_DEF) {
+		if(vartype(p1) != vartype("str")) {
+			_p4 = 32
+		} else {
+			_p4 = HIGHDPI_sizeof(p1)
+		}
+	}
+	input@HSP p1, _p2, _p3, _p4
+	return
+
+#undef mesbox
+#define global\
+	mesbox(%1,%2=HIGHDPI_DEF,%3=HIGHDPI_DEF,%4=HIGHDPI_DEF,%5=HIGHDPI_DEF)\
+	HIGHDPI_mesbox %1, %2, %3, %4, %5
+#deffunc HIGHDPI_mesbox\
+	var p1, int p2, int p3, int p4, int p5,\
+	local _p2, local _p3, local _p4, local _p5,\
+	local BMSCR, local _ox, local _oy
+	_p2 = HIGHDPI_X(p2)
+	_p3 = HIGHDPI_Y(p3)
+	_p4 = p4
+	_p5 = p5
+	mref BMSCR, 67 // objsize 情報を取得
+	_ox = BMSCR.29
+	_oy = BMSCR.30
+	if(p2 == HIGHDPI_DEF) : _p2 = _ox
+	if(p3 == HIGHDPI_DEF) : _p3 = _oy
+	if(p4 == HIGHDPI_DEF) : _p4 = 1
+	if(p5 == HIGHDPI_DEF) : _p5 = -1
+	mesbox@HSP p1, _p2, _p3, _p4, _p5
+	return
+
+#undef listbox
+#define global\
+	listbox(%1,%2=HIGHDPI_DEF,%3)\
+	HIGHDPI_listbox %1, %2, %3
+#deffunc HIGHDPI_listbox\
+	var p1, int p2, str p3,\
+	local _p2
+	_p2 = HIGHDPI_Y(p2)
+	if(p2 == HIGHDPI_DEF) : _p2 = HIGHDPI_Y(100)
+	listbox@HSP p1, _p2, p3
+	return
+
+#undef combox
+#define global\
+	combox(%1,%2=HIGHDPI_DEF,%3)\
+	HIGHDPI_combox %1, %2, %3
+#deffunc HIGHDPI_combox\
+	var p1, int p2, str p3,\
+	local _p2
+	_p2 = HIGHDPI_Y(p2)
+	if(p2 == HIGHDPI_DEF) : _p2 = HIGHDPI_Y(100)
+	combox@HSP p1, _p2, p3
+	return
+
+#undef gmode
+#define global\
+	gmode(%1=HIGHDPI_DEF,%2=HIGHDPI_DEF,%3=HIGHDPI_DEF,%4=HIGHDPI_DEF)\
+	HIGHDPI_gmode %1, %2, %3, %4
+#deffunc HIGHDPI_gmode\
+	int p1, int p2, int p3, int p4,\
+	local _p1, local _p2, local _p3, local _p4
+	_p1 = p1
+	_p2 = HIGHDPI_X(p2)
+	_p3 = HIGHDPI_Y(p3)
+	_p4 = p4
+	if(p1 == HIGHDPI_DEF) : _p1 = 0
+	if(p2 == HIGHDPI_DEF) : _p2 = HIGHDPI_X(32)
+	if(p3 == HIGHDPI_DEF) : _p3 = HIGHDPI_Y(32)
+	if(p4 == HIGHDPI_DEF) : _p4 = 0
+	gmode@HSP _p1, _p2, _p3, _p4
+	return
+
+#undef gcopy
+#define global\
+	gcopy(%1=HIGHDPI_DEF,%2=HIGHDPI_DEF,%3=HIGHDPI_DEF,%4=HIGHDPI_DEF,%5=HIGHDPI_DEF)\
+	HIGHDPI_gcopy %1, %2, %3, %4, %5
+#deffunc HIGHDPI_gcopy\
+	int p1, int p2, int p3, int p4, int p5,\
+	local _p1, local _p2, local _p3, local _p4, local _p5,\
+	local BMSCR, local _gx, local _gy
+	_p1 = p1
+	_p2 = HIGHDPI_X(p2)
+	_p3 = HIGHDPI_Y(p3)
+	_p4 = HIGHDPI_X(p4)
+	_p5 = HIGHDPI_Y(p5)
+	mref BMSCR, 67 // gmode 情報を取得
+	_gx = BMSCR.33
+	_gy = BMSCR.34
+	if(p1 == HIGHDPI_DEF) : _p1 = 0
+	if(p2 == HIGHDPI_DEF) : _p2 = 0
+	if(p3 == HIGHDPI_DEF) : _p3 = 0
+	if(p4 == HIGHDPI_DEF) : _p4 = _gx
+	if(p5 == HIGHDPI_DEF) : _p5 = _gy
+	gcopy@HSP _p1, _p2, _p3, _p4, _p5
+	return
+
+#undef gzoom
+#define global\
+	gzoom(%1=HIGHDPI_DEF,%2=HIGHDPI_DEF,%3=HIGHDPI_DEF,%4=HIGHDPI_DEF,%5=HIGHDPI_DEF,%6=HIGHDPI_DEF,%7=HIGHDPI_DEF,%8=HIGHDPI_DEF)\
+	HIGHDPI_gzoom %1, %2, %3, %4, %5, %6, %7, %8
+#deffunc HIGHDPI_gzoom\
+	int p1, int p2, int p3, int p4, int p5, int p6, int p7, int p8,\
+	local _p1, local _p2, local _p3, local _p4, local _p5, local _p6, local _p7, local _p8,\
+	local BMSCR, local _gx, local _gy, local _gw, local _gh
+	_p1 = HIGHDPI_X(p1)
+	_p2 = HIGHDPI_Y(p2)
+	_p3 = p3
+	_p4 = HIGHDPI_X(p4)
+	_p5 = HIGHDPI_Y(p5)
+	_p6 = HIGHDPI_X(p6)
+	_p7 = HIGHDPI_Y(p7)
+	_p8 = _p8
+	mref BMSCR, 67 // gmode 情報を取得
+	_gx = BMSCR.33
+	_gy = BMSCR.34
+	_gw = BMSCR.1
+	_gh = BMSCR.2
+	if(p1 == HIGHDPI_DEF) : _p1 = _gx
+	if(p2 == HIGHDPI_DEF) : _p2 = _gy
+	if(p3 == HIGHDPI_DEF) : _p3 = 0
+	if(p4 == HIGHDPI_DEF) : _p4 = 0
+	if(p5 == HIGHDPI_DEF) : _p5 = 0
+	if(p6 == HIGHDPI_DEF) : _p6 = _gw
+	if(p7 == HIGHDPI_DEF) : _p7 = _gh
+	if(p8 == HIGHDPI_DEF) : _p8 = 0
+	gzoom@HSP _p1, _p2, _p3, _p4, _p5, _p6, _p7, _p8
+	return
+
+#undef grotate
+#define global\
+	grotate(%1=HIGHDPI_DEF,%2=HIGHDPI_DEF,%3=HIGHDPI_DEF,%4=HIGHDPI_DEF,%5=HIGHDPI_DEF,%6=HIGHDPI_DEF)\
+	HIGHDPI_grotate %1, %2, %3, %4, %5, %6
+#deffunc HIGHDPI_grotate\
+	int p1, int p2, int p3, double p4, int p5, int p6,\
+	local _p1, local _p2, local _p3, local _p4, local _p5, local _p6,\
+	local BMSCR, local _gx, local _gy, local _gw, local _gh
+	_p1 = p1
+	_p2 = HIGHDPI_X(p2)
+	_p3 = HIGHDPI_Y(p3)
+	_p4 = p4
+	_p5 = HIGHDPI_X(p5)
+	_p6 = HIGHDPI_Y(p6)
+	mref BMSCR, 67 // gmode 情報を取得
+	_gx = BMSCR.33
+	_gy = BMSCR.34
+	if(p1 == HIGHDPI_DEF) : _p1 = 0
+	if(p2 == HIGHDPI_DEF) : _p2 = 0
+	if(p3 == HIGHDPI_DEF) : _p3 = 0
+	if(p4 == HIGHDPI_DEF) : _p4 = 0.0
+	if(p5 == HIGHDPI_DEF) : _p5 = _gx
+	if(p6 == HIGHDPI_DEF) : _p6 = _gy
+	grotate@HSP _p1, _p2, _p3, _p4, _p5, _p6
+	return
+
+#undef _grotate
+#define global\
+	_grotate(%1=HIGHDPI_DEF,%2=HIGHDPI_DEF,%3=HIGHDPI_DEF,%4=HIGHDPI_DEF,%5=HIGHDPI_DEF,%6=HIGHDPI_DEF)\
+	HIGHDPI__grotate %1, %2, %3, %4, %5, %6
+#deffunc HIGHDPI__grotate\
+	int p1, int p2, int p3, double p4, int p5, int p6,\
+	local _p1, local _p2, local _p3, local _p4, local _p5, local _p6,\
+	local BMSCR, local _gx, local _gy, local _gw, local _gh
+	_p1 = p1
+	_p2 = HIGHDPI_X(p2)
+	_p3 = HIGHDPI_Y(p3)
+	_p4 = p4
+	_p5 = HIGHDPI_X(p5)
+	_p6 = HIGHDPI_Y(p6)
+	mref BMSCR, 67 // gmode 情報を取得
+	_gx = BMSCR.33
+	_gy = BMSCR.34
+	_gw = BMSCR.1
+	_gh = BMSCR.2
+	if(p1 == HIGHDPI_DEF) : _p1 = 0
+	if(p2 == HIGHDPI_DEF) : _p2 = 0
+	if(p3 == HIGHDPI_DEF) : _p3 = 0
+	if(p4 == HIGHDPI_DEF) : _p4 = 0.0
+	if(p5 == HIGHDPI_DEF) : _p5 = _gw
+	if(p6 == HIGHDPI_DEF) : _p6 = _gh
+	__grotate@ _p1, _p2, _p3, _p4, _p5, _p6
+	return
+
+#undef gfini
+#define global\
+	gfini(%1=HIGHDPI_DEF,%2=HIGHDPI_DEF)\
+	HIGHDPI_gfini %1, %2
+#deffunc HIGHDPI_gfini\
+	int p1, int p2,\
+	local _p1, local _p2,\
+	local BMSCR, local _gw, local _gh
+	_p1 = HIGHDPI_X(p1)
+	_p2 = HIGHDPI_Y(p2)
+	mref BMSCR, 67 // gmode 情報を取得
+	_gw = BMSCR.1
+	_gh = BMSCR.2
+	if(p1 == HIGHDPI_DEF) : _p1 = _gw
+	if(p2 == HIGHDPI_DEF) : _p2 = _gh
+	_gfini@ _p1, _p2
+	return
+
+#undef picload
+#define global\
+	picload(%1=HIGHDPI_DEF,%2=HIGHDPI_DEF)\
+	HIGHDPI_picload %1, %2
+#deffunc HIGHDPI_picload\
+	str p1, int p2,\
+	local _p1, local _p2,\
+	local BMSCR, local _gbuf, local _gw, local _gh
+	_p1 = p1
+	_p2 = p2
+	mref BMSCR, 67 // gmode 情報を取得
+	_gbuf = BMSCR.18
+	if(p1 == HIGHDPI_DEF) : _p1 = _p1
+	if(p2 == HIGHDPI_DEF) : _p2 = 0
+	if ( _p2 == 0 | _p2 == 2 ) {
+		// buffer will be reinitialized with actual image size,
+		// so we need to reallocate the buffer at scaled size
+		picload@HSP _p1, _p2
+		mref BMSCR, 67 // gmode 情報を取得
+		_gbuf = BMSCR.18 // get current buffer
+		_gw = BMSCR.1 // get image dimensions
+		_gh = BMSCR.2
+		buffer@HSP _gbuf, HIGHDPI_X(_gw), HIGHDPI_Y(_gh)
+		picload@HSP _p1, 1
+		gzoom@HSP HIGHDPI_X(_gw), HIGHDPI_Y(_gh), _gbuf, 0, 0, _gw, _gh, HIGHDPI_SMOOTH_MODE
+	} else {
+		buffer@HSP 100000 // scratch buffer for copying image
+		picload@HSP _p1, 0
+		mref BMSCR, 67 // gmode 情報を取得
+		_gw = BMSCR.1 // get image dimensions
+		_gh = BMSCR.2
+		gsel@HSP _gbuf
+		gzoom@HSP HIGHDPI_X(_gw), HIGHDPI_Y(_gh), 100000, 0, 0, _gw, _gh, HIGHDPI_SMOOTH_MODE
+	}
+	return
+
+#undef winobj
+#define global\
+	winobj(%1,%2,%3=HIGHDPI_DEF,%4=HIGHDPI_DEF,%5=HIGHDPI_DEF,%6=HIGHDPI_DEF,%7=HIGHDPI_DEF,%8=HIGHDPI_DEF)\
+	HIGHDPI_winobj %1, %2, %3, %4, %5, %6, %7, %8
+#deffunc HIGHDPI_winobj\
+	str winobj_class, str winobj_title, int p1, int p2, int p3, int p4, int p5, int p6,\
+	local _p1, local _p2, local _p3, local _p4, local _p5, local _p6,\
+	local BMSCR, local _ox, local _oy
+	_p1 = p1
+	_p2 = p2
+	_p3 = HIGHDPI_X(p3)
+	_p4 = HIGHDPI_Y(p4)
+	_p5 = p5
+	_p6 = p6
+	mref BMSCR, 67 // objsize 情報を取得
+	_ox = BMSCR.29
+	_oy = BMSCR.30
+	if(p1 == HIGHDPI_DEF) : _p1 = 0
+	if(p2 == HIGHDPI_DEF) : _p2 = 0
+	if(p3 < 0) : _p3 = _ox
+	if(p4 < 0) : _p4 = _oy
+	if(p5 == HIGHDPI_DEF) : _p5 = 0
+	if(p6 == HIGHDPI_DEF) : _p6 = 0
+	winobj@HSP winobj_class, winobj_title, _p1, _p2, _p3, _p4, _p5, _p6
+	return
+
+#undef axobj
+#define global\
+	axobj(%1,%2,%3=HIGHDPI_DEF,%4=HIGHDPI_DEF)\
+	HIGHDPI_axobj %1, %2, %3, %4
+#deffunc HIGHDPI_axobj\
+	var p1, str axobj_iid, int p2, int p3,\
+	local _p2, local _p3
+	_p2 = HIGHDPI_X(p2)
+	_p3 = HIGHDPI_Y(p3)
+	if(p2 == HIGHDPI_DEF) : _p2 = HIGHDPI_ginfo_sx
+	if(p3 == HIGHDPI_DEF) : _p3 = HIGHDPI_ginfo_sy
+	axobj@HSP p1, axobj_iid, _p2, _p3
+	return
+
+#deffunc HIGHDPI_setScreenDefaultFont local BMSCR, local lfHeight
+	mref BMSCR, 67
+	lfHeight = BMSCR.32
+	font "ＭＳ ゴシック", lfHeight
+	// screen作成時のデフォルトは「FixedSys」になっているが、
+	// フォントのサイズが用意されていないため「ＭＳ ゴシック」とする
+	return
+
+#global
+
+HIGHDPI_Initialize 1.0
+
+#endif

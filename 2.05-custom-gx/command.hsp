@@ -1646,9 +1646,9 @@
 			break
 		}
 		noteget s, p
-		gmesx = wx + 40
-		gmesy = wy + 66 + cnt * 19 + 2
-		gmesw = 600
+		gmesx = HIGHDPI_X(wx + 40)
+		gmesy = HIGHDPI_Y(wy + 66 + cnt * 19 + 2)
+		gmesw = HIGHDPI_X(600)
 		gmescol = 30, 30, 30
 		gmestype = 0
 		pos wx + 54, wy + 66 + cnt * 19 + 2
@@ -1727,9 +1727,9 @@
 			break
 		}
 		noteget s, p
-		gmesx = wx + 40
-		gmesy = wy + 66 + cnt * 19 + 2
-		gmesw = 600
+		gmesx = HIGHDPI_X(wx + 40)
+		gmesy = HIGHDPI_Y(wy + 66 + cnt * 19 + 2)
+		gmesw = HIGHDPI_X(600)
 		gmescol = 30, 30, 30
 		gmestype = 0
 		pos wx + 54, wy + 66 + cnt * 19 + 2
@@ -9809,18 +9809,18 @@
 	else {
 		if ( cbit(CHARA_BIT_PCC, cc) == 1 ) {
 			if ( cfg_pcc_show == 0 ) {
+				pos wx + 276, wy + 126
+				gmode 2, 32, 48
+			}
+			if ( cfg_pcc_show == 1 ) {
 				pos wx + 276, wy + 130
 				gmode 2, 32, 48
 			}
-			if ( cfg_pcc_show == 1 ) {
-				pos wx + 280, wy + 130
-				gmode 2, 32, 48
-			}
 			if ( cfg_pcc_show == 0 ) {
-				grotate 10 + cc, f / 4 \ 4 * 32, f / 16 \ 4 * 48, 0, 32, 48
+				grotate 10 + cc, f / 4 \ 4 * 32, f / 16 \ 4 * 48, 0, 48, 80
 			}
 			if ( cfg_pcc_show == 1 ) {
-				grotate 10 + cc, f / 4 \ 4 * 32, f / 16 \ 4 * 48, 0, 48, 80
+				grotate 10 + cc, f / 4 \ 4 * 32, f / 16 \ 4 * 48, 0, 32, 48
 			}
 		}
 		else {
@@ -9956,7 +9956,9 @@
 			}
 		}
 	}
-	create_pcpic cc, 0
+	if ( p ) {
+		create_pcpic cc, 0
+	}
 	if ( key == key_cancel ) {
 		create_pcpic cc, 1
 		return 0
@@ -10012,18 +10014,18 @@
 	}
 	window2 wx + 234, wy + 60, 88, 120, 1, 1
 	if ( cfg_pcc_show == 0 ) {
+		pos wx + 276, wy + 116
+		gmode 2, 32, 48
+	}
+	if ( cfg_pcc_show == 1 ) {
 		pos wx + 276, wy + 120
 		gmode 2, 32, 48
 	}
-	if ( cfg_pcc_show == 1 ) {
-		pos wx + 280, wy + 120
-		gmode 2, 32, 48
-	}
 	if ( cfg_pcc_show == 0 ) {
-		grotate 10 + cc, f / 4 \ 4 * 32, f / 16 \ 4 * 48, 0, 32, 48
+		grotate 10 + cc, f / 4 \ 4 * 32, f / 16 \ 4 * 48, 0, 48, 80
 	}
 	if ( cfg_pcc_show == 1 ) {
-		grotate 10 + cc, f / 4 \ 4 * 32, f / 16 \ 4 * 48, 0, 48, 80
+		grotate 10 + cc, f / 4 \ 4 * 32, f / 16 \ 4 * 48, 0, 32, 48
 	}
 	gmode 2
 	font lang(cfg_font1, cfg_font2), 14 - en * 2, 0

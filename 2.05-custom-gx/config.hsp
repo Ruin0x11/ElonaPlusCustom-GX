@@ -110,6 +110,8 @@
 	dup key_mode2, key_buff(63)
 	dup key_itemstack, key_buff(64)
 	sdim jkey, 2, 12
+	cfg_highdpi_scaling = 1.0
+	cfg_highdpi_smoothing = FALSE
 	return
 
 *config_loadCore
@@ -134,6 +136,14 @@
 		cfgRead "windowY.", windowy = int(rtvaln)
 		cfgRead "windowW.", windoww = int(rtvaln)
 		cfgRead "windowH.", windowh = int(rtvaln)
+
+		/********** RUIN0X11 CUSTOM - BEGINNING **********/ // High DPI options
+
+		cfgRead "highDPIScaling.", cfg_highdpi_scaling = double(rtvaln)
+		cfgRead "highDPISmoothing.", cfg_highdpi_smoothing = int(rtvaln) == 1
+
+		/********** RUIN0X11 CUSTOM - ENDING **********/
+
 		cfgRead "clockX.", inf_clockx = int(rtvaln)
 		cfgRead "clockW.", inf_clockw = int(rtvaln)
 		cfgRead "clockH.", inf_clockh = int(rtvaln)
@@ -500,9 +510,9 @@
 	}
 	if ( submenu == 2 ) {
 		q = lang("画面と音の設定", "Screen & Sound")
-		s = lang("サウンドの再生*", "Sound*"), lang("midiの再生*", "Music*"), lang("画面モード*", "Screen Mode*"), lang("画面の大きさ*", "Screen Resolution*"), lang("スクロール", "Smooth Scroll"), lang("主人公中心に描写", "Always Center"), lang("心臓の音", "Heartbeat Sound"), lang("攻撃時アニメ", "Attack Animation"), lang("天候エフェクト", "Weather Effect"), lang("光源の描写", "Lighting"), lang("アイテムの影描写", "Object Shadow"), lang("PCC表示", "PCC show"), ""
+		s = lang("サウンドの再生*", "Sound*"), lang("midiの再生*", "Music*"), lang("画面モード*", "Screen Mode*"), lang("画面の大きさ*", "Screen Resolution*"), lang("高ＤＰＩスケール*", "High DPI Scaling*"), lang("高ＤＰＩスムージング*", "High DPI Smoothing*"), lang("スクロール", "Smooth Scroll"), lang("主人公中心に描写", "Always Center"), lang("心臓の音", "Heartbeat Sound"), lang("攻撃時アニメ", "Attack Animation"), lang("天候エフェクト", "Weather Effect"), lang("光源の描写", "Lighting"), lang("アイテムの影描写", "Object Shadow"), lang("PCC表示", "PCC show"), ""
 		dx = 440
-		dy = 370
+		dy = 410
 	}
 	if ( submenu == 3 ) {
 		q = lang("ネット機能の設定", "Network Setting")
@@ -712,34 +722,41 @@
 				mes "" + windoww2 + " * " + windowh2
 			}
 			if ( cnt == 4 ) {
-				s = lang("しない", "No"), lang("する", "Yes")
-				mes s(cfg_scroll)
+				mes "" + strf("%.1f", cfg_highdpi_scaling)
 			}
 			if ( cnt == 5 ) {
 				s = lang("しない", "No"), lang("する", "Yes")
-				mes s(cfg_alwayscenter)
+				mes s(cfg_highdpi_smoothing)
 			}
 			if ( cnt == 6 ) {
+				s = lang("しない", "No"), lang("する", "Yes")
+				mes s(cfg_scroll)
+			}
+			if ( cnt == 7 ) {
+				s = lang("しない", "No"), lang("する", "Yes")
+				mes s(cfg_alwayscenter)
+			}
+			if ( cnt == 8 ) {
 				s = lang("再生しない", "Don't play"), lang("再生する", "Play")
 				mes s(cfg_heart)
 			}
-			if ( cnt == 7 ) {
+			if ( cnt == 9 ) {
 				s = lang("アニメなし", "No"), lang("主人公のみ", "Only PC"), lang("味方側のみ", "Only Ally"), lang("全員あり", "All")
 				mes s(cfg_attackanime)
 			}
-			if ( cnt == 8 ) {
+			if ( cnt == 10 ) {
 				s = lang("アニメなし", "No animation"), lang("アニメあり", "Always")
 				mes s(cfg_env)
 			}
-			if ( cnt == 9 ) {
+			if ( cnt == 11 ) {
 				s = lang("高画質", "High"), lang("低画質", "Low")
 				mes s(cfg_shadow)
 			}
-			if ( cnt == 10 ) {
+			if ( cnt == 12 ) {
 				s = lang("なし（高速）", "No(Fast)"), lang("あり（低速）", "Yes(Slow)")
 				mes s(cfg_objectshadow)
 			}
-			if ( cnt == 11 ) {
+			if ( cnt == 13 ) {
 				s = lang("原寸表示", "Full-size"), lang("縮小表示", "Reduced")
 				mes s(cfg_pcc_show)
 			}
@@ -1169,6 +1186,36 @@
 				goto *com_config_loop
 			}
 			if ( cs == 4 ) {
+				cfg_highdpi_scaling += double(p) * 0.1
+				if ( cfg_highdpi_scaling > 2.0 ) {
+					cfg_highdpi_scaling = 2.0
+				}
+				else {
+					if ( cfg_highdpi_scaling < 1.0 ) {
+						cfg_highdpi_scaling = 1.0
+					}
+				}
+				snd SOUNDLIST_OK1
+				valn = "highDPIScaling.", str(cfg_highdpi_scaling)
+				gosub *cfg_write
+				goto *com_config_loop
+			}
+			if ( cs == 5 ) {
+				cfg_highdpi_smoothing += p
+				if ( cfg_highdpi_smoothing > 1 ) {
+					cfg_highdpi_smoothing = 1
+				}
+				else {
+					if ( cfg_highdpi_smoothing < 0 ) {
+						cfg_highdpi_smoothing = 0
+					}
+				}
+				snd SOUNDLIST_OK1
+				valn = "highDPISmoothing.", str(cfg_highdpi_smoothing)
+				gosub *cfg_write
+				goto *com_config_loop
+			}
+			if ( cs == 6 ) {
 				cfg_scroll += p
 				if ( cfg_scroll > 1 ) {
 					cfg_scroll = 1
@@ -1183,7 +1230,7 @@
 				gosub *cfg_write
 				goto *com_config_loop
 			}
-			if ( cs == 5 ) {
+			if ( cs == 7 ) {
 				cfg_alwayscenter += p
 				if ( cfg_alwayscenter > 1 ) {
 					cfg_alwayscenter = 1
@@ -1198,7 +1245,7 @@
 				gosub *cfg_write
 				goto *com_config_loop
 			}
-			if ( cs == 6 ) {
+			if ( cs == 8 ) {
 				cfg_heart += p
 				if ( cfg_heart > 1 ) {
 					cfg_heart = 1
@@ -1213,7 +1260,7 @@
 				gosub *cfg_write
 				goto *com_config_loop
 			}
-			if ( cs == 7 ) {
+			if ( cs == 9 ) {
 				cfg_attackanime += p
 				if ( cfg_attackanime > 3 ) {
 					cfg_attackanime = 3
@@ -1228,7 +1275,7 @@
 				gosub *cfg_write
 				goto *com_config_loop
 			}
-			if ( cs == 8 ) {
+			if ( cs == 10 ) {
 				cfg_env += p
 				if ( cfg_env > 1 ) {
 					cfg_env = 1
@@ -1243,7 +1290,7 @@
 				gosub *cfg_write
 				goto *com_config_loop
 			}
-			if ( cs == 9 ) {
+			if ( cs == 11 ) {
 				cfg_shadow += p
 				if ( cfg_shadow > 1 ) {
 					cfg_shadow = 1
@@ -1258,7 +1305,7 @@
 				gosub *cfg_write
 				goto *com_config_loop
 			}
-			if ( cs == 10 ) {
+			if ( cs == 12 ) {
 				cfg_objectshadow += p
 				if ( cfg_objectshadow > 1 ) {
 					cfg_objectshadow = 1
@@ -1273,7 +1320,7 @@
 				gosub *cfg_write
 				goto *com_config_loop
 			}
-			if ( cs == 11 ) {
+			if ( cs == 13 ) {
 				cfg_pcc_show += p
 				if ( cfg_pcc_show > 1 ) {
 					cfg_pcc_show = 1
