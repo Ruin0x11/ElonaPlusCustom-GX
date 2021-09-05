@@ -1,5 +1,5 @@
 #packopt type 0
-#packopt name "elochat"
+#packopt name "elochatCGX"
 #cmpopt varname 1
 
 	goto *init
@@ -144,11 +144,11 @@
 	exist "server.txt"
 	if ( strsize != (-1) ) {
 		noteload "server.txt"
-		netBuff = serverList
 	}
 	else {
-		netBuff = "elochat.nori.agency%elochat.nori.agency%"
+		serverList = "elochat.yeek.agency%elochat.yeek.agency%"
 	}
+	netBuff = serverList
 ;	netProcess serverListUrl
 	p=instr(netBuff,0,"%"):server1=strmid(netBuff,0,p):server2=strmid(netBuff,p+1,instr(netBuff,p+1,"%"))
 	notesave "server.txt"
