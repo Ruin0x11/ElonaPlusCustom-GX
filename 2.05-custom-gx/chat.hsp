@@ -225,7 +225,7 @@
 		if ( cdata(CDATA_ID, tc) == CREATURE_ID_ALFRED_THE_CANGNAN_WIND & gdata(GDATA_FLAG_MAIN_CHAOS_CRADLE_25) >= 1000 & gdata(GDATA_AREA) == AREA_CHAOS_CRADLE & cdata(CDATA_ALLIED, tc) == 0 ) {
 			cdata(CDATA_CONDITION_DIM, tc) = 0
 			chatMore "(" + name(tc) + lang("は錆びた鈴の音に反応して目を開けた", " is stunned.") + ")"
-			chatMore lang("この…鈴の音は…ランカータ…？なぜ…ここ…に。いや、違う…！", "Is that a bell I hear... Lankata is that you? Why would he be here...? No wait, it couldn't be!")
+			chatMore lang("この…鈴の音は…ランカータ…？なぜ…ここ…に。いや、違う…！", "Is that a bell I hear... Lankata, is that you? Why would he be here...? No wait, it couldn't be!")
 		}
 	}
 	if ( cdata(CDATA_CONDITION_DIM, tc) > 60 ) {
@@ -238,10 +238,10 @@
 	}
 	if ( cdata(CDATA_ID, tc) == CREATURE_ID_ALFRED_THE_CANGNAN_WIND & gdata(GDATA_AREA) == AREA_CHAOS_CRADLE & gdata(GDATA_LEVEL) == 173 & cdata(CDATA_ALLIED, tc) == 0 ) {
 		chatMore lang("誰…ですか…貴方…は？", "W-Who... who are you?")
-		chatMore lang("冒険者が…ここまで？私は…どれだけの時間…気絶…していた！？", "An adventurer out here? How much time do I have left before I'll drop?!")
-		chatMore lang("私の、身体…ですか？はは…。", "You mean my body? Haha...")
-		chatMore lang("次元炉…を無理矢理身体に埋め込んで…反動を…薬物で強化した肉体…で抑え込んでいましたが…この有様ですよ。ぐっ！？", "The dimensional reactor inflicts a state in the body similar to some sort of drug and strengthens it!?")
-		chatMore lang("ボロボロに…なった筋肉を…引き裂いて…フレームが嫌な…音を立てていますね…！", "Oww, I'm so worn out and I think pulled a muscle... That frame sure is unpleasant and noisy!")
+		chatMore lang("冒険者が…ここまで？私は…どれだけの時間…気絶…していた！？", "An adventurer... down here? Just how long have I been unconscious for...?!")
+		chatMore lang("私の、身体…ですか？はは…。", "...My body? Haha, about that...")
+		chatMore lang("次元炉…を無理矢理身体に埋め込んで…反動を…薬物で強化した肉体…で抑え込んでいましたが…この有様ですよ。ぐっ！？", "I forced the dimensional furnace... into my body... and suppressed the recoil... with my drug-enhanced flesh... but... I've ended up like this. Guh!")
+		chatMore lang("ボロボロに…なった筋肉を…引き裂いて…フレームが嫌な…音を立てていますね…！", "This frame sure is... making an unpleasant noise... as it tears through... my tattered muscles...!")
 		if ( gdata(GDATA_FLAG_MAIN_CHAOS_CRADLE_30) == 4 & gdata(GDATA_FLAG_MAIN_CHAOS_CRADLE_25) < 1000 ) {
 			goto *chat_unique_lankata
 		}
@@ -865,7 +865,7 @@
 				gdata(GDATA_FLAG_SUB_MISSION_FROM_GARZIEM)++
 				chatMore lang("おっと。お前が艦長の推薦でやってきた新入りか。わからないことがあったらリーダーの俺にちゃんと聞くんだぞ。", "Ah, so you're the new guy the captain recommended. If you've got any questions, ask me. I'm the leader of this joint.")
 				chatList 1, lang("ＡＢＣの内容を教えてください", "Please tell me about each of the jobs.")
-				chatList 0, lang("暴走機械がいるって聞いたんですけど", "I heard there was a runaway machine.")
+				chatList 0, lang("暴走機械がいるって聞いたんですけど", "I heard there were some malfunctioning machines.")
 				buff = lang("さっそくだがお前の仕事の割り当ては、仕事Ａ：" + gdata(GDATA_FLAG_WORK_A_REMAINING) + "、仕事Ｂ：" + gdata(GDATA_FLAG_WORK_B_REMAINING) + "、仕事Ｃ：" + gdata(GDATA_FLAG_WORK_C_REMAINING) + "だ。頼むぞ。", "I'll cut to the chase. Here's your work assignment. Work A: " + gdata(GDATA_FLAG_WORK_A_REMAINING) + " units. Work B: " + gdata(GDATA_FLAG_WORK_B_REMAINING) + " units. Work C:" + gdata(GDATA_FLAG_WORK_C_REMAINING) + " units. Get to it.")
 				chatesc = 0
 				gosub *chat_select
@@ -5352,7 +5352,7 @@
 	}
 	if ( _switch_val == CREATURE_ID_SILVIA_THE_PRINCESS | _switch_sw ) {
 		_switch_sw = 0
-		if ( gdata(GDATA_FLAG_SUB_herself) == 1000 ) {
+		if ( gdata(GDATA_FLAG_SUB_FALLEN_PRINCESS) == 1000 ) {
 			chatMore lang("ああ…エウリュピデス、私を置いてどこに行ってたの！体が疼いてしょうがないわ。もう、我慢できないのよ！", "Oh... Eurypides, what have you done to me?! My body aches without your touch. I can't stand it anymore!")
 			chatMore lang("あなたと合体したい…。", "I want to become one with you..."), lang("やめて！", "Stop!")
 			gosub *sexsex
@@ -6545,12 +6545,12 @@
 		_switch_sw = 0
 		if ( gdata(GDATA_AREA) == AREA_CHAOS_CRADLE ) {
 			if ( gdata(GDATA_FLAG_MAIN) >= 630 ) {
-				chatMore lang("今思うと、イトコのフロンとリアにも来てもらうべきでしたね。下見ついでに混沌の神も倒せて一石二鳥だったかもしれません。", "Now that I think about it, I should have asked my cousins Fron and Leah to come too. We could have killed two birds with one stone by defeating the God of Chaos while also having ourselves a look around."), strbye
+				chatMore lang("今思うと、イトコのフロンとリアにも来てもらうべきでしたね。下見ついでに混沌の神も倒せて一石二鳥だったかもしれません。", "Now that I think about it, I should have asked my cousins Fron and Leah to come along also. We could have killed two birds with one stone by defeating the God of Chaos while also having ourselves a tour of the place."), strbye
 				goto *chat_end
 			}
 			else {
-				chatMore lang("妹のエールと一緒にツアーの下見に来たんですが、ここで貧弱なお客様を守りながら戦うのは至難の業ですね…。", "I came here with my younger sister Yale to preview the tour in advance, but it's extremely difficult to fight while protecting these frail customers...")
-				chatMore lang("というか、妹がどんどん先に行くのではぐれてしまいました。か弱い姉を置きざりにするなんてどんな判断だ！", "In fact, I got separated from my sister because she kept going on ahead of me. What on earth was she thinking, leaving her weak and helpless big sis behind like that!"), strbye
+				chatMore lang("妹のエールと一緒にツアーの下見に来たんですが、ここで貧弱なお客様を守りながら戦うのは至難の業ですね…。", "I came here with my younger sister Aile to do a dry run of the tour, but it's extremely difficult to fight while protecting these frail customers...")
+				chatMore lang("というか、妹がどんどん先に行くのではぐれてしまいました。か弱い姉を置きざりにするなんてどんな判断だ！", "In fact, I got separated from my sister because she kept going on ahead of me. What on earth was she thinking, leaving her weak and helpless big sis behind!"), strbye
 				gdata(GDATA_FLAG_MAIN) = 630
 				goto *chat_end
 			}
@@ -6565,12 +6565,12 @@
 		_switch_sw = 0
 		if ( gdata(GDATA_AREA) == AREA_CHAOS_CRADLE ) {
 			if ( gdata(GDATA_FLAG_MAIN) >= 650 ) {
-				chatMore lang("ネフィア探索は添乗員の専門外なんですけどねぇ…。", "This guide doesn't know where Nefia are..."), strbye
+				chatMore lang("ネフィア探索は添乗員の専門外なんですけどねぇ…。", "Nefia expeditions aren't this tour guide's area of expertise..."), strbye
 				goto *chat_end
 			}
 			else {
-				chatMore lang("うーん。気が付いたらお姉ちゃんがいない…。", "Well when she notices it, she'll be gone already...")
-				chatMore lang("お姉ちゃんは昔から私達の中でもどんくさい感じでしたので。ちんたらしてて迷子になったんでしょうね。やれやれ。", "My sister has always been the dunce of our family. She must have gotten lost from lazing around somewhere. Oh, what a bother..."), strbye
+				chatMore lang("うーん。気が付いたらお姉ちゃんがいない…。", "Hmmm. All of a sudden, my sister is nowhere to be found...")
+				chatMore lang("お姉ちゃんは昔から私達の中でもどんくさい感じでしたので。ちんたらしてて迷子になったんでしょうね。やれやれ。", "My older sister has always been the dunce of the family. She must have gotten herself lost by deciding to take a nice little stroll somewhere. What a bother..."), strbye
 				gdata(GDATA_FLAG_MAIN) = 650
 				goto *chat_end
 			}
@@ -6600,7 +6600,7 @@
 		if ( gdata(GDATA_FLAG_MAIN) >= 1010 ) {
 			if ( gdata(GDATA_FLAG_DIALOG_LEOLD) < 300 ) {
 				gdata(GDATA_FLAG_DIALOG_LEOLD) = 300
-				chatMore lang("…っ！！", "*gasp*")
+				chatMore lang("…っ！！", "*gasp*!")
 				chatMore lang("遅いぞ" + cdatan(CDATAN_NAME, CHARA_PLAYER) + "。無事だったなら、もっと早く顔を見せてくれ。こっちはお前が灰になるところまでしか見ていないんだからな。", "Where the hell were you, " + cdatan(CDATAN_NAME, CHARA_PLAYER) + "? If you're safe, show your face sooner. The last time any of us saw you was the moment you turned to ashes.")
 				chatMore lang("あんなボロボロになっても諦めず神に挑むなんて、お前は馬鹿だ。最高の馬鹿だよ全く。", "You're a damn fool for challenging God to the end like that after nearly getting beaten to death. You're the greatest damn fool who ever lived, I tell you!")
 				chatMore lang("俺も諦めずにやってみるさ。AO-Iの有用性を示し、再生産の予算を勝ち取る！その暁にはお前に見せたいものもあるからな、気長に待っていてくれ。", "I'm not about to give up on my own ventures, either. I'm going to prove that AO-I is a useful invention and raise enough funding to produce a complete replica! And when I do, I'll have big something to show you, so look forward to it.")
@@ -7054,8 +7054,8 @@
 	if ( _switch_val == CREATURE_ID_GETUEI_THE_NINJA_MASTER | _switch_sw ) {
 		_switch_sw = 0
 		if ( gdata(GDATA_AREA) == AREA_CHAOS_CRADLE ) {
-			chatMore lang("才能はあるのに修行を嫌がって何度も家出するもんだから、わざわざ死亡工作までして忍を抜けさせてやったというのに。まさか遊びながら我流で俺より強くなってしまうとはな…。お兄ちゃんは泣きたいぞ。立つ瀬がないぞ。", "My little sister has a lot of talent, but she doesn't want to train and runs away from home again and again. I even went to the trouble of faking her death so that she could leave the Shinobi world. But I never imagined that she would become stronger than me and even develop her own style of Ninjutsu just by playing around... Some big brother I turned out to be.")
-			chatMore lang("…まぁ。反抗期の酷かった妹が、こうして俺を頼ってくれたのはすごく嬉しいがな！お兄ちゃん頑張っちゃうぞ。", "...Well, at least my sister, who was once that rebellious little youngster, has come to rely on me like this! I'm so happy! As her older brother, I'm going to do my best."), strbye
+			chatMore lang("才能はあるのに修行を嫌がって何度も家出するもんだから、わざわざ死亡工作までして忍を抜けさせてやったというのに。まさか遊びながら我流で俺より強くなってしまうとはな…。お兄ちゃんは泣きたいぞ。立つ瀬がないぞ。", "My little sister was very talented, but she didn't want to train and kept running away from home. I even went to the trouble of faking her death so that she could leave the Shinobi world. Yet, I never imagined that she would eventually become stronger than me just from playing around. She even developed her own unique style of Ninjutsu... Some big brother I turned out to be.")
+			chatMore lang("…まぁ。反抗期の酷かった妹が、こうして俺を頼ってくれたのはすごく嬉しいがな！お兄ちゃん頑張っちゃうぞ。", "...Well, at least my sister, who was once that rebellious little kid, has come to rely on me like this! I'm so happy! As her older brother, I'm going to do my best."), strbye
 			goto *chat_end
 		}
 		goto *chat_end
@@ -8185,7 +8185,7 @@
 		if ( gdata(GDATA_AREA) == AREA_AIMWELL ) {
 			if ( gdata(GDATA_FLAG_MAIN) == 780 ) {
 				chatMore lang("君は今！ガイアス・ヴィスへの第一歩を踏み出した！", "You have - right now! - taken the first step towards Gaius Vis!")
-				chatMore lang("ここまで長かった…この世界ではまだ1年程度しか経っていないけれど、ボクはループ込みで10年以上対応にあたっていたんだ。ようやく君という因子を見つけて連れてくることができたよ。", "It has taken so long... In this world it has only been about a year, but because of the loops, I've been dealing with this for over 10 years by now. Finally, I've managed to find you, the crucial factor in all of this, and have managed to bring you here.")
+				chatMore lang("ここまで長かった…この世界ではまだ1年程度しか経っていないけれど、ボクはループ込みで10年以上対応にあたっていたんだ。ようやく君という因子を見つけて連れてくることができたよ。", "It has taken so long... In this world it has only been about a year, but because of the loops, I've been dealing with this for over 10 years by now. Finally, I've managed to find you, the Decisive Factor, and have managed to bring you here.")
 				chatMore lang("うーん。でもまだ君の認識が次元を超えて追いついていないみたいだね。おそらく君の目には、多くのものがイルヴァのものに置き換わって見えるだろう。", "Hmmm... But it seems that your perception has not caught up with you across dimensions yet. Perhaps, in your eyes, many things here will appear to be replaced by things you've seen in Irva.")
 				chatMore lang("さて…見る限り、依然として廃忘獣がはびこっているようだね…。あのお方は大丈夫だろうか。一緒に探しに行こう！", "Well... as far as I can see, it seems this place is still crawling with oblivion beasts... I wonder if that girl is okay. Let's go look for her together!")
 				chatMore lang("えっ。あのお方が誰かって？ああ、まだ説明してなかったっけ。", "Eh? Who's \"that girl\", you say? Oh, right. I haven't explained that part yet.")
@@ -8224,13 +8224,13 @@
 		}
 		if ( gdata(GDATA_AREA) == AREA_CHAOS_CRADLE ) {
 			if ( gdata(GDATA_FLAG_MAIN) >= 525 ) {
-				chatMore lang("その時が来たら、君にも協力してもらいたいと思っているんだ。そしてガイアス・ヴィスの話も憶えておいてほしい。人も世界も、完全に忘れられた時に本当の死を迎えるのだから。", "When the time comes, I'd like for you to cooperate with me too. And I want you to learn more of Gaius Vis. For people and different worlds, death only truly comes when you've been completely forgotten."), strbye
+				chatMore lang("その時が来たら、君にも協力してもらいたいと思っているんだ。そしてガイアス・ヴィスの話も憶えておいてほしい。人も世界も、完全に忘れられた時に本当の死を迎えるのだから。", "When the time comes, I hope that you'll also be able to help me. And I want you to learn more of Gaius Vis. For people and different worlds, death only truly comes when you've been completely forgotten."), strbye
 			}
 			if ( gdata(GDATA_FLAG_MAIN) == 520 ) {
-				chatMore lang("いやぁ、君が宇宙人の相手をしてくれてようやく解放されたよ。それじゃあ本題について話すよ。…君には真の脅威について知っておいて欲しいんだ。", "Finally you've got the space man out of my hair. Let's talk for a minute... I'd like for you to know the true threat.")
-				chatMore lang("実は、ボクはこの世界の出身じゃない。ガイアス・ヴィスという別世界から来たんだ。妖精族の中でもエルンと呼ばれる特別な種族で、あちら側では訛ってエルフとも呼ばれていたよ。", "To be honest, I'm not from this world. I'm from a world known as Gaius Vis. In my world, there's a special race of fairy known as Elun, also known there by the name of Elves.")
+				chatMore lang("いやぁ、君が宇宙人の相手をしてくれてようやく解放されたよ。それじゃあ本題について話すよ。…君には真の脅威について知っておいて欲しいんだ。", "Finally you've got the space man out of my hair. Let's talk for a minute... I want you to know about what's truly threatening this world.")
+				chatMore lang("実は、ボクはこの世界の出身じゃない。ガイアス・ヴィスという別世界から来たんだ。妖精族の中でもエルンと呼ばれる特別な種族で、あちら側では訛ってエルフとも呼ばれていたよ。", "I'm not actually from this world - I came from a different world known as Gaius Vis. In my world, there's a special race of fairy known as Elun, also known there by the name of Elves.")
 				chatMore lang("ガイアス・ヴィスはこのイルヴァの姉妹世界。同じようにエーテルの風が吹き、人々は異形の森を排除しようとしていた。けれどその矢先、突如として現れた忘却の化身に侵略され、世界のおよそ95％が記憶ごと存在消滅しガイアス・ヴィスは滅んだ。消滅した部分には何があったのか、どんな人々が暮らしていたのか、ボクにももう思い出せない。", "Gaius Vis is a sister world to Irva. It also has the Etherwind, and a group that wanted to destroy the Heretical Forest. But suddenly, Gaius Vis was invaded by the avatar of Oblivion, utterly obliterating the existence of 95% of the world. Gaius Vis collapsed.")
-				chatMore lang("そんな時、絶望するボクの前に現れたのがあのお方だったんだ！ボクはあのお方の力を借りて時間を巻き戻し、運命を変えようと努力した。イレギュラーと成り得る旅人を何人も導き、何度も共に戦った。戦いの中で、ボクの先祖である運命の女神ノルンの力も覚醒した。同じ女神の血統を持つ巨人族・小人族の末裔とも協力した。", "It was then that \"he\" appeared before me! I borrowed his power and rewound time, attempting to change fate. I guided many adventurers with the potential to become anomalies, and fought together with them many times. In these fights, the power of my ancestor, the Goddess of Destiny Norne, awoke within me. I worked together with the dwarves and giants, both of whom also shared my lineage.")
+				chatMore lang("そんな時、絶望するボクの前に現れたのがあのお方だったんだ！ボクはあのお方の力を借りて時間を巻き戻し、運命を変えようと努力した。イレギュラーと成り得る旅人を何人も導き、何度も共に戦った。戦いの中で、ボクの先祖である運命の女神ノルンの力も覚醒した。同じ女神の血統を持つ巨人族・小人族の末裔とも協力した。", "It was then that \"he\" appeared before me! I borrowed his power and rewound time, attempting to change fate. I guided many adventurers with the potential to become Irregulars, and fought together with them many times. In these fights, the power of my ancestor, the Goddess of Destiny Norne, awoke within me. I worked together with the dwarves and giants, both of whom also shared my lineage.")
 				chatMore lang("でも何千回繰り返してもダメだった！なんとか街ひとつとその周囲を含むごく一部の地域の存在は守れた程度で、消滅する運命にある世界の大半には干渉すらできなかった。導いた旅人たちはどこへも行けず、疲弊し、考えるのをやめ、最後はいつも忘却の海へと消えていった。君にわかるかい、この絶望が。この怒りが。", "But no matter how many times we fought, the destiny of the world could not be changed! Somehow I was able to protect a single town and its surroundings, but the vast majority of the world couldn't be saved from extinction. The adventurers I had led could do nothing, eventually giving up and themselves fading into oblivion as everything else had done. Can you understand my despair? My anger?")
 				chatMore lang("そしてボクはあのお方から聞いた。イルヴァという姉妹世界も忘却の化身に狙われていると。ガイアス・ヴィスの悲劇を繰り返してはいけない。そう思ったボクらはこちら側に移り住み、迎撃準備を始めた。忘却の化身に滅ぼされたいくつもの世界から生存者をかき集め、運命変革因子として揃えた。", "And then \"he\" told me. The sister world of Irva was also to be targeted by the avatar of Oblivion. I cannot allow the tragedy of Gaius Vis to be repeated. With that singular purpose in my heart, I came to this world and began preparing to counter the invasion. I gathered surviving individuals from many worlds destroyed by the avatar of Oblivion, using them as a bid to alter fate.")
 				chatMore lang("そうして奴らの尖兵を撃退することには成功したんだ。一匹は完全に抹殺し、一匹はエウダーナの老魔導士が支配して制御に成功した。残り一匹、死にぞこないがサウスティリスに潜伏しているみたいだけど、あれはもう本来の力を取り戻せないから大丈夫だよ。", "The repelling of their vanguard was a success. One was killed entirely, and the other successfully dominated by a mage from Eulderna. One remains hidden away in South Tyris, but since he cannot regain his original power, it's not a concern.")
@@ -8866,12 +8866,12 @@
 			}
 		}
 		if ( gdata(GDATA_FLAG_MAIN) == 690 ) {
-			chatMore lang("決戦因子は君に決まったんだね。テスカトリポカが認めたなら大丈夫だろう。", "You've been chosen as the deciding factor in this battle. So long as Tezcatlipoca admits that, everything should go smoothly.")
+			chatMore lang("決戦因子は君に決まったんだね。テスカトリポカが認めたなら大丈夫だろう。", "So you've been chosen as the Decisive Factor. Given that Tezcatlipoca has recognized your prowess, I am confident that you will succeed.")
 			chatList 1, lang("仕方がない", "I guess I have no choice.")
 			chatList 2, lang("はい喜んで", "My pleasure.")
 			chatList 3, lang("報酬は出るの？", "Will I be rewarded?")
 			chatList 4, lang("嫌です", "I don't want to.")
-			buff = lang("もし神の間が崩壊して混沌の神が出てきたら、神々も定命ももれなく混沌に取り込まれ、世界は蹂躙され全ての秩序は失われてしまうだろう。もちろん討伐を引き受けてくれるね？", "If the Eternal Seal collapses and the God of Chaos escapes, the gods and mortals will all be engulfed by Chaos, the world will be overrun, and all order will be lost. Of course, you'll be the one to to defeat him, right?")
+			buff = lang("もし神の間が崩壊して混沌の神が出てきたら、神々も定命ももれなく混沌に取り込まれ、世界は蹂躙され全ての秩序は失われてしまうだろう。もちろん討伐を引き受けてくれるね？", "If the Eternal Seal collapses and the God of Chaos escapes, the gods and mortals will all be engulfed by Chaos, the world will be overrun, and all order will be lost. Of course, you'll be the one to to stop him, right?")
 			chatesc = 0
 			gosub *chat_select
 			if ( chatval == 4 ) {
@@ -8893,11 +8893,11 @@
 			gosub *chat_select
 			gdata(STARTING_GDATA_FLAG + 352) = chatval
 			if ( chatval == 5 ) {
-				chatMore lang("神には神の仕事ルールがあってそれに縛られることになるよ。個神には大した権限もない。自由と引き換えてでも秩序維持のために働きたいのなら話は別だけど、それでも君の一生を全うしてからの方がいいだろうね。とにかくおすすめしないね。", "Gods have their own set of workplace rules, so you'll be bound by them. Individual gods don't have much authority - that is, unless you want to continually work to maintain order in exchange for your freedom. But even then, it's probably better to wait until you've lived your whole life before deciding to sit in god's chair. Anyway, I wouldn't recommend it.")
+				chatMore lang("神には神の仕事ルールがあってそれに縛られることになるよ。個神には大した権限もない。自由と引き換えてでも秩序維持のために働きたいのなら話は別だけど、それでも君の一生を全うしてからの方がいいだろうね。とにかくおすすめしないね。", "Gods have their own set of business rules, and you'd be subject to following them. Individual gods don't have much authority - that is, unless you want to continually work to maintain order in exchange for your freedom. But even then, it's probably better to wait until you've lived your whole life before deciding to sit in god's chair. Anyway, I wouldn't recommend it.")
 				goto *chat_end
 			}
 			if ( chatval == 6 ) {
-				chatMore lang("そんなことを言って、相手の反応が知りたいだけだろう？そのくらいは本で読んで知っているよ。神をからかってはいけないね。", "All you'd want out of saying such a thing is to know how the other party will react, right? I know that much from reading a few books. You shouldn't poke fun at a god, you know.")
+				chatMore lang("そんなことを言って、相手の反応が知りたいだけだろう？そのくらいは本で読んで知っているよ。神をからかってはいけないね。", "You're just saying that to see how I'd react, right? I know that much from reading a few books. You shouldn't poke fun at a god, you know.")
 				goto *chat_end
 			}
 			chatMore lang("なるほど…覚えておくね。", "I see... I'll keep that in mind.")
@@ -8907,10 +8907,10 @@
 			snd SOUNDLIST_COMPLETE1
 			gdata(GDATA_FLAG_MAIN) = 695
 			txt_questupdate
-			chatMore lang("いくら弱っているとはいえ、相手は私達より圧倒的に高い存在級位を有している。物理的にいくら殺しても倒したことにならない。あれほどの存在をアカシックレコードから切り離すには、膨大なアストラル光が必要になるんだ。", "No matter how weak they are, our adversary still possesses a level of existence that is overwhelmingly stronger than ours. No matter how many times we kill them physically, we will never truly be able to defeat them. It would take an enormous amount of astral light to separate a being of that magnitude from the Akashic Records.")
-			chatMore lang("そこで、混沌の神を殺す瞬間…すなわち、相手の存在が最も揺らぐ瞬間に神々全員の神力をマナに逆変換して来光の牙に送る。来光の牙はマナをアストラル光に変換するための装置なんだ。発生したアストラル光によって、奴のアカシックレコードに完全干渉する。", "So, the moment we kill the God of Chaos... that is, the moment when the opponent's existence is most shaken, we will convert the divine power of all the gods back into mana and send it to the Origin of Light. The Origin of Light is a device that converts mana into astral light. The astral light that is generated will completely interfere with their Akashic Records.")
-			chatMore lang("…簡単に説明すると、トドメの際に突き刺せば、完全に消滅させるなり、無力化したうえで闇檻に放り込むなりで処理できるということだね。この突破法の準備に3000年かかったから失敗しないでほしいね。", "...In other words, if you can strike the God of Chaos during that window of opportunity, you can incapacitate or even completely obliterate it, then lock it in the prison of darkness for good. It took me 3,000 years to prepare this breakthrough strategy, so I certainly hope you won't fail.")
-			chatMore lang("…そうだ。あと、これも必要なら持っていくといい。", "...Oh, and also, you can take this with you if you need it.")
+			chatMore lang("いくら弱っているとはいえ、相手は私達より圧倒的に高い存在級位を有している。物理的にいくら殺しても倒したことにならない。あれほどの存在をアカシックレコードから切り離すには、膨大なアストラル光が必要になるんだ。", "No matter how weak he is, our adversary still possesses a level of existence that is overwhelmingly stronger than ours. No matter how many times we kill him physically, we will never truly be able to defeat him. It would take an enormous amount of astral light to separate a being of that magnitude from the Akashic Records.")
+			chatMore lang("そこで、混沌の神を殺す瞬間…すなわち、相手の存在が最も揺らぐ瞬間に神々全員の神力をマナに逆変換して来光の牙に送る。来光の牙はマナをアストラル光に変換するための装置なんだ。発生したアストラル光によって、奴のアカシックレコードに完全干渉する。", "So, the moment we kill the God of Chaos... that is, the moment when his existence is most shaken, we will convert the divine power of all the gods back into mana and send it all to the Origin of Light. The Origin of Light is a device that converts mana into astral light. The astral light that is generated will completely interfere with his Akashic Records.")
+			chatMore lang("…簡単に説明すると、トドメの際に突き刺せば、完全に消滅させるなり、無力化したうえで闇檻に放り込むなりで処理できるということだね。この突破法の準備に3000年かかったから失敗しないでほしいね。", "...In other words, if you can strike the God of Chaos during that window of opportunity, you can incapacitate or even completely obliterate him, then lock him in the prison of darkness for good. It took me 3,000 years to prepare this breakthrough strategy, so I certainly hope you won't fail.")
+			chatMore lang("…そうだ。あと、これも必要なら持っていくといい。", "...Oh, and you can take this with you as well, if you'll be needing it.")
 			flt
 			itemcreate -1, ITEM_ID_HEART_OF_TWILIGHT, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
 			txt_questitem
@@ -8942,9 +8942,9 @@
 				chatMore lang("混沌の神…エンテュメイシス。その正体は…もう一人の私なんだ。", "The God of Chaos... Enthumesis. That identity... is my other self.")
 				chatMore lang("わが父、《深淵のプロパトル》は至高の超越者だった。神としても次元が違うため知覚できないほどのね。末娘だった私は兄や姉に尋ねたが一切の情報が不明。「誰にも知ることができない神」と言っても過言じゃない…。", "My father, \"Prophatorl of The Abyss\", was the greatest transcendent of them all. Even as a god, he was imperceptible because he existed in a different dimension from ours. As the youngest daughter out of my siblings, I asked my older brothers and sisters, but they knew nothing about him. It's no exaggeration to say that he was the \"god that no one could ever know\"...")
 				chatMore lang("それでも…当時の私はどうしても父のことを知りたかった。知識欲の強い娘が、行方不明の父のことを調べようと思うのは仕方がないことだったと思う。", "Even so... at the time, I really wanted to know more about my father. I think it was inevitable that a daughter with such a strong desire for knowledge would want to find out about her missing father.")
-				chatMore lang("知りたいのに知ることができないジレンマが頂点に達した時、暴走した想いが私の中にエンテュメイシスという穢れた人格を作り出した。魂の穢れた私は堕天して地上を彷徨っていたが、兄姉の精神浄化によってエンテュメイシスを分離して帰還することができた。今では父のことを知ろうなんて気持ちは微塵もないね。", "When my dilemma of wanting to know but not being able to finally reached its peak, my runaway thoughts created an unholy personality within me called Enthumesis. My soul was corrupted and I wandered the earth, but through the spiritual purification I received from my siblings, I was able to separate from Enthumesis and return to the heavens. Nowadays, I no longer have even the slightest desire to learn anything more about my father.")
+				chatMore lang("知りたいのに知ることができないジレンマが頂点に達した時、暴走した想いが私の中にエンテュメイシスという穢れた人格を作り出した。魂の穢れた私は堕天して地上を彷徨っていたが、兄姉の精神浄化によってエンテュメイシスを分離して帰還することができた。今では父のことを知ろうなんて気持ちは微塵もないね。", "When my dilemma of wanting to know but not being able to finally reached its peak, my runaway thoughts created an unholy personality within me called Enthumesis. My soul was corrupted and I wandered the earth, but through the spiritual purification I received from my siblings, I was able to separate myself from Enthumesis and return to the heavens. Nowadays, I no longer have even the slightest desire to learn anything more about my father.")
 				chatMore lang("だがエンテュメイシスは私から分離した後も実は消えずに活動していたんだ。人間たちには不死で知りたがりの娼婦として扱われていたようだね。とりあえずは無害だと判断されていたのだけれど、神々の大戦中、エンテュメイシスは牙を剥いた。", "But actually, Enthumesis was still active after I separated from them. It seems that the humans treated them as an immortal harlot with an unending thirst for knowledge. For the time being, they were deemed harmless, but during the War of the Gods, Enthumesis revealed their true nature.")
-				chatMore lang("あれはまるで本から知識を取り込むかのように、大戦で傷ついた神々を次々と吸収していった。父についての情報を得るため、そして力を蓄えて同じ高次元に立とうとしたんだね。熱いパトスのおもむくまま、むやみやたらと神の力を混ぜ合わせていった結果、両性具有の混沌神となってしまった。", "They absorbed the gods wounded in the Great War one after another, as if taking in knowledge from a book. They were trying to gain information about my father, and to stand on the same higher plane as him by accumulating enough power. As a result of that hot pathos, they recklessly mixed the power of the gods together, and as a result became a chaotic god of both sexes.")
+				chatMore lang("あれはまるで本から知識を取り込むかのように、大戦で傷ついた神々を次々と吸収していった。父についての情報を得るため、そして力を蓄えて同じ高次元に立とうとしたんだね。熱いパトスのおもむくまま、むやみやたらと神の力を混ぜ合わせていった結果、両性具有の混沌神となってしまった。", "They absorbed the gods wounded in the Great War one after another, as if taking in knowledge from some books. They were trying to gain information about my father, and to stand on the same higher plane as him by accumulating enough power. As a result of that hot pathos, they recklessly mixed the power of the gods together, and as a result became a chaotic god of both sexes.")
 				chatMore lang("エンテュメイシスは封印される間際でも父を求めていたよ。混沌の眷属が人間を取り込もうとするのも、根底にあるのは知識欲なのかもしれないね…。", "Enthumesis was still seeking their father when they were about to be sealed away. Perhaps it is that desire for knowledge that lies at the root of the servants of Chaos' desire to possess humans...."), strbye
 				goto *chat_end
 			}
@@ -8952,13 +8952,13 @@
 				chatMore lang("じゃあ簡単に、かいつまんで。", "Okay, so I'll briefly recap.")
 				chatMore lang("1。長い歴史の中で、人類は神は徐々に必要としなくなり、神は力を失いつつあった。", "1. Over the course of history, humanity has gradually outgrown the need for God, and the gods have been losing their power.")
 				chatMore lang("2。そんな時、人類の大半が宇宙に旅立ってしまった。", "2. At that point in time, the majority of humankind had left for the cosmos.")
-				chatMore lang("3。存在の危うくなった神々が殺気立つ中、テスカトリポカが他の神を倒して信者を奪った。", "3. As the gods were seething with anger, seeing their existence endangered, Tezcatlipoca defeats them all and claimed their followers.")
+				chatMore lang("3。存在の危うくなった神々が殺気立つ中、テスカトリポカが他の神を倒して信者を奪った。", "3. As the gods were seething with anger, seeing their existence endangered, Tezcatlipoca defeats them all and claims their followers.")
 				chatMore lang("4。神々の生存競争が勃発。多くの神が消滅したり魔物に堕ちた。", "4. A war of life and death breaks out between the gods. Many of them disappear or fall to demonic powers.")
 				chatMore lang("5。大戦の裏で混沌の神が力をつけていたことが発覚。混沌対神々の構図に変化。", "5. It is found that the gods of Chaos have been gaining power in the backdrop of the Great War. The nature of the battle changes to that of Chaos versus the gods.")
 				chatMore lang("6。激戦の末混沌の神は封印できたがこの時混沌の精霊の種が蒔かれていた。", "6. After a fierce battle, the God of Chaos is sealed. But at that moment, the seeds of the Spirit of Chaos were already sown.")
 				chatMore lang("7。ひとつの大陸がイルヴァから隔離され、ロストイルヴァとなった。", "7. A single continent separates from the rest of Irva, and becomes Lost Irva.")
 				chatMore lang("8。神の間が老朽化したのを狙って混沌の軍勢が巨城に侵攻。", "8. When the Eternal Seal falls into a state of decay, the armies of Chaos use that opportunity to invade the Great Castle.")
-				chatMore lang("9。テスカトリポカが混沌の軍勢を撃退するも右腕を失う。", "9. Tezcatlipoca repels the forces of chaos, but loses his right arm in the process.")
+				chatMore lang("9。テスカトリポカが混沌の軍勢を撃退するも右腕を失う。", "9. Tezcatlipoca repels the forces of Chaos, but loses his right arm in the process.")
 				chatMore lang("10。オルフェをはじめとする決死隊が役目を果たし、神の間の増築に成功。", "10. Orphe and the death squads that come afterwards manage to fulfill their purpose of expanding the Eternal Seal.")
 				chatMore lang("11。唯一生還したオルフェが常闇の眼を盗んで行方不明に。", "11. Orphe, the only remaining survivor, steals the Origin of Vice and goes missing.")
 				chatMore lang("12。混沌の神から奪った力を還元し、ネフィア誕生。", "12. The power stolen from the God of Chaos is returned to the land, and Nefia is born.")
@@ -8966,16 +8966,16 @@
 				chatMore lang("14。神の間が再度老朽化。", "14. The Eternal Seal falls into decay once again.")
 				chatMore lang("15。人工細菌メサイアによって作られた秩序の一角獣が役目を果たす。後にサーペントに取り込まれてカオス・ユニコーンへ変化したことが判明。", "15. The Unicorn of Order, created by the artificial bacterium Messia, fulfills its purpose. It is later revealed that it was possessed by the Serpent and transformed into the Chaos Unicorn.")
 				chatMore lang("16。エーテルが発見され、はみ出し者たちによって盛んに採取された。", "16. Ether is discovered, and it is harvested extensively by the outcast population.")
-				chatMore lang("17。メサイアが事故で変異・流出しメシェーラと呼ばれるように。エーテル減少で弱っていた環境は激変。", "17. Messia mutates and escapes containment in an accident, and became known as Meshera. The environment, having already been weakened by the depletion of Ether, undergoes drastic changes.")
-				chatMore lang("18。環境変化に耐え切れずレム・イド滅亡。人類はシェルターで細々と暮らす程度に。", "18. The population of Rehm-Ido is unable to adapt to the environmental changes and is wiped out. Humanity is reduced to living meager lives in shelters.")
+				chatMore lang("17。メサイアが事故で変異・流出しメシェーラと呼ばれるように。エーテル減少で弱っていた環境は激変。", "17. Messia mutates and escapes containment in an accident, and becomes known as Meshera. The environment, having already been weakened by the depletion of Ether, undergoes drastic changes.")
+				chatMore lang("18。環境変化に耐え切れずレム・イド滅亡。人類はシェルターで細々と暮らす程度に。", "18. The population of Rehm-Ido, unable to adapt to the rapidly changing environment, is wiped out. Humanity is reduced to living meager lives in shelters.")
 				chatMore lang("19。メシェーラに侵食された超生物やアンデッド兵器が荒野を徘徊する、永い暗黒期の到来。", "19. A long, dark chapter in history arrives, in which Meshera-infested super-beings and undead weapons of destruction roam the wilderness.")
-				chatMore lang("20。年月経過で回復したエーテルが風を生みヴィンデールの森が発達。", "20. The Ether that has been restored over the years causes a wind to blow, and the forest of Vindale develops.")
-				chatMore lang("21。メシェーラ環境に適応できる人類が生まれ世界に拡散。シエラ・テール誕生。", "21. Humans capable of adapting to the Meshera-infested environment are born, and spread throughout the world. Sierre Terre is born.")
-				chatMore lang("22。常闇の杖が完成しオルフェ発見。監視を開始。", "22. The Origin of Vice is completed and Orphe is discovered. His movements are promptly put under surveillance.")
+				chatMore lang("20。年月経過で回復したエーテルが風を生みヴィンデールの森が発達。", "20. The natural reserve of Ether that has been gradually recovering over the years causes a wind to blow, and the forest of Vindale develops.")
+				chatMore lang("21。メシェーラ環境に適応できる人類が生まれ世界に拡散。シエラ・テール誕生。", "21. Humans capable of adapting to the Meshera-infested environment are born, and spread throughout the world. Sierre Terre is formed.")
+				chatMore lang("22。常闇の杖が完成しオルフェ発見。監視を開始。", "22. The Origin of Vice is completed and Orphe is discovered. He is promptly put under surveillance.")
 				chatMore lang("23。さらに回復したエーテルがヴィンデールの森を拡大。カルーン滅亡。", "23. Further restoration of Ether expands the forest of Vindale. Karune is destroyed.")
 				chatMore lang("24。ヴィンデールの森が焼き払われる。", "24. The forest of Vindale is burned to the ground.")
-				chatMore lang("25。神の間が再度老朽化。潜伏していた混沌の軍勢も活発に。", "25. The Eternal Seal falls into decay once more. The forces of chaos that had once been dormant start to awaken.")
-				chatMore lang("そして、強さと抵抗力を兼ね備えた君が決戦因子として選ばれた…というわけだね。", "And so, with your combination of strength and resilience, you have been chosen as the deciding factor in this imminent battle."), strbye
+				chatMore lang("25。神の間が再度老朽化。潜伏していた混沌の軍勢も活発に。", "25. The Eternal Seal falls into decay once more. The forces of Chaos that had once been dormant start to awaken.")
+				chatMore lang("そして、強さと抵抗力を兼ね備えた君が決戦因子として選ばれた…というわけだね。", "And so, with your combination of strength and resilience, you have been chosen as the Decisive Factor in this imminent battle."), strbye
 				goto *chat_end
 			}
 			if ( chatval == 6 ) {
@@ -9033,12 +9033,12 @@
 						chatMore lang("君には神の間を目指して欲しいのだけどね。", "I'd really like for you to aim for the Eternal Seal. Other than that...")
 					}
 					chatMore lang("ふむ…そうだね。この後、地下の第" + soukop + "倉庫を整理する予定があって人手を探しているんだ。", "Ah, right. I'm going to be looking for some help soon in organizing the " + soukop + cnvrank(soukop) + " underground warehouse.")
-					chatMore lang("もしも君にその気があるのなら、" + gdata(GDATA_FLAG_SUB_SOPHIA_THE_WISE_YEAR) + "年" + gdata(GDATA_FLAG_SUB_SOPHIA_THE_WISE_MONTH) + "月" + gdata(GDATA_FLAG_SUB_SOPHIA_THE_WISE_DAY) + "日の午後14時半から15時までの間に話しかけてもらえるかな。", "If you'd like to help, I'll be working on it from 14:30 to 15:00 on " + gdata(GDATA_FLAG_SUB_SOPHIA_THE_WISE_YEAR) + "/" + gdata(GDATA_FLAG_SUB_SOPHIA_THE_WISE_MONTH) + "/" + gdata(GDATA_FLAG_SUB_SOPHIA_THE_WISE_DAY) + "."), strbye
+					chatMore lang("もしも君にその気があるのなら、" + gdata(GDATA_FLAG_SUB_SOPHIA_THE_WISE_YEAR) + "年" + gdata(GDATA_FLAG_SUB_SOPHIA_THE_WISE_MONTH) + "月" + gdata(GDATA_FLAG_SUB_SOPHIA_THE_WISE_DAY) + "日の午後14時半から15時までの間に話しかけてもらえるかな。", "If you'd like to help, I'll be working on something from 14:30 to 15:00 on " + gdata(GDATA_FLAG_SUB_SOPHIA_THE_WISE_YEAR) + "/" + gdata(GDATA_FLAG_SUB_SOPHIA_THE_WISE_MONTH) + "/" + gdata(GDATA_FLAG_SUB_SOPHIA_THE_WISE_DAY) + "."), strbye
 					gdata(GDATA_FLAG_SUB_SOPHIA_THE_WISE)++
 					txt_questupdate
 					goto *chat_end
 				}
-				chatMore lang("もしも君にその気があるのなら、" + gdata(GDATA_FLAG_SUB_SOPHIA_THE_WISE_YEAR) + "年" + gdata(GDATA_FLAG_SUB_SOPHIA_THE_WISE_MONTH) + "月" + gdata(GDATA_FLAG_SUB_SOPHIA_THE_WISE_DAY) + "日の午後14時半から15時までの間に話しかけてもらえるかな。", "If you'd like to help, I'll be working on it from 14:30 to 15:00 on " + gdata(GDATA_FLAG_SUB_SOPHIA_THE_WISE_YEAR) + "/" + gdata(GDATA_FLAG_SUB_SOPHIA_THE_WISE_MONTH) + "/" + gdata(GDATA_FLAG_SUB_SOPHIA_THE_WISE_DAY) + "."), strbye
+				chatMore lang("もしも君にその気があるのなら、" + gdata(GDATA_FLAG_SUB_SOPHIA_THE_WISE_YEAR) + "年" + gdata(GDATA_FLAG_SUB_SOPHIA_THE_WISE_MONTH) + "月" + gdata(GDATA_FLAG_SUB_SOPHIA_THE_WISE_DAY) + "日の午後14時半から15時までの間に話しかけてもらえるかな。", "If you'd like to help, I'll be working on something from 14:30 to 15:00 on " + gdata(GDATA_FLAG_SUB_SOPHIA_THE_WISE_YEAR) + "/" + gdata(GDATA_FLAG_SUB_SOPHIA_THE_WISE_MONTH) + "/" + gdata(GDATA_FLAG_SUB_SOPHIA_THE_WISE_DAY) + "."), strbye
 				goto *chat_end
 			}
 			goto *chat_end
@@ -9125,7 +9125,7 @@
 				if ( gdata(GDATA_LEVEL) == 1 ) {
 					if ( gdata(GDATA_FLAG_SUB_REGULUS_EULDERNA) <= 2 ) {
 						chatMore lang("うむ…おまえさんは…？", "Hmm... And you are...?")
-						chatMore lang("おお、" + cdatan(CDATAN_AKA, CHARA_PLAYER) + cdatan(CDATAN_NAME, CHARA_PLAYER) + "か。パルミアが寄越した協力者じゃな。話は聞いておるよ。" + gdata(GDATA_DEEPEST_LEVEL) + "階相当のネフィアを攻略している強者とな。他の者はおまえさんの力を認めないかもしれんが、わしは決定的な戦力になると予感しておるぞ。", "Ahh, you must be " + cdatan(CDATAN_AKA, CHARA_PLAYER) + " " + cdatan(CDATAN_NAME,0) + ", the adventurer that's working with Palmia. I've heard you're strong enough that you've conquered a ruin of Nefia with a difficulty of " + gdata(GDATA_DEEPEST_LEVEL) + ". Others here may not want to recognize your strength, but I think you'll be the decisive factor is this battle.")
+						chatMore lang("おお、" + cdatan(CDATAN_AKA, CHARA_PLAYER) + cdatan(CDATAN_NAME, CHARA_PLAYER) + "か。パルミアが寄越した協力者じゃな。話は聞いておるよ。" + gdata(GDATA_DEEPEST_LEVEL) + "階相当のネフィアを攻略している強者とな。他の者はおまえさんの力を認めないかもしれんが、わしは決定的な戦力になると予感しておるぞ。", "Ahh, you must be " + cdatan(CDATAN_AKA, CHARA_PLAYER) + " " + cdatan(CDATAN_NAME,0) + ", the adventurer that's working with Palmia. I've heard you're strong enough that you've conquered a ruin of Nefia with a difficulty of " + gdata(GDATA_DEEPEST_LEVEL) + ". Others here may not want to recognize your strength, but I think you'll be the Decisive Factor of this battle.")
 					}
 					chatList 0, lang("ちょっと待って", "Hold on a minute.")
 					chatList 1, lang("出撃！", "Let's roll out!")
@@ -10619,7 +10619,7 @@
 			if ( gdata(GDATA_FLAG_SUB_MISSION_FROM_GARZIEM) \ 10 == 1 ) {
 				chatList 0, lang("もうこりごりだよ〜", "I'm sick of this.")
 				chatList 1, lang("次の区画はもっとうまくやれるでしょう", "I'll do even better this time.")
-				buff = lang("ログを見るに、他の区画でも暴走している作業機械がいるようなのだが…潜入して彼らにも精密検査を受けさせてくれないだろうか？各区画は独立していて、外部からでは指導はできても強制ができないのだ。", "Looking at the logs, it seems that there are some more runaway work machines in the other sectors... Can you infiltrate the affected areas, and have the machines undergo a thorough inspection as well? Each sector is independent, and while we can provide guidance from the outside, we have no control of the inside.")
+				buff = lang("ログを見るに、他の区画でも暴走している作業機械がいるようなのだが…潜入して彼らにも精密検査を受けさせてくれないだろうか？各区画は独立していて、外部からでは指導はできても強制ができないのだ。", "Looking at the logs, it seems that there are some more malfunctioning work machines in the other sectors... Can you infiltrate the affected areas, and have the machines undergo a thorough inspection as well? Each sector is independent, and while we can provide guidance from the outside, we have no control of the inside.")
 				gosub *chat_select
 				if ( chatval != 1 ) {
 					chatMore lang("そうか…すまない。", "I see... Sorry for bothering you."), strbye
@@ -10709,8 +10709,8 @@
 			buff = lang("よくぞ来てくれた。貴君をわが艦に迎え入れたのは、協力を要請したいことがあるためだ。もちろん報酬は用意しているが、どうかね？", "I'm glad you're here. The reason I've invited you aboard my ship is because I need your help with something. Of course, I've prepared a reward for your services. How about it?")
 			gosub *chat_select
 			if ( chatval == 1 ) {
-				chatMore lang("…とある区画で暴走している作業機械がいる。こちらからの指令も一切受け付けない状態だ。送り込んだ者たちは囚われ、1機たりとも帰ってこなかった。艦長である私は持ち場を離れるわけにはいかない…そこで、だ。", "...There are some work machines running amok in a particular section of the ship. They're refusing to accept any orders from us. The people we sent there are trapped, and not a single machine has returned. As captain, I can't leave my post, so...")
-				chatMore lang("貴君には該当区画に潜入し、作業機械の暴走を止めてもらいたいのだ。その気になったらまた話しかけてくれたまえ。", "I need you to infiltrate the sector in question and put an end to the outbreak of rampant machines. Please talk to me again when you are ready.")
+				chatMore lang("…とある区画で暴走している作業機械がいる。こちらからの指令も一切受け付けない状態だ。送り込んだ者たちは囚われ、1機たりとも帰ってこなかった。艦長である私は持ち場を離れるわけにはいかない…そこで、だ。", "...There are some unruly work machines in a particular section of the ship who are refusing to accept any of our orders. The workers we sent to rectify the issue got trapped themselves, and not a single one of them has returned. As captain, I can't leave my post, so...")
+				chatMore lang("貴君には該当区画に潜入し、作業機械の暴走を止めてもらいたいのだ。その気になったらまた話しかけてくれたまえ。", "I need you to infiltrate the sector in question and put an end to the outbreak of disobedient machines. Please talk to me again when you are ready.")
 				gdata(GDATA_FLAG_SUB_MISSION_FROM_GARZIEM) = 1
 			}
 			goto *chat_end
@@ -10725,7 +10725,7 @@
 			gdata(GDATA_FLAG_SUB_KARAVIKA_OF_SONG_AND_DANCE) = 2
 		}
 		if ( gdata(GDATA_FLAG_SUB_KARAVIKA_OF_SONG_AND_DANCE) \ 3 == 0 ) {
-			chatMore lang("限定コンサートは大成功ー♪キミが守ってくれたおかげだねっ！これはお礼！", "The limited-time concert was a huge success.♪ Thanks to your help, I made it out safe and sound! Here, this is for you!")
+			chatMore lang("限定コンサートは大成功ー♪キミが守ってくれたおかげだねっ！これはお礼！", "The limited-time concert was a huge success!♪ Thanks to your help, I made it out safe and sound! Here, this is for you!")
 			txt_questcompleted
 			txtmore
 			txt_questitem
@@ -11126,28 +11126,28 @@
 		if ( gdata(GDATA_FLAG_SUB_BELPHAT_THE_COSMIC_SWORD) == 1000 ) {
 			kaiwa = rnd(8)
 			if ( kaiwa == 0 ) {
-				chatMore lang("まじかよ、クロやん…うちの家宝の剣のイミテーション作ってるじゃないか。おそろいのつもりなんだろうけど…気まずいなぁ。前回勝手に家宝持ち出したこと親父に叱られたから、今回は持ってきてないんだよな。", "Seriously, that Kuroyan... He's making an imitation of our family's heirloom sword. I guess they're supposed to complement one another, but... this doesn't feel right. After all, I didn't bring the original with me this time, because last time my father scolded me for taking it without permission."), strbye
+				chatMore lang("まじかよ、クロやん…うちの家宝の剣のイミテーション作ってるじゃないか。おそろいのつもりなんだろうけど…気まずいなぁ。前回勝手に家宝持ち出したこと親父に叱られたから、今回は持ってきてないんだよな。", "Seriously, that Kuroyan... He's been creating an imitation of our family's heirloom sword. I guess it's supposed to complement the original, but... this is awkward. After all, I didn't bring the original with me this time, because last time my father scolded me for taking it without permission."), strbye
 			}
 			if ( kaiwa == 1 ) {
-				chatMore lang("惑星ユゴスを訪れた時、スペースハンターのボッヘリト星人が外来種であるミ=ゴの駆除をしていてね。抵抗するミ=ゴもいたが、訓練された犬の３倍の能力を持つボッヘリト星人には次々と狩られていった。その手伝いの後のミ=ゴ鍋は旨かったなぁ。", "When I visited the planet Yugos, the space hunter aliens called the Bohelito were exterminating an alien species called the Mi-Go. Some of the Mi-Go resisted, but they were hunted down one by one by the Bohelito aliens, who were three times more capable than trained dogs. They offered me some Mi-Go hot pot for helping them - it was delicious."), strbye
+				chatMore lang("惑星ユゴスを訪れた時、スペースハンターのボッヘリト星人が外来種であるミ=ゴの駆除をしていてね。抵抗するミ=ゴもいたが、訓練された犬の３倍の能力を持つボッヘリト星人には次々と狩られていった。その手伝いの後のミ=ゴ鍋は旨かったなぁ。", "When I visited the planet Yugos, a band of Bohelito space hunters were exterminating an alien species called the Mi-Go. Some of the Mi-Go resisted, but they were mercilessly hunted down by the Bohelito aliens, who were three times as skilled as trained dogs. Oh, and they offered me some Mi-Go hot pot for helping them out - it was delicious!"), strbye
 			}
 			if ( kaiwa == 2 ) {
-				chatMore lang("バイアクヘー星間旅行サービスも利用したことがあるんだが、あれは精神しか旅行できないから食べ歩きに不向きなんだよなぁ。事前準備も色々と面倒だし。", "I've also used the Bayakhae interstellar travel service, but that only allows you to travel through the mind, so it's not suitable for dining out. The preparations you have to do in advance are a lot of work, too."), strbye
+				chatMore lang("バイアクヘー星間旅行サービスも利用したことがあるんだが、あれは精神しか旅行できないから食べ歩きに不向きなんだよなぁ。事前準備も色々と面倒だし。", "I've also used the Bayakhae interstellar travel service before, but that only allows you to travel via sensory perception, so you can't have the authentic gourmet traveling experience that way. The preparations you have to do in advance are a lot of work, too."), strbye
 			}
 			if ( kaiwa == 3 ) {
-				chatMore lang("惑星サイクラノーシュを訪れた時は大変だった。現地のキノコ料理をご馳走になったまではいいんだが、勝手に彼らのボスの配偶者に選ばれてしまって。慌てて逃げ出したよ。", "My visit to the planet Cyclanorch was a wild one. It was going along smoothly until I was treated to a local mushroom feast, where I was chosen to be married to the group's leader. I ran out of there as fast as I could."), strbye
+				chatMore lang("惑星サイクラノーシュを訪れた時は大変だった。現地のキノコ料理をご馳走になったまではいいんだが、勝手に彼らのボスの配偶者に選ばれてしまって。慌てて逃げ出したよ。", "My visit to the planet Cyclanorch was a wild one. It was going along smoothly until I was treated to a local mushroom feast, where I was chosen to be married to the group's leader. I ran away from there as fast as I could."), strbye
 			}
 			if ( kaiwa == 4 ) {
 				chatMore lang("惑星トゥンツァに行った時、ちょうどそこの神の生誕祭をやっていてな。ラッキーだと思ったら、振る舞われたのが亜硫酸スープ。一応飲んだけど、舌がピリピリして味わうどころじゃなかった。", "When I went to the planet Tunza, they were having a birthday celebration for their god. Just when I thought I had a lucky break, they served me this acidic soup. I tried drinking some, but it burned my tongue and I couldn't taste a thing."), strbye
 			}
 			if ( kaiwa == 5 ) {
-				chatMore lang("物も人も星すらも食い尽くして宇宙を渡り歩く宇宙最凶生物…デベロンダッタ星人とよく間違われて攻撃されるんだ。宇宙食べ歩きには危険がいっぱいだな。", "I'm often mistaken for a Develondatta, the deadliest creature in the universe... It travels across the entire cosmos devouring everything and everyone in its path, even entire planets. I'm often attacked due to the resemblence. There's a lot of danger in the travels of an intergalactic gourmet."), strbye
+				chatMore lang("物も人も星すらも食い尽くして宇宙を渡り歩く宇宙最凶生物…デベロンダッタ星人とよく間違われて攻撃されるんだ。宇宙食べ歩きには危険がいっぱいだな。", "I'm often mistaken for a Develondatta, the deadliest creature in the universe... It travels across the entire cosmos devouring everyone and everything in its path, even entire planets. I'm often attacked by strangers due to the resemblence. There's a lot of danger in the travels of an intergalactic gourmet."), strbye
 			}
 			if ( kaiwa == 6 ) {
-				chatMore lang("お土産にジェラミス星人のたこやきも用意していたんだが、あんまり暴れるものだから来る途中で全部食べてしまったよ。仕方がないから代わりにイス焼きを大量に買ってきた。", "I had prepared some Geramis octopus dumplings as a gift, but they were thrashing around so much that I had to eat them all myself on the way over. I didn't have many options left, so I bought a ton of fried ice cream as a substitute."), strbye
+				chatMore lang("お土産にジェラミス星人のたこやきも用意していたんだが、あんまり暴れるものだから来る途中で全部食べてしまったよ。仕方がないから代わりにイス焼きを大量に買ってきた。", "I'd brought along some Geramis octopus dumplings as a gift, but they were thrashing around so much that I had to eat them all myself on the way over. I didn't have many options left, so I bought a ton of fried ice cream as a substitute."), strbye
 			}
 			if ( kaiwa == 7 ) {
-				chatMore lang("猫とかいう、ニャリン星人に似た生物がこの星には大勢いるな。前に来た時はすごく驚いた。スンバラリア星を侵略した強豪と聞いていたからな…。", "There are a lot of cats and other creatures that look like Nyarins on this planet. I remember how surprised I was the last time I came here. I'd heard that they were some ridiculously powerful beings that had managed to invade the planet of Sumbalaria, after all..."), strbye
+				chatMore lang("猫とかいう、ニャリン星人に似た生物がこの星には大勢いるな。前に来た時はすごく驚いた。スンバラリア星を侵略した強豪と聞いていたからな…。", "This planet is home to a large number of creatures called \"cats\" that resemble the Nyarin race of aliens. I remember how surprised I was the last time I came here and stumbled across those creatures. I'd heard that the Nyarins were some stupendously powerful beings that had managed to invade the planet of Sumbalaria, after all..."), strbye
 			}
 			goto *chat_end
 		}
@@ -11190,11 +11190,11 @@
 		_switch_sw = 0
 		if ( gdata(GDATA_AREA) == AREA_CHAOS_CRADLE ) {
 			if ( gdata(GDATA_FLAG_MAIN) >= 580 ) {
-				chatMore lang("あー…腕に自信がないなら、次の階層はあんまり近寄らないほうがいいかもしれないね。", "Ah... if you're not confident in your skills, you might not want to get too close to the next level."), strbye
+				chatMore lang("あー…腕に自信がないなら、次の階層はあんまり近寄らないほうがいいかもしれないね。", "Hey... if you're not confident enough in your skills, you might not want to head towards the next floor."), strbye
 				goto *chat_end
 			}
 			if ( gdata(GDATA_FLAG_MAIN) == 575 ) {
-				chatMore lang("いやー。駄目元でも交渉してみるものだね。おっと、こっちの話さ。", "Yeah, well... Even if there's not much hope, you might as well try negotating anyway. ...Whoops, don't mind me."), strbye
+				chatMore lang("いやー。駄目元でも交渉してみるものだね。おっと、こっちの話さ。", "Yeah, well... Even if they're not going to listen, might as well try to warn them off anyway. ...Oh, uh, I was just thinking out loud."), strbye
 				gdata(GDATA_FLAG_MAIN) = 580
 				goto *chat_end
 			}
@@ -11206,7 +11206,7 @@
 				flt
 				characreate -1, CREATURE_ID_BELPHAT_THE_COSMIC_SWORD, 6, 12
 				cdata(CDATA_ROLE, rc) = ROLE_SPECIAL
-				chatMore lang("少年の頃、僕には異星の友人がいてね。彼が母星に帰ってから数十年…別れ際に再会を誓ったけれど、僕はもうこんなおじさんになってしまった。生きている間にもう一度会いたいものだね…。", "When I was a boy, I had a friend from a different planet. It's been decades now since he returned to his home world... When we parted, we vowed to reunite someday, but I've already grown old. I hope to meet him once again while I'm still alive...")
+				chatMore lang("少年の頃、僕には異星の友人がいてね。彼が母星に帰ってから数十年…別れ際に再会を誓ったけれど、僕はもうこんなおじさんになってしまった。生きている間にもう一度会いたいものだね…。", "When I was a boy, I had a friend from a different planet. By now it's been decades since he returned to his home world... When we parted, we vowed to reunite someday, but I've already grown old. I hope to meet him once again while I'm still alive...")
 				chatMore lang("DNAスキャン…外見は変わっているが間違いない。クロやん！", "Scanning DNA... Your appearance has changed, but that's definitely you, Kuro!"), strmore, findchara(CREATURE_ID_BELPHAT_THE_COSMIC_SWORD)
 				chatMore lang("え、誰！？", "W-who are you?!"), strmore, findchara(CREATURE_ID_KUROYA_THE_LOOKING_UNIVERSE)
 				chatMore lang("…いや、待てよ。その呼び方は…わが友、ベルっちではないか？", "...Hold on. Calling me Kuro... Are you my friend Bel?"), strmore, findchara(CREATURE_ID_KUROYA_THE_LOOKING_UNIVERSE)
@@ -11214,7 +11214,7 @@
 				chatMore lang("お前がなかなか戻ってこないから老化したんだよ！そう言うベルっちも変わりすぎだ！昔はもっと丸っこくて小さくてボーッっとした感じだったろ！一皮剥けたとかそういうレベルじゃないぞ。", "I got old because you took so long to come back! But you've changed too, Bel! You used to be smaller and far more round! It's like your skin has all peeled off!"), strmore, findchara(CREATURE_ID_KUROYA_THE_LOOKING_UNIVERSE)
 				chatMore lang("ああ。82回脱皮した。", "It has. 82 times, actually."), strmore, findchara(CREATURE_ID_BELPHAT_THE_COSMIC_SWORD)
 				chatMore lang("剥けすぎだろ…。", "That's too much..."), strmore, findchara(CREATURE_ID_KUROYA_THE_LOOKING_UNIVERSE)
-				chatMore lang("いかんいかん。話が長くなってしまう。先に、ここまで案内してくれた恩人に礼をしなきゃな。お土産の一部を受け取って…おっと。この星では足元に転がすのだったな。", "It happens. Let's sit down and catch up. But first, I need to thank the person that led me here. Here, take this as a gift... Whoops. I almost forget its customary to place gifts at other's feet on this planet."), strmore, findchara(CREATURE_ID_BELPHAT_THE_COSMIC_SWORD)
+				chatMore lang("いかんいかん。話が長くなってしまう。先に、ここまで案内してくれた恩人に礼をしなきゃな。お土産の一部を受け取って…おっと。この星では足元に転がすのだったな。", "It happens. Let's sit down and catch up. But first, I need to thank the person that led me here. Here, take this as a gift... Whoops, I almost forgot. It's customary to place gifts at other's feet on this planet."), strmore, findchara(CREATURE_ID_BELPHAT_THE_COSMIC_SWORD)
 				flt
 				itemcreate -1, ITEM_ID_AMULET_OF_YEKUB, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
 				flt
@@ -11302,7 +11302,7 @@
 	}
 	if ( _switch_val == CREATURE_ID_FRON_THE_TOUR_PLANNER | _switch_sw ) {
 		_switch_sw = 0
-		chatMore lang("より良いツアーのプランを組み立てるには、常に各地の現状を把握しておく必要があります。それがたとえ火の中、水の中、草の中、森の中、土の中や雲の中だろうと。ツアープランナーはお客様の護衛がないぶんガイドよりも身軽ですが、未開拓地域の調査や力ずくでの交渉といった業務も多いため、高い戦闘力が要求されます。", "In order to put together a better tour plan, you must always be aware of the current situation in the relevant places - even if they are within fire, water, grass, forest, soil, or clouds. Tour planners carry less of a burden than tour guides because they don't have to escort their clients, but they are required to have a high level of combat power because they often have to survey uncharted areas and negotiate by force.")
+		chatMore lang("より良いツアーのプランを組み立てるには、常に各地の現状を把握しておく必要があります。それがたとえ火の中、水の中、草の中、森の中、土の中や雲の中だろうと。ツアープランナーはお客様の護衛がないぶんガイドよりも身軽ですが、未開拓地域の調査や力ずくでの交渉といった業務も多いため、高い戦闘力が要求されます。", "In order to put together a better tour plan, you must always be aware of the current situation in the relevant places - even if they are within fire, water, grass, forest, soil, or clouds. Tour planners carry less of a burden than tour guides because they don't have to escort their clients. Regardless, they are required to have a high level of combat power, because they often have to survey uncharted areas and negotiate by force.")
 		goto *chat_end
 	}
 	if ( _switch_val == CREATURE_ID_RENAI_THE_OVER_MESHERA | _switch_sw ) {
@@ -11457,7 +11457,7 @@
 				goto *chat_end
 			}
 			if ( gdata(GDATA_FLAG_MAIN) == 595 ) {
-				chatMore lang("へぇー。ロスリアの連中になかなか出くわさないと思ったら、本隊はまだ上の階層にいるんだ。やっぱり少数精鋭が身軽だよね！あまりに大所帯だと思うように進めないんじゃないかなぁ。", "Well, well. Just as I thought I'd barely seen any Rosurians around these parts, it turns out that their main army is still in the upper levels. It sure is easier to send down a small group of highly trained elites. I guess we won't be able to advance as far as we want if we're too large of a group."), strbye
+				chatMore lang("へぇー。ロスリアの連中になかなか出くわさないと思ったら、本隊はまだ上の階層にいるんだ。やっぱり少数精鋭が身軽だよね！あまりに大所帯だと思うように進めないんじゃないかなぁ。", "Well, well. Just as I thought I'd barely seen any Rosurians around these parts, it turns out that their main army is still in the upper levels. It sure is easier to send down only a small group of highly trained elites. I guess we won't be able to advance as far as we want if we're too large of a group."), strbye
 				gdata(GDATA_FLAG_MAIN) = 600
 				goto *chat_end
 			}
@@ -11796,12 +11796,12 @@
 				goto *chat_end
 			}
 			if ( gdata(GDATA_FLAG_MAIN) >= 660 ) {
-				chatMore lang("神の間、決戦因子、か。どうにも胡散臭いものを感じる。進むのをためらうほどにな。", "The decisive factor, here in the Eternal Seal? I can't help but smell something fishy. It's enough to make me hesitant to proceed."), strbye
+				chatMore lang("神の間、決戦因子、か。どうにも胡散臭いものを感じる。進むのをためらうほどにな。", "The Decisive Factor, here in the Eternal Seal? I can't help but smell something fishy. It's enough to make me hesitant to proceed."), strbye
 				goto *chat_end
 			}
 			else {
-				chatMore lang("君は…ひょっとして" + cdatan(CDATAN_AKA, CHARA_PLAYER) + "か？こんなところで知り合いに会うとは奇遇だな。", "Are you... ...perhaps "+ cdatan (CDATAN_AKA, CHARA_PLAYER) +"? It's a strange feeling to run across an acquaintance in a place like this.")
-				chatMore lang("せめて昔の勘を取り戻すまで、私はこの階層で鍛錬するつもりだ。今でも力不足を感じるのに、あと何層あるのかわかったものじゃないからな。", "I will train on this floor until I regain at least my old intuition. Even now I still feel insufficient, but I do not know how many more floors are left."), strbye
+				chatMore lang("君は…ひょっとして" + cdatan(CDATAN_AKA, CHARA_PLAYER) + "か？こんなところで知り合いに会うとは奇遇だな。", "Are you, perhaps... "+ cdatan (CDATAN_AKA, CHARA_PLAYER) +"? It's a strange feeling to run across an acquaintance in a place like this.")
+				chatMore lang("せめて昔の勘を取り戻すまで、私はこの階層で鍛錬するつもりだ。今でも力不足を感じるのに、あと何層あるのかわかったものじゃないからな。", "I will train on this floor until I at least recover my old reflexes. Even though I still feel inadequate, there's no way for me to know how many more floors I'll have to descend."), strbye
 				gdata(GDATA_FLAG_MAIN) = 660
 				goto *chat_end
 			}
@@ -12390,9 +12390,9 @@
 		}
 		if ( gdata(GDATA_AREA) == AREA_CHAOS_CRADLE ) {
 			if ( gdata(GDATA_FLAG_MAIN) == 575 | gdata(GDATA_FLAG_MAIN) == 580 | gdata(GDATA_FLAG_MAIN) == 585 ) {
-				chatMore lang("そこの冒険者、止まってください。", "Hey you, adventurer, please stop.")
+				chatMore lang("そこの冒険者、止まってください。", "You there, adventurer. Stop right where you are.")
 				chatList 0, lang("はく製を置いてこの世を去りなさい", "Lay down your figurine and leave this world.")
-				chatList 1, lang("嫌でも通してもらおう", "I'm coming through whether or not you like it.")
+				chatList 1, lang("嫌でも通してもらおう", "I'm coming through whether you like it or not.")
 				chatList 2, lang("靴下くれないと暴れるよ", "Give me some socks or I'm going to snap.")
 				chatList 3, lang("話せばわかる！", "Just hear me out!")
 				buff = lang("見てのとおり、ここは現在我々が占拠しています。速やかに武器を置いてこの階を去りなさい。", "As you can see, this area is now under our control. Lay down your weapons at once and leave this floor.")
@@ -12402,7 +12402,7 @@
 					chatMore lang("！？貴方もですか…。", "Not you too!?")
 				}
 				if ( chatval >= 0 & chatval <= 2 ) {
-					chatMore lang("我々が消耗しているとでも思っているのでしょうが…我々は物資を獲得したことにより、戦闘可能な状態に回復しています。一介の冒険者など敵ではありません。", "You may think we are exhausted, but we have acquired supplies and have been restored to fighting condition. A single adventurer is no match for us.")
+					chatMore lang("我々が消耗しているとでも思っているのでしょうが…我々は物資を獲得したことにより、戦闘可能な状態に回復しています。一介の冒険者など敵ではありません。", "You may think we are exhausted, but we have acquired supplies and restored ourselves to fighting condition. A single adventurer is no match for us.")
 				}
 				if ( chatval == 3 ) {
 					chatMore lang("警告はしました。これ以上の問答は無用です。", "You have been warned. Any further dialogue is useless.")
@@ -12477,7 +12477,7 @@
 			goto *chat_end
 		}
 		if ( gdata(GDATA_AREA) == AREA_CHAOS_CRADLE ) {
-			chatMore lang("うぐがぁぁっ！いいですか…もし、辿り着いても…混沌の神は、まだ、倒しては…！あれは世界を…結束させるため必要なっ…！", "Ughaaah! Listen to me... even if we manage to reach there... the God of Chaos must not be defeated... yet! It's necessary to unite the world...")
+			chatMore lang("うぐがぁぁっ！いいですか…もし、辿り着いても…混沌の神は、まだ、倒しては…！あれは世界を…結束させるため必要なっ…！", "Ughaaah! Listen to me... even if you manage to reach the Eternal Seal... the God of Chaos must not be defeated... yet! It's necessary to unite the world...")
 			chatMore lang("あっ…がっ…。", "Ahhh...ughh...")
 			animeload ANIMATION_OFFER, tc
 			snd SOUNDLIST_BALL1
@@ -13608,11 +13608,11 @@
 	if ( _switch_val == CREATURE_ID_AIKAGE_THE_SHINOBI_MASK | _switch_sw ) {
 		_switch_sw = 0
 		if ( gdata(GDATA_FLAG_MAIN) == 605 | gdata(GDATA_FLAG_MAIN) == 610 | gdata(GDATA_FLAG_MAIN) == 615 ) {
-			chatMore lang("冒険者か…！いいところに来てくれた。", "An adventurer! You've come to the right place.")
+			chatMore lang("冒険者か…！いいところに来てくれた。", "An adventurer! You came at just the right time.")
 			chatList 0, lang("気が向いたら", "If I feel like it.")
-			chatList 1, lang("逃げればいいんじゃ？", "Why not just run away?")
-			chatList 2, lang("お前は7層で倒したはず", "Didn't I kill you back on the 7th floor?")
-			buff = lang("俺たちは混沌の手の者に魔術で操られ、露払いをさせられていたのだが…。術者が死んだことにより、同じく操られていたアンデッド兵器が暴れ始めたのだ。鎮圧に手を貸してくれ！", "We were under the spell of the Hand of Chaos, and were being forced to clear out the mists... Now that the sorcerer in question is dead, the undead weapons that were being manipulated along with us have begun to run rampant. I need your help to stop them!")
+			chatList 1, lang("逃げればいいんじゃ？", "Why don't you just run away?")
+			chatList 2, lang("お前は7層で倒したはず", "Didn't I defeat you back on the 7th floor?")
+			buff = lang("俺たちは混沌の手の者に魔術で操られ、露払いをさせられていたのだが…。術者が死んだことにより、同じく操られていたアンデッド兵器が暴れ始めたのだ。鎮圧に手を貸してくれ！", "We were under the spell of a sorcerer of Chaos, and he was forcing us to act as his personal bodyguards... Now that the sorcerer in question is dead, the undead weapons that were also under his command have started to run rampant. I need your help to stop them!")
 			gosub *chat_select
 			if ( chatval == 0 ) {
 				chatMore lang("頼むぞ！", "I beg of you!")
@@ -14821,7 +14821,7 @@
 						buff = lang("それにしても我…いや俺がテスカトリポカだとは思わなかっただろう。騙されたな？", "You didn't think I was Tezcatlipoca, did you? Gotcha.")
 					}
 					if ( gdata(GDATA_FLAG_MAIN) > 680 ) {
-						buff = lang("神の間で決戦因子と共に戦えるように、受肉して神力を使わず純粋に鍛え上げた…それがこのレオルドとしての姿だ。混沌の神にどこまで通用するかはわからんがな。", "What you see here - the person you call Leold - is a physical form that I had created and trained up without any use of divine power. All so that I could fight alongside the Factors in the Eternal Seal. I don't know how much of that effort will pay off against the God of Chaos though.")
+						buff = lang("神の間で決戦因子と共に戦えるように、受肉して神力を使わず純粋に鍛え上げた…それがこのレオルドとしての姿だ。混沌の神にどこまで通用するかはわからんがな。", "What you see here - the person you call Leold - is a physical form that I had created and trained up without any use of divine power. All so that I could fight alongside the Decisive Factor in the Eternal Seal. I don't know how much of that effort will pay off against the God of Chaos though.")
 					}
 					if ( gdata(GDATA_FLAG_MAIN) == 680 ) {
 						gdata(GDATA_FLAG_MAIN) = 685
@@ -14837,8 +14837,8 @@
 						txt lang("シナア「うみゃっ！？」", "Sinaha: \"Mew!?\"")
 					}
 					if ( chatval == 2 ) {
-						chatMore lang("誰がそんなこと言ったんだ。混沌の神は混沌の神、テスカトリポカはテスカトリポカで全くの別神だぞ。誰かの推測でも鵜呑みにしたか？", "Who told you that? The God of Chaos and Tezcatlipoca are completely separate and different. You shouldn't believe every rumour that you hear.")
-						chatMore lang("俺は滅亡が迫っていることを決戦因子候補たちに警告し、神の間を目指して必要な力を示すように指示したが…俺自身が滅ぼすなんて一言も言っていないだろう。そもそも神の間に囚われていたら神力で外界に呼びかけること自体が不可能だ。", "When danger drew close, I did warn all the people who were candidates as Factors and tell them to head to the Eternal Seal. I did not say anything about destroying anything myself, did I? Besides, it would've been impossible to summon anybody in the outside world if I were trapped in the Prison.")
+						chatMore lang("誰がそんなこと言ったんだ。混沌の神は混沌の神、テスカトリポカはテスカトリポカで全くの別神だぞ。誰かの推測でも鵜呑みにしたか？", "Who told you that? The God of Chaos and Tezcatlipoca are completely different beings. You shouldn't believe every rumour that you hear.")
+						chatMore lang("俺は滅亡が迫っていることを決戦因子候補たちに警告し、神の間を目指して必要な力を示すように指示したが…俺自身が滅ぼすなんて一言も言っていないだろう。そもそも神の間に囚われていたら神力で外界に呼びかけること自体が不可能だ。", "When danger drew close, I did warn all the people who were candidates for the Decisive Factor and tell them to head to the Eternal Seal. I did not say anything about destroying anything myself, did I? Besides, it would've been impossible to summon anybody in the outside world if I were trapped in the Prison.")
 						chatMore lang("確定情報と不確定情報は混同せず、ちゃんと分けて整理したほうがいいぞ。勘違いを招くからな。", "You should always be careful about separating facts from assumptions, or else you'll get things wrong again.")
 					}
 					if ( chatval == 4 ) {
@@ -14927,13 +14927,13 @@
 				if ( gdata(GDATA_FLAG_MAIN) == 665 ) {
 					chatList 0, lang("ここで何してるの？", "What are you doing here?")
 					chatList 1, lang("二番乗りじゃなくて？", "First? I'm not the second?")
-					buff = lang("よくここまで辿り着いたな。" + cdatan(CDATAN_AKA, CHARA_PLAYER) + cdatan(CDATAN_NAME, CHARA_PLAYER) + "、お前が一番乗りだ。", "Good to see you here, " + cdatan(CDATAN_AKA, CHARA_PLAYER) + " " + cdatan(CDATAN_NAME, CHARA_PLAYER) + ". You're the first.")
+					buff = lang("よくここまで辿り着いたな。" + cdatan(CDATAN_AKA, CHARA_PLAYER) + cdatan(CDATAN_NAME, CHARA_PLAYER) + "、お前が一番乗りだ。", "Good to see you here, " + cdatan(CDATAN_AKA, CHARA_PLAYER) + " " + cdatan(CDATAN_NAME, CHARA_PLAYER) + ". You're the first one to arrive.")
 					chatesc = 1
 					gosub *chat_select
-					chatMore lang("俺は決戦因子の選定役だ。ずっと伏せてきたが、これが八柱神から与えられた使命でな。そのために強者の育成に力を尽くしてきた。", "I've been hiding and watching to choose the Factors. It's the job delegated to me by the Eight Gods. That's why I've been training and helping the strong all the time.")
+					chatMore lang("俺は決戦因子の選定役だ。ずっと伏せてきたが、これが八柱神から与えられた使命でな。そのために強者の育成に力を尽くしてきた。", "I'm the one who selects the Decisive Factor. I've kept this a secret for a long time, but this is the mission given to me by the Eight Pillars. That is the reason I've been devoting myself to training the strong.")
 					if ( gdata(GDATA_FLAG_LEOLD_LOCATION_STATE) == 1 ) {
 						gdata(GDATA_FLAG_LEOLD_LOCATION_STATE) = 2
-						chatMore lang("しかし、まさか初対面の冒険者が来るとはな。俺の立場がないぞ…。", "But to think that an adventurer that I've never met before would be here. Impressive. You put my efforts to shame.")
+						chatMore lang("しかし、まさか初対面の冒険者が来るとはな。俺の立場がないぞ…。", "But to think that an adventurer that I've never met before would be here... Impressive. You've put my efforts to shame.")
 					}
 					chatMore lang("すぐ下が神の間に続いている。神の間では記録ができないらしい。回復アイテム、補給用アイテム、装備の見直し、メンバーの入れ替え…入念に準備をするんだ。用意ができたら話しかけてくれ、案内する。", "The Eternal Seal is right ahead. I've heard that you won't be able to save in there. Make sure that you have all your healing and buffing items, and give your equipment and party a lookover. You can't be over-prepared for what's ahead. When you're ready, come talk to me and I'll take you there.")
 					if ( gdata(GDATA_FLAG_LEOLD_LOCATION_STATE) < 5 ) {
@@ -14952,10 +14952,10 @@
 						gdata(GDATA_FLAG_LEOLD_LOCATION_STATE) = 5
 					}
 					if ( chatval == 1 ) {
-						chatMore lang("ここでやると色々と処理が面倒くさくてな。悪いがウールム・レゾンまで来てくれ。", "That's going to be too much trouble here. If you want that, you'll have to come with me to Ulm-Leson.")
+						chatMore lang("ここでやると色々と処理が面倒くさくてな。悪いがウールム・レゾンまで来てくれ。", "That's going to be too much trouble here. If you want that, you'll have to come see me in Ulm-Leson.")
 					}
 					if ( chatval == 2 ) {
-						chatMore lang("ん？…まぁ、いいだろう。先にテスカトリポカについて話をしておこう。", "Huh? Well, sure, I guess. But I should tell you about Tezcatlipoca before that.")
+						chatMore lang("ん？…まぁ、いいだろう。先にテスカトリポカについて話をしておこう。", "Hmm? Well, alright. But first, I should tell you about Tezcatlipoca.")
 						chatMore lang("テスカトリポカは争いを好む軍神だ。元々はエヘカトルやイツパロトルと同じ地域で生まれた神だったらしいが。エヘカトルとは長年の好敵手で、代が変わっても殺し合ったり作ったものを壊し合ったり時に怪物討伐で共闘したりを繰り返してきたとされる。", "Tezcatlipoca is the conflict-loving God of War. It's said that he was born in the same domain as Ehekatl and Itzpalt. Forever the rival of Ehekatl, they would fight and kill each other generation after generation, but also fight alongside each other to slay monsters.")
 						chatMore lang("特に初代は狡猾な奴だったらしい。具体的には、初代の男のエヘカトルを騙して特殊な呪われた酒を飲ませ、エヘカトルが悪酔いして実の妹と気持ちいいこと漬けになったところで暴露して追放に追い込んだりな。", "It's said that the first generation of Tezcatlipoca was extremely cunning. He tricked the first Ehekatl into drinking a special cursed wine and made him have a little tail with his own little sister, then exposed the scandal to exile him.")
 						chatMore lang("とにかく油断をするなということだ。単純な戦闘力だけではなく、騙されるという危険があるのだから。では、いくぞ。", "Anyway, you just have to be careful of him. Tezcatlipoca isn't just about combat prowess - you also have to be careful not to get tricked. Now, let's go.")
@@ -16556,7 +16556,7 @@
 
 *chat_unique_enthumesis
 	chatMore lang("累計放出量から予測した状態を、ソピアーから聞いていたが…それよりもだいぶ弱っているようだ。", "Sophia told me about the condition of this thing that she predicted based on reading its cumulative emissions... but it seems to be much weaker than that."), strmore, findchara(CREATURE_ID_BLACK_GAUNTLET_LEOLD)
-	chatMore lang("一度でいいから会いたいよ…。どうすれば会えるの？こいつらの知識を取り込めばわかるの？", "I want to meet her... How can I meet her? If I take in all of the knowledge of these beings, will I find out?"), strmore, findchara(CREATURE_ID_ENTHUMESIS)
+	chatMore lang("一度でいいから会いたいよ…。どうすれば会えるの？こいつらの知識を取り込めばわかるの？", "I want to meet him... How can I meet him? If I take in all of the knowledge of these beings, will I find out?"), strmore, findchara(CREATURE_ID_ENTHUMESIS)
 	chatMore lang("情けをかけるのは危険だ。仕留めるぞ。", "Showing mercy for this thing is dangerous. Let's finish this."), strmore, findchara(CREATURE_ID_BLACK_GAUNTLET_LEOLD)
 	gdata(GDATA_FLAG_MAIN) = 710
 	txt_questupdate
