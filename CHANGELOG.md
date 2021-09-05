@@ -1,3 +1,30 @@
+# 2.06fix.2.0
+
+## Added
+- Translated all untranslated text except cutscenes, and improved upon Custom-G's machine translations.
+- Restored all of Elona's original network code that was removed in Elona+.
+- Added marriage chat messages from the work-in-progress Elona source code.
+- Added back the option to vote on an alias when using the voting box.
+- Added HiDPI scaling and smoothing options, accessible from the Screen & Sound section of the options menu.
+- Added a patched version of `elochat.exe` that can be configured to use a different server.
+- Added an option to show the actual numbers for class/race stats during character creation (`charamake_preciseStats.`).
+- Added a tweak for quickly reloading the last save upon death.
+- Added a tweak to revert changes to the experience formula after Elona+ 1.90.
+- Added a tweak to disable study day bonus skill experience.
+- Added a tweak to disable the DESTINY feature and restore the chances of finding godly equipment.
+
+## Changed
+- Enable the use of network features by default.
+- Use `elochat.yeek.agency` as the default chat server.
+- Make the codebase compatible with HSP 3.6. (Thanks, @Mirarara!)
+- Show the Life, Mana and Speed of classes/races during character creation.
+- Don't apply "Prevent home stayers from moving" to special NPCs like Lomias and Larnneire.
+
+## Fixed
+- Fixed Yacatect's Bank not working on use. (Thanks, @Mirarara!)
+- Fixed Memory Converters not working on use.
+- Fixed potion puddles not spawning when throwing potions.
+
 # 2.06fix.1.0
 
 ## Added
