@@ -1,9 +1,3 @@
-# 2.06fix.2.1
-
-## Fixed
-- Fixed collect yield option in farms not resetting plant status. (Thanks, @Mirarara!)
-- Fixed various incorrect item descriptions.
-
 # 2.06fix.2.0
 
 ## Added
@@ -23,7 +17,7 @@
 - Enable the use of network features by default.
 - Use `elochat.yeek.agency` as the default chat server.
 - Make the codebase compatible with HSP 3.6. (Thanks, @Mirarara!)
-- Show the Life, Mana and Speed, and body parts of classes/races during character creation.
+- Show the Life, Mana and Speed of classes/races during character creation.
 - Don't apply "Prevent home stayers from moving" to special NPCs like Lomias and Larnneire.
 
 ## Fixed
