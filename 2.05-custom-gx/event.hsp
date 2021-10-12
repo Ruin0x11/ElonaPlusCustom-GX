@@ -836,19 +836,43 @@
 	if ( _switch_val == RANDOM_EVENT_DREAM_LOSE_RES | _switch_sw ) {
 		_switch_sw = 0
 		snd SOUNDLIST_CURSE2
-		tc = CHARA_PLAYER
-		efp = 100
 		f = 0
-		repeat 10
-			p = rnd(MAX_SKILL_RESIST - STARTING_SKILL_RESIST) + STARTING_SKILL_RESIST
-			if ( sorg(p, tc) >= 150 ) {
-				f++
-				resistmod tc, p, 50 * (-1)
-				if ( f >= efp / 100 ) {
-					break
-				}
+		tc = CHARA_PLAYER
+		if ( findbuff(tc, BUFF_DISINFECTION) == (-1) ) {
+			p = 13 - 10
+			if ( encfind(tc, 6 * 10000 + 10 + p) != (-1) ) {
+				p = -1
 			}
-		loop
+			if ( p != (-1) ) {
+				i = sorg(10 + p, tc) - cdata(STARTING_CDATA_ATTR + p, tc)
+				if ( i > 0 ) {
+					cdata(STARTING_CDATA_ATTR + p, tc) -= sorg(10 + p, tc) / 3 + 5
+				}
+				f++
+			}
+			p = 15 - 10
+			if ( encfind(tc, 6 * 10000 + 10 + p) != (-1) ) {
+				p = -1
+			}
+			if ( p != (-1) ) {
+				i = sorg(10 + p, tc) - cdata(STARTING_CDATA_ATTR + p, tc)
+				if ( i > 0 ) {
+					cdata(STARTING_CDATA_ATTR + p, tc) -= sorg(10 + p, tc) / 3 + 5
+				}
+				f++
+			}
+			p = 19 - 10
+			if ( encfind(tc, 6 * 10000 + 10 + p) != (-1) ) {
+				p = -1
+			}
+			if ( p != (-1) ) {
+				i = sorg(10 + p, tc) - cdata(STARTING_CDATA_ATTR + p, tc)
+				if ( i > 0 ) {
+					cdata(STARTING_CDATA_ATTR + p, tc) -= sorg(10 + p, tc) / 3 + 5
+				}
+				f++
+			}
+		}
 		s = lang("不気味な夢", "Creepy Dream")
 		file = "bg_re5"
 		buff = lang("あなたは不気味な夢をみた。陰気な幾つもの瞳があなたを凝視し、どこからともなく笑い声がこだました。「ケラケラケラ…ミツケタヨ…ケラケラ」あなたが二度寝返りをうった後、その夢は終わった。", "In your dreams, several pairs of gloomy eyes stare at you and laughter seemingly from nowhere echoes around you.  \"Keh-la keh-la keh-la I found you...I found you.. keh-la keh-la keh-la\" After tossing around a couple times, the dream is gone.")

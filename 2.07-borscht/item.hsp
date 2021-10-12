@@ -3712,10 +3712,10 @@
 		if ( cc < MAX_CHARA_FOLLOWER ) {
 			txt lang(name(cc) + "はクッキーの中のおみくじを読んだ。", name(cc) + " read" + _s(cc) + " the paper fortune.")
 			valn = "%COOKIE2"
-			gosub *label_0420
+			gosub *spec_talk
 			if ( inv(INV_ITEM_STATUS, ci) >= ITEM_STATUS_BLESSED | (inv(INV_ITEM_STATUS, ci) == ITEM_STATUS_NORMAL & rnd(2)) ) {
 				valn = "%COOKIE1"
-				gosub *label_0420
+				gosub *spec_talk
 			}
 			txtef COLOR_YELLOW
 			txt "" + buff

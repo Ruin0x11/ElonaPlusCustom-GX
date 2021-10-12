@@ -505,7 +505,12 @@
 		gdata(GDATA_QUEST) = QUEST_TYPE_NONE
 	}
 	repeat MAX_CHARA_TOTAL
-		cdata(CDATA_CAN_REVIVE, cnt) = 1
+		if ( cnt != CHARA_PLAYER ) {
+			cdata(CDATA_CAN_REVIVE, cnt) = 1
+		}
+		cdata(CDATA_FRIENDSHIP, CHARA_PLAYER) = 0
+		cbitmod CHARA_BIT_MAGNETISM_S_POLE, cnt, FALSE
+		cbitmod CHARA_BIT_MAGNETISM_N_POLE, cnt, FALSE
 		cdata(CDATA_POWER_GAUGE, cnt) = 0
 		gdata(STARTING_GDATA_FLAG + 379) = 0
 		if ( cdata(CDATA_EXIST, cnt) != CHAR_STATE_ALIVE ) {
@@ -13801,6 +13806,61 @@
 			}
 		}
 		return
+	}
+	if ( cdata(CDATA_FRIENDSHIP, CHARA_PLAYER) == (-1) ) {
+		if ( rnd(5) == 0 ) {
+			snd SOUNDLIST_BOLT1
+			tuex = rnd(mdata(MDATA_WIDTH))
+			tuey = rnd(mdata(MDATA_HEIGHT))
+			txtef COLOR_SKY_BLUE
+			if ( rnd(2) == 0 ) {
+				txt lang("空を裂いて何かが落ちてきた！", "Something falls through the sky!")
+			}
+			else {
+				txt lang("神の杖が地上に振り下ろされた！", "A rods from God is swung down!")
+			}
+			snd SOUNDLIST_ATK_FIRE
+			range = 6
+			ele = SKILL_RES_CHAOS
+			aniref = range
+			animeid = ANIMATION_BALL_NUKE
+			anix = tuex
+			aniy = tuey
+			gosub *anime
+			gosub *screen_draw
+			repeat range * 2 + 1
+				dy = tuey - range + cnt
+				if ( dy < 0 | dy >= mdata(MDATA_HEIGHT) ) {
+					continue
+				}
+				repeat range * 2 + 1
+					dx = tuex - range + cnt
+					if ( dx < 0 | dx >= mdata(MDATA_WIDTH) ) {
+						continue
+					}
+					if ( dist(tuex, tuey, dx, dy) > range ) {
+						continue
+					}
+					f = 0
+					if ( map(dx, dy, MAP_TILE_ID) != xy2pic(8, 21) & map(dx, dy, MAP_TILE_ID) != xy2pic(11, 20) ) {
+						map(dx, dy, MAP_TILE_ID) = xy2pic(4, 1)
+					}
+					if ( map(dx, dy, MAP_CHARA_INDEX_PLUS_ONE) != 0 ) {
+						tc = map(dx, dy, MAP_CHARA_INDEX_PLUS_ONE) - 1
+						if ( cdata(CDATA_IN_TAGTEAM, tc) != 0 ) {
+							if ( tc != CHARA_PLAYER ) {
+								if ( rnd(cdata(CDATA_HP, tc) + 1) < rnd(cdata(CDATA_HP, cdata(CDATA_TAGTEAM_PARTNER, tc)) + 1) ) {
+									tc = cdata(CDATA_TAGTEAM_PARTNER, tc)
+								}
+								txt lang(name(tc) + "は" + name(cdata(CDATA_TAGTEAM_PARTNER, tc)) + "をかばった！", name(tc) + " guarded " + name(cdata(CDATA_TAGTEAM_PARTNER, tc)) + ".")
+							}
+						}
+						dmg = 1000
+						dmghp tc, dmg, DAMAGE_FROM_TRAP
+					}
+				loop
+			loop
+		}
 	}
 	if ( gdata(GDATA_AREA) == AREA_NT_SOUTH_BORDER ) {
 		if ( gdata(GDATA_LEVEL) == 100 ) {

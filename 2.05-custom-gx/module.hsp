@@ -2458,6 +2458,14 @@
 								}
 							}
 						}
+						if ( cbit(CHARA_BIT_MAGNETISM_S_POLE, locvar_cell_draw_c) ) {
+							pos locvar_cell_draw_dx + 9, locvar_cell_draw_dy + 25 - 9
+							gcopy BUFFER_INF, 1383, 517, 8, 8
+						}
+						if ( cbit(CHARA_BIT_MAGNETISM_N_POLE, locvar_cell_draw_c) ) {
+							pos locvar_cell_draw_dx + 9, locvar_cell_draw_dy + 25 - 9
+							gcopy BUFFER_INF, 1375, 517, 8, 8
+						}
 						if ( cdata(CDATA_POWER_GAUGE, locvar_cell_draw_c) < 0 ) {
 							cdata(CDATA_POWER_GAUGE, locvar_cell_draw_c) = 0
 						}
@@ -2976,6 +2984,14 @@
 										pos locvar_cell_draw_dx + 9, locvar_cell_draw_dy + 31
 										gcopy 3, 480 - locvar_cell_draw_h, 513, locvar_cell_draw_h, 3
 									}
+								}
+								if ( cbit(CHARA_BIT_MAGNETISM_S_POLE, locvar_cell_draw_c) ) {
+									pos locvar_cell_draw_dx + 9 + cdata(CDATA_IN_TAGTEAM, locvar_cell_draw_c) * 13, locvar_cell_draw_dy + 25 - 9
+									gcopy BUFFER_INF, 1383, 517, 8, 8
+								}
+								if ( cbit(CHARA_BIT_MAGNETISM_N_POLE, locvar_cell_draw_c) ) {
+									pos locvar_cell_draw_dx + 9 + cdata(CDATA_IN_TAGTEAM, locvar_cell_draw_c) * 13, locvar_cell_draw_dy + 25 - 9
+									gcopy BUFFER_INF, 1375, 517, 8, 8
 								}
 								locvar_cell_draw_powsel = 0
 								if ( gdata(GDATA_FLAG_MAIN) < 350 ) {

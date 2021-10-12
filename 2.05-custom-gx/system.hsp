@@ -763,6 +763,22 @@
 			cdata(CDATA_DV_FIX, CHARA_PLAYER) = 200
 		}
 	}
+	if ( gdata(GDATA_VERSION) < 6070 ) {
+		if ( trait(TRAIT_NORMAL_SKILL_CASTING) != 0 ) {
+			if ( spact(SKILL_SPACT_MAGNECOAT - STARTING_SKILL_SPACT) == 0 ) {
+				spact(SKILL_SPACT_MAGNECOAT - STARTING_SKILL_SPACT) = 1
+				txtmore
+				txtef COLOR_YELLOW
+				txt lang("あなたは「" + skillname(SKILL_SPACT_MAGNECOAT) + "」の能力を得た。", "You have learned new ability, " + skillname(SKILL_SPACT_MAGNECOAT) + ".")
+			}
+		}
+		repeat 245
+			if ( cdata(CDATA_CONDITION_JIU_JITSU, cnt) != 0 ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, cnt) = 0
+				cbitmod CHARA_BIT_VINDALIAN_JIUJITSU_ACTIVE, cnt, TRUE
+			}
+		loop
+	}
 	repeat 16
 		if ( cdata(CDATA_CHARA_PIC_ORG, cnt) == 1 ) {
 			cdata(CDATA_CHARA_PIC, cnt) = xy2pic(1, 0)

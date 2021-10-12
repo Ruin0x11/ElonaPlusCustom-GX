@@ -3012,6 +3012,15 @@
 			}
 		}
 	}
+	if ( cdata(CDATA_ID, cc) == CREATURE_ID_AJETALIO_THE_SEMINAR_LECTURER | cdata(CDATA_ID, cc) == CREATURE_ID_HELLSTLING | cdata(CDATA_ID, cc) == CREATURE_ID_ATLACH_NACHA ) {
+		if ( cdata(CDATA_POWER_GAUGE, cc) >= 80 ) {
+			if ( cdata(CDATA_FRIENDSHIP, CHARA_PLAYER) != 2 & cdata(CDATA_FRIENDSHIP, CHARA_PLAYER) >= 0 ) {
+				if ( rnd(3) == 0 ) {
+					act = SKILL_SPACT_WIRE_WORLD
+				}
+			}
+		}
+	}
 	if ( cdata(CDATA_ID, cc) == CREATURE_ID_MAGIC_BEE ) {
 		if ( cdata(CDATA_CONDITION_ANGRY, cc) > 0 ) {
 			if ( rnd(3) == 0 ) {
@@ -3139,7 +3148,7 @@
 	if ( cdata(CDATA_ID, cc) == CREATURE_ID_MARY_THE_INSECT_MASTER | cdata(CDATA_ID, cc) == CREATURE_ID_ULTIMATE_GOLEM | cdata(CDATA_ID, cc) == CREATURE_ID_ARMA_THE_TOUR_GUIDE | cdata(CDATA_ID, cc) == CREATURE_ID_AJETALIO_THE_SEMINAR_LECTURER | cdata(CDATA_ID, cc) == CREATURE_ID_CURSE_GRAPPLER ) {
 		if ( cdata(CDATA_TARGET, cc) != 0 | cdata(CDATA_TARGET, cc) == 0 ) {
 			if ( rnd(3) ) {
-				if ( cdata(CDATA_CONDITION_JIU_JITSU, cc) == 0 ) {
+				if ( cbit(CHARA_BIT_VINDALIAN_JIUJITSU_ACTIVE, cc) == FALSE ) {
 					if ( cdata(CDATA_PV, tc) >= cdata(CDATA_DV, tc) + 100 ) {
 						act = SKILL_SPACT_VINDALIAN_JIUJITSU
 					}

@@ -255,17 +255,16 @@
 	}
 	if ( tid == TRAIT_NORMAL_SKILL_CASTING ) {
 		if ( traitmode == 0 ) {
-			traitref = 0, 0, 2, 1, 0, 100, -1
-			traitrefn2 = lang("集中", "Concentration"), lang("高い集中", "More Concentration")
+			traitref = 0, 0, 1, 1, 0, 100, -1
+			traitrefn2 = lang("磁力操作", "Magnetic Manipulate"), lang("磁力操作", "Magnetic Manipulate")
 			if ( trait(tid) >= 0 ) {
-				traitrefn(2) = lang("日々瞑想し詠唱技術を高める", "Daily meditation increases your casting skill."), lang("あなたの集中力は高い[詠唱+4]", "You concentrate while casting. [Casting+4]"), lang("あなたは極度に集中できる[詠唱+8]", "You concentrate more while casting. [Casting+8]")
-			}
-			if ( sorg(SKILL_NORMAL_CASTING, CHARA_PLAYER) == 0 ) {
-				return -1
+				traitrefn(2) = lang("改造されて磁力を操れるようになる", "As a result of body modification, you can manipulate magnetic force."), lang("あなたは磁力を自在に操る", "You manipulate magnetic force."), lang("あなたは磁力を自在に操る", "You manipulate magnetic force.")
 			}
 			return 1
 		}
-		sdata(SKILL_NORMAL_CASTING, CHARA_PLAYER) = limit(sdata(SKILL_NORMAL_CASTING, CHARA_PLAYER) + trait(tid) * 4, sdata(SKILL_NORMAL_CASTING, CHARA_PLAYER) > 0, 9999)
+		if ( spact(SKILL_SPACT_MAGNECOAT - STARTING_SKILL_SPACT) == 0 ) {
+			spact(SKILL_SPACT_MAGNECOAT - STARTING_SKILL_SPACT) = 1
+		}
 		return 1
 	}
 	if ( tid == TRAIT_NORMAL_OTHER_SHIELD_BASH ) {
@@ -767,7 +766,7 @@
 		if ( traitmode == 0 ) {
 			traitref = 2, 0, 1, 1, 0, 100, -1
 			if ( trait(tid) >= 0 ) {
-				traitrefn(2) = "", lang("あなたは1s以上の物を装備できない[DV上昇]", "You can't wear equipment weighting more than 1s. [DV++]")
+				traitrefn(2) = "", lang("あなたは2sを超える物を装備できない[DV上昇]", "You can't wear equipment weight over 2s. [DV++]")
 			}
 			return 1
 		}

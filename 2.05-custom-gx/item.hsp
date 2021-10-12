@@ -326,6 +326,13 @@
 			return
 		}
 	}
+	if ( cbit(CHARA_BIT_DROP_GOLD, rc) == TRUE ) {
+		if ( cdata(CDATA_GOLD, rc) > 0 ) {
+			flt
+			itemcreate -1, ITEM_ID_GOLD_PIECE, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), cdata(CDATA_GOLD, rc)
+			cdata(CDATA_GOLD, rc) = 0
+		}
+	}
 	if ( cbit(CHARA_BIT_HIRED, rc) ) {
 		return
 	}
@@ -573,13 +580,6 @@
 		}
 		inv(INV_ITEM_NUM, ci) = 0
 	loop
-	if ( cbit(CHARA_BIT_DROP_GOLD, rc) == TRUE ) {
-		if ( cdata(CDATA_GOLD, rc) > 0 ) {
-			flt
-			itemcreate -1, ITEM_ID_GOLD_PIECE, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), cdata(CDATA_GOLD, rc)
-			cdata(CDATA_GOLD, rc) = 0
-		}
-	}
 	if ( (cdata(CDATA_ROLE, rc) >= ROLE_SHOP_MIN & cdata(CDATA_ROLE, rc) < ROLE_GUEST_MIN | cdata(CDATA_ROLE, rc) == ROLE_GUEST_MERCHANT) != 1 ) {
 		if ( cdata(CDATA_QUALITY, rc) >= FIX_QUALITY_MIRACLE | gdata(GDATA_FLAG_DUEL_TARGET) == (-2) | rnd(10) == 0 | rc < MAX_CHARA_FOLLOWER ) {
 			if ( cdata(CDATA_GOLD, rc) > 0 ) {
