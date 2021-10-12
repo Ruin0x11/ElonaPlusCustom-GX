@@ -116,9 +116,9 @@
 
 #include "highdpi.hsp"
 
-#define global VARIANT_NAME "ElonaPlus Custom-GX 2.06fix.2.0"
-#define global VARIANT_TITLE "Elona+ Custom-GX 2.06fix.2.0"
-#define global VERSION_STRING "6.06"
+#define global VARIANT_NAME "ElonaPlus Custom-GX 2.07.1.0"
+#define global VARIANT_TITLE "Elona+ Custom-GX 2.07.1.0"
+#define global VERSION_STRING "6.07"
 #define global VERSION_NUMBER int(double(VERSION_STRING) * 1000)
 
     develop = dirinfo(4) == "--develop"
@@ -1944,6 +1944,13 @@
 					evadd EVENT_AMURDEAD_SUB_CREATE_STAIRS, 0
 					goto *turn_end
 				}
+			}
+		}
+	}
+	if ( cdata(CDATA_FRIENDSHIP, CHARA_PLAYER) == 1 ) {
+		if ( cdata(CDATA_CONDITION_PARALYZE, cc) == 0 ) {
+			if ( rnd(2) == 0 ) {
+				cdata(CDATA_CONDITION_PARALYZE, cc) = 1
 			}
 		}
 	}
@@ -7509,7 +7516,7 @@
 						break
 					}
 				}
-				if ( rnd(20) == 0 ) {
+				if ( rnd(10) == 0 ) {
 					homeu++
 					if ( (gdata(GDATA_DAY) + homeu) \ 4 == 0 ) {
 						if ( findcharahome(CREATURE_ID_SCARD_THE_HAPPY_SWALLOW) == 0 ) {

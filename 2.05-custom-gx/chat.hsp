@@ -14119,13 +14119,13 @@
 			goto *chat_end
 		}
 		if ( chatval == 2 ) {
-			if ( gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 < cdata(CDATA_CAN_REVIVE, tc) ) {
+			if ( gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 < cdata(CDATA_MATERIAL1_COUNTER, tc) ) {
 				snd SOUNDLIST_FAIL1
-				txt lang("次に徴収できるのは" + cnvdate(cdata(CDATA_CAN_REVIVE, tc), 1) + "だ。", "You can receive something again on " + cnvdate(cdata(CDATA_CAN_REVIVE, tc), 1) + ".")
+				txt lang("次に徴収できるのは" + cnvdate(cdata(CDATA_MATERIAL1_COUNTER, tc), 1) + "だ。", "The next time is " + cnvdate(cdata(CDATA_MATERIAL1_COUNTER, tc), 1) + ".")
 				goto *chat_end
 			}
 			chatMore lang("まぁ、気づかずにすみません。こちらを受け取ってください。娘たちと一緒に作ったんですよ。", "Oh, that's right. Sorry for falling behind. Please take these - I made them together with my daughters.")
-			cdata(CDATA_CAN_REVIVE, tc) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 + 24 * 30
+			cdata(CDATA_MATERIAL1_COUNTER, tc) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 + 24 * 30
 			txt_questitem
 			flt
 			itemcreate -1, ITEM_ID_GOLDEN_MEAD, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 4
@@ -14152,13 +14152,13 @@
 			goto *chat_end
 		}
 		if ( chatval == 2 ) {
-			if ( gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 < cdata(CDATA_CAN_REVIVE, tc) ) {
+			if ( gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 < cdata(CDATA_MATERIAL1_COUNTER, tc) ) {
 				snd SOUNDLIST_FAIL1
-				txt lang("次に徴収できるのは" + cnvdate(cdata(CDATA_CAN_REVIVE, tc), 1) + "だ。", "You can receive something again on " + cnvdate(cdata(CDATA_CAN_REVIVE, tc), 1) + ".")
+				txt lang("次に徴収できるのは" + cnvdate(cdata(CDATA_MATERIAL1_COUNTER, tc), 1) + "だ。", "The next time is " + cnvdate(cdata(CDATA_MATERIAL1_COUNTER, tc), 1) + ".")
 				goto *chat_end
 			}
 			chatMore lang("あっ、はい。", "Ah, right.")
-			cdata(CDATA_CAN_REVIVE, tc) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 + 24 * 30
+			cdata(CDATA_MATERIAL1_COUNTER, tc) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 + 24 * 30
 			txt_questitem
 			if ( gdata(GDATA_MONTH) == 1 ) {
 				flt
@@ -14572,7 +14572,7 @@
 					if ( gdata(GDATA_FLAG_LEOLD_LOCATION_STATE) < 8 ) {
 						chatList 3, lang("まだ貰っていないご褒美がある", "There's a reward I haven't received yet.")
 					}
-					buff = lang("ああ、そうそう。他の連中のクリア後会話はまだ開発中だ。気長に待ってくれ。", "Ahh, that reminds me. The after-story scenarios for all the others are still under development. Please be patient for a while.")
+					buff = lang("想定を超えてお前は強く、たくましくなった。俺も鼻が高いよ…。", "You've become stronger and braver than we'd ever expected. I'm proud of you, as well...")
 					if ( gdata(GDATA_FLAG_MAIN) == 1010 ) {
 						gdata(GDATA_FLAG_MAIN) = 1015
 					}
@@ -14651,7 +14651,7 @@
 				if ( gdata(GDATA_FLAG_MAIN) >= 840 & gdata(GDATA_FLAG_MAIN) < 1000 ) {
 					if ( gdata(GDATA_FLAG_MAIN) == 840 ) {
 						chatMore lang("オルフェめ、やってくれたな。だが今度こそ止めてみせる…。", "You've done it now, Orphe. But this will be the time we finally stop you...")
-						chatMore lang("おっと。待っていたぞ、" + cdatan(CDATAN_NAME, CHARA_PLAYER) + "。必要なんでな、来光の牙を返してもらうぞ。", "Ah. I've been waiting for you, " + cdatan(CDATAN_NAME, CHARA_PLAYER) + ". I'll be taking the [Origin of Light], since I'll be needing it soon.")
+						chatMore lang("おっと。待っていたぞ、" + cdatan(CDATAN_NAME, CHARA_PLAYER) + "。決戦に必要なんでな、来光の牙を返してもらうぞ。", "Ah. I've been waiting for you, " + cdatan(CDATAN_NAME, CHARA_PLAYER) + ". I'll be taking the [Origin of Light], since I'll be needing it for the final confrontation ahead of us.")
 						txtef COLOR_BLUE
 						txt lang("[来光の牙]を失った。", "You have lost the [Origin of Light]...")
 						gdata(GDATA_FLAG_MAIN) = 845
@@ -17030,6 +17030,7 @@
 	chatMore lang("ほざいているがいい。少しの間だが遊んでやろう。お前たちがどこまで耐えられるか楽しみだな。", "Prattle along while you still can. I'll indulge you for a short while. It will be amusing to see how much suffering you're able to endure."), strmore, findchara(CREATURE_ID_JALDABAOTH_THE_CHAOS_CHILD)
 	txtnew
 	txtef COLOR_RED
+	cdata(CDATA_FRIENDSHIP, CHARA_PLAYER) = -2
 	txt lang("ヤルダバオート中心に世界が回り始める…。", "The world begins to distort, centering around Jaldabaoth...")
 	gdata(GDATA_FLAG_MAIN) = 865
 	txt lang("声が聞こえる…。", "You can hear someone's voice...")

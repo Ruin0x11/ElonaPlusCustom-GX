@@ -61,6 +61,8 @@
 	_conmuteki = lang("無　敵", "Invulnerable")
 	_conjudo = lang("柔　術", "Jiu-jitsu")
 	_conadvance = lang("高度詠唱", "Adv-Cast")
+	_conmags = lang("Ｓ極状態", "Magnet-S")
+	_conmagn = lang("Ｎ極状態", "Magnet-N")
 	_conwash = lang("洗　脳", "Brainwash")
 	_conkaen = lang("怯　み", "Wince")
 	_conreiki = lang("震　え", "Chills")
@@ -83,7 +85,7 @@
 	_conovergods = lang("神智超越", "OverGods")
 	_confatigue = lang("軽疲労", "Tired"), lang("疲　労", "Very tired"), lang("過　労", "VERY tired")
 	_quality = "", lang("粗悪", "bad"), lang("良質", "good"), lang("高品質", "great"), lang("奇跡", "miracle"), lang("神器", "godly"), lang("特別", "special")
-	_resist = lang("致命的な弱点", "Criticaly Weak"), lang("弱点", "Weak"), lang("耐性なし", "No Resist"), lang("弱い耐性", "Little"), lang("普通の耐性", "Normal"), lang("強い耐性", "Strong"), lang("素晴らしい耐性", "Superb")
+	_resist = lang("致命的な弱点", "Criticaly Weak"), lang("弱点", "Weak"), lang("耐性なし", "No Resist"), lang("弱い耐性", "Little"), lang("普通の耐性", "Normal"), lang("強い耐性", "Strong"), lang("素晴らしい耐性", "Superb"), lang("凄まじい耐性", "Amazing"), lang("至上の耐性", "Supreme")
 	_mark = lang("。", "."), lang("？", "?"), lang("！", "!"), ""
 	_sex = lang("男", "Male"), lang("女", "Female")
 	_sex2 = lang("男", "boy"), lang("女", "girl")
@@ -6228,6 +6230,15 @@
 					}
 					break
 				}
+				else {
+					if ( cdata(CDATA_SEX, CHARA_PLAYER) == 0 ) {
+						s = "brother"
+					}
+					if ( cdata(CDATA_SEX, CHARA_PLAYER) == 1 ) {
+						s = "sister"
+					}
+					break
+				}
 			}
 			if ( s == "syujin" ) {
 				if ( jp ) {
@@ -6237,6 +6248,10 @@
 					if ( cdata(CDATA_SEX, CHARA_PLAYER) == 1 ) {
 						s = "お嬢様"
 					}
+					break
+				}
+				else {
+					s = "master"
 					break
 				}
 			}
@@ -6303,6 +6318,639 @@
 	gdata(GDATA_CUSTOM_TEXT_DIALOG) = 0
 	return
 
+*convert_guide
+	repeat 30
+		await
+		pg = instr(buffg, 0, "{"), instr(buffg, pg, "}"), strlen(buffg)
+		if ( pg == (-1) ) {
+			break
+		}
+		sg = strmid(buffg, pg + 1, pg(1) - 1), strmid(buffg, 0, pg), strmid(buffg, pg + pg(1) + 1, pg(2) - pg(1) - pg)
+		repeat 1
+			if ( sg == "ref" ) {
+				if ( talkref == 1 ) {
+					sg = lang("" + gdata(GDATA_GUEST), "" + gdata(GDATA_GUEST) + " guest" + _s2(gdata(GDATA_GUEST)))
+					break
+				}
+			}
+			if ( sg == "you" ) {
+				sg = _kimi(3)
+				break
+			}
+			if ( sg == "player" ) {
+				sg = cdatan(CDATAN_NAME, CHARA_PLAYER)
+				break
+			}
+			if ( sg == "aka" ) {
+				sg = cdatan(CDATAN_AKA, CHARA_PLAYER)
+				break
+			}
+			if ( sg == "onii" ) {
+				if ( jp ) {
+					if ( cdata(CDATA_SEX, CHARA_PLAYER) == 0 ) {
+						sg = "お兄"
+					}
+					if ( cdata(CDATA_SEX, CHARA_PLAYER) == 1 ) {
+						sg = "お姉"
+					}
+					break
+				}
+				else {
+					if ( cdata(CDATA_SEX, CHARA_PLAYER) == 0 ) {
+						sg = "brother"
+					}
+					if ( cdata(CDATA_SEX, CHARA_PLAYER) == 1 ) {
+						sg = "sister"
+					}
+					break
+				}
+			}
+			if ( sg == "syujin" ) {
+				if ( jp ) {
+					if ( cdata(CDATA_SEX, CHARA_PLAYER) == 0 ) {
+						sg = "ご主人様"
+					}
+					if ( cdata(CDATA_SEX, CHARA_PLAYER) == 1 ) {
+						sg = "お嬢様"
+					}
+					break
+				}
+				else {
+					sg = "master"
+					break
+				}
+			}
+			if ( sg == "sex" ) {
+				if ( jp ) {
+					if ( cdata(CDATA_SEX, CHARA_PLAYER) == 0 ) {
+						sg = "男"
+					}
+					if ( cdata(CDATA_SEX, CHARA_PLAYER) == 1 ) {
+						sg = "女"
+					}
+					break
+				}
+				else {
+					if ( cdata(CDATA_SEX, CHARA_PLAYER) == 0 ) {
+						sg = "boy"
+					}
+					if ( cdata(CDATA_SEX, CHARA_PLAYER) == 1 ) {
+						sg = "girl"
+					}
+					break
+				}
+			}
+			if ( sg == "guide1" ) {
+				cdata(CDATA_CAN_REVIVE, CHARA_PLAYER) = 1
+				sg = ""
+				break
+			}
+			if ( sg == "guide2" ) {
+				cdata(CDATA_CAN_REVIVE, CHARA_PLAYER) = 2
+				sg = ""
+				break
+			}
+			if ( sg == "guide3" ) {
+				cdata(CDATA_CAN_REVIVE, CHARA_PLAYER) = 3
+				sg = ""
+				break
+			}
+			if ( sg == "guide4" ) {
+				cdata(CDATA_CAN_REVIVE, CHARA_PLAYER) = 4
+				sg = ""
+				break
+			}
+			if ( sg == "guide5" ) {
+				cdata(CDATA_CAN_REVIVE, CHARA_PLAYER) = 5
+				sg = ""
+				break
+			}
+			if ( sg == "guide6" ) {
+				cdata(CDATA_CAN_REVIVE, CHARA_PLAYER) = 6
+				sg = ""
+				break
+			}
+			if ( sg == "guide7" ) {
+				cdata(CDATA_CAN_REVIVE, CHARA_PLAYER) = 7
+				sg = ""
+				break
+			}
+			if ( sg == "guide8" ) {
+				cdata(CDATA_CAN_REVIVE, CHARA_PLAYER) = 8
+				sg = ""
+				break
+			}
+			if ( sg == "guide9" ) {
+				cdata(CDATA_CAN_REVIVE, CHARA_PLAYER) = 9
+				sg = ""
+				break
+			}
+			if ( sg == "se0" ) {
+				snd SOUNDLIST_USER_SE00
+				sg = ""
+				break
+			}
+			if ( sg == "se1" ) {
+				snd SOUNDLIST_USER_SE01
+				sg = ""
+				break
+			}
+			if ( sg == "se2" ) {
+				snd SOUNDLIST_USER_SE02
+				sg = ""
+				break
+			}
+			if ( sg == "se3" ) {
+				snd SOUNDLIST_USER_SE03
+				sg = ""
+				break
+			}
+			if ( sg == "se4" ) {
+				snd SOUNDLIST_USER_SE04
+				sg = ""
+				break
+			}
+			if ( sg == "se5" ) {
+				snd SOUNDLIST_USER_SE05
+				sg = ""
+				break
+			}
+			if ( sg == "se6" ) {
+				snd SOUNDLIST_USER_SE06
+				sg = ""
+				break
+			}
+			if ( sg == "se7" ) {
+				snd SOUNDLIST_USER_SE07
+				sg = ""
+				break
+			}
+			if ( sg == "se8" ) {
+				snd SOUNDLIST_USER_SE08
+				sg = ""
+				break
+			}
+			if ( sg == "se9" ) {
+				snd SOUNDLIST_USER_SE09
+				sg = ""
+				break
+			}
+			if ( sg == "se10" ) {
+				snd SOUNDLIST_USER_SE10
+				sg = ""
+				break
+			}
+			if ( sg == "se11" ) {
+				snd SOUNDLIST_USER_SE11
+				sg = ""
+				break
+			}
+			if ( sg == "se12" ) {
+				snd SOUNDLIST_USER_SE12
+				sg = ""
+				break
+			}
+			if ( sg == "se13" ) {
+				snd SOUNDLIST_USER_SE13
+				sg = ""
+				break
+			}
+			if ( sg == "se14" ) {
+				snd SOUNDLIST_USER_SE14
+				sg = ""
+				break
+			}
+			if ( sg == "se15" ) {
+				snd SOUNDLIST_USER_SE15
+				sg = ""
+				break
+			}
+			if ( sg == "se16" ) {
+				snd SOUNDLIST_USER_SE16
+				sg = ""
+				break
+			}
+			if ( sg == "se17" ) {
+				snd SOUNDLIST_USER_SE17
+				sg = ""
+				break
+			}
+			if ( sg == "se18" ) {
+				snd SOUNDLIST_USER_SE18
+				sg = ""
+				break
+			}
+			if ( sg == "se19" ) {
+				snd SOUNDLIST_USER_SE19
+				sg = ""
+				break
+			}
+			if ( sg == "se20" ) {
+				snd SOUNDLIST_USER_SE20
+				sg = ""
+				break
+			}
+			if ( sg == "se21" ) {
+				snd SOUNDLIST_USER_SE21
+				sg = ""
+				break
+			}
+			if ( sg == "se22" ) {
+				snd SOUNDLIST_USER_SE22
+				sg = ""
+				break
+			}
+			if ( sg == "se23" ) {
+				snd SOUNDLIST_USER_SE23
+				sg = ""
+				break
+			}
+			if ( sg == "se24" ) {
+				snd SOUNDLIST_USER_SE24
+				sg = ""
+				break
+			}
+			if ( sg == "se25" ) {
+				snd SOUNDLIST_USER_SE25
+				sg = ""
+				break
+			}
+			if ( sg == "se26" ) {
+				snd SOUNDLIST_USER_SE26
+				sg = ""
+				break
+			}
+			if ( sg == "se27" ) {
+				snd SOUNDLIST_USER_SE27
+				sg = ""
+				break
+			}
+			if ( sg == "se28" ) {
+				snd SOUNDLIST_USER_SE28
+				sg = ""
+				break
+			}
+			if ( sg == "se29" ) {
+				snd SOUNDLIST_USER_SE29
+				sg = ""
+				break
+			}
+			if ( sg == "se30" ) {
+				snd SOUNDLIST_USER_SE30
+				sg = ""
+				break
+			}
+			if ( sg == "se31" ) {
+				snd SOUNDLIST_USER_SE31
+				sg = ""
+				break
+			}
+			if ( sg == "se32" ) {
+				snd SOUNDLIST_USER_SE32
+				sg = ""
+				break
+			}
+			if ( sg == "se33" ) {
+				snd SOUNDLIST_USER_SE33
+				sg = ""
+				break
+			}
+			if ( sg == "se34" ) {
+				snd SOUNDLIST_USER_SE34
+				sg = ""
+				break
+			}
+			if ( sg == "se35" ) {
+				snd SOUNDLIST_USER_SE35
+				sg = ""
+				break
+			}
+			if ( sg == "se36" ) {
+				snd SOUNDLIST_USER_SE36
+				sg = ""
+				break
+			}
+			if ( sg == "se37" ) {
+				snd SOUNDLIST_USER_SE37
+				sg = ""
+				break
+			}
+			if ( sg == "se38" ) {
+				snd SOUNDLIST_USER_SE38
+				sg = ""
+				break
+			}
+			if ( sg == "se39" ) {
+				snd SOUNDLIST_USER_SE39
+				sg = ""
+				break
+			}
+			if ( sg == "se40" ) {
+				snd SOUNDLIST_USER_SE40
+				sg = ""
+				break
+			}
+			if ( sg == "se41" ) {
+				snd SOUNDLIST_USER_SE41
+				sg = ""
+				break
+			}
+			if ( sg == "se42" ) {
+				snd SOUNDLIST_USER_SE42
+				sg = ""
+				break
+			}
+			if ( sg == "se43" ) {
+				snd SOUNDLIST_USER_SE43
+				sg = ""
+				break
+			}
+			if ( sg == "se44" ) {
+				snd SOUNDLIST_USER_SE44
+				sg = ""
+				break
+			}
+			if ( sg == "se45" ) {
+				snd SOUNDLIST_USER_SE45
+				sg = ""
+				break
+			}
+			if ( sg == "se46" ) {
+				snd SOUNDLIST_USER_SE46
+				sg = ""
+				break
+			}
+			if ( sg == "se47" ) {
+				snd SOUNDLIST_USER_SE47
+				sg = ""
+				break
+			}
+			if ( sg == "se48" ) {
+				snd SOUNDLIST_USER_SE48
+				sg = ""
+				break
+			}
+			if ( sg == "se49" ) {
+				snd SOUNDLIST_USER_SE49
+				sg = ""
+				break
+			}
+			if ( sg == "se50" ) {
+				snd SOUNDLIST_USER_SE50
+				sg = ""
+				break
+			}
+			if ( sg == "se51" ) {
+				snd SOUNDLIST_USER_SE51
+				sg = ""
+				break
+			}
+			if ( sg == "se52" ) {
+				snd SOUNDLIST_USER_SE52
+				sg = ""
+				break
+			}
+			if ( sg == "se53" ) {
+				snd SOUNDLIST_USER_SE53
+				sg = ""
+				break
+			}
+			if ( sg == "se54" ) {
+				snd SOUNDLIST_USER_SE54
+				sg = ""
+				break
+			}
+			if ( sg == "se55" ) {
+				snd SOUNDLIST_USER_SE55
+				sg = ""
+				break
+			}
+			if ( sg == "se56" ) {
+				snd SOUNDLIST_USER_SE56
+				sg = ""
+				break
+			}
+			if ( sg == "se57" ) {
+				snd SOUNDLIST_USER_SE57
+				sg = ""
+				break
+			}
+			if ( sg == "se58" ) {
+				snd SOUNDLIST_USER_SE58
+				sg = ""
+				break
+			}
+			if ( sg == "se59" ) {
+				snd SOUNDLIST_USER_SE59
+				sg = ""
+				break
+			}
+			if ( sg == "se60" ) {
+				snd SOUNDLIST_USER_SE60
+				sg = ""
+				break
+			}
+			if ( sg == "se61" ) {
+				snd SOUNDLIST_USER_SE61
+				sg = ""
+				break
+			}
+			if ( sg == "se62" ) {
+				snd SOUNDLIST_USER_SE62
+				sg = ""
+				break
+			}
+			if ( sg == "se63" ) {
+				snd SOUNDLIST_USER_SE63
+				sg = ""
+				break
+			}
+			if ( sg == "se64" ) {
+				snd SOUNDLIST_USER_SE64
+				sg = ""
+				break
+			}
+			if ( sg == "se65" ) {
+				snd SOUNDLIST_USER_SE65
+				sg = ""
+				break
+			}
+			if ( sg == "se66" ) {
+				snd SOUNDLIST_USER_SE66
+				sg = ""
+				break
+			}
+			if ( sg == "se67" ) {
+				snd SOUNDLIST_USER_SE67
+				sg = ""
+				break
+			}
+			if ( sg == "se68" ) {
+				snd SOUNDLIST_USER_SE68
+				sg = ""
+				break
+			}
+			if ( sg == "se69" ) {
+				snd SOUNDLIST_USER_SE69
+				sg = ""
+				break
+			}
+			if ( sg == "se70" ) {
+				snd SOUNDLIST_USER_SE70
+				sg = ""
+				break
+			}
+			if ( sg == "se71" ) {
+				snd SOUNDLIST_USER_SE71
+				sg = ""
+				break
+			}
+			if ( sg == "se72" ) {
+				snd SOUNDLIST_USER_SE72
+				sg = ""
+				break
+			}
+			if ( sg == "se73" ) {
+				snd SOUNDLIST_USER_SE73
+				sg = ""
+				break
+			}
+			if ( sg == "se74" ) {
+				snd SOUNDLIST_USER_SE74
+				sg = ""
+				break
+			}
+			if ( sg == "se75" ) {
+				snd SOUNDLIST_USER_SE75
+				sg = ""
+				break
+			}
+			if ( sg == "se76" ) {
+				snd SOUNDLIST_USER_SE76
+				sg = ""
+				break
+			}
+			if ( sg == "se77" ) {
+				snd SOUNDLIST_USER_SE77
+				sg = ""
+				break
+			}
+			if ( sg == "se78" ) {
+				snd SOUNDLIST_USER_SE78
+				sg = ""
+				break
+			}
+			if ( sg == "se79" ) {
+				snd SOUNDLIST_USER_SE79
+				sg = ""
+				break
+			}
+			if ( sg == "se80" ) {
+				snd SOUNDLIST_USER_SE80
+				sg = ""
+				break
+			}
+			if ( sg == "se81" ) {
+				snd SOUNDLIST_USER_SE81
+				sg = ""
+				break
+			}
+			if ( sg == "se82" ) {
+				snd SOUNDLIST_USER_SE82
+				sg = ""
+				break
+			}
+			if ( sg == "se83" ) {
+				snd SOUNDLIST_USER_SE83
+				sg = ""
+				break
+			}
+			if ( sg == "se84" ) {
+				snd SOUNDLIST_USER_SE84
+				sg = ""
+				break
+			}
+			if ( sg == "se85" ) {
+				snd SOUNDLIST_USER_SE85
+				sg = ""
+				break
+			}
+			if ( sg == "se86" ) {
+				snd SOUNDLIST_USER_SE86
+				sg = ""
+				break
+			}
+			if ( sg == "se87" ) {
+				snd SOUNDLIST_USER_SE87
+				sg = ""
+				break
+			}
+			if ( sg == "se88" ) {
+				snd SOUNDLIST_USER_SE88
+				sg = ""
+				break
+			}
+			if ( sg == "se89" ) {
+				snd SOUNDLIST_USER_SE89
+				sg = ""
+				break
+			}
+			if ( sg == "se90" ) {
+				snd SOUNDLIST_USER_SE90
+				sg = ""
+				break
+			}
+			if ( sg == "se91" ) {
+				snd SOUNDLIST_USER_SE91
+				sg = ""
+				break
+			}
+			if ( sg == "se92" ) {
+				snd SOUNDLIST_USER_SE92
+				sg = ""
+				break
+			}
+			if ( sg == "se93" ) {
+				snd SOUNDLIST_USER_SE93
+				sg = ""
+				break
+			}
+			if ( sg == "se94" ) {
+				snd SOUNDLIST_USER_SE94
+				sg = ""
+				break
+			}
+			if ( sg == "se95" ) {
+				snd SOUNDLIST_USER_SE95
+				sg = ""
+				break
+			}
+			if ( sg == "se96" ) {
+				snd SOUNDLIST_USER_SE96
+				sg = ""
+				break
+			}
+			if ( sg == "se97" ) {
+				snd SOUNDLIST_USER_SE97
+				sg = ""
+				break
+			}
+			if ( sg == "se98" ) {
+				snd SOUNDLIST_USER_SE98
+				sg = ""
+				break
+			}
+			if ( sg == "se99" ) {
+				snd SOUNDLIST_USER_SE99
+				sg = ""
+				break
+			}
+			sg = "Unknown Code"
+		loop
+		buffg = sg(1) + sg + sg(2)
+	loop
+	return
+
 *convert_talk
 	buff = strmid(buff, p, instr(buff, p, "%END"))
 	if ( noteinfo(0) <= 1 ) {
@@ -6315,6 +6963,28 @@
 	noteget s, p
 	buff = s
 	gosub *convert_word
+	return
+
+*guide_talk_2
+	buffg = strmid(buffg, pg, instr(buffg, pg, "%END"))
+	if ( noteinfo(0) <= 1 ) {
+		noteload exedir + "guide\\guide.txt"
+		pg = instr(buffg, 0, "%DEFAULT," + lang("JP", "EN"))
+		buffg = strmid(buffg, pg, instr(buffg, pg, "%END"))
+	}
+	notedel 0
+	pg = rnd(noteinfo(0))
+	noteget sg, pg
+	buffg = sg
+	gosub *convert_guide
+	return
+
+*guide_talk
+	buffg = ""
+	notesel buffg
+	noteload exedir + "guide\\guide.txt"
+	pg = instr(buffg, 0, valn + "," + lang("JP", "EN"))
+	gosub *guide_talk_2
 	return
 
 *spec_talk
@@ -8766,6 +9436,15 @@
 					}
 					break
 				}
+				else {
+					if ( cdata(CDATA_SEX, CHARA_PLAYER) == 0 ) {
+						s = "brother"
+					}
+					if ( cdata(CDATA_SEX, CHARA_PLAYER) == 1 ) {
+						s = "sister"
+					}
+					break
+				}
 			}
 			if ( s == "syujin" ) {
 				if ( jp ) {
@@ -8775,6 +9454,10 @@
 					if ( cdata(CDATA_SEX, CHARA_PLAYER) == 1 ) {
 						s = "お嬢様"
 					}
+					break
+				}
+				else {
+					s = "master"
 					break
 				}
 			}

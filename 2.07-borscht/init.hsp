@@ -15495,7 +15495,7 @@
 	gdata(GDATA_CUSTOM_TEXT_DIALOG) = 0
 	return
 
-*label_0414
+*convert_guide
 	repeat 30
 		await
 		pg = instr(buffg, 0, "{"), instr(buffg, pg, "}"), strlen(buffg)
@@ -16142,7 +16142,7 @@
 	gosub *convert_word
 	return
 
-*spec_talk
+*guide_talk_2
 	buffg = strmid(buffg, pg, instr(buffg, pg, "%END"))
 	if ( noteinfo(0) <= 1 ) {
 		noteload exedir + "guide\\guide.txt"
@@ -16153,18 +16153,18 @@
 	pg = rnd(noteinfo(0))
 	noteget sg, pg
 	buffg = sg
-	gosub *label_0414
+	gosub *convert_guide
 	return
 
-*label_0419
+*guide_talk
 	buffg = ""
 	notesel buffg
 	noteload exedir + "guide\\guide.txt"
 	pg = instr(buffg, 0, valn + "," + lang("JP", "EN"))
-	gosub *spec_talk
+	gosub *guide_talk_2
 	return
 
-*label_0420
+*spec_talk
 	buff = ""
 	notesel buff
 	noteload exedir + "data\\talk.txt"

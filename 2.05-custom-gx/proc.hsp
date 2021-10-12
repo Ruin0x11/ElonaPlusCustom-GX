@@ -248,8 +248,10 @@
 				}
 			}
 			if ( feat(2) == CELL_SUB_FEATURE_TRAP_BLADE_STRINGS | feat(2) == CELL_SUB_FEATURE_TRAP_HOSTILE_BLADE_STRINGS ) {
-				if ( cbit(CHARA_BIT_FLOAT, cc) == 1 & cdata(CDATA_CONDITION_GRAVITY, cc) == 0 | findbuff(cc, BUFF_GRAVITY_ACCEL) != (-1) ) {
-					return
+				if ( cdata(CDATA_FRIENDSHIP, CHARA_PLAYER) != 2 ) {
+					if ( cbit(CHARA_BIT_FLOAT, cc) == TRUE & cdata(CDATA_CONDITION_GRAVITY, cc) == 0 | findbuff(cc, BUFF_GRAVITY_ACCEL) != (-1) ) {
+						return
+					}
 				}
 				if ( feat(3) != 0 ) {
 					if ( cc >= MAX_CHARA_FOLLOWER ) {
@@ -4417,7 +4419,7 @@
 	if ( rowactre != 0 ) {
 		return
 	}
-	ci = cdata(CDATA_ITEM_USING, CHARA_PLAYER)
+	turi = cdata(CDATA_ITEM_USING, CHARA_PLAYER)
 	dbmax = 0
 	dbsum = 0
 	repeat 100
@@ -4462,6 +4464,7 @@
 	inv(INV_ITEM_WEIGHT, ci) = fishdata(FISHDATA_WEIGHT, fish) / 10 * fishsize
 	txt lang(itemname(ci, 1) + "を釣り上げた！", "You get " + itemname(ci, 1) + "!")
 	item_stack CHARA_PLAYER, ci, 1
+	inv(INV_ITEM_CHARGE, turi)--
 	fishsize = 0
 	return
 
@@ -4511,6 +4514,10 @@
 		return
 	}
 	if ( cdata(CDATA_ACTION_PERIOD, cc) > 0 ) {
+		if ( tulimit <= gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 & tulihun <= gdata(GDATA_MIN) | inv(INV_ITEM_CHARGE, turi) <= 0 ) {
+			txt lang("釣りを切り上げた。", "You stop fishing...")
+			rowactend cc
+		}
 		if ( rnd(3) == 0 ) {
 			fishstat = 1
 			gosub *choose_fish
@@ -4592,8 +4599,15 @@
 			loop
 			snd SOUNDLIST_GET1 + rnd(2)
 			fishanime = 0
-			rowactend cc
 			gosub *get_fish
+			if ( tulimit > gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 | tulihun > gdata(GDATA_MIN) & inv(INV_ITEM_CHARGE, turi) > 0 ) {
+				racount = 0
+				fishstat = 0
+				cdata(CDATA_ACTION_PERIOD, cc) = 30
+			}
+			else {
+				rowactend cc
+			}
 			gosub *expFishing
 			cdata(CDATA_EMO_ICON, CHARA_PLAYER) = 6 + 100 * 3
 		}
@@ -4603,7 +4617,14 @@
 		return
 	}
 	txt lang("何も釣れなかった…", "A waste of time...")
-	rowactend cc
+	if ( tulimit > gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 | tulihun > gdata(GDATA_MIN) & inv(INV_ITEM_CHARGE, turi) > 0 ) {
+		racount = 0
+		fishstat = 0
+		cdata(CDATA_ACTION_PERIOD, cc) = 30
+	}
+	else {
+		rowactend cc
+	}
 	return
 
 *plant
@@ -9461,8 +9482,19 @@
 			}
 			dmgsp CHARA_PLAYER, rnd(sdataref(SKILL_DATAREF_COST, efid) / 2 + 1) + sdataref(SKILL_DATAREF_COST, efid) / 2 + 1
 		}
+		turi = ci
 		item_separate ci
-		inv(INV_ITEM_CHARGE, ci)--
+		item_find ITEM_ID_SUPER_LURE, ITEM_FIND_MODE_DBID
+		if ( stat == (-1) ) {
+			txt lang("何時間釣ろうか？", "How many hours do you fish?")
+			display_msg screenmsgy, 1
+			val = (windoww - 200) / 2 + inf_screenx, winposy(60), 8, 1, 6
+			inputlog = "" + 1
+			gosub *prompt_word
+			in = int(inputlog)
+			tulihun = gdata(GDATA_MIN)
+			tulimit = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 + in
+		}
 		rowactre = 0
 		gosub *fishing
 		goto *effect_end
@@ -11865,6 +11897,7 @@
 		txtef COLOR_GREEN
 		txt lang(name(cc) + "は風に乗せて酸を放った！", name(cc) + " send" + _s(cc) + " out a blast of acidic wind!")
 		animeid = ANIMATION_ACID_HURRICANE
+		animode = 0
 		gosub *anime
 		get_route cdata(CDATA_X, cc), cdata(CDATA_Y, cc), cdata(CDATA_X, tc), cdata(CDATA_Y, tc)
 		if ( stat == 0 ) {
@@ -11928,6 +11961,95 @@
 					}
 					if ( cbit(CHARA_BIT_METAL, tc) ) {
 						cdata(CDATA_CONDITION_POISON, tc) += 35
+					}
+				}
+			}
+		loop
+		goto *effect_end
+		_switch_sw++
+	}
+	if ( _switch_val == SKILL_SPACT_E_MAG_TORNADO | _switch_sw ) {
+		_switch_sw = 0
+		txtef COLOR_GREEN
+		txt lang(name(cc) + "は電磁竜巻を放った！", name(cc) + " gave off tornado of E-Mag energy!")
+		animeid = ANIMATION_ACID_HURRICANE
+		animode = 1
+		gosub *anime
+		get_route cdata(CDATA_X, cc), cdata(CDATA_Y, cc), cdata(CDATA_X, tc), cdata(CDATA_Y, tc)
+		if ( stat == 0 ) {
+			goto *effect_end
+		}
+		dx = cdata(CDATA_X, cc)
+		dy = cdata(CDATA_Y, cc)
+		repeat 20
+			route_info dx, dy, cnt
+			if ( stat == 0 ) {
+				break
+			}
+			else {
+				if ( stat == (-1) ) {
+					continue
+				}
+			}
+			if ( dist(dx, dy, cdata(CDATA_X, cc), cdata(CDATA_Y, cc)) > sdataref(SKILL_DATAREF_TG, efid) \ 1000 + 1 ) {
+				break
+			}
+			if ( dx == cdata(CDATA_X, cc) & dy == cdata(CDATA_Y, cc) ) {
+				continue
+			}
+			if ( map(dx, dy, MAP_CHARA_INDEX_PLUS_ONE) != 0 ) {
+				tc = map(dx, dy, MAP_CHARA_INDEX_PLUS_ONE) - 1
+				if ( cc != tc ) {
+					if ( gdata(GDATA_RIDER) != 0 ) {
+						if ( gdata(GDATA_RIDER) == cc ) {
+							if ( tc == CHARA_PLAYER ) {
+								continue
+							}
+						}
+					}
+					dmg = role(dice1, dice2, bonus)
+					calcmagiccontrol cc, tc
+					if ( stat == 1 ) {
+						continue
+					}
+					if ( cdata(CDATA_IN_TAGTEAM, tc) != 0 ) {
+						if ( tc != CHARA_PLAYER ) {
+							if ( rnd(cdata(CDATA_HP, tc) + 1) < rnd(cdata(CDATA_HP, cdata(CDATA_TAGTEAM_PARTNER, tc)) + 1) ) {
+								tc = cdata(CDATA_TAGTEAM_PARTNER, tc)
+							}
+							txt lang(name(tc) + "は" + name(cdata(CDATA_TAGTEAM_PARTNER, tc)) + "をかばった！", name(tc) + " guarded " + name(cdata(CDATA_TAGTEAM_PARTNER, tc)) + ".")
+						}
+					}
+					if ( synccheck(tc, -1) ) {
+						txtmore
+						if ( tc >= MAX_CHARA_FOLLOWER ) {
+							gdata(GDATA_DMG_TYPE) = 2
+							txt3rd = 1
+							txt lang("竜巻は" + name(tc) + "に命中し", "The E-Mag hits " + name(tc) + " and")
+						}
+						else {
+							txt lang("竜巻が" + name(tc) + "に命中した。", "The E-Mag hits " + name(tc) + ".")
+						}
+					}
+					if ( cbit(CHARA_BIT_MAGNETISM_S_POLE, tc) | cbit(CHARA_BIT_MAGNETISM_N_POLE, tc) ) {
+						if ( cdata(CDATA_CONDITION_BIND, tc) == 0 ) {
+							cdata(CDATA_CONDITION_BIND, tc) = 5
+						}
+						dmghp tc, dmg * 2, cc, ele, elep
+					}
+					else {
+						if ( cdata(CDATA_CONDITION_BIND, tc) == 0 ) {
+							cdata(CDATA_CONDITION_BIND, tc) = 3
+						}
+						dmghp tc, dmg, cc, ele, elep
+					}
+					if ( cdata(CDATA_EXIST, tc) != CHAR_STATE_ALIVE ) {
+						continue
+					}
+					if ( cbit(CHARA_BIT_MAGNETISM_N_POLE, tc) == FALSE ) {
+						txt lang(name(tc) + "の前面がＮ極になった！", name(cc) + " became the N pole on the front!")
+						cbitmod CHARA_BIT_MAGNETISM_S_POLE, tc, FALSE
+						cbitmod CHARA_BIT_MAGNETISM_N_POLE, tc, TRUE
 					}
 				}
 			}
@@ -14841,14 +14963,14 @@
 	}
 	if ( _switch_val == SKILL_SPACT_VINDALIAN_JIUJITSU | _switch_sw ) {
 		_switch_sw = 0
-		if ( cdata(CDATA_CONDITION_JIU_JITSU, cc) != 0 ) {
-			cdata(CDATA_CONDITION_JIU_JITSU, cc) = 0
+		if ( cbit(CHARA_BIT_VINDALIAN_JIUJITSU_ACTIVE, cc) == TRUE ) {
+			cbitmod CHARA_BIT_VINDALIAN_JIUJITSU_ACTIVE, cc, FALSE
 			txt lang(name(cc) + "は呼吸を整え、構えを変えた。", name(cc) + " steadied " + his(cc) + " breathing and changed " + his(cc) + " posture.")
 			goto *effect_end
 		}
-		if ( cdata(CDATA_CONDITION_JIU_JITSU, cc) == 0 ) {
+		if ( cbit(CHARA_BIT_VINDALIAN_JIUJITSU_ACTIVE, cc) == FALSE ) {
 			snd SOUNDLIST_SWING
-			cdata(CDATA_CONDITION_JIU_JITSU, cc) = 100
+			cbitmod CHARA_BIT_VINDALIAN_JIUJITSU_ACTIVE, cc, TRUE
 			txt lang(name(cc) + "は呼吸を整え、柔術の構えをとった。", name(cc) + " steadied " + his(cc) + " breathing and changed " + his(cc) + " posture.")
 			goto *effect_end
 		}
@@ -14937,6 +15059,63 @@
 			cfg_animewait = waitbk
 			cc = ccthrowpotion
 			potionthrow = 0
+		}
+		goto *effect_end
+		_switch_sw++
+	}
+	if ( _switch_val == SKILL_SPACT_LINEAR_LAUNCHER | _switch_sw ) {
+		_switch_sw = 0
+		if ( cc == CHARA_PLAYER ) {
+			txt lang("消費＆射出するアイテムは？", "Which item will you consume?")
+			invsubroutine = 1
+			invctrl = INVCTRL_MATERIAL_ENCHANT, 25
+			snd SOUNDLIST_INV
+			gosub *com_inventory
+		}
+		else {
+			ti = inv_getfreeid(cc)
+			if ( ti != (-1) ) {
+				flt
+				itemcreate cc, ITEM_ID_ORE_PIECE, -1, -1, 0
+				inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+			}
+			else {
+				goto *effect_end
+			}
+		}
+		if ( stat == 1 ) {
+			snd SOUNDLIST_ATK_ELEC
+			txtef COLOR_BLUE
+			txt lang(itemname(ci) + "が高速で射出された。", itemname(ci) + " was launched at high speed.")
+			inv(INV_ITEM_NUM, ci)--
+			if ( cc == CHARA_PLAYER ) {
+				gosub *calcBurdenPc
+			}
+			waitbk = cfg_animewait
+			if ( cfg_animewait > 0 ) {
+				cfg_animewait = 1
+			}
+			animeid = ANIMATION_LINEAR_LAUNCHER
+			aniref = ci
+			gosub *anime
+			cfg_animewait = waitbk
+			dmg = sdata(SKILL_ATTR_PER, cc) / 2 * limit(inv(INV_ITEM_WEIGHT, ci) / 1000, 1, 50) + sdata(SKILL_ATTR_PER, cc) * 2 + rnd(inv(INV_ITEM_WEIGHT, ci) / 500 + 1)
+			if ( cbit(CHARA_BIT_MAGNETISM_S_POLE, cc) | cbit(CHARA_BIT_MAGNETISM_N_POLE, cc) ) {
+				dmghp tc, dmg * 2, cc, SKILL_RESDMG_CRUSH, 1000
+			}
+			else {
+				dmghp tc, dmg, cc, SKILL_RESDMG_CRUSH, 1000
+			}
+			if ( inv(INV_ITEM_WEIGHT, ci) >= 10000 & cdata(CDATA_EXIST, tc) == CHAR_STATE_ALIVE ) {
+				if ( cdata(CDATA_CONDITION_INVERT, tc) < 1 ) {
+					cdata(CDATA_CONDITION_INVERT, tc) = 1
+					if ( synccheck(tc, -1) ) {
+						txtmore
+						txtef COLOR_PURPLE
+						txt lang(name(tc) + "は転倒した。", name(tc) + " " + is(tc) + " blinded.")
+					}
+				}
+			}
 		}
 		goto *effect_end
 		_switch_sw++
@@ -16165,7 +16344,7 @@
 		goto *effect_end
 		_switch_sw++
 	}
-	if ( _switch_val == 822 | _switch_sw ) {
+	if ( _switch_val == SKILL_SPACT_OVERLIMIT_THROW | _switch_sw ) {
 		_switch_sw = 0
 		if ( findbuff(tc, BUFF_OVERLIMIT_THROW) != (-1) ) {
 			repeat 8 + 8
@@ -18210,6 +18389,211 @@
 		loop
 		goto *effect_end
 	}
+	if ( _switch_val == SKILL_SPACT_E_MAG_CAGE | _switch_sw ) {
+		_switch_sw = 0
+		if ( cdata(CDATA_POWER_GAUGE, cc) < 80 ) {
+			txt lang("何もおきない… ", "Nothing happens...")
+			goto *effect_end
+		}
+		snd SOUNDLIST_ENC
+		animeload 40, cc
+		if ( synccheck(cc, -1) ) {
+			animeid = ANIMATION_GARDEN
+			animode = 1
+			gosub *anime
+		}
+		cdata(CDATA_POWER_GAUGE, cc) -= 80
+		if ( cdata(CDATA_FRIENDSHIP, CHARA_PLAYER) >= 0 ) {
+			cdata(CDATA_FRIENDSHIP, CHARA_PLAYER) = 1
+		}
+		if ( cc == CHARA_PLAYER ) {
+			cdata(CDATA_EVOLUTION_STAGE, CHARA_PLAYER) = 0
+		}
+		if ( weap == 0 ) {
+			weap = limit(sdata(SKILL_ATTR_PER, cc) / 4, 1, 1000)
+		}
+		inv_getheader cc
+		eqlv = 1
+		eqbui = 0
+		repeat invrange, invhead
+			if ( inv(INV_ITEM_NUM, cnt) == 0 | inv(INV_ITEM_EQUIP, cnt) == 0 ) {
+				continue
+			}
+			eqlv += limit(inv(INV_ITEM_LEVEL, cnt), 0, 20)
+			eqbui++
+		loop
+		if ( eqlv <= 0 ) {
+			eqlv = 1
+		}
+		if ( eqbui <= 0 ) {
+			eqbui = 1
+		}
+		eqlv = limit(eqlv / eqbui * 3, 3, 30)
+		dmg = limit(cdata(CDATA_DAMAGE_FIX, cc) + (weap + 1) / 2, 2, 2500) * sqrt(weap) * sqrt(eqlv - 2) + rnd(weap + 1)
+		repeat 245
+			if ( cdata(CDATA_EXIST, cnt) != CHAR_STATE_ALIVE ) {
+				continue
+			}
+			if ( cc == cnt ) {
+				continue
+			}
+			if ( cc < MAX_CHARA_FOLLOWER ) {
+				if ( cdata(CDATA_RELATION, cnt) != RELATION_ENEMY ) {
+					continue
+				}
+			}
+			if ( cc >= MAX_CHARA_FOLLOWER ) {
+				if ( cdata(CDATA_RELATION, cnt) == cdata(CDATA_RELATION, cc) ) {
+					continue
+				}
+			}
+			tc = cnt
+			dx = cdata(CDATA_X, tc)
+			dy = cdata(CDATA_Y, tc)
+			if ( dist(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), dx, dy) > sdataref(SKILL_DATAREF_TG, SKILL_SPACT_CHEER) \ 1000 + 1 ) {
+				continue
+			}
+			if ( fov_los(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), dx, dy) == 0 ) {
+				continue
+			}
+			if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) != TRUE & cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) != TRUE & cbit(CHARA_BIT_SUMMONED, tc) != TRUE & cbit(CHARA_BIT_LIVESTOCK, tc) != TRUE & cbit(CHARA_BIT_NECRO, tc) != TRUE & cbit(CHARA_BIT_SANDBAG, tc) != TRUE & tc != CHARA_PLAYER ) {
+				f = 1
+			}
+			dmghp tc, dmg, cc, SKILL_SPACT_FLASH_OF_SWIFTNESS
+			if ( cdata(CDATA_EXIST, tc) != CHAR_STATE_ALIVE ) {
+				continue
+			}
+			txt lang(name(tc) + "の前面がＳ極になった！", name(cc) + " became the S pole on the front!")
+			cbitmod CHARA_BIT_MAGNETISM_S_POLE, tc, TRUE
+			cbitmod CHARA_BIT_MAGNETISM_N_POLE, tc, FALSE
+		loop
+		if ( f == 1 ) {
+			f = 0
+			skillexp SKILL_ATTR_PER, cc, 200
+		}
+		goto *effect_end
+		_switch_sw++
+	}
+	if ( _switch_val == SKILL_SPACT_WIRE_WORLD | _switch_sw ) {
+		_switch_sw = 0
+		if ( cdata(CDATA_POWER_GAUGE, cc) < 80 ) {
+			txt lang("何もおきない… ", "Nothing happens...")
+			goto *effect_end
+		}
+		snd SOUNDLIST_ENC
+		animeload 40, cc
+		if ( synccheck(cc, -1) ) {
+			animeid = ANIMATION_GARDEN
+			animode = 2
+			gosub *anime
+		}
+		cdata(CDATA_POWER_GAUGE, cc) -= 80
+		if ( cdata(CDATA_FRIENDSHIP, CHARA_PLAYER) >= 0 ) {
+			cdata(CDATA_FRIENDSHIP, CHARA_PLAYER) = 2
+		}
+		if ( cc == CHARA_PLAYER ) {
+			cdata(CDATA_EVOLUTION_STAGE, CHARA_PLAYER) = 0
+		}
+		if ( weap == 0 ) {
+			weap = limit(sdata(SKILL_ATTR_DEX, cc) / 4, 1, 1000)
+		}
+		inv_getheader cc
+		eqlv = 1
+		eqbui = 0
+		repeat invrange, invhead
+			if ( inv(INV_ITEM_NUM, cnt) == 0 | inv(INV_ITEM_EQUIP, cnt) == 0 ) {
+				continue
+			}
+			eqlv += limit(inv(INV_ITEM_LEVEL, cnt), 0, 20)
+			eqbui++
+		loop
+		if ( eqlv <= 0 ) {
+			eqlv = 1
+		}
+		if ( eqbui <= 0 ) {
+			eqbui = 1
+		}
+		eqlv = limit(eqlv / eqbui * 3, 3, 30)
+		dmg = limit(cdata(CDATA_DAMAGE_FIX, cc) + (weap + 1) / 2, 2, 2500) * sqrt(weap) * sqrt(eqlv - 2) + rnd(weap + 1)
+		repeat 245
+			if ( cdata(CDATA_EXIST, cnt) != CHAR_STATE_ALIVE ) {
+				continue
+			}
+			if ( cc == cnt ) {
+				continue
+			}
+			if ( cc < MAX_CHARA_FOLLOWER ) {
+				if ( cdata(CDATA_RELATION, cnt) != RELATION_ENEMY ) {
+					continue
+				}
+			}
+			if ( cc >= MAX_CHARA_FOLLOWER ) {
+				if ( cdata(CDATA_RELATION, cnt) == cdata(CDATA_RELATION, cc) ) {
+					continue
+				}
+			}
+			tc = cnt
+			dx = cdata(CDATA_X, tc)
+			dy = cdata(CDATA_Y, tc)
+			if ( dist(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), dx, dy) > sdataref(SKILL_DATAREF_TG, SKILL_SPACT_CHEER) \ 1000 + 1 ) {
+				continue
+			}
+			if ( fov_los(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), dx, dy) == 0 ) {
+				continue
+			}
+			if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) != TRUE & cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) != TRUE & cbit(CHARA_BIT_SUMMONED, tc) != TRUE & cbit(CHARA_BIT_LIVESTOCK, tc) != TRUE & cbit(CHARA_BIT_NECRO, tc) != TRUE & cbit(CHARA_BIT_SANDBAG, tc) != TRUE & tc != CHARA_PLAYER ) {
+				f = 1
+			}
+			dmghp tc, dmg, cc, SKILL_SPACT_FLASH_OF_SWIFTNESS
+			if ( map(cdata(CDATA_X, tc), cdata(CDATA_Y, tc), MAP_FEATS_ON_TILE) != 0 ) {
+				continue
+			}
+			if ( cc < MAX_CHARA_FOLLOWER ) {
+				cell_featset cdata(CDATA_X, tc), cdata(CDATA_Y, tc), 0, CELL_FEATURE_TRAP, CELL_SUB_FEATURE_TRAP_HOSTILE_BLADE_STRINGS, cc
+			}
+			else {
+				cell_featset cdata(CDATA_X, tc), cdata(CDATA_Y, tc), 0, CELL_FEATURE_TRAP, CELL_SUB_FEATURE_TRAP_BLADE_STRINGS, cc
+			}
+			if ( cc == CHARA_PLAYER ) {
+				cell_featset cdata(CDATA_X, tc), cdata(CDATA_Y, tc), tile_trap, -1, -1
+			}
+		loop
+		if ( f == 1 ) {
+			f = 0
+			skillexp SKILL_ATTR_DEX, cc, 200
+		}
+		goto *effect_end
+		_switch_sw++
+	}
+	if ( _switch_val == SKILL_SPACT_MAGNECOAT | _switch_sw ) {
+		_switch_sw = 0
+		if ( cbit(CHARA_BIT_MAGNETISM_N_POLE, tc) == TRUE ) {
+			snd SOUNDLIST_ATK_ELEC
+			animeload 11, tc
+			txt lang(name(tc) + "から磁気が消えた…。", "The magnetism disappeared...")
+			cbitmod CHARA_BIT_MAGNETISM_S_POLE, tc, FALSE
+			cbitmod CHARA_BIT_MAGNETISM_N_POLE, tc, FALSE
+			goto *effect_end
+		}
+		if ( cbit(CHARA_BIT_MAGNETISM_S_POLE, tc) == FALSE ) {
+			snd SOUNDLIST_ATK_ELEC
+			animeload 11, tc
+			txt lang(name(tc) + "の前面がＳ極になった！", name(cc) + " became the S pole on the front!")
+			cbitmod CHARA_BIT_MAGNETISM_S_POLE, tc, TRUE
+			cbitmod CHARA_BIT_MAGNETISM_N_POLE, tc, FALSE
+			goto *effect_end
+		}
+		if ( cbit(CHARA_BIT_MAGNETISM_S_POLE, tc) == TRUE ) {
+			snd SOUNDLIST_ATK_ELEC
+			animeload 11, tc
+			txt lang(name(tc) + "の前面がＮ極になった！", name(cc) + " became the N pole on the front!")
+			cbitmod CHARA_BIT_MAGNETISM_S_POLE, tc, FALSE
+			cbitmod CHARA_BIT_MAGNETISM_N_POLE, tc, TRUE
+			goto *effect_end
+		}
+		goto *effect_end
+		_switch_sw++
+	}
 	if ( _switch_val == SKILL_SPACT_TICKLING_HELL | _switch_sw ) {
 		_switch_sw = 0
 		txt lang(name(cc) + "は" + name(tc) + "の動きを封じ、全力でくすぐった！", name(cc) + " held down " + name(tc) + " and started to tickle " + him(tc) + " at full power!")
@@ -18420,7 +18804,7 @@
 			cdata(CDATA_CONDITION_BIND, tc) = 1
 		}
 		if ( ( cc == CHARA_PLAYER & cdata(CDATA_IMPRESSION, tc) < 100 ) | ( tc == CHARA_PLAYER & cdata(CDATA_IMPRESSION, cc) < 100 ) ) {
-			if ( cdata(CDATA_CONDITION_JIU_JITSU, cc) == 100 ) {
+			if ( cbit(CHARA_BIT_VINDALIAN_JIUJITSU_ACTIVE, cc) == TRUE ) {
 				txtef COLOR_RED
 				txt lang("さらに、" + name(tc) + "に極め技を仕掛けた。", "Further, " + name(cc) + " attacked " + name(tc) + " by kiwame-waza.")
 			}
@@ -18433,7 +18817,7 @@
 			await 100
 			snd SOUNDLIST_DRINK1
 			dmghp tc, limit(sdata(SKILL_ATTR_STR, cc) / 20 * (sdata(SKILL_ATTR_STR, cc) / 20 + rnd(sdata(SKILL_ATTR_STR, cc) / 20 + 2)) - sdata(SKILL_ATTR_STR, tc) * 2, sdata(SKILL_ATTR_STR, cc), 100000), cc
-			if ( cdata(CDATA_CONDITION_JIU_JITSU, cc) == 100 ) {
+			if ( cbit(CHARA_BIT_VINDALIAN_JIUJITSU_ACTIVE, cc) == TRUE ) {
 				dmghp tc, limit(sdata(SKILL_ATTR_DEX, cc) / 10 * (sdata(SKILL_WEAPON_MARTIAL_ARTS, cc) + 1) / 10 + rnd(sdata(SKILL_ATTR_DEX, cc) * 2) - sdata(SKILL_ATTR_CON, tc) * 2, sdata(SKILL_ATTR_DEX, cc), 100000), cc
 				if ( cdata(CDATA_CONDITION_BIND, cc) < 2 ) {
 					cdata(CDATA_CONDITION_BIND, cc) = 2
@@ -18586,6 +18970,15 @@
 		addbuff tc, BUFF_RETENTION, 30, 30
 		snd SOUNDLIST_PRAY1
 		animeload ANIMATION_BLOOD, cc
+		if ( cdata(CDATA_FRIENDSHIP, CHARA_PLAYER) < 0 ) {
+			txtef COLOR_RED
+			txt lang("現在のフィールド変化は解除できない…。", "The current field state cannot be reset...")
+		}
+		if ( cdata(CDATA_FRIENDSHIP, CHARA_PLAYER) > 0 ) {
+			cdata(CDATA_FRIENDSHIP, CHARA_PLAYER) = 0
+			txtef COLOR_GREEN
+			txt lang("フィールド変化が解除された。", "The field state was reset.")
+		}
 		goto *effect_end
 	}
 	if ( _switch_val == SKILL_SPACT_UNCONTROL | _switch_sw ) {
@@ -18868,6 +19261,7 @@
 		_switch_sw = 0
 		if ( synccheck(cc, -1) ) {
 			animeid = ANIMATION_GARDEN
+			animode = 3
 			gosub *anime
 		}
 		txtef COLOR_YELLOW
@@ -20303,6 +20697,17 @@
 				skillexp SKILL_NORMAL_TACTICS, cc, 40
 			}
 		}
+		if ( cdata(CDATA_FRIENDSHIP, CHARA_PLAYER) == 2 & map(cdata(CDATA_X, tc), cdata(CDATA_Y, tc), MAP_FEATS_ON_TILE) == 0 ) {
+			if ( cc < MAX_CHARA_FOLLOWER ) {
+				cell_featset cdata(CDATA_X, tc), cdata(CDATA_Y, tc), 0, CELL_FEATURE_TRAP, CELL_SUB_FEATURE_TRAP_HOSTILE_BLADE_STRINGS, cc
+			}
+			else {
+				cell_featset cdata(CDATA_X, tc), cdata(CDATA_Y, tc), 0, CELL_FEATURE_TRAP, CELL_SUB_FEATURE_TRAP_BLADE_STRINGS, cc
+			}
+			if ( cc == CHARA_PLAYER ) {
+				cell_featset cdata(CDATA_X, tc), cdata(CDATA_Y, tc), tile_trap, -1, -1
+			}
+		}
 		goto *effect_end
 	}
 	if ( _switch_val == SKILL_SPACT_THREAD_OF_INNERVATION | _switch_sw ) {
@@ -20310,6 +20715,17 @@
 		txt lang(name(cc) + "は" + name(tc) + "の身体に糸を打ち込んだ。", name(cc) + " put thread in " + name(tc) + ".")
 		animeid = ANIMATION_INNERVATION
 		gosub *anime
+		if ( cdata(CDATA_FRIENDSHIP, CHARA_PLAYER) == 2 & map(cdata(CDATA_X, tc), cdata(CDATA_Y, tc), MAP_FEATS_ON_TILE) == 0 ) {
+			if ( cc < MAX_CHARA_FOLLOWER ) {
+				cell_featset cdata(CDATA_X, tc), cdata(CDATA_Y, tc), 0, CELL_FEATURE_TRAP, CELL_SUB_FEATURE_TRAP_HOSTILE_BLADE_STRINGS, cc
+			}
+			else {
+				cell_featset cdata(CDATA_X, tc), cdata(CDATA_Y, tc), 0, CELL_FEATURE_TRAP, CELL_SUB_FEATURE_TRAP_BLADE_STRINGS, cc
+			}
+			if ( cc == CHARA_PLAYER ) {
+				cell_featset cdata(CDATA_X, tc), cdata(CDATA_Y, tc), tile_trap, -1, -1
+			}
+		}
 		gdata(STARTING_GDATA_FLAG + 372) = 0
 		if ( cdata(CDATA_HP, tc) > cdata(CDATA_MAX_HP, tc) / 9 ) {
 			dmghp tc, (sdata(SKILL_ATTR_PER, cc) / 5 + 4) * ((sdata(SKILL_NORMAL_GENE_ENGINEER, cc) + 1) / 5 + 3) * 2 + rnd(sdata(SKILL_NORMAL_GENE_ENGINEER, cc) * 2 + 5) + 1, cc, SKILL_RES_NERVE, sdata(SKILL_ATTR_PER, cc) + 200
@@ -20417,6 +20833,17 @@
 		}
 		efid = SKILL_SPACT_DRAW_SHADOW
 		gosub *effect
+		if ( cdata(CDATA_FRIENDSHIP, CHARA_PLAYER) == 2 & map(cdata(CDATA_X, tc), cdata(CDATA_Y, tc), MAP_FEATS_ON_TILE) == 0 ) {
+			if ( cc < MAX_CHARA_FOLLOWER ) {
+				cell_featset cdata(CDATA_X, tc), cdata(CDATA_Y, tc), 0, CELL_FEATURE_TRAP, CELL_SUB_FEATURE_TRAP_HOSTILE_BLADE_STRINGS, cc
+			}
+			else {
+				cell_featset cdata(CDATA_X, tc), cdata(CDATA_Y, tc), 0, CELL_FEATURE_TRAP, CELL_SUB_FEATURE_TRAP_BLADE_STRINGS, cc
+			}
+			if ( cc == CHARA_PLAYER ) {
+				cell_featset cdata(CDATA_X, tc), cdata(CDATA_Y, tc), tile_trap, -1, -1
+			}
+		}
 		goto *effect_end
 	}
 	if ( _switch_val == SKILL_SPACT_MULTIPLE_GATHER | _switch_sw ) {

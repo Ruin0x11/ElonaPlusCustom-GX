@@ -372,6 +372,22 @@
 			sy -= 20
 		}
 	}
+	if ( cbit(CHARA_BIT_MAGNETISM_S_POLE, CHARA_PLAYER) ) {
+		color 0, 0, 100
+		pos sx, sy
+		gcopy BUFFER_INF, 0 + en * 84, 416, 65 + en * 30, 15
+		pos sx + 6, sy + 1
+		mes _conmags
+		sy -= 20
+	}
+	if ( cbit(CHARA_BIT_MAGNETISM_N_POLE, CHARA_PLAYER) ) {
+		color 100, 0, 0
+		pos sx, sy
+		gcopy BUFFER_INF, 0 + en * 84, 416, 65 + en * 30, 15
+		pos sx + 6, sy + 1
+		mes _conmagn
+		sy -= 20
+	}
 	if ( cdata(CDATA_CONDITION_SICK, CHARA_PLAYER) != 0 ) {
 		color 80, 120, 0
 		if ( cdata(CDATA_CONDITION_SICK, CHARA_PLAYER) >= 30 ) {
@@ -448,7 +464,7 @@
 		mes _conblind
 		sy -= 20
 	}
-	if ( cdata(CDATA_CONDITION_PARALYZE, CHARA_PLAYER) != 0 ) {
+	if ( cdata(CDATA_CONDITION_PARALYZE, CHARA_PLAYER) > 0 ) {
 		color 0, 100, 100
 		pos sx, sy
 		gcopy 3, 0, 416, 65 + en * 15, 15
@@ -632,7 +648,7 @@
 		mes _conmuteki
 		sy -= 20
 	}
-	if ( cdata(CDATA_CONDITION_JIU_JITSU, CHARA_PLAYER) != 0 ) {
+	if ( cbit(CHARA_BIT_VINDALIAN_JIUJITSU_ACTIVE, CHARA_PLAYER) == TRUE ) {
 		color 10, 10, 10
 		pos sx, sy
 		gcopy 3, 0, 416, 65 + en * 15, 15
@@ -794,6 +810,38 @@
 		sy -= 20
 	}
 	color 0
+	if ( navi == (-1) ) {
+		navi = 0
+		gosub *screen_raderRefresh
+	}
+	if ( navi != 0 ) {
+		cdata(CDATA_CAN_REVIVE, CHARA_PLAYER) = 0
+		gsel BUFFER_BUF
+		pos 0, 200
+		picload exedir + "guide\\ie_guide.bmp", 1
+		gsel BUFFER_SCREEN
+		pos (windoww - 600) / 2 + inf_screenx, windowh - 133 - 5
+		gcopy BUFFER_BUF, 0, 200, 600, 51
+		font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
+		color 50, 50, 50
+		valn = "" + navis
+		gosub *guide_talk
+		talk_conv buffg, 68 - en * 10
+		buffg += "\n"
+		pos (windoww - 600) / 2 + inf_screenx + 80, windowh - 133
+		mes "" + buffg
+		if ( cdata(CDATA_CAN_REVIVE, CHARA_PLAYER) == 0 ) {
+			cdata(CDATA_CAN_REVIVE, CHARA_PLAYER) = 1
+		}
+		gsel BUFFER_BUF
+		pos 0, 0
+		picload exedir + "guide\\guide" + cdata(CDATA_CAN_REVIVE, CHARA_PLAYER) + ".bmp", 1
+		gsel BUFFER_SCREEN
+		pos 0, windowh - 200
+		gcopy BUFFER_BUF, 0, 0, 110, 200
+		navi = -1
+		navis = ""
+	}
 	pos inf_clockx, inf_clocky
 	gcopy 3, 448, 408, inf_clockw, inf_clockh
 	pos inf_clockx + 78, inf_clocky + 8
@@ -853,6 +901,46 @@
 			pos inf_clockw + 80, inf_clocky + 17
 			color 0, 80, 180
 			bmes _biyori(gdata(GDATA_FLAG_STUDY_BONUS_KIND)) + " / " + _destiny(gdata(GDATA_FLAG_DESTINY_LETTERS)), 255, 255, 255
+		}
+	}
+	if ( cdata(CDATA_FRIENDSHIP, CHARA_PLAYER) == (-2) ) {
+		pos inf_clockw + 6, inf_clocky + 50
+		color 0, 0, 0
+		if ( jp ) {
+			bmes "<混沌の秩序>", 235, 5, 155
+		}
+		if ( en ) {
+			bmes "<Order of Chaos>", 235, 5, 155
+		}
+	}
+	if ( cdata(CDATA_FRIENDSHIP, CHARA_PLAYER) == (-1) ) {
+		pos inf_clockw + 6, inf_clocky + 50
+		color 0, 0, 0
+		if ( jp ) {
+			bmes "<終末の空>", 235, 235, 235
+		}
+		if ( en ) {
+			bmes "<Doomsday sky>", 235, 235, 235
+		}
+	}
+	if ( cdata(CDATA_FRIENDSHIP, CHARA_PLAYER) == 1 ) {
+		pos inf_clockw + 6, inf_clocky + 50
+		color 0, 0, 0
+		if ( jp ) {
+			bmes "[電磁獄]", 235, 235, 5
+		}
+		if ( en ) {
+			bmes "[E-Mag Cage]", 235, 235, 5
+		}
+	}
+	if ( cdata(CDATA_FRIENDSHIP, CHARA_PLAYER) == 2 ) {
+		pos inf_clockw + 6, inf_clocky + 50
+		color 0, 0, 0
+		if ( jp ) {
+			bmes "[弦葬世界]", 235, 235, 235
+		}
+		if ( en ) {
+			bmes "[Wire World]", 235, 235, 235
 		}
 	}
 	if ( gdata(GDATA_FLAG_NEFIA_FEVER_ACTIVE) == 100 ) {
@@ -2163,12 +2251,20 @@
 	}
 	if ( _switch_val == ANIMATION_BURN_SCROLLS | _switch_sw ) {
 		_switch_sw = 0
+		_switch_sw++
+	}
+	if ( _switch_val == ANIMATION_LINEAR_LAUNCHER | _switch_sw ) {
+		_switch_sw = 0
 		if ( synccheck(cc, -1) == 0 ) {
 			goto *anime_SWEND1
 		}
 
 		preparePicItem 6, anicol
 
+		if ( animeid == ANIMATION_LINEAR_LAUNCHER ) {
+			preparePicItem inv(INV_ITEM_PIC, aniref), inv(INV_ITEM_COL, aniref)
+			snd SOUNDLIST_BOLT1
+		}
 		if ( animeid == ANIMATION_BURN_SCROLLS ) {
 			preparePicItem xy2pic(22, 36), 0
 			snd SOUNDLIST_ATK_FIRE
@@ -2622,13 +2718,18 @@
 		gmode 2
 		goto *anime_SWEND1
 	}
-	if ( _switch_val == 44 | _switch_sw ) {
+	if ( _switch_val == ANIMATION_ACID_HURRICANE | _switch_sw ) {
 		_switch_sw = 0
 		if ( synccheck(cc, -1) == 0 ) {
 			goto *anime_SWEND1
 		}
 
-		preparePicItem xy2pic(32, 35), 0
+		if ( animode == 0 ) {
+			preparePicItem xy2pic(32, 35), COLOR_DEFAULT
+		}
+		if ( animode == 1 ) {
+			preparePicItem xy2pic(32, 35), COLOR_PINK
+		}
 
 		anix = cdata(CDATA_X, tc)
 		aniy = cdata(CDATA_Y, tc)
@@ -3611,8 +3712,18 @@
 	}
 	if ( _switch_val == ANIMATION_GARDEN | _switch_sw ) {
 		_switch_sw = 0
-		gsel 7
-		picload exedir + "graphic\\anime61.bmp"
+		if ( animode == 1 ) {
+			gsel BUFFER_PIC
+			picload exedir + "graphic\\anime83.bmp"
+		}
+		if ( animode == 2 ) {
+			gsel BUFFER_PIC
+			picload exedir + "graphic\\anime84.bmp"
+		}
+		if ( animode == 3 ) {
+			gsel BUFFER_PIC
+			picload exedir + "graphic\\anime61.bmp"
+		}
 		gsel 4
 		pos 0, 0
 		gmode 0
@@ -3655,7 +3766,15 @@
 			if ( cnt \ 2 == 0 ) {
 				if ( cnt < 8 ) {
 					if ( cnt / 3 < am ) {
-						snd SOUNDLIST_SONIC
+						if ( animode == 1 ) {
+							snd SOUNDLIST_ATK_ELEC
+						}
+						if ( animode == 2 ) {
+							snd SOUNDLIST_SONIC
+						}
+						if ( animode == 3 ) {
+							snd SOUNDLIST_SONIC
+						}
 					}
 				}
 			}
@@ -5726,7 +5845,7 @@
 			return 1
 		}
 	}
-	if ( cdata(CDATA_CONDITION_DIM, cc) != 0 ) {
+	if ( cdata(CDATA_CONDITION_DIM, cc) != 0 & tohit > 0 ) {
 		if ( attackrange ) {
 			tohit /= 5
 		}
@@ -5759,11 +5878,335 @@
 			return 1
 		}
 	}
+	if ( cdata(CDATA_CONDITION_JIU_JITSU, tc) == 0 | cdata(CDATA_CONDITION_JIU_JITSU, tc) == 100 ) {
+		repeat
+			if ( cdatan(CDATAN_RACE, tc) == "kobolt" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 8
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "orc" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 8
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "largeanimal" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "lizardman" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "minotaur" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "yerles" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 6
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "norland" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 6
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "eulderna" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 6
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "fairy" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 6
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "asura" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "slime" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 8
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "doggod" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 1
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "dwarf" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 6
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "juere" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 6
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "zombie" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "elea" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 6
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "rabbit" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 8
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "sheep" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "frog" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 9
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "worm" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 9
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "snail" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 11
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "mandrake" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 9
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "beetle" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 9
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "mushroom" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 9
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "bat" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 8
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "ent" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "lich" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 5
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "bacteria" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "ghost" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 5
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "spirit" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "eye" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 9
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "mazin" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "wasp" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 8
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "giant" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 6
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "imp" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 6
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "hand" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 8
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "snake" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 8
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "drake" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 6
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "goblin" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "bear" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "armor" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 8
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "medusa" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "cupid" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 6
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "karune" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 6
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "harpy" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "dragon" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 4
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "dinosaur" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "beast" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 6
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "spider" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 8
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "golem" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 5
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "rock" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 9
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "zanan" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 6
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "skeleton" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 6
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "piece" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "cat" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 6
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "dog" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "roran" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "rat" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 8
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "shell" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 8
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "catgod" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 1
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "machinegod" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 1
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "undeadgod" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 1
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "machine" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "wisp" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 6
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "bird" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 8
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "seamonster" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "catsister" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 5
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "mutant" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "yeek" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 8
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "yith" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 5
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "servant" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 6
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "horse" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "god" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 1
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "quickling" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 1
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "metal" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 1
+				break
+			}
+			if ( cdatan(CDATAN_RACE, tc) == "vehicle" ) {
+				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 6
+				break
+			}
+		loop
+	}
 	if ( cdatan(CDATAN_CLASS, cc) == "predator" ) {
-		cr = 20
+		cr = 1
 	}
 	else {
 		cr = 0
+	}
+	if ( cbit(CHARA_BIT_MAGNETISM_S_POLE, cc) ) {
+		if ( cbit(CHARA_BIT_MAGNETISM_S_POLE, tc) ) {
+			cr -= 2
+		}
+		if ( cbit(CHARA_BIT_MAGNETISM_N_POLE, tc) ) {
+			cr += 2
+		}
+	}
+	if ( cbit(CHARA_BIT_MAGNETISM_N_POLE, cc) ) {
+		if ( cbit(CHARA_BIT_MAGNETISM_N_POLE, tc) ) {
+			cr -= 2
+		}
+		if ( cbit(CHARA_BIT_MAGNETISM_S_POLE, tc) ) {
+			cr += 2
+		}
 	}
 	if ( attackskill == SKILL_WEAPON_MARTIAL_ARTS ) {
 		creva = 100
@@ -5790,7 +6233,7 @@
 			handryoute = 0
 		}
 	}
-	if ( (cdata(CDATA_CRIT_CHANCE, cc) * 4 + cr + 10) * (handryoute + 10) / 10 > (rnd(400) + rnd(creva + 2) + cdata(CDATA_DEC_ENEMY_CRIT_CHANCE, tc) * 2) * (extraattack + 1) ) {
+	if ( (cdata(CDATA_CRIT_CHANCE, cc) * 4 + 10) * (handryoute + 10) / 10 * ((cr + 10) / 10) > (rnd(400) + rnd(creva + 2) + cdata(CDATA_DEC_ENEMY_CRIT_CHANCE, tc) * 2) * (extraattack + 1) * ((cdata(CDATA_CONDITION_JIU_JITSU, tc) * 2 + 8) / 10) ) {
 		critical = 1
 		if ( findbuff(tc, BUFF_EMERGENCY_EVASION) != (-1) & cdata(CDATA_EQUIP_WEIGHT, tc) < 15000 ) {
 			critical = 0
@@ -5992,7 +6435,7 @@
 	hoseipv = (cdata(CDATA_PV, tc) + cdata(CDATA_PV_FIX, tc) / 25) * cdata(CDATA_PV_FIX, tc) / 100
 	prot = hoseipv + limit(limit(sdata(carmor(tc), tc), 0, 300) - cdata(CDATA_PROT_PENALTY, tc) * 100, 0, 300) + sdata(SKILL_ATTR_DEX, tc) / 10
 	if ( calcattackdmg_arg1 == 0 ) {
-		if ( cdata(CDATA_CONDITION_JIU_JITSU, cc) != 0 ) {
+		if ( cbit(CHARA_BIT_VINDALIAN_JIUJITSU_ACTIVE, cc) == TRUE ) {
 			prot = cdata(CDATA_DV, tc) + limit(limit(sdata(SKILL_NORMAL_LIGHT_ARMOR, tc), 0, 300) - cdata(CDATA_PROT_PENALTY, tc) * 100, 0, 300) + sdata(SKILL_ATTR_DEX, tc) / 10
 		}
 	}
@@ -6182,6 +6625,22 @@
 	if ( findbuff(tc, BUFF_GRAVITY_ACCEL) != (-1) ) {
 		if ( damage > 19 ) {
 			damage = damage * 19 / 20
+		}
+	}
+	if ( cbit(CHARA_BIT_MAGNETISM_S_POLE, cc) ) {
+		if ( cbit(CHARA_BIT_MAGNETISM_S_POLE, tc) ) {
+			damage = damage * 9 / 10
+		}
+		if ( cbit(CHARA_BIT_MAGNETISM_N_POLE, tc) ) {
+			damage = damage * 11 / 10
+		}
+	}
+	if ( cbit(CHARA_BIT_MAGNETISM_N_POLE, cc) ) {
+		if ( cbit(CHARA_BIT_MAGNETISM_N_POLE, tc) ) {
+			damage = damage * 9 / 10
+		}
+		if ( cbit(CHARA_BIT_MAGNETISM_S_POLE, tc) ) {
+			damage = damage * 11 / 10
 		}
 	}
 	if ( cc == CHARA_PLAYER ) {
@@ -6723,7 +7182,7 @@
 	if ( cdata(CDATA_MAX_HP, r1) < 1 ) {
 		cdata(CDATA_MAX_HP, r1) = 1
 	}
-	if ( r1 >= 57 & cdata(CDATA_ALLIED, r1) == 0 & rc != CHARA_PLAYER ) {
+	if ( r1 >= 57 & cdata(CDATA_ALLIED, r1) == 0 & r1 != CHARA_PLAYER ) {
 		cdata(CDATA_DV, r1) += limit(cdata(CDATA_LEVEL, r1) / 2, 1, 200)
 		cdata(CDATA_PV, r1) += limit(cdata(CDATA_LEVEL, r1) / 2, 1, 200)
 		if ( cdata(CDATA_QUALITY, r1) == FIX_QUALITY_GREAT ) {

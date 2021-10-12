@@ -4443,7 +4443,10 @@
 	if ( locvar_dmghp_ele == SKILL_NONE | locvar_dmghp_ele >= MAX_SKILL_RESIST ) {
 		if ( locvar_dmghp_ele == SKILL_RESDMG_CRUSH ) {
 			locvar_dmghp_r = cdata(CDATA_PV, dmghp_charid) + cdata(CDATA_DV, dmghp_charid)
-			locvar_dmghp_dmg = locvar_dmghp_dmg * 100 / limit(locvar_dmghp_r + 100, 50, 3000)
+			if ( locvar_dmghp_r > 0 ) {
+				locvar_dmghp_r = locvar_dmghp_r * 2 / 3
+			}
+			locvar_dmghp_dmg = locvar_dmghp_dmg * 100 / limit(locvar_dmghp_r + 110, 50, 3000)
 		}
 	}
 	else {
@@ -4534,348 +4537,343 @@
 		if ( cdata(CDATA_ID, dmghp_charid) == CREATURE_ID_JALDABAOTH_THE_CHAOS_CHILD & cdata(CDATA_ALLIED, dmghp_charid) == 0 ) {
 			if ( gdata(GDATA_FLAG_COLLECTED_WISHES) > 0 ) {
 				if ( dmghp_source == CHARA_PLAYER ) {
-					repeat 2
-						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 100 ) {
-							gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 100
-							break
-						}
-						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 200 ) {
-							gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 200
-							break
-						}
-						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 300 ) {
-							gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 300
-							break
-						}
-						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 400 ) {
-							gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 400
-							break
-						}
-						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 500 ) {
-							gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 500
-							break
-						}
-						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 600 ) {
-							gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 600
-							break
-						}
-						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 700 ) {
-							gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 700
-							break
-						}
-						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 2000 ) {
-							if ( gdata(GDATA_FLAG_SUB_SLIME) >= 1000 ) {
-								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 2000
+					if ( cdata(CDATA_GAUGE_COOLDOWN2, dmghp_charid) == 0 ) {
+						repeat 2
+							if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 100 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 100
 								break
 							}
-						}
-						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 2100 ) {
-							if ( gdata(GDATA_FLAG_SUB_ROGUE) >= 1000 ) {
-								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 2100
+							if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 200 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 200
 								break
 							}
-						}
-						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 2200 ) {
-							if ( gdata(GDATA_FLAG_SUB_NIGHTMARE) >= 1000 ) {
-								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 2200
+							if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 300 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 300
 								break
 							}
-						}
-						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 2300 ) {
-							if ( gdata(GDATA_FLAG_SUB_MOTHER) >= 1000 ) {
-								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 2300
+							if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 400 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 400
 								break
 							}
-						}
-						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 2400 ) {
-							if ( gdata(GDATA_FLAG_SUB_WIFE) >= 1000 ) {
-								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 2400
+							if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 500 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 500
 								break
 							}
-						}
-						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 2500 ) {
-							if ( gdata(GDATA_FLAG_SUB_DOG) >= 1000 ) {
-								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 2500
+							if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 600 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 600
 								break
 							}
-						}
-						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 2600 ) {
-							if ( gdata(GDATA_FLAG_SUB_CAT) >= 1000 ) {
-								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 2600
+							if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 700 ) {
+								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 700
 								break
 							}
-						}
-						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 2700 ) {
-							if ( gdata(GDATA_FLAG_SUB_WAR) >= 1000 ) {
-								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 2700
-								break
+							if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 2000 ) {
+								if ( gdata(GDATA_FLAG_SUB_SLIME) >= 1000 ) {
+									gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 2000
+									break
+								}
 							}
-						}
-						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 2800 ) {
-							if ( gdata(GDATA_FLAG_SUB_YEEK) >= 1000 ) {
-								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 2800
-								break
+							if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 2100 ) {
+								if ( gdata(GDATA_FLAG_SUB_ROGUE) >= 1000 ) {
+									gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 2100
+									break
+								}
 							}
-						}
-						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 2900 ) {
-							if ( gdata(GDATA_FLAG_SUB_KAMIKAZE) >= 1000 ) {
-								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 2900
-								break
+							if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 2200 ) {
+								if ( gdata(GDATA_FLAG_SUB_NIGHTMARE) >= 1000 ) {
+									gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 2200
+									break
+								}
 							}
-						}
-						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 3000 ) {
-							if ( gdata(GDATA_FLAG_SUB_MIAS_DREAM) >= 1000 ) {
-								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 3000
-								break
+							if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 2300 ) {
+								if ( gdata(GDATA_FLAG_SUB_MOTHER) >= 1000 ) {
+									gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 2300
+									break
+								}
 							}
-						}
-						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 3100 ) {
-							if ( gdata(GDATA_FLAG_SUB_VEIN) >= 1000 ) {
-								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 3100
-								break
+							if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 2400 ) {
+								if ( gdata(GDATA_FLAG_SUB_WIFE) >= 1000 ) {
+									gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 2400
+									break
+								}
 							}
-						}
-						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 3200 ) {
-							if ( gdata(GDATA_FLAG_SUB_PYRAMID) >= 1000 ) {
-								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 3200
-								break
+							if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 2500 ) {
+								if ( gdata(GDATA_FLAG_SUB_DOG) >= 1000 ) {
+									gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 2500
+									break
+								}
 							}
-						}
-						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 3300 ) {
-							if ( gdata(GDATA_FLAG_SUB_NUKE) >= 1000 ) {
-								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 3300
-								break
+							if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 2600 ) {
+								if ( gdata(GDATA_FLAG_SUB_CAT) >= 1000 ) {
+									gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 2600
+									break
+								}
 							}
-						}
-						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 3400 ) {
-							if ( gdata(GDATA_FLAG_SUB_BIOLOGIST) >= 1000 ) {
-								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 3400
-								break
+							if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 2700 ) {
+								if ( gdata(GDATA_FLAG_SUB_WAR) >= 1000 ) {
+									gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 2700
+									break
+								}
 							}
-						}
-						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 3500 ) {
-							if ( gdata(GDATA_FLAG_SUB_SEWER) >= 1000 ) {
-								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 3500
-								break
+							if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 2800 ) {
+								if ( gdata(GDATA_FLAG_SUB_YEEK) >= 1000 ) {
+									gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 2800
+									break
+								}
 							}
-						}
-						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 3600 ) {
-							if ( gdata(GDATA_FLAG_SUB_GUILD_WARS1) >= 1000 ) {
-								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 3600
-								break
+							if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 2900 ) {
+								if ( gdata(GDATA_FLAG_SUB_KAMIKAZE) >= 1000 ) {
+									gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 2900
+									break
+								}
 							}
-						}
-						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 3700 ) {
-							if ( gdata(GDATA_FLAG_SUB_GUILD_WARS3) >= 1000 ) {
-								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 3700
-								break
+							if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 3000 ) {
+								if ( gdata(GDATA_FLAG_SUB_MIAS_DREAM) >= 1000 ) {
+									gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 3000
+									break
+								}
 							}
-						}
-						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 3800 ) {
-							if ( gdata(GDATA_FLAG_SUB_GUILD_WARS2) >= 1000 ) {
-								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 3800
-								break
+							if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 3100 ) {
+								if ( gdata(GDATA_FLAG_SUB_VEIN) >= 1000 ) {
+									gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 3100
+									break
+								}
 							}
-						}
-						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 4200 ) {
-							if ( gdata(GDATA_FLAG_SUB_MINOTAUR) >= 1000 ) {
-								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 4200
-								break
+							if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 3200 ) {
+								if ( gdata(GDATA_FLAG_SUB_PYRAMID) >= 1000 ) {
+									gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 3200
+									break
+								}
 							}
-						}
-						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 4300 ) {
-							if ( gdata(GDATA_FLAG_SUB_DADDY) >= 1000 ) {
-								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 4300
-								break
+							if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 3300 ) {
+								if ( gdata(GDATA_FLAG_SUB_NUKE) >= 1000 ) {
+									gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 3300
+									break
+								}
 							}
-						}
-						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 4500 ) {
-							if ( gdata(GDATA_FLAG_SUB_LOST_KITTY) >= 1000 ) {
-								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 4500
-								break
+							if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 3400 ) {
+								if ( gdata(GDATA_FLAG_SUB_BIOLOGIST) >= 1000 ) {
+									gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 3400
+									break
+								}
 							}
-						}
-						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 4600 ) {
-							if ( gdata(GDATA_FLAG_SUB_DIVERSIONARY_TACTICS) >= 1000 ) {
-								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 4600
-								break
+							if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 3500 ) {
+								if ( gdata(GDATA_FLAG_SUB_SEWER) >= 1000 ) {
+									gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 3500
+									break
+								}
 							}
-						}
-						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 4700 ) {
-							if ( gdata(GDATA_FLAG_SUB_JUERES_IMPERTINENCE) >= 1000 ) {
-								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 4700
-								break
+							if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 3600 ) {
+								if ( gdata(GDATA_FLAG_SUB_GUILD_WARS1) >= 1000 ) {
+									gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 3600
+									break
+								}
 							}
-						}
-						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 4800 ) {
-							if ( gdata(GDATA_FLAG_SUB_PIRATE_HUNTING) >= 1000 ) {
-								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 4800
-								break
+							if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 3700 ) {
+								if ( gdata(GDATA_FLAG_SUB_GUILD_WARS3) >= 1000 ) {
+									gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 3700
+									break
+								}
 							}
-						}
-						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 4900 ) {
-							if ( gdata(GDATA_FLAG_SUB_FALLEN_PRINCESS) >= 1000 ) {
-								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 4900
-								break
+							if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 3800 ) {
+								if ( gdata(GDATA_FLAG_SUB_GUILD_WARS2) >= 1000 ) {
+									gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 3800
+									break
+								}
 							}
-						}
-						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 5000 ) {
-							if ( gdata(GDATA_FLAG_SUB_UNPAID_COMPENSATION) >= 1 ) {
-								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 5000
-								break
+							if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 4200 ) {
+								if ( gdata(GDATA_FLAG_SUB_MINOTAUR) >= 1000 ) {
+									gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 4200
+									break
+								}
 							}
-						}
-						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 5100 ) {
-							if ( gdata(GDATA_FLAG_SUB_MANSION_FOR_SALE) >= 1000 ) {
-								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 5100
-								break
+							if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 4300 ) {
+								if ( gdata(GDATA_FLAG_SUB_DADDY) >= 1000 ) {
+									gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 4300
+									break
+								}
 							}
-						}
-						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 5200 ) {
-							if ( gdata(GDATA_FLAG_SUB_THE_RESULT_OF_REVENGE) >= 1000 ) {
-								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 5200
-								break
+							if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 4500 ) {
+								if ( gdata(GDATA_FLAG_SUB_LOST_KITTY) >= 1000 ) {
+									gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 4500
+									break
+								}
 							}
-						}
-						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 5300 ) {
-							if ( gdata(GDATA_FLAG_SUB_STRUGGLE_AGAINST_INSANITY) >= 1000 ) {
-								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 5300
-								break
+							if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 4600 ) {
+								if ( gdata(GDATA_FLAG_SUB_DIVERSIONARY_TACTICS) >= 1000 ) {
+									gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 4600
+									break
+								}
 							}
-						}
-						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 5400 ) {
-							if ( gdata(GDATA_FLAG_SUB_H_SISTER) >= 1000 ) {
-								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 5400
-								break
+							if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 4700 ) {
+								if ( gdata(GDATA_FLAG_SUB_JUERES_IMPERTINENCE) >= 1000 ) {
+									gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 4700
+									break
+								}
 							}
-						}
-						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 6400 ) {
-							if ( gdata(GDATA_FLAG_SUB_LAW_OF_NINJAS) >= 1000 ) {
-								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 6400
-								break
+							if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 4800 ) {
+								if ( gdata(GDATA_FLAG_SUB_PIRATE_HUNTING) >= 1000 ) {
+									gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 4800
+									break
+								}
 							}
-						}
-						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 6600 ) {
-							if ( gdata(GDATA_FLAG_SUB_MONOCHROME_DELIVERY_SERVICE_LETTER) >= 1 ) {
-								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 6600
-								break
+							if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 4900 ) {
+								if ( gdata(GDATA_FLAG_SUB_FALLEN_PRINCESS) >= 1000 ) {
+									gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 4900
+									break
+								}
 							}
-						}
-						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 7100 ) {
-							if ( gdata(GDATA_FLAG_SUB_DOGS_TAIL) >= 1000 ) {
-								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 7100
-								break
+							if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 5000 ) {
+								if ( gdata(GDATA_FLAG_SUB_UNPAID_COMPENSATION) >= 1 ) {
+									gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 5000
+									break
+								}
 							}
-						}
-						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 7300 ) {
-							if ( gdata(GDATA_FLAG_DIALOG_NAZUNA) >= 1000 ) {
-								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 7300
-								break
+							if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 5100 ) {
+								if ( gdata(GDATA_FLAG_SUB_MANSION_FOR_SALE) >= 1000 ) {
+									gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 5100
+									break
+								}
 							}
-						}
-						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 7600 ) {
-							if ( gdata(GDATA_FLAG_SUB_THE_TRUE_APPEARANCE) >= 1000 ) {
-								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 7600
-								break
+							if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 5200 ) {
+								if ( gdata(GDATA_FLAG_SUB_THE_RESULT_OF_REVENGE) >= 1000 ) {
+									gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 5200
+									break
+								}
 							}
-						}
-						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 7700 ) {
-							if ( gdata(GDATA_FLAG_SUB_THE_ABYSS_OF_MAGIC) >= 1000 ) {
-								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 7700
-								break
+							if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 5300 ) {
+								if ( gdata(GDATA_FLAG_SUB_STRUGGLE_AGAINST_INSANITY) >= 1000 ) {
+									gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 5300
+									break
+								}
 							}
-						}
-						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 7900 ) {
-							if ( gdata(GDATA_FLAG_SUB_THE_DISTANT_SEA_OF_STARS) >= 1000 ) {
-								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 7900
-								break
+							if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 5400 ) {
+								if ( gdata(GDATA_FLAG_SUB_H_SISTER) >= 1000 ) {
+									gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 5400
+									break
+								}
 							}
-						}
-						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 8000 ) {
-							if ( gdata(GDATA_FLAG_SUB_BEYOND_THE_GENERATIONS) >= 9 ) {
-								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 8000
-								break
+							if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 6400 ) {
+								if ( gdata(GDATA_FLAG_SUB_LAW_OF_NINJAS) >= 1000 ) {
+									gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 6400
+									break
+								}
 							}
-						}
-						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 8100 ) {
-							if ( gdata(GDATA_FLAG_SUB_WHEN_THE_FLAME_BURNS_OUT) >= 1000 ) {
-								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 8100
-								break
+							if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 6600 ) {
+								if ( gdata(GDATA_FLAG_SUB_MONOCHROME_DELIVERY_SERVICE_LETTER) >= 1 ) {
+									gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 6600
+									break
+								}
 							}
-						}
-						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 8400 ) {
-							if ( gdata(GDATA_FLAG_SUB_NINE_HEAD_DRAGON) >= 3 ) {
-								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 8400
-								break
+							if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 7100 ) {
+								if ( gdata(GDATA_FLAG_SUB_DOGS_TAIL) >= 1000 ) {
+									gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 7100
+									break
+								}
 							}
-						}
-						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 9100 ) {
-							if ( gdata(GDATA_FLAG_SUB_REGULUS_ZANAN) >= 1003 ) {
-								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 9100
-								break
+							if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 7300 ) {
+								if ( gdata(GDATA_FLAG_DIALOG_NAZUNA) >= 1000 ) {
+									gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 7300
+									break
+								}
 							}
-						}
-						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 9200 ) {
-							if ( gdata(GDATA_FLAG_SUB_REGULUS_EULDERNA) >= 1000 ) {
-								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 9200
-								break
+							if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 7600 ) {
+								if ( gdata(GDATA_FLAG_SUB_THE_TRUE_APPEARANCE) >= 1000 ) {
+									gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 7600
+									break
+								}
 							}
-						}
-						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 9300 ) {
-							if ( gdata(GDATA_FLAG_SUB_REGULUS_KIKKASU) >= 1000 ) {
-								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 9300
-								break
+							if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 7700 ) {
+								if ( gdata(GDATA_FLAG_SUB_THE_ABYSS_OF_MAGIC) >= 1000 ) {
+									gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 7700
+									break
+								}
 							}
-						}
-						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 9400 ) {
-							if ( gdata(GDATA_FLAG_SUB_REGULUS_MAYROON) >= 1000 ) {
-								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 9400
-								break
+							if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 7900 ) {
+								if ( gdata(GDATA_FLAG_SUB_THE_DISTANT_SEA_OF_STARS) >= 1000 ) {
+									gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 7900
+									break
+								}
 							}
-						}
-						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 10500 ) {
-							if ( gdata(GDATA_FLAG_SUB_THE_LIFE_IN_THIS_WORLD) >= 2 ) {
-								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 10500
-								break
+							if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 8000 ) {
+								if ( gdata(GDATA_FLAG_SUB_BEYOND_THE_GENERATIONS) >= 9 ) {
+									gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 8000
+									break
+								}
 							}
-						}
-						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 10900 ) {
-							if ( gdata(GDATA_FLAG_SUB_BELPHAT_THE_COSMIC_SWORD) >= 1000 ) {
-								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 10900
-								break
+							if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 8100 ) {
+								if ( gdata(GDATA_FLAG_SUB_WHEN_THE_FLAME_BURNS_OUT) >= 1000 ) {
+									gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 8100
+									break
+								}
 							}
-						}
-						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 11500 ) {
-							if ( gdata(GDATA_FLAG_MAIN_CHAOS_CRADLE_34) >= 100 ) {
-								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 11500
-								break
+							if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 8400 ) {
+								if ( gdata(GDATA_FLAG_SUB_NINE_HEAD_DRAGON) >= 3 ) {
+									gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 8400
+									break
+								}
 							}
-						}
-						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 12600 ) {
-							if ( gdata(GDATA_FLAG_TRAINING_COURSE_COMBAT_4) >= 1000 ) {
-								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 12600
-								break
+							if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 9100 ) {
+								if ( gdata(GDATA_FLAG_SUB_REGULUS_ZANAN) >= 1003 ) {
+									gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 9100
+									break
+								}
 							}
-						}
-						if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 13500 ) {
-							if ( gdata(GDATA_FLAG_SUB_KARURA) >= 1 ) {
-								gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 13500
-								break
+							if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 9200 ) {
+								if ( gdata(GDATA_FLAG_SUB_REGULUS_EULDERNA) >= 1000 ) {
+									gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 9200
+									break
+								}
 							}
-						}
-					loop
-					if ( gdata(GDATA_TEMPORARY_FLAGS2) == 1200 | gdata(GDATA_TEMPORARY_FLAGS2) == 1000 ) {
-						if ( rnd(17) == 0 ) {
-							gdata(GDATA_FLAG_COLLECTED_WISHES)--
-						}
+							if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 9300 ) {
+								if ( gdata(GDATA_FLAG_SUB_REGULUS_KIKKASU) >= 1000 ) {
+									gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 9300
+									break
+								}
+							}
+							if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 9400 ) {
+								if ( gdata(GDATA_FLAG_SUB_REGULUS_MAYROON) >= 1000 ) {
+									gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 9400
+									break
+								}
+							}
+							if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 10500 ) {
+								if ( gdata(GDATA_FLAG_SUB_THE_LIFE_IN_THIS_WORLD) >= 2 ) {
+									gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 10500
+									break
+								}
+							}
+							if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 10900 ) {
+								if ( gdata(GDATA_FLAG_SUB_BELPHAT_THE_COSMIC_SWORD) >= 1000 ) {
+									gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 10900
+									break
+								}
+							}
+							if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 11500 ) {
+								if ( gdata(GDATA_FLAG_MAIN_CHAOS_CRADLE_34) >= 100 ) {
+									gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 11500
+									break
+								}
+							}
+							if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 12600 ) {
+								if ( gdata(GDATA_FLAG_TRAINING_COURSE_COMBAT_4) >= 1000 ) {
+									gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 12600
+									break
+								}
+							}
+							if ( gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) < 13500 ) {
+								if ( gdata(GDATA_FLAG_SUB_KARURA) >= 1 ) {
+									gdata(GDATA_FLAG_CUT_IN_MESSAGE_2) = 13500
+									break
+								}
+							}
+						loop
+						gdata(GDATA_FLAG_COLLECTED_WISHES)--
 						if ( gdata(GDATA_FLAG_COLLECTED_WISHES) < 0 ) {
 							gdata(GDATA_FLAG_COLLECTED_WISHES) = 0
 						}
+						locvar_dmghp_dmg += cdata(CDATA_MAX_HP, dmghp_charid) / 20
 					}
-					else {
-						gdata(GDATA_FLAG_COLLECTED_WISHES)--
-					}
-					locvar_dmghp_dmg += cdata(CDATA_MAX_HP, dmghp_charid) / 20
 				}
 			}
 		}
@@ -5541,6 +5539,11 @@
 			}
 		}
 	}
+	if ( locvar_dmghp_dmg > 0 ) {
+		if ( cdata(CDATA_GAUGE_COOLDOWN2, dmghp_charid) == 0 ) {
+			cdata(CDATA_GAUGE_COOLDOWN2, dmghp_charid) = 1
+		}
+	}
 	if ( cdata(CDATA_HP, dmghp_charid) < 0 ) {
 		locvar_dmghp_bakuretu = 0
 	}
@@ -5803,6 +5806,18 @@
 				if ( rnd(10 + (cdata(CDATA_QUALITY, dmghp_charid) >= FIX_QUALITY_MIRACLE) * 10) == 0 ) {
 					if ( cdata(CDATA_CONDITION_PARALYZE, dmghp_charid) == 0 ) {
 						cdata(CDATA_CONDITION_PARALYZE, dmghp_charid)++
+					}
+				}
+				if ( cdata(CDATA_FRIENDSHIP, CHARA_PLAYER) == 1 ) {
+					if ( dmghp_charid == CHARA_PLAYER ) {
+						if ( cdata(CDATA_SP, dmghp_charid) >= (-100) ) {
+							cdata(CDATA_SP, dmghp_charid) -= 5
+						}
+					}
+					if ( dmghp_charid != CHARA_PLAYER ) {
+						if ( cdata(CDATA_SP, dmghp_charid) >= (-50) ) {
+							cdata(CDATA_SP, dmghp_charid) -= 5
+						}
 					}
 				}
 			}

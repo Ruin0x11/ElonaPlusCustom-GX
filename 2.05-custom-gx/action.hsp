@@ -4358,7 +4358,7 @@
 				kickhantei = 10
 			}
 			if ( attackskill == SKILL_WEAPON_MARTIAL_ARTS ) {
-				if ( cdata(CDATA_CONDITION_JIU_JITSU, cc) != 0 ) {
+				if ( cbit(CHARA_BIT_VINDALIAN_JIUJITSU_ACTIVE, cc) == TRUE ) {
 					melbk = cdata(CDATA_MELEE_STYLE, cc)
 					cdata(CDATA_MELEE_STYLE, cc) = 9
 				}
@@ -4404,7 +4404,7 @@
 						txt lang(aln(tc) + name(cc) + "に蹴り飛ばされた。", name(cc) + " kick" + _s(cc) + " " + name(tc) + ".")
 					}
 				}
-				if ( cdata(CDATA_CONDITION_JIU_JITSU, cc) != 0 ) {
+				if ( cbit(CHARA_BIT_VINDALIAN_JIUJITSU_ACTIVE, cc) == TRUE ) {
 					cdata(CDATA_MELEE_STYLE, cc) = melbk
 				}
 			}
@@ -7630,6 +7630,7 @@
 				}
 			}
 			snd SOUNDLIST_DRINK1
+			item_separate ci
 			inv(INV_ITEM_PARAM2, ci)--
 			cdata(CDATA_THIRST, CHARA_PLAYER) += 2000
 			cdata(CDATA_HUNGER, CHARA_PLAYER) += 150

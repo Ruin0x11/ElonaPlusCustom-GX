@@ -8597,6 +8597,14 @@
 			mes s
 			p = sdata(STARTING_SKILL_ATTR + cnt + STARTING_SKILL_SPACT, cc) \ 1000
 			pos wx + 176, wy + 152 + cnt * 15
+			if ( p >= 400 ) {
+				mes "Supreme"
+				continue
+			}
+			if ( p >= 300 ) {
+				mes "Amazing"
+				continue
+			}
 			if ( p >= 200 ) {
 				mes "Superb"
 				continue
@@ -8860,7 +8868,7 @@
 				loop
 				cs_list s, wx + x, wy + 66 + cnt * 19 - 1, 19
 				if ( list(0, p) >= STARTING_SKILL_RESIST & list(0, p) < STARTING_SKILL_WEAPON ) {
-					p(1) = limit(sdata(list(0, p), cc) / 50, 0, 6)
+					p(1) = limit(sdata(list(0, p), cc) / (50 * 2), 0, 8)
 					s = _resist(p(1))
 				}
 				else {
@@ -11323,6 +11331,20 @@
 						continue
 					}
 				}
+				if ( invctrl(1) == 25 ) {
+					if ( inv(INV_ITEM_WEIGHT, cnt) <= 0 ) {
+						continue
+					}
+					if ( inv(INV_ITEM_EQUIP, cnt) != 0 ) {
+						continue
+					}
+					if ( ibit(ITEM_BIT_NO_DROP, cnt) ) {
+						continue
+					}
+					if ( ibit(ITEM_BIT_PRECIOUS, cnt) ) {
+						continue
+					}
+				}
 			}
 			if ( invctrl == 24 ) {
 				if ( invctrl(1) == 0 ) {
@@ -12299,7 +12321,7 @@
 		if ( invctrl == 6 ) {
 			if ( cc == CHARA_PLAYER ) {
 				if ( trait(TRAIT_RACE_WEAK) != 0 ) {
-					if ( inv(INV_ITEM_WEIGHT, ci) >= 1000 ) {
+					if ( inv(INV_ITEM_WEIGHT, ci) > 2000 ) {
 						txt lang("それは重すぎて装備できない。", "It's too heavy to equip.")
 						goto *com_inventory_loop
 					}
