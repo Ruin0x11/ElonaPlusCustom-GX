@@ -83,6 +83,12 @@
 		gosub *screen_draw
 		goto *pc_turn
 	}
+	if ( spact(SKILL_SPACT_MARKING - STARTING_SKILL_SPACT) == 0 ) {
+		spact(SKILL_SPACT_MARKING - STARTING_SKILL_SPACT) = 1
+		txtmore
+		txtef COLOR_YELLOW
+		txt lang("あなたは「" + skillname(SKILL_SPACT_MARKING) + "」の能力を得た。", "You have learned a new ability, " + skillname(SKILL_SPACT_MARKING) + ".")
+	}
 	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_DEED ) {
 		gdata(GDATA_HOME_LEVEL) = inv(INV_ITEM_PARAM1, ci)
 		inv(INV_ITEM_NUM, ci)--

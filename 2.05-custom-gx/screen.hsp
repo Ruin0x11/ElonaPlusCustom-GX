@@ -372,6 +372,41 @@
 			sy -= 20
 		}
 	}
+	if ( TweakData(TWEAK_GAMEPLAY_CG_DISABLE_THIRST, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
+		if ( cdata(CDATA_THIRST, CHARA_PLAYER) >= 12000 ) {
+			color 0, 0, 80
+			pos sx, sy
+			gcopy BUFFER_INF, 0 + en * 84, 416, 65 + en * 30, 15
+			pos sx + 6, sy + 1
+			mes _thirsty(12)
+			sy -= 20
+		}
+		else {
+			if ( cdata(CDATA_THIRST, CHARA_PLAYER) >= 1000 ) {
+				if ( cdata(CDATA_THIRST, CHARA_PLAYER) <= 4000 ) {
+					color 200, 0, 0
+				}
+				else {
+					color 0, 0, 80
+				}
+				if ( _thirsty(cdata(CDATA_THIRST, CHARA_PLAYER) / 1000) != "" ) {
+					pos sx, sy
+					gcopy BUFFER_INF, 0 + en * 84, 416, 65 + en * 30, 15
+					pos sx + 6, sy + 1
+					mes _thirsty(cdata(CDATA_THIRST, CHARA_PLAYER) / 1000)
+					sy -= 20
+				}
+			}
+			else {
+				color 250, 0, 0
+				pos sx, sy
+				gcopy BUFFER_INF, 0 + en * 84, 416, 65 + en * 30, 15
+				pos sx + 6, sy + 1
+				mes _thirsty(0)
+				sy -= 20
+			}
+		}
+	}
 	if ( cbit(CHARA_BIT_MAGNETISM_S_POLE, CHARA_PLAYER) ) {
 		color 0, 0, 100
 		pos sx, sy
@@ -1440,22 +1475,32 @@
 		bmes lang("カルラ「Etherwindの因果が、あなたの力になるわ」", "Karura reassures, " + cnvtalk("The fate of the Etherwind will give you strength.")), 235, 235, 35
  	}
 
-	/********** ORIGINAL - BEGINNING ********** // Remove Curtain Call.
-
-	if ( gdata(GDATA_FLAG_CURTAIN_CALL) < 0 ) {
-		if ( jp ) {
-			pos inf_clockw + 380, inf_clocky + 17
-			color 0, 0, 0
-			bmes "*カーテンコール*", 235, 35, 35
+	if ( TweakData(TWEAK_GAMEPLAY_CG_DISABLE_CURTAIN_CALL, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
+		if ( gdata(GDATA_FLAG_CURTAIN_CALL) > 9999 * 2 / 3 & gdata(GDATA_FLAG_CURTAIN_CALL) <= 9999 ) {
+			if ( jp ) {
+				pos inf_clockw + 380, inf_clocky + 17
+				color 0, 0, 0
+				bmes "早くこの場を離れたほうがいい気がする…", 235, 35, 35
+			}
+			if ( en ) {
+				pos inf_clockw + 380, inf_clocky + 17
+				color 0, 0, 0
+				bmes "You had better leave this place as soon as possible.", 235, 35, 35
+			}
 		}
-		if ( en ) {
-			pos inf_clockw + 380, inf_clocky + 17
-			color 0, 0, 0
-			bmes " *Curtain Call* ", 235, 35, 35
+		if ( gdata(GDATA_FLAG_CURTAIN_CALL) < 0 ) {
+			if ( jp ) {
+				pos inf_clockw + 380, inf_clocky + 17
+				color 0, 0, 0
+				bmes "*カーテンコール*", 235, 35, 35
+			}
+			if ( en ) {
+				pos inf_clockw + 380, inf_clocky + 17
+				color 0, 0, 0
+				bmes " *Curtain Call* ", 235, 35, 35
+			}
 		}
 	}
-
-	 ********** ORIGINAL - ENDING **********/
 
 	ap3 = 0
 	repeat 15

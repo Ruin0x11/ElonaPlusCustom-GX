@@ -59,6 +59,9 @@
 	return 0
 
 *ai_turn
+	if ( cdata(CDATA_CHAIN_ATTACK_COUNT, cc) != 0 ) {
+		cdata(CDATA_CHAIN_ATTACK_COUNT, cc) = 0
+	}
 	if ( cc < MAX_CHARA_FOLLOWER ) {
 		if ( cdata(CDATA_ALLIED, cc) == 0 ) {
 			cdata(CDATA_ALLIED, cc) = 100
@@ -1271,6 +1274,11 @@
 					else {
 						cdata(CDATA_HUNGER, cc) -= 3000
 					}
+					if ( TweakData(TWEAK_GAMEPLAY_CG_DISABLE_THIRST, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
+						if ( cdata(CDATA_THIRST, cc) <= 6000 ) {
+							cdata(CDATA_THIRST, cc) += 5000
+						}
+					}
 				}
 				else {
 					flt 20
@@ -1298,6 +1306,11 @@
 							}
 							else {
 								cdata(CDATA_HUNGER, cc) -= 3000
+							}
+							if ( TweakData(TWEAK_GAMEPLAY_CG_DISABLE_THIRST, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
+								if ( cdata(CDATA_THIRST, cc) <= 6000 ) {
+									cdata(CDATA_THIRST, cc) += 5000
+								}
 							}
 						}
 					}
@@ -3694,6 +3707,15 @@
 	if ( cdata(CDATA_ID, cc) == CREATURE_ID_SPIRAL_KING ) {
 		if ( act == SKILL_SPELL_MUTATION ) {
 			act = SKILL_SPELL_DARK_EYE
+		}
+	}
+	if ( cdata(CDATA_ID, cc) == CREATURE_ID_LAST_DANCER ) {
+		if ( cdata(CDATA_ALLIED, cc) == 0 ) {
+			if ( gdata(STARTING_GDATA_FLAG + 373) < 0 ) {
+				if ( cdata(CDATA_EXIST, CHARA_PLAYER) == CHAR_STATE_ALIVE ) {
+					act = SKILL_SPACT_GRAND_FINALE
+				}
+			}
 		}
 	}
 	if ( cdata(CDATA_ALLIED, cc) == 100 ) {

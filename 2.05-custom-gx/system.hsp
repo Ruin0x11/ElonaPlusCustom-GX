@@ -626,6 +626,16 @@
 			}
 		}
 	}
+	if ( gdata(GDATA_VERSION) < 3050 ) {
+		repeat MAX_CHARA_SAVE
+			if ( cnt == CHARA_PLAYER ) {
+				cdata(CDATA_THIRST, cnt) = 9000
+			}
+			else {
+				cdata(CDATA_THIRST, cnt) = 6000 - 1000 + rnd(4000)
+			}
+		loop
+	}
 	if ( gdata(GDATA_VERSION) < 3060 ) {
 		repeat STARTING_RANDOM_AREA - STARTING_USER_AREA, STARTING_USER_AREA
 			if ( adata(ADATA_ID, cnt) != AREA_SHOP ) {

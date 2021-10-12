@@ -516,6 +516,9 @@
 		if ( cdata(CDATA_EXIST, cnt) != CHAR_STATE_ALIVE ) {
 			continue
 		}
+		if ( cnt >= MAX_CHARA_FOLLOWER ) {
+			cdata(CDATA_THIRST, cnt) = 6000 + 1000
+		}
 		cdata(CDATA_CONDITION_GRAVITY, cnt) = 0
 		if ( cdata(CDATA_ID, cnt) == CREATURE_ID_LAST_DANCER ) {
 			if ( cbit(CHARA_BIT_SANDBAG, cnt) == 0 ) {
@@ -14401,6 +14404,13 @@
 					txt lang("シェルターの貯蔵食品を食べた。", "You eat stored food.")
 					cdata(CDATA_HUNGER, CHARA_PLAYER) += 5000
 					gosub *eat_finish
+				}
+			}
+			if ( TweakData(TWEAK_GAMEPLAY_CG_DISABLE_THIRST, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
+				if ( cdata(CDATA_THIRST, CHARA_PLAYER) < 5000 ) {
+					snd SOUNDLIST_DRINK1
+					txt lang("シェルターの貯蔵飲料を飲んだ。", "You drink some beverages stored in the shelter.")
+					cdata(CDATA_THIRST, CHARA_PLAYER) += 5000
 				}
 			}
 			if ( gdata(GDATA_SLEEP) >= 15 ) {

@@ -1336,12 +1336,18 @@
 			gdata(GDATA_SLEEP)++
 		}
 		if ( TweakData(53, 2) == 0 & rnd(15) == 0 ) {
-			if ( mode == MODELIST_MAIN ) {
-				txt lang("仮眠をとった。", "You take a nap.")
-				gdata(GDATA_SLEEP) -= 3
-				if ( gdata(GDATA_SLEEP) < 0 ) {
-					gdata(GDATA_SLEEP) = 0
+			if ( TweakData(TWEAK_GAMEPLAY_CG_DISABLE_SLEEP_PREVENTION, TWEAK_CATEGORY_GAMEPLAY) == TRUE | gdata(GDATA_FLAG_SLEEP_PREVENTION) <= 0 ) {
+				if ( mode == MODELIST_MAIN ) {
+					txt lang("仮眠をとった。", "You take a nap.")
+					gdata(GDATA_SLEEP) -= 3
+					if ( gdata(GDATA_SLEEP) < 0 ) {
+						gdata(GDATA_SLEEP) = 0
+					}
 				}
+			}
+			else {
+				txt lang("眠気を我慢した。", "You endure your sleepiness.")
+				gdata(GDATA_FLAG_SLEEP_PREVENTION)--
 			}
 		}
 	}
@@ -1702,6 +1708,11 @@
 				}
 				r1 = cnt
 				gosub *expRegen
+				if ( TweakData(TWEAK_GAMEPLAY_CG_DISABLE_THIRST, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
+					if ( cdata(CDATA_THIRST, cnt) >= 10000 ) {
+						healsp cnt, 2
+					}
+				}
 			loop
 		}
 		if ( p == 2 ) {
@@ -2047,6 +2058,14 @@
 			goto *turn_end
 		}
 	}
+	if ( TweakData(TWEAK_GAMEPLAY_CG_DISABLE_THIRST, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
+		if ( cdata(CDATA_THIRST, cc) > 35000 ) {
+			if ( rnd(60) == 0 ) {
+				chara_morasi cc
+				goto *turn_end
+			}
+		}
+	}
 	if ( cdata(CDATA_ROW_ACT_WARNING, cc) == 1 ) {
 		if ( cc == CHARA_PLAYER ) {
 			if ( cdata(CDATA_ROW_ACT, cc) != ACTION_PERFORM_DANCE & cdata(CDATA_ROW_ACT, cc) != ACTION_EAT & cdata(CDATA_ROW_ACT, cc) != ACTION_READ & cdata(CDATA_ROW_ACT, cc) != ACTION_TRAVEL & cdata(CDATA_ROW_ACT, cc) != ACTION_WRITING ) {
@@ -2323,6 +2342,9 @@
 			}
 		}
 		gosub *calcHunger
+		if ( TweakData(TWEAK_GAMEPLAY_CG_DISABLE_THIRST, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
+			gosub *calcThirst
+		}
 		refreshspeed cc
 		procid = (procid + 1) \ 4
 		proclist(procid) = "turn_end:pc" + " ct:" + ct
@@ -2333,6 +2355,12 @@
 			if ( cdata(CDATA_HUNGER, cc) < 3000 ) {
 				if ( cbit(CHARA_BIT_ANOREXIA, cc) == 0 ) {
 					cdata(CDATA_HUNGER, cc) = 3000
+				}
+			}
+			if ( TweakData(TWEAK_GAMEPLAY_CG_DISABLE_THIRST, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
+				cdata(CDATA_THIRST, cc) -= 8
+				if ( cdata(CDATA_THIRST, cc) < 3000 ) {
+					cdata(CDATA_THIRST, cc) = 3000
 				}
 			}
 		}
@@ -2406,24 +2434,22 @@
 		}
 	}
 
-	/********** ORIGINAL - BEGINNING ********** // Remove Curtain Call.
-
-	if ( gdata(GDATA_FLAG_CURTAIN_CALL) > 9999 ) {
-		if ( mdata(MDATA_TYPE) != MAP_TYPE_WORLD ) {
-			evadd EVENT_RAGNAROK, 0
-			repeat 4
-				flt , 5
-				initlv = 1800
-				characreate -1, CREATURE_ID_LAST_DANCER, -3, 0
-				cbitmod CHARA_BIT_SUMMONED, rc, TRUE
-				cdata(CDATA_TARGET, rc) = 0
-				cdata(CDATA_AI_AGGRO, rc) = 300
-			loop
-			gdata(GDATA_FLAG_CURTAIN_CALL) = -9999
+	if ( TweakData(TWEAK_GAMEPLAY_CG_DISABLE_CURTAIN_CALL, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
+		if ( gdata(GDATA_FLAG_CURTAIN_CALL) > 9999 ) {
+			if ( mdata(MDATA_TYPE) != MAP_TYPE_WORLD ) {
+				evadd EVENT_RAGNAROK, 0
+				repeat 4
+					flt , 5
+					initlv = 1800
+					characreate -1, CREATURE_ID_LAST_DANCER, -3, 0
+					cbitmod CHARA_BIT_SUMMONED, rc, TRUE
+					cdata(CDATA_TARGET, rc) = 0
+					cdata(CDATA_AI_AGGRO, rc) = 300
+				loop
+				gdata(GDATA_FLAG_CURTAIN_CALL) = -9999
+			}
 		}
 	}
-
-	 ********** ORIGINAL - ENDING **********/
 
 	goto *game_main
 
@@ -2674,7 +2700,7 @@
 				}
 				cdata(CDATA_EXIST, cnt) = followerexist(cnt)
 			loop
-			gdata(STARTING_GDATA_FLAG + 373) = 0
+			gdata(GDATA_FLAG_CURTAIN_CALL) = 0
 			goto *map_exit
 		}
 *pc_turn_init_WHILE1
@@ -2725,7 +2751,7 @@
 			key = ""
 		}
 		gosub *screen_draw
-		if ( gdata(STARTING_GDATA_FLAG + 373) > 999 ) {
+		if ( gdata(GDATA_FLAG_CURTAIN_CALL) > 999 ) {
 			snd SOUNDLIST_GONG
 			txtef COLOR_RED2
 			txt lang("*判定負け*", "*Loss on points*")
@@ -2802,6 +2828,9 @@
 		goto *turn_end
 	}
 	t++
+	if ( cdata(CDATA_CHAIN_ATTACK_COUNT, CHARA_PLAYER) != 0 ) {
+		cdata(CDATA_CHAIN_ATTACK_COUNT, CHARA_PLAYER) = 0
+	}
 	if ( t \ cfg_scrsync == 1 ) {
 		scrturn++
 		gosub *screen_sync
@@ -7937,8 +7966,26 @@
 		gdata(GDATA_WEATHER) = WEATHER_ETHER
 		envonly = 1
 		gosub *music_play
-		txt lang("終末の日が訪れた。", "Let's Ragnarok!")
-		msg_halt
+		if ( TweakData(TWEAK_GAMEPLAY_CG_DISABLE_CURTAIN_CALL, TWEAK_CATEGORY_GAMEPLAY) == TRUE ) {
+			if ( cdata(CDATA_FRIENDSHIP, CHARA_PLAYER) >= 0 ) {
+				cdata(CDATA_FRIENDSHIP, CHARA_PLAYER) = -1
+			}
+			txt lang("終末の日が訪れた。", "Let's Ragnarok!")
+			msg_halt
+		}
+		else {
+			if ( gdata(GDATA_FLAG_CURTAIN_CALL) < 9999 & gdata(GDATA_FLAG_CURTAIN_CALL) >= 0 ) {
+				if ( cdata(CDATA_FRIENDSHIP, CHARA_PLAYER) >= 0 ) {
+					cdata(CDATA_FRIENDSHIP, CHARA_PLAYER) = -1
+				}
+				txt lang("終末の日が訪れた。", "Let's Ragnarok!")
+				msg_halt
+			}
+			if ( gdata(GDATA_FLAG_CURTAIN_CALL) >= 9999 | gdata(GDATA_FLAG_CURTAIN_CALL) < 0 ) {
+				txt lang("*カーテンコール*", " *Curtain Call* ")
+				await 2000
+			}
+		}
 		animeid = ANIMATION_RAGNA
 		gosub *anime
 		repeat 200

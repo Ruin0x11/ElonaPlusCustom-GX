@@ -2195,6 +2195,12 @@
 	else {
 		cdata(CDATA_HUNGER, rc) = 6000 - 1000 + rnd(4000)
 	}
+	if ( rc == CHARA_PLAYER ) {
+		cdata(CDATA_THIRST, rc) = 9000
+	}
+	else {
+		cdata(CDATA_THIRST, rc) = 6000 - 1000 + rnd(4000)
+	}
 	cdata(CDATA_HEIGHT, rc) = cdata(CDATA_HEIGHT, rc) + rnd(cdata(CDATA_HEIGHT, rc) / 5 + 1) - rnd(cdata(CDATA_HEIGHT, rc) / 5 + 1)
 	cdata(CDATA_WEIGHT, rc) = cdata(CDATA_HEIGHT, rc) * cdata(CDATA_HEIGHT, rc) * (rnd(6) + 18) / 10000
 	if ( cdata(CDATA_ID, rc) == CREATURE_ID_SPACE_ZILLA | cdata(CDATA_ID, rc) == CREATURE_ID_DHOLE | cdata(CDATA_ID, rc) == CREATURE_ID_CLOUD_BEAST | cdata(CDATA_ID, rc) == CREATURE_ID_METAL_ZILLA | cdata(CDATA_ID, rc) == CREATURE_ID_GRAND_LEECH | cdata(CDATA_ID, rc) == CREATURE_ID_SIN_GORILLA | cdata(CDATA_ID, rc) == CREATURE_ID_SUNRISE_THE_ARCHIPELAGO_DRAGON ) {
@@ -2720,6 +2726,9 @@
 	cdata(CDATA_AREA, rc) = AREA_NONE
 	cdata(CDATA_RELATION, rc) = cdata(CDATA_RELATION_ORG, rc)
 	cdata(CDATA_HUNGER, rc) = 8000
+	if ( TweakData(TWEAK_GAMEPLAY_CG_DISABLE_THIRST, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
+		cdata(CDATA_THIRST, rc) = 8000
+	}
 *renewStatus
 	cbitmod CHARA_BIT_CONTINGENCY, rc, 0
 	rowactend rc
