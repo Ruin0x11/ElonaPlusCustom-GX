@@ -1,4 +1,4 @@
-# 2.06fix.2.1
+# 2.07.1.0
 
 ## Fixed
 - Fixed collect yield option in farms not resetting plant status. (Thanks, @Mirarara!)
