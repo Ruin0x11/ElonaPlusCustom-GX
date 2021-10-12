@@ -2715,6 +2715,30 @@
 				txt lang(name(dmgcon_charid) + "は恐怖に侵された。", name(dmgcon_charid) + " " + is(dmgcon_charid) + " frightened.")
                 DamagePopupAdd "" + _confear, dmgcon_charid, DMGPOPUP_ADD_CONDITION, CONDITION_FEAR
 			}
+			if ( TweakData(TWEAK_GAMEPLAY_CG_DISABLE_THIRST, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
+				if ( cdata(CDATA_THIRST, dmgcon_charid) > 12000 ) {
+					if ( synccheck(dmgcon_charid, -1) ) {
+						snd SOUNDLIST_WATERM
+						txt lang(name(dmgcon_charid) + "は漏らした。", name(dmgcon_charid) + " is incontinent.")
+						if ( dmgcon_charid != CHARA_PLAYER ) {
+							txt lang("「…スッキリ！」", cnvtalk("Do not look at me!"))
+						}
+					}
+					if ( mdata(MDATA_TYPE) != MAP_TYPE_WORLD ) {
+						if ( cfg_dust_select == 0 ) {
+							flt
+							itemcreate -1, ITEM_ID_URINE, cdata(CDATA_X, dmgcon_charid), cdata(CDATA_Y, dmgcon_charid), 0
+							if ( stat != 0 ) {
+								if ( dmgcon_charid != CHARA_PLAYER ) {
+									inv(INV_ITEM_SUB_NAME, ci) = cdata(CDATA_ID, dmgcon_charid)
+									item_stack -1, ci
+								}
+							}
+						}
+					}
+					cdata(CDATA_THIRST, dmgcon_charid) = 5000
+				}
+			}
 		}
 		return 1
 	}
@@ -3422,6 +3446,33 @@
 			}
 		}
 	}
+	if ( TweakData(TWEAK_GAMEPLAY_CG_DISABLE_TALK_ACTION_EXP, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
+		locvar_check_talk_exp = limit(cdata(CDATA_LEVEL, check_talk_arg2), 1, 400) * limit(cdata(CDATA_LEVEL, check_talk_arg2) + 1, 1, 400) * limit(cdata(CDATA_LEVEL, check_talk_arg2) + 2, 1, 400) / 10 + 8
+		if ( check_talk_arg1 == 0 ) {
+			if ( cdata(CDATA_LEVEL, check_talk_arg2) < cdata(CDATA_LEVEL, check_talk_arg1) ) {
+				locvar_check_talk_exp = locvar_check_talk_exp / 100 + 10
+			}
+		}
+		if ( check_talk_arg1 == 0 ) {
+			if ( cdata(CDATA_LEVEL, check_talk_arg2) > cdata(CDATA_LEVEL, check_talk_arg1) ) {
+				locvar_check_talk_exp *= limit(cdata(CDATA_LEVEL, check_talk_arg2) * 2 / cdata(CDATA_LEVEL, CHARA_PLAYER), 1, 10)
+			}
+		}
+		if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, check_talk_arg2) | cbit(CHARA_BIT_SPLIT_NO_EFFECT, check_talk_arg2) ) {
+			locvar_check_talk_exp = 0
+		}
+		cdata(CDATA_EXP, check_talk_arg1) += locvar_check_talk_exp
+		if ( check_talk_arg1 == 0 ) {
+			if ( gdata(GDATA_SLEEP_EXP) > 1000000000 ) {
+				gdata(GDATA_SLEEP_EXP) = 1000000000
+			}
+			gdata(GDATA_SLEEP_EXP) += locvar_check_talk_exp
+			if ( gdata(GDATA_SLEEP_EXP) > 1000000000 ) {
+				gdata(GDATA_SLEEP_EXP) = 1000000000
+			}
+		}
+	}
+	cdata(CDATA_AI_AGGRO, check_talk_arg1) = 0
 	return
 
 #deffunc check_kill int check_kill_arg1, int check_kill_arg2
@@ -4901,6 +4952,17 @@
 	if ( gdata(GDATA_TEMPORARY_FLAGS2) == 1200 ) {
 		locvar_dmghp_dmg = locvar_dmghp_dmg * 1 / 6 + 1
 	}
+	if ( TweakData(TWEAK_GAMEPLAY_CG_DISABLE_CHAIN_ATTACKS, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
+		if ( cdata(CDATA_CHAIN_ATTACK_COUNT, dmghp_charid) >= 50 ) {
+			locvar_dmghp_dmg = locvar_dmghp_dmg / 10 * (10 - cdata(CDATA_CHAIN_ATTACK_COUNT, dmghp_charid) / 20)
+			if ( cdata(CDATA_CHAIN_ATTACK_COUNT, dmghp_charid) >= 200 ) {
+				locvar_dmghp_dmg = 1
+			}
+		}
+		if ( gdata(GDATA_TEMPORARY_FLAGS2) == 0 ) {
+			cdata(CDATA_CHAIN_ATTACK_COUNT, dmghp_charid)++
+		}
+	}
 	if ( dmghp_source >= DAMAGE_FROM_CHARA ) {
 		if ( locvar_dmghp_dmg > 0 ) {
 			if ( cdata(CDATA_QUALITY, dmghp_charid) >= FIX_QUALITY_MIRACLE ) {
@@ -4908,20 +4970,6 @@
 			}
 		}
 	}
-
-	/********** ORIGINAL - BEGINNING ********** // Remove chain attacks.
-
-	if ( cdata(CDATA_CHAIN_ATTACK_COUNT, dmghp_charid) >= 50 ) {
-		locvar_dmghp_dmg = locvar_dmghp_dmg / 10 * (10 - cdata(CDATA_CHAIN_ATTACK_COUNT, dmghp_charid) / 20)
-		if ( cdata(CDATA_CHAIN_ATTACK_COUNT, dmghp_charid) >= 200 ) {
-			locvar_dmghp_dmg = 1
-		}
-	}
-	if ( gdata(GDATA_TEMPORARY_FLAGS2) == 0 ) {
-		cdata(CDATA_CHAIN_ATTACK_COUNT, dmghp_charid)++
-	}
-
-	 ********** ORIGINAL - ENDING **********/
 
 	if ( cbit(CHARA_BIT_CONTINGENCY, dmghp_charid) ) {
 		if ( cdata(CDATA_HP, dmghp_charid) - locvar_dmghp_dmg <= 0 ) {
@@ -5778,6 +5826,30 @@
 								txtmore
 								txtef COLOR_BLUE
 								txt lang(name(dmghp_charid) + "は恐怖して逃げ出した。", name(dmghp_charid) + " run" + _s(dmghp_charid) + " away in terror.")
+								if ( TweakData(TWEAK_GAMEPLAY_CG_DISABLE_THIRST, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
+									if ( cdata(CDATA_THIRST, dmghp_charid) > 12000 ) {
+										if ( synccheck(dmghp_charid, -1) ) {
+											snd SOUNDLIST_WATERM
+											txt lang(name(dmghp_charid) + "は漏らした。", name(dmghp_charid) + " is incontinent.")
+											if ( dmghp_charid != CHARA_PLAYER ) {
+												txt lang("「…スッキリ！」", cnvtalk("Do not look at me!"))
+											}
+										}
+										if ( mdata(MDATA_TYPE) != MAP_TYPE_WORLD ) {
+											if ( cfg_dust_select == 0 ) {
+												flt
+												itemcreate -1, ITEM_ID_URINE, cdata(CDATA_X, dmghp_charid), cdata(CDATA_Y, dmghp_charid), 0
+												if ( stat != 0 ) {
+													if ( dmghp_charid != CHARA_PLAYER ) {
+														inv(INV_ITEM_SUB_NAME, ci) = cdata(CDATA_ID, dmghp_charid)
+														item_stack -1, ci
+													}
+												}
+											}
+										}
+										cdata(CDATA_THIRST, dmghp_charid) = 5000
+									}
+								}
 							}
 						}
 					}
@@ -7387,6 +7459,32 @@
 		}
 	}
 	cdata(CDATA_HUNGER, chara_vomit_charid) -= 3000
+	if ( TweakData(TWEAK_GAMEPLAY_CG_DISABLE_THIRST, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
+		cdata(CDATA_THIRST, chara_vomit_charid) -= 1000
+	}
+	return
+
+#deffunc chara_morasi int chara_morasi_arg1
+	if ( synccheck(chara_morasi_arg1, -1) ) {
+		snd SOUNDLIST_WATERM
+		txt lang(name(chara_morasi_arg1) + "は漏らした。", name(chara_morasi_arg1) + " is incontinent.")
+		if ( chara_morasi_arg1 != 0 ) {
+			txt lang("「…スッキリ！」", cnvtalk("Do not look at me!"))
+		}
+	}
+	if ( mdata(MDATA_TYPE) != MAP_TYPE_WORLD ) {
+		if ( cfg_dust_select == 0 ) {
+			flt
+			itemcreate -1, ITEM_ID_URINE, cdata(CDATA_X, chara_morasi_arg1), cdata(CDATA_Y, chara_morasi_arg1), 0
+			if ( stat != 0 ) {
+				if ( chara_morasi_arg1 != 0 ) {
+					inv(INV_ITEM_SUB_NAME, ci) = cdata(CDATA_ID, chara_morasi_arg1)
+					item_stack -1, ci
+				}
+			}
+		}
+	}
+	cdata(CDATA_THIRST, chara_morasi_arg1) = 5000
 	return
 
 #deffunc eatstatus int eatstatus_arg1, int eatstatus_arg2

@@ -2001,7 +2001,7 @@
 	/********** BLOODYSHADE CUSTOM - ENDING **********/
 
 	if ( cc == CHARA_PLAYER ) {
-		gdata(STARTING_GDATA_FLAG + 373) = 0
+		gdata(GDATA_FLAG_CURTAIN_CALL) = 0
 	}
 	if ( cdata(CDATA_DIRECTIVE_MODE, cc) == DIRECTIVE_MODE_DEFENSIVE ) {
 		if ( cdata(CDATA_TARGET, cc) != 0 ) {
@@ -3971,7 +3971,9 @@
 		txt lang(name(cc) + "は怖気づいた。", name(cc) + " " + is(cc) + " frightened.")
 		return
 	}
-	gdata(STARTING_GDATA_FLAG + 373)++
+	if ( TweakData(TWEAK_GAMEPLAY_CG_DISABLE_CURTAIN_CALL, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
+		gdata(GDATA_FLAG_CURTAIN_CALL)++
+	}
 	if ( cbit(CHARA_BIT_SANDBAG, tc) != 1 ) {
 		if ( cdata(CDATA_GAUGE_COOLDOWN, cc) == 0 ) {
 			cdata(CDATA_GAUGE_COOLDOWN, cc) = 1
@@ -4840,6 +4842,11 @@
 					dmghp tc, sdata(SKILL_ATTR_STR, cc) / 10 * (sdata(SKILL_WEAPON_MARTIAL_ARTS, cc) + 1) / 10 + 5, cc
 					if ( cdata(CDATA_HP, tc) >= 0 ) {
 						chara_vomit tc
+						if ( TweakData(TWEAK_GAMEPLAY_CG_DISABLE_THIRST, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
+							if ( cdata(CDATA_THIRST, tc) > 12000 ) {
+								chara_morasi tc
+							}
+						}
 					}
 					tc = tcbk
 				}
@@ -6136,27 +6143,38 @@
 	if ( ibit(ITEM_BIT_PERIOD, ci) == 1 ) {
 		if ( gdata(GDATA_FLAG_INSIDE_DEEP_SEA_CASTLE) == 100 ) {
 			inv(INV_ITEM_CHARGE, ci) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 + inv(INV_ITEM_PARAM3, ci)
-			inv(INV_ITEM_NEED_SLEEP, ci) = 1
-			gdata(STARTING_GDATA_FLAG + 376) = 1
+			if ( TweakData(TWEAK_GAMEPLAY_CG_DISABLE_ITEM_NEED_SLEEP, TWEAK_CATEGORY_GAMEPLAY) == TRUE ) {
+				inv(INV_ITEM_NEED_SLEEP, ci) = 1
+				gdata(STARTING_GDATA_FLAG + 376) = 1
+			}
+			else {
+				if ( inv(INV_ITEM_INTERVAL, ci) >= 24 ) {
+					inv(INV_ITEM_NEED_SLEEP, ci) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12
+				}
+			}
 		}
-		if ( gdata(STARTING_GDATA_FLAG + 376) == 0 ) {
-			inv(INV_ITEM_NEED_SLEEP, ci) = 0
+		if ( TweakData(TWEAK_GAMEPLAY_CG_DISABLE_ITEM_NEED_SLEEP, TWEAK_CATEGORY_GAMEPLAY) == TRUE ) {
+			if ( gdata(STARTING_GDATA_FLAG + 376) == 0 ) {
+				inv(INV_ITEM_NEED_SLEEP, ci) = 0
+			}
 		}
 
 		/********** ANNA CUSTOM - BEGINNING **********/ // Smart Use of Cooldown Items, will search inventory for others of the same item and use those if available.
 
-		repeat 200, 0
-			if ( inv(INV_ITEM_NUM, cnt) == 0 ) {
-				continue
-			}
-
-			if ( inv(INV_ITEM_ID, cnt) == inv(INV_ITEM_ID, ci) ) {
-				if ( inv(INV_ITEM_CHARGE, cnt) < gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 ) {	
-					ci = cnt
-					break
+		if ( TweakData(TWEAK_GAMEPLAY_CG_DISABLE_ITEM_NEED_SLEEP, TWEAK_CATEGORY_GAMEPLAY) == TRUE | inv(INV_ITEM_NEED_SLEEP, ci) <= 0 | inv(INV_ITEM_NEED_SLEEP, ci) < gdata(STARTING_GDATA_FLAG + 376) ) {
+			repeat 200, 0
+				if ( inv(INV_ITEM_NUM, cnt) == 0 ) {
+					continue
 				}
-			}
-		loop
+
+				if ( inv(INV_ITEM_ID, cnt) == inv(INV_ITEM_ID, ci) ) {
+					if ( inv(INV_ITEM_CHARGE, cnt) < gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 ) {	
+						ci = cnt
+						break
+					}
+				}
+			loop
+		}
 
 		/********** ANNA CUSTOM - ENDING **********/
 
@@ -6165,10 +6183,12 @@
 			gosub *screen_draw
 			goto *pc_turn
 		}
-		if ( inv(INV_ITEM_NEED_SLEEP, ci) != 0 ) {
-			txt lang("そのアイテムが次に使用できるのは睡眠後だ。", "This item will be useable again after sleep.")
-			gosub *screen_draw
-			goto *pc_turn
+		if ( inv(INV_ITEM_NEED_SLEEP, ci) > 1 ) {
+			if ( inv(INV_ITEM_NEED_SLEEP, ci) >= gdata(GDATA_FLAG_DATE_OF_LAST_BREAKFAST) ) {
+				txt lang("そのアイテムが次に使用できるのは睡眠後だ。", "This item will be useable again after sleep.")
+				gosub *screen_draw
+				goto *pc_turn
+			}
 		}
 		item_separate ci
 		inv(INV_ITEM_NEXT_PERIOD, ci) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 + inv(INV_ITEM_INTERVAL, ci)
@@ -8461,8 +8481,13 @@
 				cdata(CDATA_HUNGER, tc) += 1000
 			}
 			if ( tc == CHARA_PLAYER ) {
-				if ( gdata(GDATA_SLEEP) >= 0 ) {
-					gdata(GDATA_SLEEP) -= 5
+				if ( TweakData(TWEAK_GAMEPLAY_CG_DISABLE_SLEEP_PREVENTION, TWEAK_CATEGORY_GAMEPLAY) == TRUE ) {
+					if ( gdata(GDATA_SLEEP) >= 0 ) {
+						gdata(GDATA_SLEEP) -= 5
+					}
+				}
+				else {
+					gdata(GDATA_FLAG_SLEEP_PREVENTION) += 3 + rnd(3)
 				}
 				gdata(GDATA_FLAG_SMOKING_FREQUENCY)++
 				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_CIGARETTE ) {

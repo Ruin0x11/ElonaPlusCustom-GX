@@ -1551,6 +1551,39 @@
 	}
 	return
 
+*calcThirst
+	if ( cdata(CDATA_THIRST, r1) <= 0 ) {
+		cdata(CDATA_THIRST, r1) = 1
+	}
+	p = cdata(CDATA_THIRST, r1) / 1000
+	if ( cdata(CDATA_CONDITION_WET, r1) <= 0 ) {
+		cdata(CDATA_THIRST, r1) -= 8 / 2
+	}
+	if ( cdata(CDATA_CONDITION_WET, r1) > 0 ) {
+		if ( cdata(CDATA_THIRST, r1) < 5000 ) {
+			cdata(CDATA_THIRST, r1) += 8
+		}
+	}
+	if ( findbuff(r1, BUFF_CURSE_OF_HUNGER) != (-1) ) {
+		cdata(CDATA_THIRST, r1) -= 8 / 2
+	}
+	if ( cdata(CDATA_THIRST, r1) / 1000 != p ) {
+		if ( p == 1000 / 1000 ) {
+			msgalert = 1
+			txt lang("このままだと脱水症状で倒れてしまう！", "You are about to collapse from dehydration!"), lang("水分不足で干物になりそうだ。", "You are almost a mummy.")
+		}
+		if ( p == 2000 / 1000 ) {
+			msgalert = 1
+			txt lang("水分不足で目が回りだした…", "Your thirst makes you dizzy."), lang("すぐに何かを飲まなくては…", "You have to drink something NOW.")
+		}
+		if ( p == 5000 / 1000 ) {
+			msgalert = 1
+			txt lang("喉がカラカラだ。", "You are getting thirsty."), lang("喉が渇いた。", "You feel thirsty."), lang("さて何を飲もうか。", "Now what shall I drink?")
+		}
+		refreshspeed r1
+	}
+	return
+
 *calcCondition
 	if ( tarudmg != 0 ) {
 		repeat MAX_CHARA_TOTAL
@@ -2056,27 +2089,25 @@
  			}
 		}
 
-		/********** ORIGINAL - BEGINNING ********** // Remove thirst mechanic.
-
-		if ( cdata(CDATA_THIRST, r1) < 2000 ) {
-			if ( cdata(CDATA_CONDITION_WET, r1) <= 0 ) {
-				if ( gdata(GDATA_FLAG_GAME_MODE) != 5 ) {
-					if ( cdata(CDATA_THIRST, r1) < 1000 ) {
-						if ( cdata(CDATA_SP, r1) > (-100) ) {
-							if ( tc == CHARA_PLAYER ) {
-								dmgsp CHARA_PLAYER, rnd(10) + 10
-							}
-							if ( tc != CHARA_PLAYER ) {
-								dmgspt tc, rnd(10) + 10
+		if ( TweakData(TWEAK_GAMEPLAY_CG_DISABLE_THIRST, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
+			if ( cdata(CDATA_THIRST, r1) < 2000 ) {
+				if ( cdata(CDATA_CONDITION_WET, r1) <= 0 ) {
+					if ( gdata(GDATA_FLAG_GAME_MODE) != 5 ) {
+						if ( cdata(CDATA_THIRST, r1) < 1000 ) {
+							if ( cdata(CDATA_SP, r1) > (-100) ) {
+								if ( tc == CHARA_PLAYER ) {
+									dmgsp CHARA_PLAYER, rnd(10) + 10
+								}
+								if ( tc != CHARA_PLAYER ) {
+									dmgspt tc, rnd(10) + 10
+								}
 							}
 						}
+						regen = 0
 					}
-					regen = 0
 				}
 			}
 		}
-
-		 ********** ORIGINAL - ENDING **********/
 
 		if ( gdata(GDATA_SLEEP) >= 30 ) {
 			if ( gdata(GDATA_TURN) \ 100 == 0 ) {

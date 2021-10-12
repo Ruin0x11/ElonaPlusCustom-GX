@@ -3846,6 +3846,9 @@
 	mode = MODELIST_MAIN
 	wake_up
 	cdata(CDATA_HUNGER, cc) -= 1500 / (trait(TRAIT_RACE_SLOW_DIGESTION) + 1)
+	if ( TweakData(TWEAK_GAMEPLAY_CG_DISABLE_THIRST, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
+		cdata(CDATA_THIRST, cc) -= 1500 / 2
+	}
 	item_find ITEM_ID_MANIS_ALARM_CLOCK, 3, 1
 	if ( stat != (-1) ) {
 		ci = stat
@@ -3878,12 +3881,7 @@
 		}
 	}
 
-	/********** ORIGINAL - BEGINNING **********
-
  	gdata(GDATA_FLAG_SLEEP_PREVENTION) = 0
-
-	 ********** ORIGINAL - ENDING **********/
-
 	gdata(GDATA_FLAG_HOURS_SLEPT) += timeslept
 	f = 0
 	if ( cdata(CDATA_ITEM_USING, CHARA_PLAYER) == (-1) ) {
@@ -4142,8 +4140,20 @@
 			gdata(GDATA_WEATHER) = WEATHER_ETHER
 			envonly = 1
 			gosub *music_play
-			txt lang("終末の日が訪れた。", "Let's Ragnarok!")
-			msg_halt
+			if ( TweakData(TWEAK_GAMEPLAY_CG_DISABLE_CURTAIN_CALL, TWEAK_CATEGORY_GAMEPLAY) == TRUE ) {
+				txt lang("終末の日が訪れた。", "Let's Ragnarok!")
+				msg_halt
+			}
+			else {
+				if ( gdata(GDATA_FLAG_CURTAIN_CALL) < 9999 & gdata(GDATA_FLAG_CURTAIN_CALL) >= 0 ) {
+					txt lang("終末の日が訪れた。", "Let's Ragnarok!")
+					msg_halt
+				}
+				if ( gdata(GDATA_FLAG_CURTAIN_CALL) >= 9999 | gdata(GDATA_FLAG_CURTAIN_CALL) < 0 ) {
+					txt lang("*カーテンコール*", " *Curtain Call* ")
+					await 2000
+				}
+			}
 			animeid = ANIMATION_RAGNA
 			gosub *anime
 			repeat 200
@@ -4361,6 +4371,9 @@
                 cdata(CDATA_CONDITION_WET, CHARA_PLAYER) = 0
                 dmgcon cc, CONDITION_DIM, 200
                 cdata(CDATA_SP, CHARA_PLAYER) -= 30
+				if ( TweakData(TWEAK_GAMEPLAY_CG_DISABLE_THIRST, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
+					cdata(CDATA_THIRST, CHARA_PLAYER) -= 3000
+				}
                 dmghp CHARA_PLAYER, rnd(10) + cdata(CDATA_MAX_HP, CHARA_PLAYER) / 20 + 1, DAMAGE_FROM_DESERT
             }
         }
@@ -5687,6 +5700,9 @@
 	if ( potionspill | potionthrow ) {
 		potionspill = 0
 		potionthrow = 0
+		if ( TweakData(TWEAK_GAMEPLAY_CG_DISABLE_THIRST, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
+			cdata(CDATA_THIRST, tc) += 400
+		}
 		cdata(CDATA_HUNGER, tc) += 30
 	}
 	else {
@@ -5704,11 +5720,21 @@
 				gosub *calcBurdenPc
 			}
 		}
+		if ( TweakData(TWEAK_GAMEPLAY_CG_DISABLE_THIRST, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
+			cdata(CDATA_THIRST, tc) += 2000
+		}
 		cdata(CDATA_HUNGER, tc) += 150
 	}
 	if ( cdata(CDATA_HUNGER, tc) > 12000 * 2 ) {
 		if ( rnd(5) == 0 ) {
 			chara_vomit tc
+		}
+	}
+	if ( TweakData(TWEAK_GAMEPLAY_CG_DISABLE_THIRST, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
+		if ( cdata(CDATA_THIRST, tc) >= 12000 * 2 ) {
+			if ( rnd(5) == 0 ) {
+				chara_morasi tc
+			}
 		}
 	}
 	return 1
@@ -5906,6 +5932,9 @@
 	}
 	else {
 		cdata(CDATA_HUNGER, cc) += 500
+	}
+	if ( TweakData(TWEAK_GAMEPLAY_CG_DISABLE_THIRST, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
+		cdata(CDATA_THIRST, cc) += 2000
 	}
 	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_HOLY_WELL ) {
 		gdata(GDATA_FLAG_HOLY_WELL)--
@@ -8066,6 +8095,7 @@
 						}
 						else {
 							if ( efidprev == SKILL_SPACT_DISPATCH_FLYING_BEAST ) {
+								cdata(CDATA_CHAIN_ATTACK_COUNT, tc) = 0
 								cdata(CDATA_X_NEW, tc) = telex
 								cdata(CDATA_Y_NEW, tc) = teley
 								if ( cdata(CDATA_AI_DISTANCE, tc) >= 2 ) {
@@ -19865,7 +19895,9 @@
 	if ( _switch_val == SKILL_SPACT_GRAND_FINALE | _switch_sw ) {
 		_switch_sw = 0
 
-        /********** ORIGINAL - BEGINNING ********** // Remove Curtain Call.
+		if ( TweakData(TWEAK_GAMEPLAY_CG_DISABLE_CURTAIN_CALL, TWEAK_CATEGORY_GAMEPLAY) == TRUE ) {
+			goto *effect_end
+		}
 
 		if ( gdata(GDATA_FLAG_CURTAIN_CALL) >= 0 ) {
 			goto *effect_end
@@ -19900,8 +19932,6 @@
 			cdata(CDATA_IMMUNE_DAMAGE, tc) = 0
 			dmghp tc, cdata(CDATA_MAX_HP, tc), cc
 		loop
-
-         ********** ORIGINAL - ENDING **********/
 
 		goto *effect_end
 	}
@@ -20654,6 +20684,43 @@
 	}
 	if ( _switch_val == SKILL_SPACT_MARKING | _switch_sw ) {
 		_switch_sw = 0
+
+		if ( TweakData(TWEAK_GAMEPLAY_CG_DISABLE_THIRST, TWEAK_CATEGORY_GAMEPLAY) == TRUE ) {
+			goto *effect_end
+		}
+
+		if ( cdata(CDATA_THIRST, cc) < 10000 ) {
+			txt lang("何もおきない… ", "Nothing happens...")
+			goto *effect_end
+		}
+		if ( tc == cc | (cc != CHARA_PLAYER & dist(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), cdata(CDATA_X, tc), cdata(CDATA_Y, tc)) > 1) ) {
+			if ( mdata(MDATA_TYPE) == MAP_TYPE_WORLD ) {
+				goto *effect_end
+			}
+			snd SOUNDLIST_WATERM
+			cdata(CDATA_THIRST, cc) = 5000
+			txt lang(name(cc) + "はマーキングを始めた。*ジョロロロ*　", name(cc) + " began marking. *slop around* ")
+			if ( cfg_dust_select == 0 ) {
+				flt
+				itemcreate -1, ITEM_ID_URINE, tlocx, tlocy, 0
+				if ( stat != 0 ) {
+					if ( cc != CHARA_PLAYER ) {
+						inv(INV_ITEM_SUB_NAME, ci) = cdata(CDATA_ID, cc)
+					}
+				}
+			}
+			goto *effect_end
+		}
+		snd SOUNDLIST_WATERM
+		cdata(CDATA_THIRST, cc) = 5000
+		txt lang(name(cc) + "はマーキングを始めた。*ジョロロロ*　", name(cc) + " began marking. *slop around* ")
+		if ( synccheck(tc, -1) ) {
+			txtef COLOR_BLUE
+			txt lang(name(tc) + "はあまりの屈辱に体を奮わせた！", name(tc) + " " + is(tc) + " engulfed in fury!")
+		}
+		cdata(CDATA_CONDITION_ANGRY, tc) += 3
+		cdata(CDATA_CONDITION_WET, tc) += 3
+
 		goto *effect_end
 	}
 	if ( _switch_val == SKILL_SPACT_BLADE_STRINGS | _switch_sw ) {
@@ -21969,7 +22036,12 @@
 			txt lang(name(tc) + "の眠気が和らいだ。", "" + name(tc) + your(tc) + " drowsiness fades away.")
 		}
 		if ( tc == CHARA_PLAYER ) {
-			gdata(GDATA_SLEEP) -= 20
+			if ( TweakData(TWEAK_GAMEPLAY_CG_DISABLE_SLEEP_PREVENTION, TWEAK_CATEGORY_GAMEPLAY) == TRUE) {
+				gdata(GDATA_SLEEP) -= 20
+			}
+			else {
+				gdata(GDATA_FLAG_SLEEP_PREVENTION) += 15 + rnd(11)
+			}
 		}
 		cdata(CDATA_CONDITION_SLEEP, tc) = 0
 		if ( ibit(ITEM_BIT_ACIDPROOF, ci) == 1 ) {

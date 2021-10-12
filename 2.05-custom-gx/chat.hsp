@@ -17678,13 +17678,9 @@
 			}
 		}
 		if ( cdata(CDATA_ROLE, tc) == ROLE_BARTENDER ) {
-
-			/********** ORIGINAL - BEGINNING ********** // Remove thirst mechanic.
-
-			chatList 93, lang("飲み物を注文する", "Bring me something to drink.") + " (" + calcmealvalued() + strgold + ")"
-
-			 ********** ORIGINAL - ENDING **********/
-
+			if ( TweakData(TWEAK_GAMEPLAY_CG_DISABLE_THIRST, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
+				chatList 93, lang("飲み物を注文する", "Bring me something to drink.") + " (" + calcmealvalued() + strgold + ")"
+			}
 			chatList 112, lang("スペシャルメニューを頼む (ブロンズ硬貨1枚)", "Bring me a special drink. (1 bronze) ")
 
 			chatList 33, lang("仲間を呼び戻す", "Call back my allies.")
@@ -18217,22 +18213,23 @@
 		buff = lang("冷やかし" + _ka(1), "You kidding?")
 		goto *chat_default
 	}
-
-	/********** ORIGINAL - BEGINNING ********** // Remove thirst mechanic.
-
 	if ( chatval == 93 ) {
 		if ( cdata(CDATA_GOLD, CHARA_PLAYER) < calcmealvalued() ) {
 			buff = strnogold
 			goto *chat_default
 		}
-		if ( cdata(CDATA_THIRST, CHARA_PLAYER) >= 15000 ) {
-			buff = lang("喉が渇いているようにはみえない" + _yo(), "You don't seem that thirsty.")
-			goto *chat_default
+		if ( TweakData(TWEAK_GAMEPLAY_CG_DISABLE_THIRST, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
+			if ( cdata(CDATA_THIRST, CHARA_PLAYER) >= 15000 ) {
+				buff = lang("喉が渇いているようにはみえない" + _yo(), "You don't seem that thirsty.")
+				goto *chat_default
+			}
 		}
 		snd SOUNDLIST_PAYGOLD1
 		cdata(CDATA_GOLD, CHARA_PLAYER) -= calcmealvalued()
 		snd SOUNDLIST_DRINK1
-		cdata(CDATA_THIRST, CHARA_PLAYER) = 15000
+		if ( TweakData(TWEAK_GAMEPLAY_CG_DISABLE_THIRST, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
+			cdata(CDATA_THIRST, CHARA_PLAYER) = 15000
+		}
 		if ( cdata(CDATA_HUNGER, CHARA_PLAYER) < 15000 - 1000 ) {
 			cdata(CDATA_HUNGER, CHARA_PLAYER) += 1000
 		}
@@ -18240,23 +18237,17 @@
 		txt lang("なかなか美味しかった。", "It was tasty."), lang("悪くない。", "Not bad at all."), lang("あなたは舌鼓をうった。", "You smack your lips.")
 		goto *chat_default
 	}
-
-	 ********** ORIGINAL - ENDING **********/
-
 	if ( chatval == 112 ) {
 		item_find ITEM_ID_BRONZE_COIN, ITEM_FIND_MODE_DBID, ITEM_FIND_LOCATION_CHARAS
 		if ( stat != (-1) ) {
 			ci = stat
 			if ( inv(INV_ITEM_NUM, ci) >= 1 ) {
-
-				/********** ORIGINAL - BEGINNING ********** // Remove thirst mechanic.
-
-				if ( cdata(CDATA_THIRST, CHARA_PLAYER) >= 15000 ) {
-					buff = lang("喉が渇いているようにはみえない" + _yo(), "You don't seem that thirsty.")
-					goto *chat_default
+				if ( TweakData(TWEAK_GAMEPLAY_CG_DISABLE_THIRST, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
+					if ( cdata(CDATA_THIRST, CHARA_PLAYER) >= 15000 ) {
+						buff = lang("喉が渇いているようにはみえない" + _yo(), "You don't seem that thirsty.")
+						goto *chat_default
+					}
 				}
-
-				 ********** ORIGINAL - ENDING **********/
 
 				inv(INV_ITEM_NUM, ci)--
 				snd SOUNDLIST_TM2_ALCHEMIST000
@@ -18291,11 +18282,9 @@
 					cdata(CDATA_EMO_ICON, tc) = 6 + 100 * 3
 					addbuff tc, BUFF_LIFE_TASTING, 10, 5000
 
-					/********** ORIGINAL - BEGINNING ********** // Remove thirst mechanic.
-
-					cdata(CDATA_THIRST, tc) = 15000
-
-					 ********** ORIGINAL - ENDING **********/
+					if ( TweakData(TWEAK_GAMEPLAY_CG_DISABLE_THIRST, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
+						cdata(CDATA_THIRST, tc) = 15000
+					}
 
 					if ( cdata(CDATA_HUNGER, tc) < 15000 - 1000 ) {
 						cdata(CDATA_HUNGER, tc) += 1000

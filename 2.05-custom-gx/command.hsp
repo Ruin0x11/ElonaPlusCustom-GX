@@ -1365,6 +1365,21 @@
 			s = lang("美味しい手料理が食べたい", "Want to eat delicious home cooking")
 		}
 	}
+	if ( TweakData(TWEAK_GAMEPLAY_CG_DISABLE_THIRST, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
+		if ( cdata(CDATA_THIRST, tc) <= 6000 ) {
+			s = lang("干からびそう", "Looks completely dried up")
+			kokoro = rnd(4)
+			if ( kokoro == 1 ) {
+				s = lang("喉がカラカラだ", "My throat hurts")
+			}
+			if ( kokoro == 2 ) {
+				s = lang("水分不足でふらふらする", "Seems disoriented from the lack of water")
+			}
+			if ( kokoro == 3 ) {
+				s = lang("み、水…", "W-Water...")
+			}
+		}
+	}
 	if ( cdata(CDATA_EVOCHAT_POINTS, tc) > 0 ) {
 		s = lang("今日も一日頑張れそう", "I can work hard today")
 		kokoro = rnd(3)
@@ -12366,6 +12381,15 @@
 			screenupdate = -1
 			gosub *screen_draw
 			savecycle
+			if ( TweakData(TWEAK_GAMEPLAY_CG_DISABLE_THIRST, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
+				if ( cdata(CDATA_THIRST, CHARA_PLAYER) > 10000 ) {
+					if ( gdata(GDATA_FLAG_GAME_MODE) != GAMEMODE_PURGE ) {
+						txt lang("これ以上飲めない…。", "Your are too full to drink."), lang("膀胱がやぶける…", "You are too bloated to drink any more."), lang("まだ喉は渇いていない。", "Your stomach can't digest any more.")
+						gosub *screen_draw
+						goto *pc_turn
+					}
+				}
+			}
 			goto *act_drink
 		}
 		if ( invctrl == 9 ) {
