@@ -36,6 +36,9 @@ TweakData(55, 2) = "Revert post-1.90 experience formula changes."
 TweakData(56, 2) = "Disable study days."
 TweakData(57, 2) = "Disable DESTINY."
 TweakData(58, 2) = "(Custom-G) Disable thirst."
+TweakData(59, 2) = "(Custom-G) Disable Curtain Call."
+TweakData(60, 2) = "(Custom-G) Disable chain attacks."
+TweakData(61, 2) = "(Custom-G) Disable sleep prevention on items."
 
 TweakData(x, 3) = "AI Tweaks"
 TweakData(0, 3) = "Change Zeome's AI."
@@ -52,6 +55,7 @@ TweakData(51, 4) = "Disable cicada noises."
 *TweakMenu
     cs = 0
 	cs_bk = -1
+    cs_bk2 = -1
 	pagesize = 0
 *TweakMenu_loop
 	redraw 0
@@ -104,6 +108,7 @@ TweakData(51, 4) = "Disable cicada noises."
 	loop
 
 	cs_bk = cs
+	cs_bk2 = cs
 	redraw 1
 	await cfg_wait1
 	key_check
@@ -112,35 +117,35 @@ TweakData(51, 4) = "Disable cicada noises."
         if ( key == key_select(TWEAK_CATEGORY_UI) ) {
             snd SOUNDLIST_OK1
             gosub *UITweakMenu
-            cs = cs_bk
+            cs = cs_bk2
             keyhalt = 1
             break
         }
         if ( key == key_select(TWEAK_CATEGORY_CONVENIENCE) ) {
             snd SOUNDLIST_OK1
             gosub *ConvenienceTweakMenu
-            cs = cs_bk
+            cs = cs_bk2
             keyhalt = 1
             break
         }
         if ( key == key_select(TWEAK_CATEGORY_GAMEPLAY) ) {
             snd SOUNDLIST_OK1
             gosub *GameplayTweakMenu
-            cs = cs_bk
+            cs = cs_bk2
             keyhalt = 1
             break
         }
         if ( key == key_select(TWEAK_CATEGORY_AI) ) {
             snd SOUNDLIST_OK1
             gosub *AITweakMenu
-            cs = cs_bk
+            cs = cs_bk2
             keyhalt = 1
             break
         }
         if ( key == key_select(TWEAK_CATEGORY_MISC) ) {
             snd SOUNDLIST_OK1
             gosub *MiscTweakMenu
-            cs = cs_bk
+            cs = cs_bk2
             keyhalt = 1
             break
         }
@@ -420,9 +425,15 @@ TweakData(51, 4) = "Disable cicada noises."
 
 *GameplayTweakMenu
     cs = 0
+    page = 0
+    pagesize = 16
+    listmax = 20
+*GameplayTweakMenu_pgchk
+	redraw 0
+	page_check
 *GameplayTweakMenu_loop
 	redraw 0
-	s = "Tweak Setup", strhint3b
+	s = "Tweak Setup", strhint2 + strhint3b
 	display_window (windoww - 680) / 2 + inf_screenx, winposy(448), 640, 448
 	s = "Configure Tweaks"
 	gosub *screen_drawMsg2
@@ -442,68 +453,92 @@ TweakData(51, 4) = "Disable cicada noises."
 	listn(0, 12) = "Revert post-1.90 experience formula changes." + GetTStatus(TWEAK_CATEGORY_GAMEPLAY, TWEAK_GAMEPLAY_REVERT_POST_190_EXP_CHANGES)
 	listn(0, 13) = "Disable study days." + GetTStatus(TWEAK_CATEGORY_GAMEPLAY, TWEAK_GAMEPLAY_DISABLE_STUDY_DAYS)
 	listn(0, 14) = "Disable DESTINY." + GetTStatus(TWEAK_CATEGORY_GAMEPLAY, TWEAK_GAMEPLAY_DISABLE_DESTINY)
-	listn(0, 15) = "Return"
+	listn(0, 15) = "(Custom-G) Disable thirst." + GetTStatus(TWEAK_CATEGORY_GAMEPLAY, TWEAK_GAMEPLAY_CG_DISABLE_THIRST)
+	listn(0, 16) = "(Custom-G) Disable Curtain Call." + GetTStatus(TWEAK_CATEGORY_GAMEPLAY, TWEAK_GAMEPLAY_CG_DISABLE_CURTAIN_CALL)
+	listn(0, 17) = "(Custom-G) Disable chain attacks." + GetTStatus(TWEAK_CATEGORY_GAMEPLAY, TWEAK_GAMEPLAY_CG_DISABLE_CHAIN_ATTACKS)
+	listn(0, 18) = "(Custom-G) Disable sleep prevention on items." + GetTStatus(TWEAK_CATEGORY_GAMEPLAY, TWEAK_GAMEPLAY_CG_DISABLE_SLEEP_PREVENTION)
+	listn(0, 19) = "Return"
 
 	font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
 
-	repeat 16
+	repeat pagesize
+		p = pagesize * page + cnt
+		if ( p >= listmax ) {
+			break
+		}
 		key_list(cnt) = key_select(cnt)
 		keyrange = cnt + 1
 		pos wx + 38, wy + 40 + cnt * 19 - 2
 		gcopy 3, cnt * 24 + 72, 30, 24, 18
-		cs_list listn(0, cnt), wx + 64, wy + 40 + cnt * 19 - 1, 19
+		cs_list listn(0, p), wx + 64, wy + 40 + cnt * 19 - 1, 19
 	loop
 
 	font lang(cfg_font1, cfg_font2), 13 - en * 2, 0
 
-	repeat 16
-		if ( listn(0, cs) == listn(0, cnt) ) {
-			if ( cnt == TWEAK_GAMEPLAY_GATHER_ITEM_PARTYTIME ) {
+	repeat pagesize
+		p = pagesize * page + cnt
+		if ( p >= listmax ) {
+			break
+		}
+		if ( cs == cnt ) {
+			if ( p == TWEAK_GAMEPLAY_GATHER_ITEM_PARTYTIME ) {
 				s = "When a Party Time! quest ends, you will be presented with a list of items on the\nfloor that you can take."
 			}
-			if ( cnt == TWEAK_GAMEPLAY_PETS_HEAL_PETS ) {
+			if ( p == TWEAK_GAMEPLAY_PETS_HEAL_PETS ) {
 				s = "Pets with Healing Rain will consider the health of other pets when deciding\nwhether or not to use it. If using custom AI, no effect except\nusage out of combat (requires pet to know it naturally)."
 			}
-			if ( cnt == TWEAK_GAMEPLAY_SHARED_PERFORMANCE_GOLD ) {
+			if ( p == TWEAK_GAMEPLAY_SHARED_PERFORMANCE_GOLD ) {
 				s = "When performing an ensemble with pets, your pets will receive a portion\nof all gold earned."
 			}
-			if ( cnt == TWEAK_GAMEPLAY_PETS_DIE_LOSSMODE ) {
+			if ( p == TWEAK_GAMEPLAY_PETS_DIE_LOSSMODE ) {
 				s = "If you are playing in Loss Mode, pets will also have permadeath."
 			}
-			if ( cnt == TWEAK_GAMEPLAY_ENABLE_SAVE_SCUMMING ) {
+			if ( p == TWEAK_GAMEPLAY_ENABLE_SAVE_SCUMMING ) {
 				s = "Disables autosaving, re-enables F2 save reloading."
 			}
-			if ( cnt == TWEAK_GAMEPLAY_BASH_ALL_FRUIT ) {
+			if ( p == TWEAK_GAMEPLAY_BASH_ALL_FRUIT ) {
 				s = "Bash all fruit out of fruit trees in one go."
 			}
-			if ( cnt == TWEAK_GAMEPLAY_ORGANIZE_RANCH ) {
+			if ( p == TWEAK_GAMEPLAY_ORGANIZE_RANCH ) {
 				s = "Better organize the ranch by collecting all ranch produce in one spot (x17 y14)."
 			}
-			if ( cnt == 7 ) {
+			if ( p == 7 ) {
 				s = "Allows shops to sell furniture, red books, and deeds. Registers,\nshop strongboxes, shelters, and unique items still won't be sold."
 			}
-			if ( cnt == 8 ) {
+			if ( p == 8 ) {
 				s = "Visiting the Deep-Sea Castle only resets items with a cooldown period\nwhile you're there, instead of continuously resetting them until you sleep."
 			}
-			if ( cnt == 9 ) {
+			if ( p == 9 ) {
 				s = "Sandbagged monsters will give experience."
 			}
-			if ( cnt == 10 ) {
+			if ( p == 10 ) {
 				s = "Removes the chance to automatically take a nap when traveling while sleepy."
 			}
-			if ( cnt == 11 ) {
+			if ( p == 11 ) {
 				s = "Livestock can randomly become sick, are born unable to be milked, etc."
 			}
-			if ( cnt == 12 ) {
-				s = "Reverts changes to the experience formula after version 1.90.\nThis mostly addresses the three-fold increase in player experience gain."
+			if ( p == 12 ) {
+				s = "Reverts changes to the experience formula after version 1.90.\nThis mainly addresses the three-fold increase in player experience gain."
 			}
-			if ( cnt == 13 ) {
+			if ( p == 13 ) {
 				s = "Disables the \"study day bonus\" feature.\nThis will prevent certain skills from gaining triple experience based on the\nstudy day type."
 			}
-			if ( cnt == 14 ) {
+			if ( p == 14 ) {
 				s = "Disables the \"DESTINY\" feature.\nThis restores the chances of godly equipment being generated, regardless of\nDESTINY triggers."
 			}
-			if ( cnt == 15 ) {
+			if ( p == 15 ) {
+				s = "Disables the thirst mechanic.\nThis allows you to survive without drinking, and also disables the passive\nstamina regeneration that the \"Wetting\" condition provides."
+			}
+			if ( p == 16 ) {
+				s = "Disables the Curtain Call mechanic.\nThis is an anti-AFK mechanism intended to prevent farming. It instantly kills you \nif you stay too long on the same map."
+			}
+			if ( p == 17 ) {
+				s = "Disables the chain attacks mechanic.\nThis reduces the damage that enemies take from sequential attacks."
+			}
+			if ( p == 18 ) {
+				s = "Disables the sleep cooldown on items with a cooldown period longer than 24 hours.\nThese items normally prevent their reuse until after you've gone to sleep again."
+			}
+			if ( p == 19 ) {
 				s = "Return to the previous menu."
 			}
 			pos wx + 38, wy + 343
@@ -515,85 +550,113 @@ TweakData(51, 4) = "Disable cicada noises."
 	await cfg_wait1
 	key_check
 	cursor_check
-	if ( key == key_select(TWEAK_GAMEPLAY_GATHER_ITEM_PARTYTIME) ) {
+	p = -1
+	repeat keyrange
+		if ( key == key_select(cnt) ) {
+			p = pagesize * page + cnt
+			break
+		}
+	loop
+	if ( p == TWEAK_GAMEPLAY_GATHER_ITEM_PARTYTIME ) {
 		tc = TWEAK_CATEGORY_GAMEPLAY
 		tn = TWEAK_GAMEPLAY_GATHER_ITEM_PARTYTIME
 		gosub *ToggleTweak
 	}
-	if ( key == key_select(TWEAK_GAMEPLAY_PETS_HEAL_PETS) ) {
+	if ( p == TWEAK_GAMEPLAY_PETS_HEAL_PETS ) {
 		tc = TWEAK_CATEGORY_GAMEPLAY
 		tn = TWEAK_GAMEPLAY_PETS_HEAL_PETS
 		gosub *ToggleTweak
 	}
-	if ( key == key_select(TWEAK_GAMEPLAY_SHARED_PERFORMANCE_GOLD) ) {
+	if ( p == TWEAK_GAMEPLAY_SHARED_PERFORMANCE_GOLD ) {
 		tc = TWEAK_CATEGORY_GAMEPLAY
 		tn = TWEAK_GAMEPLAY_SHARED_PERFORMANCE_GOLD
 		gosub *ToggleTweak
 	}
-	if ( key == key_select(TWEAK_GAMEPLAY_PETS_DIE_LOSSMODE) ) {
+	if ( p == TWEAK_GAMEPLAY_PETS_DIE_LOSSMODE ) {
 		tc = TWEAK_CATEGORY_GAMEPLAY
 		tn = TWEAK_GAMEPLAY_PETS_DIE_LOSSMODE
 		gosub *ToggleTweak
 	}
-	if ( key == key_select(TWEAK_GAMEPLAY_ENABLE_SAVE_SCUMMING) ) {
+	if ( p == TWEAK_GAMEPLAY_ENABLE_SAVE_SCUMMING ) {
 		tc = TWEAK_CATEGORY_GAMEPLAY
 		tn = TWEAK_GAMEPLAY_ENABLE_SAVE_SCUMMING
 		gosub *ToggleTweak
 	}
-	if ( key == key_select(TWEAK_GAMEPLAY_BASH_ALL_FRUIT) ) {
+	if ( p == TWEAK_GAMEPLAY_BASH_ALL_FRUIT ) {
 		tc = TWEAK_CATEGORY_GAMEPLAY
 		tn = TWEAK_GAMEPLAY_BASH_ALL_FRUIT
 		gosub *ToggleTweak
 	}
-	if ( key == key_select(TWEAK_GAMEPLAY_ORGANIZE_RANCH) ) {
+	if ( p == TWEAK_GAMEPLAY_ORGANIZE_RANCH ) {
 		tc = TWEAK_CATEGORY_GAMEPLAY
 		tn = TWEAK_GAMEPLAY_ORGANIZE_RANCH
 		gosub *ToggleTweak
 	}
-	if ( key == key_select(7) ) {
+	if ( p == 7 ) {
 		tc = TWEAK_CATEGORY_GAMEPLAY
 		tn = TWEAK_GAMEPLAY_EVERYTHING_MUST_GO
 		gosub *ToggleTweak
 	}
-	if ( key == key_select(8) ) {
+	if ( p == 8 ) {
 		tc = TWEAK_CATEGORY_GAMEPLAY
 		tn = TWEAK_GAMEPLAY_DISABLE_DEEP_SEA_CASTLE_PERSISTENCE
 		gosub *ToggleTweak
 	}
-	if ( key == key_select(9) ) {
+	if ( p == 9 ) {
 		tc = TWEAK_CATEGORY_GAMEPLAY
 		tn = TWEAK_GAMEPLAY_SANDBAG_TRAINING
 		gosub *ToggleTweak
 	}
-	if ( key == key_select(10) ) {
+	if ( p == 10 ) {
 		tc = TWEAK_CATEGORY_GAMEPLAY
 		tn = TWEAK_GAMEPLAY_NO_NAPS_WHILE_TRAVELING
 		gosub *ToggleTweak
 	}
-	if ( key == key_select(11) ) {
+	if ( p == 11 ) {
 		tc = TWEAK_CATEGORY_GAMEPLAY
 		tn = TWEAK_GAMEPLAY_HARVEST_MOON_RANCH
 		gosub *ToggleTweak
 	}
-	if ( key == key_select(12) ) {
+	if ( p == 12 ) {
 		tc = TWEAK_CATEGORY_GAMEPLAY
 		tn = TWEAK_GAMEPLAY_REVERT_POST_190_EXP_CHANGES
 		gosub *ToggleTweak
 	}
-	if ( key == key_select(13) ) {
+	if ( p == 13 ) {
 		tc = TWEAK_CATEGORY_GAMEPLAY
 		tn = TWEAK_GAMEPLAY_DISABLE_STUDY_DAYS
 		gosub *ToggleTweak
 	}
-	if ( key == key_select(14) ) {
+	if ( p == 14 ) {
 		tc = TWEAK_CATEGORY_GAMEPLAY
 		tn = TWEAK_GAMEPLAY_DISABLE_DESTINY
 		gosub *ToggleTweak
 	}
-	if ( key == key_select(15) ) {
+	if ( p == 15 ) {
+		tc = TWEAK_CATEGORY_GAMEPLAY
+		tn = TWEAK_GAMEPLAY_CG_DISABLE_THIRST
+		gosub *ToggleTweak
+	}
+	if ( p == 16 ) {
+		tc = TWEAK_CATEGORY_GAMEPLAY
+		tn = TWEAK_GAMEPLAY_CG_DISABLE_CURTAIN_CALL
+		gosub *ToggleTweak
+	}
+	if ( p == 17 ) {
+		tc = TWEAK_CATEGORY_GAMEPLAY
+		tn = TWEAK_GAMEPLAY_CG_DISABLE_CHAIN_ATTACKS
+		gosub *ToggleTweak
+	}
+	if ( p == 18 ) {
+		tc = TWEAK_CATEGORY_GAMEPLAY
+		tn = TWEAK_GAMEPLAY_CG_DISABLE_SLEEP_PREVENTION
+		gosub *ToggleTweak
+	}
+	if ( p == 19 ) {
 		snd SOUNDLIST_OK1
         return
 	}
+	page_change *GameplayTweakMenu_pgchk
 	if ( key == key_cancel ) {
         return
 	}
