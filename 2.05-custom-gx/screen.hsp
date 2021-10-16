@@ -4815,7 +4815,7 @@
 	scrollp = cfg_walkwait
 	if ( mdata(MDATA_TYPE) == MAP_TYPE_WORLD ) {
 		scrollp = 6
-		if ( TweakData(TWEAK_CONVENIENCE_ALLOW_RUNNING_IN_WORLD_MAP, TWEAK_CATEGORY_CONVENIENCE) == FALSE & cdata(CDATA_IN_TAGTEAM, CHARA_PLAYER) == 0 ) {
+		if ( TweakData(TWEAK_CONVENIENCE_ALLOW_RUNNING_IN_WORLD_MAP, TWEAK_CATEGORY_CONVENIENCE) == FALSE ) {
 			keybd_wait = 1000
 		}
 		if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) != VEHICLE_MAGIC_LOCOMOTIVE ) {
@@ -4861,9 +4861,7 @@
 		gcopy 0, 0, windowh - inf_verh, windoww, inf_tiles
 		gsel 0
 		gmode 2
-		if ( cdata(CDATA_IN_TAGTEAM, CHARA_PLAYER) == 0 ) {
-			gosub *los_draw
-		}
+		gosub *los_draw
 		gmode 0
 		pos 0, windowh - inf_verh
 		gcopy 4, 0, 0, windoww, inf_tiles
