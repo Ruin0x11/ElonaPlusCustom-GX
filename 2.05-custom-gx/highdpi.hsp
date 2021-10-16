@@ -630,6 +630,40 @@
 	// フォントのサイズが用意されていないため「ＭＳ ゴシック」とする
 	return
 
+dim fpss@d3m, 32
+
+#uselib "winmm.dll"
+#func timeBeginPeriod "timeBeginPeriod" int
+#func timeEndPeriod "timeEndPeriod" int
+#cfunc timeGetTime "timeGetTime"
+
+#undef redraw
+#define global\
+	redraw(%1,%2=0,%3=0,%4=0,%5=0)\
+	HIGHDPI_redraw %1, %2, %3, %4, %5
+#deffunc HIGHDPI_redraw int p1, int p2, int p3, int p4, int p5,\
+	local _p1, local _p2, local _p3, local _p4, local _p5
+	_p1 = p1
+	_p2 = HIGHDPI_X(p2)
+	_p3 = HIGHDPI_Y(p3)
+	_p4 = HIGHDPI_X(p4)
+	_p5 = HIGHDPI_Y(p5)
+
+	redraw@HSP _p1, _p2, _p3, _p4, _p5
+	a@d3m = timeGetTime() / 200
+	fpss@d3m(a@d3m & 31)++
+	if (bktp@d3m != a@d3m) {
+		bktp@d3m = a@d3m
+		cfps@d3m = 0
+		repeat 5, 1
+			cfps@d3m += fpss@d3m(a@d3m - cnt & 31)
+		loop
+		repeat 20, 1
+			fpss@d3m(a@d3m + cnt & 31) = 0
+		loop
+	}
+	return
+
 #global
 
 HIGHDPI_Initialize 1.0
