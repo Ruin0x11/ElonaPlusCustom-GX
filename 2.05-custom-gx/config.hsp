@@ -458,6 +458,44 @@
 	loop
 	return locvar_cnvjkey_p + 1
 
+*getScreenResolutions
+	dim resolutionsX, 128, 0
+	dim resolutionsY, 128, 0
+	lastX = 0
+	lastY = 0
+	resolutionsNum = 0
+
+	dim monitorInfo, 10 + 8 ; MONITORINFOEX
+	monitorInfo(0) = 40 + 32
+	dim devMode, 44 ; DEVMODEA 
+	MonitorFromPoint 0, 0, 0 ; Get primary monitor at (0, 0)
+	if ( stat ) {
+		GetMonitorInfo stat, varptr(monitorInfo)
+		getstr monitorName, monitorInfo, 40 ; szDevice
+	} else {
+		monitorName = ""
+	}
+	repeat
+		EnumDisplaySettings monitorName, cnt, varptr(devMode)
+		if ( stat == 0 ) : break
+		if ( devMode(27) != lastX || devMode(28) != lastY ) {
+			; Both dimensions must be a multiple of 4.
+			if ( devMode(27) >= 800 && devMode(28) >= 600 && devMode(27) \ 4 == 0 && devMode(28) \ 4 == 0 ) {
+				resolutionsX(resolutionsNum) = devMode(27)
+				resolutionsY(resolutionsNum) = devMode(28)
+				lastX = devMode(27)
+				lastY = devMode(28)
+				resolutionsNum += 1
+			}
+		}
+	loop
+	if ( resolutionsNum == 0 ) {
+		resolutionsNum = 6
+		resolutionsX = 800, 800, 1024, 1152, 1280, 1280
+		resolutionsY = 600, 696, 768,  864,  768,  1024
+	}
+	return
+
 *com_config
 	listmax = 0
 	page = 0
@@ -472,6 +510,7 @@
 	cfg_fullscreen2 = cfg_fullscreen
 	windoww2 = windoww
 	windowh2 = windowh
+	gosub *getScreenResolutions
 	if ( mode == MODELIST_TITLE ) {
 		sel = 2
 	}
@@ -1192,7 +1231,7 @@
 				goto *com_config_loop
 			}
 			if ( cs == 4 ) {
-				cfg_highdpi_scaling += double(p) * 0.1
+				cfg_highdpi_scaling += double(p) * 0.5
 				if ( cfg_highdpi_scaling > 2.0 ) {
 					cfg_highdpi_scaling = 2.0
 				}
@@ -1342,14 +1381,13 @@
 				goto *com_config_loop
 			}
 			if ( cs == 3 ) {
-                dim x, 20
-                dim y, 20
-                x = 800, 1024, 1152, 1280, 1280, 1280, 1280, 1280, 1360, 1366, 1440, 1600, 1600, 1600, 1680, 1920, 1920
-                y = 600, 768,  864,  720,  768,  800,  960,  1024, 768,  768,  900,  900,  1024, 1200, 1050, 1080, 1200
 				i = 0
-				repeat 17
-					if ( windoww2 == x(cnt) ) {
-						if ( windowh2 == y(cnt) ) {
+				repeat resolutionsNum
+					if ( resolutionsX(cnt) == 0 ) {
+						break
+					}
+					if ( windoww2 == resolutionsX(cnt) ) {
+						if ( windowh2 == resolutionsY(cnt) ) {
 							i = cnt
 							break
 						}
@@ -1360,12 +1398,12 @@
 					i = 0
 				}
 				else {
-					if ( i > 16 ) {
-						i = 16
+					if ( i > resolutionsNum - 1) {
+						i = resolutionsNum - 1
 					}
 				}
-				windoww2 = x(i)
-				windowh2 = y(i)
+				windoww2 = resolutionsX(i)
+				windowh2 = resolutionsY(i)
 				valn = "windowW.", "" + windoww2
 				gosub *cfg_write
 				valn = "windowH.", "" + windowh2
