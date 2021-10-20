@@ -56,8 +56,12 @@ TweakData(51, 4) = "Disable cicada noises."
     cs = 0
 	cs_bk = -1
     cs_bk2 = -1
-	pagesize = 0
+    page = 0
+    pagebk = 0
 *TweakMenu_loop
+	pagesize = 0
+    pagemax = 0
+    page = pagebk
 	redraw 0
 	s = "Tweak Setup", strhint3b
 	display_window (windoww - 680) / 2 + inf_screenx, winposy(448), 640, 448
@@ -109,6 +113,7 @@ TweakData(51, 4) = "Disable cicada noises."
 
 	cs_bk = cs
 	cs_bk2 = cs
+    pagebk = page
 	redraw 1
 	await cfg_wait1
 	key_check
@@ -530,10 +535,10 @@ TweakData(51, 4) = "Disable cicada noises."
 				s = "Disables the thirst mechanic.\nThis allows you to survive without drinking, and also disables the passive\nstamina regeneration that the \"Wetting\" condition provides."
 			}
 			if ( p == 16 ) {
-				s = "Disables the Curtain Call mechanic.\nThis is an anti-AFK mechanism intended to prevent farming. It spawns high-level\nenemies with instant-kill attacks if you attack 10,000 times within the same map without leaving."
+				s = "Disables the Curtain Call mechanic.\nThis is an anti-AFK mechanism intended to prevent farming. It spawns instant-kill\nenemies if you attack 10,000 times within the same map without leaving."
 			}
 			if ( p == 17 ) {
-				s = "Disables the chain attacks mechanic.\nThis reduces the damage dealt by sequential attacks in the same turn."
+				s = "Disables the chain attacks mechanic.\nThis reduces the damage dealt by sequential attacks within the attacker's turn."
 			}
 			if ( p == 18 ) {
 				s = "Disables the sleep prevention effects caused by coffee and tobacco."
