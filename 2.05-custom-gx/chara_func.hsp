@@ -1493,11 +1493,19 @@
 	return
 
 #deffunc rowact_check int rowact_check_charid
-	if ( cdata(CDATA_ROW_ACT, rowact_check_charid) != ACTION_NONE ) {
-		if ( cdata(CDATA_ROW_ACT, rowact_check_charid) != ACTION_TRAVEL ) {
-			cdata(CDATA_ROW_ACT_WARNING, rowact_check_charid) = 1
-		}
+
+    /********** RUIN0X11 CUSTOM - BEGINNING **********/ // Don't warn if the player has a 100% of nullifying lethal damage.
+
+	if ( cdata(CDATA_IMMUNE_DAMAGE, rowact_check_charid) < 100 ) {
+        if ( cdata(CDATA_ROW_ACT, rowact_check_charid) != ACTION_NONE ) {
+            if ( cdata(CDATA_ROW_ACT, rowact_check_charid) != ACTION_TRAVEL ) {
+                cdata(CDATA_ROW_ACT_WARNING, rowact_check_charid) = 1
+            }
+        }
 	}
+
+    /********** RUIN0X11 CUSTOM - ENDING **********/
+
 	return
 
 #deffunc rowact_item int rowact_item_arg1
