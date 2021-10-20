@@ -1,10 +1,18 @@
 *screen_init
-	if (windoww < 800) {
+	if ( windoww < 800 ) {
 		windoww = 800
 	}
-	if (windowh < 600) {
+	if ( windowh < 600 ) {
 		windowh = 600
 	}
+
+	// HSP expects the screen resolution to be a multiple of 4, because of the
+	// way the canvas is laid out in memory.
+	windoww2 = windoww
+	windowh2 = windowh
+	windoww = windoww - (windoww \ 4)
+	windowh = windowh - (windowh \ 4)
+
 	selcur = 0
 	inf_clockarrowx = inf_clockx + 62
 	inf_clockarrowy = inf_clocky + 48
