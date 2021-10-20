@@ -1,8 +1,18 @@
 # 2.07.1.0
 
+## Added
+- Ported all changes from Elona+ 2.07.
+- Added new custom tweaks to disable several changes from Custom-G: thirst, Curtain Call, chain attacks, and sleep prevention from coffee/tobacco.
+- Added an option in `config.txt` for showing the FPS (`showFps.`).
+
+## Changed
+- Existing CGX saves will now have the previously mentioned Custom-G changes disabled by default. Please use the Tweaks menu from the in-game Escape menu to enable them again.
+- Don't disable scrolling if the player has a tag team partner.
+
 ## Fixed
 - Fixed collect yield option in farms not resetting plant status. (Thanks, @Mirarara!)
-- Fixed various incorrect item descriptions.
+- Fixed a crash when claiming YacaPoint rewards.
+- Fixed various incorrect item descriptions in Japanese.
 
 # 2.06fix.2.0
 
