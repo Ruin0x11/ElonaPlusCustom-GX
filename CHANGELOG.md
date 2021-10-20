@@ -8,11 +8,14 @@
 ## Changed
 - Existing CGX saves will now have the previously mentioned Custom-G changes disabled by default. Please use the Tweaks menu from the in-game Escape menu to enable them again.
 - Don't disable scrolling if the player has a tag team partner.
+- Retrieve the list of valid screen resolutions from the OS instead of hardcoding them.
+- Limit the DPI scaling option to increments of 0.5 only.
 
 ## Fixed
 - Fixed collect yield option in farms not resetting plant status. (Thanks, @Mirarara!)
 - Fixed a crash when claiming YacaPoint rewards.
 - Fixed various incorrect item descriptions in Japanese.
+- Fixed various issues when trying to use screen resolutions that are not a multiple of 4 and esoteric DPI scaling amounts.
 
 # 2.06fix.2.0
 
