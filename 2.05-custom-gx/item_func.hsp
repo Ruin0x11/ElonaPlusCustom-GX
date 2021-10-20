@@ -1994,30 +1994,14 @@
 		if ( gdata(GDATA_AREA) == AREA_VALM ) {
 			if ( gdata(GDATA_LEVEL) == 3 ) {
 				inv(INV_ITEM_NEXT_PERIOD, itemname_itemid) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 + inv(INV_ITEM_INTERVAL, itemname_itemid)
-				if ( TweakData(TWEAK_GAMEPLAY_CG_DISABLE_ITEM_NEED_SLEEP, TWEAK_CATEGORY_GAMEPLAY) == TRUE ) {
-					inv(INV_ITEM_NEED_SLEEP, itemname_itemid) = 1
-					gdata(GDATA_FLAG_DATE_OF_LAST_BREAKFAST) = 1
-				}
-				else {
-					if ( inv(INV_ITEM_INTERVAL, itemname_itemid) >= 24 ) {
-						inv(INV_ITEM_NEED_SLEEP, itemname_itemid) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12
-					}
-				}
+				inv(INV_ITEM_NEED_SLEEP, itemname_itemid) = 1
+				gdata(GDATA_FLAG_DATE_OF_LAST_BREAKFAST) = 1
 			}
 		}
 		if ( gdata(GDATA_FLAG_INSIDE_DEEP_SEA_CASTLE) == 100 ) {
 			inv(INV_ITEM_NEXT_PERIOD, itemname_itemid) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 + inv(INV_ITEM_INTERVAL, itemname_itemid)
 			inv(INV_ITEM_NEED_SLEEP, itemname_itemid) = 1
 			gdata(GDATA_FLAG_DATE_OF_LAST_BREAKFAST) = 1
-			if ( TweakData(TWEAK_GAMEPLAY_CG_DISABLE_ITEM_NEED_SLEEP, TWEAK_CATEGORY_GAMEPLAY) == TRUE ) {
-				inv(INV_ITEM_NEED_SLEEP, itemname_itemid) = 1
-				gdata(GDATA_FLAG_DATE_OF_LAST_BREAKFAST) = 1
-			}
-			else {
-				if ( inv(INV_ITEM_INTERVAL, itemname_itemid) >= 24 ) {
-					inv(INV_ITEM_NEED_SLEEP, itemname_itemid) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12
-				}
-			}
 		}
 		if ( gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 < inv(INV_ITEM_NEXT_PERIOD, itemname_itemid) ) {
 			locvar_itemowner_s += lang("(" + (inv(INV_ITEM_NEXT_PERIOD, itemname_itemid) - (gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12)) + "時間)", "(Next: " + (inv(INV_ITEM_NEXT_PERIOD, itemname_itemid) - (gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12)) + "h.)")
