@@ -8,10 +8,15 @@
 
 	// HSP expects the screen resolution to be a multiple of 4, because of the
 	// way the canvas is laid out in memory.
+    if (windoww \ 4 != 0) {
+		windoww = windoww - (windoww \ 4)
+    }
+    if (windowh \ 4 != 0) {
+		windowh = windowh - (windowh \ 4)
+    }
+
 	windoww2 = windoww
 	windowh2 = windowh
-	windoww = windoww - (windoww \ 4)
-	windowh = windowh - (windowh \ 4)
 
 	selcur = 0
 	inf_clockarrowx = inf_clockx + 62

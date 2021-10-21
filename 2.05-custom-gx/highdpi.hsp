@@ -121,8 +121,12 @@
 	if(p6 == HIGHDPI_DEF) : _p6 = -1
 	if(p7 == HIGHDPI_DEF) : _p7 = _p2
 	if(p8 == HIGHDPI_DEF) : _p8 = _p3
-    _p2 = _p2 - (_p2 \ 4) + 4
-    _p3 = _p3 - (_p3 \ 4) + 4
+    if (_p2 \ 4 != 0) {
+    	_p2 = _p2 - (_p2 \ 4) + 4
+    }
+    if (_p3 \ 4 != 0) {
+    	_p3 = _p3 - (_p3 \ 4) + 4
+    }
 	screen@HSP _p1, _p2, _p3, _p4, _p5, _p6, _p7, _p8
 	HIGHDPI_setScreenDefaultFont
 	return
@@ -140,8 +144,12 @@
 	if(p1 == HIGHDPI_DEF) : _p1 = 0
 	if(p2 == HIGHDPI_DEF) : _p2 = HIGHDPI_X(640)
 	if(p3 == HIGHDPI_DEF) : _p3 = HIGHDPI_Y(480)
-    _p2 = _p2 - (_p2 \ 4) + 4
-    _p3 = _p3 - (_p3 \ 4) + 4
+    if (_p2 \ 4 != 0) {
+    	_p2 = _p2 - (_p2 \ 4) + 4
+    }
+    if (_p3 \ 4 != 0) {
+    	_p3 = _p3 - (_p3 \ 4) + 4
+    }
 	chgdisp@HSP _p1, _p2, _p3
 	return
 
@@ -168,8 +176,12 @@
 	if(p6 == HIGHDPI_DEF) : _p6 = -1
 	if(p7 == HIGHDPI_DEF) : _p7 = _p2
 	if(p8 == HIGHDPI_DEF) : _p8 = _p3
-    _p2 = _p2 - (_p2 \ 4) + 4
-    _p3 = _p3 - (_p3 \ 4) + 4
+    if (_p2 \ 4 != 0) {
+    	_p2 = _p2 - (_p2 \ 4) + 4
+    }
+    if (_p3 \ 4 != 0) {
+    	_p3 = _p3 - (_p3 \ 4) + 4
+    }
 	bgscr@HSP _p1, _p2, _p3, _p4, _p5, _p6, _p7, _p8
 	HIGHDPI_setScreenDefaultFont
 	return
@@ -195,8 +207,12 @@
 	if(p2 == HIGHDPI_DEF) : _p2 = HIGHDPI_X(640)
 	if(p3 == HIGHDPI_DEF) : _p3 = HIGHDPI_Y(480)
 	if(p4 == HIGHDPI_DEF) : _p4 = 0
-    _p2 = _p2 - (_p2 \ 4) + 4
-    _p3 = _p3 - (_p3 \ 4) + 4
+    if (_p2 \ 4 != 0) {
+    	_p2 = _p2 - (_p2 \ 4) + 4
+    }
+    if (_p3 \ 4 != 0) {
+    	_p3 = _p3 - (_p3 \ 4) + 4
+    }
 	buffer@HSP _p1, _p2, _p3, _p4
 	HIGHDPI_setScreenDefaultFont
 	return
