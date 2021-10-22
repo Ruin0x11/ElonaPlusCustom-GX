@@ -4002,6 +4002,12 @@
         noteadd "Done."
         goto *console_write
     }
+    if ( instr(buff, 0, "cgx207mapfix") != (-1) ) {
+        gdata(GDATA_WORLD_RENEW) = TRUE
+        notesel dbm
+        noteadd "Done."
+        goto *console_write
+    }
 
     /********** RUIN0X11 CUSTOM - ENDING **********/
 
@@ -4183,6 +4189,7 @@
     noteadd "\tresetmap\tResets towns and some areas."
     noteadd "\tfixmap\t\tFixes possible bugs for current map."
     noteadd "\tmapinfo\t\tShows map info."
+    noteadd "\tcgx207mapfix\tFixes incorrect world map tiles (Noyel, Miral's Workshop) from CGX ver. 2.07.0.1."
     goto *console_write
 
 #define EM_LINESCROLL $B6	//任意の方向にスクロール
