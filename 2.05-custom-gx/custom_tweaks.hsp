@@ -39,7 +39,8 @@ TweakData(58, 2) = "(Custom-G) Disable thirst."
 TweakData(59, 2) = "(Custom-G) Disable Curtain Call."
 TweakData(60, 2) = "(Custom-G) Disable chain attacks."
 TweakData(61, 2) = "(Custom-G) Disable sleep prevention."
-TweakData(62, 2) = "(Custom-G) Revert skill/damage calculation nerfs."
+TweakData(62, 2) = "(Custom-G) Apply skill buffs."
+TweakData(63, 2) = "(Custom-G) Apply damage calculation buffs."
 
 TweakData(x, 3) = "AI Tweaks"
 TweakData(0, 3) = "Change Zeome's AI."
@@ -433,7 +434,7 @@ TweakData(51, 4) = "Disable cicada noises."
     cs = 0
     page = 0
     pagesize = 16
-    listmax = 21
+    listmax = 22
 *GameplayTweakMenu_pgchk
 	redraw 0
 	page_check
@@ -463,8 +464,9 @@ TweakData(51, 4) = "Disable cicada noises."
 	listn(0, 16) = "(Custom-G) Disable Curtain Call." + GetTStatus(TWEAK_CATEGORY_GAMEPLAY, TWEAK_GAMEPLAY_CG_DISABLE_CURTAIN_CALL)
 	listn(0, 17) = "(Custom-G) Disable chain attacks." + GetTStatus(TWEAK_CATEGORY_GAMEPLAY, TWEAK_GAMEPLAY_CG_DISABLE_CHAIN_ATTACKS)
 	listn(0, 18) = "(Custom-G) Disable sleep prevention." + GetTStatus(TWEAK_CATEGORY_GAMEPLAY, TWEAK_GAMEPLAY_CG_DISABLE_SLEEP_PREVENTION)
-	listn(0, 19) = "(Custom-G) Revert skill/damage calculation nerfs." + GetTStatus(TWEAK_CATEGORY_GAMEPLAY, TWEAK_GAMEPLAY_CG_REVERT_SKILL_NERFS)
-	listn(0, 20) = "Return"
+	listn(0, 19) = "(Custom-G) Apply skill buffs." + GetTStatus(TWEAK_CATEGORY_GAMEPLAY, TWEAK_GAMEPLAY_CG_REVERT_SKILL_NERFS)
+	listn(0, 20) = "(Custom-G) Apply damage calculation buffs." + GetTStatus(TWEAK_CATEGORY_GAMEPLAY, TWEAK_GAMEPLAY_CG_REVERT_DAMAGE_CALC_NERFS)
+	listn(0, 21) = "Return"
 
 	font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
 
@@ -546,9 +548,12 @@ TweakData(51, 4) = "Disable cicada noises."
 				s = "Disables the sleep prevention effects caused by coffee and tobacco."
 			}
 			if ( p == 19 ) {
-				s = "Enables Custom-G's changes to certain skills/damage calculations.\nThis affects Gravity Sphere, Graviton Buster, Violent Garden,\nShadow Step, and some other skills."
+				s = "Enables Custom-G's changes to certain skills.\nThis affects Gravity Sphere, Graviton Buster, Violent Garden,\nShadow Step, and some other skills."
 			}
 			if ( p == 20 ) {
+				s = "Enables Custom-G's changes to damage calculation.\nThis affects the damage and critical chance when multi-attacking."
+			}
+			if ( p == 21 ) {
 				s = "Return to the previous menu."
 			}
 			pos wx + 38, wy + 343
@@ -666,9 +671,14 @@ TweakData(51, 4) = "Disable cicada noises."
 		tc = TWEAK_CATEGORY_GAMEPLAY
 		tn = TWEAK_GAMEPLAY_CG_REVERT_SKILL_NERFS
 		gosub *ToggleTweak
-        gosub *ApplyCGSkillTweak
+		gosub *ApplyCGSkillTweak
 	}
 	if ( p == 20 ) {
+		tc = TWEAK_CATEGORY_GAMEPLAY
+		tn = TWEAK_GAMEPLAY_CG_REVERT_DAMAGE_CALC_NERFS
+		gosub *ToggleTweak
+	}
+	if ( p == 21 ) {
 		snd SOUNDLIST_OK1
         return
 	}

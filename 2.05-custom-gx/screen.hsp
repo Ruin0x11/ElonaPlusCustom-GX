@@ -5936,7 +5936,13 @@
 			}
 		}
 	}
-	if ( rnd(5000) < sdata(SKILL_ATTR_PER, cc) + 50 ) {
+	if ( TweakData(TWEAK_GAMEPLAY_CG_REVERT_DAMAGE_CALC_NERFS, TWEAK_CATEGORY_GAMEPLAY) == TRUE ) {
+    	locvar_calcattackhit_critical = rnd(5000) < sdata(SKILL_ATTR_PER, cc) + 50
+	}
+    else {
+    	locvar_calcattackhit_critical = rnd(5000) * (extraattack + 1) < sdata(SKILL_ATTR_PER, cc) + 50
+	}
+	if ( locvar_calcattackhit_critical ) {
 		critical = 1
 		if ( cbit(CHARA_BIT_AWAKE_NEAR_DEATH_EVASION, tc) ) {
 			if ( cdata(CDATA_HP, tc) >= 0 ) {
@@ -6283,6 +6289,9 @@
 			cr += 2
 		}
 	}
+	if ( TweakData(TWEAK_GAMEPLAY_CG_REVERT_DAMAGE_CALC_NERFS, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
+		creva = 400
+	}
 	if ( attackskill == SKILL_WEAPON_MARTIAL_ARTS ) {
 		creva = 100
 	}
@@ -6504,7 +6513,7 @@
 		}
 	}
 	cdata(CDATA_DAMAGE_FIX, cc) = dmgfix
-	if ( TweakData(TWEAK_GAMEPLAY_CG_REVERT_SKILL_NERFS, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
+	if ( TweakData(TWEAK_GAMEPLAY_CG_REVERT_DAMAGE_CALC_NERFS, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
 		if ( attacknum > 2 ) {
 			repeat attacknum - 2
 				dmgfix = dmgfix * 3 / 5
