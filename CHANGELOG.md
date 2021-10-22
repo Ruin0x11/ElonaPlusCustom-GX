@@ -9,7 +9,7 @@
 - Fixed more issues with screen resolutions and fullscreen/crashing.
 - Fixed certain world map areas being generated with grass instead of snow. To apply the fix to existing saves, open the console with F12 and type the command `cgx207mapfix`.
 - Fixed maps with multiple door types changing doors to the wrong tile when opening/closing them.
-- Fixed a small typo in the Japanese langauge after travelling between towns.
+- Fixed a small typo in the Japanese language after travelling between towns.
 
 # 2.07.1.0
 
