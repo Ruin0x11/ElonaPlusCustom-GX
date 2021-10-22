@@ -102,6 +102,41 @@
 	loop
 	return
 
+#defcfunc getcloseddoortile int getcloseddoortile_open_id
+    switch getcloseddoortile_open_id
+		case xy2pic(0, 8)
+			return xy2pic(4, 22)
+		case xy2pic(10, 7)
+			return xy2pic(2, 22)
+		case xy2pic(2, 8)
+			return xy2pic(8, 22)
+		case xy2pic(1, 8)
+			return xy2pic(7, 22)
+    	swend
+   	return xy2pic(0, 22)
+
+#defcfunc getopendoortile int getopendoortile_closed_id
+    switch getopendoortile_closed_id
+		case xy2pic(4, 22)
+			return xy2pic(0, 8)
+		case xy2pic(2, 22)
+			return xy2pic(10, 7)
+		case xy2pic(8, 22)
+			return xy2pic(2, 8)
+		case xy2pic(7, 22)
+			return xy2pic(1, 8)
+    	swend
+   	return xy2pic(5, 7)
+
+#defcfunc getopendoorsound int getopendoorsound_closed_id
+    switch getopendoorsound_closed_id
+		case xy2pic(4, 22)
+			return SOUNDLIST_CARD1
+		case xy2pic(2, 22)
+			return SOUNDLIST_DOOR2
+    	swend
+   	return SOUNDLIST_DOOR1
+
 #deffunc map_tileset int map_tileset_arg1
 	procid = (procid + 1) \ 4
 	proclist(procid) = "map_tileSet:Begin" + " ct:" + ct
