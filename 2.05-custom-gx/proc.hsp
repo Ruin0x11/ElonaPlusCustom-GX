@@ -1289,7 +1289,7 @@
 						if ( tc < MAX_CHARA_FOLLOWER ) {
 							p = 1
 						}
-						if ( cdata(CDATA_ROLE, tc) >= (1000 /*!!!@[ROLE_SHOP_MIN @@@ ROLE_SHOP_WEAPON]@!!! */) & cdata(CDATA_ROLE, tc) < (2000 /*!!!@[ROLE_GUEST_BEGGAR @@@ ROLE_GUEST_MIN]@!!! */) | cdata(CDATA_ROLE, tc) == ROLE_GUEST_MERCHANT ) {
+						if ( cdata(CDATA_ROLE, tc) >= ROLE_SHOP_MIN & cdata(CDATA_ROLE, tc) < ROLE_GUEST_MIN | cdata(CDATA_ROLE, tc) == ROLE_GUEST_MERCHANT ) {
 							p /= 50
 						}
 						if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) == TRUE | cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) == TRUE | cbit(CHARA_BIT_SUMMONED, tc) == TRUE ) {
@@ -4512,7 +4512,12 @@
 			gosub *choose_fish
 			gosub *get_fish
 			rowactend cc
-			cdata(CDATA_SP, cc) -= 3
+			if ( TweakData(TWEAK_GAMEPLAY_CG_REVERT_SKILL_NERFS, TWEAK_CATEGORY_GAMEPLAY) == TRUE ) {
+				cdata(CDATA_SP, cc) -= 3
+			}
+			else {
+				cdata(CDATA_SP, cc) -= 15
+			}
 			if ( rnd(10) == 0 ) {
 				gosub *expFishing
 			}
@@ -8187,8 +8192,12 @@
 							if ( zero2 != 200 ) {
 								animeid = ANIMATION_ATTACK
 								gosub *anime
+								if ( TweakData(TWEAK_GAMEPLAY_CG_REVERT_SKILL_NERFS, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
+									shadow = 100
+								}
 								gosub *act_melee
 							}
+							shadow = 0
 							break
 						}
 						else {
@@ -10628,6 +10637,9 @@
 		_switch_sw = 0
 		snd SOUNDLIST_STAB
 		txt lang(name(cc) + "は" + name(tc) + "の首を狙って攻撃した。", name(cc) + " aim" + _s(cc) + " at " + name(tc) + your(tc) + " head and attack" + _s(cc) + ".")
+		if ( TweakData(TWEAK_GAMEPLAY_CG_REVERT_SKILL_NERFS, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
+			dmghp tc, limit(sdata(SKILL_ATTR_DEX, cc) * 3 + rnd(sdata(SKILL_ATTR_DEX, cc)) - cdata(CDATA_PV, tc), 1, 99999), cc
+		}
 		if ( cdatan(CDATAN_CLASS, cc) == "farmer" ) {
 			ha = 1
 		}
@@ -10635,7 +10647,14 @@
 			ha = 0
 		}
 		if ( cdata(CDATA_HP, tc) > cdata(CDATA_MAX_HP, tc) / (8 - ha) ) {
-			gosub *act_melee
+			if ( TweakData(TWEAK_GAMEPLAY_CG_REVERT_SKILL_NERFS, TWEAK_CATEGORY_GAMEPLAY) == TRUE ) {
+				gosub *act_melee
+			}
+			else {
+				if ( cdata(CDATA_CONDITION_SUFFOCATION, tc) < 10 ) {
+					cdata(CDATA_CONDITION_SUFFOCATION, tc) += 3
+				}
+			}
 			goto *effect_end
 		}
 		if ( attackskill == SKILL_WEAPON_FIREARM ) {
@@ -14932,9 +14951,17 @@
 						snd SOUNDLIST_BASH1
 						await 100
 						snd SOUNDLIST_BALL1
+						redraw 0
+						gosub *screen_draw
+						gosub *screen_fade
+						gsel 4
+						buffer 4, FACE_SIZE_WIDTH, FACE_SIZE_HEIGHT
+						pos 0, 0
+						picload exedir + "graphic\\face1" + devfile + ".bmp", 1
+						gsel 0
 						if ( breakstr / 2 < inv(INV_ITEM_PARAM2, ci) ) {
 							txtef COLOR_BLUE
-							txt lang("…力任せでも無理だということがわかった。", "...It's impossible to open.")
+							txt lang("…力任せでも無理だということがわかった。", "...You realize that it's impossible to force open.")
 							goto *effect_end
 						}
 						if ( rnd(rnd(breakstr + 1) + 1) < inv(INV_ITEM_PARAM2, ci) ) {
@@ -18988,7 +19015,12 @@
 	}
 	if ( _switch_val == SKILL_SPACT_KILLING_DANCE | _switch_sw ) {
 		_switch_sw = 0
-		addbuff tc, BUFF_KILLING_DANCE, 13, 13
+		if ( TweakData(TWEAK_GAMEPLAY_CG_REVERT_SKILL_NERFS, TWEAK_CATEGORY_GAMEPLAY) == TRUE ) {
+			addbuff tc, BUFF_KILLING_DANCE, 44, 44
+		}
+        else {
+			addbuff tc, BUFF_KILLING_DANCE, 13, 13
+		}
 		snd SOUNDLIST_ATK_MIND
 		animeload 43, cc
 		goto *effect_end
@@ -19325,10 +19357,20 @@
 					f = 1
 				}
 			}
-			dmg = (sdata(SKILL_ATTR_LER, cc) / 5 + 2) * ((sdata(SKILL_NORMAL_GARDENING, cc) + 1) / 2 + 2) + rnd(sdata(SKILL_ATTR_LER, cc) + 5)
+			if ( TweakData(TWEAK_GAMEPLAY_CG_REVERT_SKILL_NERFS, TWEAK_CATEGORY_GAMEPLAY) == TRUE ) {
+				dmg = (sdata(SKILL_ATTR_LER, cc) / 5 + 2) * ((sdata(SKILL_NORMAL_GARDENING, cc) + 1) / 2 + 2) + rnd(sdata(SKILL_ATTR_LER, cc) + 5)
+			}
+			else {
+				dmg = (sdata(SKILL_ATTR_LER, cc) / 5 + 2) * ((sdata(SKILL_NORMAL_GARDENING, cc) + 1) / 5 + 2) + rnd(sdata(SKILL_ATTR_LER, cc) + 5)
+			}
 			dmghp tc, dmg, cc, SKILL_RES_POISON, 1000
 			if ( cdata(CDATA_CONDITION_BIND, tc) == 0 ) {
-				cdata(CDATA_CONDITION_BIND, tc) += 3
+				if ( TweakData(TWEAK_GAMEPLAY_CG_REVERT_SKILL_NERFS, TWEAK_CATEGORY_GAMEPLAY) == TRUE ) {
+					cdata(CDATA_CONDITION_BIND, tc) += 3
+				}
+				else {
+					cdata(CDATA_CONDITION_BIND, tc) += 1
+				}
 				if ( synccheck(tc, -1) ) {
 					txt lang(name(tc) + "は蔓に束縛された。", name(tc) + " was bound.")
 				}
@@ -20998,7 +21040,24 @@
 		if ( synccheck(tc, -1) ) {
 			txt lang(name(tc) + "は重力の球に押しつぶされた。", name(tc) + " was pressed by super Gravity.")
 		}
-		dmg = sdata(SKILL_ATTR_CON, cc) * sdata(SKILL_ATTR_CON, cc) / 50 + limit(gdata(GDATA_LEVEL) * (gdata(GDATA_LEVEL) + 100) / 50, 1, 29999) + rnd(gdata(GDATA_LEVEL) + 5)
+		if ( TweakData(TWEAK_GAMEPLAY_CG_REVERT_SKILL_NERFS, TWEAK_CATEGORY_GAMEPLAY) == TRUE ) {
+			dmg = sdata(SKILL_ATTR_CON, cc) * sdata(SKILL_ATTR_CON, cc) / 50 + limit(gdata(GDATA_LEVEL) * (gdata(GDATA_LEVEL) + 100) / 50, 1, 29999) + rnd(gdata(GDATA_LEVEL) + 5)
+		}
+        else {
+			dmg = limit(sdata(SKILL_ATTR_CON, cc) * sdata(SKILL_ATTR_MAG, cc) / 40, 2, 200000) / 2 + limit(gdata(GDATA_LEVEL) * (gdata(GDATA_LEVEL) + 100) / 50, 1, 29999) + rnd(gdata(GDATA_LEVEL) + 5)
+			if ( cdata(CDATA_CONDITION_GRAVITY, tc) >= 50 & cdata(CDATA_CONDITION_GRAVITY, tc) < 100 ) {
+				dmg = dmg * 3 / 2
+			}
+			if ( cdata(CDATA_CONDITION_GRAVITY, tc) >= 100 & cdata(CDATA_CONDITION_GRAVITY, tc) < 150 ) {
+				dmg = dmg * 2
+			}
+			if ( cdata(CDATA_CONDITION_GRAVITY, tc) >= 150 & cdata(CDATA_CONDITION_GRAVITY, tc) < 200 ) {
+				dmg = dmg * 5 / 2
+			}
+			if ( cdata(CDATA_CONDITION_GRAVITY, tc) >= 200 ) {
+				dmg = dmg * 3
+			}
+        }
 		if ( findbuff(tc, BUFF_FEATHER) != (-1) ) {
 			dmg = dmg / 10
 		}
@@ -21078,7 +21137,12 @@
 			cdata(CDATA_EVOLUTION_STAGE, CHARA_PLAYER) = 0
 		}
 		if ( weap == 0 ) {
-			weap = limit((sdata(SKILL_ATTR_CON, cc) + gdata(GDATA_LEVEL)) / 2, 1, 2000)
+			if ( TweakData(TWEAK_GAMEPLAY_CG_REVERT_SKILL_NERFS, TWEAK_CATEGORY_GAMEPLAY) == TRUE ) {
+				weap = limit((sdata(SKILL_ATTR_CON, cc) + gdata(GDATA_LEVEL)) / 2, 1, 2000)
+			}
+            else {
+				weap = limit((sdata(SKILL_ATTR_CON, cc) + sqrt((gdata(GDATA_LEVEL) + 1)) * 2) / 2, 1, 2000)
+			}
 		}
 		snd SOUNDLIST_ENC
 		animeload ANIMATION_UNISON_IMPACT2, cc
