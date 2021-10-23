@@ -47,10 +47,8 @@
 	if(dpi < 0.01) {
 		dpi = 1.0
 	}
-	DPI_X = HIGHDPI_GetDeviceCaps(hdc, HIGHDPI_LOGPIXELSX)
-	DPI_Y = HIGHDPI_GetDeviceCaps(hdc, HIGHDPI_LOGPIXELSY)
-	DPI_X = dpi * DPI_X
-	DPI_Y = dpi * DPI_Y
+	DPI_X = dpi * DEFAULT_DPI
+	DPI_Y = dpi * DEFAULT_DPI
 	HIGHDPI_RATE_X = double(DPI_X) / DEFAULT_DPI
 	HIGHDPI_RATE_IX = 1.0 / HIGHDPI_RATE_X
 	HIGHDPI_RATE_Y = double(DPI_Y) / DEFAULT_DPI
@@ -129,6 +127,7 @@
     }
 	screen@HSP _p1, _p2, _p3, _p4, _p5, _p6, _p7, _p8
 	HIGHDPI_setScreenDefaultFont
+	HIGHDPI_callSetProcessDPIAware
 	return
 
 #undef chgdisp
@@ -151,6 +150,7 @@
     	_p3 = _p3 - (_p3 \ 4) + 4
     }
 	chgdisp@HSP _p1, _p2, _p3
+	HIGHDPI_callSetProcessDPIAware
 	return
 
 #undef bgscr
@@ -184,6 +184,7 @@
     }
 	bgscr@HSP _p1, _p2, _p3, _p4, _p5, _p6, _p7, _p8
 	HIGHDPI_setScreenDefaultFont
+	HIGHDPI_callSetProcessDPIAware
 	return
 
 #undef buffer

@@ -508,6 +508,8 @@
 	cfg_sound2 = cfg_sound
 	cfg_music2 = cfg_music
 	cfg_fullscreen2 = cfg_fullscreen
+    windoww2s = windoww2 * cfg_highdpi_scaling
+    windowh2s = windowh2 * cfg_highdpi_scaling
 	gosub *getScreenResolutions
 	if ( mode == MODELIST_TITLE ) {
 		sel = 2
@@ -762,10 +764,10 @@
 				mes s(cfg_fullscreen2)
 			}
 			if ( cnt == 3 ) {
-				mes "" + windoww2 + " * " + windowh2
+				mes "" + windoww2s + " * " + windowh2s
 			}
 			if ( cnt == 4 ) {
-				mes "" + strf("%.1f", cfg_highdpi_scaling)
+				mes "" + strf("%.1f", cfg_highdpi_scaling) + " (" + int(double(windoww2s) / cfg_highdpi_scaling) + " * " + int(double(windowh2s) / cfg_highdpi_scaling) + ")"
 			}
 			if ( cnt == 5 ) {
 				s = lang("しない", "No"), lang("する", "Yes")
@@ -1228,21 +1230,6 @@
 				gosub *cfg_write
 				goto *com_config_loop
 			}
-			if ( cs == 4 ) {
-				cfg_highdpi_scaling += double(p) * 0.5
-				if ( cfg_highdpi_scaling > 2.0 ) {
-					cfg_highdpi_scaling = 2.0
-				}
-				else {
-					if ( cfg_highdpi_scaling < 1.0 ) {
-						cfg_highdpi_scaling = 1.0
-					}
-				}
-				snd SOUNDLIST_OK1
-				valn = "highDPIScaling.", str(cfg_highdpi_scaling)
-				gosub *cfg_write
-				goto *com_config_loop
-			}
 			if ( cs == 5 ) {
 				cfg_highdpi_smoothing += p
 				if ( cfg_highdpi_smoothing > 1 ) {
@@ -1384,8 +1371,8 @@
 					if ( resolutionsX(cnt) == 0 ) {
 						break
 					}
-					if ( windoww2 == resolutionsX(cnt) ) {
-						if ( windowh2 == resolutionsY(cnt) ) {
+					if ( windoww2s == resolutionsX(cnt) ) {
+						if ( windowh2s == resolutionsY(cnt) ) {
 							i = cnt
 							break
 						}
@@ -1400,12 +1387,51 @@
 						i = resolutionsNum - 1
 					}
 				}
-				windoww2 = resolutionsX(i)
-				windowh2 = resolutionsY(i)
-				valn = "windowW.", "" + windoww2
-				gosub *cfg_write
-				valn = "windowH.", "" + windowh2
-				gosub *cfg_write
+				windoww2s = resolutionsX(i)
+				windowh2s = resolutionsY(i)
+                locvar_com_config_newW = int(double(windoww2s) / cfg_highdpi_scaling)
+                locvar_com_config_newH = int(double(windowh2s) / cfg_highdpi_scaling)
+                locvar_com_config_invalidW = (locvar_com_config_newW < 800) | ((locvar_com_config_newW \ 4) != 0)
+                locvar_com_config_invalidH = (locvar_com_config_newH < 600) | ((locvar_com_config_newH \ 4) != 0)
+                if ( ( locvar_com_config_invalidW | locvar_com_config_invalidH ) == TRUE ) {
+					cfg_highdpi_scaling = 1.0
+                }
+                else {
+                	windoww2 = locvar_com_config_newW
+					windowh2 = locvar_com_config_newH
+					valn = "highDPIScaling.", str(cfg_highdpi_scaling)
+					gosub *cfg_write
+					valn = "windowW.", "" + windoww2
+					gosub *cfg_write
+					valn = "windowH.", "" + windowh2
+					gosub *cfg_write
+                }
+				snd SOUNDLIST_OK1
+				goto *com_config_loop
+			}
+			if ( cs == 4 ) {
+                locvar_com_config_prevScaling = cfg_highdpi_scaling
+				cfg_highdpi_scaling += double(p) * 0.5
+				if ( cfg_highdpi_scaling < 1.0 ) {
+					cfg_highdpi_scaling = 1.0
+				}
+                locvar_com_config_newW = int(double(windoww2s) / cfg_highdpi_scaling)
+                locvar_com_config_newH = int(double(windowh2s) / cfg_highdpi_scaling)
+                locvar_com_config_invalidW = (locvar_com_config_newW < 800) | ((locvar_com_config_newW \ 4) != 0)
+                locvar_com_config_invalidH = (locvar_com_config_newH < 600) | ((locvar_com_config_newH \ 4) != 0)
+                if ( ( locvar_com_config_invalidW | locvar_com_config_invalidH ) == TRUE ) {
+                	cfg_highdpi_scaling = locvar_com_config_prevScaling
+                }
+                else {
+                	windoww2 = locvar_com_config_newW
+					windowh2 = locvar_com_config_newH
+					valn = "highDPIScaling.", str(cfg_highdpi_scaling)
+					gosub *cfg_write
+					valn = "windowW.", "" + windoww2
+					gosub *cfg_write
+					valn = "windowH.", "" + windowh2
+					gosub *cfg_write
+                }
 				snd SOUNDLIST_OK1
 				goto *com_config_loop
 			}
