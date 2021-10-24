@@ -1550,13 +1550,23 @@
 	if ( cdata(CDATA_THIRST, r1) <= 0 ) {
 		cdata(CDATA_THIRST, r1) = 1
 	}
+	if ( gdata(GDATA_FLAG_GAME_MODE) == 5 ) {
+		if ( cdata(CDATA_THIRST, r1) < 5000 ) {
+			cdata(CDATA_THIRST, r1) = 5000
+		}
+		if ( cdata(CDATA_THIRST, r1) <= 5000 ) {
+			return
+		}
+	}
 	p = cdata(CDATA_THIRST, r1) / 1000
-	if ( cdata(CDATA_CONDITION_WET, r1) <= 0 ) {
-		cdata(CDATA_THIRST, r1) -= 8 / 2
+	if ( gdata(GDATA_FLAG_MAIN) != 900 ) {
+		if ( cdata(CDATA_CONDITION_WET, r1) <= 0 ) {
+			cdata(CDATA_THIRST, r1) -= 8 / 2
+		}
 	}
 	if ( cdata(CDATA_CONDITION_WET, r1) > 0 ) {
-		if ( cdata(CDATA_THIRST, r1) < 5000 ) {
-			cdata(CDATA_THIRST, r1) += 8
+		if ( cdata(CDATA_THIRST, r1) < 10000 ) {
+			cdata(CDATA_THIRST, r1) += 8 * 10
 		}
 	}
 	if ( findbuff(r1, BUFF_CURSE_OF_HUNGER) != (-1) ) {
