@@ -1415,6 +1415,23 @@
 				if ( cfg_highdpi_scaling < 1.0 ) {
 					cfg_highdpi_scaling = 1.0
 				}
+                else {
+                    repeat
+                		locvar_com_config_newW = int(double(windoww2s) / cfg_highdpi_scaling)
+                		locvar_com_config_newH = int(double(windowh2s) / cfg_highdpi_scaling)
+						if ( cfg_highdpi_scaling < 1.0 ) {
+							cfg_highdpi_scaling = 1.0
+                            break
+						}
+                    	if ((locvar_com_config_newW < 800 | locvar_com_config_newH < 600) == TRUE) {
+                    	    break
+                    	}
+                    	if ((((locvar_com_config_newW \ 4) == 0) & (locvar_com_config_newH \ 4) == 0) == TRUE) {
+                    	    break
+                    	}
+						cfg_highdpi_scaling += double(p) * 0.5
+                    loop
+                }
                 locvar_com_config_newW = int(double(windoww2s) / cfg_highdpi_scaling)
                 locvar_com_config_newH = int(double(windowh2s) / cfg_highdpi_scaling)
                 locvar_com_config_invalidW = (locvar_com_config_newW < 800) | ((locvar_com_config_newW \ 4) != 0)
