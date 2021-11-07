@@ -1,3 +1,9 @@
+# 2.07.1.2
+
+# Changed
+- Limit the combinations of resolution and DPI scaling in the options menu so that fullscreen always works.
+- Prevent crashes from invalid resolutions by checking if the maximum display size is exceeded on startup.
+
 # 2.07.1.1
 
 ## Changed
