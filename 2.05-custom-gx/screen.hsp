@@ -15,6 +15,16 @@
 		windowh = windowh - (windowh \ 4)
     }
 
+    maxResolutionX = GetDeviceCaps(hdc, 8)  ; HORZRES
+    maxResolutionY = GetDeviceCaps(hdc, 10) ; VERTRES
+
+    if ( (double(windoww) * cfg_highdpi_scaling) > maxResolutionX | (double(windowh) * cfg_highdpi_scaling) > maxResolutionY ) {
+        dialog "Invalid screen resolution detected. Custom-GX will attempt to reset to a sane default.", 1
+        windoww = 800
+        windowh = 600
+        cfg_highdpi_scaling = 1.0
+    }
+
 	windoww2 = windoww
 	windowh2 = windowh
 
