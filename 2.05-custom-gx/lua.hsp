@@ -79,6 +79,9 @@
     hl_pushfunction *lua_hsp_getvar
     hl_setfield -2, "getvar"
 
+    hl_pushfunction *lua_hsp_setvar
+    hl_setfield -2, "setvar"
+
     hl_pop
     return
 
@@ -134,6 +137,21 @@
     hl_pushhspvalue v
     return 1
 
+*lua_hsp_setvar
+    if hl_gettop() < 2 {
+        luaError("Invalid argument count")
+    }
+    s = hl_tolstring(1)
+    v = hl_tohspvalue(2)
+	hl_setvar s, v
+    if stat == -1 {
+        hl_pushboolean FALSE
+    }
+    else {
+        hl_pushboolean TRUE
+    }
+    return 1
+
 *lua_make_elona
     hl_getglobal "_G"
 
@@ -148,11 +166,20 @@
     hl_pushfunction *lua_elona_itemname
     hl_setfield -2, "itemname"
 
+    hl_pushfunction *lua_elona_cnvitemname
+    hl_setfield -2, "cnvitemname"
+
+    hl_pushfunction *lua_elona_flt
+    hl_setfield -2, "flt"
+
     hl_pushfunction *lua_elona_characreate
     hl_setfield -2, "characreate"
 
     hl_pushfunction *lua_elona_itemcreate
     hl_setfield -2, "itemcreate"
+
+    hl_pushfunction *lua_elona_item_delete
+    hl_setfield -2, "item_delete"
 
     hl_pushfunction *lua_elona_add_ally
     hl_setfield -2, "add_ally"
@@ -175,6 +202,7 @@
     pushDim(gdatan)
     pushDim(spell)
     pushDim(map)
+    pushDim(dblist)
 
     hl_pop
     return
@@ -331,13 +359,36 @@
         luaError("Wrong number of arguments")
     }
     if hl_isinteger(1) {
-        txtEf hl_tointeger(1)
         ci = hl_tointeger(1)
         s = itemname(ci)
         hl_pushstring s
         return 1
     }
     luaError("Invalid arguments")
+
+*lua_elona_cnvitemname
+    if hl_gettop() < 1 {
+        luaError("Wrong number of arguments")
+    }
+    if hl_isinteger(1) {
+        ci = hl_tointeger(1)
+        s = cnvitemname(ci)
+        hl_pushstring s
+        return 1
+    }
+    luaError("Invalid arguments")
+
+*lua_elona_flt
+    locvar_objlv = 0
+    locvar_qualitylv = 0
+    if hl_isinteger(1) {
+        locvar_objlv = hl_tointeger(1)
+    }
+    if hl_isinteger(2) {
+        locvar_qualitylv = hl_tointeger(2)
+    }
+    flt locvar_objlv, locvar_qualitylv
+    return 0
 
 *lua_elona_characreate
     if hl_gettop() < 1 {
@@ -394,6 +445,18 @@
     itemcreate rc, dbid, x, y, amount
     hl_pushinteger(ci)
     return 1
+
+*lua_elona_item_delete
+    if hl_gettop() < 1 {
+        luaError("Wrong number of arguments")
+    }
+    if hl_isinteger(1) {
+        locvar_ci = hl_tointeger(1)
+    } else {
+        luaError("Invalid arguments")
+    }
+    item_delete locvar_ci
+    return 0
 
 *lua_elona_add_ally
     if hl_gettop() < 1 {

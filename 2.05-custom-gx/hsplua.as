@@ -36,6 +36,7 @@
 #cmd hl_pushdim                 0x29
 #cmd hl_pushhspvalue            0x2A
 #cmd hl_settop                  0x2B
+#cmd hl_setvar                  0x2C
 #cmd hl_isboolean               0x80
 #cmd hl_iscfunction             0x81
 #cmd hl_isfunction              0x82
@@ -68,3 +69,4 @@
 #cmd hl_checkstring             0xA1
 #cmd hl_checklstring            0xA2
 #cmd hl_isinteger               0xA3
+#cmd hl_tohspvalue              0xA4
