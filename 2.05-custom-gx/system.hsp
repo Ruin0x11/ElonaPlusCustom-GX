@@ -673,9 +673,9 @@
 		repeat MAX_CHARA_TOTAL
 			cdata(CDATA_CUSTOM_TALK_LINE, cnt) = 0
 		loop
-		gdata(GDATA_FLAG_SCROLL_OF_WITCHCRAFT_TOTAL_SKILL_BONUS) = cdata(CDATA_LEVEL, CHARA_PLAYER) * 5
+		gdata(GDATA_FLAG_SCROLL_OF_WITCHCRAFT_TOTAL_SPELL_BONUS) = cdata(CDATA_LEVEL, CHARA_PLAYER) * 5
 		if ( gdata(GDATA_FLAG_GAME_MODE) == GAMEMODE_PURGE ) {
-			gdata(GDATA_FLAG_SCROLL_OF_WITCHCRAFT_TOTAL_SKILL_BONUS) += 10000
+			gdata(GDATA_FLAG_SCROLL_OF_WITCHCRAFT_TOTAL_SPELL_BONUS) += 10000
 		}
 		txt lang("あなたはスペルボーナスを獲得した。", "You gain spell bonus points.")
 	}
@@ -705,11 +705,11 @@
 	}
 	if ( gdata(GDATA_VERSION) < 5980 ) {
 		gdata(GDATA_FLAG_PC_SKILL_BONUS_OBTAINED) = cdata(CDATA_SKILLPOINT, CHARA_PLAYER)
-		gdata(GDATA_FLAG_SPELL_BONUS_OBTAINED) = gdata(GDATA_FLAG_SCROLL_OF_WITCHCRAFT_TOTAL_SKILL_BONUS)
+		gdata(GDATA_FLAG_SPELL_BONUS_OBTAINED) = gdata(GDATA_FLAG_SCROLL_OF_WITCHCRAFT_TOTAL_SPELL_BONUS)
 
         /********** ORIGINAL - BEGINNING ********** // Remove skill bonus limit.
 
-		if ( gdata(GDATA_FLAG_SCROLL_OF_WITCHCRAFT_TOTAL_SKILL_BONUS) >= 100 | cdata(CDATA_SKILLPOINT, CHARA_PLAYER) >= 100 | cdata(CDATA_PLATINUM, CHARA_PLAYER) >= 100 ) {
+		if ( gdata(GDATA_FLAG_SCROLL_OF_WITCHCRAFT_TOTAL_SPELL_BONUS) >= 100 | cdata(CDATA_SKILLPOINT, CHARA_PLAYER) >= 100 | cdata(CDATA_PLATINUM, CHARA_PLAYER) >= 100 ) {
 			if ( gdata(GDATA_FLAG_GAME_MODE) != 2 & gdata(GDATA_FLAG_GAME_MODE) != GAMEMODE_PURGE ) {
 				dialog lang("注意！スペルボーナス、スキルボーナス、プラチナ硬貨は100以上所持していると新たに獲得できない。", "Caution! While the spell bonus is 100 or more, you cannot get new.")
 			}

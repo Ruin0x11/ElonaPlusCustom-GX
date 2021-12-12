@@ -8600,7 +8600,7 @@
 		s = ""
 		if ( csctrl == 0 | csctrl == 4 ) {
 			if ( page != 0 ) {
-				s = lang("残り " + cdata(CDATA_SKILLPOINT, cc) + " のボーナスをスキルに、残り " + gdata(GDATA_FLAG_SCROLL_OF_WITCHCRAFT_TOTAL_SKILL_BONUS) + " のボーナスをスペルに分配できる", "You can spend " + cdata(CDATA_SKILLPOINT, cc) + " bonus to skill / " + gdata(GDATA_FLAG_SCROLL_OF_WITCHCRAFT_TOTAL_SKILL_BONUS) + " bonus to spell.")
+				s = lang("残り " + cdata(CDATA_SKILLPOINT, cc) + " のボーナスをスキルに、残り " + gdata(GDATA_FLAG_SCROLL_OF_WITCHCRAFT_TOTAL_SPELL_BONUS) + " のボーナスをスペルに分配できる", "You can spend " + cdata(CDATA_SKILLPOINT, cc) + " bonus to skill / " + gdata(GDATA_FLAG_SCROLL_OF_WITCHCRAFT_TOTAL_SPELL_BONUS) + " bonus to spell.")
 			}
 		}
 	}
@@ -9239,16 +9239,16 @@
 				}
 			}
 			else {
-				if ( gdata(GDATA_FLAG_SCROLL_OF_WITCHCRAFT_TOTAL_SKILL_BONUS) < 1 | p < 0 | p < 100 ) {
+				if ( gdata(GDATA_FLAG_SCROLL_OF_WITCHCRAFT_TOTAL_SPELL_BONUS) < 1 | p < 0 | p < 100 ) {
 					goto *com_charainfo_loop
 				}
 				if ( sorg(csskill, CHARA_PLAYER) == 0 ) {
 					snd SOUNDLIST_FAIL1
 					goto *com_charainfo_loop
 				}
-				gdata(GDATA_FLAG_SCROLL_OF_WITCHCRAFT_TOTAL_SKILL_BONUS)--
+				gdata(GDATA_FLAG_SCROLL_OF_WITCHCRAFT_TOTAL_SPELL_BONUS)--
 				if ( dbg_skillpointfix ) {
-					gdata(GDATA_FLAG_SCROLL_OF_WITCHCRAFT_TOTAL_SKILL_BONUS)++
+					gdata(GDATA_FLAG_SCROLL_OF_WITCHCRAFT_TOTAL_SPELL_BONUS)++
 				}
 			}
 			snd SOUNDLIST_SPEND1
