@@ -3042,7 +3042,7 @@
 		cutname s, 36
 		cs_list s, wx + 84, wy + 66 + cnt * 19 - 1, 19
 		s = "Lv." + cdata(CDATA_LEVEL, i) + " "
-        s += gendername(i)
+        s += cnven(gendername(i))
 		s += lang(" ", "(") + calcage(i) + "" + lang("歳", ")")
 		if ( cdata(CDATA_EXIST, i) == CHAR_STATE_ALLY_DEAD | cdata(CDATA_EXIST, i) == CHAR_STATE_ADV_DEAD | cdata(CDATA_EXIST, i) == CHAR_STATE_DEAD ) {
 			if ( cdata(CDATA_CAN_REVIVE, i) <= 0 ) {
@@ -3988,15 +3988,67 @@
 		goto *com_wish_end
 	}
 	if ( inputlog == "性転換" | inputlog == "性" | inputlog == "異性" | inputlog == "sex" ) {
-		if ( cdata(CDATA_SEX, CHARA_PLAYER) == 0 ) {
-			cdata(CDATA_SEX, CHARA_PLAYER) = 1
-			cdatan(CDATAN_NEWSEX, CHARA_PLAYER) = lang("女性", "female")
+		txt lang("どんな性別が欲しい？", "Which gender would you like?")
+
+		promptAdd cnven(strmale), "null", 0
+		promptAdd cnven(strfemale), "null", 1
+		promptAdd cnven(lang("自称男性", "male?")), "null", 2
+		promptAdd cnven(lang("自称女性", "female?")), "null", 3
+		promptAdd cnven(lang("両性具有", "hermaphrodite")), "null", 4
+		promptAdd cnven(lang("性別不明", "unknown")), "null", 5
+        val = promptx, prompty, 200, 1
+		gosub *prompt_key
+
+        if ( rtval == (-1) ) {
+			txt lang("やっぱりやめた。", "You changed your mind.")
+			goto *com_wish_end
+        }
+
+        locvar_sex = cdata(CDATA_SEX, CHARA_PLAYER)
+        locvar_newsex = cdatan(CDATAN_NEWSEX, CHARA_PLAYER)
+
+ 		if ( rtval == 0 ) {
+ 			locvar_sex = SEX_MALE
+			locvar_newsex = ""
+ 		}
+ 		if ( rtval == 1 ) {
+ 			locvar_sex = SEX_FEMALE
+			locvar_newsex = ""
 		}
-		else {
-			cdata(CDATA_SEX, CHARA_PLAYER) = 0
-			cdatan(CDATAN_NEWSEX, CHARA_PLAYER) = lang("男性", "male")
+		if ( rtval == 2 ) {
+			locvar_sex = SEX_FEMALE
+			locvar_newsex = lang("自称男性", "male?")
 		}
-		txt lang(name(CHARA_PLAYER) + "は" + _sex(cdata(CDATA_SEX, CHARA_PLAYER)) + "になった！ …もう後戻りはできないわよ。", name(CHARA_PLAYER) + " become " + _sex(cdata(CDATA_SEX, CHARA_PLAYER)) + "!")
+		if ( rtval == 3 ) {
+			locvar_sex = SEX_MALE
+			locvar_newsex = lang("自称女性", "female?")
+		}
+		if ( rtval == 4 ) {
+			locvar_sex = SEX_FEMALE
+			locvar_newsex = lang("両性具有", "hermaphrodite")
+		}
+		if ( rtval == 5 ) {
+			locvar_sex = SEX_MALE
+    	    locvar_newsex = lang("なし", "none")
+		}
+
+        txt lang("性別名を変更する？", "Will you change name of gender?")
+		promptYesNo
+        if ( rtval == 0 ) {
+			txt lang("新しい性別は？", "What's a new name of gender?")
+			val = (windoww - 220) / 2 + inf_screenx, winposy(90), 12, 1, 0
+			inputlog = ""
+			input_mode = 0
+			gosub *prompt_word
+			if ( inputlog != "" ) {
+				locvar_newsex = "" + inputlog
+			}
+        }
+
+		cdata(CDATA_SEX, CHARA_PLAYER) = locvar_sex
+		cdatan(CDATAN_NEWSEX, CHARA_PLAYER) = locvar_newsex
+
+		txt lang(name(CHARA_PLAYER) + "は" + gendername(CHARA_PLAYER) + "になった！ …もう後戻りはできないわよ。", name(CHARA_PLAYER) + " became " + gendername(CHARA_PLAYER) + "!")
 		goto *com_wish_end
 	}
 	if ( inputlog == "贖罪" | inputlog == "redemption" | inputlog == "atonement" ) {
@@ -8559,12 +8611,7 @@
 			s(3) = cnven(strfemale)
 		}
 		inipower = cdata(CDATA_INIT_LIFEMANA, cc) + cdata(CDATA_INIT_ATTR, cc)
-		if ( cdatan(CDATAN_NEWSEX, cc) != "" ) {
-			s(3) = cnven(lang("" + cdatan(CDATAN_NEWSEX, cc), cdatan(CDATAN_NEWSEX, cc)))
-		}
-		if ( cdatan(CDATAN_NEWSEX, cc) == lang("なし", "none") ) {
-			s(3) = lang("性別不明", "unknown")
-		}
+        s(3) = cnven(gendername(cc))
 		s(5) = "" + calcage(cc) + " " + lang("歳", ""), "" + cdata(CDATA_HEIGHT, cc) + " cm", "" + cdata(CDATA_WEIGHT, cc) + " kg", "" + inipower + "/" + cdata(CDATA_INIT_SPEED, cc), "" + cdata(CDATA_AP_CURRENT, cc) + "(" + cdata(CDATA_AP_TOTAL, cc) + ")", ""
 		repeat 10
 			pos wx + 68 + cnt / 5 * 190 + en * ((cnt > 4) * 12), wy + 46 + cnt \ 5 * 15

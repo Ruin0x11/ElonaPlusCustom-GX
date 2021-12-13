@@ -3320,10 +3320,10 @@
 	display_topic lang("性別の候補", "Gender"), wx + 28, wy + 30
 	listn(0, 0) = cnven(strmale)
 	listn(0, 1) = cnven(strfemale)
-	listn(0, 2) = lang("自称男性", "male?")
-	listn(0, 3) = lang("自称女性", "female?")
-	listn(0, 4) = lang("両性具有", "hermaphrodite")
-	listn(0, 5) = lang("性別不明", "unknown")
+	listn(0, 2) = cnven(lang("自称男性", "male?"))
+	listn(0, 3) = cnven(lang("自称女性", "female?"))
+	listn(0, 4) = cnven(lang("両性具有", "hermaphrodite"))
+	listn(0, 5) = cnven(lang("性別不明", "unknown"))
 	font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
 	repeat 6
 		key_list(cnt) = key_select(cnt)
@@ -3338,32 +3338,32 @@
 	key_check
 	cursor_check
  	if ( key == key_select(0) ) {
- 		cmsex = 0
+ 		cmsex = SEX_MALE
 		zisyousex = ""
  		goto *cm_sex_WEND1
  	}
  	if ( key == key_select(1) ) {
- 		cmsex = 1
+ 		cmsex = SEX_FEMALE
 		zisyousex = ""
 		goto *cm_sex_WEND1
 	}
 	if ( key == key_select(2) ) {
-		cmsex = 1
+		cmsex = SEX_FEMALE
 		zisyousex = lang("自称男性", "male?")
 		goto *cm_sex_WEND1
 	}
 	if ( key == key_select(3) ) {
-		cmsex = 0
+		cmsex = SEX_MALE
 		zisyousex = lang("自称女性", "female?")
 		goto *cm_sex_WEND1
 	}
 	if ( key == key_select(4) ) {
-		cmsex = 1
+		cmsex = SEX_FEMALE
 		zisyousex = lang("両性具有", "hermaphrodite")
 		goto *cm_sex_WEND1
 	}
 	if ( key == key_select(5) ) {
-		cmsex = 0
+		cmsex = SEX_MALE
         zisyousex = lang("性別不明", "unknown")
  		goto *cm_sex_WEND1
 	}
