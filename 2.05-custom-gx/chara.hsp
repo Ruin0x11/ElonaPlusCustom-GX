@@ -3364,7 +3364,7 @@
 	}
 	if ( key == key_select(5) ) {
 		cmsex = 0
-        zisyousex = lang("性別不明", "none")
+        zisyousex = lang("性別不明", "unknown")
  		goto *cm_sex_WEND1
 	}
 	if ( key == key_cancel ) {
@@ -3378,6 +3378,63 @@
 	goto *cm_sex_WHILE1
 *cm_sex_WEND1
 	snd SOUNDLIST_OK1
+
+*cm_sex_change_name
+	snd SOUNDLIST_SKILL
+	dim cmlock, 10
+	cmlock(8) = 2
+	redraw 0
+	cs = 0
+	cs_bk = -1
+	page = 0
+	pagesize = 0
+	gmode 0
+	pos 0, 0
+	gcopy 4, 0, 0, windoww, windowh
+	gmode 2
+	s = lang("性別名を変更する？", "Will you change name of gender?")
+	gosub *screen_drawMsg2
+	promptAdd lang("はい", "Yes"), "a"
+	promptAdd lang("いいえ", "No"), "b"
+	val = promptx, 240, 160, 1
+	gosub *prompt_key
+	snd SOUNDLIST_OK1
+	if ( rtval == 0 ) {
+		nowindowanime = 0
+		goto *cm_sex_change_name_input
+	}
+	if ( rtval == 1 | rtval == (-1) ) {
+		goto *cm_class
+	}
+	windowshadow = 1
+*cm_sex_change_name_input
+	redraw 0
+	cs = 0
+	cs_bk = -1
+	page = 0
+	pagesize = 0
+	gmode 0
+	pos 0, 0
+	gcopy 4, 0, 0, windoww, windowh
+	gmode 2
+	s = lang("新しい性別は？", "What's a new name of gender?")
+	gosub *screen_drawMsg2
+	font lang(cfg_font1, cfg_font2), 13 - en * 2, 1
+	pos 20, windowh - 20
+	color 0, 0, 0
+	mes "Press F1 to show help."
+	if ( geneuse != "" ) {
+		pos 20, windowh - 36
+		mes "Gene from " + geneuse
+	}
+	val = (windoww - 220) / 2 + inf_screenx, winposy(90), 12, 1, 0
+	inputlog = ""
+	input_mode = 0
+	gosub *prompt_word
+	if ( inputlog != "" ) {
+		zisyousex = "" + inputlog
+	}
+	snd SOUNDLIST_SKILL
 
 *cm_class
 	redraw 0
@@ -3501,6 +3558,7 @@
 	}
 	if ( rtval == 1 | rtval == (-1) ) {
 		cmzisyou = ""
+		snd SOUNDLIST_SKILL
 		goto *cm_skill
 	}
 	windowshadow = 1
@@ -4000,18 +4058,12 @@
 	if ( cmzisyou != "" ) {
 		cdatan(CDATAN_FAKE_CLASS, rc) = cmzisyou
 	}
-	if ( zisyousex == lang("自称男性", "male?") ) {
-		cdatan(CDATAN_NEWSEX, rc) = lang("自称男性", "male?")
-	}
-	if ( zisyousex == lang("自称女性", "female?") ) {
-		cdatan(CDATAN_NEWSEX, rc) = lang("自称女性", "female?")
-	}
-	if ( zisyousex == lang("両性具有", "hermaphrodite") ) {
-		cdatan(CDATAN_NEWSEX, rc) = lang("両性具有", "hermaphrodite")
-	}
 	if ( zisyousex == lang("性別不明", "unknown") ) {
 		cdatan(CDATAN_NEWSEX, rc) = lang("なし", "none")
 	}
+    else {
+		cdatan(CDATAN_NEWSEX, rc) = zisyousex
+    }
 	cdata(CDATA_BACKGROUND_PART_A1, rc) = ohanasi1
 	cdata(CDATA_BACKGROUND_PART_A2, rc) = ohanasi2
 	cdata(CDATA_BACKGROUND_PART_B1, rc) = ohanasi3
