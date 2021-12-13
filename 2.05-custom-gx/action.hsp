@@ -1,3 +1,57 @@
+/********** RUIN0X11 CUSTOM - BEGINNING **********/
+
+// Gender checks for evolution purposes.
+
+#defcfunc evoismale int charid
+    locvar_newsex = cdatan(CDATAN_NEWSEX, charid)
+
+	switch locvar_newsex
+        case ""
+			if ( cdata(CDATA_SEX, charid) == SEX_MALE ) {
+				return TRUE
+			}
+    		swbreak
+		case "男性"
+		case "なし"
+		case "自称男性"
+		case "male"
+		case "none"
+		case "male?"
+		case "trans-male"
+			return TRUE
+    		swbreak
+		default
+			swbreak
+	swend
+
+    return FALSE
+
+#defcfunc evoisfemale int charid
+    locvar_newsex = cdatan(CDATAN_NEWSEX, charid)
+
+	switch locvar_newsex
+        case ""
+			if ( cdata(CDATA_SEX, charid) == SEX_FEMALE ) {
+				return TRUE
+			}
+    		swbreak
+		case "女性"
+		case "両性具有"
+		case "自称女性"
+		case "female"
+		case "hermaphrodite"
+		case "female?"
+		case "trans-female"
+			return TRUE
+    		swbreak
+		default
+			swbreak
+	swend
+
+    return FALSE
+
+/********** RUIN0X11 CUSTOM - ENDING **********/
+
 *act_throw
 	if ( inv(INV_ITEM_PROPERTY, ci) == PROP_NPC | inv(INV_ITEM_PROPERTY, ci) == PROP_SPECIAL ) {
 		snd SOUNDLIST_FAIL1
@@ -12722,20 +12776,10 @@
 		if ( cdata(CDATA_ID, tc) == CREATURE_ID_BLACK_CAT ) {
 			if ( inv(INV_ITEM_PARAM1, ci) == EVITEM_HEART_GOD ) {
 				if ( cdata(CDATA_EVOLUTION_STAGE, tc) == 0 ) {
-					if ( cdatan(CDATAN_NEWSEX, tc) == "" ) {
-						if ( cdata(CDATA_SEX, tc) == 0 ) {
-							evmode = 12
-						}
-					}
-					if ( cdatan(CDATAN_NEWSEX, tc) == lang("男性", "male") | cdatan(CDATAN_NEWSEX, tc) == lang("自称男性", "trans-male") | cdatan(CDATAN_NEWSEX, tc) == lang("なし", "none") ) {
+					if ( evoismale(tc) ) {
 						evmode = 12
 					}
-					if ( cdatan(CDATAN_NEWSEX, tc) == "" ) {
-						if ( cdata(CDATA_SEX, tc) == 1 ) {
-							evmode = 13
-						}
-					}
-					if ( cdatan(CDATAN_NEWSEX, tc) == lang("女性", "female") | cdatan(CDATAN_NEWSEX, tc) == lang("自称女性", "trans-female") | cdatan(CDATAN_NEWSEX, tc) == lang("両性具有", "hermaphrodite") ) {
+					if ( evoisfemale(tc) ) {
 						evmode = 13
 					}
 				}
@@ -12744,20 +12788,10 @@
 		if ( cdata(CDATA_ID, tc) == CREATURE_ID_CUTE_FAIRY ) {
 			if ( inv(INV_ITEM_PARAM1, ci) == EVITEM_HEART_GOD ) {
 				if ( cdata(CDATA_EVOLUTION_STAGE, tc) == 0 ) {
-					if ( cdatan(CDATAN_NEWSEX, tc) == "" ) {
-						if ( cdata(CDATA_SEX, tc) == 0 ) {
-							evmode = 14
-						}
-					}
-					if ( cdatan(CDATAN_NEWSEX, tc) == lang("男性", "male") | cdatan(CDATAN_NEWSEX, tc) == lang("自称男性", "trans-male") | cdatan(CDATAN_NEWSEX, tc) == lang("なし", "none") ) {
+					if ( evoismale(tc) ) {
 						evmode = 14
 					}
-					if ( cdatan(CDATAN_NEWSEX, tc) == "" ) {
-						if ( cdata(CDATA_SEX, tc) == 1 ) {
-							evmode = 15
-						}
-					}
-					if ( cdatan(CDATAN_NEWSEX, tc) == lang("女性", "female") | cdatan(CDATAN_NEWSEX, tc) == lang("自称女性", "trans-female") | cdatan(CDATAN_NEWSEX, tc) == lang("両性具有", "hermaphrodite") ) {
+					if ( evoisfemale(tc) ) {
 						evmode = 15
 					}
 				}
@@ -12766,20 +12800,10 @@
 		if ( cdata(CDATA_ID, tc) == CREATURE_ID_ANDROID ) {
 			if ( inv(INV_ITEM_PARAM1, ci) == EVITEM_HEART_GOD ) {
 				if ( cdata(CDATA_EVOLUTION_STAGE, tc) == 0 ) {
-					if ( cdatan(CDATAN_NEWSEX, tc) == "" ) {
-						if ( cdata(CDATA_SEX, tc) == 0 ) {
-							evmode = 16
-						}
-					}
-					if ( cdatan(CDATAN_NEWSEX, tc) == lang("男性", "male") | cdatan(CDATAN_NEWSEX, tc) == lang("自称男性", "trans-male") | cdatan(CDATAN_NEWSEX, tc) == lang("なし", "none") ) {
+					if ( evoismale(tc) ) {
 						evmode = 16
 					}
-					if ( cdatan(CDATAN_NEWSEX, tc) == "" ) {
-						if ( cdata(CDATA_SEX, tc) == 1 ) {
-							evmode = 17
-						}
-					}
-					if ( cdatan(CDATAN_NEWSEX, tc) == lang("女性", "female") | cdatan(CDATAN_NEWSEX, tc) == lang("自称女性", "trans-female") | cdatan(CDATAN_NEWSEX, tc) == lang("両性具有", "hermaphrodite") ) {
+					if ( evoisfemale(tc) ) {
 						evmode = 17
 					}
 				}
@@ -12795,20 +12819,10 @@
 		if ( cdata(CDATA_ID, tc) == CREATURE_ID_EXILE ) {
 			if ( inv(INV_ITEM_PARAM1, ci) == EVITEM_HEART_GOD ) {
 				if ( cdata(CDATA_EVOLUTION_STAGE, tc) == 0 ) {
-					if ( cdatan(CDATAN_NEWSEX, tc) == "" ) {
-						if ( cdata(CDATA_SEX, tc) == 0 ) {
-							evmode = 19
-						}
-					}
-					if ( cdatan(CDATAN_NEWSEX, tc) == lang("男性", "male") | cdatan(CDATAN_NEWSEX, tc) == lang("自称男性", "trans-male") | cdatan(CDATAN_NEWSEX, tc) == lang("なし", "none") ) {
+					if ( evoismale(tc) ) {
 						evmode = 19
 					}
-					if ( cdatan(CDATAN_NEWSEX, tc) == "" ) {
-						if ( cdata(CDATA_SEX, tc) == 1 ) {
-							evmode = 20
-						}
-					}
-					if ( cdatan(CDATAN_NEWSEX, tc) == lang("女性", "female") | cdatan(CDATAN_NEWSEX, tc) == lang("自称女性", "trans-female") | cdatan(CDATAN_NEWSEX, tc) == lang("両性具有", "hermaphrodite") ) {
+					if ( evoisfemale(tc) ) {
 						evmode = 20
 					}
 				}
@@ -13181,20 +13195,10 @@
 		if ( cdata(CDATA_ID, tc) == CREATURE_ID_SLIME | cdata(CDATA_ID, tc) == CREATURE_ID_ACID_SLIME ) {
 			if ( inv(INV_ITEM_PARAM1, ci) == EVITEM_HEART_ANOTHER ) {
 				if ( cdata(CDATA_EVOLUTION_STAGE, tc) == 0 ) {
-					if ( cdatan(CDATAN_NEWSEX, tc) == "" ) {
-						if ( cdata(CDATA_SEX, tc) == 0 ) {
-							evmode = 74
-						}
-					}
-					if ( cdatan(CDATAN_NEWSEX, tc) == lang("男性", "male") | cdatan(CDATAN_NEWSEX, tc) == lang("自称男性", "trans-male") | cdatan(CDATAN_NEWSEX, tc) == lang("なし", "none") ) {
+					if ( evoismale(tc) ) {
 						evmode = 74
 					}
-					if ( cdatan(CDATAN_NEWSEX, tc) == "" ) {
-						if ( cdata(CDATA_SEX, tc) == 1 ) {
-							evmode = 73
-						}
-					}
-					if ( cdatan(CDATAN_NEWSEX, tc) == lang("女性", "female") | cdatan(CDATAN_NEWSEX, tc) == lang("自称女性", "trans-female") | cdatan(CDATAN_NEWSEX, tc) == lang("両性具有", "hermaphrodite") ) {
+					if ( evoisfemale(tc) ) {
 						evmode = 73
 					}
 				}
@@ -13203,12 +13207,7 @@
 		if ( cdata(CDATA_ID, tc) == CREATURE_ID_ALIEN ) {
 			if ( inv(INV_ITEM_PARAM1, ci) == EVITEM_HEART_KING ) {
 				if ( cdata(CDATA_EVOLUTION_STAGE, tc) == 0 ) {
-					if ( cdatan(CDATAN_NEWSEX, tc) == "" ) {
-						if ( cdata(CDATA_SEX, tc) == 1 ) {
-							evmode = 75
-						}
-					}
-					if ( cdatan(CDATAN_NEWSEX, tc) == lang("女性", "female") | cdatan(CDATAN_NEWSEX, tc) == lang("自称女性", "trans-female") | cdatan(CDATAN_NEWSEX, tc) == lang("両性具有", "hermaphrodite") ) {
+					if ( evoisfemale(tc) ) {
 						evmode = 75
 					}
 				}
@@ -13322,12 +13321,7 @@
 		if ( cdata(CDATA_ID, tc) == CREATURE_ID_WASP | cdata(CDATA_ID, tc) == CREATURE_ID_RED_WASP | cdata(CDATA_ID, tc) == CREATURE_ID_BLACK_HORNET ) {
 			if ( inv(INV_ITEM_PARAM1, ci) == EVITEM_HEART_MAGIC ) {
 				if ( cdata(CDATA_EVOLUTION_STAGE, tc) == 0 ) {
-					if ( cdatan(CDATAN_NEWSEX, tc) == "" ) {
-						if ( cdata(CDATA_SEX, tc) == 1 ) {
-							evmode = 91
-						}
-					}
-					if ( cdatan(CDATAN_NEWSEX, tc) == lang("女性", "female") | cdatan(CDATAN_NEWSEX, tc) == lang("自称女性", "trans-female") | cdatan(CDATAN_NEWSEX, tc) == lang("両性具有", "hermaphrodite") ) {
+					if ( evoisfemale(tc) ) {
 						evmode = 91
 					}
 				}
@@ -13336,12 +13330,7 @@
 		if ( cdata(CDATA_ID, tc) == CREATURE_ID_MUSHROOM | cdata(CDATA_ID, tc) == CREATURE_ID_SPORE_MUSHROOM | cdata(CDATA_ID, tc) == CREATURE_ID_CHAOS_MUSHROOM ) {
 			if ( inv(INV_ITEM_PARAM1, ci) == EVITEM_HEART_EVOLUTION ) {
 				if ( cdata(CDATA_EVOLUTION_STAGE, tc) == 0 ) {
-					if ( cdatan(CDATAN_NEWSEX, tc) == "" ) {
-						if ( cdata(CDATA_SEX, tc) == 1 ) {
-							evmode = 92
-						}
-					}
-					if ( cdatan(CDATAN_NEWSEX, tc) == lang("女性", "female") | cdatan(CDATAN_NEWSEX, tc) == lang("自称女性", "trans-female") | cdatan(CDATAN_NEWSEX, tc) == lang("両性具有", "hermaphrodite") ) {
+					if ( evoisfemale(tc) ) {
 						evmode = 92
 					}
 				}
@@ -13350,12 +13339,7 @@
 		if ( cdata(CDATA_ID, tc) == CREATURE_ID_COBRA | cdata(CDATA_ID, tc) == CREATURE_ID_KING_COBRA ) {
 			if ( inv(INV_ITEM_PARAM1, ci) == EVITEM_HEART_ANOTHER ) {
 				if ( cdata(CDATA_EVOLUTION_STAGE, tc) == 0 ) {
-					if ( cdatan(CDATAN_NEWSEX, tc) == "" ) {
-						if ( cdata(CDATA_SEX, tc) == 1 ) {
-							evmode = 93
-						}
-					}
-					if ( cdatan(CDATAN_NEWSEX, tc) == lang("女性", "female") | cdatan(CDATAN_NEWSEX, tc) == lang("自称女性", "trans-female") | cdatan(CDATAN_NEWSEX, tc) == lang("両性具有", "hermaphrodite") ) {
+					if ( evoisfemale(tc) ) {
 						evmode = 93
 					}
 				}
@@ -13583,12 +13567,7 @@
 		if ( cdata(CDATA_ID, tc) == CREATURE_ID_WILD_RABBIT ) {
 			if ( inv(INV_ITEM_PARAM1, ci) == EVITEM_HEART_ANOTHER ) {
 				if ( cdata(CDATA_EVOLUTION_STAGE, tc) == 0 ) {
-					if ( cdatan(CDATAN_NEWSEX, tc) == "" ) {
-						if ( cdata(CDATA_SEX, tc) == 1 ) {
-							evmode = 125
-						}
-					}
-					if ( cdatan(CDATAN_NEWSEX, tc) == lang("女性", "female") | cdatan(CDATAN_NEWSEX, tc) == lang("自称女性", "trans-female") | cdatan(CDATAN_NEWSEX, tc) == lang("両性具有", "hermaphrodite") ) {
+					if ( evoisfemale(tc) ) {
 						evmode = 125
 					}
 				}
@@ -13856,12 +13835,7 @@
 		if ( cdata(CDATA_ID, tc) == CREATURE_ID_FLOATING_EYE | cdata(CDATA_ID, tc) == CREATURE_ID_CHAOS_EYE | cdata(CDATA_ID, tc) == CREATURE_ID_MAD_GAZE | cdata(CDATA_ID, tc) == CREATURE_ID_DEATH_GAZE ) {
 			if ( inv(INV_ITEM_PARAM1, ci) == 16 ) {
 				if ( cdata(CDATA_EVOLUTION_STAGE, tc) == 0 ) {
-					if ( cdatan(CDATAN_NEWSEX, tc) == "" ) {
-						if ( cdata(CDATA_SEX, tc) == 1 ) {
-							evmode = 163
-						}
-					}
-					if ( cdatan(CDATAN_NEWSEX, tc) == lang("女性", "female") | cdatan(CDATAN_NEWSEX, tc) == lang("自称女性", "female") | cdatan(CDATAN_NEWSEX, tc) == lang("両性具有", "bisexual") ) {
+					if ( evoisfemale(tc) ) {
 						evmode = 163
 					}
 				}
@@ -13884,12 +13858,7 @@
 		if ( cdata(CDATA_ID, tc) == CREATURE_ID_HAND_OF_THE_DEAD | cdata(CDATA_ID, tc) == CREATURE_ID_HAND_OF_THE_CHAOS | cdata(CDATA_ID, tc) == CREATURE_ID_HAND_OF_THE_MURDERER ) {
 			if ( inv(INV_ITEM_PARAM1, ci) == 14 ) {
 				if ( cdata(CDATA_EVOLUTION_STAGE, tc) == 0 ) {
-					if ( cdatan(CDATAN_NEWSEX, tc) == "" ) {
-						if ( cdata(CDATA_SEX, tc) == 0 ) {
-							evmode = 166
-						}
-					}
-					if ( cdatan(CDATAN_NEWSEX, tc) == lang("男性", "male") | cdatan(CDATAN_NEWSEX, tc) == lang("自称男性", "male") | cdatan(CDATAN_NEWSEX, tc) == lang("なし", "none") ) {
+					if ( evoismale(tc) ) {
 						evmode = 166
 					}
 				}
@@ -13898,12 +13867,7 @@
 		if ( cdata(CDATA_ID, tc) == CREATURE_ID_HAND_OF_THE_DEAD | cdata(CDATA_ID, tc) == CREATURE_ID_HAND_OF_THE_CHAOS | cdata(CDATA_ID, tc) == CREATURE_ID_HAND_OF_THE_MURDERER ) {
 			if ( inv(INV_ITEM_PARAM1, ci) == 16 ) {
 				if ( cdata(CDATA_EVOLUTION_STAGE, tc) == 0 ) {
-					if ( cdatan(CDATAN_NEWSEX, tc) == "" ) {
-						if ( cdata(CDATA_SEX, tc) == 1 ) {
-							evmode = 167
-						}
-					}
-					if ( cdatan(CDATAN_NEWSEX, tc) == lang("女性", "female") | cdatan(CDATAN_NEWSEX, tc) == lang("自称女性", "female") | cdatan(CDATAN_NEWSEX, tc) == lang("両性具有", "bisexual") ) {
+					if ( evoisfemale(tc) ) {
 						evmode = 167
 					}
 				}
@@ -14578,56 +14542,26 @@
 						evname = lang("ハイスピリット", "High Spirit")
 						evold = lang("スピリット", "spirit")
 						if ( cdata(CDATA_ID, tc) == CREATURE_ID_WAR_SPIRIT ) {
-							if ( cdatan(CDATAN_NEWSEX, tc) == "" ) {
-								if ( cdata(CDATA_SEX, tc) == 0 ) {
-									cdata(CDATA_PIC, tc) = xy2pic(6, 9) + COLOR_LIGHT_BLUE * COLOR_TINT_MULT
-								}
-							}
-							if ( cdatan(CDATAN_NEWSEX, tc) == lang("男性", "male") | cdatan(CDATAN_NEWSEX, tc) == lang("自称男性", "trans-male") | cdatan(CDATAN_NEWSEX, tc) == lang("なし", "none") ) {
+							if ( evoismale(tc) ) {
 								cdata(CDATA_PIC, tc) = xy2pic(6, 9) + COLOR_LIGHT_BLUE * COLOR_TINT_MULT
 							}
-							if ( cdatan(CDATAN_NEWSEX, tc) == "" ) {
-								if ( cdata(CDATA_SEX, tc) == 1 ) {
-									cdata(CDATA_PIC, tc) = xy2pic(7, 9) + COLOR_LIGHT_BLUE * COLOR_TINT_MULT
-								}
-							}
-							if ( cdatan(CDATAN_NEWSEX, tc) == lang("女性", "female") | cdatan(CDATAN_NEWSEX, tc) == lang("自称女性", "trans-female") | cdatan(CDATAN_NEWSEX, tc) == lang("両性具有", "hermaphrodite") ) {
+							if ( evoisfemale(tc) ) {
 								cdata(CDATA_PIC, tc) = xy2pic(7, 9) + COLOR_LIGHT_BLUE * COLOR_TINT_MULT
 							}
 						}
 						if ( cdata(CDATA_ID, tc) == CREATURE_ID_MAGIC_SPIRIT ) {
-							if ( cdatan(CDATAN_NEWSEX, tc) == "" ) {
-								if ( cdata(CDATA_SEX, tc) == 0 ) {
-									cdata(CDATA_PIC, tc) = xy2pic(8, 9) + COLOR_LIGHT_PURPLE * COLOR_TINT_MULT
-								}
-							}
-							if ( cdatan(CDATAN_NEWSEX, tc) == lang("男性", "male") | cdatan(CDATAN_NEWSEX, tc) == lang("自称男性", "trans-male") | cdatan(CDATAN_NEWSEX, tc) == lang("なし", "none") ) {
+							if ( evoismale(tc) ) {
 								cdata(CDATA_PIC, tc) = xy2pic(8, 9) + COLOR_LIGHT_PURPLE * COLOR_TINT_MULT
 							}
-							if ( cdatan(CDATAN_NEWSEX, tc) == "" ) {
-								if ( cdata(CDATA_SEX, tc) == 1 ) {
-									cdata(CDATA_PIC, tc) = xy2pic(9, 9) + COLOR_LIGHT_PURPLE * COLOR_TINT_MULT
-								}
-							}
-							if ( cdatan(CDATAN_NEWSEX, tc) == lang("女性", "female") | cdatan(CDATAN_NEWSEX, tc) == lang("自称女性", "trans-female") | cdatan(CDATAN_NEWSEX, tc) == lang("両性具有", "hermaphrodite") ) {
+							if ( evoisfemale(tc) ) {
 								cdata(CDATA_PIC, tc) = xy2pic(9, 9) + COLOR_LIGHT_PURPLE * COLOR_TINT_MULT
 							}
 						}
 						if ( cdata(CDATA_ID, tc) == CREATURE_ID_GUN_SPIRIT ) {
-							if ( cdatan(CDATAN_NEWSEX, tc) == "" ) {
-								if ( cdata(CDATA_SEX, tc) == 0 ) {
-									cdata(CDATA_PIC, tc) = xy2pic(30, 2) + COLOR_LIGHT_RED * COLOR_TINT_MULT
-								}
-							}
-							if ( cdatan(CDATAN_NEWSEX, tc) == lang("男性", "male") | cdatan(CDATAN_NEWSEX, tc) == lang("自称男性", "trans-male") | cdatan(CDATAN_NEWSEX, tc) == lang("なし", "none") ) {
+							if ( evoismale(tc) ) {
 								cdata(CDATA_PIC, tc) = xy2pic(30, 2) + COLOR_LIGHT_RED * COLOR_TINT_MULT
 							}
-							if ( cdatan(CDATAN_NEWSEX, tc) == "" ) {
-								if ( cdata(CDATA_SEX, tc) == 1 ) {
-									cdata(CDATA_PIC, tc) = xy2pic(31, 2) + COLOR_LIGHT_RED * COLOR_TINT_MULT
-								}
-							}
-							if ( cdatan(CDATAN_NEWSEX, tc) == lang("女性", "female") | cdatan(CDATAN_NEWSEX, tc) == lang("自称女性", "trans-female") | cdatan(CDATAN_NEWSEX, tc) == lang("両性具有", "hermaphrodite") ) {
+							if ( evoisfemale(tc) ) {
 								cdata(CDATA_PIC, tc) = xy2pic(31, 2) + COLOR_LIGHT_RED * COLOR_TINT_MULT
 							}
 						}
@@ -14970,20 +14904,10 @@
 					if ( evmode == 87 ) {
 						evname = lang("翻弄するエレアの戦士", "Merciful Warrior of Elea")
 						evold = lang("エレアの戦士", "warrior of Elea")
-						if ( cdatan(CDATAN_NEWSEX, tc) == "" ) {
-							if ( cdata(CDATA_SEX, tc) == 0 ) {
-								cdata(CDATA_PIC, tc) = xy2pic(4, 19)
-							}
-						}
-						if ( cdatan(CDATAN_NEWSEX, tc) == lang("男性", "male") | cdatan(CDATAN_NEWSEX, tc) == lang("自称男性", "trans-male") | cdatan(CDATAN_NEWSEX, tc) == lang("なし", "none") ) {
+						if ( evoismale(tc) ) {
 							cdata(CDATA_PIC, tc) = xy2pic(4, 19)
 						}
-						if ( cdatan(CDATAN_NEWSEX, tc) == "" ) {
-							if ( cdata(CDATA_SEX, tc) == 1 ) {
-								cdata(CDATA_PIC, tc) = xy2pic(3, 22)
-							}
-						}
-						if ( cdatan(CDATAN_NEWSEX, tc) == lang("女性", "female") | cdatan(CDATAN_NEWSEX, tc) == lang("自称女性", "trans-female") | cdatan(CDATAN_NEWSEX, tc) == lang("両性具有", "hermaphrodite") ) {
+						if ( evoisfemale(tc) ) {
 							cdata(CDATA_PIC, tc) = xy2pic(3, 22)
 						}
 						skillmod SKILL_ATTR_SPD, tc, 20000
@@ -14992,20 +14916,10 @@
 					if ( evmode == 88 ) {
 						evname = lang("エレアの魔法学者", "Magus of Elea")
 						evold = lang("エレアの魔術士", "wizard of Elea")
-						if ( cdatan(CDATAN_NEWSEX, tc) == "" ) {
-							if ( cdata(CDATA_SEX, tc) == 0 ) {
-								cdata(CDATA_PIC, tc) = xy2pic(6, 19)
-							}
-						}
-						if ( cdatan(CDATAN_NEWSEX, tc) == lang("男性", "male") | cdatan(CDATAN_NEWSEX, tc) == lang("自称男性", "trans-male") | cdatan(CDATAN_NEWSEX, tc) == lang("なし", "none") ) {
+						if ( evoismale(tc) ) {
 							cdata(CDATA_PIC, tc) = xy2pic(6, 19)
 						}
-						if ( cdatan(CDATAN_NEWSEX, tc) == "" ) {
-							if ( cdata(CDATA_SEX, tc) == 1 ) {
-								cdata(CDATA_PIC, tc) = xy2pic(2, 22)
-							}
-						}
-						if ( cdatan(CDATAN_NEWSEX, tc) == lang("女性", "female") | cdatan(CDATAN_NEWSEX, tc) == lang("自称女性", "trans-female") | cdatan(CDATAN_NEWSEX, tc) == lang("両性具有", "hermaphrodite") ) {
+						if ( evoisfemale(tc) ) {
 							cdata(CDATA_PIC, tc) = xy2pic(2, 22)
 						}
 						skillmod SKILL_ATTR_SPD, tc, 10000
@@ -15640,20 +15554,10 @@
 					if ( evmode == 142 ) {
 						evname = lang("カオス・スプラウト", "Chaos Sprout")
 						evold = lang("カオス・シード", "chaos seed")
-						if ( cdatan(CDATAN_NEWSEX, tc) == "" ) {
-							if ( cdata(CDATA_SEX, tc) == 0 ) {
-								cdata(CDATA_PIC, tc) = xy2pic(22, 15)
-							}
-						}
-						if ( cdatan(CDATAN_NEWSEX, tc) == lang("男性", "male") | cdatan(CDATAN_NEWSEX, tc) == lang("自称男性", "trans-male") | cdatan(CDATAN_NEWSEX, tc) == lang("なし", "none") ) {
+						if ( evoismale(tc) ) {
 							cdata(CDATA_PIC, tc) = xy2pic(22, 15)
 						}
-						if ( cdatan(CDATAN_NEWSEX, tc) == "" ) {
-							if ( cdata(CDATA_SEX, tc) == 1 ) {
-								cdata(CDATA_PIC, tc) = xy2pic(23, 15)
-							}
-						}
-						if ( cdatan(CDATAN_NEWSEX, tc) == lang("女性", "female") | cdatan(CDATAN_NEWSEX, tc) == lang("自称女性", "trans-female") | cdatan(CDATAN_NEWSEX, tc) == lang("両性具有", "hermaphrodite") ) {
+						if ( evoisfemale(tc) ) {
 							cdata(CDATA_PIC, tc) = xy2pic(23, 15)
 						}
 						skillmod SKILL_ATTR_SPD, tc, 20000
