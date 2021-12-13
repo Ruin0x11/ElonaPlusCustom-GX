@@ -7692,9 +7692,22 @@
 				if ( efid == SKILL_SPACT_SUMMON_CHAOS ) {
 					p = 5
 				}
+
+                // Make Summon Sprit scale with spell level.
+                //
+                // The following code for limiting the summoned ally level
+                // was supposed to be implemented in an earlier Plus version, but
+                // it didn't take effect due to a programming error. To make the spell
+                // more viable, it has been removed in CGX.
+
+                /********** ORIGINAL - BEGINNING **********
+
 				if ( efid == SKILL_SPELL_SUMMON_SPIRIT ) {
 					efp = 2 + rnd(8)
 				}
+
+                ********** ORIGINAL - ENDING **********/
+
 				if ( efid == SKILL_SPELL_SUMMON_MONSTERS ) {
 					if ( efp > cdata(CDATA_LEVEL, cc) + 5 ) {
 						efp = cdata(CDATA_LEVEL, cc) + rnd(5)
@@ -7821,6 +7834,19 @@
 						characreate -1, dbid, cdata(CDATA_X, tc), cdata(CDATA_Y, tc)
 						cbitmod CHARA_BIT_SUMMONED, rc, 1
 						cdata(CDATA_CHARACTER_TIER, rc) = CHARACTER_TIER_SUMMONED_NORMAL
+
+                        /********** RUIN0X11 CUSTOM - BEGINNING **********/ // Make summoned spirits neutral.
+
+						if ( cdata(CDATA_RELATION, cc) >= RELATION_DISLIKE ) {
+							locvar_relation = RELATION_DISLIKE
+						}
+						else {
+							locvar_relation = RELATION_ENEMY
+						}
+
+						cdata(CDATA_RELATION, rc) = locvar_relation
+
+                        /********** RUIN0X11 CUSTOM - ENDING **********/
 					}
 					else {
 						if ( efid == SKILL_SPACT_TEMPEST_ARROW ) {
