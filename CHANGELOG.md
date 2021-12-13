@@ -1,6 +1,32 @@
+# 2.07.2.0
+
+## Added
+- You can now rename the gender you select during character creation.
+
+## Changed
+- Display the actual danger level for Fort of Chaos nefia.
+- Summon Spirit now scales with the spell's level and spawns neutral creatures that attack enemies.
+- Revert the translations for the extra genders to that of stock Plus.
+- The `sex` wish now allows you to choose your new gender from the list available during character creation.
+
+## Fixed
+- Fixed the limits on speed bonuses from Leold during the main story not being correct.
+- Fixed a few details of certain blending recipes, and reverted Custom-G's changes to them.
+- Applied the change to the shortcut text display for the inventory window from Elona+ 1.995.
+- Fixed not being able to sound the horn when driving a truck.
+- Fixed roads being removed when building something over them using a deed.
+- Fixed spell bonuses being incorrectly labeled as skill bonuses in the journal.
+- Fixed the layout of the journal records so they don't overflow the page.
+- Fixed player skill bonuses on level up not being tracked in the journal.
+- Fixed Big Brushes and Nyoi Mimikaki being randomly generated.
+- Fixed a crash when offering livestock with Impress greater than 150 to your god.
+- Fixed auto aim cheetahs not having their special ammo action.
+- Fixed the random generation of items added in later Plus versions.
+- Fixed more crashes due to OS-level DPI scaling.
+
 # 2.07.1.2
 
-# Changed
+## Changed
 - Limit the combinations of resolution and DPI scaling in the options menu so that fullscreen always works.
 - Prevent crashes from invalid resolutions by checking if the maximum display size is exceeded on startup.
 
