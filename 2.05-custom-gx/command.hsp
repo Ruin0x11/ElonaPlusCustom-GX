@@ -3042,32 +3042,7 @@
 		cutname s, 36
 		cs_list s, wx + 84, wy + 66 + cnt * 19 - 1, 19
 		s = "Lv." + cdata(CDATA_LEVEL, i) + " "
-		if ( cdatan(CDATAN_NEWSEX, i) == lang("両性具有", "hermaphrodite") ) {
-			s += lang("両性具有", "hermaphrodite")
-		}
-		if ( cdatan(CDATAN_NEWSEX, i) == lang("なし", "none") ) {
-			s += lang("性別不明", "unknown")
-		}
-		if ( cdatan(CDATAN_NEWSEX, i) == lang("男性", "male") ) {
-			s += lang("男性", "male")
-		}
-		if ( cdatan(CDATAN_NEWSEX, i) == lang("女性", "female") ) {
-			s += lang("女性", "female")
-		}
-		if ( cdatan(CDATAN_NEWSEX, i) == lang("自称男性", "trans-male") ) {
-			s += lang("自称男性", "trans-male")
-		}
-		if ( cdatan(CDATAN_NEWSEX, i) == lang("自称女性", "trans-female") ) {
-			s += lang("自称女性", "trans-female")
-		}
-		if ( cdatan(CDATAN_NEWSEX, i) == "" ) {
-			if ( cdata(CDATA_SEX, i) == 0 ) {
-				s += cnven(strmale)
-			}
-			else {
-				s += cnven(strfemale)
-			}
-		}
+        s += gendername(i)
 		s += lang(" ", "(") + calcage(i) + "" + lang("歳", ")")
 		if ( cdata(CDATA_EXIST, i) == CHAR_STATE_ALLY_DEAD | cdata(CDATA_EXIST, i) == CHAR_STATE_ADV_DEAD | cdata(CDATA_EXIST, i) == CHAR_STATE_DEAD ) {
 			if ( cdata(CDATA_CAN_REVIVE, i) <= 0 ) {

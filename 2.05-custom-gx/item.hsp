@@ -3762,17 +3762,21 @@
 		if ( inv(INV_ITEM_STATUS, ci) == ITEM_STATUS_BLESSED ) {
 			if ( cdatan(CDATAN_NEWSEX, cc) != "" ) {
 				if ( cdatan(CDATAN_NEWSEX, cc) == lang("男性", "male") ) {
+					cdata(CDATA_SEX, cc) = SEX_FEMALE
 					cdatan(CDATAN_NEWSEX, cc) = lang("女性", "female")
 				}
 				else {
+					cdata(CDATA_SEX, cc) = SEX_MALE
 					cdatan(CDATAN_NEWSEX, cc) = lang("男性", "male")
 				}
 			}
 			if ( cdatan(CDATAN_NEWSEX, cc) == "" ) {
-				if ( cdata(CDATA_SEX, cc) == 0 ) {
+				if ( cdata(CDATA_SEX, cc) == SEX_MALE ) {
+					cdata(CDATA_SEX, cc) = SEX_FEMALE
 					cdatan(CDATAN_NEWSEX, cc) = lang("女性", "female")
 				}
 				else {
+					cdata(CDATA_SEX, cc) = SEX_MALE
 					cdatan(CDATAN_NEWSEX, cc) = lang("男性", "male")
 				}
 			}
@@ -3780,30 +3784,28 @@
 		}
 		if ( inv(INV_ITEM_STATUS, ci) == ITEM_STATUS_NORMAL ) {
 			if ( cdatan(CDATAN_NEWSEX, cc) != "" ) {
-				if ( cdatan(CDATAN_NEWSEX, cc) == lang("自称女性", "trans-female") ) {
-					cdatan(CDATAN_NEWSEX, cc) = lang("自称男性", "trans-male")
+				if ( cdatan(CDATAN_NEWSEX, cc) == lang("自称女性", "female?") ) {
+					cdatan(CDATAN_NEWSEX, cc) = lang("自称男性", "male?")
 				}
 				else {
-					cdatan(CDATAN_NEWSEX, cc) = lang("自称女性", "trans-female")
+					cdatan(CDATAN_NEWSEX, cc) = lang("自称女性", "female?")
 				}
 			}
 			if ( cdatan(CDATAN_NEWSEX, cc) == "" ) {
-				if ( cdata(CDATA_SEX, cc) == 0 ) {
-					cdatan(CDATAN_NEWSEX, cc) = lang("自称男性", "trans-male")
+				if ( cdata(CDATA_SEX, cc) == SEX_MALE ) {
+					cdatan(CDATAN_NEWSEX, cc) = lang("自称男性", "male?")
 				}
 				else {
-					cdatan(CDATAN_NEWSEX, cc) = lang("自称女性", "trans-female")
+					cdatan(CDATAN_NEWSEX, cc) = lang("自称女性", "female?")
 				}
 			}
-			txt lang(name(cc) + "は性転換した…？", name(cc) + " became the opposite sex...?")
-		}
-		if ( cc == CHARA_PLAYER ) {
-			if ( cdata(CDATA_SEX, cc) == 0 ) {
-				cdata(CDATA_SEX, cc) = 1
+			if ( cdata(CDATA_SEX, cc) == SEX_MALE ) {
+				cdata(CDATA_SEX, cc) = SEX_FEMALE
 			}
 			else {
-				cdata(CDATA_SEX, cc) = 0
+				cdata(CDATA_SEX, cc) = SEX_MALE
 			}
+			txt lang(name(cc) + "は性転換した…？", name(cc) + " became the opposite sex...?")
 		}
 		if ( inv(INV_ITEM_STATUS, ci) <= ITEM_STATUS_CURSED ) {
 			if ( cdatan(CDATAN_NEWSEX, cc) != lang("両性具有", "hermaphrodite") ) {

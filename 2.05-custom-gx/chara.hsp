@@ -3320,8 +3320,8 @@
 	display_topic lang("性別の候補", "Gender"), wx + 28, wy + 30
 	listn(0, 0) = cnven(strmale)
 	listn(0, 1) = cnven(strfemale)
-	listn(0, 2) = lang("自称男性", "trans-male")
-	listn(0, 3) = lang("自称女性", "trans-female")
+	listn(0, 2) = lang("自称男性", "male?")
+	listn(0, 3) = lang("自称女性", "female?")
 	listn(0, 4) = lang("両性具有", "hermaphrodite")
 	listn(0, 5) = lang("性別不明", "unknown")
 	font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
@@ -3349,12 +3349,12 @@
 	}
 	if ( key == key_select(2) ) {
 		cmsex = 1
-		zisyousex = lang("自称男性", "trans-male")
+		zisyousex = lang("自称男性", "male?")
 		goto *cm_sex_WEND1
 	}
 	if ( key == key_select(3) ) {
 		cmsex = 0
-		zisyousex = lang("自称女性", "trans-female")
+		zisyousex = lang("自称女性", "female?")
 		goto *cm_sex_WEND1
 	}
 	if ( key == key_select(4) ) {
@@ -4000,11 +4000,11 @@
 	if ( cmzisyou != "" ) {
 		cdatan(CDATAN_FAKE_CLASS, rc) = cmzisyou
 	}
-	if ( zisyousex == lang("自称男性", "trans-male") ) {
-		cdatan(CDATAN_NEWSEX, rc) = lang("自称男性", "trans-male")
+	if ( zisyousex == lang("自称男性", "male?") ) {
+		cdatan(CDATAN_NEWSEX, rc) = lang("自称男性", "male?")
 	}
-	if ( zisyousex == lang("自称女性", "trans-female") ) {
-		cdatan(CDATAN_NEWSEX, rc) = lang("自称女性", "trans-female")
+	if ( zisyousex == lang("自称女性", "female?") ) {
+		cdatan(CDATAN_NEWSEX, rc) = lang("自称女性", "female?")
 	}
 	if ( zisyousex == lang("両性具有", "hermaphrodite") ) {
 		cdatan(CDATAN_NEWSEX, rc) = lang("両性具有", "hermaphrodite")

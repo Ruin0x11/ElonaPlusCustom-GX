@@ -1310,13 +1310,13 @@ if instr(s,0,%1)!-1{	%c\
 		if ( cdatan(CDATAN_NEWSEX, he_charid) == lang("男性", "male") | cdatan(CDATAN_NEWSEX, he_charid) == lang("なし", "none") ) {
 			return lang("彼", "he")
 		}
-		if ( cdatan(CDATAN_NEWSEX, he_charid) == lang("自称男性", "trans-male") ) {
+		if ( cdatan(CDATAN_NEWSEX, he_charid) == lang("自称男性", "male?") | cdatan(CDATAN_NEWSEX, he_charid) == lang("自称男性", "trans-male") ) {
 			return lang("彼？", "he?")
 		}
 		if ( cdatan(CDATAN_NEWSEX, he_charid) == lang("女性", "female") | cdatan(CDATAN_NEWSEX, he_charid) == lang("両性具有", "hermaphrodite") ) {
 			return lang("彼女", "she")
 		}
-		if ( cdatan(CDATAN_NEWSEX, he_charid) == lang("自称女性", "trans-female") ) {
+		if ( cdatan(CDATAN_NEWSEX, he_charid) == lang("自称女性", "female?") | cdatan(CDATAN_NEWSEX, he_charid) == lang("自称女性", "trans-female") ) {
 			return lang("彼女？", "she?")
 		}
 		if ( cdata(CDATA_SEX, he_charid) == 0 ) {
@@ -1392,10 +1392,12 @@ if instr(s,0,%1)!-1{	%c\
 			return "her"
 			swbreak
 		case "自称男性"
+		case "male?"
 		case "trans-male"
 			return "his?"
 			swbreak
 		case "自称女性"
+		case "female?"
 		case "trans-female"
 			return "her?"
 			swbreak
@@ -1427,10 +1429,12 @@ if instr(s,0,%1)!-1{	%c\
 			return "her"
 			swbreak
 		case "自称男性"
+		case "male?"
 		case "trans-male"
 			return "him?"
 			swbreak
 		case "自称女性"
+		case "female?"
 		case "trans-female"
 			return "her?"
 			swbreak
@@ -1456,13 +1460,13 @@ if instr(s,0,%1)!-1{	%c\
 		if ( cdatan(CDATAN_NEWSEX, his_charid) == lang("男性", "male") | cdatan(CDATAN_NEWSEX, his_charid) == lang("なし", "none") ) {
 			return lang("彼の", "his")
 		}
-		if ( cdatan(CDATAN_NEWSEX, his_charid) == lang("自称男性", "trans-male") ) {
+		if ( cdatan(CDATAN_NEWSEX, his_charid) == lang("自称男性", "male?") | cdatan(CDATAN_NEWSEX, his_charid) == lang("自称男性", "trans-male") ) {
 			return lang("彼？の", "his?")
 		}
 		if ( cdatan(CDATAN_NEWSEX, his_charid) == lang("女性", "female") | cdatan(CDATAN_NEWSEX, his_charid) == lang("両性具有", "hermaphrodite") ) {
 			return lang("彼女の", "her")
 		}
-		if ( cdatan(CDATAN_NEWSEX, his_charid) == lang("自称女性", "trans-female") ) {
+		if ( cdatan(CDATAN_NEWSEX, his_charid) == lang("自称男性", "female?") | cdatan(CDATAN_NEWSEX, his_charid) == lang("自称女性", "trans-female") ) {
 			return lang("彼女？の", "her?")
 		}
 		if ( jp ) {
@@ -1509,13 +1513,13 @@ if instr(s,0,%1)!-1{	%c\
 		if ( cdatan(CDATAN_NEWSEX, him_charid) == lang("男性", "male") | cdatan(CDATAN_NEWSEX, him_charid) == lang("なし", "none") ) {
 			return lang("彼", "he")
 		}
-		if ( cdatan(CDATAN_NEWSEX, him_charid) == lang("自称男性", "trans-male") ) {
+		if ( cdatan(CDATAN_NEWSEX, him_charid) == lang("自称男性", "male?") | cdatan(CDATAN_NEWSEX, him_charid) == lang("自称男性", "trans-male") ) {
 			return lang("彼？", "he?")
 		}
 		if ( cdatan(CDATAN_NEWSEX, him_charid) == lang("女性", "female") | cdatan(CDATAN_NEWSEX, him_charid) == lang("両性具有", "hermaphrodite") ) {
 			return lang("彼女", "she")
 		}
-		if ( cdatan(CDATAN_NEWSEX, him_charid) == lang("自称女性", "trans-female") ) {
+		if ( cdatan(CDATAN_NEWSEX, him_charid) == lang("自称女性", "female?") | cdatan(CDATAN_NEWSEX, him_charid) == lang("自称女性", "trans-female") ) {
 			return lang("彼女？", "she?")
 		}
 		if ( cdata(CDATA_SEX, him_charid) == 0 ) {
@@ -1572,6 +1576,28 @@ if instr(s,0,%1)!-1{	%c\
 		return "himself"
 	}
 	return "herself"
+
+/********** RUIN0X11 CUSTOM - BEGINNING **********/
+
+#defcfunc gendername int gendername_charid
+	if ( cdatan(CDATAN_NEWSEX, gendername_charid) == "" ) {
+		if ( cdata(CDATA_SEX, gendername_charid) == SEX_MALE ) {
+			return cnven(strmale)
+		}
+		else {
+			return cnven(strfemale)
+		}
+	}
+    else {
+		if ( cdatan(CDATAN_NEWSEX, gendername_charid) == lang("なし", "none") ) {
+			return lang("性別不明", "unknown")
+		}
+    	else {
+			return cdatan(CDATAN_NEWSEX, gendername_charid)
+    	}
+    }
+
+/********** RUIN0X11 CUSTOM - ENDING **********/
 
 #deffunc txt_check int txt_check_arg1
 	txtvalid = -1

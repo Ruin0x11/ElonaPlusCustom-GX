@@ -2,12 +2,12 @@
 
 // Gender checks for evolution purposes.
 
-#defcfunc evoismale int charid
-    locvar_newsex = cdatan(CDATAN_NEWSEX, charid)
+#defcfunc evoismale int evoismale_charid
+    locvar_newsex = cdatan(CDATAN_NEWSEX, evoismale_charid)
 
 	switch locvar_newsex
         case ""
-			if ( cdata(CDATA_SEX, charid) == SEX_MALE ) {
+			if ( cdata(CDATA_SEX, evoismale_charid) == SEX_MALE ) {
 				return TRUE
 			}
     		swbreak
@@ -26,12 +26,12 @@
 
     return FALSE
 
-#defcfunc evoisfemale int charid
-    locvar_newsex = cdatan(CDATAN_NEWSEX, charid)
+#defcfunc evoisfemale int evoisfemale_charid
+    locvar_newsex = cdatan(CDATAN_NEWSEX, evoisfemale_charid)
 
 	switch locvar_newsex
         case ""
-			if ( cdata(CDATA_SEX, charid) == SEX_FEMALE ) {
+			if ( cdata(CDATA_SEX, evoisfemale_charid) == SEX_FEMALE ) {
 				return TRUE
 			}
     		swbreak

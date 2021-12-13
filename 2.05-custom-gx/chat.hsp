@@ -22655,32 +22655,7 @@
 		s = ""
 	}
 	if ( evochat < 2 ) {
-		if ( cdatan(CDATAN_NEWSEX, tc) == lang("両性具有", "hermaphrodite") ) {
-			s += lang("両性具有", "hermaphrodite")
-		}
-		if ( cdatan(CDATAN_NEWSEX, tc) == lang("なし", "none") ) {
-			s += lang("性別不明", "unknown")
-		}
-		if ( cdatan(CDATAN_NEWSEX, tc) == lang("男性", "male") ) {
-			s += lang("男性", "male")
-		}
-		if ( cdatan(CDATAN_NEWSEX, tc) == lang("女性", "female") ) {
-			s += lang("女性", "female")
-		}
-		if ( cdatan(CDATAN_NEWSEX, tc) == lang("自称男性", "trans-male") ) {
-			s += lang("自称男性", "trans-male")
-		}
-		if ( cdatan(CDATAN_NEWSEX, tc) == lang("自称女性", "trans-female") ) {
-			s += lang("自称女性", "trans-female")
-		}
-		if ( cdatan(CDATAN_NEWSEX, tc) == "" ) {
-			if ( cdata(CDATA_SEX, tc) == 0 ) {
-				s += cnven(strmale)
-			}
-			else {
-				s += cnven(strfemale)
-			}
-		}
+        s += gendername(tc)
 		if ( cdatan(CDATAN_AKA, tc) != "" ) {
 			s += lang(" 名声 ", " Fame: ") + cdata(CDATA_FAME, tc)
 		}
