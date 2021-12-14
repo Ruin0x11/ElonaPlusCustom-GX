@@ -769,7 +769,7 @@
 #defcfunc calcspellpower int calcspellpower_skillid, int calcspellpower_charid
 	if ( calcspellpower_skillid >= STARTING_SKILL_SPACT ) {
 		if ( sdataref(SKILL_DATAREF_USE, calcspellpower_skillid) != 0 ) {
-			return sdataref(SKILL_DATAREF_USE, calcspellpower_skillid) * 6 + 10
+			return sdata(sdataref(SKILL_DATAREF_USE, calcspellpower_skillid), calcspellpower_charid) * 6 + 10
 		}
 		return 100
 	}
