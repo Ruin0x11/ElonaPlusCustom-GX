@@ -4534,6 +4534,12 @@
 			txt lang("釣りを切り上げた。", "You stop fishing...")
 			rowactend cc
 		}
+		if ( inv_getspace(cc) == 0 ) {
+			txt_invfull
+			txt lang("釣りを切り上げた。", "You stop fishing...")
+			rowactend cc
+            return
+		}
 		if ( rnd(3) == 0 ) {
 			fishstat = 1
 			gosub *choose_fish
