@@ -1,0 +1,606 @@
+#deffunc cardplayerinit int cardplayerinit_arg1, int cardplayerinit_arg2
+	dim locvar_cardplayerinit_cardplayer, 100, cardplayerinit_arg1
+	locvar_cardplayerinit_cardplayermax = cardplayerinit_arg1
+	locvar_cardplayerinit_cardholdermax = cardplayerinit_arg2
+	return
+
+#deffunc cardplayeradd int cardplayeradd_arg1, int cardplayeradd_arg2, int cardplayeradd_arg3
+	locvar_cardplayerinit_cardplayer(1, cardplayeradd_arg1) = cardplayeradd_arg2, cardplayeradd_arg3
+	repeat 10
+		locvar_cardplayerinit_cardplayer(10 + cnt, cardplayeradd_arg1) = -1
+	loop
+	return
+
+#deffunc initcard int initcard_arg1, int initcard_arg2, int initcard_arg2
+	locvar_initcard_pilex = initcard_arg1
+	locvar_initcard_piley = initcard_arg2
+	dim locvar_initcard_card, 6, 53
+	locvar_initcard_cardmax = 53
+	if ( nojoker == 1 ) {
+		locvar_initcard_cardmax = 52
+	}
+	repeat locvar_initcard_cardmax
+		locvar_initcard_card(0, cnt) = cnt \ 13 + 1, cnt / 13, 1
+		if ( cnt == 52 ) {
+			locvar_initcard_card(1, cnt) = 4
+		}
+		locvar_initcard_card(5, cnt) = -1
+	loop
+	repeat 200
+		locvar_initcard_i = rnd(locvar_initcard_cardmax), rnd(locvar_initcard_cardmax)
+		locvar_initcard_p = locvar_initcard_card(0, locvar_initcard_i), locvar_initcard_card(1, locvar_initcard_i)
+		locvar_initcard_card(0, locvar_initcard_i) = locvar_initcard_card(0, locvar_initcard_i(1)), locvar_initcard_card(1, locvar_initcard_i(1))
+		locvar_initcard_card(0, locvar_initcard_i(1)) = locvar_initcard_p, locvar_initcard_p(1)
+	loop
+	return
+
+#deffunc showcard2 int showcard2_arg1, int showcard2_arg2
+	font lang(cfg_font1, cfg_font2), 43 - en * 2, 1
+	color 0, 0, 0
+	gmode 2, 64, 96
+	pos locvar_initcard_card(3, showcard2_arg1), locvar_initcard_card(4, showcard2_arg1)
+	if ( locvar_initcard_card(2, showcard2_arg1) == 1 ) {
+		gcopy BUFFER_INF, 736, 216, 64, 96
+	}
+	else {
+		gcopy BUFFER_INF, 672, 216, 64, 96
+		if ( showcard2_arg2 == 0 ) {
+			gmode 4, inf_tiles, inf_tiles, 220
+			color 0, 0, 0
+			if ( locvar_initcard_card(1, showcard2_arg1) == 0 ) {
+				pos locvar_initcard_card(3, showcard2_arg1) + 32, locvar_initcard_card(4, showcard2_arg1) + 36
+				grotate BUFFER_CHR, 144, 240, 0, 64, 104
+				locvar_showcard2_col = 140, 140, 255
+			}
+			if ( locvar_initcard_card(1, showcard2_arg1) == 1 ) {
+				pos locvar_initcard_card(3, showcard2_arg1) + 32, locvar_initcard_card(4, showcard2_arg1) + 40
+				grotate BUFFER_CHR, 1104, 288, 0, 64, 104
+				locvar_showcard2_col = 255, 140, 140
+			}
+			if ( locvar_initcard_card(1, showcard2_arg1) == 2 ) {
+				pos locvar_initcard_card(3, showcard2_arg1) + 32, locvar_initcard_card(4, showcard2_arg1) + 50
+				grotate BUFFER_CHR, 480, 336, 0, 64, 84
+				locvar_showcard2_col = 240, 240, 240
+			}
+			if ( locvar_initcard_card(1, showcard2_arg1) == 3 ) {
+				pos locvar_initcard_card(3, showcard2_arg1) + 28, locvar_initcard_card(4, showcard2_arg1) + 48
+				grotate BUFFER_CHR, 1200, 288, 0, 64, 80
+				locvar_showcard2_col = 140, 255, 140
+			}
+			if ( locvar_initcard_card(1, showcard2_arg1) == 4 ) {
+				pos locvar_initcard_card(3, showcard2_arg1) + 28, locvar_initcard_card(4, showcard2_arg1) + 44
+				grotate BUFFER_CHR, 1296, 336, 0, 72, 86
+				locvar_showcard2_col = 250, 250, 105
+			}
+			gmode 2
+			locvar_showcard2_s = str(locvar_initcard_card(0, showcard2_arg1))
+			locvar_showcard2_tx = 2
+			if ( locvar_initcard_card(0, showcard2_arg1) == 1 ) {
+				locvar_showcard2_s = "A"
+				locvar_showcard2_tx = 3
+			}
+			if ( locvar_initcard_card(0, showcard2_arg1) == 11 ) {
+				locvar_showcard2_s = "J"
+				locvar_showcard2_tx = 13
+			}
+			if ( locvar_initcard_card(0, showcard2_arg1) == 12 ) {
+				locvar_showcard2_s = "Q"
+				locvar_showcard2_tx = 14
+			}
+			if ( locvar_initcard_card(0, showcard2_arg1) == 13 ) {
+				locvar_showcard2_s = "K"
+				locvar_showcard2_tx = 14
+			}
+			if ( locvar_initcard_card(1, showcard2_arg1) == 4 ) {
+				locvar_showcard2_s = "Jo"
+				locvar_showcard2_tx = -12
+			}
+			pos locvar_initcard_card(3, showcard2_arg1) + 18 - (locvar_initcard_card(0, showcard2_arg1) >= 10) * 12 + locvar_showcard2_tx, locvar_initcard_card(4, showcard2_arg1) + 28
+			color 10, 10, 10
+			bmes locvar_showcard2_s, locvar_showcard2_col(0), locvar_showcard2_col(1), locvar_showcard2_col(2)
+		}
+		else {
+			font lang(cfg_font1, cfg_font2), 12 - en * 2, 0
+			color 0, 0, 0
+			if ( locvar_initcard_card(1, showcard2_arg1) != (-1) ) {
+			}
+		}
+	}
+	return
+
+#deffunc showcardpile
+	redraw 0
+	pos locvar_initcard_pilex - 8, locvar_initcard_piley - 8
+	gcopy BUFFER_INF, 528, 216, 80, 112
+	locvar_showcardpile_pilestack = 0
+	repeat locvar_initcard_cardmax
+		if ( locvar_initcard_card(5, cnt) == (-1) ) {
+			locvar_showcardpile_pilestack++
+			if ( locvar_showcardpile_pilestack > 7 ) {
+				continue
+			}
+			locvar_initcard_card(3, cnt) = locvar_initcard_pilex - locvar_showcardpile_pilestack, locvar_initcard_piley - locvar_showcardpile_pilestack
+			showcard2 cnt
+		}
+	loop
+	font lang(cfg_font1, cfg_font2), 16 - en * 2, 1
+	color 10, 10, 10
+	pos locvar_initcard_pilex + 8, locvar_initcard_piley + 70
+	bmes "X " + locvar_showcardpile_pilestack, 240, 240, 240
+	return
+
+#deffunc showcard
+	redraw 0
+	showcardpile
+	repeat locvar_initcard_cardmax
+		if ( locvar_initcard_card(5, cnt) == (-1) | locvar_initcard_card(5, cnt) == (-2) ) {
+			continue
+		}
+		showcard2 cnt
+	loop
+	return
+
+#deffunc servecard int servecard_arg1
+	locvar_servecard_cardid = -1
+	repeat locvar_initcard_cardmax
+		if ( locvar_initcard_card(5, cnt) == (-1) ) {
+			locvar_servecard_cardid = cnt
+			break
+		}
+	loop
+	if ( locvar_servecard_cardid == (-1) ) {
+		return 0
+	}
+	repeat 10
+		if ( locvar_cardplayerinit_cardplayer(10 + cnt, servecard_arg1) == (-1) ) {
+			locvar_initcard_p = cnt
+			break
+		}
+	loop
+	locvar_servecard_dx = locvar_initcard_pilex - locvar_cardplayerinit_cardplayer(1, servecard_arg1) - locvar_initcard_p * 88
+	locvar_servecard_dy = locvar_initcard_piley - locvar_cardplayerinit_cardplayer(2, servecard_arg1)
+	locvar_initcard_card(5, locvar_servecard_cardid) = servecard_arg1
+	locvar_cardplayerinit_cardplayer(10 + locvar_initcard_p, servecard_arg1) = locvar_servecard_cardid
+	repeat 10
+		redraw 0
+		if ( cnt != 0 ) {
+			pos locvar_initcard_card(3, locvar_servecard_cardid), locvar_initcard_card(4, locvar_servecard_cardid)
+			gcopy BUFFER_INF, 608, 216, 64, 96
+		}
+		locvar_initcard_card(3, locvar_servecard_cardid) = locvar_initcard_pilex - locvar_servecard_dx / 10 * cnt
+		if ( cnt == 9 ) {
+			locvar_initcard_card(3, locvar_servecard_cardid) = locvar_initcard_pilex - locvar_servecard_dx
+		}
+		locvar_initcard_card(4, locvar_servecard_cardid) = locvar_initcard_piley - locvar_servecard_dy / 10 * cnt
+		if ( cnt == 9 ) {
+			locvar_initcard_card(4, locvar_servecard_cardid) = locvar_initcard_piley - locvar_servecard_dy
+		}
+		gmode 0
+		gsel BUFFER_INF
+		pos 608, 216
+		gcopy BUFFER_SCREEN, locvar_initcard_card(3, locvar_servecard_cardid), locvar_initcard_card(4, locvar_servecard_cardid), 64, 96
+		gsel BUFFER_SCREEN
+		gmode 2
+		showcard2 locvar_servecard_cardid
+		showcardpile
+		await 10
+		redraw 1
+	loop
+	return locvar_servecard_cardid
+
+#deffunc showcardholder
+	redraw 0
+	repeat locvar_cardplayerinit_cardplayermax
+		locvar_initcard_p = cnt
+		repeat locvar_cardplayerinit_cardholdermax
+			locvar_servecard_dx = locvar_cardplayerinit_cardplayer(1, locvar_initcard_p) + cnt * 88
+			locvar_servecard_dy = locvar_cardplayerinit_cardplayer(2, locvar_initcard_p)
+			pos locvar_servecard_dx - 8, locvar_servecard_dy - 8
+			gcopy BUFFER_INF, 528, 216, 80, 112
+		loop
+	loop
+	return
+
+#deffunc opencard2 int opencard2_arg1, int opencard2_arg2
+	if ( opencard2_arg2 == 1 ) {
+		if ( locvar_initcard_card(2, opencard2_arg1) == 0 ) {
+			return opencard2_arg1
+		}
+	}
+	snd SOUNDLIST_CARD1
+	repeat 10
+		redraw 0
+		if ( opencard2_arg2 == 0 ) {
+			pos locvar_initcard_card(3, opencard2_arg1) - 8, locvar_initcard_card(4, opencard2_arg1) - 8
+			gcopy BUFFER_INF, 528, 216, 80, 112
+			gmode 2, 64, 96
+		}
+		else {
+			pos locvar_initcard_card(3, opencard2_arg1), locvar_initcard_card(4, opencard2_arg1)
+			gcopy BUFFER_BUF, locvar_initcard_card(3, opencard2_arg1) - wx - 4, locvar_initcard_card(4, opencard2_arg1) - wy - 4, 80, 112
+			gmode 2, 64, 96
+		}
+		pos locvar_initcard_card(3, opencard2_arg1) + 32, locvar_initcard_card(4, opencard2_arg1) + 48
+		grotate BUFFER_INF, 736, 216, 0, 64 - cnt * 14, 96
+		await 10
+		redraw 1
+	loop
+	locvar_initcard_card(2, opencard2_arg1) = 0
+	showcard2 opencard2_arg1, opencard2_arg2
+	redraw 1
+	return opencard2_arg1
+
+#deffunc trashcard int trashcard_arg1
+	repeat 21
+		redraw 0
+		pos locvar_initcard_card(3, trashcard_arg1) - 8, locvar_initcard_card(4, trashcard_arg1) - 8
+		gcopy BUFFER_INF, 528, 216, 80, 112
+		gmode 2, 64, 96
+		if ( cnt == 20 ) {
+			redraw 1
+			break
+		}
+		pos locvar_initcard_card(3, trashcard_arg1) + 32, locvar_initcard_card(4, trashcard_arg1) + 48
+		grotate BUFFER_INF, 736, 216, 0.015 * cnt * cnt, 64 - cnt * 3, 96 - cnt * 4
+		await 10
+		redraw 1
+	loop
+	repeat locvar_cardplayerinit_cardplayermax
+		locvar_initcard_p = cnt
+		repeat locvar_cardplayerinit_cardholdermax
+			if ( locvar_cardplayerinit_cardplayer(10 + cnt, locvar_initcard_p) == trashcard_arg1 ) {
+				locvar_cardplayerinit_cardplayer(10 + cnt, locvar_initcard_p) = -1
+			}
+		loop
+	loop
+	return trashcard_arg1
+
+#defcfunc cpscore int cpscore_arg1
+	locvar_initcard_i = 0
+	locvar_cpscore_ace = 0
+	repeat locvar_cardplayerinit_cardholdermax
+		locvar_cpscore_c = locvar_cardplayerinit_cardplayer(10 + cnt, cpscore_arg1)
+		if ( locvar_cpscore_c == (-1) ) {
+			break
+		}
+		locvar_cpscore_c = locvar_initcard_card(0, locvar_cpscore_c)
+		if ( locvar_cpscore_c >= 10 ) {
+			locvar_cpscore_c = 10
+		}
+		if ( locvar_cpscore_c == 1 ) {
+			locvar_cpscore_ace++
+			locvar_cpscore_c = 11
+		}
+		locvar_initcard_i += locvar_cpscore_c
+	loop
+	repeat locvar_cpscore_ace
+		if ( locvar_initcard_i > 21 ) {
+			locvar_initcard_i -= 10
+		}
+	loop
+	return locvar_initcard_i
+
+#defcfunc lastcard int lastcard_arg1
+	locvar_cpscore_c = 0
+	repeat locvar_cardplayerinit_cardholdermax
+		if ( locvar_cardplayerinit_cardplayer(10 + cnt, lastcard_arg1) == (-1) ) {
+			break
+		}
+		locvar_cpscore_c = locvar_cardplayerinit_cardplayer(10 + cnt, lastcard_arg1)
+	loop
+	return locvar_cpscore_c
+
+#defcfunc cpblackcard int cpblackcard_arg1
+	locvar_cpscore_c = 0
+	repeat locvar_cardplayerinit_cardholdermax
+		locvar_cpscore_c = locvar_cardplayerinit_cardplayer(10 + cnt, cpblackcard_arg1)
+		if ( locvar_initcard_card(2, locvar_cpscore_c) == 1 ) {
+			break
+		}
+	loop
+	return locvar_cpscore_c
+
+#defcfunc cpcardnum int cpcardnum_arg1
+	locvar_cpscore_c = 0
+	repeat locvar_cardplayerinit_cardholdermax
+		if ( locvar_cardplayerinit_cardplayer(10 + cnt, cpcardnum_arg1) != (-1) ) {
+			locvar_cpscore_c++
+		}
+	loop
+	return locvar_cpscore_c
+
+#defcfunc pileremain
+	locvar_initcard_p = 0
+	repeat locvar_initcard_cardmax
+		if ( locvar_initcard_card(5, cnt) == (-1) ) {
+			locvar_initcard_p++
+		}
+	loop
+	return locvar_initcard_p
+
+*label_0535
+	goto *random_titleInit
+
+#deffunc csvsort array csvsort_arg1, var csvsort_arg2, int csvsort_arg3
+	locvar_csvsort_p(0) = 0
+	repeat 40
+		csvsort_arg1(cnt) = ""
+		getstr csvsort_arg1(cnt), csvsort_arg2, locvar_csvsort_p(0), csvsort_arg3
+		if ( strsize == 0 ) {
+			csvmax = cnt
+			break
+		}
+		locvar_csvsort_p(0) += strsize
+	loop
+	return
+
+*random_titleInit
+	sdim randn1, 30, 20
+	notesel titlebuff
+	noteload lang("data\\ndata.csv", "data\\ndata-e.csv")
+	sdim rnlist, 20, 15, noteinfo(0)
+	repeat noteinfo(0)
+		noteget msgtemp, cnt
+		csvsort randn1, msgtemp, 44
+		cnt2 = cnt
+		repeat 15
+			rnlist(cnt, cnt2) = randn1(cnt)
+		loop
+	loop
+	notesel titlebuff
+	noteload "data\\name.csv"
+	sdim rn1, 15, noteinfo(0)
+	sdim rn2, 15, noteinfo(0)
+	repeat noteinfo(0)
+		noteget msgtemp, cnt
+		csvsort randn1, msgtemp, 44
+		rn1(cnt) = lang(randn1(0), randn1(1))
+		rn2(cnt) = lang(randn1(2), randn1(3))
+	loop
+	return
+	goto *time_warn_talk
+	sdim locvar_csvsort_randn2, 30, 20
+	dim locvar_csvsort_p, 10
+
+#defcfunc randomname int randomname_arg0
+
+*randomName_WHILE1
+	if ( 1 == 0 ) {
+		goto *randomName_BREAK
+	}
+	locvar_randomname_s = rn1(rnd(length(rn1)))
+	if ( locvar_randomname_s == "" ) {
+		goto *randomName_WHILE1_CONTINUE
+	}
+	if ( jp ) {
+		if ( rnd(8) == 0 ) {
+			locvar_randomname_s += "ー"
+		}
+	}
+	if ( rnd(5) ) {
+		locvar_randomname_s += rn2(rnd(length(rn2)))
+	}
+	locvar_csvsort_p = strlen(locvar_randomname_s)
+	if ( locvar_csvsort_p < 4 ) {
+		goto *randomName_WHILE1_CONTINUE
+	}
+	if ( locvar_csvsort_p < 6 ) {
+		if ( rnd(3) ) {
+			goto *randomName_WHILE1_CONTINUE
+		}
+	}
+	if ( locvar_csvsort_p < 8 ) {
+		if ( rnd(2) ) {
+			goto *randomName_WHILE1_CONTINUE
+		}
+	}
+	if ( jp ) {
+		if ( strmid(locvar_randomname_s, 0, 2) == "ー" ) {
+			goto *randomName_WHILE1_CONTINUE
+		}
+		if ( instr(locvar_randomname_s, 0, "ーッ") != (-1) ) {
+			goto *randomName_WHILE1_CONTINUE
+		}
+	}
+	goto *randomName_BREAK
+
+*randomName_WHILE1_CONTINUE
+	goto *randomName_WHILE1
+
+*randomName_BREAK
+	return cnven(locvar_randomname_s)
+
+#defcfunc random_title int random_title_arg1
+
+*random_title_loop
+	repeat 1
+		locvar_csvsort_p(2) = rnd(length2(rnlist))
+		locvar_csvsort_p(1) = rnd(14)
+		if ( rnlist(locvar_csvsort_p(1), locvar_csvsort_p(2)) == "" ) {
+			continue cnt
+		}
+	loop
+	if ( random_title_arg1 == 1 | random_title_arg1 == 3 ) {
+		if ( rnlist(14, locvar_csvsort_p(2)) == "具" ) {
+			goto *random_title_loop
+		}
+	}
+	locvar_csvsort_randn2 = rnlist(locvar_csvsort_p(1), locvar_csvsort_p(2)), rnlist(14, locvar_csvsort_p(2))
+	locvar_random_title_rtval = -1
+	if ( jp ) {
+		repeat 1
+			if ( locvar_csvsort_p(1) == 10 | locvar_csvsort_p(1) == 11 ) {
+				if ( rnd(5) == 0 ) {
+					locvar_csvsort_p(1) = 0
+					locvar_csvsort_p(3) = rnd(2)
+					if ( locvar_csvsort_p(3) == 0 ) {
+						locvar_csvsort_randn2 += "の"
+					}
+					break
+				}
+				locvar_csvsort_p = rnd(5)
+				if ( locvar_csvsort_p == 0 ) {
+					locvar_csvsort_randn2 += "・オブ・"
+				}
+				if ( locvar_csvsort_p == 1 ) {
+					locvar_csvsort_randn2 = "ザ・" + locvar_csvsort_randn2
+					locvar_random_title_rtval = 1
+					break
+				}
+				if ( locvar_csvsort_p == 2 ) {
+					locvar_csvsort_randn2 += "・"
+				}
+			}
+			if ( locvar_csvsort_p(1) == 0 | locvar_csvsort_p(1) == 1 ) {
+				locvar_csvsort_randn2 += "の"
+				locvar_csvsort_p(3) = rnd(10)
+				if ( locvar_csvsort_p(3) == 0 ) {
+					locvar_csvsort_p(1) = 10
+				}
+			}
+		loop
+	}
+	else {
+		repeat 1
+			if ( locvar_csvsort_p(1) == 0 | locvar_csvsort_p(1) == 1 ) {
+				if ( rnd(6) == 0 ) {
+					locvar_csvsort_randn2 += " of"
+				}
+				else {
+					if ( rnd(6) == 0 ) {
+						locvar_csvsort_randn2 = "the " + locvar_csvsort_randn2
+						locvar_random_title_rtval = 1
+						break
+					}
+				}
+			}
+			locvar_csvsort_randn2 += " "
+		loop
+		locvar_csvsort_randn2 = cnven(locvar_csvsort_randn2)
+	}
+	if ( locvar_random_title_rtval == 1 ) {
+		locvar_randomname_s = locvar_csvsort_randn2
+		goto *end_name
+	}
+	locvar_random_title_rtval = -1
+	repeat 100
+		locvar_csvsort_p(4) = rnd(length2(rnlist))
+		if ( locvar_csvsort_p(4) == locvar_csvsort_p(2) ) {
+			continue
+		}
+		if ( rnlist(14, locvar_csvsort_p(4)) == locvar_csvsort_randn2(1) ) {
+			if ( rnlist(14, locvar_csvsort_p(4)) != "万能" ) {
+				if ( locvar_csvsort_randn2(1) != "万能" ) {
+					continue
+				}
+			}
+		}
+		if ( locvar_csvsort_p(1) < 10 ) {
+			locvar_csvsort_p(1) = rnd(2)
+		}
+		else {
+			locvar_csvsort_p(1) = rnd(2)
+			locvar_csvsort_p(1) += 10
+		}
+		if ( rnlist(locvar_csvsort_p(1), locvar_csvsort_p(4)) == "" ) {
+			continue
+		}
+		locvar_random_title_rtval = 1
+		break
+	loop
+	if ( locvar_random_title_rtval == (-1) ) {
+		goto *random_title_loop
+	}
+	if ( en ) {
+		rnlist(locvar_csvsort_p(1), locvar_csvsort_p(4)) = cnven(rnlist(locvar_csvsort_p(1), locvar_csvsort_p(4)))
+	}
+	locvar_csvsort_randn2 += rnlist(locvar_csvsort_p(1), locvar_csvsort_p(4))
+	locvar_randomname_s = locvar_csvsort_randn2
+	if ( strlen(locvar_randomname_s) >= 28 ) {
+		goto *random_title_loop
+	}
+
+*end_name
+	if ( random_title_arg1 == 2 ) {
+		if ( jp ) {
+			locvar_random_title_s2 = "団", "チーム", "パーティー", "の集い", "の軍", "アーミー", "隊", "の一家", "軍", "の隊", "の団"
+			if ( rnd(5) ) {
+				locvar_randomname_s += locvar_random_title_s2(rnd(10))
+			}
+		}
+		else {
+			if ( rnd(2) ) {
+				locvar_random_title_s2 = "The army of ", "The party of ", "The house of ", "Clan "
+				locvar_randomname_s = locvar_random_title_s2(rnd(4)) + locvar_randomname_s
+			}
+			else {
+				locvar_random_title_s2 = "Clan", "Party", "Band", "Gangs", "Gathering", "House", "Army"
+				locvar_randomname_s += " " + locvar_random_title_s2(rnd(7))
+			}
+		}
+	}
+	return locvar_randomname_s
+
+*time_warn_talk
+	if ( hour_played == 1 ) {
+		s += lang("ラーネイレ「がんばれ〜」", "Larneire cheers, " + cnvtalk("Way to go!"))
+	}
+	if ( hour_played == 2 ) {
+		s += lang("ロミアス「陰ながら応援しているよ（ニヤリ）」", "Lomias grins, " + cnvtalk("Go for it."))
+	}
+	if ( hour_played == 3 ) {
+		s += lang("クミロミ「…大丈夫…だよね？」", "Kumiromi worries, " + cnvtalk("Are you...okay..?"))
+	}
+	if ( hour_played == 4 ) {
+		s += lang("ルルウィ「あら、思いの他がんばるのね」", "Lulwy sneers, " + cnvtalk("You're tougher than I thought, little kitty."))
+	}
+	if ( hour_played == 5 ) {
+		s += lang("ラーネイレ「いけない。このままでは…手遅れになってしまうわ…」", "Larneire cries, " + cnvtalk("No...before it is too late..."))
+	}
+	if ( hour_played == 6 ) {
+		s += lang("ロミアス「まだまだ、これからだろう（ニヤリ）」", "Lomias grins, " + cnvtalk("Tt hasn't even started yet... hasn't it?"))
+	}
+	if ( hour_played == 7 ) {
+		s += lang("ルルウィ「休憩しなさい。壊れちゃったら、私の役にたてないじゃない」", "Lulwy warns you, " + cnvtalk("Have a rest, kitty. If you are broken, you're no use to me."))
+	}
+	if ( hour_played == 8 ) {
+		s += lang("ルルウィ「何を言っても無駄のようね。好きにするといいわ」", "Lulwy laughs, " + cnvtalk("I guess there's no use warning you. Alright. Do as you please, kitty."))
+	}
+	if ( hour_played == 9 ) {
+		s += lang("ヤカテクト「体を壊したら元も子もないんやで？」", "Opatos laughs, " + cnvtalk("Muwahahahahahaha!"))
+	}
+	if ( hour_played == 12 ) {
+		s += lang("オパートス「フハハハハッフハー」", "Opatos laughs, " + cnvtalk("Muwahahahahahaha!"))
+	}
+	if ( hour_played == 24 ) {
+		s += lang("エヘカトル「死なにゃいで！死なにゃいって約束して！して！」", "Ehekatl hugs you," + cnvtalk("Don't die! Promise you don't die!"))
+	}
+	return
+	goto *label_0559
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
