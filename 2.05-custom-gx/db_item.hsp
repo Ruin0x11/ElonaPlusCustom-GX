@@ -39956,6 +39956,1374 @@
 	return
 
 *db_item_set
+	if ( dbid == ITEM_ID_SPELLBOOK_OF_THUNDER_VORTEX ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 4500
+			inv(INV_ITEM_WEIGHT, ci) = 380
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_SPELLBOOK_OF_THUNDER_VORTEX
+			inv(INV_ITEM_PIC, ci) = xy2pic(0, 13)
+			reftype = FILTER_ITEM_SPELLBOOK
+			reftypeminor = FILTER_NOTHING
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			inv(INV_ITEM_CHARGE, ci) = 3 + rnd(3) - rnd(3)
+			ibitmod ITEM_BIT_CHARGE_ITEM, ci, TRUE
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 3
+			infilterref = ""
+			reftype = FILTER_ITEM_SPELLBOOK
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == DBSPEC_TYPE ) {
+				return 54000
+			}
+			if ( dbspec == DBSPEC_TYPE_MINOR ) {
+				return 99999
+			}
+			if ( dbspec == DBSPEC_VALUE_ORG ) {
+				return 4500
+			}
+			if ( dbspec == DBSPEC_PARAM3_ORG ) {
+				return
+			}
+			if ( dbspec == DBSPEC_CAN_READ ) {
+				return 1
+			}
+			if ( dbspec == DBSPEC_PCC ) {
+				return 0
+			}
+			if ( dbspec == DBSPEC_OBJ_LEVEL ) {
+				return 30
+			}
+			if ( dbspec == DBSPEC_RARE_LEVEL ) {
+				return 700
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_ON_READ ) {
+			efid = SKILL_SPELL_THUNDER_VORTEX
+			efp = 100
+			gosub *readSpellbook
+			return -1
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t「雷霆の渦」という呪文について学ぶことができる魔法書。怒って雷を落としたいあなたに。\n#〜本の為の本・魔法書編〜\n"
+				description(1) = "<ランク6魔法>"
+				description(2) = ""
+				description(3) = "\t\t電撃属性の範囲魔法呪文を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == ITEM_ID_SPELLBOOK_OF_ECLIPSE_JAIL ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 4800
+			inv(INV_ITEM_WEIGHT, ci) = 380
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_SPELLBOOK_OF_ECLIPSE_JAIL
+			inv(INV_ITEM_PIC, ci) = xy2pic(0, 13)
+			reftype = FILTER_ITEM_SPELLBOOK
+			reftypeminor = FILTER_NOTHING
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			inv(INV_ITEM_CHARGE, ci) = 3 + rnd(3) - rnd(3)
+			ibitmod ITEM_BIT_CHARGE_ITEM, ci, TRUE
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 3
+			infilterref = ""
+			reftype = FILTER_ITEM_SPELLBOOK
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == DBSPEC_TYPE ) {
+				return 54000
+			}
+			if ( dbspec == DBSPEC_TYPE_MINOR ) {
+				return 99999
+			}
+			if ( dbspec == DBSPEC_VALUE_ORG ) {
+				return 4800
+			}
+			if ( dbspec == DBSPEC_PARAM3_ORG ) {
+				return
+			}
+			if ( dbspec == DBSPEC_CAN_READ ) {
+				return 1
+			}
+			if ( dbspec == DBSPEC_PCC ) {
+				return 0
+			}
+			if ( dbspec == DBSPEC_OBJ_LEVEL ) {
+				return 35
+			}
+			if ( dbspec == DBSPEC_RARE_LEVEL ) {
+				return 700
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_ON_READ ) {
+			efid = SKILL_SPELL_ECLIPSE
+			efp = 100
+			gosub *readSpellbook
+			return -1
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t「月蝕の檻」という呪文について学ぶことができる魔法書。暗闇に神秘を感じるあなたに。\n#〜本の為の本・魔法書編〜\n"
+				description(1) = "<ランク7魔法>"
+				description(2) = ""
+				description(3) = "\t\t暗黒属性の範囲魔法呪文を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == ITEM_ID_SPELLBOOK_OF_NETHER_ROAR ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 4800
+			inv(INV_ITEM_WEIGHT, ci) = 380
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_SPELLBOOK_OF_NETHER_ROAR
+			inv(INV_ITEM_PIC, ci) = xy2pic(0, 13)
+			reftype = FILTER_ITEM_SPELLBOOK
+			reftypeminor = FILTER_NOTHING
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			inv(INV_ITEM_CHARGE, ci) = 3 + rnd(3) - rnd(3)
+			ibitmod ITEM_BIT_CHARGE_ITEM, ci, TRUE
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 3
+			infilterref = ""
+			reftype = FILTER_ITEM_SPELLBOOK
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == DBSPEC_TYPE ) {
+				return 54000
+			}
+			if ( dbspec == DBSPEC_TYPE_MINOR ) {
+				return 99999
+			}
+			if ( dbspec == DBSPEC_VALUE_ORG ) {
+				return 4800
+			}
+			if ( dbspec == DBSPEC_PARAM3_ORG ) {
+				return
+			}
+			if ( dbspec == DBSPEC_CAN_READ ) {
+				return 1
+			}
+			if ( dbspec == DBSPEC_PCC ) {
+				return 0
+			}
+			if ( dbspec == DBSPEC_OBJ_LEVEL ) {
+				return 35
+			}
+			if ( dbspec == DBSPEC_RARE_LEVEL ) {
+				return 700
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_ON_READ ) {
+			efid = SKILL_SPELL_NETHER_WAVE
+			efp = 100
+			gosub *readSpellbook
+			return -1
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t「冥王の咆哮」という呪文について学ぶことができる魔法書。地獄に君臨したいあなたに。\n#〜本の為の本・魔法書編〜\n"
+				description(1) = "<ランク7魔法>"
+				description(2) = ""
+				description(3) = "\t\t地獄属性の範囲魔法呪文を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == ITEM_ID_SPELLBOOK_OF_POISON_STORM ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 4800
+			inv(INV_ITEM_WEIGHT, ci) = 380
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_SPELLBOOK_OF_POISON_STORM
+			inv(INV_ITEM_PIC, ci) = xy2pic(0, 13)
+			reftype = FILTER_ITEM_SPELLBOOK
+			reftypeminor = FILTER_NOTHING
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			inv(INV_ITEM_CHARGE, ci) = 3 + rnd(3) - rnd(3)
+			ibitmod ITEM_BIT_CHARGE_ITEM, ci, TRUE
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 3
+			infilterref = ""
+			reftype = FILTER_ITEM_SPELLBOOK
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == DBSPEC_TYPE ) {
+				return 54000
+			}
+			if ( dbspec == DBSPEC_TYPE_MINOR ) {
+				return 99999
+			}
+			if ( dbspec == DBSPEC_VALUE_ORG ) {
+				return 4800
+			}
+			if ( dbspec == DBSPEC_PARAM3_ORG ) {
+				return
+			}
+			if ( dbspec == DBSPEC_CAN_READ ) {
+				return 1
+			}
+			if ( dbspec == DBSPEC_PCC ) {
+				return 0
+			}
+			if ( dbspec == DBSPEC_OBJ_LEVEL ) {
+				return 35
+			}
+			if ( dbspec == DBSPEC_RARE_LEVEL ) {
+				return 700
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_ON_READ ) {
+			efid = SKILL_SPELL_POISON_STORM
+			efp = 100
+			gosub *readSpellbook
+			return -1
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t「猛毒の嵐」という呪文について学ぶことができる魔法書。毒をまき散らしたいあなたに。\n#〜本の為の本・魔法書編〜\n"
+				description(1) = "<ランク7魔法>"
+				description(2) = ""
+				description(3) = "\t\t毒属性の範囲魔法呪文を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == ITEM_ID_SPELLBOOK_OF_BUBBLE_STORM ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 5000
+			inv(INV_ITEM_WEIGHT, ci) = 380
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_SPELLBOOK_OF_BUBBLE_STORM
+			inv(INV_ITEM_PIC, ci) = xy2pic(0, 13)
+			reftype = FILTER_ITEM_SPELLBOOK
+			reftypeminor = FILTER_NOTHING
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			inv(INV_ITEM_CHARGE, ci) = 3 + rnd(3) - rnd(3)
+			ibitmod ITEM_BIT_CHARGE_ITEM, ci, TRUE
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 3
+			infilterref = ""
+			reftype = FILTER_ITEM_SPELLBOOK
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == DBSPEC_TYPE ) {
+				return 54000
+			}
+			if ( dbspec == DBSPEC_TYPE_MINOR ) {
+				return 99999
+			}
+			if ( dbspec == DBSPEC_VALUE_ORG ) {
+				return 5000
+			}
+			if ( dbspec == DBSPEC_PARAM3_ORG ) {
+				return
+			}
+			if ( dbspec == DBSPEC_CAN_READ ) {
+				return 1
+			}
+			if ( dbspec == DBSPEC_PCC ) {
+				return 0
+			}
+			if ( dbspec == DBSPEC_OBJ_LEVEL ) {
+				return 40
+			}
+			if ( dbspec == DBSPEC_RARE_LEVEL ) {
+				return 700
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_ON_READ ) {
+			efid = SKILL_SPELL_BUBBLE_STORM
+			efp = 100
+			gosub *readSpellbook
+			return -1
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t「泡沫の嵐」という呪文について学ぶことができる魔法書。シャボン玉が好きなあなたに。\n#〜本の為の本・魔法書編〜\n"
+				description(1) = "<ランク8魔法>"
+				description(2) = ""
+				description(3) = "\t\tＰＶＤＶ属性の範囲魔法呪文を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == ITEM_ID_SPELLBOOK_OF_ILLUSION_ROAR ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 4800
+			inv(INV_ITEM_WEIGHT, ci) = 380
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_SPELLBOOK_OF_ILLUSION_ROAR
+			inv(INV_ITEM_PIC, ci) = xy2pic(0, 13)
+			reftype = FILTER_ITEM_SPELLBOOK
+			reftypeminor = FILTER_NOTHING
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			inv(INV_ITEM_CHARGE, ci) = 3 + rnd(3) - rnd(3)
+			ibitmod ITEM_BIT_CHARGE_ITEM, ci, TRUE
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 3
+			infilterref = ""
+			reftype = FILTER_ITEM_SPELLBOOK
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == DBSPEC_TYPE ) {
+				return 54000
+			}
+			if ( dbspec == DBSPEC_TYPE_MINOR ) {
+				return 99999
+			}
+			if ( dbspec == DBSPEC_VALUE_ORG ) {
+				return 4800
+			}
+			if ( dbspec == DBSPEC_PARAM3_ORG ) {
+				return
+			}
+			if ( dbspec == DBSPEC_CAN_READ ) {
+				return 1
+			}
+			if ( dbspec == DBSPEC_PCC ) {
+				return 0
+			}
+			if ( dbspec == DBSPEC_OBJ_LEVEL ) {
+				return 35
+			}
+			if ( dbspec == DBSPEC_RARE_LEVEL ) {
+				return 700
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_ON_READ ) {
+			efid = SKILL_SPELL_ILLUSION_ROAR
+			efp = 100
+			gosub *readSpellbook
+			return -1
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t「混沌の渦」という呪文について学ぶことができる魔法書。夢見がちなあなたに。\n#〜本の為の本・魔法書編〜\n"
+				description(1) = "<ランク7魔法>"
+				description(2) = ""
+				description(3) = "\t\t幻惑属性の範囲魔法呪文を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == ITEM_ID_SPELLBOOK_OF_ANGUISH_JAIL ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 4800
+			inv(INV_ITEM_WEIGHT, ci) = 380
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_SPELLBOOK_OF_ANGUISH_JAIL
+			inv(INV_ITEM_PIC, ci) = xy2pic(0, 13)
+			reftype = FILTER_ITEM_SPELLBOOK
+			reftypeminor = FILTER_NOTHING
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			inv(INV_ITEM_CHARGE, ci) = 3 + rnd(3) - rnd(3)
+			ibitmod ITEM_BIT_CHARGE_ITEM, ci, TRUE
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 3
+			infilterref = ""
+			reftype = FILTER_ITEM_SPELLBOOK
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == DBSPEC_TYPE ) {
+				return 54000
+			}
+			if ( dbspec == DBSPEC_TYPE_MINOR ) {
+				return 99999
+			}
+			if ( dbspec == DBSPEC_VALUE_ORG ) {
+				return 4800
+			}
+			if ( dbspec == DBSPEC_PARAM3_ORG ) {
+				return
+			}
+			if ( dbspec == DBSPEC_CAN_READ ) {
+				return 1
+			}
+			if ( dbspec == DBSPEC_PCC ) {
+				return 0
+			}
+			if ( dbspec == DBSPEC_OBJ_LEVEL ) {
+				return 35
+			}
+			if ( dbspec == DBSPEC_RARE_LEVEL ) {
+				return 700
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_ON_READ ) {
+			efid = SKILL_SPELL_ANGUISH_JAIL
+			efp = 100
+			gosub *readSpellbook
+			return -1
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t「轟音の波動」という呪文について学ぶことができる魔法書。サディストなあなたに。\n#〜本の為の本・魔法書編〜\n"
+				description(1) = "<ランク7魔法>"
+				description(2) = ""
+				description(3) = "\t\t神経属性の範囲魔法呪文を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == ITEM_ID_SPELLBOOK_OF_NETHER_BOLT ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 2200
+			inv(INV_ITEM_WEIGHT, ci) = 380
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_SPELLBOOK_OF_NETHER_BOLT
+			inv(INV_ITEM_PIC, ci) = xy2pic(0, 13)
+			reftype = FILTER_ITEM_SPELLBOOK
+			reftypeminor = FILTER_NOTHING
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			inv(INV_ITEM_CHARGE, ci) = 4 + rnd(4) - rnd(4)
+			ibitmod ITEM_BIT_CHARGE_ITEM, ci, TRUE
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 4
+			infilterref = ""
+			reftype = FILTER_ITEM_SPELLBOOK
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == DBSPEC_TYPE ) {
+				return 54000
+			}
+			if ( dbspec == DBSPEC_TYPE_MINOR ) {
+				return 99999
+			}
+			if ( dbspec == DBSPEC_VALUE_ORG ) {
+				return 2200
+			}
+			if ( dbspec == DBSPEC_PARAM3_ORG ) {
+				return
+			}
+			if ( dbspec == DBSPEC_CAN_READ ) {
+				return 1
+			}
+			if ( dbspec == DBSPEC_PCC ) {
+				return 0
+			}
+			if ( dbspec == DBSPEC_OBJ_LEVEL ) {
+				return 18
+			}
+			if ( dbspec == DBSPEC_RARE_LEVEL ) {
+				return 1000
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_ON_READ ) {
+			efid = SKILL_SPELL_NETHER_BOLT
+			efp = 100
+			gosub *readSpellbook
+			return -1
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t「ネザーボルト」という呪文について学ぶことができる魔法書。地獄に落としたい人がいるあなたに。\n#〜本の為の本・魔法書編〜\n"
+				description(1) = "<ランク5魔法>"
+				description(2) = ""
+				description(3) = "\t\t地獄属性のボルトを唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == ITEM_ID_SPELLBOOK_OF_POISON_BOLT ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 2200
+			inv(INV_ITEM_WEIGHT, ci) = 380
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_SPELLBOOK_OF_POISON_BOLT
+			inv(INV_ITEM_PIC, ci) = xy2pic(0, 13)
+			reftype = FILTER_ITEM_SPELLBOOK
+			reftypeminor = FILTER_NOTHING
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			inv(INV_ITEM_CHARGE, ci) = 4 + rnd(4) - rnd(4)
+			ibitmod ITEM_BIT_CHARGE_ITEM, ci, TRUE
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 4
+			infilterref = ""
+			reftype = FILTER_ITEM_SPELLBOOK
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == DBSPEC_TYPE ) {
+				return 54000
+			}
+			if ( dbspec == DBSPEC_TYPE_MINOR ) {
+				return 99999
+			}
+			if ( dbspec == DBSPEC_VALUE_ORG ) {
+				return 2200
+			}
+			if ( dbspec == DBSPEC_PARAM3_ORG ) {
+				return
+			}
+			if ( dbspec == DBSPEC_CAN_READ ) {
+				return 1
+			}
+			if ( dbspec == DBSPEC_PCC ) {
+				return 0
+			}
+			if ( dbspec == DBSPEC_OBJ_LEVEL ) {
+				return 18
+			}
+			if ( dbspec == DBSPEC_RARE_LEVEL ) {
+				return 1000
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_ON_READ ) {
+			efid = SKILL_SPELL_POISON_BOLT
+			efp = 100
+			gosub *readSpellbook
+			return -1
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t「ポイズンボルト」という呪文について学ぶことができる魔法書。毒々しいものが好きなあなたに。\n#〜本の為の本・魔法書編〜\n"
+				description(1) = "<ランク5魔法>"
+				description(2) = ""
+				description(3) = "\t\t毒属性のボルトを唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == ITEM_ID_SPELLBOOK_OF_SOUND_BOLT ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 2200
+			inv(INV_ITEM_WEIGHT, ci) = 380
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_SPELLBOOK_OF_SOUND_BOLT
+			inv(INV_ITEM_PIC, ci) = xy2pic(0, 13)
+			reftype = FILTER_ITEM_SPELLBOOK
+			reftypeminor = FILTER_NOTHING
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			inv(INV_ITEM_CHARGE, ci) = 4 + rnd(4) - rnd(4)
+			ibitmod ITEM_BIT_CHARGE_ITEM, ci, TRUE
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 4
+			infilterref = ""
+			reftype = FILTER_ITEM_SPELLBOOK
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == DBSPEC_TYPE ) {
+				return 54000
+			}
+			if ( dbspec == DBSPEC_TYPE_MINOR ) {
+				return 99999
+			}
+			if ( dbspec == DBSPEC_VALUE_ORG ) {
+				return 2200
+			}
+			if ( dbspec == DBSPEC_PARAM3_ORG ) {
+				return
+			}
+			if ( dbspec == DBSPEC_CAN_READ ) {
+				return 1
+			}
+			if ( dbspec == DBSPEC_PCC ) {
+				return 0
+			}
+			if ( dbspec == DBSPEC_OBJ_LEVEL ) {
+				return 18
+			}
+			if ( dbspec == DBSPEC_RARE_LEVEL ) {
+				return 1000
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_ON_READ ) {
+			efid = SKILL_SPELL_SOUND_BOLT
+			efp = 100
+			gosub *readSpellbook
+			return -1
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t「サウンドボルト」という呪文について学ぶことができる魔法書。騒がしいのが好きなあなたに。\n#〜本の為の本・魔法書編〜\n"
+				description(1) = "<ランク5魔法>"
+				description(2) = ""
+				description(3) = "\t\t音属性のボルトを唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == ITEM_ID_SPELLBOOK_OF_CHAOS_BOLT ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 2200
+			inv(INV_ITEM_WEIGHT, ci) = 380
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_SPELLBOOK_OF_CHAOS_BOLT
+			inv(INV_ITEM_PIC, ci) = xy2pic(0, 13)
+			reftype = FILTER_ITEM_SPELLBOOK
+			reftypeminor = FILTER_NOTHING
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			inv(INV_ITEM_CHARGE, ci) = 4 + rnd(4) - rnd(4)
+			ibitmod ITEM_BIT_CHARGE_ITEM, ci, TRUE
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 4
+			infilterref = ""
+			reftype = FILTER_ITEM_SPELLBOOK
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == DBSPEC_TYPE ) {
+				return 54000
+			}
+			if ( dbspec == DBSPEC_TYPE_MINOR ) {
+				return 99999
+			}
+			if ( dbspec == DBSPEC_VALUE_ORG ) {
+				return 2200
+			}
+			if ( dbspec == DBSPEC_PARAM3_ORG ) {
+				return
+			}
+			if ( dbspec == DBSPEC_CAN_READ ) {
+				return 1
+			}
+			if ( dbspec == DBSPEC_PCC ) {
+				return 0
+			}
+			if ( dbspec == DBSPEC_OBJ_LEVEL ) {
+				return 18
+			}
+			if ( dbspec == DBSPEC_RARE_LEVEL ) {
+				return 1000
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_ON_READ ) {
+			efid = SKILL_SPELL_CHAOS_BOLT
+			efp = 100
+			gosub *readSpellbook
+			return -1
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t「カオスボルト」という呪文について学ぶことができる魔法書。散らかっているほうが落ち着くあなたに。\n#〜本の為の本・魔法書編〜\n"
+				description(1) = "<ランク5魔法>"
+				description(2) = ""
+				description(3) = "\t\t混沌属性のボルトを唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == ITEM_ID_SPELLBOOK_OF_NERVE_BOLT ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 2200
+			inv(INV_ITEM_WEIGHT, ci) = 380
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_SPELLBOOK_OF_NERVE_BOLT
+			inv(INV_ITEM_PIC, ci) = xy2pic(0, 13)
+			reftype = FILTER_ITEM_SPELLBOOK
+			reftypeminor = FILTER_NOTHING
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			inv(INV_ITEM_CHARGE, ci) = 4 + rnd(4) - rnd(4)
+			ibitmod ITEM_BIT_CHARGE_ITEM, ci, TRUE
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 4
+			infilterref = ""
+			reftype = FILTER_ITEM_SPELLBOOK
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == DBSPEC_TYPE ) {
+				return 54000
+			}
+			if ( dbspec == DBSPEC_TYPE_MINOR ) {
+				return 99999
+			}
+			if ( dbspec == DBSPEC_VALUE_ORG ) {
+				return 2200
+			}
+			if ( dbspec == DBSPEC_PARAM3_ORG ) {
+				return
+			}
+			if ( dbspec == DBSPEC_CAN_READ ) {
+				return 1
+			}
+			if ( dbspec == DBSPEC_PCC ) {
+				return 0
+			}
+			if ( dbspec == DBSPEC_OBJ_LEVEL ) {
+				return 18
+			}
+			if ( dbspec == DBSPEC_RARE_LEVEL ) {
+				return 1000
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_ON_READ ) {
+			efid = SKILL_SPELL_NERVE_BOLT
+			efp = 100
+			gosub *readSpellbook
+			return -1
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t「ナーブボルト」という呪文について学ぶことができる魔法書。痛みこそが愛だと思うあなたに。\n#〜本の為の本・魔法書編〜\n"
+				description(1) = "<ランク5魔法>"
+				description(2) = ""
+				description(3) = "\t\t神経属性のボルトを唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == ITEM_ID_SPELLBOOK_OF_FIRE_CLAW ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 1500
+			inv(INV_ITEM_WEIGHT, ci) = 380
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_SPELLBOOK_OF_FIRE_CLAW
+			inv(INV_ITEM_PIC, ci) = xy2pic(0, 13)
+			reftype = FILTER_ITEM_SPELLBOOK
+			reftypeminor = FILTER_NOTHING
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			inv(INV_ITEM_CHARGE, ci) = 5 + rnd(5) - rnd(5)
+			ibitmod ITEM_BIT_CHARGE_ITEM, ci, TRUE
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 5
+			infilterref = ""
+			reftype = FILTER_ITEM_SPELLBOOK
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == DBSPEC_TYPE ) {
+				return 54000
+			}
+			if ( dbspec == DBSPEC_TYPE_MINOR ) {
+				return 99999
+			}
+			if ( dbspec == DBSPEC_VALUE_ORG ) {
+				return 1500
+			}
+			if ( dbspec == DBSPEC_PARAM3_ORG ) {
+				return
+			}
+			if ( dbspec == DBSPEC_CAN_READ ) {
+				return 1
+			}
+			if ( dbspec == DBSPEC_PCC ) {
+				return 0
+			}
+			if ( dbspec == DBSPEC_OBJ_LEVEL ) {
+				return 5
+			}
+			if ( dbspec == DBSPEC_RARE_LEVEL ) {
+				return 1000
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_ON_READ ) {
+			efid = SKILL_SPELL_FIRE_CLAW
+			efp = 100
+			gosub *readSpellbook
+			return -1
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t「火炎の爪」という呪文について学ぶことができる魔法書。熱い傷跡を残したいあなたに。\n#〜本の為の本・魔法書編〜\n"
+				description(1) = "<ランク2魔法>"
+				description(2) = ""
+				description(3) = "\t\t火炎属性の矢を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == ITEM_ID_SPELLBOOK_OF_COLD_BLADE ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 1500
+			inv(INV_ITEM_WEIGHT, ci) = 380
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_SPELLBOOK_OF_COLD_BLADE
+			inv(INV_ITEM_PIC, ci) = xy2pic(0, 13)
+			reftype = FILTER_ITEM_SPELLBOOK
+			reftypeminor = FILTER_NOTHING
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			inv(INV_ITEM_CHARGE, ci) = 5 + rnd(5) - rnd(5)
+			ibitmod ITEM_BIT_CHARGE_ITEM, ci, TRUE
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 5
+			infilterref = ""
+			reftype = FILTER_ITEM_SPELLBOOK
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == DBSPEC_TYPE ) {
+				return 54000
+			}
+			if ( dbspec == DBSPEC_TYPE_MINOR ) {
+				return 99999
+			}
+			if ( dbspec == DBSPEC_VALUE_ORG ) {
+				return 1500
+			}
+			if ( dbspec == DBSPEC_PARAM3_ORG ) {
+				return
+			}
+			if ( dbspec == DBSPEC_CAN_READ ) {
+				return 1
+			}
+			if ( dbspec == DBSPEC_PCC ) {
+				return 0
+			}
+			if ( dbspec == DBSPEC_OBJ_LEVEL ) {
+				return 5
+			}
+			if ( dbspec == DBSPEC_RARE_LEVEL ) {
+				return 1000
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_ON_READ ) {
+			efid = SKILL_SPELL_COLD_BLADE
+			efp = 100
+			gosub *readSpellbook
+			return -1
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t「冷気の刃」という呪文について学ぶことができる魔法書。冷静沈着なあなたに。\n#〜本の為の本・魔法書編〜\n"
+				description(1) = "<ランク2魔法>"
+				description(2) = ""
+				description(3) = "\t\t冷気属性の矢を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == ITEM_ID_SPELLBOOK_OF_LIGHTNING_SPEAR ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 1500
+			inv(INV_ITEM_WEIGHT, ci) = 380
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_SPELLBOOK_OF_LIGHTNING_SPEAR
+			inv(INV_ITEM_PIC, ci) = xy2pic(0, 13)
+			reftype = FILTER_ITEM_SPELLBOOK
+			reftypeminor = FILTER_NOTHING
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			inv(INV_ITEM_CHARGE, ci) = 5 + rnd(5) - rnd(5)
+			ibitmod ITEM_BIT_CHARGE_ITEM, ci, TRUE
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 5
+			infilterref = ""
+			reftype = FILTER_ITEM_SPELLBOOK
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == DBSPEC_TYPE ) {
+				return 54000
+			}
+			if ( dbspec == DBSPEC_TYPE_MINOR ) {
+				return 99999
+			}
+			if ( dbspec == DBSPEC_VALUE_ORG ) {
+				return 1500
+			}
+			if ( dbspec == DBSPEC_PARAM3_ORG ) {
+				return
+			}
+			if ( dbspec == DBSPEC_CAN_READ ) {
+				return 1
+			}
+			if ( dbspec == DBSPEC_PCC ) {
+				return 0
+			}
+			if ( dbspec == DBSPEC_OBJ_LEVEL ) {
+				return 5
+			}
+			if ( dbspec == DBSPEC_RARE_LEVEL ) {
+				return 1000
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_ON_READ ) {
+			efid = SKILL_SPELL_LIGHTNING_SPEAR
+			efp = 100
+			gosub *readSpellbook
+			return -1
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t「電撃の槍」という呪文について学ぶことができる魔法書。皆を痺れさせたいあなたに。\n#〜本の為の本・魔法書編〜\n"
+				description(1) = "<ランク2魔法>"
+				description(2) = ""
+				description(3) = "\t\t電撃属性の矢を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == ITEM_ID_SPELLBOOK_OF_MIND_THORN ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 2000
+			inv(INV_ITEM_WEIGHT, ci) = 380
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_SPELLBOOK_OF_MIND_THORN
+			inv(INV_ITEM_PIC, ci) = xy2pic(0, 13)
+			reftype = FILTER_ITEM_SPELLBOOK
+			reftypeminor = FILTER_NOTHING
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			inv(INV_ITEM_CHARGE, ci) = 5 + rnd(5) - rnd(5)
+			ibitmod ITEM_BIT_CHARGE_ITEM, ci, TRUE
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 5
+			infilterref = ""
+			reftype = FILTER_ITEM_SPELLBOOK
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == DBSPEC_TYPE ) {
+				return 54000
+			}
+			if ( dbspec == DBSPEC_TYPE_MINOR ) {
+				return 99999
+			}
+			if ( dbspec == DBSPEC_VALUE_ORG ) {
+				return 2000
+			}
+			if ( dbspec == DBSPEC_PARAM3_ORG ) {
+				return
+			}
+			if ( dbspec == DBSPEC_CAN_READ ) {
+				return 1
+			}
+			if ( dbspec == DBSPEC_PCC ) {
+				return 0
+			}
+			if ( dbspec == DBSPEC_OBJ_LEVEL ) {
+				return 10
+			}
+			if ( dbspec == DBSPEC_RARE_LEVEL ) {
+				return 1000
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_ON_READ ) {
+			efid = SKILL_SPELL_MIND_THORN
+			efp = 100
+			gosub *readSpellbook
+			return -1
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t「幻惑の棘の吐息」という呪文について学ぶことができる魔法書。敵を幻覚で翻弄したいあなたに。\n#〜本の為の本・魔法書編〜\n"
+				description(1) = "<ランク3魔法>"
+				description(2) = ""
+				description(3) = "\t\t幻惑属性の矢を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == ITEM_ID_SPELLBOOK_OF_POISON_MUCUS ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 2000
+			inv(INV_ITEM_WEIGHT, ci) = 380
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_SPELLBOOK_OF_POISON_MUCUS
+			inv(INV_ITEM_PIC, ci) = xy2pic(0, 13)
+			reftype = FILTER_ITEM_SPELLBOOK
+			reftypeminor = FILTER_NOTHING
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			inv(INV_ITEM_CHARGE, ci) = 5 + rnd(5) - rnd(5)
+			ibitmod ITEM_BIT_CHARGE_ITEM, ci, TRUE
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 5
+			infilterref = ""
+			reftype = FILTER_ITEM_SPELLBOOK
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == DBSPEC_TYPE ) {
+				return 54000
+			}
+			if ( dbspec == DBSPEC_TYPE_MINOR ) {
+				return 99999
+			}
+			if ( dbspec == DBSPEC_VALUE_ORG ) {
+				return 2000
+			}
+			if ( dbspec == DBSPEC_PARAM3_ORG ) {
+				return
+			}
+			if ( dbspec == DBSPEC_CAN_READ ) {
+				return 1
+			}
+			if ( dbspec == DBSPEC_PCC ) {
+				return 0
+			}
+			if ( dbspec == DBSPEC_OBJ_LEVEL ) {
+				return 10
+			}
+			if ( dbspec == DBSPEC_RARE_LEVEL ) {
+				return 1000
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_ON_READ ) {
+			efid = SKILL_SPELL_POISON_MUCUS
+			efp = 100
+			gosub *readSpellbook
+			return -1
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t「毒の粘液」という呪文について学ぶことができる魔法書。有毒生物に興味があるあなたに。\n#〜本の為の本・魔法書編〜\n"
+				description(1) = "<ランク3魔法>"
+				description(2) = ""
+				description(3) = "\t\t毒属性の矢を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == ITEM_ID_SPELLBOOK_OF_SOUND_CANNONBALL ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 2000
+			inv(INV_ITEM_WEIGHT, ci) = 380
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_SPELLBOOK_OF_SOUND_CANNONBALL
+			inv(INV_ITEM_PIC, ci) = xy2pic(0, 13)
+			reftype = FILTER_ITEM_SPELLBOOK
+			reftypeminor = FILTER_NOTHING
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			inv(INV_ITEM_CHARGE, ci) = 5 + rnd(5) - rnd(5)
+			ibitmod ITEM_BIT_CHARGE_ITEM, ci, TRUE
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 5
+			infilterref = ""
+			reftype = FILTER_ITEM_SPELLBOOK
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == DBSPEC_TYPE ) {
+				return 54000
+			}
+			if ( dbspec == DBSPEC_TYPE_MINOR ) {
+				return 99999
+			}
+			if ( dbspec == DBSPEC_VALUE_ORG ) {
+				return 2000
+			}
+			if ( dbspec == DBSPEC_PARAM3_ORG ) {
+				return
+			}
+			if ( dbspec == DBSPEC_CAN_READ ) {
+				return 1
+			}
+			if ( dbspec == DBSPEC_PCC ) {
+				return 0
+			}
+			if ( dbspec == DBSPEC_OBJ_LEVEL ) {
+				return 10
+			}
+			if ( dbspec == DBSPEC_RARE_LEVEL ) {
+				return 1000
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_ON_READ ) {
+			efid = SKILL_SPELL_SOUND_CANNONBALL
+			efp = 100
+			gosub *readSpellbook
+			return -1
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t「音の砲弾」という呪文について学ぶことができる魔法書。音楽で人をぶっ飛ばしたいあなたに。\n#〜本の為の本・魔法書編〜\n"
+				description(1) = "<ランク3魔法>"
+				description(2) = ""
+				description(3) = "\t\t音属性の矢を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == ITEM_ID_SPELLBOOK_OF_HYDRO_FANG ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 2500
+			inv(INV_ITEM_WEIGHT, ci) = 380
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_SPELLBOOK_OF_HYDRO_FANG
+			inv(INV_ITEM_PIC, ci) = xy2pic(0, 13)
+			reftype = FILTER_ITEM_SPELLBOOK
+			reftypeminor = FILTER_NOTHING
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			inv(INV_ITEM_CHARGE, ci) = 5 + rnd(5) - rnd(5)
+			ibitmod ITEM_BIT_CHARGE_ITEM, ci, TRUE
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 5
+			infilterref = ""
+			reftype = FILTER_ITEM_SPELLBOOK
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == DBSPEC_TYPE ) {
+				return 54000
+			}
+			if ( dbspec == DBSPEC_TYPE_MINOR ) {
+				return 99999
+			}
+			if ( dbspec == DBSPEC_VALUE_ORG ) {
+				return 2500
+			}
+			if ( dbspec == DBSPEC_PARAM3_ORG ) {
+				return
+			}
+			if ( dbspec == DBSPEC_CAN_READ ) {
+				return 1
+			}
+			if ( dbspec == DBSPEC_PCC ) {
+				return 0
+			}
+			if ( dbspec == DBSPEC_OBJ_LEVEL ) {
+				return 15
+			}
+			if ( dbspec == DBSPEC_RARE_LEVEL ) {
+				return 1000
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_ON_READ ) {
+			efid = SKILL_SPELL_HYDRO_FANG
+			efp = 100
+			gosub *readSpellbook
+			return -1
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t「水の牙」という呪文について学ぶことができる魔法書。水の恐ろしさを知るあなたに。\n#〜本の為の本・魔法書編〜\n"
+				description(1) = "<ランク3魔法>"
+				description(2) = ""
+				description(3) = "\t\tPVDV属性の矢を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
 	if ( dbid == ITEM_ID_DYING_CICADA ) {
 		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
 			inv(INV_ITEM_VALUE, ci) = 10
@@ -41655,7 +43023,7 @@
 				description(0) = "\t\t守護者の体内から見つかる謎の結晶。記憶と化合することで力を生み出すという。ネフィア症候群の末期患者を解剖したところ、体内に同様の結晶が形成されつつあったという記録もある。\n#〜イルヴァ幻想辞典〜\n"
 				description(1) = ""
 				description(2) = ""
-				description(3) = "\t\tスキルをボーナスに変換する結晶。使用することができる（使い捨て）。\n#〜鑑定報告書：＜遺物＞カテゴリ〜\n"
+				description(3) = "\t\tスキル半減し僅かにボーナスを得る結晶。使用することができる（使い捨て）。\n#〜鑑定報告書：＜遺物＞カテゴリ〜\n"
 			}
 			else {
 				description(0) = ""
@@ -52867,7 +54235,7 @@
 	}
 	if ( dbid == ITEM_ID_SPELLBOOK_WATER_BEAM ) {
 		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
-			inv(INV_ITEM_VALUE, ci) = 6500
+			inv(INV_ITEM_VALUE, ci) = 2800
 			inv(INV_ITEM_WEIGHT, ci) = 380
 		}
 		if ( dbmode == DBMODE_SET ) {
@@ -52878,12 +54246,12 @@
 			inv(INV_ITEM_NUM, ci) = 1
 			fixeditemenc = 0
 			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
-			inv(INV_ITEM_CHARGE, ci) = 2 + rnd(2) - rnd(2)
+			inv(INV_ITEM_CHARGE, ci) = 4 + rnd(4) - rnd(4)
 			ibitmod ITEM_BIT_CHARGE_ITEM, ci, 1
 			return
 		}
 		if ( dbmode == DBMODE_REF ) {
-			ichargelevel = 2
+			ichargelevel = 4
 			infilterref = ""
 			reftype = FILTER_ITEM_SPELLBOOK
 			return
@@ -52896,7 +54264,7 @@
 				return FILTER_NONE
 			}
 			if ( dbspec == DBSPEC_VALUE_ORG ) {
-				return 6500
+				return 2800
 			}
 			if ( dbspec == DBSPEC_PARAM3_ORG ) {
 				return
@@ -52908,10 +54276,10 @@
 				return 0
 			}
 			if ( dbspec == DBSPEC_OBJ_LEVEL ) {
-				return 30
+				return 24
 			}
 			if ( dbspec == DBSPEC_RARE_LEVEL ) {
-				return 300
+				return 1000
 			}
 			return 0
 		}
@@ -52924,9 +54292,9 @@
 		if ( dbmode == DBMODE_DESC ) {
 			if ( jp ) {
 				description(0) = "\t\t「ハイドロボルト」という呪文について学ぶことができる魔法書。水芸を極めたいあなたに。\n#〜本の為の本・魔法書編〜\n"
-				description(1) = "<ランク4魔法>"
+				description(1) = "<ランク5魔法>"
 				description(2) = ""
-				description(3) = "\t\t無属性の水ボルトを唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
+				description(3) = "\t\tＰＶＤＶ属性のボルトを唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
 			}
 			else {
 				description(0) = ""
@@ -53005,7 +54373,7 @@
 				description(0) = "\t\t特定の魔法が封じ込められた杖。今にも割れてしまいそうな儚げな宝石が取り付けられている。\n#〜魔具全典〜\n"
 				description(1) = ""
 				description(2) = ""
-				description(3) = "\t\t振ることで無属性の水範囲攻撃を発動する魔法の杖だ。\n#〜鑑定報告書：＜魔道具＞カテゴリ〜\n"
+				description(3) = "\t\t振ることでＰＶＤＶ属性の範囲攻撃を発動する魔法の杖だ。\n#〜鑑定報告書：＜魔道具＞カテゴリ〜\n"
 			}
 			else {
 				description(0) = ""
@@ -55326,7 +56694,7 @@
 			reftype = FILTER_GIRDLE
 			reftypeminor = FILTER_GIRDLE_MEDIUM
 			inv(INV_ITEM_NUM, ci) = 1
-			fixeditemenc = ENCHANT_RESISTANCE * EXT_ENCHANTMENT + SKILL_RES_NETHER, 350, ENCHANT_RESISTANCE * EXT_ENCHANTMENT + SKILL_RES_FIRE, 350, ENCHANT_RES_PREGNANCY, 100, ENCHANT_RES_CURSE, 400, ENCHANT_ATTRIBUTE * EXT_ENCHANTMENT + SKILL_ATTR_MAG, 700, 0
+			fixeditemenc = ENCHANT_RESISTANCE * EXT_ENCHANTMENT + SKILL_RES_NETHER, 350, ENCHANT_RESISTANCE * EXT_ENCHANTMENT + SKILL_RES_FIRE, 350, ENCHANT_RES_PREGNANCY, 100, ENCHANT_RES_CURSE, 400, ENCHANT_DARKNESS_AND_NETHER, 100, ENCHANT_ATTRIBUTE * EXT_ENCHANTMENT + SKILL_ATTR_MAG, 700, 0
 			ibitmod ITEM_BIT_PRECIOUS, ci, 1
 			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 500
 			fixlv = FIX_QUALITY_UNIQUE
@@ -58396,7 +59764,7 @@
 			reftype = FILTER_WEAPON
 			reftypeminor = FILTER_WEAPON_POLEARM
 			inv(INV_ITEM_NUM, ci) = 1
-			fixeditemenc = ENCHANT_ELEMENTAL_DMG * EXT_ENCHANTMENT + SKILL_RES_COLD, 400, ENCHANT_PIERCING_CHANCE, 500, ENCHANT_PROC * EXT_ENCHANTMENT + ENCHANT_PROC_ICE_BOLT, 1000, ENCHANT_RES_FEAR, 100, 0
+			fixeditemenc = ENCHANT_ELEMENTAL_DMG * EXT_ENCHANTMENT + SKILL_RES_COLD, 400, ENCHANT_PIERCING_CHANCE, 500, ENCHANT_PROC * EXT_ENCHANTMENT + ENCHANT_PROC_ICE_BOLT, 1000, ENCHANT_BANE_METAL, 200, ENCHANT_RES_FEAR, 100, 0
 			ibitmod ITEM_BIT_PRECIOUS, ci, 1
 			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 500
 			fixlv = FIX_QUALITY_UNIQUE
@@ -61161,7 +62529,7 @@
 			reftype = FILTER_WEAPON
 			reftypeminor = FILTER_WEAPON_STAVE
 			inv(INV_ITEM_NUM, ci) = 1
-			fixeditemenc = ENCHANT_RESISTANCE * EXT_ENCHANTMENT + SKILL_RES_DARKNESS, 350, ENCHANT_RES_CONFUSE, 100, ENCHANT_RES_BLIND, 100, ENCHANT_ATTRIBUTE * EXT_ENCHANTMENT + SKILL_ATTR_LER, 800, ENCHANT_ENHANCE_SPELL, 600, ENCHANT_REFLECT_MAGIC, 150, 0
+			fixeditemenc = ENCHANT_RESISTANCE * EXT_ENCHANTMENT + SKILL_RES_DARKNESS, 350, ENCHANT_RES_CONFUSE, 100, ENCHANT_RES_BLIND, 100, ENCHANT_ATTRIBUTE * EXT_ENCHANTMENT + SKILL_ATTR_LER, 800, ENCHANT_ENHANCE_SPELL, 600, ENCHANT_DARKNESS_AND_NETHER, 200, 0
 			ibitmod ITEM_BIT_PRECIOUS, ci, 1
 			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 500
 			fixlv = FIX_QUALITY_UNIQUE
@@ -65071,7 +66439,7 @@
 			reftype = FILTER_RANGE
 			reftypeminor = FILTER_RANGE_ROCK_THROW
 			inv(INV_ITEM_NUM, ci) = 1
-			fixeditemenc = ENCHANT_ELEMENTAL_DMG * EXT_ENCHANTMENT + SKILL_RESDMG_CUT, 150, ENCHANT_SKILL * EXT_ENCHANTMENT + SKILL_NORMAL_STEALTH, -700, ENCHANT_ATTRIBUTE * EXT_ENCHANTMENT + SKILL_ATTR_DEX, 600, ENCHANT_CRIT_CHANCE, 300, 0
+			fixeditemenc = ENCHANT_ELEMENTAL_DMG * EXT_ENCHANTMENT + SKILL_RESDMG_CUT, 150, ENCHANT_SKILL * EXT_ENCHANTMENT + SKILL_NORMAL_STEALTH, -700, ENCHANT_ATTRIBUTE * EXT_ENCHANTMENT + SKILL_ATTR_DEX, 600, ENCHANT_CRIT_CHANCE, 300, ENCHANT_BANE_METAL, 200, 0
 			ibitmod ITEM_BIT_PRECIOUS, ci, 1
 			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 500
 			fixlv = FIX_QUALITY_UNIQUE
@@ -65109,7 +66477,7 @@
 		}
 		if ( dbmode == DBMODE_DESC ) {
 			if ( jp ) {
-				description(0) = "\t\t携行性と隠密性を犠牲にして威力を追求した手裏剣。その大きさはもはや暗器でないが、防御に使えるという長所も。\n#〜イルヴァ幻想辞典〜\n"
+				description(0) = "\t\t携行性と隠密性を犠牲にして威力を追求した手裏剣。その大きさはもはや暗器でないが、防御に使えるという長所も。刀身にはレアメタルが使われており、硬い物も切り裂く。\n#〜イルヴァ幻想辞典〜\n"
 				description(1) = ""
 				description(2) = ""
 				description(3) = "\t\t相手に出血を起こさせる投擲用武器だ。\n#〜鑑定報告書：＜武器＞カテゴリ〜\n"
@@ -67455,7 +68823,7 @@
 			reftype = FILTER_WEAPON
 			reftypeminor = FILTER_WEAPON_STAVE
 			inv(INV_ITEM_NUM, ci) = 1
-			fixeditemenc = ENCHANT_PROC * EXT_ENCHANTMENT + ENCHANT_PROC_HERO, 550, ENCHANT_SEE_INVISIBLE, 100, ENCHANT_RESISTANCE * EXT_ENCHANTMENT + SKILL_RES_MAGIC, 250, ENCHANT_RESISTANCE * EXT_ENCHANTMENT + SKILL_RES_DARKNESS, 400, ENCHANT_RES_POISON, 100, 0
+			fixeditemenc = ENCHANT_PROC * EXT_ENCHANTMENT + ENCHANT_PROC_HERO, 550, ENCHANT_SEE_INVISIBLE, 100, ENCHANT_RESISTANCE * EXT_ENCHANTMENT + SKILL_RES_MAGIC, 250, ENCHANT_RESISTANCE * EXT_ENCHANTMENT + SKILL_RES_DARKNESS, 400, ENCHANT_BANE_METAL, 100, ENCHANT_RES_POISON, 100, 0
 			ibitmod ITEM_BIT_PRECIOUS, ci, 1
 			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 500
 			fixlv = FIX_QUALITY_UNIQUE
@@ -75108,12 +76476,12 @@
 			inv(INV_ITEM_NUM, ci) = 1
 			fixeditemenc = 0
 			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
-			inv(INV_ITEM_CHARGE, ci) = 2 + rnd(2) - rnd(2)
+			inv(INV_ITEM_CHARGE, ci) = 4 + rnd(4) - rnd(4)
 			ibitmod ITEM_BIT_CHARGE_ITEM, ci, 1
 			return
 		}
 		if ( dbmode == DBMODE_REF ) {
-			ichargelevel = 2
+			ichargelevel = 4
 			infilterref = ""
 			reftype = FILTER_ITEM_SPELLBOOK
 			return
@@ -75141,7 +76509,7 @@
 				return 20
 			}
 			if ( dbspec == DBSPEC_RARE_LEVEL ) {
-				return 300
+				return 1000
 			}
 			return 0
 		}
@@ -75153,8 +76521,8 @@
 		}
 		if ( dbmode == DBMODE_DESC ) {
 			if ( jp ) {
-				description(0) = "\t\t「魔力の集積」という呪文について学ぶことができる魔法書。指からビームを出したいあなたに。\n#〜本の為の本・魔法書編〜\n"
-				description(1) = "<ランク9魔法>"
+				description(0) = "\t\t「マジックボルト」という呪文について学ぶことができる魔法書。指からビームを出したいあなたに。\n#〜本の為の本・魔法書編〜\n"
+				description(1) = "<ランク2魔法>"
 				description(2) = ""
 				description(3) = "\t\t魔法属性のボルトを唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
 			}
@@ -75169,7 +76537,7 @@
 	}
 	if ( dbid == ITEM_ID_SPELLBOOK_MAGIC_BALL ) {
 		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
-			inv(INV_ITEM_VALUE, ci) = 7100
+			inv(INV_ITEM_VALUE, ci) = 4000
 			inv(INV_ITEM_WEIGHT, ci) = 380
 		}
 		if ( dbmode == DBMODE_SET ) {
@@ -75180,12 +76548,12 @@
 			inv(INV_ITEM_NUM, ci) = 1
 			fixeditemenc = 0
 			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
-			inv(INV_ITEM_CHARGE, ci) = 2 + rnd(2) - rnd(2)
+			inv(INV_ITEM_CHARGE, ci) = 3 + rnd(3) - rnd(3)
 			ibitmod ITEM_BIT_CHARGE_ITEM, ci, 1
 			return
 		}
 		if ( dbmode == DBMODE_REF ) {
-			ichargelevel = 2
+			ichargelevel = 3
 			infilterref = ""
 			reftype = FILTER_ITEM_SPELLBOOK
 			return
@@ -75198,7 +76566,7 @@
 				return FILTER_NONE
 			}
 			if ( dbspec == DBSPEC_VALUE_ORG ) {
-				return 7100
+				return 4000
 			}
 			if ( dbspec == DBSPEC_PARAM3_ORG ) {
 				return
@@ -75210,10 +76578,10 @@
 				return 0
 			}
 			if ( dbspec == DBSPEC_OBJ_LEVEL ) {
-				return 30
+				return 25
 			}
 			if ( dbspec == DBSPEC_RARE_LEVEL ) {
-				return 300
+				return 700
 			}
 			return 0
 		}
@@ -75226,9 +76594,9 @@
 		if ( dbmode == DBMODE_DESC ) {
 			if ( jp ) {
 				description(0) = "\t\t「魔力の嵐」という呪文について学ぶことができる魔法書。雨の日に外に出たがるあなたに。\n#〜本の為の本・魔法書編〜\n"
-				description(1) = "<ランク15魔法>"
+				description(1) = "<ランク5魔法>"
 				description(2) = ""
-				description(3) = "\t\t範囲的な魔法属性攻撃の呪文を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
+				description(3) = "\t\t範囲的な魔法属性の呪文を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
 			}
 			else {
 				description(0) = ""
@@ -75255,7 +76623,7 @@
 			reftype = FILTER_WEAPON
 			reftypeminor = FILTER_WEAPON_LARGE_AXE
 			inv(INV_ITEM_NUM, ci) = 1
-			fixeditemenc = ENCHANT_CRIT_CHANCE, 750, 0
+			fixeditemenc = ENCHANT_CRIT_CHANCE, 750, ENCHANT_BANE_METAL, 150, 0
 			ibitmod ITEM_BIT_PRECIOUS, ci, 1
 			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 500
 			fixlv = FIX_QUALITY_UNIQUE
@@ -77560,7 +78928,7 @@
 	}
 	if ( dbid == ITEM_ID_SPELLBOOK_DARKNESS_ARROW ) {
 		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
-			inv(INV_ITEM_VALUE, ci) = 1700
+			inv(INV_ITEM_VALUE, ci) = 4800
 			inv(INV_ITEM_WEIGHT, ci) = 380
 		}
 		if ( dbmode == DBMODE_SET ) {
@@ -77589,7 +78957,7 @@
 				return FILTER_NONE
 			}
 			if ( dbspec == DBSPEC_VALUE_ORG ) {
-				return 1700
+				return 4800
 			}
 			if ( dbspec == DBSPEC_PARAM3_ORG ) {
 				return
@@ -77616,8 +78984,8 @@
 		}
 		if ( dbmode == DBMODE_DESC ) {
 			if ( jp ) {
-				description(0) = "\t\t「暗黒の矢」という呪文について学ぶことができる魔法書。クールに決めたいあなたに。\n#〜本の為の本・魔法書編〜\n"
-				description(1) = "<ランク3魔法>"
+				description(0) = "\t\t「暗黒の楔」という呪文について学ぶことができる魔法書。クールに決めたいあなたに。\n#〜本の為の本・魔法書編〜\n"
+				description(1) = "<ランク4魔法>"
 				description(2) = ""
 				description(3) = "\t\t暗黒属性の矢を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
 			}
@@ -103160,7 +104528,7 @@
 	}
 	if ( dbid == ITEM_ID_SPELLBOOK_CHAOS_BALL ) {
 		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
-			inv(INV_ITEM_VALUE, ci) = 6000
+			inv(INV_ITEM_VALUE, ci) = 4800
 			inv(INV_ITEM_WEIGHT, ci) = 380
 		}
 		if ( dbmode == DBMODE_SET ) {
@@ -103171,12 +104539,12 @@
 			inv(INV_ITEM_NUM, ci) = 1
 			fixeditemenc = 0
 			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
-			inv(INV_ITEM_CHARGE, ci) = 4 + rnd(4) - rnd(4)
+			inv(INV_ITEM_CHARGE, ci) = 3 + rnd(3) - rnd(3)
 			ibitmod ITEM_BIT_CHARGE_ITEM, ci, 1
 			return
 		}
 		if ( dbmode == DBMODE_REF ) {
-			ichargelevel = 4
+			ichargelevel = 3
 			infilterref = ""
 			reftype = FILTER_ITEM_SPELLBOOK
 			return
@@ -103189,7 +104557,7 @@
 				return FILTER_NONE
 			}
 			if ( dbspec == DBSPEC_VALUE_ORG ) {
-				return 6000
+				return 4800
 			}
 			if ( dbspec == DBSPEC_PARAM3_ORG ) {
 				return
@@ -103201,7 +104569,7 @@
 				return 0
 			}
 			if ( dbspec == DBSPEC_OBJ_LEVEL ) {
-				return 15
+				return 35
 			}
 			if ( dbspec == DBSPEC_RARE_LEVEL ) {
 				return 700
@@ -103217,7 +104585,7 @@
 		if ( dbmode == DBMODE_DESC ) {
 			if ( jp ) {
 				description(0) = "\t\t「混沌の渦」という呪文について学ぶことができる魔法書。めちゃくちゃに騒ぎたいあなたに。\n#〜本の為の本・魔法書編〜\n"
-				description(1) = "<ランク9魔法>"
+				description(1) = "<ランク7魔法>"
 				description(2) = ""
 				description(3) = "\t\t混沌属性の範囲魔法呪文を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
 			}
@@ -103232,7 +104600,7 @@
 	}
 	if ( dbid == ITEM_ID_SPELLBOOK_SOUND_BALL ) {
 		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
-			inv(INV_ITEM_VALUE, ci) = 4200
+			inv(INV_ITEM_VALUE, ci) = 4800
 			inv(INV_ITEM_WEIGHT, ci) = 380
 		}
 		if ( dbmode == DBMODE_SET ) {
@@ -103243,12 +104611,12 @@
 			inv(INV_ITEM_NUM, ci) = 1
 			fixeditemenc = 0
 			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
-			inv(INV_ITEM_CHARGE, ci) = 4 + rnd(4) - rnd(4)
+			inv(INV_ITEM_CHARGE, ci) = 3 + rnd(3) - rnd(3)
 			ibitmod ITEM_BIT_CHARGE_ITEM, ci, 1
 			return
 		}
 		if ( dbmode == DBMODE_REF ) {
-			ichargelevel = 4
+			ichargelevel = 3
 			infilterref = ""
 			reftype = FILTER_ITEM_SPELLBOOK
 			return
@@ -103261,7 +104629,7 @@
 				return FILTER_NONE
 			}
 			if ( dbspec == DBSPEC_VALUE_ORG ) {
-				return 4200
+				return 4800
 			}
 			if ( dbspec == DBSPEC_PARAM3_ORG ) {
 				return
@@ -103273,10 +104641,10 @@
 				return 0
 			}
 			if ( dbspec == DBSPEC_OBJ_LEVEL ) {
-				return 10
+				return 35
 			}
 			if ( dbspec == DBSPEC_RARE_LEVEL ) {
-				return 800
+				return 700
 			}
 			return 0
 		}
@@ -103291,7 +104659,7 @@
 				description(0) = "\t\t「轟音の波動」という呪文について学ぶことができる魔法書。大音量で騒ぎたいあなたに。\n#〜本の為の本・魔法書編〜\n"
 				description(1) = "<ランク7魔法>"
 				description(2) = ""
-				description(3) = "\t\t音波属性の範囲魔法呪文を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
+				description(3) = "\t\t音属性の範囲魔法呪文を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
 			}
 			else {
 				description(0) = ""
@@ -103304,7 +104672,7 @@
 	}
 	if ( dbid == ITEM_ID_SPELLBOOK_FIRE_BALL ) {
 		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
-			inv(INV_ITEM_VALUE, ci) = 2700
+			inv(INV_ITEM_VALUE, ci) = 4500
 			inv(INV_ITEM_WEIGHT, ci) = 380
 		}
 		if ( dbmode == DBMODE_SET ) {
@@ -103315,12 +104683,12 @@
 			inv(INV_ITEM_NUM, ci) = 1
 			fixeditemenc = 0
 			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
-			inv(INV_ITEM_CHARGE, ci) = 4 + rnd(4) - rnd(4)
+			inv(INV_ITEM_CHARGE, ci) = 3 + rnd(3) - rnd(3)
 			ibitmod ITEM_BIT_CHARGE_ITEM, ci, 1
 			return
 		}
 		if ( dbmode == DBMODE_REF ) {
-			ichargelevel = 4
+			ichargelevel = 3
 			infilterref = ""
 			reftype = FILTER_ITEM_SPELLBOOK
 			return
@@ -103333,7 +104701,7 @@
 				return FILTER_NONE
 			}
 			if ( dbspec == DBSPEC_VALUE_ORG ) {
-				return 2700
+				return 4500
 			}
 			if ( dbspec == DBSPEC_PARAM3_ORG ) {
 				return
@@ -103345,10 +104713,10 @@
 				return 0
 			}
 			if ( dbspec == DBSPEC_OBJ_LEVEL ) {
-				return 3
+				return 30
 			}
 			if ( dbspec == DBSPEC_RARE_LEVEL ) {
-				return 1000
+				return 700
 			}
 			return 0
 		}
@@ -103361,9 +104729,9 @@
 		if ( dbmode == DBMODE_DESC ) {
 			if ( jp ) {
 				description(0) = "\t\t「灼熱の嵐」という呪文について学ぶことができる魔法書。辺りを暖かくしたいあなたに。\n#〜本の為の本・魔法書編〜\n"
-				description(1) = "<ランク5魔法>"
+				description(1) = "<ランク6魔法>"
 				description(2) = ""
-				description(3) = "\t\t炎属性の範囲魔法呪文を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
+				description(3) = "\t\t火炎属性の範囲魔法呪文を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
 			}
 			else {
 				description(0) = ""
@@ -103376,7 +104744,7 @@
 	}
 	if ( dbid == ITEM_ID_SPELLBOOK_ICE_BALL ) {
 		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
-			inv(INV_ITEM_VALUE, ci) = 2700
+			inv(INV_ITEM_VALUE, ci) = 4500
 			inv(INV_ITEM_WEIGHT, ci) = 380
 		}
 		if ( dbmode == DBMODE_SET ) {
@@ -103387,12 +104755,12 @@
 			inv(INV_ITEM_NUM, ci) = 1
 			fixeditemenc = 0
 			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
-			inv(INV_ITEM_CHARGE, ci) = 4 + rnd(4) - rnd(4)
+			inv(INV_ITEM_CHARGE, ci) = 3 + rnd(3) - rnd(3)
 			ibitmod ITEM_BIT_CHARGE_ITEM, ci, 1
 			return
 		}
 		if ( dbmode == DBMODE_REF ) {
-			ichargelevel = 4
+			ichargelevel = 3
 			infilterref = ""
 			reftype = FILTER_ITEM_SPELLBOOK
 			return
@@ -103405,7 +104773,7 @@
 				return FILTER_NONE
 			}
 			if ( dbspec == DBSPEC_VALUE_ORG ) {
-				return 2700
+				return 4500
 			}
 			if ( dbspec == DBSPEC_PARAM3_ORG ) {
 				return
@@ -103417,10 +104785,10 @@
 				return 0
 			}
 			if ( dbspec == DBSPEC_OBJ_LEVEL ) {
-				return 3
+				return 30
 			}
 			if ( dbspec == DBSPEC_RARE_LEVEL ) {
-				return 1000
+				return 700
 			}
 			return 0
 		}
@@ -103433,9 +104801,9 @@
 		if ( dbmode == DBMODE_DESC ) {
 			if ( jp ) {
 				description(0) = "\t\t「氷結の波動」という呪文について学ぶことができる魔法書。辺りを涼しくしたいあなたに。\n#〜本の為の本・魔法書編〜\n"
-				description(1) = "<ランク5魔法>"
+				description(1) = "<ランク6魔法>"
 				description(2) = ""
-				description(3) = "\t\t氷属性の範囲魔法呪文を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
+				description(3) = "\t\t冷気属性の範囲魔法呪文を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
 			}
 			else {
 				description(0) = ""
@@ -103505,9 +104873,9 @@
 		if ( dbmode == DBMODE_DESC ) {
 			if ( jp ) {
 				description(0) = "\t\t「マインドボルト」という呪文について学ぶことができる魔法書。魅惑的なウインクのできるあなたに。\n#〜本の為の本・魔法書編〜\n"
-				description(1) = "<ランク4魔法>"
+				description(1) = "<ランク6魔法>"
 				description(2) = ""
-				description(3) = "\t\t眩惑属性のボルトを唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
+				description(3) = "\t\t幻惑属性のボルトを唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
 			}
 			else {
 				description(0) = ""
@@ -103577,7 +104945,7 @@
 		if ( dbmode == DBMODE_DESC ) {
 			if ( jp ) {
 				description(0) = "\t\t「ダークネスボルト」という呪文について学ぶことができる魔法書。周りを威圧する眼光を持つあなたに。\n#〜本の為の本・魔法書編〜\n"
-				description(1) = "<ランク4魔法>"
+				description(1) = "<ランク6魔法>"
 				description(2) = ""
 				description(3) = "\t\t暗黒属性のボルトを唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
 			}
@@ -103671,12 +105039,12 @@
 			inv(INV_ITEM_NUM, ci) = 1
 			fixeditemenc = 0
 			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
-			inv(INV_ITEM_CHARGE, ci) = 3 + rnd(3) - rnd(3)
+			inv(INV_ITEM_CHARGE, ci) = 5 + rnd(5) - rnd(5)
 			ibitmod ITEM_BIT_CHARGE_ITEM, ci, 1
 			return
 		}
 		if ( dbmode == DBMODE_REF ) {
-			ichargelevel = 3
+			ichargelevel = 5
 			infilterref = ""
 			reftype = FILTER_ITEM_SPELLBOOK
 			return
@@ -103716,8 +105084,8 @@
 		}
 		if ( dbmode == DBMODE_DESC ) {
 			if ( jp ) {
-				description(0) = "\t\t「麻痺の矢」という呪文について学ぶことができる魔法書。運命の出会いと勘違いしやすいあなたに。\n#〜本の為の本・魔法書編〜\n"
-				description(1) = "<ランク5魔法>"
+				description(0) = "\t\t「神経の針」という呪文について学ぶことができる魔法書。運命の出会いと勘違いしやすいあなたに。\n#〜本の為の本・魔法書編〜\n"
+				description(1) = "<ランク3魔法>"
 				description(2) = ""
 				description(3) = "\t\t神経属性の矢を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
 			}
@@ -103743,12 +105111,12 @@
 			inv(INV_ITEM_NUM, ci) = 1
 			fixeditemenc = 0
 			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
-			inv(INV_ITEM_CHARGE, ci) = 3 + rnd(3) - rnd(3)
+			inv(INV_ITEM_CHARGE, ci) = 5 + rnd(5) - rnd(5)
 			ibitmod ITEM_BIT_CHARGE_ITEM, ci, 1
 			return
 		}
 		if ( dbmode == DBMODE_REF ) {
-			ichargelevel = 3
+			ichargelevel = 5
 			infilterref = ""
 			reftype = FILTER_ITEM_SPELLBOOK
 			return
@@ -103776,7 +105144,7 @@
 				return 12
 			}
 			if ( dbspec == DBSPEC_RARE_LEVEL ) {
-				return 800
+				return 1000
 			}
 			return 0
 		}
@@ -103789,7 +105157,7 @@
 		if ( dbmode == DBMODE_DESC ) {
 			if ( jp ) {
 				description(0) = "\t\t「混沌の瞳」という呪文について学ぶことができる魔法書。流し眼を練習しているあなたに。\n#〜本の為の本・魔法書編〜\n"
-				description(1) = "<ランク6魔法>"
+				description(1) = "<ランク3魔法>"
 				description(2) = ""
 				description(3) = "\t\t混沌属性の矢を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
 			}
@@ -103815,12 +105183,12 @@
 			inv(INV_ITEM_NUM, ci) = 1
 			fixeditemenc = 0
 			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
-			inv(INV_ITEM_CHARGE, ci) = 3 + rnd(3) - rnd(3)
+			inv(INV_ITEM_CHARGE, ci) = 5 + rnd(5) - rnd(5)
 			ibitmod ITEM_BIT_CHARGE_ITEM, ci, 1
 			return
 		}
 		if ( dbmode == DBMODE_REF ) {
-			ichargelevel = 3
+			ichargelevel = 5
 			infilterref = ""
 			reftype = FILTER_ITEM_SPELLBOOK
 			return
@@ -103861,7 +105229,7 @@
 		if ( dbmode == DBMODE_DESC ) {
 			if ( jp ) {
 				description(0) = "\t\t「地獄の吐息」という呪文について学ぶことができる魔法書。悪魔ぶりたいあなたに。\n#〜本の為の本・魔法書編〜\n"
-				description(1) = "<ランク5魔法>"
+				description(1) = "<ランク3魔法>"
 				description(2) = ""
 				description(3) = "\t\t地獄属性の矢を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
 			}
@@ -109791,7 +111159,7 @@
 				description(0) = "\t\t特定の魔法が封じ込められた杖。半透明の黄色い宝石が取り付けられている。\n#〜魔具全典〜\n"
 				description(1) = ""
 				description(2) = ""
-				description(3) = "\t\t振ることで対象に雷属性のボルトを放つ魔法の杖だ。\n#〜鑑定報告書：＜魔道具＞カテゴリ〜\n"
+				description(3) = "\t\t振ることで対象に電撃属性のボルトを放つ魔法の杖だ。\n#〜鑑定報告書：＜魔道具＞カテゴリ〜\n"
 			}
 			else {
 				description(0) = ""
@@ -113044,7 +114412,7 @@
 				description(0) = "\t\t特定の魔法が封じ込められた杖。半透明の赤い宝石が取り付けられている。\n#〜魔具全典〜\n"
 				description(1) = ""
 				description(2) = ""
-				description(3) = "\t\t振ることで対象に炎属性のボルトを放つ魔法の杖だ。\n#〜鑑定報告書：＜魔道具＞カテゴリ〜\n"
+				description(3) = "\t\t振ることで対象に火炎属性のボルトを放つ魔法の杖だ。\n#〜鑑定報告書：＜魔道具＞カテゴリ〜\n"
 			}
 			else {
 				description(0) = ""
@@ -113123,7 +114491,7 @@
 				description(0) = "\t\t特定の魔法が封じ込められた杖。半透明の青い宝石が取り付けられている。\n#〜魔具全典〜\n"
 				description(1) = ""
 				description(2) = ""
-				description(3) = "\t\t振ることで対象に氷属性のボルトを放つ魔法の杖だ。\n#〜鑑定報告書：＜魔道具＞カテゴリ〜\n"
+				description(3) = "\t\t振ることで対象に冷気属性のボルトを放つ魔法の杖だ。\n#〜鑑定報告書：＜魔道具＞カテゴリ〜\n"
 			}
 			else {
 				description(0) = ""
@@ -117322,7 +118690,7 @@
 			reftype = FILTER_WEAPON
 			reftypeminor = FILTER_WEAPON_LONGSWORD
 			inv(INV_ITEM_NUM, ci) = 1
-			fixeditemenc = ENCHANT_PIERCING_CHANCE, 400, ENCHANT_RES_CONFUSE, 100, ENCHANT_ATTRIBUTE * EXT_ENCHANTMENT + SKILL_ATTR_STR, 300, ENCHANT_RESISTANCE * EXT_ENCHANTMENT + SKILL_RES_NERVE, 200, 0
+			fixeditemenc = ENCHANT_PIERCING_CHANCE, 400, ENCHANT_RES_CONFUSE, 100, ENCHANT_ATTRIBUTE * EXT_ENCHANTMENT + SKILL_ATTR_STR, 300, ENCHANT_RESISTANCE * EXT_ENCHANTMENT + SKILL_RES_NERVE, 200, ENCHANT_BANE_METAL, 300, 0
 			ibitmod ITEM_BIT_PRECIOUS, ci, 1
 			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 500
 			fixlv = FIX_QUALITY_UNIQUE
@@ -118844,7 +120212,7 @@
 				return 0
 			}
 			if ( dbspec == DBSPEC_OBJ_LEVEL ) {
-				return 1
+				return 12
 			}
 			if ( dbspec == DBSPEC_RARE_LEVEL ) {
 				return 1000
@@ -118860,9 +120228,9 @@
 		if ( dbmode == DBMODE_DESC ) {
 			if ( jp ) {
 				description(0) = "\t\t「ライトニングボルト」という呪文について学ぶことができる魔法書。いつでも雷を見たいあなたに。\n#〜本の為の本・魔法書編〜\n"
-				description(1) = "<ランク3魔法>"
+				description(1) = "<ランク4魔法>"
 				description(2) = ""
-				description(3) = "\t\t雷属性のボルトを唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
+				description(3) = "\t\t電撃属性のボルトを唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
 			}
 			else {
 				description(0) = ""
@@ -118916,7 +120284,7 @@
 				return 0
 			}
 			if ( dbspec == DBSPEC_OBJ_LEVEL ) {
-				return 1
+				return 12
 			}
 			if ( dbspec == DBSPEC_RARE_LEVEL ) {
 				return 1000
@@ -118932,9 +120300,9 @@
 		if ( dbmode == DBMODE_DESC ) {
 			if ( jp ) {
 				description(0) = "\t\t「ファイアボルト」という呪文について学ぶことができる魔法書。寒がりなあなたに。\n#〜本の為の本・魔法書編〜\n"
-				description(1) = "<ランク3魔法>"
+				description(1) = "<ランク4魔法>"
 				description(2) = ""
-				description(3) = "\t\t炎属性のボルトを唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
+				description(3) = "\t\t火炎属性のボルトを唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
 			}
 			else {
 				description(0) = ""
@@ -118988,7 +120356,7 @@
 				return 0
 			}
 			if ( dbspec == DBSPEC_OBJ_LEVEL ) {
-				return 1
+				return 12
 			}
 			if ( dbspec == DBSPEC_RARE_LEVEL ) {
 				return 1000
@@ -119004,9 +120372,9 @@
 		if ( dbmode == DBMODE_DESC ) {
 			if ( jp ) {
 				description(0) = "\t\t「アイスボルト」という呪文について学ぶことができる魔法書。暑がりなあなたに。\n#〜本の為の本・魔法書編〜\n"
-				description(1) = "<ランク3魔法>"
+				description(1) = "<ランク4魔法>"
 				description(2) = ""
-				description(3) = "\t\t氷属性のボルトを唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
+				description(3) = "\t\t冷気属性のボルトを唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
 			}
 			else {
 				description(0) = ""
@@ -121218,6 +122586,44 @@
 	return -999
 
 *db_setFilterItem
+	filter_item(ITEM_ID_SPELLBOOK_OF_THUNDER_VORTEX) = ""
+	rffilter_item(ITEM_ID_SPELLBOOK_OF_THUNDER_VORTEX) = ""
+	filter_item(ITEM_ID_SPELLBOOK_OF_ECLIPSE_JAIL) = ""
+	rffilter_item(ITEM_ID_SPELLBOOK_OF_ECLIPSE_JAIL) = ""
+	filter_item(ITEM_ID_SPELLBOOK_OF_NETHER_ROAR) = ""
+	rffilter_item(ITEM_ID_SPELLBOOK_OF_NETHER_ROAR) = ""
+	filter_item(ITEM_ID_SPELLBOOK_OF_POISON_STORM) = ""
+	rffilter_item(ITEM_ID_SPELLBOOK_OF_POISON_STORM) = ""
+	filter_item(ITEM_ID_SPELLBOOK_OF_BUBBLE_STORM) = ""
+	rffilter_item(ITEM_ID_SPELLBOOK_OF_BUBBLE_STORM) = ""
+	filter_item(ITEM_ID_SPELLBOOK_OF_ILLUSION_ROAR) = ""
+	rffilter_item(ITEM_ID_SPELLBOOK_OF_ILLUSION_ROAR) = ""
+	filter_item(ITEM_ID_SPELLBOOK_OF_ANGUISH_JAIL) = ""
+	rffilter_item(ITEM_ID_SPELLBOOK_OF_ANGUISH_JAIL) = ""
+	filter_item(ITEM_ID_SPELLBOOK_OF_NETHER_BOLT) = ""
+	rffilter_item(ITEM_ID_SPELLBOOK_OF_NETHER_BOLT) = ""
+	filter_item(ITEM_ID_SPELLBOOK_OF_POISON_BOLT) = ""
+	rffilter_item(ITEM_ID_SPELLBOOK_OF_POISON_BOLT) = ""
+	filter_item(ITEM_ID_SPELLBOOK_OF_SOUND_BOLT) = ""
+	rffilter_item(ITEM_ID_SPELLBOOK_OF_SOUND_BOLT) = ""
+	filter_item(ITEM_ID_SPELLBOOK_OF_CHAOS_BOLT) = ""
+	rffilter_item(ITEM_ID_SPELLBOOK_OF_CHAOS_BOLT) = ""
+	filter_item(ITEM_ID_SPELLBOOK_OF_NERVE_BOLT) = ""
+	rffilter_item(ITEM_ID_SPELLBOOK_OF_NERVE_BOLT) = ""
+	filter_item(ITEM_ID_SPELLBOOK_OF_FIRE_CLAW) = ""
+	rffilter_item(ITEM_ID_SPELLBOOK_OF_FIRE_CLAW) = ""
+	filter_item(ITEM_ID_SPELLBOOK_OF_COLD_BLADE) = ""
+	rffilter_item(ITEM_ID_SPELLBOOK_OF_COLD_BLADE) = ""
+	filter_item(ITEM_ID_SPELLBOOK_OF_LIGHTNING_SPEAR) = ""
+	rffilter_item(ITEM_ID_SPELLBOOK_OF_LIGHTNING_SPEAR) = ""
+	filter_item(ITEM_ID_SPELLBOOK_OF_MIND_THORN) = ""
+	rffilter_item(ITEM_ID_SPELLBOOK_OF_MIND_THORN) = ""
+	filter_item(ITEM_ID_SPELLBOOK_OF_POISON_MUCUS) = ""
+	rffilter_item(ITEM_ID_SPELLBOOK_OF_POISON_MUCUS) = ""
+	filter_item(ITEM_ID_SPELLBOOK_OF_SOUND_CANNONBALL) = ""
+	rffilter_item(ITEM_ID_SPELLBOOK_OF_SOUND_CANNONBALL) = ""
+	filter_item(ITEM_ID_SPELLBOOK_OF_HYDRO_FANG) = ""
+	rffilter_item(ITEM_ID_SPELLBOOK_OF_HYDRO_FANG) = ""
 	filter_item(ITEM_ID_DYING_CICADA) = ""
 	rffilter_item(ITEM_ID_DYING_CICADA) = ""
 	filter_item(ITEM_ID_M01_GARNET) = ""
@@ -123707,6 +125113,291 @@
 	return
 
 *db_setItem
+	ilight(ITEM_ID_SPELLBOOK_OF_THUNDER_VORTEX) = LIGHT_TYPE_NONE
+	ialphanameref(ITEM_ID_SPELLBOOK_OF_THUNDER_VORTEX) = ""
+	iorgweight(ITEM_ID_SPELLBOOK_OF_THUNDER_VORTEX) = 380
+	if ( jp ) {
+		ioriginalnameref(ITEM_ID_SPELLBOOK_OF_THUNDER_VORTEX) = "雷霆の渦の魔法書"
+	}
+	else {
+		ioriginalnameref(ITEM_ID_SPELLBOOK_OF_THUNDER_VORTEX) = "thunder vortex"
+		ioriginalnameref2(ITEM_ID_SPELLBOOK_OF_THUNDER_VORTEX) = "spellbook"
+	}
+	ipicref(ITEM_ID_SPELLBOOK_OF_THUNDER_VORTEX) = xy2pic(0, 13)
+	p = (ITEM_ID_SPELLBOOK_OF_THUNDER_VORTEX + gdata(GDATA_RAND_SEED_A)) \ 6
+	iknownnameref(ITEM_ID_SPELLBOOK_OF_THUNDER_VORTEX) = _namespellbook(p) + strblank + strspellbook
+	icolref(ITEM_ID_SPELLBOOK_OF_THUNDER_VORTEX) = _randcolor(p)
+	irandomname(ITEM_ID_SPELLBOOK_OF_THUNDER_VORTEX) = 1
+	ilight(ITEM_ID_SPELLBOOK_OF_ECLIPSE_JAIL) = LIGHT_TYPE_NONE
+	ialphanameref(ITEM_ID_SPELLBOOK_OF_ECLIPSE_JAIL) = ""
+	iorgweight(ITEM_ID_SPELLBOOK_OF_ECLIPSE_JAIL) = 380
+	if ( jp ) {
+		ioriginalnameref(ITEM_ID_SPELLBOOK_OF_ECLIPSE_JAIL) = "月蝕の檻の魔法書"
+	}
+	else {
+		ioriginalnameref(ITEM_ID_SPELLBOOK_OF_ECLIPSE_JAIL) = "eclipse jail"
+		ioriginalnameref2(ITEM_ID_SPELLBOOK_OF_ECLIPSE_JAIL) = "spellbook"
+	}
+	ipicref(ITEM_ID_SPELLBOOK_OF_ECLIPSE_JAIL) = xy2pic(0, 13)
+	p = (ITEM_ID_SPELLBOOK_OF_ECLIPSE_JAIL + gdata(GDATA_RAND_SEED_A)) \ 6
+	iknownnameref(ITEM_ID_SPELLBOOK_OF_ECLIPSE_JAIL) = _namespellbook(p) + strblank + strspellbook
+	icolref(ITEM_ID_SPELLBOOK_OF_ECLIPSE_JAIL) = _randcolor(p)
+	irandomname(ITEM_ID_SPELLBOOK_OF_ECLIPSE_JAIL) = 1
+	ilight(ITEM_ID_SPELLBOOK_OF_NETHER_ROAR) = LIGHT_TYPE_NONE
+	ialphanameref(ITEM_ID_SPELLBOOK_OF_NETHER_ROAR) = ""
+	iorgweight(ITEM_ID_SPELLBOOK_OF_NETHER_ROAR) = 380
+	if ( jp ) {
+		ioriginalnameref(ITEM_ID_SPELLBOOK_OF_NETHER_ROAR) = "冥王の咆哮の魔法書"
+	}
+	else {
+		ioriginalnameref(ITEM_ID_SPELLBOOK_OF_NETHER_ROAR) = "nether roar"
+		ioriginalnameref2(ITEM_ID_SPELLBOOK_OF_NETHER_ROAR) = "spellbook"
+	}
+	ipicref(ITEM_ID_SPELLBOOK_OF_NETHER_ROAR) = xy2pic(0, 13)
+	p = (ITEM_ID_SPELLBOOK_OF_NETHER_ROAR + gdata(GDATA_RAND_SEED_A)) \ 6
+	iknownnameref(ITEM_ID_SPELLBOOK_OF_NETHER_ROAR) = _namespellbook(p) + strblank + strspellbook
+	icolref(ITEM_ID_SPELLBOOK_OF_NETHER_ROAR) = _randcolor(p)
+	irandomname(ITEM_ID_SPELLBOOK_OF_NETHER_ROAR) = 1
+	ilight(ITEM_ID_SPELLBOOK_OF_POISON_STORM) = LIGHT_TYPE_NONE
+	ialphanameref(ITEM_ID_SPELLBOOK_OF_POISON_STORM) = ""
+	iorgweight(ITEM_ID_SPELLBOOK_OF_POISON_STORM) = 380
+	if ( jp ) {
+		ioriginalnameref(ITEM_ID_SPELLBOOK_OF_POISON_STORM) = "猛毒の嵐の魔法書"
+	}
+	else {
+		ioriginalnameref(ITEM_ID_SPELLBOOK_OF_POISON_STORM) = "poison storm"
+		ioriginalnameref2(ITEM_ID_SPELLBOOK_OF_POISON_STORM) = "spellbook"
+	}
+	ipicref(ITEM_ID_SPELLBOOK_OF_POISON_STORM) = xy2pic(0, 13)
+	p = (ITEM_ID_SPELLBOOK_OF_POISON_STORM + gdata(GDATA_RAND_SEED_A)) \ 6
+	iknownnameref(ITEM_ID_SPELLBOOK_OF_POISON_STORM) = _namespellbook(p) + strblank + strspellbook
+	icolref(ITEM_ID_SPELLBOOK_OF_POISON_STORM) = _randcolor(p)
+	irandomname(ITEM_ID_SPELLBOOK_OF_POISON_STORM) = 1
+	ilight(ITEM_ID_SPELLBOOK_OF_BUBBLE_STORM) = LIGHT_TYPE_NONE
+	ialphanameref(ITEM_ID_SPELLBOOK_OF_BUBBLE_STORM) = ""
+	iorgweight(ITEM_ID_SPELLBOOK_OF_BUBBLE_STORM) = 380
+	if ( jp ) {
+		ioriginalnameref(ITEM_ID_SPELLBOOK_OF_BUBBLE_STORM) = "泡沫の嵐の魔法書"
+	}
+	else {
+		ioriginalnameref(ITEM_ID_SPELLBOOK_OF_BUBBLE_STORM) = "bubble storm"
+		ioriginalnameref2(ITEM_ID_SPELLBOOK_OF_BUBBLE_STORM) = "spellbook"
+	}
+	ipicref(ITEM_ID_SPELLBOOK_OF_BUBBLE_STORM) = xy2pic(0, 13)
+	p = (ITEM_ID_SPELLBOOK_OF_BUBBLE_STORM + gdata(GDATA_RAND_SEED_A)) \ 6
+	iknownnameref(ITEM_ID_SPELLBOOK_OF_BUBBLE_STORM) = _namespellbook(p) + strblank + strspellbook
+	icolref(ITEM_ID_SPELLBOOK_OF_BUBBLE_STORM) = _randcolor(p)
+	irandomname(ITEM_ID_SPELLBOOK_OF_BUBBLE_STORM) = 1
+	ilight(ITEM_ID_SPELLBOOK_OF_ILLUSION_ROAR) = LIGHT_TYPE_NONE
+	ialphanameref(ITEM_ID_SPELLBOOK_OF_ILLUSION_ROAR) = ""
+	iorgweight(ITEM_ID_SPELLBOOK_OF_ILLUSION_ROAR) = 380
+	if ( jp ) {
+		ioriginalnameref(ITEM_ID_SPELLBOOK_OF_ILLUSION_ROAR) = "夢幻の咆哮の魔法書"
+	}
+	else {
+		ioriginalnameref(ITEM_ID_SPELLBOOK_OF_ILLUSION_ROAR) = "illusion roar"
+		ioriginalnameref2(ITEM_ID_SPELLBOOK_OF_ILLUSION_ROAR) = "spellbook"
+	}
+	ipicref(ITEM_ID_SPELLBOOK_OF_ILLUSION_ROAR) = xy2pic(0, 13)
+	p = (ITEM_ID_SPELLBOOK_OF_ILLUSION_ROAR + gdata(GDATA_RAND_SEED_A)) \ 6
+	iknownnameref(ITEM_ID_SPELLBOOK_OF_ILLUSION_ROAR) = _namespellbook(p) + strblank + strspellbook
+	icolref(ITEM_ID_SPELLBOOK_OF_ILLUSION_ROAR) = _randcolor(p)
+	irandomname(ITEM_ID_SPELLBOOK_OF_ILLUSION_ROAR) = 1
+	ilight(ITEM_ID_SPELLBOOK_OF_ANGUISH_JAIL) = LIGHT_TYPE_NONE
+	ialphanameref(ITEM_ID_SPELLBOOK_OF_ANGUISH_JAIL) = ""
+	iorgweight(ITEM_ID_SPELLBOOK_OF_ANGUISH_JAIL) = 380
+	if ( jp ) {
+		ioriginalnameref(ITEM_ID_SPELLBOOK_OF_ANGUISH_JAIL) = "苦悶の檻の魔法書"
+	}
+	else {
+		ioriginalnameref(ITEM_ID_SPELLBOOK_OF_ANGUISH_JAIL) = "anguish jail"
+		ioriginalnameref2(ITEM_ID_SPELLBOOK_OF_ANGUISH_JAIL) = "spellbook"
+	}
+	ipicref(ITEM_ID_SPELLBOOK_OF_ANGUISH_JAIL) = xy2pic(0, 13)
+	p = (ITEM_ID_SPELLBOOK_OF_ANGUISH_JAIL + gdata(GDATA_RAND_SEED_A)) \ 6
+	iknownnameref(ITEM_ID_SPELLBOOK_OF_ANGUISH_JAIL) = _namespellbook(p) + strblank + strspellbook
+	icolref(ITEM_ID_SPELLBOOK_OF_ANGUISH_JAIL) = _randcolor(p)
+	irandomname(ITEM_ID_SPELLBOOK_OF_ANGUISH_JAIL) = 1
+	ilight(ITEM_ID_SPELLBOOK_OF_NETHER_BOLT) = LIGHT_TYPE_NONE
+	ialphanameref(ITEM_ID_SPELLBOOK_OF_NETHER_BOLT) = ""
+	iorgweight(ITEM_ID_SPELLBOOK_OF_NETHER_BOLT) = 380
+	if ( jp ) {
+		ioriginalnameref(ITEM_ID_SPELLBOOK_OF_NETHER_BOLT) = "ネザーボルトの魔法書"
+	}
+	else {
+		ioriginalnameref(ITEM_ID_SPELLBOOK_OF_NETHER_BOLT) = "nether bolt"
+		ioriginalnameref2(ITEM_ID_SPELLBOOK_OF_NETHER_BOLT) = "spellbook"
+	}
+	ipicref(ITEM_ID_SPELLBOOK_OF_NETHER_BOLT) = xy2pic(0, 13)
+	p = (ITEM_ID_SPELLBOOK_OF_NETHER_BOLT + gdata(GDATA_RAND_SEED_A)) \ 6
+	iknownnameref(ITEM_ID_SPELLBOOK_OF_NETHER_BOLT) = _namespellbook(p) + strblank + strspellbook
+	icolref(ITEM_ID_SPELLBOOK_OF_NETHER_BOLT) = _randcolor(p)
+	irandomname(ITEM_ID_SPELLBOOK_OF_NETHER_BOLT) = 1
+	ilight(ITEM_ID_SPELLBOOK_OF_POISON_BOLT) = LIGHT_TYPE_NONE
+	ialphanameref(ITEM_ID_SPELLBOOK_OF_POISON_BOLT) = ""
+	iorgweight(ITEM_ID_SPELLBOOK_OF_POISON_BOLT) = 380
+	if ( jp ) {
+		ioriginalnameref(ITEM_ID_SPELLBOOK_OF_POISON_BOLT) = "ポイズンボルトの魔法書"
+	}
+	else {
+		ioriginalnameref(ITEM_ID_SPELLBOOK_OF_POISON_BOLT) = "poison bolt"
+		ioriginalnameref2(ITEM_ID_SPELLBOOK_OF_POISON_BOLT) = "spellbook"
+	}
+	ipicref(ITEM_ID_SPELLBOOK_OF_POISON_BOLT) = xy2pic(0, 13)
+	p = (ITEM_ID_SPELLBOOK_OF_POISON_BOLT + gdata(GDATA_RAND_SEED_A)) \ 6
+	iknownnameref(ITEM_ID_SPELLBOOK_OF_POISON_BOLT) = _namespellbook(p) + strblank + strspellbook
+	icolref(ITEM_ID_SPELLBOOK_OF_POISON_BOLT) = _randcolor(p)
+	irandomname(ITEM_ID_SPELLBOOK_OF_POISON_BOLT) = 1
+	ilight(ITEM_ID_SPELLBOOK_OF_SOUND_BOLT) = LIGHT_TYPE_NONE
+	ialphanameref(ITEM_ID_SPELLBOOK_OF_SOUND_BOLT) = ""
+	iorgweight(ITEM_ID_SPELLBOOK_OF_SOUND_BOLT) = 380
+	if ( jp ) {
+		ioriginalnameref(ITEM_ID_SPELLBOOK_OF_SOUND_BOLT) = "サウンドボルトの魔法書"
+	}
+	else {
+		ioriginalnameref(ITEM_ID_SPELLBOOK_OF_SOUND_BOLT) = "sound bolt"
+		ioriginalnameref2(ITEM_ID_SPELLBOOK_OF_SOUND_BOLT) = "spellbook"
+	}
+	ipicref(ITEM_ID_SPELLBOOK_OF_SOUND_BOLT) = xy2pic(0, 13)
+	p = (ITEM_ID_SPELLBOOK_OF_SOUND_BOLT + gdata(GDATA_RAND_SEED_A)) \ 6
+	iknownnameref(ITEM_ID_SPELLBOOK_OF_SOUND_BOLT) = _namespellbook(p) + strblank + strspellbook
+	icolref(ITEM_ID_SPELLBOOK_OF_SOUND_BOLT) = _randcolor(p)
+	irandomname(ITEM_ID_SPELLBOOK_OF_SOUND_BOLT) = 1
+	ilight(ITEM_ID_SPELLBOOK_OF_CHAOS_BOLT) = LIGHT_TYPE_NONE
+	ialphanameref(ITEM_ID_SPELLBOOK_OF_CHAOS_BOLT) = ""
+	iorgweight(ITEM_ID_SPELLBOOK_OF_CHAOS_BOLT) = 380
+	if ( jp ) {
+		ioriginalnameref(ITEM_ID_SPELLBOOK_OF_CHAOS_BOLT) = "カオスボルトの魔法書"
+	}
+	else {
+		ioriginalnameref(ITEM_ID_SPELLBOOK_OF_CHAOS_BOLT) = "chaos bolt"
+		ioriginalnameref2(ITEM_ID_SPELLBOOK_OF_CHAOS_BOLT) = "spellbook"
+	}
+	ipicref(ITEM_ID_SPELLBOOK_OF_CHAOS_BOLT) = xy2pic(0, 13)
+	p = (ITEM_ID_SPELLBOOK_OF_CHAOS_BOLT + gdata(GDATA_RAND_SEED_A)) \ 6
+	iknownnameref(ITEM_ID_SPELLBOOK_OF_CHAOS_BOLT) = _namespellbook(p) + strblank + strspellbook
+	icolref(ITEM_ID_SPELLBOOK_OF_CHAOS_BOLT) = _randcolor(p)
+	irandomname(ITEM_ID_SPELLBOOK_OF_CHAOS_BOLT) = 1
+	ilight(ITEM_ID_SPELLBOOK_OF_NERVE_BOLT) = LIGHT_TYPE_NONE
+	ialphanameref(ITEM_ID_SPELLBOOK_OF_NERVE_BOLT) = ""
+	iorgweight(ITEM_ID_SPELLBOOK_OF_NERVE_BOLT) = 380
+	if ( jp ) {
+		ioriginalnameref(ITEM_ID_SPELLBOOK_OF_NERVE_BOLT) = "ナーブボルトの魔法書"
+	}
+	else {
+		ioriginalnameref(ITEM_ID_SPELLBOOK_OF_NERVE_BOLT) = "nerve bolt"
+		ioriginalnameref2(ITEM_ID_SPELLBOOK_OF_NERVE_BOLT) = "spellbook"
+	}
+	ipicref(ITEM_ID_SPELLBOOK_OF_NERVE_BOLT) = xy2pic(0, 13)
+	p = (ITEM_ID_SPELLBOOK_OF_NERVE_BOLT + gdata(GDATA_RAND_SEED_A)) \ 6
+	iknownnameref(ITEM_ID_SPELLBOOK_OF_NERVE_BOLT) = _namespellbook(p) + strblank + strspellbook
+	icolref(ITEM_ID_SPELLBOOK_OF_NERVE_BOLT) = _randcolor(p)
+	irandomname(ITEM_ID_SPELLBOOK_OF_NERVE_BOLT) = 1
+	ilight(ITEM_ID_SPELLBOOK_OF_FIRE_CLAW) = LIGHT_TYPE_NONE
+	ialphanameref(ITEM_ID_SPELLBOOK_OF_FIRE_CLAW) = ""
+	iorgweight(ITEM_ID_SPELLBOOK_OF_FIRE_CLAW) = 380
+	if ( jp ) {
+		ioriginalnameref(ITEM_ID_SPELLBOOK_OF_FIRE_CLAW) = "火炎の爪の魔法書"
+	}
+	else {
+		ioriginalnameref(ITEM_ID_SPELLBOOK_OF_FIRE_CLAW) = "fire claw"
+		ioriginalnameref2(ITEM_ID_SPELLBOOK_OF_FIRE_CLAW) = "spellbook"
+	}
+	ipicref(ITEM_ID_SPELLBOOK_OF_FIRE_CLAW) = xy2pic(0, 13)
+	p = (ITEM_ID_SPELLBOOK_OF_FIRE_CLAW + gdata(GDATA_RAND_SEED_A)) \ 6
+	iknownnameref(ITEM_ID_SPELLBOOK_OF_FIRE_CLAW) = _namespellbook(p) + strblank + strspellbook
+	icolref(ITEM_ID_SPELLBOOK_OF_FIRE_CLAW) = _randcolor(p)
+	irandomname(ITEM_ID_SPELLBOOK_OF_FIRE_CLAW) = 1
+	ilight(ITEM_ID_SPELLBOOK_OF_COLD_BLADE) = LIGHT_TYPE_NONE
+	ialphanameref(ITEM_ID_SPELLBOOK_OF_COLD_BLADE) = ""
+	iorgweight(ITEM_ID_SPELLBOOK_OF_COLD_BLADE) = 380
+	if ( jp ) {
+		ioriginalnameref(ITEM_ID_SPELLBOOK_OF_COLD_BLADE) = "冷気の刃の魔法書"
+	}
+	else {
+		ioriginalnameref(ITEM_ID_SPELLBOOK_OF_COLD_BLADE) = "cold blade"
+		ioriginalnameref2(ITEM_ID_SPELLBOOK_OF_COLD_BLADE) = "spellbook"
+	}
+	ipicref(ITEM_ID_SPELLBOOK_OF_COLD_BLADE) = xy2pic(0, 13)
+	p = (ITEM_ID_SPELLBOOK_OF_COLD_BLADE + gdata(GDATA_RAND_SEED_A)) \ 6
+	iknownnameref(ITEM_ID_SPELLBOOK_OF_COLD_BLADE) = _namespellbook(p) + strblank + strspellbook
+	icolref(ITEM_ID_SPELLBOOK_OF_COLD_BLADE) = _randcolor(p)
+	irandomname(ITEM_ID_SPELLBOOK_OF_COLD_BLADE) = 1
+	ilight(ITEM_ID_SPELLBOOK_OF_LIGHTNING_SPEAR) = LIGHT_TYPE_NONE
+	ialphanameref(ITEM_ID_SPELLBOOK_OF_LIGHTNING_SPEAR) = ""
+	iorgweight(ITEM_ID_SPELLBOOK_OF_LIGHTNING_SPEAR) = 380
+	if ( jp ) {
+		ioriginalnameref(ITEM_ID_SPELLBOOK_OF_LIGHTNING_SPEAR) = "電撃の槍の魔法書"
+	}
+	else {
+		ioriginalnameref(ITEM_ID_SPELLBOOK_OF_LIGHTNING_SPEAR) = "lightning spear"
+		ioriginalnameref2(ITEM_ID_SPELLBOOK_OF_LIGHTNING_SPEAR) = "spellbook"
+	}
+	ipicref(ITEM_ID_SPELLBOOK_OF_LIGHTNING_SPEAR) = xy2pic(0, 13)
+	p = (ITEM_ID_SPELLBOOK_OF_LIGHTNING_SPEAR + gdata(GDATA_RAND_SEED_A)) \ 6
+	iknownnameref(ITEM_ID_SPELLBOOK_OF_LIGHTNING_SPEAR) = _namespellbook(p) + strblank + strspellbook
+	icolref(ITEM_ID_SPELLBOOK_OF_LIGHTNING_SPEAR) = _randcolor(p)
+	irandomname(ITEM_ID_SPELLBOOK_OF_LIGHTNING_SPEAR) = 1
+	ilight(ITEM_ID_SPELLBOOK_OF_MIND_THORN) = LIGHT_TYPE_NONE
+	ialphanameref(ITEM_ID_SPELLBOOK_OF_MIND_THORN) = ""
+	iorgweight(ITEM_ID_SPELLBOOK_OF_MIND_THORN) = 380
+	if ( jp ) {
+		ioriginalnameref(ITEM_ID_SPELLBOOK_OF_MIND_THORN) = "幻惑の棘の魔法書"
+	}
+	else {
+		ioriginalnameref(ITEM_ID_SPELLBOOK_OF_MIND_THORN) = "mind thorn"
+		ioriginalnameref2(ITEM_ID_SPELLBOOK_OF_MIND_THORN) = "spellbook"
+	}
+	ipicref(ITEM_ID_SPELLBOOK_OF_MIND_THORN) = xy2pic(0, 13)
+	p = (ITEM_ID_SPELLBOOK_OF_MIND_THORN + gdata(GDATA_RAND_SEED_A)) \ 6
+	iknownnameref(ITEM_ID_SPELLBOOK_OF_MIND_THORN) = _namespellbook(p) + strblank + strspellbook
+	icolref(ITEM_ID_SPELLBOOK_OF_MIND_THORN) = _randcolor(p)
+	irandomname(ITEM_ID_SPELLBOOK_OF_MIND_THORN) = 1
+	ilight(ITEM_ID_SPELLBOOK_OF_POISON_MUCUS) = LIGHT_TYPE_NONE
+	ialphanameref(ITEM_ID_SPELLBOOK_OF_POISON_MUCUS) = ""
+	iorgweight(ITEM_ID_SPELLBOOK_OF_POISON_MUCUS) = 380
+	if ( jp ) {
+		ioriginalnameref(ITEM_ID_SPELLBOOK_OF_POISON_MUCUS) = "毒の粘液の魔法書"
+	}
+	else {
+		ioriginalnameref(ITEM_ID_SPELLBOOK_OF_POISON_MUCUS) = "poison mucus"
+		ioriginalnameref2(ITEM_ID_SPELLBOOK_OF_POISON_MUCUS) = "spellbook"
+	}
+	ipicref(ITEM_ID_SPELLBOOK_OF_POISON_MUCUS) = xy2pic(0, 13)
+	p = (ITEM_ID_SPELLBOOK_OF_POISON_MUCUS + gdata(GDATA_RAND_SEED_A)) \ 6
+	iknownnameref(ITEM_ID_SPELLBOOK_OF_POISON_MUCUS) = _namespellbook(p) + strblank + strspellbook
+	icolref(ITEM_ID_SPELLBOOK_OF_POISON_MUCUS) = _randcolor(p)
+	irandomname(ITEM_ID_SPELLBOOK_OF_POISON_MUCUS) = 1
+	ilight(ITEM_ID_SPELLBOOK_OF_SOUND_CANNONBALL) = LIGHT_TYPE_NONE
+	ialphanameref(ITEM_ID_SPELLBOOK_OF_SOUND_CANNONBALL) = ""
+	iorgweight(ITEM_ID_SPELLBOOK_OF_SOUND_CANNONBALL) = 380
+	if ( jp ) {
+		ioriginalnameref(ITEM_ID_SPELLBOOK_OF_SOUND_CANNONBALL) = "音の砲弾の魔法書"
+	}
+	else {
+		ioriginalnameref(ITEM_ID_SPELLBOOK_OF_SOUND_CANNONBALL) = "sound cannonball"
+		ioriginalnameref2(ITEM_ID_SPELLBOOK_OF_SOUND_CANNONBALL) = "spellbook"
+	}
+	ipicref(ITEM_ID_SPELLBOOK_OF_SOUND_CANNONBALL) = xy2pic(0, 13)
+	p = (ITEM_ID_SPELLBOOK_OF_SOUND_CANNONBALL + gdata(GDATA_RAND_SEED_A)) \ 6
+	iknownnameref(ITEM_ID_SPELLBOOK_OF_SOUND_CANNONBALL) = _namespellbook(p) + strblank + strspellbook
+	icolref(ITEM_ID_SPELLBOOK_OF_SOUND_CANNONBALL) = _randcolor(p)
+	irandomname(ITEM_ID_SPELLBOOK_OF_SOUND_CANNONBALL) = 1
+	ilight(ITEM_ID_SPELLBOOK_OF_HYDRO_FANG) = LIGHT_TYPE_NONE
+	ialphanameref(ITEM_ID_SPELLBOOK_OF_HYDRO_FANG) = ""
+	iorgweight(ITEM_ID_SPELLBOOK_OF_HYDRO_FANG) = 380
+	if ( jp ) {
+		ioriginalnameref(ITEM_ID_SPELLBOOK_OF_HYDRO_FANG) = "水の牙の魔法書"
+	}
+	else {
+		ioriginalnameref(ITEM_ID_SPELLBOOK_OF_HYDRO_FANG) = "hydro fang"
+		ioriginalnameref2(ITEM_ID_SPELLBOOK_OF_HYDRO_FANG) = "spellbook"
+	}
+	ipicref(ITEM_ID_SPELLBOOK_OF_HYDRO_FANG) = xy2pic(0, 13)
+	p = (ITEM_ID_SPELLBOOK_OF_HYDRO_FANG + gdata(GDATA_RAND_SEED_A)) \ 6
+	iknownnameref(ITEM_ID_SPELLBOOK_OF_HYDRO_FANG) = _namespellbook(p) + strblank + strspellbook
+	icolref(ITEM_ID_SPELLBOOK_OF_HYDRO_FANG) = _randcolor(p)
+	irandomname(ITEM_ID_SPELLBOOK_OF_HYDRO_FANG) = 1
 	ilight(ITEM_ID_DYING_CICADA) = LIGHT_TYPE_NONE
 	ialphanameref(ITEM_ID_DYING_CICADA) = ""
 	iorgweight(ITEM_ID_DYING_CICADA) = 10
@@ -124508,7 +126199,7 @@
 		ioriginalnameref2(ITEM_ID_SCROLL_OF_WITCHCRAFT) = "scroll"
 	}
 	ipicref(ITEM_ID_SCROLL_OF_WITCHCRAFT) = xy2pic(8, 14)
-	p = (1173 + gdata(GDATA_RAND_SEED_A)) \ 6
+	p = (ITEM_ID_SCROLL_OF_WITCHCRAFT + gdata(GDATA_RAND_SEED_A)) \ 6
 	iknownnameref(ITEM_ID_SCROLL_OF_WITCHCRAFT) = _namescroll(p) + strblank + strscroll
 	icolref(ITEM_ID_SCROLL_OF_WITCHCRAFT) = _randcolor(p)
 	irandomname(ITEM_ID_SCROLL_OF_WITCHCRAFT) = 1
@@ -126512,7 +128203,7 @@
 		ioriginalnameref(ITEM_ID_SPELLBOOK_WATER_BEAM) = "ハイドロボルトの魔法書"
 	}
 	else {
-		ioriginalnameref(ITEM_ID_SPELLBOOK_WATER_BEAM) = "water beam"
+		ioriginalnameref(ITEM_ID_SPELLBOOK_WATER_BEAM) = "hydro bolt"
 		ioriginalnameref2(ITEM_ID_SPELLBOOK_WATER_BEAM) = "spellbook"
 	}
 	ipicref(ITEM_ID_SPELLBOOK_WATER_BEAM) = xy2pic(0, 13)
@@ -131600,10 +133291,10 @@
 	ialphanameref(ITEM_ID_SPELLBOOK_MAGIC_LASER) = ""
 	iorgweight(ITEM_ID_SPELLBOOK_MAGIC_LASER) = 380
 	if ( jp ) {
-		ioriginalnameref(ITEM_ID_SPELLBOOK_MAGIC_LASER) = "魔力の集積の魔法書"
+		ioriginalnameref(ITEM_ID_SPELLBOOK_MAGIC_LASER) = "マジックボルトの魔法書"
 	}
 	else {
-		ioriginalnameref(ITEM_ID_SPELLBOOK_MAGIC_LASER) = "magic laser"
+		ioriginalnameref(ITEM_ID_SPELLBOOK_MAGIC_LASER) = "magic bolt"
 		ioriginalnameref2(ITEM_ID_SPELLBOOK_MAGIC_LASER) = "spellbook"
 	}
 	ipicref(ITEM_ID_SPELLBOOK_MAGIC_LASER) = xy2pic(0, 13)
@@ -131618,7 +133309,7 @@
 		ioriginalnameref(ITEM_ID_SPELLBOOK_MAGIC_BALL) = "魔力の嵐の魔法書"
 	}
 	else {
-		ioriginalnameref(ITEM_ID_SPELLBOOK_MAGIC_BALL) = "magic ball"
+		ioriginalnameref(ITEM_ID_SPELLBOOK_MAGIC_BALL) = "magic storm"
 		ioriginalnameref2(ITEM_ID_SPELLBOOK_MAGIC_BALL) = "spellbook"
 	}
 	ipicref(ITEM_ID_SPELLBOOK_MAGIC_BALL) = xy2pic(0, 13)
@@ -132192,10 +133883,10 @@
 	ialphanameref(ITEM_ID_SPELLBOOK_DARKNESS_ARROW) = ""
 	iorgweight(ITEM_ID_SPELLBOOK_DARKNESS_ARROW) = 380
 	if ( jp ) {
-		ioriginalnameref(ITEM_ID_SPELLBOOK_DARKNESS_ARROW) = "暗黒の矢の魔法書"
+		ioriginalnameref(ITEM_ID_SPELLBOOK_DARKNESS_ARROW) = "暗黒の楔の魔法書"
 	}
 	else {
-		ioriginalnameref(ITEM_ID_SPELLBOOK_DARKNESS_ARROW) = "darkness arrow"
+		ioriginalnameref(ITEM_ID_SPELLBOOK_DARKNESS_ARROW) = "darkness wedge"
 		ioriginalnameref2(ITEM_ID_SPELLBOOK_DARKNESS_ARROW) = "spellbook"
 	}
 	ipicref(ITEM_ID_SPELLBOOK_DARKNESS_ARROW) = xy2pic(0, 13)
@@ -137562,7 +139253,7 @@
 		ioriginalnameref(ITEM_ID_SPELLBOOK_CHAOS_BALL) = "混沌の渦の魔法書"
 	}
 	else {
-		ioriginalnameref(ITEM_ID_SPELLBOOK_CHAOS_BALL) = "chaos ball"
+		ioriginalnameref(ITEM_ID_SPELLBOOK_CHAOS_BALL) = "chaos vortex"
 		ioriginalnameref2(ITEM_ID_SPELLBOOK_CHAOS_BALL) = "spellbook"
 	}
 	ipicref(ITEM_ID_SPELLBOOK_CHAOS_BALL) = xy2pic(0, 13)
@@ -137577,7 +139268,7 @@
 		ioriginalnameref(ITEM_ID_SPELLBOOK_SOUND_BALL) = "轟音の波動の魔法書"
 	}
 	else {
-		ioriginalnameref(ITEM_ID_SPELLBOOK_SOUND_BALL) = "sound ball"
+		ioriginalnameref(ITEM_ID_SPELLBOOK_SOUND_BALL) = "howling wave"
 		ioriginalnameref2(ITEM_ID_SPELLBOOK_SOUND_BALL) = "spellbook"
 	}
 	ipicref(ITEM_ID_SPELLBOOK_SOUND_BALL) = xy2pic(0, 13)
@@ -137592,7 +139283,7 @@
 		ioriginalnameref(ITEM_ID_SPELLBOOK_FIRE_BALL) = "灼熱の嵐の魔法書"
 	}
 	else {
-		ioriginalnameref(ITEM_ID_SPELLBOOK_FIRE_BALL) = "fire ball"
+		ioriginalnameref(ITEM_ID_SPELLBOOK_FIRE_BALL) = "burning storm"
 		ioriginalnameref2(ITEM_ID_SPELLBOOK_FIRE_BALL) = "spellbook"
 	}
 	ipicref(ITEM_ID_SPELLBOOK_FIRE_BALL) = xy2pic(0, 13)
@@ -137607,7 +139298,7 @@
 		ioriginalnameref(ITEM_ID_SPELLBOOK_ICE_BALL) = "氷結の波動の魔法書"
 	}
 	else {
-		ioriginalnameref(ITEM_ID_SPELLBOOK_ICE_BALL) = "ice ball"
+		ioriginalnameref(ITEM_ID_SPELLBOOK_ICE_BALL) = "freezing wave"
 		ioriginalnameref2(ITEM_ID_SPELLBOOK_ICE_BALL) = "spellbook"
 	}
 	ipicref(ITEM_ID_SPELLBOOK_ICE_BALL) = xy2pic(0, 13)
@@ -137622,7 +139313,7 @@
 		ioriginalnameref(ITEM_ID_SPELLBOOK_ILLUSION_BEAM) = "マインドボルトの魔法書"
 	}
 	else {
-		ioriginalnameref(ITEM_ID_SPELLBOOK_ILLUSION_BEAM) = "illusion beam"
+		ioriginalnameref(ITEM_ID_SPELLBOOK_ILLUSION_BEAM) = "mind bolt"
 		ioriginalnameref2(ITEM_ID_SPELLBOOK_ILLUSION_BEAM) = "spellbook"
 	}
 	ipicref(ITEM_ID_SPELLBOOK_ILLUSION_BEAM) = xy2pic(0, 13)
@@ -137637,7 +139328,7 @@
 		ioriginalnameref(ITEM_ID_SPELLBOOK_DARKNESS_BEAM) = "ダークネスボルトの魔法書"
 	}
 	else {
-		ioriginalnameref(ITEM_ID_SPELLBOOK_DARKNESS_BEAM) = "darkness beam"
+		ioriginalnameref(ITEM_ID_SPELLBOOK_DARKNESS_BEAM) = "darkness bolt"
 		ioriginalnameref2(ITEM_ID_SPELLBOOK_DARKNESS_BEAM) = "spellbook"
 	}
 	ipicref(ITEM_ID_SPELLBOOK_DARKNESS_BEAM) = xy2pic(0, 13)
@@ -137662,10 +139353,10 @@
 	ialphanameref(ITEM_ID_SPELLBOOK_NERVE_EYE) = ""
 	iorgweight(ITEM_ID_SPELLBOOK_NERVE_EYE) = 380
 	if ( jp ) {
-		ioriginalnameref(ITEM_ID_SPELLBOOK_NERVE_EYE) = "麻痺の矢の魔法書"
+		ioriginalnameref(ITEM_ID_SPELLBOOK_NERVE_EYE) = "神経の針の魔法書"
 	}
 	else {
-		ioriginalnameref(ITEM_ID_SPELLBOOK_NERVE_EYE) = "nerve eye"
+		ioriginalnameref(ITEM_ID_SPELLBOOK_NERVE_EYE) = "nerve needle"
 		ioriginalnameref2(ITEM_ID_SPELLBOOK_NERVE_EYE) = "spellbook"
 	}
 	ipicref(ITEM_ID_SPELLBOOK_NERVE_EYE) = xy2pic(0, 13)
@@ -137695,7 +139386,7 @@
 		ioriginalnameref(ITEM_ID_SPELLBOOK_NETHER_EYE) = "地獄の吐息の魔法書"
 	}
 	else {
-		ioriginalnameref(ITEM_ID_SPELLBOOK_NETHER_EYE) = "nether eye"
+		ioriginalnameref(ITEM_ID_SPELLBOOK_NETHER_EYE) = "nether sigh"
 		ioriginalnameref2(ITEM_ID_SPELLBOOK_NETHER_EYE) = "spellbook"
 	}
 	ipicref(ITEM_ID_SPELLBOOK_NETHER_EYE) = xy2pic(0, 13)
@@ -141311,77 +143002,77 @@
 	rangemap = 100, 20, 20, 20, 20, 20, 20, 20, 20, 20
 	if ( calcweaponfix_itemid == ITEM_ID_RAVENBRAND ) {
 		pierce = 15
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_BAMBNIR ) {
 		pierce = 25
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_KALPA_HAND ) {
 		pierce = 60
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_FRIGHT_PRAWN ) {
 		pierce = 0
-		rangemap = 90, 100, 80
+		rangemap = 90, 100, 80, 70, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_ANNINDOFU_LIKE_A_LIGHTSABRE ) {
 		pierce = 90
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_KANI_KAMA ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_GO_RENGE ) {
 		pierce = 0
-		rangemap = 90, 100, 80
+		rangemap = 90, 100, 80, 70, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_EPECLAIR ) {
 		pierce = 80
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_GOUTEN ) {
 		pierce = 15
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_DGT_101 ) {
 		pierce = 5
-		rangemap = 90, 100, 80
+		rangemap = 90, 100, 80, 70, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_NUMENIUS ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_ENGOKU ) {
 		pierce = 10
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_POWER_TRIANGLE ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_CROSS_RAIL ) {
 		pierce = 10
-		rangemap = 80, 100, 90, 80, 70, 60, 50
+		rangemap = 80, 100, 90, 80, 70, 60, 50, 40, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_NAZUNAS_SOX ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_SCORPIERCE ) {
@@ -141391,217 +143082,217 @@
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_YOMI_TO ) {
 		pierce = 0
-		rangemap = 90, 100, 80
+		rangemap = 90, 100, 80, 70, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_RINKHALS ) {
 		pierce = 5
-		rangemap = 80, 100, 90, 80, 70, 60, 50
+		rangemap = 80, 100, 90, 80, 70, 60, 50, 40, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_LINGS_BOW ) {
 		pierce = 15
-		rangemap = 90, 100, 100, 80, 60
+		rangemap = 90, 100, 100, 80, 60, 40, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_KUNAI ) {
 		pierce = 0
-		rangemap = 90, 100, 80
+		rangemap = 90, 100, 80, 70, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_FLEURE ) {
 		pierce = 80
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_DRILL ) {
 		pierce = 15
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_LANCE ) {
 		pierce = 60
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_TOMAHAWK ) {
 		pierce = 5
-		rangemap = 90, 100, 80
+		rangemap = 90, 100, 80, 70, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_CHAINSAW ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_SCISSORS ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_BONE_SCYTHE ) {
 		pierce = 15
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_WAR_HAMMER ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_STAR_HAMMER ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_SHAKUJO ) {
 		pierce = 10
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_NUNCHAKU ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_BLADE_BOW ) {
 		pierce = 15
-		rangemap = 90, 100, 100, 80, 60
+		rangemap = 90, 100, 100, 80, 60, 40, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_CROSSFIRE ) {
 		pierce = 10
-		rangemap = 80, 100, 90, 80, 70, 60, 50
+		rangemap = 80, 100, 90, 80, 70, 60, 50, 40, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_GUN_PAIR ) {
 		pierce = 20
-		rangemap = 90, 100, 80, 60
+		rangemap = 90, 100, 80, 60, 30, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_GRAVITAIL ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_BEETLE_CYBORG ) {
 		pierce = 10
-		rangemap = 90, 100, 80
+		rangemap = 90, 100, 80, 70, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_GOD_BINDER ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_CROWN_POINT ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_YOHUALLI_TEZCATL ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_GULIWELZEN ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_NECROMANTIS ) {
 		pierce = 5
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_ZUGAIKURAI ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_DOKURO_MIKADUKI ) {
 		pierce = 15
-		rangemap = 60, 90, 100, 100, 80, 60
+		rangemap = 60, 90, 100, 100, 80, 60, 40, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_HELTIARRE ) {
 		pierce = 15
-		rangemap = 90, 100, 100, 80, 60
+		rangemap = 90, 100, 100, 80, 60, 40, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_SASANQUA_SICKLE ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_BLOOD_ROD ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_THE_WHITE_HAWK ) {
 		pierce = 10
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_ION_CAKRAM ) {
 		pierce = 30
-		rangemap = 90, 100, 80
+		rangemap = 90, 100, 80, 70, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_SPADILLE ) {
 		pierce = 30
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_HL_KRSW ) {
 		pierce = 5
-		rangemap = 100, 100, 100, 100, 100, 100, 100
+		rangemap = 100, 100, 100, 100, 100, 100, 100, 50, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_LUCKY_ALMONDS ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_BLOODY_TEARS ) {
 		pierce = 30
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_IVY_SPINE ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_MELODYUS ) {
 		pierce = 10
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_GRANDEL ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_WHIP ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_SOCKS ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_CHAINSICKLE ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_BALLISTA ) {
 		pierce = 40
-		rangemap = 80, 100, 90, 80, 70, 60, 50
+		rangemap = 80, 100, 90, 80, 70, 60, 50, 40, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_N97_CANNON ) {
@@ -141611,102 +143302,102 @@
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_TRISHULA ) {
 		pierce = 25
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_HOUSENKA ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_OTOGIRI ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_ROCK ) {
 		pierce = 0
-		rangemap = 90, 100, 80
+		rangemap = 90, 100, 80, 70, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_CLAW ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_REPEATING_BOW ) {
 		pierce = 5
-		rangemap = 80, 100, 90, 80, 70, 60, 50
+		rangemap = 80, 100, 90, 80, 70, 60, 50, 40, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_GUR_BAGH_NAKH ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_ASTRAL_SICKLE ) {
 		pierce = 5
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_VICE_STAFF ) {
 		pierce = 20
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_GRAVITY_AXE ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_DRAKE_ROD ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_SONIC_TONFA ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_SABER_TONFA ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_SMASH_TONFA ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_SHIELD_TONFA ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_SACRIFICE_TONFA ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_GRIFFON ) {
 		pierce = 20
-		rangemap = 90, 100, 80, 60
+		rangemap = 90, 100, 80, 60, 30, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_MOONLIGHT ) {
 		pierce = 100
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_AA_12_ADVANCE ) {
 		pierce = 25
-		rangemap = 100, 80
+		rangemap = 100, 80, 50, 20, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_SLASH_JOKER ) {
 		pierce = 0
-		rangemap = 90, 100, 80
+		rangemap = 90, 100, 80, 70, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_RAINBOW ) {
@@ -141716,72 +143407,72 @@
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_FLASH_CROSSBOW ) {
 		pierce = 25
-		rangemap = 80, 100, 90, 80, 70, 60, 50
+		rangemap = 80, 100, 90, 80, 70, 60, 50, 40, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_UNICORN_DRILL ) {
 		pierce = 60
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_NOVA_GRENADE ) {
 		pierce = 0
-		rangemap = 90, 100, 80
+		rangemap = 90, 100, 80, 70, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_FLAME_EDGE ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_ZWIEBEL ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_SEALED_SHIELD ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_VITAL_FLAYER ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_NAIL_STRADIVARIUS ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_GERBERA_CROSS ) {
 		pierce = 15
-		rangemap = 90, 100, 80
+		rangemap = 90, 100, 80, 70, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_NIGHTMARE ) {
 		pierce = 0
-		rangemap = 100, 100, 100, 100, 100, 100, 100
+		rangemap = 100, 100, 100, 100, 100, 100, 100, 100, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_BUSTER_BOOK ) {
 		pierce = 65
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_STONE_COIN ) {
 		pierce = 65
-		rangemap = 90, 100, 80
+		rangemap = 90, 100, 80, 70, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_BLACK_MONKSHOOD ) {
 		pierce = 5
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_SASUMATA ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_SNIPER_RIFLE ) {
@@ -141796,192 +143487,192 @@
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_SOLAR_CANE ) {
 		pierce = 100
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_STORM_BRINGER ) {
 		pierce = 15
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_KINDNESS_BLADE ) {
 		pierce = 65
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_DREADNOUGHT ) {
 		pierce = 65
-		rangemap = 80, 100, 90, 80, 70, 60, 50
+		rangemap = 80, 100, 90, 80, 70, 60, 50, 40, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_G3_EXA ) {
 		pierce = 65
-		rangemap = 80, 100, 100, 90, 80, 70
+		rangemap = 80, 100, 100, 90, 80, 70, 40, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_GOD_BREAKER ) {
 		pierce = 65
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_BEAST_SICKLE ) {
 		pierce = 65
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_GEMINI ) {
 		pierce = 20
-		rangemap = 90, 100, 80, 60
+		rangemap = 90, 100, 80, 60, 30, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_OTI_TUBAKI ) {
 		pierce = 40
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_DYNAMIC_SABER ) {
 		pierce = 10
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_KANEITUUHOU ) {
 		pierce = 100
-		rangemap = 90, 100, 80
+		rangemap = 90, 100, 80, 70, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_GAU_17_CUSTOM ) {
 		pierce = 0
-		rangemap = 80, 100, 100, 90, 80, 70
+		rangemap = 80, 100, 100, 90, 80, 70, 40, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_NEGATIVE_EDGE ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_PILE_DRIVER ) {
 		pierce = 50
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_DRAGON_SLAYER ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_SKULL_BOW ) {
 		pierce = 15
-		rangemap = 60, 90, 100, 100, 80, 60
+		rangemap = 60, 90, 100, 100, 80, 60, 40, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_KITCHEN_KNIFE ) {
 		pierce = 40
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_LIGHTSABRE ) {
 		pierce = 100
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_MAUSER_C96_CUSTOM ) {
 		pierce = 35
-		rangemap = 90, 100, 80, 60
+		rangemap = 90, 100, 80, 60, 30, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_CARNEADES_PLANK ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_HIRYU_TO ) {
 		pierce = 20
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_FRISIAS_TAIL ) {
 		pierce = 65
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_SCYTHE ) {
 		pierce = 5
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_SHIELD_OF_THORNS ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_ALUD ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_KILL_KILL_PIANO ) {
 		pierce = 0
-		rangemap = 90, 100, 80
+		rangemap = 90, 100, 80, 70, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_CLAYMORE2 ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_SHENAS_PANTY ) {
 		pierce = 5
-		rangemap = 90, 100, 80
+		rangemap = 90, 100, 80, 70, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_VANILLA_ROCK ) {
 		pierce = 50
-		rangemap = 90, 100, 80
+		rangemap = 90, 100, 80, 70, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_GRENADE ) {
 		pierce = 0
-		rangemap = 90, 100, 80
+		rangemap = 90, 100, 80, 70, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_SHURIKEN ) {
 		pierce = 15
-		rangemap = 90, 100, 80
+		rangemap = 90, 100, 80, 70, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_AXE_OF_DESTRUCTION ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_GAIA_HAMMER ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_LUCKY_DAGGER ) {
 		pierce = 10
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_HOLY_LANCE ) {
 		pierce = 30
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_ELEMENTAL_STAFF ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_KUMIROMI_SCYTHE ) {
 		pierce = 15
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_WINCHESTER_PREMIUM ) {
 		pierce = 30
-		rangemap = 100, 80
+		rangemap = 100, 80, 50, 20, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_WIND_BOW ) {
@@ -141991,7 +143682,7 @@
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_PANTY ) {
 		pierce = 5
-		rangemap = 90, 100, 80
+		rangemap = 90, 100, 80, 70, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_RAIL_GUN ) {
@@ -142001,142 +143692,142 @@
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_LASER_GUN ) {
 		pierce = 5
-		rangemap = 100, 100, 100, 100, 100, 100, 100
+		rangemap = 100, 100, 100, 100, 100, 100, 100, 50, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_SHOT_GUN ) {
 		pierce = 30
-		rangemap = 100, 80
+		rangemap = 100, 80, 50, 20, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_CROSSBOW ) {
 		pierce = 25
-		rangemap = 80, 100, 90, 80, 70, 60, 50
+		rangemap = 80, 100, 90, 80, 70, 60, 50, 40, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_TOWER_SHIELD ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_KITE_SHIELD ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_LARGE_SHIELD ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_SHIELD ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_ROUND_SHIELD ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_SMALL_SHIELD ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_RANKIS ) {
 		pierce = 40
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_STAFF_OF_INSANITY ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_BLOOD_MOON ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_WAKIZASHI ) {
 		pierce = 5
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_HALBERD ) {
 		pierce = 40
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_BARDISH ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_CLAYMORE ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_MACHINE_GUN ) {
 		pierce = 0
-		rangemap = 80, 100, 100, 90, 80, 70
+		rangemap = 80, 100, 100, 90, 80, 70, 40, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_SHORT_BOW ) {
 		pierce = 15
-		rangemap = 90, 100, 100, 80, 60
+		rangemap = 90, 100, 100, 80, 60, 40, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_LONG_STAFF ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_TRIDENT ) {
 		pierce = 25
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_HAMMER ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_BATTLE_AXE ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_SCIMITAR ) {
 		pierce = 10
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_KATANA ) {
 		pierce = 20
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_SPEAR ) {
 		pierce = 25
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_STAFF ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_SICKLE ) {
 		pierce = 5
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_STONE ) {
 		pierce = 5
-		rangemap = 90, 100, 80
+		rangemap = 90, 100, 80, 70, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_BOW_OF_VINDALE ) {
@@ -142146,32 +143837,32 @@
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_ETHER_DAGGER ) {
 		pierce = 20
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_RAGNAROK ) {
 		pierce = 20
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_MOURNBLADE ) {
 		pierce = 15
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_SCYTHE_OF_THE_VOID ) {
 		pierce = 15
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_PISTOL ) {
 		pierce = 10
-		rangemap = 90, 100, 80, 60
+		rangemap = 90, 100, 80, 60, 30, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_KNIGHT_SHIELD ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_LONG_BOW ) {
@@ -142181,32 +143872,32 @@
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_ZANTETSUKEN ) {
 		pierce = 25
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_DIABLOS ) {
 		pierce = 10
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_CLUB ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_HAND_AXE ) {
 		pierce = 0
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_DAGGER ) {
 		pierce = 10
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	if ( calcweaponfix_itemid == ITEM_ID_LONG_SWORD ) {
 		pierce = 5
-		rangemap = 50, 80, 60
+		rangemap = 50, 80, 60, 30, 20, 20, 20, 20, 20
 		return 1
 	}
 	return 0
