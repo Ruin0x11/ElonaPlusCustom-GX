@@ -3870,13 +3870,11 @@
 	}
 	txtef COLOR_GREEN
 	txt lang("" + timeslept + "時間眠った。あなたはリフレッシュした。", "You have slept for " + timeslept + " hours. You are refreshed.")
-	if ( TweakData(TWEAK_GAMEPLAY_DISABLE_DESTINY, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
-		if ( gdata(GDATA_FLAG_DESTINY_TIMES_SLEPT) < 3 ) {
-			gdata(GDATA_FLAG_DESTINY_TIMES_SLEPT)++
-			if ( gdata(GDATA_FLAG_DESTINY_TIMES_SLEPT) >= 3 ) {
-				if ( gdata(GDATA_FLAG_DESTINY_LETTERS) < 7 ) {
-					gdata(GDATA_FLAG_DESTINY_LETTERS)++
-				}
+	if ( gdata(GDATA_FLAG_DESTINY_TIMES_SLEPT) < 3 ) {
+		gdata(GDATA_FLAG_DESTINY_TIMES_SLEPT)++
+		if ( gdata(GDATA_FLAG_DESTINY_TIMES_SLEPT) >= 3 ) {
+			if ( gdata(GDATA_FLAG_DESTINY_LETTERS) < 7 ) {
+				gdata(GDATA_FLAG_DESTINY_LETTERS)++
 			}
 		}
 	}
