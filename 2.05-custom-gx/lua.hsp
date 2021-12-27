@@ -175,6 +175,9 @@
     hl_pushfunction *lua_elona_characreate
     hl_setfield -2, "characreate"
 
+    hl_pushfunction *lua_elona_chara_vanquish
+    hl_setfield -2, "chara_vanquish"
+
     hl_pushfunction *lua_elona_itemcreate
     hl_setfield -2, "itemcreate"
 
@@ -186,6 +189,9 @@
 
     hl_pushfunction *lua_elona_advance_hour
     hl_setfield -2, "advance_hour"
+
+    hl_pushfunction *lua_elona_fltChara
+    hl_setfield -2, "fltChara"
 
     pushDim(cdata)
     pushDim(mdata)
@@ -413,6 +419,18 @@
     hl_pushinteger(rc)
     return 1
 
+*lua_elona_chara_vanquish
+    if hl_gettop() < 1 {
+        luaError("Wrong number of arguments")
+    }
+    if hl_isinteger(1) {
+        locvar_tc = hl_tointeger(1)
+    } else {
+        luaError("Invalid arguments")
+    }
+    chara_vanquish locvar_tc
+    return 0
+
 *lua_elona_itemcreate
     if hl_gettop() < 1 {
         luaError("Wrong number of arguments")
@@ -480,4 +498,8 @@
 		gdata(GDATA_HOUR)++
 		gosub *advance_hour
 	loop
+	return 0
+
+*lua_elona_fltChara
+    gosub *fltChara
 	return 0
