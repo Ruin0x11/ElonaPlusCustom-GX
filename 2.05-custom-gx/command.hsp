@@ -1876,21 +1876,167 @@
 	if ( cdata(CDATA_RACE_ID, r1) == 0 ) {
 		gosub *raceID_fix
 	}
+	locvar_com_trait_bit = lang("[bit]", "[bit]")
 	if ( cbit(CHARA_BIT_INCOGNITO, tc) == 1 ) {
 		list(0, listmax) = 1, 99999
-		listn(0, listmax) = lang("[その他]", "[ETC]") + lang("あなたは変装している", "You are disguising yourself.")
+		listn(0, listmax) = locvar_com_trait_bit + lang("あなたは変装している", "You are disguising yourself.")
 		listmax++
 	}
 	if ( cbit(CHARA_BIT_PREGNANT, tc) == 1 ) {
 		list(0, listmax) = 1, 99999
-		listn(0, listmax) = lang("[その他]", "[ETC]") + lang("あなたは寄生されている", "You are pregnant.")
+		listn(0, listmax) = locvar_com_trait_bit + lang("あなたは寄生されている", "You are pregnant.")
 		listmax++
 	}
 	if ( cbit(CHARA_BIT_ANOREXIA, tc) == 1 ) {
 		list(0, listmax) = 1, 99999
-		listn(0, listmax) = lang("[その他]", "[ETC]") + lang("あなたは拒食症だ", "You have anorexia.")
+		listn(0, listmax) = locvar_com_trait_bit + lang("あなたは拒食症だ", "You have anorexia.")
 		listmax++
 	}
+	if ( cbit(CHARA_BIT_FLOAT, tc) == TRUE ) {
+		list(0, listmax) = 1, 99999
+		listn(0, listmax) = locvar_com_trait_bit + lang("あなたは浮遊できる", "You can float.")
+		listmax++
+	}
+	if ( cbit(CHARA_BIT_INVISIBLE, tc) == TRUE ) {
+		list(0, listmax) = 1, 99999
+		listn(0, listmax) = locvar_com_trait_bit + lang("あなたは透明になれる", "You can be invisible.")
+		listmax++
+	}
+	if ( cbit(CHARA_BIT_SEE_INVISIBLE, tc) == TRUE ) {
+		list(0, listmax) = 1, 99999
+		listn(0, listmax) = locvar_com_trait_bit + lang("あなたは透明な存在が見える", "You see invisible creatures.")
+		listmax++
+	}
+	if ( cbit(CHARA_BIT_RES_CONFUSE, tc) == TRUE ) {
+		list(0, listmax) = 1, 99999
+		listn(0, listmax) = locvar_com_trait_bit + lang("あなたには混乱が効かない", "You negates the effect of confusion.")
+		listmax++
+	}
+	if ( cbit(CHARA_BIT_RES_BLIND, tc) == TRUE ) {
+		list(0, listmax) = 1, 99999
+		listn(0, listmax) = locvar_com_trait_bit + lang("あなたには盲目が効かない", "You negates the effect of blindness.")
+		listmax++
+	}
+	if ( cbit(CHARA_BIT_RES_FEAR, tc) == TRUE ) {
+		list(0, listmax) = 1, 99999
+		listn(0, listmax) = locvar_com_trait_bit + lang("あなたには恐怖が効かない", "You negates the effect of fear.")
+		listmax++
+	}
+	if ( cbit(CHARA_BIT_RES_SLEEP, tc) == TRUE ) {
+		list(0, listmax) = 1, 99999
+		listn(0, listmax) = locvar_com_trait_bit + lang("あなたには睡眠が効かない", "You negates the effect of sleep.")
+		listmax++
+	}
+	if ( cbit(CHARA_BIT_RES_PARALYZE, tc) == TRUE ) {
+		list(0, listmax) = 1, 99999
+		listn(0, listmax) = locvar_com_trait_bit + lang("あなたには麻痺が効かない", "You negates the effect of paralysis.")
+		listmax++
+	}
+	if ( cbit(CHARA_BIT_RES_POISON, tc) == TRUE ) {
+		list(0, listmax) = 1, 99999
+		listn(0, listmax) = locvar_com_trait_bit + lang("あなたには毒が効かない", "You negates the effect of poison.")
+		listmax++
+	}
+	if ( cbit(CHARA_BIT_EAT_ROTTEN, tc) == TRUE ) {
+		list(0, listmax) = 1, 99999
+		listn(0, listmax) = locvar_com_trait_bit + lang("あなたは腐ったものを難なく消化する", "You can digest rotten foods.")
+		listmax++
+	}
+	if ( cbit(CHARA_BIT_RES_STEAL, tc) == TRUE ) {
+		list(0, listmax) = 1, 99999
+		listn(0, listmax) = locvar_com_trait_bit + lang("あなたはアイテムを盗まれない", "You will not have item stolen.")
+		listmax++
+	}
+	if ( cbit(CHARA_BIT_SUICIDE, tc) == TRUE ) {
+		list(0, listmax) = 1, 99999
+		listn(0, listmax) = locvar_com_trait_bit + lang("あなたは自爆する", "You self-destruct.")
+		listmax++
+	}
+	if ( cbit(CHARA_BIT_DEATH_MASTER, tc) == TRUE ) {
+		list(0, listmax) = 1, 99999
+		listn(0, listmax) = locvar_com_trait_bit + lang("あなたは死を司る", "You govern death word.")
+		listmax++
+	}
+	if ( cbit(CHARA_BIT_RAPID_MAGIC, tc) == TRUE ) {
+		list(0, listmax) = 1, 99999
+		listn(0, listmax) = locvar_com_trait_bit + lang("あなたは連続矢魔法を使える", "You can cast triple arrow spells.")
+		listmax++
+	}
+	if ( cbit(CHARA_BIT_LAY_HANDS, tc) == TRUE ) {
+		list(0, listmax) = 1, 99999
+		listn(0, listmax) = locvar_com_trait_bit + lang("あなたはレイハンドを使える", "You can use Layhand.")
+		listmax++
+	}
+	if ( cbit(CHARA_BIT_SUPERIOR_RIDING, tc) == TRUE ) {
+		list(0, listmax) = 1, 99999
+		listn(0, listmax) = locvar_com_trait_bit + lang("あなたは乗馬に適している", "You are suitable for riding.")
+		listmax++
+	}
+	if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) == TRUE ) {
+		list(0, listmax) = 1, 99999
+		listn(0, listmax) = locvar_com_trait_bit + lang("あなたは分裂できる", "You can split when attacked easily.")
+		listmax++
+	}
+	if ( cbit(CHARA_BIT_RES_CURSE, tc) == TRUE ) {
+		list(0, listmax) = 1, 99999
+		listn(0, listmax) = locvar_com_trait_bit + lang("あなたは呪いに強い", "You are strong against curses.")
+		listmax++
+	}
+	if ( cbit(CHARA_BIT_INFERIOR_RIDING, tc) == TRUE ) {
+		list(0, listmax) = 1, 99999
+		listn(0, listmax) = locvar_com_trait_bit + lang("あなたは乗馬に適さない", "You are too weak to carry you.")
+		listmax++
+	}
+	if ( cbit(CHARA_BIT_RES_ELEMENTAL, tc) == TRUE ) {
+		list(0, listmax) = 1, 99999
+		listn(0, listmax) = locvar_com_trait_bit + lang("あなたは属性攻撃で傷つかない", "You are not hurt by attribute attacks.")
+		listmax++
+	}
+	if ( cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) == TRUE ) {
+		list(0, listmax) = 1, 99999
+		listn(0, listmax) = locvar_com_trait_bit + lang("あなたは元気な場合分裂する", "You can split when attacked.")
+		listmax++
+	}
+	if ( cbit(CHARA_BIT_METAL, tc) == TRUE ) {
+		list(0, listmax) = 1, 99999
+		listn(0, listmax) = locvar_com_trait_bit + lang("あなたは特殊金属で構成されている", "You are made of special metal")
+		listmax++
+	}
+	if ( cbit(CHARA_BIT_CURE_BLEEDING, tc) == TRUE ) {
+		list(0, listmax) = 1, 99999
+		listn(0, listmax) = locvar_com_trait_bit + lang("あなたは出血しにくい", "You don't bleed easily.")
+		listmax++
+	}
+	if ( cbit(CHARA_BIT_IMMUNE_MINE, tc) == TRUE ) {
+		list(0, listmax) = 1, 99999
+		listn(0, listmax) = locvar_com_trait_bit + lang("あなたは地雷に反応されない", "You are not sensed by land mines.")
+		listmax++
+	}
+	if ( cbit(CHARA_BIT_TEMPER, tc) == TRUE ) {
+		list(0, listmax) = 1, 99999
+		listn(0, listmax) = locvar_com_trait_bit + lang("あなたは攻撃されると怒る", "You get angry when attacked.")
+		listmax++
+	}
+	if ( cbit(CHARA_BIT_ARMOUR, tc) == TRUE ) {
+		list(0, listmax) = 1, 99999
+		listn(0, listmax) = locvar_com_trait_bit + lang("あなたは特殊装甲に覆われている", "You are covered in special armor.")
+		listmax++
+	}
+	if ( cbit(CHARA_BIT_QUICK_SHOOTING, tc) == TRUE ) {
+		list(0, listmax) = 1, 99999
+		listn(0, listmax) = locvar_com_trait_bit + lang("あなたは早撃ちが得意だ", "You are good at shooting fast.")
+		listmax++
+	}
+	if ( cbit(CHARA_BIT_VINDALIAN_JIUJITSU_ACTIVE, tc) == TRUE ) {
+		list(0, listmax) = 1, 99999
+		listn(0, listmax) = locvar_com_trait_bit + lang("あなたは柔術の構えをしている", "You are ready for Jiujitsu.")
+		listmax++
+	}
+	if ( cbit(CHARA_BIT_UPLIFTED_WHILE_CASTING, tc) == TRUE ) {
+		list(0, listmax) = 1, 99999
+		listn(0, listmax) = locvar_com_trait_bit + lang("あなたは詠唱中に気分が高揚する", "You feel uplifted while casting.")
+ 		listmax++
+ 	}
 	if ( cdata(CDATA_BODY_SPEED_FIX, tc) != 0 ) {
 		list(0, listmax) = 1, 99999
 		listn(0, listmax) = lang("[その他]", "[ETC]") + lang("あなたは複雑な体をしている[速度-" + cdata(CDATA_BODY_SPEED_FIX, tc) + "%]", "Your body is complicated. [SPD-" + cdata(CDATA_BODY_SPEED_FIX, tc) + "%]")
@@ -6842,22 +6988,7 @@
 		if ( i == SKILL_SPELL_SUMMON_SPIRIT ) {
 			satusuu = -1
 		}
-		if ( i == SKILL_SPELL_ECLIPSE ) {
-			satusuu = -1
-		}
-		if ( i == SKILL_SPELL_THUNDER_VORTEX ) {
-			satusuu = -1
-		}
-		if ( i == SKILL_SPELL_NETHER_WAVE ) {
-			satusuu = -1
-		}
 		if ( i == SKILL_SPELL_MIST_OF_DAZZLING ) {
-			satusuu = -1
-		}
-		if ( i == SKILL_SPELL_POISON_STORM ) {
-			satusuu = -1
-		}
-		if ( i == SKILL_SPELL_BUBBLE_STORM ) {
 			satusuu = -1
 		}
 		if ( satusuu > 0 ) {
@@ -6940,27 +7071,7 @@
 			efid = -1
 			return
 		}
-		if ( p == SKILL_SPELL_ECLIPSE ) {
-			efid = -1
-			return
-		}
-		if ( p == SKILL_SPELL_THUNDER_VORTEX ) {
-			efid = -1
-			return
-		}
-		if ( p == SKILL_SPELL_NETHER_WAVE ) {
-			efid = -1
-			return
-		}
 		if ( p == SKILL_SPELL_MIST_OF_DAZZLING ) {
-			efid = -1
-			return
-		}
-		if ( p == SKILL_SPELL_POISON_STORM ) {
-			efid = -1
-			return
-		}
-		if ( p == SKILL_SPELL_BUBBLE_STORM ) {
 			efid = -1
 			return
 		}
@@ -8513,7 +8624,7 @@
 			mes _stats2(cnt)
 		loop
 		if ( cc < MAX_CHARA_FOLLOWER ) {
-			s = lang("HP/MP", "HP/MP"), lang("生命力", "Life"), lang("マナ", "Mana"), lang("狂気度", "Sanity"), lang("速度", "Speed"), lang("名声", "Fame"), lang("カルマ", "Karma"), lang("適正", "Rating"), lang("打撃修正", "Melee"), lang("射撃修正", "Shoot"), "", "", "", "", "", ""
+			s = lang("HP/MP", "HP/MP"), lang("生命力", "Life"), lang("マナ", "Mana"), lang("狂気度", "Sanity"), lang("速度", "Speed"), lang("名声", "Fame"), lang("カルマ", "Karma"), lang("戦力評価", "Rating"), lang("打撃修正", "Melee"), lang("射撃修正", "Shoot"), "", "", "", "", "", ""
 		}
 		else {
 			s = lang("HP/MP", "HP/MP"), lang("生命力", "Life"), lang("マナ", "Mana"), lang("狂気度", "Sanity"), lang("速度", "Speed"), lang("名声", "Fame"), "", "", "", "", "", "", ""
@@ -12751,7 +12862,7 @@
 					if ( instr(filter_item(inv(INV_ITEM_ID, ci)), 0, "/neg/") != (-1) ) {
 						f = 0
 					}
-					if ( inv(INV_ITEM_ID, ci) == ITEM_ID_SCROLL_TELEPORTATION | inv(INV_ITEM_ID, ci) == ITEM_ID_SCROLL_MINOR_TELEPORTATION ) {
+					if ( inv(INV_ITEM_ID, ci) == ITEM_ID_SCROLL_TELEPORTATION | inv(INV_ITEM_ID, ci) == ITEM_ID_SCROLL_MINOR_TELEPORTATION | inv(INV_ITEM_ID, ci) == ITEM_ID_TREASURE_MAP ) {
 						f = 0
 					}
 				}

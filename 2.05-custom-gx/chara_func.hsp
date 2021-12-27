@@ -2545,7 +2545,7 @@
 		if ( f@con == 0 ) {
 			return 0
 		}
-		p@con = p@con / 7
+		p@con = p@con / 10
 		if ( p@con > 0 ) {
 			if ( cdata(CDATA_CONDITION_CONFUSE, dmgcon_charid) == 0 ) {
 				cdata(CDATA_CONDITION_CONFUSE, dmgcon_charid) = p@con
@@ -5493,10 +5493,7 @@
 		if ( dmghp_source >= DAMAGE_FROM_CHARA ) {
 			if ( locvar_dmghp_dmg > 0 ) {
 				if ( cdata(CDATA_HP, dmghp_charid) > 0 ) {
-					locvar_dmghp_healn = limit(rnd(locvar_dmghp_dmg * (150 + dmghp_power * 2) / 1000 + 10), 1, cdata(CDATA_MAX_HP, dmghp_source) / 10 + rnd(5))
-					if ( locvar_dmghp_healn > cdata(CDATA_HP, dmghp_charid) / 2 + 1 ) {
-						locvar_dmghp_healn = cdata(CDATA_HP, dmghp_charid) / 2 + 1
-					}
+					locvar_dmghp_healn = limit(rnd(locvar_dmghp_dmg * (150 + dmghp_element_power * 2) / 1000 + 10), 1, cdata(CDATA_HP, dmghp_source) / 15 + rnd(5))
 					healhp dmghp_source, locvar_dmghp_healn
 					locvar_dmghp_healn = 0
 				}
@@ -5858,21 +5855,13 @@
 		}
 		if ( locvar_dmghp_ele ) {
 			if ( locvar_dmghp_ele == SKILL_RES_CHAOS ) {
-				if ( rnd(10) < dmghp_power / 75 + 4 ) {
-					dmgcon dmghp_charid, CONDITION_BLIND, rnd(dmghp_power / 3 * 2 + 1)
-				}
-				if ( rnd(20) < dmghp_power / 50 + 4 ) {
-					dmgcon dmghp_charid, CONDITION_PARALYZE, rnd(dmghp_power / 3 * 2 + 1)
-				}
-				if ( rnd(20) < dmghp_power / 50 + 4 ) {
-					dmgcon dmghp_charid, CONDITION_CONFUSE, rnd(dmghp_power / 3 * 2 + 1)
-				}
-				if ( rnd(20) < dmghp_power / 50 + 4 ) {
-					dmgcon dmghp_charid, CONDITION_POISON, rnd(dmghp_power / 3 * 2 + 1)
-				}
-				if ( rnd(20) < dmghp_power / 50 + 4 ) {
-					dmgcon dmghp_charid, CONDITION_SLEEP, rnd(dmghp_power / 3 * 2 + 1)
-				}
+				dmgcon dmghp_charid, CONDITION_WINCE, rnd(dmghp_element_power / 7 + 1)
+				dmgcon dmghp_charid, CONDITION_CHILLS, rnd(dmghp_element_power / 7 + 1)
+				dmgcon dmghp_charid, CONDITION_BLIND, rnd(dmghp_element_power / 7 + 1)
+				dmgcon dmghp_charid, CONDITION_PARALYZE, rnd(dmghp_element_power / 7 + 1)
+				dmgcon dmghp_charid, CONDITION_CONFUSE, rnd(dmghp_element_power / 7 + 1)
+				dmgcon dmghp_charid, CONDITION_DIM, rnd(dmghp_element_power / 7 + 1)
+				dmgcon dmghp_charid, CONDITION_POISON, rnd(dmghp_element_power / 7 + 1)
 			}
 			if ( locvar_dmghp_ele == SKILL_RES_LIGHTNING ) {
 				if ( rnd(10 + (cdata(CDATA_QUALITY, dmghp_charid) >= FIX_QUALITY_MIRACLE) * 10) == 0 ) {
@@ -5922,7 +5911,7 @@
 				dmgcon dmghp_charid, CONDITION_CONFUSE, rnd(dmghp_power + 1)
 			}
 			if ( locvar_dmghp_ele == SKILL_RES_SOUND ) {
-				dmgcon dmghp_charid, CONDITION_CONFUSE, rnd(dmghp_power + 1)
+				dmgcon dmghp_charid, CONDITION_DIM, rnd(dmghp_element_power + 1)
 			}
 			if ( locvar_dmghp_ele == SKILL_RES_POISON ) {
 				dmgcon dmghp_charid, CONDITION_POISON, rnd(dmghp_power + 1)
@@ -7451,12 +7440,14 @@
 	dmgcon chara_vomit_charid, CONDITION_DIM, 100
 	modweight chara_vomit_charid, (1 + rnd(5)) * (-1)
 	if ( cdata(CDATA_HUNGER, chara_vomit_charid) <= 0 ) {
-		if ( chara_vomit_charid != CHARA_PLAYER & gdata(GDATA_FLAG_GAME_MODE) == GAMEMODE_PURGE ) {
-			dmghp chara_vomit_charid, 999999, DAMAGE_FROM_HUNGER
-		}
-		else {
-			dmghp chara_vomit_charid, 10 + sdata(SKILL_ATTR_CON, chara_vomit_charid) * 3, DAMAGE_FROM_HUNGER
-		}
+		if ( cdata(CDATA_VOMIT, chara_vomit_charid) > 0 ) {
+			if ( chara_vomit_charid != CHARA_PLAYER & gdata(GDATA_FLAG_GAME_MODE) == 5 ) {
+				dmghp chara_vomit_charid, 999999, DAMAGE_FROM_HUNGER
+			}
+			else {
+				dmghp chara_vomit_charid, sdata(SKILL_ATTR_PER, chara_vomit_charid) / 10 * limit(cdata(CDATA_VOMIT, chara_vomit_charid), 1, 30) + 10, DAMAGE_FROM_HUNGER
+			}
+   	}
 	}
 	cdata(CDATA_HUNGER, chara_vomit_charid) -= 3000
 	if ( TweakData(TWEAK_GAMEPLAY_CG_DISABLE_THIRST, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
