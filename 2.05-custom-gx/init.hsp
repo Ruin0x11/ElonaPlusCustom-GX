@@ -46,6 +46,9 @@ if instr(s,0,%1)!-1{	%c\
 #define chatList(%1,%2) list(0,listmax)=%1 : listn(0,listmax)=%2 : listmax++
 #define chatMore(%1,%2=strmore,%3=0) listmax=0:buff=%1:tc=tc*(%3=0)+(%3!0)*%3:chatList 0,%2:chatesc=1:gosub *chat_select :if scenemode:if scene_cut=1 : goto *chat_end
 
+#define global ctype min(%1,%2) ((%1)*((%1)<=(%2))+(%2)*((%1)>(%2)))
+#define global ctype max(%1,%2) ((%1)*((%1)>=(%2))+(%2)*((%1)<(%2)))
+
 #deffunc netload str netload_filename
 	netrequest netload_filename
 	repeat

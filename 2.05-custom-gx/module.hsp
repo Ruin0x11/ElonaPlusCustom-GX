@@ -1458,7 +1458,25 @@
 			reph(3)--
 		}
 	}
-	locvar_cell_draw_dy = (reph(1) - scy) * inf_tiles + inf_screeny + locvar_cell_draw_syfix
+	locvar_cell_draw_cutoffy = 0
+	if ( inf_tilecutoffy > 0 ) {
+		if ( reph(1) < -1 | ( reph(1) < 0 & (scy != scybk) )) {
+			locvar_rest = inf_tiles - inf_tilecutoffy
+			if ( scy != scybk ) {
+				asdf = 3
+				if ( syfix > 0 ) {
+					locvar_cell_draw_cutoffy = -min(locvar_rest - syfix, 0)
+				}
+				else {
+					locvar_cell_draw_cutoffy = max(inf_tilecutoffy + syfix, 0)
+				}
+			}
+			else {
+				locvar_cell_draw_cutoffy = inf_tilecutoffy
+			}
+		}
+	}
+	locvar_cell_draw_dy = (reph(1) - scy) * inf_tiles + inf_screeny + locvar_cell_draw_syfix - locvar_cell_draw_cutoffy
 	locvar_cell_draw_ly = 1
 	repeat reph, reph(1)
 		locvar_cell_draw_y = cnt
@@ -1492,7 +1510,7 @@
 					if ( scxbk == scx ) {
 						locvar_cell_draw_px -= sxfix
 					}
-					locvar_cell_draw_py = (cdata(CDATA_Y, CHARA_PLAYER) + 1 - scy) * inf_tiles + inf_screeny
+					locvar_cell_draw_py = (cdata(CDATA_Y, CHARA_PLAYER) + 1 - scy) * inf_tiles + inf_screeny - locvar_cell_draw_cutoffy
 					if ( scybk == scy ) {
 						locvar_cell_draw_py -= syfix
 					}
@@ -1510,7 +1528,7 @@
 						if ( scxbk == scx ) {
 							locvar_cell_draw_px -= sxfix
 						}
-						locvar_cell_draw_py = (cdata(CDATA_Y, CHARA_PLAYER) - scy) * inf_tiles + inf_screeny
+						locvar_cell_draw_py = (cdata(CDATA_Y, CHARA_PLAYER) - scy) * inf_tiles + inf_screeny - locvar_cell_draw_cutoffy
 						if ( scybk == scy ) {
 							locvar_cell_draw_py -= syfix
 						}
@@ -3301,7 +3319,7 @@
 		color 0, 0, 0
 		gmode 6, inf_tiles, inf_tiles, locvar_cell_draw_light
 		locvar_cell_draw_y = 2
-		locvar_cell_draw_dy = inf_screeny
+		locvar_cell_draw_dy = inf_screeny - locvar_cell_draw_cutoffy
 		repeat inf_screenh
 			locvar_cell_draw_x = 2
 			locvar_cell_draw_dx = inf_screenx
@@ -3323,7 +3341,7 @@
 	gmode 6, inf_tiles, inf_tiles, locvar_cell_draw_light
 	if ( scrollanime == 0 ) {
 		locvar_cell_draw_y = 2
-		locvar_cell_draw_dy = inf_screeny + locvar_cell_draw_syfix * (scrollp > 3)
+		locvar_cell_draw_dy = inf_screeny + locvar_cell_draw_syfix * (scrollp > 3) - locvar_cell_draw_cutoffy
 		repeat inf_screenh
 			locvar_cell_draw_x = 2
 			locvar_cell_draw_dx = inf_screenx + locvar_cell_draw_sxfix * (scrollp > 3)
@@ -3494,7 +3512,7 @@
 			locvar_cell_draw_f = 1
 		}
 		locvar_cell_draw_y = 1
-		locvar_cell_draw_dy = inf_screeny + locvar_cell_draw_syfix * locvar_cell_draw_f - 48
+		locvar_cell_draw_dy = inf_screeny + locvar_cell_draw_syfix * locvar_cell_draw_f - 48 - locvar_cell_draw_cutoffy
 		repeat inf_screenh + 2
 			if ( locvar_cell_draw_dy <= -inf_tiles | locvar_cell_draw_dy >= windowh - inf_verh ) {
 				locvar_cell_draw_dy += inf_tiles
