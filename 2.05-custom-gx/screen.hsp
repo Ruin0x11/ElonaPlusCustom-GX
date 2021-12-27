@@ -416,6 +416,23 @@
 			sy -= 20
 		}
 	}
+	if ( cbit(CHARA_BIT_ANOREXIA, CHARA_PLAYER) ) {
+		color 200, 100, 50
+		if ( cdata(CDATA_VOMIT, CHARA_PLAYER) > 0 ) {
+			pos sx, sy
+			gcopy BUFFER_INF, 0 + en * 84, 416, 65 + en * 30, 15
+			pos sx + 6, sy + 1
+			mes _vomit(cdata(CDATA_VOMIT, CHARA_PLAYER) / 3)
+			sy -= 20
+		}
+		else {
+			pos sx, sy
+			gcopy BUFFER_INF, 0 + en * 84, 416, 65 + en * 30, 15
+			pos sx + 6, sy + 1
+			mes _vomit(0)
+			sy -= 20
+		}
+	}
 	if ( TweakData(TWEAK_GAMEPLAY_CG_DISABLE_THIRST, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
 		if ( cdata(CDATA_THIRST, CHARA_PLAYER) >= 12000 ) {
 			color 0, 0, 80
@@ -5339,7 +5356,7 @@
 		if ( r1 == CHARA_PLAYER ) {
 
 			/********** ORIGINAL - BEGINNING ********** // Remove skill bonus limit.
-   
+
 			if ( gdata(GDATA_FLAG_SCROLL_OF_WITCHCRAFT_TOTAL_SPELL_BONUS) >= 100 ) {
 				if ( gdata(GDATA_FLAG_GAME_MODE) != 2 & gdata(GDATA_FLAG_GAME_MODE) != 5 ) {
 					gdata(GDATA_FLAG_SCROLL_OF_WITCHCRAFT_TOTAL_SPELL_BONUS) -= p
@@ -5986,312 +6003,235 @@
 		}
 	}
 	if ( cdata(CDATA_CONDITION_JIU_JITSU, tc) == 0 | cdata(CDATA_CONDITION_JIU_JITSU, tc) == 100 ) {
-		repeat
-			if ( cdatan(CDATAN_RACE, tc) == "kobolt" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 8
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "orc" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 8
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "largeanimal" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "lizardman" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "minotaur" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "yerles" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 6
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "norland" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 6
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "eulderna" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 6
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "fairy" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 6
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "asura" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "slime" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 8
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "doggod" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 1
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "dwarf" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 6
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "juere" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 6
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "zombie" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "elea" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 6
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "rabbit" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 8
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "sheep" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "frog" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 9
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "worm" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 9
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "snail" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 11
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "mandrake" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 9
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "beetle" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 9
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "mushroom" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 9
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "bat" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 8
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "ent" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "lich" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 5
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "bacteria" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "ghost" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 5
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "spirit" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "eye" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 9
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "mazin" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "wasp" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 8
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "giant" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 6
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "imp" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 6
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "hand" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 8
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "snake" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 8
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "drake" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 6
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "goblin" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "bear" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "armor" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 8
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "medusa" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "cupid" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 6
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "karune" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 6
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "harpy" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "dragon" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 4
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "dinosaur" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "beast" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 6
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "spider" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 8
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "golem" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 5
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "rock" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 9
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "zanan" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 6
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "skeleton" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 6
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "piece" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "cat" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 6
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "dog" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "roran" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "rat" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 8
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "shell" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 8
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "catgod" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 1
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "machinegod" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 1
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "undeadgod" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 1
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "machine" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "wisp" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 6
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "bird" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 8
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "seamonster" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "catsister" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 5
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "mutant" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "yeek" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 8
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "yith" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 5
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "servant" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 6
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "horse" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "god" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 1
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "quickling" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 1
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "metal" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 1
-				break
-			}
-			if ( cdatan(CDATAN_RACE, tc) == "vehicle" ) {
-				cdata(CDATA_CONDITION_JIU_JITSU, tc) = 6
-				break
-			}
-		loop
+		cdata(CDATA_CONDITION_JIU_JITSU, tc) = 5
+		if ( cdatan(CDATAN_RACE, tc) == "kobolt" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 8
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "orc" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 8
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "largeanimal" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "lizardman" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "minotaur" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "yerles" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 6
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "norland" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 6
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "eulderna" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 6
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "fairy" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 6
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "asura" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "slime" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 8
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "doggod" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 1
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "dwarf" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 6
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "juere" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 6
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "zombie" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "elea" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 6
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "rabbit" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 8
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "sheep" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "frog" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 9
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "worm" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 9
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "snail" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 11
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "mandrake" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 9
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "beetle" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 9
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "mushroom" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 9
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "bat" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 8
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "ent" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "lich" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 5
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "bacteria" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "ghost" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 5
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "spirit" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "eye" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 9
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "mazin" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "wasp" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 8
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "giant" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 6
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "imp" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 6
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "hand" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 8
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "snake" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 8
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "drake" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 6
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "goblin" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "bear" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "armor" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 8
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "medusa" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "cupid" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 6
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "karune" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 6
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "harpy" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "dragon" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 4
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "dinosaur" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "beast" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 6
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "spider" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 8
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "golem" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 5
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "rock" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 9
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "zanan" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 6
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "skeleton" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 6
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "piece" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "cat" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 6
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "dog" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "roran" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "rat" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 8
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "shell" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 8
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "catgod" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 1
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "machinegod" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 1
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "undeadgod" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 1
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "machine" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "wisp" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 6
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "bird" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 8
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "seamonster" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "catsister" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 5
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "mutant" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "yeek" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 8
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "yith" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 5
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "servant" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 6
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "horse" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 7
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "god" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 1
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "quickling" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 1
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "metal" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 1
+		}
+		if ( cdatan(CDATAN_RACE, tc) == "vehicle" ) {
+			cdata(CDATA_CONDITION_JIU_JITSU, tc) = 6
+		}
 	}
 	if ( cdatan(CDATAN_CLASS, cc) == "predator" ) {
 		cr = 1
@@ -6342,6 +6282,9 @@
 		if ( handryoute == 1 ) {
 			handryoute = 0
 		}
+	}
+	if ( develop ) {
+		txt lang("[命中力" + tohit + "][回避力" + evade + "]", "[HIT" + ohit + "][EVA" + evade + "]")
 	}
 	if ( (cdata(CDATA_CRIT_CHANCE, cc) * 4 + 10) * (handryoute + 10) / 10 * ((cr + 10) / 10) > (rnd(400) + rnd(creva + 2) + cdata(CDATA_DEC_ENEMY_CRIT_CHANCE, tc) * 2) * (extraattack + 1) * ((cdata(CDATA_CONDITION_JIU_JITSU, tc) * 2 + 8) / 10) ) {
 		critical = 1
@@ -6840,7 +6783,7 @@
 					continue
 				}
 				rp = cdata(cnt, r1) \ EXT_EQUIP_SLOTS - 1
-				if ( inv(INV_ITEM_WEIGHT, rp) >= 1000 ) {
+				if ( inv(INV_ITEM_WEIGHT, rp) > 2000 ) {
 					cdata(cnt, r1) = cdata(cnt, r1) / EXT_EQUIP_SLOTS * EXT_EQUIP_SLOTS
 					inv(INV_ITEM_EQUIP, rp) = 0
 				}
@@ -6857,6 +6800,9 @@
 				if ( cdata(CDATA_ID, r1) == CREATURE_ID_LAME_HORSE | cdata(CDATA_ID, r1) == CREATURE_ID_WILD_HORSE | cdata(CDATA_ID, r1) == CREATURE_ID_NOYEL_HORSE | cdata(CDATA_ID, r1) == CREATURE_ID_YOWYN_HORSE | cdata(CDATA_ID, r1) == CREATURE_ID_THOROUGHBRED | cdata(CDATA_ID, r1) == CREATURE_ID_YERLES_MACHINE_INFANTRY | cdata(CDATA_ID, r1) == CREATURE_ID_YERLES_ELITE_MACHINE_INFANTRY | cdata(CDATA_ID, r1) == CREATURE_ID_COBRA | cdata(CDATA_ID, r1) == CREATURE_ID_KING_COBRA | cdata(CDATA_ID, r1) == CREATURE_ID_CARBUNCLE | cdata(CDATA_ID, r1) == CREATURE_ID_LION | cdata(CDATA_ID, r1) == CREATURE_ID_FIRE_DRAGON_CHILD | cdata(CDATA_ID, r1) == CREATURE_ID_GRYFFON_CHILD | cdata(CDATA_ID, r1) == CREATURE_ID_FIRE_ENT | cdata(CDATA_ID, r1) == CREATURE_ID_ICE_ENT ) {
 					cbitmod CHARA_BIT_FLOAT, r1, 1
 				}
+				if ( cdata(CDATA_ID, r1) == CREATURE_ID_WIZARD_OF_ELEA | cdata(CDATA_ID, r1) == CREATURE_ID_EXILE ) {
+					cbitmod CHARA_BIT_UPLIFTED_WHILE_CASTING, r1, TRUE
+				}
 			}
 			if ( cdata(CDATA_EVOLUTION_STAGE, r1) >= 2 ) {
 				if ( cdata(CDATA_ID, r1) == CREATURE_ID_OLDER_DOG_SISTER ) {
@@ -6871,10 +6817,16 @@
 				if ( cdata(CDATA_ID, r1) == CREATURE_ID_HERMIT_CRAB ) {
 					cbitmod CHARA_BIT_ARMOUR, r1, 1
 				}
+				if ( cdata(CDATA_ID, r1) == CREATURE_ID_ELECTRIC_CLOUD | cdata(CDATA_ID, r1) == CREATURE_ID_CHAOS_CLOUD | cdata(CDATA_ID, r1) == CREATURE_ID_WISP ) {
+					cbitmod CHARA_BIT_UPLIFTED_WHILE_CASTING, r1, TRUE
+				}
 			}
 			if ( cdata(CDATA_EVOLUTION_STAGE, r1) >= 3 ) {
 				if ( cdata(CDATA_ID, r1) == CREATURE_ID_LITTLE_GIRL ) {
 					cbitmod CHARA_BIT_FLOAT, r1, 1
+				}
+				if ( cdata(CDATA_ID, r1) == CREATURE_ID_ZOMBIE_GIRL ) {
+					cbitmod CHARA_BIT_UPLIFTED_WHILE_CASTING, r1, TRUE
 				}
 			}
 			if ( cdata(CDATA_EVOLUTION_STAGE, r1) >= 10 ) {

@@ -3774,12 +3774,12 @@
 		}
 		healcon tc, CONDITION_SICK, 7 + rnd(7)
 		if ( cbit(CHARA_BIT_ANOREXIA, tc) ) {
-			cdata(CDATA_VOMIT, tc) -= rnd(6)
+			cdata(CDATA_VOMIT, tc) -= rnd(5) + 1
 		}
 		else {
-			cdata(CDATA_VOMIT, tc) -= rnd(3)
+			cdata(CDATA_VOMIT, tc) -= rnd(2) + 1
 		}
-		if ( cdata(CDATA_VOMIT, tc) < 0 ) {
+		if ( cdata(CDATA_VOMIT, tc) <= 0 ) {
 			cure_anorexia tc
 			cdata(CDATA_VOMIT, tc) = 0
 		}
@@ -5637,9 +5637,32 @@
 	if ( cdata(CDATA_EQUIP_WEIGHT, cc) < 35000 & cdata(CDATA_EQUIP_WEIGHT, cc) >= 15000 & findbuff(cc, BUFF_MAGIC_EQUIP) != (-1) ) {
 		efp = efp * 6 / 5
 	}
+	if ( cbit(CHARA_BIT_UPLIFTED_WHILE_CASTING, cc) ) {
+		cdata(CDATA_POWER_GAUGE, cc) += 5
+		if ( cdata(CDATA_POWER_GAUGE, cc) > 100 ) {
+			if ( cdata(CDATA_SHIFT_FORM, cc) <= SHIFT_FORM_NONE & (cdata(CDATA_EVOLUTION_STAGE, cc) <= 0 | cc == CHARA_PLAYER) & (cdata(CDATA_QUALITY, cc) < FIX_QUALITY_MIRACLE | cc < MAX_CHARA_FOLLOWER) ) {
+				cdata(CDATA_POWER_GAUGE, cc) = 100
+			}
+		}
+		if ( cdata(CDATA_POWER_GAUGE, cc) > 200 ) {
+			cdata(CDATA_POWER_GAUGE, cc) = 200
+		}
+	}
 	rapidmagic = 0
 	if ( cbit(CHARA_BIT_RAPID_MAGIC, cc) & sdataref(SKILL_DATAREF_TYPE, efid) == SKILL_TYPE_ARROW ) {
 		rapidmagic = 3
+	}
+	if ( efid == SKILL_SPELL_FIRE_CLAW | efid == SKILL_SPELL_COLD_BLADE | efid == SKILL_SPELL_FIRE_BOLT | efid == SKILL_SPELL_ICE_BOLT | efid == SKILL_SPELL_FIRE_BALL | efid == SKILL_SPELL_ICE_BALL ) {
+		fusifc = encfindpower(cc, ENCHANT_FIRE_AND_COLD)
+	}
+	if ( efid == SKILL_SPELL_MIND_THORN | efid == SKILL_SPELL_SOUND_CANNONBALL | efid == SKILL_SPELL_MIND_BOLT | efid == SKILL_SPELL_MIND_BOLT | efid == SKILL_SPELL_ILLUSION_ROAR | efid == SKILL_SPELL_ILLUSION_ROAR ) {
+		fusims = encfindpower(cc, ENCHANT_MIND_AND_SOUND)
+	}
+	if ( efid == SKILL_SPELL_NERVE_ARROW | efid == SKILL_SPELL_POISON_MUCUS | efid == SKILL_SPELL_NERVE_BOLT | efid == SKILL_SPELL_POISON_BOLT | efid == SKILL_SPELL_ANGUISH_JAIL | efid == SKILL_SPELL_POISON_STORM ) {
+		fusipn = encfindpower(cc, ENCHANT_POISON_AND_NERVE)
+	}
+	if ( efid == SKILL_SPELL_DARK_EYE | efid == SKILL_SPELL_NETHER_ARROW | efid == SKILL_SPELL_DARKNESS_BOLT | efid == SKILL_SPELL_NETHER_BOLT | efid == SKILL_SPELL_ECLIPSE | efid == SKILL_SPELL_NETHER_WAVE ) {
+		fusidne = encfindpower(cc, ENCHANT_DARKNESS_AND_NETHER)
 	}
 	if ( rapidmagic ) {
 		repeat rapidmagic
@@ -5651,15 +5674,6 @@
 		rapidmagic = 0
 	}
 	else {
-		if ( efid == SKILL_SPELL_FIRE_BOLT | efid == SKILL_SPELL_ICE_BOLT | efid == SKILL_SPELL_FIRE_BALL | efid == SKILL_SPELL_ICE_BALL ) {
-			fusifc = encfindpower(cc, 73)
-		}
-		if ( efid == SKILL_SPELL_MIND_BOLT | efid == SKILL_SPELL_RAGING_ROAR ) {
-			fusims = encfindpower(cc, 74)
-		}
-		if ( efid == SKILL_SPELL_NERVE_ARROW | efid == SKILL_SPELL_POISON_STORM ) {
-			fusipn = encfindpower(cc, 75)
-		}
 		gosub *effect
 	}
 	return 1
@@ -6758,6 +6772,16 @@
 										dmghp tc, limit(dmg * fusipn / 500 + rnd(dmg / 4 + 1), 1, dmg * 3 / 2), cc, SKILL_RES_POISON, elep
 									}
 								}
+								if ( fusidne > 0 ) {
+									if ( ele == SKILL_RES_DARKNESS ) {
+										snd SOUNDLIST_ATK_HELL
+										dmghp tc, limit(dmg * fusidne / 500 + rnd(dmg / 4 + 1), 1, dmg * 3 / 2), cc, SKILL_RES_NETHER, elep
+									}
+									if ( ele == SKILL_RES_NETHER ) {
+										snd SOUNDLIST_ATK_DARK
+										dmghp tc, limit(dmg * fusidne / 500 + rnd(dmg / 4 + 1), 1, dmg * 3 / 2), cc, SKILL_RES_DARKNESS, elep
+									}
+								}
 							}
 							if ( gdata(GDATA_TEMPORARY_FLAGS) == 0 ) {
 								if ( cdata(CDATA_REFLECT_MAGIC, tc) > 0 ) {
@@ -6799,6 +6823,7 @@
 				fusifc = 0
 				fusims = 0
 				fusipn = 0
+				fusidne = 0
 				goto *effect_SWEND1
 			}
 			if ( _switch_val == SKILL_TYPE_BALL | _switch_sw ) {
@@ -7040,6 +7065,11 @@
 									}
 								}
 								dmghp tc, dmg, cc, ele, elep
+								if ( cdata(CDATA_EXIST, tc) == CHAR_STATE_ALIVE ) {
+									dmgcon tc, CONDITION_FEAR, sdata(SKILL_ATTR_CON, cc) + 100
+									cdata(CDATA_CONDITION_WINCE, tc) += 5
+									txt lang(name(tc) + "は怯んだ。", name(tc) + " " + is(tc) + " faltered.")
+								}
 							}
 							else {
 								if ( findbuff(cc, BUFF_CHARGE) != (-1) ) {
@@ -7112,6 +7142,16 @@
 											dmghp tc, limit(dmg * fusipn / 500 + rnd(dmg / 4 + 1), 1, dmg * 3 / 2), cc, SKILL_RES_POISON, elep
 										}
 									}
+									if ( fusidne > 0 ) {
+										if ( ele == SKILL_RES_DARKNESS ) {
+											snd SOUNDLIST_ATK_HELL
+											dmghp tc, limit(dmg * fusidne / 500 + rnd(dmg / 4 + 1), 1, dmg * 3 / 2), cc, SKILL_RES_NETHER, elep
+										}
+										if ( ele == SKILL_RES_NETHER ) {
+											snd SOUNDLIST_ATK_DARK
+											dmghp tc, limit(dmg * fusidne / 500 + rnd(dmg / 4 + 1), 1, dmg * 3 / 2), cc, SKILL_RES_DARKNESS, elep
+										}
+									}
 								}
 								if ( cdata(CDATA_REFLECT_MAGIC, tc) > 0 ) {
 									if ( efid != SKILL_SPACT_GRENADE ) {
@@ -7156,6 +7196,7 @@
 					}
 				}
 				if ( efid == SKILL_SPACT_SUICIDE_ATTACK ) {
+					cdata(CDATA_HP, cc) = 0
 					dmghp cc, 99999, DAMAGE_FROM_SUICIDE
 				}
 				if ( chainbomb > 0 ) {
@@ -7186,6 +7227,7 @@
 				fusifc = 0
 				fusims = 0
 				fusipn = 0
+				fusidne = 0
 				goto *effect_SWEND1
 			}
 			if ( _switch_val == SKILL_TYPE_ARROW | _switch_sw ) {
@@ -7262,6 +7304,16 @@
 							dmghp tc, limit(dmg * fusipn / 500 + rnd(dmg / 4 + 1), 1, dmg * 3 / 2), cc, SKILL_RES_POISON, elep
 						}
 					}
+					if ( fusidne > 0 ) {
+						if ( ele == SKILL_RES_DARKNESS ) {
+							snd SOUNDLIST_ATK_HELL
+							dmghp tc, limit(dmg * fusidne / 500 + rnd(dmg / 4 + 1), 1, dmg * 3 / 2), cc, SKILL_RES_NETHER, elep
+						}
+						if ( ele == SKILL_RES_NETHER ) {
+							snd SOUNDLIST_ATK_DARK
+							dmghp tc, limit(dmg * fusidne / 500 + rnd(dmg / 4 + 1), 1, dmg * 3 / 2), cc, SKILL_RES_DARKNESS, elep
+						}
+					}
 				}
 				if ( cdata(CDATA_REFLECT_MAGIC, tc) > 0 ) {
 					dmghp cc, limit(dmg * cdata(CDATA_REFLECT_MAGIC, tc) / 200 + 1, 1, cdata(CDATA_MAX_HP, cc) / 10), tc, ele, elep
@@ -7273,6 +7325,7 @@
 				fusifc = 0
 				fusims = 0
 				fusipn = 0
+				fusidne = 0
 				goto *effect_SWEND1
 			}
 			if ( _switch_val == SKILL_TYPE_HEAL | _switch_sw ) {
@@ -7921,9 +7974,11 @@
 				_switch_sw = 0
 				if ( efid == SKILL_SPACT_DISPATCH_FLYING_BEAST ) {
 					if ( cc == tc ) {
-						if ( cc == CHARA_PLAYER ) {
-							txt lang("自分で自分は投げられない。", "You can not throw yourself.")
-						}
+						txt lang("自分で自分は投げられない。", "You can not throw yourself.")
+						goto *effect_SWEND1
+					}
+					if ( tc == CHARA_PLAYER ) {
+						txt lang(name(tc) + "は抵抗した。", name(tc) + " resist" + _s(tc) + ".")
 						goto *effect_SWEND1
 					}
 				}
@@ -8009,7 +8064,7 @@
 				if ( efid == SKILL_SPACT_DISPATCH_FLYING_BEAST ) {
 					if ( synccheck(cc, -1) ) {
 						txtmore
-						txt lang(name(cc) + "は" + name(tc) + "を放り投げた。", name(cc) + " threw " + name(tc) + ".")
+						txt lang(name(cc) + "は" + cdatan(CDATAN_NAME, cdata(CDATA_TARGET, tc)) + "に向かって" + name(tc) + "を放り投げた。", name(cc) + " threw " + name(tc) + " to " + cdatan(CDATAN_NAME, cdata(CDATA_TARGET, tc)) + ".")
 					}
 					if ( cdata(CDATA_TARGET, tc) != (-1) ) {
 						telex = cdata(CDATA_X, cdata(CDATA_TARGET, tc))
@@ -8063,7 +8118,7 @@
 						goto *effect_SWEND1
 					}
 
-                    /********** ORIGINAL - BEGINNING ********** 
+                    /********** ORIGINAL - BEGINNING **********
 
 					if ( cbit(CHARA_BIT_SANDBAG, tc) == TRUE ) {
 
@@ -8130,55 +8185,14 @@
 						}
 						else {
 							if ( efidprev == SKILL_SPACT_DISPATCH_FLYING_BEAST ) {
+								if ( cdata(CDATA_AI_DISTANCE, tc) < 1 ) {
+									cdata(CDATA_AI_DISTANCE, tc) = 1
+								}
 								cdata(CDATA_CHAIN_ATTACK_COUNT, tc) = 0
-								cdata(CDATA_X_NEW, tc) = telex
-								cdata(CDATA_Y_NEW, tc) = teley
-								if ( cdata(CDATA_AI_DISTANCE, tc) >= 2 ) {
-									hosei = rnd(12)
-									if ( hosei == 0 ) {
-										cdata(CDATA_X_NEW, tc) += cdata(CDATA_AI_DISTANCE, tc)
-									}
-									if ( hosei == 1 ) {
-										cdata(CDATA_X_NEW, tc) -= cdata(CDATA_AI_DISTANCE, tc)
-									}
-									if ( hosei == 2 ) {
-										cdata(CDATA_Y_NEW, tc) += cdata(CDATA_AI_DISTANCE, tc)
-									}
-									if ( hosei == 3 ) {
-										cdata(CDATA_Y_NEW, tc) -= cdata(CDATA_AI_DISTANCE, tc)
-									}
-									if ( hosei == 4 ) {
-										cdata(CDATA_X_NEW, tc) += cdata(CDATA_AI_DISTANCE, tc)
-										cdata(CDATA_Y_NEW, tc) += 1
-									}
-									if ( hosei == 5 ) {
-										cdata(CDATA_X_NEW, tc) -= cdata(CDATA_AI_DISTANCE, tc)
-										cdata(CDATA_Y_NEW, tc) -= 1
-									}
-									if ( hosei == 6 ) {
-										cdata(CDATA_X_NEW, tc) += cdata(CDATA_AI_DISTANCE, tc)
-										cdata(CDATA_Y_NEW, tc) -= 1
-									}
-									if ( hosei == 7 ) {
-										cdata(CDATA_X_NEW, tc) -= cdata(CDATA_AI_DISTANCE, tc)
-										cdata(CDATA_Y_NEW, tc) += 1
-									}
-									if ( hosei == 8 ) {
-										cdata(CDATA_Y_NEW, tc) += cdata(CDATA_AI_DISTANCE, tc)
-										cdata(CDATA_X_NEW, tc) += 1
-									}
-									if ( hosei == 9 ) {
-										cdata(CDATA_Y_NEW, tc) -= cdata(CDATA_AI_DISTANCE, tc)
-										cdata(CDATA_X_NEW, tc) -= 1
-									}
-									if ( hosei == 10 ) {
-										cdata(CDATA_Y_NEW, tc) += cdata(CDATA_AI_DISTANCE, tc)
-										cdata(CDATA_X_NEW, tc) -= 1
-									}
-									if ( hosei == 11 ) {
-										cdata(CDATA_Y_NEW, tc) -= cdata(CDATA_AI_DISTANCE, tc)
-										cdata(CDATA_X_NEW, tc) += 1
-									}
+								cdata(CDATA_X_NEW, tc) = telex + rnd(cnt / 8 + 1 + cdata(CDATA_AI_DISTANCE, tc)) - rnd(cnt / 8 + 1 + cdata(CDATA_AI_DISTANCE, tc))
+								cdata(CDATA_Y_NEW, tc) = teley + rnd(cnt / 8 + 1 + cdata(CDATA_AI_DISTANCE, tc)) - rnd(cnt / 8 + 1 + cdata(CDATA_AI_DISTANCE, tc))
+								if ( dist(cdata(CDATA_X_NEW, tc), cdata(CDATA_Y_NEW, tc), cdata(CDATA_X, cdata(CDATA_TARGET, tc)), cdata(CDATA_Y, cdata(CDATA_TARGET, tc))) < cdata(CDATA_AI_DISTANCE, tc) ) {
+									continue
 								}
 								cell_check cdata(CDATA_X_NEW, tc), cdata(CDATA_Y_NEW, tc)
 							}
@@ -8514,7 +8528,7 @@
 			}
 			cdata(CDATA_POWER_GAUGE, cc) += 2
 			if ( cdata(CDATA_POWER_GAUGE, cc) > 100 ) {
-				if ( cdata(CDATA_SHIFT_FORM, cc) <= SHIFT_FORM_NONE & (cdata(CDATA_EVOLUTION_STAGE, cc) <= 0 | dmgsource == 0) & (cdata(CDATA_QUALITY, cc) < FIX_QUALITY_MIRACLE | cc < MAX_CHARA_FOLLOWER) ) {
+				if ( cdata(CDATA_SHIFT_FORM, cc) <= SHIFT_FORM_NONE & (cdata(CDATA_EVOLUTION_STAGE, cc) <= 0 | cc == CHARA_PLAYER) & (cdata(CDATA_QUALITY, cc) < FIX_QUALITY_MIRACLE | cc < MAX_CHARA_FOLLOWER) ) {
 					cdata(CDATA_POWER_GAUGE, cc) = 100
 				}
 			}
@@ -10552,6 +10566,9 @@
 	}
 	if ( _switch_val == SKILL_SPACT_TIME_STOP | _switch_sw ) {
 		_switch_sw = 0
+		if ( cdata(CDATA_POWER_GAUGE, cc) < 100 ) {
+			goto *effect_end
+		}
 		if ( gdata(GDATA_TIME_STOP_TIME) > 0 | gdata(GDATA_FLAG_STOP_TIME_OTHER) > 0 ) {
 			txtef COLOR_SKY_BLUE
 			txt lang("時は既に止まっている。", "Time is already stopped.")
@@ -15558,6 +15575,17 @@
 					txt cdatan(CDATAN_NAME, tc) + "は" + cdatan(CDATAN_NAME, cc) + "に重ねて詠唱した。"
 				}
 			}
+			if ( cbit(CHARA_BIT_UPLIFTED_WHILE_CASTING, tc) ) {
+				cdata(CDATA_POWER_GAUGE, tc) += 5
+				if ( cdata(CDATA_POWER_GAUGE, tc) > 100 ) {
+					if ( cdata(CDATA_SHIFT_FORM, tc) <= SHIFT_FORM_NONE & (cdata(CDATA_EVOLUTION_STAGE, tc) <= 0 | tc == CHARA_PLAYER) & (cdata(CDATA_QUALITY, tc) < FIX_QUALITY_MIRACLE | tc < MAX_CHARA_FOLLOWER) ) {
+						cdata(CDATA_POWER_GAUGE, tc) = 100
+					}
+				}
+				if ( cdata(CDATA_POWER_GAUGE, tc) > 200 ) {
+					cdata(CDATA_POWER_GAUGE, tc) = 200
+				}
+			}
 			animeload 46, tc
 			snd SOUNDLIST_ATK_MIND
 			if ( cdata(CDATA_ID, tc) != CREATURE_ID_ANOTHER_WORLD_CHEATAH ) {
@@ -18935,7 +18963,7 @@
 			if ( cdata(CDATA_HP, tc) != cdata(CDATA_MAX_HP, tc) ) {
 				animeid = ANIMATION_HEAL_FAST
 				gosub *anime
-				dmghp cc, limit(cdata(CDATA_MAX_HP, cc) / 10, 1, cdata(CDATA_MAX_HP, tc) - cdata(CDATA_HP, tc)), 
+				dmghp cc, limit(cdata(CDATA_MAX_HP, cc) / 10, 1, cdata(CDATA_MAX_HP, tc) - cdata(CDATA_HP, tc)),
 				healhp tc, cdata(CDATA_MAX_HP, cc) / 10
 			}
 		}
@@ -20303,30 +20331,6 @@
 				gdata(GDATA_FLAG_WORK_B_REMAINING) = 0
 				gdata(GDATA_FLAG_WORK_C_REMAINING) = 0
 				seiton = 4
-				flt
-				itemcreate -1, ITEM_ID_M01_GARNET, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
-				flt
-				itemcreate -1, ITEM_ID_M02_AMETHYST, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
-				flt
-				itemcreate -1, ITEM_ID_M03_AQUAMARINE, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
-				flt
-				itemcreate -1, ITEM_ID_M04_DIAMOND, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
-				flt
-				itemcreate -1, ITEM_ID_M05_EMERALD, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
-				flt
-				itemcreate -1, ITEM_ID_M06_ALEXANDRITE, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
-				flt
-				itemcreate -1, ITEM_ID_M07_RUBY, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
-				flt
-				itemcreate -1, ITEM_ID_M08_SARDONYX, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
-				flt
-				itemcreate -1, ITEM_ID_M09_SAPPHIRE, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
-				flt
-				itemcreate -1, ITEM_ID_M10_OPAL, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
-				flt
-				itemcreate -1, ITEM_ID_M11_TOPAZ, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
-				flt
-				itemcreate -1, ITEM_ID_M12_LAPIS_LAZULI, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
 				gdata(GDATA_FLAG_SUB_SLIME) = 1000
 				gdata(GDATA_FLAG_SUB_ROGUE) = 1000
 				gdata(GDATA_FLAG_SUB_NIGHTMARE) = 1000
@@ -21338,7 +21342,7 @@
 			}
 			cdata(CDATA_POWER_GAUGE, cc) += 2
 			if ( cdata(CDATA_POWER_GAUGE, cc) > 100 ) {
-				if ( cdata(CDATA_SHIFT_FORM, cc) <= SHIFT_FORM_NONE & (cdata(CDATA_EVOLUTION_STAGE, cc) <= 0 | dmgsource == 0) & (cdata(CDATA_QUALITY, cc) < FIX_QUALITY_MIRACLE | cc < MAX_CHARA_FOLLOWER) ) {
+				if ( cdata(CDATA_SHIFT_FORM, cc) <= SHIFT_FORM_NONE & (cdata(CDATA_EVOLUTION_STAGE, cc) <= 0 | cc == CHARA_PLAYER) & (cdata(CDATA_QUALITY, cc) < FIX_QUALITY_MIRACLE | cc < MAX_CHARA_FOLLOWER) ) {
 					cdata(CDATA_POWER_GAUGE, cc) = 100
 				}
 			}
@@ -21461,7 +21465,7 @@
 			}
 			cdata(CDATA_POWER_GAUGE, cc) += 2
 			if ( cdata(CDATA_POWER_GAUGE, cc) > 100 ) {
-				if ( cdata(CDATA_SHIFT_FORM, cc) <= SHIFT_FORM_NONE & (cdata(CDATA_EVOLUTION_STAGE, cc) <= 0 | dmgsource == 0) & (cdata(CDATA_QUALITY, cc) < FIX_QUALITY_MIRACLE | cc < MAX_CHARA_FOLLOWER) ) {
+				if ( cdata(CDATA_SHIFT_FORM, cc) <= SHIFT_FORM_NONE & (cdata(CDATA_EVOLUTION_STAGE, cc) <= 0 | cc == CHARA_PLAYER) & (cdata(CDATA_QUALITY, cc) < FIX_QUALITY_MIRACLE | cc < MAX_CHARA_FOLLOWER) ) {
 					cdata(CDATA_POWER_GAUGE, cc) = 100
 				}
 			}
@@ -21570,7 +21574,7 @@
 				}
 				cdata(CDATA_POWER_GAUGE, cc) += 2
 				if ( cdata(CDATA_POWER_GAUGE, cc) > 100 ) {
-					if ( cdata(CDATA_SHIFT_FORM, cc) <= SHIFT_FORM_NONE & (cdata(CDATA_EVOLUTION_STAGE, cc) <= 0 | dmgsource == 0) & (cdata(CDATA_QUALITY, cc) < FIX_QUALITY_MIRACLE | cc < MAX_CHARA_FOLLOWER) ) {
+					if ( cdata(CDATA_SHIFT_FORM, cc) <= SHIFT_FORM_NONE & (cdata(CDATA_EVOLUTION_STAGE, cc) <= 0 | cc == CHARA_PLAYER) & (cdata(CDATA_QUALITY, cc) < FIX_QUALITY_MIRACLE | cc < MAX_CHARA_FOLLOWER) ) {
 						cdata(CDATA_POWER_GAUGE, cc) = 100
 					}
 				}
@@ -21648,7 +21652,7 @@
 			}
 			cdata(CDATA_POWER_GAUGE, cc) += 2
 			if ( cdata(CDATA_POWER_GAUGE, cc) > 100 ) {
-				if ( cdata(CDATA_SHIFT_FORM, cc) <= SHIFT_FORM_NONE & (cdata(CDATA_EVOLUTION_STAGE, cc) <= 0 | dmgsource == 0) & (cdata(CDATA_QUALITY, cc) < FIX_QUALITY_MIRACLE | cc < MAX_CHARA_FOLLOWER) ) {
+				if ( cdata(CDATA_SHIFT_FORM, cc) <= SHIFT_FORM_NONE & (cdata(CDATA_EVOLUTION_STAGE, cc) <= 0 | cc == CHARA_PLAYER) & (cdata(CDATA_QUALITY, cc) < FIX_QUALITY_MIRACLE | cc < MAX_CHARA_FOLLOWER) ) {
 					cdata(CDATA_POWER_GAUGE, cc) = 100
 				}
 			}
@@ -21723,7 +21727,7 @@
 			}
 			cdata(CDATA_POWER_GAUGE, cc) += 2
 			if ( cdata(CDATA_POWER_GAUGE, cc) > 100 ) {
-				if ( cdata(CDATA_SHIFT_FORM, cc) <= SHIFT_FORM_NONE & (cdata(CDATA_EVOLUTION_STAGE, cc) <= 0 | dmgsource == 0) & (cdata(CDATA_QUALITY, cc) < FIX_QUALITY_MIRACLE | cc < MAX_CHARA_FOLLOWER) ) {
+				if ( cdata(CDATA_SHIFT_FORM, cc) <= SHIFT_FORM_NONE & (cdata(CDATA_EVOLUTION_STAGE, cc) <= 0 | cc == CHARA_PLAYER) & (cdata(CDATA_QUALITY, cc) < FIX_QUALITY_MIRACLE | cc < MAX_CHARA_FOLLOWER) ) {
 					cdata(CDATA_POWER_GAUGE, cc) = 100
 				}
 			}
@@ -21802,7 +21806,7 @@
 			}
 			cdata(CDATA_POWER_GAUGE, cc) += 2
 			if ( cdata(CDATA_POWER_GAUGE, cc) > 100 ) {
-				if ( cdata(CDATA_SHIFT_FORM, cc) <= SHIFT_FORM_NONE & (cdata(CDATA_EVOLUTION_STAGE, cc) <= 0 | dmgsource == 0) & (cdata(CDATA_QUALITY, cc) < FIX_QUALITY_MIRACLE | cc < MAX_CHARA_FOLLOWER) ) {
+				if ( cdata(CDATA_SHIFT_FORM, cc) <= SHIFT_FORM_NONE & (cdata(CDATA_EVOLUTION_STAGE, cc) <= 0 | cc == CHARA_PLAYER) & (cdata(CDATA_QUALITY, cc) < FIX_QUALITY_MIRACLE | cc < MAX_CHARA_FOLLOWER) ) {
 					cdata(CDATA_POWER_GAUGE, cc) = 100
 				}
 			}

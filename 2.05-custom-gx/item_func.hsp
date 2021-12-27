@@ -217,15 +217,11 @@
 		}
 		if ( cdata(CDATA_ROW_ACT, cnt) != ACTION_NONE ) {
 			if ( cdata(CDATA_ACTION_PERIOD, cnt) > 0 ) {
-				if ( cdata(CDATA_ROW_ACT, cnt) != ACTION_SEX ) {
-					if ( cdata(CDATA_ROW_ACT, cnt) != ACTION_CHARGE ) {
-						if ( cdata(CDATA_ROW_ACT, cnt) != ACTION_CUT_TREE ) {
-							if ( cdata(CDATA_ITEM_USING, cnt) == itemusingfind_arg1 ) {
-								if ( itemusingfind_arg2 == 0 | (itemusingfind_arg2 == 1 & cnt != 0) ) {
-									locvar_itemusingfind_f = cnt
-									break
-								}
-							}
+				if ( cdata(CDATA_ROW_ACT, cnt) != ACTION_SEX & cdata(CDATA_ROW_ACT, cnt) != ACTION_CHARGE & cdata(CDATA_ROW_ACT, cnt) != ACTION_PERFORM_PREACH & cdata(CDATA_ROW_ACT, cnt) != ACTION_MEAL & cdata(CDATA_ROW_ACT, cnt) != ACTION_PERFORM_DANCE & cdata(CDATA_ROW_ACT, cnt) != ACTION_XMAS_CAKE & cdata(CDATA_ROW_ACT, cnt) != ACTION_PERSUASION & cdata(CDATA_ROW_ACT, cnt) != ACTION_PECULIAR_JOKE & cdata(CDATA_ROW_ACT, cnt) != ACTION_BLENDED_LIE & cdata(CDATA_ROW_ACT, cnt) != ACTION_INTIMIDATION & cdata(CDATA_ROW_ACT, cnt) != ACTION_MYSTERIOUS_SONG & cdata(CDATA_ROW_ACT, cnt) != ACTION_TUIN_DER_LUSTEN & cdata(CDATA_ROW_ACT, cnt) != ACTION_BEGGING ) {
+					if ( cdata(CDATA_ITEM_USING, cnt) == itemusingfind_itemid ) {
+						if ( itemusingfind_arg2 == FALSE | (itemusingfind_arg2 == TRUE & cnt != 0) ) {
+							locvar_itemusingfind_f = cnt
+							break
 						}
 					}
 				}

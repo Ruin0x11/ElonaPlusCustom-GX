@@ -263,6 +263,8 @@
 	encref(0, ENCHANT_POTIOMAN_PRECISE_SHOT) = 100, 120, 300, FILTER_FURNITURE
 	encref(0, ENCHANT_POTIOMAN_CHANGING_TRAJECTORY) = 100, 120, 300, FILTER_FURNITURE
 	encref(0, ENCHANT_BANE_FLYING) = 2, 170, 150, FILTER_WEAPON, FILTER_GLOVES
+	encref(0, ENCHANT_BANE_METAL) = 2, 170, 150, FILTER_WEAPON, FILTER_RANGE
+	encref(0, ENCHANT_DARKNESS_AND_NETHER) = 3, 150, 350, FILTER_GIRDLE, FILTER_ACCESSORY_AMULET
 
 	dim encprocref, 6, MAX_EHCHANTMENT_PROC
 	encprocref(0, 0) = SKILL_SPELL_ELEMENT_SCAR, TARGET_TYPE_ENEMY, 1000, FILTER_WEAPON, FILTER_RANGE, 10
@@ -590,6 +592,8 @@
 	encDisp ENCHANT_POTIOMAN_CONTINUOUS_SHOT,     4, lang("絶え間なく射撃できる", "can shoot continuously.")
 	encDisp ENCHANT_POTIOMAN_PRECISE_SHOT,        4, lang("精密な射撃を可能にする", "allows precise shooting.")
 	encDisp ENCHANT_POTIOMAN_CHANGING_TRAJECTORY, 4, lang("変幻自在の弾道で翻弄する", "confuses with a changing trajectory.")
+	encDisp ENCHANT_BANE_METAL,                   4, lang("特殊金属にも絶大な威力を発揮する", "inflicts massive damage to metals.")
+	encDisp ENCHANT_DARKNESS_AND_NETHER,          4, lang("暗黒と地獄の複合詠唱を可能にする", "combine darkness and nether spells.")
 	return
 
 #defcfunc randomenc int randomenc_arg1
@@ -1287,11 +1291,11 @@
 	mtname(0, ITEM_MATERIAL_RAW) = lang("生もの", "raw"), lang("食用", "candy")
 	mtref(0, ITEM_MATERIAL_RAW) = 100, 50, -5, -5, -5, -5, 100, 0
 	mtenc(0, ITEM_MATERIAL_RAW) = ENCHANT_NONE
-	
+
 	mtname(0, ITEM_MATERIAL_BAMBOO) = lang("竹", "bamboo"), lang("渋い", "tasteful")
 	mtref(0, ITEM_MATERIAL_BAMBOO) = 120, 30, 17, 3, 14, 9, 100, 2
 	mtenc(0, ITEM_MATERIAL_BAMBOO) = ENCHANT_SKILL * EXT_ENCHANTMENT + SKILL_NORMAL_MEDITATION, 100
-	
+
 	mtname(0, ITEM_MATERIAL_NANOMACHINE) = lang("ナノマシン", "nanomachine"), lang("変形する", "variable")
 	mtref(0, ITEM_MATERIAL_NANOMACHINE) = 230, 900, 13, 30, 26, 30, 200, 9
 	mtenc(0, ITEM_MATERIAL_NANOMACHINE) = ENCHANT_SKILL * EXT_ENCHANTMENT + SKILL_NORMAL_HEALING, 100
