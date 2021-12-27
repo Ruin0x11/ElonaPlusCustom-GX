@@ -54,7 +54,8 @@
 	inf_raderw = 136
 	inf_screenw = windoww / inf_tiles + (windoww \ inf_tiles != 0)
 	inf_screenh = (windowh - inf_verh) / inf_tiles
-	if ( (windowh - inf_verh) \ inf_tiles != 0 ) {
+	inf_tilecutoffy = (windowh - inf_verh) \ inf_tiles
+	if ( inf_tilecutoffy != 0 ) {
 		inf_screenh++
 	}
 	if ( inf_vertype == 0 ) {
@@ -67,8 +68,8 @@
 	}
 	else {
 		inf_screeny = 0
-		if ( (windowh - inf_verh) \ inf_tiles != 0 ) {
-			inf_screeny = 0 - inf_tiles + (windowh - inf_verh) \ inf_tiles
+		if ( inf_tilecutoffy != 0 ) {
+			inf_screeny = 0 - inf_tiles + inf_tilecutoffy
 		}
 		inf_ver = windowh - inf_verh
 		inf_bary = windowh - inf_barh
@@ -4404,8 +4405,12 @@
 	if ( scy + inf_screenh >= mdata(MDATA_HEIGHT) ) {
 		scy = mdata(MDATA_HEIGHT) - inf_screenh
 	}
-	if ( scy < 0 ) {
-		scy = 0
+	locvar_screen_setPos_miny = 0
+	if ( cfg_showtoptilecutoff & inf_tilecutoffy != 0 ) {
+		locvar_screen_setPos_miny = -1
+	}
+	if ( scy < locvar_screen_setPos_miny ) {
+		scy = locvar_screen_setPos_miny
 	}
 	if ( scx < 0 ) {
 		scx = 0
