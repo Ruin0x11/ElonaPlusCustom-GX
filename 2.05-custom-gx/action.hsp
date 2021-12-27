@@ -1296,7 +1296,7 @@
 			goto *pc_turn
 		}
 		if ( itemusingfind(ci) > 0 ) {
-			txt lang("そのアイテムは他の誰かが使用中だ。", "Someone else is using the item.")
+			txt lang(itemname(ci) + "は" + cdatan(CDATAN_NAME, itemusingfind(ci)) + "が使用中だ。", cdatan(CDATAN_NAME, itemusingfind(ci)) + " is using " + itemname(ci) + ".")
 			goto *pc_turn
 		}
 	}
@@ -3688,32 +3688,74 @@
 	if ( cbit(CHARA_BIT_AWAKE_MAGIC_ATTACK, cc) ) {
 		actaa = SKILL_SPELL_MAGIC_DART
 		bvar = sdata(SKILL_RES_MAGIC, cc)
+		if ( sdata(SKILL_RES_FIRE, cc) > bvar ) {
+			actaa = SKILL_SPELL_FIRE_CLAW
+			bvar = sdata(SKILL_RES_FIRE, cc)
+		}
+		if ( sdata(SKILL_RES_COLD, cc) > bvar ) {
+			actaa = SKILL_SPELL_COLD_BLADE
+			bvar = sdata(SKILL_RES_COLD, cc)
+		}
+		if ( sdata(SKILL_RES_LIGHTNING, cc) > bvar ) {
+			actaa = SKILL_SPELL_LIGHTNING_SPEAR
+			bvar = sdata(SKILL_RES_LIGHTNING, cc)
+		}
 		if ( sdata(SKILL_RES_DARKNESS, cc) > bvar ) {
 			actaa = SKILL_SPELL_DARK_EYE
 			bvar = sdata(SKILL_RES_DARKNESS, cc)
+		}
+		if ( sdata(SKILL_RES_MIND, cc) > bvar ) {
+			actaa = SKILL_SPELL_MIND_THORN
+			bvar = sdata(SKILL_RES_MIND, cc)
+		}
+		if ( sdata(SKILL_RES_POISON, cc) > bvar ) {
+			actaa = SKILL_SPELL_POISON_MUCUS
+			bvar = sdata(SKILL_RES_POISON, cc)
 		}
 		if ( sdata(SKILL_RES_NETHER, cc) > bvar ) {
 			actaa = SKILL_SPELL_NETHER_ARROW
 			bvar = sdata(SKILL_RES_NETHER, cc)
 		}
-		if ( sdata(SKILL_RES_CHAOS, cc) > bvar ) {
-			actaa = SKILL_SPELL_CHAOS_EYE
-			bvar = sdata(SKILL_RES_CHAOS, cc)
+		if ( sdata(SKILL_RES_SOUND, cc) > bvar ) {
+			actaa = SKILL_SPELL_SOUND_CANNONBALL
+			bvar = sdata(SKILL_RES_SOUND, cc)
 		}
 		if ( sdata(SKILL_RES_NERVE, cc) > bvar ) {
 			actaa = SKILL_SPELL_NERVE_ARROW
 			bvar = sdata(SKILL_RES_NERVE, cc)
+		}
+		if ( sdata(SKILL_RES_CHAOS, cc) > bvar ) {
+			actaa = SKILL_SPELL_CHAOS_EYE
+			bvar = sdata(SKILL_RES_CHAOS, cc)
 		}
 		if ( sdata(SKILL_RES_MAGIC, cc) >= bvar ) {
 			actaa = SKILL_SPELL_MAGIC_DART
 		}
 		bvar = 0
 		if ( cdata(CDATA_ELEMENTS_EYES_ELE, cc) != 0 ) {
+			if ( cdata(CDATA_ELEMENTS_EYES_ELE, cc) == 1 ) {
+				actaa = SKILL_SPELL_FIRE_CLAW
+			}
+			if ( cdata(CDATA_ELEMENTS_EYES_ELE, cc) == 2 ) {
+				actaa = SKILL_SPELL_COLD_BLADE
+			}
+			if ( cdata(CDATA_ELEMENTS_EYES_ELE, cc) == 3 ) {
+				actaa = SKILL_SPELL_LIGHTNING_SPEAR
+			}
 			if ( cdata(CDATA_ELEMENTS_EYES_ELE, cc) == 4 ) {
 				actaa = SKILL_SPELL_DARK_EYE
 			}
+			if ( cdata(CDATA_ELEMENTS_EYES_ELE, cc) == 5 ) {
+				actaa = SKILL_SPELL_MIND_THORN
+			}
+			if ( cdata(CDATA_ELEMENTS_EYES_ELE, cc) == 6 ) {
+				actaa = SKILL_SPELL_POISON_MUCUS
+			}
 			if ( cdata(CDATA_ELEMENTS_EYES_ELE, cc) == 7 ) {
 				actaa = SKILL_SPELL_NETHER_ARROW
+			}
+			if ( cdata(CDATA_ELEMENTS_EYES_ELE, cc) == 8 ) {
+				actaa = SKILL_SPELL_SOUND_CANNONBALL
 			}
 			if ( cdata(CDATA_ELEMENTS_EYES_ELE, cc) == 9 ) {
 				actaa = SKILL_SPELL_NERVE_ARROW
@@ -3857,43 +3899,85 @@
 
 *act_melee
 	if ( cbit(CHARA_BIT_AWAKE_MAGIC_ATTACK, cc) ) {
-		actaa = 414
+		actaa = SKILL_SPELL_MAGIC_DART
 		bvar = sdata(SKILL_RES_MAGIC, cc)
+		if ( sdata(SKILL_RES_FIRE, cc) > bvar ) {
+			actaa = SKILL_SPELL_FIRE_CLAW
+			bvar = sdata(SKILL_RES_FIRE, cc)
+		}
+		if ( sdata(SKILL_RES_COLD, cc) > bvar ) {
+			actaa = SKILL_SPELL_COLD_BLADE
+			bvar = sdata(SKILL_RES_COLD, cc)
+		}
+		if ( sdata(SKILL_RES_LIGHTNING, cc) > bvar ) {
+			actaa = SKILL_SPELL_LIGHTNING_SPEAR
+			bvar = sdata(SKILL_RES_LIGHTNING, cc)
+		}
 		if ( sdata(SKILL_RES_DARKNESS, cc) > bvar ) {
-			actaa = 418
+			actaa = SKILL_SPELL_DARK_EYE
 			bvar = sdata(SKILL_RES_DARKNESS, cc)
 		}
+		if ( sdata(SKILL_RES_MIND, cc) > bvar ) {
+			actaa = SKILL_SPELL_MIND_THORN
+			bvar = sdata(SKILL_RES_MIND, cc)
+		}
+		if ( sdata(SKILL_RES_POISON, cc) > bvar ) {
+			actaa = SKILL_SPELL_POISON_MUCUS
+			bvar = sdata(SKILL_RES_POISON, cc)
+		}
 		if ( sdata(SKILL_RES_NETHER, cc) > bvar ) {
-			actaa = 415
+			actaa = SKILL_SPELL_NETHER_ARROW
 			bvar = sdata(SKILL_RES_NETHER, cc)
 		}
-		if ( sdata(SKILL_RES_CHAOS, cc) > bvar ) {
-			actaa = 417
-			bvar = sdata(SKILL_RES_CHAOS, cc)
+		if ( sdata(SKILL_RES_SOUND, cc) > bvar ) {
+			actaa = SKILL_SPELL_SOUND_CANNONBALL
+			bvar = sdata(SKILL_RES_SOUND, cc)
 		}
 		if ( sdata(SKILL_RES_NERVE, cc) > bvar ) {
-			actaa = 416
+			actaa = SKILL_SPELL_NERVE_ARROW
 			bvar = sdata(SKILL_RES_NERVE, cc)
 		}
+		if ( sdata(SKILL_RES_CHAOS, cc) > bvar ) {
+			actaa = SKILL_SPELL_CHAOS_EYE
+			bvar = sdata(SKILL_RES_CHAOS, cc)
+		}
 		if ( sdata(SKILL_RES_MAGIC, cc) >= bvar ) {
-			actaa = 414
+			actaa = SKILL_SPELL_MAGIC_DART
 		}
 		bvar = 0
 		if ( cdata(CDATA_ELEMENTS_EYES_ELE, cc) != 0 ) {
+			if ( cdata(CDATA_ELEMENTS_EYES_ELE, cc) == 1 ) {
+				actaa = SKILL_SPELL_FIRE_CLAW
+			}
+			if ( cdata(CDATA_ELEMENTS_EYES_ELE, cc) == 2 ) {
+				actaa = SKILL_SPELL_COLD_BLADE
+			}
+			if ( cdata(CDATA_ELEMENTS_EYES_ELE, cc) == 3 ) {
+				actaa = SKILL_SPELL_LIGHTNING_SPEAR
+			}
 			if ( cdata(CDATA_ELEMENTS_EYES_ELE, cc) == 4 ) {
-				actaa = 418
+				actaa = SKILL_SPELL_DARK_EYE
+			}
+			if ( cdata(CDATA_ELEMENTS_EYES_ELE, cc) == 5 ) {
+				actaa = SKILL_SPELL_MIND_THORN
+			}
+			if ( cdata(CDATA_ELEMENTS_EYES_ELE, cc) == 6 ) {
+				actaa = SKILL_SPELL_POISON_MUCUS
 			}
 			if ( cdata(CDATA_ELEMENTS_EYES_ELE, cc) == 7 ) {
-				actaa = 415
+				actaa = SKILL_SPELL_NETHER_ARROW
+			}
+			if ( cdata(CDATA_ELEMENTS_EYES_ELE, cc) == 8 ) {
+				actaa = SKILL_SPELL_SOUND_CANNONBALL
 			}
 			if ( cdata(CDATA_ELEMENTS_EYES_ELE, cc) == 9 ) {
-				actaa = 416
+				actaa = SKILL_SPELL_NERVE_ARROW
 			}
 			if ( cdata(CDATA_ELEMENTS_EYES_ELE, cc) == 10 ) {
-				actaa = 417
+				actaa = SKILL_SPELL_CHAOS_EYE
 			}
 			if ( cdata(CDATA_ELEMENTS_EYES_ELE, cc) == 11 ) {
-				actaa = 414
+				actaa = SKILL_SPELL_MAGIC_DART
 			}
 		}
 		efid = actaa
@@ -4820,7 +4904,7 @@
 								if ( cfg_attackanime ) {
 									animeload ANIMATION_UNISON_IMPACT1, tc
 								}
-								dmghp tc, (shootp / 40 * (orgdmg / 3) + rnd(sdata(SKILL_NORMAL_TACTICS, cc) * 10 + 1)) * 200 / limit(sdata(carmor(tc), tc) * 2 + 200, 200, 1200), cc
+								dmghp tc, (shootp / 40 * (orgdmg / 30) + rnd(sdata(SKILL_NORMAL_TACTICS, cc) * 10 + 1)) * 20 / limit(sdata(carmor(tc), tc) / 5 + 20, 20, 120) * 10, cc
 							}
 							if ( cdata(CDATA_EXTRA_ATTACKS_TYPE, cc) == 2 ) {
 								txtef COLOR_PINK
@@ -4834,7 +4918,7 @@
 								if ( cfg_attackanime ) {
 									animeload ANIMATION_UNISON_IMPACT1, tc
 								}
-								dmghp tc, (shootp / 50 * (orgdmg / 3) + rnd(sdata(SKILL_NORMAL_MARKSMAN, cc) * 5 + 1)) * 200 / limit(sdata(carmor(tc), tc) * 2 + 200, 200, 1200), cc
+								dmghp tc, (shootp / 50 * (orgdmg / 30) + rnd(sdata(SKILL_NORMAL_MARKSMAN, cc) * 5 + 1)) * 20 / limit(sdata(carmor(tc), tc) / 5 + 20, 20, 120) * 10, cc
 							}
 						}
 					}
@@ -5558,7 +5642,7 @@
 			s = refchara(cdata(CDATA_ID, tc), DBSPEC_CHARA_FILTER, 1)
 			if ( instr(s, 0, "/dragon/") != (-1) ) {
 				gdata(GDATA_DMG_TYPE) = 1
-				dmghp tc, orgdmg / 30 * (rnd(20) + inv(STARTING_INV_ITEM_ENCHANT + cnt * 2 + 1, cw)) / 50 + 1, cc
+				dmghp tc, orgdmg / 30 * ((rnd(20) + inv(40 + cnt * 2 + 1, cw)) / 50) + 1, cc
 				subdmg = 0
 			}
 			continue
@@ -5567,7 +5651,7 @@
 			s = refchara(cdata(CDATA_ID, tc), DBSPEC_CHARA_FILTER, 1)
 			if ( instr(s, 0, "/god/") != (-1) ) {
 				gdata(GDATA_DMG_TYPE) = 1
-				dmghp tc, orgdmg / 30 * (rnd(20) + inv(STARTING_INV_ITEM_ENCHANT + cnt * 2 + 1, cw)) / 50 + 1, cc
+				dmghp tc, orgdmg / 30 * ((rnd(20) + inv(40 + cnt * 2 + 1, cw)) / 50) + 1, cc
 				subdmg = 0
 			}
 			continue
@@ -5576,7 +5660,7 @@
 			s = refchara(cdata(CDATA_ID, tc), DBSPEC_CHARA_FILTER, 1)
 			if ( instr(s, 0, "/undead/") != (-1) ) {
 				gdata(GDATA_DMG_TYPE) = 1
-				dmghp tc, orgdmg / 30 * (rnd(20) + inv(STARTING_INV_ITEM_ENCHANT + cnt * 2 + 1, cw)) / 50 + 1, cc
+				dmghp tc, orgdmg / 30 * ((rnd(20) + inv(40 + cnt * 2 + 1, cw)) / 50) + 1, cc
 				subdmg = 0
 			}
 			continue
@@ -5584,7 +5668,15 @@
 		if ( enc == ENCHANT_BANE_FLYING ) {
 			if ( cbit(CHARA_BIT_FLOAT, tc) == 1 ) {
 				gdata(GDATA_DMG_TYPE) = 1
-				dmghp tc, orgdmg / 120 * (rnd(10) + inv(STARTING_INV_ITEM_ENCHANT + cnt * 2 + 1, cw)) / 50 + 1, cc
+				dmghp tc, orgdmg / 120 * ((rnd(10) + inv(40 + cnt * 2 + 1, cw)) / 50) + 1, cc
+				subdmg = 0
+			}
+			continue
+		}
+		if ( enc == ENCHANT_BANE_METAL ) {
+			if ( cbit(CHARA_BIT_METAL, tc) == TRUE ) {
+				gdata(GDATA_DMG_TYPE) = 1
+				dmghp tc, orgdmg / 25 * ((rnd(100) + inv(40 + cnt * 2 + 1, cw)) / 50) + 100, cc
 				subdmg = 0
 			}
 			continue
@@ -7536,6 +7628,63 @@
 				if ( efid == SKILL_SPELL_TELEPORT ) {
 					dbid = ITEM_ID_SPELLBOOK_TELEPORTATION
 				}
+				if ( efid == SKILL_SPELL_THUNDER_VORTEX ) {
+					dbid = ITEM_ID_SPELLBOOK_OF_THUNDER_VORTEX
+				}
+				if ( efid == SKILL_SPELL_ECLIPSE ) {
+					dbid = ITEM_ID_SPELLBOOK_OF_ECLIPSE_JAIL
+				}
+				if ( efid == SKILL_SPELL_NETHER_WAVE ) {
+					dbid = ITEM_ID_SPELLBOOK_OF_NETHER_ROAR
+				}
+				if ( efid == SKILL_SPELL_POISON_STORM ) {
+					dbid = ITEM_ID_SPELLBOOK_OF_POISON_STORM
+				}
+				if ( efid == SKILL_SPELL_BUBBLE_STORM ) {
+					dbid = ITEM_ID_SPELLBOOK_OF_BUBBLE_STORM
+				}
+				if ( efid == SKILL_SPELL_ILLUSION_ROAR ) {
+					dbid = ITEM_ID_SPELLBOOK_OF_ILLUSION_ROAR
+				}
+				if ( efid == SKILL_SPELL_ANGUISH_JAIL ) {
+					dbid = ITEM_ID_SPELLBOOK_OF_ANGUISH_JAIL
+				}
+				if ( efid == SKILL_SPELL_FIRE_CLAW ) {
+					dbid = ITEM_ID_SPELLBOOK_OF_FIRE_CLAW
+				}
+				if ( efid == SKILL_SPELL_COLD_BLADE ) {
+					dbid = ITEM_ID_SPELLBOOK_OF_COLD_BLADE
+				}
+				if ( efid == SKILL_SPELL_LIGHTNING_SPEAR ) {
+					dbid = ITEM_ID_SPELLBOOK_OF_LIGHTNING_SPEAR
+				}
+				if ( efid == SKILL_SPELL_MIND_THORN ) {
+					dbid = ITEM_ID_SPELLBOOK_OF_MIND_THORN
+				}
+				if ( efid == SKILL_SPELL_POISON_MUCUS ) {
+					dbid = ITEM_ID_SPELLBOOK_OF_POISON_MUCUS
+				}
+				if ( efid == SKILL_SPELL_SOUND_CANNONBALL ) {
+					dbid = ITEM_ID_SPELLBOOK_OF_SOUND_CANNONBALL
+				}
+				if ( efid == SKILL_SPELL_HYDRO_FANG ) {
+					dbid = ITEM_ID_SPELLBOOK_OF_HYDRO_FANG
+				}
+				if ( efid == SKILL_SPELL_NETHER_BOLT ) {
+					dbid = ITEM_ID_SPELLBOOK_OF_NETHER_BOLT
+				}
+				if ( efid == SKILL_SPELL_POISON_BOLT ) {
+					dbid = ITEM_ID_SPELLBOOK_OF_POISON_BOLT
+				}
+				if ( efid == SKILL_SPELL_SOUND_BOLT ) {
+					dbid = ITEM_ID_SPELLBOOK_OF_SOUND_BOLT
+				}
+				if ( efid == SKILL_SPELL_CHAOS_BOLT ) {
+					dbid = ITEM_ID_SPELLBOOK_OF_CHAOS_BOLT
+				}
+				if ( efid == SKILL_SPELL_NERVE_BOLT ) {
+					dbid = ITEM_ID_SPELLBOOK_OF_NERVE_BOLT
+				}
 				flt
 				itemcreate -1, dbid, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), num
 				inv(INV_ITEM_CHARGE, ci) = 1
@@ -7702,7 +7851,7 @@
 		val = 0
 		gosub *prompt_direction
 		if ( stat == 0 ) {
-			txt_impossible 
+			txt_impossible
 			gosub *screen_draw
 			goto *pc_turn
 		}
@@ -7710,7 +7859,7 @@
 			tc = map(x, y, MAP_CHARA_INDEX_PLUS_ONE) - 1
 		}
 		else {
-			txt_impossible 
+			txt_impossible
 			gosub *screen_draw
 			goto *pc_turn
 		}
@@ -8054,30 +8203,46 @@
 			gosub *screen_draw
 			goto *pc_turn
 		}
-		snd SOUNDLIST_OFFER2
-		animeload 23, tc
-		txtef COLOR_PINK
-		txt lang(name(tc) + "のスキルがボーナスに変換された。", name(tc) + your(tc) + " skill memories have been converted to skill bonuses.")
-		sdata(inv(INV_ITEM_PARAM1, ci) + STARTING_SKILL_SPACT, tc) = sdata(inv(INV_ITEM_PARAM1, ci) + STARTING_SKILL_SPACT, tc) / 2
-		cdata(CDATA_SKILLPOINT, tc) += 3
+		txtef COLOR_RED
+		txt lang("対応スキルが半減するが、本当に使う？", "Corresponding skills will be halved, do you really use it?")
+		txtselectuse 2
+		repeat 2
+			promptl(0, promptmax) = s(cnt), key_select(cnt), "" + promptmax
+			promptmax++
+		loop
+		val = promptx, prompty, 200, 1
+		gosub *prompt_key
+		if ( stat == 0 ) {
+			gosub *screen_draw
+			goto *pc_turn
+		}
+		if ( rtval == 1 ) {
+			snd SOUNDLIST_OFFER2
+			animeload 23, tc
+			txtef COLOR_PINK
+			txt lang(name(tc) + "のスキルがボーナスに変換された。", "Skill memories have been converted to bonuses.")
+			sdata(inv(INV_ITEM_PARAM1, ci) + STARTING_SKILL_SPACT, tc) = sdata(inv(INV_ITEM_PARAM1, ci) + STARTING_SKILL_SPACT, tc) / 2
+			cdata(CDATA_SKILLPOINT, tc) += 3
 
-        /********** ORIGINAL - BEGINNING ********** // Remove skill bonus limit.
+			/********** ORIGINAL - BEGINNING ********** // Remove skill bonus limit.
 
-		if ( cdata(CDATA_SKILLPOINT, tc) >= 100 ) {
-			if ( gdata(GDATA_FLAG_GAME_MODE) != 2 & gdata(GDATA_FLAG_GAME_MODE) != 5 ) {
-				snd SOUNDLIST_CHIME
-				txtef COLOR_RED
-				txt lang("注意！スキルボーナスは100以上あると新たに獲得できない。", "Caution! While the skill bonus is 100 or more, you cannot get new.")
+			if ( cdata(CDATA_SKILLPOINT, tc) >= 100 ) {
+				if ( gdata(GDATA_FLAG_GAME_MODE) != 2 & gdata(GDATA_FLAG_GAME_MODE) != 5 ) {
+					snd SOUNDLIST_CHIME
+					txtef COLOR_RED
+					txt lang("注意！スキルボーナスは100以上あると新たに獲得できない。", "Caution! While the skill bonus is 100 or more, you cannot get new.")
+				}
 			}
+
+			 ********** ORIGINAL - ENDING **********/
+
+			inv(INV_ITEM_NUM, ci)--
+			cell_refresh inv(INV_ITEM_X, ci), inv(INV_ITEM_Y, ci)
+			r1 = tc
+			gosub *charaRefresh
+			gosub *calcBurdenPc
 		}
 
-		 ********** ORIGINAL - ENDING **********/
-
-		inv(INV_ITEM_NUM, ci)--
-		cell_refresh inv(INV_ITEM_X, ci), inv(INV_ITEM_Y, ci)
-		r1 = tc
-		gosub *charaRefresh
-		gosub *calcBurdenPc
 		goto *act_use_SWEND1
 		_switch_sw++
 	}
@@ -10372,7 +10537,7 @@
 							}
 							if ( inv(INV_ITEM_SUB_NAME, ci) >= 7 & inv(INV_ITEM_SUB_NAME, ci) <= 12 ) {
 								if ( rnd(30) == 0 ) {
-									fgain = ITEM_ID_BRONZE_COIN	
+									fgain = ITEM_ID_BRONZE_COIN
 									snd SOUNDLIST_FISH_GET
 									txtef COLOR_YELLOW
 									txt lang(itemname(ci) + "は何かを水底から持ってきた。", itemname(ci) + " brought something from the bottom of the water.")
@@ -10380,7 +10545,7 @@
 							}
 							if ( inv(INV_ITEM_SUB_NAME, ci) >= 13 & inv(INV_ITEM_SUB_NAME, ci) <= 18 ) {
 								if ( rnd(12) == 0 ) {
-									fgain = ITEM_ID_JEWEL_CORAL	
+									fgain = ITEM_ID_JEWEL_CORAL
 									snd SOUNDLIST_FISH_GET
 									txtef COLOR_YELLOW
 									txt lang(itemname(ci) + "は何かを吐き出した！", itemname(ci) + " spit something out!")
@@ -10388,7 +10553,7 @@
 							}
 							if ( inv(INV_ITEM_SUB_NAME, ci) >= 19 & inv(INV_ITEM_SUB_NAME, ci) <= 24 ) {
 								if ( rnd(10) == 0 ) {
-									fgain = ITEM_ID_DEVIL_FRAGMENT	
+									fgain = ITEM_ID_DEVIL_FRAGMENT
 									snd SOUNDLIST_FISH_GET
 									txtef COLOR_YELLOW
 									txt lang(itemname(ci) + "は何かを吐き出した！", itemname(ci) + " spit something out!")
@@ -10412,7 +10577,7 @@
 							}
 							if ( inv(INV_ITEM_SUB_NAME, ci) >= 37 & inv(INV_ITEM_SUB_NAME, ci) <= 40 ) {
 								if ( rnd(20) == 0 ) {
-									fgain = ITEM_ID_DRAGONS_RED	
+									fgain = ITEM_ID_DRAGONS_RED
 									snd SOUNDLIST_FISH_GET
 									txtef COLOR_YELLOW
 									txt lang(itemname(ci) + "は何かを吐き出した！", itemname(ci) + " spit something out!")
@@ -11409,7 +11574,7 @@
 
 		/********** BLOODYSHADE CUSTOM - ENDING **********/
 
-		gosub *prompt_key		
+		gosub *prompt_key
 		if ( stat == 0 ) {
 			gosub *screen_draw
 			goto *pc_turn
@@ -14124,6 +14289,7 @@
 						skillmod SKILL_ATTR_SPD, tc, 50000
 						skillmod SKILL_ATTR_CON, tc, 20000
 						skillmod SKILL_ATTR_MAG, tc, 20000
+						cbitmod CHARA_BIT_UPLIFTED_WHILE_CASTING, tc, TRUE
 						skillmod SKILL_NORMAL_CONTROL_MAGIC, tc, 10000
 						cdata(CDATA_HEIGHT, tc) += rnd(500) + 1000
 						cdata(CDATA_WEIGHT, tc) += rnd(5000) + 5000
@@ -14135,6 +14301,7 @@
 						skillmod SKILL_ATTR_SPD, tc, 50000
 						skillmod SKILL_ATTR_DEX, tc, 10000
 						skillmod SKILL_ATTR_MAG, tc, 30000
+						cbitmod CHARA_BIT_UPLIFTED_WHILE_CASTING, tc, TRUE
 						skillmod SKILL_NORMAL_CONTROL_MAGIC, tc, 10000
 					}
 					if ( evmode == 21 ) {
@@ -14922,6 +15089,7 @@
 						if ( evoisfemale(tc) ) {
 							cdata(CDATA_PIC, tc) = xy2pic(2, 22)
 						}
+						cbitmod CHARA_BIT_UPLIFTED_WHILE_CASTING, tc, TRUE
 						skillmod SKILL_ATTR_SPD, tc, 10000
 						skillmod SKILL_ATTR_MAG, tc, 40000
 					}
@@ -15232,6 +15400,7 @@
 						cdata(CDATA_EVOLUTION_STAGE, tc) += 2
 						skillmod SKILL_ATTR_SPD, tc, 10000
 						skillmod SKILL_ATTR_STR, tc, 25000
+						cbitmod CHARA_BIT_UPLIFTED_WHILE_CASTING, tc, TRUE
 					}
 					if ( evmode == 114 ) {
 						evname = lang("なめくじ", "Slug")
@@ -15249,7 +15418,7 @@
 						skillmod SKILL_ATTR_CON, tc, 20000
 						cdata(CDATA_HEIGHT, tc) += rnd(50) + 100
 						cdata(CDATA_WEIGHT, tc) += rnd(20) + 80
-						cbitmod CHARA_BIT_ARMOUR, tc, 1
+						cbitmod CHARA_BIT_METAL, tc, TRUE
 					}
 					if ( evmode == 116 ) {
 						evname = lang("混沌の雷雲龍", "Chaos Stormcloud Dragon")
@@ -15271,6 +15440,7 @@
 						evold = lang("ダークソウル", "Dark Soul")
 						skillmod SKILL_ATTR_SPD, tc, 15000
 						skillmod SKILL_ATTR_MAG, tc, 30000
+						cbitmod CHARA_BIT_UPLIFTED_WHILE_CASTING, tc, TRUE
 						cdata(CDATA_PIC, tc) = xy2pic(18, 25) + COLOR_BLUE * COLOR_TINT_MULT
 						cdata(CDATA_HEIGHT, tc) += rnd(50) + 50
 						cdata(CDATA_WEIGHT, tc) += rnd(20) + 20
@@ -16606,7 +16776,7 @@
 		}
 	}
 	if ( sdata(SKILL_NORMAL_GARDENING, CHARA_PLAYER) < rnd(p + 1) | rnd(200) < p - saibai | feat(FEAT_CELL_SUB_FEATURE_ID) \ 10 == SEED_TYPE_ARTIFACT ) {
-	
+
 	// Mod for collect yield with house board (usecustom = 1 when house board collection)
 		if ( usecustom ) {
 			map(x, y, 6) = 0
@@ -16710,7 +16880,7 @@
 			if ( gdata(GDATA_MONTH) >= 3 & gdata(GDATA_MONTH) <= 5 ) {
 				dbid = isetplantunknownh(rnd(length(isetplantunknownh)))
 				if ( feat(FEAT_CELL_SUB_FEATURE_ID) == 10 + CELL_SUB_FEATURE_SEED_ARTIFACT | feat(FEAT_CELL_SUB_FEATURE_ID) == 40 + CELL_SUB_FEATURE_SEED_ARTIFACT ) {
-					dbid = ITEM_ID_TEA_LEAF	
+					dbid = ITEM_ID_TEA_LEAF
 				}
 				if ( feat(FEAT_CELL_SUB_FEATURE_ID) == 20 + CELL_SUB_FEATURE_SEED_ARTIFACT ) {
 					dbid = ITEM_ID_BANNOU_MUGI
