@@ -178,7 +178,7 @@ TweakData(51, 4) = "Disable cicada noises."
 	s = "Configure Tweaks"
 	gosub *screen_drawMsg2
 
-	listn(0, TWEAK_UI_SHOW_ENCHANT_STRENGTH) = "Show Enchant Strength With Objet of Heart." + GetTStatus(TWEAK_CATEGORY_UI, TWEAK_UI_SHOW_ENCHANT_STRENGTH)
+	listn(0, TWEAK_UI_SHOW_ENCHANT_STRENGTH) = "Show Enchant Strength With Objet of Heart. (Currently: " + TweakData(TWEAK_UI_SHOW_ENCHANT_STRENGTH, TWEAK_CATEGORY_UI) + ")"
 	listn(0, TWEAK_UI_SPELL_TRACKING) = "Allow Spell Tracking." + GetTStatus(TWEAK_CATEGORY_UI, TWEAK_UI_SPELL_TRACKING)
 	listn(0, TWEAK_UI_POTENTIALS_IN_SKILL_TRACKER) = "Add Potentials To Skill Tracker." + GetTStatus(TWEAK_CATEGORY_UI, TWEAK_UI_POTENTIALS_IN_SKILL_TRACKER)
 	listn(0, TWEAK_UI_FILTER_SKILL_TRACKER_BY_POTENTIAL) = "Filter Skill Tracker By Potential." + GetTStatus(TWEAK_CATEGORY_UI, TWEAK_UI_FILTER_SKILL_TRACKER_BY_POTENTIAL)
@@ -201,7 +201,7 @@ TweakData(51, 4) = "Disable cicada noises."
 	repeat 8
 		if ( listn(0, cs) == listn(0, cnt) ) {
 			if ( cnt == TWEAK_UI_SHOW_ENCHANT_STRENGTH ) {
-				s = "When examining items while holding the Objet of Heart, the strength\nof enchantments on the item will be shown."
+				s = "When examining items while holding the Objet of Heart, the strength\nof enchantments on the item will be shown.\n0 = Don't Show, 1 = Show For Enchants w/Level, 2 = Show All"
 			}
 			if ( cnt == TWEAK_UI_SPELL_TRACKING ) {
 				s = "Spells can be added to the skill tracker in the same manner as skills."
@@ -236,7 +236,9 @@ TweakData(51, 4) = "Disable cicada noises."
 	if ( key == key_select(TWEAK_UI_SHOW_ENCHANT_STRENGTH) ) {
 		tc = TWEAK_CATEGORY_UI
 		tn = TWEAK_UI_SHOW_ENCHANT_STRENGTH
-		gosub *ToggleTweak
+		ts = 1
+		tm = 2
+		gosub *IncrementTweak
 	}
 	if ( key == key_select(TWEAK_UI_SPELL_TRACKING) ) {
 		tc = TWEAK_CATEGORY_UI

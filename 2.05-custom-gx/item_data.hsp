@@ -303,15 +303,18 @@
     if val == %1 {%c\
 		rtval = %2%c\
     	s = %3%c\
+	    item_find ITEM_ID_OBJET_HEART, 3%c\
     	if %4 == (-1) {%c\
+	    	if ( stat != (-1) & TweakData(TWEAK_UI_SHOW_ENCHANT_STRENGTH, TWEAK_CATEGORY_UI) == 2 ) {%c\
+	    		s += "(" + val(1) + ")"%c\
+	    	}%c\
     	    return%c\
     	} else {%c\
     		if val(2) == 0 {%c\
     		    s += " ["%c\
     		    putEncLv %4%c\
     		    s += "]"%c\
-			    item_find ITEM_ID_OBJET_HEART, 3%c\
-			    if ( stat != (-1) & TweakData(TWEAK_UI_SHOW_ENCHANT_STRENGTH, TWEAK_CATEGORY_UI) == 1 ) {%c\
+			    if ( stat != (-1) & TweakData(TWEAK_UI_SHOW_ENCHANT_STRENGTH, TWEAK_CATEGORY_UI) >= 1 ) {%c\
 			    	s += "(" + val(1) + ")"%c\
 			    }%c\
     		    return%c\
@@ -347,13 +350,25 @@
 					/********** ANNA CUSTOM - BEGINNING **********/ // Show Enchant Strength With Objet of Heart
 
 					item_find ITEM_ID_OBJET_HEART, 3
-					if ( stat != (-1) & TweakData(TWEAK_UI_SHOW_ENCHANT_STRENGTH, TWEAK_CATEGORY_UI) == 1 ) {
+					if ( stat != (-1) & TweakData(TWEAK_UI_SHOW_ENCHANT_STRENGTH, TWEAK_CATEGORY_UI) >= 1 ) {
 						s += "(" + val(1) + ")"
 					}
 
 					/********** ANNA CUSTOM - ENDING **********/
 
 				}
+                else {
+
+					/********** ANNA CUSTOM - BEGINNING **********/ // Show Enchant Strength With Objet of Heart
+
+					item_find ITEM_ID_OBJET_HEART, 3
+					if ( stat != (-1) & TweakData(TWEAK_UI_SHOW_ENCHANT_STRENGTH, TWEAK_CATEGORY_UI) == 2 ) {
+						s += "(" + val(1) + ")"
+					}
+
+					/********** ANNA CUSTOM - ENDING **********/
+
+                }
 			}
 			else {
 				s = lang("" + skillname(sid) + "を" + abs(val(1) / 50 + 1) + "上げる", "increases your " + skillname(sid) + " by " + abs(val(1) / 50 + 1) + ".")
@@ -365,13 +380,25 @@
 					/********** ANNA CUSTOM - BEGINNING **********/ // Show Enchant Strength With Objet of Heart
 
 					item_find ITEM_ID_OBJET_HEART, 3
-					if ( stat != (-1) & TweakData(TWEAK_UI_SHOW_ENCHANT_STRENGTH, TWEAK_CATEGORY_UI) == 1 ) {
+					if ( stat != (-1) & TweakData(TWEAK_UI_SHOW_ENCHANT_STRENGTH, TWEAK_CATEGORY_UI) >= 1 ) {
 						s += "(" + val(1) + ")"
 					}
 
 					/********** ANNA CUSTOM - ENDING **********/
 
 				}
+                else {
+
+					/********** ANNA CUSTOM - BEGINNING **********/ // Show Enchant Strength With Objet of Heart
+
+					item_find ITEM_ID_OBJET_HEART, 3
+					if ( stat != (-1) & TweakData(TWEAK_UI_SHOW_ENCHANT_STRENGTH, TWEAK_CATEGORY_UI) == 2 ) {
+						s += "(" + val(1) + ")"
+					}
+
+					/********** ANNA CUSTOM - ENDING **********/
+
+                }
 			}
 		}
 		if ( val(10) == ENCHANT_FOOD ) {
@@ -391,7 +418,7 @@
 			/********** ANNA CUSTOM - BEGINNING **********/ // Show Enchant Strength With Objet of Heart
 
 			item_find ITEM_ID_OBJET_HEART, 3
-			if ( stat != (-1) & TweakData(TWEAK_UI_SHOW_ENCHANT_STRENGTH, TWEAK_CATEGORY_UI) == 1 ) {
+			if ( stat != (-1) & TweakData(TWEAK_UI_SHOW_ENCHANT_STRENGTH, TWEAK_CATEGORY_UI) >= 1 ) {
 				s += "(" + val(1) + ")"
 			}
 
@@ -418,7 +445,7 @@
 			/********** ANNA CUSTOM - BEGINNING **********/ // Show Enchant Strength With Objet of Heart
 
 			item_find ITEM_ID_OBJET_HEART, 3
-			if ( stat != (-1) & TweakData(TWEAK_UI_SHOW_ENCHANT_STRENGTH, TWEAK_CATEGORY_UI) == 1 ) {
+			if ( stat != (-1) & TweakData(TWEAK_UI_SHOW_ENCHANT_STRENGTH, TWEAK_CATEGORY_UI) >= 1 ) {
 				s += "(" + val(1) + ")"
 			}
 
@@ -451,7 +478,7 @@
 			/********** ANNA CUSTOM - BEGINNING **********/ // Show Enchant Strength With Objet of Heart
 
 			item_find ITEM_ID_OBJET_HEART, 3
-			if ( stat != (-1) & TweakData(TWEAK_UI_SHOW_ENCHANT_STRENGTH, TWEAK_CATEGORY_UI) == 1 ) {
+			if ( stat != (-1) & TweakData(TWEAK_UI_SHOW_ENCHANT_STRENGTH, TWEAK_CATEGORY_UI) >= 1 ) {
 				s += "(" + val(1) + ")"
 			}
 
@@ -469,13 +496,25 @@
 				/********** ANNA CUSTOM - BEGINNING **********/ // Show Enchant Strength With Objet of Heart
 
 				item_find ITEM_ID_OBJET_HEART, 3
-				if ( stat != (-1) & TweakData(TWEAK_UI_SHOW_ENCHANT_STRENGTH, TWEAK_CATEGORY_UI) == 1 ) {
+				if ( stat != (-1) & TweakData(TWEAK_UI_SHOW_ENCHANT_STRENGTH, TWEAK_CATEGORY_UI) >= 1 ) {
 					s += "(" + val(1) + ")"
 				}
 
 				/********** ANNA CUSTOM - ENDING **********/
 
 			}
+            else {
+
+				/********** ANNA CUSTOM - BEGINNING **********/ // Show Enchant Strength With Objet of Heart
+
+				item_find ITEM_ID_OBJET_HEART, 3
+				if ( stat != (-1) & TweakData(TWEAK_UI_SHOW_ENCHANT_STRENGTH, TWEAK_CATEGORY_UI) == 2 ) {
+					s += "(" + val(1) + ")"
+				}
+
+				/********** ANNA CUSTOM - ENDING **********/
+
+            }
 		}
 		if ( val(10) == ENCHANT_ELEMENTAL_DMG ) {
 			rtval = 4
@@ -491,7 +530,7 @@
 			/********** ANNA CUSTOM - BEGINNING **********/ // Show Enchant Strength With Objet of Heart
 
 			item_find ITEM_ID_OBJET_HEART, 3
-			if ( stat != (-1) & TweakData(TWEAK_UI_SHOW_ENCHANT_STRENGTH, TWEAK_CATEGORY_UI) == 1 ) {
+			if ( stat != (-1) & TweakData(TWEAK_UI_SHOW_ENCHANT_STRENGTH, TWEAK_CATEGORY_UI) >= 1 ) {
 				s += "(" + val(1) + ")"
 			}
 
@@ -510,7 +549,7 @@
 			/********** ANNA CUSTOM - BEGINNING **********/ // Show Enchant Strength With Objet of Heart
 
 			item_find ITEM_ID_OBJET_HEART, 3
-			if ( stat != (-1) & TweakData(TWEAK_UI_SHOW_ENCHANT_STRENGTH, TWEAK_CATEGORY_UI) == 1 ) {
+			if ( stat != (-1) & TweakData(TWEAK_UI_SHOW_ENCHANT_STRENGTH, TWEAK_CATEGORY_UI) >= 1 ) {
 				s += "(" + val(1) + ")"
 			}
 
@@ -521,6 +560,15 @@
 			rtval = 4
 			s = lang("" + ammoname(sid) + "を装填できる", "can be loaded with " + ammoname(sid) + ".")
 			s += lang(" [最大", " [Max ") + val(1) / EXT_ENCHANTMENT_AMMO + lang("発]", "]")
+
+			/********** ANNA CUSTOM - BEGINNING **********/ // Show Enchant Strength With Objet of Heart
+
+			item_find ITEM_ID_OBJET_HEART, 3
+			if ( stat != (-1) & TweakData(TWEAK_UI_SHOW_ENCHANT_STRENGTH, TWEAK_CATEGORY_UI) == 2 ) {
+				s += "(" + val(1) + ")"
+			}
+
+			/********** ANNA CUSTOM - ENDING **********/
 		}
 		return
 	}
