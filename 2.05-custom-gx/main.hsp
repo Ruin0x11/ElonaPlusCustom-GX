@@ -122,9 +122,9 @@
 
 #include "highdpi.hsp"
 
-#define global VARIANT_NAME "ElonaPlus Custom-GX 2.07.2.0"
-#define global VARIANT_TITLE "Elona+ Custom-GX 2.07.2.0"
-#define global VERSION_STRING "6.07"
+#define global VARIANT_NAME "ElonaPlus Custom-GX 2.08.1.0"
+#define global VARIANT_TITLE "Elona+ Custom-GX 2.08.1.0"
+#define global VERSION_STRING "6.08"
 #define global VERSION_NUMBER int(double(VERSION_STRING) * 1000)
 
     develop = dirinfo(4) == "--develop"
@@ -155,7 +155,7 @@
     ; If we're running under hsed3, dir_exe will be the HSP installation folder
     ; (C:\bin\hsp30), *not* the folder with Elona's assets.
     ;
-    ; If the editor is being used, then _DEBUG will be defined as true, so check 
+    ; If the editor is being used, then _DEBUG will be defined as true, so check
     ; that when setting the executable directory.
 #ifdef _DEBUG
 	exedir = dir_cur + "\\..\\assets\\2.05-custom-gx\\"
@@ -197,7 +197,7 @@
 #endif
 	; #include "hspext_ext.as"
 	; #include "elonadll.as"
-	; #include "z.as"	
+	; #include "z.as"
 	; #include "comdlg32.as"
 	; #include "hspmath.as"
 	; #include "hmm.as"
@@ -207,11 +207,11 @@
 
 	#include "init.hsp"
 	#include "chips.hsp"
-	
-	; #if fastcmp=0	
+
+	; #if fastcmp=0
 	; #include "db_defitem.hsp"
 	; #else
-	; #include "db_defitem_fake.hsp"	
+	; #include "db_defitem_fake.hsp"
 	; #endif
 
 	#include "etc.hsp"
@@ -221,12 +221,12 @@
 	#include "module.hsp"
 	#include "material_data.hsp"
 
-	; #if fastcmp=0	
+	; #if fastcmp=0
 	#include "db_item.hsp"
 	; #else
-	; #include "db_item_fake.hsp"	
+	; #include "db_item_fake.hsp"
 	; #endif
-	
+
 	#include "chara_func.hsp"
 	#include "net.hsp"
 	#include "screen.hsp"
@@ -239,7 +239,7 @@
 	#include "map.hsp"
 	#include "tcg.hsp"
 
-	#include "material.hsp"	
+	#include "material.hsp"
 	#include "txtadv.hsp"
 	#include "god.hsp"
 
@@ -251,8 +251,8 @@
 	#include "action.hsp"
 	#include "chat.hsp"
 	#include "economy.hsp"
-	
-	; #if fastcmp=0	
+
+	; #if fastcmp=0
 	#include "db_race.hsp"
 	#include "db_class.hsp"
 	#include "db_creature.hsp"
@@ -261,7 +261,7 @@
 	; #include "db_class_fake.hsp"
 	; #include "db_creature_fake.hsp"
 	; #endif
-	
+
 	#include "randname.hsp"
 	#include "adv.hsp"
 	#include "quest.hsp"
@@ -5574,35 +5574,35 @@
 			listmax = 0
 			if ( rnd(sdata(SKILL_ATTR_DEX, CHARA_PLAYER) + sdata(SKILL_ATTR_PER, CHARA_PLAYER) + sdata(SKILL_ATTR_CON, tc) + sdata(SKILL_ATTR_WIL, tc)) > rnd(sorg(SKILL_ATTR_SPD, tc) + 10) ) {
 				if ( mimikaki == 0 ) {
-					chatList 1, lang("慎重に入れる", "Put in carefully") 
+					chatList 1, lang("慎重に入れる", "Put in carefully")
 				}
 				if ( mimikaki == 1 ) {
-					chatList 2, lang("奥まで入れる", "Put in all the way") 
+					chatList 2, lang("奥まで入れる", "Put in all the way")
 				}
 				if ( mimikaki == 2 ) {
-					chatList 3, lang("丹念に掻き出す", "Carefully scrape") 
+					chatList 3, lang("丹念に掻き出す", "Carefully scrape")
 				}
 			}
 			if ( rnd(sdata(SKILL_ATTR_WIL, CHARA_PLAYER) + 10) > rnd(sdata(SKILL_ATTR_WIL, tc) + 10) ) {
-				chatList 4, lang("サイズの調整", "Size adjustment") 
+				chatList 4, lang("サイズの調整", "Size adjustment")
 			}
 			if ( haretu == 0 ) {
-				chatList 8, lang("サイズ膨張", "Size expansion") 
+				chatList 8, lang("サイズ膨張", "Size expansion")
 			}
 			if ( haretu == 1 ) {
-				chatList 9, lang("サイズ大膨張", "Size expansion (large)") 
+				chatList 9, lang("サイズ大膨張", "Size expansion (large)")
 			}
 			if ( haretu == 2 ) {
-				chatList 10, lang("耳穴破裂", "Rupture ear canal") 
+				chatList 10, lang("耳穴破裂", "Rupture ear canal")
 			}
 			if ( komaku == 0 ) {
-				chatList 5, lang("突き入れる", "Shove in") 
+				chatList 5, lang("突き入れる", "Shove in")
 			}
 			if ( komaku == 1 ) {
-				chatList 6, lang("奥まで突き刺す", "Thrust in deeply") 
+				chatList 6, lang("奥まで突き刺す", "Thrust in deeply")
 			}
 			if ( komaku == 2 ) {
-				chatList 7, lang("鼓膜をぶち破る", "Break through the eardrum") 
+				chatList 7, lang("鼓膜をぶち破る", "Break through the eardrum")
 			}
 			gosub *re_select
 			p = rtval
@@ -5685,35 +5685,35 @@
 			listmax = 0
 			if ( rnd(sdata(SKILL_ATTR_DEX, CHARA_PLAYER) + sdata(SKILL_ATTR_PER, CHARA_PLAYER) + sdata(SKILL_ATTR_CON, tc) + sdata(SKILL_ATTR_WIL, tc)) > rnd(sorg(SKILL_ATTR_SPD, tc) + 10) ) {
 				if ( mimikaki == 3 ) {
-					chatList 1, lang("慎重に入れる", "Put in carefully") 
+					chatList 1, lang("慎重に入れる", "Put in carefully")
 				}
 				if ( mimikaki == 4 ) {
-					chatList 2, lang("奥まで入れる", "Put in all the way") 
+					chatList 2, lang("奥まで入れる", "Put in all the way")
 				}
 				if ( mimikaki == 5 ) {
-					chatList 3, lang("丹念に掻き出す", "Carefully scrape") 
+					chatList 3, lang("丹念に掻き出す", "Carefully scrape")
 				}
 			}
 			if ( rnd(sdata(SKILL_ATTR_WIL, CHARA_PLAYER) + 10) > rnd(sdata(SKILL_ATTR_WIL, tc) + 10) ) {
-				chatList 4, lang("サイズの調整", "Size adjustment") 
+				chatList 4, lang("サイズの調整", "Size adjustment")
 			}
 			if ( haretu == 0 ) {
-				chatList 8, lang("サイズ膨張", "Size expansion") 
+				chatList 8, lang("サイズ膨張", "Size expansion")
 			}
 			if ( haretu == 1 ) {
-				chatList 9, lang("サイズ大膨張", "Size large expansion") 
+				chatList 9, lang("サイズ大膨張", "Size large expansion")
 			}
 			if ( haretu == 2 ) {
-				chatList 10, lang("耳穴破裂", "Rupture ear canal") 
+				chatList 10, lang("耳穴破裂", "Rupture ear canal")
 			}
 			if ( komaku == 0 ) {
-				chatList 5, lang("突き入れる", "Shove in") 
+				chatList 5, lang("突き入れる", "Shove in")
 			}
 			if ( komaku == 1 ) {
-				chatList 6, lang("奥まで突き刺す", "Thrust in deeply") 
+				chatList 6, lang("奥まで突き刺す", "Thrust in deeply")
 			}
 			if ( komaku == 2 ) {
-				chatList 7, lang("鼓膜をぶち破る", "Break through the eardrum") 
+				chatList 7, lang("鼓膜をぶち破る", "Break through the eardrum")
 			}
 			gosub *re_select
 			p = rtval
@@ -5801,9 +5801,9 @@
 		file = "bg38"
 		buff = lang("あなたの目の前に富の女神が現れ、くじ引きの箱を置いた。", "The goddess of wealth appears in front of you and places down a lottery box.")
 		listmax = 0
-		chatList 1, lang("祈りながらくじを選ぶ", "Good luck to me.") 
-		chatList 2, lang("最初に手に触れたくじを選ぶ", "First lottery ticket that touches my hand is fated.") 
-		chatList 3, lang("漁りながら、これだ！と感じたくじを選ぶ", "I leave it to my intuition!") 
+		chatList 1, lang("祈りながらくじを選ぶ", "Good luck to me.")
+		chatList 2, lang("最初に手に触れたくじを選ぶ", "First lottery ticket that touches my hand is fated.")
+		chatList 3, lang("漁りながら、これだ！と感じたくじを選ぶ", "I leave it to my intuition!")
 		gosub *re_select
 		redraw 0
 		gosub *screen_draw
@@ -5822,9 +5822,9 @@
 		file = "bg39"
 		buff = lang("手にしたくじが光の粒子に変わり、あなたの足元に集まっていく…。", "The lottery ticket in your hand turns into light particles, which start to gather at your feet...")
 		listmax = 0
-		chatList 1, lang("何だろう？", "What could it be?") 
-		chatList 2, lang("これは…！", "This is...!") 
-		chatList 3, lang("来いッ！", "Come on!") 
+		chatList 1, lang("何だろう？", "What could it be?")
+		chatList 2, lang("これは…！", "This is...!")
+		chatList 3, lang("来いッ！", "Come on!")
 		gosub *re_select
 		snd SOUNDLIST_OFFER2
 		animeload 32, 0

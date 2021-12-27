@@ -1,3 +1,8 @@
+# 2.08.1.0
+
+## Added
+- Ported all changes from Elona+ 2.08.
+
 # 2.07.2.0
 
 ## Added
