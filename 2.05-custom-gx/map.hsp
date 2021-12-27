@@ -11379,7 +11379,8 @@
 					loop
 				loop
 			}
-			s = lang("あなた", "You've")
+			locvar_map_begin_friends = 0
+			locvar_map_begin_friendtc = 0
 			repeat MAX_CHARA_TOTAL
 				if ( cdata(CDATA_EXIST, cnt) != CHAR_STATE_ALIVE ) {
 					continue
@@ -11406,14 +11407,21 @@
 				if ( fov_los(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), dx, dy) == 0 ) {
 					continue
 				}
-				if ( s == "You've" ) {
-					s = "You and " + name(tc) + " have"
-				}
-				else {
-					s = "You and your friends have"
-				}
+				locvar_map_begin_friends++
+				locvar_map_begin_friendtc = tc
 				ens2 += limit((sdata(SKILL_NORMAL_LITERACY, tc) + sdata(SKILL_NORMAL_MEMORIZATION, tc) + 1) / 2, 3, 3 + sdata(SKILL_NORMAL_LITERACY, cc) / 5)
 			loop
+			if ( locvar_map_begin_friends == 0 ) {
+				s = lang("あなた", "You've")
+			}
+			else {
+				if ( locvar_map_begin_friends == 1 ) {
+					s = lang("あなたと" + name(locvar_map_begin_friendtc), "You and " + name(locvar_map_begin_friendtc) + " have")
+				}
+				else {
+					s = lang("あなたとその仲間", "You and your friends have")
+				}
+			}
 			txtmore
 			txt lang(s + "は" + gdata(GDATA_TRAVEL_DISTANCE) + "マイルの距離を歩き、経験を積んだ。", s + " walked about " + gdata(GDATA_TRAVEL_DISTANCE) + " miles and have gained experience.")
 			gdata(GDATA_TRAVEL_DISTANCE) = 0
