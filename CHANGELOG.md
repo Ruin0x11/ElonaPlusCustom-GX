@@ -2,6 +2,17 @@
 
 ## Added
 - Ported all changes from Elona+ 2.08.
+- You can now see tiles that are cut off at the top of the screen due to the selected screen resolution. Please set the `showTopTileCutoff.` option to `"1"` in `config.txt` to enable this feature.
+
+## Changed
+- The "Show enchant strength" tweak can now optionally be used to display the enchant power of all enchantments, not just those with a declared power level in the vanilla UI. This is helpful for artifact fusion. (#46)
+- Allow the "Display Pickpocket shortcut" tweak to work inside Party Time! quests. (#57)
+
+## Fixed
+- Fixed the town travelling message being displayed in English when the language is Japanese. (#49)
+- Fixed the DESTINY conditions not being tracked if the "Disable DESTINY" tweak is active. (#44)
+- Fixed the hit chance displayed by the Data Scan buff always showing 0 if the language is English. (#54)
+- Fixed the "flying bane" enchantment being generated on gloves instead of ranged weapons. (#59)
 
 # 2.07.2.0
 
