@@ -8,7 +8,7 @@ Elona+ Custom-GX is a new variant of Elona+ based on Elona+ Custom-G, updated wi
 
 ## Installation
 
-1. Download Elona+ 2.08 from [here](https://mega.nz/file/E7BhxaZB#4AsB9JCoXPzdKmSHTQM5oI-F3js6cRFkk7g4_PnkDRQ). Extract it to `elonaplus2.08`.
+1. Download Elona+ 2.08 from [here](https://mega.nz/file/tyxymS4S#JG92KBEcg5-Nf2I7UJtAaydw8wWGobyqzW-8r9qCek8). Extract it to `elonaplus2.08`.
 2. Extract the contents of Custom-GX's archive to the `elonaplus2.08` folder, overwriting all existing files.
 3. Run `elonapluscgx.exe`.
 
