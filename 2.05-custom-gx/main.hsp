@@ -122,6 +122,9 @@
 
 #include "highdpi.hsp"
 
+; Define this to enable Lua debugging features.
+; #define CUSTOM_GX_LUA
+
 #define global VARIANT_NAME "ElonaPlus Custom-GX 2.08.1.0"
 #define global VARIANT_TITLE "Elona+ Custom-GX 2.08.1.0"
 #define global VERSION_STRING "6.08"
@@ -203,7 +206,9 @@
 	; #include "hmm.as"
 	; #include "hspsock.as"
 	; #include "hspinet.as"
+#ifdef CUSTOM_GX_LUA
 	#include "hsplua.as"
+#endif
 
 	#include "init.hsp"
 	#include "chips.hsp"

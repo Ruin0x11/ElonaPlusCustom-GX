@@ -3694,11 +3694,15 @@
 	    	_break
 	    }
 	    if ( a == 32 ) {
+#ifdef CUSTOM_GX_LUA
             if ( dbg_luaConsole ) {
                 gosub *dbg_lua_GetInfo
             } else {
+#endif
                 gosub *dbg_GetInfo
+#ifdef CUSTOM_GX_LUA
             }
+#endif
             gosub *screen_draw
 	    }
     wend
@@ -4018,11 +4022,13 @@
 
 		/********** RUIN0X11 CUSTOM - BEGINNING **********/ 
 
+#ifdef CUSTOM_GX_LUA
 		if ( buff == "lua\n" ) {
 			noteadd "Lua mode activated."
 			dbg_luaConsole = 1
 			goto *console_write
 		}
+#endif
 
 		/********** RUIN0X11 CUSTOM - ENDING **********/
 
@@ -4117,6 +4123,7 @@
 	noteadd "Unknown command. Type \"?\" for help. Hit ESC to exit."
 	goto *console_write
 
+#ifdef CUSTOM_GX_LUA
 *dbg_lua_GetInfo
 	if ( buff == "?\n" ) {
         goto *dbg_ShowHelp
@@ -4159,6 +4166,7 @@
 	loop
 
 	goto *console_write
+#endif
 
 *dbg_ShowHelp
     noteadd "\t1\t\tShows charainfo."
@@ -4182,7 +4190,9 @@
     noteadd "\tallinv\t\tDisplays all the items in the map."
     noteadd "\tspawn\t\tSpawns a character by numeric ID."
     noteadd "\tadd_ally\tAdds an ally by character index."
+#ifdef CUSTOM_GX_LUA
     noteadd "\tlua\t\tToggles Lua console mode."
+#endif
     noteadd ""
     noteadd "\tThe commands below should be only used to deal with certain problems."
     noteadd "\t108fix\t\tTurns all the NPCs in the map hostile."
