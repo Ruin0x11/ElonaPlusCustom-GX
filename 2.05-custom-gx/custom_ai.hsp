@@ -537,7 +537,7 @@
 	}
 
 	; Melee Attacks
-	if ( act == 1 ) {
+	if ( act == CUSTOM_AI_ACTION_ATTACK_MELEE ) {
 		distance = dist(cdata(CDATA_X, tc), cdata(CDATA_Y, tc), cdata(CDATA_X, cc), cdata(CDATA_Y, cc))
 		if ( distance == 1 ) {
 			gosub *act_melee
@@ -546,7 +546,7 @@
 	}
 
 	; Ranged Attacks
-	if ( act == 2 ) {
+	if ( act == CUSTOM_AI_ACTION_ATTACK_RANGED ) {
 		distance = dist(cdata(CDATA_X, tc), cdata(CDATA_Y, tc), cdata(CDATA_X, cc), cdata(CDATA_Y, cc))
 		if ( distance < 6 ) {
 			if ( fov_los(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), cdata(CDATA_X, tc), cdata(CDATA_Y, tc)) ) {
@@ -560,13 +560,13 @@
 	}
 
 	; Movement
-	if ( act == 3 | act == 4 ) {
+	if ( act == CUSTOM_AI_ACTION_MOVE_AWAY | act == CUSTOM_AI_ACTION_MOVE_FORWARD ) {
 		AIData(6, cc-1) = cdata(CDATA_AI_DISTANCE, cc)
 		distance = dist(cdata(CDATA_X, tc), cdata(CDATA_Y, tc), cdata(CDATA_X, cc), cdata(CDATA_Y, cc))
-		if ( act == 3 ) {
+		if ( act == CUSTOM_AI_ACTION_MOVE_AWAY ) {
 			cdata(CDATA_AI_DISTANCE, cc) = distance+1
 		}
-		if ( act == 4 & distance != 1 ) {
+		if ( act == CUSTOM_AI_ACTION_MOVE_FORWARD & distance != 1 ) {
 			cdata(CDATA_AI_DISTANCE, cc) = distance-1
 		}
 		goto *ai_followMove
@@ -630,6 +630,11 @@
 			}
 		}
 	}
+
+    ; Do Nothing
+    if ( act == CUSTOM_AI_ACTION_DO_NOTHING ) {
+        goto *turn_end
+    }
 
 	; Failure
 	if ( AIData(7, cc-1) == 0 ) {
@@ -753,7 +758,7 @@
 	if ( PassTactic == 1 ) {
 		return
 	}
-	if ( act == 5 ) {
+	if ( act == CUSTOM_AI_ACTION_AND ) {
 		ContinueTactic = 1
 	}
 	if ( HoldTarget == 1 ) {
@@ -1414,7 +1419,7 @@
 				key = key_cancel
 				break
 			}
-			if ( cnt == 106 ) {
+			if ( cnt == 100 + CUSTOM_AI_ACTION_DO_NOTHING + 1 ) {
 				AIData(70+CurrentTactic, tc-1) = AIData(3, tc-1)
 				key = key_cancel
 				break
