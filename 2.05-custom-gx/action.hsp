@@ -6939,43 +6939,55 @@
 				s = lang("旅歩きスキル上昇***を獲得する", "Add Traveling Skill Bonus")
 				promptAdd s
 			}
-			if ( taisei \ 7 == 0 ) {
+			if ( taisei \ 9 == 0 ) {
 				list(0, listmax) = -7
 				listmax++
 				s = lang("対神**を獲得する", "Add Damage against Gods")
 				promptAdd s
 			}
-			if ( taisei \ 7 == 1 ) {
+			if ( taisei \ 9 == 1 ) {
 				list(0, listmax) = -7
 				listmax++
 				s = lang("対不死者***を獲得する", "Add Damage against Undead")
 				promptAdd s
 			}
-			if ( taisei \ 7 == 2 ) {
+			if ( taisei \ 9 == 2 ) {
 				list(0, listmax) = -7
 				listmax++
 				s = lang("対竜***を獲得する", "Add Damage against Dragons")
 				promptAdd s
 			}
-			if ( taisei \ 7 == 3 ) {
+			if ( taisei \ 9 == 3 ) {
+				list(0, listmax) = -7
+				listmax++
+				s = lang("対空**を獲得する", "Add Damage against Flying")
+				promptAdd s
+			}
+			if ( taisei \ 9 == 4 ) {
+				list(0, listmax) = -7
+				listmax++
+				s = lang("対メタル***を獲得する", "Add Damage against Metal")
+				promptAdd s
+			}
+			if ( taisei \ 9 == 5 ) {
 				list(0, listmax) = -7
 				listmax++
 				s = lang("クリティカル上昇***を獲得する", "Add Critical Hit Chance")
 				promptAdd s
 			}
-			if ( taisei \ 7 == 4 ) {
+			if ( taisei \ 9 == 6 ) {
 				list(0, listmax) = -7
 				listmax++
 				s = lang("魔法威力上昇**を獲得する", "Add Enhance Spells")
 				promptAdd s
 			}
-			if ( taisei \ 7 == 5 ) {
+			if ( taisei \ 9 == 7 ) {
 				list(0, listmax) = -7
 				listmax++
 				s = lang("放射威力上昇***を獲得する", "Add Breath Skill")
 				promptAdd s
 			}
-			if ( taisei \ 7 == 6 ) {
+			if ( taisei \ 9 == 8 ) {
 				list(0, listmax) = -7
 				listmax++
 				s = lang("完全貫通発生**を獲得する", "Add Piercing Attack Chance")
@@ -7240,7 +7252,7 @@
 					}
 				}
 				if ( list(0, rtval) == (-7) ) {
-					taiseip = taisei \ 7
+					taiseip = taisei \ 9
 					if ( taiseip == 0 ) {
 						encadd ci, ENCHANT_BANE_GOD, 80, 0, 1
 					}
@@ -7251,15 +7263,21 @@
 						encadd ci, ENCHANT_BANE_DRAGON, 130, 0, 1
 					}
 					if ( taiseip == 3 ) {
-						encadd ci, ENCHANT_CRIT_CHANCE, 130, 0, 1, 0, 1
+						encadd ci, ENCHANT_BANE_FLYING, 80, 0, 1
 					}
 					if ( taiseip == 4 ) {
-						encadd ci, ENCHANT_ENHANCE_SPELL, 80, 0, 1, 0, 1
+						encadd ci, ENCHANT_BANE_METAL, 130, 0, 1
 					}
 					if ( taiseip == 5 ) {
-						encadd ci, ENCHANT_ENHANCE_BREATH, 130, 0, 1, 0, 1
+						encadd ci, ENCHANT_CRIT_CHANCE, 130, 0, 1, 0, 1
 					}
 					if ( taiseip == 6 ) {
+						encadd ci, ENCHANT_ENHANCE_SPELL, 80, 0, 1, 0, 1
+					}
+					if ( taiseip == 7 ) {
+						encadd ci, ENCHANT_ENHANCE_BREATH, 130, 0, 1, 0, 1
+					}
+					if ( taiseip == 8 ) {
 						encadd ci, ENCHANT_PIERCING_CHANCE, 80, 0, 1, 0, 1
 					}
 				}
