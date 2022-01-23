@@ -3446,30 +3446,28 @@
 			}
 		}
 	}
-	if ( TweakData(TWEAK_GAMEPLAY_CG_DISABLE_TALK_ACTION_EXP, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
-		locvar_check_talk_exp = limit(cdata(CDATA_LEVEL, check_talk_arg2), 1, 400) * limit(cdata(CDATA_LEVEL, check_talk_arg2) + 1, 1, 400) * limit(cdata(CDATA_LEVEL, check_talk_arg2) + 2, 1, 400) / 10 + 8
-		if ( check_talk_arg1 == 0 ) {
-			if ( cdata(CDATA_LEVEL, check_talk_arg2) < cdata(CDATA_LEVEL, check_talk_arg1) ) {
-				locvar_check_talk_exp = locvar_check_talk_exp / 100 + 10
-			}
+	locvar_check_talk_exp = limit(cdata(CDATA_LEVEL, check_talk_arg2), 1, 400) * limit(cdata(CDATA_LEVEL, check_talk_arg2) + 1, 1, 400) * limit(cdata(CDATA_LEVEL, check_talk_arg2) + 2, 1, 400) / 10 + 8
+	if ( check_talk_arg1 == 0 ) {
+		if ( cdata(CDATA_LEVEL, check_talk_arg2) < cdata(CDATA_LEVEL, check_talk_arg1) ) {
+			locvar_check_talk_exp = locvar_check_talk_exp / 100 + 10
 		}
-		if ( check_talk_arg1 == 0 ) {
-			if ( cdata(CDATA_LEVEL, check_talk_arg2) > cdata(CDATA_LEVEL, check_talk_arg1) ) {
-				locvar_check_talk_exp *= limit(cdata(CDATA_LEVEL, check_talk_arg2) * 2 / cdata(CDATA_LEVEL, CHARA_PLAYER), 1, 10)
-			}
+	}
+	if ( check_talk_arg1 == 0 ) {
+		if ( cdata(CDATA_LEVEL, check_talk_arg2) > cdata(CDATA_LEVEL, check_talk_arg1) ) {
+			locvar_check_talk_exp *= limit(cdata(CDATA_LEVEL, check_talk_arg2) * 2 / cdata(CDATA_LEVEL, CHARA_PLAYER), 1, 10)
 		}
-		if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, check_talk_arg2) | cbit(CHARA_BIT_SPLIT_NO_EFFECT, check_talk_arg2) ) {
-			locvar_check_talk_exp = 0
+	}
+	if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, check_talk_arg2) | cbit(CHARA_BIT_SPLIT_NO_EFFECT, check_talk_arg2) ) {
+		locvar_check_talk_exp = 0
+	}
+	cdata(CDATA_EXP, check_talk_arg1) += locvar_check_talk_exp
+	if ( check_talk_arg1 == 0 ) {
+		if ( gdata(GDATA_SLEEP_EXP) > 1000000000 ) {
+			gdata(GDATA_SLEEP_EXP) = 1000000000
 		}
-		cdata(CDATA_EXP, check_talk_arg1) += locvar_check_talk_exp
-		if ( check_talk_arg1 == 0 ) {
-			if ( gdata(GDATA_SLEEP_EXP) > 1000000000 ) {
-				gdata(GDATA_SLEEP_EXP) = 1000000000
-			}
-			gdata(GDATA_SLEEP_EXP) += locvar_check_talk_exp
-			if ( gdata(GDATA_SLEEP_EXP) > 1000000000 ) {
-				gdata(GDATA_SLEEP_EXP) = 1000000000
-			}
+		gdata(GDATA_SLEEP_EXP) += locvar_check_talk_exp
+		if ( gdata(GDATA_SLEEP_EXP) > 1000000000 ) {
+			gdata(GDATA_SLEEP_EXP) = 1000000000
 		}
 	}
 	cdata(CDATA_AI_AGGRO, check_talk_arg1) = 0
