@@ -423,7 +423,7 @@
 			pos sx, sy
 			gcopy BUFFER_INF, 0 + en * 84, 416, 65 + en * 30, 15
 			pos sx + 6, sy + 1
-			mes _vomit(cdata(CDATA_VOMIT, CHARA_PLAYER) / 3)
+			mes _vomit(limit(cdata(CDATA_VOMIT, CHARA_PLAYER) / 3, 0, length(_vomit) - 1))
 			sy -= 20
 		}
 		else {
