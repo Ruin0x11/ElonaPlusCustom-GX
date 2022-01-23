@@ -4034,19 +4034,35 @@
 
 		/********** ANNA CUSTOM - BEGINNING **********/ // Spawn npc command
 
-		if ( instr(buff, 0, "spawn") != (-1) ) {
+		if ( instr(buff, 0, "spawn_chara") != (-1) ) {
 			if ( instr(buff, 0, " ") != (-1) ) {
 				characreate -1, int(strmid(buff, instr(buff, 0, " "), strlen(buff) - instr(buff, 0, " "))), cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER)
 				noteadd "Done. (" + rc + ")"
 				goto *console_write
 			}
 			else {
-				noteadd "Must add a NPC ID e.g. spawn 2"
+				noteadd "Must add a NPC ID e.g. spawn_chara 2"
 				goto *console_write
 			}
 		}
 
 		/********** ANNA CUSTOM - ENDING **********/
+
+		/********** RUIN0X11 CUSTOM - BEGINNING **********/ // Spawn item command
+
+		if ( instr(buff, 0, "spawn_item") != (-1) ) {
+			if ( instr(buff, 0, " ") != (-1) ) {
+				locvar_ri = itemcreate -1, int(strmid(buff, instr(buff, 0, " "), strlen(buff) - instr(buff, 0, " "))), cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
+				noteadd "Done. (" + locvar_ri + ")"
+				goto *console_write
+			}
+			else {
+				noteadd "Must add an item ID e.g. spawn_item 2"
+				goto *console_write
+			}
+		}
+
+		/********** RUIN0X11 CUSTOM - ENDING **********/
 
 		/********** RUIN0X11 CUSTOM - BEGINNING **********/ // Add ally command
 
@@ -4188,7 +4204,8 @@
     noteadd "\tgain_exp\tPC gains a billion of exp."
     noteadd "\tgain_fame\tPC gains fame."
     noteadd "\tallinv\t\tDisplays all the items in the map."
-    noteadd "\tspawn\t\tSpawns a character by numeric ID."
+    noteadd "\tspawn_chara\t\tSpawns a character by numeric ID."
+    noteadd "\tspawn_item\t\tSpawns an item by numeric ID."
     noteadd "\tadd_ally\tAdds an ally by character index."
 #ifdef CUSTOM_GX_LUA
     noteadd "\tlua\t\tToggles Lua console mode."
