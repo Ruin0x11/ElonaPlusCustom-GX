@@ -1,3 +1,23 @@
+# 2.08.2.0
+
+# Added
+- Added a new "Do Nothing" custom AI action. (#68)
+
+# Changed
+- Hydro Fang now causes wet. (#69)
+- Remove the release-build dependency on `hsplua.dll`. It can be enabled again with a compiler define.
+
+# Fixed
+- Fixed the subject for the "bored" town citizen dialog lines being incorrect. (#60)
+- Fixed the displayed level of duel opponents being incorrect. (#55)
+- Fixed some elemental damage not causing status effects. (#63)
+- Fixed a couple of AI action lists for some characters being incorrect. (#76)
+- Fixed NPC actions interrupting the player's actions. (#76)
+- Fixed some minor typos. (#73, #74)
+- Fixed crashing when anorexia status becomes too high. (#72)
+- Fixed enchantment level not displaying for the enchantments added in 2.08. (#70)
+- Fixed the enchantments addable to living weapons being different from stock Plus. (#62)
+
 # 2.08.1.0
 
 ## Added
