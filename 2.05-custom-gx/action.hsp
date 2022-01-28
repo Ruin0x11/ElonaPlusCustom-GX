@@ -1965,6 +1965,7 @@
 						gosub *screen_draw
 						if ( rtval == 0 ) {
 							if ( gdata(GDATA_QUEST) == QUEST_TYPE_PARTY | gdata(GDATA_QUEST) == QUEST_TYPE_HARVEST | gdata(GDATA_QUEST) == QUEST_TYPE_MINEFIELD ) {
+								gdata(GDATA_TIME_STOP_TIME) = 0
 								gdata(GDATA_TIME_LIMIT) = 0
 								if ( qexit == 0 ) {
 									evadd EVENT_QUEST_TIMEOUT
@@ -4194,12 +4195,19 @@
 				txt lang("会心の一撃！ ", "Critical Hit!")
 				txtmore
 			}
-		}
-		if ( critical ) {
 			if ( cc != CHARA_PLAYER ) {
 				txtef COLOR_BLUE
 				txt lang("会心の一撃！ ", "Critical Hit!")
 				txtmore
+			}
+			if ( cdata(CDATA_FRIENDSHIP, CHARA_PLAYER) == 4 ) {
+				if ( attackrange == 0 ) {
+					snd SOUNDLIST_CRUSH1
+					map(cdata(CDATA_X, tc), cdata(CDATA_Y, tc), MAP_TILE_ID) = xy2pic(32, 17)
+					if ( cdata(CDATA_CONDITION_BIND, tc) < 2 ) {
+						cdata(CDATA_CONDITION_BIND, tc) = 2
+					}
+				}
 			}
 		}
 		if ( critical != 1 ) {
@@ -7859,6 +7867,104 @@
 		goto *act_use_SWEND1
 		_switch_sw++
 	}
+	if ( _switch_val == EFFECT_SOCKS2 | _switch_sw ) {
+		_switch_sw = 0
+		txt lang("誰を対象にする？", "Who will you use them on?")
+		val = 0
+		gosub *prompt_direction
+		f = 0
+		if ( stat != 0 ) {
+			if ( map(x, y, MAP_CHARA_INDEX_PLUS_ONE) > 0 ) {
+				tc = map(x, y, MAP_CHARA_INDEX_PLUS_ONE) - 1
+				if ( cdata(CDATA_IN_TAGTEAM, tc) != 0 ) {
+					txtselecttc 2
+					repeat 2
+						promptl(0, promptmax) = s(cnt), key_select(cnt), "" + promptmax
+						promptmax++
+					loop
+					val = promptx, prompty, 200, 1
+					gosub *prompt_key
+					if ( stat == 0 ) {
+						gosub *screen_draw
+						goto *pc_turn
+					}
+					if ( rtval == 1 ) {
+						tc = cdata(CDATA_TAGTEAM_PARTNER, tc)
+					}
+				}
+				txt lang(name(tc) + "の顔面に靴下を押し当てた。", "You pressed the socks against " + name(tc) + ".")
+				if ( cdata(CDATA_CONDITION_DIM, tc) < 3 ) {
+					cdata(CDATA_CONDITION_DIM, tc) = 3
+				}
+				if ( cdata(CDATA_ID, tc) != CREATURE_ID_KUROYA_THE_LOOKING_UNIVERSE ) {
+					txtef COLOR_SKY_BLUE
+					txtmore
+					txt lang("「くさい」", name(tc) + " moans, " + cnvtalk("Smelly!"))
+				}
+				if ( cdata(CDATA_ID, tc) == CREATURE_ID_KUROYA_THE_LOOKING_UNIVERSE ) {
+					if ( inv(INV_ITEM_COL, ci) >= 2 & inv(INV_ITEM_COL, ci) <= 4 ) {
+						txtef COLOR_PINK
+						txtmore
+						txt lang("「なんだか頑張れそうだよ」", name(tc) + " states, " + cnvtalk("I think I can do my best!"))
+					}
+					if ( inv(INV_ITEM_COL, ci) >= 5 & inv(INV_ITEM_COL, ci) <= 7 ) {
+						txtef COLOR_PINK
+						txtmore
+						txt lang("「僕はこういうのも好きだね」", name(tc) + " states, " + cnvtalk("I also like this!"))
+					}
+					if ( inv(INV_ITEM_COL, ci) >= 8 & inv(INV_ITEM_COL, ci) <= 10 ) {
+						txtef COLOR_PINK
+						txtmore
+						txt lang("「いいね！センスあるよ」", name(tc) + " states, " + cnvtalk("How nice! There is a sense!"))
+					}
+					if ( inv(INV_ITEM_COL, ci) >= 11 & inv(INV_ITEM_COL, ci) <= 13 ) {
+						txtef COLOR_PINK
+						txtmore
+						txt lang("「この刺激が生を実感させてくれる」", name(tc) + " states, " + cnvtalk("This stimulus makes me feel the life!"))
+					}
+					if ( inv(INV_ITEM_COL, ci) >= 14 & inv(INV_ITEM_COL, ci) <= 16 ) {
+						txtef COLOR_PINK
+						txtmore
+						txt lang("「おっと、通だね」", name(tc) + " states, " + cnvtalk("Oops, it's a maniac!"))
+					}
+					if ( inv(INV_ITEM_COL, ci) >= 17 & inv(INV_ITEM_COL, ci) <= 19 ) {
+						txtef COLOR_PINK
+						txtmore
+						txt lang("「脳に染み渡るようだ！」", name(tc) + " states, " + cnvtalk("It seems to permeate my brain!"))
+					}
+					if ( inv(INV_ITEM_COL, ci) >= 20 & inv(INV_ITEM_COL, ci) <= 22 ) {
+						txtef COLOR_PINK
+						txtmore
+						txt lang("「これだよこれこれ！」", name(tc) + " states, " + cnvtalk("This is gooooood!"))
+					}
+					if ( inv(INV_ITEM_COL, ci) >= 23 & inv(INV_ITEM_COL, ci) <= 25 ) {
+						txtef COLOR_PINK
+						txtmore
+						txt lang("「何度でも嗅ぎたいって感じだ！」", name(tc) + " states, " + cnvtalk("I want to sniff as many times as I want!"))
+					}
+					if ( inv(INV_ITEM_COL, ci) >= 26 & inv(INV_ITEM_COL, ci) <= 28 ) {
+						txtef COLOR_PINK
+						txtmore
+						txt lang("「プハー！効くねぇ！」", name(tc) + " states, " + cnvtalk("Puha! It works!"))
+					}
+					if ( inv(INV_ITEM_COL, ci) >= 29 | inv(INV_ITEM_COL, ci) <= 1 ) {
+						txtef COLOR_PINK
+						txtmore
+						txt lang("「おお、わかってるねぇ〜」", name(tc) + " states, " + cnvtalk("Oh, you're familiar with it!"))
+					}
+					addbuff tc, BUFF_BOOST, 20, 3
+				}
+				goto *act_use_SWEND1
+			}
+		}
+		if ( f == 0 ) {
+			txt lang("それは無理だ。", "It's impossible.")
+		}
+		gosub *screen_draw
+		goto *pc_turn
+		goto *act_use_SWEND1
+		_switch_sw++
+	}
 	if ( _switch_val == EFFECT_G_FINGER | _switch_sw ) {
 		_switch_sw = 0
 		if ( mdata(MDATA_TYPE) == MAP_TYPE_WORLD ) {
@@ -10545,7 +10651,7 @@
 					if ( gdata(GDATA_FLAG_RARE_DROP) == 100 ) {
 						fgain = 0
 						if ( inv(INV_ITEM_ID, ci) == ITEM_ID_FISH ) {
-							if ( inv(INV_ITEM_SUB_NAME, ci) >= 0 & inv(INV_ITEM_SUB_NAME, ci) <= 6 ) {
+							if ( inv(INV_ITEM_SUB_NAME, ci) >= 0 & inv(INV_ITEM_SUB_NAME, ci) <= 6 | (inv(INV_ITEM_SUB_NAME, ci) >= 41 & inv(INV_ITEM_SUB_NAME, ci) <= 52) ) {
 								if ( rnd(5) == 0 ) {
 									fgain = ITEM_ID_AQUATIC_PLANT
 									snd SOUNDLIST_FISH_GET
@@ -10553,7 +10659,7 @@
 									txt lang(itemname(ci) + "の身体に何か絡まっている…。", "Something is tangled in " + itemname(ci) + its2(ci) + " body...")
 								}
 							}
-							if ( inv(INV_ITEM_SUB_NAME, ci) >= 7 & inv(INV_ITEM_SUB_NAME, ci) <= 12 ) {
+							if ( inv(INV_ITEM_SUB_NAME, ci) >= 7 & inv(INV_ITEM_SUB_NAME, ci) <= 12 | (inv(INV_ITEM_SUB_NAME, ci) >= 53 & inv(INV_ITEM_SUB_NAME, ci) <= 64) ) {
 								if ( rnd(30) == 0 ) {
 									fgain = ITEM_ID_BRONZE_COIN
 									snd SOUNDLIST_FISH_GET
@@ -10561,7 +10667,7 @@
 									txt lang(itemname(ci) + "は何かを水底から持ってきた。", itemname(ci) + " brought something from the bottom of the water.")
 								}
 							}
-							if ( inv(INV_ITEM_SUB_NAME, ci) >= 13 & inv(INV_ITEM_SUB_NAME, ci) <= 18 ) {
+							if ( inv(INV_ITEM_SUB_NAME, ci) >= 13 & inv(INV_ITEM_SUB_NAME, ci) <= 18 | (inv(INV_ITEM_SUB_NAME, ci) >= 65 & inv(INV_ITEM_SUB_NAME, ci) <= 76) ) {
 								if ( rnd(12) == 0 ) {
 									fgain = ITEM_ID_JEWEL_CORAL
 									snd SOUNDLIST_FISH_GET
@@ -10569,7 +10675,7 @@
 									txt lang(itemname(ci) + "は何かを吐き出した！", itemname(ci) + " spit something out!")
 								}
 							}
-							if ( inv(INV_ITEM_SUB_NAME, ci) >= 19 & inv(INV_ITEM_SUB_NAME, ci) <= 24 ) {
+							if ( inv(INV_ITEM_SUB_NAME, ci) >= 19 & inv(INV_ITEM_SUB_NAME, ci) <= 24 | (inv(INV_ITEM_SUB_NAME, ci) >= 77 & inv(INV_ITEM_SUB_NAME, ci) <= 88) ) {
 								if ( rnd(10) == 0 ) {
 									fgain = ITEM_ID_DEVIL_FRAGMENT
 									snd SOUNDLIST_FISH_GET
@@ -10577,7 +10683,7 @@
 									txt lang(itemname(ci) + "は何かを吐き出した！", itemname(ci) + " spit something out!")
 								}
 							}
-							if ( inv(INV_ITEM_SUB_NAME, ci) >= 25 & inv(INV_ITEM_SUB_NAME, ci) <= 30 ) {
+							if ( inv(INV_ITEM_SUB_NAME, ci) >= 25 & inv(INV_ITEM_SUB_NAME, ci) <= 30 | (inv(INV_ITEM_SUB_NAME, ci) >= 89 & inv(INV_ITEM_SUB_NAME, ci) <= 100) ) {
 								if ( rnd(8) == 0 ) {
 									fgain = ITEM_ID_SPOTTED_GARDEN_EEL
 									snd SOUNDLIST_FISH_GET
@@ -10585,7 +10691,7 @@
 									txt lang(itemname(ci) + "の開いた口から何かが這い出てきた！", "Something came crawling out of " + itemname(ci) + its2(ci) + " open mouth!")
 								}
 							}
-							if ( inv(INV_ITEM_SUB_NAME, ci) >= 31 & inv(INV_ITEM_SUB_NAME, ci) <= 36 ) {
+							if ( inv(INV_ITEM_SUB_NAME, ci) >= 31 & inv(INV_ITEM_SUB_NAME, ci) <= 36 | (inv(INV_ITEM_SUB_NAME, ci) >= 101 & inv(INV_ITEM_SUB_NAME, ci) <= 112) ) {
 								if ( rnd(30) == 0 ) {
 									fgain = CREATURE_ID_CTHULHICK
 									snd SOUNDLIST_FISH_GET
@@ -12142,7 +12248,6 @@
 			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
 			flt
 			itemcreate -1, ITEM_ID_GREEN_TEA, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 360
-			inv(INV_ITEM_LEVEL, ci) = 1
 			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
 		}
 		if ( rtval == 5 ) {
