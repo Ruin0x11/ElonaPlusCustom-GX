@@ -4471,7 +4471,7 @@
 	}
 	return
 
-#deffunc dmghp int dmghp_charid, int dmghp_origin, int dmghp_source, int dmghp_element, int dmghp_power
+#deffunc dmghp int dmghp_charid, int dmghp_origin, int dmghp_source, int dmghp_element, int dmghp_element_power
 	locvar_dmghp_ele = dmghp_element
 	if ( txt3rd == 0 ) {
 		locvar_dmghp_c3 = dmghp_source
@@ -6361,7 +6361,7 @@
 		if ( locvar_dmghp_ele == SKILL_RES_NETHER ) {
 			if ( dmghp_source >= DAMAGE_FROM_CHARA ) {
 				if ( locvar_dmghp_dmg > 0 ) {
-					locvar_dmghp_healn = limit(rnd(locvar_dmghp_dmg * (150 + dmghp_power * 2) / 1000 + 10), 1, cdata(CDATA_MAX_HP, dmghp_source) / 10 + rnd(5))
+					locvar_dmghp_healn = limit(rnd(locvar_dmghp_dmg * (150 + dmghp_element_power * 2) / 1000 + 10), 1, cdata(CDATA_MAX_HP, dmghp_source) / 10 + rnd(5))
 					if ( locvar_dmghp_healn > cdata(CDATA_MAX_HP, dmghp_charid) / 10 + 1 ) {
 						locvar_dmghp_healn = cdata(CDATA_MAX_HP, dmghp_charid) / 10 + 1
 					}
