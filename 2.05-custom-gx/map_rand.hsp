@@ -1527,6 +1527,98 @@
 	loop
 	return
 
+*map_riverHorizontal
+	v = 6 + gdata(GDATA_FLAG_COLLECTED_WISHES) * 2
+	dy = mdata(MDATA_HEIGHT) / 2 - v / 2 - 5
+	p = 0
+	repeat mdata(MDATA_WIDTH)
+		x = cnt
+		repeat v
+			y = cnt + dy
+			map(x, y, MAP_TILE_ID) = xy2pic(0, 5)
+		loop
+		if ( p <= 0 ) {
+			if ( rnd(2) ) {
+				p = rnd(12)
+			}
+		}
+		if ( rnd(2) ) {
+			if ( v > 4 ) {
+				v -= rnd(2)
+			}
+		}
+		if ( p > 0 ) {
+			if ( p < 5 ) {
+				if ( v > 3 ) {
+					v -= rnd(2)
+					p--
+				}
+			}
+			if ( p > 4 ) {
+				if ( v < 10 ) {
+					v++
+					p--
+				}
+			}
+		}
+		if ( dy > 1 ) {
+			dy -= rnd(2)
+		}
+		if ( dy + v < mdata(MDATA_HEIGHT) - 1 ) {
+			dy += rnd(2)
+		}
+		if ( dy + v > mdata(MDATA_HEIGHT) ) {
+			v = mdata(MDATA_HEIGHT) - dy
+		}
+	loop
+	return
+
+*map_riverVertical
+	w = 6 + gdata(GDATA_FLAG_COLLECTED_WISHES) * 2
+	dx = mdata(MDATA_WIDTH) / 2 - w / 2 - 5
+	p = 0
+	repeat mdata(MDATA_HEIGHT)
+		y = cnt
+		repeat w
+			x = cnt + dx
+			map(x, y, MAP_TILE_ID) = xy2pic(0, 5)
+		loop
+		if ( p <= 0 ) {
+			if ( rnd(2) ) {
+				p = rnd(12)
+			}
+		}
+		if ( rnd(2) ) {
+			if ( w > 4 ) {
+				w -= rnd(2)
+			}
+		}
+		if ( p > 0 ) {
+			if ( p < 5 ) {
+				if ( w > 3 ) {
+					w -= rnd(2)
+					p--
+				}
+			}
+			if ( p > 4 ) {
+				if ( w < 10 ) {
+					w++
+					p--
+				}
+			}
+		}
+		if ( dx > 1 ) {
+			dx -= rnd(2)
+		}
+		if ( dx + w < mdata(MDATA_WIDTH) - 1 ) {
+			dx += rnd(2)
+		}
+		if ( dx + w > mdata(MDATA_WIDTH) ) {
+			w = mdata(MDATA_WIDTH) - dx
+		}
+	loop
+	return
+
 *map_createDungeonHighPass
 	mdata(MDATA_WIDTH) = 30
 	mdata(MDATA_HEIGHT) = 60 + rnd(60)

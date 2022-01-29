@@ -5361,7 +5361,10 @@
 				}
 			}
 		}
-		if ( cbit(CHARA_BIT_HAS_BEEN_CONFESSED_TO, tc) == FALSE ) {
+		if ( gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 >= cdata(CDATA_INTEREST_RENEW, tc) ) {
+			cdata(CDATA_INTEREST, tc) = 100
+		}
+		if ( cdata(CDATA_INTEREST, tc) >= 80 ) {
 			promptAdd lang("気持ちを伝える", "Confess feelings"), "null", "" + 29
 		}
 		if ( cbit(CHARA_BIT_BODYGUARD, tc) == 0 & cbit(CHARA_BIT_GUARD_TEMP, tc) == 0 ) {
@@ -5443,7 +5446,7 @@
 	if ( tc != CHARA_PLAYER & cdata(CDATA_RELATION, tc) == RELATION_ALLY | (gdata(GDATA_AREA) == AREA_DOJO & cbit(CHARA_BIT_LIVESTOCK, tc) == TRUE) ) {
 		promptAdd lang("能力の開示", "Info"), "null", "" + 28
 	}
-	if ( gdata(GDATA_WIZARD) | (gdata(GDATA_AREA) == AREA_DOJO & cbit(CHARA_BIT_LIVESTOCK, tc) == 1) ) {
+	if ( develop | gdata(GDATA_WIZARD) ) {
 		promptAdd lang("情報", "Information"), "null", 6
 	}
 	if ( cdata(CDATA_ID, tc) == CREATURE_ID_ITZPALT | cdata(CDATA_ID, tc) == CREATURE_ID_YACATECT | cdata(CDATA_ID, tc) == CREATURE_ID_JURE | cdata(CDATA_ID, tc) == CREATURE_ID_LULWY | cdata(CDATA_ID, tc) == CREATURE_ID_EHEKATL | cdata(CDATA_ID, tc) == CREATURE_ID_OPATOS | cdata(CDATA_ID, tc) == CREATURE_ID_KUMIROMI | cdata(CDATA_ID, tc) == CREATURE_ID_MANI | cdata(CDATA_ID, tc) == CREATURE_ID_WAR_SPIRIT | cdata(CDATA_ID, tc) == CREATURE_ID_MAGIC_SPIRIT | cdata(CDATA_ID, tc) == CREATURE_ID_PUDDING_SPIRIT | cdata(CDATA_ID, tc) == CREATURE_ID_GUN_SPIRIT ) {
@@ -6002,6 +6005,8 @@
 			txt lang(cdatan(CDATAN_NAME, tc) + "はあなたが何を伝えようとしたのか、すごく気になっている…。", cdatan(CDATAN_NAME, tc) + " becomes very curious about what you were wanting to tell " + him(tc) + "...")
 			cdata(CDATA_EMO_ICON, tc) = 21 + 100 * 3
 		}
+		cdata(CDATA_INTEREST, tc) -= 80
+		cdata(CDATA_INTEREST_RENEW, tc) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 + 12
 		if ( rtval >= 1 & rtval <= 3 ) {
 			if ( cdata(CDATA_IMPRESSION, tc) >= 150 ) {
 				modimp tc, 12
@@ -6019,7 +6024,6 @@
 				txtef COLOR_RED
 				txt lang(cdatan(CDATAN_NAME, tc) + "は気持ち悪そうにあなたを見ている…。", cdatan(CDATAN_NAME, tc) + " is looking at you like you're some kind of creep.")
 			}
-			cbitmod CHARA_BIT_HAS_BEEN_CONFESSED_TO, tc, TRUE
 		}
 		if ( rtval >= 4 & rtval <= 6 ) {
 			snd SOUNDLIST_DING2
@@ -6027,7 +6031,6 @@
 			txt lang(cdatan(CDATAN_NAME, tc) + "はまんざらでもないようだ。", cdatan(CDATAN_NAME, tc) + " doesn't seem to be very happy about that.")
 			modimp tc, 7
 			cdata(CDATA_EMO_ICON, tc) = 6 + 100 * 3
-			cbitmod CHARA_BIT_HAS_BEEN_CONFESSED_TO, tc, TRUE
 		}
 		if ( rtval >= 7 & rtval <= 9 ) {
 			if ( cdata(CDATA_IMPRESSION, tc) >= 150 ) {
@@ -6041,7 +6044,6 @@
 			if ( cdata(CDATA_IMPRESSION, tc) < 75 ) {
 				txt lang(cdatan(CDATAN_NAME, tc) + "はやれやれと肩をすくめた。", cdatan(CDATAN_NAME, tc) + " shrugged " + his(tc) + " shoulders in relief.")
 			}
-			cbitmod CHARA_BIT_HAS_BEEN_CONFESSED_TO, tc, TRUE
 		}
 		if ( rtval == 10 ) {
 			if ( cbit(CHARA_BIT_MARRIED, tc) != FALSE ) {
@@ -10468,6 +10470,10 @@
 	gcopy 3, 960, 216, 72, 144
 	dvr1 = cdata(CDATA_DV, cc) * cdata(CDATA_DV_FIX, cc) / 100 + cdata(CDATA_DV_FIX, cc) - 100
 	pvr1 = (cdata(CDATA_PV, cc) + cdata(CDATA_PV_FIX, cc) / 25) * cdata(CDATA_PV_FIX, cc) / 100
+	if ( cdata(CDATA_DRAIN_HP, cc) >= 100 ) {
+		dvr1 = 0
+		pvr1 = 0
+	}
 	if ( showresist ) {
 		pos wx + 320, wy + 40
 		color 0, 0, 0
@@ -11931,6 +11937,10 @@
 		window x, y, w, h - h \ 8, 0, 0
 		dvr1 = cdata(CDATA_DV, tc) * cdata(CDATA_DV_FIX, tc) / 100 + cdata(CDATA_DV_FIX, tc) - 100
 		pvr1 = (cdata(CDATA_PV, tc) + cdata(CDATA_PV_FIX, tc) / 25) * cdata(CDATA_PV_FIX, tc) / 100
+		if ( cdata(CDATA_DRAIN_HP, tc) >= 100 ) {
+			dvr1 = 0
+			pvr1 = 0
+		}
 		font lang(cfg_font1, cfg_font2), 12 + en - en * 2, 0
 		pos x + 16, y + 17
 		mes "Dv:" + dvr1 + " Pv:" + pvr1
@@ -11946,6 +11956,10 @@
 		window x, y, w, h - h \ 8, 0, 0
 		dvr1 = cdata(CDATA_DV, tc) * cdata(CDATA_DV_FIX, tc) / 100 + cdata(CDATA_DV_FIX, tc) - 100
 		pvr1 = (cdata(CDATA_PV, tc) + cdata(CDATA_PV_FIX, tc) / 25) * cdata(CDATA_PV_FIX, tc) / 100
+		if ( cdata(CDATA_DRAIN_HP, tc) >= 100 ) {
+			dvr1 = 0
+			pvr1 = 0
+		}
 		font lang(cfg_font1, cfg_font2), 12 + en - en * 2, 0
 		pos x + 16, y + 17
 		mes "Dv:" + dvr1 + " Pv:" + pvr1

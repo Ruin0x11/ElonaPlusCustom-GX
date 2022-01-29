@@ -250,13 +250,26 @@
 		pos inf_hpx + 16, inf_hpy + 10
 		gcopy 3, 1439 - ap, 492, ap, 2
 	}
+	if ( cdata(CDATA_DRAIN_HP, CHARA_PLAYER) > 0 & cdata(CDATA_DRAIN_HP, CHARA_PLAYER) <= 100 ) {
+		apg = cdata(CDATA_DRAIN_HP, CHARA_PLAYER) * 84 / 100
+		if ( apg > 100 ) {
+			apg = 100
+		}
+		pos inf_mpx + 6, inf_mpy + 10
+		gcopy BUFFER_INF, 532 - apg, 525, apg, 2
+	}
+	if ( cdata(CDATA_DRAIN_HP, CHARA_PLAYER) > 100 ) {
+		apg = 84
+		pos inf_mpx + 6, inf_mpy + 10
+		gcopy BUFFER_INF, 1439 - apg, 585, apg, 2
+	}
 	if ( cdata(CDATA_MP, CHARA_PLAYER) > 0 ) {
 		ap = cdata(CDATA_MP, CHARA_PLAYER) * 84 / cdata(CDATA_MAX_MP, CHARA_PLAYER)
 		if ( ap > 100 ) {
 			ap = 100
 		}
 		pos inf_mpx + 6, inf_mpy + 5
-		gcopy 3, 532 - ap, 520, ap, 6
+		gcopy BUFFER_INF, 532 - ap, 520, ap, 5
 	}
 	if ( gdata(GDATA_RIDER) != 0 ) {
 		if ( cdata(CDATA_EXIST, gdata(GDATA_RIDER)) == CHAR_STATE_ALIVE ) {
@@ -306,6 +319,11 @@
 	color 0
 	pos sx + 4, sy - 2
 	bmes "" + cdata(CDATA_POWER_GAUGE, CHARA_PLAYER) + "%", 255, 255, 255
+	sx = inf_mpx + 92
+	sy = inf_mpy + 3
+	color 0
+	pos sx + 4, sy - 2
+	bmes "" + cdata(CDATA_DRAIN_HP, CHARA_PLAYER) + "%", 255, 255, 255
 	font lang(cfg_font1, cfg_font2), 13 - en * 2, 0
 	color 0, 0, 0
 	sy = inf_bary + 2 + vfix
@@ -345,6 +363,10 @@
 				gcopy 3, 0, 440, 64, 16
 				dvpc = cdata(CDATA_DV, CHARA_PLAYER) * cdata(CDATA_DV_FIX, CHARA_PLAYER) / 100 + cdata(CDATA_DV_FIX, CHARA_PLAYER) - 100
 				pvpc = (cdata(CDATA_PV, CHARA_PLAYER) + cdata(CDATA_PV_FIX, CHARA_PLAYER) / 25) * cdata(CDATA_PV_FIX, CHARA_PLAYER) / 100
+				if ( cdata(CDATA_DRAIN_HP, CHARA_PLAYER) >= 100 ) {
+					dvpc = 0
+					pvpc = 0
+				}
 				mes "" + dvpc + "/" + pvpc
 			}
 		}
@@ -366,7 +388,7 @@
 	sx = windoww - 320
 	sy = inf_ver - 16
 	color 0
-	pos sx + 28, sy + 2
+	pos sx + 38, sy - 5
 	bmes "Sp" + cdata(CDATA_SP, CHARA_PLAYER) + "/" + cdata(CDATA_MAX_SP, CHARA_PLAYER), 255, 255, 255
 	color 0, 0, 0
 	pos 4, inf_ver - 16 - 4
@@ -1046,6 +1068,26 @@
 			bmes "[Wire World]", 235, 235, 235
 		}
 	}
+	if ( cdata(CDATA_FRIENDSHIP, CHARA_PLAYER) == 3 ) {
+		pos inf_clockw + 6, inf_clocky + 50
+		color 0, 0, 0
+		if ( jp ) {
+			bmes "[暴虐の庭園]", 5, 235, 5
+		}
+		if ( en ) {
+			bmes "[Violent Garden]", 5, 235, 5
+		}
+	}
+	if ( cdata(CDATA_FRIENDSHIP, CHARA_PLAYER) == 4 ) {
+		pos inf_clockw + 6, inf_clocky + 50
+		color 0, 0, 0
+		if ( jp ) {
+			bmes "[ロックラッシュ]", 235, 135, 5
+		}
+		if ( en ) {
+			bmes "[Rocrush]", 235, 135, 5
+		}
+	}
 	if ( gdata(GDATA_FLAG_NEFIA_FEVER_ACTIVE) == 100 ) {
 		pos 10, 0
 		gcopy 3, 1338, 385, 102, 100
@@ -1063,9 +1105,9 @@
 		}
 	}
 	if ( dbg_subAmurdad ) {
-		paraa = gdata(GDATA_FLAG_SUB_AMURDAD)
-		parab = gdata(GDATA_LEVEL)
-		parac = -1
+		paraa = tlocx
+		parab = tlocy
+		parac = gdata(GDATA_FLAG_COLLECTED_WISHES)
 		if ( jp ) {
 			pos inf_clockw + 380, inf_clocky + 37
 			color 0, 0, 0
@@ -1966,6 +2008,94 @@
 		}
 		goto *anime_SWEND1
 	}
+	if ( _switch_val == ANIMATION_SAND_CANNON | _switch_sw ) {
+		_switch_sw = 0
+		anicol = 0
+		gsel BUFFER_ITEM
+		color 0
+		boxf 0, 960, chipi(CHIPI_WIDTH, xy2pic(5, 0)), chipi(CHIPI_HEIGHT, xy2pic(5, 0)) + 960
+		if ( 5 == 528 ) {
+			gmode 2
+			pos 0, 960
+			gcopy BUFFER_ITEM, 0, 768, inf_tiles, inf_tiles
+			pos 0, 1008
+			gzoom 22, 20, 5, chipc(CHIPC_X, anicol) + 8, chipc(CHIPC_Y, anicol) + 4 + (chipc(CHIPC_HEIGHT, anicol) > inf_tiles) * 8, chipc(CHIPC_WIDTH, anicol) - 16, chipc(CHIPC_HEIGHT, anicol) - 8 - (chipc(CHIPC_HEIGHT, anicol) > inf_tiles) * 10, 1
+			pos 6, 974
+			gcopy BUFFER_ITEM, 0, 1008, 22, 20
+			gsel selcur
+		}
+		else {
+			if ( 5 == 1119 ) {
+				pos 0, 1055 - chipc(CHIPC_HEIGHT, anicol)
+				gcopy BUFFER_CHR, chipc(CHIPC_X, anicol), chipc(CHIPC_Y, anicol), chipc(CHIPC_WIDTH, anicol), chipc(CHIPC_HEIGHT, anicol)
+				gmode 2
+				gsel selcur
+			}
+			else {
+				if ( 5 == 1206 ) {
+					pos 0, 1055 - chipc(CHIPC_HEIGHT, anicol)
+					gcopy BUFFER_CHR, chipc(CHIPC_X, anicol), chipc(CHIPC_Y, anicol), chipc(CHIPC_WIDTH, anicol), chipc(CHIPC_HEIGHT, anicol)
+					gfini chipi(CHIPI_WIDTH, xy2pic(5, 0)), chipi(CHIPI_HEIGHT, xy2pic(5, 0))
+					gfdec2 0, 0, 255
+					gsel selcur
+				}
+				else {
+					if ( 5 == 531 ) {
+						pos 8, 1058 - chipc(CHIPC_HEIGHT, anicol)
+						gcopy BUFFER_CHR, chipc(CHIPC_X, anicol) + 8, chipc(CHIPC_Y, anicol) + 2, chipc(CHIPC_WIDTH, anicol) - 16, chipc(CHIPC_HEIGHT, anicol) - 8
+						gmode 4, , , 150
+						color 0, 0, 0
+						pos 0, 960 + (chipc(CHIPC_HEIGHT, anicol) == inf_tiles) * 48
+						gcopy BUFFER_ITEM, 144, 768 + (chipc(CHIPC_HEIGHT, anicol) > inf_tiles) * 48, inf_tiles, chipc(CHIPC_HEIGHT, anicol) + (chipc(CHIPC_HEIGHT, anicol) > inf_tiles) * 48 * 0
+						gmode 2
+						gsel selcur
+					}
+					else {
+						pos 0, 960
+						gcopy BUFFER_ITEM, chipi(CHIPI_X, xy2pic(5, 0)), chipi(CHIPI_Y, xy2pic(5, 0)), chipi(CHIPI_WIDTH, xy2pic(5, 0)), chipi(CHIPI_HEIGHT, xy2pic(5, 0))
+						gfini chipi(CHIPI_WIDTH, xy2pic(5, 0)), chipi(CHIPI_HEIGHT, xy2pic(5, 0))
+						gfdec2 c_col(0, anicol), c_col(1, anicol), c_col(2, anicol)
+						gsel selcur
+					}
+				}
+			}
+		}
+		gsel BUFFER_PIC
+		picload exedir + "graphic\\anime86.bmp"
+		pos 0, 0
+		gfini 480, 48
+		gfdec2 c_col(0, anicol), c_col(1, anicol), c_col(2, anicol)
+		gsel BUFFER_BUF
+		pos 0, 0
+		gmode 0
+		gcopy BUFFER_SCREEN, 0, 0, windoww, windowh
+		gsel BUFFER_SCREEN
+		repeat 6
+			cnt2 = cnt
+			redraw 0
+			pos 0, 0
+			gmode 0
+			gcopy BUFFER_BUF, 0, 0, windoww, windowh
+			repeat maxbreath
+				anidx = breathlist(0, cnt)
+				anidy = breathlist(1, cnt)
+				if ( fov_los(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), anidx, anidy) == 0 ) {
+					continue
+				}
+				if ( (anidx - scx) * inf_tiles + inf_screenx + inf_tiles / 2 < windoww ) {
+					if ( (anidy - scy) * inf_tiles + inf_screeny + 16 < inf_screenh * inf_tiles + inf_screeny - inf_tiles / 2 ) {
+						pos (anidx - scx) * inf_tiles + inf_screenx + inf_tiles / 2, (anidy - scy) * inf_tiles + inf_screeny + 16
+						gmode 2, inf_tiles, inf_tiles
+						grotate BUFFER_PIC, cnt2 * 48, 0, atan(tlocx - cdata(CDATA_X, cc), cdata(CDATA_Y, cc) - tlocy), inf_tiles, inf_tiles
+					}
+				}
+			loop
+			await cfg_animewait
+			redraw 1
+		loop
+		goto *anime_SWEND1
+		_switch_sw++
+	}
 	if ( _switch_val == ANIMATION_MP_BREATH | _switch_sw ) {
 		_switch_sw = 0
 
@@ -2373,6 +2503,9 @@
 		_switch_sw++
 	}
 	if ( _switch_val == ANIMATION_LINEAR_LAUNCHER | _switch_sw ) {
+		_switch_sw++
+	}
+	if ( _switch_val == ANIMATION_SHINING_THROW | _switch_sw ) {
 		_switch_sw = 0
 		if ( synccheck(cc, -1) == 0 ) {
 			goto *anime_SWEND1
@@ -2422,6 +2555,10 @@
 		}
 		if ( animeid == ANIMATION_POTION_PLUG_5 ) {
 			preparePicItem xy2pic(27, 36), potionc
+			snd SOUNDLIST_BOLT1
+		}
+		if ( animeid == ANIMATION_SHINING_THROW ) {
+			preparePicItem xy2pic(15, 36), 0
 			snd SOUNDLIST_BOLT1
 		}
 		if ( animeid == ANIMATION_UNUSED1 ) {
@@ -3843,6 +3980,10 @@
 			gsel BUFFER_PIC
 			picload exedir + "graphic\\anime61.bmp"
 		}
+		if ( animode == 4 ) {
+			gsel BUFFER_PIC
+			picload exedir + "graphic\\anime85.bmp"
+		}
 		gsel 4
 		pos 0, 0
 		gmode 0
@@ -3893,6 +4034,9 @@
 						}
 						if ( animode == 3 ) {
 							snd SOUNDLIST_SONIC
+						}
+						if ( animode == 4 ) {
+							snd SOUNDLIST_ATK_FIRE
 						}
 					}
 				}
@@ -5833,6 +5977,9 @@
 		tohit = tohit * 2
 	}
 	hoseidv = cdata(CDATA_DV, tc) * cdata(CDATA_DV_FIX, tc) / 100 + cdata(CDATA_DV_FIX, tc) - 100
+	if ( cdata(CDATA_DRAIN_HP, tc) >= 100 ) {
+		hoseidv = 0
+	}
 	evade = sdata(SKILL_ATTR_PER, tc) / 6 + sdata(SKILL_NORMAL_EVASION, tc) + hoseidv * 2 * 7 / 4 + 25 - cdata(CDATA_EVASION_PENALTY, tc) * 100
 	if ( cdata(CDATA_DIRECTIVE_MODE, tc) == DIRECTIVE_MODE_DEFENSIVE ) {
 		evade += sdata(SKILL_NORMAL_SHIELD, tc) + sdata(SKILL_ATTR_CON, tc) / 6
@@ -6504,7 +6651,10 @@
 		return damage
 	}
 	hoseipv = (cdata(CDATA_PV, tc) + cdata(CDATA_PV_FIX, tc) / 25) * cdata(CDATA_PV_FIX, tc) / 100
-	prot = hoseipv + limit(limit(sdata(carmor(tc), tc), 0, 300) - cdata(CDATA_PROT_PENALTY, tc) * 100, 0, 300) + sdata(SKILL_ATTR_DEX, tc) / 10
+	if ( cdata(CDATA_DRAIN_HP, tc) >= 100 ) {
+		hoseipv = 0
+	}
+	prot = hoseipv + limit(sdata(carmor(tc), tc) / 4 - cdata(CDATA_PROT_PENALTY, tc) * 100, 0, 2000) + sdata(SKILL_ATTR_DEX, tc) / 10
 	if ( calcattackdmg_arg1 == 0 ) {
 		if ( cbit(CHARA_BIT_VINDALIAN_JIUJITSU_ACTIVE, cc) == TRUE ) {
 			prot = cdata(CDATA_DV, tc) + limit(limit(sdata(SKILL_NORMAL_LIGHT_ARMOR, tc), 0, 300) - cdata(CDATA_PROT_PENALTY, tc) * 100, 0, 300) + sdata(SKILL_ATTR_DEX, tc) / 10
@@ -6625,7 +6775,7 @@
 				}
 			}
 		}
-		if ( cdata(CDATA_PIERCING_CHANCE, cc) > rnd(100) | sutemi == 100 ) {
+		if ( limit(cdata(CDATA_PIERCING_CHANCE, cc), 0, 30) > rnd(100) | sutemi == 100 ) {
 			pierce = 100
 			if ( synccheck(cc, -1) ) {
 				txtef COLOR_YELLOW
@@ -7263,8 +7413,12 @@
 		cdata(CDATA_MAX_HP, r1) = 1
 	}
 	if ( r1 >= 57 & cdata(CDATA_ALLIED, r1) == 0 & r1 != CHARA_PLAYER ) {
-		cdata(CDATA_DV, r1) += limit(cdata(CDATA_LEVEL, r1) / 2, 1, 200)
-		cdata(CDATA_PV, r1) += limit(cdata(CDATA_LEVEL, r1) / 2, 1, 200)
+		if ( cdata(CDATA_DRAIN_HP, r1) < 100 ) {
+			cdata(CDATA_DV, r1) += limit(cdata(CDATA_LEVEL, r1) / 2, 1, 200)
+		}
+		if ( cdata(CDATA_DRAIN_HP, r1) < 100 ) {
+			cdata(CDATA_PV, r1) += limit(cdata(CDATA_LEVEL, r1) / 2, 1, 200)
+		}
 		if ( cdata(CDATA_QUALITY, r1) == FIX_QUALITY_GREAT ) {
 			cdata(CDATA_MAX_HP, r1) = cdata(CDATA_MAX_HP, r1) * 3 / 2
 		}

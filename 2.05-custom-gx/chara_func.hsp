@@ -4493,6 +4493,11 @@
 		if ( locvar_dmghp_ele == SKILL_RESDMG_CRUSH ) {
 			locvar_dmghp_r = cdata(CDATA_PV, dmghp_charid) + cdata(CDATA_DV, dmghp_charid)
 			if ( locvar_dmghp_r > 0 ) {
+				if ( cdata(CDATA_DRAIN_HP, dmghp_charid) >= 100 ) {
+					locvar_dmghp_r = 0
+				}
+			}
+			if ( locvar_dmghp_r > 0 ) {
 				locvar_dmghp_r = locvar_dmghp_r * 2 / 3
 			}
 			locvar_dmghp_dmg = locvar_dmghp_dmg * 100 / limit(locvar_dmghp_r + 110, 50, 3000)
@@ -5525,6 +5530,27 @@
 		}
 	}
 	sutemi = 0
+	if ( dmghp_source >= DAMAGE_FROM_CHARA ) {
+		if ( breakgauge == 0 ) {
+			if ( cdata(CDATA_DRAIN_HP, dmghp_charid) < 100 ) {
+				breakgauge = 1
+				cdata(CDATA_DRAIN_HP, dmghp_charid) += 2
+				if ( locvar_dmghp_ele == 64 ) {
+					cdata(CDATA_DRAIN_HP, dmghp_charid) += 8
+				}
+				if ( cdata(CDATA_DRAIN_HP, dmghp_charid) >= 100 ) {
+					cdata(CDATA_DRAIN_HP, dmghp_charid) = 120
+					locvar_dmghp_waitbk = cfg_animewait
+					if ( cfg_animewait < 50 ) {
+						cfg_animewait = 50
+					}
+					animeload 87, dmghp_charid
+					snd SOUNDLIST_CRASH14
+					cfg_animewait = locvar_dmghp_waitbk
+				}
+			}
+		}
+	}
 	if ( locvar_dmghp_dmg <= 0 ) {
 		locvar_dmghp_dmglevel = -1
 	}

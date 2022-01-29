@@ -19,6 +19,10 @@
 	buffname(BUFF_ATTRIBUTE_SHIELD) = lang("属性保護", "Attribute Shield")
 	bufftxt(0, BUFF_ATTRIBUTE_SHIELD) = lang("は属性への耐性を得た。", " gain"), " resistance to attributes."
 
+	bdataref(0, BUFF_MOGRANIC_AURA) = BUFF_TYPE_BUFF, 1, 0
+	buffname(BUFF_MOGRANIC_AURA) = lang("土竜闘気", "Mogranic Aura")
+	bufftxt(0, BUFF_MOGRANIC_AURA) = lang("は闘気を纏った。", "wore"), " anti-magic aura."
+
 	bdataref(0, BUFF_SPEED) = BUFF_TYPE_BUFF, 1, 0
 	buffname(BUFF_SPEED) = lang("加速", "Speed")
 	bufftxt(0, BUFF_SPEED) = lang("は機敏になった。", " speed"), " up."
@@ -386,6 +390,20 @@
 		sdata(SKILL_RES_DARKNESS, calcbuff_charid) += 80 + calcbuff_power / 20
 		return
 	}
+	if ( calcbuff_buffid == BUFF_MOGRANIC_AURA ) {
+		dur = 10 + calcbuff_power / 20
+		if ( calcbuff_charid < CHARA_PLAYER ) {
+			if ( calcbuff_charid == CALCBUFF_DURATION ) {
+				return
+			}
+			else {
+				buffdesc = lang("魔法耐性の獲得", "RES+ magic")
+				return
+			}
+		}
+		sdata(SKILL_RES_MAGIC, calcbuff_charid) += 100 + calcbuff_power
+		return
+	}
 	if ( calcbuff_buffid == BUFF_FORM_SHIFT_ALPHA ) {
 		dur = 100
 		if ( calcbuff_charid < CHARA_PLAYER ) {
@@ -508,11 +526,16 @@
 		return
 	}
 	if ( calcbuff_buffid == BUFF_SPEED ) {
-		locvar_calcbuff_p = 50 + calcbuff_power / 10
-		if ( locvar_calcbuff_p > 800 ) {
-			locvar_calcbuff_p = 800
-		}
+		locvar_calcbuff_p = limit(50 + calcbuff_power / 10, 1, 800)
 		dur = 8 + calcbuff_power / 20
+		if ( calcbuff_charid == CHARA_PLAYER ) {
+			if ( cdata(CDATA_MATERIAL2_COUNTER, CHARA_PLAYER) == 1 ) {
+				locvar_calcbuff_p = locvar_calcbuff_p * 13 / 10
+			}
+		}
+		if ( locvar_calcbuff_p > 1000 ) {
+			locvar_calcbuff_p = 1000
+		}
 		if ( calcbuff_charid < CHARA_PLAYER ) {
 			if ( calcbuff_charid == (-1) ) {
 				return

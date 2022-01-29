@@ -954,6 +954,20 @@
 			}
 		}
 	}
+	socks = 0
+	s = refchara(cdata(CDATA_ID, rc), DBSPEC_CHARA_FILTER, 1)
+	if ( instr(s, 0, "/man/") != (-1) ) {
+		socks = 1
+	}
+	if ( socks == 1 & rnd(400) == 0 | gdata(GDATA_FLAG_DUEL_TARGET) == (-2) ) {
+		flt
+		itemcreate -1, ITEM_ID_SOCKS2, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+		remain_make ci, rc
+		inv(INV_ITEM_SUB_NAME, ci) = cdata(CDATA_ID, rc)
+		inv(INV_ITEM_COL, ci) = rnd(31)
+		cell_refresh inv(INV_ITEM_X, ci), inv(INV_ITEM_Y, ci)
+		socks = 0
+	}
 	if ( gdata(GDATA_FLAG_DUEL_TARGET) == (-2) ) {
 		gdata(GDATA_FLAG_DUEL_TARGET) = -1
 	}
@@ -1549,7 +1563,9 @@
 		if ( gdata(GDATA_FLAG_SUB_SOCKS_THIEF) == 11 ) {
 			gdata(GDATA_FLAG_SUB_SOCKS_THIEF) = 12
 			flt
-			itemcreate -1, ITEM_ID_SOCKS, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 10
+			itemcreate -1, ITEM_ID_SOCKS, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 4
+			flt
+			itemcreate -1, ITEM_ID_SOCKS2, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 3
 		}
 	}
 	if ( cdata(CDATA_ID, rc) == CREATURE_ID_ARKHAI ) {

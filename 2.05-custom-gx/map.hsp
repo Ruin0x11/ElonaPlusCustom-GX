@@ -511,7 +511,11 @@
 		cdata(CDATA_FRIENDSHIP, CHARA_PLAYER) = 0
 		cbitmod CHARA_BIT_MAGNETISM_S_POLE, cnt, FALSE
 		cbitmod CHARA_BIT_MAGNETISM_N_POLE, cnt, FALSE
+		if ( gdata(GDATA_AREA) == AREA_WILDERNESS ) {
+			gdata(GDATA_FLAG_COLLECTED_WISHES) = 0
+		}
 		cdata(CDATA_POWER_GAUGE, cnt) = 0
+		cdata(CDATA_DRAIN_HP, cnt) = 0
 		gdata(STARTING_GDATA_FLAG + 379) = 0
 		if ( cdata(CDATA_EXIST, cnt) != CHAR_STATE_ALIVE ) {
 			continue
@@ -3408,6 +3412,15 @@
 				inv(INV_ITEM_PROPERTY, ci) = PROP_NPC
 				map(inv(INV_ITEM_X, ci), inv(INV_ITEM_Y, ci), 0) = 0
 			loop
+			if ( rnd(2) == 0 ) {
+				gdata(GDATA_FLAG_COLLECTED_WISHES) = 1
+				if ( rnd(2) == 0 ) {
+					gosub *map_riverHorizontal
+				}
+				else {
+					gosub *map_riverVertical
+				}
+			}
 		}
 		if ( 264 <= gdata(GDATA_WORLD_TILE) & gdata(GDATA_WORLD_TILE) < 363 ) {
 			mdatan(MDATAN_NAME) = lang("水上", "Sea")
@@ -3428,6 +3441,15 @@
 				itemcreate -1, ITEM_ID_DUMMY, -1, -1, 0
 				inv(INV_ITEM_PROPERTY, ci) = PROP_NPC
 			loop
+			if ( rnd(3) == 0 ) {
+				gdata(GDATA_FLAG_COLLECTED_WISHES) = 3
+				if ( rnd(2) == 0 ) {
+					gosub *map_riverHorizontal
+				}
+				else {
+					gosub *map_riverVertical
+				}
+			}
 		}
 		if ( 13 <= gdata(GDATA_WORLD_TILE) & gdata(GDATA_WORLD_TILE) < 17 ) {
 			mdatan(MDATAN_NAME) = lang("荒野", "Wasteland")
@@ -3538,6 +3560,15 @@
 				itemcreate -1, ITEM_ID_DUMMY, -1, -1, 0
 				inv(INV_ITEM_PROPERTY, ci) = PROP_NPC
 			loop
+			if ( rnd(4) == 0 ) {
+				gdata(GDATA_FLAG_COLLECTED_WISHES) = 5
+				if ( rnd(2) == 0 ) {
+					gosub *map_riverHorizontal
+				}
+				else {
+					gosub *map_riverVertical
+				}
+			}
 		}
 		if ( chipm(CHIPM_ROLE, gdata(GDATA_WORLD_TILE)) == MAP_CHIP_ROLE_SNOW ) {
 			mdatan(MDATAN_NAME) = lang("雪原", "Snow Field")
@@ -3570,6 +3601,15 @@
 				itemcreate -1, ITEM_ID_DUMMY, -1, -1, 0
 				inv(INV_ITEM_PROPERTY, ci) = PROP_NPC
 			loop
+			if ( rnd(4) == 0 ) {
+				gdata(GDATA_FLAG_COLLECTED_WISHES) = 5
+				if ( rnd(2) == 0 ) {
+					gosub *map_riverHorizontal
+				}
+				else {
+					gosub *map_riverVertical
+				}
+			}
 		}
 		map_placeplayer
 		if ( 264 > gdata(GDATA_WORLD_TILE) | gdata(GDATA_WORLD_TILE) >= 363 ) {
@@ -11344,7 +11384,7 @@
 						}
 					}
 				}
-				repeat gdata(GDATA_TRAVEL_DISTANCE)
+				repeat 300
 					repeat
 						if ( cdata(CDATA_AREA, cnt) == gdata(GDATA_AREA) ) {
 							continue
@@ -11358,7 +11398,7 @@
 							if ( sorg(p, tc) == 0 ) {
 								continue
 							}
-							skillexp p, tc, limit(sdata(SKILL_NORMAL_TRAVELING, tc) * 1 / 4 + 3, 1, 50)
+							skillexp p, tc, limit(sdata(SKILL_NORMAL_TRAVELING, tc) * 1 / 4 + gdata(GDATA_TRAVEL_DISTANCE), 1, 1000)
 							break
 						}
 					loop
@@ -11366,14 +11406,14 @@
 			loop
 			if ( sdata(SKILL_NORMAL_TRAVELING, CHARA_PLAYER) > 0 ) {
 				skillexp SKILL_NORMAL_TRAVELING, CHARA_PLAYER, 5 + gdata(GDATA_TRAVEL_DISTANCE) * 2 / 5, 0, 1000
-				repeat gdata(GDATA_TRAVEL_DISTANCE)
+				repeat 300
 					repeat
 						p = rnd(STARTING_SKILL_SPELL - STARTING_SKILL_WEAPON) + STARTING_SKILL_WEAPON
 						if ( sdataref(SKILL_DATAREF_USE, p) != 0 ) {
 							if ( sorg(p, CHARA_PLAYER) == 0 ) {
 								continue
 							}
-							skillexp p, CHARA_PLAYER, limit(sdata(SKILL_NORMAL_TRAVELING, CHARA_PLAYER) * 1 / 4 + 3, 1, 50)
+							skillexp p, CHARA_PLAYER, limit(sdata(SKILL_NORMAL_TRAVELING, CHARA_PLAYER) * 1 / 4 + gdata(GDATA_TRAVEL_DISTANCE), 1, 1000)
 							break
 						}
 					loop
@@ -11438,10 +11478,8 @@
 			if ( cnt == CHARA_PLAYER ) {
 				continue
 			}
-			if ( cdata(CDATA_ID, cnt) == CREATURE_ID_NAZUNA_THE_INSTRUCTOR ) {
-				if ( cdata(CDATA_ALLIED, cnt) == 0 ) {
-					continue
-				}
+			if ( cdata(CDATA_ALLIED, cnt) == 0 ) {
+				continue
 			}
 			tc = cnt
 			repeat 300
@@ -11452,7 +11490,7 @@
 						if ( sorg(p, tc) == 0 ) {
 							continue
 						}
-						skillexp p, tc, limit(gdata(GDATA_DOJO_TURNS) * 1 / 4, 0, 200000)
+						skillexp p, tc, limit(gdata(GDATA_DOJO_TURNS) * 4, 0, 200000)
 						break
 					}
 				loop

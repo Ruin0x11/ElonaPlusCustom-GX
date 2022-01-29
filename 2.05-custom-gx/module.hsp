@@ -2508,6 +2508,30 @@
 							else {
 								gcopy 3, 1440 - locvar_cell_draw_h, 531, locvar_cell_draw_h, 3
 							}
+							if ( cdata(CDATA_IN_TAGTEAM, locvar_cell_draw_c) == 0 ) {
+								locvar_cell_draw_hg = cdata(CDATA_DRAIN_HP, locvar_cell_draw_c) * 30 / 100
+								if ( locvar_cell_draw_hg > 30 ) {
+									locvar_cell_draw_hg = 30
+								}
+							}
+							else {
+								locvar_cell_draw_hg = cdata(CDATA_DRAIN_HP, locvar_cell_draw_c) * 15 / 100
+								if ( locvar_cell_draw_hg > 15 ) {
+									locvar_cell_draw_hg = 15
+								}
+							}
+							if ( cdata(CDATA_IN_TAGTEAM, locvar_cell_draw_c) == 1 ) {
+								pos locvar_cell_draw_dx + 9 + cdata(CDATA_IN_TAGTEAM, locvar_cell_draw_c) * 13, locvar_cell_draw_dy + 39
+							}
+							else {
+								pos locvar_cell_draw_dx + 9, locvar_cell_draw_dy + 39
+							}
+							if ( cdata(CDATA_DRAIN_HP, locvar_cell_draw_c) < 100 ) {
+								gcopy BUFFER_INF, 1440 - locvar_cell_draw_hg, 588, locvar_cell_draw_hg, 3
+							}
+							else {
+								gcopy BUFFER_INF, 1440 - locvar_cell_draw_hg, 591, locvar_cell_draw_hg, 3
+							}
 						}
 						if ( cdata(CDATA_POWER_GAUGE, locvar_cell_draw_c) > 100 ) {
 							if ( mdata(MDATA_TYPE) != MAP_TYPE_WORLD & locvar_cell_draw_mimi == 0 & (locvar_cell_draw_c >= MAX_CHARA_FOLLOWER | cbit(CHARA_BIT_STETHOSCOPE, locvar_cell_draw_c) == 1 | gdata(GDATA_SCOPE) == locvar_cell_draw_c) ) {
@@ -2673,6 +2697,11 @@
 							pos locvar_cell_draw_dx, locvar_cell_draw_dy - 15
 							gmode 5, inf_tiles, inf_tiles, 30 * cdata(CDATA_BRUSH_LEVEL, locvar_cell_draw_c) + rnd(30)
 							gcopy 3, 192 + 48 * 9 + rnd(2) * inf_tiles, 704
+						}
+						if ( cdata(CDATA_ID, locvar_cell_draw_c) == CREATURE_ID_CRYSTALIAN & cdata(CDATA_PIC, locvar_cell_draw_c) >= xy2pic(31, 33) ) {
+							pos locvar_cell_draw_dx, locvar_cell_draw_dy - 15
+							gmode 5, inf_tiles, inf_tiles, 50 + rnd(50)
+							gcopy BUFFER_INF, 192 + 48 * 9 + rnd(2) * inf_tiles, 704
 						}
 						if ( cdata(CDATA_PIC, locvar_cell_draw_c) == xy2pic(29, 7) + COLOR_WHITE * COLOR_TINT_MULT ) {
 							pos locvar_cell_draw_dx, locvar_cell_draw_dy - 5
@@ -3032,6 +3061,30 @@
 									else {
 										gcopy 3, 1440 - locvar_cell_draw_h, 531, locvar_cell_draw_h, 3
 									}
+									if ( cdata(CDATA_IN_TAGTEAM, locvar_cell_draw_c) == 0 ) {
+										locvar_cell_draw_hg = cdata(CDATA_DRAIN_HP, locvar_cell_draw_c) * 30 / 100
+										if ( locvar_cell_draw_hg > 30 ) {
+											locvar_cell_draw_hg = 30
+										}
+									}
+									else {
+										locvar_cell_draw_hg = cdata(CDATA_DRAIN_HP, locvar_cell_draw_c) * 15 / 100
+										if ( locvar_cell_draw_hg > 15 ) {
+											locvar_cell_draw_hg = 15
+										}
+									}
+									if ( cdata(CDATA_IN_TAGTEAM, locvar_cell_draw_c) == 1 ) {
+										pos locvar_cell_draw_dx + 9 + 15, locvar_cell_draw_dy + 39
+									}
+									else {
+										pos locvar_cell_draw_dx + 9, locvar_cell_draw_dy + 39
+									}
+									if ( cdata(CDATA_DRAIN_HP, locvar_cell_draw_c) < 100 ) {
+										gcopy BUFFER_INF, 1440 - locvar_cell_draw_hg, 588, locvar_cell_draw_hg, 3
+									}
+									else {
+										gcopy BUFFER_INF, 1440 - locvar_cell_draw_hg, 591, locvar_cell_draw_hg, 3
+									}
 								}
 								if ( cdata(CDATA_POWER_GAUGE, locvar_cell_draw_c) > 100 ) {
 									if ( mdata(MDATA_TYPE) != MAP_TYPE_WORLD & locvar_cell_draw_mimi == 0 & (locvar_cell_draw_c >= MAX_CHARA_FOLLOWER | cbit(CHARA_BIT_STETHOSCOPE, locvar_cell_draw_c) == 1 | gdata(GDATA_SCOPE) == locvar_cell_draw_c) ) {
@@ -3190,6 +3243,11 @@
 									pos locvar_cell_draw_dx + cdata(CDATA_IN_TAGTEAM, locvar_cell_draw_c) * 12, locvar_cell_draw_dy - 15
 									gmode 5, inf_tiles, inf_tiles, 30 * cdata(CDATA_BRUSH_LEVEL, locvar_cell_draw_c) + rnd(30)
 									gcopy 3, 192 + 48 * 9 + rnd(2) * inf_tiles, 704
+								}
+								if ( cdata(CDATA_ID, locvar_cell_draw_c) == CREATURE_ID_CRYSTALIAN & cdata(CDATA_PIC, locvar_cell_draw_c) >= xy2pic(31, 33) ) {
+									pos locvar_cell_draw_dx + cdata(CDATA_IN_TAGTEAM, locvar_cell_draw_c) * 12, locvar_cell_draw_dy - 15
+									gmode 5, inf_tiles, inf_tiles, 50 + rnd(50)
+									gcopy BUFFER_INF, 192 + 48 * 9 + rnd(2) * inf_tiles, 704
 								}
 								if ( cdata(CDATA_PIC, locvar_cell_draw_c) == xy2pic(29, 7) + COLOR_WHITE * COLOR_TINT_MULT ) {
 									pos locvar_cell_draw_dx + cdata(CDATA_IN_TAGTEAM, locvar_cell_draw_c) * 12, locvar_cell_draw_dy - 5

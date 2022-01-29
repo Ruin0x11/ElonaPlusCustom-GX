@@ -413,36 +413,28 @@
 	}
 	if ( tid == TRAIT_NORMAL_STAT_SPD ) {
 		if ( traitmode == 0 ) {
-			traitref = 0, 0, 2, 1, 0, 100, -1
-			traitrefn2 = lang("俊足", "Agile"), lang("韋駄天", "Very Agile")
+			traitref = 0, 0, 1, 1, 0, 100, -1
+			traitrefn2 = lang("超加速", "Super Accel"), lang("超加速", "Super Accel")
 			if ( trait(tid) >= 0 ) {
-				traitrefn(2) = lang("猫を追いかけて速くなる", "Chasing cats increases your speed."), lang("あなたは速く走ることができる[速度+5]", "You can run fast. [SPD+5]"), lang("あなたは猫よりも速い[速度+10]", "You can run faster than a cat. [SPD+10]")
-			}
-			if ( trait(tid) == 1 ) {
-				if ( cdata(CDATA_LEVEL, CHARA_PLAYER) < 5 ) {
-					return -1
-				}
+				traitrefn(2) = lang("誰よりも速さを追求する", "You pursue speed more than anyone."), lang("あなたは規格外の加速力を持つ[加速効果上昇]", "Your acceleration is amazing. [Speedspell+]"), lang("あなたは規格外の加速力を持つ[加速効果上昇]", "Your acceleration is amazing. [Speedspell+]")
 			}
 			return 1
 		}
-		sdata(SKILL_ATTR_SPD, CHARA_PLAYER) = limit(sdata(SKILL_ATTR_SPD, CHARA_PLAYER) + trait(tid) * 5, sdata(SKILL_ATTR_SPD, CHARA_PLAYER) > 0, 9999)
+		cdata(CDATA_MATERIAL2_COUNTER, CHARA_PLAYER) = 1
 		return 1
 	}
 	if ( tid == TRAIT_NORMAL_STAT_PV ) {
 		if ( traitmode == 0 ) {
-			traitref = 0, 0, 3, 1, 0, 100, -1
-			traitrefn2 = lang("石の守備", "Stone Defense"), lang("鉄の守備", "Iron Defense"), lang("鋼の守備", "Steel Defense")
+			traitref = 0, 0, 1, 1, 0, 100, -1
+			traitrefn2 = lang("地気利用", "Ground Manipulater"), lang("地気利用", "Ground Manipulater"), lang("地気利用", "Ground Manipulater")
 			if ( trait(tid) >= 0 ) {
-				traitrefn(2) = lang("受身を会得しPVを上昇させる", "You establish your own defensive style."), lang("あなたの防御は石のように硬い[PV+5]", "Your defense is as hard as stone. [PV+5]"), lang("あなたの守備は鉄壁だ[PV+10]", "Your defense is as hard as iron. [PV+10]"), lang("あなたの防御は鋼のように固い[PV+15]", "Your defense is as hard as steel. [PV+15]")
-			}
-			if ( trait(tid) == 1 ) {
-				if ( cdata(CDATA_LEVEL, CHARA_PLAYER) < 5 ) {
-					return -1
-				}
+				traitrefn(2) = lang("土地が持つエネルギーに目をつけ操作法を探す", "You discover the energy of the land."), lang("あなたは土地のエネルギーを操る", "You manipulate the ground."), lang("あなたは土地のエネルギーを操る", "You manipulate the ground."), lang("あなたは土地のエネルギーを操る", "You manipulate the ground.")
 			}
 			return 1
 		}
-		cdata(CDATA_PV, CHARA_PLAYER) = limit(cdata(CDATA_PV, CHARA_PLAYER) + trait(tid) * 5, cdata(CDATA_PV, CHARA_PLAYER) > 0, 9999)
+		if ( spact(SKILL_SPACT_SAND_CANNON - STARTING_SKILL_SPACT) == 0 ) {
+			spact(SKILL_SPACT_SAND_CANNON - STARTING_SKILL_SPACT) = 1
+		}
 		return 1
 	}
 	if ( tid == TRAIT_NORMAL_STAT_DV ) {

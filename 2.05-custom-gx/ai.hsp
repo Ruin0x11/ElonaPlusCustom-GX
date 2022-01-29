@@ -2167,7 +2167,7 @@
 					if ( rnd(5) == 0 ) {
 						act = SKILL_SPACT_STRUCK_OUT
 					}
-					if ( dist(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), cdata(CDATA_X, tc), cdata(CDATA_Y, tc)) > 3 ) {
++					if ( rnd(10) == 0 ) {
 						act = SKILL_SPACT_OVER_LONG_THROW
 					}
 					if ( cdata(CDATA_MP, cc) >= cdata(CDATA_MAX_MP, cc) / 3 ) {
@@ -3076,10 +3076,35 @@
 			}
 		}
 	}
-	if ( cdata(CDATA_ID, cc) == CREATURE_ID_MAGIC_BEE ) {
+	if ( cdata(CDATA_ID, cc) == CREATURE_ID_GRAVEED_THE_GRAVITY_VALLEY | cdata(CDATA_ID, cc) == CREATURE_ID_GASYADOKURO | cdata(CDATA_ID, cc) == CREATURE_ID_MUSCLE_GOLEM | cdata(CDATA_ID, cc) == CREATURE_ID_ATLAS ) {
+		if ( cdata(CDATA_POWER_GAUGE, cc) >= 80 ) {
+			if ( cdata(CDATA_FRIENDSHIP, CHARA_PLAYER) != 4 & cdata(CDATA_FRIENDSHIP, CHARA_PLAYER) >= 0 ) {
+				if ( rnd(3) == 0 ) {
+					act = SKILL_SPACT_ROCRUSHER
+				}
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, cc) == CREATURE_ID_MAGIC_BEE | cdata(CDATA_ID, cc) == CREATURE_ID_EIGHTY_SHAKU ) {
 		if ( cdata(CDATA_CONDITION_ANGRY, cc) > 0 ) {
 			if ( rnd(3) == 0 ) {
 				act = SKILL_SPACT_FLAME_OF_RAGE
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, cc) == CREATURE_ID_CRYSTALIAN ) {
+		if ( findbuff(cc, BUFF_GEM_POWER) == (-1) ) {
+			if ( rnd(3) == 0 ) {
+				act = SKILL_SPELL_GEM_POWER
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, cc) == CREATURE_ID_MEGA_MOLE | cdata(CDATA_ID, cc) == CREATURE_ID_TALPIDAE | cdata(CDATA_ID, cc) == CREATURE_ID_SUPER_DRAGONEWT ) {
+		if ( findbuff(cc, BUFF_LIFE_TASTING) == (-1) ) {
+			if ( cdata(CDATA_CONDITION_MPOISON, cc) == 0 ) {
+				if ( rnd(2) == 0 ) {
+					act = SKILL_SPACT_MOGRANIC_AURA
+				}
 			}
 		}
 	}

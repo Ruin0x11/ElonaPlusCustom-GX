@@ -1868,6 +1868,12 @@
 			gosub *charaRefresh
 		}
 	}
+	if ( cdata(CDATA_DRAIN_HP, r1) > 0 ) {
+		cdata(CDATA_DRAIN_HP, r1)--
+		if ( cdata(CDATA_DRAIN_HP, r1) == 100 ) {
+			cdata(CDATA_DRAIN_HP, r1) = 0
+		}
+	}
 	if ( cdata(CDATA_DRUG_DEPENDENCE, r1) > 0 ) {
 		if ( mdata(MDATA_TYPE) != MAP_TYPE_WORLD & rnd(50) == 0 ) {
 			if ( findbuff(r1, BUFF_MELANCHOLY) == (-1) & cdata(CDATA_POWER_GAUGE, r1) < 100 & cdata(CDATA_CONDITION_DRUNK, r1) == 0 ) {

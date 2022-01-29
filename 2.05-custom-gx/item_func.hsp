@@ -919,14 +919,14 @@
 	}
 	if ( inv(INV_ITEM_SUB_NAME, itemowner_itemid) != 0 ) {
 		if ( inv(INV_ITEM_ID, itemowner_itemid) == ITEM_ID_FISH | inv(INV_ITEM_ID, itemowner_itemid) == ITEM_ID_FISH_JUNK ) {
-			if ( inv(INV_ITEM_SUB_NAME, itemowner_itemid) < 0 | inv(INV_ITEM_SUB_NAME, itemowner_itemid) >= 100 ) {
+			if ( inv(INV_ITEM_SUB_NAME, itemowner_itemid) < 0 | inv(INV_ITEM_SUB_NAME, itemowner_itemid) >= 120 ) {
 				locvar_itemowner_s += "/bugged/"
 				return
 			}
 			locvar_itemowner_s += "" + fishdatan(inv(INV_ITEM_SUB_NAME, itemowner_itemid))
 		}
 		else {
-			if ( locvar_itemowner_a == FILTER_ITEM_FOOD | locvar_itemowner_a == FILTER_REMAINS | inv(INV_ITEM_ID, itemowner_itemid) == ITEM_ID_FIGURINE | inv(INV_ITEM_ID, itemowner_itemid) == ITEM_ID_CARD | inv(INV_ITEM_ID, itemowner_itemid) == ITEM_ID_SHIT | inv(INV_ITEM_ID, itemowner_itemid) == ITEM_ID_BOTTLE_MILK | inv(INV_ITEM_ID, itemowner_itemid) == ITEM_ID_SOUL_SPINDLE | inv(INV_ITEM_ID, itemowner_itemid) == ITEM_ID_GOLDEN_DOLL ) {
+			if ( locvar_itemowner_a == FILTER_ITEM_FOOD | locvar_itemowner_a == FILTER_REMAINS | inv(INV_ITEM_ID, itemowner_itemid) == ITEM_ID_FIGURINE | inv(INV_ITEM_ID, itemowner_itemid) == ITEM_ID_CARD | inv(INV_ITEM_ID, itemowner_itemid) == ITEM_ID_SHIT | inv(INV_ITEM_ID, itemowner_itemid) == ITEM_ID_BOTTLE_MILK | inv(INV_ITEM_ID, itemowner_itemid) == ITEM_ID_SOUL_SPINDLE | inv(INV_ITEM_ID, itemowner_itemid) == ITEM_ID_GOLDEN_DOLL | inv(INV_ITEM_ID, itemowner_itemid) == ITEM_ID_SOCKS2 ) {
 				if ( inv(INV_ITEM_ID, itemowner_itemid) == ITEM_ID_SOUL_SPINDLE ) {
 					if ( inv(INV_ITEM_SUB_NAME, itemowner_itemid) < 0 | inv(INV_ITEM_SUB_NAME, itemowner_itemid) >= MAX_DB ) {
 						locvar_itemowner_s += "/bugged/"
@@ -1056,7 +1056,7 @@
 			if ( locvar_itemowner_a == FILTER_ITEM_SCROLL ) {
 				locvar_itemname_s2 = "巻の"
 			}
-			if ( locvar_itemowner_a == FILTER_GLOVES | locvar_itemowner_a == FILTER_BOOTS ) {
+			if ( locvar_itemowner_a == FILTER_GLOVES | locvar_itemowner_a == FILTER_BOOTS | inv(INV_ITEM_ID, itemname_itemid) == ITEM_ID_SOCKS2 ) {
 				locvar_itemname_s2 = "対の"
 			}
 			if ( locvar_itemowner_a == FILTER_GOLD | locvar_itemowner_a == FILTER_PLATINUM | inv(INV_ITEM_ID, itemname_itemid) == ITEM_ID_SMALL_MEDAL | inv(INV_ITEM_ID, itemname_itemid) == ITEM_ID_MUSIC_TICKET | inv(INV_ITEM_ID, itemname_itemid) == ITEM_ID_TOKEN_FRIENDSHIP | inv(INV_ITEM_ID, itemname_itemid) == ITEM_ID_SOCKS | inv(INV_ITEM_ID, itemname_itemid) == ITEM_ID_PANTY | inv(INV_ITEM_ID, itemname_itemid) == ITEM_ID_1_2_MILLION_TAX_CERTIFICATE | inv(INV_ITEM_ID, itemname_itemid) == ITEM_ID_12_MILLION_TAX_CERTIFICATE | inv(INV_ITEM_ID, itemname_itemid) == ITEM_ID_BRONZE_COIN | inv(INV_ITEM_ID, itemname_itemid) == ITEM_ID_SKILL_TICKET | inv(INV_ITEM_ID, itemname_itemid) == ITEM_ID_MANUSCRIPT ) {

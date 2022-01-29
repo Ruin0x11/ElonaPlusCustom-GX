@@ -7770,6 +7770,7 @@
 			}
 			if ( chatval == 2 ) {
 				monka = 0
+				trcost = 0
 				repeat MAX_CHARA_TOTAL
 					if ( cdata(CDATA_EXIST, cnt) != CHAR_STATE_ALIVE ) {
 						continue
@@ -7780,9 +7781,14 @@
 					if ( cnt == CHARA_PLAYER ) {
 						continue
 					}
+					kiso = cdata(CDATA_INIT_ATTR, cnt) * 8 + cdata(CDATA_INIT_SPEED, cnt) * 10 + cdata(CDATA_INIT_LIFEMANA, cnt) * 8
+					if ( kiso > 20000 ) {
+						kiso = 20000
+					}
+					trcost += kiso
 					monka++
 				loop
-				trcost = monka * 30000 + 10000 - monka * monka * 30
+				trcost = trcost * 5
 				if ( cdata(CDATA_GOLD, CHARA_PLAYER) >= trcost ) {
 					chatList 1, lang("訓練する", "Too expensive, but okay.")
 				}
@@ -7807,31 +7813,31 @@
 						continue
 					}
 					tc = cnt
-					modgrowth tc, SKILL_ATTR_STR, 25
-					modgrowth tc, SKILL_ATTR_CON, 25
-					modgrowth tc, SKILL_ATTR_DEX, 25
-					modgrowth tc, SKILL_ATTR_PER, 25
-					modgrowth tc, SKILL_ATTR_LER, 25
-					modgrowth tc, SKILL_ATTR_WIL, 25
-					modgrowth tc, SKILL_ATTR_MAG, 25
-					modgrowth tc, SKILL_ATTR_CHA, 25
+					modgrowth tc, SKILL_ATTR_STR, 90
+					modgrowth tc, SKILL_ATTR_CON, 90
+					modgrowth tc, SKILL_ATTR_DEX, 90
+					modgrowth tc, SKILL_ATTR_PER, 90
+					modgrowth tc, SKILL_ATTR_LER, 90
+					modgrowth tc, SKILL_ATTR_WIL, 90
+					modgrowth tc, SKILL_ATTR_MAG, 90
+					modgrowth tc, SKILL_ATTR_CHA, 90
 					repeat MAX_SKILL_WEAPON - STARTING_SKILL_WEAPON, STARTING_SKILL_WEAPON
 						if ( sorg(cnt, tc) == 0 ) {
 							continue
 						}
-						modgrowth tc, cnt, 15
+						modgrowth tc, cnt, 120
 					loop
 					repeat MAX_SKILL_NORMAL - STARTING_SKILL_NORMAL, STARTING_SKILL_NORMAL
 						if ( sorg(cnt, tc) == 0 ) {
 							continue
 						}
-						modgrowth tc, cnt, 15
+						modgrowth tc, cnt, 120
 					loop
 					repeat MAX_SKILL_ACTIVE - STARTING_SKILL_ACTIVE, STARTING_SKILL_ACTIVE
 						if ( sorg(cnt, tc) == 0 ) {
 							continue
 						}
-						modgrowth tc, cnt, 15
+						modgrowth tc, cnt, 120
 					loop
 					r1 = tc
 					gosub *charaRefresh
@@ -11011,11 +11017,14 @@
 							break
 						}
 						if ( inv(INV_ITEM_NUM, cnt) > 0 ) {
-							if ( inv(INV_ITEM_ID, cnt) == ITEM_ID_SOCKS ) {
+							if ( inv(INV_ITEM_ID, cnt) == ITEM_ID_SOCKS | inv(INV_ITEM_ID, cnt) == ITEM_ID_SOCKS2 ) {
 								if ( inv(INV_ITEM_EQUIP, cnt) == 0 ) {
 									if ( ibit(ITEM_BIT_NO_DROP, cnt) != 1 ) {
 										inv(INV_ITEM_NUM, cnt)--
 										gdata(GDATA_FLAG_SUB_URCAGUARY_THE_TENACIOUS_GEM)++
+										if ( inv(INV_ITEM_ID, cnt) == ITEM_ID_SOCKS2 ) {
+											gdata(GDATA_FLAG_SUB_URCAGUARY_THE_TENACIOUS_GEM)++
+										}
 										f = 1
 										txt itemname(cnt, 1) + lang("を納入した。", " was handed over.")
 										continue cnt
@@ -11244,10 +11253,21 @@
 				}
 			}
 		}
+		if ( kaiwa == 0 ) {
+			item_find ITEM_ID_SOCKS2, ITEM_FIND_MODE_DBID, ITEM_FIND_LOCATION_CHARAS
+			if ( stat != (-1) ) {
+				ci = stat
+				if ( inv(INV_ITEM_NUM, ci) >= 1 ) {
+					if ( ibit(ITEM_BIT_NO_DROP, ci) != TRUE ) {
+						kaiwa = 1
+					}
+				}
+			}
+		}
 		if ( kaiwa == 1 ) {
 			chatList 0, lang("あげないよ", "No way.")
 			chatList 1, lang(itemname(ci) + "を交換", "(Hand over " + itemname(ci) + ".)")
-			buff = lang("おや…？君、靴下を持っているみたいだね。提案なんだけれど、その靴下１枚と信仰の巻物３枚を交換してくれないかな？", "Oh...? It seems you have some socks with you. I have a proposal for you. Why don't you trade me one of those socks in exchange for three scrolls of faith?")
+			buff = lang("おや…？君、靴下を持っているみたいだね。提案なんだけれど、その靴下と信仰の巻物３枚を交換してくれないかな？", "Oh...? It seems you have some socks with you. I have a proposal for you. Why don't you trade me those socks in exchange for three scrolls of faith?")
 			gosub *chat_select
 			if ( chatval != 1 ) {
 				chatMore lang("それは…残念だね。", "That's... too bad.")
@@ -17190,8 +17210,8 @@
 								}
 							}
 						}
-						cdata(CDATA_INTEREST, tc) -= rnd(30)
-						cdata(CDATA_INTEREST_RENEW, tc) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 + 8
+						cdata(CDATA_INTEREST, tc) -= rnd(20)
+						cdata(CDATA_INTEREST_RENEW, tc) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 + 12
 					}
 				}
 			}
@@ -19717,6 +19737,7 @@
 			skillexp SKILL_ATTR_PER, tc, 30
 			modimp2 tc, 10
 			cdata(CDATA_INTEREST, tc) -= 30
+			cdata(CDATA_INTEREST_RENEW, tc) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 + 12
 		}
 		goto *chat_default
 	}
@@ -21790,6 +21811,7 @@
 		break
 	loop
 	listmax = 0
+	dorei2 = 0
 	buff = lang("そう" + _dana() + "" + cdatan(CDATAN_NAME, MAX_CHARA_NC) + "を" + calcslavevalue(MAX_CHARA_NC) + strgold + "でどう" + _da(1), "Okay. Let me check the stable... How about " + cnven(cdatan(CDATAN_NAME, MAX_CHARA_NC)) + " for " + calcslavevalue(MAX_CHARA_NC) + " gold pieces. I'd say it's quite a bargain!")
 	if ( cdata(CDATA_LEVEL, CHARA_PLAYER) >= 4 ) {
 		chatList 2, lang("カタログAを見る(レベル" + limit(cdata(CDATA_LEVEL, CHARA_PLAYER) / 2 + 5, 6, 130) + "以下)", "Catalog A (Level < " + limit(cdata(CDATA_LEVEL, CHARA_PLAYER) / 2 + 5, 6, 130) + ")")

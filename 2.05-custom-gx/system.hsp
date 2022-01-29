@@ -808,6 +808,11 @@
 			hagureta = 100
 		}
 	loop
+	if ( gdata(GDATA_VERSION) < 6090 ) {
+		if ( trait(TRAIT_NORMAL_STAT_SPD) != 0 ) {
+			cdata(CDATA_MATERIAL2_COUNTER, CHARA_PLAYER) = 1
+		}
+	}
 	if ( gdata(GDATA_VERSION) != VERSION_NUMBER ) {
 		gdata(GDATA_WORLD_RENEW) = 1
 	}

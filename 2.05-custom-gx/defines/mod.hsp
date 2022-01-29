@@ -109,7 +109,8 @@
 #define global	BUFF_DATA_SCAN	63
 #define global	BUFF_JYUSOU_GOUSHIN	64
 #define global	BUFF_HARMONIC_ASSAULT	65
-#define global	BUFF_LIFE_TASTING	66
+#define global	BUFF_MOGRANIC_AURA	66
+#define global	BUFF_LIFE_TASTING	67
 
 #define global	MAX_BUFF	(BUFF_LIFE_TASTING + 1)
 
@@ -493,7 +494,7 @@
 #define global	SKILL_SPACT_MULTIPLE_GATHER	752
 #define global	SKILL_SPACT_PSYCHIC_WAVE	753
 #define global	SKILL_SPACT_READING_PARTY	754
-#define global	SKILL_SPACT_OVER_LONG_THROW	755
+#define global	SKILL_SPACT_SHINING_THROW	755
 #define global	SKILL_SPACT_DUPLICANE	756
 #define global	SKILL_SPACT_LOCK_BREAK	757
 #define global	SKILL_SPACT_MEMORY_POISON	758
@@ -575,8 +576,11 @@
 #define global	SKILL_SPACT_E_MAG_CAGE	834
 #define global	SKILL_SPACT_E_MAG_TORNADO	835
 #define global	SKILL_SPACT_WIRE_WORLD	836
+#define global	SKILL_SPACT_SAND_CANNON	837
+#define global	SKILL_SPACT_ROCRUSHER	838
+#define global	SKILL_SPACT_MOGRANIC_AURA	839
 
-#define global	MAX_SKILL	(SKILL_SPACT_WIRE_WORLD + 1)
+#define global	MAX_SKILL	(SKILL_SPACT_MOGRANIC_AURA + 1)
 
 // Absolute skill limits
 #define global	MAX_SPACT_COUNT	500 // Maximum number of spact slots available in the array, beginning at STARTING_SKILL_SPACT, meaning the effective max skillid is 1099 (1100 if you really push it)
@@ -1183,8 +1187,9 @@
 #define global	SOUNDLIST_SEMI3	296
 #define global	SOUNDLIST_SEMI4	297
 #define global	SOUNDLIST_SEMI5	298
+#define global	SOUNDLIST_CRASH14	299
 
-#define global	SOUNDLIST_MAX	(SOUNDLIST_SEMI5 + 1)
+#define global	SOUNDLIST_MAX	(SOUNDLIST_CRASH14 + 1)
 
 // Item effects
 #define global	EFFECT_NONE	0
@@ -1312,7 +1317,12 @@
 #define global	EFFECT_LESIMAS_FRAGMENT	122
 #define global	EFFECT_REMIDO_FRAGMENT	123
 #define global	EFFECT_CHAOS_FRAGMENT	124
+
+; NOTE: Due to a bug in (non-Custom) Elona+, the effect ID
+; for memory converters is undefined, so the socks effect 
+; in non-Custom's code is 125 when it should have been 126.
 #define global	EFFECT_MEMORY_CONVERTER	125
+#define global	EFFECT_SOCKS2	126
 
 // Traits (feats)
 #define global	TRAIT_NORMAL_OTHER_MUTANT	0
@@ -2765,6 +2775,8 @@
 #define global	ANIMATION_POTION_PLUG_5	56
 #define global	ANIMATION_BURN_SCROLLS	57
 #define global	ANIMATION_LINEAR_LAUNCHER	58
+#define global	ANIMATION_SAND_CANNON	59
+#define global	ANIMATION_SHINING_THROW	60
 
 #define global	ANIMATION_UNUSED1	108
 #define global	ANIMATION_UNUSED2	109
@@ -5702,8 +5714,9 @@
 #define global	ITEM_ID_SPELLBOOK_OF_NETHER_ROAR	1245
 #define global	ITEM_ID_SPELLBOOK_OF_ECLIPSE_JAIL	1246
 #define global	ITEM_ID_SPELLBOOK_OF_THUNDER_VORTEX	1247
+#define global	ITEM_ID_SOCKS2	1248
 
-#define global	MAX_ITEM_ID	(ITEM_ID_SPELLBOOK_OF_THUNDER_VORTEX + 3)
+#define global	MAX_ITEM_ID	(ITEM_ID_SOCKS2 + 3)
 
 // Creatures
 #define global	CREATURE_ID_BUG	0 // Also doubles as RANDOM
@@ -6755,8 +6768,15 @@
 #define global	CREATURE_ID_YONORNE_THE_ROOKIE_GUIDE	1046
 #define global	CREATURE_ID_MAGIC_BEE	1047
 #define global	CREATURE_ID_YOUNG_SWALLOW	1048
+#define global	CREATURE_ID_MAG_COUNT	1049
+#define global	CREATURE_ID_E_MAG_DUKE	1050
+#define global	CREATURE_ID_CRYSTALIAN	1051
+#define global	CREATURE_ID_EIGHTY_SHAKU	1052
+#define global	CREATURE_ID_GIGANTES	1053
+#define global	CREATURE_ID_SURTR	1054
+#define global	CREATURE_ID_DARK_ARTIFICIAL_GIANT	1055
 
-#define global	MAX_CREATURE_ID	(CREATURE_ID_YOUNG_SWALLOW + 3)
+#define global	MAX_CREATURE_ID	(CREATURE_ID_DARK_ARTIFICIAL_GIANT + 3)
 
 // Buffer
 #define global	BUFFER_SCREEN	0
