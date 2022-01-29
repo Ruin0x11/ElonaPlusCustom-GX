@@ -1,3 +1,11 @@
+# 2.09.1.0
+
+## Added
+- Ported all changes from Elona+ 2.09.
+
+## Fixed
+- Fixed elemental damage causing no status effects. (#78)
+
 # 2.08.2.0
 
 # Added
