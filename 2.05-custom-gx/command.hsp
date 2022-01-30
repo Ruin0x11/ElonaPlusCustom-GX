@@ -8768,8 +8768,11 @@
 			}
 			mes "Hopeless"
 		loop
+		if ( cdata(CDATA_SANITY, cc) > 100 ) {
+			cdata(CDATA_SANITY, cc) = 100
+		}
 		if ( cc < MAX_CHARA_FOLLOWER ) {
-			s = "" + cdata(CDATA_HP, cc) + "/" + cdata(CDATA_MP, cc), "" + sdata(SKILL_ATTR_LIFE, cc) + "(" + sorg(SKILL_ATTR_LIFE, cc) + ")", "" + sdata(SKILL_ATTR_MANA, cc) + "(" + sorg(SKILL_ATTR_MANA, cc) + ")", "" + cdata(CDATA_SANITY, cc), "" + cdata(CDATA_SPEED, cc) + "(" + sorg(SKILL_ATTR_SPD, cc) + ")", "" + cdata(CDATA_FAME, cc), "" + cdata(CDATA_KARMA, CHARA_PLAYER), "" + cdata(CDATA_SHOP_INVEST, cc) + "" + lang("階相当", " level"), ""
+			s = "" + cdata(CDATA_HP, cc) + "/" + cdata(CDATA_MP, cc), "" + sdata(SKILL_ATTR_LIFE, cc) + "(" + sorg(SKILL_ATTR_LIFE, cc) + ")", "" + sdata(SKILL_ATTR_MANA, cc) + "(" + sorg(SKILL_ATTR_MANA, cc) + ")", "" + cdata(CDATA_SANITY, cc) + "" + lang("%", " %"), "" + cdata(CDATA_SPEED, cc) + "(" + sorg(SKILL_ATTR_SPD, cc) + ")", "" + cdata(CDATA_FAME, cc), "" + cdata(CDATA_KARMA, CHARA_PLAYER), "" + cdata(CDATA_SHOP_INVEST, cc) + "" + lang("階相当", " level"), ""
 		}
 		else {
 			if ( cdata(CDATA_ALLIED, cc) == 0 ) {
@@ -10365,6 +10368,22 @@
 	}
 	return
 
+#define calcDvPv(%1)\
+	dvfix = cdata(CDATA_DV_FIX, %1)\
+	pvfix = cdata(CDATA_PV_FIX, %1)\
+	if ( cdata(CDATA_DV, %1) < 0 ) {\
+		dvfix = 100\
+	}\
+	if ( cdata(CDATA_PV, %1) < 0 ) {\
+		pvfix = 100\
+	}\
+	dvr1 = cdata(CDATA_DV, %1) * dvfix / 100 + dvfix - 100\
+	pvr1 = (cdata(CDATA_PV, %1) + pvfix / 25) * pvfix / 100\
+	if ( cdata(CDATA_DRAIN_HP, %1) >= 100 ) {\
+		dvr1 = 0\
+		pvr1 = 0\
+	}
+
 *com_wear
 	procid = (procid + 1) \ 4
 	proclist(procid) = "com_wear" + " ct:" + ct
@@ -10468,12 +10487,7 @@
 	gcopy 3, 960, 96, 96, 120
 	pos wx, wy + wh - 164
 	gcopy 3, 960, 216, 72, 144
-	dvr1 = cdata(CDATA_DV, cc) * cdata(CDATA_DV_FIX, cc) / 100 + cdata(CDATA_DV_FIX, cc) - 100
-	pvr1 = (cdata(CDATA_PV, cc) + cdata(CDATA_PV_FIX, cc) / 25) * cdata(CDATA_PV_FIX, cc) / 100
-	if ( cdata(CDATA_DRAIN_HP, cc) >= 100 ) {
-		dvr1 = 0
-		pvr1 = 0
-	}
+    calcDvPv cc
 	if ( showresist ) {
 		pos wx + 320, wy + 40
 		color 0, 0, 0
@@ -11935,12 +11949,7 @@
 		h = 102
 		window x + 4, y + 4, w, h - h \ 8, 0, -1
 		window x, y, w, h - h \ 8, 0, 0
-		dvr1 = cdata(CDATA_DV, tc) * cdata(CDATA_DV_FIX, tc) / 100 + cdata(CDATA_DV_FIX, tc) - 100
-		pvr1 = (cdata(CDATA_PV, tc) + cdata(CDATA_PV_FIX, tc) / 25) * cdata(CDATA_PV_FIX, tc) / 100
-		if ( cdata(CDATA_DRAIN_HP, tc) >= 100 ) {
-			dvr1 = 0
-			pvr1 = 0
-		}
+        calcDvPv tc
 		font lang(cfg_font1, cfg_font2), 12 + en - en * 2, 0
 		pos x + 16, y + 17
 		mes "Dv:" + dvr1 + " Pv:" + pvr1
@@ -11954,12 +11963,7 @@
 		h = 102
 		window x + 4, y + 4, w, h - h \ 8, 0, -1
 		window x, y, w, h - h \ 8, 0, 0
-		dvr1 = cdata(CDATA_DV, tc) * cdata(CDATA_DV_FIX, tc) / 100 + cdata(CDATA_DV_FIX, tc) - 100
-		pvr1 = (cdata(CDATA_PV, tc) + cdata(CDATA_PV_FIX, tc) / 25) * cdata(CDATA_PV_FIX, tc) / 100
-		if ( cdata(CDATA_DRAIN_HP, tc) >= 100 ) {
-			dvr1 = 0
-			pvr1 = 0
-		}
+        calcDvPv tc
 		font lang(cfg_font1, cfg_font2), 12 + en - en * 2, 0
 		pos x + 16, y + 17
 		mes "Dv:" + dvr1 + " Pv:" + pvr1

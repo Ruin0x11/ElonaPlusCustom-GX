@@ -2403,7 +2403,7 @@
 	}
 	return
 
-#deffunc dmgcon int dmgcon_charid, int dmgcon_cond, int dmgcon_arg3
+#deffunc dmgcon int dmgcon_charid, int dmgcon_cond, int dmgcon_power
 	if ( dmgcon_arg3 < 1 ) {
 		f@con = 0
 	}
@@ -2815,7 +2815,10 @@
 		return 1
 	}
 	if ( dmgcon_cond == CONDITION_INSANE ) {
-		p@con = dmgcon_arg3 / 8 + 1
+		if ( cdata(CDATA_SANITY, dmgcon_charid) > 100 ) {
+			cdata(CDATA_SANITY, dmgcon_charid) = 100
+		}
+		p@con = dmgcon_power / 8 + cdata(CDATA_SANITY, dmgcon_charid)
 		if ( cdata(CDATA_CONDITION_DRUNK, dmgcon_charid) > 0 ) {
 			p@con /= 4
 		}
@@ -2823,7 +2826,7 @@
 			p@con /= 8
 		}
 		if ( findbuff(dmgcon_charid, BUFF_RETENTION) != (-1) ) {
-			p@con = 0
+			p@con /= 2
 		}
 		if ( p@con > 0 ) {
 			if ( cdata(CDATA_CONDITION_INSANE, dmgcon_charid) == 0 ) {
@@ -5531,9 +5534,8 @@
 	}
 	sutemi = 0
 	if ( dmghp_source >= DAMAGE_FROM_CHARA ) {
-		if ( breakgauge == 0 ) {
+		if ( cdata(CDATA_GAUGE_COOLDOWN2, dmghp_charid) == 0 ) {
 			if ( cdata(CDATA_DRAIN_HP, dmghp_charid) < 100 ) {
-				breakgauge = 1
 				cdata(CDATA_DRAIN_HP, dmghp_charid) += 2
 				if ( locvar_dmghp_ele == 64 ) {
 					cdata(CDATA_DRAIN_HP, dmghp_charid) += 8
@@ -7259,9 +7261,6 @@
 	if ( locvar_dmgsan_r <= 0 ) {
 		locvar_dmgsan_r = 1
 	}
-	if ( locvar_dmgsan_r > 10 ) {
-		return 0
-	}
 	locvar_dmgsan_dmg = dmgsan_arg2 / locvar_dmgsan_r
 	if ( dmgsan_charid < MAX_CHARA_FOLLOWER ) {
 		if ( trait(TRAIT_GOD_JURE) ) {
@@ -7273,6 +7272,9 @@
 	}
 	if ( locvar_dmgsan_dmg > 0 ) {
 		cdata(CDATA_SANITY, dmgsan_charid) += locvar_dmgsan_dmg
+	}
+	if ( cdata(CDATA_SANITY, dmgsan_charid) > 100 ) {
+		cdata(CDATA_SANITY, dmgsan_charid) = 100
 	}
 	else {
 		locvar_dmgsan_dmg = 0

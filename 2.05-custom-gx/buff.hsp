@@ -806,14 +806,13 @@
 				return
 			}
 			else {
-				buffdesc = lang("PVを半減しさらに" + locvar_calcbuff_p2 + "減少", "PV halved and -" + locvar_calcbuff_p)
+				buffdesc = lang("PVを半減", "Halves PV")
 				return
 			}
 		}
 		if ( cdata(CDATA_PV, calcbuff_charid) > 0 ) {
 			cdata(CDATA_PV, calcbuff_charid) = cdata(CDATA_PV, calcbuff_charid) / 2
 		}
-		cdata(CDATA_PV, calcbuff_charid) -= locvar_calcbuff_p2
 		return
 	}
 	if ( calcbuff_buffid == BUFF_ELEMENT_SCAR ) {
@@ -1267,7 +1266,7 @@
 				return
 			}
 			else {
-				buffdesc = lang("テレポート妨害/速度上昇/耐狂気", "Prevent teleport/Increases speed/RES+ insane")
+				buffdesc = lang("テレポート妨害/速度上昇/狂気半減", "Prevent teleport/Increases speed/Halve insane")
 				return
 			}
 		}

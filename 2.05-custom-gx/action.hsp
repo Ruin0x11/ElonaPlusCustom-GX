@@ -4106,6 +4106,11 @@
 	if ( TweakData(TWEAK_GAMEPLAY_CG_DISABLE_CURTAIN_CALL, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
 		gdata(GDATA_FLAG_CURTAIN_CALL)++
 	}
+	if ( cdata(CDATA_GAUGE_COOLDOWN, cc) == 0 ) {
+		if ( cdata(CDATA_SP, cc) > (-50) ) {
+			cdata(CDATA_SP, cc)--
+		}
+	}
 	if ( cbit(CHARA_BIT_SANDBAG, tc) != 1 ) {
 		if ( cdata(CDATA_GAUGE_COOLDOWN, cc) == 0 ) {
 			cdata(CDATA_GAUGE_COOLDOWN, cc) = 1
@@ -4166,6 +4171,14 @@
 				}
 				return
 			}
+		}
+	}
+	if ( cdata(CDATA_SP, cc) < 50 ) {
+		if ( rnd(2) == 0 ) {
+			if ( synccheck(cc, -1) ) {
+				txt lang("疲労し過ぎて失敗した！", "You are too exhausted!")
+			}
+			return
 		}
 	}
 	if ( attackrange == 1 ) {
@@ -4742,6 +4755,9 @@
 				if ( cdata(CDATA_EXIST, tc) == CHAR_STATE_ALIVE ) {
 					if ( orgdmg > 0 ) {
 						cw2 = -1
+						cw3 = -1
+						cw4 = -1
+						shootp = 0
 						repeat MAX_EQUIP_SLOT_TOTAL, CDATA_STARTING_EQUIP_SLOTS
 							if ( cdata(cnt, cc) == 0 ) {
 								continue
@@ -4750,6 +4766,26 @@
 								continue
 							}
 							cw2 = cdata(cnt, cc) - cdata(cnt, cc) / EXT_EQUIP_SLOTS * EXT_EQUIP_SLOTS - 1
+							break
+						loop
+						repeat MAX_EQUIP_SLOT_TOTAL, CDATA_STARTING_EQUIP_SLOTS
+							if ( cdata(cnt, cc) == 0 ) {
+								continue
+							}
+							if ( rnd(10) != 0 ) {
+								continue
+							}
+							cw3 = cdata(cnt, cc) - cdata(cnt, cc) / EXT_EQUIP_SLOTS * EXT_EQUIP_SLOTS - 1
+							break
+						loop
+						repeat MAX_EQUIP_SLOT_TOTAL, CDATA_STARTING_EQUIP_SLOTS
+							if ( cdata(cnt, cc) == 0 ) {
+								continue
+							}
+							if ( rnd(10) != 0 ) {
+								continue
+							}
+							cw4 = cdata(cnt, cc) - cdata(cnt, cc) / EXT_EQUIP_SLOTS * EXT_EQUIP_SLOTS - 1
 							break
 						loop
 						if ( cw2 != (-1) ) {
@@ -4771,6 +4807,52 @@
 									break
 								}
 							loop
+							if ( shootp == 0 ) {
+								if ( cw3 != (-1) ) {
+									cw2 = cw3
+                                    repeat RANGE_INV_ITEM_ENCHANT
+										if ( inv(STARTING_INV_ITEM_ENCHANT + cnt * 2, cw2) == 0 ) {
+											break
+										}
+										enc = inv(STARTING_INV_ITEM_ENCHANT + cnt * 2, cw2)
+										if ( dist(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), cdata(CDATA_X, tc), cdata(CDATA_Y, tc)) <= 1 ) {
+											if ( enc == ENCHANT_PROXIMITY_ASSIST ) {
+												cdata(CDATA_EXTRA_ATTACKS_TYPE, cc) = 1
+												shootp = inv(STARTING_INV_ITEM_ENCHANT + cnt * 2 + 1, cw2)
+												break
+											}
+										}
+										if ( enc == ENCHANT_SHOOTING_MECHANISM ) {
+											cdata(CDATA_EXTRA_ATTACKS_TYPE, cc) = 2
+											shootp = inv(STARTING_INV_ITEM_ENCHANT + cnt * 2 + 1, cw2)
+											break
+										}
+									loop
+								}
+							}
+							if ( shootp == 0 ) {
+								if ( cw4 != (-1) ) {
+									cw2 = cw4
+                                    repeat RANGE_INV_ITEM_ENCHANT
+										if ( inv(STARTING_INV_ITEM_ENCHANT + cnt * 2, cw2) == 0 ) {
+											break
+										}
+										enc = inv(STARTING_INV_ITEM_ENCHANT + cnt * 2, cw2)
+										if ( dist(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), cdata(CDATA_X, tc), cdata(CDATA_Y, tc)) <= 1 ) {
+											if ( enc == ENCHANT_PROXIMITY_ASSIST ) {
+												cdata(CDATA_EXTRA_ATTACKS_TYPE, cc) = 1
+												shootp = inv(STARTING_INV_ITEM_ENCHANT + cnt * 2 + 1, cw2)
+												break
+											}
+										}
+										if ( enc == ENCHANT_SHOOTING_MECHANISM ) {
+											cdata(CDATA_EXTRA_ATTACKS_TYPE, cc) = 2
+											shootp = inv(STARTING_INV_ITEM_ENCHANT + cnt * 2 + 1, cw2)
+											break
+										}
+									loop
+								}
+							}
 							if ( cdata(CDATA_EXTRA_ATTACKS_TYPE, cc) != 0 ) {
 								if ( inv(INV_ITEM_QUALITY, cw2) >= FIX_QUALITY_MIRACLE ) {
 									if ( inv(INV_ITEM_QUALITY, cw2) == FIX_QUALITY_UNIQUE ) {
@@ -4900,6 +4982,13 @@
 									s(1) = ioriginalnameref(inv(INV_ITEM_ID, cw2))
 								}
 							}
+							if ( shootp > 2000 ) {
+								shootp = 2000
+							}
+							if ( develop & FALSE ) {
+								cdata(CDATA_EXTRA_ATTACKS_TYPE, cc) = 1
+								shootp = 2000
+							}
 							if ( cdata(CDATA_EXTRA_ATTACKS_TYPE, cc) == 1 ) {
 								txtef COLOR_PINK
 								txt lang(name(cc) + "は" + s(1) + "で追撃した！", "Furthermore, " + name(cc) + " attacked with " + s(1) + "!")
@@ -4912,7 +5001,7 @@
 								if ( cfg_attackanime ) {
 									animeload ANIMATION_UNISON_IMPACT1, tc
 								}
-								dmghp tc, (shootp / 40 * (orgdmg / 30) + rnd(sdata(SKILL_NORMAL_TACTICS, cc) * 10 + 1)) * 20 / limit(sdata(carmor(tc), tc) / 5 + 20, 20, 120) * 10, cc
+								dmghp tc, orgdmg / 30 * ((rnd(20) + shootp) / 50) + rnd(sdata(SKILL_NORMAL_TACTICS, cc) * 3 + 1), cc
 							}
 							if ( cdata(CDATA_EXTRA_ATTACKS_TYPE, cc) == 2 ) {
 								txtef COLOR_PINK
@@ -4926,7 +5015,7 @@
 								if ( cfg_attackanime ) {
 									animeload ANIMATION_UNISON_IMPACT1, tc
 								}
-								dmghp tc, (shootp / 50 * (orgdmg / 30) + rnd(sdata(SKILL_NORMAL_MARKSMAN, cc) * 5 + 1)) * 20 / limit(sdata(carmor(tc), tc) / 5 + 20, 20, 120) * 10, cc
+								dmghp tc, orgdmg / 30 * ((rnd(20) + shootp) / 50) + rnd(sdata(SKILL_NORMAL_MARKSMAN, cc) * 3 + 1), cc
 							}
 						}
 					}
@@ -5650,7 +5739,7 @@
 			s = refchara(cdata(CDATA_ID, tc), DBSPEC_CHARA_FILTER, 1)
 			if ( instr(s, 0, "/dragon/") != (-1) ) {
 				gdata(GDATA_DMG_TYPE) = 1
-				dmghp tc, orgdmg / 30 * ((rnd(20) + inv(40 + cnt * 2 + 1, cw)) / 50) + 1, cc
+				dmghp tc, orgdmg / 30 * ((rnd(20) + limit(inv(STARTING_INV_ITEM_ENCHANT + cnt * 2 + 1, cw), 1, 2000)) / 50) + 1, cc
 				subdmg = 0
 			}
 			continue
@@ -5659,7 +5748,7 @@
 			s = refchara(cdata(CDATA_ID, tc), DBSPEC_CHARA_FILTER, 1)
 			if ( instr(s, 0, "/god/") != (-1) ) {
 				gdata(GDATA_DMG_TYPE) = 1
-				dmghp tc, orgdmg / 30 * ((rnd(20) + inv(40 + cnt * 2 + 1, cw)) / 50) + 1, cc
+				dmghp tc, orgdmg / 30 * ((rnd(20) + limit(inv(STARTING_INV_ITEM_ENCHANT + cnt * 2 + 1, cw), 1, 2000)) / 50) + 1, cc
 				subdmg = 0
 			}
 			continue
@@ -5668,7 +5757,7 @@
 			s = refchara(cdata(CDATA_ID, tc), DBSPEC_CHARA_FILTER, 1)
 			if ( instr(s, 0, "/undead/") != (-1) ) {
 				gdata(GDATA_DMG_TYPE) = 1
-				dmghp tc, orgdmg / 30 * ((rnd(20) + inv(40 + cnt * 2 + 1, cw)) / 50) + 1, cc
+				dmghp tc, orgdmg / 30 * ((rnd(20) + limit(inv(STARTING_INV_ITEM_ENCHANT + cnt * 2 + 1, cw), 1, 2000)) / 50) + 1, cc
 				subdmg = 0
 			}
 			continue
@@ -5676,7 +5765,7 @@
 		if ( enc == ENCHANT_BANE_FLYING ) {
 			if ( cbit(CHARA_BIT_FLOAT, tc) == 1 ) {
 				gdata(GDATA_DMG_TYPE) = 1
-				dmghp tc, orgdmg / 120 * ((rnd(10) + inv(40 + cnt * 2 + 1, cw)) / 50) + 1, cc
+				dmghp tc, orgdmg / 120 * ((rnd(10) + limit(inv(STARTING_INV_ITEM_ENCHANT + cnt * 2 + 1, cw), 1, 2000)) / 50) + 1, cc
 				subdmg = 0
 			}
 			continue
@@ -5684,7 +5773,7 @@
 		if ( enc == ENCHANT_BANE_METAL ) {
 			if ( cbit(CHARA_BIT_METAL, tc) == TRUE ) {
 				gdata(GDATA_DMG_TYPE) = 1
-				dmghp tc, orgdmg / 25 * ((rnd(100) + inv(40 + cnt * 2 + 1, cw)) / 50) + 100, cc
+				dmghp tc, orgdmg / 25 * ((rnd(100) + limit(inv(STARTING_INV_ITEM_ENCHANT + cnt * 2 + 1, cw), 1, 2000)) / 50) + 100, cc
 				subdmg = 0
 			}
 			continue
@@ -12653,7 +12742,10 @@
 		inv(INV_ITEM_NUM, ci)--
 		cell_refresh inv(INV_ITEM_X, ci), inv(INV_ITEM_Y, ci)
 		snd SOUNDLIST_ATK_DARK
-		gdata(GDATA_FLAG_ABYSS_POWER) += 1
+		gdata(GDATA_FLAG_ABYSS_POWER) += 20
+		if ( gdata(GDATA_FLAG_ABYSS_POWER) > 100000 ) {
+			gdata(GDATA_FLAG_ABYSS_POWER) = 100000
+		}
 		txt lang("[深淵魔力: " + gdata(GDATA_FLAG_ABYSS_POWER) + "] ", "[Abyss power: " + gdata(GDATA_FLAG_ABYSS_POWER) + "] ")
 		goto *act_use_SWEND1
 		_switch_sw++

@@ -813,6 +813,12 @@
 			cdata(CDATA_MATERIAL2_COUNTER, CHARA_PLAYER) = 1
 		}
 	}
+	if ( gdata(GDATA_VERSION) < 6100 ) {
+		gdata(GDATA_FLAG_ABYSS_POWER) = gdata(GDATA_FLAG_ABYSS_POWER) * 20
+		if ( gdata(GDATA_FLAG_ABYSS_POWER) > 100000 ) {
+			gdata(GDATA_FLAG_ABYSS_POWER) = 100000
+		}
+	}
 	if ( gdata(GDATA_VERSION) != VERSION_NUMBER ) {
 		gdata(GDATA_WORLD_RENEW) = 1
 	}
@@ -4246,10 +4252,12 @@
 *mutexobj
 	CreateMutexA 0, 0, VARIANT_NAME
 	mutex_handle = stat
+    #ifndef CUSTOM_GX_MOCK
 	_GetLastError
 	if ( stat == 183 ) {
 		dialog lang("二重起動のため終了します。", "The program is already running."), 1
 		end
 	}
+    #endif
 	return
 

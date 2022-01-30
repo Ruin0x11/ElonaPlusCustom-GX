@@ -125,9 +125,9 @@
 ; Define this to enable Lua debugging features.
 ;#define CUSTOM_GX_LUA
 
-#define global VARIANT_NAME "ElonaPlus Custom-GX 2.09.1.0"
-#define global VARIANT_TITLE "Elona+ Custom-GX 2.09.1.0"
-#define global VERSION_STRING "6.09"
+#define global VARIANT_NAME "ElonaPlus Custom-GX 2.10.1.0"
+#define global VARIANT_TITLE "Elona+ Custom-GX 2.10.1.0"
+#define global VERSION_STRING "6.10"
 #define global VERSION_NUMBER int(double(VERSION_STRING) * 1000)
 
     develop = dirinfo(4) == "--develop"
@@ -2322,7 +2322,6 @@
 
 *turn_end
 	buffact = 0
-	breakgauge = 0
 
 	/********** ANNA CUSTOM - BEGINNING **********/
 
@@ -6609,6 +6608,13 @@
 			flt
 			characreate -1, CREATURE_ID_ZISILION_THE_MINE_KING, 9, 10
 			cdata(CDATA_ROLE, rc) = ROLE_SPECIAL
+		}
+		if ( gdata(GDATA_AREA) == AREA_TRUCE_GROUND ) {
+			flt
+			characreate -1, CREATURE_ID_TALKA_THE_LONG_TWINTAIL, 16, 4
+			cdata(CDATA_ROLE, rc) = ROLE_SPECIAL
+			flt
+			itemcreate -1, ITEM_ID_AURTEHOM, 25, 16, 0
 		}
 		if ( gdata(GDATA_AREA) == AREA_PALMIA ) {
 			flt

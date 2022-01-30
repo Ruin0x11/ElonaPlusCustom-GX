@@ -1533,6 +1533,13 @@
 	if ( gdata(GDATA_AREA) == AREA_TRUCE_GROUND ) {
 		map_initcustom "shrine_1"
 		mdata(MDATA_MODERATE_CROWD) = 10
+		if ( gdata(GDATA_FLAG_TALKA_IN_TRUCE_GROUND) == 1 ) {
+			flt
+			characreate -1, CREATURE_ID_TALKA_THE_LONG_TWINTAIL, 16, 4
+			cdata(CDATA_ROLE, rc) = ROLE_SPECIAL
+			flt
+			itemcreate -1, ITEM_ID_AURTEHOM, 25, 16, 0
+		}
 		flt
 		itemcreate -1, ITEM_ID_ALTAR, 10, 8, 0
 		inv(INV_ITEM_GOD, ci) = GOD_MANI
@@ -8780,6 +8787,7 @@
 			gosub *place_chara
 			cdata(CDATA_HP, rc) = cdata(CDATA_MAX_HP, rc)
 			cdata(CDATA_MP, rc) = cdata(CDATA_MAX_MP, rc)
+			cdata(CDATA_SP, rc) = cdata(CDATA_MAX_SP, rc)
 		}
 	loop
 	if ( mdata(MDATA_CAN_SAVE) == 1 ) {
@@ -9029,6 +9037,7 @@
 			if ( rc >= MAX_CHARA_SAVE ) {
 				cdata(CDATA_HP, rc) = cdata(CDATA_MAX_HP, rc)
 				cdata(CDATA_MP, rc) = cdata(CDATA_MAX_MP, rc)
+				cdata(CDATA_SP, rc) = cdata(CDATA_MAX_SP, rc)
 				cdata(CDATA_SANITY, rc) = 0
 			}
 			if ( rc >= MAX_CHARA_SAVE ) {
@@ -10057,6 +10066,15 @@
 				cdata(CDATA_EXIST, cnt) = CHAR_STATE_DEAD
 				map(cdata(CDATA_X, cnt), cdata(CDATA_Y, cnt), 1) = 0
 			loop
+		}
+	}
+	if ( adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_TRUCE_GROUND ) {
+		if ( gdata(GDATA_FLAG_TALKA_IN_TRUCE_GROUND) == 0 ) {
+			if ( findchara(CREATURE_ID_TALKA_THE_LONG_TWINTAIL) != 0 ) {
+				chara_vanquish findchara(CREATURE_ID_TALKA_THE_LONG_TWINTAIL)
+			}
+			evadd EVENT_SPAWN_EVENT_NPCS
+			gdata(GDATA_FLAG_TALKA_IN_TRUCE_GROUND) = 1
 		}
 	}
 	if ( adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_SISTER_MANSION ) {
@@ -11384,39 +11402,61 @@
 						}
 					}
 				}
-				repeat 300
-					repeat
-						if ( cdata(CDATA_AREA, cnt) == gdata(GDATA_AREA) ) {
-							continue
-						}
-						if ( cdata(CDATA_EXIST, cnt) == CHAR_STATE_ALLY_WORK ) {
-							continue
-						}
-						await
-						p = rnd(STARTING_SKILL_SPELL - STARTING_SKILL_WEAPON) + STARTING_SKILL_WEAPON
-						if ( sdataref(SKILL_DATAREF_USE, p) != 0 ) {
-							if ( sorg(p, tc) == 0 ) {
-								continue
-							}
-							skillexp p, tc, limit(sdata(SKILL_NORMAL_TRAVELING, tc) * 1 / 4 + gdata(GDATA_TRAVEL_DISTANCE), 1, 1000)
-							break
-						}
-					loop
+				skillexp SKILL_ATTR_STR, tc, limit(sdata(SKILL_NORMAL_TRAVELING, tc) * 1 / 4 + gdata(GDATA_TRAVEL_DISTANCE) / 2 + rnd(gdata(GDATA_TRAVEL_DISTANCE) / 2), 1, 2000)
+				skillexp SKILL_ATTR_CON, tc, limit(sdata(SKILL_NORMAL_TRAVELING, tc) * 1 / 4 + gdata(GDATA_TRAVEL_DISTANCE) / 2 + rnd(gdata(GDATA_TRAVEL_DISTANCE) / 2), 1, 2000)
+				skillexp SKILL_ATTR_DEX, tc, limit(sdata(SKILL_NORMAL_TRAVELING, tc) * 1 / 4 + gdata(GDATA_TRAVEL_DISTANCE) / 2 + rnd(gdata(GDATA_TRAVEL_DISTANCE) / 2), 1, 2000)
+				skillexp SKILL_ATTR_PER, tc, limit(sdata(SKILL_NORMAL_TRAVELING, tc) * 1 / 4 + gdata(GDATA_TRAVEL_DISTANCE) / 2 + rnd(gdata(GDATA_TRAVEL_DISTANCE) / 2), 1, 2000)
+				skillexp SKILL_ATTR_LER, tc, limit(sdata(SKILL_NORMAL_TRAVELING, tc) * 1 / 4 + gdata(GDATA_TRAVEL_DISTANCE) / 2 + rnd(gdata(GDATA_TRAVEL_DISTANCE) / 2), 1, 2000)
+				skillexp SKILL_ATTR_WIL, tc, limit(sdata(SKILL_NORMAL_TRAVELING, tc) * 1 / 4 + gdata(GDATA_TRAVEL_DISTANCE) / 2 + rnd(gdata(GDATA_TRAVEL_DISTANCE) / 2), 1, 2000)
+				skillexp SKILL_ATTR_MAG, tc, limit(sdata(SKILL_NORMAL_TRAVELING, tc) * 1 / 4 + gdata(GDATA_TRAVEL_DISTANCE) / 2 + rnd(gdata(GDATA_TRAVEL_DISTANCE) / 2), 1, 2000)
+				skillexp SKILL_ATTR_CHA, tc, limit(sdata(SKILL_NORMAL_TRAVELING, tc) * 1 / 4 + gdata(GDATA_TRAVEL_DISTANCE) / 2 + rnd(gdata(GDATA_TRAVEL_DISTANCE) / 2), 1, 2000)
+				repeat MAX_SKILL_WEAPON - STARTING_SKILL_WEAPON, STARTING_SKILL_WEAPON
+					if ( sorg(cnt, tc) == 0 ) {
+						continue
+					}
+					skillexp cnt, tc, limit(sdata(SKILL_NORMAL_TRAVELING, tc) * 1 / 4 + gdata(GDATA_TRAVEL_DISTANCE) / 2 + rnd(gdata(GDATA_TRAVEL_DISTANCE) / 2), 1, 2000)
+				loop
+				repeat MAX_SKILL_NORMAL - STARTING_SKILL_NORMAL, STARTING_SKILL_NORMAL
+					if ( sorg(cnt, tc) == 0 ) {
+						continue
+					}
+					skillexp cnt, tc, limit(sdata(SKILL_NORMAL_TRAVELING, tc) * 1 / 4 + gdata(GDATA_TRAVEL_DISTANCE) / 2 + rnd(gdata(GDATA_TRAVEL_DISTANCE) / 2), 1, 2000)
+				loop
+				repeat MAX_SKILL_ACTIVE - STARTING_SKILL_ACTIVE, STARTING_SKILL_ACTIVE
+					if ( sorg(cnt, tc) == 0 ) {
+						continue
+					}
+					skillexp cnt, tc, limit(sdata(SKILL_NORMAL_TRAVELING, tc) * 1 / 4 + gdata(GDATA_TRAVEL_DISTANCE) / 2 + rnd(gdata(GDATA_TRAVEL_DISTANCE) / 2), 1, 2000)
 				loop
 			loop
 			if ( sdata(SKILL_NORMAL_TRAVELING, CHARA_PLAYER) > 0 ) {
-				skillexp SKILL_NORMAL_TRAVELING, CHARA_PLAYER, 5 + gdata(GDATA_TRAVEL_DISTANCE) * 2 / 5, 0, 1000
-				repeat 300
-					repeat
-						p = rnd(STARTING_SKILL_SPELL - STARTING_SKILL_WEAPON) + STARTING_SKILL_WEAPON
-						if ( sdataref(SKILL_DATAREF_USE, p) != 0 ) {
-							if ( sorg(p, CHARA_PLAYER) == 0 ) {
-								continue
-							}
-							skillexp p, CHARA_PLAYER, limit(sdata(SKILL_NORMAL_TRAVELING, CHARA_PLAYER) * 1 / 4 + gdata(GDATA_TRAVEL_DISTANCE), 1, 1000)
-							break
-						}
-					loop
+				tc = CHARA_PLAYER
+				skillexp SKILL_NORMAL_TRAVELING, tc, 5 + gdata(GDATA_TRAVEL_DISTANCE) * 2 / 5, 0, 1000
+				skillexp SKILL_ATTR_STR, tc, limit(sdata(SKILL_NORMAL_TRAVELING, tc) * 1 / 4 + gdata(GDATA_TRAVEL_DISTANCE) / 2 + rnd(gdata(GDATA_TRAVEL_DISTANCE) / 2), 1, 2000)
+				skillexp SKILL_ATTR_CON, tc, limit(sdata(SKILL_NORMAL_TRAVELING, tc) * 1 / 4 + gdata(GDATA_TRAVEL_DISTANCE) / 2 + rnd(gdata(GDATA_TRAVEL_DISTANCE) / 2), 1, 2000)
+				skillexp SKILL_ATTR_DEX, tc, limit(sdata(SKILL_NORMAL_TRAVELING, tc) * 1 / 4 + gdata(GDATA_TRAVEL_DISTANCE) / 2 + rnd(gdata(GDATA_TRAVEL_DISTANCE) / 2), 1, 2000)
+				skillexp SKILL_ATTR_PER, tc, limit(sdata(SKILL_NORMAL_TRAVELING, tc) * 1 / 4 + gdata(GDATA_TRAVEL_DISTANCE) / 2 + rnd(gdata(GDATA_TRAVEL_DISTANCE) / 2), 1, 2000)
+				skillexp SKILL_ATTR_LER, tc, limit(sdata(SKILL_NORMAL_TRAVELING, tc) * 1 / 4 + gdata(GDATA_TRAVEL_DISTANCE) / 2 + rnd(gdata(GDATA_TRAVEL_DISTANCE) / 2), 1, 2000)
+				skillexp SKILL_ATTR_WIL, tc, limit(sdata(SKILL_NORMAL_TRAVELING, tc) * 1 / 4 + gdata(GDATA_TRAVEL_DISTANCE) / 2 + rnd(gdata(GDATA_TRAVEL_DISTANCE) / 2), 1, 2000)
+				skillexp SKILL_ATTR_MAG, tc, limit(sdata(SKILL_NORMAL_TRAVELING, tc) * 1 / 4 + gdata(GDATA_TRAVEL_DISTANCE) / 2 + rnd(gdata(GDATA_TRAVEL_DISTANCE) / 2), 1, 2000)
+				skillexp SKILL_ATTR_CHA, tc, limit(sdata(SKILL_NORMAL_TRAVELING, tc) * 1 / 4 + gdata(GDATA_TRAVEL_DISTANCE) / 2 + rnd(gdata(GDATA_TRAVEL_DISTANCE) / 2), 1, 2000)
+				repeat MAX_SKILL_WEAPON - STARTING_SKILL_WEAPON, STARTING_SKILL_WEAPON
+					if ( sorg(cnt, tc) == 0 ) {
+						continue
+					}
+					skillexp cnt, tc, limit(sdata(SKILL_NORMAL_TRAVELING, tc) * 1 / 4 + gdata(GDATA_TRAVEL_DISTANCE) / 2 + rnd(gdata(GDATA_TRAVEL_DISTANCE) / 2), 1, 2000)
+				loop
+				repeat MAX_SKILL_NORMAL - STARTING_SKILL_NORMAL, STARTING_SKILL_NORMAL
+					if ( sorg(cnt, tc) == 0 ) {
+						continue
+					}
+					skillexp cnt, tc, limit(sdata(SKILL_NORMAL_TRAVELING, tc) * 1 / 4 + gdata(GDATA_TRAVEL_DISTANCE) / 2 + rnd(gdata(GDATA_TRAVEL_DISTANCE) / 2), 1, 2000)
+				loop
+				repeat MAX_SKILL_ACTIVE - STARTING_SKILL_ACTIVE, STARTING_SKILL_ACTIVE
+					if ( sorg(cnt, tc) == 0 ) {
+						continue
+					}
+					skillexp cnt, tc, limit(sdata(SKILL_NORMAL_TRAVELING, tc) * 1 / 4 + gdata(GDATA_TRAVEL_DISTANCE) / 2 + rnd(gdata(GDATA_TRAVEL_DISTANCE) / 2), 1, 2000)
 				loop
 			}
 			locvar_map_begin_friends = 0
@@ -11482,18 +11522,31 @@
 				continue
 			}
 			tc = cnt
-			repeat 300
-				repeat
-					await
-					p = rnd(STARTING_SKILL_SPELL - STARTING_SKILL_WEAPON) + STARTING_SKILL_WEAPON
-					if ( sdataref(SKILL_DATAREF_USE, p) != 0 ) {
-						if ( sorg(p, tc) == 0 ) {
-							continue
-						}
-						skillexp p, tc, limit(gdata(GDATA_DOJO_TURNS) * 4, 0, 200000)
-						break
-					}
-				loop
+			skillexp SKILL_ATTR_STR, tc, limit(gdata(GDATA_DOJO_TURNS) * 3 + rnd(gdata(GDATA_DOJO_TURNS)), 0, 200000)
+			skillexp SKILL_ATTR_CON, tc, limit(gdata(GDATA_DOJO_TURNS) * 3 + rnd(gdata(GDATA_DOJO_TURNS)), 0, 200000)
+			skillexp SKILL_ATTR_DEX, tc, limit(gdata(GDATA_DOJO_TURNS) * 3 + rnd(gdata(GDATA_DOJO_TURNS)), 0, 200000)
+			skillexp SKILL_ATTR_PER, tc, limit(gdata(GDATA_DOJO_TURNS) * 3 + rnd(gdata(GDATA_DOJO_TURNS)), 0, 200000)
+			skillexp SKILL_ATTR_LER, tc, limit(gdata(GDATA_DOJO_TURNS) * 3 + rnd(gdata(GDATA_DOJO_TURNS)), 0, 200000)
+			skillexp SKILL_ATTR_WIL, tc, limit(gdata(GDATA_DOJO_TURNS) * 3 + rnd(gdata(GDATA_DOJO_TURNS)), 0, 200000)
+			skillexp SKILL_ATTR_MAG, tc, limit(gdata(GDATA_DOJO_TURNS) * 3 + rnd(gdata(GDATA_DOJO_TURNS)), 0, 200000)
+			skillexp SKILL_ATTR_CHA, tc, limit(gdata(GDATA_DOJO_TURNS) * 3 + rnd(gdata(GDATA_DOJO_TURNS)), 0, 200000)
+			repeat MAX_SKILL_WEAPON - STARTING_SKILL_WEAPON, STARTING_SKILL_WEAPON
+				if ( sorg(cnt, tc) == 0 ) {
+					continue
+				}
+				skillexp cnt, tc, limit(gdata(GDATA_DOJO_TURNS) * 3 + rnd(gdata(GDATA_DOJO_TURNS)), 0, 200000)
+			loop
+			repeat MAX_SKILL_NORMAL - STARTING_SKILL_NORMAL, STARTING_SKILL_NORMAL
+				if ( sorg(cnt, tc) == 0 ) {
+					continue
+				}
+				skillexp cnt, tc, limit(gdata(GDATA_DOJO_TURNS) * 3 + rnd(gdata(GDATA_DOJO_TURNS)), 0, 200000)
+			loop
+			repeat MAX_SKILL_ACTIVE - STARTING_SKILL_ACTIVE, STARTING_SKILL_ACTIVE
+				if ( sorg(cnt, tc) == 0 ) {
+					continue
+				}
+				skillexp cnt, tc, limit(gdata(GDATA_DOJO_TURNS) * 3 + rnd(gdata(GDATA_DOJO_TURNS)), 0, 200000)
 			loop
 		loop
 		txtef COLOR_YELLOW

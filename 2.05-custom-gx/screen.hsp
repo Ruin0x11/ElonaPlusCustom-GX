@@ -361,8 +361,16 @@
 				color 0, 0, 0
 				pos sx + 14, sy
 				gcopy 3, 0, 440, 64, 16
-				dvpc = cdata(CDATA_DV, CHARA_PLAYER) * cdata(CDATA_DV_FIX, CHARA_PLAYER) / 100 + cdata(CDATA_DV_FIX, CHARA_PLAYER) - 100
-				pvpc = (cdata(CDATA_PV, CHARA_PLAYER) + cdata(CDATA_PV_FIX, CHARA_PLAYER) / 25) * cdata(CDATA_PV_FIX, CHARA_PLAYER) / 100
+				dvfix = cdata(CDATA_DV_FIX, CHARA_PLAYER)
+				pvfix = cdata(CDATA_PV_FIX, CHARA_PLAYER)
+				if ( cdata(CDATA_DV, CHARA_PLAYER) < 0 ) {
+					dvfix = 100
+				}
+				if ( cdata(CDATA_PV, CHARA_PLAYER) < 0 ) {
+					pvfix = 100
+				}
+				dvpc = cdata(CDATA_DV, CHARA_PLAYER) * dvfix / 100 + dvfix - 100
+				pvpc = (cdata(CDATA_PV, CHARA_PLAYER) + pvfix / 25) * pvfix / 100
 				if ( cdata(CDATA_DRAIN_HP, CHARA_PLAYER) >= 100 ) {
 					dvpc = 0
 					pvpc = 0
@@ -5976,7 +5984,11 @@
 	if ( gdata(GDATA_TEMPORARY_FLAGS2) == 1200 ) {
 		tohit = tohit * 2
 	}
-	hoseidv = cdata(CDATA_DV, tc) * cdata(CDATA_DV_FIX, tc) / 100 + cdata(CDATA_DV_FIX, tc) - 100
+	dvfix = cdata(CDATA_DV_FIX, tc)
+	if ( cdata(CDATA_DV, tc) < 0 ) {
+		dvfix = 100
+	}
+	hoseidv = cdata(CDATA_DV, tc) * dvfix / 100 + dvfix - 100
 	if ( cdata(CDATA_DRAIN_HP, tc) >= 100 ) {
 		hoseidv = 0
 	}
@@ -6650,7 +6662,11 @@
 	if ( calcattackdmg_arg1 == 1 ) {
 		return damage
 	}
-	hoseipv = (cdata(CDATA_PV, tc) + cdata(CDATA_PV_FIX, tc) / 25) * cdata(CDATA_PV_FIX, tc) / 100
+	pvfix = cdata(CDATA_PV_FIX, tc)
+	if ( cdata(CDATA_PV, tc) < 0 ) {
+		pvfix = 100
+	}
+	hoseipv = (cdata(CDATA_PV, tc) + pvfix / 25) * pvfix / 100
 	if ( cdata(CDATA_DRAIN_HP, tc) >= 100 ) {
 		hoseipv = 0
 	}

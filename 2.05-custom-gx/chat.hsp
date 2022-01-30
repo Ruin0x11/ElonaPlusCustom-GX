@@ -14246,6 +14246,25 @@
 		goto *chat_unique_SWEND1
 		_switch_sw++
 	}
+	if ( _switch_val == CREATURE_ID_TALKA_THE_LONG_TWINTAIL | _switch_sw ) {
+		_switch_sw = 0
+		listmax = 0
+		buff = lang("なんですか、ジロジロと…わたしの顔に何かついてます？", "under development!")
+		tc = tc * (0 == 0) + (0 != 0) * 0
+		list(0, listmax) = 0
+		listn(0, listmax) = strbye
+		listmax++
+		chatesc = 1
+		gosub *chat_select
+		if ( scenemode ) {
+			if ( scene_cut == 1 ) {
+				goto *chat_end
+			}
+		}
+		goto *chat_end
+		goto *chat_unique_SWEND1
+		_switch_sw++
+	}
 	if ( _switch_val == CREATURE_ID_AIME_THE_STORY_TELLER | _switch_sw ) {
 		_switch_sw = 0
 		if ( gdata(GDATA_FLAG_MAIN) < 1000 ) {

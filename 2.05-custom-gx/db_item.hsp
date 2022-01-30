@@ -4,7 +4,39 @@
 	}
 	dbmax = 0
 	dbsum = 0
-//*db_item_SOCKS2
+//*db_item_AURTEHOM
+ 	if ( 1 > objlv ) {
+ 		goto *db_item_SOCKS2
+ 	}
+	if ( fltselect != 3 ) {
+		goto *db_item_SOCKS2
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_ITEM_BOOK ) {
+			goto *db_item_SOCKS2
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_NONE ) {
+			goto *db_item_SOCKS2
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_AURTEHOM), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_SOCKS2
+		}
+	}
+	dbsum += 10000 / (1000 + abs(objlv - 1) * 10) + 1
+	dblist(0, dbmax) = ITEM_ID_AURTEHOM, dbsum
+	dbmax++
+*db_item_SOCKS2
 	if ( 1 > objlv ) {
 		goto *db_item_SPELLBOOK_OF_THUNDER_VORTEX
 	}
@@ -39988,6 +40020,76 @@
 	return
 
 *db_item_set
+	if ( dbid == ITEM_ID_AURTEHOM ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 666
+			inv(INV_ITEM_WEIGHT, ci) = 400
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_AURTEHOM
+			inv(INV_ITEM_PIC, ci) = xy2pic(13, 36)
+			reftype = FILTER_ITEM_BOOK
+			reftypeminor = FILTER_NOTHING
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			ibitmod ITEM_BIT_PRECIOUS, ci, TRUE
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			fixlv = FIX_QUALITY_UNIQUE
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_ITEM_BOOK
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == DBSPEC_TYPE ) {
+				return FILTER_ITEM_BOOK
+			}
+			if ( dbspec == DBSPEC_TYPE_MINOR ) {
+				return FILTER_NONE
+			}
+			if ( dbspec == DBSPEC_VALUE_ORG ) {
+				return 666
+			}
+			if ( dbspec == DBSPEC_PARAM3_ORG ) {
+				return
+			}
+			if ( dbspec == DBSPEC_CAN_READ ) {
+				return 1
+			}
+			if ( dbspec == DBSPEC_PCC ) {
+				return 0
+			}
+			if ( dbspec == DBSPEC_OBJ_LEVEL ) {
+				return 1
+			}
+			if ( dbspec == DBSPEC_RARE_LEVEL ) {
+				return 10
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_ON_READ ) {
+			gosub *read
+			return -1
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t波長が合う者の前に姿を現すとされる。冷たくはないのに手に持つと異様に背筋が冷え、魂を鷲掴みにされているような感覚に陥る。ページはどれも黒く半透明だが、光に反射して奇妙な文字が浮かび上がる。この世界のものではない物質で構成されており、その正体は本ではなく深淵を映す窓なのだという説もある。\n#〜イルヴァ幻想辞典〜\n"
+				description(1) = ""
+				description(2) = "\t\t「私は　利用されていた」\n#〜挟まれていた紙片の殴り書き〜\n"
+				description(3) = "\t\t深淵魔術を行使できる本。何度でも読める。\n#〜鑑定報告書：＜秘宝＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
 	if ( dbid == ITEM_ID_SOCKS2 ) {
 		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
 			inv(INV_ITEM_VALUE, ci) = 300
@@ -122683,6 +122785,8 @@
 	return -999
 
 *db_setFilterItem
+	filter_item(ITEM_ID_AURTEHOM) = ""
+	rffilter_item(ITEM_ID_AURTEHOM) = ""
 	filter_item(ITEM_ID_SOCKS2) = ""
 	rffilter_item(ITEM_ID_SOCKS2) = ""
 	filter_item(ITEM_ID_SPELLBOOK_OF_THUNDER_VORTEX) = ""
@@ -125212,6 +125316,24 @@
 	return
 
 *db_setItem
+	ilight(ITEM_ID_AURTEHOM) = LIGHT_TYPE_ITEM
+	ialphanameref(ITEM_ID_AURTEHOM) = ""
+	iorgweight(ITEM_ID_AURTEHOM) = 400
+	if ( jp ) {
+		ioriginalnameref(ITEM_ID_AURTEHOM) = "アウルテホム"
+	}
+	else {
+		ioriginalnameref(ITEM_ID_AURTEHOM) = "Aurtehom"
+		ioriginalnameref2(ITEM_ID_AURTEHOM) = "horrible book"
+	}
+	ipicref(ITEM_ID_AURTEHOM) = xy2pic(13, 36)
+	if ( jp ) {
+		iknownnameref(ITEM_ID_AURTEHOM) = "おぞましき本"
+	}
+	else {
+		iknownnameref(ITEM_ID_AURTEHOM) = ""
+	}
+	icolref(ITEM_ID_AURTEHOM) = COLOR_DEFAULT
 	ilight(ITEM_ID_SOCKS2) = LIGHT_TYPE_NONE
 	ialphanameref(ITEM_ID_SOCKS2) = ""
 	iorgweight(ITEM_ID_SOCKS2) = 200

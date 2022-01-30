@@ -3474,11 +3474,7 @@
 	}
 	cdata(CDATA_HUNGER, cc) += nutrition
 	if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_ITEM_FOOD ) {
-		if ( cc == CHARA_PLAYER ) {
-			if ( inv(INV_ITEM_PARAM2, ci) >= 3 ) {
-				healsp CHARA_PLAYER, limit(inv(INV_ITEM_LEVEL, ci) * 3 / 2 + inv(INV_ITEM_PARAM2, ci), 3, 31)
-			}
-		}
+		healsp cc, 5 + inv(INV_ITEM_PARAM2, ci) * 3 + inv(INV_ITEM_LEVEL, ci) * 3
 	}
 	if ( cdata(CDATA_ID, cc) == CREATURE_ID_CUTE_FAIRY ) {
 		if ( cdata(CDATA_RELATION, cc) == 10 ) {

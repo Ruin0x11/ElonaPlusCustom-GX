@@ -5466,6 +5466,10 @@
 		}
 		return 1
 	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_AURTEHOM ) {
+		txt lang("未実装。", "under development!")
+		return 1
+	}
 	tc = cc
 	item_identify ci, ITEM_KNOWN_NAME
 	gosub *com_book
@@ -5578,6 +5582,14 @@
 			efsource = 0
 			return 0
 		}
+		if ( cdata(CDATA_SP, cc) > (-50) ) {
+			cdata(CDATA_SP, cc)--
+		}
+		if ( cc != CHARA_PLAYER ) {
+			if ( cdata(CDATA_SP, cc) > (-50) ) {
+				cdata(CDATA_SP, cc)--
+			}
+		}
 		if ( cc != CHARA_PLAYER ) {
 			if ( sdataref(SKILL_DATAREF_TYPE, efid) == SKILL_TYPE_SUMMON ) {
 				procid = (procid + 1) \ 4
@@ -5670,6 +5682,17 @@
 			efsource = 0
 			return 1
 		}
+		if ( cdata(CDATA_SP, cc) < 50 ) {
+			if ( rnd(2) == 0 ) {
+				if ( synccheck(cc, -1) ) {
+					txt lang("疲労し過ぎて失敗した！", "You are too exhausted!")
+					animeid = ANIMATION_FIZZLE
+					gosub *anime
+				}
+				efsource = 0
+				return 1
+			}
+		}
 		if ( noeffect == 1 ) {
 			txt_nothinghappens
 			efsource = 0
@@ -5685,6 +5708,7 @@
 		hoseim = limit(cdata(CDATA_ENHANCE_SPELL, cc) * 2 / 3, 0, 1000) / 10 + limit(sdata(SKILL_ATTR_MAG, cc) / 5, 0, 300)
 	}
 	efp = efp * (100 + hoseim) / 100
+	efpori = efp
 	if ( cdata(CDATA_EQUIP_WEIGHT, cc) < 35000 & cdata(CDATA_EQUIP_WEIGHT, cc) >= 15000 & findbuff(cc, BUFF_MAGIC_EQUIP) != (-1) ) {
 		efp = efp * 6 / 5
 	}
