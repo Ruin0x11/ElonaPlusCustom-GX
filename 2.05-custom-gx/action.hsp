@@ -2044,7 +2044,7 @@
 
 	if ( TweakData(TWEAK_MISC_PREVENT_STAYER_MOVEMENT, TWEAK_CATEGORY_MISC) == 1 ) {
 		if ( cc != CHARA_PLAYER & ( cdata(CDATA_AREA, cc) == AREA_HOME | gdata(GDATA_AREA) == AREA_HOME ) ) {
-			if( cdata(CDATA_ROLE, cc) > ROLE_NONE & cdata(CDATA_ROLE, cc) < ROLE_GUEST_MIN | cdata(CDATA_HOME, cc) == gdata(GDATA_LEVEL) ) {
+			if( ( cdata(CDATA_ROLE, cc) > ROLE_NONE & cdata(CDATA_ROLE, cc) < ROLE_GUEST_MIN ) | ( cdata(CDATA_AREA, cc) != AREA_NONE & cdata(CDATA_HOME, cc) == gdata(GDATA_LEVEL) ) ) {
 				// Don't apply it to characters like Lomias and Larnneire.
 				if ( cdata(CDATA_ROLE, cc) != ROLE_SPECIAL ) {
 					goto *turn_end
