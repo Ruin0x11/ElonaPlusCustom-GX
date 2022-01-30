@@ -10369,19 +10369,19 @@
 	return
 
 #define calcDvPv(%1)\
-	dvfix = cdata(CDATA_DV_FIX, %1)\
-	pvfix = cdata(CDATA_PV_FIX, %1)\
-	if ( cdata(CDATA_DV, %1) < 0 ) {\
-		dvfix = 100\
-	}\
-	if ( cdata(CDATA_PV, %1) < 0 ) {\
-		pvfix = 100\
-	}\
-	dvr1 = cdata(CDATA_DV, %1) * dvfix / 100 + dvfix - 100\
-	pvr1 = (cdata(CDATA_PV, %1) + pvfix / 25) * pvfix / 100\
-	if ( cdata(CDATA_DRAIN_HP, %1) >= 100 ) {\
-		dvr1 = 0\
-		pvr1 = 0\
+	dvfix = cdata(CDATA_DV_FIX, %1) %c\
+	pvfix = cdata(CDATA_PV_FIX, %1) %c\
+	if ( cdata(CDATA_DV, %1) < 0 ) { %c\
+		dvfix = 100%c\
+	} %c\
+	if ( cdata(CDATA_PV, %1) < 0 ) { %c\
+		pvfix = 100 %c\
+	} %c\
+	dvr1 = cdata(CDATA_DV, %1) * dvfix / 100 + dvfix - 100 %c\
+	pvr1 = (cdata(CDATA_PV, %1) + pvfix / 25) * pvfix / 100 %c\
+	if ( cdata(CDATA_DRAIN_HP, %1) >= 100 ) { %c\
+		dvr1 = 0 %c\
+		pvr1 = 0 %c\
 	}
 
 *com_wear
