@@ -41,6 +41,7 @@ TweakData(60, 2) = "(Custom-G) Disable chain attacks."
 TweakData(61, 2) = "(Custom-G) Disable sleep prevention."
 TweakData(62, 2) = "(Custom-G) Apply skill buffs."
 TweakData(63, 2) = "(Custom-G) Apply damage calculation buffs."
+TweakData(64, 2) = "Summoned monster training."
 
 TweakData(x, 3) = "AI Tweaks"
 TweakData(0, 3) = "Change Zeome's AI."
@@ -436,7 +437,7 @@ TweakData(51, 4) = "Disable cicada noises."
     cs = 0
     page = 0
     pagesize = 16
-    listmax = 22
+    listmax = 23
 *GameplayTweakMenu_pgchk
 	redraw 0
 	page_check
@@ -468,7 +469,8 @@ TweakData(51, 4) = "Disable cicada noises."
 	listn(0, 18) = "(Custom-G) Disable sleep prevention." + GetTStatus(TWEAK_CATEGORY_GAMEPLAY, TWEAK_GAMEPLAY_CG_DISABLE_SLEEP_PREVENTION)
 	listn(0, 19) = "(Custom-G) Apply skill buffs." + GetTStatus(TWEAK_CATEGORY_GAMEPLAY, TWEAK_GAMEPLAY_CG_REVERT_SKILL_NERFS)
 	listn(0, 20) = "(Custom-G) Apply damage calculation buffs." + GetTStatus(TWEAK_CATEGORY_GAMEPLAY, TWEAK_GAMEPLAY_CG_REVERT_DAMAGE_CALC_NERFS)
-	listn(0, 21) = "Return"
+	listn(0, 21) = "Summoned monster training." + GetTStatus(TWEAK_CATEGORY_GAMEPLAY, TWEAK_GAMEPLAY_SUMMONED_MONSTER_TRAINING)
+	listn(0, 22) = "Return"
 
 	font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
 
@@ -556,6 +558,9 @@ TweakData(51, 4) = "Disable cicada noises."
 				s = "Enables Custom-G's changes to damage calculation.\nThis affects the damage and critical chance when multi-attacking."
 			}
 			if ( p == 21 ) {
+				s = "Summoned monsters and monsters that split up will give experience."
+			}
+			if ( p == 22 ) {
 				s = "Return to the previous menu."
 			}
 			pos wx + 38, wy + 343
@@ -681,6 +686,11 @@ TweakData(51, 4) = "Disable cicada noises."
 		gosub *ToggleTweak
 	}
 	if ( p == 21 ) {
+		tc = TWEAK_CATEGORY_GAMEPLAY
+		tn = TWEAK_GAMEPLAY_SUMMONED_MONSTER_TRAINING
+		gosub *ToggleTweak
+	}
+	if ( p == 22 ) {
 		snd SOUNDLIST_OK1
         return
 	}

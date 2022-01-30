@@ -5700,13 +5700,8 @@
 	return
 
 *expCasting
-	if ( tc != (-1) ) {
-		if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) | cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) | cbit(CHARA_BIT_NECRO, tc) | cbit(CHARA_BIT_SUMMONED, tc) | cbit(CHARA_BIT_LIVESTOCK, tc) ) {
-			return
-		}
-		if ( cbit(CHARA_BIT_SANDBAG, tc) & TweakData(52, 2) == 0 ) {
-			return
-		}
+	if ( tc != (-1) & charaGivesExp(tc) == FALSE ) {
+		return
 	}
 	if ( r1 == CHARA_PLAYER ) {
 		skillexp r2, r1, sdataref(SKILL_DATAREF_COST, r2) * 4 + 20, 4, 5
@@ -5811,13 +5806,8 @@
 	return
 
 *expMagicDevice
-	if ( tc != (-1) ) {
-		if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) | cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) | cbit(CHARA_BIT_NECRO, tc) | cbit(CHARA_BIT_SUMMONED, tc) | cbit(CHARA_BIT_LIVESTOCK, tc) ) {
-			return
-		}
-		if ( cbit(CHARA_BIT_SANDBAG, tc) & TweakData(52, 2) == 0 ) {
-			return
-		}
+	if ( tc != (-1) & charaGivesExp(tc) == FALSE ) {
+		return
 	}
 	skillexp SKILL_NORMAL_MAGIC_DEVICE, cc, 40
 	return

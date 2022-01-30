@@ -532,11 +532,9 @@
 			if ( synccheck(tc, -1) ) {
 				txt_hittarget
 			}
-			if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) != 1 & cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) != 1 & cbit(CHARA_BIT_SUMMONED, tc) != 1 & cbit(CHARA_BIT_LIVESTOCK, tc) != 1 & cbit(CHARA_BIT_NECRO, tc) != 1 & tc != CHARA_PLAYER ) {
-				if ( cbit(CHARA_BIT_SANDBAG, tc) != 1 | TweakData(52, 2) == 1 ) {
-					skillexp SKILL_NORMAL_TACTICS, cc, limit(sdata(SKILL_NORMAL_EVASION, tc) * 3 - sdata(SKILL_NORMAL_TACTICS, cc) + 1, 5, 80)
-					skillexp SKILL_WEAPON_THROWING, cc, limit(sdata(SKILL_NORMAL_EVASION, tc) * 3 - sdata(SKILL_WEAPON_THROWING, cc) + 1, 5, 80)
-				}
+			if ( charaGivesExp(tc) & tc != CHARA_PLAYER ) {
+				skillexp SKILL_NORMAL_TACTICS, cc, limit(sdata(SKILL_NORMAL_EVASION, tc) * 3 - sdata(SKILL_NORMAL_TACTICS, cc) + 1, 5, 80)
+				skillexp SKILL_WEAPON_THROWING, cc, limit(sdata(SKILL_NORMAL_EVASION, tc) * 3 - sdata(SKILL_WEAPON_THROWING, cc) + 1, 5, 80)
 			}
 			rowact_check tc
 			snd SOUNDLIST_ATK2
@@ -608,11 +606,9 @@
 			if ( synccheck(tc, -1) ) {
 				txt_hittarget
 			}
-			if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) != 1 & cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) != 1 & cbit(CHARA_BIT_SUMMONED, tc) != 1 & cbit(CHARA_BIT_LIVESTOCK, tc) != 1 & cbit(CHARA_BIT_NECRO, tc) != 1 & tc != CHARA_PLAYER ) {
-				if ( cbit(CHARA_BIT_SANDBAG, tc) != 1 | TweakData(52, 2) == 1 ) {
-					skillexp SKILL_NORMAL_TACTICS, cc, limit(sdata(SKILL_NORMAL_EVASION, tc) * 3 - sdata(SKILL_NORMAL_TACTICS, cc) + 1, 5, 80)
-					skillexp SKILL_WEAPON_THROWING, cc, limit(sdata(SKILL_NORMAL_EVASION, tc) * 3 - sdata(SKILL_WEAPON_THROWING, cc) + 1, 5, 80)
-				}
+			if ( charaGivesExp(tc) & tc != CHARA_PLAYER ) {
+				skillexp SKILL_NORMAL_TACTICS, cc, limit(sdata(SKILL_NORMAL_EVASION, tc) * 3 - sdata(SKILL_NORMAL_TACTICS, cc) + 1, 5, 80)
+				skillexp SKILL_WEAPON_THROWING, cc, limit(sdata(SKILL_NORMAL_EVASION, tc) * 3 - sdata(SKILL_WEAPON_THROWING, cc) + 1, 5, 80)
 			}
 			rowact_check tc
 			snd SOUNDLIST_ATK2
@@ -653,11 +649,9 @@
 					txt_hittarget
 				}
 			}
-			if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) != 1 & cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) != 1 & cbit(CHARA_BIT_NECRO, tc) != 1 & cbit(CHARA_BIT_SUMMONED, tc) != 1 & cbit(CHARA_BIT_LIVESTOCK, tc) != 1 & tc != CHARA_PLAYER ) {
-				if ( cbit(CHARA_BIT_SANDBAG, tc) != 1 | TweakData(52, 2) == 1 ) {
-					skillexp SKILL_NORMAL_TACTICS, cc, limit(sdata(SKILL_NORMAL_EVASION, tc) * 3 - sdata(SKILL_NORMAL_TACTICS, cc) + 1, 5, 80)
-					skillexp SKILL_WEAPON_THROWING, cc, limit(sdata(SKILL_NORMAL_EVASION, tc) * 3 - sdata(SKILL_WEAPON_THROWING, cc) + 1, 5, 80)
-				}
+			if ( charaGivesExp(tc) & tc != CHARA_PLAYER ) {
+				skillexp SKILL_NORMAL_TACTICS, cc, limit(sdata(SKILL_NORMAL_EVASION, tc) * 3 - sdata(SKILL_NORMAL_TACTICS, cc) + 1, 5, 80)
+				skillexp SKILL_WEAPON_THROWING, cc, limit(sdata(SKILL_NORMAL_EVASION, tc) * 3 - sdata(SKILL_WEAPON_THROWING, cc) + 1, 5, 80)
 			}
 			rowact_check tc
 			if ( inv(INV_ITEM_ID, ci) != ITEM_ID_OHUDA ) {
@@ -1856,11 +1850,9 @@
 					if ( cdata(CDATA_CONDITION_WINCE, tc) < 0 ) {
 						cdata(CDATA_CONDITION_WINCE, tc) = 1
 					}
-					if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) != 1 & cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) != 1 & cbit(CHARA_BIT_SUMMONED, tc) != 1 & cbit(CHARA_BIT_LIVESTOCK, tc) != 1 & cbit(CHARA_BIT_NECRO, tc) != 1 & tc != CHARA_PLAYER ) {
-						if ( cbit(CHARA_BIT_SANDBAG, tc) != 1 | TweakData(52, 2) == 1 ) {
-							skillexp SKILL_ACTIVE_RIDING, CHARA_PLAYER, 30
-							skillexp SKILL_ACTIVE_RIDING, gdata(GDATA_RIDER), 20
-						}
+					if ( charaGivesExp(tc) & tc != CHARA_PLAYER ) {
+						skillexp SKILL_ACTIVE_RIDING, CHARA_PLAYER, 30
+						skillexp SKILL_ACTIVE_RIDING, gdata(GDATA_RIDER), 20
 					}
 					gosub *cell_info
 					goto *turn_end
@@ -5361,7 +5353,7 @@
 			if ( ibit(ITEM_BIT_ALIVE, cw) ) {
 				if ( inv(INV_ITEM_GROWTH, cw) < 15 ) {
 					if ( inv(INV_ITEM_EXP, cw) < calcexpalive(inv(INV_ITEM_GROWTH, cw)) ) {
-						if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) != 1 & cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) != 1 & cbit(CHARA_BIT_SUMMONED, tc) != 1 & cbit(CHARA_BIT_LIVESTOCK, tc) != 1 & cbit(CHARA_BIT_NECRO, tc) != 1 & cdata(CDATA_ROLE, tc) != ROLE_BOUNTY_HUNTER & cdata(CDATA_ROLE, tc) != ROLE_GUARD ) {
+						if ( charaGivesExp(tc) & cdata(CDATA_ROLE, tc) != ROLE_BOUNTY_HUNTER & cdata(CDATA_ROLE, tc) != ROLE_GUARD ) {
 							ikihosei = 0
 						}
 						else {
@@ -8113,7 +8105,7 @@
 			snd SOUNDLIST_FAIL1
 			goto *act_use_SWEND1
 		}
-		if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) | cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) & cbit(CHARA_BIT_SUMMONED, tc) ) {
+		if ( charaIsSummoned(tc) ) {
 			snd SOUNDLIST_FAIL1
 			goto *act_use_SWEND1
 		}
@@ -9577,7 +9569,7 @@
 					txt lang("タッグは吊るせない。", "Can't be hung while in a tag-team.")
 					goto *pc_turn
 				}
-				if ( cdata(CDATA_HP, tc) >= cdata(CDATA_MAX_HP, tc) / 5 ) {
+				if ( cdata(CDATA_HP, tc) >= cdata(CDATA_MAX_HP, tc) / 5 & develop == FALSE ) {
 					txt lang("もっと弱らせないと吊るせない。", "The target needs to be weakened.")
 					goto *pc_turn
 				}

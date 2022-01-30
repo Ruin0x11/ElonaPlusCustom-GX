@@ -2252,7 +2252,7 @@
 			continue
 		}
 		if ( cdata(CDATA_IMPRESSION, cnt) >= 53 ) {
-			if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, cnt) == 1 | cbit(CHARA_BIT_SPLIT_NO_EFFECT, cnt) == 1 | cbit(CHARA_BIT_SUMMONED, cnt) == 1 ) {
+			if ( charaIsSummoned(cnt) ) {
 				ptp += limit((cdata(CDATA_LEVEL, cnt) + 1) / 5 + 1, 1, 20)
 			}
 			else {

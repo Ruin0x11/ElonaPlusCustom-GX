@@ -3306,7 +3306,7 @@
 	if ( cdata(CDATA_INIT_LIFEMANA, check_talk_arg1) == 0 ) {
 		cdata(CDATA_INIT_LIFEMANA, check_talk_arg1) = limit(sorg(SKILL_ATTR_LIFE, check_talk_arg1), 50, 200) * 2 + limit(sorg(SKILL_ATTR_MANA, check_talk_arg1), 50, 200) / 2
 	}
-	if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, check_talk_arg2) != 1 & cbit(CHARA_BIT_SPLIT_NO_EFFECT, check_talk_arg2) != 1 & cbit(CHARA_BIT_SUMMONED, check_talk_arg2) != 1 & cbit(CHARA_BIT_NECRO, check_talk_arg2) != 1 & cbit(CHARA_BIT_LIVESTOCK, check_talk_arg2) != 1 & cdata(CDATA_ROLE, check_talk_arg2) != ROLE_BOUNTY_HUNTER & cdata(CDATA_ROLE, check_talk_arg2) != ROLE_GUARD & cbit(CHARA_BIT_CRADLE_15TH, check_talk_arg2) != 1 ) {
+	if ( charaGivesExp(check_talk_arg2) & cdata(CDATA_ROLE, check_talk_arg2) != ROLE_BOUNTY_HUNTER & cdata(CDATA_ROLE, check_talk_arg2) != ROLE_GUARD & cbit(CHARA_BIT_CRADLE_15TH, check_talk_arg2) != 1 ) {
 		if ( gdata(GDATA_AREA) != AREA_VOID ) {
 			if ( sorg(SKILL_ATTR_SPD, check_talk_arg2) > sorg(SKILL_ATTR_SPD, check_talk_arg1) ) {
 				skillexp SKILL_ATTR_SPD, check_talk_arg1, limit(sorg(SKILL_ATTR_SPD, check_talk_arg2), 10, 2000) / 5
@@ -3565,7 +3565,7 @@
 							modimp check_kill_arg2, -25
 						}
 					}
-					if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, check_kill_arg2) != 1 & cbit(CHARA_BIT_SPLIT_NO_EFFECT, check_kill_arg2) != 1 & cbit(CHARA_BIT_SUMMONED, check_kill_arg2) != 1 & cbit(CHARA_BIT_NECRO, check_kill_arg2) != 1 & cbit(CHARA_BIT_LIVESTOCK, check_kill_arg2) != 1 & cdata(CDATA_ROLE, check_kill_arg2) != ROLE_BOUNTY_HUNTER & cdata(CDATA_ROLE, check_kill_arg2) != ROLE_GUARD & cbit(CHARA_BIT_CRADLE_15TH, check_kill_arg2) != 1 ) {
+					if ( charaGivesExp(check_kill_arg2) & cdata(CDATA_ROLE, check_kill_arg2) != ROLE_BOUNTY_HUNTER & cdata(CDATA_ROLE, check_kill_arg2) != ROLE_GUARD & cbit(CHARA_BIT_CRADLE_15TH, check_kill_arg2) != 1 ) {
 						if ( gdata(GDATA_AREA) != AREA_VOID ) {
 							if ( sorg(SKILL_ATTR_SPD, check_kill_arg2) > sorg(SKILL_ATTR_SPD, check_kill_arg1) ) {
 								skillexp SKILL_ATTR_SPD, check_kill_arg1, limit(sorg(SKILL_ATTR_SPD, check_kill_arg2), 10, 2000) / 5
@@ -6152,7 +6152,7 @@
 					}
 				}
 				if ( cdata(CDATA_POWER_GAUGE, cnt) <= 195 ) {
-					if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, dmghp_charid) != 1 & cbit(CHARA_BIT_SPLIT_NO_EFFECT, dmghp_charid) != 1 & cbit(CHARA_BIT_SUMMONED, dmghp_charid) != 1 ) {
+					if ( charaIsSummoned(dmghp_charid) == FALSE ) {
 						cdata(CDATA_POWER_GAUGE, cnt) += 5
 					}
 				}
@@ -6420,7 +6420,7 @@
 		if ( dmghp_source >= DAMAGE_FROM_CHARA ) {
 			if ( dmghp_source != DAMAGE_FROM_CHARA ) {
 				if ( sdata(SKILL_ACTIVE_PICKPOCKET, dmghp_source) != 0 ) {
-					if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, dmghp_charid) != 1 & cbit(CHARA_BIT_SPLIT_NO_EFFECT, dmghp_charid) != 1 & cbit(CHARA_BIT_SUMMONED, dmghp_charid) != 1 & cbit(CHARA_BIT_LIVESTOCK, dmghp_charid) != 1 ) {
+					if ( charaIsSummoned(dmghp_charid) == FALSE & cbit(CHARA_BIT_LIVESTOCK, dmghp_charid) != 1 ) {
 						locvar_dmghp_goudatu = limit(sdata(SKILL_ACTIVE_PICKPOCKET, dmghp_source) * 5 + 100, 50, 2000)
 						if ( locvar_dmghp_goudatu > cdata(CDATA_GOLD, dmghp_charid) ) {
 							locvar_dmghp_goudatu = cdata(CDATA_GOLD, dmghp_charid)
@@ -6521,7 +6521,7 @@
 			cdata(CDATA_AI_AGGRO, dmghp_source) = 0
 		}
 		if ( dmghp_source >= DAMAGE_FROM_CHARA ) {
-			if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, dmghp_charid) != 1 & cbit(CHARA_BIT_SPLIT_NO_EFFECT, dmghp_charid) != 1 & cbit(CHARA_BIT_SUMMONED, dmghp_charid) != 1 ) {
+			if ( charaIsSummoned(dmghp_charid) == FALSE ) {
 				if ( dmghp_source < MAX_CHARA_FOLLOWER ) {
 					if ( dmghp_source != DAMAGE_FROM_CHARA ) {
 						if ( cdata(CDATA_IMPRESSION, dmghp_source) >= 100 ) {
@@ -7566,3 +7566,19 @@
 	}
 	return
 
+#defcfunc charaGivesExp int charaGivesExp_charidx
+	if ( charaIsSummoned(charaGivesExp_charidx) | cbit(CHARA_BIT_NECRO, charaGivesExp_charidx) | cbit(CHARA_BIT_LIVESTOCK, charaGivesExp_charidx) ) {
+		if ( TweakData(TWEAK_GAMEPLAY_SUMMONED_MONSTER_TRAINING, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
+			return FALSE
+		}
+	}
+	if ( cbit(CHARA_BIT_SANDBAG, charaGivesExp_charidx) & TweakData(TWEAK_GAMEPLAY_SANDBAG_TRAINING, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
+		return FALSE
+	}
+	return TRUE
+
+#defcfunc charaIsSummoned int charaIsSummoned_charidx
+	if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, charaIsSummoned_charidx) | cbit(CHARA_BIT_SPLIT_NO_EFFECT, charaIsSummoned_charidx) | cbit(CHARA_BIT_SUMMONED, charaIsSummoned_charidx) ) {
+		return TRUE
+	}
+	return FALSE

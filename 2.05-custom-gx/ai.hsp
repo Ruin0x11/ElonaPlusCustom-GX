@@ -1676,12 +1676,10 @@
 			if ( cdata(CDATA_CONDITION_WINCE, tc) < 0 ) {
 				cdata(CDATA_CONDITION_WINCE, tc) = 1
 			}
-			if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) != 1 & cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) != 1 & cbit(CHARA_BIT_SUMMONED, tc) != 1 & cbit(CHARA_BIT_LIVESTOCK, tc) != 1 & cbit(CHARA_BIT_NECRO, tc) != 1 & tc != CHARA_PLAYER ) {
-				if ( cbit(CHARA_BIT_SANDBAG, tc) != 1 | TweakData(52, 2) == 1 ) {
-					skillexp SKILL_ACTIVE_RIDING, cc, 30
-					if ( cdata(CDATA_IN_TAGTEAM, cc) != 0 ) {
-						skillexp SKILL_ACTIVE_RIDING, cdata(CDATA_TAGTEAM_PARTNER, cc), 30
-					}
+			if ( charaGivesExp(tc) & tc != CHARA_PLAYER ) {
+				skillexp SKILL_ACTIVE_RIDING, cc, 30
+				if ( cdata(CDATA_IN_TAGTEAM, cc) != 0 ) {
+					skillexp SKILL_ACTIVE_RIDING, cdata(CDATA_TAGTEAM_PARTNER, cc), 30
 				}
 			}
 			ride = 0

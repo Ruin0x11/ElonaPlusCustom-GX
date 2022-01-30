@@ -627,7 +627,7 @@
 						if ( cdata(CDATA_ROLE, tc) >= ROLE_SHOP_MIN & cdata(CDATA_ROLE, tc) < ROLE_GUEST_MIN | cdata(CDATA_ROLE, tc) == ROLE_GUEST_MERCHANT ) {
 							p /= 10
 						}
-						if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) == 1 | cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) == 1 | cbit(CHARA_BIT_SUMMONED, tc) == 1 ) {
+						if ( charaIsSummoned(tc) ) {
 							p = limit((p + 1) / 5 + 1, 1, 3000)
 						}
 						if ( p > cdata(CDATA_GOLD, tc) ) {
@@ -648,7 +648,7 @@
 					continue
 				}
 				p = rnd(cdata(CDATA_LEVEL, tc) + 1) + 1
-				if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) == 1 | cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) == 1 | cbit(CHARA_BIT_SUMMONED, tc) == 1 ) {
+				if ( charaIsSummoned(tc) ) {
 					p = limit((p + 1) / 5 + 1, 1, 30)
 				}
 				if ( rnd(sdata(SKILL_NORMAL_PERFORMER, cc) + 1) + ens > rnd(cdata(CDATA_LEVEL, tc) * 2 + 1) ) {
@@ -672,7 +672,7 @@
 						dmgcon tc, CONDITION_DRUNK, 500
 					}
 				}
-				if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) == 1 | cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) == 1 | cbit(CHARA_BIT_SUMMONED, tc) == 1 ) {
+				if ( charaIsSummoned(tc) ) {
 					continue
 				}
 				if ( rnd(sdata(SKILL_NORMAL_PERFORMER, cc) + 1) + ens > rnd(cdata(CDATA_LEVEL, tc) * 5 + 1) ) {
@@ -1021,7 +1021,7 @@
 						if ( cdata(CDATA_ROLE, tc) >= ROLE_SHOP_MIN & cdata(CDATA_ROLE, tc) < ROLE_GUEST_MIN | cdata(CDATA_ROLE, tc) == ROLE_GUEST_MERCHANT ) {
 							p /= 100
 						}
-						if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) == 1 | cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) == 1 | cbit(CHARA_BIT_SUMMONED, tc) == 1 ) {
+						if ( charaIsSummoned(tc) ) {
 							p = limit((p + 1) / 5 + 1, 1, 3000)
 						}
 						if ( p > cdata(CDATA_GOLD, tc) ) {
@@ -1042,7 +1042,7 @@
 					continue
 				}
 				p = rnd(cdata(CDATA_LEVEL, tc) / 2 + 2) + cdata(CDATA_LEVEL, tc) + 5
-				if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) == 1 | cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) == 1 | cbit(CHARA_BIT_SUMMONED, tc) == 1 ) {
+				if ( charaIsSummoned(tc) ) {
 					p = limit((p + 1) / 5 + 1, 1, 30)
 				}
 				if ( rnd(sdata(SKILL_ATTR_CHA, cc) + 1) > rnd(cdata(CDATA_LEVEL, tc) * 4 + 5) ) {
@@ -1302,7 +1302,7 @@
 						if ( cdata(CDATA_ROLE, tc) >= ROLE_SHOP_MIN & cdata(CDATA_ROLE, tc) < ROLE_GUEST_MIN | cdata(CDATA_ROLE, tc) == ROLE_GUEST_MERCHANT ) {
 							p /= 50
 						}
-						if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) == TRUE | cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) == TRUE | cbit(CHARA_BIT_SUMMONED, tc) == TRUE ) {
+						if ( charaIsSummoned(tc) ) {
 							p = limit((p + 1) / 5 + 1, 1, 300)
 						}
 						if ( p > cdata(CDATA_GOLD, tc) ) {
@@ -1501,7 +1501,7 @@
 						if ( cdata(CDATA_ROLE, tc) >= ROLE_SHOP_MIN & cdata(CDATA_ROLE, tc) < ROLE_GUEST_MIN | cdata(CDATA_ROLE, tc) == ROLE_GUEST_MERCHANT ) {
 							p /= 50
 						}
-						if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) == 1 | cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) == 1 | cbit(CHARA_BIT_SUMMONED, tc) == 1 ) {
+						if ( charaIsSummoned(tc) ) {
 							p = limit((p + 1) / 5 + 1, 1, 3000)
 						}
 						if ( p > cdata(CDATA_GOLD, tc) ) {
@@ -1589,7 +1589,7 @@
 								}
 							}
 							p = sdata(SKILL_NORMAL_FAITH, tc) / 2 + 1
-							if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) == 1 | cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) == 1 | cbit(CHARA_BIT_SUMMONED, tc) == 1 ) {
+							if ( charaIsSummoned(tc) ) {
 								p = limit((p + 1) / 5 + 1, 1, 30)
 							}
 							if ( gdata(GDATA_QUEST) == QUEST_TYPE_PARTY ) {
@@ -1621,7 +1621,7 @@
 												}
 											}
 											p = sdata(SKILL_NORMAL_FAITH, tc) * 2
-											if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) == 1 | cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) == 1 | cbit(CHARA_BIT_SUMMONED, tc) == 1 ) {
+											if ( charaIsSummoned(tc) ) {
 												p = limit((p + 1) / 5 + 1, 1, 30)
 											}
 											cdata(CDATA_PERFORM_SCORE, cc) += p
@@ -1907,11 +1907,9 @@
 						cdata(CDATA_CONDITION_CONFUSE, tc) = 1
 					}
 				}
-				if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) != 1 & cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) != 1 & cbit(CHARA_BIT_SUMMONED, tc) != 1 & cbit(CHARA_BIT_LIVESTOCK, tc) != 1 & cbit(CHARA_BIT_NECRO, tc) != 1 & tc != CHARA_PLAYER ) {
-					if ( cbit(CHARA_BIT_SANDBAG, tc) != 1 | TweakData(52, 2) == 1 ) {
-						skillexp SKILL_ATTR_WIL, cc, 20
-						skillexp SKILL_NORMAL_NEGOTIATION, cc, 20
-					}
+				if ( charaGivesExp(tc) & tc != CHARA_PLAYER ) {
+					skillexp SKILL_ATTR_WIL, cc, 20
+					skillexp SKILL_NORMAL_NEGOTIATION, cc, 20
 				}
 				talkfix = 1
 				if ( cdata(CDATA_SP, tc) < cdata(CDATA_MAX_SP, tc) / 2 ) {
@@ -2122,11 +2120,9 @@
 						cdata(CDATA_CONDITION_PARALYZE, tc) = 1
 					}
 				}
-				if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) != 1 & cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) != 1 & cbit(CHARA_BIT_SUMMONED, tc) != 1 & cbit(CHARA_BIT_LIVESTOCK, tc) != 1 & cbit(CHARA_BIT_NECRO, tc) != 1 & tc != CHARA_PLAYER ) {
-					if ( cbit(CHARA_BIT_SANDBAG, tc) != 1 | TweakData(52, 2) == 1 ) {
-						skillexp SKILL_ATTR_PER, cc, 20
-						skillexp SKILL_NORMAL_NEGOTIATION, cc, 20
-					}
+				if ( charaGivesExp(tc) & tc != CHARA_PLAYER ) {
+					skillexp SKILL_ATTR_PER, cc, 20
+					skillexp SKILL_NORMAL_NEGOTIATION, cc, 20
 				}
 				talkfix = 1
 				if ( cdata(CDATA_POWER_GAUGE, tc) < 50 ) {
@@ -2328,11 +2324,9 @@
 						cdata(CDATA_CONDITION_ATROPHY, tc) = 1
 					}
 				}
-				if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) != 1 & cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) != 1 & cbit(CHARA_BIT_SUMMONED, tc) != 1 & cbit(CHARA_BIT_LIVESTOCK, tc) != 1 & cbit(CHARA_BIT_NECRO, tc) != 1 & tc != CHARA_PLAYER ) {
-					if ( cbit(CHARA_BIT_SANDBAG, tc) != 1 | TweakData(52, 2) == 1 ) {
-						skillexp SKILL_ATTR_DEX, cc, 20
-						skillexp SKILL_NORMAL_NEGOTIATION, cc, 20
-					}
+				if ( charaGivesExp(tc) & tc != CHARA_PLAYER ) {
+					skillexp SKILL_ATTR_DEX, cc, 20
+					skillexp SKILL_NORMAL_NEGOTIATION, cc, 20
 				}
 				talkfix = 1
 				if ( cdata(CDATA_MP, tc) < cdata(CDATA_MAX_MP, tc) * 9 / 10 ) {
@@ -2558,11 +2552,9 @@
 						cdata(CDATA_CONDITION_FEAR, tc) = 1
 					}
 				}
-				if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) != 1 & cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) != 1 & cbit(CHARA_BIT_SUMMONED, tc) != 1 & cbit(CHARA_BIT_LIVESTOCK, tc) != 1 & cbit(CHARA_BIT_NECRO, tc) != 1 & tc != CHARA_PLAYER ) {
-					if ( cbit(CHARA_BIT_SANDBAG, tc) != 1 | TweakData(52, 2) == 1 ) {
-						skillexp SKILL_ATTR_STR, cc, 20
-						skillexp SKILL_NORMAL_NEGOTIATION, cc, 20
-					}
+				if ( charaGivesExp(tc) & tc != CHARA_PLAYER ) {
+					skillexp SKILL_ATTR_STR, cc, 20
+					skillexp SKILL_NORMAL_NEGOTIATION, cc, 20
 				}
 				talkfix = 1
 				if ( cdata(CDATA_HP, tc) < cdata(CDATA_MAX_HP, tc) * 9 / 10 ) {
@@ -2788,11 +2780,9 @@
 						cdata(CDATA_CONDITION_PARALYZE, tc) = 1
 					}
 				}
-				if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) != 1 & cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) != 1 & cbit(CHARA_BIT_SUMMONED, tc) != 1 & cbit(CHARA_BIT_LIVESTOCK, tc) != 1 & cbit(CHARA_BIT_NECRO, tc) != 1 & tc != CHARA_PLAYER ) {
-					if ( cbit(CHARA_BIT_SANDBAG, tc) != 1 | TweakData(52, 2) == 1 ) {
-						skillexp SKILL_ATTR_MAG, cc, 20
-						skillexp SKILL_NORMAL_NEGOTIATION, cc, 20
-					}
+				if ( charaGivesExp(tc) & tc != CHARA_PLAYER ) {
+					skillexp SKILL_ATTR_MAG, cc, 20
+					skillexp SKILL_NORMAL_NEGOTIATION, cc, 20
 				}
 				talkfix = 1
 				if ( cdata(CDATA_POWER_GAUGE, tc) > 50 ) {
@@ -6139,10 +6129,8 @@
 				efp = efp * 7 / 10 + 1
 				txtef COLOR_GREEN
 				txt lang(name(cc) + "は杖を一時複製した。", name(cc) + " duplicated replica of " + itemname(ci) + ".")
-				if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) != 1 & cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) != 1 & cbit(CHARA_BIT_NECRO, tc) != 1 & cbit(CHARA_BIT_SUMMONED, tc) != 1 & cbit(CHARA_BIT_LIVESTOCK, tc) != 1 ) {
-					if ( cbit(CHARA_BIT_SANDBAG, tc) != 1 | TweakData(52, 2) == 1 ) {
-						skillexp SKILL_NORMAL_ALCHEMY, cc, 80
-					}
+				if ( charaGivesExp(tc) ) {
+					skillexp SKILL_NORMAL_ALCHEMY, cc, 80
 				}
 			}
 		}
@@ -6154,10 +6142,8 @@
 			txtef COLOR_GREEN
 			txt lang(name(cc) + "は杖を一時複製した。", name(cc) + " duplicated replica of " + itemname(ci) + ".")
 			item_stack CHARA_PLAYER, ci, 1
-			if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) != 1 & cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) != 1 & cbit(CHARA_BIT_NECRO, tc) != 1 & cbit(CHARA_BIT_SUMMONED, tc) != 1 & cbit(CHARA_BIT_LIVESTOCK, tc) != 1 ) {
-				if (cbit(CHARA_BIT_SANDBAG, tc) != 1 | TweakData(52, 2) == 1 ) {
-					skillexp SKILL_NORMAL_ALCHEMY, cc, 40
-				}
+			if ( charaGivesExp(tc) ) {
+				skillexp SKILL_NORMAL_ALCHEMY, cc, 40
 			}
 			dmgsp CHARA_PLAYER, 3
 		}
@@ -10721,14 +10707,12 @@
 		if ( sdata(SKILL_NORMAL_CASTING, cc) < sdata(SKILL_NORMAL_MAGIC_DEVICE, cc) ) {
 			weap = sdata(SKILL_NORMAL_MAGIC_DEVICE, cc)
 		}
-		if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) != 1 & cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) != 1 & cbit(CHARA_BIT_SUMMONED, tc) != 1 & cbit(CHARA_BIT_LIVESTOCK, tc) != 1 & cbit(CHARA_BIT_NECRO, tc) != 1 ) {
-			if ( cbit(CHARA_BIT_SANDBAG, tc) != 1 | TweakData(52, 2) == 1 ) {
-				if ( sdata(SKILL_NORMAL_CASTING, cc) < sdata(SKILL_NORMAL_MAGIC_DEVICE, cc) ) {
-					skillexp SKILL_NORMAL_MAGIC_DEVICE, cc, 400
-				}
-				else {
-					skillexp SKILL_NORMAL_CASTING, cc, 400 // As far as I can understand this is what this is supposed to be, rather than trying to give experience to magic device in either case, since it uses the skill with highest level
-				}
+		if ( charaGivesExp(tc) ) {
+			if ( sdata(SKILL_NORMAL_CASTING, cc) < sdata(SKILL_NORMAL_MAGIC_DEVICE, cc) ) {
+				skillexp SKILL_NORMAL_MAGIC_DEVICE, cc, 400
+			}
+			else {
+				skillexp SKILL_NORMAL_CASTING, cc, 400 // As far as I can understand this is what this is supposed to be, rather than trying to give experience to magic device in either case, since it uses the skill with highest level
 			}
 		}
 		if ( synccheck(tc, -1) ) {
@@ -11192,18 +11176,16 @@
 			attackrange = 1
 			extraattack = 0
 			gosub *act_attack
-			if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) != 1 & cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) != 1 & cbit(CHARA_BIT_SUMMONED, tc) != 1 & cbit(CHARA_BIT_LIVESTOCK, tc) != 1 & cbit(CHARA_BIT_NECRO, tc) != 1 ) {
-				if ( cbit(CHARA_BIT_SANDBAG, tc) != 1 | TweakData(52, 2) == 1 ) {
-					skillexp SKILL_NORMAL_MARKSMAN, cc, 400
-					if ( attackskill == SKILL_WEAPON_BOW ) {
-						skillexp SKILL_WEAPON_BOW, cc, 400
-					}
-					if ( attackskill == SKILL_WEAPON_FIREARM ) {
-						skillexp SKILL_WEAPON_FIREARM, cc, 400
-					}
-					if ( attackskill == SKILL_WEAPON_CROSSBOW ) {
-						skillexp SKILL_WEAPON_CROSSBOW, cc, 400
-					}
+			if ( charaGivesExp(tc) ) {
+				skillexp SKILL_NORMAL_MARKSMAN, cc, 400
+				if ( attackskill == SKILL_WEAPON_BOW ) {
+					skillexp SKILL_WEAPON_BOW, cc, 400
+				}
+				if ( attackskill == SKILL_WEAPON_FIREARM ) {
+					skillexp SKILL_WEAPON_FIREARM, cc, 400
+				}
+				if ( attackskill == SKILL_WEAPON_CROSSBOW ) {
+					skillexp SKILL_WEAPON_CROSSBOW, cc, 400
 				}
 			}
 			if ( cc == CHARA_PLAYER | cc != gdata(GDATA_RIDER) ) {
@@ -11278,11 +11260,9 @@
 			extraattack = 0
 			gosub *act_attack
 		}
-		if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) != 1 & cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) != 1 & cbit(CHARA_BIT_SUMMONED, tc) != 1 & cbit(CHARA_BIT_LIVESTOCK, tc) != 1 & cbit(CHARA_BIT_NECRO, tc) != 1 ) {
-			if ( cbit(CHARA_BIT_SANDBAG, tc) != 1 | TweakData(52, 2) == 1 ) {
-				skillexp SKILL_NORMAL_TACTICS, cc, 400
-				skillexp SKILL_WEAPON_THROWING, cc, 400
-			}
+		if ( charaGivesExp(tc) ) {
+			skillexp SKILL_NORMAL_TACTICS, cc, 400
+			skillexp SKILL_WEAPON_THROWING, cc, 400
 		}
 		gdata(GDATA_TEMPORARY_FLAGS) = 0
 		weap = 0
@@ -11367,11 +11347,9 @@
 		eqlv = limit(eqlv / eqbui * 3, 3, 30)
 		dmgmp tc, limit(limit(cdata(CDATA_DAMAGE_FIX, cc) + (weap + 1) / 2, 2, 2500) * sqrt(weap) * sqrt(eqlv - 2) / 5, 1, cdata(CDATA_MAX_MP, tc) / 2)
 		dmghp tc, limit(cdata(CDATA_DAMAGE_FIX, cc) + (weap + 1) / 2, 2, 2500) * sqrt(weap) * sqrt(eqlv - 2) + rnd(weap + 1), cc, SKILL_SPACT_FLASH_OF_SWIFTNESS
-		if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) != 1 & cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) != 1 & cbit(CHARA_BIT_SUMMONED, tc) != 1 & cbit(CHARA_BIT_LIVESTOCK, tc) != 1 & cbit(CHARA_BIT_NECRO, tc) != 1 ) {
-			if ( cbit(CHARA_BIT_SANDBAG, tc) != 1 | TweakData(52, 2) == 1 ) {
-				skillexp SKILL_NORMAL_TACTICS, cc, 400
-				skillexp SKILL_WEAPON_SCYTHE, cc, 400
-			}
+		if ( charaGivesExp(tc) ) {
+			skillexp SKILL_NORMAL_TACTICS, cc, 400
+			skillexp SKILL_WEAPON_SCYTHE, cc, 400
 		}
 		eqlv = 0
 		eqbui = 0
@@ -11440,20 +11418,18 @@
 		dmghp tc, limit(cdata(CDATA_DAMAGE_FIX, cc) + (weap + 1) / 2, 2, 2500) * sqrt(weap) * sqrt(eqlv - 2) + rnd(weap + 1), cc, SKILL_SPACT_FLASH_OF_SWIFTNESS
 		eqlv = 0
 		eqbui = 0
-		if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) != 1 & cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) != 1 & cbit(CHARA_BIT_SUMMONED, tc) != 1 & cbit(CHARA_BIT_LIVESTOCK, tc) != 1 & cbit(CHARA_BIT_NECRO, tc) != 1 ) {
-			if ( cbit(CHARA_BIT_SANDBAG, tc | TweakData(52, 2) == 1) != 1 ) {
-				if ( cdata(CDATA_WEAPON_STYLE_TYPE, cc) == WEAPON_STYLE_LONGSWORD ) {
-					skillexp SKILL_NORMAL_TACTICS, cc, 400
-					skillexp SKILL_WEAPON_LONGSWORD, cc, 400
-				}
-				if ( cdata(CDATA_WEAPON_STYLE_TYPE, cc) == WEAPON_STYLE_SHORTSWORD ) {
-					skillexp SKILL_NORMAL_TACTICS, cc, 400
-					skillexp SKILL_WEAPON_SHORTSWORD, cc, 400
-				}
-				if ( cdata(CDATA_WEAPON_STYLE_TYPE, cc) == WEAPON_STYLE_SWORDCANE ) {
-					skillexp SKILL_NORMAL_TACTICS, cc, 400
-					skillexp SKILL_WEAPON_STAVE, cc, 400
-				}
+		if ( charaGivesExp(tc) ) {
+			if ( cdata(CDATA_WEAPON_STYLE_TYPE, cc) == WEAPON_STYLE_LONGSWORD ) {
+				skillexp SKILL_NORMAL_TACTICS, cc, 400
+				skillexp SKILL_WEAPON_LONGSWORD, cc, 400
+			}
+			if ( cdata(CDATA_WEAPON_STYLE_TYPE, cc) == WEAPON_STYLE_SHORTSWORD ) {
+				skillexp SKILL_NORMAL_TACTICS, cc, 400
+				skillexp SKILL_WEAPON_SHORTSWORD, cc, 400
+			}
+			if ( cdata(CDATA_WEAPON_STYLE_TYPE, cc) == WEAPON_STYLE_SWORDCANE ) {
+				skillexp SKILL_NORMAL_TACTICS, cc, 400
+				skillexp SKILL_WEAPON_STAVE, cc, 400
 			}
 		}
 		cdata(CDATA_GAUGE_COOLDOWN, cc) = 1
@@ -11520,11 +11496,9 @@
 		}
 		eqlv = limit(eqlv / eqbui * 3, 3, 30)
 		dmghp tc, limit(cdata(CDATA_DAMAGE_FIX, cc) + (weap + 1) / 2, 2, 2500) * sqrt(weap) * sqrt(eqlv - 2) + rnd(weap + 1), cc, SKILL_SPACT_FLASH_OF_SWIFTNESS
-		if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) != 1 & cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) != 1 & cbit(CHARA_BIT_SUMMONED, tc) != 1 & cbit(CHARA_BIT_LIVESTOCK, tc) != 1 & cbit(CHARA_BIT_NECRO, tc) != 1 ) {
-			if ( cbit(CHARA_BIT_SANDBAG, tc) != 1 | TweakData(52, 2) == 1 ) {
-				skillexp SKILL_NORMAL_TACTICS, cc, 400
-				skillexp SKILL_WEAPON_SHORTSWORD, cc, 400
-			}
+		if ( charaGivesExp(tc) ) {
+			skillexp SKILL_NORMAL_TACTICS, cc, 400
+			skillexp SKILL_WEAPON_SHORTSWORD, cc, 400
 		}
 		eqlv = 0
 		eqbui = 0
@@ -11593,16 +11567,14 @@
 		}
 		eqlv = limit(eqlv / eqbui * 3, 3, 30)
 		dmghp tc, limit(cdata(CDATA_DAMAGE_FIX, cc) + (weap + 1) / 2, 2, 2500) * sqrt(weap) * sqrt(eqlv - 2) + rnd(weap + 1), cc, SKILL_SPACT_FLASH_OF_SWIFTNESS
-		if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) != 1 & cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) != 1 & cbit(CHARA_BIT_SUMMONED, tc) != 1 & cbit(CHARA_BIT_LIVESTOCK, tc) != 1 & cbit(CHARA_BIT_NECRO, tc) != 1 ) {
-			if ( cbit(CHARA_BIT_SANDBAG, tc) != 1 | TweakData(52, 2) == 1 ) {
-				if ( cdata(CDATA_WEAPON_STYLE_TYPE, cc) == WEAPON_STYLE_LONGSWORD2 ) {
-					skillexp SKILL_NORMAL_TACTICS, cc, 400
-					skillexp SKILL_WEAPON_LONGSWORD, cc, 400
-				}
-				if ( cdata(CDATA_WEAPON_STYLE_TYPE, cc) == WEAPON_STYLE_AXE ) {
-					skillexp SKILL_NORMAL_TACTICS, cc, 400
-					skillexp SKILL_WEAPON_AXE, cc, 400
-				}
+		if ( charaGivesExp(tc) ) {
+			if ( cdata(CDATA_WEAPON_STYLE_TYPE, cc) == WEAPON_STYLE_LONGSWORD2 ) {
+				skillexp SKILL_NORMAL_TACTICS, cc, 400
+				skillexp SKILL_WEAPON_LONGSWORD, cc, 400
+			}
+			if ( cdata(CDATA_WEAPON_STYLE_TYPE, cc) == WEAPON_STYLE_AXE ) {
+				skillexp SKILL_NORMAL_TACTICS, cc, 400
+				skillexp SKILL_WEAPON_AXE, cc, 400
 			}
 		}
 		eqlv = 0
@@ -11719,11 +11691,9 @@
 		loop
 		eqlv = 0
 		eqbui = 0
-		if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) != 1 & cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) != 1 & cbit(CHARA_BIT_SUMMONED, tc) != 1 & cbit(CHARA_BIT_LIVESTOCK, tc) != 1 & cbit(CHARA_BIT_NECRO, tc) != 1 ) {
-			if ( cbit(CHARA_BIT_SANDBAG, tc) != 1 | TweakData(52, 2) == 1 ) {
-				skillexp SKILL_NORMAL_MARKSMAN, cc, 400
-				skillexp SKILL_WEAPON_BOW, cc, 400
-			}
+		if ( charaGivesExp(tc) ) {
+			skillexp SKILL_NORMAL_MARKSMAN, cc, 400
+			skillexp SKILL_WEAPON_BOW, cc, 400
 		}
 		cdata(CDATA_GAUGE_COOLDOWN, cc) = 1
 		weap = 0
@@ -11783,11 +11753,9 @@
 		}
 		eqlv = limit(eqlv / eqbui * 3, 3, 30)
 		dmghp tc, limit(cdata(CDATA_DAMAGE_FIX, cc) + (weap + 1) / 2, 2, 2500) * sqrt(weap) * sqrt(eqlv - 2) + rnd(weap + 1), cc, SKILL_SPACT_FLASH_OF_SWIFTNESS
-		if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) != 1 & cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) != 1 & cbit(CHARA_BIT_SUMMONED, tc) != 1 & cbit(CHARA_BIT_LIVESTOCK, tc) != 1 & cbit(CHARA_BIT_NECRO, tc) != 1 ) {
-			if ( cbit(CHARA_BIT_SANDBAG, tc) != 1 | TweakData(52, 2) == 1 ) {
-				skillexp SKILL_NORMAL_MARKSMAN, cc, 400
-				skillexp SKILL_WEAPON_CROSSBOW, cc, 400
-			}
+		if ( charaGivesExp(tc) ) {
+			skillexp SKILL_NORMAL_MARKSMAN, cc, 400
+			skillexp SKILL_WEAPON_CROSSBOW, cc, 400
 		}
 		eqlv = 0
 		eqbui = 0
@@ -11862,11 +11830,9 @@
 		}
 		eqlv = limit(eqlv / eqbui * 3, 3, 30)
 		dmghp tc, limit(cdata(CDATA_DAMAGE_FIX, cc) + (weap + 1) / 2, 2, 2500) * sqrt(weap) * sqrt(eqlv - 2) + rnd(weap + 1), cc, SKILL_SPACT_FLASH_OF_SWIFTNESS
-		if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) != 1 & cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) != 1 & cbit(CHARA_BIT_SUMMONED, tc) != 1 & cbit(CHARA_BIT_LIVESTOCK, tc) != 1 & cbit(CHARA_BIT_NECRO, tc) != 1 ) {
-			if ( cbit(CHARA_BIT_SANDBAG, tc) != 1 | TweakData(52, 2) == 1 ) {
-				skillexp SKILL_NORMAL_MARKSMAN, cc, 400
-				skillexp SKILL_WEAPON_FIREARM, cc, 400
-			}
+		if ( charaGivesExp(tc) ) {
+			skillexp SKILL_NORMAL_MARKSMAN, cc, 400
+			skillexp SKILL_WEAPON_FIREARM, cc, 400
 		}
 		eqlv = 0
 		eqbui = 0
@@ -11937,11 +11903,9 @@
 		}
 		eqlv = limit(eqlv / eqbui * 3, 3, 30)
 		dmghp tc, limit(cdata(CDATA_DAMAGE_FIX, cc) + (weap + 1) / 2, 2, 2500) * sqrt(weap) * sqrt(eqlv - 2) + rnd(weap + 1), cc, SKILL_SPACT_FLASH_OF_SWIFTNESS
-		if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) != 1 & cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) != 1 & cbit(CHARA_BIT_SUMMONED, tc) != 1 & cbit(CHARA_BIT_LIVESTOCK, tc) != 1 & cbit(CHARA_BIT_NECRO, tc) != 1 ) {
-			if ( cbit(CHARA_BIT_SANDBAG, tc) != 1 | TweakData(52, 2) == 1 ) {
-				skillexp SKILL_NORMAL_MARKSMAN, cc, 400
-				skillexp SKILL_WEAPON_FIREARM, cc, 400
-			}
+		if ( charaGivesExp(tc) ) {
+			skillexp SKILL_NORMAL_MARKSMAN, cc, 400
+			skillexp SKILL_WEAPON_FIREARM, cc, 400
 		}
 		eqlv = 0
 		eqbui = 0
@@ -12061,11 +12025,9 @@
 			}
 		loop
 		weap = 0
-		if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) != 1 & cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) != 1 & cbit(CHARA_BIT_SUMMONED, tc) != 1 & cbit(CHARA_BIT_LIVESTOCK, tc) != 1 & cbit(CHARA_BIT_NECRO, tc) != 1 ) {
-			if ( cbit(CHARA_BIT_SANDBAG, tc) != 1 | TweakData(52, 2) == 1 ) {
-				skillexp SKILL_NORMAL_MARKSMAN, cc, 400
-				skillexp SKILL_WEAPON_FIREARM, cc, 400
-			}
+		if ( charaGivesExp(tc) ) {
+			skillexp SKILL_NORMAL_MARKSMAN, cc, 400
+			skillexp SKILL_WEAPON_FIREARM, cc, 400
 		}
 		eqlv = 0
 		eqbui = 0
@@ -12419,11 +12381,9 @@
 		}
 		eqlv = limit(eqlv / eqbui * 3, 3, 30)
 		dmghp tc, limit(cdata(CDATA_DAMAGE_FIX, cc) + (weap + 1) / 2, 2, 2500) * sqrt(weap) * sqrt(eqlv - 2) + rnd(weap + 1), cc, SKILL_SPACT_FLASH_OF_SWIFTNESS
-		if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) != 1 & cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) != 1 & cbit(CHARA_BIT_SUMMONED, tc) != 1 & cbit(CHARA_BIT_LIVESTOCK, tc) != 1 & cbit(CHARA_BIT_NECRO, tc) != 1 ) {
-			if ( cbit(CHARA_BIT_SANDBAG, tc) != 1 | TweakData(52, 2) == 1 ) {
-				skillexp SKILL_NORMAL_TACTICS, cc, 400
-				skillexp SKILL_WEAPON_BLUNT, cc, 400
-			}
+		if ( charaGivesExp(tc) ) {
+			skillexp SKILL_NORMAL_TACTICS, cc, 400
+			skillexp SKILL_WEAPON_BLUNT, cc, 400
 		}
 		eqlv = 0
 		eqbui = 0
@@ -12490,16 +12450,14 @@
 		}
 		eqlv = limit(eqlv / eqbui * 3, 3, 30)
 		dmghp tc, limit(cdata(CDATA_DAMAGE_FIX, cc) + (weap + 1) / 2, 2, 2500) * sqrt(weap) * sqrt(eqlv - 2) + rnd(weap + 1), cc, SKILL_SPACT_FLASH_OF_SWIFTNESS
-		if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) != 1 & cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) != 1 & cbit(CHARA_BIT_SUMMONED, tc) != 1 & cbit(CHARA_BIT_LIVESTOCK, tc) != 1 & cbit(CHARA_BIT_NECRO, tc) != 1 ) {
-			if ( cbit(CHARA_BIT_SANDBAG, tc) != 1 | TweakData(52, 2) == 1 ) {
-				if ( cdata(CDATA_WEAPON_STYLE_TYPE, cc) == WEAPON_STYLE_POLEARM ) {
-					skillexp SKILL_NORMAL_TACTICS, cc, 400
-					skillexp SKILL_WEAPON_POLEARM, cc, 400
-				}
-				if ( cdata(CDATA_WEAPON_STYLE_TYPE, cc) == WEAPON_STYLE_STAVE ) {
-					skillexp SKILL_NORMAL_TACTICS, cc, 400
-					skillexp SKILL_WEAPON_STAVE, cc, 400
-				}
+		if ( charaGivesExp(tc) ) {
+			if ( cdata(CDATA_WEAPON_STYLE_TYPE, cc) == WEAPON_STYLE_POLEARM ) {
+				skillexp SKILL_NORMAL_TACTICS, cc, 400
+				skillexp SKILL_WEAPON_POLEARM, cc, 400
+			}
+			if ( cdata(CDATA_WEAPON_STYLE_TYPE, cc) == WEAPON_STYLE_STAVE ) {
+				skillexp SKILL_NORMAL_TACTICS, cc, 400
+				skillexp SKILL_WEAPON_STAVE, cc, 400
 			}
 		}
 		eqlv = 0
@@ -12577,11 +12535,9 @@
 		loop
 		eqlv = 0
 		eqbui = 0
-		if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) != 1 & cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) != 1 & cbit(CHARA_BIT_SUMMONED, tc) != 1 & cbit(CHARA_BIT_LIVESTOCK, tc) != 1 & cbit(CHARA_BIT_NECRO, tc) != 1 ) {
-			if ( cbit(CHARA_BIT_SANDBAG, tc) != 1 | TweakData(52, 2) == 1 ) {
-				skillexp SKILL_NORMAL_TACTICS, cc, 400
-				skillexp SKILL_WEAPON_STAVE, cc, 400
-			}
+		if ( charaGivesExp(tc) ) {
+			skillexp SKILL_NORMAL_TACTICS, cc, 400
+			skillexp SKILL_WEAPON_STAVE, cc, 400
 		}
 		snd SOUNDLIST_BOLT1
 		cdata(CDATA_EVASION_PENALTY, tc) = 5
@@ -12646,11 +12602,9 @@
 			if ( cdata(CDATA_CONDITION_PARALYZE, tc) == 0 ) {
 				cdata(CDATA_CONDITION_PARALYZE, tc) += rnd(2) + cbit(CHARA_BIT_BREAK_WALLS, cc)
 			}
-			if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) != 1 & cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) != 1 & cbit(CHARA_BIT_SUMMONED, tc) != 1 & cbit(CHARA_BIT_LIVESTOCK, tc) != 1 & cbit(CHARA_BIT_NECRO, tc) != 1 ) {
-				if ( cbit(CHARA_BIT_SANDBAG, tc) != 1 | TweakData(52, 2) == 1 ) {
-					skillexp SKILL_NORMAL_TACTICS, cc, 400
-					skillexp SKILL_NORMAL_SHIELD, cc, 400
-				}
+			if ( charaGivesExp(tc) ) {
+				skillexp SKILL_NORMAL_TACTICS, cc, 400
+				skillexp SKILL_NORMAL_SHIELD, cc, 400
 			}
 			weap = 0
 		}
@@ -12735,11 +12689,9 @@
 			msg_halt
 		}
 		dmghp tc, cdata(444, cc), cc, SKILL_SPACT_FLASH_OF_SWIFTNESS
-		if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) != 1 & cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) != 1 & cbit(CHARA_BIT_SUMMONED, tc) != 1 & cbit(CHARA_BIT_LIVESTOCK, tc) != 1 & cbit(CHARA_BIT_NECRO, tc) != 1 ) {
-			if ( cbit(CHARA_BIT_SANDBAG, tc) != 1 | TweakData(52, 2) == 1 ) {
-				skillexp SKILL_NORMAL_TACTICS, cc, 400
-				skillexp SKILL_WEAPON_MARTIAL_ARTS, cc, 400
-			}
+		if ( charaGivesExp(tc) ) {
+			skillexp SKILL_NORMAL_TACTICS, cc, 400
+			skillexp SKILL_WEAPON_MARTIAL_ARTS, cc, 400
 		}
 		eqlv = 0
 		eqbui = 0
@@ -17310,10 +17262,8 @@
 			if ( cdata(CDATA_CONDITION_BIND, tc) == 0 ) {
 				cdata(CDATA_CONDITION_BIND, tc)++
 			}
-			if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) != 1 & cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) != 1 & cbit(CHARA_BIT_SUMMONED, tc) != 1 & cbit(CHARA_BIT_LIVESTOCK, tc) != 1 & cbit(CHARA_BIT_NECRO, tc) != 1 & tc != CHARA_PLAYER ) {
-				if ( cbit(CHARA_BIT_SANDBAG, tc) != 1 | TweakData(52, 2) == 1 ) {
-					f = 1
-				}
+			if ( charaGivesExp(tc) & tc != CHARA_PLAYER ) {
+				f = 1
 			}
 			dmghp tc, dmg, cc, SKILL_RES_MAGIC, 1000
 		loop
@@ -18089,40 +18039,38 @@
 			gosub *anime
 		}
 		dmghp tc, dmg, cc, SKILL_SPACT_FLASH_OF_SWIFTNESS
-		if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) != 1 & cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) != 1 & cbit(CHARA_BIT_SUMMONED, tc) != 1 & cbit(CHARA_BIT_LIVESTOCK, tc) != 1 & cbit(CHARA_BIT_NECRO, tc) != 1 ) {
-			if ( cbit(CHARA_BIT_SANDBAG, tc) != 1 | TweakData(52, 2) == 1 ) {
-				repeat MAX_CHARA_TOTAL
-					if ( cdata(CDATA_EXIST, cnt) != CHAR_STATE_ALIVE ) {
+		if ( charaGivesExp(tc) ) {
+			repeat MAX_CHARA_TOTAL
+				if ( cdata(CDATA_EXIST, cnt) != CHAR_STATE_ALIVE ) {
+					continue
+				}
+				if ( cdata(CDATA_POWER_GAUGE, cnt) < 0 ) {
+					continue
+				}
+				if ( cdata(CDATA_RELATION, cnt) == 10 | cc == CHARA_PLAYER ) {
+					if ( cdata(CDATA_RELATION, cnt) < 10 ) {
 						continue
 					}
-					if ( cdata(CDATA_POWER_GAUGE, cnt) < 0 ) {
+				}
+				if ( cdata(CDATA_RELATION, cnt) < 10 & cc != CHARA_PLAYER ) {
+					if ( cdata(CDATA_RELATION, cc) != cdata(CDATA_RELATION, cnt) ) {
 						continue
 					}
-					if ( cdata(CDATA_RELATION, cnt) == 10 | cc == CHARA_PLAYER ) {
-						if ( cdata(CDATA_RELATION, cnt) < 10 ) {
-							continue
-						}
-					}
-					if ( cdata(CDATA_RELATION, cnt) < 10 & cc != CHARA_PLAYER ) {
-						if ( cdata(CDATA_RELATION, cc) != cdata(CDATA_RELATION, cnt) ) {
-							continue
-						}
-					}
-					ovtc = cnt
-					dx = cdata(CDATA_X, ovtc)
-					dy = cdata(CDATA_Y, ovtc)
-					if ( dist(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), dx, dy) > sdataref(SKILL_DATAREF_TG_RANGE, SKILL_SPACT_CHEER) \ EXT_SDATAREF + 1 ) {
-						continue
-					}
-					if ( fov_los(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), dx, dy) == 0 ) {
-						continue
-					}
-					skillexp SKILL_NORMAL_TACTICS, ovtc, 200
-					skillexp SKILL_NORMAL_MARKSMAN, ovtc, 200
-					skillexp SKILL_NORMAL_CASTING, ovtc, 200
-					skillexp SKILL_NORMAL_MAGIC_DEVICE, ovtc, 200
-				loop
-			}
+				}
+				ovtc = cnt
+				dx = cdata(CDATA_X, ovtc)
+				dy = cdata(CDATA_Y, ovtc)
+				if ( dist(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), dx, dy) > sdataref(SKILL_DATAREF_TG_RANGE, SKILL_SPACT_CHEER) \ EXT_SDATAREF + 1 ) {
+					continue
+				}
+				if ( fov_los(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), dx, dy) == 0 ) {
+					continue
+				}
+				skillexp SKILL_NORMAL_TACTICS, ovtc, 200
+				skillexp SKILL_NORMAL_MARKSMAN, ovtc, 200
+				skillexp SKILL_NORMAL_CASTING, ovtc, 200
+				skillexp SKILL_NORMAL_MAGIC_DEVICE, ovtc, 200
+			loop
 		}
 		goto *effect_end
 	}
@@ -18835,7 +18783,7 @@
 			if ( fov_los(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), dx, dy) == 0 ) {
 				continue
 			}
-			if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) != TRUE & cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) != TRUE & cbit(CHARA_BIT_SUMMONED, tc) != TRUE & cbit(CHARA_BIT_LIVESTOCK, tc) != TRUE & cbit(CHARA_BIT_NECRO, tc) != TRUE & cbit(CHARA_BIT_SANDBAG, tc) != TRUE & tc != CHARA_PLAYER ) {
+			if ( charaGivesExp(tc) & tc != CHARA_PLAYER ) {
 				f = 1
 			}
 			dmghp tc, dmg, cc, SKILL_SPACT_FLASH_OF_SWIFTNESS
@@ -18920,7 +18868,7 @@
 			if ( fov_los(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), dx, dy) == 0 ) {
 				continue
 			}
-			if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) != TRUE & cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) != TRUE & cbit(CHARA_BIT_SUMMONED, tc) != TRUE & cbit(CHARA_BIT_LIVESTOCK, tc) != TRUE & cbit(CHARA_BIT_NECRO, tc) != TRUE & cbit(CHARA_BIT_SANDBAG, tc) != TRUE & tc != CHARA_PLAYER ) {
+			if ( charaGivesExp(tc) & tc != CHARA_PLAYER ) {
 				f = 1
 			}
 			dmghp tc, dmg, cc, SKILL_SPACT_FLASH_OF_SWIFTNESS
@@ -19003,7 +18951,7 @@
 			if ( fov_los(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), dx, dy) == 0 ) {
 				continue
 			}
-			if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) != TRUE & cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) != TRUE & cbit(CHARA_BIT_SUMMONED, tc) != TRUE & cbit(CHARA_BIT_LIVESTOCK, tc) != TRUE & cbit(CHARA_BIT_NECRO, tc) != TRUE & cbit(CHARA_BIT_SANDBAG, tc) != TRUE & tc != CHARA_PLAYER ) {
+			if ( charaGivesExp(tc) & tc != CHARA_PLAYER ) {
 				f = 1
 			}
 			dmghp tc, dmg, cc, SKILL_SPACT_FLASH_OF_SWIFTNESS
@@ -19675,10 +19623,8 @@
 	}
 	if ( _switch_val == SKILL_SPACT_MISTELTEIN | _switch_sw ) {
 		_switch_sw = 0
-		if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) != 1 & cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) != 1 & cbit(CHARA_BIT_SUMMONED, tc) != 1 & cbit(CHARA_BIT_LIVESTOCK, tc) != 1 & cbit(CHARA_BIT_NECRO, tc) != 1 & tc != CHARA_PLAYER ) {
-			if ( cbit(CHARA_BIT_SANDBAG, tc) != 1 | TweakData(52, 2) == 1 ) {
-				f = 1
-			}
+		if ( charaGivesExp(tc) & tc != CHARA_PLAYER ) {
+			f = 1
 		}
 		txtef COLOR_GREEN
 		txt lang(name(cc) + "はヤドリギを投げつけた。", name(cc) + " threw the mistletoe.")
@@ -19759,10 +19705,8 @@
 			if ( fov_los(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), dx, dy) == 0 ) {
 				continue
 			}
-			if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) != 1 & cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) != 1 & cbit(CHARA_BIT_SUMMONED, tc) != 1 & cbit(CHARA_BIT_LIVESTOCK, tc) != 1 & cbit(CHARA_BIT_NECRO, tc) != 1 & tc != CHARA_PLAYER ) {
-				if ( cbit(CHARA_BIT_SANDBAG, tc) != 1 | TweakData(52, 2) == 1 ) {
-					f = 1
-				}
+			if ( charaGivesExp(tc) & tc != CHARA_PLAYER ) {
+				f = 1
 			}
 			if ( TweakData(TWEAK_GAMEPLAY_CG_REVERT_SKILL_NERFS, TWEAK_CATEGORY_GAMEPLAY) == TRUE ) {
 				dmg = (sdata(SKILL_ATTR_LER, cc) / 5 + 2) * ((sdata(SKILL_NORMAL_GARDENING, cc) + 1) / 2 + 2) + rnd(sdata(SKILL_ATTR_LER, cc) + 5)
@@ -19823,10 +19767,8 @@
 			if ( fov_los(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), dx, dy) == 0 ) {
 				continue
 			}
-			if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) != 1 & cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) != 1 & cbit(CHARA_BIT_SUMMONED, tc) != 1 & cbit(CHARA_BIT_LIVESTOCK, tc) != 1 & cbit(CHARA_BIT_NECRO, tc) != 1 & tc != CHARA_PLAYER ) {
-				if ( cbit(CHARA_BIT_SANDBAG, tc) != 1 | TweakData(52, 2) == 1 ) {
-					f = 1
-				}
+			if ( charaGivesExp(tc) & tc != CHARA_PLAYER ) {
+				f = 1
 			}
 			dmg = limit((sdata(SKILL_ATTR_CON, cc) / 8 + 2) * ((sdata(SKILL_NORMAL_GENE_ENGINEER, cc) + 1) / 8 + 2) + rnd(cdata(CDATA_CONDITION_POISON, tc) + 5), 2, 40000)
 			if ( cdata(CDATA_CONDITION_POISON, tc) >= 25 & cdata(CDATA_CONDITION_POISON, tc) < 50 ) {
@@ -19923,7 +19865,7 @@
 							txt_guard
 						}
 					}
-					if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) != 1 & cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) != 1 & cbit(CHARA_BIT_SUMMONED, tc) != 1 & cbit(CHARA_BIT_LIVESTOCK, tc) != 1 & cbit(CHARA_BIT_NECRO, tc) != 1 & cbit(CHARA_BIT_SANDBAG, tc) != 1 & tc != CHARA_PLAYER ) {
+					if ( charaGivesExp(tc) & tc != CHARA_PLAYER ) {
 						f = 1
 					}
 					dmg = (sdata(SKILL_NORMAL_TACTICS, cc) / 5 + 2) * ((sdata(SKILL_NORMAL_GENE_ENGINEER, cc) + 1) / 5 + 2) + rnd(sdata(SKILL_NORMAL_TACTICS, cc) + sdata(SKILL_NORMAL_GENE_ENGINEER, cc) + 5)
@@ -21183,10 +21125,8 @@
 				gosub *effect
 			}
 		}
-		if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) != 1 & cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) != 1 & cbit(CHARA_BIT_SUMMONED, tc) != 1 & cbit(CHARA_BIT_LIVESTOCK, tc) != 1 & cbit(CHARA_BIT_NECRO, tc) != 1 & tc != CHARA_PLAYER ) {
-			if ( cbit(CHARA_BIT_SANDBAG, tc) != 1 | TweakData(52, 2) == 1 ) {
-				skillexp SKILL_NORMAL_TACTICS, cc, 40
-			}
+		if ( charaGivesExp(tc) & tc != CHARA_PLAYER ) {
+			skillexp SKILL_NORMAL_TACTICS, cc, 40
 		}
 		if ( cdata(CDATA_FRIENDSHIP, CHARA_PLAYER) == 2 & map(cdata(CDATA_X, tc), cdata(CDATA_Y, tc), MAP_FEATS_ON_TILE) == 0 ) {
 			if ( cc < MAX_CHARA_FOLLOWER ) {
@@ -21239,10 +21179,7 @@
 		if ( cbit(CHARA_BIT_HIRED, tc) ) {
 			goto *effect_end
 		}
-		if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) | cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) & cbit(CHARA_BIT_SUMMONED, tc) ) {
-			goto *effect_end
-		}
-		if ( cbit(CHARA_BIT_SUMMONED, tc) ) {
+		if ( charaIsSummoned(tc) ) {
 			goto *effect_end
 		}
 		if ( cbit(CHARA_BIT_CRADLE_15TH, tc) ) {
@@ -21620,11 +21557,9 @@
 				}
 			}
 		loop
-		if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) != 1 & cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) != 1 & cbit(CHARA_BIT_SUMMONED, tc) != 1 & cbit(CHARA_BIT_LIVESTOCK, tc) != 1 & cbit(CHARA_BIT_NECRO, tc) != 1 ) {
-			if ( cbit(CHARA_BIT_SANDBAG, tc) != 1 | TweakData(52, 2) == 1 ) {
-				skillexp SKILL_NORMAL_TACTICS, cc, 400
-				skillexp SKILL_NORMAL_MAGIC_CAPACITY, cc, 400
-			}
+		if ( charaGivesExp(tc) ) {
+			skillexp SKILL_NORMAL_TACTICS, cc, 400
+			skillexp SKILL_NORMAL_MAGIC_CAPACITY, cc, 400
 		}
 		eqlv = 0
 		eqbui = 0
@@ -22275,10 +22210,8 @@
 		}
 		eqlv = 0
 		eqbui = 0
-		if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) != 1 & cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) != 1 & cbit(CHARA_BIT_SUMMONED, tc) != 1 & cbit(CHARA_BIT_LIVESTOCK, tc) != 1 & cbit(CHARA_BIT_NECRO, tc) != 1 ) {
-			if ( cbit(CHARA_BIT_SANDBAG, tc) != 1 | TweakData(52, 2) == 1 ) {
-				skillexp SKILL_ATTR_MAG, cc, 200
-			}
+		if ( charaGivesExp(tc) ) {
+			skillexp SKILL_ATTR_MAG, cc, 200
 		}
 		weap = 0
 		goto *effect_end
@@ -22384,7 +22317,7 @@
 		dmgsptalk tc, dmgtalk
 		eqlv = 0
 		eqbui = 0
-		if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) != TRUE & cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) != TRUE & cbit(CHARA_BIT_SUMMONED, tc) != TRUE & cbit(CHARA_BIT_LIVESTOCK, tc) != TRUE & cbit(CHARA_BIT_NECRO, tc) != TRUE & cbit(CHARA_BIT_SANDBAG, tc) != TRUE ) {
+		if ( charaGivesExp(tc) ) {
 			skillexp SKILL_NORMAL_NEGOTIATION, cc, 400
 			skillexp SKILL_NORMAL_SENSE_QUALITY, cc, 400
 		}
@@ -22470,11 +22403,9 @@
 		}
 		eqlv = 0
 		eqbui = 0
-		if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) != 1 & cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) != 1 & cbit(CHARA_BIT_SUMMONED, tc) != 1 & cbit(CHARA_BIT_LIVESTOCK, tc) != 1 & cbit(CHARA_BIT_NECRO, tc) != 1 ) {
-			if ( cbit(CHARA_BIT_SANDBAG, tc) != 1 | TweakData(52, 2) == 1 ) {
-				skillexp SKILL_ATTR_WIL, cc, 100
-				skillexp SKILL_ATTR_MAG, cc, 100
-			}
+		if ( charaGivesExp(tc) ) {
+			skillexp SKILL_ATTR_WIL, cc, 100
+			skillexp SKILL_ATTR_MAG, cc, 100
 		}
 		weap = 0
 		goto *effect_end
