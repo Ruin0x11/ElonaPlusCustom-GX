@@ -6006,9 +6006,10 @@
 			}
 		}
 	}
-	if ( cdata(CDATA_PLATINUM, cc) > 0 ) {
+    ; The player does not have an Analysis gauge; the slot is reused for the platinum count.
+	if ( cc != CHARA_PLAYER & cdata(CDATA_ANALYSIS_GAUGE, cc) > 0 ) {
 		if ( calcattackhit_arg1 == 0 ) {
-			evade += (limit(sdata(SKILL_NORMAL_MEMORIZATION, tc) / 5, 1, 100) + 10) * (cdata(CDATA_PLATINUM, cc) / 10 + 1)
+			evade += (limit(sdata(SKILL_NORMAL_MEMORIZATION, tc) / 5, 1, 100) + 10) * (cdata(CDATA_ANALYSIS_GAUGE, cc) / 10 + 1)
 			if ( sorg(SKILL_NORMAL_MEMORIZATION, tc) > 0 ) {
 				skillexp SKILL_NORMAL_MEMORIZATION, tc, 4, 0, 1000
 			}

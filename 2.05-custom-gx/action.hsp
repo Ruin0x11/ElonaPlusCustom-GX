@@ -4225,25 +4225,25 @@
 		}
 		if ( critical != 1 ) {
 			if ( gdata(GDATA_TEMPORARY_FLAGS2) == 0 ) {
-				if ( cdata(CDATA_PLATINUM, cc) < 100 ) {
+				if ( cdata(CDATA_ANALYSIS_GAUGE, cc) < 100 ) {
 					if ( cdata(CDATA_ALLIED, cc) == 0 & cc != CHARA_PLAYER & tc < MAX_CHARA_FOLLOWER ) {
-						cdata(CDATA_PLATINUM, cc) += 2
+						cdata(CDATA_ANALYSIS_GAUGE, cc) += 2
 						if ( rnd(sdata(SKILL_NORMAL_SENSE_QUALITY, tc) + 1) > rnd(50) ) {
-							cdata(CDATA_PLATINUM, cc) += 1
+							cdata(CDATA_ANALYSIS_GAUGE, cc) += 1
 						}
 						if ( gdata(GDATA_FLAG_DATA_SCAN_CHARA_INDEX) != 0 ) {
 							if ( rnd(sdata(SKILL_NORMAL_SENSE_QUALITY, tc) + 50) > rnd(100) ) {
-								cdata(CDATA_PLATINUM, cc) += 1
+								cdata(CDATA_ANALYSIS_GAUGE, cc) += 1
 							}
 						}
 						if ( rnd(sdata(SKILL_NORMAL_SENSE_QUALITY, tc) + 1) > rnd(200) ) {
-							cdata(CDATA_PLATINUM, cc) += 1
+							cdata(CDATA_ANALYSIS_GAUGE, cc) += 1
 						}
 						if ( rnd(sdata(SKILL_NORMAL_SENSE_QUALITY, tc) + 1) > rnd(500) ) {
-							cdata(CDATA_PLATINUM, cc) += 1
+							cdata(CDATA_ANALYSIS_GAUGE, cc) += 1
 						}
-						if ( cdata(CDATA_PLATINUM, cc) > 100 ) {
-							cdata(CDATA_PLATINUM, cc) = 100
+						if ( cdata(CDATA_ANALYSIS_GAUGE, cc) > 100 ) {
+							cdata(CDATA_ANALYSIS_GAUGE, cc) = 100
 						}
 						if ( sorg(SKILL_NORMAL_SENSE_QUALITY, tc) > 0 ) {
 							skillexp SKILL_NORMAL_SENSE_QUALITY, tc, 4, 0, 1000
@@ -5244,25 +5244,25 @@
 			}
 		}
 		if ( gdata(GDATA_TEMPORARY_FLAGS2) == 0 ) {
-			if ( cdata(CDATA_PLATINUM, cc) < 100 ) {
+			if ( cdata(CDATA_ANALYSIS_GAUGE, cc) < 100 ) {
 				if ( cdata(CDATA_ALLIED, cc) == 0 & cc != CHARA_PLAYER & tc < MAX_CHARA_FOLLOWER ) {
-					cdata(CDATA_PLATINUM, cc) += 5
+					cdata(CDATA_ANALYSIS_GAUGE, cc) += 5
 					if ( rnd(sdata(SKILL_NORMAL_SENSE_QUALITY, tc) + 1) > rnd(50) ) {
-						cdata(CDATA_PLATINUM, cc) += 3
+						cdata(CDATA_ANALYSIS_GAUGE, cc) += 3
 					}
 					if ( gdata(GDATA_FLAG_DATA_SCAN_CHARA_INDEX) != 0 ) {
 						if ( rnd(sdata(SKILL_NORMAL_SENSE_QUALITY, tc) + 50) > rnd(100) ) {
-							cdata(CDATA_PLATINUM, cc) += 3
+							cdata(CDATA_ANALYSIS_GAUGE, cc) += 3
 						}
 					}
 					if ( rnd(sdata(SKILL_NORMAL_SENSE_QUALITY, tc) + 1) > rnd(200) ) {
-						cdata(CDATA_PLATINUM, cc) += 3
+						cdata(CDATA_ANALYSIS_GAUGE, cc) += 3
 					}
 					if ( rnd(sdata(SKILL_NORMAL_SENSE_QUALITY, tc) + 1) > rnd(500) ) {
-						cdata(CDATA_PLATINUM, cc) += 3
+						cdata(CDATA_ANALYSIS_GAUGE, cc) += 3
 					}
-					if ( cdata(CDATA_PLATINUM, cc) > 100 ) {
-						cdata(CDATA_PLATINUM, cc) = 100
+					if ( cdata(CDATA_ANALYSIS_GAUGE, cc) > 100 ) {
+						cdata(CDATA_ANALYSIS_GAUGE, cc) = 100
 					}
 					if ( sorg(SKILL_NORMAL_SENSE_QUALITY, tc) > 0 ) {
 						skillexp SKILL_NORMAL_SENSE_QUALITY, tc, 8, 0, 1000
@@ -11342,7 +11342,7 @@
 				animeload ANIMATION_CHAOS_CHILD, cc
 				if ( cdata(CDATA_RELATION, tc) == RELATION_ENEMY ) {
 					txt lang(name(tc) + "の攻撃パターンも分析した。", "You also analyzed the attack pattern of " + name(tc) + ".")
-					cdata(CDATA_PLATINUM, tc) = 100
+					cdata(CDATA_ANALYSIS_GAUGE, tc) = 100
 				}
 				csctrl = 4
 				snd SOUNDLIST_POP2
