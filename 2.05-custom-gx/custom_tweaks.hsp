@@ -18,6 +18,7 @@ TweakData(3, 1) = "Re-parse ItemList.txt values."
 TweakData(50,1) = "Throw potion at self with [t]."
 TweakData(51,1) = "Allow running in world map."
 TweakData(52,1) = "Option to reload last save after death."
+TweakData(53,1) = "Skip skill training confirmation."
 
 TweakData(x, 2) = "Gameplay Tweaks"
 TweakData(0, 2) = "Gather Items At End Of Party Time."
@@ -325,6 +326,7 @@ TweakData(51, 4) = "Disable cicada noises."
 
 *ConvenienceTweakMenu
     cs = 0
+    listmax = 9
 *ConvenienceTweakMenu_loop
 	redraw 0
 	s = "Tweak Setup", strhint3b
@@ -339,10 +341,11 @@ TweakData(51, 4) = "Disable cicada noises."
 	listn(0, 4) = "Throw potion at self with [t]." + GetTStatus(TWEAK_CATEGORY_CONVENIENCE, TWEAK_CONVENIENCE_THROW_POTION_AT_SELF)
 	listn(0, 5) = "Allow running in world map." + GetTStatus(TWEAK_CATEGORY_CONVENIENCE, TWEAK_CONVENIENCE_ALLOW_RUNNING_IN_WORLD_MAP)
 	listn(0, 6) = "Option to reload last save after death." + GetTStatus(TWEAK_CATEGORY_CONVENIENCE, TWEAK_CONVENIENCE_RELOAD_AFTER_DEATH_OPTION)
-	listn(0, 7) = "Return."
+	listn(0, 7) = "Skip skill training confirmation." + GetTStatus(TWEAK_CATEGORY_CONVENIENCE, TWEAK_CONVENIENCE_SKIP_SKILL_TRAINING_CONFIRMATION)
+	listn(0, 8) = "Return."
 	font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
 
-	repeat 8
+	repeat listmax
 		key_list(cnt) = key_select(cnt)
 		keyrange = cnt + 1
 		pos wx + 38, wy + 40 + cnt * 19 - 2
@@ -352,7 +355,7 @@ TweakData(51, 4) = "Disable cicada noises."
 
 	font lang(cfg_font1, cfg_font2), 13 - en * 2, 0
 
-	repeat 8
+	repeat listmax
 		if ( listn(0, cs) == listn(0, cnt) ) {
 			if ( cnt == TWEAK_CONVENIENCE_FEED_OPTION_PETS ) {
 				s = "Adds a Feed option that works like Give but that filters out non-food items when\ninteracting with pets. Also allows for feeding pets raw equipment."
@@ -376,6 +379,9 @@ TweakData(51, 4) = "Disable cicada noises."
 				s = "Adds an option to the death menu for reloading from the previous save.\nIf \"Confirm Reload With F2\" is enabled, you will be warned when playing in a mode\nwith a save penalty."
 			}
 			if ( cnt == 7 ) {
+				s = "Skips the confirmation when spending platinum coins on skill training."
+			}
+			if ( cnt == 8 ) {
 				s = "Return to the previous menu."
 			}
 			pos wx + 38, wy + 343
@@ -425,6 +431,11 @@ TweakData(51, 4) = "Disable cicada noises."
 		gosub *ToggleTweak
 	}
 	if ( key == key_select(7) ) {
+		tc = TWEAK_CATEGORY_CONVENIENCE
+		tn = TWEAK_CONVENIENCE_SKIP_SKILL_TRAINING_CONFIRMATION
+		gosub *ToggleTweak
+	}
+	if ( key == key_select(8) ) {
 		snd SOUNDLIST_OK1
         return
 	}

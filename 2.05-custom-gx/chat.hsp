@@ -22010,6 +22010,25 @@
 	}
 	listmax = 0
 	if ( csctrl == 2 ) {
+
+		/********** RUIN0X11 CUSTOM - BEGINNING **********/ // Skip trainer confirmation tweak.
+
+		if ( TweakData(TWEAK_CONVENIENCE_SKIP_SKILL_TRAINING_CONFIRMATION, TWEAK_CATEGORY_CONVENIENCE) ) {
+			if ( cdata(CDATA_PLATINUM, CHARA_PLAYER) >= calctraincost(csskill, cc) ) {
+				snd SOUNDLIST_PAYGOLD1
+				cdata(CDATA_PLATINUM, CHARA_PLAYER) -= calctraincost(csskill, cc)
+				modgrowth cc, csskill, 100
+			}
+			else {
+				snd SOUNDLIST_FAIL1
+				txt lang("プラチナコインが足りない。", "You don't have enough platinum coins.")
+			}
+			com_charainfo_preserve_page = TRUE
+			goto *chat_train
+		}
+
+		/********** RUIN0X11 CUSTOM - ENDING **********/
+
 		buff = lang(skillname(csskill) + "の能力を訓練するには" + calctraincost(csskill, cc) + strplat + "かかるけどいい" + _kana(1), "Training " + skillname(csskill) + " will cost you " + calctraincost(csskill, cc) + " platinum pieces.")
 		if ( cdata(CDATA_PLATINUM, CHARA_PLAYER) >= calctraincost(csskill, cc) ) {
 			chatList 1, lang("訓練する", "Train me.")

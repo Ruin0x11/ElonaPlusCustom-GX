@@ -8279,22 +8279,25 @@
 			dbg_showallskill = 1
 		}
 	}
-	page = 0
 	pagesize = 16
 	listmax = 0
-	cs = 0
 	if ( csctrl != 4 & csctrl != 300 ) {
 		cc = CHARA_PLAYER
 	}
 	csskill = -1
 	cs_buff = 0
 	curmenu = 0
-	if ( csctrl == 2 | csctrl == 3 ) {
-		page = 1
+	if ( com_charainfo_preserve_page == FALSE ) {
+		page = 0
+		cs = 0
+		if ( csctrl == 2 | csctrl == 3 ) {
+			page = 1
+		}
+		if ( csctrl == 300 ) {
+			page = 1
+		}
 	}
-	if ( csctrl == 300 ) {
-		page = 1
-	}
+	com_charainfo_preserve_page = FALSE
 	if ( dbg_showallskill ) {
 		if ( csctrl != 2 & csctrl != 3 & csctrl != 300 ) {
 			list(0, listmax) = -1, 10000
