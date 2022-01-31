@@ -4063,8 +4063,9 @@
 
 		if ( instr(buff, 0, "spawn_item") != (-1) ) {
 			if ( instr(buff, 0, " ") != (-1) ) {
-				locvar_ri = itemcreate -1, int(strmid(buff, instr(buff, 0, " "), strlen(buff) - instr(buff, 0, " "))), cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
-				noteadd "Done. (" + locvar_ri + ")"
+                locvar_dbid = int(strmid(buff, instr(buff, 0, " "), strlen(buff) - instr(buff, 0, " ")))
+				itemcreate -1, locvar_dbid, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
+				noteadd "Done. (" + ci + ")"
 				goto *console_write
 			}
 			else {
@@ -4079,8 +4080,8 @@
 
 		if ( instr(buff, 0, "add_ally") != (-1) ) {
 			if ( instr(buff, 0, " ") != (-1) ) {
-                rc = int(strmid(buff, instr(buff, 0, " "), strlen(buff) - instr(buff, 0, " ")))
-                gosub *add_ally
+				rc = int(strmid(buff, instr(buff, 0, " "), strlen(buff) - instr(buff, 0, " ")))
+				gosub *add_ally
 				noteadd "Done."
 				goto *console_write
 			}
@@ -4090,7 +4091,27 @@
 			}
 		}
 
-		/********** ANNA CUSTOM - ENDING **********/
+		/********** RUIN0X11 CUSTOM - ENDING **********/
+
+		/********** RUIN0X11 CUSTOM - BEGINNING **********/ // Advance hours command
+
+		if ( instr(buff, 0, "advance_hour") != (-1) ) {
+			if ( instr(buff, 0, " ") != (-1) ) {
+				locvar_hours = int(strmid(buff, instr(buff, 0, " "), strlen(buff) - instr(buff, 0, " ")))
+				repeat locvar_hours
+					gdata(GDATA_HOUR)++
+					gosub *advance_hour
+				loop
+				noteadd "Done."
+				goto *console_write
+			}
+			else {
+				noteadd "Must add a number of hours e.g. advance_hour 2"
+				goto *console_write
+			}
+		}
+
+		/********** RUIN0X11 CUSTOM - ENDING **********/
 
 		if ( instr(buff, 0, "gain_spell") != (-1) ) {
 			repeat MAX_SPELL - STARTING_SKILL_SPELL, STARTING_SKILL_SPELL
@@ -4215,9 +4236,10 @@
     noteadd "\tgain_exp\tPC gains a billion of exp."
     noteadd "\tgain_fame\tPC gains fame."
     noteadd "\tallinv\t\tDisplays all the items in the map."
-    noteadd "\tspawn_chara\t\tSpawns a character by numeric ID."
-    noteadd "\tspawn_item\t\tSpawns an item by numeric ID."
+    noteadd "\tspawn_chara\tSpawns a character by numeric ID."
+    noteadd "\tspawn_item\tSpawns an item by numeric ID."
     noteadd "\tadd_ally\tAdds an ally by character index."
+    noteadd "\tadvance_hour\tAdvances time by the specified number of hours."
 #ifdef CUSTOM_GX_LUA
     noteadd "\tlua\t\tToggles Lua console mode."
 #endif
