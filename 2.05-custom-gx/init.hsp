@@ -1464,10 +1464,8 @@ if instr(s,0,%1)!-1{	%c\
 
 #defcfunc his int his_charid, int his_arg2
 	if ( his_arg2 ) {
-		if ( jp ) {
-			if ( his_charid == CHARA_PLAYER ) {
-				return "あなたの"
-			}
+		if ( his_charid == CHARA_PLAYER ) {
+			return lang("あなたの", "your")
 		}
 		if ( cdatan(CDATAN_NEWSEX, his_charid) == lang("男性", "male") | cdatan(CDATAN_NEWSEX, his_charid) == lang("なし", "none") ) {
 			return lang("彼の", "his")
@@ -1481,29 +1479,11 @@ if instr(s,0,%1)!-1{	%c\
 		if ( cdatan(CDATAN_NEWSEX, his_charid) == lang("自称男性", "female?") | cdatan(CDATAN_NEWSEX, his_charid) == lang("自称女性", "trans-female") ) {
 			return lang("彼女？の", "her?")
 		}
-		if ( jp ) {
-			if ( his_charid == CHARA_PLAYER ) {
-				return "あなたの"
-			}
-			else {
-				if ( cdata(CDATA_SEX, his_charid) == 0 ) {
-					return "彼の"
-				}
-				else {
-					return "彼女の"
-				}
-			}
-		}
-		if ( his_charid == CHARA_PLAYER ) {
-			return "your"
+		if ( cdata(CDATA_SEX, his_charid) == SEX_MALE ) {
+			return lang("彼の", "his")
 		}
 		else {
-			if ( cdata(CDATA_SEX, his_charid) == 0 ) {
-				return "his"
-			}
-			else {
-				return "her"
-			}
+			return lang("彼女の", "her")
 		}
 	}
 	if ( his_charid < CHARA_PLAYER | his_charid >= MAX_CHARA_TOTAL ) {
@@ -1515,7 +1495,7 @@ if instr(s,0,%1)!-1{	%c\
 	if ( his_charid == CHARA_PLAYER ) {
 		return "your"
 	}
-	if ( cdata(CDATA_SEX, his_charid) == 0 ) {
+	if ( cdata(CDATA_SEX, his_charid) == SEX_MALE ) {
 		return "his"
 	}
 	return "her"

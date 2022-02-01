@@ -1698,7 +1698,7 @@
 		if ( locvar_addbuff_f == 1 ) {
 			if ( synccheck(addbuff_charid, -1) ) {
 				txtmore
-				txt lang(name(addbuff_charid) + "は抵抗した。", name(addbuff_charid) + " resist" + _s(addbuff_charid) + " the hex.")
+				txt lang(cnven(name(addbuff_charid)) + "は抵抗した。", name(addbuff_charid) + " resist" + _s(addbuff_charid) + " the hex.")
 			}
 			return
 		}
@@ -1726,30 +1726,27 @@
 				buff_text_entity = cnven(buff_text_entity)
 				switch addbuff_buffid
 					case BUFF_CLEAR_MIND
-						buff_text_part_two = " " + his(addbuff_charid, 1) + " mind..."
+						buff_text_part_two = " " + his(addbuff_charid) + " mind..."
 						swbreak
 					case BUFF_SUPER_REGEN
-						buff_text_entity = "Your"
-						buff_text_part_one = " body regenerates"
+						buff_text_part_one = " body regenerate" + _s(addbuff_charid)
 						swbreak
 					case BUFF_FEATHER
-						buff_text_entity = "Your"
-						buff_text_part_one = " body becomes"
+						buff_text_part_one = " body become" + _s(addbuff_charid)
 						swbreak
 					case BUFF_ATTRIBUTE
-						buff_text_part_two = " " + his(addbuff_charid, 1) + " attribute."
+						buff_text_part_two = " " + his(addbuff_charid) + " attribute."
 						swbreak
 					case BUFF_RESOLUTION_HAND
-						buff_text_entity = "Your"
 						buff_text_part_one = " hands"
 						swbreak
 					case BUFF_EMERGENCY_EVASION
 					case BUFF_MAGIC_EQUIP
 					case BUFF_SUPER_ARMOR
-						buff_text_part_two = " out the power of " + his(addbuff_charid, 1) + " armor."
+						buff_text_part_two = " out the power of " + his(addbuff_charid) + " armor."
 						swbreak
 					case BUFF_SHIELD_PARRY
-						buff_text_part_two = " out the power of " + his(addbuff_charid, 1) + " shield."
+						buff_text_part_two = " out the power of " + his(addbuff_charid) + " shield."
 						swbreak
 					default
 						swbreak
@@ -1758,18 +1755,18 @@
 			else {
 				switch addbuff_buffid
 					case BUFF_CLEAR_MIND
-						buff_text_part_two = " " + his(addbuff_charid, 1) + " mind..."
+						buff_text_part_two = " " + his(addbuff_charid) + " mind..."
 						swbreak
 					case BUFF_EMERGENCY_EVASION
 					case BUFF_MAGIC_EQUIP
 					case BUFF_SUPER_ARMOR
-						buff_text_part_two = " out the power of " + his(addbuff_charid, 1) + " armor."
+						buff_text_part_two = " out the power of " + his(addbuff_charid) + " armor."
 						swbreak
 					case BUFF_SHIELD_PARRY
-						buff_text_part_two = " out the power of " + his(addbuff_charid, 1) + " shield."
+						buff_text_part_two = " out the power of " + his(addbuff_charid) + " shield."
 						swbreak
 					case BUFF_ATTRIBUTE
-						buff_text_part_two = " " + his(addbuff_charid, 1) + " attribute."
+						buff_text_part_two = " " + his(addbuff_charid) + " attribute."
 						swbreak
 					case BUFF_BLACK_MIRROR
 						buff_text_part_one = " copies"

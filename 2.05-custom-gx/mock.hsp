@@ -26,7 +26,7 @@
 	cdatan(CDATAN_NEWSEX, CHARA_PLAYER) = "ray"
 
 #define printhis \
-	color 0, 0, 0:font 14:print "his=" + his(CHARA_PLAYER) + " his2=" + his2(CHARA_PLAYER) + " his3=" + his3(CHARA_PLAYER) + " " + cdatan(CDATAN_NEWSEX, CHARA_PLAYER) + " " + cdata(CDATA_SEX, CHARA_PLAYER)
+	color 0, 0, 0:font 14:print "his=" + his(CHARA_PLAYER, 1) + " his2=" + his2(CHARA_PLAYER) + " his3=" + his3(CHARA_PLAYER) + " " + cdatan(CDATAN_NEWSEX, CHARA_PLAYER) + " " + cdata(CDATA_SEX, CHARA_PLAYER):addbuff CHARA_PLAYER, BUFF_CLEAR_MIND, 100, 20
 
 	printhis
 
@@ -36,6 +36,10 @@
 		gosub *insta_eat
 		printhis
 	loop
+
+    repeat MAX_BUFF
+		addbuff CHARA_PLAYER, cnt, 100, 100
+    loop
 
 	repeat 2
 		ci = locvar_ci_cursed
