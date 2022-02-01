@@ -2868,15 +2868,17 @@
 		}
 	}
 	if ( movelevelbystairs == 1 ) {
-		actionsp CHARA_PLAYER, 15
-		if ( stat == 0 | cdata(CDATA_BURDEN, CHARA_PLAYER) >= 3 ) {
-			if ( stat == 0 | rnd(4 + 1 - cdata(CDATA_BURDEN, CHARA_PLAYER)) == 0 ) {
-				txt lang("うわああ！" + name(CHARA_PLAYER) + "は階段から足を踏み外した。", "Noooo! You lost your step and roll down!")
-				dmghp cc, cdata(CDATA_MAX_HP, cc) * (cdata(CDATA_INV_WEIGHT, CHARA_PLAYER) * 10 / cdata(CDATA_CARRY_LIMIT, CHARA_PLAYER) + 10) / 100 + 1, DAMAGE_FROM_TUMBLE
-				msg_halt
-			}
-			if ( cdata(CDATA_EXIST, CHARA_PLAYER) == CHAR_STATE_DEAD ) {
-				goto *main_init
+		if ( TweakData(TWEAK_GAMEPLAY_HOME_STAIRS_NO_STAMINA_USAGE, TWEAK_CATEGORY_GAMEPLAY) == FALSE | gdata(GDATA_AREA) != AREA_HOME ) {
+			actionsp CHARA_PLAYER, 15
+			if ( stat == 0 | cdata(CDATA_BURDEN, CHARA_PLAYER) >= 3 ) {
+				if ( stat == 0 | rnd(4 + 1 - cdata(CDATA_BURDEN, CHARA_PLAYER)) == 0 ) {
+					txt lang("うわああ！" + name(CHARA_PLAYER) + "は階段から足を踏み外した。", "Noooo! You lost your step and roll down!")
+					dmghp cc, cdata(CDATA_MAX_HP, cc) * (cdata(CDATA_INV_WEIGHT, CHARA_PLAYER) * 10 / cdata(CDATA_CARRY_LIMIT, CHARA_PLAYER) + 10) / 100 + 1, DAMAGE_FROM_TUMBLE
+					msg_halt
+				}
+				if ( cdata(CDATA_EXIST, CHARA_PLAYER) == CHAR_STATE_DEAD ) {
+					goto *main_init
+				}
 			}
 		}
 	}
