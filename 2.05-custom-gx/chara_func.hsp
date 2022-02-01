@@ -2401,7 +2401,7 @@
 	return
 
 #deffunc dmgcon int dmgcon_charid, int dmgcon_cond, int dmgcon_power
-	if ( dmgcon_arg3 < 1 ) {
+	if ( dmgcon_power < 1 ) {
 		f@con = 0
 	}
 	else {
@@ -2501,7 +2501,7 @@
 		return 1
 	}
 	if ( dmgcon_cond == CONDITION_INVERT ) {
-		p@con = rnd(dmgcon_arg3 / 2 + 1) + 1
+		p@con = rnd(dmgcon_power / 2 + 1) + 1
 		if ( p@con > 0 ) {
 			if ( cdata(CDATA_CONDITION_INVERT, dmgcon_charid) == 0 ) {
 				cdata(CDATA_CONDITION_INVERT, dmgcon_charid) = 2
@@ -2595,7 +2595,7 @@
 				f@con = 0
 			}
 		}
-		p@con = rnd(dmgcon_arg3 / 2 + 1) + dmgcon_arg3 / 2
+		p@con = rnd(dmgcon_power / 2 + 1) + dmgcon_power / 2
 		p@con = p@con * 100 / (50 + sdata(SKILL_NORMAL_MAGIC_CAPACITY, dmgcon_charid))
 		p@con = p@con / 5
 		if ( p@con > 0 ) {
@@ -2772,7 +2772,7 @@
 		return 1
 	}
 	if ( dmgcon_cond == CONDITION_BLEED ) {
-		p@con = dmgcon_arg3 / 25
+		p@con = dmgcon_power / 25
 		if ( cdata(CDATA_QUALITY, dmgcon_charid) > FIX_QUALITY_GREAT | cdata(CDATA_ID, dmgcon_charid) == CREATURE_ID_AILE_THE_ATTENDANT ) {
 			p@con /= 5
 		}
@@ -2794,7 +2794,7 @@
 		return 1
 	}
 	if ( dmgcon_cond == CONDITION_DRUNK ) {
-		p@con = dmgcon_arg3 / 10
+		p@con = dmgcon_power / 10
 		cdata(CDATA_ALCOHOL_CONSUMED, dmgcon_charid)++
 		if ( p@con > 0 ) {
 			if ( cdata(CDATA_CONDITION_DRUNK, dmgcon_charid) == 0 ) {
@@ -2843,7 +2843,7 @@
 		return 1
 	}
 	if ( dmgcon_cond == CONDITION_SICK ) {
-		p@con = dmgcon_arg3 / 10
+		p@con = dmgcon_power / 10
 		if ( p@con > 0 ) {
 			if ( cdata(CDATA_CONDITION_SICK, dmgcon_charid) == 0 ) {
 				cdata(CDATA_CONDITION_SICK, dmgcon_charid) = p@con
@@ -2877,7 +2877,7 @@
 	return
 
 *conCalc
-	p@con = rnd(dmgcon_arg3 / 2 + 1) + dmgcon_arg3 / 2
+	p@con = rnd(dmgcon_power / 2 + 1) + dmgcon_power / 2
 	r@con = sdata(res@con, dmgcon_charid) / 50
 	p@con = p@con * 100 / (50 + r@con * 50)
 	if ( r@con >= 3 ) {
