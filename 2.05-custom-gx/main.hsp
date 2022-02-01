@@ -4,6 +4,12 @@
 #packopt name "ElonaPlusCGX"
 #cmpopt varname 1
 
+; Define this to enable Lua debugging features.
+;#define CUSTOM_GX_LUA
+
+; Define this to enable mocking features.
+; #define CUSTOM_GX_MOCK
+
 #uselib "exrand.dll"
 #func exrand_randomize "_exrand_randomize@16" int, int, int, int
 #func exrand_rnd "_exrand_rnd@16" var, int, int, int
@@ -122,28 +128,29 @@
 
 #include "highdpi.hsp"
 
-; Define this to enable Lua debugging features.
-;#define CUSTOM_GX_LUA
+#ifdef CUSTOM_GX_MOCK
+#include "mock_defines.hsp"
+#endif
 
 #define global VARIANT_NAME "ElonaPlus Custom-GX 2.10.1.0"
 #define global VARIANT_TITLE "Elona+ Custom-GX 2.10.1.0"
 #define global VERSION_STRING "6.10"
 #define global VERSION_NUMBER int(double(VERSION_STRING) * 1000)
 
-    develop = dirinfo(4) == "--develop"
+	develop = dirinfo(4) == "--develop"
 
 	if ( develop ) {
 		dbg_titleinfo = 1
 		dbg_hpAlwaysFull = 0
 		dbg_skipCm = 0
-        dbg_figure = 1
-        dbg_extraSkills = 1
-        dbg_evolution = 0
-        dbg_advMessages = 0
-        dbg_subAmurdad = 0
-        dbg_doNothing = 1
+		dbg_figure = 1
+		dbg_extraSkills = 1
+		dbg_evolution = 0
+		dbg_advMessages = 0
+		dbg_subAmurdad = 0
+		dbg_doNothing = 1
 		dbg_quickStart = 0
-        dbg_luaConsole = 1
+		dbg_luaConsole = 1
 		dbg_net = 1
 	}
 
@@ -155,30 +162,30 @@
 
 	; #include "exrand.as"
 
-    ; If we're running under hsed3, dir_exe will be the HSP installation folder
-    ; (C:\bin\hsp30), *not* the folder with Elona's assets.
-    ;
-    ; If the editor is being used, then _DEBUG will be defined as true, so check
-    ; that when setting the executable directory.
+	; If we're running under hsed3, dir_exe will be the HSP installation folder
+	; (C:\bin\hsp30), *not* the folder with Elona's assets.
+	;
+	; If the editor is being used, then _DEBUG will be defined as true, so check
+	; that when setting the executable directory.
 #ifdef _DEBUG
 	exedir = dir_cur + "\\..\\assets\\2.05-custom-gx\\"
 	exist exedir + "elona.dll"
 	if ( strsize == (-1) ) {
-        dialog "Could not find debug assets folder '" + exedir + "'. Please copy a full installation of Elona+ Custom-G to this folder first."
-        end
+		dialog "Could not find debug assets folder '" + exedir + "'. Please copy a full installation of Elona+ Custom-G to this folder first."
+		end
 	}
 #else
 	exedir = dir_exe + "\\"
 	exist exedir + "elona.dll"
 	if ( strsize == (-1) ) {
-        dialog "Could not find an installation of Elona+. Please follow the install instructions to install Elona+ first before running this program."
-        end
+		dialog "Could not find an installation of Elona+. Please follow the install instructions to install Elona+ first before running this program."
+		end
 	}
 #endif
 	devfile = ""
 
-    ; HSP only provides the name of the file an error occurred in if it crashes
-    ; with its default error handler, and only if it's running from the editor.
+	; HSP only provides the name of the file an error occurred in if it crashes
+	; with its default error handler, and only if it's running from the editor.
 	; (Did I mention that HSP sucks?)
 #ifndef _DEBUG
 	onerror goto *exit_game_error
@@ -277,6 +284,10 @@
 
 	#include "lua.hsp"
 
+#ifdef CUSTOM_GX_MOCK
+	#include "mock_lib.hsp"
+#endif
+
 *game_init
 	gdata(GDATA_YEAR) = 517, 10, 12, 16, 10
 	quickpage = 1
@@ -285,10 +296,14 @@
 		goto *mapEditor_init
 	}
 
-    if ( dbg_quickStart ) {
-	    mode = MODELIST_QUICK_START
-	    goto *world_init
-    }
+#ifdef CUSTOM_GX_MOCK
+	goto *mock_createPlayer
+#endif
+
+	if ( dbg_quickStart ) {
+		mode = MODELIST_QUICK_START
+		goto *world_init
+	}
 
 	if ( defload != "" ) {
 		exist exedir + "save\\" + defload + "\\header.txt"
@@ -956,6 +971,10 @@
 	goto *map_init
 
 *main_init
+#ifdef CUSTOM_GX_MOCK
+	#include "mock.hsp"
+	stop
+#endif
 	procid = (procid + 1) \ 4
 	proclist(procid) = "main_init:Begin" + " ct:" + ct
 	sound = SOUNDLIST_NONE

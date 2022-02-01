@@ -1,0 +1,52 @@
+	goto *mock
+
+*mock
+	flt
+	nostack = 1
+	itemcreate CHARA_PLAYER, ITEM_ID_FORBIDDEN_MEAT, -1, -1, 0
+	inv(INV_ITEM_NUM, ci) = 5
+	inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+	locvar_ci_normal = ci
+
+	flt
+	nostack = 1
+	itemcreate CHARA_PLAYER, ITEM_ID_FORBIDDEN_MEAT, -1, -1, 0
+	inv(INV_ITEM_NUM, ci) = 5
+	inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_CURSED
+	locvar_ci_cursed = ci
+
+	flt
+	nostack = 1
+	itemcreate CHARA_PLAYER, ITEM_ID_FORBIDDEN_MEAT, -1, -1, 0
+	inv(INV_ITEM_NUM, ci) = 5
+	inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_BLESSED
+	locvar_ci_blessed = ci
+
+	cdata(CDATA_SEX, CHARA_PLAYER) = SEX_FEMALE
+	cdatan(CDATAN_NEWSEX, CHARA_PLAYER) = "ray"
+
+#define printhis \
+	color 0, 0, 0:font 14:print "his=" + his(CHARA_PLAYER) + " his2=" + his2(CHARA_PLAYER) + " his3=" + his3(CHARA_PLAYER) + " " + cdatan(CDATAN_NEWSEX, CHARA_PLAYER) + " " + cdata(CDATA_SEX, CHARA_PLAYER)
+
+	printhis
+
+	repeat 2
+		ci = locvar_ci_normal
+		cc = CHARA_PLAYER
+		gosub *insta_eat
+		printhis
+	loop
+
+	repeat 2
+		ci = locvar_ci_cursed
+		cc = CHARA_PLAYER
+		gosub *insta_eat
+		printhis
+	loop
+
+	repeat 2
+		ci = locvar_ci_blessed
+		cc = CHARA_PLAYER
+		gosub *insta_eat
+		printhis
+	loop

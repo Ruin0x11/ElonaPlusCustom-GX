@@ -4274,12 +4274,12 @@
 *mutexobj
 	CreateMutexA 0, 0, VARIANT_NAME
 	mutex_handle = stat
-    #ifndef CUSTOM_GX_MOCK
+#ifndef CUSTOM_GX_MOCK
 	_GetLastError
 	if ( stat == 183 ) {
 		dialog lang("二重起動のため終了します。", "The program is already running."), 1
 		end
 	}
-    #endif
+#endif
 	return
 
