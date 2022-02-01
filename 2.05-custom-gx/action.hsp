@@ -3248,7 +3248,18 @@
 		gosub *open_chest
 		goto *act_open_SWEND1
 *act_open_SWEND1
+		ti = -1
+		locvar_chest_ci = ri
 		item_stack cc, ri
+		if ( ti !=(-1) ) {
+			locvar_chest_ci = ti
+		}
+		if ( TweakData(TWEAK_CONVENIENCE_AUTODROP_OPENED_CHESTS, TWEAK_CATEGORY_CONVENIENCE) & cc == CHARA_PLAYER & inv(INV_ITEM_PARAM1, locvar_chest_ci) == 0 & inv_getfreeid(-1) != (-1) ) {
+			ci = locvar_chest_ci
+			in = inv(INV_ITEM_NUM, ci)
+			dropval = 0
+			gosub *act_drop
+		}
 	}
 	screenupdate = -1
 	gosub *screen_draw

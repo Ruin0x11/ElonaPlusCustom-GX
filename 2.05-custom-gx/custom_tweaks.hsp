@@ -19,6 +19,7 @@ TweakData(50,1) = "Throw potion at self with [t]."
 TweakData(51,1) = "Allow running in world map."
 TweakData(52,1) = "Option to reload last save after death."
 TweakData(53,1) = "Skip skill training confirmation."
+TweakData(54,1) = "Auto-drop opened chests."
 
 TweakData(x, 2) = "Gameplay Tweaks"
 TweakData(0, 2) = "Gather Items At End Of Party Time."
@@ -326,7 +327,7 @@ TweakData(51, 4) = "Disable cicada noises."
 
 *ConvenienceTweakMenu
     cs = 0
-    listmax = 9
+    listmax = 10
 *ConvenienceTweakMenu_loop
 	redraw 0
 	s = "Tweak Setup", strhint3b
@@ -342,7 +343,8 @@ TweakData(51, 4) = "Disable cicada noises."
 	listn(0, 5) = "Allow running in world map." + GetTStatus(TWEAK_CATEGORY_CONVENIENCE, TWEAK_CONVENIENCE_ALLOW_RUNNING_IN_WORLD_MAP)
 	listn(0, 6) = "Option to reload last save after death." + GetTStatus(TWEAK_CATEGORY_CONVENIENCE, TWEAK_CONVENIENCE_RELOAD_AFTER_DEATH_OPTION)
 	listn(0, 7) = "Skip skill training confirmation." + GetTStatus(TWEAK_CATEGORY_CONVENIENCE, TWEAK_CONVENIENCE_SKIP_SKILL_TRAINING_CONFIRMATION)
-	listn(0, 8) = "Return."
+	listn(0, 8) = "Auto-drop opened chests." + GetTStatus(TWEAK_CATEGORY_CONVENIENCE, TWEAK_CONVENIENCE_AUTODROP_OPENED_CHESTS)
+	listn(0, 9) = "Return."
 	font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
 
 	repeat listmax
@@ -382,6 +384,9 @@ TweakData(51, 4) = "Disable cicada noises."
 				s = "Skips the confirmation when spending platinum coins on skill training."
 			}
 			if ( cnt == 8 ) {
+				s = "Automatically drops empty chests after they've been opened."
+			}
+			if ( cnt == 9 ) {
 				s = "Return to the previous menu."
 			}
 			pos wx + 38, wy + 343
@@ -436,6 +441,11 @@ TweakData(51, 4) = "Disable cicada noises."
 		gosub *ToggleTweak
 	}
 	if ( key == key_select(8) ) {
+		tc = TWEAK_CATEGORY_CONVENIENCE
+		tn = TWEAK_CONVENIENCE_AUTODROP_OPENED_CHESTS
+		gosub *ToggleTweak
+	}
+	if ( key == key_select(9) ) {
 		snd SOUNDLIST_OK1
         return
 	}
