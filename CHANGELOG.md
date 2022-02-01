@@ -1,3 +1,25 @@
+# 2.10.1.0
+
+## Added
+- Ported all changes from Elona+ 2.10.
+- Added a tweak that makes summoned monsters give skill/spell experience. (#66)
+- Added a tweak for skipping the confirmation when spending platinum on skill training.
+- Added a tweak for auto-dropping empty chests after opening them. (#50)
+- Added a tweak for using stairs in your home without depleting stamina. (#43)
+
+## Changed
+- Make Oblivion Palace a returnable location in wizard mode. (#40)
+
+## Fixed
+- Fixed analysis gauge logic applying to the player. (#53)
+- Fixed the behavior of the "Prevent home stayers from moving" tweak. (#52)
+- Fixed some incorrect results of using crop management tools. (#67)
+- Fixed some incorrect pronouns/grammar being displayed in the feats and buffs menus. (#64)
+- Fixed enchantment magnitude being displayed in the feats menu details. (#65)
+- Fixed shop names being incorrectly displayed when changing shop types. (#40)
+- Fixed a few typos and translation errors. (#40)
+- Fixed a crash when trying to move a hostile creature in your home. (#40)
+
 # 2.09.1.0
 
 ## Added
