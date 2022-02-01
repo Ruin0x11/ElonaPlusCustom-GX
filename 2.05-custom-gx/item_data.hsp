@@ -300,30 +300,32 @@
 /********** ANNA CUSTOM - BEGINNING **********/ // Show Enchant Strength With Objet of Heart
 
 #define encDisp(%1,%2,%3,%4=-1) \
-    if val == %1 {%c\
+	if val == %1 {%c\
 		rtval = %2%c\
-    	s = %3%c\
-	    item_find ITEM_ID_OBJET_HEART, 3%c\
-    	if %4 == (-1) {%c\
-	    	if ( stat != (-1) & TweakData(TWEAK_UI_SHOW_ENCHANT_STRENGTH, TWEAK_CATEGORY_UI) == 2 ) {%c\
-	    		s += "(" + val(1) + ")"%c\
-	    	}%c\
-    	    return%c\
-    	} else {%c\
-    		if val(2) == 0 {%c\
-    		    s += " ["%c\
-    		    putEncLv %4%c\
-    		    s += "]"%c\
-			    if ( stat != (-1) & TweakData(TWEAK_UI_SHOW_ENCHANT_STRENGTH, TWEAK_CATEGORY_UI) >= 1 ) {%c\
-			    	s += "(" + val(1) + ")"%c\
-			    }%c\
-    		    return%c\
-    	    } else {%c\
-    	    	rtval(1) = %4%c\
-    		}%c\
-    	}%c\
-    	return%c\
-    }%c\
+		s = %3%c\
+		item_find ITEM_ID_OBJET_HEART, 3%c\
+		if %4 == (-1) {%c\
+			if val(2) == 0 {%c\
+				if ( stat != (-1) & TweakData(TWEAK_UI_SHOW_ENCHANT_STRENGTH, TWEAK_CATEGORY_UI) == 2 ) {%c\
+					s += " (" + val(1) + ")"%c\
+				}%c\
+			}%c\
+			return%c\
+		} else {%c\
+			if val(2) == 0 {%c\
+				s += " ["%c\
+				putEncLv %4%c\
+				s += "]"%c\
+				if ( stat != (-1) & TweakData(TWEAK_UI_SHOW_ENCHANT_STRENGTH, TWEAK_CATEGORY_UI) >= 1 ) {%c\
+					s += "(" + val(1) + ")"%c\
+				}%c\
+				return%c\
+			} else {%c\
+				rtval(1) = %4%c\
+			}%c\
+		}%c\
+		return%c\
+	}%c\
 
 /********** ANNA CUSTOM - ENDING **********/
 
@@ -363,7 +365,7 @@
 
 					item_find ITEM_ID_OBJET_HEART, 3
 					if ( stat != (-1) & TweakData(TWEAK_UI_SHOW_ENCHANT_STRENGTH, TWEAK_CATEGORY_UI) == 2 ) {
-						s += "(" + val(1) + ")"
+						s += " (" + val(1) + ")"
 					}
 
 					/********** ANNA CUSTOM - ENDING **********/
@@ -393,7 +395,7 @@
 
 					item_find ITEM_ID_OBJET_HEART, 3
 					if ( stat != (-1) & TweakData(TWEAK_UI_SHOW_ENCHANT_STRENGTH, TWEAK_CATEGORY_UI) == 2 ) {
-						s += "(" + val(1) + ")"
+						s += " (" + val(1) + ")"
 					}
 
 					/********** ANNA CUSTOM - ENDING **********/
@@ -509,7 +511,7 @@
 
 				item_find ITEM_ID_OBJET_HEART, 3
 				if ( stat != (-1) & TweakData(TWEAK_UI_SHOW_ENCHANT_STRENGTH, TWEAK_CATEGORY_UI) == 2 ) {
-					s += "(" + val(1) + ")"
+					s += " (" + val(1) + ")"
 				}
 
 				/********** ANNA CUSTOM - ENDING **********/
