@@ -724,17 +724,18 @@
 		txt lang("誰を移動させる？", "Move who?")
 		allyctrl = 0
 		gosub *com_listNpc
-		if ( stat == (-1) ) {
+		locvar_cc = stat
+		if ( locvar_cc == (-1) ) {
 			goto *turn_end
 		}
-		if ( cdata(CDATA_RELATION, stat) <= (-3) ) {
+		if ( cdata(CDATA_RELATION, locvar_cc) <= (-3) ) {
 			txtnew
 			txtef COLOR_SKY_BLUE
-			txt cdatan(CDATAN_NAME, stat) + lang("「触るな！」", " " + cnvtalk("Don't touch me!"))
+			txt cdatan(CDATAN_NAME, locvar_cc) + lang("「触るな！」", " " + cnvtalk("Don't touch me!"))
 			goto *turn_end
 		}
-		tchome = stat
-		tc = stat
+		tchome = locvar_cc
+		tc = locvar_cc
 		snd SOUNDLIST_OK1
 *com_home_WHILE3
 		txtnew
