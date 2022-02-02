@@ -1,3 +1,12 @@
+# 2.10.1.1
+
+Thanks to DiscoWitch for fixing these issues.
+
+## Fixed
+- Fixed status effects not applying.
+- Fixed a crash that occurs when fishing.
+- Fixed the display of the Super Accel buff in the profile.
+
 # 2.10.1.0
 
 ## Added
