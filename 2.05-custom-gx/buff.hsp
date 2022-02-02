@@ -528,7 +528,7 @@
 	if ( calcbuff_buffid == BUFF_SPEED ) {
 		locvar_calcbuff_p = limit(50 + calcbuff_power / 10, 1, 800)
 		dur = 8 + calcbuff_power / 20
-		if ( calcbuff_charid == CHARA_PLAYER ) {
+		if ( calcbuff_charid == CHARA_PLAYER | (calcbuff_charid == -2 & tc == CHARA_PLAYER) ) {
 			if ( cdata(CDATA_MATERIAL2_COUNTER, CHARA_PLAYER) == 1 ) {
 				locvar_calcbuff_p = locvar_calcbuff_p * 13 / 10
 			}
