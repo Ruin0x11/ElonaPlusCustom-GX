@@ -18760,11 +18760,15 @@
 			arenaimport = 1
 		}
 		listmax = 0
+		petArenaMatchLimit = 3 // Vanilla
+		if (TweakData(TWEAK_GAMEPLAY_PET_ARENA_INCREASED_MATCH_LIMIT, TWEAK_CATEGORY_GAMEPLAY) != 0) {
+			petArenaMatchLimit = TweakData(TWEAK_GAMEPLAY_PET_ARENA_INCREASED_MATCH_LIMIT, TWEAK_CATEGORY_GAMEPLAY)
+		}
 		if ( chatval == 40 ) {
 			if ( adata(ADATA_ARENA_RENEW_DATE, gdata(GDATA_AREA)) <= gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 ) {
 				adata(ADATA_ARENA_MATCHES_FOUGHT, gdata(GDATA_AREA)) = 0
 			}
-			if ( adata(ADATA_ARENA_MATCHES_FOUGHT, gdata(GDATA_AREA)) >= 3 ) {
+			if ( adata(ADATA_ARENA_MATCHES_FOUGHT, gdata(GDATA_AREA)) >= petArenaMatchLimit ) {
 				if ( dbg_arena == 0 ) {
 					buff = lang("残念だが、今日の試合はもう終了し" + _ta(), "The game is over today. Come again tommorow.")
 					goto *chat_default
@@ -18777,13 +18781,13 @@
 			if ( gdata(GDATA_RANK_PET_ARENA) / 100 == 1 & adata(ADATA_PET_ARENA_WIN, gdata(GDATA_AREA)) >= 29 ) {
 				chatMore lang("ようこそペットの王！" + _kimi(3) + "のペットと戦うため、今日も挑戦者がやってきている" + _yo(2), "Welcome! A challenger has come to fight with your pet!")
 			}
-			buff = lang("一対一の戦いで、対戦相手はレベル" + arenaop(2) + "相当の相手" + _da() + "挑戦する" + _noka(1), "The opponent is around level " + arenaop(2) + ". Want to give it a try? ")
+			buff = lang("一対一の戦いで、対戦相手はレベル" + arenaop(2) + "相当の相手" + _da() + "挑戦する" + _noka(1), "The opponent is around level " + arenaop(2) + ". Want to give it a try? You have " + (petArenaMatchLimit - adata(ADATA_ARENA_MATCHES_FOUGHT, gdata(GDATA_AREA))) + " attempts left today.")
 		}
 		if ( chatval == 41 ) {
 			if ( adata(ADATA_ARENA_RENEW_DATE, gdata(GDATA_AREA)) <= gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 ) {
 				adata(ADATA_ARENA_MATCHES_FOUGHT, gdata(GDATA_AREA)) = 0
 			}
-			if ( adata(ADATA_ARENA_MATCHES_FOUGHT, gdata(GDATA_AREA)) >= 3 ) {
+			if ( adata(ADATA_ARENA_MATCHES_FOUGHT, gdata(GDATA_AREA)) >= petArenaMatchLimit ) {
 				if ( dbg_arena == 0 ) {
 					buff = lang("残念だが、今日の試合はもう終了し" + _ta(), "The game is over today. Come again tommorow.")
 					goto *chat_default
@@ -18797,13 +18801,13 @@
 			if ( gdata(GDATA_RANK_PET_ARENA) / 100 == 1 & adata(ADATA_PET_ARENA_WIN, gdata(GDATA_AREA)) >= 29 ) {
 				chatMore lang("ようこそペットの王！" + _kimi(3) + "のペットと戦うため、今日も挑戦者がやってきている" + _yo(2), "Welcome! A challenger has come to fight with your pet!")
 			}
-			buff = lang("" + arenaop(1) + "人同士のチームバトルで、対戦相手はレベル" + arenaop(2) + "の相手複数" + _da() + "挑戦する" + _noka(1), "It's a " + arenaop(1) + " vs " + arenaop(1) + " match. The opponent's group is formed by the pets less than " + arenaop(2) + " levels. What you say?")
+			buff = lang("" + arenaop(1) + "人同士のチームバトルで、対戦相手はレベル" + arenaop(2) + "の相手複数" + _da() + "挑戦する" + _noka(1), "It's a " + arenaop(1) + " vs " + arenaop(1) + " match. The opponent's group is formed by the pets less than " + arenaop(2) + " levels. What you say? You have " + (petArenaMatchLimit - adata(ADATA_ARENA_MATCHES_FOUGHT, gdata(GDATA_AREA))) + " attempts left today.")
 		}
 		if ( chatval == 49 ) {
 			arenaop = 1, 2, rtval(1)
 			enemylv = rtval(1)
 			arenaop(1) = rtval
-			buff = lang("" + arenaop(1) + "人同士のチームバトルで、対戦相手はレベル" + arenaop(2) + "以下の相手複数" + _da() + "挑戦する" + _noka(1), "It's a " + arenaop(1) + " vs " + arenaop(1) + " match. The opponent's group is formed by the pets less than " + arenaop(2) + " levels. What you say?")
+			buff = lang("" + arenaop(1) + "人同士のチームバトルで、対戦相手はレベル" + arenaop(2) + "以下の相手複数" + _da() + "挑戦する" + _noka(1), "It's a " + arenaop(1) + " vs " + arenaop(1) + " match. The opponent's group is formed by the pets less than " + arenaop(2) + " levels. What you say? You have " + (petArenaMatchLimit - adata(ADATA_ARENA_MATCHES_FOUGHT, gdata(GDATA_AREA))) + " attempts left today.")
 		}
 		chatList 1, lang("挑戦する", "I'll send my pet.")
 		chatList 0, lang("やめる", "I'll pass.")
