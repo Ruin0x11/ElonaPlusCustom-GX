@@ -20,6 +20,7 @@ TweakData(51,1) = "Allow running in world map."
 TweakData(52,1) = "Option to reload last save after death."
 TweakData(53,1) = "Skip skill training confirmation."
 TweakData(54,1) = "Auto-drop opened chests."
+TweakData(55,1) = "Remove spell over-cast confirmation."
 
 TweakData(x, 2) = "Gameplay Tweaks"
 TweakData(0, 2) = "Gather Items At End Of Party Time."
@@ -45,6 +46,7 @@ TweakData(62, 2) = "(Custom-G) Apply skill buffs."
 TweakData(63, 2) = "(Custom-G) Apply damage calculation buffs."
 TweakData(64, 2) = "Summoned monster training."
 TweakData(65, 2) = "No stamina depletion when using stairs in Your Home."
+TweakData(66, 2) = "Increased limit to daily pet arena match attempts."
 
 TweakData(x, 3) = "AI Tweaks"
 TweakData(0, 3) = "Change Zeome's AI."
@@ -328,7 +330,7 @@ TweakData(51, 4) = "Disable cicada noises."
 
 *ConvenienceTweakMenu
     cs = 0
-    listmax = 10
+    listmax = 11
 *ConvenienceTweakMenu_loop
 	redraw 0
 	s = "Tweak Setup", strhint3b
@@ -345,7 +347,8 @@ TweakData(51, 4) = "Disable cicada noises."
 	listn(0, 6) = "Option to reload last save after death." + GetTStatus(TWEAK_CATEGORY_CONVENIENCE, TWEAK_CONVENIENCE_RELOAD_AFTER_DEATH_OPTION)
 	listn(0, 7) = "Skip skill training confirmation." + GetTStatus(TWEAK_CATEGORY_CONVENIENCE, TWEAK_CONVENIENCE_SKIP_SKILL_TRAINING_CONFIRMATION)
 	listn(0, 8) = "Auto-drop opened chests." + GetTStatus(TWEAK_CATEGORY_CONVENIENCE, TWEAK_CONVENIENCE_AUTODROP_OPENED_CHESTS)
-	listn(0, 9) = "Return."
+	listn(0, 9) = "Remove spell over-cast confirmation." + GetTStatus(TWEAK_CATEGORY_CONVENIENCE, TWEAK_CONVENIENCE_REMOVE_OVER_CAST_CONFIRMATION)
+	listn(0, 10) = "Return."
 	font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
 
 	repeat listmax
@@ -388,6 +391,9 @@ TweakData(51, 4) = "Disable cicada noises."
 				s = "Automatically drops empty chests after they've been opened."
 			}
 			if ( cnt == 9 ) {
+				s = "Removes confirmation window when over-casting spells."
+			}
+			if ( cnt == 10 ) {
 				s = "Return to the previous menu."
 			}
 			pos wx + 38, wy + 343
@@ -447,6 +453,11 @@ TweakData(51, 4) = "Disable cicada noises."
 		gosub *ToggleTweak
 	}
 	if ( key == key_select(9) ) {
+		tc = TWEAK_CATEGORY_CONVENIENCE
+		tn = TWEAK_CONVENIENCE_REMOVE_OVER_CAST_CONFIRMATION
+		gosub *ToggleTweak
+	}
+	if ( key == key_select(10) ) {
 		snd SOUNDLIST_OK1
         return
 	}
@@ -459,7 +470,7 @@ TweakData(51, 4) = "Disable cicada noises."
     cs = 0
     page = 0
     pagesize = 16
-    listmax = 24
+    listmax = 25
 *GameplayTweakMenu_pgchk
 	redraw 0
 	page_check
@@ -493,7 +504,8 @@ TweakData(51, 4) = "Disable cicada noises."
 	listn(0, 20) = "(Custom-G) Apply damage calculation buffs." + GetTStatus(TWEAK_CATEGORY_GAMEPLAY, TWEAK_GAMEPLAY_CG_REVERT_DAMAGE_CALC_NERFS)
 	listn(0, 21) = "Summoned monster training." + GetTStatus(TWEAK_CATEGORY_GAMEPLAY, TWEAK_GAMEPLAY_SUMMONED_MONSTER_TRAINING)
 	listn(0, 22) = "No stamina depletion when using stairs in Your Home." + GetTStatus(TWEAK_CATEGORY_GAMEPLAY, TWEAK_GAMEPLAY_HOME_STAIRS_NO_STAMINA_USAGE)
-	listn(0, 23) = "Return"
+	listn(0, 23) = "Increased daily Pet Arena attempts. " + GetTStatus(TWEAK_CATEGORY_GAMEPLAY, TWEAK_GAMEPLAY_PET_ARENA_INCREASED_MATCH_LIMIT)
+	listn(0, 24) = "Return"
 
 	font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
 
@@ -587,6 +599,9 @@ TweakData(51, 4) = "Disable cicada noises."
 				s = "Using stairs in Your Home will not deplete stamina."
 			}
 			if ( p == 23 ) {
+				s = "Increases the daily limit to Pet Arena match attempts\nin intervals of 10 and maxing out at 100 a day."
+			}
+			if ( p == 24 ) {
 				s = "Return to the previous menu."
 			}
 			pos wx + 38, wy + 343
@@ -722,6 +737,13 @@ TweakData(51, 4) = "Disable cicada noises."
 		gosub *ToggleTweak
 	}
 	if ( p == 23 ) {
+		tc = TWEAK_CATEGORY_GAMEPLAY
+		tn = TWEAK_GAMEPLAY_PET_ARENA_INCREASED_MATCH_LIMIT
+		ts = 10 // Increments by
+		tm = 100 // Max
+		gosub *IncrementTweak
+	}
+	if ( p == 24 ) {
 		snd SOUNDLIST_OK1
         return
 	}
