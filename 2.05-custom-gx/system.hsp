@@ -4162,6 +4162,15 @@
 			noteadd "Done."
 			goto *console_write
 		}
+		if ( instr(buff, 0, "gain_attribute") != (-1) ) {
+			repeat SKILL_ATTR_LUC - SKILL_ATTR_STR, SKILL_ATTR_STR
+				skillmod cnt, tc, 1000000000
+			loop
+			skillmod SKILL_ATTR_LIFE, tc, 1000000000
+			skillmod SKILL_ATTR_MANA, tc, 1000000000
+			noteadd "Done."
+			goto *console_write
+		}
 		if ( instr(buff, 0, "gain_fame") != (-1) ) {
 			cdata(CDATA_FAME, CHARA_PLAYER) += 10000
 			noteadd "Done."
@@ -4234,6 +4243,7 @@
     noteadd "\tgain_spell\tPC gains all spells."
     noteadd "\tgain_spact\tPC gains all special actions."
     noteadd "\tgain_exp\tPC gains a billion of exp."
+	noteadd "\tgain_attribute\tPC attributes set to 2000."
     noteadd "\tgain_fame\tPC gains fame."
     noteadd "\tallinv\t\tDisplays all the items in the map."
     noteadd "\tspawn_chara\tSpawns a character by numeric ID."
