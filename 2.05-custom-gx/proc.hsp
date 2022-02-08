@@ -5108,6 +5108,14 @@
 	if ( synccheck(cc, -1) ) {
 		txt lang(npcn(cc) + itemname(ci, 1) + "を食べ終えた。", name(cc) + " " + have(cc) + " finished eating " + itemname(ci, 1) + ".")
 	}
+	if ( TweakData(TWEAK_GAMEPLAY_CG_DISABLE_THIRST, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
+		if ( cdata(CDATA_THIRST, cc) < 12000 ) {
+			if ( synccheck(cc, -1) ) {
+				txt lang("さらに、付属していた飲み物も飲んだ。", name(cc) + " also drank the beverage that came with the food.")
+			}
+			cdata(CDATA_THIRST, cc) += 2000
+		}
+	}
 
     /********** ORIGINAL - BEGINNING ********** // Remove thirst mechanic.
 
