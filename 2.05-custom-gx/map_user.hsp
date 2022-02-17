@@ -1420,7 +1420,11 @@
 			txt lang("家はすでに人であふれかえっている。", "You already have too many guests in your home.")
 			goto *com_home_SWEND1
 		}
-		repeat 10
+		moreHireableHomeServants = 0
+		if ( TweakData(TWEAK_GAMEPLAY_MORE_HIREABLE_HOUSE_SERVANTS, TWEAK_CATEGORY_GAMEPLAY == TRUE){
+			moreHireableHomeServants = 3
+		}
+		repeat 10 + (moreHireableHomeServants * 2)
 			randomize gdata(GDATA_DAY) + cnt
 			if ( rnd(2) ) {
 				continue
@@ -1442,8 +1446,8 @@
 			cdata(CDATA_EXIST, rc) = CHAR_STATE_TEMP
 			cdata(CDATA_ROLE, rc) = isethirerole(hire)
 			if ( cdata(CDATA_ID, rc) == CREATURE_ID_SHOPKEEPER ) {
-				p = rnd(6)
-				if ( p == 0 ) {
+				p = rnd(6 + moreHireableHomeServants)
+				if ( p == 0 | p == 4) {
 					cdata(CDATA_ROLE, rc) = ROLE_SHOP_ARMOR
 					cdatan(CDATAN_NAME, rc) = lang("武具店の" + cdatan(CDATAN_NAME, rc), cdatan(CDATAN_NAME, rc) + " of armory")
 				}
@@ -1459,13 +1463,22 @@
 					cdata(CDATA_ROLE, rc) = ROLE_SHOP_GOODS
 					cdatan(CDATAN_NAME, rc) = lang("何でも屋の" + cdatan(CDATAN_NAME, rc), cdatan(CDATAN_NAME, rc) + " of goods store")
 				}
-				if ( p == 4 ) {
-					cdata(CDATA_ROLE, rc) = ROLE_SHOP_ARMOR
-					cdatan(CDATAN_NAME, rc) = lang("武具店の" + cdatan(CDATAN_NAME, rc), cdatan(CDATAN_NAME, rc) + " of armory")
-				}
 				if ( p == 5 ) {
 					cdata(CDATA_ROLE, rc) = ROLE_SHOP_BLACKMARKET
 					cdatan(CDATAN_NAME, rc) = lang("ブラックマーケットの" + cdatan(CDATAN_NAME, rc), cdatan(CDATAN_NAME, rc) + " of blackmarket")
+				}
+				if ( p == 6 ) {
+					cdata(CDATA_ROLE, rc) = ROLE_SHOP_BAKERY
+					cdatan(CDATAN_NAME, rc) = lang("魔法店の" + cdatan(CDATAN_NAME, rc), cdatan(CDATAN_NAME, rc) + " of baker store")
+					cdata(CDATA_PIC, rc) = xy2pic(6, 4) //Baker sprite, otherwise looks like normal merchant.	
+				}
+				if ( p == 7 ) {
+					cdata(CDATA_ROLE, rc) = ROLE_SHOP_FOOD
+					cdatan(CDATAN_NAME, rc) = lang("魔法店の" + cdatan(CDATAN_NAME, rc), cdatan(CDATAN_NAME, rc) + " the food vendor")
+				}
+				if ( p == 8 ) {
+					cdata(CDATA_ROLE, rc) = ROLE_SHOP_FISH
+					cdatan(CDATAN_NAME, rc) = lang("魔法店の" + cdatan(CDATAN_NAME, rc), cdatan(CDATAN_NAME, rc) + " the fisher")
 				}
 				randomize
 				cdata(CDATA_ROLE_SHOP_LEVEL, rc) = rnd(15) + 1

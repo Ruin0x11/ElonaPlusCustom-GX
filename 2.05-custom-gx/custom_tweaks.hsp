@@ -47,6 +47,7 @@ TweakData(63, 2) = "(Custom-G) Apply damage calculation buffs."
 TweakData(64, 2) = "Summoned monster training."
 TweakData(65, 2) = "No stamina depletion when using stairs in Your Home."
 TweakData(66, 2) = "Increased limit to daily pet arena match attempts."
+TweakData(67, 2) = "Increased variety of hireable home servants."
 
 TweakData(x, 3) = "AI Tweaks"
 TweakData(0, 3) = "Change Zeome's AI."
@@ -471,7 +472,7 @@ TweakData(51, 4) = "Disable cicada noises."
     cs = 0
     page = 0
     pagesize = 16
-    listmax = 25
+    listmax = 26
 *GameplayTweakMenu_pgchk
 	redraw 0
 	page_check
@@ -506,7 +507,8 @@ TweakData(51, 4) = "Disable cicada noises."
 	listn(0, 21) = "Summoned monster training." + GetTStatus(TWEAK_CATEGORY_GAMEPLAY, TWEAK_GAMEPLAY_SUMMONED_MONSTER_TRAINING)
 	listn(0, 22) = "No stamina depletion when using stairs in Your Home." + GetTStatus(TWEAK_CATEGORY_GAMEPLAY, TWEAK_GAMEPLAY_HOME_STAIRS_NO_STAMINA_USAGE)
 	listn(0, 23) = "Increased daily Pet Arena attempts. " + GetTStatus(TWEAK_CATEGORY_GAMEPLAY, TWEAK_GAMEPLAY_PET_ARENA_INCREASED_MATCH_LIMIT)
-	listn(0, 24) = "Return"
+	listn(0, 24) = "Increased variety of hireable home servants." + GetTStatus(TWEAK_CATEGORY_GAMEPLAY, TWEAK_GAMEPLAY_MORE_HIREABLE_HOUSE_SERVANTS)
+	listn(0, 25) = "Return"
 
 	font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
 
@@ -600,9 +602,12 @@ TweakData(51, 4) = "Disable cicada noises."
 				s = "Using stairs in Your Home will not deplete stamina."
 			}
 			if ( p == 23 ) {
-				s = "Increases the daily limit to Pet Arena match attempts\nin intervals of 10 and maxing out at 100 a day."
+				s = "Increases the daily limit of Pet Arena match attempts\nin intervals of 10 and maxing out at 100 a day."
 			}
 			if ( p == 24 ) {
+				s = "Adds more hireable home servants.\nIncludes the baker, fisher, and food vendor.\nAlso increases the number of servants generated."
+			}
+			if ( p == 25 ) {
 				s = "Return to the previous menu."
 			}
 			pos wx + 38, wy + 343
@@ -745,6 +750,11 @@ TweakData(51, 4) = "Disable cicada noises."
 		gosub *IncrementTweak
 	}
 	if ( p == 24 ) {
+		tc = TWEAK_CATEGORY_GAMEPLAY
+		tn = TWEAK_GAMEPLAY_MORE_HIREABLE_HOUSE_SERVANTS
+		gosub *ToggleTweak
+	}
+	if ( p == 25 ) {
 		snd SOUNDLIST_OK1
         return
 	}
@@ -1072,4 +1082,3 @@ TweakData(51, 4) = "Disable cicada noises."
 	}
 	goto *ai_followMove
 	return
-
