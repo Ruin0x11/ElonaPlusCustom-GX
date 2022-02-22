@@ -786,7 +786,7 @@ TweakData(51, 4) = "Disable cicada noises."
 	gosub *screen_drawMsg2
 
 	listn(0, TWEAK_AI_ZEOME) = "Change Zeome's AI." + GetTStatus(TWEAK_CATEGORY_AI, TWEAK_AI_ZEOME)
-	listn(0, TWEAK_AI_INCREASED_PARTYTIME_DRUNKENNESS) = "More drinking during party time! " + GetTStatus(TWEAK_CATEGORY_AI, TWEAK_AI_INCREASED_PARTYTIME_DRUNKENNESS)
+	listn(0, TWEAK_AI_INCREASED_PARTYTIME_DRUNKENNESS) = "More drinking during party time! Increased chance : " + GetTStatus(TWEAK_CATEGORY_AI, TWEAK_AI_INCREASED_PARTYTIME_DRUNKENNESS)
 	listn(0, 2) = "Return."
 	font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
 
@@ -806,7 +806,7 @@ TweakData(51, 4) = "Disable cicada noises."
 				s = "Changes Zeome's move list and AI to make the fight significantly more difficult."
 			}
 			if ( cnt == TWEAK_AI_INCREASED_PARTYTIME_DRUNKENNESS ) {
-				s = "NPC's drink more during Party Time! Not for the faint of heart."
+				s = "NPC's drink and brawl more during Party Time! Warning : 100% is chaos. "
 			}
 			if ( cnt == 2 ) {
 				s = "Return to the previous menu."
@@ -828,7 +828,9 @@ TweakData(51, 4) = "Disable cicada noises."
 	if ( key == key_select(TWEAK_AI_INCREASED_PARTYTIME_DRUNKENNESS) ) {
 		tc = TWEAK_CATEGORY_AI
 		tn = TWEAK_AI_INCREASED_PARTYTIME_DRUNKENNESS
-		gosub *ToggleTweak
+		ts = 10
+		tm = 100
+		gosub *IncrementTweak
 	}
 	if ( key == key_select(2) ) {
 		snd SOUNDLIST_OK1
