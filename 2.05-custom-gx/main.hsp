@@ -2045,12 +2045,12 @@
 			}
 		}
 	}
-	if ( cdata(CDATA_CONDITION_DRUNK, cc) != 0 ) {	
+	if ( cdata(CDATA_CONDITION_DRUNK, cc) != 0 ) {
 		partyTimeDrunkkeness = 0
-		if ( TweakData(TWEAK_AI_INCREASED_PARTYTIME_DRUNKENNESS , TWEAK_CATEGORY_AI) == 1 && gdata(GDATA_QUEST) == QUEST_TYPE_PARTY ) {
-			partyTimeDrunkkeness = 1
+		if ( TweakData(TWEAK_AI_INCREASED_PARTYTIME_DRUNKENNESS , TWEAK_CATEGORY_AI) != 0 && gdata(GDATA_QUEST) == QUEST_TYPE_PARTY ) {
+			partyTimeDrunkkeness = TweakData(TWEAK_AI_INCREASED_PARTYTIME_DRUNKENNESS , TWEAK_CATEGORY_AI)
 		}
-		if ( rnd(200 - partyTimeDrunkkeness * 75) == 0 ) {
+		if ( rnd(200 - partyTimeDrunkkeness * 2) == 0 ) {
 			if ( cc != CHARA_PLAYER ) {
 				repeat MAX_CHARA_TOTAL
 					if ( cdata(CDATA_EXIST, cnt) != CHAR_STATE_ALIVE ) {
@@ -2071,7 +2071,7 @@
 						txt lang(name(cc) + "は酔っ払って" + name(tc) + "にからんだ。", name(cc) + " gets the worse for drink and catches " + name(tc) + ".")
 						txt lang("「一杯どうだい？」", cnvtalk("Have a drink baby.")), lang("「飲んでないよ」", cnvtalk("What are you looking at?")), lang("「何見てるのさ」", cnvtalk("I ain't drunk.")), lang("「遊ぼうぜ」", cnvtalk("Let's have fun."))
 					}
-					if ( rnd(4 - partyTimeDrunkkeness * 1) == 0 ) {
+					if ( rnd(4 - partyTimeDrunkkeness * 0.04 ) == 0 ) {
 						if ( tc != CHARA_PLAYER ) {
 							if ( synccheck(cc, -1) | synccheck(tc, -1) ) {
 								txtef COLOR_SKY_BLUE
