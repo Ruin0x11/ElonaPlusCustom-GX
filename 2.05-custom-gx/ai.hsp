@@ -1182,14 +1182,14 @@
 		if ( cdata(CDATA_RELATION, cc) != 10 ) {
 			if ( gdata(GDATA_AREA) == AREA_QUEST ) {
 				if ( gdata(GDATA_QUEST) == QUEST_TYPE_PARTY ) {
-					if ( rnd(30 - TweakData(TWEAK_CATEGORY_AI, TWEAK_AI_INCREASED_PARTYTIME_DRUNKENNESS) * 10) == 0 ) {
+					if ( rnd(30) == 0 | TweakData(TWEAK_AI_INCREASED_PARTYTIME_DRUNKENNESS , TWEAK_CATEGORY_AI) == 1 ) {
 						flt 20
 						if ( rnd(4) == 0 ) {
 							flttypemajor = FILTER_ITEM_FOOD
 						}
 						else {
 							flttypemajor = FILTER_ITEM_POTION
-							if ( rnd(8 - TweakData(TWEAK_CATEGORY_AI, TWEAK_AI_INCREASED_PARTYTIME_DRUNKENNESS) * 7) ) {
+							if ( rnd(8) | TweakData(TWEAK_AI_INCREASED_PARTYTIME_DRUNKENNESS , TWEAK_CATEGORY_AI) == 1 ) {
 								flttypeminor = FILTER_ITEM_POTION_ALE
 							}
 						}
