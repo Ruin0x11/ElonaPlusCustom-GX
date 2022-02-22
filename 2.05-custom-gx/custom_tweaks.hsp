@@ -50,6 +50,7 @@ TweakData(66, 2) = "Increased limit to daily pet arena match attempts."
 
 TweakData(x, 3) = "AI Tweaks"
 TweakData(0, 3) = "Change Zeome's AI."
+TweakData(0, 3) = "More Party Time Drunkenness"
 
 TweakData(x, 4) = "Miscellaneous Tweaks"
 TweakData(0, 4) = "Enable Random Start For MP3."
@@ -776,6 +777,7 @@ TweakData(51, 4) = "Disable cicada noises."
 
 *AITweakMenu
     cs = 0
+	listmax = 3
 *AITweakMenu_loop
 	redraw 0
 	s = "Tweak Setup", strhint3b
@@ -784,10 +786,11 @@ TweakData(51, 4) = "Disable cicada noises."
 	gosub *screen_drawMsg2
 
 	listn(0, TWEAK_AI_ZEOME) = "Change Zeome's AI." + GetTStatus(TWEAK_CATEGORY_AI, TWEAK_AI_ZEOME)
-	listn(0, 1) = "Return."
+	listn(0, TWEAK_AI_INCREASED_PARTYTIME_DRUNKENNESS) = "More drinking during party time! " + GetTStatus(TWEAK_CATEGORY_AI, TWEAK_AI_INCREASED_PARTYTIME_DRUNKENNESS)
+	listn(0, 2) = "Return."
 	font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
 
-	repeat 2
+	repeat listmax
 		key_list(cnt) = key_select(cnt)
 		keyrange = cnt + 1
 		pos wx + 38, wy + 40 + cnt * 19 - 2
@@ -797,12 +800,15 @@ TweakData(51, 4) = "Disable cicada noises."
 
 	font lang(cfg_font1, cfg_font2), 13 - en * 2, 0
 
-	repeat 2
+	repeat listmax
 		if ( listn(0, cs) == listn(0, cnt) ) {
 			if ( cnt == TWEAK_AI_ZEOME ) {
 				s = "Changes Zeome's move list and AI to make the fight significantly more difficult."
 			}
-			if ( cnt == 1 ) {
+			if ( cnt == TWEAK_AI_INCREASED_PARTYTIME_DRUNKENNESS ) {
+				s = "NPC's drink more during Party Time! Not for the faint of heart."
+			}
+			if ( cnt == 2 ) {
 				s = "Return to the previous menu."
 			}
 			pos wx + 38, wy + 343
@@ -819,7 +825,12 @@ TweakData(51, 4) = "Disable cicada noises."
 		tn = TWEAK_AI_ZEOME
 		gosub *ToggleTweak
 	}
-	if ( key == key_select(1) ) {
+	if ( key == key_select(TWEAK_AI_INCREASED_PARTYTIME_DRUNKENNESS) ) {
+		tc = TWEAK_CATEGORY_AI
+		tn = TWEAK_AI_INCREASED_PARTYTIME_DRUNKENNESS
+		gosub *ToggleTweak
+	}
+	if ( key == key_select(2) ) {
 		snd SOUNDLIST_OK1
         return
 	}
