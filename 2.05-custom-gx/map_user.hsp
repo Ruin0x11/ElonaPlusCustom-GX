@@ -1421,11 +1421,11 @@
 			goto *com_home_SWEND1
 		}
 		moreHireableHomeServants = 0
-		if ( TweakData(TWEAK_GAMEPLAY_MORE_HIREABLE_HOUSE_SERVANTS, TWEAK_CATEGORY_GAMEPLAY == TRUE){
+		if ( TweakData(TWEAK_GAMEPLAY_MORE_HIREABLE_HOUSE_SERVANTS, TWEAK_CATEGORY_GAMEPLAY) == TRUE ) {
 			moreHireableHomeServants = 3
 		}
 		repeat 10 + (moreHireableHomeServants * 2)
-			randomize gdata(GDATA_DAY) + cnt
+			randomize gdata(GDATA_DAY) + gdata(GDATA_MONTH) * 31 + cnt
 			if ( rnd(2) ) {
 				continue
 			}
@@ -1437,7 +1437,7 @@
 			}
 			dbid = isethire(hire)
 
-			randomize gdata(GDATA_DAY) + cnt
+			randomize gdata(GDATA_DAY) + gdata(GDATA_MONTH) * 31 + cnt
 			flt 20
 			characreate -1, dbid, -3, 0
 			if ( stat == 0 ) {
@@ -1447,38 +1447,38 @@
 			cdata(CDATA_ROLE, rc) = isethirerole(hire)
 			if ( cdata(CDATA_ID, rc) == CREATURE_ID_SHOPKEEPER ) {
 				p = rnd(6 + moreHireableHomeServants)
-				if ( p == 0 | p == 4) {
+				if ( p == 0 | p == 4 ) {
 					cdata(CDATA_ROLE, rc) = ROLE_SHOP_ARMOR
-					cdatan(CDATAN_NAME, rc) = lang("武具店の" + cdatan(CDATAN_NAME, rc), cdatan(CDATAN_NAME, rc) + " of armory")
+					snarmor cdatan(CDATAN_NAME, rc)
 				}
 				if ( p == 1 ) {
 					cdata(CDATA_ROLE, rc) = ROLE_SHOP_GENERAL
-					cdatan(CDATAN_NAME, rc) = lang("雑貨屋の" + cdatan(CDATAN_NAME, rc), cdatan(CDATAN_NAME, rc) + " of general store")
+					sngeneral cdatan(CDATAN_NAME, rc)
 				}
 				if ( p == 2 ) {
 					cdata(CDATA_ROLE, rc) = ROLE_SHOP_MAGIC
-					cdatan(CDATAN_NAME, rc) = lang("魔法店の" + cdatan(CDATAN_NAME, rc), cdatan(CDATAN_NAME, rc) + " of magic store")
+					snmagic cdatan(CDATAN_NAME, rc)
 				}
 				if ( p == 3 ) {
 					cdata(CDATA_ROLE, rc) = ROLE_SHOP_GOODS
-					cdatan(CDATAN_NAME, rc) = lang("何でも屋の" + cdatan(CDATAN_NAME, rc), cdatan(CDATAN_NAME, rc) + " of goods store")
+					sngoods cdatan(CDATAN_NAME, rc)
 				}
 				if ( p == 5 ) {
 					cdata(CDATA_ROLE, rc) = ROLE_SHOP_BLACKMARKET
-					cdatan(CDATAN_NAME, rc) = lang("ブラックマーケットの" + cdatan(CDATAN_NAME, rc), cdatan(CDATAN_NAME, rc) + " of blackmarket")
+					snblack cdatan(CDATAN_NAME, rc)
 				}
 				if ( p == 6 ) {
 					cdata(CDATA_ROLE, rc) = ROLE_SHOP_BAKERY
-					cdatan(CDATAN_NAME, rc) = lang("魔法店の" + cdatan(CDATAN_NAME, rc), cdatan(CDATAN_NAME, rc) + " of baker store")
-					cdata(CDATA_PIC, rc) = xy2pic(6, 4) //Baker sprite, otherwise looks like normal merchant.	
+					snbakery cdatan(CDATAN_NAME, rc)
+					cdata(CDATA_PIC, rc) = xy2pic(6, 4) // Baker sprite
 				}
 				if ( p == 7 ) {
 					cdata(CDATA_ROLE, rc) = ROLE_SHOP_FOOD
-					cdatan(CDATAN_NAME, rc) = lang("魔法店の" + cdatan(CDATAN_NAME, rc), cdatan(CDATAN_NAME, rc) + " the food vendor")
+					snfood cdatan(CDATAN_NAME, rc)
 				}
 				if ( p == 8 ) {
 					cdata(CDATA_ROLE, rc) = ROLE_SHOP_FISH
-					cdatan(CDATAN_NAME, rc) = lang("魔法店の" + cdatan(CDATAN_NAME, rc), cdatan(CDATAN_NAME, rc) + " the fisher")
+					snfish cdatan(CDATAN_NAME, rc)
 				}
 				randomize
 				cdata(CDATA_ROLE_SHOP_LEVEL, rc) = rnd(15) + 1
