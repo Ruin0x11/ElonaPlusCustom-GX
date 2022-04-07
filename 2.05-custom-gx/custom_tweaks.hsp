@@ -48,6 +48,7 @@ TweakData(64, 2) = "Summoned monster training."
 TweakData(65, 2) = "No stamina depletion when using stairs in Your Home."
 TweakData(66, 2) = "Increased limit to daily pet arena match attempts."
 TweakData(67, 2) = "Increased variety of hireable home servants."
+TweakData(68, 2) = "Disable stamina depletion when attacking."
 
 TweakData(x, 3) = "AI Tweaks"
 TweakData(0, 3) = "Change Zeome's AI."
@@ -472,7 +473,7 @@ TweakData(51, 4) = "Disable cicada noises."
     cs = 0
     page = 0
     pagesize = 16
-    listmax = 26
+    listmax = 27
 *GameplayTweakMenu_pgchk
 	redraw 0
 	page_check
@@ -508,7 +509,8 @@ TweakData(51, 4) = "Disable cicada noises."
 	listn(0, 22) = "No stamina depletion when using stairs in Your Home." + GetTStatus(TWEAK_CATEGORY_GAMEPLAY, TWEAK_GAMEPLAY_HOME_STAIRS_NO_STAMINA_USAGE)
 	listn(0, 23) = "Increased daily Pet Arena attempts. " + GetTStatus(TWEAK_CATEGORY_GAMEPLAY, TWEAK_GAMEPLAY_PET_ARENA_INCREASED_MATCH_LIMIT)
 	listn(0, 24) = "Increased variety of hireable home servants." + GetTStatus(TWEAK_CATEGORY_GAMEPLAY, TWEAK_GAMEPLAY_MORE_HIREABLE_HOUSE_SERVANTS)
-	listn(0, 25) = "Return"
+	listn(0, 25) = "Disable stamina depletion when attacking." + GetTStatus(TWEAK_CATEGORY_GAMEPLAY, TWEAK_GAMEPLAY_DISABLE_ATTACK_STAMINA_DEPLETION)
+	listn(0, 26) = "Return"
 
 	font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
 
@@ -608,6 +610,9 @@ TweakData(51, 4) = "Disable cicada noises."
 				s = "Adds more hireable home servants.\nIncludes the baker, fisher, and food vendor.\nAlso increases the number of servants generated."
 			}
 			if ( p == 25 ) {
+				s = "Disables stamina depletion when melee attacking or casting spells."
+			}
+			if ( p == 26 ) {
 				s = "Return to the previous menu."
 			}
 			pos wx + 38, wy + 343
@@ -755,8 +760,13 @@ TweakData(51, 4) = "Disable cicada noises."
 		gosub *ToggleTweak
 	}
 	if ( p == 25 ) {
+		tc = TWEAK_CATEGORY_GAMEPLAY
+		tn = TWEAK_GAMEPLAY_DISABLE_ATTACK_STAMINA_DEPLETION
+		gosub *ToggleTweak
+	}
+	if ( p == 26 ) {
 		snd SOUNDLIST_OK1
-        return
+		return
 	}
 	page_change *GameplayTweakMenu_pgchk
 	if ( key == key_cancel ) {

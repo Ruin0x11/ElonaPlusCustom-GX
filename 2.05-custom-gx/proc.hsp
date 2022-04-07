@@ -5548,12 +5548,14 @@
 			efsource = 0
 			return 0
 		}
-		if ( cdata(CDATA_SP, cc) > (-50) ) {
-			cdata(CDATA_SP, cc)--
-		}
-		if ( cc != CHARA_PLAYER ) {
+		if ( TweakData(TWEAK_GAMEPLAY_DISABLE_ATTACK_STAMINA_DEPLETION, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
 			if ( cdata(CDATA_SP, cc) > (-50) ) {
 				cdata(CDATA_SP, cc)--
+			}
+			if ( cc != CHARA_PLAYER ) {
+				if ( cdata(CDATA_SP, cc) > (-50) ) {
+					cdata(CDATA_SP, cc)--
+				}
 			}
 		}
 		if ( cc != CHARA_PLAYER ) {
@@ -5648,15 +5650,17 @@
 			efsource = 0
 			return 1
 		}
-		if ( cdata(CDATA_SP, cc) < 50 ) {
-			if ( rnd(2) == 0 ) {
-				if ( synccheck(cc, -1) ) {
-					txt lang("疲労し過ぎて失敗した！", "You are too exhausted!")
-					animeid = ANIMATION_FIZZLE
-					gosub *anime
+		if ( TweakData(TWEAK_GAMEPLAY_DISABLE_ATTACK_STAMINA_DEPLETION, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
+			if ( cdata(CDATA_SP, cc) < 50 ) {
+				if ( rnd(2) == 0 ) {
+					if ( synccheck(cc, -1) ) {
+						txt lang("疲労し過ぎて失敗した！", "You are too exhausted!")
+						animeid = ANIMATION_FIZZLE
+						gosub *anime
+					}
+					efsource = 0
+					return 1
 				}
-				efsource = 0
-				return 1
 			}
 		}
 		if ( noeffect == 1 ) {

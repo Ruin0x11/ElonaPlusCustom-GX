@@ -4111,9 +4111,11 @@
 	if ( TweakData(TWEAK_GAMEPLAY_CG_DISABLE_CURTAIN_CALL, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
 		gdata(GDATA_FLAG_CURTAIN_CALL)++
 	}
-	if ( cdata(CDATA_GAUGE_COOLDOWN, cc) == 0 ) {
-		if ( cdata(CDATA_SP, cc) > (-50) ) {
-			cdata(CDATA_SP, cc)--
+	if ( TweakData(TWEAK_GAMEPLAY_DISABLE_ATTACK_STAMINA_DEPLETION, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
+		if ( cdata(CDATA_GAUGE_COOLDOWN, cc) == 0 ) {
+			if ( cdata(CDATA_SP, cc) > (-50) ) {
+				cdata(CDATA_SP, cc)--
+			}
 		}
 	}
 	if ( cbit(CHARA_BIT_SANDBAG, tc) != 1 ) {
@@ -4178,12 +4180,14 @@
 			}
 		}
 	}
-	if ( cdata(CDATA_SP, cc) < 50 ) {
-		if ( rnd(2) == 0 ) {
-			if ( synccheck(cc, -1) ) {
-				txt lang("疲労し過ぎて失敗した！", "You are too exhausted!")
+	if ( TweakData(TWEAK_GAMEPLAY_DISABLE_ATTACK_STAMINA_DEPLETION, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
+		if ( cdata(CDATA_SP, cc) < 50 ) {
+			if ( rnd(2) == 0 ) {
+				if ( synccheck(cc, -1) ) {
+					txt lang("疲労し過ぎて失敗した！", "You are too exhausted!")
+				}
+				return
 			}
-			return
 		}
 	}
 	if ( attackrange == 1 ) {

@@ -2,6 +2,7 @@
 
 ## Added
 - Ported all changes from Elona+ 2.11.
+- Added a tweak for disabling stamina loss when melee attacking or casting spells.
 
 # 2.10.1.1
 
