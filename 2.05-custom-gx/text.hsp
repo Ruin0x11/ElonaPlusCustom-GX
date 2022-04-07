@@ -1899,6 +1899,102 @@
 	loop
 	return
 
+#deffunc txtsetabyss int txtsetabyss_arg1
+	repeat 10
+		i = cnt
+		p(cnt) = p(i)
+		p(i) = cnt
+	loop
+	repeat txtsetabyss_arg1
+		if ( p(cnt) == 0 ) {
+			s(cnt) = lang("急いで本を閉じる", "Hurry to close the book")
+		}
+		if ( p(cnt) == 1 ) {
+			s(cnt) = lang("深淵へと続く糸　SAN1 /アイテムを深淵魔力に変換", "[Abyss Leading]    SAN1  /Convert items into abyss power")
+		}
+		if ( gdata(GDATA_FLAG_ABYSS_POWER) < 500 ) {
+			if ( p(cnt) == 2 ) {
+				s(cnt) = lang("<深淵魔力500以上で解放>", "<Can be used with abyss power 500>")
+			}
+		}
+		if ( gdata(GDATA_FLAG_ABYSS_POWER) >= 500 ) {
+			if ( p(cnt) == 2 ) {
+				s(cnt) = lang("見えざる幽回刀　SAN50/深淵魔力50/範囲斬撃首狩り", "[Phantom Swords]   SAN50 /Abyss50 /Surround Decapitation")
+			}
+		}
+		if ( gdata(GDATA_FLAG_ABYSS_POWER) < 1000 ) {
+			if ( p(cnt) == 3 ) {
+				s(cnt) = lang("<深淵魔力1000以上で解放>", "<Can be used with abyss power 1000>")
+			}
+		}
+		if ( gdata(GDATA_FLAG_ABYSS_POWER) >= 1000 ) {
+			if ( p(cnt) == 3 ) {
+				s(cnt) = lang("放逐すべき暗黒　SAN200/深淵魔力200/被召喚敵全抹殺", "[Dark Expulsion]   SAN200/Abyss200/Kill summoned enemies")
+			}
+		}
+		if ( gdata(GDATA_FLAG_ABYSS_POWER) < 2000 ) {
+			if ( p(cnt) == 4 ) {
+				s(cnt) = lang("<深淵魔力2000以上で解放>", "<Can be used with abyss power 2000>")
+			}
+		}
+		if ( gdata(GDATA_FLAG_ABYSS_POWER) >= 2000 ) {
+			if ( p(cnt) == 4 ) {
+				s(cnt) = lang("光明見えぬ洞門　SAN500/深淵魔力500/即時マップ脱出", "[Lightless Gate]   SAN500/Abyss500/Immediate map escape")
+			}
+		}
+		if ( gdata(GDATA_FLAG_ABYSS_POWER) < 3000 ) {
+			if ( p(cnt) == 5 ) {
+				s(cnt) = lang("<深淵魔力3000以上で解放>", "<Can be used with abyss power 3000>")
+			}
+		}
+		if ( gdata(GDATA_FLAG_ABYSS_POWER) >= 3000 ) {
+			if ( p(cnt) == 5 ) {
+				s(cnt) = lang("這い寄る魔神兵　SAN150/深淵魔力150/読書魔道具依存神降臨", "[Evil Guardians]   SAN150/Abyss150/Summon dark guardians")
+			}
+		}
+		if ( gdata(GDATA_FLAG_ABYSS_POWER) < 4000 ) {
+			if ( p(cnt) == 6 ) {
+				s(cnt) = lang("<深淵魔力4000以上で解放>", "<Can be used with abyss power 4000>")
+			}
+		}
+		if ( gdata(GDATA_FLAG_ABYSS_POWER) >= 4000 ) {
+			if ( p(cnt) == 6 ) {
+				s(cnt) = lang("素晴らしき深海　SAN350/深淵魔力300/範囲沈黙窒息", "[Beckoning Seabed] SAN300/Abyss300/Surround silence choked")
+			}
+		}
+		if ( gdata(GDATA_FLAG_ABYSS_POWER) < 5000 ) {
+			if ( p(cnt) == 7 ) {
+				s(cnt) = lang("<深淵魔力5000以上で解放>", "<Can be used with abyss power 5000>")
+			}
+		}
+		if ( gdata(GDATA_FLAG_ABYSS_POWER) >= 5000 ) {
+			if ( p(cnt) == 7 ) {
+				s(cnt) = lang("呻き立つ死者共　SAN450/深淵魔力450/蘇生可能者を全蘇生", "[Suffering Deads]  SAN450/Abyss450/Resurrect all")
+			}
+		}
+		if ( gdata(GDATA_FLAG_ABYSS_POWER) < 6000 ) {
+			if ( p(cnt) == 8 ) {
+				s(cnt) = lang("<深淵魔力6000以上で解放>", "<Can be used with abyss power 6000]")
+			}
+		}
+		if ( gdata(GDATA_FLAG_ABYSS_POWER) >= 6000 ) {
+			if ( p(cnt) == 8 ) {
+				s(cnt) = lang("慈悲無き大洪水　SAN600/深淵魔力600/全域PVDV属性無差別攻撃", "[Merciless Flood]  SAN600/Abyss600/Indiscriminate(PVDV)")
+			}
+		}
+		if ( gdata(GDATA_FLAG_ABYSS_POWER) < 6666 ) {
+			if ( p(cnt) == 9 ) {
+				s(cnt) = lang("<深淵魔力6666以上で解放>", "<Can be used with abyss power 6666>")
+			}
+		}
+		if ( gdata(GDATA_FLAG_ABYSS_POWER) >= 6666 ) {
+			if ( p(cnt) == 9 ) {
+				s(cnt) = lang("狂気満ちる劇場　SAN400/深淵魔力400/狂気による攻防強化", "[Crazy Theater]    SAN400/Abyss400/Power-up as go crazy")
+			}
+		}
+	loop
+	return
+
 #deffunc txtsetnefia int txtsetnefia_arg1
 	repeat 6
 		i = cnt

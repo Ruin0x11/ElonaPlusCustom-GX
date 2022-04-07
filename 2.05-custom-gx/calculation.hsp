@@ -1506,87 +1506,106 @@
 	}
 	return 0
 
-*calcHunger
-	if ( trait(TRAIT_RACE_SLOW_DIGESTION) ) {
-		if ( cdata(CDATA_HUNGER, r1) <= 5000 ) {
-			if ( rnd(3) == 0 ) {
-				return
+*calcThirst // and hunger
+	haraheri = 8 * 100
+	if ( gdata(GDATA_AREA) == AREA_VALM ) {
+		if ( gdata(GDATA_LEVEL) == 3 ) {
+			haraheri = 8
+		}
+	}
+	repeat MAX_CHARA_TOTAL
+		if ( cdata(CDATA_EXIST, cnt) != CHAR_STATE_ALIVE ) {
+			continue
+		}
+		r1 = cnt
+		if ( TweakData(TWEAK_GAMEPLAY_CG_DISABLE_THIRST, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
+			if ( cdata(CDATA_THIRST, r1) <= 0 ) {
+				cdata(CDATA_THIRST, r1) = 1
+			}
+			p = cdata(CDATA_THIRST, r1) / 1000
+			if ( gdata(GDATA_FLAG_MAIN) != 900 ) {
+				if ( cdata(CDATA_CONDITION_WET, r1) <= 0 ) {
+					cdata(CDATA_THIRST, r1) -= haraheri / 2
+				}
+			}
+			if ( cdata(CDATA_CONDITION_WET, r1) > 0 ) {
+				if ( cdata(CDATA_THIRST, r1) < 10000 ) {
+					cdata(CDATA_THIRST, r1) += haraheri
+				}
+			}
+			if ( findbuff(r1, BUFF_CURSE_OF_HUNGER) != (-1) ) {
+				cdata(CDATA_THIRST, r1) -= haraheri / 4
+			}
+			if ( gdata(GDATA_FLAG_GAME_MODE) == 5 ) {
+				if ( cdata(CDATA_THIRST, r1) < 5000 ) {
+					cdata(CDATA_THIRST, r1) = 5000
+				}
+			}
+			if ( r1 == 0 ) {
+				if ( cdata(CDATA_THIRST, r1) / 1000 != p ) {
+					if ( p == 1000 / 1000 ) {
+						msgalert = 1
+						txt lang("このままだと脱水症状で倒れてしまう！", "You are dehydrated!"), lang("水分不足で干物になりそうだ。", "You are almost a mummy.")
+					}
+					if ( p == 2000 / 1000 ) {
+						msgalert = 1
+						txt lang("水分不足で目が回りだした…", "Your thirst makes you dizzy."), lang("すぐに何かを飲まなくては…", "You have to drink something NOW.")
+					}
+					if ( p == 5000 / 1000 ) {
+						msgalert = 1
+						txt lang("喉がカラカラだ。", "You are getting thirsty."), lang("喉が渇いた。", "You feel thirsty."), lang("さて何を飲もうか。", "Now what shall I drink?")
+					}
+					refreshspeed r1
+				}
+			}
+			else {
+				if ( cdata(CDATA_THIRST, r1) < 3000 ) {
+					cdata(CDATA_THIRST, r1) = 3000
+				}
 			}
 		}
-	}
-	if ( gdata(GDATA_FLAG_GAME_MODE) == GAMEMODE_PURGE ) {
-		if ( cdata(CDATA_HUNGER, r1) < 5000 ) {
-			cdata(CDATA_HUNGER, r1) = 5000
+		p = cdata(CDATA_HUNGER, r1) / 1000
+		if ( gdata(GDATA_FLAG_MAIN) != 900 ) {
+			cdata(CDATA_HUNGER, r1) -= haraheri
 		}
-		if ( cdata(CDATA_HUNGER, r1) <= 5000 ) {
-			return
+		if ( findbuff(r1, BUFF_CURSE_OF_HUNGER) != (-1) ) {
+			cdata(CDATA_HUNGER, r1) -= haraheri / 2
 		}
-	}
-	p = cdata(CDATA_HUNGER, r1) / 1000
-	if ( gdata(GDATA_FLAG_MAIN) != 900 ) {
-		cdata(CDATA_HUNGER, r1) -= 8
-	}
-	if ( findbuff(r1, BUFF_CURSE_OF_HUNGER) != (-1) ) {
-		cdata(CDATA_HUNGER, r1) -= 8
-	}
-	if ( cdata(CDATA_HUNGER, r1) / 1000 != p ) {
-		if ( p == 1000 / 1000 ) {
-			msgalert = 1
-			txt lang("このままだと餓死してしまう！", "You are starving!"), lang("腹が減ってほとんど死にかけている。", "You are almost dead from hunger.")
+		if ( trait(TRAIT_RACE_SLOW_DIGESTION) ) {
+			if ( cdata(CDATA_HUNGER, r1) <= 5000 ) {
+				cdata(CDATA_HUNGER, r1) += haraheri / 2
+			}
 		}
-		if ( p == 2000 / 1000 ) {
-			msgalert = 1
-			txt lang("空腹で目が回りだした…", "Your hunger makes you dizzy."), lang("すぐに何かを食べなくては…", "You have to eat something NOW.")
+		if ( gdata(GDATA_FLAG_GAME_MODE) == 5 ) {
+			if ( cdata(CDATA_HUNGER, r1) < 5000 ) {
+				cdata(CDATA_HUNGER, r1) = 5000
+			}
 		}
-		if ( p == 5000 / 1000 ) {
-			msgalert = 1
-			txt lang("腹がすいてきた。", "You are getting hungry."), lang("空腹になった。", "You feel hungry."), lang("さて何を食べようか。", "Now what shall I eat?")
+		if ( r1 == 0 ) {
+			if ( cdata(CDATA_HUNGER, r1) / 1000 != p ) {
+				if ( p == 1000 / 1000 ) {
+					msgalert = 1
+					txt lang("このままだと餓死してしまう！", "You are starving!"), lang("腹が減ってほとんど死にかけている。", "You are almost dead from hunger.")
+				}
+				if ( p == 2000 / 1000 ) {
+					msgalert = 1
+					txt lang("空腹で目が回りだした…", "Your hunger makes you dizzy."), lang("すぐに何かを食べなくては…", "You have to eat something NOW.")
+				}
+				if ( p == 5000 / 1000 ) {
+					msgalert = 1
+					txt lang("腹がすいてきた。", "You are getting hungry."), lang("空腹になった。", "You feel hungry."), lang("さて何を食べようか。", "Now what shall I eat?")
+				}
+				refreshspeed r1
+			}
 		}
-		refreshspeed r1
-	}
-	return
-
-*calcThirst
-	if ( cdata(CDATA_THIRST, r1) <= 0 ) {
-		cdata(CDATA_THIRST, r1) = 1
-	}
-	if ( gdata(GDATA_FLAG_GAME_MODE) == 5 ) {
-		if ( cdata(CDATA_THIRST, r1) < 5000 ) {
-			cdata(CDATA_THIRST, r1) = 5000
+		else {
+			if ( cdata(CDATA_HUNGER, r1) < 3000 ) {
+				if ( cbit(CHARA_BIT_ANOREXIA, r1) == FALSE ) {
+					cdata(CDATA_HUNGER, r1) = 3000
+				}
+			}
 		}
-		if ( cdata(CDATA_THIRST, r1) <= 5000 ) {
-			return
-		}
-	}
-	p = cdata(CDATA_THIRST, r1) / 1000
-	if ( gdata(GDATA_FLAG_MAIN) != 900 ) {
-		if ( cdata(CDATA_CONDITION_WET, r1) <= 0 ) {
-			cdata(CDATA_THIRST, r1) -= 8 / 2
-		}
-	}
-	if ( cdata(CDATA_CONDITION_WET, r1) > 0 ) {
-		if ( cdata(CDATA_THIRST, r1) < 10000 ) {
-			cdata(CDATA_THIRST, r1) += 8 * 10
-		}
-	}
-	if ( findbuff(r1, BUFF_CURSE_OF_HUNGER) != (-1) ) {
-		cdata(CDATA_THIRST, r1) -= 8 / 2
-	}
-	if ( cdata(CDATA_THIRST, r1) / 1000 != p ) {
-		if ( p == 1000 / 1000 ) {
-			msgalert = 1
-			txt lang("このままだと脱水症状で倒れてしまう！", "You are about to collapse from dehydration!"), lang("水分不足で干物になりそうだ。", "You are almost a mummy.")
-		}
-		if ( p == 2000 / 1000 ) {
-			msgalert = 1
-			txt lang("水分不足で目が回りだした…", "Your thirst makes you dizzy."), lang("すぐに何かを飲まなくては…", "You have to drink something NOW.")
-		}
-		if ( p == 5000 / 1000 ) {
-			msgalert = 1
-			txt lang("喉がカラカラだ。", "You are getting thirsty."), lang("喉が渇いた。", "You feel thirsty."), lang("さて何を飲もうか。", "Now what shall I drink?")
-		}
-		refreshspeed r1
-	}
+	loop
 	return
 
 *calcCondition

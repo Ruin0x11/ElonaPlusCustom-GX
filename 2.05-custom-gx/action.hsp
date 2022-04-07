@@ -743,6 +743,7 @@
 				}
 				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_MAGISTUS ) {
 					tcbk = tc
+					efpori = inv(INV_ITEM_PARAM2, ci) * 6 + 5
 					efid = SKILL_SPELL_MAGIC_STORM
 					efp = inv(INV_ITEM_PARAM2, ci) * 6 + 5
 					gosub *effect
@@ -751,6 +752,7 @@
 				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_TRISMAGISTUS ) {
 					tcbk = tc
 					magist = 3
+					efpori = inv(INV_ITEM_PARAM2, ci) * 6 + 5
 					repeat 3
 						efid = SKILL_SPELL_MAGIC_STORM
 						efp = inv(INV_ITEM_PARAM2, ci) * 6 + 5
@@ -1470,12 +1472,12 @@
 					}
 				}
 			}
-			if ( cdata(CDATA_CONDITION_SUFFOCATION, tc) ) {
+			if ( cdata(CDATA_CONDITION_SUFFOCATION, tc) >= 15 ) {
 				snd SOUNDLIST_BASH1
 				txt lang(name(cc) + "は" + name(tc) + "に全力で体当たりした。", name(cc) + " bash" + _s(cc) + " up " + name(tc) + " at full power.")
 				dmghp tc, sdata(SKILL_ATTR_STR, cc) * 2, cc
 				if ( cdata(CDATA_EXIST, tc) == CHAR_STATE_ALIVE ) {
-					txt lang(name(tc) + "は食べ物を吐き出した。", name(tc) + " spit" + _s(tc) + " out the food.")
+					txt lang(name(tc) + "は気道を確保した。", name(tc) + " secured the airway.")
 					txt lang("「助かったよ！」", cnvtalk("You saved me!"))
 					cdata(CDATA_CONDITION_SUFFOCATION, tc) = 0
 					if ( tc != CHARA_PLAYER ) {
@@ -3793,15 +3795,6 @@
 			else {
 				ammoproc = inv(STARTING_INV_ITEM_ENCHANT + inv(INV_ITEM_AMMO, ammo) * 2, ammo) \ EXT_ENCHANTMENT
 				if ( cc == CHARA_PLAYER ) {
-					if ( cdata(CDATA_SP, CHARA_PLAYER) < 50 ) {
-						if ( cdata(CDATA_SP, CHARA_PLAYER) < rnd(75) ) {
-							txt_exhausted
-							dmgsp CHARA_PLAYER, encammoref(2, ammoproc) / 2 + 1
-							ammoproc = -1
-							return 1
-						}
-					}
-					dmgsp CHARA_PLAYER, rnd(encammoref(2, ammoproc) + 1)
 				}
 				inv(STARTING_INV_ITEM_ENCHANT + inv(INV_ITEM_AMMO, ammo) * 2 + 1, ammo)--
 			}
@@ -3843,7 +3836,7 @@
 	}
 	if ( ammoproc == ENCHANT_AMMO_RAPID ) {
 		gdata(GDATA_RAPID_FIRE) = 100
-		repeat 3
+		repeat 6
 			gosub *FindRangeWeapon
 			ele = SKILL_NONE
 			extraattack = 0
@@ -3865,7 +3858,7 @@
 	}
 	else {
 		if ( ammoproc == ENCHANT_AMMO_BURST ) {
-			repeat 20
+			repeat 40
 				gosub *FindRangeWeapon
 				ele = SKILL_NONE
 				gosub *com_findTarget
@@ -5393,20 +5386,22 @@
 				if ( gdata(GDATA_TEMPORARY_FLAGS2) == 0 ) {
 					if ( gdata(GDATA_TEMPORARY_FLAGS) == 0 ) {
 						if ( attackrange ) {
-							if ( cdatan(CDATAN_CLASS, cc) == "gunner" ) {
-								if ( rnd(100) < rnd(cdata(CDATA_EXTRA_SHOOT, cc) * 2 + 1) + 5 ) {
-									ammoproc = -1
-									extraattack++
-									ele = SKILL_NONE
-									goto *act_attack
+							if ( ammoproc == ENCHANT_AMMO_NONE ) {
+								if ( cdatan(CDATAN_CLASS, cc) == "gunner" ) {
+									if ( rnd(100) < rnd(cdata(CDATA_EXTRA_SHOOT, cc) * 2 + 1) + 5 ) {
+										ammoproc = -1
+										extraattack++
+										ele = SKILL_NONE
+										goto *act_attack
+									}
 								}
-							}
-							if ( cdatan(CDATAN_CLASS, cc) != "gunner" ) {
-								if ( rnd(100) < rnd(cdata(CDATA_EXTRA_SHOOT, cc) * 2 + 1) ) {
-									ammoproc = -1
-									extraattack++
-									ele = SKILL_NONE
-									goto *act_attack
+								if ( cdatan(CDATAN_CLASS, cc) != "gunner" ) {
+									if ( rnd(100) < rnd(cdata(CDATA_EXTRA_SHOOT, cc) * 2 + 1) ) {
+										ammoproc = -1
+										extraattack++
+										ele = SKILL_NONE
+										goto *act_attack
+									}
 								}
 							}
 						}
@@ -5829,6 +5824,7 @@
 				tlocy = cdata(CDATA_Y, tc)
 				if ( rnd(100) < p ) {
 					gdata(GDATA_ACTIVATE_PROC) = 100
+					efpori = inv(40 + cnt * 2 + 1, cw) + sdata(attackskill, cc) * 10
 					efid = enc
 					efp = inv(STARTING_INV_ITEM_ENCHANT + cnt * 2 + 1, cw) + sdata(attackskill, cc) * 10
 					gosub *effect
@@ -6474,10 +6470,14 @@
 	if ( ibit(ITEM_BIT_ULTIMATE, ci) == 1 ) {
 		if ( synccheck(tc, -1) ) {
 			txtef COLOR_RED
-			txt lang("エターナルフォース一本につき一度しか使えない。無差別全域攻撃魔法を発動する？", "Invoke an indiscriminate, map-wide magic attack? This can only be used once per Eternal Force weapon.")
+			txt lang("SPを最大分消費して無差別全域攻撃魔法を発動する？", "Do you want to consume your maximum amount of SP to activate indiscriminate attack magic?")
 		}
 		promptYesNo
 		if ( rtval == 0 ) {
+			if ( cdata(CDATA_SP, CHARA_PLAYER) <= 0 ) {
+				txt lang("疲労し過ぎて失敗した！", "You are too exhausted!")
+				goto *turn_end
+			}
 			if ( gdata(GDATA_AREA) == AREA_PET_ARENA | mdata(MDATA_TYPE) == MAP_TYPE_WORLD | gdata(GDATA_AREA) == AREA_PYRAMID | gdata(GDATA_AREA) == AREA_JAIL ) {
 				txt_nothinghappens
 				goto *turn_end
@@ -6486,7 +6486,7 @@
 			txtef COLOR_BLUE
 			txt lang("周囲の大気が一瞬にして氷結した！", "The surrounding air was frozen in a moment!")
 			snd SOUNDLIST_ATK_ICE
-			ibitmod ITEM_BIT_ULTIMATE, ci, 0
+			dmgsp CHARA_PLAYER, cdata(CDATA_MAX_SP, CHARA_PLAYER)
 			snd SOUNDLIST_ATK_ICE
 			snd SOUNDLIST_ATK_ICE
 			snd SOUNDLIST_ATK_ICE
@@ -6545,7 +6545,7 @@
 						snd SOUNDLIST_ATK_ICE
 						if ( cdata(CDATA_REFLECT_MAGIC, tc) > 0 ) {
 							if ( cc >= MAX_CHARA_FOLLOWER | tc >= MAX_CHARA_FOLLOWER ) {
-								dmghp cc, limit(dmg * cdata(CDATA_REFLECT_MAGIC, tc) / 200 + 1, 1, cdata(CDATA_MAX_HP, cc) / 10), tc, SKILL_RES_FIRE, 1000
+								dmghp cc, limit(dmg * cdata(CDATA_REFLECT_MAGIC, tc) / 200 + 1, 1, cdata(CDATA_MAX_HP, cc) / 10), tc, SKILL_RES_COLD, 1000
 								if ( synccheck(tc, -1) ) {
 									txtef COLOR_PURPLE
 									txt lang(name(tc) + "は魔法の一部を反射した。", name(tc) + " reflected part of the magic.")
@@ -7535,6 +7535,7 @@
 				snd SOUNDLIST_PAYGOLD1
 				booksitu = inv(INV_ITEM_PARAM3, ci)
 				bookpage = limit(inv(INV_ITEM_NUM, ci), 1, 1000)
+				syukuzyu = inv(INV_ITEM_STATUS, ci)
 				inv(INV_ITEM_NUM, ci) = 0
 				cell_refresh inv(INV_ITEM_X, ci), inv(INV_ITEM_Y, ci)
 				gosub *calcBurdenPc
@@ -7551,6 +7552,7 @@
 				inv(INV_ITEM_PARAM3, ci) = booksitu
 				inv(INV_ITEM_VALUE, ci) = (booksitu * 3 + 10) * 3 * bookpage
 				item_identify ci, ITEM_KNOWN_FULL
+				inv(INV_ITEM_STATUS, ci) = syukuzyu
 				item_stack -1, ci, 0
 				txt lang("この本の題名は…！", "What do you want to name this book?")
 				val = 4
@@ -12756,6 +12758,35 @@
 			gdata(GDATA_FLAG_ABYSS_POWER) = 100000
 		}
 		txt lang("[深淵魔力: " + gdata(GDATA_FLAG_ABYSS_POWER) + "] ", "[Abyss power: " + gdata(GDATA_FLAG_ABYSS_POWER) + "] ")
+		goto *act_use_SWEND1
+		_switch_sw++
+	}
+	if ( _switch_val == EFFECT_COMMAND_WHISTLE | _switch_sw ) {
+		_switch_sw = 0
+		snd SOUNDLIST_WHISTLE00
+		txtef COLOR_SKY_BLUE
+		txt lang(" *ピッ* ", "*Pep* ")
+		repeat MAX_CHARA_TOTAL
+			if ( cdata(CDATA_EXIST, cnt) != CHAR_STATE_ALIVE ) {
+				continue
+			}
+			if ( cdata(CDATA_DRAIN_HP, cnt) >= 100 ) {
+				continue
+			}
+			tc = cnt
+			dx = cdata(CDATA_X, tc)
+			dy = cdata(CDATA_Y, tc)
+			if ( dist(cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), dx, dy) > sdataref(SKILL_DATAREF_TG, SKILL_SPACT_CHEER) \ 1000 + 1 ) {
+				continue
+			}
+			if ( fov_los(cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), dx, dy) == 0 ) {
+				continue
+			}
+			cdata(CDATA_DRAIN_HP, tc) -= 5
+			if ( cdata(CDATA_DRAIN_HP, tc) < 0 ) {
+				cdata(CDATA_DRAIN_HP, tc) = 0
+			}
+		loop
 		goto *act_use_SWEND1
 		_switch_sw++
 	}

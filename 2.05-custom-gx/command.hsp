@@ -1176,6 +1176,9 @@
 					}
 					s = "   " + hpcost + " / " + cdata(CDATA_AP_CURRENT, i)
 				}
+				if ( leoleo == 3 ) {
+					s = "   " + cdata(CDATA_AP_CURRENT, i)
+				}
 				if ( adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_SHOP ) {
 					s = "   " + sdata(SKILL_ATTR_CHA, i) + " / " + sdata(SKILL_NORMAL_NEGOTIATION, i)
 				}
@@ -1353,7 +1356,7 @@
 	if ( kokoro == 16 ) {
 		s = lang("この前見た夢はなんだったのか", "What was the dream last time?")
 	}
-	if ( cdata(CDATA_HUNGER, tc) <= 6000 ) {
+	if ( cdata(CDATA_HUNGER, tc) <= 10000 ) {
 		s = lang("お腹が空いて力が出ない", "Hungry and has no strength.")
 		kokoro = rnd(5)
 		if ( kokoro == 1 ) {
@@ -1370,7 +1373,7 @@
 		}
 	}
 	if ( TweakData(TWEAK_GAMEPLAY_CG_DISABLE_THIRST, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
-		if ( cdata(CDATA_THIRST, tc) <= 6000 ) {
+		if ( cdata(CDATA_THIRST, tc) <= 10000 ) {
 			s = lang("干からびそう", "Looks completely dried up")
 			kokoro = rnd(4)
 			if ( kokoro == 1 ) {
@@ -3097,18 +3100,14 @@
 				continue
 			}
 		}
-		else {
-			if ( allyctrl == 1 ) {
-				if ( allyctrl == 1 ) {
-					if ( cdata(CDATA_EXIST, cnt) != CHAR_STATE_TEMP ) {
-						continue
-					}
-				}
+		if ( allyctrl == 1 ) {
+			if ( cdata(CDATA_EXIST, cnt) != CHAR_STATE_TEMP ) {
+				continue
 			}
-			else {
-				if ( cdata(CDATA_EXIST, cnt) != CHAR_STATE_ALIVE ) {
-					continue
-				}
+		}
+		if ( allyctrl == 0 ) {
+			if ( cdata(CDATA_EXIST, cnt) != CHAR_STATE_ALIVE ) {
+				continue
 			}
 			if ( cnt < MAX_CHARA_FOLLOWER ) {
 				if ( cdata(CDATA_AREA, cnt) != gdata(GDATA_AREA) ) {
@@ -3117,6 +3116,9 @@
 			}
 		}
 		if ( allyctrl == 3 ) {
+			if ( cdata(CDATA_EXIST, cnt) != CHAR_STATE_ALIVE ) {
+				continue
+			}
 			if ( cnt < MAX_CHARA_FOLLOWER ) {
 				continue
 			}
@@ -3124,10 +3126,18 @@
 				continue
 			}
 		}
-		if ( cnt == CHARA_PLAYER ) {
+		if ( allyctrl == 4 ) {
+			if ( cdata(CDATA_EXIST, cnt) != CHAR_STATE_ALIVE ) {
+				continue
+			}
+			if ( cdata(CDATA_RELATION, cnt) != RELATION_ALLY & cnt >= MAX_CHARA_FOLLOWER ) {
+				continue
+			}
+		}
+		if ( cnt == 0 ) {
 			continue
 		}
-		if ( cbit(CHARA_BIT_GUARD_TEMP, cnt) == 1 ) {
+		if ( cbit(CHARA_BIT_GUARD_TEMP, cnt) == TRUE ) {
 			continue
 		}
 		list(0, listmax) = cnt, -cdata(CDATA_LEVEL, cnt)
@@ -3145,11 +3155,14 @@
 	if ( allyctrl == 0 ) {
 		s = lang("給料", "Wage")
 	}
-	else {
+	if ( allyctrl == 1 ) {
 		s = lang("雇用費(給料)", "Init. Cost(Wage)")
 	}
 	if ( allyctrl == 3 ) {
 		s = lang("レベル", "Level")
+	}
+	if ( allyctrl == 4 ) {
+		s = lang("ガードブレイク", "GuardBreak")
 	}
 	display_topic lang("NPCの名前", "Name"), wx + 28, wy + 36
 	display_topic lang("情報", "Info"), wx + 350, wy + 36
@@ -3191,13 +3204,31 @@
 		s = cdatan(CDATAN_NAME, i)
 		cutname s, 36
 		cs_list s, wx + 84, wy + 66 + cnt * 19 - 1, 19
-		s = "Lv." + cdata(CDATA_LEVEL, i) + " "
-        s += cnven(gendername(i))
-		s += lang(" ", "(") + calcage(i) + "" + lang("歳", ")")
-		if ( cdata(CDATA_EXIST, i) == CHAR_STATE_ALLY_DEAD | cdata(CDATA_EXIST, i) == CHAR_STATE_ADV_DEAD | cdata(CDATA_EXIST, i) == CHAR_STATE_DEAD ) {
-			if ( cdata(CDATA_CAN_REVIVE, i) <= 0 ) {
-				s += lang("(マップ切替えるまで復活不能)", "(revival impossible until you switch area)")
+		if ( allyctrl == 4 ) {
+			if ( fov_los(cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), cdata(CDATA_X, i), cdata(CDATA_Y, i)) == 0 | dist(cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), cdata(CDATA_X, i), cdata(CDATA_Y, i)) > sdataref(SKILL_DATAREF_TG, SKILL_SPACT_CHEER) \ 1000 + 1 ) {
+				s = lang("(視覚外)", "(OutRange")
 			}
+			else {
+				s = "Hp:" + cdata(CDATA_HP, i) * 100 / cdata(CDATA_MAX_HP, i) + "%"
+				if ( cdata(CDATA_DIRECTIVE_MODE, i) == DIRECTIVE_MODE_OFFENSIVE ) {
+					s += lang("/突撃/", "(offensive")
+				}
+				if ( cdata(CDATA_DIRECTIVE_MODE, i) == DIRECTIVE_MODE_DEFENSIVE ) {
+					s += lang("/防御/", "(defensive")
+				}
+				if ( cdata(CDATA_DIRECTIVE_MODE, i) == DIRECTIVE_MODE_INTERCEPT ) {
+					s += lang("/迎撃/", "(intercept")
+				}
+				if ( cdata(CDATA_DIRECTIVE_MODE, i) == DIRECTIVE_MODE_TALKING ) {
+					s += lang("/交渉/", "(talking")
+				}
+				s += lang("ガードブレイク" + cdata(CDATA_DRAIN_HP, i) + "%", " GuardBreak:" + cdata(CDATA_DRAIN_HP, i) + "%")
+			}
+		}
+		if ( allyctrl != 4 ) {
+			s = "Lv." + cdata(CDATA_LEVEL, i) + " "
+			s += gendername(i)
+			s += lang(" ", "(") + calcage(i) + "" + lang("歳", ")")
 		}
 		pos wx + 372, wy + 66 + cnt * 19 + 2
 		mes s
@@ -8633,7 +8664,7 @@
 			mes _stats2(cnt)
 		loop
 		if ( cc < MAX_CHARA_FOLLOWER ) {
-			s = lang("HP/MP", "HP/MP"), lang("生命力", "Life"), lang("マナ", "Mana"), lang("狂気度", "Sanity"), lang("速度", "Speed"), lang("名声", "Fame"), lang("カルマ", "Karma"), lang("戦力評価", "Rating"), lang("打撃修正", "Melee"), lang("射撃修正", "Shoot"), "", "", "", "", "", ""
+			s = lang("HP/MP", "HP/MP"), lang("生命力", "Life"), lang("マナ", "Mana"), lang("狂気度", "InSAN"), lang("速度", "Speed"), lang("名声", "Fame"), lang("カルマ", "Karma"), lang("戦力評価", "Rating"), lang("打撃修正", "Melee"), lang("射撃修正", "Shoot"), "", "", "", "", "", ""
 		}
 		else {
 			s = lang("HP/MP", "HP/MP"), lang("生命力", "Life"), lang("マナ", "Mana"), lang("狂気度", "Sanity"), lang("速度", "Speed"), lang("名声", "Fame"), "", "", "", "", "", "", ""
@@ -10789,8 +10820,14 @@
 					}
 				}
 				if ( mdata(MDATA_TYPE) == MAP_TYPE_WORLD ) {
-					if ( feat(1) == CELL_FEATURE_NEFIA ) {
-						if ( feat(2) + feat(3) * 100 >= 300 & feat(2) + feat(3) * 100 < 450 ) {
+					if ( feat(FEAT_CELL_FEATURE_ID) == CELL_FEATURE_NEFIA ) {
+						if ( feat(FEAT_CELL_SUB_FEATURE_ID) + feat(FEAT_CELL_PARAM_1) * 100 >= 300 & feat(FEAT_CELL_SUB_FEATURE_ID) + feat(FEAT_CELL_PARAM_1) * 100 < 450 ) {
+							area = feat(FEAT_CELL_SUB_FEATURE_ID) + feat(FEAT_CELL_PARAM_1) * 100
+							if ( adata(ADATA_ARENA_WIN, area) == (-1) ) {
+								snd SOUNDLIST_FAIL1
+								txt lang("この建物は移設するまで撤去できない。", "You can not remove the building until relocation.")
+								goto *pc_turn
+							}
 							txt lang("本当にこの建物を撤去する？（注意！建物と中の物は完全に失われます）", "Really remove this building?")
 							promptYesNo
 							if ( rtval != 0 ) {

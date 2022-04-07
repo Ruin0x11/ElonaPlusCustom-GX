@@ -804,7 +804,7 @@
 
 	/********** ANNA CUSTOM - ENDING **********/
 
-		if ( cdata(CDATA_RELATION, cc) != 10 | cdata(CDATA_HUNGER, cc) <= 6000 ) {
+		if ( cdata(CDATA_RELATION, cc) != 10 | cdata(CDATA_HUNGER, cc) <= 10000 ) {
 			if ( cdata(CDATA_TAMER_WHIP_EAT, cc) == 1 ) {
 				txtef COLOR_BLUE
 				customtalk cc, DBMODE_FLAVOR_DISCIPLINE_EAT
@@ -894,7 +894,7 @@
 					if ( stat == 1 ) {
 						ci = rtval(1)
 						p = refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE)
-						if ( cdata(CDATA_HUNGER, cc) <= 6000 ) {
+						if ( cdata(CDATA_HUNGER, cc) <= 10000 ) {
 							if ( p == FILTER_ITEM_FOOD ) {
 								if ( inv(INV_ITEM_PROPERTY, ci) <= PROP_NONE ) {
 									if ( itemusingfind(ci) != (-1) & itemusingfind(ci) == cdata(CDATA_TAGTEAM_PARTNER, cc) ) {
@@ -1266,7 +1266,7 @@
 					}
 				}
 			}
-			if ( cdata(CDATA_HUNGER, cc) <= 6000 ) {
+			if ( cdata(CDATA_HUNGER, cc) <= 10000 ) {
 				if ( cdata(CDATA_SYNC, cc) != msync | rnd(5) ) {
 					if ( cbit(CHARA_BIT_ANOREXIA, cc) == 0 ) {
 						cdata(CDATA_HUNGER, cc) += 5000
@@ -1275,7 +1275,7 @@
 						cdata(CDATA_HUNGER, cc) -= 3000
 					}
 					if ( TweakData(TWEAK_GAMEPLAY_CG_DISABLE_THIRST, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
-						if ( cdata(CDATA_THIRST, cc) <= 6000 ) {
+						if ( cdata(CDATA_THIRST, cc) <= 10000 ) {
 							cdata(CDATA_THIRST, cc) += 5000
 						}
 					}
@@ -1308,7 +1308,7 @@
 								cdata(CDATA_HUNGER, cc) -= 3000
 							}
 							if ( TweakData(TWEAK_GAMEPLAY_CG_DISABLE_THIRST, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
-								if ( cdata(CDATA_THIRST, cc) <= 6000 ) {
+								if ( cdata(CDATA_THIRST, cc) <= 10000 ) {
 									cdata(CDATA_THIRST, cc) += 5000
 								}
 							}

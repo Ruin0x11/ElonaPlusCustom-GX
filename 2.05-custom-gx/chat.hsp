@@ -15747,7 +15747,7 @@
  ********** ORIGINAL - ENDING **********/
 
 *chat_unique_leold_done
-	if ( leoval != (-2) ) {
+	if ( leoval == 0 ) {
 		allyctrl = 3
 		leoleo = 1
 		gosub *com_ally
@@ -15755,6 +15755,11 @@
 	if ( leoval == (-2) ) {
 		allyctrl = 3
 		leoleo = 2
+		gosub *com_ally
+	}
+	if ( leoval != 0 & leoval != (-2) ) {
+		allyctrl = 3
+		leoleo = 3
 		gosub *com_ally
 	}
 	leoleo = 0
@@ -17689,7 +17694,7 @@
 				if ( cbit(CHARA_BIT_GUARD_TEMP, tc) == 0 ) {
 					if ( cbit(CHARA_BIT_NECRO, tc) == 0 ) {
 						if ( cbit(CHARA_BIT_LIVESTOCK, tc) == 0 ) {
-							if ( cdata(CDATA_HUNGER, CHARA_PLAYER) <= 10000 & cdata(CDATA_HUNGER, tc) <= 6000 & cdata(CDATA_IMPRESSION, tc) >= 100 & cbit(CHARA_BIT_ANOREXIA, tc) != 1 & cbit(CHARA_BIT_ANOREXIA, CHARA_PLAYER) != 1 ) {
+							if ( cdata(CDATA_HUNGER, CHARA_PLAYER) <= 10000 & cdata(CDATA_HUNGER, tc) <= 10000 & cdata(CDATA_IMPRESSION, tc) >= 100 & cbit(CHARA_BIT_ANOREXIA, tc) != TRUE & cbit(CHARA_BIT_ANOREXIA, CHARA_PLAYER) != TRUE ) {
 								chatList 84, lang("一緒に食事する", "Let's have a meal together.")
 							}
 							if ( cdata(CDATA_MATERIAL1_COUNTER, tc) > 200 | cdata(CDATA_MATERIAL2_COUNTER, tc) > 200 | cdata(CDATA_MATERIAL3_COUNTER, tc) > 200 | cdata(CDATA_MATERIAL4_COUNTER, tc) > 200 | cdata(CDATA_MATERIAL5_COUNTER, tc) > 200 ) {

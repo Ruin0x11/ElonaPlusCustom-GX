@@ -36,7 +36,8 @@
 			if ( adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_CROP | adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_MUSEUM | adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_SHOP | adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_STORAGE_HOUSE | adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_RANCH | adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_DISCARDED_RANCH | adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_DUNGEON ) {
 				item_separate ci
 				inv(INV_ITEM_PARAM2, ci) = gdata(GDATA_AREA)
-				txt lang("物件No" + inv(INV_ITEM_PARAM2, ci) + "を登録した。", "Property No. " + inv(INV_ITEM_PARAM2, ci) + " has been registered.")
+				txt lang("物件No" + inv(INV_ITEM_PARAM2, ci) + "を登録" + adata(ADATA_ARENA_WIN, gdata(GDATA_AREA)) + "した。", "Property No. " + inv(INV_ITEM_PARAM2, ci) + " has been registered. (" + adata(ADATA_ARENA_WIN, gdata(GDATA_AREA)) + ")")
+				adata(ADATA_ARENA_WIN, gdata(GDATA_AREA)) = -1
 				snd SOUNDLIST_ENC
 				gosub *screen_draw
 				goto *pc_turn
@@ -151,6 +152,7 @@
 		txtef COLOR_GREEN
 		txt lang("移設が完了した！ ", "Property relocation finished!")
 		msg_halt
+		adata(ADATA_ARENA_WIN, bukken) = 0
 		snd SOUNDLIST_EXITMAP1
 		goto *map_exit
 	}
@@ -338,7 +340,13 @@
 		if ( getworker(gdata(GDATA_AREA)) != (-1) ) {
 			sc = getworker(gdata(GDATA_AREA))
 			p = sdata(SKILL_NORMAL_NEGOTIATION + STARTING_SKILL_SPACT, sc) \ 1000
-			if ( p >= 200 ) {
+			if ( p >= 400 ) {
+				txt lang("[交渉潜在：Supreme]", "[Trade potential : Supreme]")
+			}
+			if ( p >= 300 & p < 400 ) {
+				txt lang("[交渉潜在：Amazing]", "[Trade potential : Amazing]")
+			}
+			if ( p >= 200 & p < 300 ) {
 				txt lang("[交渉潜在：Superb]", "[Trade potential: Superb]")
 			}
 			if ( p >= 150 & p < 200 ) {
@@ -354,7 +362,13 @@
 				txt lang("[交渉潜在：Hopeless]", "[Trade potential: Hopeless]")
 			}
 			p = sdata(SKILL_ATTR_CHA + STARTING_SKILL_SPACT, sc) \ 1000
-			if ( p >= 200 ) {
+			if ( p >= 400 ) {
+				txt lang("[魅力潜在：Supreme]", "[Charisma potential : Supreme]")
+			}
+			if ( p >= 300 & p < 400 ) {
+				txt lang("[魅力潜在：Amazing]", "[Charisma potential : Amazing]")
+			}
+			if ( p >= 200 & p < 300 ) {
 				txt lang("[魅力潜在：Superb]", "[Charisma potential: Superb]")
 			}
 			if ( p >= 150 & p < 200 ) {
@@ -462,6 +476,8 @@
 			promptAdd lang("施設名称変更", "Change Map Name"), "null", 10
 		}
 	}
+	promptl(0, promptmax) = lang("お片付け機能", "Collecting function"), "null", "" + 23
+	promptmax++
 	homemakewall = 0
 
 	/********** BLOODYSHADE CUSTOM - BEGINNING **********/ // House Board - Plant seeds/Collect yield

@@ -1363,6 +1363,7 @@
 	gosub *map_prepareTile
 	gosub *adv_action
 	gosub *item_rot
+	gosub *calcThirst
 	if ( mdata(MDATA_TYPE) == MAP_TYPE_WORLD ) {
 		if ( rnd(3) == 0 ) {
 			gdata(GDATA_SLEEP)++
@@ -2377,29 +2378,11 @@
 				dmghp cc, cdata(CDATA_MAX_HP, cc) * (cdata(CDATA_INV_WEIGHT, CHARA_PLAYER) * 10 / cdata(CDATA_CARRY_LIMIT, CHARA_PLAYER) + 10) / 200 + 1, DAMAGE_FROM_BURDEN
 			}
 		}
-		gosub *calcHunger
-		if ( TweakData(TWEAK_GAMEPLAY_CG_DISABLE_THIRST, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
-			gosub *calcThirst
-		}
 		refreshspeed cc
 		procid = (procid + 1) \ 4
 		proclist(procid) = "turn_end:pc" + " ct:" + ct
 	}
 	else {
-		if ( mdata(MDATA_TYPE) != MAP_TYPE_WORLD ) {
-			cdata(CDATA_HUNGER, cc) -= 8 * 2
-			if ( cdata(CDATA_HUNGER, cc) < 3000 ) {
-				if ( cbit(CHARA_BIT_ANOREXIA, cc) == 0 ) {
-					cdata(CDATA_HUNGER, cc) = 3000
-				}
-			}
-			if ( TweakData(TWEAK_GAMEPLAY_CG_DISABLE_THIRST, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
-				cdata(CDATA_THIRST, cc) -= 8
-				if ( cdata(CDATA_THIRST, cc) < 3000 ) {
-					cdata(CDATA_THIRST, cc) = 3000
-				}
-			}
-		}
 	}
 	if ( gdata(GDATA_TIME_STOP_TIME) > 0 ) {
 		gdata(GDATA_TIME_STOP_TIME)--

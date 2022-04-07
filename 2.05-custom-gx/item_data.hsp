@@ -184,12 +184,12 @@
 	dim enclist, 2, MAX_ENCHANTMENT
 	dim encammoref, 3, ENCHANT_AMMO_MAX
 	sdim ammoname, ENCHANT_AMMO_MAX
-	encammoref(0, ENCHANT_AMMO_RAPID) = 30, 70, 1
-	encammoref(0, ENCHANT_AMMO_EXPLOSIVE) = 5, 15, 10
-	encammoref(0, ENCHANT_AMMO_MAGIC) = 20, 35, 2
-	encammoref(0, ENCHANT_AMMO_PIERCING) = 15, 30, 2
+	encammoref(0, ENCHANT_AMMO_RAPID) = 40, 70, 1
+	encammoref(0, ENCHANT_AMMO_EXPLOSIVE) = 10, 20, 10
+	encammoref(0, ENCHANT_AMMO_MAGIC) = 30, 40, 2
+	encammoref(0, ENCHANT_AMMO_PIERCING) = 20, 30, 2
 	encammoref(0, ENCHANT_AMMO_TIME_STOP) = 2, 5, 25
-	encammoref(0, ENCHANT_AMMO_BURST) = 2, 5, 15
+	encammoref(0, ENCHANT_AMMO_BURST) = 5, 10, 15
 	ammoname = lang("連射弾", "rapid ammo"), lang("炸裂弾", "explosive ammo"), lang("貫通弾", "piercing ammo"), lang("魔弾", "magic ammo"), lang("時止弾", "time stop ammo"), lang("バースト", "burst ammo")
 	// level, value%, rarity, filter types
 	encref(0, ENCHANT_RANDOM_TELEPORT) = -1, 50, 75, FILTER_NOTHING
@@ -885,6 +885,9 @@
 		}
 		if ( locvar_encremove_enc == ENCHANT_AMMO ) {
 			locvar_encremove_enc = rnd(rnd(ENCHANT_AMMO_MAX) + 1)
+			if ( rnd(10) == 0 ) {
+				locvar_encremove_enc = ENCHANT_AMMO_BURST
+			}
 			locvar_encremove_encp = limit(locvar_encremove_encp, 0, 500) * encammoref(1, locvar_encremove_enc) / 500 + encammoref(0, locvar_encremove_enc)
 			locvar_encremove_enc += ENCHANT_AMMO * EXT_ENCHANTMENT
 			locvar_encremove_encp += locvar_encremove_encp * 1000

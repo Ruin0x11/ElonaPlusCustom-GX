@@ -280,7 +280,7 @@
 				ap = 100
 			}
 			pos inf_hpx - 120 + 16, inf_hpy + 5
-			if ( cdata(CDATA_HUNGER, gdata(GDATA_RIDER)) > 6000 ) {
+			if ( cdata(CDATA_HUNGER, gdata(GDATA_RIDER)) > 10000 ) {
 				gcopy 3, 1440 - ap, 487, ap, 5
 			}
 			else {
@@ -1094,6 +1094,16 @@
 		}
 		if ( en ) {
 			bmes "[Rocrush]", 235, 135, 5
+		}
+	}
+	if ( cdata(CDATA_FRIENDSHIP, CHARA_PLAYER) == 5 ) {
+		pos inf_clockw + 6, inf_clocky + 50
+		color 0, 0, 0
+		if ( jp ) {
+			bmes "[狂気満ちる劇場]", 235, 5, 235
+		}
+		if ( en ) {
+			bmes "[Crazy Theater]", 235, 5, 235
 		}
 	}
 	if ( gdata(GDATA_FLAG_NEFIA_FEVER_ACTIVE) == 100 ) {
@@ -2668,8 +2678,12 @@
 				pos ax, ay - inf_tiles / 2
 				gcopy 4, 0, 0, inf_tiles, inf_tiles
 				gmode 2
+				hoseiwait = cfg_animewait
+				if ( ammoproc == ENCHANT_AMMO_BURST ) {
+					hoseiwait = 0
+				}
 				if ( gdata(GDATA_TEMPORARY_FLAGS) != 300 ) {
-					await cfg_animewait
+					await hoseiwait
 				}
 			loop
 		}
@@ -2818,89 +2832,88 @@
 		if ( attackskill == SKILL_WEAPON_SCYTHE ) {
 			ap = 1
 		}
-		if ( ap == 1 ) {
-			kakudo = rnd(9)
+		if ( ammoproc == ENCHANT_AMMO_BURST | ammoproc == ENCHANT_AMMO_RAPID ) {
+			ap = -1
 		}
-		aniref = aniref / 4 + 1
-		if ( aniref > 20 ) {
-			aniref = 20
-		}
-		if ( cbit(CHARA_BIT_STONE_BLOOD, tc) ) {
-			anix(1) = 1104
-		}
-		else {
-			anix(1) = 720
-		}
-		if ( ap == 0 ) {
-			gsel 1
-			color 0
-			boxf 0, 960, chipi(CHIPI_WIDTH, xy2pic(17, 0)), chipi(CHIPI_HEIGHT, xy2pic(17, 0)) + 960
-			pos 0, 960
-			gcopy 1, chipi(CHIPI_X, xy2pic(17, 0)), chipi(CHIPI_Y, xy2pic(17, 0)), chipi(CHIPI_WIDTH, xy2pic(17, 0)), chipi(CHIPI_HEIGHT, xy2pic(17, 0))
-			gfini chipi(CHIPI_WIDTH, xy2pic(17, 0)), chipi(CHIPI_HEIGHT, xy2pic(17, 0))
-			gfdec2 c_col(0, 0), c_col(1, 0), c_col(2, 0)
-			gsel selcur
-		}
-		repeat aniref
-			sx(cnt) = rnd(24) - 12
-			sy(cnt) = rnd(8)
-			if ( gdata(GDATA_TEMPORARY_FLAGS2) == 1200 | gdata(GDATA_TEMPORARY_FLAGS2) == 1000 ) {
-				sy(cnt) = rnd(24) - 12
+		if ( ap >= 0 ) {
+			if ( ap == 1 ) {
+				kakudo = rnd(9)
 			}
-		loop
-		anidx = (cdata(CDATA_X, tc) - scx) * inf_tiles + inf_screenx
-		anix = anidx + rnd(12) - rnd(12)
-		anidy = (cdata(CDATA_Y, tc) - scy) * inf_tiles + inf_screeny
-		aniy = anidy - 16 + rnd(12) - rnd(12)
-		gsel 4
-		gmode 0
-		pos 0, 0
-		gcopy 0, anidx - 24, anidy - 48, 96, 144
-		if ( gdata(GDATA_TEMPORARY_FLAGS2) != 1200 ) {
-			if ( critical ) {
-				gsel 7
-				picload exedir + "graphic\\anime28.bmp"
+			aniref = aniref / 4 + 1
+			if ( aniref > 20 ) {
+				aniref = 20
 			}
-		}
-		gmode 2
-		gsel 0
-		repeat 4 + (critical != 0)
-			redraw 0
-			gmode 2
-			cnt2 = cnt * 2
-			gmode 2, inf_tiles, inf_tiles
-			if ( gdata(GDATA_TEMPORARY_FLAGS2) != 1200 ) {
-				if ( critical ) {
-					pos anidx - 24, anidy - 32
-					gcopy 7, cnt * 96, 0, 96, 96
-				}
+			if ( cbit(CHARA_BIT_STONE_BLOOD, tc) ) {
+				anix(1) = 1104
+			}
+			else {
+				anix(1) = 720
+			}
+			if ( ap == 0 ) {
+				preparePicItem 17, COLOR_DEFAULT
 			}
 			repeat aniref
-				pos anidx + 24 + sx(cnt) + (sx(cnt) < 4) * ((1 + (cnt \ 2 == 0)) * (-1)) * cnt2 + (sx(cnt) > (-4)) * (1 + (cnt \ 2 == 0)) * cnt2, anidy + sy(cnt) + cnt2 * cnt2 / 3
-				grotate 1, anix(1), 0, 0.4 * cnt, 6, 6
+				sx(cnt) = rnd(24) - 12
+				sy(cnt) = rnd(8)
+				if ( gdata(GDATA_TEMPORARY_FLAGS2) == 1200 | gdata(GDATA_TEMPORARY_FLAGS2) == 1000 ) {
+					sy(cnt) = rnd(24) - 12
+				}
 			loop
-			if ( ap == 0 ) {
-				pos anidx + sx + 24, anidy + sy + 10
-				grotate 1, 0, 960, 0.5 * cnt - 0.8, cnt * 10 + aniref, cnt * 10 + aniref
-			}
-			if ( ap == 1 ) {
-				pos anidx + 24, anidy + 12
-				grotate 3, 1008 + cnt * 48, 432, kakudo, 48, 48
-			}
-			if ( ap == 2 ) {
-				pos anidx, anidy
-				gcopy 3, 816 + cnt * 48, 432, 48, 48
-			}
-			redraw 1
-			redraw 0
+			anidx = (cdata(CDATA_X, tc) - scx) * inf_tiles + inf_screenx
+			anix = anidx + rnd(12) - rnd(12)
+			anidy = (cdata(CDATA_Y, tc) - scy) * inf_tiles + inf_screeny
+			aniy = anidy - 16 + rnd(12) - rnd(12)
+			gsel BUFFER_BUF
 			gmode 0
-			pos anidx - 24, anidy - 48
-			gcopy 4, 0, 0, 96, 144
+			pos 0, 0
+			gcopy BUFFER_SCREEN, anidx - 24, anidy - 48, 96, 144
+			if ( gdata(GDATA_TEMPORARY_FLAGS2) != 1200 ) {
+				if ( critical ) {
+					gsel BUFFER_PIC
+					picload exedir + "graphic\\anime28.bmp"
+				}
+			}
 			gmode 2
-			await cfg_animewait
-		loop
-		kakudo = 0
+			gsel BUFFER_SCREEN
+			repeat 4 + (critical != 0)
+				redraw 0
+				gmode 2
+				cnt2 = cnt * 2
+				gmode 2, inf_tiles, inf_tiles
+				if ( gdata(GDATA_TEMPORARY_FLAGS2) != 1200 ) {
+					if ( critical ) {
+						pos anidx - 24, anidy - 32
+						gcopy BUFFER_PIC, cnt * 96, 0, 96, 96
+					}
+				}
+				repeat aniref
+					pos anidx + 24 + sx(cnt) + (sx(cnt) < 4) * ((1 + (cnt \ 2 == 0)) * (-1)) * cnt2 + (sx(cnt) > (-4)) * (1 + (cnt \ 2 == 0)) * cnt2, anidy + sy(cnt) + cnt2 * cnt2 / 3
+					grotate BUFFER_ITEM, anix(1), 0, 0.4 * cnt, 6, 6
+				loop
+				if ( ap == 0 ) {
+					pos anidx + sx + 24, anidy + sy + 10
+					grotate BUFFER_ITEM, 0, 960, 0.5 * cnt - 0.8, cnt * 10 + aniref, cnt * 10 + aniref
+				}
+				if ( ap == 1 ) {
+					pos anidx + 24, anidy + 12
+					grotate BUFFER_INF, 1008 + cnt * 48, 432, kakudo, 48, 48
+				}
+				if ( ap == 2 ) {
+					pos anidx, anidy
+					gcopy BUFFER_INF, 816 + cnt * 48, 432, 48, 48
+				}
+				redraw 1
+				redraw 0
+				gmode 0
+				pos anidx - 24, anidy - 48
+				gcopy BUFFER_BUF, 0, 0, 96, 144
+				gmode 2
+				await cfg_animewait
+			loop
+			kakudo = 0
+		}
 		goto *anime_SWEND1
+		_switch_sw++
 	}
 	if ( _switch_val == ANIMATION_GENE | _switch_sw ) {
 		_switch_sw = 0
@@ -5858,6 +5871,9 @@
 			tohit = tohit * (10 - limit(dist(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), cdata(CDATA_X, tc), cdata(CDATA_Y, tc)) - 1, 0, 5)) / 10
 		}
 	}
+	if ( ammoproc == ENCHANT_AMMO_BURST ) {
+		tohit /= 2
+	}
 	if ( attackskill != SKILL_WEAPON_MARTIAL_ARTS ) {
 		if ( attackrange & attackskill != SKILL_WEAPON_BLUNT | (attackrange != 1 & attackskill == SKILL_WEAPON_THROWING) ) {
 			if ( calcattackhit_arg1 == 0 ) {
@@ -6818,10 +6834,7 @@
 			damage /= 2
 		}
 		if ( ammoproc == ENCHANT_AMMO_BURST ) {
-			damage /= 3
-		}
-		if ( ammoproc == ENCHANT_AMMO_MAGIC ) {
-			damage /= 10
+			damage /= 5
 		}
 	}
 	if ( prot > 0 ) {
@@ -7404,9 +7417,9 @@
 			cdata(CDATA_PV, r1) = cdata(CDATA_PV, r1) * 13 / 10
 		}
 	}
-	lvhosei = limit(cdata(CDATA_LEVEL, r1) / 4 + limit(cdata(CDATA_LEVEL, r1) / 4, 1, 250) + limit(cdata(CDATA_LEVEL, r1) / 4, 1, 500) + limit(cdata(CDATA_LEVEL, r1) / 4, 1, 750), 1, 4000)
-	cdata(CDATA_MAX_MP, r1) = limit((sdata(SKILL_ATTR_MAG, r1) * 3 + sdata(SKILL_ATTR_WIL, r1) + sdata(SKILL_ATTR_LER, r1)) / 3 * lvhosei / 9 + sdata(SKILL_ATTR_MAG, r1), 1, 2000000) * limit(sdata(SKILL_ATTR_MANA, r1), 1, 1000) / 100
-	cdata(CDATA_MAX_HP, r1) = limit((sdata(SKILL_ATTR_CON, r1) * 3 + sdata(SKILL_ATTR_STR, r1) + sdata(SKILL_ATTR_WIL, r1)) / 3 * lvhosei / 9 + sdata(SKILL_ATTR_CON, r1), 1, 2000000) * limit(sdata(SKILL_ATTR_LIFE, r1), 1, 1000) / 100 + 5
+	lvhosei = limit(cdata(CDATA_LEVEL, r1) / 4 + limit(cdata(CDATA_LEVEL, r1) / 5, 0, 20) + limit(cdata(CDATA_LEVEL, r1) / 5, 1, 40) + limit(cdata(CDATA_LEVEL, r1) / 5, 1, 60) + limit(cdata(CDATA_LEVEL, r1) / 5, 1, 100), 1, 3000)
+	cdata(CDATA_MAX_MP, r1) = limit((sdata(SKILL_ATTR_MAG, r1) * 3 + sdata(SKILL_ATTR_WIL, r1) + sdata(SKILL_ATTR_LER, r1)) / 3 * lvhosei / 10 + sdata(SKILL_ATTR_MAG, r1), 1, 2000000) * limit(sdata(SKILL_ATTR_MANA, r1), 1, 1000) / 100
+	cdata(CDATA_MAX_HP, r1) = limit((sdata(SKILL_ATTR_CON, r1) * 3 + sdata(SKILL_ATTR_STR, r1) + sdata(SKILL_ATTR_WIL, r1)) / 3 * lvhosei / 10 + sdata(SKILL_ATTR_CON, r1), 1, 2000000) * limit(sdata(SKILL_ATTR_LIFE, r1), 1, 1000) / 100 + 5
 	cdata(CDATA_MAX_SP, r1) = 100 + (sdata(SKILL_ATTR_WIL, r1) + sdata(SKILL_ATTR_CON, r1)) / 5 + trait(TRAIT_NORMAL_STAT_STAMINA) * 8
 	if ( r1 == CHARA_PLAYER ) {
 		if ( trait(TRAIT_ETHER_ABNORMAL_LIBIDO) != 0 ) {
@@ -7430,7 +7443,18 @@
 			cdata(CDATA_MAX_HP, r1) = cdata(CDATA_MAX_HP, r1) * 3 / 2
 		}
 		if ( cdata(CDATA_QUALITY, r1) >= FIX_QUALITY_MIRACLE | cdata(CDATA_ID, r1) == CREATURE_ID_AILE_THE_ATTENDANT ) {
-			cdata(CDATA_MAX_HP, r1) = cdata(CDATA_MAX_HP, r1) * 5
+			cdata(CDATA_MAX_HP, r1) = cdata(CDATA_MAX_HP, r1) * 6
+			sdata(SKILL_RES_FIRE, r1) += 150
+			sdata(SKILL_RES_COLD, r1) += 150
+			sdata(SKILL_RES_LIGHTNING, r1) += 150
+			sdata(SKILL_RES_NERVE, r1) += 150
+			sdata(SKILL_RES_MIND, r1) += 150
+			sdata(SKILL_RES_NETHER, r1) += 150
+			sdata(SKILL_RES_POISON, r1) += 150
+			sdata(SKILL_RES_SOUND, r1) += 150
+			sdata(SKILL_RES_CHAOS, r1) += 150
+			sdata(SKILL_RES_DARKNESS, r1) += 150
+			sdata(SKILL_RES_MAGIC, r1) += 150
 		}
 	}
 	else {

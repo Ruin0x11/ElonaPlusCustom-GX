@@ -135,6 +135,14 @@
 			txt lang("あなたは「" + skillname(SKILL_SPACT_SPACE_RETENTION) + "」の能力を得た。", "You have learned new ability, " + skillname(SKILL_SPACT_SPACE_RETENTION) + ".")
 		}
 	}
+	if ( sorg(SKILL_ATTR_LER, CHARA_PLAYER) > 29 & trait(TRAIT_NORMAL_SPACT_CHEER) != 0 ) {
+		if ( spact(SKILL_SPACT_INDIVIDUAL_LEADING - STARTING_SKILL_SPACT) == 0 ) {
+			spact(SKILL_SPACT_INDIVIDUAL_LEADING - STARTING_SKILL_SPACT) = 1
+			txtmore
+			txtef COLOR_YELLOW
+			txt lang("あなたは「" + skillname(SKILL_SPACT_INDIVIDUAL_LEADING) + "」の能力を得た。", "You have learned new ability, " + skillname(SKILL_SPACT_INDIVIDUAL_LEADING) + ".")
+		}
+	}
 	if ( sorg(SKILL_ATTR_STR, CHARA_PLAYER) > 39 & trait(TRAIT_NORMAL_STAT_PV) != 0 ) {
 		if ( spact(SKILL_SPACT_SMASH_GROUND - STARTING_SKILL_SPACT) == 0 ) {
 			spact(SKILL_SPACT_SMASH_GROUND - STARTING_SKILL_SPACT) = 1
@@ -2228,13 +2236,13 @@
 		cdata(CDATA_HUNGER, rc) = 9000
 	}
 	else {
-		cdata(CDATA_HUNGER, rc) = 6000 - 1000 + rnd(4000)
+		cdata(CDATA_HUNGER, rc) = 10000 - 1000 + rnd(4000)
 	}
 	if ( rc == CHARA_PLAYER ) {
 		cdata(CDATA_THIRST, rc) = 9000
 	}
 	else {
-		cdata(CDATA_THIRST, rc) = 6000 - 1000 + rnd(4000)
+		cdata(CDATA_THIRST, rc) = 10000 - 1000 + rnd(4000)
 	}
 	cdata(CDATA_HEIGHT, rc) = cdata(CDATA_HEIGHT, rc) + rnd(cdata(CDATA_HEIGHT, rc) / 5 + 1) - rnd(cdata(CDATA_HEIGHT, rc) / 5 + 1)
 	cdata(CDATA_WEIGHT, rc) = cdata(CDATA_HEIGHT, rc) * cdata(CDATA_HEIGHT, rc) * (rnd(6) + 18) / 10000
@@ -2273,7 +2281,7 @@
 		cdata(CDATA_HEIGHT, rc) = rnd(200) + 800
 		cdata(CDATA_WEIGHT, rc) = rnd(3000) + 6000
 	}
-	if ( cdata(CDATA_ID, rc) == CREATURE_ID_MAMMOTH | cdata(CDATA_ID, rc) == CREATURE_ID_KNIGHTCEROS | cdata(CDATA_ID, rc) == CREATURE_ID_ELECTRIC_HIPPOPOTAMUS | cdata(CDATA_ID, rc) == CREATURE_ID_KILLING_ANTEATER | cdata(CDATA_ID, rc) == CREATURE_ID_GRAVEED_THE_GRAVITY_VALLEY | cdata(CDATA_ID, rc) == CREATURE_ID_HOT_MUSHROOM_TEACHER | cdata(CDATA_ID, rc) == CREATURE_ID_JANKEN_KING | cdata(CDATA_ID, rc) == CREATURE_ID_MAG_COUNT | cdata(CDATA_ID, rc) == CREATURE_ID_E_MAG_DUKE ) {
+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_MAMMOTH | cdata(CDATA_ID, rc) == CREATURE_ID_KNIGHTCEROS | cdata(CDATA_ID, rc) == CREATURE_ID_ELECTRIC_HIPPOPOTAMUS | cdata(CDATA_ID, rc) == CREATURE_ID_KILLING_ANTEATER | cdata(CDATA_ID, rc) == CREATURE_ID_GRAVEED_THE_GRAVITY_VALLEY | cdata(CDATA_ID, rc) == CREATURE_ID_HOT_MUSHROOM_TEACHER | cdata(CDATA_ID, rc) == CREATURE_ID_JANKEN_KING | cdata(CDATA_ID, rc) == CREATURE_ID_MAG_COUNT | cdata(CDATA_ID, rc) == CREATURE_ID_E_MAG_DUKE | cdata(CDATA_ID, rc) == CREATURE_ID_GREEN_DARK_GUARDIAN | cdata(CDATA_ID, rc) == CREATURE_ID_BLUE_DARK_GUARDIAN | cdata(CDATA_ID, rc) == CREATURE_ID_CRIMSON_DARK_GUARDIAN ) {
 		cdata(CDATA_HEIGHT, rc) = rnd(80) + 450
 		cdata(CDATA_WEIGHT, rc) = rnd(5000) + 10000
 	}

@@ -352,6 +352,9 @@
 		if ( customtalk_dbmode == DBMODE_FLAVOR_TAG_EVO ) {
 			locvar_customtalk_s = "%txtTagEvo"
 		}
+		if ( customtalk_dbmode == DBMODE_FLAVOR_LEADING ) {
+			locvar_customtalk_s = "%txtLeading"
+		}
 		locvar_customtalk_p = instr(locvar_customtalk_buff, 0, locvar_customtalk_s + "," + lang("JP", "EN"))
 		locvar_customtalk_buff = strmid(locvar_customtalk_buff, locvar_customtalk_p, instr(locvar_customtalk_buff, locvar_customtalk_p + 1, "%"))
 		if ( noteinfo(0) > 1 ) {
@@ -3375,6 +3378,84 @@
 				}
 			}
 		}
+		locvar_check_talk_ccr = -1
+		if ( gdata(GDATA_RIDER) != 0 ) {
+			if ( check_talk_arg1 == 0 ) {
+				locvar_check_talk_ccr = gdata(GDATA_RIDER)
+			}
+			if ( check_talk_arg1 == gdata(GDATA_RIDER) ) {
+				locvar_check_talk_ccr = 0
+			}
+		}
+		if ( locvar_check_talk_ccr >= 0 ) {
+			if ( cdata(CDATA_AP_CURRENT, locvar_check_talk_ccr) < 2000 ) {
+				locvar_check_talk_aspd = cdata(CDATA_INIT_SPEED, locvar_check_talk_ccr)
+				if ( cdata(CDATA_INIT_SPEED, CHARA_PLAYER) > cdata(CDATA_INIT_SPEED, gdata(GDATA_RIDER)) ) {
+					locvar_check_talk_aspd = cdata(CDATA_INIT_SPEED, CHARA_PLAYER)
+				}
+				else {
+					locvar_check_talk_aspd = cdata(CDATA_INIT_SPEED, gdata(GDATA_RIDER))
+				}
+				if ( 0 ) {
+					cdata(CDATA_INIT_ATTR, CHARA_PLAYER) = 1
+					locvar_check_talk_aspd = 1
+					cdata(CDATA_AP_TOTAL, CHARA_PLAYER) = 1
+				}
+				if ( cdata(CDATA_INIT_ATTR, check_talk_arg2) + cdata(CDATA_INIT_LIFEMANA, check_talk_arg2) >= 1000 ) {
+					if ( cdata(CDATA_INIT_ATTR, check_talk_arg2) + cdata(CDATA_INIT_SPEED, check_talk_arg2) > cdata(CDATA_INIT_ATTR, locvar_check_talk_ccr) + cdata(CDATA_INIT_LIFEMANA, locvar_check_talk_ccr) + locvar_check_talk_aspd + (cdata(CDATA_AP_TOTAL, locvar_check_talk_ccr) + 1) / 5 ) {
+						if ( cdata(CDATA_INIT_SPEED, check_talk_arg2) > locvar_check_talk_aspd * 5 ) {
+							cdata(CDATA_AP_CURRENT, locvar_check_talk_ccr) += 1
+							cdata(CDATA_AP_TOTAL, locvar_check_talk_ccr) += 1
+							if ( locvar_check_talk_ccr != 0 ) {
+								cdata(CDATA_AP_CURRENT, locvar_check_talk_ccr) += 1
+								cdata(CDATA_AP_TOTAL, locvar_check_talk_ccr) += 1
+							}
+						}
+						if ( cdata(CDATA_INIT_SPEED, check_talk_arg2) > locvar_check_talk_aspd * 4 ) {
+							cdata(CDATA_AP_CURRENT, locvar_check_talk_ccr) += 2
+							cdata(CDATA_AP_TOTAL, locvar_check_talk_ccr) += 2
+							if ( locvar_check_talk_ccr != 0 ) {
+								cdata(CDATA_AP_CURRENT, locvar_check_talk_ccr) += 2
+								cdata(CDATA_AP_TOTAL, locvar_check_talk_ccr) += 2
+							}
+						}
+						if ( cdata(CDATA_INIT_SPEED, check_talk_arg2) > locvar_check_talk_aspd * 3 ) {
+							cdata(CDATA_AP_CURRENT, locvar_check_talk_ccr) += 2
+							cdata(CDATA_AP_TOTAL, locvar_check_talk_ccr) += 2
+							if ( locvar_check_talk_ccr != 0 ) {
+								cdata(CDATA_AP_CURRENT, locvar_check_talk_ccr) += 2
+								cdata(CDATA_AP_TOTAL, locvar_check_talk_ccr) += 2
+							}
+						}
+						if ( cdata(CDATA_INIT_SPEED, check_talk_arg2) > locvar_check_talk_aspd * 2 ) {
+							cdata(CDATA_AP_CURRENT, locvar_check_talk_ccr) += 2
+							cdata(CDATA_AP_TOTAL, locvar_check_talk_ccr) += 2
+							if ( locvar_check_talk_ccr != 0 ) {
+								cdata(CDATA_AP_CURRENT, locvar_check_talk_ccr) += 2
+								cdata(CDATA_AP_TOTAL, locvar_check_talk_ccr) += 2
+							}
+						}
+						if ( cdata(CDATA_INIT_SPEED, check_talk_arg2) > locvar_check_talk_aspd ) {
+							cdata(CDATA_AP_CURRENT, locvar_check_talk_ccr)++
+							cdata(CDATA_AP_TOTAL, locvar_check_talk_ccr)++
+							snd SOUNDLIST_ENC
+							animeload 36, locvar_check_talk_ccr
+							if ( locvar_check_talk_ccr != 0 ) {
+								cdata(CDATA_AP_CURRENT, locvar_check_talk_ccr)++
+								cdata(CDATA_AP_TOTAL, locvar_check_talk_ccr)++
+							}
+						}
+						if ( cdata(CDATA_AP_CURRENT, locvar_check_talk_ccr) > 2000 ) {
+							cdata(CDATA_AP_TOTAL, locvar_check_talk_ccr) -= cdata(CDATA_AP_CURRENT, locvar_check_talk_ccr) - 2000
+							cdata(CDATA_AP_CURRENT, locvar_check_talk_ccr) = 2000
+						}
+						if ( cdata(CDATA_AP_TOTAL, locvar_check_talk_ccr) < 0 ) {
+							cdata(CDATA_AP_TOTAL, locvar_check_talk_ccr) = 2000
+						}
+					}
+				}
+			}
+		}
 		if ( cdata(CDATA_IN_TAGTEAM, check_talk_arg1) != 0 ) {
 			locvar_check_talk_cct = cdata(CDATA_TAGTEAM_PARTNER, check_talk_arg1)
 			if ( gdata(GDATA_AREA) != AREA_VOID ) {
@@ -3730,6 +3811,84 @@
 								}
 							}
 						}
+						locvar_check_kill_ccr = -1
+						if ( gdata(GDATA_RIDER) != 0 ) {
+							if ( check_kill_arg1 == 0 ) {
+								locvar_check_kill_ccr = gdata(GDATA_RIDER)
+							}
+							if ( check_kill_arg1 == gdata(GDATA_RIDER) ) {
+								locvar_check_kill_ccr = 0
+							}
+						}
+						if ( locvar_check_kill_ccr >= 0 ) {
+							if ( cdata(CDATA_AP_CURRENT, locvar_check_kill_ccr) < 2000 ) {
+								locvar_check_kill_aspd = cdata(CDATA_INIT_SPEED, locvar_check_kill_ccr)
+								if ( cdata(CDATA_INIT_SPEED, CHARA_PLAYER) > cdata(CDATA_INIT_SPEED, gdata(GDATA_RIDER)) ) {
+									locvar_check_kill_aspd = cdata(CDATA_INIT_SPEED, CHARA_PLAYER)
+								}
+								else {
+									locvar_check_kill_aspd = cdata(CDATA_INIT_SPEED, gdata(GDATA_RIDER))
+								}
+								if ( 0 ) {
+									cdata(CDATA_INIT_ATTR, CHARA_PLAYER) = 1
+									locvar_check_kill_aspd = 1
+									cdata(CDATA_AP_TOTAL, CHARA_PLAYER) = 1
+								}
+								if ( cdata(CDATA_INIT_ATTR, check_kill_arg2) + cdata(CDATA_INIT_LIFEMANA, check_kill_arg2) >= 1000 ) {
+									if ( cdata(CDATA_INIT_ATTR, check_kill_arg2) + cdata(CDATA_INIT_SPEED, check_kill_arg2) > cdata(CDATA_INIT_ATTR, locvar_check_kill_ccr) + cdata(CDATA_INIT_LIFEMANA, locvar_check_kill_ccr) + locvar_check_kill_aspd + (cdata(CDATA_AP_TOTAL, locvar_check_kill_ccr) + 1) / 5 ) {
+										if ( cdata(CDATA_INIT_SPEED, check_kill_arg2) > locvar_check_kill_aspd * 5 ) {
+											cdata(CDATA_AP_CURRENT, locvar_check_kill_ccr) += 1
+											cdata(CDATA_AP_TOTAL, locvar_check_kill_ccr) += 1
+											if ( locvar_check_kill_ccr != 0 ) {
+												cdata(CDATA_AP_CURRENT, locvar_check_kill_ccr) += 1
+												cdata(CDATA_AP_TOTAL, locvar_check_kill_ccr) += 1
+											}
+										}
+										if ( cdata(CDATA_INIT_SPEED, check_kill_arg2) > locvar_check_kill_aspd * 4 ) {
+											cdata(CDATA_AP_CURRENT, locvar_check_kill_ccr) += 1
+											cdata(CDATA_AP_TOTAL, locvar_check_kill_ccr) += 1
+											if ( locvar_check_kill_ccr != 0 ) {
+												cdata(CDATA_AP_CURRENT, locvar_check_kill_ccr) += 1
+												cdata(CDATA_AP_TOTAL, locvar_check_kill_ccr) += 1
+											}
+										}
+										if ( cdata(CDATA_INIT_SPEED, check_kill_arg2) > locvar_check_kill_aspd * 3 ) {
+											cdata(CDATA_AP_CURRENT, locvar_check_kill_ccr) += 1
+											cdata(CDATA_AP_TOTAL, locvar_check_kill_ccr) += 1
+											if ( locvar_check_kill_ccr != 0 ) {
+												cdata(CDATA_AP_CURRENT, locvar_check_kill_ccr) += 1
+												cdata(CDATA_AP_TOTAL, locvar_check_kill_ccr) += 1
+											}
+										}
+										if ( cdata(CDATA_INIT_SPEED, check_kill_arg2) > locvar_check_kill_aspd * 2 ) {
+											cdata(CDATA_AP_CURRENT, locvar_check_kill_ccr) += 1
+											cdata(CDATA_AP_TOTAL, locvar_check_kill_ccr) += 1
+											if ( locvar_check_kill_ccr != 0 ) {
+												cdata(CDATA_AP_CURRENT, locvar_check_kill_ccr) += 1
+												cdata(CDATA_AP_TOTAL, locvar_check_kill_ccr) += 1
+											}
+										}
+										if ( cdata(CDATA_INIT_SPEED, check_kill_arg2) > locvar_check_kill_aspd ) {
+											cdata(CDATA_AP_CURRENT, locvar_check_kill_ccr)++
+											cdata(CDATA_AP_TOTAL, locvar_check_kill_ccr)++
+											snd SOUNDLIST_ENC
+											animeload 36, locvar_check_kill_ccr
+											if ( locvar_check_kill_ccr != 0 ) {
+												cdata(CDATA_AP_CURRENT, locvar_check_kill_ccr)++
+												cdata(CDATA_AP_TOTAL, locvar_check_kill_ccr)++
+											}
+										}
+										if ( cdata(CDATA_AP_CURRENT, locvar_check_kill_ccr) > 2000 ) {
+											cdata(CDATA_AP_TOTAL, locvar_check_kill_ccr) -= cdata(CDATA_AP_CURRENT, locvar_check_kill_ccr) - 2000
+											cdata(CDATA_AP_CURRENT, locvar_check_kill_ccr) = 2000
+										}
+										if ( cdata(CDATA_AP_TOTAL, locvar_check_kill_ccr) < 0 ) {
+											cdata(CDATA_AP_TOTAL, locvar_check_kill_ccr) = 2000
+										}
+									}
+								}
+							}
+						}
 						if ( cdata(CDATA_IN_TAGTEAM, check_kill_arg1) != 0 ) {
 							locvar_check_kill_cct = cdata(CDATA_TAGTEAM_PARTNER, check_kill_arg1)
 							if ( gdata(GDATA_AREA) != AREA_VOID ) {
@@ -3994,29 +4153,52 @@
 					}
 				}
 				locvar_item_acid_p = rnd(inv(INV_ITEM_NUM, locvar_item_acid_ci)) / 2 + 1
-				if ( gdata(STARTING_GDATA_FLAG + 381) < 3 ) {
+				if ( gdata(GDATA_FLAG_BOMB_BARRELS_EXPLODED) < 5 ) {
 					if ( inv(INV_ITEM_ID, locvar_item_acid_ci) == ITEM_ID_BOMB_BARREL ) {
 						locvar_item_acid_p = 1
-						gdata(STARTING_GDATA_FLAG + 381)++
+						gdata(GDATA_FLAG_BOMB_BARRELS_EXPLODED)++
 						txtef COLOR_RED
 						txt lang("引火した" + itemname(locvar_item_acid_ci, locvar_item_acid_p) + "が爆発した。", itemname(locvar_item_acid_ci, locvar_item_acid_p) + " exploded.")
-						aniref = 0
+						locvar_item_fire_range = 2
+						aniref = locvar_item_fire_range
 						animeid = ANIMATION_BALL_NUKE
 						anix = inv(INV_ITEM_X, locvar_item_acid_ci)
 						aniy = inv(INV_ITEM_Y, locvar_item_acid_ci)
 						gosub *anime
-						locvar_item_fire_tcb = -1
-						if ( map(inv(INV_ITEM_X, locvar_item_acid_ci), inv(INV_ITEM_Y, locvar_item_acid_ci), 1) != 0 ) {
-							locvar_item_fire_tcb = map(inv(INV_ITEM_X, locvar_item_acid_ci), inv(INV_ITEM_Y, locvar_item_acid_ci), 1) - 1
-						}
 						snd SOUNDLIST_BOM06
-						if ( locvar_item_fire_tcb != (-1) ) {
-							tarudmg = 1
-							if ( cdata(CDATA_CONDITION_SLEEP, locvar_item_fire_tcb) > 0 ) {
-								cdata(CDATA_CONDITION_SLEEP, locvar_item_fire_tcb) = 0
+						tarudmg = 1
+						locvar_item_fire_tuex = inv(INV_ITEM_X, locvar_item_acid_ci)
+						locvar_item_fire_tuey = inv(INV_ITEM_Y, locvar_item_acid_ci)
+						repeat locvar_item_fire_range * 2 + 1
+							locvar_item_fire_dy = locvar_item_fire_tuey - locvar_item_fire_range + cnt
+							if ( locvar_item_fire_dy < 0 | locvar_item_fire_dy >= mdata(MDATA_HEIGHT) ) {
+								continue
 							}
-							cdata(CDATA_CONDITION_SLEEP, locvar_item_fire_tcb) -= limit(sdata(SKILL_NORMAL_DISARM_TRAP, CHARA_PLAYER) * 2 * sqrt(sdata(SKILL_NORMAL_GENE_ENGINEER, CHARA_PLAYER) + 2) + rnd(sdata(SKILL_NORMAL_GENE_ENGINEER, CHARA_PLAYER) + 2), 1, 99999)
-						}
+							repeat locvar_item_fire_range * 2 + 1
+								locvar_item_fire_dx = locvar_item_fire_tuex - locvar_item_fire_range + cnt
+								if ( locvar_item_fire_dx < 0 | locvar_item_fire_dx >= mdata(MDATA_WIDTH) ) {
+									continue
+								}
+								if ( dist(locvar_item_fire_tuex, locvar_item_fire_tuey, locvar_item_fire_dx, locvar_item_fire_dy) > locvar_item_fire_range ) {
+									continue
+								}
+								if ( map(locvar_item_fire_dx, locvar_item_fire_dy, MAP_CHARA_INDEX_PLUS_ONE) != 0 ) {
+									locvar_item_fire_tcb = map(locvar_item_fire_dx, locvar_item_fire_dy, MAP_CHARA_INDEX_PLUS_ONE) - 1
+									if ( cdata(CDATA_IN_TAGTEAM, locvar_item_fire_tcb) != 0 ) {
+										if ( locvar_item_fire_tcb != 0 ) {
+											if ( rnd(cdata(CDATA_HP, locvar_item_fire_tcb) + 1) < rnd(cdata(CDATA_HP, cdata(CDATA_TAGTEAM_PARTNER, locvar_item_fire_tcb)) + 1) ) {
+												locvar_item_fire_tcb = cdata(CDATA_TAGTEAM_PARTNER, locvar_item_fire_tcb)
+											}
+											txt lang(name(locvar_item_fire_tcb) + "は" + name(cdata(CDATA_TAGTEAM_PARTNER, locvar_item_fire_tcb)) + "をかばった！", name(locvar_item_fire_tcb) + " guarded " + name(cdata(CDATA_TAGTEAM_PARTNER, locvar_item_fire_tcb)) + ".")
+										}
+									}
+									if ( cdata(CDATA_CONDITION_SLEEP, locvar_item_fire_tcb) > 0 ) {
+										cdata(CDATA_CONDITION_SLEEP, locvar_item_fire_tcb) = 0
+									}
+									cdata(CDATA_CONDITION_SLEEP, locvar_item_fire_tcb) -= ((sdata(SKILL_NORMAL_DISARM_TRAP, CHARA_PLAYER) + 1) / 2 + 5) * ((sdata(SKILL_NORMAL_GENE_ENGINEER, CHARA_PLAYER) + 1) / 2 + 2) * 2 + rnd(sdata(SKILL_NORMAL_GENE_ENGINEER, CHARA_PLAYER) + 2)
+								}
+							loop
+						loop
 					}
 				}
 				if ( item_fire_arg1 != (-1) ) {
@@ -4484,6 +4666,11 @@
 		return 0
 	}
 	locvar_dmghp_dmg = dmghp_origin * (1 + (cdata(CDATA_CONDITION_ANGRY, dmghp_charid) > 0))
+	if ( cdata(CDATA_FRIENDSHIP, CHARA_PLAYER) == 5 ) {
+		if ( locvar_dmghp_dmg >= 200 ) {
+			locvar_dmghp_dmg = locvar_dmghp_dmg / 200 * (200 - limit(cdata(CDATA_SANITY, dmghp_charid), 0, 100))
+		}
+	}
 	if ( dmghp_source >= DAMAGE_FROM_CHARA ) {
 		if ( cdata(CDATA_CONDITION_ATROPHY, dmghp_source) > 0 ) {
 			locvar_dmghp_dmg = locvar_dmghp_dmg / 2
@@ -4491,7 +4678,9 @@
 	}
 	if ( locvar_dmghp_ele == SKILL_NONE | locvar_dmghp_ele >= MAX_SKILL_RESIST ) {
 		if ( locvar_dmghp_ele == SKILL_RESDMG_CRUSH ) {
-			locvar_dmghp_r = cdata(CDATA_PV, dmghp_charid) + cdata(CDATA_DV, dmghp_charid)
+			locvar_dmghp_hoseidv = cdata(CDATA_DV, dmghp_charid) * cdata(CDATA_DV_FIX, dmghp_charid) / 100 + cdata(CDATA_DV_FIX, dmghp_charid) - 100
+			locvar_dmghp_hoseipv = (cdata(CDATA_PV, dmghp_charid) + cdata(CDATA_PV_FIX, dmghp_charid) / 25) * cdata(CDATA_PV_FIX, dmghp_charid) / 100
+			locvar_dmghp_r = locvar_dmghp_hoseidv + locvar_dmghp_hoseipv
 			if ( locvar_dmghp_r > 0 ) {
 				if ( cdata(CDATA_DRAIN_HP, dmghp_charid) >= 100 ) {
 					locvar_dmghp_r = 0
@@ -5441,6 +5630,11 @@
 			locvar_dmghp_dmg *= 2
 		}
 	}
+		if ( cdata(CDATA_FRIENDSHIP, CHARA_PLAYER) == 5 ) {
+			if ( locvar_dmghp_dmg >= 100 ) {
+				locvar_dmghp_dmg = locvar_dmghp_dmg / 100 * (100 + limit(cdata(CDATA_SANITY, dmghp_source), 0, 100))
+			}
+		}
 	if ( cdata(CDATA_DIRECTIVE_MODE, dmghp_charid) == DIRECTIVE_MODE_DEFENSIVE ) {
 		locvar_dmghp_dmg = locvar_dmghp_dmg / 3
 	}
