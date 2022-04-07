@@ -4,6 +4,9 @@
 - Ported all changes from Elona+ 2.11.
 - Added a tweak for disabling stamina loss when melee attacking or casting spells.
 
+## Changed
+- Allow spawning Little Sisters by killing Big Daddies with Empathy/persuasion skills. (#88)
+
 # 2.10.1.1
 
 Thanks to DiscoWitch for fixing these issues.
