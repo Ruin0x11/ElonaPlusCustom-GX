@@ -2,10 +2,19 @@
 
 ## Added
 - Ported all changes from Elona+ 2.11.
+- Added a tweak for increasing the maximum number of arena attempts per day. (#89)
+- Added a tweak for disabling the spell overcast warning. (#89)
+- Added a tweak for increasing the variety of hireable home servants. (#92)
+- Added a tweak for increasing the drinking/brawling chance during Party Time! quests. (#96)
 - Added a tweak for disabling stamina loss when melee attacking or casting spells.
 
 ## Changed
 - Allow spawning Little Sisters by killing Big Daddies with Empathy/persuasion skills. (#88)
+
+## Fixed
+- Fixed cargo food items not applying thirst reduction.
+
+Thanks to @EnragedWaters for contributing.
 
 # 2.10.1.1
 
