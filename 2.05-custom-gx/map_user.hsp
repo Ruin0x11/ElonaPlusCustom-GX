@@ -1006,6 +1006,42 @@
 		adata(ADATA_RANCH_PRODUCE_RESTRICTION, gdata(GDATA_AREA)) = 0
 		goto *com_home_SWEND1
 	}
+	if ( _switch_val == 23 | _switch_sw ) {
+		_switch_sw = 0
+		txtnew
+		txtef COLOR_RED
+		txt lang("落ちているアイテム全てを足元に集める機能だ。", "This is a function to collect all the dropped items at your feet.")
+		txtselectuse 2
+		repeat 2
+			promptl(0, promptmax) = s(cnt), key_select(cnt), "" + promptmax
+			promptmax++
+		loop
+		val = promptx, prompty, 200, 1
+		gosub *prompt_key
+		if ( stat == 0 ) {
+			gosub *screen_draw
+			goto *home_resetTargetLoc
+		}
+		if ( rtval == 1 ) {
+			snd SOUNDLIST_ENC
+			repeat MAX_MAP_INV, RANGE_INV2
+				if ( inv(INV_ITEM_NUM, cnt) <= 0 ) {
+					continue
+				}
+				if ( inv(INV_ITEM_PROPERTY, cnt) == PROP_NPC | inv(INV_ITEM_PROPERTY, cnt) == PROP_SPECIAL ) {
+					continue
+				}
+				bkx = inv(INV_ITEM_X, cnt)
+				bky = inv(INV_ITEM_Y, cnt)
+				inv(INV_ITEM_X, cnt) = cdata(CDATA_X, CHARA_PLAYER)
+				inv(INV_ITEM_Y, cnt) = cdata(CDATA_Y, CHARA_PLAYER)
+				cell_refresh bkx, bky
+			loop
+			cell_refresh cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER)
+		}
+		goto *home_resetTargetLoc
+		_switch_sw++
+	}
 	if ( _switch_val == 5 | _switch_sw ) {
 		_switch_sw = 0
 		txtnew
@@ -1525,6 +1561,13 @@
 		goto *com_home_SWEND1
 	}
 *com_home_SWEND1
+	tlocinitx = 0
+	tlocinity = 0
+	screenupdate = -1
+	gosub *screen_draw
+	goto *com_home
+
+*home_resetTargetLoc
 	tlocinitx = 0
 	tlocinity = 0
 	screenupdate = -1

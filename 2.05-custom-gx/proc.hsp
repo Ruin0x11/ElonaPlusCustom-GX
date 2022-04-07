@@ -7614,19 +7614,7 @@
 					dmgcon tc, CONDITION_SLEEP, elep
 				}
 				if ( efid == SKILL_SPACT_TOUCH_OF_HUNGER ) {
-					if ( findbuff(r1, BUFF_CURSE_OF_HUNGER) != (-1) ) {
-						cdata(CDATA_HUNGER, tc) -= 8 * 100
-						if ( synccheck(tc, -1) ) {
-							txtmore
-							txtef COLOR_PURPLE
-							txt lang(name(tc) + "はお腹が減った。", "Suddenly, " + name(tc) + " feel" + _s(tc) + " hungry.")
-						}
-						r1 = tc
-						gosub *calcHunger
-					}
-					else {
-						addbuff tc, BUFF_CURSE_OF_HUNGER, 9999999, 100
-					}
+					addbuff tc, BUFF_CURSE_OF_HUNGER, 9999999, 100
 				}
 				if ( efid == SKILL_SPACT_TOUCH_OF_WEAKNESS ) {
 					if ( cdata(CDATA_QUALITY, tc) >= FIX_QUALITY_MIRACLE ) {

@@ -977,6 +977,10 @@
 			txt lang("誰の力を覚醒させる？", "Whose power will you awaken?")
 			s(10) = lang("対象候補", "Ally List"), strhint2 + strhint3, lang("仲間の情報", "Name"), lang("必要AP/所持AP", "Cost/AP")
 		}
+		if ( leoleo == 3 ) {
+			txt lang("誰の力を覚醒させる？", "Whose power will you awaken?")
+			s(10) = lang("対象候補", "Ally List"), strhint2 + strhint3, lang("仲間の情報", "Name"), lang("所持AP", "AP")
+		}
 		if ( ikoru == 1000 ) {
 			txt lang("誰の部位を増やす？", "Who will you add body parts to?")
 			s(10) = lang("対象候補", "Ally List"), strhint2 + strhint3, lang("仲間の情報", "Name"), lang("現在の生命力", "Life")
@@ -3204,7 +3208,7 @@
 			else {
 				s = "" + calchirecost(i)
 			}
-			if ( allyctrl != 3 ) {
+			if ( allyctrl == 1 ) {
 				pos wx + 512, wy + 66 + cnt * 19 + 2
 				mes s + lang(" gold", "gp")
 			}
