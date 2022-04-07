@@ -1,3 +1,8 @@
+# 2.11.1.0
+
+## Added
+- Ported all changes from Elona+ 2.11.
+
 # 2.10.1.1
 
 Thanks to DiscoWitch for fixing these issues.
