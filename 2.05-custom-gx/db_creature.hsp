@@ -4,7 +4,231 @@
 	}
 	dbsum = 0
 	dbmax = 0
-//*db_creature_GREEN_DARK_GUARDIAN
+//*db_creature_SIST_THE_OLDER_SISTER
+	if ( 70 > objlv ) {
+		goto *db_creature_HELRAUNE
+	}
+	if ( fltselect != 3 ) {
+		goto *db_creature_HELRAUNE
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_NOTHING ) {
+			goto *db_creature_HELRAUNE
+		}
+	}
+	if ( fltnrace != "" ) {
+		if ( fltnrace != "roran" ) {
+			goto *db_creature_HELRAUNE
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_creature(2), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_creature_HELRAUNE
+		}
+	}
+	dbsum += 30000 / (500 + abs(objlv - 70) * 400) + 1
+	dblist(0, dbmax) = CREATURE_ID_SIST_THE_OLDER_SISTER, dbsum
+	dbmax++
+*db_creature_HELRAUNE
+	if ( 183 > objlv ) {
+		goto *db_creature_KING_HOGWEEDER
+	}
+	if ( fltselect != 0 ) {
+		goto *db_creature_KING_HOGWEEDER
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_NOTHING ) {
+			goto *db_creature_KING_HOGWEEDER
+		}
+	}
+	if ( fltnrace != "" ) {
+		if ( fltnrace != "mandrake" ) {
+			goto *db_creature_KING_HOGWEEDER
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_creature(3), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_creature_KING_HOGWEEDER
+		}
+	}
+	dbsum += 20000 / (500 + abs(objlv - 183) * 400) + 1
+	dblist(0, dbmax) = CREATURE_ID_HELRAUNE, dbsum
+	dbmax++
+*db_creature_KING_HOGWEEDER
+	if ( 108 > objlv ) {
+		goto *db_creature_HOGWEEDER
+	}
+	if ( fltselect != 0 ) {
+		goto *db_creature_HOGWEEDER
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_NOTHING ) {
+			goto *db_creature_HOGWEEDER
+		}
+	}
+	if ( fltnrace != "" ) {
+		if ( fltnrace != "mandrake" ) {
+			goto *db_creature_HOGWEEDER
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_creature(4), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_creature_HOGWEEDER
+		}
+	}
+	dbsum += 80000 / (500 + abs(objlv - 108) * 400) + 1
+	dblist(0, dbmax) = CREATURE_ID_KING_HOGWEEDER, dbsum
+	dbmax++
+*db_creature_HOGWEEDER
+	if ( 55 > objlv ) {
+		goto *db_creature_ALRAUNE
+	}
+	if ( fltselect != 0 ) {
+		goto *db_creature_ALRAUNE
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_NOTHING ) {
+			goto *db_creature_ALRAUNE
+		}
+	}
+	if ( fltnrace != "" ) {
+		if ( fltnrace != "mandrake" ) {
+			goto *db_creature_ALRAUNE
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_creature(5), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_creature_ALRAUNE
+		}
+	}
+	dbsum += 90000 / (500 + abs(objlv - 55) * 400) + 1
+	dblist(0, dbmax) = CREATURE_ID_HOGWEEDER, dbsum
+	dbmax++
+*db_creature_ALRAUNE
+	if ( 36 > objlv ) {
+		goto *db_creature_KUSOSUGI
+	}
+	if ( fltselect != 0 ) {
+		goto *db_creature_KUSOSUGI
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_NOTHING ) {
+			goto *db_creature_KUSOSUGI
+		}
+	}
+	if ( fltnrace != "" ) {
+		if ( fltnrace != "mandrake" ) {
+			goto *db_creature_KUSOSUGI
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_creature(6), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_creature_KUSOSUGI
+		}
+	}
+	dbsum += 100000 / (500 + abs(objlv - 36) * 400) + 1
+	dblist(0, dbmax) = CREATURE_ID_ALRAUNE, dbsum
+	dbmax++
+*db_creature_KUSOSUGI
+	if ( 175 > objlv ) {
+		goto *db_creature_HINOCCHIO
+	}
+	if ( fltselect != 0 ) {
+		goto *db_creature_HINOCCHIO
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_RACE_KUSOSUGI ) {
+			goto *db_creature_HINOCCHIO
+		}
+	}
+	if ( fltnrace != "" ) {
+		if ( fltnrace != "ent" ) {
+			goto *db_creature_HINOCCHIO
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_creature(7), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_creature_HINOCCHIO
+		}
+	}
+	dbsum += 10000 / (500 + abs(objlv - 175) * 400) + 1
+	dblist(0, dbmax) = CREATURE_ID_KUSOSUGI, dbsum
+	dbmax++
+*db_creature_HINOCCHIO
+	if ( 68 > objlv ) {
+		goto *db_creature_GREEN_DARK_GUARDIAN
+	}
+	if ( fltselect != 0 ) {
+		goto *db_creature_GREEN_DARK_GUARDIAN
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_NOTHING ) {
+			goto *db_creature_GREEN_DARK_GUARDIAN
+		}
+	}
+	if ( fltnrace != "" ) {
+		if ( fltnrace != "ent" ) {
+			goto *db_creature_GREEN_DARK_GUARDIAN
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_creature(8), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_creature_GREEN_DARK_GUARDIAN
+		}
+	}
+	dbsum += 60000 / (500 + abs(objlv - 68) * 400) + 1
+	dblist(0, dbmax) = CREATURE_ID_HINOCCHIO, dbsum
+	dbmax++
+*db_creature_GREEN_DARK_GUARDIAN
 	if ( 30 > objlv ) {
 		goto *db_creature_BLUE_DARK_GUARDIAN
 	}
@@ -34006,6 +34230,512 @@
 	return
 
 *db_creature2
+	if ( dbid == CREATURE_ID_SIST_THE_OLDER_SISTER ) {
+		if ( dbmode == DBMODE_FLAVOR_PASSIVE ) {
+			if ( jp ) {
+				txtmore
+				txtef COLOR_SKY_BLUE
+				txt "「甘えてきてもいいんだぞ」", "「私がしっかりしないとな！」", "「こういう時はもっと姉を頼るものだ」"
+				return 1
+			}
+		}
+		if ( dbmode == DBMODE_FLAVOR_ANGERED ) {
+			if ( jp ) {
+				txtmore
+				txtef COLOR_SKY_BLUE
+				txt "「ここは姉に任せるんだ」", "「きゃあ！」", "「うおおおお」"
+				return 1
+			}
+		}
+		if ( dbmode == DBMODE_FLAVOR_DEATH ) {
+			if ( jp ) {
+				txtmore
+				txtef COLOR_SKY_BLUE
+				txt "「すまない…」", "「くっ…これでは姉失格だな」"
+				return 1
+			}
+		}
+		if ( dbmode == DBMODE_FLAVOR_WELCOME ) {
+			if ( jp ) {
+				txtmore
+				txtef COLOR_SKY_BLUE
+				txt "「おかえりんこ！」", "「心配していたぞ、怪我していないだろうな？」", "「姉を置いてどこかに行くとはけしからんな」"
+				return 1
+			}
+		}
+		if ( dbmode == DBMODE_FLAVOR_KILL ) {
+			if ( jp ) {
+				txtmore
+				txtef COLOR_SKY_BLUE
+				txt "「姉の活躍を目に焼きつけろ」", "姉がこちらに向かって人差し指を向けている。", "姉はあなたをちらちら見ている。褒めてもらいたいようだ。"
+				return 1
+			}
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 3 ) {
+				return 3
+			}
+			if ( dbspec == 5 ) {
+				return 0
+			}
+			if ( dbspec == 6 ) {
+				return 30
+			}
+			if ( dbspec == 2 ) {
+				return lang("修道姉『シスターシスター』", "<Sist> the older sister")
+			}
+			if ( dbspec == 8 ) {
+				return "" + "/man/"
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_REF ) {
+			dbidn = "roran"
+			dbmode = DBMODE_REF
+			gosub *db_race
+			cpicref = 1121
+			cpicref += 0 * 1000
+			return
+		}
+		if ( dbmode == DBMODE_SET ) {
+			cdata(CDATA_ID, rc) = CREATURE_ID_SIST_THE_OLDER_SISTER
+			if ( initlv != 0 ) {
+				cdata(CDATA_LEVEL, rc) = initlv
+			}
+			else {
+				cdata(CDATA_LEVEL, rc) = 70
+			}
+			if ( voidlv != 0 ) {
+				cdata(CDATA_LEVEL, rc) = voidlv * (100 + cdata(CDATA_LEVEL, rc) * 2) / 100
+			}
+			cdata(CDATA_PORTRAIT, rc) = 66
+			cdata(CDATA_AI_CALM, rc) = 3
+			cdata(CDATA_AI_MOVE_FREQ, rc) = 20
+			cdata(CDATA_AI_DISTANCE, rc) = 2
+			cdata(CDATA_AI_SUB, rc) = 10
+			creaturepack = FILTER_NOTHING
+			cdata(STARTING_CDATA_ACT_MAIN, rc) = ACTION_RANGE, SKILL_SPELL_ILLUSION_ROAR, SKILL_SPACT_EYE_OF_ANE, SKILL_SPELL_MIND_BOLT, SKILL_SPELL_MIND_BOLT
+			cdata(STARTING_CDATA_ACT_SUB, rc) = SKILL_SPACT_EYE_OF_BRAINWASHING
+			cdata(CDATA_ACT_INDEX, rc) = 15
+			cdata(CDATA_TXT, rc) += 1
+			cdata(CDATA_TXT, rc) += 1
+			cdata(CDATA_TXT, rc) += 1
+			cdata(CDATA_TXT, rc) += 1
+			cdatan(CDATAN_NAME, rc) = lang("修道姉『シスターシスター』", "<Sist> the older sister")
+			cdata(CDATA_RELATION, rc) = RELATION_NEUTRAL
+			cdata(CDATA_RELATION_ORG, rc) = RELATION_NEUTRAL
+			cdata(CDATA_ALIGNMENT, rc) = -10000
+			dbidn = "roran"
+			dbmode = DBMODE_SET
+			gosub *db_race
+			dbidn = "priest"
+			dbmode = DBMODE_SET
+			gosub *db_class
+			cdata(CDATA_SEX, rc) = 1
+			cdata(CDATA_PIC, rc) = xy2pic(32, 33)
+			cdata(CDATA_PIC, rc) += 0 * 1000
+			fixlv = FIX_QUALITY_UNIQUE
+			cspecialeq = 0
+			return
+		}
+		return 0
+	}
+	if ( dbid == CREATURE_ID_HELRAUNE ) {
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 3 ) {
+				return 2
+			}
+			if ( dbspec == 5 ) {
+				return 10
+			}
+			if ( dbspec == 6 ) {
+				return 20
+			}
+			if ( dbspec == 2 ) {
+				return lang("ヘルラウネ", "helraune")
+			}
+			if ( dbspec == 8 ) {
+				return "" + "/nefia2/"
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_REF ) {
+			dbidn = "mandrake"
+			dbmode = DBMODE_REF
+			gosub *db_race
+			cpicref = 989
+			cpicref += 10 * 1000
+			return
+		}
+		if ( dbmode == DBMODE_SET ) {
+			cdata(CDATA_ID, rc) = CREATURE_ID_HELRAUNE
+			if ( initlv != 0 ) {
+				cdata(CDATA_LEVEL, rc) = initlv
+			}
+			else {
+				cdata(CDATA_LEVEL, rc) = 183
+			}
+			if ( voidlv != 0 ) {
+				cdata(CDATA_LEVEL, rc) = voidlv * (100 + cdata(CDATA_LEVEL, rc) * 2) / 100
+			}
+			cdata(CDATA_PORTRAIT, rc) = -1
+			cdata(CDATA_AI_CALM, rc) = 1
+			cdata(CDATA_AI_MOVE_FREQ, rc) = 60
+			cdata(CDATA_AI_DISTANCE, rc) = 3
+			cdata(CDATA_AI_SUB, rc) = 0
+			creaturepack = FILTER_NOTHING
+			cdata(STARTING_CDATA_ACT_MAIN, rc) = SKILL_SPACT_POLLEN_CANNON, SKILL_SPACT_ANAPHYLAXIS, SKILL_SPELL_POISON_BOLT, SKILL_SPELL_POISON_BOLT, SKILL_SPELL_NETHER_WAVE
+			cdata(CDATA_ACT_INDEX, rc) = 5
+			cdatan(CDATAN_NAME, rc) = lang("ヘルラウネ", "helraune")
+			cdata(CDATA_RELATION, rc) = RELATION_ENEMY
+			cdata(CDATA_RELATION_ORG, rc) = RELATION_ENEMY
+			cdata(CDATA_ALIGNMENT, rc) = -10000
+			dbidn = "mandrake"
+			dbmode = DBMODE_SET
+			gosub *db_race
+			dbidn = "wizard"
+			dbmode = DBMODE_SET
+			gosub *db_class
+			cdata(CDATA_SEX, rc) = 1
+			cdata(CDATA_PIC, rc) = xy2pic(32, 29)
+			cdata(CDATA_PIC, rc) += 10 * 1000
+			cspecialeq = 0
+			return
+		}
+		return 0
+	}
+	if ( dbid == CREATURE_ID_KING_HOGWEEDER ) {
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == DBSPEC_CHARA_LOOT ) {
+				return 2
+			}
+			if ( dbspec == DBSPEC_CHARA_COL ) {
+				return 7
+			}
+			if ( dbspec == DBSPEC_CHARA_RARE ) {
+				return 80
+			}
+			if ( dbspec == DBSPEC_CHARA_NAME_ORG ) {
+				return lang("クワモドキング", "king hogweeder")
+			}
+			if ( dbspec == DBSPEC_CHARA_FILTER ) {
+				return "" + "/nefia2/"
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_REF ) {
+			dbidn = "mandrake"
+			dbmode = DBMODE_REF
+			gosub *db_race
+			cpicref = 988
+			cpicref += 7 * 1000
+			return
+		}
+		if ( dbmode == DBMODE_SET ) {
+			cdata(CDATA_ID, rc) = CREATURE_ID_KING_HOGWEEDER
+			if ( initlv != 0 ) {
+				cdata(CDATA_LEVEL, rc) = initlv
+			}
+			else {
+				cdata(CDATA_LEVEL, rc) = 108
+			}
+			if ( voidlv != 0 ) {
+				cdata(CDATA_LEVEL, rc) = voidlv * (100 + cdata(CDATA_LEVEL, rc) * 2) / 100
+			}
+			cdata(CDATA_PORTRAIT, rc) = -1
+			cdata(CDATA_AI_CALM, rc) = 1
+			cdata(CDATA_AI_MOVE_FREQ, rc) = 90
+			cdata(CDATA_AI_DISTANCE, rc) = 1
+			cdata(CDATA_AI_SUB, rc) = 0
+			creaturepack = FILTER_NOTHING
+			cdata(STARTING_CDATA_ACT_MAIN, rc) = ACTION_MELEE, ACTION_MELEE, SKILL_SPACT_POLLEN_CANNON, SKILL_SPACT_TOUCH_OF_POISON, SKILL_SPACT_TOUCH_OF_NERVE
+			cdata(CDATA_ACT_INDEX, rc) = 5
+			cdatan(CDATAN_NAME, rc) = lang("クワモドキング", "king hogweeder")
+			cdata(CDATA_RELATION, rc) = RELATION_ENEMY
+			cdata(CDATA_RELATION_ORG, rc) = RELATION_ENEMY
+			cdata(CDATA_ALIGNMENT, rc) = -10000
+			dbidn = "mandrake"
+			dbmode = DBMODE_SET
+			gosub *db_race
+			dbidn = "warrior"
+			dbmode = DBMODE_SET
+			gosub *db_class
+			cdata(CDATA_SEX, rc) = 0
+			cdata(CDATA_PIC, rc) = xy2pic(31, 29)
+			cdata(CDATA_PIC, rc) += 7 * 1000
+			cspecialeq = 0
+			return
+		}
+		return 0
+	}
+	if ( dbid == CREATURE_ID_HOGWEEDER ) {
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == DBSPEC_CHARA_LOOT ) {
+				return 2
+			}
+			if ( dbspec == DBSPEC_CHARA_COL ) {
+				return 0
+			}
+			if ( dbspec == DBSPEC_CHARA_RARE ) {
+				return 90
+			}
+			if ( dbspec == DBSPEC_CHARA_NAME_ORG ) {
+				return lang("ブタクサ野郎", "hogweeder")
+			}
+			if ( dbspec == DBSPEC_CHARA_FILTER ) {
+				return "" + "/nefia2/"
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_REF ) {
+			dbidn = "mandrake"
+			dbmode = DBMODE_REF
+			gosub *db_race
+			cpicref = 988
+			cpicref += 0 * 1000
+			return
+		}
+		if ( dbmode == DBMODE_SET ) {
+			cdata(CDATA_ID, rc) = CREATURE_ID_HOGWEEDER
+			if ( initlv != 0 ) {
+				cdata(CDATA_LEVEL, rc) = initlv
+			}
+			else {
+				cdata(CDATA_LEVEL, rc) = 55
+			}
+			if ( voidlv != 0 ) {
+				cdata(CDATA_LEVEL, rc) = voidlv * (100 + cdata(CDATA_LEVEL, rc) * 2) / 100
+			}
+			cdata(CDATA_PORTRAIT, rc) = -1
+			cdata(CDATA_AI_CALM, rc) = 1
+			cdata(CDATA_AI_MOVE_FREQ, rc) = 95
+			cdata(CDATA_AI_DISTANCE, rc) = 5
+			cdata(CDATA_AI_SUB, rc) = 0
+			creaturepack = FILTER_NOTHING
+			cdata(STARTING_CDATA_ACT_MAIN, rc) = SKILL_SPACT_POLLEN_CANNON, ACTION_RANGE, SKILL_SPACT_POISON_BREATH, SKILL_SPACT_POISON_BREATH, SKILL_SPACT_PROVOKE
+			cdata(CDATA_ACT_INDEX, rc) = 5
+			cdatan(CDATAN_NAME, rc) = lang("ブタクサ野郎", "hogweeder")
+			cdata(CDATA_RELATION, rc) = RELATION_ENEMY
+			cdata(CDATA_RELATION_ORG, rc) = RELATION_ENEMY
+			cdata(CDATA_ALIGNMENT, rc) = -10000
+			dbidn = "mandrake"
+			dbmode = DBMODE_SET
+			gosub *db_race
+			dbidn = "archer"
+			dbmode = DBMODE_SET
+			gosub *db_class
+			cdata(CDATA_SEX, rc) = 0
+			cdata(CDATA_PIC, rc) = xy2pic(31, 29)
+			cdata(CDATA_PIC, rc) += 0 * 1000
+			cspecialeq = 0
+			return
+		}
+		return 0
+	}
+	if ( dbid == CREATURE_ID_ALRAUNE ) {
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == DBSPEC_CHARA_LOOT ) {
+				return 2
+			}
+			if ( dbspec == DBSPEC_CHARA_COL ) {
+				return 0
+			}
+			if ( dbspec == DBSPEC_CHARA_RARE ) {
+				return 100
+			}
+			if ( dbspec == DBSPEC_CHARA_NAME_ORG ) {
+				return lang("アルラウネ", "alraune")
+			}
+			if ( dbspec == DBSPEC_CHARA_FILTER ) {
+				return "" + "/nefia2/"
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_REF ) {
+			dbidn = "mandrake"
+			dbmode = DBMODE_REF
+			gosub *db_race
+			cpicref = 989
+			cpicref += 0 * 1000
+			return
+		}
+		if ( dbmode == DBMODE_SET ) {
+			cdata(CDATA_ID, rc) = CREATURE_ID_ALRAUNE
+			if ( initlv != 0 ) {
+				cdata(CDATA_LEVEL, rc) = initlv
+			}
+			else {
+				cdata(CDATA_LEVEL, rc) = 36
+			}
+			if ( voidlv != 0 ) {
+				cdata(CDATA_LEVEL, rc) = voidlv * (100 + cdata(CDATA_LEVEL, rc) * 2) / 100
+			}
+			cdata(CDATA_PORTRAIT, rc) = -1
+			cdata(CDATA_AI_CALM, rc) = 1
+			cdata(CDATA_AI_MOVE_FREQ, rc) = 10
+			cdata(CDATA_AI_DISTANCE, rc) = 1
+			cdata(CDATA_AI_SUB, rc) = 10
+			creaturepack = FILTER_NOTHING
+			cdata(STARTING_CDATA_ACT_MAIN, rc) = ACTION_MELEE, ACTION_MELEE, ACTION_MELEE, SKILL_SPELL_MIND_THORN, SKILL_SPELL_MIND_THORN
+			cdata(STARTING_CDATA_ACT_SUB, rc) = SKILL_SPELL_MIST_OF_FRAILNESS
+			cdata(CDATA_ACT_INDEX, rc) = 15
+			cdata(CDATA_ACT_HEAL, rc) = 402
+			cdatan(CDATAN_NAME, rc) = lang("アルラウネ", "alraune")
+			cdata(CDATA_RELATION, rc) = RELATION_ENEMY
+			cdata(CDATA_RELATION_ORG, rc) = RELATION_ENEMY
+			cdata(CDATA_ALIGNMENT, rc) = -10000
+			dbidn = "mandrake"
+			dbmode = DBMODE_SET
+			gosub *db_race
+			dbidn = "warmage"
+			dbmode = DBMODE_SET
+			gosub *db_class
+			cdata(CDATA_SEX, rc) = 1
+			cdata(CDATA_PIC, rc) = xy2pic(32, 29)
+			cdata(CDATA_PIC, rc) += 0 * 1000
+			cspecialeq = 0
+			return
+		}
+		return 0
+	}
+	if ( dbid == CREATURE_ID_KUSOSUGI ) {
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == DBSPEC_CHARA_LOOT ) {
+				return 1
+			}
+			if ( dbspec == DBSPEC_CHARA_COL ) {
+				return 6
+			}
+			if ( dbspec == DBSPEC_CHARA_RARE ) {
+				return 10
+			}
+			if ( dbspec == DBSPEC_CHARA_NAME_ORG ) {
+				return lang("苦狙杉", "kusosugi")
+			}
+			if ( dbspec == DBSPEC_CHARA_FILTER ) {
+				return "" + "/nefia2/"
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_REF ) {
+			dbidn = "ent"
+			dbmode = DBMODE_REF
+			gosub *db_race
+			cpicref = 1053
+			cpicref += 6 * 1000
+			return
+		}
+		if ( dbmode == DBMODE_SET ) {
+			cdata(CDATA_ID, rc) = CREATURE_ID_KUSOSUGI
+			if ( initlv != 0 ) {
+				cdata(CDATA_LEVEL, rc) = initlv
+			}
+			else {
+				cdata(CDATA_LEVEL, rc) = 175
+			}
+			if ( voidlv != 0 ) {
+				cdata(CDATA_LEVEL, rc) = voidlv * (100 + cdata(CDATA_LEVEL, rc) * 2) / 100
+			}
+			cdata(CDATA_PORTRAIT, rc) = -1
+			cdata(CDATA_AI_CALM, rc) = 1
+			cdata(CDATA_AI_MOVE_FREQ, rc) = 30
+			cdata(CDATA_AI_DISTANCE, rc) = 3
+			cdata(CDATA_AI_SUB, rc) = 10
+			creaturepack = FILTER_RACE_KUSOSUGI
+			cdata(STARTING_CDATA_ACT_MAIN, rc) = ACTION_RANGE, ACTION_RANGE, ACTION_RANGE, SKILL_SPACT_BLAME_PAIN, SKILL_SPACT_POLLEN_CANNON
+			cdata(STARTING_CDATA_ACT_SUB, rc) = SKILL_SPACT_EYE_OF_INSANITY
+			cdata(CDATA_ACT_INDEX, rc) = 15
+			cdatan(CDATAN_NAME, rc) = lang("苦狙杉", "kusosugi")
+			cdata(CDATA_RELATION, rc) = RELATION_ENEMY
+			cdata(CDATA_RELATION_ORG, rc) = RELATION_ENEMY
+			cdata(CDATA_ALIGNMENT, rc) = -10000
+			dbidn = "ent"
+			dbmode = DBMODE_SET
+			gosub *db_race
+			dbidn = "gunner"
+			dbmode = DBMODE_SET
+			gosub *db_class
+			cdata(CDATA_PIC, rc) = xy2pic(30, 31)
+			cdata(CDATA_PIC, rc) += 6 * 1000
+			cspecialeq = 1
+			return
+		}
+		if ( dbmode == DBMODE_INITIAL_EQUIP ) {
+			eqrange = 817, 3
+			eqammo = 513, 3
+			return
+		}
+		return 0
+	}
+	if ( dbid == CREATURE_ID_HINOCCHIO ) {
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == DBSPEC_CHARA_LOOT ) {
+				return 1
+			}
+			if ( dbspec == DBSPEC_CHARA_COL ) {
+				return 0
+			}
+			if ( dbspec == DBSPEC_CHARA_RARE ) {
+				return 60
+			}
+			if ( dbspec == DBSPEC_CHARA_NAME_ORG ) {
+				return lang("ヒノキオ", "hinocchio")
+			}
+			if ( dbspec == DBSPEC_CHARA_FILTER ) {
+				return "" + "/nefia2/"
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_REF ) {
+			dbidn = "ent"
+			dbmode = DBMODE_REF
+			gosub *db_race
+			cpicref = 1053
+			cpicref += 0 * 1000
+			return
+		}
+		if ( dbmode == DBMODE_SET ) {
+			cdata(CDATA_ID, rc) = CREATURE_ID_HINOCCHIO
+			if ( initlv != 0 ) {
+				cdata(CDATA_LEVEL, rc) = initlv
+			}
+			else {
+				cdata(CDATA_LEVEL, rc) = 68
+			}
+			if ( voidlv != 0 ) {
+				cdata(CDATA_LEVEL, rc) = voidlv * (100 + cdata(CDATA_LEVEL, rc) * 2) / 100
+			}
+			cdata(CDATA_PORTRAIT, rc) = -1
+			cdata(CDATA_AI_CALM, rc) = 1
+			cdata(CDATA_AI_MOVE_FREQ, rc) = 90
+			cdata(CDATA_AI_DISTANCE, rc) = 1
+			cdata(CDATA_AI_SUB, rc) = 0
+			creaturepack = FILTER_NOTHING
+			cdata(STARTING_CDATA_ACT_MAIN, rc) = ACTION_MELEE, ACTION_MELEE, ACTION_MELEE, SKILL_SPACT_POLLEN_CANNON, SKILL_SPACT_BLENDED_LIE
+			cdata(CDATA_ACT_INDEX, rc) = 5
+			cdatan(CDATAN_NAME, rc) = lang("ヒノキオ", "hinocchio")
+			cdata(CDATA_RELATION, rc) = RELATION_ENEMY
+			cdata(CDATA_RELATION_ORG, rc) = RELATION_ENEMY
+			cdata(CDATA_ALIGNMENT, rc) = -10000
+			dbidn = "ent"
+			dbmode = DBMODE_SET
+			gosub *db_race
+			dbidn = "thief"
+			dbmode = DBMODE_SET
+			gosub *db_class
+			cdata(CDATA_SEX, rc) = 0
+			cdata(CDATA_PIC, rc) = xy2pic(30, 31)
+			cdata(CDATA_PIC, rc) += 0 * 1000
+			cspecialeq = 1
+			return
+		}
+		if ( dbmode == DBMODE_INITIAL_EQUIP ) {
+			eqweapon1 = 1146
+			eqtwohand = 1
+			return
+		}
+		return 0
+	}
 	if ( dbid == CREATURE_ID_GREEN_DARK_GUARDIAN ) {
 		if ( dbmode == DBMODE_REF_SPEC ) {
 			if ( dbspec == DBSPEC_CHARA_LOOT ) {

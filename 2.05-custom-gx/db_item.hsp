@@ -4,7 +4,39 @@
 	}
 	dbmax = 0
 	dbsum = 0
-//*db_item_COMMAND_WHISTLE
+// *db_item_ANERING
+	if ( 1 > objlv ) {
+		goto *db_item_COMMAND_WHISTLE
+	}
+	if ( fltselect != 1 ) {
+		goto *db_item_COMMAND_WHISTLE
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_ITEM_TOOL ) {
+			goto *db_item_COMMAND_WHISTLE
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_NONE ) {
+			goto *db_item_COMMAND_WHISTLE
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_ANERING), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_COMMAND_WHISTLE
+		}
+	}
+	dbsum += 50000 / (1000 + abs(objlv - 1) * 10) + 1
+	dblist(0, dbmax) = 1251, dbsum
+	dbmax++
+*db_item_COMMAND_WHISTLE
 	if ( 1 > objlv ) {
 		goto *db_item_AURTEHOM
 	}
@@ -40052,6 +40084,72 @@
 	return
 
 *db_item_set
+	if ( dbid == ITEM_ID_ANERING ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 120
+			inv(INV_ITEM_WEIGHT, ci) = 20
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_ANERING
+			inv(INV_ITEM_PIC, ci) = xy2pic(11, 36)
+			reftype = FILTER_ITEM_TOOL
+			reftypeminor = FILTER_NOTHING
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_EFFECT, ci) = EFFECT_ANERING
+			inv(INV_ITEM_PARAM1, ci) = 0
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_ITEM_TOOL
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == DBSPEC_TYPE ) {
+				return 59000
+			}
+			if ( dbspec == DBSPEC_TYPE_MINOR ) {
+				return 99999
+			}
+			if ( dbspec == DBSPEC_VALUE_ORG ) {
+				return 120
+			}
+			if ( dbspec == DBSPEC_PARAM3_ORG ) {
+				return
+			}
+			if ( dbspec == DBSPEC_CAN_USE ) {
+				return 1
+			}
+			if ( dbspec == DBSPEC_PCC ) {
+				return 0
+			}
+			if ( dbspec == DBSPEC_OBJ_LEVEL ) {
+				return 1
+			}
+			if ( dbspec == DBSPEC_RARE_LEVEL ) {
+				return 50
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "\t\t薄い輪っかのような結晶体。これによく似た何の効果もないネジ止め用部品を、電磁波対策・思考盗聴防止アイテムとして法外な値段で売りつける不届き者も存在するので注意。幻覚・妄想に苦しんでいる人々を食い物にする恥ずべき行為なので、WIN−WINだからセーフとか言ってないで早く悔い改めてほしいものである。…アネワッシャーにはちゃんと姉波動が内包されており、割れば浴びることができるので安心してほしい。\n#〜姉波動聖典〜\n"
+				description(1) = ""
+				description(2) = ""
+				description(3) = "\t\tMPを回復できるリングだ。使用することができる（使い捨て）。\n#〜鑑定報告書：＜器具＞カテゴリ〜\n"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
 	if ( dbid == ITEM_ID_COMMAND_WHISTLE ) {
 		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
 			inv(INV_ITEM_VALUE, ci) = 1000
@@ -48049,7 +48147,7 @@
 		}
 		if ( dbmode == DBMODE_DESC ) {
 			if ( jp ) {
-				description(0) = "\t\t家以外の物件を移設するのに必要な申請書。家と違い事前にその物件を登録する必要があるが、安価で外装・内装をそのままに移設してくれる。\n#〜今日から君も冒険者・旅用マニュアル〜\n"
+				description(0) = "\t\t家以外の自分の物件を移設するのに必要。事前にその物件内部で読むことで登録する必要があるが、安価で外装・内装をそのままに移設してくれる。\n#〜今日から君も冒険者・旅用マニュアル〜\n"
 				description(1) = ""
 				description(2) = ""
 				description(3) = "\t\t読むことで家以外の移設ができる申請書だ。\n#〜鑑定報告書：＜証書＞カテゴリ〜\n"
@@ -97651,9 +97749,9 @@
 		if ( dbmode == DBMODE_DESC ) {
 			if ( jp ) {
 				description(0) = "\t\t飲むと突然過去の過ちを思い出し、防御が疎かになってしまうという危険な水薬。抽出方法は不明だが、きっと瓶の中一杯に銀眼の斬殺者の罵倒が詰め込まれているのだろう。\n#〜飲めるのみもの、飲めないのみもの〜\n"
-				description(1) = "<難度8魔法>"
+				description(1) = ""
 				description(2) = ""
-				description(3) = "\t\t一時的にPVとDVを下げるポーションだ。\n#〜鑑定報告書：＜液体＞カテゴリ〜\n"
+				description(3) = "\t\t一時的にPVを下げるポーションだ。\n#〜鑑定報告書：＜液体＞カテゴリ〜\n"
 			}
 			else {
 				description(0) = ""
@@ -97797,7 +97895,7 @@
 				description(0) = "\t\t「脆弱の霧」という呪文について学ぶことができる魔法書。力自慢が過ぎる友人を持ったあなたに。\n#〜本の為の本・魔法書編〜\n"
 				description(1) = "<ランク4魔法>"
 				description(2) = ""
-				description(3) = "\t\t対象の肉体的な耐性を一時的に下げる呪文を唱える為に必要な本だ。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
+				description(3) = "\t\t対象のPVを一時的に下げる呪文を唱える為に必要な本だ。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
 			}
 			else {
 				description(0) = ""
@@ -122882,6 +122980,8 @@
 	return -999
 
 *db_setFilterItem
+	filter_item(ITEM_ID_ANERING) = ""
+	rffilter_item(ITEM_ID_ANERING) = ""
 	filter_item(ITEM_ID_COMMAND_WHISTLE) = ""
 	rffilter_item(ITEM_ID_COMMAND_WHISTLE) = ""
 	filter_item(ITEM_ID_AURTEHOM) = ""
@@ -125415,6 +125515,19 @@
 	return
 
 *db_setItem
+	ilight(ITEM_ID_ANERING) = LIGHT_TYPE_NONE
+	ialphanameref(ITEM_ID_ANERING) = ""
+	iorgweight(ITEM_ID_ANERING) = 20
+	if ( jp ) {
+		ioriginalnameref(ITEM_ID_ANERING) = "アネワッシャー"
+	}
+	else {
+		ioriginalnameref(ITEM_ID_ANERING) = "anering"
+		ioriginalnameref2(ITEM_ID_ANERING) = ""
+	}
+	ipicref(ITEM_ID_ANERING) = xy2pic(11, 36)
+	iknownnameref(ITEM_ID_ANERING) = ioriginalnameref(ITEM_ID_ANERING)
+	icolref(ITEM_ID_ANERING) = COLOR_DEFAULT
 	ilight(ITEM_ID_COMMAND_WHISTLE) = LIGHT_TYPE_NONE
 	ialphanameref(ITEM_ID_COMMAND_WHISTLE) = ""
 	iorgweight(ITEM_ID_COMMAND_WHISTLE) = 20
