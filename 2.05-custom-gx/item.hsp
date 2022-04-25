@@ -2730,10 +2730,14 @@
 			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
 		}
 	}
+	cooks = sdata(SKILL_NORMAL_COOKING, cc)
+	if ( cooks <= 0 ) {
+		cooks = 1
+	}
 	s = itemname(ci)
-	p = rnd(sdata(SKILL_NORMAL_COOKING, cc) + 6) + rnd(inv(INV_ITEM_PARAM1, cooktool) / 50 + 1)
-	if ( p > sdata(SKILL_NORMAL_COOKING, cc) / 5 + 7 ) {
-		p = sdata(SKILL_NORMAL_COOKING, cc) / 5 + 7
+	p = rnd(cooks + 6) + rnd(inv(INV_ITEM_PARAM1, cooktool) / 50 + 1)
+	if ( p > cooks / 5 + 7 ) {
+		p = cooks / 5 + 7
 	}
 	p = rnd(p + 1)
 	if ( p > 3 ) {
@@ -2962,7 +2966,9 @@
 	if ( inv(INV_ITEM_LEVEL, ci) > 0 & inv(INV_ITEM_LEVEL, ci) <= 15 ) {
 		modgrowth cc, SKILL_ATTR_SPD, inv(INV_ITEM_LEVEL, ci) / 2 + 3
 	}
-	nutrition = nutrition * (100 + inv(INV_ITEM_PARAM2, ci) * 15) / 100
+	if ( inv(INV_ITEM_PARAM2, ci) > 0 ) {
+		nutrition = nutrition * 175 / 100
+	}
 	repeat fdmax
 		if ( fdlist(1, cnt) > 0 ) {
 			if ( inv(INV_ITEM_PARAM2, ci) < 3 ) {
@@ -3426,7 +3432,6 @@
 			else {
 				if ( trait(TRAIT_NORMAL_OTHER_CANNIBALISM) ) {
 					txt lang("人肉の方が好みだが…", "You would've rather eaten human flesh.")
-					nutrition = nutrition * 2 / 3
 				}
 			}
 		}
@@ -3453,9 +3458,6 @@
 	if ( inv(INV_ITEM_STATUS, ci) <= ITEM_STATUS_CURSED ) {
 		nutrition = nutrition * 50 / 100
 	}
-	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_JERKY ) {
-		nutrition = limit((nutrition + 1) / 2, 600, 1800)
-	}
 	if ( meal == 100 ) {
 		if ( nutrition > 0 ) {
 			nutrition = nutrition / 2 + 1
@@ -3478,7 +3480,7 @@
 	}
 	if ( cdata(CDATA_ID, cc) == CREATURE_ID_CUTE_FAIRY ) {
 		if ( cdata(CDATA_RELATION, cc) == 10 ) {
-			if ( nutrition >= 4000 ) {
+			if ( nutrition >= 1000 ) {
 				if ( cbit(CHARA_BIT_EXCLUSIVE_SKILL_CHARGE, cc) != 0 ) {
 					cibk = ci
 					gdata(GDATA_FLAG_CUTE_FAIRY_SEEDS_SPIT)++
@@ -3516,7 +3518,7 @@
 	}
 	if ( cdata(CDATA_ID, cc) == CREATURE_ID_GOOSE ) {
 		if ( cdata(CDATA_RELATION, cc) == 10 ) {
-			if ( nutrition >= 3000 ) {
+			if ( nutrition >= 1000 ) {
 				if ( cbit(CHARA_BIT_EXCLUSIVE_SKILL_CHARGE, cc) != 0 ) {
 					snd SOUNDLIST_DING3
 					cibk = ci

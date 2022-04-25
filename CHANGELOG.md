@@ -1,3 +1,8 @@
+# 2.12.1.0
+
+## Added
+- Ported all changes from Elona+ 2.12.
+
 # 2.11.1.0
 
 ## Added

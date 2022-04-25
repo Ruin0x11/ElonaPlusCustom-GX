@@ -5581,9 +5581,13 @@
 			animeload 82, 0
 			dmgsan CHARA_PLAYER, 150
 			gdata(GDATA_FLAG_ABYSS_POWER) -= 150
+			necrolv = sdata(SKILL_NORMAL_LITERACY, CHARA_PLAYER) + (sdata(SKILL_NORMAL_MAGIC_DEVICE, CHARA_PLAYER) + 10) / 2
+			if ( necrolv > gdata(GDATA_DEEPEST_LEVEL) * 3 / 2 ) {
+				necrolv = gdata(GDATA_DEEPEST_LEVEL) * 3 / 2
+			}
 			if ( findchara(CREATURE_ID_GREEN_DARK_GUARDIAN) == 0 ) {
 				flt
-				initlv = sdata(SKILL_NORMAL_LITERACY, CHARA_PLAYER) + (sdata(SKILL_NORMAL_MAGIC_DEVICE, CHARA_PLAYER) + 10) / 2
+				initlv = necrolv
 				novoidlv = 1
 				fixlv = FIX_QUALITY_GOOD
 				characreate -1, CREATURE_ID_GREEN_DARK_GUARDIAN, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER)
@@ -5594,7 +5598,7 @@
 			}
 			if ( findchara(CREATURE_ID_BLUE_DARK_GUARDIAN) == 0 ) {
 				flt
-				initlv = sdata(SKILL_NORMAL_LITERACY, CHARA_PLAYER) + (sdata(SKILL_NORMAL_MAGIC_DEVICE, CHARA_PLAYER) + 10) / 2
+				initlv = necrolv
 				novoidlv = 1
 				fixlv = FIX_QUALITY_GOOD
 				characreate -1, CREATURE_ID_BLUE_DARK_GUARDIAN, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER)
@@ -5605,7 +5609,7 @@
 			}
 			if ( findchara(CREATURE_ID_CRIMSON_DARK_GUARDIAN) == 0 ) {
 				flt
-				initlv = sdata(SKILL_NORMAL_LITERACY, CHARA_PLAYER) + (sdata(SKILL_NORMAL_MAGIC_DEVICE, CHARA_PLAYER) + 10) / 2
+				initlv = necrolv
 				novoidlv = 1
 				fixlv = FIX_QUALITY_GOOD
 				characreate -1, CREATURE_ID_CRIMSON_DARK_GUARDIAN, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER)
@@ -5800,7 +5804,7 @@
 			if ( rtval == 1 ) {
 				snd SOUNDLIST_BREATH1
 				animeload 82, 0
-				dmgsan CHARA_PLAYER, 1
+				dmgsan CHARA_PLAYER, 10
 				await 200
 				snd SOUNDLIST_SONIC
 				repeat MAX_MAP_INV, RANGE_INV2
@@ -5942,6 +5946,14 @@
 				if ( cdata(CDATA_SP, cc) > (-50) ) {
 					cdata(CDATA_SP, cc)--
 				}
+			}
+		}
+		if ( cdata(CDATA_DRAIN_HP, cc) < 99 ) {
+			cdata(CDATA_DRAIN_HP, cc)++
+		}
+		if ( cc != CHARA_PLAYER ) {
+			if ( cdata(CDATA_DRAIN_HP, cc) < 99 ) {
+				cdata(CDATA_DRAIN_HP, cc)++
 			}
 		}
 		if ( cc != CHARA_PLAYER ) {
@@ -6086,7 +6098,7 @@
 	if ( efid == SKILL_SPELL_FIRE_CLAW | efid == SKILL_SPELL_COLD_BLADE | efid == SKILL_SPELL_FIRE_BOLT | efid == SKILL_SPELL_ICE_BOLT | efid == SKILL_SPELL_FIRE_BALL | efid == SKILL_SPELL_ICE_BALL ) {
 		fusifc = encfindpower(cc, ENCHANT_FIRE_AND_COLD)
 	}
-	if ( efid == SKILL_SPELL_MIND_THORN | efid == SKILL_SPELL_SOUND_CANNONBALL | efid == SKILL_SPELL_MIND_BOLT | efid == SKILL_SPELL_MIND_BOLT | efid == SKILL_SPELL_ILLUSION_ROAR | efid == SKILL_SPELL_ILLUSION_ROAR ) {
+	if ( efid == SKILL_SPELL_MIND_THORN | efid == SKILL_SPELL_SOUND_CANNONBALL | efid == SKILL_SPELL_MIND_BOLT | efid == SKILL_SPELL_SOUND_BOLT | efid == SKILL_SPELL_ILLUSION_ROAR | efid == SKILL_SPELL_RAGING_ROAR ) {
 		fusims = encfindpower(cc, ENCHANT_MIND_AND_SOUND)
 	}
 	if ( efid == SKILL_SPELL_NERVE_ARROW | efid == SKILL_SPELL_POISON_MUCUS | efid == SKILL_SPELL_NERVE_BOLT | efid == SKILL_SPELL_POISON_BOLT | efid == SKILL_SPELL_ANGUISH_JAIL | efid == SKILL_SPELL_POISON_STORM ) {
@@ -9886,10 +9898,6 @@
 	}
 	if ( _switch_val == SKILL_NORMAL_COOKING | _switch_sw ) {
 		_switch_sw = 0
-		if ( sdata(SKILL_NORMAL_COOKING, CHARA_PLAYER) == 0 ) {
-			txt lang("料理の仕方を知らない。", "You don't know how to cook.")
-			return 0
-		}
 		cooktool = ci
 		invsubroutine = 1
 		invctrl = 16
@@ -20013,6 +20021,52 @@
 		snd SOUNDLIST_CHEER
 		goto *effect_end
 	}
+	if ( _switch_val == SKILL_SPACT_POLLEN_CANNON | _switch_sw ) {
+		_switch_sw = 0
+		txtef COLOR_GREEN
+		txt lang(name(cc) + "は強烈花粉を噴出した！", name(cc) + " gushed out intense pollen!")
+		animeid = ANIMATION_POLLEN_CANNON
+		gosub *anime
+		animeload 8, tc
+		if ( tc == CHARA_PLAYER ) {
+			txt lang("ぐわぁぁぁぁぁっ！！！", "Arrrrg!")
+		}
+		hostileaction cc, tc
+		elep = cdata(CDATA_LEVEL, cc) * 2
+		dmgcon tc, CONDITION_WINCE, rnd(elep + 1)
+		dmgcon tc, CONDITION_CHILLS, rnd(elep + 1)
+		dmgcon tc, CONDITION_BLIND, rnd(elep + 1)
+		dmgcon tc, CONDITION_PARALYZE, rnd(elep + 1)
+		dmgcon tc, CONDITION_CONFUSE, rnd(elep + 1)
+		dmgcon tc, CONDITION_DIM, rnd(elep + 1)
+		dmgcon tc, CONDITION_POISON, rnd(elep + 1)
+		if ( cdata(CDATA_EXIST, tc) == CHAR_STATE_ALIVE ) {
+			p = 13 - 10
+			if ( cdata(CDATA_QUALITY, tc) >= FIX_QUALITY_MIRACLE | encfind(tc, 6 * 10000 + 10 + p) != (-1) ) {
+				p = -1
+			}
+			if ( sdata(SKILL_ATTR_PER, tc) < sorg(SKILL_ATTR_PER, tc) / 2 ) {
+				p = -1
+			}
+			if ( p != (-1) ) {
+				i = sorg(10 + p, tc) - cdata(STARTING_CDATA_ATTR + p, tc)
+				if ( i > 0 ) {
+					efp = (elep + 1) / 4 + 20
+					i = i * efp / 2000 + 5
+					cdata(STARTING_CDATA_ATTR + p, tc) -= i
+				}
+				if ( synccheck(tc, -1) ) {
+					txtmore
+					txtef COLOR_PURPLE
+					txt lang(name(tc) + "は弱くなった。", name(tc) + " " + is(tc) + " weakened.")
+				}
+				r1 = tc
+				gosub *charaRefresh
+			}
+		}
+		goto *effect_end
+		_switch_sw++
+	}
 	if ( _switch_val == SKILL_SPACT_MISTELTEIN | _switch_sw ) {
 		_switch_sw = 0
 		if ( charaGivesExp(tc) & tc != CHARA_PLAYER ) {
@@ -22009,6 +22063,108 @@
 			modcorrupt 200
 		}
 		goto *effect_end
+	}
+	if ( _switch_val == SKILL_SPACT_EYE_OF_ANE | _switch_sw ) {
+		_switch_sw = 0
+		if ( cdata(CDATA_ID, tc) == CREATURE_ID_SIST_THE_OLDER_SISTER | cdata(CDATA_ID, tc) == CREATURE_ID_MIKRAANESIS | cdata(CDATA_ID, tc) == CREATURE_ID_URCAGUARY | cdata(CDATA_ID, tc) == CREATURE_ID_LAZY_OLDER_SISTER | cdata(CDATA_ID, tc) == CREATURE_ID_OLDER_SISTER2 | cdata(CDATA_ID, tc) == CREATURE_ID_OLDER_DOG_SISTER | cdata(CDATA_ID, tc) == CREATURE_ID_OLDER_SISTER ) {
+			txtef COLOR_PURPLE
+			txt lang(name(cc) + "の眼差しは" + name(tc) + "の姉波動に防がれた！", name(tc) + " defended with ane power!")
+			goto *effect_end
+		}
+		txtef COLOR_RED
+		txt lang(name(cc) + "は勝手に" + name(tc) + "の姉ヅラをして、勝手に癒されている！", name(cc) + " became the older sister of " + name(tc) + " without permission, And " + name(cc) + " was healed for some reason.")
+		repeat 8 + 8
+			if ( cdata(STARTING_CDATA_BUFF + cnt * ARRAY_CDATA_BUFF, cc) == BUFF_NONE ) {
+				break
+			}
+			if ( cdata(STARTING_CDATA_BUFF + cnt * ARRAY_CDATA_BUFF, cc) == BUFF_MELANCHOLY ) {
+				delbuff cc, cnt
+				continue cnt
+			}
+		loop
+		anepower = cdata(CDATA_LEVEL, cc) * 10
+		if ( cc == CHARA_PLAYER ) {
+			cdata(CDATA_MATERIAL3_COUNTER, CHARA_PLAYER)++
+			if ( cdata(CDATA_MATERIAL3_COUNTER, CHARA_PLAYER) > cdata(CDATA_LEVEL, CHARA_PLAYER) ) {
+				cdata(CDATA_MATERIAL3_COUNTER, CHARA_PLAYER) = cdata(CDATA_LEVEL, CHARA_PLAYER)
+			}
+			anepower = (cdata(CDATA_MATERIAL3_COUNTER, CHARA_PLAYER) + 13) / 13 * 10
+		}
+		tcbk = tc
+		tc = cc
+		animeid = ANIMATION_HEAL
+		gosub *anime
+		tc = tcbk
+		healhp cc, anepower
+		if ( findbuff(cc, BUFF_ABYSS_IN_THE_EYE) != (-1) ) {
+			snd SOUNDLIST_OFFER1
+			txt lang(name(cc) + "の瞳孔が開いた。", "Touched portion is turned into dust.")
+			dmghp tc, sdata(SKILL_ATTR_MAG, cc) / 6 + rnd(5 + sdata(SKILL_ATTR_MAG, cc) / 6)
+			healhp cc, sdata(SKILL_ATTR_MAG, cc) / 2 + rnd(5 + sdata(SKILL_ATTR_MAG, cc) / 2)
+			dmgmp tc, sdata(SKILL_ATTR_MAG, cc) / 6 + rnd(5 + sdata(SKILL_ATTR_MAG, cc) / 6)
+			healmp cc, sdata(SKILL_ATTR_MAG, cc) / 2 + rnd(5 + sdata(SKILL_ATTR_MAG, cc) / 2)
+			cdata(CDATA_POWER_GAUGE, tc) -= 2
+			if ( cdata(CDATA_POWER_GAUGE, tc) < 0 ) {
+				cdata(CDATA_POWER_GAUGE, tc) = 0
+			}
+			cdata(CDATA_POWER_GAUGE, cc) += 2
+			if ( cdata(CDATA_POWER_GAUGE, cc) > 100 ) {
+				if ( cdata(CDATA_SHIFT_FORM, cc) <= SHIFT_FORM_NONE & (cdata(CDATA_EVOLUTION_STAGE, cc) <= 0 | cc == CHARA_PLAYER) & (cdata(CDATA_QUALITY, cc) < FIX_QUALITY_MIRACLE | cc < MAX_CHARA_FOLLOWER) ) {
+					cdata(CDATA_POWER_GAUGE, cc) = 100
+				}
+			}
+			if ( cdata(CDATA_POWER_GAUGE, cc) > 200 ) {
+				cdata(CDATA_POWER_GAUGE, cc) = 200
+			}
+		}
+		powsel = 0
+		if ( gdata(GDATA_FLAG_MAIN) < 350 ) {
+			if ( cdata(CDATA_LEVEL, cc) >= 130 ) {
+				powsel = 100
+			}
+		}
+		if ( gdata(GDATA_FLAG_MAIN) >= 350 ) {
+			if ( cdata(CDATA_LEVEL, cc) >= 50 ) {
+				powsel = 100
+			}
+		}
+		if ( cc < MAX_CHARA_FOLLOWER | cdata(CDATA_ALLIED, cc) == 100 | cc == CHARA_PLAYER ) {
+			powsel = 100
+		}
+		if ( gdata(GDATA_FLAG_GAME_MODE) == 1 ) {
+			powsel = 100
+		}
+		if ( cc >= MAX_CHARA_FOLLOWER & cdata(CDATA_QUALITY, cc) > FIX_QUALITY_GREAT & cdata(CDATA_HP, cc) > cdata(CDATA_MAX_HP, cc) / 2 & cdata(CDATA_POWER_GAUGE, cc) < 200 ) {
+			if ( exgauge != 100 ) {
+				powsel = 0
+			}
+		}
+		if ( gdata(GDATA_TEMPORARY_FLAGS2) == 888 ) {
+			powsel = 0
+		}
+		if ( cdata(CDATA_DIRECTIVE_MODE, cc) == DIRECTIVE_MODE_TEMPORARY ) {
+			if ( cdata(CDATA_DIRECTIVE_MODE_ORG, cc) != 0 ) {
+				powsel = 0
+			}
+		}
+		if ( cdata(CDATA_DIRECTIVE_MODE, cc) == DIRECTIVE_MODE_DEFENSIVE | cdata(CDATA_DIRECTIVE_MODE, cc) == DIRECTIVE_MODE_INTERCEPT ) {
+			powsel = 0
+		}
+		if ( cc == CHARA_PLAYER ) {
+			if ( cdata(CDATA_EVOLUTION_STAGE, CHARA_PLAYER) == 0 ) {
+				powsel = 0
+			}
+		}
+		if ( cdata(CDATA_POWER_GAUGE, cc) >= 100 ) {
+			if ( powsel == 100 ) {
+				if ( cdata(CDATA_EXIST, tc) == CHAR_STATE_ALIVE ) {
+					efid = SKILL_SPACT_MIND_BREAK
+					gosub *effect
+				}
+			}
+		}
+		goto *effect_end
+		_switch_sw++
 	}
 	if ( _switch_val == SKILL_SPACT_EYE_OF_ETHER | _switch_sw ) {
 		_switch_sw = 0

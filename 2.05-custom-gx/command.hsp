@@ -5478,7 +5478,7 @@
 	}
 	promptAdd lang("口調を変える", "Change Tone"), "null", 10
 	promptAdd lang("名前をつける", "Name"), "null", 3
-	if ( tc != CHARA_PLAYER & cdata(CDATA_RELATION, tc) == RELATION_ALLY | (gdata(GDATA_AREA) == AREA_DOJO & cbit(CHARA_BIT_LIVESTOCK, tc) == TRUE) ) {
+	if ( tc != CHARA_PLAYER & cdata(CDATA_RELATION, tc) == RELATION_ALLY | (gdata(GDATA_AREA) == AREA_DOJO & cbit(CHARA_BIT_LIVESTOCK, tc) == TRUE) | (tc != CHARA_PLAYER & cdata(CDATA_ANALYSIS_GAUGE, tc) == 100) ) {
 		promptAdd lang("能力の開示", "Info"), "null", "" + 28
 	}
 	if ( develop | gdata(GDATA_WIZARD) ) {
@@ -9244,6 +9244,11 @@
 					snd SOUNDLIST_FAIL1
 					goto *com_charainfo_loop
 				}
+				if ( csskill == SKILL_SPELL_WISH ) {
+					txt lang("その魔法には使えない。", "Bonuses can't be used for that spell.")
+					snd SOUNDLIST_FAIL1
+					goto *com_charainfo_loop
+				}
 				gdata(GDATA_FLAG_SCROLL_OF_WITCHCRAFT_TOTAL_SPELL_BONUS)--
 				if ( dbg_skillpointfix ) {
 					gdata(GDATA_FLAG_SCROLL_OF_WITCHCRAFT_TOTAL_SPELL_BONUS)++
@@ -12830,6 +12835,20 @@
 					goto *com_inventory
 				}
 			}
+			if ( inv(INV_ITEM_ID, ci) == ITEM_ID_BOTTLE_MILK & cbit(CHARA_BIT_LIVESTOCK, tc) == TRUE ) {
+				tcbk = tc
+				if ( cdata(CDATA_HUNGER, tc) >= 8000 ) {
+					snd SOUNDLIST_FAIL1
+					txt lang("「今はおなかいっぱい！」", cnvtalk("I'm full now!"))
+					goto *com_inventory
+				}
+				inv(INV_ITEM_NUM, ci)--
+				gosub *calcBurdenPc
+				tc = tcbk
+				efid = SKILL_EFFECT_POTION_MILK
+				gosub *effect
+				goto *pc_turn
+			}
 			if ( inv(INV_ITEM_ID, ci) == ITEM_ID_LIVESTOCK_FEED & cdata(CDATA_HUNGER, tc) < 10000 & cbit(CHARA_BIT_LIVESTOCK, tc) == 1 ) {
 				inv(INV_ITEM_NUM, ci)--
 				gosub *calcBurdenPc
@@ -13667,7 +13686,6 @@
 	p = 0
 	s = ""
 	reftype = refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE)
-	getinheritance ci, inhlist, inhmax
 	dbid = inv(INV_ITEM_ID, ci)
 	dbmode = DBMODE_REF
 	gosub *db_item

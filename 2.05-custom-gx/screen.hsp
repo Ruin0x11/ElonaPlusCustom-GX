@@ -2521,9 +2521,14 @@
 		_switch_sw++
 	}
 	if ( _switch_val == ANIMATION_LINEAR_LAUNCHER | _switch_sw ) {
+		_switch_sw = 0
 		_switch_sw++
 	}
 	if ( _switch_val == ANIMATION_SHINING_THROW | _switch_sw ) {
+		_switch_sw = 0
+		_switch_sw++
+	}
+	if ( _switch_val == ANIMATION_POLLEN_CANNON | _switch_sw ) {
 		_switch_sw = 0
 		if ( synccheck(cc, -1) == 0 ) {
 			goto *anime_SWEND1
@@ -2536,31 +2541,31 @@
 			snd SOUNDLIST_BOLT1
 		}
 		if ( animeid == ANIMATION_BURN_SCROLLS ) {
-			preparePicItem xy2pic(22, 36), 0
+			preparePicItem xy2pic(22, 36), COLOR_DEFAULT
 			snd SOUNDLIST_ATK_FIRE
 		}
 		if ( animeid == ANIMATION_GOLDENSTORM ) {
-			preparePicItem xy2pic(5, 0), 0
+			preparePicItem xy2pic(5, 0), COLOR_DEFAULT
 			snd SOUNDLIST_GETGOLD1
 		}
 		if ( animeid == ANIMATION_SPORE ) {
-			preparePicItem xy2pic(23, 0), 0
+			preparePicItem xy2pic(23, 0), COLOR_DEFAULT
 			snd SOUNDLIST_BOW1
 		}
 		if ( animeid == ANIMATION_INNERVATION ) {
-			preparePicItem xy2pic(31, 33), 0
+			preparePicItem xy2pic(31, 33), COLOR_DEFAULT
 			snd SOUNDLIST_SWING39
 		}
 		if ( animeid == ANIMATION_DISTANT_ATK ) {
-			preparePicItem xy2pic(32, 33), 0
+			preparePicItem xy2pic(32, 33), COLOR_DEFAULT
 			snd SOUNDLIST_BOW1
 		}
 		if ( animeid == ANIMATION_POTION_PLUG_1 ) {
-			preparePicItem xy2pic(25, 36), 0
+			preparePicItem xy2pic(25, 36), COLOR_DEFAULT
 			snd SOUNDLIST_TM2_HIT000
 		}
 		if ( animeid == ANIMATION_POTION_PLUG_2 ) {
-			preparePicItem xy2pic(26, 36), 0
+			preparePicItem xy2pic(26, 36), COLOR_DEFAULT
 			snd SOUNDLIST_TM2_HIT000
 		}
 		if ( animeid == ANIMATION_POTION_PLUG_3 ) {
@@ -2576,7 +2581,11 @@
 			snd SOUNDLIST_BOLT1
 		}
 		if ( animeid == ANIMATION_SHINING_THROW ) {
-			preparePicItem xy2pic(15, 36), 0
+			preparePicItem xy2pic(15, 36), COLOR_DEFAULT
+			snd SOUNDLIST_BOLT1
+		}
+		if ( animeid == ANIMATION_POLLEN_CANNON ) {
+			preparePicItem xy2pic(12, 36), COLOR_DEFAULT
 			snd SOUNDLIST_BOLT1
 		}
 		if ( animeid == ANIMATION_UNUSED1 ) {
@@ -6012,11 +6021,19 @@
 		}
 	}
     ; The player does not have an Analysis gauge; the slot is reused for the platinum count.
-	if ( cc != CHARA_PLAYER & cdata(CDATA_ANALYSIS_GAUGE, cc) > 0 ) {
+	if ( cdata(CDATA_ANALYSIS_GAUGE, cc) > 0 & cc != CHARA_PLAYER ) {
 		if ( calcattackhit_arg1 == 0 ) {
-			evade += (limit(sdata(SKILL_NORMAL_MEMORIZATION, tc) / 5, 1, 100) + 10) * (cdata(CDATA_ANALYSIS_GAUGE, cc) / 10 + 1)
+			evade += (limit(sdata(SKILL_NORMAL_MEMORIZATION, tc) / 3, 1, 300) + 15) * (cdata(CDATA_ANALYSIS_GAUGE, cc) / 10 + 1)
 			if ( sorg(SKILL_NORMAL_MEMORIZATION, tc) > 0 ) {
 				skillexp SKILL_NORMAL_MEMORIZATION, tc, 4, 0, 1000
+			}
+		}
+	}
+	if ( cdata(CDATA_ANALYSIS_GAUGE, tc) > 0 & tc != CHARA_PLAYER ) {
+		if ( calcattackhit_arg1 == 0 ) {
+			evade -= (limit(sdata(SKILL_NORMAL_MEMORIZATION, cc) / 3, 1, 300) + 15) * (cdata(CDATA_ANALYSIS_GAUGE, tc) / 10 + 1)
+			if ( sorg(SKILL_NORMAL_MEMORIZATION, cc) > 0 ) {
+				skillexp SKILL_NORMAL_MEMORIZATION, cc, 4, 0, 1000
 			}
 		}
 	}

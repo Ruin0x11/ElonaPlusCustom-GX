@@ -4104,11 +4104,14 @@
 	if ( TweakData(TWEAK_GAMEPLAY_CG_DISABLE_CURTAIN_CALL, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
 		gdata(GDATA_FLAG_CURTAIN_CALL)++
 	}
-	if ( TweakData(TWEAK_GAMEPLAY_DISABLE_ATTACK_STAMINA_DEPLETION, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
-		if ( cdata(CDATA_GAUGE_COOLDOWN, cc) == 0 ) {
+	if ( cdata(CDATA_GAUGE_COOLDOWN, cc) == 0 ) {
+		if ( TweakData(TWEAK_GAMEPLAY_DISABLE_ATTACK_STAMINA_DEPLETION, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
 			if ( cdata(CDATA_SP, cc) > (-50) ) {
 				cdata(CDATA_SP, cc)--
 			}
+		}
+		if ( cdata(CDATA_DRAIN_HP, cc) < 99 ) {
+			cdata(CDATA_DRAIN_HP, cc)++
 		}
 	}
 	if ( cbit(CHARA_BIT_SANDBAG, tc) != 1 ) {
@@ -8058,7 +8061,7 @@
 			}
 		}
 		if ( f == 0 ) {
-			txt lang("それは無理だ。", "It's impossible.")
+			txt_impossible
 		}
 		gosub *screen_draw
 		goto *pc_turn
@@ -8364,6 +8367,57 @@
 			txt lang(name(tc) + "の力が高まった。", "Skill memories have been converted to bonuses.")
 		}
 		zouka = 0
+		r1 = tc
+		gosub *charaRefresh
+		gosub *calcBurdenPc
+		goto *act_use_SWEND1
+		_switch_sw++
+	}
+	if ( _switch_val == EFFECT_ANERING | _switch_sw ) {
+		_switch_sw = 0
+		if ( mdata(MDATA_TYPE) == MAP_TYPE_WORLD ) {
+			goto *act_use_SWEND1
+		}
+		txt lang("誰に使用する？", "Who is the target?")
+		gosub *screen_draw
+		val = 0
+		gosub *prompt_direction
+		if ( stat == 0 ) {
+			txt_impossible
+			gosub *screen_draw
+			goto *pc_turn
+		}
+		if ( map(x, y, MAP_CHARA_INDEX_PLUS_ONE) > 0 ) {
+			tc = map(x, y, MAP_CHARA_INDEX_PLUS_ONE) - 1
+		}
+		else {
+			txt_impossible
+			gosub *screen_draw
+			goto *pc_turn
+		}
+		if ( cdata(CDATA_IN_TAGTEAM, tc) != 0 ) {
+			txtselecttc 2
+			repeat 2
+				promptl(0, promptmax) = s(cnt), key_select(cnt), "" + promptmax
+				promptmax++
+			loop
+			val = promptx, prompty, 200, 1
+			gosub *prompt_key
+			if ( stat == 0 ) {
+				gosub *screen_draw
+				goto *pc_turn
+			}
+			if ( rtval == 1 ) {
+				tc = cdata(CDATA_TAGTEAM_PARTNER, tc)
+			}
+		}
+		snd SOUNDLIST_OFFER2
+		anepower = (cdata(CDATA_MATERIAL3_COUNTER, CHARA_PLAYER) + 13) / 13 * 10
+		healmp tc, anepower
+		animeid = ANIMATION_HEAL
+		gosub *anime
+		inv(INV_ITEM_NUM, ci)--
+		cell_refresh inv(INV_ITEM_X, ci), inv(INV_ITEM_Y, ci)
 		r1 = tc
 		gosub *charaRefresh
 		gosub *calcBurdenPc
@@ -8904,45 +8958,50 @@
 				cdata(CDATA_HUNGER, tc) += 1000
 			}
 			if ( tc == CHARA_PLAYER ) {
-				if ( TweakData(TWEAK_GAMEPLAY_CG_DISABLE_SLEEP_PREVENTION, TWEAK_CATEGORY_GAMEPLAY) == TRUE ) {
-					if ( gdata(GDATA_SLEEP) >= 0 ) {
-						gdata(GDATA_SLEEP) -= 5
-					}
-				}
-				else {
-					gdata(GDATA_FLAG_SLEEP_PREVENTION) += 3 + rnd(3)
-				}
+				gdata(GDATA_FLAG_SLEEP_PREVENTION) += 3 + rnd(3)
 				gdata(GDATA_FLAG_SMOKING_FREQUENCY)++
 				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_CIGARETTE ) {
-					skillexp SKILL_ATTR_PER, tc, 3000 + inv(INV_ITEM_LEVEL, ci) * 200
+					skillexp SKILL_ATTR_PER, tc, 10000 + inv(INV_ITEM_LEVEL, ci) * 800
 				}
 				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_HAMAKI ) {
-					skillexp SKILL_ATTR_DEX, tc, 3000 + inv(INV_ITEM_LEVEL, ci) * 200
+					skillexp SKILL_ATTR_DEX, tc, 10000 + inv(INV_ITEM_LEVEL, ci) * 800
 				}
 				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_TOBACCO_PIPE ) {
-					skillexp SKILL_ATTR_LER, tc, 3000 + inv(INV_ITEM_LEVEL, ci) * 200
+					skillexp SKILL_ATTR_LER, tc, 10000 + inv(INV_ITEM_LEVEL, ci) * 800
 				}
 				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_KISERU ) {
-					skillexp SKILL_ATTR_CHA, tc, 3000 + inv(INV_ITEM_LEVEL, ci) * 200
+					skillexp SKILL_ATTR_CHA, tc, 10000 + inv(INV_ITEM_LEVEL, ci) * 800
 				}
 			}
 			else {
 				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_CIGARETTE ) {
-					skillexp SKILL_ATTR_PER, tc, 15000 + inv(INV_ITEM_LEVEL, ci) * 1000
+					skillexp SKILL_ATTR_PER, tc, 12000 + inv(INV_ITEM_LEVEL, ci) * 1000
 				}
 				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_HAMAKI ) {
-					skillexp SKILL_ATTR_DEX, tc, 15000 + inv(INV_ITEM_LEVEL, ci) * 1000
+					skillexp SKILL_ATTR_DEX, tc, 12000 + inv(INV_ITEM_LEVEL, ci) * 1000
 				}
 				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_TOBACCO_PIPE ) {
-					skillexp SKILL_ATTR_LER, tc, 15000 + inv(INV_ITEM_LEVEL, ci) * 1000
+					skillexp SKILL_ATTR_LER, tc, 12000 + inv(INV_ITEM_LEVEL, ci) * 1000
 				}
 				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_KISERU ) {
-					skillexp SKILL_ATTR_CHA, tc, 15000 + inv(INV_ITEM_LEVEL, ci) * 1000
+					skillexp SKILL_ATTR_CHA, tc, 12000 + inv(INV_ITEM_LEVEL, ci) * 1000
 				}
+			}
+			if ( inv(INV_ITEM_ID, ci) == ITEM_ID_CIGARETTE ) {
+				modgrowth tc, SKILL_ATTR_PER, 50 + limit(inv(INV_ITEM_LEVEL, ci) * 10, 0, 150)
+			}
+			if ( inv(INV_ITEM_ID, ci) == ITEM_ID_HAMAKI ) {
+				modgrowth tc, SKILL_ATTR_DEX, 50 + limit(inv(INV_ITEM_LEVEL, ci) * 10, 0, 150)
+			}
+			if ( inv(INV_ITEM_ID, ci) == ITEM_ID_TOBACCO_PIPE ) {
+				modgrowth tc, SKILL_ATTR_LER, 50 + limit(inv(INV_ITEM_LEVEL, ci) * 10, 0, 150)
+			}
+			if ( inv(INV_ITEM_ID, ci) == ITEM_ID_KISERU ) {
+				modgrowth tc, SKILL_ATTR_CHA, 50 + limit(inv(INV_ITEM_LEVEL, ci) * 10, 0, 150)
 			}
 		}
 		else {
-			txt lang(" *むしゃむしゃ* ", " *chomp* ")
+			txt lang(" *むしゃむしゃ* ", "*chomp*")
 			snd SOUNDLIST_EAT1
 			if ( inv(INV_ITEM_LEVEL, ci) > 10 ) {
 				cdata(CDATA_TOBACCO_DEPENDENCE, tc) -= inv(INV_ITEM_LEVEL, ci) - 10
@@ -8963,6 +9022,7 @@
 		}
 		toba = 0
 		goto *act_use_SWEND1
+		_switch_sw++
 	}
 	if ( _switch_val == EFFECT_FIREWORK | _switch_sw ) {
 		_switch_sw = 0
@@ -11352,7 +11412,7 @@
 				snd SOUNDLIST_ENC
 				animeload ANIMATION_CHAOS_CHILD, cc
 				if ( cdata(CDATA_RELATION, tc) == RELATION_ENEMY ) {
-					txt lang(name(tc) + "の攻撃パターンも分析した。", "You also analyzed the attack pattern of " + name(tc) + ".")
+					txt lang(name(tc) + "の動きも分析した。", "You also analyzed the movements of " + name(tc) + ".")
 					cdata(CDATA_ANALYSIS_GAUGE, tc) = 100
 				}
 				csctrl = 4

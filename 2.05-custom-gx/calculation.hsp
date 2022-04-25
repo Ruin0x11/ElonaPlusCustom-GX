@@ -1259,6 +1259,9 @@
 	if ( cdata(CDATA_ID, r1) == CREATURE_ID_HEQET ) {
 		skillinit SKILL_NORMAL_ALCHEMY, r1, 3
 	}
+	if ( cdata(CDATA_ID, r1) == CREATURE_ID_HELRAUNE ) {
+		skillinit SKILL_NORMAL_GENE_ENGINEER, r1, 4
+	}
 	if ( necrop2 > 0 ) {
 		if ( necrop2 == ITEM_ID_BONE ) {
 			skillinit SKILL_NORMAL_TACTICS, r1, 2
@@ -1507,7 +1510,10 @@
 	return 0
 
 *calcThirst // and hunger
-	haraheri = 8 * 100
+	haraheri = 8 * 50
+	if ( mdata(MDATA_TYPE) == MAP_TYPE_WORLD ) {
+		haraheri = 8 * 10
+	}
 	if ( gdata(GDATA_AREA) == AREA_VALM ) {
 		if ( gdata(GDATA_LEVEL) == 3 ) {
 			haraheri = 8
@@ -1891,6 +1897,19 @@
 		cdata(CDATA_DRAIN_HP, r1)--
 		if ( cdata(CDATA_DRAIN_HP, r1) == 100 ) {
 			cdata(CDATA_DRAIN_HP, r1) = 0
+		}
+	}
+	if ( cdata(CDATA_SP, r1) < cdata(CDATA_MAX_SP, r1) ) {
+		if ( rnd(sdata(SKILL_ATTR_CON, r1) * 2 + 100) > rnd(4000) ) {
+			healsp r1, 1
+		}
+	}
+	if ( cdata(CDATA_DRAIN_HP, r1) > 0 ) {
+		if ( rnd(sdata(SKILL_ATTR_CON, r1) * 2 + 100) > rnd(4000) ) {
+			cdata(CDATA_DRAIN_HP, r1)--
+			if ( cdata(CDATA_DRAIN_HP, r1) == 100 ) {
+				cdata(CDATA_DRAIN_HP, r1) = 0
+			}
 		}
 	}
 	if ( cdata(CDATA_DRUG_DEPENDENCE, r1) > 0 ) {

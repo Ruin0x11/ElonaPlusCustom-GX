@@ -380,7 +380,7 @@
 	return
 
 #deffunc skillexp int skillexp_skillid, int skillexp_charid, int skillexp_amount, int skillexp_arg4, int skillexp_arg5
-	if ( sorg(skillexp_skillid, skillexp_charid) == 0 ) {
+	if ( sorg(skillexp_skillid, skillexp_charid) <= 0 ) {
 		return 0
 	}
 	if ( skillexp_amount == 0 ) {
@@ -390,7 +390,8 @@
 		skillexp sdataref(SKILL_DATAREF_USE, skillexp_skillid), skillexp_charid, skillexp_amount / (2 + skillexp_arg4)
 	}
 	locvar_skillmod_lv = sorg(skillexp_skillid, skillexp_charid)
-	locvar_skillexp_lvli = limit(sorg(skillexp_skillid, skillexp_charid), 1, 300)
+	locvar_skillexp_lvs = limit(sorg(skillexp_skillid, skillexp_charid), 1, 400)
+	locvar_skillexp_lvli = sqrt(locvar_skillexp_lvs * 10) * 2
 	locvar_skillmod_growth = sgrowth(skillexp_skillid, skillexp_charid)
 	if ( locvar_skillmod_growth == 0 ) {
 		return

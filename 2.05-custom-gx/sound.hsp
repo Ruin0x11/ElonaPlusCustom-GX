@@ -785,7 +785,12 @@
 			music = MUSICLIST_MCTOWN8
 		}
 		if ( gdata(GDATA_AREA) == AREA_LUDUS ) {
-			music = MUSICLIST_MCTOWN7
+			if ( gdata(GDATA_LEVEL) < 5 ) {
+				music = MUSICLIST_MCTOWN7
+			}
+			if ( gdata(GDATA_LEVEL) == 5 ) {
+				music = MUSICLIST_MCCHURCH
+			}
 		}
 		if ( gdata(GDATA_AREA) == AREA_SOUTH_RASKILIS ) {
 			if ( gdata(GDATA_LEVEL) == 1 ) {

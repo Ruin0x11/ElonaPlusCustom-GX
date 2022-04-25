@@ -8435,6 +8435,57 @@
 			put_questtarget
 			map_placeplayer
 		}
+		if ( gdata(GDATA_LEVEL) == 5 ) {
+			mdata(MDATA_TILESET) = MAP_TILESET_DUNGEON
+			map_initcustom "ane"
+			mdata(MDATA_FIELD) = MAP_FIELD_INDOOR
+			mdata(MDATA_TYPE) = MAP_TYPE_VILLAGE
+			mdata(MDATA_MODERATE_CROWD) = 0
+			mdata(MDATA_MUSIC) = MUSICLIST_MCCHURCH
+			mdata(MDATA_NO_RENEW) = 0
+			mdatan(0) = lang("姉の教会", "the Church of Older Sister")
+			flt
+			characreate -1, CREATURE_ID_SIST_THE_OLDER_SISTER, 20, 3
+			cdata(CDATA_ROLE, rc) = ROLE_SPECIAL
+			if ( stat != 0 ) {
+				cdata(CDATA_AI_CALM, rc) = 3
+			}
+			flt
+			characreate -1, CREATURE_ID_OLDER_SISTER2, 13, 36
+			cdata(CDATA_ROLE, rc) = ROLE_SPECIAL
+			flt
+			characreate -1, CREATURE_ID_OLDER_SISTER2, 33, 2
+			cdata(CDATA_ROLE, rc) = ROLE_SPECIAL
+			flt
+			characreate -1, CREATURE_ID_OLDER_SISTER2, 9, 1
+			cdata(CDATA_ROLE, rc) = ROLE_SPECIAL
+			flt
+			characreate -1, CREATURE_ID_OLDER_SISTER2, 26, 24
+			cdata(CDATA_ROLE, rc) = ROLE_SPECIAL
+			flt
+			characreate -1, CREATURE_ID_YOUNGER_SISTER, 7, 42
+			cdata(CDATA_ROLE, rc) = ROLE_SPECIAL
+			if ( stat != 0 ) {
+				cdata(CDATA_AI_CALM, rc) = 3
+			}
+			flt
+			characreate -1, CREATURE_ID_YOUNG_LADY, 33, 42
+			cdata(CDATA_ROLE, rc) = ROLE_SPECIAL
+			if ( stat != 0 ) {
+				cdata(CDATA_AI_CALM, rc) = 3
+			}
+			repeat 6
+				flt
+				characreate -1, CREATURE_ID_YOUNG_LADY, -3, 0
+				cdata(CDATA_ROLE, rc) = ROLE_SPECIAL
+			loop
+			repeat 8
+				flt
+				characreate -1, CREATURE_ID_SILVER_CAT, -3, 0
+				cdata(CDATA_ROLE, rc) = ROLE_SPECIAL
+			loop
+			map_placeplayer
+		}
 	}
 	if ( gdata(GDATA_AREA) == AREA_MAID_MANSION ) {
 		if ( gdata(GDATA_LEVEL) == 1 ) {
@@ -8932,6 +8983,7 @@
 		if ( gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 >= mdata(MDATA_RENEW) ) {
 			if ( mdata(MDATA_NO_RENEW) == 0 ) {
 				if ( mdata(MDATA_RENEW) != 0 ) {
+					snd SOUNDLIST_AMMO
 					if ( gdata(GDATA_AREA) == AREA_DERPHY ) {
 						if ( gdata(GDATA_LEVEL) == 3 ) {
 							map_reload "thiefguild"
@@ -8945,6 +8997,11 @@
 					if ( gdata(GDATA_AREA) == AREA_PORT_KAPUL ) {
 						if ( gdata(GDATA_LEVEL) == 3 ) {
 							map_reload "fighterguild"
+						}
+					}
+					if ( gdata(GDATA_AREA) == AREA_LUDUS ) {
+						if ( gdata(GDATA_LEVEL) == 5 ) {
+							map_reload "ane"
 						}
 					}
 					if ( gdata(GDATA_AREA) == AREA_EMBASSY ) {
