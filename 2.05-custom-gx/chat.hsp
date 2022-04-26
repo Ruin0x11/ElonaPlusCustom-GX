@@ -5521,19 +5521,19 @@
 		_switch_sw = 0
 		if ( gdata(GDATA_AREA) == AREA_LUDUS & gdata(GDATA_LEVEL) == 1 ) {
 			if ( gdata(GDATA_FLAG_SUB_H_SISTER) >= 1000 ) {
-				chatlist 0, lang("大丈夫", "It's okay.")
-				chatlist 1, lang("少し疲れた", "I was a little tired.")
-				buff = lang("冒険もいいけれど…" + cdatan(CDATAN_NAME, CHARA_PLAYER) + "、体には気をつけてね。疲れてない？", "Watch out for the body but also good adventure...Are you tired?")
+				chatlist 0, lang("大丈夫", "I'm alright.")
+				chatlist 1, lang("少し疲れた", "I'm a little tired.")
+				buff = lang("冒険もいいけれど…" + cdatan(CDATAN_NAME, CHARA_PLAYER) + "、体には気をつけてね。疲れてない？", "I know you have to adventure, but... Take care of yourself, " + cdatan(CDATAN_NAME, CHARA_PLAYER) + ". Are you getting tired?")
 				gosub *chat_select
 				if ( chatval != 1 ) {
 					goto *chat_end
 				}
 				if ( gdata(GDATA_FLAG_DUEL_TARGET) > 0 ) {
 					snd SOUNDLIST_FAIL1
-					txt lang("決闘の呪いからは逃げられない！", "You can not run away from the duel!")
+					txt_duel2
 					goto *chat_end
 				}
-				chatMore lang("それは大変！お姉ちゃん成分を補給しないといけないわね。さぁ…こっちよ。", "That's not good! You have to replenish ane power...Follow me."), strbye
+				chatMore lang("それは大変！お姉ちゃん成分を補給しないといけないわね。さぁ…こっちよ。", "That's no good! You'll have to replenish your Sistergy... Follow me."), strbye
 				mdata(MDATA_DOWNSTAIRS_POS) = cdata(CDATA_Y, CHARA_PLAYER) * 1000 + cdata(CDATA_X, CHARA_PLAYER)
 				gdata(GDATA_TELEPORT_AREA) = AREA_LUDUS
 				gdata(GDATA_TELEPORT_LEVEL) = 5
@@ -5545,24 +5545,22 @@
 				goto *chat_end
 			}
 			if ( gdata(GDATA_FLAG_SUB_H_SISTER) == 0 ) {
-				chatlist 0, lang("面倒だ", "None of my business.")
-				chatlist 1, lang("引き受ける", "No problem.")
-				buff = lang("た、助けて" + cdatan(CDATAN_NAME, CHARA_PLAYER) + "！最近地下室にＨな妹が住み着いて…あたし狙われてるみたいなの。お願い、退治してきて！", "Help! Rogue sister was settled in the basement aimed at me. Please, come to get rid of!")
+				chatList 0, lang("面倒だ", "Too much trouble.")
+				chatList 1, lang("引き受ける", "I'll do it.")
+				buff = lang("た、助けて" + cdatan(CDATAN_NAME, CHARA_PLAYER) + "！最近地下室にＨな妹が住み着いて…あたし狙われてるみたいなの。お願い、退治してきて！", "H-Help me, " + cdatan(CDATAN_NAME,0) + "! An H Sister settled in my basement recently... I think she's aiming to kill me. Please, get rid of her!")
 				gosub *chat_select
 				if ( chatval != 1 ) {
-					chatMore lang("お姉ちゃんを見捨てるの！？は、はくじょうものぉーー！", "Are you forsake older sister!? You're a cold-hearted!"), strbye
+					chatMore lang("お姉ちゃんを見捨てるの！？は、はくじょうものぉーー！", "You'd abandon your older sister?! Y-You heartless bastard--!"), strbye
 					goto *chat_end
 				}
-				chatMore lang("ありがと。じゃあさっそく行ってきて！地下室はうちの裏からいけるわ。", "Thanks. Please come to kill the sister immediately then. You can go to basement from the back of my house."), strbye
+				chatMore lang("ありがと。じゃあさっそく行ってきて！地下室はうちの裏からいけるわ。", "Thanks. You should go immediately! You can get to the basement from the stairs at the back of my house."), strbye
 				gdata(GDATA_FLAG_SUB_H_SISTER) = 1
-				snd SOUNDLIST_WRITE1
-				txtef COLOR_GREEN
-				txt lang("ジャーナルが更新された。", "Your journal has been updated.")
+				txt_questupdate
 				cell_featset 57, 10, tile_downstairs, CELL_FEATURE_DOWNSTAIRS, 3
 				goto *chat_end
 			}
 			if ( gdata(GDATA_FLAG_SUB_H_SISTER) == 1 ) {
-				chatMore lang("早く！早くＨな妹を退治して！", "Soon! To kill the sister soon!"), strbye
+				chatMore lang("早く！早くＨな妹を退治して！", "Hurry! Hurry and get rid of the H Sister!"), strbye
 				goto *chat_end
 			}
 			if ( gdata(GDATA_FLAG_SUB_H_SISTER) == 2 ) {
@@ -5572,61 +5570,57 @@
 				nostack = 1
 				itemcreate -1, ITEM_ID_MATERIAL_KIT, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
 				inv(INV_ITEM_MATERIAL, ci) = ITEM_MATERIAL_ETHER
-				txt lang("クエストを達成した！", "You have completed the quest!")
-				snd SOUNDLIST_COMPLETE1
+				txt_questcompleted
 				txtmore
-				txt lang("何かが足元に転がってきた。", "Something is put on the ground.")
-				snd SOUNDLIST_WRITE1
-				txtef COLOR_GREEN
-				txt lang("ジャーナルが更新された。", "Your journal has been updated.")
-				chatMore lang("どうしてあたしがヒットマンに狙われてたのかしら…。とにかくありがとね！これ、少ないけどご褒美だから。", " I thank you anyway! Let me give you a little reward though."), strbye
+				txt_questitem
+				txt_questupdate
+				chatMore lang("どうしてあたしがヒットマンに狙われてたのかしら…。とにかくありがとね！これ、少ないけどご褒美だよ。", "I wonder why I was being targeted by a hitman... Regardless, thanks a lot! Here, it's not much but I want you to have this."), strbye
 				gdata(GDATA_FLAG_SUB_H_SISTER) = 1000
 				goto *chat_end
 			}
-			goto *chat_end
 		}
 		else {
 			kaiwa = rnd(4)
 			if ( kaiwa == 0 ) {
 				chatlist 0, lang("えぇ…", "What...?")
 				chatlist 1, lang("姉と和解してやろうと思う", "I'm going to reconcile with older sisters.")
-				buff = lang("お仕置きの日はもう間近に迫っているわ…人類は姉と和解しなければならないの。", "The day of punishment is just around the corner...Mankind has to reconcile great older sisters.")
+				buff = lang("お仕置きの日はもう間近に迫っているわ…人類は姉と和解しなければならないの。", "The day of punishment is fast approaching... Humankind must reconcile with the elder sisters.")
 				gosub *chat_select
 				if ( chatval == 1 ) {
-					chatMore lang("しっ！駄目よそんな言い方…姉上様たちに聞かれたら「叱られる」わよ？", "Shhh! Don't say such vague things...If great older sisters listen, you'll be scolded!"), strquestion
+					chatMore lang("しっ！駄目よそんな言い方…姉上様たちに聞かれたら「叱られる」わよ？", "Shhh! Do not speak that way... If the elder sisters find out, a scolding shall befall you!"), strquestion
 					goto *chat_end
 				}
 				goto *chat_end
 			}
 			if ( kaiwa == 1 ) {
 				chatlist 0, lang("えぇ…", "What...?")
-				chatlist 1, lang("兄も作るのでは？", "I think god will also make an older brother on a man.")
-				buff = lang("天は人の上に人を作らず、姉を作る。", "God made an older sister without making a man on a man.")
+				chatlist 1, lang("兄も作るのでは？", "What about an older brother?")
+				buff = lang("天は人の上に人を作らず、姉を作る。", "Heaven does not create one man above another man - it creates the elder sister.")
 				gosub *chat_select
 				if ( chatval == 1 ) {
-					chatMore lang("兄は前世での善行が足りなくて姉になれなかった哀しい存在なの。それでも救済の道は用意されているわ。だってそうでしょう？誰でも修行次第で人を超えて真の姉になれるのよ？", "An older brother is a sad role that who couldn't become an older sister because of lack of good deeds in his previous life. Still, there are remedies. Anyone can become a true sister beyond humanity by training."), strquestion
+					chatMore lang("兄は前世での善行が足りなくて姉になれなかった哀しい存在なの。それでも救済の道は用意されているわ。だってそうでしょう？誰でも修行次第で人を超えて真の姉になれるのよ？", "The older brother is a sad existence. He could not become an elder sister because of a lack of benevolence in his previous life. However, there is still a path leading to his salvation. Any human being with the proper training can surpass the mortal flesh and become a true elder sister."), strquestion
 					goto *chat_end
 				}
 				goto *chat_end
 			}
 			if ( kaiwa == 2 ) {
 				chatlist 0, lang("えぇ…", "What...?")
-				chatlist 1, lang("根拠になっていない", "It's not grounds.")
-				buff = lang("こんなにあなたを可愛く感じるのだから、私はあなたの姉に違いないっ！", "I'm definitely your older sister because I feel you so cute!")
+				chatlist 1, lang("根拠になっていない", "That doesn't follow.")
+				buff = lang("こんなにあなたを可愛く感じるのだから、私はあなたの姉に違いないっ！", "I must be your big sis, because I find you so gosh-darned adorable!")
 				gosub *chat_select
 				if ( chatval == 1 ) {
-					chatMore lang("照れちゃってこの〜！かわいい〜☆", "You're shy! Cute!"), strquestion
+					chatMore lang("照れちゃってこの〜！かわいい〜☆", "Aaaaggghhh, you're so *cute* when you get all bashful like that~!"), strquestion
 					goto *chat_end
 				}
 				goto *chat_end
 			}
 			if ( kaiwa == 3 ) {
 				chatlist 0, lang("えぇ…", "What...?")
-				chatlist 1, lang("何を訳のわからん事を", "I don't believe it.")
-				buff = lang("姉波動の力を信じるのよ。委ねなさい、あなたの意識を…あなたの全てを…！", "Believe in ane power. Entrust your consciousness...all of you...!")
+				chatlist 1, lang("何を訳のわからん事を", "What the hell are you talking about?")
+				buff = lang("姉波動の力を信じるのよ。委ねなさい、あなたの意識を…あなたの全てを…！", "Believe in the power of the Sistergy waves. Entrust your consciousness... your *everything*!")
 				gosub *chat_select
 				if ( chatval == 1 ) {
-					chatMore lang("恐れることはないわ…大丈夫。いずれあなたにも分かる時が来るの。必ずね。", "Don't be afraid ... it's okay. The time will come when you will understand. Be sure."), strquestion
+					chatMore lang("恐れることはないわ…大丈夫。いずれあなたにも分かる時が来るの。必ずね。", "Do not fear... all is well. The time will come when you finally understand - sooner or later."), strquestion
 					goto *chat_end
 				}
 				goto *chat_end
@@ -5635,11 +5629,11 @@
 		}
 		goto *chat_end
 	}
-	if ( _switch_val == 1066 | _switch_sw ) {
+	if ( _switch_val == CREATURE_ID_SIST_THE_OLDER_SISTER | _switch_sw ) {
 		_switch_sw = 0
 		chatlist 0, lang("えぇ…", "What...?")
-		chatlist 1, lang("教会の規模について", "Tell me the scale of the church.")
-		chatlist 2, lang("教会の成り立ちについて", "Tell me the origin of the church.")
+		chatlist 1, lang("教会の規模について", "Tell me the scope of the church.")
+		chatlist 2, lang("教会の成り立ちについて", "Tell me the origins of the church.")
 		if ( cdata(CDATA_GOLD, CHARA_PLAYER) >= 10000 ) {
 			chatlist 3, lang("金貨10000枚お布施する", "I want to donate 10,000 gold.")
 		}
@@ -5649,31 +5643,31 @@
 		if ( cdata(CDATA_MATERIAL3_COUNTER, CHARA_PLAYER) > 0 ) {
 			chatlist 5, lang("もっと立派な姉になりたい", "I want to be a better older sister.")
 		}
-		buff = lang("姉波動とは言わば宇宙の原理！波動の形でありとあらゆる物の中に偏在している。だから、" + cdatan(CDATAN_NAME, CHARA_PLAYER) + "も身を委ねればとても簡単に…そうさ、魂レベルで簡単に感じ取れるはずだ。さらに最新の研究では姉波動は健康にもいいし鬱にも一定の効果があることが分かっている。人類はもっと多くの姉波動を浴びるべきなんだ！", "Ane power is the principle of the universe! It exists in all things in the form of waves. So it's very easy if you entrust yourself...You should be able to feel it easily at the soul level. In addition, the latest research shows that ane power is good for your health and has a certain effect on melancholy. Mankind should be exposed to more ane power!")
+		buff = lang("姉波動とは言わば宇宙の原理！波動の形でありとあらゆる物の中に偏在している。だから、" + cdatan(CDATAN_NAME, CHARA_PLAYER) + "も身を委ねればとても簡単に…そうさ、魂レベルで簡単に感じ取れるはずだ。さらに最新の研究では姉波動は健康にもいいし鬱にも一定の効果があることが分かっている。人類はもっと多くの姉波動を浴びるべきなんだ！", "Sistergy is, so to speak, one of the fundamental elements of the universe! It is ubiquitous in all things in the form of waves. So, if you surrender yourself completely, " + cdatan(CDATAN_NAME, CHARA_PLAYER) + ", you will be able to feel them very easily... down to the level of your soul. Furthermore, the latest research has shown that Sistergy waves are good for one's health and have measurable effects on depression. Humanity should be exposed to more Sistergy waves!")
 		gosub *chat_select
 		if ( chatval == 1 ) {
-			chatMore lang("姉波動普及教会は、世界各地で立派な支部を作り活動の範囲を広げている。全てはお姉ちゃまたちの頑張りによるものだ。それに比べて私のなんと未熟なことか！南北ティリスにおいて姉に対する偏見を払拭することすらできていない…もっと精進しなくては。", "The Ane Power Promotion Church has established splendid branches all over the world and is expanding the scope of its activities. Everything is due to the efforts of our older sisters. How immature I am compared to that! I haven't even been able to dispel the prejudice against older sisters in North and South Tyris...I have to work harder."), strquestion
+			chatMore lang("姉波動普及教会は、世界各地で立派な支部を作り活動の範囲を広げている。全てはお姉ちゃまたちの頑張りによるものだ。それに比べて私のなんと未熟なことか！南北ティリスにおいて姉に対する偏見を払拭することすらできていない…もっと精進しなくては。", "The Sistergy Wave Promotion Church is expanding the scope of its activities by creating splendid branches in various parts of the world. It is all thanks to the efforts of our elder sisters. How immature I am in comparison to them! I have not even been able to dispel the prejudice against my elder sisters in North and South Tyris... I must be more diligent."), strquestion
 			goto *chat_end
 		}
 		if ( chatval == 2 ) {
-			chatMore lang("そうか、聞きたいか！勉強熱心だなぁ！", "Yeah, do you want to hear? You are eager to study!")
-			chatMore lang("古い伝承によれば、全ては1人の姉と神の遭遇から始まったとされている。その神は幾人もの姉たちを束ねたかのような姉波動を放っており大いなる強さとやさしさ、父性と母性すらも内包する絶対の神姉だったという。そして今日に至るまで、姉波動の力に目覚めていった姉たちが愚弟愚妹を守り導いてきた。ちなみに支部を任されている私たち修道姉クラスは、姉神と同じ三つ編みにすることが許されているんだ。", "According to old folklore, everything started with an encounter between one older sister and god. It is said that the god was an absolute god and sister who gave off strong ane power as if she had bundled many older sisters, and included great strength and kindness, as well as paternity and motherhood. And to this day, the older sisters who have awakened to the ane power have protected and guided the foolish brothers and sisters. By the way, the leader who is in charge of the branch is allowed to have the same hairstyle as the god."), strquestion
+			chatMore lang("そうか、聞きたいか！勉強熱心だなぁ！", "Oh, so you'd like to hear about our history?! You are an eager student!")
+			chatMore lang("古い伝承によれば、全ては1人の姉と神の遭遇から始まったとされている。その神は幾人もの姉たちを束ねたかのような姉波動を放っており大いなる強さとやさしさ、父性と母性すらも内包する絶対の神姉だったという。そして今日に至るまで、姉波動の力に目覚めていった姉たちが愚弟愚妹を守り導いてきた。ちなみに支部を任されている私たち修道姉クラスは、姉神と同じ三つ編みにすることが許されているんだ。", "According to ancient legend, it all began with an encounter between an elder sister and a god. The god was an absolute divine elder sister who radiated sisterly vibrations, and appeared to unite a vast number of elder sisters whilist encompassing a great strength and gentleness. To the elder sisters, this god even encompassed both paternal and maternal qualities. And to this day, the elder sisters who have awakened to the power of Sistergy waves have protected and guided their lesser siblings. By the way - we, the class of monastic elder sisters who are in charge of this branch, are allowed to wear braids of the same style as the divine elder sister."), strquestion
 			txtef COLOR_YELLOW
-			txt lang("ノルン「あのお方は確かに姉でもあるけど…」", cnvtalk("That god is certainly an older sister, but..."))
+			txt lang("ノルン「あのお方は確かに姉でもあるけど…」", "Norn: " + cnvtalk("That god is certainly an older sister, but..."))
 			goto *chat_end
 		}
 		if ( chatval == 3 ) {
-			chatMore lang("助かるよ。だが一方的に貰ってばかりでは姉の面目が立たない。これをやろう、私の手作りだ！", "Thanks. However, older sister's pride does not allow me to receive it unilaterally. I'll give you this, my handmade!"), strquestion
+			chatMore lang("助かるよ。だが一方的に貰ってばかりでは姉の面目が立たない。これをやろう、私の手作りだ！", "I appreciate your gratitude. However, my pride as an elder sister does not allow me to receive such an offering unilaterally. In return, I shall give you these - I made them myself!"), strquestion
 			cdata(CDATA_GOLD, CHARA_PLAYER) -= 10000
 			snd SOUNDLIST_PAYGOLD1
 			flt
 			itemcreate -1, ITEM_ID_ANERING, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 3
 			inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_BLESSED
-			txt lang("何かが足元に転がってきた。", "Something is put on the ground.")
+			txt_questitem
 			goto *chat_end
 		}
 		if ( chatval == 4 ) {
-			chatMore lang("いい心掛けだ" + cdatan(CDATAN_NAME, CHARA_PLAYER) + "。姉は血縁関係にあらず。姉とは心の在り方にして魂の形。勘違いしている愚弟愚妹も多いが、血に縛られず誰だって姉へと覚醒することができるのだ。さぁ、気持ちを楽にして…内なる姉波動を解き放つんだ。" + cdatan(CDATAN_NAME, CHARA_PLAYER) + "ならきっとできる…。", "Good attitude. An older sisiter is Not name of kinship. An older sister is the shape of the soul as the way of the heart! There are many foolish brothers and sisters who misunderstand, but anyone can awaken to the older sister without being bound by blood. Now, relax your feelings ... and release your inner ane power. I'm sure you can...")
+			chatMore lang("いい心掛けだ" + cdatan(CDATAN_NAME, CHARA_PLAYER) + "。姉は血縁関係にあらず。姉とは心の在り方にして魂の形。勘違いしている愚弟愚妹も多いが、血に縛られず誰だって姉へと覚醒することができるのだ。さぁ、気持ちを楽にして…内なる姉波動を解き放つんだ。" + cdatan(CDATAN_NAME, CHARA_PLAYER) + "ならきっとできる…。", "That is the way, " + cdatan(CDATAN_NAME, CHARA_PLAYER) + ". Sisterhood is not a relation bound by blood. An elder sister is a way of living and a manifestation of the soul. There are many foolish brothers and sisters who misunderstand, but anyone can awaken to the way of an elder sister without a blood kinship. Now, ease your mind... and unleash your inner Sistergy. I am sure you can do it, " + cdatan(CDATAN_NAME, CHARA_PLAYER) + ".")
 			redraw 0
 			gosub *screen_draw
 			gosub *screen_fade
@@ -5682,7 +5676,7 @@
 			picload exedir + "graphic\\face1" + devfile + ".bmp", 1
 			gsel BUFFER_SCREEN
 			snd SOUNDLIST_COMPLETE1
-			chatMore lang("よしよし、よく頑張ったな！しかし姉は一日にしてならず。果てしない姉道の第一歩を踏み出したに過ぎない！これからは" + cdatan(CDATAN_NAME, CHARA_PLAYER) + "も立派な姉として弟や妹を救済していくんだぞ。", "Alright, you did your best! However, the older sister will not be completed in a day. It's just the first step in the endless older sisters road! From now on, save your younger brother and sister as a good older sister."), strquestion
+			chatMore lang("よしよし、よく頑張ったな！しかし姉は一日にしてならず。果てしない姉道の第一歩を踏み出したに過ぎない！これからは" + cdatan(CDATAN_NAME, CHARA_PLAYER) + "も立派な姉として弟や妹を救済していくんだぞ。", "Yes, yes, you have done well! But an elder sister is not born in a single day. You have just taken the first step on your never-ending journey of sisterhood! From now on, " + cdatan(CDATAN_NAME, CHARA_PLAYER) + ", you shall be the savior of your lesser siblings as a righteous elder sister."), strquestion
 			if ( spact(SKILL_SPACT_EYE_OF_ANE - STARTING_SKILL_SPACT) == 0 ) {
 				spact(SKILL_SPACT_EYE_OF_ANE - STARTING_SKILL_SPACT) = 1
 				txtmore
@@ -5733,12 +5727,12 @@
 				anetype = lang("ねえちゃん", "ane")
 			}
 			anelv = cdata(CDATA_MATERIAL3_COUNTER, CHARA_PLAYER) / 13 + 1
-			chatMore lang("ふむ…" + cdatan(CDATAN_NAME, CHARA_PLAYER) + "の姉波動は" + anetype + "属性で、現在レベル" + anelv + "といったところだな。", "Hmm...your ane power is Lv" + anelv + " and the attribute is " + anetype + " type!")
+			chatMore lang("ふむ…" + cdatan(CDATAN_NAME, CHARA_PLAYER) + "の姉波動は" + anetype + "属性で、現在レベル" + anelv + "といったところだな。", "Hmm... your Sistergy power is Lv" + anelv + " and your attribute is \"" + anetype + "\" type!")
 			if ( anelv <= 70 ) {
-				chatMore lang("…そんな顔をするな。不安だろうが、" + cdatan(CDATAN_NAME, CHARA_PLAYER) + "なら焦らず修練していけばきっと立派な姉になれるさ。", "...Don't make such a face. You may be worried, but if you practice without rushing, you will surely be a good older sister."), strquestion
+				chatMore lang("…そんな顔をするな。不安だろうが、" + cdatan(CDATAN_NAME, CHARA_PLAYER) + "なら焦らず修練していけばきっと立派な姉になれるさ。", "...Do not fret. You may be worried, but if you take your time and focus on your studies, I am sure you will become a worthy elder sister."), strquestion
 			}
 			if ( anelv >= 70 ) {
-				chatMore lang("感心感心！よく頑張っているじゃないか。だが慢心はしないように！姉たるもの、常に妹や弟の手本となることを忘れるな。", "Impressed Impressed! You're doing your best. But don't be bragging! Remember that older sisters are always a role model for younger sisters and brothers."), strquestion
+				chatMore lang("感心感心！よく頑張っているじゃないか。だが慢心はしないように！姉たるもの、常に妹や弟の手本となることを忘れるな。", "I'm impressed! You are doing a wonderful job out there. But don't get ahead of yourself! As an elder sister, always remember to set an example for your lesser siblings."), strquestion
 			}
 			goto *chat_end
 		}
@@ -9606,7 +9600,7 @@
 			}
 			if ( gdata(GDATA_FLAG_DUEL_TARGET) > 0 ) {
 				snd SOUNDLIST_FAIL1
-				txt lang("決闘の呪いからは逃げられない！", "You can not run away from the duel!")
+				txt_duel2
 				goto *chat_end
 			}
 			if ( get_freeally() == 0 ) {
@@ -10824,7 +10818,7 @@
 				}
 				if ( gdata(GDATA_FLAG_DUEL_TARGET) > 0 ) {
 					snd SOUNDLIST_FAIL1
-					txt lang("決闘の呪いからは逃げられない！", "You can not run away from the duel!")
+					txt_duel2
 					goto *chat_end
 				}
 				txt_questupdate
@@ -10855,7 +10849,7 @@
 			}
 			if ( gdata(GDATA_FLAG_DUEL_TARGET) > 0 ) {
 				snd SOUNDLIST_FAIL1
-				txt lang("決闘の呪いからは逃げられない！", "You can not run away from the duel!")
+				txt_duel2
 				goto *chat_end
 			}
 			chatMore lang("了解した。無理せずじっくり取り組んでもらって構わない。健闘を祈っている。", "Understood. Take your time, and don't overdo things. I wish you luck."), strbye
@@ -10881,7 +10875,7 @@
 			}
 			if ( gdata(GDATA_FLAG_DUEL_TARGET) > 0 ) {
 				snd SOUNDLIST_FAIL1
-				txt lang("決闘の呪いからは逃げられない！", "You can not run away from the duel!")
+				txt_duel2
 				goto *chat_end
 			}
 			txt_questupdate
@@ -14901,7 +14895,7 @@
 						chatMore lang("もしも俺が戦いの中で迷いを見せたら。その時はお前が俺の頬をひっぱたいてくれ。…それだけだ。行くぞ！", "If I show any hesitation during this fight, do me a favor and smack me across the face. ...That's all. Let's roll!")
 						if ( gdata(GDATA_FLAG_DUEL_TARGET) > 0 ) {
 							snd SOUNDLIST_FAIL1
-							txt lang("決闘の呪いからは逃げられない！", "You can not run away from the duel!")
+							txt_duel2
 							goto *chat_end
 						}
 						mdata(MDATA_DOWNSTAIRS_POS) = cdata(CDATA_Y, CHARA_PLAYER) * 1000 + cdata(CDATA_X, CHARA_PLAYER)
