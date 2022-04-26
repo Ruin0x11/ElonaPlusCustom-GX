@@ -22068,11 +22068,11 @@
 		_switch_sw = 0
 		if ( cdata(CDATA_ID, tc) == CREATURE_ID_SIST_THE_OLDER_SISTER | cdata(CDATA_ID, tc) == CREATURE_ID_MIKRAANESIS | cdata(CDATA_ID, tc) == CREATURE_ID_URCAGUARY | cdata(CDATA_ID, tc) == CREATURE_ID_LAZY_OLDER_SISTER | cdata(CDATA_ID, tc) == CREATURE_ID_OLDER_SISTER2 | cdata(CDATA_ID, tc) == CREATURE_ID_OLDER_DOG_SISTER | cdata(CDATA_ID, tc) == CREATURE_ID_OLDER_SISTER ) {
 			txtef COLOR_PURPLE
-			txt lang(name(cc) + "の眼差しは" + name(tc) + "の姉波動に防がれた！", name(tc) + " defended with ane power!")
+			txt lang(name(cc) + "の眼差しは" + name(tc) + "の姉波動に防がれた！", name(tc) + " defended against " + name(cc) + your(cc) + " gaze with sisterly energy!")
 			goto *effect_end
 		}
 		txtef COLOR_RED
-		txt lang(name(cc) + "は勝手に" + name(tc) + "の姉ヅラをして、勝手に癒されている！", name(cc) + " became the older sister of " + name(tc) + " without permission, And " + name(cc) + " was healed for some reason.")
+		txt lang(name(cc) + "は勝手に" + name(tc) + "の姉ヅラをして、勝手に癒されている！", name(cc) + " became the older sister of " + name(tc) + " without permission, and " + was(cc) + " healed for some reason.")
 		repeat 8 + 8
 			if ( cdata(STARTING_CDATA_BUFF + cnt * ARRAY_CDATA_BUFF, cc) == BUFF_NONE ) {
 				break
@@ -22098,7 +22098,7 @@
 		healhp cc, anepower
 		if ( findbuff(cc, BUFF_ABYSS_IN_THE_EYE) != (-1) ) {
 			snd SOUNDLIST_OFFER1
-			txt lang(name(cc) + "の瞳孔が開いた。", "Touched portion is turned into dust.")
+			txt lang(name(cc) + "の瞳孔が開いた。", name(cc) + your(cc) + " pupils dilated.")
 			dmghp tc, sdata(SKILL_ATTR_MAG, cc) / 6 + rnd(5 + sdata(SKILL_ATTR_MAG, cc) / 6)
 			healhp cc, sdata(SKILL_ATTR_MAG, cc) / 2 + rnd(5 + sdata(SKILL_ATTR_MAG, cc) / 2)
 			dmgmp tc, sdata(SKILL_ATTR_MAG, cc) / 6 + rnd(5 + sdata(SKILL_ATTR_MAG, cc) / 6)

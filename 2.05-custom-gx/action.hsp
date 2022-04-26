@@ -8958,7 +8958,14 @@
 				cdata(CDATA_HUNGER, tc) += 1000
 			}
 			if ( tc == CHARA_PLAYER ) {
-				gdata(GDATA_FLAG_SLEEP_PREVENTION) += 3 + rnd(3)
+				if ( TweakData(TWEAK_GAMEPLAY_CG_DISABLE_SLEEP_PREVENTION, TWEAK_CATEGORY_GAMEPLAY) == TRUE ) {
+					if ( gdata(GDATA_SLEEP) >= 0 ) {
+						gdata(GDATA_SLEEP) -= 5
+					}
+				}
+				else {
+					gdata(GDATA_FLAG_SLEEP_PREVENTION) += 3 + rnd(3)
+				}
 				gdata(GDATA_FLAG_SMOKING_FREQUENCY)++
 				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_CIGARETTE ) {
 					skillexp SKILL_ATTR_PER, tc, 10000 + inv(INV_ITEM_LEVEL, ci) * 800
@@ -9001,7 +9008,7 @@
 			}
 		}
 		else {
-			txt lang(" *むしゃむしゃ* ", "*chomp*")
+			txt lang(" *むしゃむしゃ* ", " *chomp* ")
 			snd SOUNDLIST_EAT1
 			if ( inv(INV_ITEM_LEVEL, ci) > 10 ) {
 				cdata(CDATA_TOBACCO_DEPENDENCE, tc) -= inv(INV_ITEM_LEVEL, ci) - 10
