@@ -1,56 +1,59 @@
 	goto *mock
 
+#defcfunc pic2xy int pic2xy_pic
+    locvar_x = pic2xy_pic \ 33
+    locvar_y = pic2xy_pic / 33
+    return 0
+
 *mock
-	flt
-	nostack = 1
-	itemcreate CHARA_PLAYER, ITEM_ID_FORBIDDEN_MEAT, -1, -1, 0
-	inv(INV_ITEM_NUM, ci) = 5
-	inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
-	locvar_ci_normal = ci
+    buff = ""
+    notesel buff
 
-	flt
-	nostack = 1
-	itemcreate CHARA_PLAYER, ITEM_ID_FORBIDDEN_MEAT, -1, -1, 0
-	inv(INV_ITEM_NUM, ci) = 5
-	inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_CURSED
-	locvar_ci_cursed = ci
+    dim rdimi, 5, 33 * 33
+    sdim rdims, 40, 5, 33 * 33
 
-	flt
-	nostack = 1
-	itemcreate CHARA_PLAYER, ITEM_ID_FORBIDDEN_MEAT, -1, -1, 0
-	inv(INV_ITEM_NUM, ci) = 5
-	inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_BLESSED
-	locvar_ci_blessed = ci
-
-	cdata(CDATA_SEX, CHARA_PLAYER) = SEX_FEMALE
-	cdatan(CDATAN_NEWSEX, CHARA_PLAYER) = "ray"
-
-#define printhis \
-	color 0, 0, 0:font 14:print "his=" + his(CHARA_PLAYER, 1) + " his2=" + his2(CHARA_PLAYER) + " his3=" + his3(CHARA_PLAYER) + " " + cdatan(CDATAN_NEWSEX, CHARA_PLAYER) + " " + cdata(CDATA_SEX, CHARA_PLAYER):addbuff CHARA_PLAYER, BUFF_CLEAR_MIND, 100, 20
-
-	printhis
-
-	repeat 2
-		ci = locvar_ci_normal
-		cc = CHARA_PLAYER
-		gosub *insta_eat
-		printhis
-	loop
-
-    repeat MAX_BUFF
-		addbuff CHARA_PLAYER, cnt, 100, 100
+    repeat MAX_CREATURE_ID
+        rc = 1
+        dbid = cnt
+        dbmode = DBMODE_SET
+        gosub *db_creature2
+        logmes "name=" + cdatan(CDATAN_NAME, rc) + " cid=" + cdata(CDATA_ID, rc) + " pic=" + cdata(CDATA_PIC, rc) + " cnt=" + cnt
+        index = cdata(CDATA_PIC, rc)
+        rdimi(0, index) = TRUE
+        rdimi(1, index) = dbid
+        rdims(0, index) = cdatan(CDATAN_NAME, rc)
     loop
 
-	repeat 2
-		ci = locvar_ci_cursed
-		cc = CHARA_PLAYER
-		gosub *insta_eat
-		printhis
-	loop
+    noteadd "return {"
 
-	repeat 2
-		ci = locvar_ci_blessed
-		cc = CHARA_PLAYER
-		gosub *insta_eat
-		printhis
-	loop
+    locvar_variant = "plus"
+
+    noteadd "variant = \"" + locvar_variant + "\","
+    noteadd "version = \"" + VERSION_STRING + "\","
+
+    repeat 33 * 34
+        if ( cnt >= 33 ) {
+            if ( chipc(CHIPC_HEIGHT, cnt - 33) > inf_tiles ) {
+                continue
+            }
+        }
+        noteadd "{"
+        if ( rdimi(0, cnt) ) {
+            noteadd "name = \"" + rdims(0, cnt) + "\","
+            noteadd "has_name = true,"
+        }
+        else {
+            noteadd "name = \"chara" + cnt + "\","
+        }
+        i = pic2xy(cnt)
+        noteadd "index = " + cnt + ","
+        noteadd "x = " + (locvar_x * inf_tiles) + ","
+        noteadd "y = " + (locvar_y * inf_tiles) + ","
+        noteadd "w = " + chipc(CHIPC_WIDTH, cnt) + ","
+        noteadd "h = " + chipc(CHIPC_HEIGHT, cnt) + ","
+        noteadd "},"
+    loop
+    noteadd "}"
+
+    notesave exedir + locvar_variant + "_" + VERSION_STRING + ".rachel"
+    stop
