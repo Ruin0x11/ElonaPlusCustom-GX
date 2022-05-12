@@ -9,51 +9,43 @@
     buff = ""
     notesel buff
 
-    dim rdimi, 5, 33 * 33
-    sdim rdims, 40, 5, 33 * 33
+    dim rdimi, 5, 33 * 38
+    sdim rdims, 40, 5, 33 * 38
 
-    repeat MAX_CREATURE_ID
-        rc = 1
+    repeat MAX_ITEM_ID - 3
         dbid = cnt
-        dbmode = DBMODE_SET
-        gosub *db_creature2
-        logmes "name=" + cdatan(CDATAN_NAME, rc) + " cid=" + cdata(CDATA_ID, rc) + " pic=" + cdata(CDATA_PIC, rc) + " cnt=" + cnt
-        index = cdata(CDATA_PIC, rc)
+        index = ipicref(dbid)
         rdimi(0, index) = TRUE
         rdimi(1, index) = dbid
-        rdims(0, index) = cdatan(CDATAN_NAME, rc)
+        rdims(0, index) = cnvitemname(dbid)
     loop
 
     noteadd "return {"
 
-    locvar_variant = "plus"
-
-    noteadd "variant = \"" + locvar_variant + "\","
-    noteadd "version = \"" + VERSION_STRING + "\","
-
-    repeat 33 * 34
+    repeat 33 * 38
         if ( cnt >= 33 ) {
-            if ( chipc(CHIPC_HEIGHT, cnt - 33) > inf_tiles ) {
+            if ( chipi(CHIPI_HEIGHT, cnt - 33) > inf_tiles ) {
                 continue
             }
         }
         noteadd "{"
         if ( rdimi(0, cnt) ) {
             noteadd "name = \"" + rdims(0, cnt) + "\","
-            noteadd "has_name = true,"
         }
         else {
-            noteadd "name = \"chara" + cnt + "\","
+            noteadd "name = \"item" + cnt + "\","
+            noteadd "has_name = false,"
         }
         i = pic2xy(cnt)
         noteadd "index = " + cnt + ","
+        noteadd "type = \"item\","
         noteadd "x = " + (locvar_x * inf_tiles) + ","
         noteadd "y = " + (locvar_y * inf_tiles) + ","
-        noteadd "w = " + chipc(CHIPC_WIDTH, cnt) + ","
-        noteadd "h = " + chipc(CHIPC_HEIGHT, cnt) + ","
+        noteadd "w = " + chipi(CHIPI_WIDTH, cnt) + ","
+        noteadd "h = " + chipi(CHIPI_HEIGHT, cnt) + ","
         noteadd "},"
     loop
     noteadd "}"
 
-    notesave exedir + locvar_variant + "_" + VERSION_STRING + ".rachel"
+    notesave exedir + locvar_variant + "_" + VERSION_STRING + "_item.rachel"
     stop
