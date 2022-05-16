@@ -195,6 +195,15 @@
     hl_pushfunction *lua_elona_fltChara
     hl_setfield -2, "fltChara"
 
+    hl_pushfunction *lua_elona_cbit
+    hl_setfield -2, "cbit"
+
+    hl_pushfunction *lua_elona_cbitmod
+    hl_setfield -2, "cbitmod"
+
+    hl_pushfunction *lua_elona_dmgcon
+    hl_setfield -2, "dmgcon"
+
     pushDim(cdata)
     pushDim(mdata)
     pushDim(cdatan)
@@ -504,6 +513,36 @@
 
 *lua_elona_fltChara
     gosub *fltChara
+	return 0
+
+*lua_elona_cbit
+    if hl_gettop() < 2 {
+        luaError("Invalid argument count")
+    }
+    p = hl_tointeger(1)
+    rc = hl_tointeger(2)
+	retval = cbit(p, rc)
+    hl_pushinteger(retval)
+    return 1
+
+*lua_elona_cbitmod
+    if hl_gettop() < 3 {
+        luaError("Invalid argument count")
+    }
+    p = hl_tointeger(1)
+    rc = hl_tointeger(2)
+    val = hl_toboolean(3)
+	cbitmod p, rc, val
+	return 0
+
+*lua_elona_dmgcon
+    if hl_gettop() < 3 {
+        luaError("Invalid argument count")
+    }
+    rc = hl_tointeger(1)
+    con = hl_tointeger(2)
+    p = hl_tointeger(3)
+	dmgcon rc, con, p
 	return 0
 
 #endif
