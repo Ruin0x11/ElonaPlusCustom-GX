@@ -1,3 +1,18 @@
+# 2.12.1.1
+
+## Added
+- Added translations for the rest of Act 3's story cutscenes. (#100)
+
+## Changed
+- Reworked parts of the story cutscenes to follow the Japanese translation more closely. (#100)
+
+## Fixed
+- Fixed the SP cost of Cooking and Fishing. (#106)
+- Fixed a crash caused by urination from fear. (#102, #105)
+- Fixed the display of spell power in menus. (#87, #99)
+
+Thanks to @AHairyGameDev and @air1068 for contributing.
+
 # 2.12.1.0
 
 ## Added
