@@ -12106,46 +12106,6 @@
 
         preparePicItem p(1), inv(INV_ITEM_COL, p)
 
-		gsel 1
-		color 0
-		boxf 0, 960, chipi(CHIPI_WIDTH, p(1)), chipi(CHIPI_HEIGHT, p(1)) + 960
-		if ( p(1) == xy2pic(0, 16) ) {
-			gmode 2
-			pos 0, 960
-			gcopy 1, 0, 768, inf_tiles, inf_tiles
-			pos 0, 1008
-			gzoom 22, 20, 5, chipc(CHIPC_X, inv(INV_ITEM_COL, p)) + 8, chipc(CHIPC_Y, inv(INV_ITEM_COL, p)) + 4 + (chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, p)) > inf_tiles) * 8, chipc(CHIPC_WIDTH, inv(INV_ITEM_COL, p)) - 16, chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, p)) - 8 - (chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, p)) > inf_tiles) * 10, 1
-			pos 6, 974
-			gcopy 1, 0, 1008, 22, 20
-			gsel selcur
-		}
-		else {
-			if ( p(1) == xy2pic(30, 33) ) {
-				pos 8, 1058 - chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, p))
-				gcopy 5, chipc(CHIPC_X, inv(INV_ITEM_COL, p)) + 8, chipc(CHIPC_Y, inv(INV_ITEM_COL, p)) + 2, chipc(CHIPC_WIDTH, inv(INV_ITEM_COL, p)), chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, p))
-				gmode 2
-				gsel selcur
-			}
-			else {
-				if ( p(1) == xy2pic(3, 16) ) {
-					pos 8, 1058 - chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, p))
-					gcopy 5, chipc(CHIPC_X, inv(INV_ITEM_COL, p)) + 8, chipc(CHIPC_Y, inv(INV_ITEM_COL, p)) + 2, chipc(CHIPC_WIDTH, inv(INV_ITEM_COL, p)) - 16, chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, p)) - 8
-					gmode 4, , , 150
-					color 0, 0, 0
-					pos 0, 960 + (chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, p)) == inf_tiles) * 48
-					gcopy 1, 144, 768 + (chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, p)) > inf_tiles) * 48, inf_tiles, chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, p)) + (chipc(CHIPC_HEIGHT, inv(INV_ITEM_COL, p)) > inf_tiles) * 48
-					gmode 2
-					gsel selcur
-				}
-				else {
-					pos 0, 960
-					gcopy 1, chipi(CHIPI_X, p(1)), chipi(CHIPI_Y, p(1)), chipi(CHIPI_WIDTH, p(1)), chipi(CHIPI_HEIGHT, p(1))
-					gfini chipi(CHIPI_WIDTH, p(1)), chipi(CHIPI_HEIGHT, p(1))
-					gfdec2 c_col(0, inv(INV_ITEM_COL, p)), c_col(1, inv(INV_ITEM_COL, p)), c_col(2, inv(INV_ITEM_COL, p))
-					gsel selcur
-				}
-			}
-		}
 		pos wx + 37, wy + 69 + cnt * 19
 		gmode 2, chipi(CHIPI_WIDTH, p(1)), chipi(CHIPI_HEIGHT, p(1))
 		grotate 1, 0, 960, 0, chipi(CHIPI_WIDTH, p(1)) * inf_tiles / chipi(CHIPI_HEIGHT, p(1)), inf_tiles
