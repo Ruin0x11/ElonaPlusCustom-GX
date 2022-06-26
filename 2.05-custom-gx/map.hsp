@@ -515,12 +515,17 @@
 			gdata(GDATA_FLAG_COLLECTED_WISHES) = 0
 		}
 		cdata(CDATA_POWER_GAUGE, cnt) = 0
+		if ( cnt < MAX_CHARA_FOLLOWER ) {
+			if ( cdata(CDATA_ROLE_SHOP_LEVEL, cnt) > 0 ) {
+				cdata(CDATA_POWER_GAUGE, cnt) = 3
+			}
+		}
 		cdata(CDATA_DRAIN_HP, cnt) = 0
-		gdata(STARTING_GDATA_FLAG + 379) = 0
+		gdata(GDATA_FLAG_MINEFIELD_QUEST_LEVEL) = 0
 		if ( cdata(CDATA_EXIST, cnt) != CHAR_STATE_ALIVE ) {
 			continue
 		}
-		if ( cnt >= MAX_CHARA_FOLLOWER ) {
+		if ( cdata(CDATA_ALLIED, cnt) == 100 ) {
 			cdata(CDATA_THIRST, cnt) = 10000 + 1000
 		}
 		cdata(CDATA_CONDITION_GRAVITY, cnt) = 0
@@ -1159,6 +1164,9 @@
 			continue
 		}
 		if ( inv(INV_ITEM_ID, cdata(CDATA_AI_ITEM, cnt)) == ITEM_ID_ROD_LIGHTNING_BALL | inv(INV_ITEM_ID, cdata(CDATA_AI_ITEM, cnt)) == ITEM_ID_ROD_ECLIPSE | inv(INV_ITEM_ID, cdata(CDATA_AI_ITEM, cnt)) == ITEM_ID_ROD_FIRE_WALL | inv(INV_ITEM_ID, cdata(CDATA_AI_ITEM, cnt)) == ITEM_ID_ROD_ACID_GROUND | inv(INV_ITEM_ID, cdata(CDATA_AI_ITEM, cnt)) == ITEM_ID_ROD_LIGHTNING_BOLT | inv(INV_ITEM_ID, cdata(CDATA_AI_ITEM, cnt)) == ITEM_ID_ROD_FIRE_BOLT | inv(INV_ITEM_ID, cdata(CDATA_AI_ITEM, cnt)) == ITEM_ID_ROD_ICE_BOLT | inv(INV_ITEM_ID, cdata(CDATA_AI_ITEM, cnt)) == ITEM_ID_ROD_MAGIC_MISSILE | inv(INV_ITEM_ID, cdata(CDATA_AI_ITEM, cnt)) == ITEM_ID_ROD_POISON_BALL | inv(INV_ITEM_ID, cdata(CDATA_AI_ITEM, cnt)) == ITEM_ID_ROD_MAGIC_LASER | inv(INV_ITEM_ID, cdata(CDATA_AI_ITEM, cnt)) == ITEM_ID_ROD_BUBBLE_BALL ) {
+			continue
+		}
+		if ( inv(INV_ITEM_ID, cdata(CDATA_AI_ITEM, cnt)) == ITEM_ID_LASER_BAZOOKA | inv(INV_ITEM_ID, cdata(CDATA_AI_ITEM, cnt)) == ITEM_ID_M202_SPECIAL | inv(INV_ITEM_ID, cdata(CDATA_AI_ITEM, cnt)) == ITEM_ID_PANZERFAUST_X | inv(INV_ITEM_ID, cdata(CDATA_AI_ITEM, cnt)) == ITEM_ID_CF_POTIOMAN | inv(INV_ITEM_ID, cdata(CDATA_AI_ITEM, cnt)) == ITEM_ID_CRUSH_POTIOMAN | inv(INV_ITEM_ID, cdata(CDATA_AI_ITEM, cnt)) == ITEM_ID_BATTLE_POTIOMAN | inv(INV_ITEM_ID, cdata(CDATA_AI_ITEM, cnt)) == ITEM_ID_SUPER_POTIOMAN ) {
 			continue
 		}
 		cdata(CDATA_AI_ITEM, cnt) = 0
@@ -8983,7 +8991,6 @@
 		if ( gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 >= mdata(MDATA_RENEW) ) {
 			if ( mdata(MDATA_NO_RENEW) == 0 ) {
 				if ( mdata(MDATA_RENEW) != 0 ) {
-					snd SOUNDLIST_AMMO
 					if ( gdata(GDATA_AREA) == AREA_DERPHY ) {
 						if ( gdata(GDATA_LEVEL) == 3 ) {
 							map_reload "thiefguild"

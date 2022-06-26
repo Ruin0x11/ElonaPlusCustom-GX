@@ -1018,24 +1018,26 @@
 		color 0, 0, 0
 		bmes "loop" + looplev + "、sub" + sublev + " ", 235, 235, 235
 	}
-	pos inf_clockw + 80, inf_clocky + 17
-	if ( gdata(GDATA_FLAG_DESTINY_LETTERS) < 7 ) {
-		color 0, 0, 0
-    }
-    else {
-		color 0, 80, 180
-    }
-    locvar_s = ""
-	if ( TweakData(TWEAK_GAMEPLAY_DISABLE_STUDY_DAYS, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
-		locvar_s += _biyori(gdata(GDATA_FLAG_STUDY_BONUS_KIND))
+	if ( casino == 0 ) {
+		pos inf_clockw + 80, inf_clocky + 17
+		if ( gdata(GDATA_FLAG_DESTINY_LETTERS) < 7 ) {
+			color 0, 0, 0
+		}
+		else {
+			color 0, 80, 180
+		}
+		locvar_s = ""
+		if ( TweakData(TWEAK_GAMEPLAY_DISABLE_STUDY_DAYS, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
+			locvar_s += _biyori(gdata(GDATA_FLAG_STUDY_BONUS_KIND))
+		}
+		if ( TweakData(TWEAK_GAMEPLAY_DISABLE_STUDY_DAYS, TWEAK_CATEGORY_GAMEPLAY) == FALSE & TweakData(TWEAK_GAMEPLAY_DISABLE_DESTINY, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
+			locvar_s += " / "
+		}
+		if ( TweakData(TWEAK_GAMEPLAY_DISABLE_DESTINY, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
+			locvar_s += _destiny(gdata(GDATA_FLAG_DESTINY_LETTERS))
+		}
+		bmes locvar_s, 255, 255, 255
 	}
-	if ( TweakData(TWEAK_GAMEPLAY_DISABLE_STUDY_DAYS, TWEAK_CATEGORY_GAMEPLAY) == FALSE & TweakData(TWEAK_GAMEPLAY_DISABLE_DESTINY, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
-		locvar_s += " / "
-	}
-	if ( TweakData(TWEAK_GAMEPLAY_DISABLE_DESTINY, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
-		locvar_s += _destiny(gdata(GDATA_FLAG_DESTINY_LETTERS))
-	}
-	bmes locvar_s, 255, 255, 255
 	if ( cdata(CDATA_FRIENDSHIP, CHARA_PLAYER) == (-2) ) {
 		pos inf_clockw + 6, inf_clocky + 50
 		color 0, 0, 0
@@ -2530,6 +2532,10 @@
 	}
 	if ( _switch_val == ANIMATION_POLLEN_CANNON | _switch_sw ) {
 		_switch_sw = 0
+		_switch_sw++
+	}
+	if ( _switch_val == ANIMATION_LASER_BAZOOKA | _switch_sw ) {
+		_switch_sw = 0
 		if ( synccheck(cc, -1) == 0 ) {
 			goto *anime_SWEND1
 		}
@@ -2587,6 +2593,10 @@
 		if ( animeid == ANIMATION_POLLEN_CANNON ) {
 			preparePicItem xy2pic(12, 36), COLOR_DEFAULT
 			snd SOUNDLIST_BOLT1
+		}
+		if ( animeid == ANIMATION_LASER_BAZOOKA ) {
+			preparePicItem xy2pic(36, 1), COLOR_DEFAULT
+			snd SOUNDLIST_GUN10
 		}
 		if ( animeid == ANIMATION_UNUSED1 ) {
 			preparePicItem xy2pic(1, 0), aniciol

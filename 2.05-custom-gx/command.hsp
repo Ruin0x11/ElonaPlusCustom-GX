@@ -1996,7 +1996,7 @@
 	}
 	if ( cbit(CHARA_BIT_RES_ELEMENTAL, tc) == TRUE ) {
 		list(0, listmax) = 1, 99999
-		listn(0, listmax) = locvar_com_trait_bit + lang("あなたは属性攻撃で傷つかない", "You are not hurt by attribute attacks.")
+		listn(0, listmax) = locvar_com_trait_bit + lang("あなたはお互いの属性攻撃を中和する", "You neutralize each other's attribute attacks.")
 		listmax++
 	}
 	if ( cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) == TRUE ) {
@@ -2194,6 +2194,16 @@
 	if ( cbit(CHARA_BIT_SHOP_BUSINESS_SMILE, tc) == 1 ) {
 		list(0, listmax) = 1, 99998
 		listn(0, listmax) = lang("[営業]", "[SHOP]") + lang("あなたの営業スマイルは完璧だ[悩殺攻撃を会得]", "You got a business smile. [Learns Bewitch]")
+		listmax++
+	}
+	if ( cdata(CDATA_ROLE_SHOP_LEVEL, tc) > 0 ) {
+		list(0, listmax) = 1, 99998
+		listn(0, listmax) = lang("[性格]", "[CHARA]") + lang("あなたは" + _seikaku(cdata(CDATA_ROLE_SHOP_LEVEL, tc)) + "だ[マップ開始時の初期パワーゲージ+3]", "You are " + _seikaku(cdata(CDATA_ROLE_SHOP_LEVEL, tc)) + ". [Power gauge +3 at the start of the map]")
+		listmax++
+	}
+	if ( cdata(CDATA_ROLE_RESTOCK, tc) > 0 ) {
+		list(0, listmax) = 1, 99998
+		listn(0, listmax) = lang("[性格]", "[CHARA]") + lang("あなたには" + _seikaku(cdata(CDATA_ROLE_RESTOCK, tc)) + "な一面もある[被ダメージ時にパワーゲージ+1]", "You have a " + _seikaku(cdata(CDATA_ROLE_SHOP_LEVEL, tc)) + " aspect. [Power gauge +1 when damaged]")
 		listmax++
 	}
 	if ( dump_return == 1 ) {
@@ -11557,6 +11567,17 @@
 						continue
 					}
 				}
+				if ( invctrl(1) == 26 ) {
+					if ( ibit(ITEM_BIT_ALIVE, cnt) != TRUE ) {
+						continue
+					}
+					if ( inv(INV_ITEM_PARAM1, cnt) >= 15 ) {
+						continue
+					}
+					if ( inv(INV_ITEM_PARAM2, cnt) >= calcexpalive(inv(INV_ITEM_PARAM1, cnt)) ) {
+						continue
+					}
+				}
 			}
 			if ( invctrl == 24 ) {
 				if ( invctrl(1) == 0 ) {
@@ -12964,6 +12985,12 @@
 				rc = tc
 				gosub *chara_item
 				if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_ITEM_ROD ) {
+					cdata(CDATA_AI_ITEM, tc) = ci
+				}
+				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_LASER_BAZOOKA | inv(INV_ITEM_ID, ci) == ITEM_ID_M202_SPECIAL | inv(INV_ITEM_ID, ci) == ITEM_ID_PANZERFAUST_X ) {
+					cdata(CDATA_AI_ITEM, tc) = ci
+				}
+				if ( inv(INV_ITEM_ID, ci) == ITEM_ID_CF_POTIOMAN | inv(INV_ITEM_ID, ci) == ITEM_ID_CRUSH_POTIOMAN | inv(INV_ITEM_ID, ci) == ITEM_ID_BATTLE_POTIOMAN | inv(INV_ITEM_ID, ci) == ITEM_ID_SUPER_POTIOMAN ) {
 					cdata(CDATA_AI_ITEM, tc) = ci
 				}
 				if ( inv(INV_ITEM_KNOWN, ci) == ITEM_KNOWN_FULL ) {

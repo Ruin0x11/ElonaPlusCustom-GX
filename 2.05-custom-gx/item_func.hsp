@@ -863,6 +863,9 @@
 	if ( inv(INV_ITEM_ID, itemowner_itemid) == ITEM_ID_MEMORY_FRAGMENT | inv(INV_ITEM_ID, itemowner_itemid) == ITEM_ID_MEMORY_CONVERTER ) {
 		locvar_itemowner_s += lang("《" + skillname(inv(INV_ITEM_PARAM1, itemowner_itemid)) + "》の", " <Art of " + skillname(inv(INV_ITEM_PARAM1, itemowner_itemid)) + ">")
 	}
+	if ( inv(INV_ITEM_ID, itemowner_itemid) == ITEM_ID_SPIRITIUM ) {
+		locvar_itemowner_s += lang("《" + _seikaku(inv(INV_ITEM_PARAM1, itemowner_itemid)) + "》の", "<" + _seikaku(inv(INV_ITEM_PARAM1, itemowner_itemid)) + "> ")
+	}
 	if ( locvar_itemowner_a == FILTER_FURNITURE_ALTAR ) {
 		if ( inv(INV_ITEM_GOD, itemowner_itemid) != GOD_EYTH ) {
 			locvar_itemowner_s += lang(godname(inv(INV_ITEM_GOD, itemowner_itemid)) + "の", " <" + godname(inv(INV_ITEM_GOD, itemowner_itemid)) + ">")
@@ -2036,8 +2039,8 @@
 	inv(INV_ITEM_WEIGHT, remain_make_itemid) = cdata(CDATA_WEIGHT, remain_make_arg2) + 1
 	if ( inv(INV_ITEM_ID, remain_make_itemid) == ITEM_ID_CORPSE ) {
 		if (TweakData(TWEAK_GAMEPLAY_HARVEST_MOON_RANCH, 2) == 1) {
-			inv(INV_ITEM_WEIGHT, remain_make_itemid) = limit(inv(INV_ITEM_WEIGHT, remain_make_itemid) / 10 * 200, 100, 50000)
-			inv(INV_ITEM_VALUE, remain_make_itemid) = limit((inv(INV_ITEM_WEIGHT, remain_make_itemid) + 12000) / 4, 3000, 15000)
+			inv(INV_ITEM_WEIGHT, remain_make_itemid) = limit(inv(INV_ITEM_WEIGHT, remain_make_itemid) / 10 * 500, 500, 50000)
+			inv(INV_ITEM_VALUE, remain_make_itemid) = limit((inv(INV_ITEM_WEIGHT, remain_make_itemid) + 20000) / 7, 2700, 10000)
 		}
 		else {
 			inv(INV_ITEM_WEIGHT, remain_make_itemid) = limit(250 * ((inv(INV_ITEM_WEIGHT, remain_make_itemid) + 100) / 100) + 500, 500, 100000)

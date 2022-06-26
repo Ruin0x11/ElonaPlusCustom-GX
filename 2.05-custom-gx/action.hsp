@@ -1329,7 +1329,7 @@
 
 *act_zap
 	if ( cc != CHARA_PLAYER ) {
-		if ( rnd(2) == 0 | cdata(CDATA_TARGET, cc) == 0 | cdata(CDATA_TARGET, cc) == 0 | cdata(CDATA_DIRECTIVE_MODE, cc) == DIRECTIVE_MODE_DEFENSIVE ) {
+		if ( rnd(2) == 0 | cdata(CDATA_TARGET, cc) == 0 | cdata(CDATA_TARGET, cc) == 0 | cdata(CDATA_DIRECTIVE_MODE, cc) == DIRECTIVE_MODE_DEFENSIVE | cdata(CDATA_DIRECTIVE_MODE, cc) == DIRECTIVE_MODE_TALKING ) {
 			goto *ai_action
 		}
 	}
@@ -3405,6 +3405,10 @@
 		flt
 		itemcreate -1, 422 + rnd(6), cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 1
 	}
+	if ( f == 0 ) {
+		flt
+		itemcreate -1, ITEM_ID_SPIRITIUM, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
+	}
 	f = 0
 	if ( inv(INV_ITEM_ID, ri) == ITEM_ID_CHEST ) {
 		if ( rnd(2) == 0 ) {
@@ -4113,10 +4117,8 @@
 		if ( cdata(CDATA_DRAIN_HP, cc) < 99 ) {
 			cdata(CDATA_DRAIN_HP, cc)++
 		}
-	}
-	if ( cbit(CHARA_BIT_SANDBAG, tc) != 1 ) {
-		if ( cdata(CDATA_GAUGE_COOLDOWN, cc) == 0 ) {
-			cdata(CDATA_GAUGE_COOLDOWN, cc) = 1
+		cdata(CDATA_GAUGE_COOLDOWN, cc) = 1
+		if ( cbit(CHARA_BIT_SANDBAG, tc) != TRUE ) {
 			cdata(CDATA_POWER_GAUGE, cc) += 2
 			if ( cdata(CDATA_ID, cc) == CREATURE_ID_TALON_SOLDIER ) {
 				cdata(CDATA_POWER_GAUGE, cc) += 2
@@ -6373,6 +6375,12 @@
 	goto *turn_end
 
 *act_use
+	if ( cc != CHARA_PLAYER ) {
+		if ( rnd(2) == 0 | cdata(CDATA_TARGET, cc) == 0 | cdata(CDATA_TARGET, cc) == 0 | cdata(CDATA_DIRECTIVE_MODE, cc) == DIRECTIVE_MODE_DEFENSIVE | cdata(CDATA_DIRECTIVE_MODE, cc) == DIRECTIVE_MODE_TALKING ) {
+			cdata(CDATA_AI_ITEM, cc) = ci
+			goto *ai_action
+		}
+	}
 	procid = (procid + 1) \ 4
 	proclist(procid) = "act_use" + " ct:" + ct
 	screenupdate = -1
@@ -6425,10 +6433,12 @@
 		inv(INV_ITEM_NEXT_PERIOD, ci) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 + inv(INV_ITEM_INTERVAL, ci)
 	}
 	if ( ibit(ITEM_BIT_CHARGE_ITEM, ci) == 1 ) {
-		if ( inv(INV_ITEM_CHARGE, ci) <= 0 ) {
-			txt lang("それはもう使えない。", "It's out of charge.")
-			gosub *screen_draw
-			goto *pc_turn
+		if ( cc == CHARA_PLAYER ) {
+			if ( inv(INV_ITEM_CHARGE, ci) <= 0 ) {
+				txt lang("それはもう使えない。", "It's out of charge.")
+				gosub *screen_draw
+				goto *pc_turn
+			}
 		}
 		item_separate ci
 		inv(INV_ITEM_CHARGE, ci)--
@@ -8373,6 +8383,100 @@
 		goto *act_use_SWEND1
 		_switch_sw++
 	}
+	if ( _switch_val == EFFECT_CORK_PACK | _switch_sw ) {
+		_switch_sw = 0
+		snd SOUNDLIST_TM2_SWITCH001
+		gdata(GDATA_FLAG_TOTAL_POTION_PLUGS) += 100
+		txtef COLOR_GREEN
+		txt lang("ポーションの栓を100個手に入れた。[残り" + gdata(GDATA_FLAG_TOTAL_POTION_PLUGS) + "個]", name(0) + " get" + _s(0) + " 100 potion plugs. [Remaining plug " + gdata(GDATA_FLAG_TOTAL_POTION_PLUGS) + "]")
+		inv(INV_ITEM_NUM, ci)--
+		cell_refresh inv(INV_ITEM_X, ci), inv(INV_ITEM_Y, ci)
+		r1 = tc
+		gosub *charaRefresh
+		gosub *calcBurdenPc
+		goto *act_use_SWEND1
+		_switch_sw++
+	}
+	if ( _switch_val == EFFECT_SURVIVABILITY_EXTENDER_X | _switch_sw ) {
+		_switch_sw = 0
+		_switch_sw++
+	}
+	if ( _switch_val == EFFECT_SURVIVABILITY_EXTENDER_Y | _switch_sw ) {
+		_switch_sw = 0
+		txt lang("開発中。", "Under development.")
+		goto *act_use_SWEND1
+		_switch_sw++
+	}
+	if ( _switch_val == EFFECT_SPIRITIUM | _switch_sw ) {
+		_switch_sw = 0
+		if ( mdata(MDATA_TYPE) == MAP_TYPE_WORLD ) {
+			goto *act_use_SWEND1
+		}
+		txt lang("誰に使用する？", "Who is target?")
+		gosub *screen_draw
+		val = 0
+		gosub *prompt_direction
+		if ( stat == 0 ) {
+			txt lang("それは無理だ。", "It's impossible.")
+			gosub *screen_draw
+			goto *pc_turn
+		}
+		if ( map(x, y, MAP_CHARA_INDEX_PLUS_ONE) > 0 ) {
+			tc = map(x, y, MAP_CHARA_INDEX_PLUS_ONE) - 1
+		}
+		else {
+			txt lang("それは無理だ。", "It's impossible.")
+			gosub *screen_draw
+			goto *pc_turn
+		}
+		if ( cdata(CDATA_IN_TAGTEAM, tc) != 0 ) {
+			txtselecttc 2
+			repeat 2
+				promptl(0, promptmax) = s(cnt), key_select(cnt), "" + promptmax
+				promptmax++
+			loop
+			val = promptx, prompty, 200, 1
+			gosub *prompt_key
+			if ( stat == 0 ) {
+				gosub *screen_draw
+				goto *pc_turn
+			}
+			if ( rtval == 1 ) {
+				tc = cdata(CDATA_TAGTEAM_PARTNER, tc)
+			}
+		}
+		if ( tc >= MAX_CHARA_FOLLOWER ) {
+			txt lang(name(tc) + "は抵抗した。", name(tc) + " resist" + _s(tc) + ".")
+			gosub *screen_draw
+			goto *pc_turn
+		}
+		snd SOUNDLIST_ATK_ELEC
+		if ( cdata(CDATA_ROLE_SHOP_LEVEL, tc) == 0 ) {
+			cdata(CDATA_ROLE_SHOP_LEVEL, tc) = inv(INV_ITEM_PARAM1, ci)
+			txt lang(name(tc) + "は自分の" + _seikaku(inv(INV_ITEM_PARAM1, ci)) + "なところを自覚した！", name(tc) + " realized " + name(tc) + " was " + _seikaku(inv(INV_ITEM_PARAM1, ci)) + "!")
+			goto *act_use_SWEND1
+		}
+		if ( cdata(CDATA_ROLE_RESTOCK, tc) == 0 ) {
+			if ( cdata(CDATA_ROLE_SHOP_LEVEL, tc) == inv(INV_ITEM_PARAM1, ci) ) {
+				txt lang(name(tc) + "は既にその性格だ。", name(tc) + " already has that personality.")
+				gosub *screen_draw
+				goto *pc_turn
+			}
+			cdata(CDATA_ROLE_RESTOCK, tc) = inv(INV_ITEM_PARAM1, ci)
+			txt lang(name(tc) + "は自分の" + _seikaku(inv(INV_ITEM_PARAM1, ci)) + "なところを自覚した！", name(tc) + " realized " + name(tc) + " was " + _seikaku(inv(INV_ITEM_PARAM1, ci)) + "!")
+			goto *act_use_SWEND1
+		}
+		if ( cdata(CDATA_ROLE_SHOP_LEVEL, tc) == inv(INV_ITEM_PARAM1, ci) ) {
+			txt lang(name(tc) + "は既にその性格だ。", name(tc) + " already has that personality.")
+			gosub *screen_draw
+			goto *pc_turn
+		}
+		cdata(CDATA_ROLE_RESTOCK, tc) = cdata(CDATA_ROLE_SHOP_LEVEL, tc)
+		cdata(CDATA_ROLE_SHOP_LEVEL, tc) = inv(INV_ITEM_PARAM1, ci)
+		txt lang(name(tc) + "は自分の" + _seikaku(inv(INV_ITEM_PARAM1, ci)) + "なところを自覚した！", name(tc) + " realized " + name(tc) + " was " + _seikaku(inv(INV_ITEM_PARAM1, ci)) + "!")
+		goto *act_use_SWEND1
+		_switch_sw++
+	}
 	if ( _switch_val == EFFECT_ANERING | _switch_sw ) {
 		_switch_sw = 0
 		if ( mdata(MDATA_TYPE) == MAP_TYPE_WORLD ) {
@@ -9042,8 +9146,14 @@
 	}
 	if ( _switch_val == EFFECT_CF_POTIOMAN | _switch_sw ) {
 		_switch_sw = 0
+		if ( cc != CHARA_PLAYER ) {
+			cdata(CDATA_AI_ITEM, cc) = ci
+		}
 		if ( inv(INV_ITEM_PARAM2, ci) == 0 ) {
 			if ( gdata(GDATA_FLAG_TOTAL_POTION_PLUGS) < 4 ) {
+				if ( cc != CHARA_PLAYER ) {
+					cdata(CDATA_AI_ITEM, cc) = 0
+				}
 				txt lang("ポーションの栓が足りない…。", "You don't have enough potion plugs...")
 				snd SOUNDLIST_FAIL1
 				goto *act_use_SWEND1
@@ -9184,6 +9294,11 @@
 				}
 			}
 		}
+		if ( cdata(CDATA_EXIST, cc) == CHAR_STATE_ALIVE ) {
+			skillexp SKILL_ATTR_STR, cc, 50
+			skillexp SKILL_ATTR_MAG, cc, 50
+			skillexp SKILL_NORMAL_MARKSMAN, cc, 50
+		}
 		goto *act_use_SWEND1
 		_switch_sw++
 	}
@@ -9251,17 +9366,114 @@
 							txt_guard
 						}
 					}
-					dmg = 1000 + (sdata(SKILL_NORMAL_CARPENTRY, CHARA_PLAYER) + 50) / 5 * limit(sdata(SKILL_NORMAL_DISARM_TRAP, CHARA_PLAYER) + 50, 50, 1000) + sdata(SKILL_NORMAL_MARKSMAN, CHARA_PLAYER) / 40 * sdata(SKILL_NORMAL_MARKSMAN, CHARA_PLAYER)
+					dmg = 1000 + (sdata(SKILL_NORMAL_CARPENTRY, cc) + 50) / 5 * limit(sdata(SKILL_NORMAL_DISARM_TRAP, cc) + 50, 50, 1000) + sdata(SKILL_NORMAL_MARKSMAN, cc) / 40 * sdata(SKILL_NORMAL_MARKSMAN, cc)
 					dmghp tc, dmg, cc
 				}
 				mapitem_fire dx, dy
 			loop
 		loop
+		if ( cdata(CDATA_EXIST, cc) == CHAR_STATE_ALIVE ) {
+			skillexp SKILL_NORMAL_CARPENTRY, cc, 80
+			skillexp SKILL_NORMAL_DISARM_TRAP, cc, 80
+			skillexp SKILL_NORMAL_MARKSMAN, cc, 80
+		}
+		goto *act_use_SWEND1
+		_switch_sw++
+	}
+	if ( _switch_val == EFFECT_LASER_BAZOOKA | _switch_sw ) {
+		_switch_sw = 0
+		if ( cc != CHARA_PLAYER ) {
+			cdata(CDATA_AI_ITEM, cc) = ci
+		}
+		inv(INV_ITEM_CHARGE, ci)++
+		if ( cc != CHARA_PLAYER ) {
+			if ( inv(INV_ITEM_CHARGE, ci) <= 0 ) {
+				if ( gdata(GDATA_ABSORB_CHARGE) < 10 ) {
+					cdata(CDATA_AI_ITEM, cc) = 0
+					txt lang("魔力の貯蓄が足りない…。", "Not enough recharge powers...")
+					snd SOUNDLIST_FAIL1
+					goto *act_use_SWEND1
+				}
+				snd SOUNDLIST_TM2_SWITCH001
+				gdata(GDATA_ABSORB_CHARGE) -= 10
+				txt lang(name(cc) + "は魔力の貯蓄を10消費した(残り" + gdata(GDATA_ABSORB_CHARGE) + ")", name(cc) + " spend 10 recharge powers. (Total:" + gdata(GDATA_ABSORB_CHARGE) + ")")
+				inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) = 1
+				goto *act_use_SWEND1
+			}
+		}
+		if ( mdata(MDATA_TYPE) == MAP_TYPE_WORLD ) {
+			goto *act_use_SWEND1
+		}
+		if ( cdata(CDATA_TARGET, cc) == 0 ) {
+			gosub *findTarget
+			if ( stat == 0 ) {
+				goto *act_use_SWEND1
+			}
+		}
+		tc = cdata(CDATA_TARGET, cc)
+		if ( dist(cdata(CDATA_X, tc), cdata(CDATA_Y, tc), cdata(CDATA_X, cc), cdata(CDATA_Y, cc)) > 6 | fov_los(cdata(CDATA_X, tc), cdata(CDATA_Y, tc), cdata(CDATA_X, cc), cdata(CDATA_Y, cc)) == 0 ) {
+			if ( cc == CHARA_PLAYER ) {
+				msgdup++
+				txt lang("範囲外だ。", "It's out of range.")
+			}
+			goto *act_use_SWEND1
+		}
+		if ( cdata(CDATA_RELATION, tc) >= RELATION_NEUTRAL ) {
+			if ( cc != CHARA_PLAYER ) {
+				goto *act_use_SWEND1
+			}
+			gosub *com_confirmAttack
+			if ( stat == 0 ) {
+				goto *act_use_SWEND1
+			}
+		}
+		tlocx = cdata(CDATA_X, tc)
+		tlocy = cdata(CDATA_Y, tc)
+		inv(INV_ITEM_CHARGE, ci)--
+		if ( inv(INV_ITEM_CHARGE, ci) < 0 ) {
+			inv(INV_ITEM_CHARGE, ci) = 0
+		}
+		item_stack cc, ci, 1
+		animeid = ANIMATION_LASER_BAZOOKA
+		gosub *anime
+		if ( cdata(CDATA_DRAIN_HP, tc) < 100 ) {
+			cdata(CDATA_DRAIN_HP, tc) += 30
+			if ( cdata(CDATA_DRAIN_HP, tc) >= 100 ) {
+				cdata(CDATA_DRAIN_HP, tc) = 99
+			}
+		}
+		dmg = rnd(50) + sdata(SKILL_ATTR_DEX, cc) * 2 + sdata(SKILL_NORMAL_MARKSMAN, cc) / 40 * sdata(SKILL_NORMAL_MARKSMAN, cc)
+		if ( dmg < 0 ) {
+			dmg = 5
+		}
+		dmghp tc, dmg, cc
+		if ( cdata(CDATA_EXIST, cc) == CHAR_STATE_ALIVE ) {
+			skillexp SKILL_ATTR_DEX, cc, 80
+			skillexp SKILL_NORMAL_MARKSMAN, cc, 80
+		}
 		goto *act_use_SWEND1
 	}
 	if ( _switch_val == EFFECT_PANZERFAUST_X | _switch_sw ) {
 		_switch_sw = 0
+		if ( cc != CHARA_PLAYER ) {
+			cdata(CDATA_AI_ITEM, cc) = ci
+		}
 		inv(INV_ITEM_CHARGE, ci)++
+		if ( cc != CHARA_PLAYER ) {
+			if ( inv(INV_ITEM_CHARGE, ci) <= 0 ) {
+				if ( gdata(GDATA_ABSORB_CHARGE) < 10 ) {
+					cdata(CDATA_AI_ITEM, cc) = 0
+					txt lang("魔力の貯蓄が足りない…。", "Not enough recharge powers...")
+					snd SOUNDLIST_FAIL1
+					goto *act_use_SWEND1
+				}
+				snd SOUNDLIST_TM2_SWITCH001
+				gdata(GDATA_ABSORB_CHARGE) -= 10
+				txt lang(name(cc) + "は魔力の貯蓄を10消費した(残り" + gdata(GDATA_ABSORB_CHARGE) + ")", name(cc) + " spend 10 recharge powers. (Total:" + gdata(GDATA_ABSORB_CHARGE) + ")")
+				inv(INV_ITEM_CHARGE, ci) = 1
+				goto *act_use_SWEND1
+			}
+		}
 		if ( mdata(MDATA_TYPE) == MAP_TYPE_WORLD ) {
 			goto *act_use_SWEND1
 		}
@@ -9280,6 +9492,9 @@
 			goto *act_use_SWEND1
 		}
 		if ( cdata(CDATA_RELATION, tc) >= 0 ) {
+			if ( cc != CHARA_PLAYER ) {
+				goto *act_use_SWEND1
+			}
 			gosub *com_confirmAttack
 			if ( stat == 0 ) {
 				goto *act_use_SWEND1
@@ -9291,7 +9506,7 @@
 		if ( inv(INV_ITEM_CHARGE, ci) < 0 ) {
 			inv(INV_ITEM_CHARGE, ci) = 0
 		}
-		item_stack CHARA_PLAYER, ci, 1
+		item_stack cc, ci, 1
 		animeid = ANIMATION_NUCLEAR
 		gosub *anime
 		aniref = 0
@@ -9300,31 +9515,76 @@
 		aniy = cdata(CDATA_Y, tc)
 		gosub *anime
 		cdata(CDATA_PROT_PENALTY, tc) = 3
-		dmg = rnd(50) + sdata(SKILL_ATTR_PER, CHARA_PLAYER) * 2 + sdata(SKILL_NORMAL_MARKSMAN, CHARA_PLAYER) / 40 * sdata(SKILL_NORMAL_MARKSMAN, CHARA_PLAYER)
+		dmg = rnd(50) + sdata(SKILL_ATTR_PER, cc) * 2 + sdata(SKILL_NORMAL_MARKSMAN, cc) / 40 * sdata(SKILL_NORMAL_MARKSMAN, cc)
 		if ( dmg < 0 ) {
 			dmg = 5
 		}
 		dmghp tc, dmg, cc
+		if ( cdata(CDATA_EXIST, cc) == CHAR_STATE_ALIVE ) {
+			skillexp SKILL_ATTR_PER, cc, 80
+			skillexp SKILL_NORMAL_MARKSMAN, cc, 80
+		}
 		goto *act_use_SWEND1
 	}
 	if ( _switch_val == EFFECT_M202_SPECIAL | _switch_sw ) {
 		_switch_sw = 0
+		if ( cc != CHARA_PLAYER ) {
+			cdata(CDATA_AI_ITEM, cc) = ci
+		}
 		inv(INV_ITEM_CHARGE, ci)++
+		if ( cc != CHARA_PLAYER ) {
+			if ( inv(INV_ITEM_CHARGE, ci) <= 0 ) {
+				if ( gdata(GDATA_ABSORB_CHARGE) < 10 ) {
+					cdata(CDATA_AI_ITEM, cc) = 0
+					txt lang("魔力の貯蓄が足りない…。", "Not enough recharge powers...")
+					snd SOUNDLIST_FAIL1
+					goto *act_use_SWEND1
+				}
+				snd SOUNDLIST_TM2_SWITCH001
+				gdata(GDATA_ABSORB_CHARGE) -= 10
+				txt lang(name(cc) + "は魔力の貯蓄を10消費した(残り" + gdata(GDATA_ABSORB_CHARGE) + ")", name(cc) + " spend 10 recharge powers. (Total:" + gdata(GDATA_ABSORB_CHARGE) + ")")
+				inv(INV_ITEM_CHARGE, ci) = 1
+				goto *act_use_SWEND1
+			}
+		}
 		if ( mdata(MDATA_TYPE) == MAP_TYPE_WORLD ) {
 			goto *act_use_SWEND1
 		}
-		gosub *findLocation
-		if ( stat != 1 ) {
-			if ( stat == 0 ) {
-				txt_cantsee
-				gosub *screen_draw
+		if ( cc == CHARA_PLAYER ) {
+			gosub *findLocation
+			if ( stat != 1 ) {
+				if ( stat == 0 ) {
+					txt_cantsee
+					gosub *screen_draw
+				}
+				goto *act_use_SWEND1
 			}
-			goto *pc_turn
+			if ( chipm(CHIPM_ATTRIB, map(tlocx, tlocy, MAP_TILE_ID)) & CHIPM_ATTRIB_CANT_PASS ) {
+				txt lang("そこには撃てない。", "The location is blocked.")
+				gosub *screen_draw
+				goto *act_use_SWEND1
+			}
 		}
-		if ( chipm(CHIPM_ATTRIB, map(tlocx, tlocy, 0)) & CHIPM_ATTRIB_CANT_PASS ) {
-			txt lang("そこには撃てない。", "The location is blocked.")
-			gosub *screen_draw
-			goto *pc_turn
+		if ( cc != CHARA_PLAYER ) {
+			if ( cdata(CDATA_TARGET, cc) == 0 ) {
+				gosub *findTarget
+				if ( stat == 0 ) {
+					goto *act_use_SWEND1
+				}
+			}
+			tc = cdata(CDATA_TARGET, cc)
+			if ( cdata(CDATA_RELATION, tc) >= RELATION_NEUTRAL ) {
+				goto *act_use_SWEND1
+			}
+			if ( dist(cdata(CDATA_X, tc), cdata(CDATA_Y, tc), cdata(CDATA_X, cc), cdata(CDATA_Y, cc)) > 6 | fov_los(cdata(CDATA_X, tc), cdata(CDATA_Y, tc), cdata(CDATA_X, cc), cdata(CDATA_Y, cc)) == 0 ) {
+				if ( cc == CHARA_PLAYER ) {
+					msgdup++
+					txt lang("範囲外だ。", "It's out of range.")
+				}
+				goto *act_use_SWEND1
+			}
+			tlocx = cdata(CDATA_X, tc)
+			tlocy = cdata(CDATA_Y, tc)
 		}
 		animeid = ANIMATION_NUCLEAR
 		gosub *anime
@@ -9339,7 +9599,7 @@
 			inv(INV_ITEM_CHARGE, ci) = 0
 		}
 		item_stack CHARA_PLAYER, ci, 1
-		efp = limit(sdata(SKILL_RES_FIRE, CHARA_PLAYER) * 2, 1, 5000) + sqrt(sdata(SKILL_NORMAL_MARKSMAN, CHARA_PLAYER) + 1) * sdata(SKILL_NORMAL_MARKSMAN, CHARA_PLAYER) * 2 + sdata(SKILL_ATTR_CON, CHARA_PLAYER) * 10
+		efp = limit(sdata(SKILL_RES_FIRE, cc) * 2, 1, 5000) + sqrt(sdata(SKILL_NORMAL_MARKSMAN, cc) + 1) * sdata(SKILL_NORMAL_MARKSMAN, cc) * 2 + sdata(SKILL_ATTR_CON, cc) * 10
 		p = 4, 2 + efp / 50
 		snd SOUNDLIST_ATK_FIRE
 		repeat 800
@@ -9398,6 +9658,10 @@
 			}
 			cdata(CDATA_ENVIRONMENT_EFFECT, cnt) = ENVIRONMENT_EFFECT_NONE
 		loop
+		if ( cdata(CDATA_EXIST, cc) == CHAR_STATE_ALIVE ) {
+			skillexp SKILL_ATTR_CON, cc, 80
+			skillexp SKILL_NORMAL_MARKSMAN, cc, 80
+		}
 		goto *act_use_SWEND1
 	}
 	if ( _switch_val == EFFECT_TWIG | _switch_sw ) {
@@ -11581,6 +11845,40 @@
 		chop = 0
 		goto *act_use_SWEND1
 	}
+	if ( _switch_val == EFFECT_STARFIBER | _switch_sw ) {
+		_switch_sw = 0
+		if ( cc != CHARA_PLAYER ) {
+			txt lang("何もおきない… ", "Nothing happens...")
+			goto *act_use_SWEND1
+		}
+		cibk = ci
+		invsubroutine = 1
+		invctrl = INVCTRL_MATERIAL_ENCHANT, 26
+		snd SOUNDLIST_INV
+		gosub *com_inventory
+		if ( stat == 1 ) {
+			snd SOUNDLIST_DING2
+			txt lang(itemname(ci) + "は強化星維を取り込んで少し成長した！", itemname(ci) + " took in the starfiber and grew a little!")
+			inv(INV_ITEM_PARAM2, ci) += 75
+			if ( inv(INV_ITEM_PARAM2, ci) >= calcexpalive(inv(INV_ITEM_PARAM1, ci)) ) {
+				txtef COLOR_GREEN
+				snd SOUNDLIST_DING3
+				txt lang(itemname(ci) + "はレベルアップできる！", itemname(cw) + " can level up!")
+			}
+			ci = cibk
+			inv(INV_ITEM_NUM, ci)--
+			if ( ci >= 5080 ) {
+				cell_refresh inv(INV_ITEM_X, ci), inv(INV_ITEM_Y, ci)
+			}
+			r1 = cc
+			gosub *charaRefresh
+		}
+		else {
+			obvious = 0
+		}
+		goto *act_use_SWEND1
+		_switch_sw++
+	}
 	if ( _switch_val == EFFECT_STARDUST | _switch_sw ) {
 		_switch_sw = 0
 		if ( cc != CHARA_PLAYER ) {
@@ -12800,6 +13098,13 @@
 			}
 		loop
 		goto *act_use_SWEND1
+	}
+	if ( _switch_val == EFFECT_MASTER_OF | _switch_sw ) {
+		_switch_sw = 0
+		snd SOUNDLIST_POWER07
+		txt lang("開発中。", "Under development.")
+		goto *act_use_SWEND1
+		_switch_sw++
 	}
 	if ( _switch_val == EFFECT_CRIMSON_DARK_ORB | _switch_sw ) {
 		_switch_sw = 0

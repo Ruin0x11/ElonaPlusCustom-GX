@@ -161,6 +161,7 @@
 		invfile = cdata(CDATA_ROLE_FILE_ID, tc)
 		gosub *shop_init
 		if ( gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 >= bkrestock ) {
+			cbitmod CHARA_BIT_EXCLUSIVE_SKILL_CHARGE, tc, TRUE
 			if ( cdata(CDATA_ROLE, tc) != ROLE_SHOP_BOOK_RESERVE ) {
 
 				/********** ORIGINAL - BEGINNING **********
@@ -5048,6 +5049,36 @@
 						}
 						if ( cnt == ITEM_ID_WAKE_UP_OF_NEFIA ) {
 							if ( gdata(GDATA_FLAG_LEOLD_LOCATION_STATE) >= 6 ) {
+								f = 1
+							}
+						}
+						if ( cnt == ITEM_ID_MASTER_OF_DIAMOND ) {
+							if ( gdata(GDATA_FLAG_CASINO) >= 2 ) {
+								f = 1
+							}
+						}
+						if ( cnt == ITEM_ID_MASTER_OF_HEART ) {
+							if ( gdata(GDATA_FLAG_CASINO) >= 2 ) {
+								f = 1
+							}
+						}
+						if ( cnt == ITEM_ID_MASTER_OF_CLUB ) {
+							if ( gdata(GDATA_FLAG_CASINO) >= 2 ) {
+								f = 1
+							}
+						}
+						if ( cnt == ITEM_ID_MASTER_OF_SPADE ) {
+							if ( gdata(GDATA_FLAG_CASINO) >= 2 ) {
+								f = 1
+							}
+						}
+						if ( cnt == ITEM_ID_SUPER_LURE ) {
+							if ( gdata(GDATA_FLAG_CASINO) >= 3 ) {
+								f = 1
+							}
+						}
+						if ( cnt == ITEM_ID_SKELETON_KEY ) {
+							if ( gdata(GDATA_FLAG_CASINO) >= 4 ) {
 								f = 1
 							}
 						}
@@ -18128,6 +18159,11 @@
 			chatList 55, lang("魔法書の予約(要：解読経験)", "I want to reserve book that I have deciphered.")
 		}
 	}
+	if ( cdata(CDATA_ROLE, tc) == ROLE_SHOP_MAGIC ) {
+		list(0, listmax) = 113
+		listn(0, listmax) = lang("ポーションの栓を分けて欲しい", "I want potion plugs.")
+		listmax++
+	}
 	if ( cdata(CDATA_CONDITION_DRUNK, tc) != 0 ) {
 		if ( gdata(GDATA_AREA) != AREA_SHOW_HOUSE ) {
 			if ( tc >= MAX_CHARA_FOLLOWER ) {
@@ -21188,6 +21224,20 @@
 		else {
 			buff = lang("冷やかし" + _ka(1), "You kidding?")
 		}
+		goto *chat_default
+	}
+	if ( chatval == 113 ) {
+		if ( cbit(CHARA_BIT_EXCLUSIVE_SKILL_CHARGE, tc) == FALSE ) {
+			buff = lang("今は余ってない" + _na(2), "It's not left over now.")
+			goto *chat_default
+		}
+		buff = lang("何に使うのか知らない" + _ga(3) + "…廃棄品なら持って行っていい" + _yo(2), "I don't know what you're going to use it for...Bring what I was supposed to dispose of.")
+		snd SOUNDLIST_TM2_SWITCH001
+		plug = 5 + limit(cdata(CDATA_ROLE_SHOP_LEVEL, tc), 1, 200) / 10
+		gdata(GDATA_FLAG_TOTAL_POTION_PLUGS) += plug
+		txtef COLOR_GREEN
+		txt lang("ポーションの栓を" + plug + "個手に入れた。[残り" + gdata(GDATA_FLAG_TOTAL_POTION_PLUGS) + "個]", name(0) + " get" + _s(0) + " " + plug + " potion plug" + _s2(plug) + ". [Remaining plug " + gdata(GDATA_FLAG_TOTAL_POTION_PLUGS) + "]")
+		cbitmod CHARA_BIT_EXCLUSIVE_SKILL_CHARGE, tc, FALSE
 		goto *chat_default
 	}
 	if ( chatval == 64 ) {

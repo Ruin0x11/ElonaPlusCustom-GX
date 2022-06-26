@@ -828,6 +828,12 @@
 	if ( a == FILTER_ITEM_ROD ) {
 		goto *act_zap
 	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_LASER_BAZOOKA | inv(INV_ITEM_ID, ci) == ITEM_ID_M202_SPECIAL | inv(INV_ITEM_ID, ci) == ITEM_ID_PANZERFAUST_X ) {
+		goto *act_use
+	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_CF_POTIOMAN | inv(INV_ITEM_ID, ci) == ITEM_ID_CRUSH_POTIOMAN | inv(INV_ITEM_ID, ci) == ITEM_ID_BATTLE_POTIOMAN | inv(INV_ITEM_ID, ci) == ITEM_ID_SUPER_POTIOMAN ) {
+		goto *act_use
+	}
 	cdata(CDATA_AI_ITEM, cc) = 0
 *ai_action
 	retreat = 0

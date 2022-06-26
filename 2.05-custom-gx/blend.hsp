@@ -1032,6 +1032,13 @@
 	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_ALCHEMY, 55, SKILL_NORMAL_CARPENTRY, 60
 	rpdata(RPDATA_MAT + 0, rpid) = RF_SHARP, ITEM_ID_SHARP_MATERIUM, ITEM_ID_SHARP_HIGH_MATERIUM, RF_STAR
 
+	rpid++
+	rplistdef(length(rplistdef)) = 1 * EXT_RECIPES + rpid
+	rpdatan(rpid) = lang("強化星維", "Starfiber")
+	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_STARFIBER, 15 + 1 * 10000
+	rpdata(RPDATA_SKILL + 0 * 2, rpid) = SKILL_NORMAL_TAILORING, 15, SKILL_NORMAL_ALCHEMY, 32
+	rpdata(RPDATA_MAT + 0, rpid) = ITEM_ID_EARTH_CRYSTAL, MAX_RF, ITEM_ID_BOTTLE_MILK
+
 	rpid = ITEM_ID_POTION_DISASTER + EXT_RP
 	rplistshop(length(rplistshop)) = 30 * EXT_RECIPES + rpid
 	rpdata(RPDATA_ITEM, rpid) = ITEM_ID_POTION_DISASTER, 60 + 3 * 10000
@@ -1101,6 +1108,7 @@
 	rfnameorg(RFNAMEORG_ID, RF_BARREL - EXT_RF) = "taru", lang("適当なタル", "any barrel")
 	rfnameorg(RFNAMEORG_ID, RF_LEAF - EXT_RF) = "kusuri", lang("薬草類", "any healthy leaf")
 	rfnameorg(RFNAMEORG_ID, RF_DISINFECTANT - EXT_RF) = "holy", lang("適当な浄化アイテム", "any holy item")
+	rfnameorg(RFNAMEORG_ID, RF_BLANKET - EXT_RF) = "blanket", lang("ブランケット類", "any blanket")
 
 	return
 

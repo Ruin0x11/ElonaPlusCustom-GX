@@ -316,6 +316,7 @@
 	await 100
 	snd SOUNDLIST_POP3
 	gosub *music_play
+	casino = 0
 	return
 
 *atx_RE
@@ -615,6 +616,7 @@
 	goto *com_txtAdvQuit
 
 *adv_casinoCard
+	casino = 1
 	atxbg = "bg14"
 	mattile = -1
 	atxinfon(0) = lang("カジノ《フォーチュンクッキー》", "Casino <<Fortune Cookie>>")
@@ -648,6 +650,9 @@
 	goto *adv_casinoCard
 
 *adv_casinoBlackJack
+	ikasama = 0
+	keihin = 0
+	ikasamalv = 0
 	atxinit
 	noteadd lang("ブラックジャックは、カードの合計を21に近づけるゲームです。", "In Blackjack, the hand with the highest total wins as long as it")
 	noteadd lang("J,Q,Kは10に、Aは1または11に数えられます。21を越えると負けです。", "doesn't exceed 21. J,Q,K are counted as 10 and A is counted as 1 or 11.")
@@ -655,6 +660,7 @@
 	noteadd lang("チップが多いほど、景品の質があがります。", "How many tips would you like to bet?")
 	atxinfon(1) = lang("カジノチップ残り " + mat(1) + "枚\n", "Casino chips left: " + mat(1) + "\n")
 	atxinfon(2) = ""
+	atxinfon(3) = ""
 	if ( mat(1) <= 0 ) {
 		noteadd ""
 		noteadd lang("お客様はチップをもっていません。", "Sorry sir, you don't seem to have casino chips.")
@@ -749,8 +755,11 @@
 				noteadd lang("おめでとうございます。あなたの勝ちです。", "Congratulations, you win.")
 			}
 		}
+		ikasama = rnd(40) + ikasamalv * ikasamalv * 5
+		keihin = stake + winrow * 2
 		atxinfon(1) = lang("カジノチップ残り " + mat(1) + "枚\n", "Casino chips left: " + mat(1) + "\n")
 		atxinfon(2) = lang("賭けチップ " + stake + "枚 現在" + winrow + "連勝中", "Bets: " + stake + " Wins: " + winrow + "")
+		atxinfon(3) = lang("イカサマ警戒Lv" + ikasama + " 景品Lv" + keihin + "　", "Alert-Lv: " + ikasama + " Rewards-Lv: " + keihin + "")
 		if ( cardround == (-1) ) {
 			if ( winner == 1 ) {
 				winrow++
@@ -811,21 +820,14 @@
 			trashcard lastcard(1)
 			servecard 1
 			opencard2 stat
-			p = 20
-			if ( stake >= 5 ) {
-				p = 40
-			}
-			if ( stake >= 10 ) {
-				p = 50
-			}
-			if ( stake >= 20 ) {
-				p = 60
-			}
+			p = ikasama
+			ikasamalv++
 			if ( rnd(sdata(SKILL_ATTR_DEX, CHARA_PLAYER)) < rnd(p) ) {
 				atxinit
 				noteadd lang("イカサマだ！", "Cheater!")
 				atxinfon(1) = lang("カジノチップ残り " + mat(1) + "枚\n", "Casino chips left: " + mat(1) + "\n")
 				atxinfon(2) = lang("賭けチップ " + stake + "枚 現在" + winrow + "連勝中", "Bets: " + stake + " Wins: " + winrow + "")
+				atxinfon(3) = lang("イカサマ警戒Lv" + ikasama + " 景品Lv" + keihin + "　", "Alert-Lv: " + ikasama + " Rewards-Lv: " + keihin + "")
 				winrow = 0
 				txt lang("イカサマが見つかってしまった…", "You are caught cheating...")
 				modkarma CHARA_PLAYER, -5
@@ -846,33 +848,22 @@
 	loop
 	if ( winrow > 0 ) {
 		atxinit
-		noteadd lang("おめでとうございます。あなたは" + winrow + "連勝しました。", "Congratulations! You've won " + winrow + " times in a row.")
+		noteadd lang("おめでとうございます。景品Lvは" + keihin + "でした。", "Congratulations! Your Rewards-Lv was " + keihin + "!")
 		repeat 1
 			i = 2
-			if ( winrow > 2 ) {
+			if ( keihin >= 7 ) {
 				i = 3
 			}
-			if ( winrow > 7 ) {
-				if ( stake >= 5 ) {
-					i = 4
-				}
+			if ( keihin >= 14 ) {
+				i = 4
 			}
-			if ( winrow > 5 ) {
-				if ( stake >= 10 ) {
-					i = 4
-				}
+			if ( keihin >= 21 ) {
+				i = 4
 			}
-			if ( winrow > 15 ) {
-				if ( stake >= 15 ) {
-					i = 5
-				}
+			if ( keihin >= 28 ) {
+				i = 5
 			}
-			if ( winrow > 10 ) {
-				if ( stake >= 20 ) {
-					i = 5
-				}
-			}
-			flt calcobjlv(rnd(stake + winrow * 2) + winrow * 3 / 2 + stake / 2), i
+			flt calcobjlv(rnd(keihin + 1) + keihin), i
 			flttypemajor = fsetwear(rnd(length(fsetwear)))
 			itemcreate -1, ITEM_ID_DUMMY, -1, -1, 0
 			if ( inv(INV_ITEM_NUM, ci) == 0 ) {
@@ -881,30 +872,133 @@
 		loop
 		snd SOUNDLIST_GET3
 		noteadd lang("@GRアイテム：" + itemname(ci, inv(INV_ITEM_NUM, ci)) + "を戦利品に加えた！", "@GR" + itemname(ci, inv(INV_ITEM_NUM, ci)) + " has been added to your loot list!")
-		if ( stake + winrow * 3 >= 25 ) {
-			flt
-			itemcreate -1, ITEM_ID_SCROLL_FAITH, -1, -1, 0
-			snd SOUNDLIST_GET3
-			noteadd lang("@GRアイテム：" + itemname(ci, inv(INV_ITEM_NUM, ci)) + "を戦利品に加えた！", "@GR" + itemname(ci, inv(INV_ITEM_NUM, ci)) + " has been added to your loot list!")
-		}
-		if ( stake + winrow * 3 >= 35 ) {
-			flt
-			itemcreate -1, ITEM_ID_BLANK_BUSINESS_CARD, -1, -1, 0
-			snd SOUNDLIST_GET3
-			noteadd lang("@GRアイテム：" + itemname(ci, inv(INV_ITEM_NUM, ci)) + "を戦利品に加えた！", "@GR" + itemname(ci, inv(INV_ITEM_NUM, ci)) + " has been added to your loot list!")
-		}
-		if ( stake + winrow * 3 >= 40 ) {
-			flt
-			itemcreate -1, ITEM_ID_POTION_POTENTIAL, -1, -1, 0
-			snd SOUNDLIST_GET3
-			noteadd lang("@GRアイテム：" + itemname(ci, inv(INV_ITEM_NUM, ci)) + "を戦利品に加えた！", "@GR" + itemname(ci, inv(INV_ITEM_NUM, ci)) + " has been added to your loot list!")
-		}
-		if ( winrow > 3 ) {
-			if ( rnd(50) < winrow * 5 + 20 ) {
+		if ( gdata(GDATA_FLAG_RARE_DROP) == 100 ) {
+			if ( keihin >= 5 ) {
+				flt
+				itemcreate -1, ITEM_ID_GIFT, -1, -1, 0
+				snd SOUNDLIST_GET3
+				noteadd lang("@GRアイテム：" + itemname(ci, inv(INV_ITEM_NUM, ci)) + "を戦利品に加えた！", "@GR" + itemname(ci, inv(INV_ITEM_NUM, ci)) + " has been added to your loot list!")
+			}
+			if ( keihin >= 9 ) {
 				flt
 				itemcreate -1, ITEM_ID_POTION_CURE_CORRUPTION, -1, -1, 0
 				snd SOUNDLIST_GET3
 				noteadd lang("@GRアイテム：" + itemname(ci, inv(INV_ITEM_NUM, ci)) + "を戦利品に加えた！", "@GR" + itemname(ci, inv(INV_ITEM_NUM, ci)) + " has been added to your loot list!")
+			}
+			if ( keihin >= 11 ) {
+				flt
+				itemcreate -1, ITEM_ID_UNICORN_HORN, -1, -1, 0
+				snd SOUNDLIST_GET3
+				noteadd lang("@GRアイテム：" + itemname(ci, inv(INV_ITEM_NUM, ci)) + "を戦利品に加えた！", "@GR" + itemname(ci, inv(INV_ITEM_NUM, ci)) + " has been added to your loot list!")
+			}
+			if ( keihin >= 13 ) {
+				flt
+				itemcreate -1, ITEM_ID_BLANK_BUSINESS_CARD, -1, -1, 0
+				snd SOUNDLIST_GET3
+				noteadd lang("@GRアイテム：" + itemname(ci, inv(INV_ITEM_NUM, ci)) + "を戦利品に加えた！", "@GR" + itemname(ci, inv(INV_ITEM_NUM, ci)) + " has been added to your loot list!")
+			}
+			if ( keihin >= 15 ) {
+				flt
+				itemcreate -1, ITEM_ID_SCROLL_FAITH, -1, -1, 0
+				snd SOUNDLIST_GET3
+				noteadd lang("@GRアイテム：" + itemname(ci, inv(INV_ITEM_NUM, ci)) + "を戦利品に加えた！", "@GR" + itemname(ci, inv(INV_ITEM_NUM, ci)) + " has been added to your loot list!")
+			}
+			if ( keihin >= 17 ) {
+				flt
+				itemcreate -1, ITEM_ID_POTION_WISDOM, -1, -1, 0
+				snd SOUNDLIST_GET3
+				noteadd lang("@GRアイテム：" + itemname(ci, inv(INV_ITEM_NUM, ci)) + "を戦利品に加えた！", "@GR" + itemname(ci, inv(INV_ITEM_NUM, ci)) + " has been added to your loot list!")
+			}
+			if ( keihin >= 19 ) {
+				flt
+				itemcreate -1, ITEM_ID_GOLDEN_MEAD, -1, -1, 0
+				snd SOUNDLIST_GET3
+				noteadd lang("@GRアイテム：" + itemname(ci, inv(INV_ITEM_NUM, ci)) + "を戦利品に加えた！", "@GR" + itemname(ci, inv(INV_ITEM_NUM, ci)) + " has been added to your loot list!")
+			}
+			if ( keihin >= 23 ) {
+				flt
+				itemcreate -1, ITEM_ID_POTION_POTENTIAL, -1, -1, 0
+				snd SOUNDLIST_GET3
+				noteadd lang("@GRアイテム：" + itemname(ci, inv(INV_ITEM_NUM, ci)) + "を戦利品に加えた！", "@GR" + itemname(ci, inv(INV_ITEM_NUM, ci)) + " has been added to your loot list!")
+			}
+			if ( keihin >= 25 ) {
+				flt
+				itemcreate -1, ITEM_ID_SURVIVABILITY_EXTENDER_X, -1, -1, 0
+				snd SOUNDLIST_GET3
+				noteadd lang("@GRアイテム：" + itemname(ci, inv(INV_ITEM_NUM, ci)) + "を戦利品に加えた！", "@GR" + itemname(ci, inv(INV_ITEM_NUM, ci)) + " has been added to your loot list!")
+				flt
+				itemcreate -1, ITEM_ID_SURVIVABILITY_EXTENDER_Y, -1, -1, 0
+				snd SOUNDLIST_GET3
+				noteadd lang("@GRアイテム：" + itemname(ci, inv(INV_ITEM_NUM, ci)) + "を戦利品に加えた！", "@GR" + itemname(ci, inv(INV_ITEM_NUM, ci)) + " has been added to your loot list!")
+			}
+			if ( keihin >= 27 ) {
+				if ( gdata(GDATA_FLAG_CASINO) == 1 ) {
+					gdata(GDATA_FLAG_CASINO) = 2
+					flt
+					itemcreate -1, ITEM_ID_MASTER_OF_DIAMOND, -1, -1, 0
+					snd SOUNDLIST_GET3
+					noteadd lang("@GRアイテム：" + itemname(ci, inv(INV_ITEM_NUM, ci)) + "を戦利品に加えた！", "@GR" + itemname(ci, inv(INV_ITEM_NUM, ci)) + " has been added to your loot list!")
+					flt
+					itemcreate -1, ITEM_ID_MASTER_OF_HEART, -1, -1, 0
+					snd SOUNDLIST_GET3
+					noteadd lang("@GRアイテム：" + itemname(ci, inv(INV_ITEM_NUM, ci)) + "を戦利品に加えた！", "@GR" + itemname(ci, inv(INV_ITEM_NUM, ci)) + " has been added to your loot list!")
+					flt
+					itemcreate -1, ITEM_ID_MASTER_OF_CLUB, -1, -1, 0
+					snd SOUNDLIST_GET3
+					noteadd lang("@GRアイテム：" + itemname(ci, inv(INV_ITEM_NUM, ci)) + "を戦利品に加えた！", "@GR" + itemname(ci, inv(INV_ITEM_NUM, ci)) + " has been added to your loot list!")
+					flt
+					itemcreate -1, ITEM_ID_MASTER_OF_SPADE, -1, -1, 0
+					snd SOUNDLIST_GET3
+					noteadd lang("@GRアイテム：" + itemname(ci, inv(INV_ITEM_NUM, ci)) + "を戦利品に加えた！", "@GR" + itemname(ci, inv(INV_ITEM_NUM, ci)) + " has been added to your loot list!")
+				}
+				else {
+					flt
+					itemcreate -1, ITEM_ID_SLASH_JOKER, -1, -1, 0
+					snd SOUNDLIST_GET3
+					noteadd lang("@GRアイテム：" + itemname(ci, inv(INV_ITEM_NUM, ci)) + "を戦利品に加えた！", "@GR" + itemname(ci, inv(INV_ITEM_NUM, ci)) + " has been added to your loot list!")
+				}
+			}
+			if ( keihin >= 29 ) {
+				flt
+				itemcreate -1, ITEM_ID_STARFIBER, -1, -1, 0
+				snd SOUNDLIST_GET3
+				noteadd lang("@GRアイテム：" + itemname(ci, inv(INV_ITEM_NUM, ci)) + "を戦利品に加えた！", "@GR" + itemname(ci, inv(INV_ITEM_NUM, ci)) + " has been added to your loot list!")
+			}
+			if ( keihin >= 31 ) {
+				flt
+				itemcreate -1, ITEM_ID_CRAFT_REPAIR_KIT, -1, -1, 0
+				snd SOUNDLIST_GET3
+				noteadd lang("@GRアイテム：" + itemname(ci, inv(INV_ITEM_NUM, ci)) + "を戦利品に加えた！", "@GR" + itemname(ci, inv(INV_ITEM_NUM, ci)) + " has been added to your loot list!")
+			}
+			if ( keihin >= 33 ) {
+				if ( gdata(GDATA_FLAG_CASINO) == 2 ) {
+					gdata(GDATA_FLAG_CASINO) = 3
+					flt
+					itemcreate -1, ITEM_ID_SUPER_LURE, -1, -1, 0
+					snd SOUNDLIST_GET3
+					noteadd lang("@GRアイテム：" + itemname(ci, inv(INV_ITEM_NUM, ci)) + "を戦利品に加えた！", "@GR" + itemname(ci, inv(INV_ITEM_NUM, ci)) + " has been added to your loot list!")
+				}
+				else {
+					flt
+					itemcreate -1, ITEM_ID_POTION_SOMA, -1, -1, 0
+					snd SOUNDLIST_GET3
+					noteadd lang("@GRアイテム：" + itemname(ci, inv(INV_ITEM_NUM, ci)) + "を戦利品に加えた！", "@GR" + itemname(ci, inv(INV_ITEM_NUM, ci)) + " has been added to your loot list!")
+				}
+			}
+			if ( keihin >= 35 ) {
+				if ( gdata(GDATA_FLAG_CASINO) == 3 ) {
+					gdata(GDATA_FLAG_CASINO) = 4
+					flt
+					itemcreate -1, ITEM_ID_SKELETON_KEY, -1, -1, 0
+					snd SOUNDLIST_GET3
+					noteadd lang("@GRアイテム：" + itemname(ci, inv(INV_ITEM_NUM, ci)) + "を戦利品に加えた！", "@GR" + itemname(ci, inv(INV_ITEM_NUM, ci)) + " has been added to your loot list!")
+				}
+				else {
+					flt
+					itemcreate -1, ITEM_ID_POTION_NEKTAR, -1, -1, 0
+					snd SOUNDLIST_GET3
+					noteadd lang("@GRアイテム：" + itemname(ci, inv(INV_ITEM_NUM, ci)) + "を戦利品に加えた！", "@GR" + itemname(ci, inv(INV_ITEM_NUM, ci)) + " has been added to your loot list!")
+				}
 			}
 		}
 		chatList 0, lang("戻る", "Great.")

@@ -15396,7 +15396,9 @@
 						}
 					}
 					dmghp tc, dmg, cc, ele, elep
-					cdata(CDATA_CONDITION_SUFFOCATION, tc) += 3
+					if ( cdata(CDATA_CONDITION_SUFFOCATION, tc) == 0 ) {
+						cdata(CDATA_CONDITION_SUFFOCATION, tc)++
+					}
 					dmgcon tc, CONDITION_BLIND, 100 + sdata(SKILL_ATTR_CON, cc)
 				}
 			}
@@ -21066,6 +21068,8 @@
 				gdata(GDATA_FLAG_WORK_B_REMAINING) = 0
 				gdata(GDATA_FLAG_WORK_C_REMAINING) = 0
 				seiton = 4
+				flt
+				itemcreate -1, ITEM_ID_CF_POTIOMAN, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
 				gdata(GDATA_FLAG_SUB_SLIME) = 1000
 				gdata(GDATA_FLAG_SUB_ROGUE) = 1000
 				gdata(GDATA_FLAG_SUB_NIGHTMARE) = 1000
@@ -21123,13 +21127,16 @@
 				cdata(CDATA_PIETY, CHARA_PLAYER) = sdata(SKILL_NORMAL_FAITH, CHARA_PLAYER) * 100
 				gdata(GDATA_RANK_HOME) = 100
 				gdata(GDATA_WORLD_RENEW) = TRUE
-				gdata(GDATA_YEAR)++
+				gdata(GDATA_YEAR) += 20
 				gosub *advance_hour
 				gdata(GDATA_GUEST) = 2
-				gdata(GDATA_WORLD) = AREA_LOST_YLVA
 				gdata(GDATA_FLAG_SCROLL_OF_WITCHCRAFT_TOTAL_SPELL_BONUS) += 95
 				cdata(CDATA_SKILLPOINT, CHARA_PLAYER) += 95
 				gdata(GDATA_FLAG_DESTINY_LETTERS) = 7
+				repeat MAX_CHARA_FOLLOWER
+					cdata(CDATA_ROLE_SHOP_LEVEL, cnt) = rnd(30) + 1
+					cdata(CDATA_ROLE_RESTOCK, cnt) = rnd(30) + 1
+				loop
 				repeat MAX_CHARA_TOTAL
 					cdata(CDATA_POWER_GAUGE, cnt) += 52
 					cdata(CDATA_DRAIN_HP, cnt) += 52

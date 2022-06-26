@@ -5123,9 +5123,11 @@
 	}
 	if ( dmghp_source != DAMAGE_FROM_UNSEEN & dmghp_source != DAMAGE_FROM_BLEED & dmghp_source != DAMAGE_FROM_POISON ) {
 		if ( locvar_dmghp_ele ) {
-			if ( locvar_dmghp_ele != SKILL_RES_MAGIC & locvar_dmghp_ele != SKILL_SPACT_DANCE_OF_BLOW & locvar_dmghp_ele != SKILL_SPACT_FLASH_OF_SWIFTNESS & locvar_dmghp_ele != SKILL_RESDMG_CRUSH ) {
+			if ( locvar_dmghp_ele != SKILL_SPACT_DANCE_OF_BLOW & locvar_dmghp_ele != SKILL_SPACT_FLASH_OF_SWIFTNESS & locvar_dmghp_ele != SKILL_RESDMG_CRUSH ) {
 				if ( cbit(CHARA_BIT_RES_ELEMENTAL, dmghp_charid) ) {
-					locvar_dmghp_dmg = 0
+					if ( locvar_dmghp_dmg > 0 ) {
+						locvar_dmghp_dmg = locvar_dmghp_dmg / 50
+					}
 				}
 			}
 		}
@@ -5159,6 +5161,15 @@
 		if ( locvar_dmghp_dmg > 0 ) {
 			if ( cdata(CDATA_QUALITY, dmghp_charid) >= FIX_QUALITY_MIRACLE ) {
 				locvar_dmghp_dmg = locvar_dmghp_dmg * 10 / limit(sdata(SKILL_ATTR_SPD, dmghp_source) * 10 / sdata(SKILL_ATTR_SPD, dmghp_charid), 10, 50)
+			}
+			if ( locvar_dmghp_ele ) {
+				if ( locvar_dmghp_ele != SKILL_SPACT_DANCE_OF_BLOW & locvar_dmghp_ele != SKILL_SPACT_FLASH_OF_SWIFTNESS & locvar_dmghp_ele != SKILL_RESDMG_CRUSH ) {
+					if ( cbit(CHARA_BIT_RES_ELEMENTAL, dmghp_source) ) {
+						if ( locvar_dmghp_dmg > 0 ) {
+							locvar_dmghp_dmg = locvar_dmghp_dmg / 50
+						}
+					}
+				}
 			}
 		}
 	}
@@ -5742,22 +5753,16 @@
 					cfg_animewait = locvar_dmghp_waitbk
 				}
 			}
-		}
-	}
-	if ( locvar_dmghp_dmg <= 0 ) {
-		locvar_dmghp_dmglevel = -1
-	}
-	else {
-		locvar_dmghp_dmglevel = locvar_dmghp_dmg * 6 / cdata(CDATA_MAX_HP, dmghp_charid)
-	}
-	if ( dmghp_source >= DAMAGE_FROM_CHARA & cbit(CHARA_BIT_SANDBAG, dmghp_charid) != 1 ) {
-		if ( cdata(CDATA_GAUGE_COOLDOWN, dmghp_source) == 0 ) {
-			cdata(CDATA_GAUGE_COOLDOWN, dmghp_source) = 1
 			cdata(CDATA_POWER_GAUGE, dmghp_source) += 2
-			if ( cdata(CDATA_ID, dmghp_source) == CREATURE_ID_TALON_SOLDIER ) {
+			if ( cbit(CHARA_BIT_SANDBAG, dmghp_charid) != TRUE ) {
 				cdata(CDATA_POWER_GAUGE, dmghp_source) += 2
+				if ( cdata(CDATA_ID, dmghp_source) == CREATURE_ID_TALON_SOLDIER ) {
+					cdata(CDATA_POWER_GAUGE, dmghp_source) += 2
+				}
 			}
 		}
+	}
+	if ( dmghp_source >= DAMAGE_FROM_CHARA ) {
 		if ( cdata(CDATA_POWER_GAUGE, dmghp_source) > 100 ) {
 			if ( cdata(CDATA_POWER_GAUGE, dmghp_source) > 100 ) {
 				if ( cdata(CDATA_SHIFT_FORM, dmghp_source) <= SHIFT_FORM_NONE & (cdata(CDATA_EVOLUTION_STAGE, dmghp_source) <= 0 | dmghp_source == DAMAGE_FROM_CHARA) & (cdata(CDATA_QUALITY, dmghp_source) < FIX_QUALITY_MIRACLE | dmghp_source <= MAX_CHARA_FOLLOWER) ) {
@@ -5769,6 +5774,12 @@
 			cdata(CDATA_POWER_GAUGE, dmghp_source) = 200
 		}
 	}
+	if ( locvar_dmghp_dmg <= 0 ) {
+		locvar_dmghp_dmglevel = -1
+	}
+	else {
+		locvar_dmghp_dmglevel = locvar_dmghp_dmg * 6 / cdata(CDATA_MAX_HP, dmghp_charid)
+	}
 	if ( cdata(CDATA_POWER_GAUGE, dmghp_charid) < 96 ) {
 		if ( locvar_dmghp_dmg > 0 ) {
 			if ( cdata(CDATA_GAUGE_COOLDOWN2, dmghp_charid) == 0 ) {
@@ -5777,6 +5788,11 @@
 				if ( cdata(CDATA_ID, dmghp_charid) == CREATURE_ID_TALON_SOLDIER ) {
 					if ( cdata(CDATA_EVOLUTION_STAGE, dmghp_charid) != 0 ) {
 						locvar_dmghp_pgauge(dmghp_charid) += 2
+					}
+				}
+				if ( cdata(CDATA_ALLIED, dmghp_charid) == 100 | dmghp_charid == CHARA_PLAYER ) {
+					if ( cdata(CDATA_ROLE_RESTOCK, dmghp_charid) > 0 ) {
+						cdata(CDATA_POWER_GAUGE, dmghp_charid) += 1
 					}
 				}
 				if ( cdata(CDATA_POWER_GAUGE, dmghp_charid) >= 96 ) {
@@ -5793,6 +5809,11 @@
 				if ( cdata(CDATA_ID, dmghp_charid) == CREATURE_ID_TALON_SOLDIER ) {
 					if ( cdata(CDATA_EVOLUTION_STAGE, dmghp_charid) != 0 ) {
 						locvar_dmghp_pgauge(dmghp_charid) += 2
+					}
+				}
+				if ( cdata(CDATA_ALLIED, dmghp_charid) == 100 | dmghp_charid == CHARA_PLAYER ) {
+					if ( cdata(CDATA_ROLE_RESTOCK, dmghp_charid) > 0 ) {
+						cdata(CDATA_POWER_GAUGE, dmghp_charid) += 1
 					}
 				}
 				if ( cdata(CDATA_POWER_GAUGE, dmghp_charid) >= 196 ) {
