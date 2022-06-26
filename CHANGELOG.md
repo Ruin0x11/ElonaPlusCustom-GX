@@ -3,6 +3,9 @@
 ## Added
 - Ported all changes from Elona+ 2.13.
 
+## Fixed
+- Fixed being unable to execute undead fusion.
+
 # 2.12.1.1
 
 ## Added
