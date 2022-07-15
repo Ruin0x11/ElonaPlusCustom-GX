@@ -1,3 +1,10 @@
+# 2.13.1.1
+
+## Fixed
+- Fixed a crash when trying to craft starfiber.
+
+Thanks to @air1068 for contributing.
+
 # 2.13.1.0
 
 ## Added
