@@ -643,13 +643,19 @@
 		gosub *prompt_word
 		if ( inputlog == "" ) {
 			txt lang("名前をつけるのはやめた。", "You changed your mind.")
-			adata(ADATA_FESTIVAL, gdata(GDATA_AREA)) = 0
+			//adata(ADATA_FESTIVAL, gdata(GDATA_AREA)) = 0
 		}
 		else {
 			mdatan(MDATAN_NAME) = "" + inputlog
+            // Immediately save the new name to the corresponding tmp file so it can be read when leaving the map
+            folder = exedir + "tmp\\"
+            file = folder + "mdatan_" + gdata(GDATA_AREA) + "_" + (100 + gdata(GDATA_LEVEL)) + ".s2"
+            fmode = "mdatan"
+            fread = 0
+            arrayfilewrapper
 			adata(ADATA_FESTIVAL, gdata(GDATA_AREA)) = 9999
-			txt lang("" + mdatan(MDATAN_NAME) + "という名前で呼ぶことにした。", "You named " + him(tc) + " " + cdatan(CDATAN_NAME, tc) + ".")
-			gosub *screen_refreshFull
+            gosub *screen_refreshFull
+			txt lang("" + mdatan(MDATAN_NAME) + "という名前で呼ぶことにした。", "You named it " + mdatan(MDATAN_NAME) + ".")
 		}
 		gosub *screen_refresh
 		goto *pc_turn

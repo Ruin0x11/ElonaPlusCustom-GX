@@ -2687,6 +2687,19 @@
 			s += lang("《覚醒》", "Awaken")
 		}
 	}
+    if ( adata(ADATA_FESTIVAL, mapname_mapid) == 9999 ) {
+        exist exedir + "tmp\\" + "mdatan_" + mapname_mapid + "_101.s2"
+        if ( strsize == (-1) ) {
+            exist exedir + "save\\" + playerid + "\\mdatan_" + mapname_mapid + "_101.s2"
+            if ( strsize != (-1) ) {    
+                noteload exedir + "save\\" + playerid + "\\mdatan_" + mapname_mapid + "_101.s2"
+            }
+        }
+        else {
+            noteload exedir + "tmp\\" + "mdatan_" + mapname_mapid + "_101.s2"
+        }
+        noteget s, 0
+    }
 	if ( mapname_arg2 == 1 ) {
 		if ( adata(ADATA_ID, mapname_mapid) == AREA_SISTER_MANSION | adata(ADATA_ID, mapname_mapid) == AREA_OBLIVION_PALACE | (gdata(GDATA_FLAG_SUB_BEYOND_THE_GENERATIONS) < 8 & adata(ADATA_ID, mapname_mapid) == AREA_IRMA_THALIA_WORKSHOP) ) {
 			return ""
