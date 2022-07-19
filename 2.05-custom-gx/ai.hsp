@@ -1431,9 +1431,14 @@
 						}
 						if ( dist(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), cdata(CDATA_X, cnt), cdata(CDATA_Y, cnt)) < 6 ) {
 							if ( fov_los(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), cdata(CDATA_X, cnt), cdata(CDATA_Y, cnt)) ) {
-								cdata(CDATA_TARGET, cc) = cnt
-								tc = cnt
-								break
+								if ( cc < MAX_CHARA_FOLLOWER & cdata(CDATA_GOLD, cnt) <= 0 ) {
+									continue
+								}
+								else {
+									cdata(CDATA_TARGET, cc) = cnt
+									tc = cnt
+									break
+								}
 							}
 						}
 					loop
