@@ -535,6 +535,30 @@
 			txt lang("あなたは「" + skillname(SKILL_SPACT_ABYSS_IN_THE_EYE) + "」の能力を得た。", "You have learned a new ability, " + skillname(SKILL_SPACT_ABYSS_IN_THE_EYE) + ".")
 		}
 	}
+	if ( sorg(SKILL_NORMAL_GENE_ENGINEER, CHARA_PLAYER) > 9 & sorg(SKILL_ATTR_DEX, CHARA_PLAYER) > 29 ) {
+		if ( spact(SKILL_SPACT_DIRECT_TRANSFUSION - STARTING_SKILL_SPACT) == 0 ) {
+			spact(SKILL_SPACT_DIRECT_TRANSFUSION - STARTING_SKILL_SPACT) = 1
+			txtmore
+			txtef COLOR_YELLOW
+			txt lang("あなたは「" + skillname(SKILL_SPACT_DIRECT_TRANSFUSION) + "」の能力を得た。", "You have learned new ability, " + skillname(SKILL_SPACT_DIRECT_TRANSFUSION) + ".")
+		}
+	}
+	if ( sorg(SKILL_NORMAL_GENE_ENGINEER, CHARA_PLAYER) > 24 & sorg(SKILL_ATTR_MAG, CHARA_PLAYER) > 49 ) {
+		if ( spact(SKILL_SPACT_ELECTRIC_SHOCK - STARTING_SKILL_SPACT) == 0 ) {
+			spact(SKILL_SPACT_ELECTRIC_SHOCK - STARTING_SKILL_SPACT) = 1
+			txtmore
+			txtef COLOR_YELLOW
+			txt lang("あなたは「" + skillname(SKILL_SPACT_ELECTRIC_SHOCK) + "」の能力を得た。", "You have learned new ability, " + skillname(SKILL_SPACT_ELECTRIC_SHOCK) + ".")
+		}
+	}
+	if ( sorg(SKILL_NORMAL_GENE_ENGINEER, CHARA_PLAYER) > 44 & sorg(SKILL_NORMAL_TAILORING, CHARA_PLAYER) > 44 ) {
+		if ( spact(SKILL_SPACT_INSTANT_SUTURE - STARTING_SKILL_SPACT) == 0 ) {
+			spact(SKILL_SPACT_INSTANT_SUTURE - STARTING_SKILL_SPACT) = 1
+			txtmore
+			txtef COLOR_YELLOW
+			txt lang("あなたは「" + skillname(SKILL_SPACT_INSTANT_SUTURE) + "」の能力を得た。", "You have learned new ability, " + skillname(SKILL_SPACT_INSTANT_SUTURE) + ".")
+		}
+	}
 	if ( sorg(SKILL_NORMAL_GENE_ENGINEER, CHARA_PLAYER) > 19 & trait(TRAIT_NORMAL_SPACT_TOUCH_OF_POISON) != 0 ) {
 		if ( spact(SKILL_SPACT_HAZARD_RECIPE - STARTING_SKILL_SPACT) == 0 ) {
 			spact(SKILL_SPACT_HAZARD_RECIPE - STARTING_SKILL_SPACT) = 1
@@ -2361,6 +2385,10 @@
 		cdata(CDATA_HEIGHT, rc) = rnd(60) + 140
 		cdata(CDATA_WEIGHT, rc) = rnd(100) + 200
 	}
+	if ( babymake == 1 ) {
+		cdata(CDATA_HEIGHT, rc) /= 5
+		cdata(CDATA_WEIGHT, rc) /= 10
+	}
 	if ( cdata(CDATA_ID, rc) == CREATURE_ID_SMALL_STONE_GOLEM | cdata(CDATA_ID, rc) == CREATURE_ID_SMALL_WOODEN_GOLEM | cdata(CDATA_ID, rc) == CREATURE_ID_SILVER_SKULL_MAJESTY | cdata(CDATA_ID, rc) == CREATURE_ID_CTHULHICK | cdata(CDATA_ID, rc) == CREATURE_ID_MAGIC_BEE | cdata(CDATA_ID, rc) == CREATURE_ID_YOUNG_SWALLOW ) {
 		cdata(CDATA_AGE, rc) = gdata(GDATA_YEAR)
 	}
@@ -2474,7 +2502,7 @@
 	else {
 		cdata(CDATA_TONE_SEX, rc) = 2
 	}
-	if ( dorei2 == 0 ) {
+	if ( dorei2 == 0 & babymake == 0 ) {
 		gosub *chara_initEquip
 	}
 	r1 = rc

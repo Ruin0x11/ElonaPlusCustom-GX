@@ -283,7 +283,7 @@
 	}
 	if ( rnd(23) == 0 | (gdata(GDATA_AREA) == AREA_PALMIA & rnd(8) == 0) | (gdata(GDATA_AREA) == AREA_ARCBELC & rnd(2) == 0) ) {
 		if ( gdata(GDATA_AREA) != AREA_RUST_PLAZA & gdata(GDATA_AREA) != AREA_OL_DRAN ) {
-			qdata(QDATA_LEVEL, rq) = limit(rnd(sdata(SKILL_NORMAL_PERFORMER, CHARA_PLAYER) + sdata(SKILL_ATTR_CHA, CHARA_PLAYER) / 10 + 10), int(1.5 * sqrt(sdata(SKILL_NORMAL_PERFORMER, CHARA_PLAYER))) + 10, cdata(CDATA_FAME, CHARA_PLAYER) / 1000 + 10)
+			qdata(QDATA_LEVEL, rq) = limit(rnd(gdata(GDATA_DEEPEST_LEVEL) + sdata(SKILL_ATTR_CHA, CHARA_PLAYER) / 10 + 10), int(1.5 * sqrt(gdata(GDATA_DEEPEST_LEVEL) + 4)) + 10, cdata(CDATA_FAME, CHARA_PLAYER) / 1000 + 10)
 			qdata(QDATA_RENEW, rq) = (rnd(6) + 2) * 24 + (gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12)
 			qdata(QDATA_REWARD_ITEM, rq) = QUEST_REWARD_NONE
 			qdata(QDATA_EXIST, rq) = QUEST_TYPE_PARTY

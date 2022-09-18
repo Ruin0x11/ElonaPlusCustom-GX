@@ -438,13 +438,18 @@
 			map_barrel 0, 0
 		loop
 	}
-	bdderu = limit(15 + gdata(GDATA_SISTER_KILLED) * 2, 15, 35) * 2 / 3
 	if ( mdata(MDATA_CAN_SAVE) == 1 ) {
+		bdderu = limit(15 + gdata(GDATA_SISTER_KILLED) * 2, 15, 35) * 2 / 3
 		if ( rnd(bdderu) == 0 ) {
 			flt
 			initlv = limit(gdata(GDATA_LEVEL), 30, 300)
 			novoidlv = 1
 			characreate -1, CREATURE_ID_BIG_DADDY, -3, 0
+		}
+		dernefia = limit(140 - gdata(GDATA_LEVEL), 40, 140) / 2
+		if ( rnd(dernefia) == 0 ) {
+			flt
+			itemcreate -1, ITEM_ID_DERNEFIA, -1, -1, 0
 		}
 	}
 	if ( adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_RANDOM_DUNGEON ) {

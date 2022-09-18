@@ -132,9 +132,9 @@
 #include "mock_defines.hsp"
 #endif
 
-#define global VARIANT_NAME "ElonaPlus Custom-GX 2.13.1.0"
-#define global VARIANT_TITLE "Elona+ Custom-GX 2.13.1.0"
-#define global VERSION_STRING "6.13"
+#define global VARIANT_NAME "ElonaPlus Custom-GX 2.14.1.0"
+#define global VARIANT_TITLE "Elona+ Custom-GX 2.14.1.0"
+#define global VERSION_STRING "6.14"
 #define global VERSION_NUMBER int(double(VERSION_STRING) * 1000)
 
 	develop = dirinfo(4) == "--develop"
@@ -457,10 +457,10 @@
 		itemcreate 0, ITEM_ID_JERKY, -1, -1, 0
 		inv(INV_ITEM_LEVEL, ci) = 10
 		flt
-		itemcreate 0, ITEM_ID_KISERU, -1, -1, 0
+		itemcreate 0, ITEM_ID_SURVIVABILITY_EXTENDER_Y, -1, -1, 0
 		inv(INV_ITEM_NUM, ci) = 30
 		flt
-		itemcreate 0, ITEM_ID_TOBACCO_PIPE, -1, -1, 0
+		itemcreate 0, ITEM_ID_SURVIVABILITY_EXTENDER_X, -1, -1, 0
 		inv(INV_ITEM_NUM, ci) = 30
 		flt
 		itemcreate 0, ITEM_ID_HAMAKI, -1, -1, 0
@@ -1577,6 +1577,7 @@
 		gdata(GDATA_DAY) += gdata(GDATA_HOUR) / 24
 		gdata(GDATA_HOUR) = gdata(GDATA_HOUR) \ 24
 		if ( gdata(GDATA_DAY) >= 31 ) {
+			gdata(GDATA_FLAG_MOST_EXPENSIVE_WORLD_MAP_VEHICLE_THIS_MONTH) = 0
 			gdata(GDATA_MONTH)++
 			gdata(GDATA_DAY) = gdata(GDATA_DAY) - 30
 			gdata(GDATA_YACTECT_GEMSTONE_MSG) = 0
@@ -1995,6 +1996,38 @@
 		if ( cdata(CDATA_CONDITION_PARALYZE, cc) == 0 ) {
 			if ( rnd(2) == 0 ) {
 				cdata(CDATA_CONDITION_PARALYZE, cc) = 1
+			}
+		}
+	}
+	if ( cbit(CHARA_BIT_BIRTHED_CHILD, cc) == TRUE ) {
+		if ( cdata(CDATA_CONDITION_SLEEP, cc) == 0 ) {
+			if ( cdata(CDATA_SPRITE_SIZE_MILK, cc) == (-5) ) {
+				if ( rnd(100) < 5 ) {
+					txt lang(cdatan(CDATAN_NAME, cc) + "はスヤスヤと眠り始めた…。", cdatan(CDATAN_NAME, cc) + " fell asleep soundly...")
+					cdata(CDATA_CONDITION_SLEEP, cc) = rnd(301) + 100
+				}
+			}
+			if ( cdata(CDATA_SPRITE_SIZE_MILK, cc) == (-4) ) {
+				if ( rnd(100) < 5 ) {
+					txt lang(cdatan(CDATAN_NAME, cc) + "はまるで電池が切れたように急に眠り始めた…。", cdatan(CDATAN_NAME, cc) + " suddenly fell asleep as if the battery had run out...")
+					cdata(CDATA_CONDITION_SLEEP, cc) = rnd(151) + 50
+				}
+			}
+			if ( cdata(CDATA_SPRITE_SIZE_MILK, cc) == (-3) ) {
+				if ( rnd(100) < 5 ) {
+					if ( gdata(GDATA_HOUR) <= 6 | gdata(GDATA_HOUR) >= 23 ) {
+						txt lang(cdatan(CDATAN_NAME, cc) + "は遊び疲れて眠り始めた…。", cdatan(CDATAN_NAME, cc) + " got tired of playing and fell asleep...")
+						cdata(CDATA_CONDITION_SLEEP, cc) = rnd(151) + 50
+					}
+				}
+			}
+			if ( cdata(CDATA_SPRITE_SIZE_MILK, cc) == (-2) ) {
+				if ( rnd(100) < 2 ) {
+					if ( gdata(GDATA_HOUR) <= 6 | gdata(GDATA_HOUR) >= 23 ) {
+						txt lang(cdatan(CDATAN_NAME, cc) + "はあくびをすると、静かに眠り始めた…。", cdatan(CDATAN_NAME, cc) + " yawned and went to sleep...")
+						cdata(CDATA_CONDITION_SLEEP, cc) = rnd(151) + 50
+					}
+				}
 			}
 		}
 	}
@@ -5803,6 +5836,121 @@
 			}
 			evadd EVENT_EAR_CLEANING
 		}
+		goto *event_SWEND1
+		_switch_sw++
+	}
+	if ( _switch_val == EVENT_BIRTH | _switch_sw ) {
+		_switch_sw = 0
+		s = lang("誕生", "Birth")
+		file = "bg39"
+		buff = lang("今、この世界で新たな生命活動が開始…産まれたのだ。", "Now, a small first cry echoes in this world...")
+		listmax = 0
+		chatList 1, lang("遂に…！", "Finally!")
+		chatList 2, lang("おぉぉぉぉ！", "Woooooo!")
+		chatList 3, lang("今日は眠れないな", "I can't sleep tonight.")
+		gosub *re_select
+		snd SOUNDLIST_OFFER2
+		if ( ccbk != 0 ) {
+			babyid = cdata(CDATA_ID, ccbk)
+		}
+		if ( ccbk == 0 ) {
+			babyid = cdata(CDATA_INFANT, ccbk)
+		}
+		babyai = cdata(CDATA_INFANT, ccbk)
+		cdata(CDATA_SP_EARNED, ccbk) = -cdata(CDATA_SP_EARNED, ccbk) \ 10000
+		if ( 0 ) {
+			txt lang(name(ccbk) + "の" + babyid + "と" + babyai + "ステージ端数" + cdata(CDATA_SP_EARNED, ccbk) + "。", name(cc) + " get genes of " + _s(cc) + ".")
+		}
+		bsid = cdata(CDATA_SP_EARNED, ccbk) / 100
+		bsids = cdata(CDATA_SP_EARNED, ccbk) \ 100
+		babymake = 1
+		repeat 20
+			if ( cdata(CDATA_TAMER_WHIP_PICKUP, ccbk) <= 0 & cdata(CDATA_TAMER_WHIP_EAT, ccbk) <= 0 ) {
+				break
+			}
+			if ( cdata(CDATA_TAMER_WHIP_PICKUP, ccbk) > 0 ) {
+				babysex = 10
+				flt
+				characreate MAX_CHARA_NC, babyai, -3, 0
+				flt
+				initlv = 1
+				novoidlv = 1
+				characreate -1, babyid, cdata(CDATA_X, ccbk), cdata(CDATA_Y, ccbk)
+				cdata(CDATA_SPRITE_SIZE_MILK, rc) = -5
+				cdata(CDATA_AGE, rc) = gdata(GDATA_YEAR)
+				cdata(CDATA_QUALITY, rc) = FIX_QUALITY_UNIQUE
+				cbitmod CHARA_BIT_BIRTHED_CHILD, rc, TRUE
+				cdata(CDATA_SEX, rc) = 0
+				cdata(CDATA_PORTRAIT, rc) = -1
+				cdatan(CDATAN_NAME, rc) = lang(cdatan(CDATAN_NAME, ccbk) + "の息子", "son of " + cdatan(CDATAN_NAME, ccbk))
+				cdatan(CDATAN_NAME, rc) = lang("《", "{") + cdatan(CDATAN_NAME, rc) + lang("》", "}")
+				cdata(CDATA_AI_MOVE_FREQ, rc) = cdata(CDATA_AI_MOVE_FREQ, MAX_CHARA_NC)
+				cdata(CDATA_AI_DISTANCE, rc) = cdata(CDATA_AI_DISTANCE, MAX_CHARA_NC)
+				cdata(CDATA_AI_SUB, rc) = cdata(CDATA_AI_SUB, MAX_CHARA_NC)
+				cdata(STARTING_CDATA_ACT_MAIN, rc) = cdata(STARTING_CDATA_ACT_MAIN, MAX_CHARA_NC)
+				cdata(STARTING_CDATA_ACT_MAIN + 1, rc) = cdata(STARTING_CDATA_ACT_MAIN + 1, MAX_CHARA_NC)
+				cdata(STARTING_CDATA_ACT_MAIN + 2, rc) = cdata(STARTING_CDATA_ACT_MAIN + 2, MAX_CHARA_NC)
+				cdata(STARTING_CDATA_ACT_MAIN + 3, rc) = cdata(STARTING_CDATA_ACT_MAIN + 3, MAX_CHARA_NC)
+				cdata(STARTING_CDATA_ACT_MAIN + 4, rc) = cdata(STARTING_CDATA_ACT_MAIN + 4, MAX_CHARA_NC)
+				cdata(STARTING_CDATA_ACT_SUB, rc) = cdata(STARTING_CDATA_ACT_SUB, MAX_CHARA_NC)
+				cdata(STARTING_CDATA_ACT_SUB + 1, rc) = cdata(STARTING_CDATA_ACT_SUB + 1, MAX_CHARA_NC)
+				cdata(STARTING_CDATA_ACT_SUB + 2, rc) = cdata(STARTING_CDATA_ACT_SUB + 2, MAX_CHARA_NC)
+				cdata(STARTING_CDATA_ACT_SUB + 3, rc) = cdata(STARTING_CDATA_ACT_SUB + 3, MAX_CHARA_NC)
+				cdata(STARTING_CDATA_ACT_SUB + 4, rc) = cdata(STARTING_CDATA_ACT_SUB + 4, MAX_CHARA_NC)
+				cdata(CDATA_ACT_INDEX, rc) = cdata(CDATA_ACT_INDEX, MAX_CHARA_NC)
+				chara_vanquish MAX_CHARA_NC
+				cdata(CDATA_TAMER_WHIP_PICKUP, ccbk)--
+				wishally = 200
+				gdata(GDATA_TEMPORARY_FLAGS2) = 200
+				gosub *add_ally
+			}
+			if ( cdata(CDATA_TAMER_WHIP_EAT, ccbk) > 0 ) {
+				babysex = 11
+				flt
+				characreate MAX_CHARA_NC, babyai, -3, 0
+				flt
+				initlv = 1
+				novoidlv = 1
+				characreate -1, babyid, cdata(CDATA_X, ccbk), cdata(CDATA_Y, ccbk)
+				cdata(CDATA_SPRITE_SIZE_MILK, rc) = -5
+				cdata(CDATA_AGE, rc) = gdata(GDATA_YEAR)
+				cdata(CDATA_QUALITY, rc) = FIX_QUALITY_UNIQUE
+				cbitmod CHARA_BIT_BIRTHED_CHILD, rc, TRUE
+				cdata(CDATA_SEX, rc) = 1
+				cdata(CDATA_PORTRAIT, rc) = -1
+				cdatan(CDATAN_NAME, rc) = lang(cdatan(CDATAN_NAME, ccbk) + "の娘", "daughter of " + cdatan(CDATAN_NAME, ccbk))
+				cdatan(CDATAN_NAME, rc) = lang("《", "{") + cdatan(CDATAN_NAME, rc) + lang("》", "}")
+				cdata(CDATA_AI_MOVE_FREQ, rc) = cdata(CDATA_AI_MOVE_FREQ, MAX_CHARA_NC)
+				cdata(CDATA_AI_DISTANCE, rc) = cdata(CDATA_AI_DISTANCE, MAX_CHARA_NC)
+				cdata(CDATA_AI_SUB, rc) = cdata(CDATA_AI_SUB, MAX_CHARA_NC)
+				cdata(STARTING_CDATA_ACT_MAIN, rc) = cdata(STARTING_CDATA_ACT_MAIN, MAX_CHARA_NC)
+				cdata(STARTING_CDATA_ACT_MAIN + 1, rc) = cdata(STARTING_CDATA_ACT_MAIN + 1, MAX_CHARA_NC)
+				cdata(STARTING_CDATA_ACT_MAIN + 2, rc) = cdata(STARTING_CDATA_ACT_MAIN + 2, MAX_CHARA_NC)
+				cdata(STARTING_CDATA_ACT_MAIN + 3, rc) = cdata(STARTING_CDATA_ACT_MAIN + 3, MAX_CHARA_NC)
+				cdata(STARTING_CDATA_ACT_MAIN + 4, rc) = cdata(STARTING_CDATA_ACT_MAIN + 4, MAX_CHARA_NC)
+				cdata(STARTING_CDATA_ACT_SUB, rc) = cdata(STARTING_CDATA_ACT_SUB, MAX_CHARA_NC)
+				cdata(STARTING_CDATA_ACT_SUB + 1, rc) = cdata(STARTING_CDATA_ACT_SUB + 1, MAX_CHARA_NC)
+				cdata(STARTING_CDATA_ACT_SUB + 2, rc) = cdata(STARTING_CDATA_ACT_SUB + 2, MAX_CHARA_NC)
+				cdata(STARTING_CDATA_ACT_SUB + 3, rc) = cdata(STARTING_CDATA_ACT_SUB + 3, MAX_CHARA_NC)
+				cdata(STARTING_CDATA_ACT_SUB + 4, rc) = cdata(STARTING_CDATA_ACT_SUB + 4, MAX_CHARA_NC)
+				cdata(CDATA_ACT_INDEX, rc) = cdata(CDATA_ACT_INDEX, MAX_CHARA_NC)
+				chara_vanquish MAX_CHARA_NC
+				cdata(CDATA_TAMER_WHIP_EAT, ccbk)--
+				wishally = 200
+				gdata(GDATA_TEMPORARY_FLAGS2) = 200
+				gosub *add_ally
+			}
+		loop
+		gdata(GDATA_TEMPORARY_FLAGS2) = 0
+		babymake = 0
+		babysex = 0
+		wishally = 0
+		cdata(CDATA_SP_EARNED, ccbk) = 0
+		cdata(CDATA_INFANT, ccbk) = 0
+		flt
+		novoidlv = 1
+		characreate -1, CREATURE_ID_BOYCIANA, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER)
+		autosave = 1 * (gdata(GDATA_AREA) != AREA_SHOW_HOUSE)
 		goto *event_SWEND1
 		_switch_sw++
 	}

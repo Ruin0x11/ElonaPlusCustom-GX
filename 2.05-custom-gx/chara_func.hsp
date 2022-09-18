@@ -1044,6 +1044,9 @@
 	if ( cdata(CDATA_BURDEN, CHARA_PLAYER) == 1 ) {
 		cdata(CDATA_SPEED_FIX, CHARA_PLAYER) -= 10
 	}
+	if ( gdata(GDATA_FLAG_MOST_EXPENSIVE_WORLD_MAP_VEHICLE_THIS_MONTH) < gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) ) {
+		gdata(GDATA_FLAG_MOST_EXPENSIVE_WORLD_MAP_VEHICLE_THIS_MONTH) = gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND)
+	}
 	if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) == VEHICLE_NONE ) {
 		if ( mdata(MDATA_TYPE) == MAP_TYPE_WORLD | mdata(MDATA_TYPE) == MAP_TYPE_LOCAL ) {
 			if ( gdata(GDATA_CARGO_WEIGHT) > gdata(GDATA_CARGO_LIMIT) ) {
@@ -2114,16 +2117,16 @@
 	return
 
 #deffunc resistmodh int resistmodh_charid, int resistmodh_ele, int resistmodh_arg3
-	locvar_resistmod_lv = sorg(resistmodh_ele, resistmodh_charid) + 25
-	if ( sorg(resistmodh_ele, resistmodh_charid) >= 200 & resistmodh_arg3 >= 25 ) {
+	locvar_resistmod_lv = sorg(resistmodh_ele, resistmodh_charid)
+	if ( sorg(resistmodh_ele, resistmodh_charid) >= 300 & resistmodh_arg3 >= 25 | sorg(resistmodh_ele, resistmodh_charid) < 100 ) {
 		txt_nothinghappens
 	}
 	else {
 		if ( locvar_resistmod_lv < 50 ) {
 			locvar_resistmod_lv = 50
 		}
-		if ( locvar_resistmod_lv > 200 ) {
-			locvar_resistmod_lv = 200
+		if ( locvar_resistmod_lv >= 100 ) {
+			locvar_resistmod_lv = 300
 		}
 		if ( resistmodh_arg3 >= 25 ) {
 			txtef COLOR_GREEN
@@ -3527,22 +3530,16 @@
 			}
 		}
 	}
-	locvar_check_talk_exp = limit(cdata(CDATA_LEVEL, check_talk_arg2), 1, 400) * limit(cdata(CDATA_LEVEL, check_talk_arg2) + 1, 1, 400) * limit(cdata(CDATA_LEVEL, check_talk_arg2) + 2, 1, 400) / 10 + 8
+	locvar_check_talk_exp = limit(cdata(CDATA_LEVEL, check_talk_arg2), 1, 400) * limit(cdata(CDATA_LEVEL, check_talk_arg2) + 1, 1, 400) * limit(cdata(CDATA_LEVEL, check_talk_arg2) + 2, 1, 400) / 10 + 10
 	if ( check_talk_arg1 == 0 ) {
 		if ( cdata(CDATA_LEVEL, check_talk_arg2) < cdata(CDATA_LEVEL, check_talk_arg1) ) {
-			locvar_check_talk_exp = locvar_check_talk_exp / 100 + 10
-		}
-	}
-	if ( check_talk_arg1 == 0 ) {
-		if ( cdata(CDATA_LEVEL, check_talk_arg2) > cdata(CDATA_LEVEL, check_talk_arg1) ) {
-			locvar_check_talk_exp *= limit(cdata(CDATA_LEVEL, check_talk_arg2) * 2 / cdata(CDATA_LEVEL, CHARA_PLAYER), 1, 10)
+			locvar_check_talk_exp = locvar_check_talk_exp / 100 + 5
 		}
 	}
 	if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, check_talk_arg2) | cbit(CHARA_BIT_SPLIT_NO_EFFECT, check_talk_arg2) ) {
 		locvar_check_talk_exp = 0
 	}
-	cdata(CDATA_EXP, check_talk_arg1) += locvar_check_talk_exp
-	if ( check_talk_arg1 == 0 ) {
+	if ( cdata(CDATA_RELATION, check_talk_arg1) == RELATION_ALLY | check_talk_arg1 == 0 ) {
 		if ( gdata(GDATA_SLEEP_EXP) > 1000000000 ) {
 			gdata(GDATA_SLEEP_EXP) = 1000000000
 		}
@@ -3551,6 +3548,14 @@
 			gdata(GDATA_SLEEP_EXP) = 1000000000
 		}
 	}
+	if ( check_talk_arg1 == 0 ) {
+		if ( cdata(CDATA_LEVEL, check_talk_arg2) > cdata(CDATA_LEVEL, check_talk_arg1) ) {
+			if ( locvar_check_talk_exp > 10 ) {
+				locvar_check_talk_exp = locvar_check_talk_exp * limit(cdata(CDATA_LEVEL, check_talk_arg2) * 30 / cdata(CDATA_LEVEL, CHARA_PLAYER), 10, 100) / 10
+			}
+		}
+	}
+	cdata(CDATA_EXP, check_talk_arg1) += locvar_check_talk_exp
 	cdata(CDATA_AI_AGGRO, check_talk_arg1) = 0
 	return
 
@@ -4302,44 +4307,46 @@
 		}
 		rowact_item locvar_item_acid_ci
 		txtmore
-		if ( ibit(ITEM_BIT_PRECIOUS, locvar_item_acid_ci) == 0 ) {
-			locvar_item_fire_a = refitem(inv(INV_ITEM_ID, locvar_item_acid_ci), DBSPEC_TYPE)
-			if ( item_cold_arg1 == (-1) ) {
-				locvar_item_cold_s = ""
-			}
-			else {
-				locvar_item_cold_s = name(item_cold_arg1) + lang("の", your(item_cold_arg1))
-			}
-			if ( locvar_item_fire_a == FILTER_CONTAINER | locvar_item_fire_a == FILTER_ITEM_TOOL | locvar_item_fire_a == FILTER_GOLD ) {
-				continue
-			}
-			if ( inv(INV_ITEM_QUALITY, locvar_item_acid_ci) >= FIX_QUALITY_MIRACLE | inv(INV_ITEM_EQUIP, locvar_item_acid_ci) != 0 ) {
-				continue
-			}
-			if ( locvar_item_fire_a != FILTER_ITEM_POTION ) {
-				if ( rnd(30) ) {
+		if ( ibit(ITEM_BIT_COLDPROOF, locvar_item_acid_ci) == FALSE ) {
+			if ( ibit(ITEM_BIT_PRECIOUS, locvar_item_acid_ci) == 0 ) {
+				locvar_item_fire_a = refitem(inv(INV_ITEM_ID, locvar_item_acid_ci), DBSPEC_TYPE)
+				if ( item_cold_arg1 == (-1) ) {
+					locvar_item_cold_s = ""
+				}
+				else {
+					locvar_item_cold_s = name(item_cold_arg1) + lang("の", your(item_cold_arg1))
+				}
+				if ( locvar_item_fire_a == FILTER_CONTAINER | locvar_item_fire_a == FILTER_ITEM_TOOL | locvar_item_fire_a == FILTER_GOLD ) {
 					continue
 				}
-			}
-			if ( locvar_item_fire_ti != (-1) ) {
-				if ( inv(INV_ITEM_NUM, locvar_item_fire_ti) > 0 ) {
-					txt lang(itemname(locvar_item_fire_ti, 1) + "が" + name(item_cold_arg1) + "の持ち物を冷気から守った。", itemname(locvar_item_fire_ti, 1) + " protects " + name(item_cold_arg1) + your(item_cold_arg1) + " stuff from cold.")
-					if ( inv(INV_ITEM_CHARGE, locvar_item_fire_ti) > 0 ) {
-						inv(INV_ITEM_CHARGE, locvar_item_fire_ti)--
-					}
-					else {
-						txt lang(itemname(locvar_item_fire_ti, 1) + "は粉々に砕けた。", itemname(locvar_item_fire_ti, 1) + " is broken to pieces.")
-						inv(INV_ITEM_NUM, locvar_item_fire_ti)--
-						break
-					}
+				if ( inv(INV_ITEM_QUALITY, locvar_item_acid_ci) >= FIX_QUALITY_MIRACLE | inv(INV_ITEM_EQUIP, locvar_item_acid_ci) != 0 ) {
 					continue
 				}
+				if ( locvar_item_fire_a != FILTER_ITEM_POTION ) {
+					if ( rnd(30) ) {
+						continue
+					}
+				}
+				if ( locvar_item_fire_ti != (-1) ) {
+					if ( inv(INV_ITEM_NUM, locvar_item_fire_ti) > 0 ) {
+						txt lang(itemname(locvar_item_fire_ti, 1) + "が" + name(item_cold_arg1) + "の持ち物を冷気から守った。", itemname(locvar_item_fire_ti, 1) + " protects " + name(item_cold_arg1) + your(item_cold_arg1) + " stuff from cold.")
+						if ( inv(INV_ITEM_CHARGE, locvar_item_fire_ti) > 0 ) {
+							inv(INV_ITEM_CHARGE, locvar_item_fire_ti)--
+						}
+						else {
+							txt lang(itemname(locvar_item_fire_ti, 1) + "は粉々に砕けた。", itemname(locvar_item_fire_ti, 1) + " is broken to pieces.")
+							inv(INV_ITEM_NUM, locvar_item_fire_ti)--
+							break
+						}
+						continue
+					}
+				}
+				locvar_item_acid_p = rnd(inv(INV_ITEM_NUM, locvar_item_acid_ci)) / 2 + 1
+				txtef COLOR_PURPLE
+				txt lang(locvar_item_cold_s + itemname(locvar_item_acid_ci, locvar_item_acid_p) + "は粉々に砕けた。", locvar_item_cold_s + itemname(locvar_item_acid_ci, locvar_item_acid_p) + " break" + _s2(locvar_item_acid_p) + " to pieces.")
+				inv(INV_ITEM_NUM, locvar_item_acid_ci) -= locvar_item_acid_p
+				locvar_item_fire_f = 1
 			}
-			locvar_item_acid_p = rnd(inv(INV_ITEM_NUM, locvar_item_acid_ci)) / 2 + 1
-			txtef COLOR_PURPLE
-			txt lang(locvar_item_cold_s + itemname(locvar_item_acid_ci, locvar_item_acid_p) + "は粉々に砕けた。", locvar_item_cold_s + itemname(locvar_item_acid_ci, locvar_item_acid_p) + " break" + _s2(locvar_item_acid_p) + " to pieces.")
-			inv(INV_ITEM_NUM, locvar_item_acid_ci) -= locvar_item_acid_p
-			locvar_item_fire_f = 1
 		}
 	loop
 	gosub *calcBurdenPc
@@ -6706,22 +6713,16 @@
 			cdata(CDATA_TARGET, dmghp_source) = 0
 			customtalk dmghp_source, DBMODE_FLAVOR_KILL
 			gosub *convert_word
-			locvar_dmghp_exp = limit(cdata(CDATA_LEVEL, dmghp_charid), 1, 400) * limit(cdata(CDATA_LEVEL, dmghp_charid) + 1, 1, 400) * limit(cdata(CDATA_LEVEL, dmghp_charid) + 2, 1, 400) / 10 + 8
+			locvar_dmghp_exp = limit(cdata(CDATA_LEVEL, dmghp_charid), 1, 400) * limit(cdata(CDATA_LEVEL, dmghp_charid) + 1, 1, 400) * limit(cdata(CDATA_LEVEL, dmghp_charid) + 2, 1, 400) / 10 + 10
 			if ( dmghp_source == DAMAGE_FROM_CHARA ) {
 				if ( cdata(CDATA_LEVEL, dmghp_charid) < cdata(CDATA_LEVEL, dmghp_source) ) {
-					locvar_dmghp_exp = locvar_dmghp_exp / 100 + 10
-				}
-			}
-			if ( dmghp_source == DAMAGE_FROM_CHARA ) {
-				if ( cdata(CDATA_LEVEL, dmghp_charid) > cdata(CDATA_LEVEL, dmghp_source) ) {
-					locvar_dmghp_exp *= limit(cdata(CDATA_LEVEL, dmghp_charid) * 2 / cdata(CDATA_LEVEL, CHARA_PLAYER), 1, 10)
+					locvar_dmghp_exp = locvar_dmghp_exp / 100 + 5
 				}
 			}
 			if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, dmghp_charid) | cbit(CHARA_BIT_SPLIT_NO_EFFECT, dmghp_charid) ) {
 				locvar_dmghp_exp = 0
 			}
-			cdata(CDATA_EXP, dmghp_source) += locvar_dmghp_exp
-			if ( dmghp_source == DAMAGE_FROM_CHARA ) {
+			if ( cdata(CDATA_RELATION, dmghp_source) == RELATION_ALLY | dmghp_source == CHARA_PLAYER ) {
 				if ( gdata(GDATA_SLEEP_EXP) > 1000000000 ) {
 					gdata(GDATA_SLEEP_EXP) = 1000000000
 				}
@@ -6730,6 +6731,12 @@
 					gdata(GDATA_SLEEP_EXP) = 1000000000
 				}
 			}
+			if ( dmghp_source == CHARA_PLAYER ) {
+				if ( cdata(CDATA_LEVEL, dmghp_charid) > cdata(CDATA_LEVEL, dmghp_source) ) {
+					locvar_dmghp_exp = locvar_dmghp_exp * limit(cdata(CDATA_LEVEL, dmghp_charid) * 20 / cdata(CDATA_LEVEL, dmghp_source), 10, 100) / 10
+				}
+			}
+			cdata(CDATA_EXP, dmghp_source) += locvar_dmghp_exp
 			cdata(CDATA_AI_AGGRO, dmghp_source) = 0
 		}
 		if ( dmghp_source >= DAMAGE_FROM_CHARA ) {
@@ -7714,6 +7721,91 @@
 		}
 	}
 	cdata(CDATA_THIRST, chara_morasi_arg1) = 5000
+	return
+
+#deffunc gain_iden int gain_iden_charaid1, int gain_iden_charaid2, int gain_iden_amount
+	if ( cdata(CDATA_SP_EARNED, gain_iden_charaid2) <= (-1000000) & cdata(CDATA_SP_EARNED, gain_iden_charaid2) > (-2000000) ) {
+		snd SOUNDLIST_OFFER2
+		locvar_gain_iden_generes = 0
+		locvar_gain_iden_bvar = sorg(SKILL_RES_MAGIC, gain_iden_charaid1)
+		locvar_gain_iden_generes = 60
+		if ( sorg(SKILL_RES_FIRE, gain_iden_charaid1) > locvar_gain_iden_bvar ) {
+			locvar_gain_iden_bvar = sorg(SKILL_RES_FIRE, gain_iden_charaid1)
+			locvar_gain_iden_generes = 50
+		}
+		if ( sorg(SKILL_RES_COLD, gain_iden_charaid1) > locvar_gain_iden_bvar ) {
+			locvar_gain_iden_bvar = sorg(SKILL_RES_COLD, gain_iden_charaid1)
+			locvar_gain_iden_generes = 51
+		}
+		if ( sorg(SKILL_RES_LIGHTNING, gain_iden_charaid1) > locvar_gain_iden_bvar ) {
+			locvar_gain_iden_bvar = sorg(SKILL_RES_LIGHTNING, gain_iden_charaid1)
+			locvar_gain_iden_generes = 52
+		}
+		if ( sorg(SKILL_RES_DARKNESS, gain_iden_charaid1) > locvar_gain_iden_bvar ) {
+			locvar_gain_iden_bvar = sorg(SKILL_RES_DARKNESS, gain_iden_charaid1)
+			locvar_gain_iden_generes = 53
+		}
+		if ( sorg(SKILL_RES_MIND, gain_iden_charaid1) > locvar_gain_iden_bvar ) {
+			locvar_gain_iden_bvar = sorg(SKILL_RES_MIND, gain_iden_charaid1)
+			locvar_gain_iden_generes = 54
+		}
+		if ( sorg(SKILL_RES_POISON, gain_iden_charaid1) > locvar_gain_iden_bvar ) {
+			locvar_gain_iden_bvar = sorg(SKILL_RES_POISON, gain_iden_charaid1)
+			locvar_gain_iden_generes = 55
+		}
+		if ( sorg(SKILL_RES_NETHER, gain_iden_charaid1) > locvar_gain_iden_bvar ) {
+			locvar_gain_iden_bvar = sorg(SKILL_RES_NETHER, gain_iden_charaid1)
+			locvar_gain_iden_generes = 56
+		}
+		if ( sorg(SKILL_RES_SOUND, gain_iden_charaid1) > locvar_gain_iden_bvar ) {
+			locvar_gain_iden_bvar = sorg(SKILL_RES_SOUND, gain_iden_charaid1)
+			locvar_gain_iden_generes = 57
+		}
+		if ( sorg(SKILL_RES_NERVE, gain_iden_charaid1) > locvar_gain_iden_bvar ) {
+			locvar_gain_iden_bvar = sorg(SKILL_RES_NERVE, gain_iden_charaid1)
+			locvar_gain_iden_generes = 58
+		}
+		if ( sorg(SKILL_RES_CHAOS, gain_iden_charaid1) > locvar_gain_iden_bvar ) {
+			locvar_gain_iden_bvar = sorg(SKILL_RES_CHAOS, gain_iden_charaid1)
+			locvar_gain_iden_generes = 59
+		}
+		if ( sorg(SKILL_RES_MAGIC, gain_iden_charaid1) >= locvar_gain_iden_bvar ) {
+			locvar_gain_iden_bvar = sorg(SKILL_RES_MAGIC, gain_iden_charaid1)
+			locvar_gain_iden_generes = 60
+		}
+		cdata(CDATA_SP_EARNED, gain_iden_charaid2) -= limit(locvar_gain_iden_bvar / 100 + gain_iden_amount, 5, 20) * 10000
+		if ( cdata(CDATA_SP_EARNED, gain_iden_charaid2) \ EXT_EQUIP_SLOTS == 0 ) {
+			cdata(CDATA_SP_EARNED, gain_iden_charaid2) -= locvar_gain_iden_generes * 100
+		}
+		else {
+			if ( cdata(CDATA_SP_EARNED, gain_iden_charaid2) \ 100 == 0 ) {
+				cdata(CDATA_SP_EARNED, gain_iden_charaid2) -= locvar_gain_iden_generes
+			}
+		}
+		if ( gain_iden_charaid1 != CREATURE_ID_BUG ) {
+			cdata(CDATA_INFANT, gain_iden_charaid2) = cdata(CDATA_ID, gain_iden_charaid1)
+		}
+		txtef COLOR_YELLOW
+		txt lang(name(gain_iden_charaid2) + "の生命核は" + name(gain_iden_charaid1) + "の遺伝子を獲得した。", name(gain_iden_charaid2) + " get genes of " + _s(gain_iden_charaid1) + ".")
+		locvar_gain_iden_sintyoku = (cdata(CDATA_SP_EARNED, gain_iden_charaid2) + 1000000) * (-1) / 10000
+		locvar_gain_iden_sintyoku += 50
+		if ( cdata(CDATA_SP_EARNED, gain_iden_charaid2) > (-1500000) ) {
+			txtef COLOR_YELLOW
+			txt lang("[フェイズ1進捗率：" + locvar_gain_iden_sintyoku + "％]", "[Phase 1 progress " + locvar_gain_iden_sintyoku + " %]")
+		}
+		if ( cdata(CDATA_SP_EARNED, gain_iden_charaid2) <= (-1500000) ) {
+			cdata(CDATA_SP_EARNED, gain_iden_charaid2) -= 500000
+			snd SOUNDLIST_DING1
+			txtef COLOR_GREEN
+			txt lang("[SURVIVABILITY EXTENSION！]　フェイズ1が完了した。これからは、食事の栄養で成長させる必要がある。", "[SURVIVABILITY EXTENSION !] Phase 1 completed. From now on, it need to grow with the nutrition of foods.")
+		}
+		if ( 0 ) {
+			txt lang("耐性" + locvar_gain_iden_generes + "でステージ" + cdata(CDATA_SP_EARNED, gain_iden_charaid2) + "。", name(gain_iden_charaid2) + " get genes of " + _s(gain_iden_charaid1) + ".")
+		}
+		locvar_gain_iden_generes = 0
+		locvar_gain_iden_bvar = 0
+		locvar_gain_iden_sintyoku = 0
+	}
 	return
 
 #deffunc eatstatus int eatstatus_arg1, int eatstatus_arg2

@@ -3063,6 +3063,8 @@
 	if ( cc == CHARA_PLAYER | tc == CHARA_PLAYER ) {
 		gdata(GDATA_FLAG_PROSTITUTION_COUNTER)++
 	}
+	gain_iden tc, cc, 10
+	gain_iden cc, tc, 10
 	if ( synccheck(cc, -1) ) {
 		txtef COLOR_SKY_BLUE
 		if ( jp ) {
@@ -3840,6 +3842,8 @@
 			cbitmod CHARA_BIT_MAKE_GENE, tc, 0
 			gosub *re_select
 			gosub *generate_gene
+			gain_iden tc, CHARA_PLAYER, 20
+			gain_iden CHARA_PLAYER, tc, 20
 		}
 	}
 	gosub *sleep_draw
@@ -7901,6 +7905,7 @@
 							txt lang(name(cc) + "に身体を食いちぎられた。", name(cc) + " bite" + _s(cc) + " off " + name(tc) + your(tc) + " flesh.")
 						}
 					}
+					gain_iden tc, cc, 7
 				}
 				if ( efid == SKILL_SPACT_MEMORY_POISON ) {
 					snd SOUNDLIST_EAT1
@@ -7938,6 +7943,7 @@
 									txt lang(name(cc) + "に血を吸われた。", name(cc) + " suck" + _s(cc) + " " + name(tc) + your(tc) + " blood.")
 								}
 							}
+							gain_iden tc, cc, 5
 						}
 						else {
 							if ( synccheck(cc, -1) ) {
@@ -9299,7 +9305,7 @@
 					txtef COLOR_SKY_BLUE
 					txt lang("「うまー」", cnvtalk("Yummy!"))
 				}
-				if ( cdata(CDATA_SPRITE_SIZE_MILK, tc) <= (-1) & cdata(CDATA_HUNGER, tc) < 8000 ) {
+				if ( cdata(CDATA_SPRITE_SIZE_MILK, tc) <= (-1) & cdata(CDATA_HUNGER, tc) < 8000 & cbit(CHARA_BIT_BIRTHED_CHILD, tc) != TRUE ) {
 					txtef COLOR_SKY_BLUE
 					txt lang(name(tc) + "はすくすくと成長した。", name(tc) + " grew quickly.")
 					if ( efstatus >= 0 ) {
@@ -9604,6 +9610,9 @@
 		if ( synccheck(tc, -1) ) {
 			txt lang("「げふぅ」", "*Ughu*")
 		}
+		flt
+		itemcreate -1, ITEM_ID_BOTTLE_CAP, cdata(CDATA_X, tc), cdata(CDATA_Y, tc), 0
+		inv(INV_ITEM_COL, ci) = 3
 		healsp tc, 15
 		sickifcursed efstatus, tc, 1
 		if ( rnd(2) == 0 ) {
@@ -9625,6 +9634,9 @@
 				txt lang(" *ごくっ* ", " *quaff* ")
 			}
 		}
+		flt
+		itemcreate -1, ITEM_ID_BOTTLE_CAP, cdata(CDATA_X, tc), cdata(CDATA_Y, tc), 0
+		inv(INV_ITEM_COL, ci) = 19
 		skillexp SKILL_NORMAL_HEALING, tc, 200
 		sickifcursed efstatus, tc, 1
 		goto *effect_end
@@ -9635,6 +9647,9 @@
 			txt lang("*シュワワ* 刺激的！", "*quaff* Refreshing!")
 			txt lang(name(tc) + "のスタミナが少し回復した。", name(tc) + " restore" + _s(tc) + " some stamina.")
 		}
+		flt
+		itemcreate -1, ITEM_ID_B_DAMA, cdata(CDATA_X, tc), cdata(CDATA_Y, tc), 0
+		inv(INV_ITEM_PIC, ci) += rnd(3)
 		healsp tc, 25
 		sickifcursed efstatus, tc, 1
 		goto *effect_end
@@ -14167,6 +14182,9 @@
 		snd SOUNDLIST_DING1
 		gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) = inv(INV_ITEM_PARAM1, ci)
 		gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_PIC) = gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) + inv(INV_ITEM_COL, ci) * COLOR_TINT_MULT
+		if ( gdata(GDATA_FLAG_MOST_EXPENSIVE_WORLD_MAP_VEHICLE_THIS_MONTH) < gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) ) {
+			gdata(GDATA_FLAG_MOST_EXPENSIVE_WORLD_MAP_VEHICLE_THIS_MONTH) = gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND)
+		}
 		txtef COLOR_YELLOW
 		txt lang("あなたは乗り物をさっそく郊外に呼んだ。", "You called the world-vehicle out to the suburbs.")
 		if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) == VEHICLE_CARRIAGE ) {
@@ -14180,10 +14198,6 @@
 		}
 		if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) == VEHICLE_LAND_BATTLESHIP ) {
 			gdata(GDATA_CARGO_LIMIT) += 100 * 1000
-		}
-		inv(INV_ITEM_NUM, ci)--
-		if ( ci >= RANGE_INV2 ) {
-			cell_refresh inv(INV_ITEM_X, ci), inv(INV_ITEM_Y, ci)
 		}
 		gosub *calcBurdenPc
 		goto *effect_end
@@ -17325,6 +17339,44 @@
 		}
 		gosub *screen_draw
 		return 0
+	}
+	if ( _switch_val == SKILL_SPACT_DIRECT_TRANSFUSION | _switch_sw ) {
+		_switch_sw = 0
+		if ( cc == CHARA_PLAYER ) {
+			txtnew
+			txt lang("まずは輸血元を選ぶ必要がある。", "Choose a blood transfusion source.")
+			txtmore
+			rcbk = rc
+			rc = -1
+			allyctrl = 5
+			gosub *com_listNpc
+			if ( stat == (-1) ) {
+				rc = rcbk
+				goto *effect_end
+			}
+			rc = stat
+			txtnew
+			txt lang("輸血先を選ぶ必要がある。", "Choose a blood transfusion destination.")
+			txtmore
+			allyctrl = 5
+			gosub *com_listNpc
+			if ( stat == (-1) ) {
+				goto *effect_end
+			}
+			tc = stat
+			snd SOUNDLIST_HEART1
+			txt lang(name(cc) + "は" + name(rc) + "から" + name(tc) + "へ輸血した。", name(cc) + " transfused blood from " + name(rc) + " to " + name(tc) + ".")
+			bleedbk = cdata(CDATA_CONDITION_BLEED, rc)
+			dmgcon rc, CONDITION_BLEED, sdata(SKILL_NORMAL_GENE_ENGINEER, cc) / 2 + 1
+			hostileaction cc, rc
+			bleed = cdata(CDATA_CONDITION_BLEED, rc) - bleedbk
+			healcon tc, CONDITION_BLEED, bleed
+			gain_iden rc, tc, 5
+			screenupdate = -1
+			gosub *screen_draw
+		}
+		goto *effect_end
+		_switch_sw++
 	}
 	if ( _switch_val == SKILL_SPACT_FASCINATION_DANCE | _switch_sw ) {
 		_switch_sw = 0
@@ -21127,7 +21179,7 @@
 				cdata(CDATA_PIETY, CHARA_PLAYER) = sdata(SKILL_NORMAL_FAITH, CHARA_PLAYER) * 100
 				gdata(GDATA_RANK_HOME) = 100
 				gdata(GDATA_WORLD_RENEW) = TRUE
-				gdata(GDATA_YEAR) += 20
+				gdata(GDATA_MONTH) = 11
 				gosub *advance_hour
 				gdata(GDATA_GUEST) = 2
 				gdata(GDATA_FLAG_SCROLL_OF_WITCHCRAFT_TOTAL_SPELL_BONUS) += 95
@@ -21541,6 +21593,78 @@
 		cdata(CDATA_CONDITION_WET, tc) += 3
 
 		goto *effect_end
+	}
+	if ( _switch_val == SKILL_SPACT_ELECTRIC_SHOCK | _switch_sw ) {
+		_switch_sw = 0
+		if ( mdata(MDATA_TYPE) == MAP_TYPE_WORLD ) {
+			goto *effect_end
+		}
+		snd SOUNDLIST_ATK_ELEC
+		animeload 18, tc
+		if ( cdata(CDATA_RELATION, tc) == RELATION_ENEMY | cdata(CDATA_RELATION, cc) == RELATION_ENEMY ) {
+			txt lang(name(cc) + "は" + name(tc) + "に強烈な電気ショックを加えた！「ぎゃっ！？」", name(cc) + " gave " + name(tc) + " strong electric shocks.")
+			snd SOUNDLIST_HEART1
+			dmghp tc, (sdata(SKILL_ATTR_DEX, cc) / 5 + 4) * ((sdata(SKILL_NORMAL_GENE_ENGINEER, cc) + 1) / 5 + 3) + rnd(sdata(SKILL_NORMAL_GENE_ENGINEER, cc) * 2 + 5) + 1, cc, SKILL_RES_LIGHTNING, 1000 + sdata(SKILL_NORMAL_GENE_ENGINEER, cc)
+			dmghp tc, (sdata(SKILL_ATTR_DEX, cc) / 5 + 4) * ((sdata(SKILL_NORMAL_GENE_ENGINEER, cc) + 1) / 5 + 3) + rnd(sdata(SKILL_NORMAL_GENE_ENGINEER, cc) * 2 + 5) + 1, cc, SKILL_RES_LIGHTNING, 1000 + sdata(SKILL_NORMAL_GENE_ENGINEER, cc)
+			dmghp tc, (sdata(SKILL_ATTR_DEX, cc) / 5 + 4) * ((sdata(SKILL_NORMAL_GENE_ENGINEER, cc) + 1) / 5 + 3) + rnd(sdata(SKILL_NORMAL_GENE_ENGINEER, cc) * 2 + 5) + 1, cc, SKILL_RES_LIGHTNING, 1000 + sdata(SKILL_NORMAL_GENE_ENGINEER, cc)
+			dmghp tc, (sdata(SKILL_ATTR_DEX, cc) / 5 + 4) * ((sdata(SKILL_NORMAL_GENE_ENGINEER, cc) + 1) / 5 + 3) + rnd(sdata(SKILL_NORMAL_GENE_ENGINEER, cc) * 2 + 5) + 1, cc, SKILL_RES_LIGHTNING, 1000 + sdata(SKILL_NORMAL_GENE_ENGINEER, cc)
+			if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) != TRUE & cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) != TRUE & cbit(CHARA_BIT_SUMMONED, tc) != TRUE & cbit(CHARA_BIT_LIVESTOCK, tc) != TRUE & cbit(CHARA_BIT_NECRO, tc) != TRUE & cbit(CHARA_BIT_SANDBAG, tc) != TRUE & tc != CHARA_PLAYER ) {
+				skillexp SKILL_NORMAL_GENE_ENGINEER, cc, 40
+			}
+			goto *effect_end
+		}
+		else {
+			txt lang(name(cc) + "は" + name(tc) + "の胸に電気ショックを加えた。「ぐはぁ！？」", name(cc) + " gave " + name(tc) + " electric shocks.")
+			if ( cc == CHARA_PLAYER ) {
+				if ( tc != CHARA_PLAYER ) {
+					modkarma cc, -1
+				}
+			}
+			if ( cdata(CDATA_CONDITION_SUFFOCATION, tc) > 0 ) {
+				cdata(CDATA_CONDITION_SUFFOCATION, tc) = cdata(CDATA_CONDITION_SUFFOCATION, tc) / 2
+			}
+			if ( cdata(CDATA_CONDITION_DIM, tc) > 60 ) {
+				cdata(CDATA_CONDITION_DIM, tc) = 59
+			}
+			if ( cdata(CDATA_CONDITION_SLEEP, tc) > 0 ) {
+				cdata(CDATA_CONDITION_SLEEP, tc) = 0
+			}
+			if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) != TRUE & cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) != TRUE & cbit(CHARA_BIT_SUMMONED, tc) != TRUE & cbit(CHARA_BIT_LIVESTOCK, tc) != TRUE & cbit(CHARA_BIT_NECRO, tc) != TRUE & cbit(CHARA_BIT_SANDBAG, tc) != TRUE & tc != CHARA_PLAYER ) {
+				skillexp SKILL_NORMAL_GENE_ENGINEER, cc, 40
+			}
+		}
+		goto *effect_end
+		_switch_sw++
+	}
+	if ( _switch_val == SKILL_SPACT_INSTANT_SUTURE | _switch_sw ) {
+		_switch_sw = 0
+		if ( mdata(MDATA_TYPE) == MAP_TYPE_WORLD ) {
+			goto *effect_end
+		}
+		snd SOUNDLIST_CARD1
+		await 50
+		snd SOUNDLIST_CARD1
+		if ( cdata(CDATA_RELATION, tc) == RELATION_ENEMY | cdata(CDATA_RELATION, cc) == RELATION_ENEMY ) {
+			txt lang(name(cc) + "は" + name(tc) + "の身体を素早く縫いつけた！", name(cc) + " sewed " + name(tc) + " up quickly!")
+			if ( cdata(CDATA_CONDITION_BIND, tc) < 10 ) {
+				cdata(CDATA_CONDITION_BIND, tc) = 10
+			}
+			if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) != TRUE & cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) != TRUE & cbit(CHARA_BIT_SUMMONED, tc) != TRUE & cbit(CHARA_BIT_LIVESTOCK, tc) != TRUE & cbit(CHARA_BIT_NECRO, tc) != TRUE & cbit(CHARA_BIT_SANDBAG, tc) != TRUE & tc != CHARA_PLAYER ) {
+				skillexp SKILL_NORMAL_TAILORING, cc, 40
+			}
+			goto *effect_end
+		}
+		else {
+			txt lang(name(cc) + "は" + name(tc) + "の身体を素早く縫合した！", name(cc) + " sewed " + name(tc) + " up quickly!")
+			if ( cdata(CDATA_CONDITION_BLEED, tc) > 0 ) {
+				cdata(CDATA_CONDITION_BLEED, tc) = cdata(CDATA_CONDITION_BLEED, tc) / 2
+			}
+			if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, tc) != TRUE & cbit(CHARA_BIT_SPLIT_NO_EFFECT, tc) != TRUE & cbit(CHARA_BIT_SUMMONED, tc) != TRUE & cbit(CHARA_BIT_LIVESTOCK, tc) != TRUE & cbit(CHARA_BIT_NECRO, tc) != TRUE & cbit(CHARA_BIT_SANDBAG, tc) != TRUE & tc != CHARA_PLAYER ) {
+				skillexp SKILL_NORMAL_TAILORING, cc, 40
+			}
+		}
+		goto *effect_end
+		_switch_sw++
 	}
 	if ( _switch_val == SKILL_SPACT_BLADE_STRINGS | _switch_sw ) {
 		_switch_sw = 0
@@ -23013,6 +23137,8 @@
 		if ( tc != CHARA_PLAYER ) {
 			juice = 15
 		}
+		flt
+		itemcreate -1, ITEM_ID_BOTTLE_CAP, cdata(CDATA_X, tc), cdata(CDATA_Y, tc), 0
 		if ( inv(INV_ITEM_PARAM1, ci) / 1000 == 2 ) {
 			if ( ibit(ITEM_BIT_HERBED_IN, ci) != 1 ) {
 				skillexp SKILL_ATTR_WIL, tc, 50 * juice
@@ -23377,6 +23503,20 @@
 			}
 			else {
 				return
+			}
+		}
+		if ( cbit(CHARA_BIT_BIRTHED_CHILD, tc) == TRUE ) {
+			if ( cdata(CDATA_SPRITE_SIZE_MILK, tc) == (-1) ) {
+				if ( rnd(2) == 0 ) {
+					snd SOUNDLIST_FAIL1
+					if ( jp ) {
+						txt cdatan(CDATAN_NAME, tc) + "「指図しないで" + _kure(3) + "」", cdatan(CDATAN_NAME, tc) + "「今やろうと思っていたのにやる気がなくなった" + _yo(3) + "」"
+					}
+					if ( en ) {
+						txt cdatan(CDATAN_NAME, tc) + " " + cnvtalk("Please don't give instructions!"), cdatan(CDATAN_NAME, tc) + " " + cnvtalk("I thought I would do it now, but I've lost my motivation!")
+					}
+					goto *effect_directive
+				}
 			}
 		}
 		if ( rtval == 0 ) {

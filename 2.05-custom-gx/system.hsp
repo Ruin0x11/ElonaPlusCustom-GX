@@ -819,6 +819,20 @@
 			gdata(GDATA_FLAG_ABYSS_POWER) = 100000
 		}
 	}
+	if ( gdata(GDATA_VERSION) < 6140 ) {
+		gdata(GDATA_FLAG_MOST_EXPENSIVE_WORLD_MAP_VEHICLE_THIS_MONTH) = gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND)
+		repeat MAX_CHARA_TOTAL
+			cdata(CDATA_SP_EARNED, cnt) = 0
+			if ( cdata(CDATA_TAMER_WHIP_PICKUP, cnt) != 0 ) {
+				cdata(CDATA_TAMER_WHIP_PICKUP, cnt) = 0
+				cbitmod CHARA_BIT_PROHIBIT_PICKING_UP_ITEMS, cnt, TRUE
+			}
+			if ( cdata(CDATA_TAMER_WHIP_EAT, cnt) != 0 ) {
+				cdata(CDATA_TAMER_WHIP_EAT, cnt) = 0
+				cbitmod CHARA_BIT_PROHIBIT_EATING_FROM_GROUND, cnt, TRUE
+			}
+		loop
+	}
 	if ( gdata(GDATA_VERSION) != VERSION_NUMBER ) {
 		gdata(GDATA_WORLD_RENEW) = 1
 	}

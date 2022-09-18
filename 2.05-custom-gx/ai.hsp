@@ -805,7 +805,7 @@
 	/********** ANNA CUSTOM - ENDING **********/
 
 		if ( cdata(CDATA_RELATION, cc) != 10 | cdata(CDATA_HUNGER, cc) <= 10000 ) {
-			if ( cdata(CDATA_TAMER_WHIP_EAT, cc) == 1 ) {
+			if ( cbit(CHARA_BIT_PROHIBIT_EATING_FROM_GROUND, cc) == TRUE ) {
 				txtef COLOR_BLUE
 				customtalk cc, DBMODE_FLAVOR_DISCIPLINE_EAT
 				gosub *convert_word
@@ -814,7 +814,7 @@
 				}
 				goto *act_eat
 			}
-			if ( cdata(CDATA_TAMER_WHIP_EAT, cc) == 0 ) {
+			if ( cbit(CHARA_BIT_PROHIBIT_EATING_FROM_GROUND, cc) != TRUE ) {
 				goto *act_eat
 			}
 		}
@@ -910,15 +910,15 @@
 										}
 									}
 									else {
-										if ( cdata(CDATA_TAMER_WHIP_EAT, cc) == 0 ) {
+										if ( cbit(CHARA_BIT_PROHIBIT_EATING_FROM_GROUND, cc) != TRUE ) {
 											if ( cdata(CDATA_RIDING, cc) == 0 ) {
 												if ( inv(INV_ITEM_ID, ci) != ITEM_ID_PUFF_PUFF_BREAD | cdata(CDATA_ID, cc) != CREATURE_ID_ALCHEMIST_NAPLUS ) {
 													if ( inv(INV_ITEM_STATUS, ci) >= ITEM_STATUS_NORMAL ) {
 														if ( adata(ADATA_ID, gdata(GDATA_AREA)) != AREA_RANCH & adata(ADATA_ID, gdata(GDATA_AREA)) != AREA_SHOP & gdata(GDATA_QUEST) != QUEST_TYPE_PARTY ) {
-															if ( cdata(CDATA_TAMER_WHIP_PICKUP, cc) != 10 | cdata(CDATA_MASTER_SERVANT, cc) <= 0 ) {
+															if ( cbit(CHARA_BIT_PROHIBIT_PICKING_UP_ITEMS, cc) != TRUE | cdata(CDATA_MASTER_SERVANT, cc) <= 0 ) {
 																goto *act_eat
 															}
-															if ( cdata(CDATA_TAMER_WHIP_PICKUP, cc) == 10 ) {
+															if ( cbit(CHARA_BIT_PROHIBIT_PICKING_UP_ITEMS, cc) == TRUE ) {
 																if ( cdata(CDATA_MASTER_SERVANT, cc) > 0 ) {
 																	if ( rnd(cdata(CDATA_MASTER_SERVANT, cc) + 1) == 0 ) {
 																		txtef COLOR_RED
@@ -933,7 +933,7 @@
 											}
 										}
 									}
-									if ( cdata(CDATA_TAMER_WHIP_EAT, cc) == 1 ) {
+									if ( cbit(CHARA_BIT_PROHIBIT_EATING_FROM_GROUND, cc) == TRUE ) {
 										if ( cdata(CDATA_RIDING, cc) == 0 ) {
 											if ( inv(INV_ITEM_ID, ci) != ITEM_ID_PUFF_PUFF_BREAD | cdata(CDATA_ID, cc) != CREATURE_ID_ALCHEMIST_NAPLUS ) {
 												if ( inv(INV_ITEM_STATUS, ci) >= ITEM_STATUS_NORMAL ) {
@@ -953,17 +953,17 @@
 										if ( inv(INV_ITEM_PARAM1, ci) >= (-5) ) {
 											if ( inv(INV_ITEM_PARAM3, ci) < 20 ) {
 												if ( inv(INV_ITEM_ID, ci) != ITEM_ID_HOLY_WELL ) {
-													if ( cdata(CDATA_TAMER_WHIP_EAT, cc) == 1 ) {
+													if ( cbit(CHARA_BIT_PROHIBIT_EATING_FROM_GROUND, cc) == TRUE ) {
 														if ( rnd(5) == 0 ) {
 															txtef COLOR_BLUE
 															txt lang(name(cc) + "は喉を潤そうとしたが、何かを思い出してびくりと震えた。", name(cc) + " salivates to moisten " + his(cc) + " throat, but remembers something and jumps up trembling.")
 														}
 													}
-													if ( cdata(CDATA_TAMER_WHIP_EAT, cc) != 1 ) {
-														if ( cdata(CDATA_TAMER_WHIP_PICKUP, cc) != 10 | cdata(CDATA_MASTER_SERVANT, cc) <= 0 ) {
+													if ( cbit(CHARA_BIT_PROHIBIT_EATING_FROM_GROUND, cc) != TRUE ) {
+														if ( cbit(CHARA_BIT_PROHIBIT_PICKING_UP_ITEMS, cc) != TRUE | cdata(CDATA_MASTER_SERVANT, cc) <= 0 ) {
 															goto *act_drink
 														}
-														if ( cdata(CDATA_TAMER_WHIP_PICKUP, cc) == 10 ) {
+														if ( cbit(CHARA_BIT_PROHIBIT_PICKING_UP_ITEMS, cc) == TRUE ) {
 															if ( cdata(CDATA_MASTER_SERVANT, cc) > 0 ) {
 																if ( rnd(cdata(CDATA_MASTER_SERVANT, cc) * 2 + 1) == 0 ) {
 																	txtef COLOR_RED
@@ -985,7 +985,7 @@
 								if ( ibit(ITEM_BIT_PRECIOUS, ci) == 0 ) {
 									if ( mdata(MDATA_TYPE) != MAP_TYPE_HOME ) {
 										in = inv(INV_ITEM_NUM, ci)
-										if ( cdata(CDATA_TAMER_WHIP_PICKUP, cc) == 0 ) {
+										if ( cbit(CHARA_BIT_PROHIBIT_PICKING_UP_ITEMS, cc) != TRUE ) {
 											if ( gdata(GDATA_RIDER) != cc ) {
 												gosub *act_get
 												if ( stat == 1 ) {
@@ -1949,6 +1949,38 @@
 			cdata(CDATA_HP, cc) = 0
 			dmghp cc, 99999, DAMAGE_FROM_UNSEEN
 			goto *turn_end
+		}
+	}
+	if ( cbit(CHARA_BIT_BIRTHED_CHILD, cc) == TRUE ) {
+		if ( cdata(CDATA_SPRITE_SIZE_MILK, cc) == (-5) ) {
+			if ( rnd(100) < 20 ) {
+				txt lang(cdatan(CDATAN_NAME, cc) + "は元気にはしゃいでいる！", cdatan(CDATAN_NAME, cc) + " " + is(cc) " rolling fine!")
+				goto *turn_end
+			}
+		}
+		if ( cdata(CDATA_SPRITE_SIZE_MILK, cc) == (-4) ) {
+			if ( rnd(100) < 15 ) {
+				txt lang(cdatan(CDATAN_NAME, cc) + "は飛び跳ねて遊んでいる！", cdatan(CDATAN_NAME, cc) + " " + is(cc) + " hopping and playing!")
+				goto *turn_end
+			}
+		}
+		if ( cdata(CDATA_SPRITE_SIZE_MILK, cc) == (-3) ) {
+			if ( rnd(100) < 10 ) {
+				txt lang(cdatan(CDATAN_NAME, cc) + "は興味津々によそ見をしている！", cdatan(CDATAN_NAME, cc) + " " + is(cc) + " looking away with interest!")
+				goto *turn_end
+			}
+		}
+		if ( cdata(CDATA_SPRITE_SIZE_MILK, cc) == (-2) ) {
+			if ( rnd(100) < 5 ) {
+				txt lang(cdatan(CDATAN_NAME, cc) + "は真剣な顔で考え事をしている！", cdatan(CDATAN_NAME, cc) + " " + is(cc) " thinking with a serious face!")
+				goto *turn_end
+			}
+		}
+		if ( cdata(CDATA_SPRITE_SIZE_MILK, cc) == (-1) ) {
+			if ( limit(cdata(CDATA_MASTER_SERVANT, cc), 1, 150) / 10 + 80 <= rnd(100) ) {
+				txt lang(cdatan(CDATAN_NAME, cc) + "は自分の在り方について悩んでいる！", cdatan(CDATAN_NAME, cc) + " " + have(cc) + " doubts about how " + he(cc) + " live" + _s(cc) + "!")
+				goto *turn_end
+			}
 		}
 	}
 	if ( cdata(CDATA_TARGET, cc) != 0 ) {

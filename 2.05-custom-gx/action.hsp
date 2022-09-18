@@ -1744,7 +1744,7 @@
 				}
 				if ( cdata(CDATA_ROW_ACT, tc) == ACTION_EAT ) {
 					if ( cdata(CDATA_ACTION_PERIOD, tc) > 0 ) {
-						if ( cdata(CDATA_TAMER_WHIP_PICKUP, tc) == 10 ) {
+						if ( cbit(CHARA_BIT_PROHIBIT_PICKING_UP_ITEMS, tc) == TRUE ) {
 							if ( cdata(CDATA_ITEM_USING, tc) >= RANGE_INV2 ) {
 								txt lang(name(tc) + "はバツが悪そうにあなたを見た。", name(tc) + " stares in your face.")
 								cdata(CDATA_ROW_ACT, tc) = ACTION_NONE, 0
@@ -1760,7 +1760,7 @@
 				if ( cdata(CDATA_IN_TAGTEAM, tc) != 0 ) {
 					ttc = cdata(CDATA_TAGTEAM_PARTNER, tc)
 					if ( cdata(CDATA_ROW_ACT, ttc) == ACTION_EAT ) {
-						if ( cdata(CDATA_TAMER_WHIP_PICKUP, ttc) == 10 ) {
+						if ( cbit(CHARA_BIT_PROHIBIT_PICKING_UP_ITEMS, ttc) == TRUE ) {
 							if ( cdata(CDATA_ACTION_PERIOD, ttc) > 0 ) {
 								if ( cdata(CDATA_ITEM_USING, ttc) >= RANGE_INV2 ) {
 									txt lang(cdatan(CDATAN_NAME, ttc) + "はバツが悪そうにあなたを見た。", cdatan(CDATAN_NAME, ttc) + " stares in your face.")
@@ -1777,7 +1777,7 @@
 				}
 				if ( cdata(CDATA_ROW_ACT, tc) == ACTION_EAT ) {
 					if ( cdata(CDATA_ACTION_PERIOD, tc) > 0 ) {
-						if ( cdata(CDATA_TAMER_WHIP_PICKUP, tc) != 10 | (cdata(CDATA_TAMER_WHIP_PICKUP, tc) == 10 & cdata(CDATA_ITEM_USING, tc) < RANGE_INV2) ) {
+						if ( cbit(CHARA_BIT_PROHIBIT_PICKING_UP_ITEMS, tc) != TRUE | (cbit(CHARA_BIT_PROHIBIT_PICKING_UP_ITEMS, tc) == TRUE & cdata(CDATA_ITEM_USING, tc) < 5080) ) {
 							if ( cdata(CDATA_IMPRESSION, tc) + cdata(CDATA_MASTER_SERVANT, tc) < 200 ) {
 								txt lang(name(tc) + "はあなたを睨み付けた。", name(tc) + " glare" + _s(tc) + " at you.")
 							}
@@ -1801,7 +1801,7 @@
 				if ( cdata(CDATA_IN_TAGTEAM, tc) != 0 ) {
 					ttc = cdata(CDATA_TAGTEAM_PARTNER, tc)
 					if ( cdata(CDATA_ROW_ACT, ttc) == ACTION_EAT ) {
-						if ( cdata(CDATA_TAMER_WHIP_PICKUP, ttc) != 10 | (cdata(CDATA_TAMER_WHIP_PICKUP, ttc) == 10 & cdata(CDATA_ITEM_USING, ttc) < RANGE_INV2) ) {
+						if ( cbit(CHARA_BIT_PROHIBIT_PICKING_UP_ITEMS, ttc) != TRUE | (cbit(CHARA_BIT_PROHIBIT_PICKING_UP_ITEMS, ttc) == TRUE & cdata(CDATA_ITEM_USING, ttc) < 5080) ) {
 							if ( cdata(CDATA_ACTION_PERIOD, ttc) > 0 ) {
 								if ( cdata(CDATA_IMPRESSION, ttc) + cdata(CDATA_MASTER_SERVANT, ttc) < 200 ) {
 									txt lang(cdatan(CDATAN_NAME, ttc) + "はあなたを睨み付けた。", cdatan(CDATAN_NAME, ttc) + " glare" + _s(ttc) + " at you.")
@@ -3406,8 +3406,10 @@
 		itemcreate -1, 422 + rnd(6), cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 1
 	}
 	if ( f == 0 ) {
-		flt
-		itemcreate -1, ITEM_ID_SPIRITIUM, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
+		if ( inv(INV_ITEM_ID, ri) == ITEM_ID_CHEST ) {
+			flt
+			itemcreate -1, ITEM_ID_SPIRITIUM, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
+		}
 	}
 	f = 0
 	if ( inv(INV_ITEM_ID, ri) == ITEM_ID_CHEST ) {
@@ -8403,7 +8405,85 @@
 	}
 	if ( _switch_val == EFFECT_SURVIVABILITY_EXTENDER_Y | _switch_sw ) {
 		_switch_sw = 0
-		txt lang("開発中。", "Under development.")
+		if ( mdata(MDATA_TYPE) == MAP_TYPE_WORLD ) {
+			goto *act_use_SWEND1
+		}
+		txt lang("誰に注射する？", "Who is the target?")
+		gosub *screen_draw
+		val = 0
+		gosub *prompt_direction
+		if ( stat == 0 ) {
+			txt_impossible
+			gosub *screen_draw
+			goto *pc_turn
+		}
+		if ( map(x, y, MAP_CHARA_INDEX_PLUS_ONE) > 0 ) {
+			tc = map(x, y, MAP_CHARA_INDEX_PLUS_ONE) - 1
+		}
+		else {
+			txt_impossible
+			gosub *screen_draw
+			goto *pc_turn
+		}
+		if ( cdata(CDATA_IN_TAGTEAM, tc) != 0 ) {
+			txtselecttc 2
+			repeat 2
+				promptl(0, promptmax) = s(cnt), key_select(cnt), "" + promptmax
+				promptmax++
+			loop
+			val = promptx, prompty, 200, 1
+			gosub *prompt_key
+			if ( stat == 0 ) {
+				gosub *screen_draw
+				goto *pc_turn
+			}
+			if ( rtval == 1 ) {
+				tc = cdata(CDATA_TAGTEAM_PARTNER, tc)
+			}
+		}
+		if ( cdata(CDATA_SP_EARNED, tc) <= (-2000000) ) {
+			txt lang("フェイズ2には使っても意味がない。", "There's no point in using it during Phase 2.")
+			gosub *screen_draw
+			goto *pc_turn
+		}
+		teikou = sdata(SKILL_ATTR_STR, tc) + 100
+		if ( cdata(CDATA_CONDITION_SLEEP, tc) > 0 | cdata(CDATA_CONDITION_DIM, tc) >= 60 | cdata(CDATA_HP, tc) < cdata(CDATA_MAX_HP, tc) / 8 ) {
+			teikou = teikou / 2
+		}
+		if ( tc != CHARA_PLAYER ) {
+			if ( teikou >= cdata(CDATA_IMPRESSION, tc) + cdata(CDATA_MASTER_SERVANT, tc) + rnd(sdata(SKILL_ATTR_DEX, CHARA_PLAYER)) ) {
+				txt lang(name(tc) + "は物凄い力で抵抗した。「注射は嫌い" + _da(3) + "！」", name(tc) + " resist" + _s(tc) + ".")
+				hostileaction CHARA_PLAYER, tc
+				hostileaction CHARA_PLAYER, tc
+				gosub *screen_draw
+				goto *pc_turn
+			}
+		}
+		snd SOUNDLIST_SWING39
+		txt lang(name(tc) + "「痛っ！」", name(tc) + " writhe" + _s(tc) + " in pain.")
+		if ( inv(INV_ITEM_ID, ci) == ITEM_ID_SURVIVABILITY_EXTENDER_X ) {
+			cdata(CDATA_TAMER_WHIP_EAT, tc) = limit(cdata(CDATA_TAMER_WHIP_EAT, tc) + 1, 1, 9)
+		}
+		if ( inv(INV_ITEM_ID, ci) == ITEM_ID_SURVIVABILITY_EXTENDER_Y ) {
+			cdata(CDATA_TAMER_WHIP_PICKUP, tc) = limit(cdata(CDATA_TAMER_WHIP_PICKUP, tc) + 1, 1, 9)
+		}
+		if ( cdata(CDATA_SP_EARNED, tc) > (-1000000) ) {
+			cdata(CDATA_SP_EARNED, tc) = -1000000
+		}
+		if ( cbit(CHARA_BIT_PREGNANT, tc) ) {
+			cbitmod CHARA_BIT_PREGNANT, tc, FALSE
+			if ( synccheck(tc, -1) ) {
+				txt lang(name(tc) + "の体内の異物は養分にされた。", name(tc) + your(tc) + "  child melt" + _s(tc) + " in " + his(tc) + " stomach.")
+			}
+		}
+		if ( tc != CHARA_PLAYER ) {
+			cdata(CDATA_INFANT, tc) = cdata(CDATA_ID, tc)
+		}
+		inv(INV_ITEM_NUM, ci)--
+		cell_refresh inv(INV_ITEM_X, ci), inv(INV_ITEM_Y, ci)
+		txtef COLOR_GREEN
+		txt lang(name(tc) + "に新たな生命核が生成された。" + name(tc) + "以外の遺伝子を与える必要がある。また、フェイズ1の間は追加投与することもできる。", "A new life core was created in " + name(tc) + ". It needs to give the genes other than " + name(tc) + ". Additional infusions are possible during Phase 1.")
+		gosub *calcBurdenPc
 		goto *act_use_SWEND1
 		_switch_sw++
 	}
@@ -10822,23 +10902,29 @@
 						hostileaction CHARA_PLAYER, tc
 					}
 					if ( rtval == 0 ) {
-						if ( cdata(CDATA_TAMER_WHIP_EAT, tc) == 1 ) {
-							cdata(CDATA_TAMER_WHIP_EAT, tc) = 0
+						if ( cbit(CHARA_BIT_PROHIBIT_EATING_FROM_GROUND, tc) == TRUE ) {
+							cbitmod CHARA_BIT_PROHIBIT_EATING_FROM_GROUND, tc, FALSE
 						}
 						else {
-							cdata(CDATA_TAMER_WHIP_EAT, tc) = 1
+							cbitmod CHARA_BIT_PROHIBIT_EATING_FROM_GROUND, tc, TRUE
 						}
 					}
 					if ( rtval == 1 ) {
-						if ( cdata(CDATA_TAMER_WHIP_PICKUP, tc) == 1 ) {
-							cdata(CDATA_TAMER_WHIP_PICKUP, tc) = 0
+						if ( cbit(CHARA_BIT_PROHIBIT_PICKING_UP_ITEMS, tc) == TRUE ) {
+							cbitmod CHARA_BIT_PROHIBIT_PICKING_UP_ITEMS, tc, FALSE
 						}
 						else {
-							cdata(CDATA_TAMER_WHIP_PICKUP, tc) = 1
+							cbitmod CHARA_BIT_PROHIBIT_PICKING_UP_ITEMS, tc, TRUE
 						}
 					}
-					if ( rtval == 0 & cdata(CDATA_TAMER_WHIP_EAT, tc) == 1 | (rtval == 1 & cdata(CDATA_TAMER_WHIP_PICKUP, tc) != 0) | rtval == 3 ) {
+					if ( rtval == 0 & cbit(CHARA_BIT_PROHIBIT_EATING_FROM_GROUND, tc) == TRUE | (rtval == 1 & cbit(CHARA_BIT_PROHIBIT_PICKING_UP_ITEMS, tc) == TRUE) | rtval == 3 ) {
 						txt lang("あなたは鞭を振り下ろした。", "You whip " + name(tc) + ".")
+						if ( rtval == 0 & cbit(CHARA_BIT_PROHIBIT_EATING_FROM_GROUND, tc) == TRUE ) {
+							txt lang("[拾い食い禁止！]", "[No eating from ground!]")
+						}
+						if ( rtval == 1 & cbit(CHARA_BIT_PROHIBIT_PICKING_UP_ITEMS, tc) == TRUE ) {
+							txt lang("[アイテム拾い禁止！]", "[No picking up items!]")
+						}
 						animeload ANIMATION_STARS, tc
 						snd SOUNDLIST_PUNISH1
 						snd SOUNDLIST_ARROW1
@@ -11986,6 +12072,10 @@
 						txt_impossible
 						goto *pc_turn
 					}
+				}
+				if ( cbit(CHARA_BIT_BIRTHED_CHILD, tc) == TRUE ) {
+					txt lang("子供のうちは夢を見させてあげよう。", "It cannot be used among children.")
+					goto *pc_turn
 				}
 				txt lang("新しい職業は？", "What's the new class?")
 				val = (windoww - 220) / 2 + inf_screenx, winposy(90), 12, 1, 0
@@ -13268,6 +13358,20 @@
 			}
 			if ( fov_los(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), dx, dy) == 0 ) {
 				continue
+			}
+			if ( cbit(CHARA_BIT_BIRTHED_CHILD, tc) == TRUE ) {
+				if ( cdata(CDATA_SPRITE_SIZE_MILK, tc) == (-1) ) {
+					if ( rnd(2) == 0 ) {
+						snd SOUNDLIST_FAIL1
+						if ( jp ) {
+							txt cdatan(CDATAN_NAME, tc) + "「指図しないで" + _kure(3) + "」", cdatan(CDATAN_NAME, tc) + "「今やろうと思っていたのにやる気がなくなった" + _yo(3) + "」"
+						}
+						if ( en ) {
+							txt cdatan(CDATAN_NAME, tc) + " " + cnvtalk("Please don't give instructions!"), cdatan(CDATAN_NAME, tc) + " " + cnvtalk("I thought I would do it now, but I've lost my motivation!")
+						}
+						continue
+					}
+				}
 			}
 			if ( rtval <= 4 ) {
 				cdata(CDATA_DIRECTIVE_MODE, tc) = tact
