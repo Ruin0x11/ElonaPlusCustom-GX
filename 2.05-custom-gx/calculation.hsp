@@ -536,16 +536,16 @@
 			locvar_calccosthire_cost += 750
 		}
 	loop
-	if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) == VEHICLE_CARRIAGE ) {
+	if ( gdata(GDATA_FLAG_MOST_EXPENSIVE_WORLD_MAP_VEHICLE_THIS_MONTH) == VEHICLE_CARRIAGE ) {
 		locvar_calccosthire_cost += 500
 	}
-	if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) == VEHICLE_TRUCK ) {
+	if ( gdata(GDATA_FLAG_MOST_EXPENSIVE_WORLD_MAP_VEHICLE_THIS_MONTH) == VEHICLE_TRUCK ) {
 		locvar_calccosthire_cost += 2000
 	}
-	if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) == VEHICLE_MAGIC_LOCOMOTIVE ) {
+	if ( gdata(GDATA_FLAG_MOST_EXPENSIVE_WORLD_MAP_VEHICLE_THIS_MONTH) == VEHICLE_MAGIC_LOCOMOTIVE ) {
 		locvar_calccosthire_cost += 10000
 	}
-	if ( gdata(GDATA_FLAG_WORLD_MAP_VEHICLE_KIND) == VEHICLE_LAND_BATTLESHIP ) {
+	if ( gdata(GDATA_FLAG_MOST_EXPENSIVE_WORLD_MAP_VEHICLE_THIS_MONTH) == VEHICLE_LAND_BATTLESHIP ) {
 		locvar_calccosthire_cost += 200000
 	}
 	if ( locvar_calccostbuilding_hantei == 0 ) {
@@ -976,6 +976,10 @@
 		}
 		sdata(cnt + STARTING_SKILL_SPACT, r1) = limit(p, 1, 800) * 1000000
 	loop
+	if ( babymake == 1 ) {
+		sdata(bsid + STARTING_SKILL_SPACT, r1) += 400 * 1000000
+		sdata(bsids + STARTING_SKILL_SPACT, r1) += 400 * 1000000
+	}
 	i = 4
 	skillinit SKILL_WEAPON_LONGSWORD, r1, i
 	skillinit SKILL_WEAPON_SHORTSWORD, r1, i
@@ -1572,6 +1576,9 @@
 		}
 		p = cdata(CDATA_HUNGER, r1) / 1000
 		if ( gdata(GDATA_FLAG_MAIN) != 900 ) {
+			cdata(CDATA_HUNGER, r1) -= haraheri
+		}
+		if ( cdata(CDATA_SP_EARNED, r1) <= (-2000000) ) {
 			cdata(CDATA_HUNGER, r1) -= haraheri
 		}
 		if ( findbuff(r1, BUFF_CURSE_OF_HUNGER) != (-1) ) {

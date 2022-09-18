@@ -344,7 +344,7 @@
 			if ( val(1) / 50 + 1 < 0 ) {
 				rtval = 9
 				s = lang("" + skillname(sid) + "を" + abs(val(1) / 50 + 1) + "下げる", "decreases your " + skillname(sid) + " by " + abs(val(1) / 50 + 1) + ".")
-				if ( val(3) == FILTER_ITEM_FOOD ) {
+				if ( val(3) == FILTER_ITEM_FOOD | val(3) == FILTER_JUNK ) {
 					s = lang("" + skillname(sid) + "を減衰させる毒素を含んでいる", "has toxins that deteriorate your " + skillname(sid) + ".") + " ["
 					putenclv val(1) / 50
 					s += "]"
@@ -374,7 +374,7 @@
 			}
 			else {
 				s = lang("" + skillname(sid) + "を" + abs(val(1) / 50 + 1) + "上げる", "increases your " + skillname(sid) + " by " + abs(val(1) / 50 + 1) + ".")
-				if ( val(3) == FILTER_ITEM_FOOD ) {
+				if ( val(3) == FILTER_ITEM_FOOD | val(3) == FILTER_JUNK ) {
 					s = lang("" + skillname(sid) + "を増強させる栄養をもっている", "has essential nutrients to enhance your " + skillname(sid) + ".") + " ["
 					putenclv val(1) / 50
 					s += "]"
@@ -460,7 +460,7 @@
 			if ( val(1) / 50 + 1 < 0 ) {
 				rtval = 9
 				s = lang("" + skillname(sid) + "の技能を下げる", "decreases your " + skillname(sid) + " skill.")
-				if ( val(3) == FILTER_ITEM_FOOD ) {
+				if ( val(3) == FILTER_ITEM_FOOD | val(3) == FILTER_JUNK ) {
 					s = lang("" + skillname(sid) + "の技術を損なう", "impairs your " + skillname(sid) + " skill.")
 				}
 			}
@@ -469,7 +469,7 @@
 				if ( s == "" ) {
 					s = lang("" + skillname(sid) + "の技能を上げる", "improves your " + skillname(sid) + " skill.")
 				}
-				if ( val(3) == FILTER_ITEM_FOOD ) {
+				if ( val(3) == FILTER_ITEM_FOOD | val(3) == FILTER_JUNK ) {
 					s = lang("" + skillname(sid) + "の見識を深める", "deepens your understanding of " + skillname(sid) + ".")
 				}
 			}
@@ -490,7 +490,7 @@
 		if ( val(10) == ENCHANT_SUSTAIN ) {
 			rtval = 8
 			s = lang(skillname(sid) + "を弱体化から守る", "protects " + skillname(sid) + " from weakening.")
-			if ( val(3) == FILTER_ITEM_FOOD ) {
+			if ( val(3) == FILTER_ITEM_FOOD | val(3) == FILTER_JUNK ) {
 				s = lang("" + skillname(sid) + "の成長を助ける栄養をもっている", "can help you exercise your " + skillname(sid) + " faster.") + " ["
 				putenclv val(1) / 50
 				s += "]"
@@ -506,7 +506,6 @@
 
 			}
             else {
-
 				/********** ANNA CUSTOM - BEGINNING **********/ // Show Enchant Strength With Objet of Heart
 
 				item_find ITEM_ID_OBJET_HEART, 3
@@ -515,7 +514,6 @@
 				}
 
 				/********** ANNA CUSTOM - ENDING **********/
-
             }
 		}
 		if ( val(10) == ENCHANT_ELEMENTAL_DMG ) {
@@ -572,6 +570,68 @@
 
 			/********** ANNA CUSTOM - ENDING **********/
 		}
+		if ( val == ENCHANT_ABSORB_MP ) {
+			rtval = 4
+			s = lang("攻撃対象からMPを吸収する", "absorbs MP from an enemy.") + " ["
+			putenclv val(1) / 50
+			s += "]"
+			if ( val(3) == FILTER_ITEM_FOOD | val(3) == FILTER_JUNK ) {
+				s = lang("MPを回復する成分を含む", "can heal your MP.") + " ["
+				putenclv val(1) / 50
+				s += "]"
+
+				/********** ANNA CUSTOM - BEGINNING **********/ // Show Enchant Strength With Objet of Heart
+
+				item_find ITEM_ID_OBJET_HEART, 3
+				if ( stat != (-1) & TweakData(TWEAK_UI_SHOW_ENCHANT_STRENGTH, TWEAK_CATEGORY_UI) >= 1 ) {
+					s += "(" + val(1) + ")"
+				}
+
+				/********** ANNA CUSTOM - ENDING **********/
+
+			}
+            else {
+				/********** ANNA CUSTOM - BEGINNING **********/ // Show Enchant Strength With Objet of Heart
+
+				item_find ITEM_ID_OBJET_HEART, 3
+				if ( stat != (-1) & TweakData(TWEAK_UI_SHOW_ENCHANT_STRENGTH, TWEAK_CATEGORY_UI) == 2 ) {
+					s += " (" + val(1) + ")"
+				}
+
+				/********** ANNA CUSTOM - ENDING **********/
+            }
+		}
+		if ( val == ENCHANT_ABSORB_STAMINA ) {
+			rtval = 4
+			s = lang("攻撃対象からスタミナを吸収する", "absorbs stamina from an enemy.") + " ["
+			putenclv val(1) / 50
+			s += "]"
+			if ( val(3) == FILTER_ITEM_FOOD | val(3) == FILTER_JUNK ) {
+				s = lang("スタミナを回復する成分を含む", "can heal your SP.") + " ["
+				putenclv val(1) / 50
+				s += "]"
+
+				/********** ANNA CUSTOM - BEGINNING **********/ // Show Enchant Strength With Objet of Heart
+
+				item_find ITEM_ID_OBJET_HEART, 3
+				if ( stat != (-1) & TweakData(TWEAK_UI_SHOW_ENCHANT_STRENGTH, TWEAK_CATEGORY_UI) >= 1 ) {
+					s += "(" + val(1) + ")"
+				}
+
+				/********** ANNA CUSTOM - ENDING **********/
+
+			}
+            else {
+				/********** ANNA CUSTOM - BEGINNING **********/ // Show Enchant Strength With Objet of Heart
+
+				item_find ITEM_ID_OBJET_HEART, 3
+				if ( stat != (-1) & TweakData(TWEAK_UI_SHOW_ENCHANT_STRENGTH, TWEAK_CATEGORY_UI) == 2 ) {
+					s += " (" + val(1) + ")"
+				}
+
+				/********** ANNA CUSTOM - ENDING **********/
+            }
+		}
 		return
 	}
 
@@ -608,9 +668,7 @@
 	encDisp ENCHANT_CHARGING,                     4, lang("チャージ時に性能を高める", "enhances when charging.")
 	encDisp ENCHANT_QUICK_SHOOTING,               4, lang("早撃ちを可能にする", "allows quick shooting.")
 	encDisp ENCHANT_SEE_INVISIBLE,                4, lang("透明な存在を見ることを可能にする", "allows you to see invisible creatures.")
-	encDisp ENCHANT_ABSORB_STAMINA,               4, lang("攻撃対象からスタミナを吸収する", "absorbs stamina from an enemy."), val(1) / 50
 	encDisp ENCHANT_RAGNAROK,                     4, lang("全てを終結させる", "brings an end.")
-	encDisp ENCHANT_ABSORB_MP,                    4, lang("攻撃対象からマナを吸収する", "absorbs MP from an enemy."), val(1) / 50
 	encDisp ENCHANT_PIERCING_CHANCE,              4, lang("完全貫通攻撃発動の機会を増やす", "gives you a chance to throw an absolute piercing attack."), val(1) / 50
 	encDisp ENCHANT_KALPA_HAND,                   4, lang("時を纏っている", "is covered with time.")
 	encDisp ENCHANT_CRIT_CHANCE,                  4, lang("クリティカルヒットの機会を増やす", "increases your chance to deliver critical hits."), val(1) / 50
@@ -1196,14 +1254,17 @@
 	mtname(0, ITEM_MATERIAL_LEATHER) = lang("革", "leather"), lang("全てを包む", "mysterious")
 	mtref(0, ITEM_MATERIAL_LEATHER) = 100, 150, 12, 2, 13, 6, 100, 6
 	mtenc(0, ITEM_MATERIAL_LEATHER) = ENCHANT_RESISTANCE * EXT_ENCHANTMENT + SKILL_RES_SOUND, 25
+	mtbit(0, ITEM_MATERIAL_LEATHER) = ITEM_BIT_COLDPROOF
 
 	mtname(0, ITEM_MATERIAL_SILK) = lang("シルク", "silk"), lang("美しき", "beautiful")
 	mtref(0, ITEM_MATERIAL_SILK) = 40, 190, 9, -2, 10, 2, 100, 5
 	mtenc(0, ITEM_MATERIAL_SILK) = ENCHANT_RESISTANCE * EXT_ENCHANTMENT + SKILL_RES_MIND, 50
+	mtbit(0, ITEM_MATERIAL_SILK) = ITEM_BIT_COLDPROOF
 
 	mtname(0, ITEM_MATERIAL_CLOTH) = lang("布", "cloth"), lang("艶やかなる", "charming")
 	mtref(0, ITEM_MATERIAL_CLOTH) = 20, 30, 6, -5, 7, 2, 100, 10
 	mtenc(0, ITEM_MATERIAL_CLOTH) = ENCHANT_RESISTANCE * EXT_ENCHANTMENT + SKILL_RES_COLD, 25
+	mtbit(0, ITEM_MATERIAL_CLOTH) = ITEM_BIT_COLDPROOF
 
 	mtname(0, ITEM_MATERIAL_SCALE) = lang("鱗", "scale"), lang("逆鱗に触れし", "wrath")
 	mtref(0, ITEM_MATERIAL_SCALE) = 180, 250, 14, 6, 12, 11, 120, 10
@@ -1249,7 +1310,7 @@
 	mtname(0, ITEM_MATERIAL_SPIRIT) = lang("霊布", "spirit cloth"), lang("この世ならざる", "amazing")
 	mtref(0, ITEM_MATERIAL_SPIRIT) = 40, 750, 3, 2, 34, 6, 100, 4
 	mtenc(0, ITEM_MATERIAL_SPIRIT) = ENCHANT_ATTRIBUTE * EXT_ENCHANTMENT + SKILL_ATTR_SPD, 200
-	mtbit(0, ITEM_MATERIAL_SPIRIT) = ITEM_BIT_ACIDPROOF
+	mtbit(0, ITEM_MATERIAL_SPIRIT) = ITEM_BIT_ACIDPROOF, ITEM_BIT_COLDPROOF
 
 	mtname(0, ITEM_MATERIAL_RUBYNUS) = lang("ルビナス", "rubynus"), lang("赤く染まった", "crimson")
 	mtref(0, ITEM_MATERIAL_RUBYNUS) = 250, 1000, 38, 18, 31, 24, 190, 3
@@ -1259,10 +1320,12 @@
 	mtname(0, ITEM_MATERIAL_PAPER) = lang("紙", "paper"), lang("ふざけた", "silly")
 	mtref(0, ITEM_MATERIAL_PAPER) = 10, 20, 15, -10, 12, 0, 100, 0
 	mtenc(0, ITEM_MATERIAL_PAPER) = ENCHANT_SKILL * EXT_ENCHANTMENT + SKILL_NORMAL_EVASION, 100
+	mtbit(0, ITEM_MATERIAL_PAPER) = ITEM_BIT_COLDPROOF
 
 	mtname(0, ITEM_MATERIAL_DUSK) = lang("宵晒", "dawn cloth"), lang("宵闇を纏いし", "dawn")
 	mtref(0, ITEM_MATERIAL_DUSK) = 45, 850, 10, 8, 35, 15, 100, 4
 	mtenc(0, ITEM_MATERIAL_DUSK) = ENCHANT_ATTRIBUTE * EXT_ENCHANTMENT + SKILL_ATTR_MANA, 200
+	mtbit(0, ITEM_MATERIAL_DUSK) = ITEM_BIT_COLDPROOF
 
 	mtname(0, ITEM_MATERIAL_BONE) = lang("ボーン", "bone"), lang("不死なる", "immortal")
 	mtref(0, ITEM_MATERIAL_BONE) = 120, 300, 10, 6, 12, 11, 140, 0
@@ -1308,10 +1371,12 @@
 	mtname(0, ITEM_MATERIAL_ZYLON) = lang("ザイロン", "zylon"), lang("異国からもたらされし", "foreign")
 	mtref(0, ITEM_MATERIAL_ZYLON) = 50, 500, 5, 4, 21, 16, 100, 4
 	mtenc(0, ITEM_MATERIAL_ZYLON) = ENCHANT_RESISTANCE * EXT_ENCHANTMENT + SKILL_RES_NETHER, 50
+	mtbit(0, ITEM_MATERIAL_ZYLON) = ITEM_BIT_COLDPROOF
 
 	mtname(0, ITEM_MATERIAL_GRIFFON) = lang("翼鳥鱗", "griffon scale"), lang("翼を折られし", "fallen")
 	mtref(0, ITEM_MATERIAL_GRIFFON) = 70, 1000, 16, 17, 32, 24, 120, 2
 	mtenc(0, ITEM_MATERIAL_GRIFFON) = ENCHANT_SKILL * EXT_ENCHANTMENT + SKILL_NORMAL_EVASION, 100
+	mtbit(0, ITEM_MATERIAL_GRIFFON) = ITEM_BIT_COLDPROOF
 
 	mtname(0, ITEM_MATERIAL_TITANIUM) = lang("チタン", "titanium"), lang("色褪せぬ", "fadeless")
 	mtref(0, ITEM_MATERIAL_TITANIUM) = 200, 750, 21, 18, 19, 22, 160, 0
@@ -1348,6 +1413,7 @@
 	mtname(0, ITEM_MATERIAL_BAMBOO) = lang("竹", "bamboo"), lang("渋い", "tasteful")
 	mtref(0, ITEM_MATERIAL_BAMBOO) = 120, 30, 17, 3, 14, 9, 100, 2
 	mtenc(0, ITEM_MATERIAL_BAMBOO) = ENCHANT_SKILL * EXT_ENCHANTMENT + SKILL_NORMAL_MEDITATION, 100
+	mtbit(0, ITEM_MATERIAL_BAMBOO) = ITEM_BIT_COLDPROOF
 
 	mtname(0, ITEM_MATERIAL_NANOMACHINE) = lang("ナノマシン", "nanomachine"), lang("変形する", "variable")
 	mtref(0, ITEM_MATERIAL_NANOMACHINE) = 230, 900, 13, 30, 26, 30, 200, 9
@@ -1365,6 +1431,7 @@
 	mtname(0, ITEM_MATERIAL_WOOD) = lang("木", "wood"), lang("古き", "old")
 	mtref(0, ITEM_MATERIAL_WOOD) = 150, 80, 14, 7, 20, 13, 120, 6
 	mtenc(0, ITEM_MATERIAL_WOOD) = 2 * 10000 + 54, 100
+	mtbit(0, ITEM_MATERIAL_WOOD) = ITEM_BIT_COLDPROOF
 
 	dim mtlistmetal, ITEM_MATERIA_GROUP_MAX, ITEM_MATERIAL_LEVEL_MAX
 	dim mtlistleather, ITEM_MATERIA_GROUP_MAX, ITEM_MATERIAL_LEVEL_MAX

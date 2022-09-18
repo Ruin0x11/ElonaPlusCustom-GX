@@ -3902,13 +3902,13 @@
 		}
 		enc = inv(STARTING_INV_ITEM_ENCHANT + cnt * 2, ci)
 		if ( enc == ENCHANT_ABSORB_STAMINA ) {
-			p = rnd(inv(STARTING_INV_ITEM_ENCHANT + cnt * 2 + 1, ci) / 50 + 1) + 1
-			healsp cc, p
+			p = inv(STARTING_INV_ITEM_ENCHANT + cnt * 2 + 1, ci) / 40 + 1
+			healsp cc, p * cdata(CDATA_MAX_SP, cc) / 100
 			continue
 		}
 		if ( enc == ENCHANT_ABSORB_MP ) {
-			p = rnd(inv(STARTING_INV_ITEM_ENCHANT + cnt * 2 + 1, ci) / 25 + 1) + 1
-			healmp cc, p / 5
+			p = inv(STARTING_INV_ITEM_ENCHANT + cnt * 2 + 1, ci) / 20 + 1
+			healmp cc, p * cdata(CDATA_MAX_MP, cc) / 100 + 1
 			continue
 		}
 		if ( enc == ENCHANT_RAGNAROK ) {
@@ -3974,6 +3974,27 @@
 			}
 		}
 	loop
+	if ( cdata(CDATA_SP_EARNED, cc) <= (-2000000) & cdata(CDATA_SP_EARNED, cc) > (-12000000) ) {
+		cdata(CDATA_SP_EARNED, cc) -= limit(nutrition / 1000, 1, 5) * 100000
+		if ( 0 ) {
+			cdata(CDATA_SP_EARNED, cc) -= 50 * 100000
+		}
+		sintyoku = (cdata(CDATA_SP_EARNED, cc) + 2000000) * (-1) / 100000
+		if ( 0 ) {
+			txt lang("満腹" + nutrition + "でステージ" + cdata(CDATA_SP_EARNED, cc) + "。", name(cc) + " get genes of " + _s(cc) + ".")
+		}
+		if ( cdata(CDATA_SP_EARNED, cc) > (-12000000) ) {
+			txtef COLOR_YELLOW
+			txt lang("[フェイズ2進捗率：" + sintyoku + "％]", "[Phase 2 progress " + sintyoku + " %]")
+		}
+		if ( cdata(CDATA_SP_EARNED, cc) <= (-12000000) ) {
+			snd SOUNDLIST_DING1
+			txtef COLOR_GREEN
+			txt lang("[HAPPY BIRTHDAY！！]　フェイズ2が完了した。", "[HAPPY BIRTHDAY!!] Phase 2 completed.")
+			ccbk = cc
+			evadd EVENT_BIRTH
+		}
+	}
 	eatstatusfood inv(INV_ITEM_STATUS, cieat), cc
 	return
 
@@ -4033,7 +4054,7 @@
 			txtef COLOR_GREEN
 			txt lang(name(cc) + "の体は一瞬燃え上がった。", name(cc) + your(cc) + " body burns up for a second.")
 		}
-		resistmod cc, SKILL_RES_FIRE, 50 * 2
+		resistmodh cc, SKILL_RES_FIRE, 50
 	}
 	return
 
@@ -4043,7 +4064,7 @@
 			txtef COLOR_PURPLE
 			txt lang(name(cc) + "の胃は狂気で満たされた。", "Sheer madness!")
 		}
-		resistmod cc, SKILL_RES_MIND, 50
+		resistmodh cc, SKILL_RES_MIND, 50
 		dmgsan cc, 200
 		dmgcon cc, CONDITION_INSANE, 1000
 	}
@@ -4218,6 +4239,13 @@
 	return
 
 *alien_effect
+	if ( cdata(CDATA_SP_EARNED, tc) <= (-1000000) ) {
+		if ( synccheck(tc, -1) ) {
+			txt lang("しかしすぐに分解された。", "But it was immediately turned into fetus nutrients.")
+		}
+		ninsin = 0
+		return
+	}
 	if ( tc == CHARA_PLAYER ) {
 		if ( trait(TRAIT_ETHER_BLOOMING_FLOWER) != 0 ) {
 			if ( synccheck(tc, -1) ) {

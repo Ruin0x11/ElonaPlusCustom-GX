@@ -2203,7 +2203,7 @@
 	}
 	if ( cdata(CDATA_ROLE_RESTOCK, tc) > 0 ) {
 		list(0, listmax) = 1, 99998
-		listn(0, listmax) = lang("[性格]", "[CHARA]") + lang("あなたには" + _seikaku(cdata(CDATA_ROLE_RESTOCK, tc)) + "な一面もある[被ダメージ時にパワーゲージ+1]", "You have a " + _seikaku(cdata(CDATA_ROLE_SHOP_LEVEL, tc)) + " aspect. [Power gauge +1 when damaged]")
+		listn(0, listmax) = lang("[性格]", "[CHARA]") + lang("あなたには" + _seikaku(cdata(CDATA_ROLE_RESTOCK, tc)) + "な一面もある[被ダメージ時にパワーゲージ+1]", "You have a " + _seikaku(cdata(CDATA_ROLE_RESTOCK, tc)) + " aspect. [Power gauge +1 when damaged]")
 		listmax++
 	}
 	if ( dump_return == 1 ) {
@@ -3144,8 +3144,21 @@
 				continue
 			}
 		}
-		if ( cnt == 0 ) {
-			continue
+		if ( allyctrl == 5 ) {
+			if ( cdata(CDATA_EXIST, cnt) != CHAR_STATE_ALIVE ) {
+				continue
+			}
+			if ( cnt == rc ) {
+				continue
+			}
+			if ( dist(cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), cdata(CDATA_X, cnt), cdata(CDATA_Y, cnt)) > 1 ) {
+				continue
+			}
+		}
+		if ( allyctrl != 5 ) {
+			if ( cnt == 0 ) {
+				continue
+			}
 		}
 		if ( cbit(CHARA_BIT_GUARD_TEMP, cnt) == TRUE ) {
 			continue
@@ -3160,7 +3173,12 @@
 	page_check
 *com_listNpc_loop
 	redraw 0
-	s = lang("NPC一覧", "NPC List"), strhint2 + strhint3
+	if ( allyctrl != 5 ) {
+		s = lang("NPC一覧", "NPC List"), strhint2 + strhint3
+	}
+	if ( allyctrl == 5 ) {
+		s = lang("候補者一覧", "Chara List"), strhint2 + strhint3
+	}
 	display_window (windoww - 700) / 2 + inf_screenx, winposy(448), 700, 448
 	if ( allyctrl == 0 ) {
 		s = lang("給料", "Wage")
@@ -3174,7 +3192,15 @@
 	if ( allyctrl == 4 ) {
 		s = lang("ガードブレイク", "GuardBreak")
 	}
-	display_topic lang("NPCの名前", "Name"), wx + 28, wy + 36
+	if ( allyctrl == 5 ) {
+		s = lang("出血度", "Bleeding Lv")
+	}
+	if ( allyctrl != 5 ) {
+		display_topic lang("NPCの名前", "Name"), wx + 28, wy + 36
+	}
+	if ( allyctrl == 5 ) {
+		display_topic lang("候補者の名前", "Name"), wx + 28, wy + 36
+	}
 	display_topic lang("情報", "Info"), wx + 350, wy + 36
 	if ( allyctrl != 2 ) {
 		display_topic s, wx + 490, wy + 36
@@ -3238,7 +3264,9 @@
 		if ( allyctrl != 4 ) {
 			s = "Lv." + cdata(CDATA_LEVEL, i) + " "
 			s += gendername(i)
-			s += lang(" ", "(") + calcage(i) + "" + lang("歳", ")")
+			if ( allyctrl != 5 ) {
+				s += lang(" ", "(") + calcage(i) + "" + lang("歳", ")")
+			}
 		}
 		pos wx + 372, wy + 66 + cnt * 19 + 2
 		mes s
@@ -3255,6 +3283,11 @@
 			}
 			if ( allyctrl == 3 ) {
 				s = "" + cdata(CDATA_LEVEL, i)
+			}
+			if ( allyctrl == 5 ) {
+				s = "" + cdata(CDATA_CONDITION_BLEED, i)
+				pos wx + 512, wy + 66 + cnt * 19 + 2
+				mes s
 			}
 		}
 	loop
@@ -12850,6 +12883,15 @@
 				txt lang("「い、いらない！ふかふかパンなんてもういらない！！」", cnvtalk("I-I don't want it! Get that puff puff bread away from me!!"))
 				goto *com_inventory_loop
 			}
+			if ( cbit(CHARA_BIT_BIRTHED_CHILD, tc) == TRUE & cdata(CDATA_SPRITE_SIZE_MILK, tc) == (-4) ) {
+				f = rnd(8) + 1
+				if ( f <= 4 ) {
+					s = "", lang("イヤぁぁあ！", "Nooooo!"), lang("イヤ〜！", "No!"), lang("イヤ♪", "No! No!"), lang("イヤッ！", "No!!!!!!")
+					snd SOUNDLIST_FAIL1
+					txt lang(name(tc) + "「" + s(f) + "」", cnvtalk(s(f)))
+					goto *pc_turn
+				}
+			}
 			f = 0
 			p = sdata(SKILL_ATTR_STR, tc) * 500 + sdata(SKILL_ATTR_CON, tc) * 500 + sdata(SKILL_NORMAL_WEIGHT_LIFTING, tc) * 2500 + 25000
 			if ( cdata(CDATA_ID, tc) == CREATURE_ID_GOLDEN_KNIGHT ) {
@@ -13267,6 +13309,15 @@
 				if ( inv_sum(CHARA_PLAYER) > 20 ) {
 					txt_invfull
 					goto *com_inventory_loop
+				}
+			}
+			if ( cbit(CHARA_BIT_BIRTHED_CHILD, tc) == TRUE & cdata(CDATA_SPRITE_SIZE_MILK, tc) == (-4) ) {
+				f = rnd(8) + 1
+				if ( f <= 4 ) {
+					s = "", lang("イヤぁぁあ！", "Nooooo!"), lang("イヤ〜！", "No!"), lang("イヤ♪", "No! No!"), lang("イヤッ！", "No!!!!!!")
+					snd SOUNDLIST_FAIL1
+					txt lang(name(tc) + "「" + s(f) + "」", cnvtalk(s(f)))
+					goto *pc_turn
 				}
 			}
 			f = 0
@@ -13958,6 +14009,11 @@
 		if ( ibit(ITEM_BIT_FIREPROOF, ci) ) {
 			list(0, p) = 7
 			listn(0, p) = lang("それは炎では燃えない", "It is fireproof.")
+			p++
+		}
+		if ( ibit(ITEM_BIT_COLDPROOF, ci) ) {
+			list(0, p) = 7
+			listn(0, p) = lang("それは冷気では砕けない", "It is coldproof.")
 			p++
 		}
 		if ( ibit(ITEM_BIT_PRECIOUS, ci) ) {

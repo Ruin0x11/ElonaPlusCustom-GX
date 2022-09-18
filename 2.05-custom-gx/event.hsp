@@ -33,6 +33,46 @@
 		}
 	}
 	if ( breakfast < 100 & kitune != 10 ) {
+		child = 0
+		repeat MAX_CHARA_TOTAL
+			if ( cbit(CHARA_BIT_BIRTHED_CHILD, cnt) != TRUE ) {
+				continue
+			}
+			if ( cdata(CDATA_EXIST, cnt) != CHAR_STATE_ALIVE ) {
+				continue
+			}
+			if ( cdata(CDATA_CONDITION_SLEEP, cnt) > 0 ) {
+				continue
+			}
+			if ( cdata(CDATA_CONDITION_DIM, cnt) >= 60 ) {
+				continue
+			}
+			if ( rnd(100) > 10 ) {
+				continue
+			}
+			if ( cdata(CDATA_SPRITE_SIZE_MILK, child) == (-4) ) {
+				if ( rnd(10) > 7 ) {
+					continue
+				}
+			}
+			if ( cdata(CDATA_SPRITE_SIZE_MILK, child) == (-3) ) {
+				if ( rnd(10) > 5 ) {
+					continue
+				}
+			}
+			if ( cdata(CDATA_SPRITE_SIZE_MILK, child) == (-2) ) {
+				if ( rnd(10) > 3 ) {
+					continue
+				}
+			}
+			if ( cdata(CDATA_SPRITE_SIZE_MILK, child) == (-1) ) {
+				if ( rnd(10) > 3 ) {
+					continue
+				}
+			}
+			child = cnt
+			break
+		loop
 		kitune = 0
 		if ( mode == MODELIST_TXT_ADV ) {
 			if ( cdata(CDATA_GOD, CHARA_PLAYER) != GOD_EYTH ) {
@@ -103,6 +143,11 @@
 					}
 				}
 			}
+			if ( child > 0 ) {
+				if ( cdata(CDATA_SPRITE_SIZE_MILK, child) == (-5) ) {
+					id = 36
+				}
+			}
 			if ( rnd(200) == 0 ) {
 				id = RANDOM_EVENT_DREAM_LUCKY
 			}
@@ -133,6 +178,61 @@
 			if ( gdata(GDATA_LEVEL) == 3 ) {
 				return
 			}
+		}
+		if ( child > 0 ) {
+			kaiwa = 0
+			if ( cdata(CDATA_SPRITE_SIZE_MILK, child) == (-5) ) {
+				id = 36
+			}
+			if ( cdata(CDATA_SPRITE_SIZE_MILK, child) == (-4) ) {
+				id = 37
+			}
+			if ( cdata(CDATA_SPRITE_SIZE_MILK, child) == (-3) ) {
+				if ( cdata(CDATA_PERSONALITY, child) > 2 ) {
+					cdata(CDATA_PERSONALITY, child) = 0
+				}
+				if ( cdata(CDATA_PERSONALITY, child) == 0 ) {
+					id = 38
+				}
+				if ( cdata(CDATA_PERSONALITY, child) == 1 ) {
+					id = 39
+				}
+				if ( cdata(CDATA_PERSONALITY, child) == 2 ) {
+					id = 40
+				}
+				cdata(CDATA_PERSONALITY, child)++
+			}
+			if ( cdata(CDATA_SPRITE_SIZE_MILK, child) == (-2) ) {
+				if ( cdata(CDATA_PERSONALITY, child) > 2 ) {
+					cdata(CDATA_PERSONALITY, child) = 0
+				}
+				if ( cdata(CDATA_PERSONALITY, child) == 0 ) {
+					id = 41
+				}
+				if ( cdata(CDATA_PERSONALITY, child) == 1 ) {
+					id = 42
+				}
+				if ( cdata(CDATA_PERSONALITY, child) == 2 ) {
+					id = 43
+				}
+				cdata(CDATA_PERSONALITY, child)++
+			}
+			if ( cdata(CDATA_SPRITE_SIZE_MILK, child) == (-1) ) {
+				if ( cdata(CDATA_PERSONALITY, child) > 2 ) {
+					cdata(CDATA_PERSONALITY, child) = 0
+				}
+				if ( cdata(CDATA_PERSONALITY, child) == 0 ) {
+					id = 44
+				}
+				if ( cdata(CDATA_PERSONALITY, child) == 1 ) {
+					id = 45
+				}
+				if ( cdata(CDATA_PERSONALITY, child) == 2 ) {
+					id = 46
+				}
+				cdata(CDATA_PERSONALITY, child)++
+			}
+			goto *random_eventProc
 		}
 		if ( rnd(30) == 0 ) {
 			id = RANDOM_EVENT_PRIEST
@@ -818,6 +918,692 @@
 		gosub *re_select
 		goto *random_eventProc_SWEND1
 	}
+	if ( _switch_val == RANDOM_EVENT_DREAM_CAUSE_UNKNOWN | _switch_sw ) {
+		_switch_sw = 0
+		tc = child
+		item_find ITEM_ID_BOTTLE_MILK, ITEM_FIND_MODE_DBID, ITEM_FIND_LOCATION_CHARAS
+		if ( stat != (-1) ) {
+			ci = stat
+			cibk = ci
+			milk = inv(INV_ITEM_NUM, cibk)
+		}
+		else {
+			milk = 0
+		}
+		snd SOUNDLIST_CHANDLER23
+		s = lang("原因は何だ？", "Cause Unknown")
+		file = "bg_re21"
+		buff = lang(cdatan(CDATAN_NAME, child) + "が突然泣き始めた！", cdatan(CDATAN_NAME, child) + " suddenly started crying out loud!")
+		chatList 1, lang("そっとしておく", "(Leave alone)")
+		chatList 2, lang("あやす", "(Soothe)")
+		chatList 3, lang("一緒に泣く", "(Cry together)")
+		chatList 4, lang("乳を与える（所持数" + milk + "）", "(Give a milk :" + milk + " possession)")
+		seikai = 1
+		if ( cdata(CDATA_POWER_GAUGE, child) <= 0 ) {
+			seikai = 2
+		}
+		if ( cdata(CDATA_HP, child) < cdata(CDATA_MAX_HP, child) * 9 / 10 ) {
+			seikai = 3
+		}
+		if ( cdata(CDATA_HUNGER, child) <= 5000 ) {
+			seikai = 4
+		}
+		gosub *re_select
+		if ( rtval == 1 ) {
+			if ( seikai != 1 ) {
+				txtef COLOR_RED
+				txt lang(cdatan(CDATAN_NAME, child) + "は泣き疲れるまで泣き続けた…。", cdatan(CDATAN_NAME, child) + " kept crying until he was tired of crying...")
+				modimp2 child, -10
+				snd SOUNDLIST_GET1
+				goto *random_eventProc_SWEND1
+			}
+			if ( seikai == 1 ) {
+				txtef COLOR_GREEN
+				txt lang(cdatan(CDATAN_NAME, child) + "が突然泣き止んだ。結局何だったのだろう…？", cdatan(CDATAN_NAME, child) + " suddenly stopped crying. What was it...?")
+				modimp2 child, 10
+				snd SOUNDLIST_GET1
+				goto *random_eventProc_SWEND1
+			}
+		}
+		if ( rtval == 2 ) {
+			if ( seikai != 2 ) {
+				txtef COLOR_RED
+				txt lang(cdatan(CDATAN_NAME, child) + "を抱っこしようが子守歌を歌おうが、全然泣き止まなくて困った…。", "Hugs and lullaby songs had little effect on " + cdatan(CDATAN_NAME, child) + "...")
+				modimp2 child, -10
+				snd SOUNDLIST_GET1
+				goto *random_eventProc_SWEND1
+			}
+			if ( seikai == 2 ) {
+				txtef COLOR_GREEN
+				txt lang(cdatan(CDATAN_NAME, child) + "をあやし始めるとスッと泣き止んだ。…もう笑ってる！", cdatan(CDATAN_NAME, child) + " stopped crying when comforted!")
+				modimp child, 10
+				snd SOUNDLIST_GET1
+				goto *random_eventProc_SWEND1
+			}
+		}
+		if ( rtval == 3 ) {
+			if ( seikai != 3 ) {
+				txtef COLOR_RED
+				txt lang(cdatan(CDATAN_NAME, child) + "は目を見開いて呆然としている。", cdatan(CDATAN_NAME, child) + " is dumbfounded...")
+				modimp child, -10
+				snd SOUNDLIST_GET1
+				goto *random_eventProc_SWEND1
+			}
+			if ( seikai == 3 ) {
+				txtef COLOR_GREEN
+				txt lang(cdatan(CDATAN_NAME, child) + "はあなたをぺちぺち叩き始めた。…慰めているつもりなのだろうか？", cdatan(CDATAN_NAME, child) + " started stroking you..." + cdatan(CDATAN_NAME, child) + " seems to be trying to comfort you.")
+				modimp child, 10
+				snd SOUNDLIST_GET1
+				goto *random_eventProc_SWEND1
+			}
+		}
+		if ( rtval == 4 ) {
+			if ( milk == 0 ) {
+				txtef COLOR_RED
+				txt lang("自前でなんとかしようとしたが、そんなに都合よく乳は出なかった。", "You tried to get your milk out, but it didn't work.")
+				modimp child, -10
+				snd SOUNDLIST_GET1
+				goto *random_eventProc_SWEND1
+			}
+			inv(INV_ITEM_NUM, cibk)--
+			cell_refresh inv(INV_ITEM_X, cibk), inv(INV_ITEM_Y, cibk)
+			cdata(CDATA_HUNGER, child) += 1000
+			gosub *calcBurdenPc
+			snd SOUNDLIST_DRINK1
+			if ( seikai != 4 ) {
+				txtef COLOR_RED
+				txt lang("ちょっと飲んだが、特に乳がほしいわけではなかったようだ。", cdatan(CDATAN_NAME, child) + " drank some milk, but didn't seem to want it.")
+				goto *random_eventProc_SWEND1
+			}
+			if ( seikai == 4 ) {
+				txtef COLOR_GREEN
+				txt lang(cdatan(CDATAN_NAME, child) + "は乳を飲んで急に大人しくなった。…小さくげっぷしている。", cdatan(CDATAN_NAME, child) + " drank the milk and suddenly calmed down and let out a small burp.")
+				modimp tc, 10
+				modimp2 child, 10
+				goto *random_eventProc_SWEND1
+			}
+		}
+		goto *random_eventProc_SWEND1
+		_switch_sw++
+	}
+	if ( _switch_val == RANDOM_EVENT_DREAM_CHILD_SELF_EXPRESSION | _switch_sw ) {
+		_switch_sw = 0
+		tc = child
+		snd SOUNDLIST_CHANDLER23
+		s = lang("子供の自己表現", "Child Self-Expression")
+		file = "bg_re21"
+		buff = lang(cdatan(CDATAN_NAME, child) + "が突然座り込んで、駄々をこね始めた！", cdatan(CDATAN_NAME, child) + " suddenly sat down and started whining!")
+		chatList 1, lang("放置する", "(Leave alone)")
+		chatList 2, lang("話を聞く", "(Listen to feelings)")
+		chatList 3, lang("そのまま引きずっていく", "(Forcibly dragging)")
+		chatList 4, lang("お小遣い500goldを与える", "(Give 500 gold pieces)")
+		gosub *re_select
+		if ( rtval == 1 ) {
+			txt lang(cdatan(CDATAN_NAME, child) + "はしばらく転げ回っていたが、無駄だと判断して動きを止めた。", cdatan(CDATAN_NAME, child) + " rolled around for a while, but decided it was useless and calmed down.")
+			modimp child, -5
+			modimp2 child, 5
+			snd SOUNDLIST_GET1
+			goto *random_eventProc_SWEND1
+		}
+		if ( rtval == 2 ) {
+			txtef COLOR_GREEN
+			txt lang(cdatan(CDATAN_NAME, child) + "は乏しい語彙力で気持ちを懸命に伝えようとしている…。", cdatan(CDATAN_NAME, child) + " tries hard to convey feelings with limited vocabulary...")
+			modimp child, 5
+			snd SOUNDLIST_GET1
+			goto *random_eventProc_SWEND1
+		}
+		if ( rtval == 3 ) {
+			txtef COLOR_GREEN
+			txt lang(cdatan(CDATAN_NAME, child) + "は泣きべそをかきながらも逆にあなたを引きずろうと頑張っている…。", cdatan(CDATAN_NAME, child) + " is crying and trying to drag you...")
+			modimp2 child, -5
+			snd SOUNDLIST_GET1
+			goto *random_eventProc_SWEND1
+		}
+		if ( rtval == 4 ) {
+			if ( cdata(CDATA_GOLD, CHARA_PLAYER) < 500 ) {
+				txt lang(cdatan(CDATAN_NAME, child) + "はあなたの財布の中身が寂しいことに気づき、丁寧に断った。", cdatan(CDATAN_NAME, child) + " notices that you don't have much money and politely declines.")
+				modimp2 child, -5
+				snd SOUNDLIST_GET1
+				goto *random_eventProc_SWEND1
+			}
+			snd SOUNDLIST_PAYGOLD1
+			cdata(CDATA_GOLD, CHARA_PLAYER) -= 500
+			cdata(CDATA_GOLD, tc) += 500
+			txt lang(cdatan(CDATAN_NAME, child) + "は喜んで金貨を数え始めた！味を占めなければいいが…。", cdatan(CDATAN_NAME, child) + " happily began to count the coins!")
+			modimp child, 5
+			modimp2 child, -5
+			snd SOUNDLIST_GET1
+			goto *random_eventProc_SWEND1
+		}
+		goto *random_eventProc_SWEND1
+		_switch_sw++
+	}
+	if ( _switch_val == RANDOM_EVENT_DREAM_DREAM_FOR_THE_FUTURE | _switch_sw ) {
+		_switch_sw = 0
+		tc = child
+		snd SOUNDLIST_PORT
+		bvar = sdata(SKILL_ATTR_STR, child)
+		pvar = 10
+		if ( sdata(SKILL_ATTR_CON, child) > bvar ) {
+			pvar = 11
+			bvar = sdata(SKILL_ATTR_CON, child)
+		}
+		if ( sdata(SKILL_ATTR_DEX, child) > bvar ) {
+			pvar = 12
+			bvar = sdata(SKILL_ATTR_DEX, child)
+		}
+		if ( sdata(SKILL_ATTR_PER, child) > bvar ) {
+			pvar = 13
+			bvar = sdata(SKILL_ATTR_PER, child)
+		}
+		if ( sdata(SKILL_ATTR_LER, child) > bvar ) {
+			pvar = 14
+			bvar = sdata(SKILL_ATTR_LER, child)
+		}
+		if ( sdata(SKILL_ATTR_WIL, child) > bvar ) {
+			pvar = 15
+			bvar = sdata(SKILL_ATTR_WIL, child)
+		}
+		if ( sdata(SKILL_ATTR_MAG, child) > bvar ) {
+			pvar = 16
+			bvar = sdata(SKILL_ATTR_MAG, child)
+		}
+		if ( sdata(SKILL_ATTR_CHA, child) > bvar ) {
+			pvar = 17
+		}
+		bvar = 0
+		if ( pvar == 10 ) {
+			yume = lang("世界最強", "a world's strongest")
+		}
+		if ( pvar == 11 ) {
+			yume = lang("機関車", "a locomotive")
+		}
+		if ( pvar == 12 ) {
+			yume = lang("サブパイロット", "a co-pilot")
+		}
+		if ( pvar == 13 ) {
+			yume = lang("サンタさん", "Santa Claus")
+		}
+		if ( pvar == 14 ) {
+			yume = lang("発明家", "an inventor")
+		}
+		if ( pvar == 15 ) {
+			yume = lang("ヒーロー", "a hero")
+		}
+		if ( pvar == 16 ) {
+			yume = lang("お花屋さん", "a florist")
+		}
+		if ( pvar == 17 ) {
+			yume = lang("カッパ巻き", "a california roll")
+		}
+		s = lang("将来の夢", "Dream for the Future")
+		file = "bg_re21"
+		buff = lang(cdatan(CDATAN_NAME, child) + "は将来、" + yume + "になりたいと言っている…。", cdatan(CDATAN_NAME, child) + " seems to want to be " + yume + " in the future.")
+		chatList 1, lang("素敵な夢だね", "Nice dream...")
+		chatList 2, lang("真面目に考えようね", "Please reconsider.")
+		chatList 3, lang("なれるように勉強しようね", "Let's study so that you can!")
+		gosub *re_select
+		if ( rtval == 1 ) {
+			if ( jp ) {
+				txt cdatan(CDATAN_NAME, child) + "「へへへ…」", cdatan(CDATAN_NAME, child) + "「" + _ore(3) + "の夢を真似してもいいよ！」"
+			}
+			if ( en ) {
+				txt cdatan(CDATAN_NAME, child) + " " + cnvtalk("Hehehe..."), cdatan(CDATAN_NAME, child) + " " + cnvtalk("I don't mind if you imitate me!")
+			}
+			modimp child, 5
+			modimp2 child, -5
+			snd SOUNDLIST_GET1
+			goto *random_eventProc_SWEND1
+		}
+		if ( rtval == 2 ) {
+			if ( jp ) {
+				txt cdatan(CDATAN_NAME, child) + "「真面目に考えてる" + _yo(3) + "！」", cdatan(CDATAN_NAME, child) + "「ダメ" + _ka(3) + "？」"
+			}
+			if ( en ) {
+				txt cdatan(CDATAN_NAME, child) + " " + cnvtalk("I'm serious!"), cdatan(CDATAN_NAME, child) + " " + cnvtalk("Is it no good?")
+			}
+			modimp child, -5
+			snd SOUNDLIST_GET1
+			goto *random_eventProc_SWEND1
+		}
+		if ( rtval == 3 ) {
+			if ( jp ) {
+				txt cdatan(CDATAN_NAME, child) + "「じゃあやめとく」", cdatan(CDATAN_NAME, child) + "「ええ〜？」"
+			}
+			if ( en ) {
+				txt cdatan(CDATAN_NAME, child) + " " + cnvtalk("I'll stop then"), cdatan(CDATAN_NAME, child) + " " + cnvtalk("Huh?")
+			}
+			snd SOUNDLIST_GET1
+			goto *random_eventProc_SWEND1
+		}
+		goto *random_eventProc_SWEND1
+		_switch_sw++
+	}
+	if ( _switch_val == RANDOM_EVENT_DREAM_TREASURE_DISCOVERY | _switch_sw ) {
+		_switch_sw = 0
+		tc = child
+		snd SOUNDLIST_PORT
+		bvar = sdata(SKILL_ATTR_STR, child)
+		pvar = 10
+		if ( sdata(SKILL_ATTR_CON, child) > bvar ) {
+			pvar = 11
+			bvar = sdata(SKILL_ATTR_CON, child)
+		}
+		if ( sdata(SKILL_ATTR_DEX, child) > bvar ) {
+			pvar = 12
+			bvar = sdata(SKILL_ATTR_DEX, child)
+		}
+		if ( sdata(SKILL_ATTR_PER, child) > bvar ) {
+			pvar = 13
+			bvar = sdata(SKILL_ATTR_PER, child)
+		}
+		if ( sdata(SKILL_ATTR_LER, child) > bvar ) {
+			pvar = 14
+			bvar = sdata(SKILL_ATTR_LER, child)
+		}
+		if ( sdata(SKILL_ATTR_WIL, child) > bvar ) {
+			pvar = 15
+			bvar = sdata(SKILL_ATTR_WIL, child)
+		}
+		if ( sdata(SKILL_ATTR_MAG, child) > bvar ) {
+			pvar = 16
+			bvar = sdata(SKILL_ATTR_MAG, child)
+		}
+		if ( sdata(SKILL_ATTR_CHA, child) > bvar ) {
+			pvar = 17
+		}
+		bvar = 0
+		if ( pvar == 10 ) {
+			yume = lang("ツルツルな石ころ", "the smooth stone")
+		}
+		if ( pvar == 11 ) {
+			yume = lang("何かのネジ", "the screw of something")
+		}
+		if ( pvar == 12 ) {
+			yume = lang("セミの抜け殻", "the cicada shell")
+		}
+		if ( pvar == 13 ) {
+			yume = lang("鮮やかな落ち葉", "the vivid leave")
+		}
+		if ( pvar == 14 ) {
+			yume = lang("謎の綿毛", "the mystery fluff")
+		}
+		if ( pvar == 15 ) {
+			yume = lang("抜け羽根", "the fallen feather")
+		}
+		if ( pvar == 16 ) {
+			yume = lang("むしった花びら", "the small petal")
+		}
+		if ( pvar == 17 ) {
+			yume = lang("ダンゴムシ", "the wood lousel")
+		}
+		s = lang("お宝発見", "Treasure Discovery")
+		file = "bg_re21"
+		buff = lang(cdatan(CDATAN_NAME, child) + "は満面の笑みで" + yume + "を差し出してきた…。", cdatan(CDATAN_NAME, child) + " handed you " + yume + " with a big smile...")
+		chatList 1, lang("コレクションに加える", "I'll add it to my collection!")
+		chatList 2, lang("受け取ってこっそり捨てる", "(Receive and secretly throw away)")
+		chatList 3, lang("ゴミ拾ってないで勉強しろ", "Study without picking up junk!!")
+		gosub *re_select
+		if ( rtval == 1 ) {
+			if ( jp ) {
+				txt cdatan(CDATAN_NAME, child) + "「あげないよ！？」", cdatan(CDATAN_NAME, child) + "「見せるだけ！見せるだけだから！」"
+			}
+			if ( en ) {
+				txt cdatan(CDATAN_NAME, child) + " " + cnvtalk("I won't give it to you!?"), cdatan(CDATAN_NAME, child) + " " + cnvtalk("Just show! I just want to show you!")
+			}
+			modimp child, -5
+			snd SOUNDLIST_GET1
+			goto *random_eventProc_SWEND1
+		}
+		if ( rtval == 2 ) {
+			if ( jp ) {
+				txt cdatan(CDATAN_NAME, child) + "「大事にしてね♪」", cdatan(CDATAN_NAME, child) + "「見つけるの大変だった" + _nda(3) + "！」"
+			}
+			if ( en ) {
+				txt cdatan(CDATAN_NAME, child) + " " + cnvtalk("You don't throw it away, do you?"), cdatan(CDATAN_NAME, child) + " " + cnvtalk("It was hard to find...")
+			}
+			modimp child, 5
+			snd SOUNDLIST_GET1
+			goto *random_eventProc_SWEND1
+		}
+		if ( rtval == 3 ) {
+			if ( jp ) {
+				txt cdatan(CDATAN_NAME, child) + "「ごめんなさい…」", cdatan(CDATAN_NAME, child) + "「ゴミじゃないのに…」"
+			}
+			if ( en ) {
+				txt cdatan(CDATAN_NAME, child) + " " + cnvtalk("I am sorry..."), cdatan(CDATAN_NAME, child) + " " + cnvtalk("It's not junk...")
+			}
+			modimp2 child, 5
+			snd SOUNDLIST_GET1
+			goto *random_eventProc_SWEND1
+		}
+		goto *random_eventProc_SWEND1
+		_switch_sw++
+	}
+	if ( _switch_val == RANDOM_EVENT_DREAM_ROOTS | _switch_sw ) {
+		_switch_sw = 0
+		tc = child
+		snd SOUNDLIST_PORT
+		s = lang("自分のルーツ", "Roots")
+		file = "bg_re21"
+		buff = lang(cdatan(CDATAN_NAME, child) + "は、自分がどこから来たのかを知りたがっている…。", cdatan(CDATAN_NAME, child) + " wants to know where a baby came from...")
+		chatList 1, lang("遺伝子を組み合わせて産まれたんだよ", "It is produced by a combination of genes.")
+		chatList 2, lang("コウノトリさんが運んできた", "The white stork brings it.")
+		chatList 3, lang("橋の下から拾ってきた", "It can be picked up in a cabbage patch.")
+		gosub *re_select
+		if ( rtval == 1 ) {
+			if ( jp ) {
+				txt cdatan(CDATAN_NAME, child) + "「遺伝子…？？？」", cdatan(CDATAN_NAME, child) + "「意味わからない！」"
+			}
+			if ( en ) {
+				txt cdatan(CDATAN_NAME, child) + " " + cnvtalk("Gene...???"), cdatan(CDATAN_NAME, child) + " " + cnvtalk("I do not know the meaning!")
+			}
+			snd SOUNDLIST_GET1
+			goto *random_eventProc_SWEND1
+		}
+		if ( rtval == 2 ) {
+			if ( jp ) {
+				txt cdatan(CDATAN_NAME, child) + "「コウノトリさんは" + _ore(3) + "をどこから運んで来たの" + _kana(3) + "」", cdatan(CDATAN_NAME, child) + "「絶対ウソだ〜」"
+			}
+			if ( en ) {
+				txt cdatan(CDATAN_NAME, child) + " " + cnvtalk("Where does the white stork bring the baby from?"), cdatan(CDATAN_NAME, child) + " " + cnvtalk("It's a lie!")
+			}
+			modimp child, -5
+			snd SOUNDLIST_GET1
+			goto *random_eventProc_SWEND1
+		}
+		if ( rtval == 3 ) {
+			if ( jp ) {
+				txt cdatan(CDATAN_NAME, child) + "「ショック！」", cdatan(CDATAN_NAME, child) + "「" + _ore(3) + "、この家の子じゃない" + _noka(3) + "！？」"
+			}
+			if ( en ) {
+				txt cdatan(CDATAN_NAME, child) + " " + cnvtalk("I am shocked!"), cdatan(CDATAN_NAME, child) + " " + cnvtalk("Was I also a cabbage!?")
+			}
+			modimp2 child, -5
+			snd SOUNDLIST_GET1
+			goto *random_eventProc_SWEND1
+		}
+		goto *random_eventProc_SWEND1
+		_switch_sw++
+	}
+	if ( _switch_val == RANDOM_EVENT_DREAM_BATTLE_IN_THE_BRAIN | _switch_sw ) {
+		_switch_sw = 0
+		tc = child
+		snd SOUNDLIST_PORT
+		s = lang("脳内バトル", "Battle in the brain")
+		file = "bg_re21"
+		buff = lang(cdatan(CDATAN_NAME, child) + "は、空想上の敵と戦っているようだ…。", cdatan(CDATAN_NAME, child) + " seems to be fighting an imaginary enemy...")
+		chatList 1, lang("まぁイメトレの一種か…", "Image training?")
+		chatList 2, lang("もっと現実世界でがんばらなくちゃ", "Try harder in the real world.")
+		chatList 3, lang("するなら戦いの勉強をするべき", "If you do, you should study fighting.")
+		gosub *re_select
+		if ( rtval == 1 ) {
+			if ( jp ) {
+				txt cdatan(CDATAN_NAME, child) + "「とうっ！」", cdatan(CDATAN_NAME, child) + "「なかなかやるな！」"
+			}
+			if ( en ) {
+				txt cdatan(CDATAN_NAME, child) + " " + cnvtalk("Huh!"), cdatan(CDATAN_NAME, child) + " " + cnvtalk("This guy is a formidable enemy!")
+			}
+			snd SOUNDLIST_GET1
+			goto *random_eventProc_SWEND1
+		}
+		if ( rtval == 2 ) {
+			if ( jp ) {
+				txt cdatan(CDATAN_NAME, child) + "「いいところだったのに…」", cdatan(CDATAN_NAME, child) + "「し、しかし…」"
+			}
+			if ( en ) {
+				txt cdatan(CDATAN_NAME, child) + " " + cnvtalk("Do not disturb..."), cdatan(CDATAN_NAME, child) + " " + cnvtalk("But...")
+			}
+			modimp child, -5
+			snd SOUNDLIST_GET1
+			goto *random_eventProc_SWEND1
+		}
+		if ( rtval == 3 ) {
+			if ( jp ) {
+				txt cdatan(CDATAN_NAME, child) + "「つまらないからイヤ」", cdatan(CDATAN_NAME, child) + "「そういうのは戦術スキルの勉強だけで十分！」"
+			}
+			if ( en ) {
+				txt cdatan(CDATAN_NAME, child) + " " + cnvtalk("I hate it because it's boring!"), cdatan(CDATAN_NAME, child) + " " + cnvtalk("Just studying tactical skills is enough!")
+			}
+			modimp2 child, -5
+			snd SOUNDLIST_GET1
+			goto *random_eventProc_SWEND1
+		}
+		goto *random_eventProc_SWEND1
+		_switch_sw++
+	}
+	if ( _switch_val == RANDOM_EVENT_DREAM_THIS_WORLD_IS_CANVAS | _switch_sw ) {
+		_switch_sw = 0
+		tc = child
+		snd SOUNDLIST_PORT
+		s = lang("この世はキャンバス", "This world is canvas")
+		file = "bg_re21"
+		buff = lang(cdatan(CDATAN_NAME, child) + "は、黙々と地面に絵を描いている…。", cdatan(CDATAN_NAME, child) + " silently draws on the ground...")
+		chatList 1, lang("いいセンスだ", "You're pretty good.")
+		chatList 2, lang("最後はちゃんと消しておくように", "Erase it properly at the end.")
+		chatList 3, lang("本格的な絵の勉強してみる？", "Do you want to study painting?")
+		gosub *re_select
+		if ( rtval == 1 ) {
+			if ( jp ) {
+				txt cdatan(CDATAN_NAME, child) + "「恥ずかしい" + _na(3) + "」", cdatan(CDATAN_NAME, child) + "「勝手に見ないでー」"
+			}
+			if ( en ) {
+				txt cdatan(CDATAN_NAME, child) + " " + cnvtalk("I'm embarrassed..."), cdatan(CDATAN_NAME, child) + " " + cnvtalk("Don't look at this...")
+			}
+			modimp child, 5
+			snd SOUNDLIST_GET1
+			goto *random_eventProc_SWEND1
+		}
+		if ( rtval == 2 ) {
+			if ( jp ) {
+				txt cdatan(CDATAN_NAME, child) + "「そんなのわかってる" + _yo(3) + "」", cdatan(CDATAN_NAME, child) + "「じゃあもう今消す！」"
+			}
+			if ( en ) {
+				txt cdatan(CDATAN_NAME, child) + " " + cnvtalk("I know that!"), cdatan(CDATAN_NAME, child) + " " + cnvtalk("I'll delete it now!")
+			}
+			modimp child, -5
+			snd SOUNDLIST_GET1
+			goto *random_eventProc_SWEND1
+		}
+		if ( rtval == 3 ) {
+			if ( jp ) {
+				txt cdatan(CDATAN_NAME, child) + "「勉強？やめとく」", cdatan(CDATAN_NAME, child) + "「" + _ore(3) + "は上手な絵が描きたいわけじゃない" + _nda(3) + "」"
+			}
+			if ( en ) {
+				txt cdatan(CDATAN_NAME, child) + " " + cnvtalk("I will refrain from studying..."), cdatan(CDATAN_NAME, child) + " " + cnvtalk("I don't want to draw a good picture...")
+			}
+			modimp2 child, -5
+			snd SOUNDLIST_GET1
+			goto *random_eventProc_SWEND1
+		}
+		goto *random_eventProc_SWEND1
+		_switch_sw++
+	}
+	if ( _switch_val == RANDOM_EVENT_DREAM_MEANING_OF_STUDY | _switch_sw ) {
+		_switch_sw = 0
+		tc = child
+		snd SOUNDLIST_PORT
+		s = lang("勉強の意味", "Meaning of Study")
+		file = "bg_re21"
+		buff = lang(cdatan(CDATAN_NAME, child) + "が、どうして子供は勉強しないといけないのか問い詰めてきた！", cdatan(CDATAN_NAME, child) + " asked why children should study!")
+		chatList 1, lang("将来の選択肢を増やすため", "Studying increases future options.")
+		chatList 2, lang("大人になっても仕事の勉強が続く", "Even when you grow up, you need to study for a job.")
+		chatList 3, lang("子供が馬鹿だと親が恥ずかしいから", "Parents are embarrassed that their children are stupid.")
+		gosub *re_select
+		if ( rtval == 1 ) {
+			if ( jp ) {
+				txt cdatan(CDATAN_NAME, child) + "「意味がよくわからない…」", cdatan(CDATAN_NAME, child) + "「" + _ore(3) + "はどうせ冒険者になるから関係ない" + _daro(3) + "」"
+			}
+			if ( en ) {
+				txt cdatan(CDATAN_NAME, child) + " " + cnvtalk("I don't know what you mean..."), cdatan(CDATAN_NAME, child) + " " + cnvtalk("I'm going to be an adventurer anyway, so it doesn't matter!")
+			}
+			snd SOUNDLIST_GET1
+			goto *random_eventProc_SWEND1
+		}
+		if ( rtval == 2 ) {
+			if ( jp ) {
+				txt cdatan(CDATAN_NAME, child) + "「" + _ore(3) + "、大人になったら勉強しなくていいと思ってい" + _ta(3) + "」", cdatan(CDATAN_NAME, child) + "「今のうちしか学べないことがあるの" + _ka(3) + "…」"
+			}
+			if ( en ) {
+				txt cdatan(CDATAN_NAME, child) + " " + cnvtalk("I thought I wouldn't have to study when I grew up..."), cdatan(CDATAN_NAME, child) + " " + cnvtalk("Does that mean that there are things I can learn only now?")
+			}
+			modimp2 child, 5
+			snd SOUNDLIST_GET1
+			goto *random_eventProc_SWEND1
+		}
+		if ( rtval == 3 ) {
+			if ( jp ) {
+				txt cdatan(CDATAN_NAME, child) + "「大人っていつもそう" + _dana(3) + "…！子供たちのことなんだと思ってる" + _noka(3) + "！？」", cdatan(CDATAN_NAME, child) + "「そんな答えしか出せないことは恥ずかしくない" + _noka(3) + "？」"
+			}
+			if ( en ) {
+				txt cdatan(CDATAN_NAME, child) + " " + cnvtalk("You think of children as decorations?"), cdatan(CDATAN_NAME, child) + " " + cnvtalk("Isn't it embarrassing that you can only answer like that?")
+			}
+			modimp child, -5
+			snd SOUNDLIST_GET1
+			goto *random_eventProc_SWEND1
+		}
+		goto *random_eventProc_SWEND1
+		_switch_sw++
+	}
+	if ( _switch_val == RANDOM_EVENT_DREAM_SELF_REVELATION | _switch_sw ) {
+		_switch_sw = 0
+		tc = child
+		snd SOUNDLIST_PORT
+		s = lang("自己顕示", "Self Revelation")
+		file = "bg_re21"
+		buff = lang(cdatan(CDATAN_NAME, child) + "は、自分の異名を自分で考えているようだ…。", cdatan(CDATAN_NAME, child) + " seems to be thinking of own aka...")
+		chatList 1, lang("呼ばれ方より先に自分を変えよう", "Change yourself before your aka.")
+		chatList 2, lang("一緒に考えてあげる", "I'll think about it with you.")
+		chatList 3, lang("勉強して語彙力つけなさい", "Study hard and improve your vocabulary.")
+		gosub *re_select
+		if ( rtval == 1 ) {
+			if ( jp ) {
+				txt cdatan(CDATAN_NAME, child) + "「意味不明」", cdatan(CDATAN_NAME, child) + "「決めポーズの練習するからあっち行ってて" + _kure(3) + "」"
+			}
+			if ( en ) {
+				txt cdatan(CDATAN_NAME, child) + " " + cnvtalk("I don't know what you mean..."), cdatan(CDATAN_NAME, child) + " " + cnvtalk("I'll practice poses, so go over there!")
+			}
+			snd SOUNDLIST_GET1
+			goto *random_eventProc_SWEND1
+		}
+		if ( rtval == 2 ) {
+			if ( jp ) {
+				txt cdatan(CDATAN_NAME, child) + "「センス古臭いから遠慮しておく" + _yo(3) + "」", cdatan(CDATAN_NAME, child) + "「鬱陶しいからあっち行って！」"
+			}
+			if ( en ) {
+				txt cdatan(CDATAN_NAME, child) + " " + cnvtalk("Your taste is so old-fashioned that I don't need it..."), cdatan(CDATAN_NAME, child) + " " + cnvtalk("Annoying!")
+			}
+			modimp2 child, -5
+			snd SOUNDLIST_GET1
+			goto *random_eventProc_SWEND1
+		}
+		if ( rtval == 3 ) {
+			if ( jp ) {
+				txt cdatan(CDATAN_NAME, child) + "「勉強、勉強ってうるさい" + _yo(3) + "」", cdatan(CDATAN_NAME, child) + "「お説教できるほどの語彙力がある" + _noka(3) + "？」"
+			}
+			if ( en ) {
+				txt cdatan(CDATAN_NAME, child) + " " + cnvtalk("Study, study, study! It's noisy!!"), cdatan(CDATAN_NAME, child) + " " + cnvtalk("Do you have enough vocabulary to preach?")
+			}
+			modimp child, -5
+			snd SOUNDLIST_GET1
+			goto *random_eventProc_SWEND1
+		}
+		goto *random_eventProc_SWEND1
+		_switch_sw++
+	}
+	if ( _switch_val == RANDOM_EVENT_DREAM_SELF_AWARENESS | _switch_sw ) {
+		_switch_sw = 0
+		tc = child
+		snd SOUNDLIST_PORT
+		s = lang("自意識", "Self Awareness")
+		file = "bg_re21"
+		buff = lang(cdatan(CDATAN_NAME, child) + "は、自分の格好が周りと比べてダサいのではないかと気にしている…。", cdatan(CDATAN_NAME, child) + " worried that own clothes aren't as good as those arounds...")
+		chatList 1, lang("そんなに変？", "Is it so weird?")
+		chatList 2, lang("個性的でいいと思う", "I think it's good to be individual.")
+		chatList 3, lang("オシャレの勉強する？", "Do you want to study fashion?")
+		gosub *re_select
+		if ( rtval == 1 ) {
+			if ( jp ) {
+				txt cdatan(CDATAN_NAME, child) + "「もういい…」", cdatan(CDATAN_NAME, child) + "「相談する相手を間違えた" + _kana(3) + "」"
+			}
+			if ( en ) {
+				txt cdatan(CDATAN_NAME, child) + " " + cnvtalk("You don't know..."), cdatan(CDATAN_NAME, child) + " " + cnvtalk("I took the wrong person for advice!")
+			}
+			modimp2 child, -5
+			snd SOUNDLIST_GET1
+			goto *random_eventProc_SWEND1
+		}
+		if ( rtval == 2 ) {
+			if ( jp ) {
+				txt cdatan(CDATAN_NAME, child) + "「個性的じゃ馬鹿にされる" + _daro(3) + "！」", cdatan(CDATAN_NAME, child) + "「みんなと違いすぎるのは嫌" + _da(3) + "…」"
+			}
+			if ( en ) {
+				txt cdatan(CDATAN_NAME, child) + " " + cnvtalk("There is a risk in the individual appearance!"), cdatan(CDATAN_NAME, child) + " " + cnvtalk("I don't like being too different from everyone...")
+			}
+			modimp child, -5
+			snd SOUNDLIST_GET1
+			goto *random_eventProc_SWEND1
+		}
+		if ( rtval == 3 ) {
+			if ( jp ) {
+				txt cdatan(CDATAN_NAME, child) + "「" + _ore(3) + "にできる" + _kana(3) + "…？」", cdatan(CDATAN_NAME, child) + "「そこまで言うならちょっとやってみてもいいかも」"
+			}
+			if ( en ) {
+				txt cdatan(CDATAN_NAME, child) + " " + cnvtalk("Can I do it?"), cdatan(CDATAN_NAME, child) + " " + cnvtalk("It might be a good idea to try it for a while...")
+			}
+			modimp child, 5
+			snd SOUNDLIST_GET1
+			goto *random_eventProc_SWEND1
+		}
+		goto *random_eventProc_SWEND1
+		_switch_sw++
+	}
+	if ( _switch_val == RANDOM_EVENT_DREAM_MARGINAL_MAN | _switch_sw ) {
+		_switch_sw = 0
+		tc = child
+		snd SOUNDLIST_PORT
+		s = lang("マージナルマン", "Marginal Man")
+		file = "bg_re21"
+		buff = lang(cdatan(CDATAN_NAME, child) + "は、子供扱いしないでほしいと強く主張している！", cdatan(CDATAN_NAME, child) + " doesn't like being treated like a child by you...")
+		chatList 1, lang("大人には相応の責任と義務が発生する", "Adults have responsibilities and obligations.")
+		chatList 2, lang("そんなこと言ってる間はまだまだ子供", "As long as you care about such things, you are still a child.")
+		chatList 3, lang("どうやら勉強が足りないようだな", "It seems that you haven't studied enough.")
+		gosub *re_select
+		if ( rtval == 1 ) {
+			if ( jp ) {
+				txt cdatan(CDATAN_NAME, child) + "「難しい言葉で誤魔化さないで…」", cdatan(CDATAN_NAME, child) + "「…大人もつらい" + _noka(3) + "？」"
+			}
+			if ( en ) {
+				txt cdatan(CDATAN_NAME, child) + " " + cnvtalk("Don't mislead me with difficult words..."), cdatan(CDATAN_NAME, child) + " " + cnvtalk("...Are adults struggling too?")
+			}
+			snd SOUNDLIST_GET1
+			goto *random_eventProc_SWEND1
+		}
+		if ( rtval == 2 ) {
+			if ( jp ) {
+				txt cdatan(CDATAN_NAME, child) + "「" + _ore(3) + "を馬鹿にしないで" + _kure(3) + "！」", cdatan(CDATAN_NAME, child) + "「真の大人は子供扱いされても涼しい顔していられるってこと？」"
+			}
+			if ( en ) {
+				txt cdatan(CDATAN_NAME, child) + " " + cnvtalk("Damn it!"), cdatan(CDATAN_NAME, child) + " " + cnvtalk("Does that mean that a true adult can keep a cool face even if he's treated like a child?")
+			}
+			modimp child, -5
+			snd SOUNDLIST_GET1
+			goto *random_eventProc_SWEND1
+		}
+		if ( rtval == 3 ) {
+			if ( jp ) {
+				txt cdatan(CDATAN_NAME, child) + "「マージナルマンとは複数の集団の境界上に存在する者のこと。特に心理学では子供と大人の狭間、すなわち青年のことを指す」", cdatan(CDATAN_NAME, child) + "「どこまで勉強したら" + _ore(3) + "を大人と認めてくれるの？」"
+			}
+			if ( en ) {
+				txt cdatan(CDATAN_NAME, child) + " " + cnvtalk("A marginal man is someone who exists on the border of multiple groups. Especially in psychology, it refers to the gap between children and adults, that is, adolescents."), cdatan(CDATAN_NAME, child) + " " + cnvtalk("How far do I have to study before you will recognize me as an adult?")
+			}
+			modimp child2, -5
+			snd SOUNDLIST_GET1
+			goto *random_eventProc_SWEND1
+		}
+		goto *random_eventProc_SWEND1
+		_switch_sw++
+	}
 	if ( _switch_val == RANDOM_EVENT_REMAINS_CAMP | _switch_sw ) {
 		_switch_sw = 0
 		s = lang("野営跡の発見", "Camping Site")
@@ -1289,6 +2075,7 @@
 					gosub *screen_fade
 					redraw 0
 					gosub *sleep_draw_init
+					gain_iden CHARA_PLAYER, tc, 18
 					break
 				}
 			}
@@ -1327,6 +2114,8 @@
 				gosub *screen_fade
 				redraw 0
 				gosub *sleep_draw_init
+				gain_iden CHARA_PLAYER, tc, 18
+				gain_iden tc, CHARA_PLAYER, 18
 				break
 			}
 		loop
@@ -2115,7 +2904,7 @@
 		autosave = 1 * (gdata(GDATA_AREA) != AREA_SHOW_HOUSE)
 	}
 	if ( gdata(GDATA_DAY) == 1 ) {
-		if ( cdata(CDATA_LEVEL, CHARA_PLAYER) >= 10 ) {
+		if ( gdata(GDATA_YEAR) > 517 ) {
 			autosave = 1 * (gdata(GDATA_AREA) != AREA_SHOW_HOUSE)
 			if ( gdata(STARTING_GDATA_FLAG + 359) <= 0 ) {
 				gdata(STARTING_GDATA_FLAG + 359) = 0
@@ -2180,7 +2969,7 @@
 		}
 		else {
 			txtmore
-			txt lang("レベルが10に達していないので納税の義務はない。", "You don't have to pay tax until you hit level 10.")
+			txt lang("初年度は納税の義務がない。", "You don't have to pay tax until new Year.")
 		}
 	}
 	file = "shop" + invfile + ".s2"
