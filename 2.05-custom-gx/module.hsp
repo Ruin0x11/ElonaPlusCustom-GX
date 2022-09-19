@@ -1852,7 +1852,7 @@
 							grotate 1, 0, 960, 0, 24, 24
 						}
 						else {
-							if ( cfg_objectshadow & can_objectshadow ) {
+							if ( cfg_objectshadow ) {
 								if ( chipi(CHIPI_SH, locvar_cell_draw_p) ) {
 									gmode 2, chipi(CHIPI_WIDTH, locvar_cell_draw_p), chipi(CHIPI_HEIGHT, locvar_cell_draw_p), 70
 									if ( chipi(CHIPI_HEIGHT, locvar_cell_draw_p) == inf_tiles ) {
@@ -1896,7 +1896,7 @@
 						grotate 1, 0, 960, 0, 24, 24
 					}
 					else {
-						if ( cfg_objectshadow & can_objectshadow ) {
+						if ( cfg_objectshadow ) {
 							if ( chipi(CHIPI_SH, locvar_cell_draw_p) >= 0 ) {
 								gmode 2, chipi(CHIPI_WIDTH, locvar_cell_draw_p), chipi(CHIPI_HEIGHT, locvar_cell_draw_p), 80
 								if ( chipi(CHIPI_HEIGHT, locvar_cell_draw_p) == inf_tiles ) {
@@ -2265,10 +2265,8 @@
 							}
 							if ( cbit(CHARA_BIT_SANDBAG, locvar_cell_draw_c) ) {
 								gmode 2, 48, 96, 80
-                                if ( can_objectshadow ) {
-									pos locvar_cell_draw_dx + 26 - 11, locvar_cell_draw_dy - 32 + 11
-									_grotate 1, 96, 816, -80, 48, 96
-                                }
+								pos locvar_cell_draw_dx + 26 - 11, locvar_cell_draw_dy - 32 + 11
+								_grotate 1, 96, 816, -80, 48, 96
 								pos locvar_cell_draw_dx, locvar_cell_draw_dy - 63
 								gcopy 1, 96, 816, 48, 96
 								chipc(CHIPC_F, locvar_cell_draw_p) += 24

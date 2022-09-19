@@ -28,21 +28,6 @@
 	windoww2 = windoww
 	windowh2 = windowh
 
-    // BUG: There is an issue with _grotate in the elona.dll module (for which
-    // the source is unavailable) which causes crashes when using Windows' system
-    // level DPI scaling with larger resolutions. Thankfully, this function is only
-    // used in a couple of places related to object shadows, so check if system level
-    // scaling is not 100% (96 DPI) and disable object shadows if so.
-
-    dpiX = GetDeviceCaps(hdc, 88) ; LOGPIXELSX
-    dpiY = GetDeviceCaps(hdc, 90) ; LOGPIXELSY
-
-    if ( (dpiX == 96) & (dpiY == 96) ) {
-        can_objectshadow = TRUE
-    } else {
-        can_objectshadow = FALSE
-    }
-
 	selcur = 0
 	inf_clockarrowx = inf_clockx + 62
 	inf_clockarrowy = inf_clocky + 48
@@ -2595,7 +2580,7 @@
 			snd SOUNDLIST_BOLT1
 		}
 		if ( animeid == ANIMATION_LASER_BAZOOKA ) {
-			preparePicItem xy2pic(36, 1), COLOR_DEFAULT
+			preparePicItem xy2pic(1, 36), COLOR_DEFAULT
 			snd SOUNDLIST_GUN10
 		}
 		if ( animeid == ANIMATION_UNUSED1 ) {

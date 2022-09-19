@@ -1,0 +1,115 @@
+#uselib "exrand.dll"
+#func exrand_randomize "_exrand_randomize@16" int, int, int, int
+#func exrand_rnd "_exrand_rnd@16" var, int, int, int
+
+; In HSP 3.6, sortnote was added as a standard library function. We need to
+; use the version in hspda.dll for compatability reasons, so rename it to
+; "sortnote2" to prevent name clashes.
+#uselib "hspda.dll"
+#func sortnote2 "_sortnote@16" pexinfo, nullptr, nullptr, nullptr
+#ifndef _DEBUG
+#func xnotesel "_xnotesel@16" pval, int, int, int
+#func xnoteadd "_xnoteadd@16" bmscr, str, int, int
+#endif
+
+#uselib "hspext_ext.dll"
+#func _gfini "_gfini@16" bmscr, int, int, int
+#func gfdec "_gfdec@16" int, int, int, int
+#func gfdec2 "_gfdec2@16" int, int, int, int
+#func gfinc "_gfinc@16" int, int, int, int
+#func ematan "_ematan@16" var, int, int, int
+#func aplsel "_aplsel@16" bmscr, str, int, prefstr
+#func aplobj "_aplobj@16" bmscr, str, int, prefstr
+#func apledit "_apledit@16" var, int, int, prefstr
+
+#uselib "elona.dll"
+#func __grotate "_grotate@16" pexinfo, nullptr, nullptr, nullptr
+
+#uselib "z.hpi"
+#func zOpen "_zOpen@16" var, str, int, int
+#func zRead "_zRead@16" var, int, int, int
+#func zWrite "_zWrite@16" var, int, int, int
+#func zClose "_zClose@16" int, int, int, int
+
+#uselib "COMDLG32.DLL"
+#func GetOpenFileNameA "GetOpenFileNameA" sptr
+#func GetSaveFileNameA "GetSaveFileNameA" sptr
+
+#uselib "hmm.dll"
+#func DSINIT "_DSINIT@16" bmscr, int, int, int
+#func DSEND "_DSEND@16" int, int, int, int
+#func DSRELEASE "_DSRELEASE@16" int, int, int, int
+#func DSLOADFNAME "_DSLOADFNAME@16" pexinfo, nullptr, nullptr, nullptr
+#func DSPLAY "_DSPLAY@16" int, int, int, int
+#func DSSTOP "_DSSTOP@16" int, int, int, int
+#func DSSETVOLUME "_DSSETVOLUME@16" int, int, int, int
+#func DSGETMASTERVOLUME "_DSGETMASTERVOLUME@16" int, int, int, int
+#func CHECKPLAY "_CHECKPLAY@16" int, int, int, int
+#func DMINIT "_DMINIT@16" bmscr, int, int, int
+#func DMEND "_DMEND@16" int, int, int, int
+#func DMLOADFNAME "_DMLOADFNAME@16" bmscr, str, int, int
+#func DMPLAY "_DMPLAY@16" int, int, int, int
+#func DMSTOP "_DMSTOP@16" bmscr, int, int, int
+#func DIINIT "_DIINIT@16" bmscr, int, int, int
+#func DIGETJOYNUM "_DIGETJOYNUM@16" int, int, int, int
+#func DIGETJOYSTATE "_DIGETJOYSTATE@16" var, int, int, int
+#func HMMBITON "_HMMBITON@16" var, int, int, int
+#func HMMBITOFF "_HMMBITOFF@16" var, int, int, int
+#func HMMBITCHECK "_HMMBITCHECK@16" int, int, int, int
+
+#uselib "hspsock.dll"
+#func sockopen "_sockopen@16" int, str, int, int
+#func sockclose "_sockclose@16" int, int, int, int
+#func sockget "_sockget@16" var, int, int, int
+#func sockput "_sockput@16" bmscr, str, int, int
+
+#uselib "hspinet.dll"
+#func netinit "_netinit@16" int, int, int, int
+#func netexec "_netexec@16" var, int, int, int
+#func neterror "_neterror@16" pexinfo, nullptr, nullptr, nullptr
+#func neturl "_neturl@16" bmscr, str, int, int
+#func netdlname "_netdlname@16" bmscr, str, int, int
+#func netrequest "_netrequest@16" bmscr, str, int, int
+
+#uselib "kernel32.dll"
+#func RemoveDirectoryA "RemoveDirectoryA" str
+#cfunc GetLastError "GetLastError"
+#func CreateMutexA "CreateMutexA" sptr, int, sptr
+#func CloseHandle "CloseHandle" sptr
+#func _GetLastError "GetLastError"
+#cfunc LCMapStringA "LCMapStringA" int, int, sptr, int, var, int
+#cfunc GetUserDefaultLCID "GetUserDefaultLCID"
+
+#uselib "water.hpi"
+#func water_getimage "_water_getimage@16" bmscr, int, int, int
+#func water_refresh "_water_refresh@16" int, int, int, int
+#func water_setripple "_water_setripple@16" int, int, int, int
+#func water_calc "_water_calc@16" int, int, int, int
+#func water_draw "_water_draw@16" bmscr, int, int, int
+
+#uselib "user32.dll"
+#func AppendMenuA "AppendMenuA" sptr, sptr, sptr, sptr
+#func CheckMenuRadioItem "CheckMenuRadioItem" sptr, sptr, sptr, sptr, sptr
+#func CreateMenu "CreateMenu"
+#func CreatePopupMenu "CreatePopupMenu"
+#func DrawMenuBar "DrawMenuBar" sptr
+#func SetMenu "SetMenu" sptr, sptr
+#func keybd_event "keybd_event" int, int, int
+#func GetKeyboardState "GetKeyboardState" var
+#func MonitorFromPoint "MonitorFromPoint" sptr, sptr, sptr
+#func GetMonitorInfo "GetMonitorInfoA" sptr, sptr
+#func EnumDisplaySettings "EnumDisplaySettingsA" sptr, sptr, sptr
+
+#uselib "gdi32.dll"
+#cfunc GetDeviceCaps "GetDeviceCaps" int,int
+
+#uselib "winmm.dll"
+#func timeBeginPeriod "timeBeginPeriod" int
+#func timeEndPeriod "timeEndPeriod" int
+#cfunc timeGetTime "timeGetTime"
+
+#uselib "imm32"
+#cfunc ImmGetContext "ImmGetContext" sptr
+#func ImmReleaseContext "ImmReleaseContext" sptr, sptr
+#func ImmSetOpenStatus "ImmSetOpenStatus" sptr, sptr
+#cfunc ImmGetOpenStatus "ImmGetOpenStatus" sptr
