@@ -5751,7 +5751,7 @@
 						}
 						wet tc, 5
 						dmg = 1000 + limit((sdata(SKILL_NORMAL_LITERACY, CHARA_PLAYER) + 10) * (sdata(SKILL_NORMAL_MAGIC_DEVICE, CHARA_PLAYER) + 10) / 3, 1, 99999)
-						dmghp tc, dmg, (0 /*!!!@[CHARA_PLAYER @@@ DAMAGE_FROM_CHARA]@!!! */), SKILL_RESDMG_CRUSH, 1000
+						dmghp tc, dmg, CHARA_PLAYER, SKILL_RESDMG_CRUSH, 1000
 						if ( cdata(CDATA_REFLECT_MAGIC, tc) > 0 ) {
 							if ( cc >= MAX_CHARA_FOLLOWER | tc >= MAX_CHARA_FOLLOWER ) {
 								dmghp cc, limit(dmg * cdata(CDATA_REFLECT_MAGIC, tc) / 200 + 1, 1, cdata(CDATA_MAX_HP, cc) / 10), tc, SKILL_RESDMG_CRUSH, 1000

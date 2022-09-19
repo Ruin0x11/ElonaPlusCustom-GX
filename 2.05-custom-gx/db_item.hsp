@@ -4,7 +4,105 @@
 	}
 	dbmax = 0
 	dbsum = 0
-//*db_item_CORK_PACK
+//*db_item_DERNEFIA
+	if ( 1 > objlv ) {
+		goto *db_item_BOTTLE_CAP
+	}
+	if ( fltselect != 1 ) {
+		goto *db_item_BOTTLE_CAP
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_JUNK ) {
+			goto *db_item_BOTTLE_CAP
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_NONE ) {
+			goto *db_item_BOTTLE_CAP
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_DERNEFIA), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_BOTTLE_CAP
+		}
+	}
+	dbsum += 1000000 / (1000 + abs(objlv - 1) * 10) + 1
+	dblist(0, dbmax) = 1264, dbsum
+	dbmax++
+
+*db_item_BOTTLE_CAP
+	if ( 1 > objlv ) {
+		goto *db_item_B_DAMA
+	}
+	if ( fltselect != 1 ) {
+		goto *db_item_B_DAMA
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_JUNK ) {
+			goto *db_item_B_DAMA
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_NONE ) {
+			goto *db_item_B_DAMA
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_BOTTLE_CAP), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_B_DAMA
+		}
+	}
+	dbsum += 500000 / (1000 + abs(objlv - 1) * 10) + 1
+	dblist(0, dbmax) = 1263, dbsum
+	dbmax++
+
+*db_item_B_DAMA
+	if ( 1 > objlv ) {
+		goto *db_item_CORK_PACK
+	}
+	if ( fltselect != 1 ) {
+		goto *db_item_CORK_PACK
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_JUNK ) {
+			goto *db_item_CORK_PACK
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_NONE ) {
+			goto *db_item_CORK_PACK
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_B_DAMA), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_CORK_PACK
+		}
+	}
+	dbsum += 500000 / (1000 + abs(objlv - 1) * 10) + 1
+	dblist(0, dbmax) = 1262, dbsum
+	dbmax++
+*db_item_CORK_PACK
 	if ( 1 > objlv ) {
 		goto *db_item_LASER_BAZOOKA
 	}
@@ -40404,6 +40502,198 @@
 	return
 
 *db_item_set
+		if ( dbid == ITEM_ID_DERNEFIA ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_MATERIAL, ci) = ITEM_MATERIAL_RAW
+			inv(INV_ITEM_VALUE, ci) = 12000
+			inv(INV_ITEM_WEIGHT, ci) = 300
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_DERNEFIA
+			inv(INV_ITEM_PIC, ci) = xy2pic(4, 37)
+			reftype = FILTER_JUNK
+			reftypeminor = FILTER_NOTHING
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 36, 800, 38, 800, 0
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_JUNK
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 5 ) {
+				return 64000
+			}
+			if ( dbspec == 9 ) {
+				return 99999
+			}
+			if ( dbspec == 20 ) {
+				return 12000
+			}
+			if ( dbspec == 19 ) {
+				return
+			}
+			if ( dbspec == 18 ) {
+				return 0
+			}
+			if ( dbspec == 7 ) {
+				return 1
+			}
+			if ( dbspec == 8 ) {
+				return 1000
+			}
+			if ( dbspec == 12 ) {
+				if ( cdata(CDATA_GOD, CHARA_PLAYER) == GOD_JURE ) {
+					return 1
+				}
+				else {
+					return 0
+				}
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "野外には生育していない花。ネフィアに自生しておりネフィアの魔力を根から吸っているのだが、こういった形態の植物はデルネフィア以外ほぼ全てモンスター化している。デルネフィアだけモンスター化しないメカニズムについては長年にわたり研究されているが、難航しているとされる。安全な階層には生えにくいことに加え、薬効がありモンスターや冒険者に好んで食われてしまうことから、サンプル数が少ないのだ。\n#?ティリス園芸図鑑?"
+				description(1) = "「ジュア様に似合う幻の花があるらしい…贈ればきっと口ではなんだかんだ言いながらも喜んでくれるんだろうな…ちょっとネフィア行ってくる」\n#?ジュアの狂信者の独り言?"
+				description(2) = ""
+				description(3) = "食べると少し回復する植物だ。\n#?鑑定報告書：＜植物＞カテゴリ?"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == ITEM_ID_BOTTLE_CAP ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 60
+			inv(INV_ITEM_WEIGHT, ci) = 5
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_BOTTLE_CAP
+			inv(INV_ITEM_PIC, ci) = xy2pic(3, 37)
+			reftype = FILTER_JUNK
+			reftypeminor = FILTER_NOTHING
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_JUNK
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 5 ) {
+				return 64000
+			}
+			if ( dbspec == 9 ) {
+				return 99999
+			}
+			if ( dbspec == 20 ) {
+				return 60
+			}
+			if ( dbspec == 19 ) {
+				return
+			}
+			if ( dbspec == 18 ) {
+				return 0
+			}
+			if ( dbspec == 7 ) {
+				return 1
+			}
+			if ( dbspec == 8 ) {
+				return 500
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "プラスチック製のフタ。軽くて丈夫でリサイクルも可能。ペットボトルと呼ばれる容器が活躍していた時代には共に世に溢れかえっていた。しかしながら洗わずにリサイクルに出す者が多く、リサイクルのコストや手間が増大し再資源化が破綻。道端に捨てていく馬鹿のせいで環境汚染が進行し、エコテロリストによる矛先を間違えたテロも勃発。ボトルキャップを高速射出する道具で社会を牛耳ろうとする悪党まで出現。百年以上に渡り積み重なった諸々の社会問題にメーカーが耐え切れず、製造中止に至ったとされる。安価で加工しやすい疑似ガラスが普及した現代では完全に過去の遺物と化している。\n#?私の愛する幾千ものガラクタ?"
+				description(1) = ""
+				description(2) = ""
+				description(3) = "ボトルの栓だ。特に他の使い道はない。\n#?鑑定報告書：＜廃品＞カテゴリ?"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == ITEM_ID_B_DAMA ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 300
+			inv(INV_ITEM_WEIGHT, ci) = 15
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_B_DAMA
+			inv(INV_ITEM_PIC, ci) = xy2pic(0, 37)
+			reftype = FILTER_JUNK
+			reftypeminor = FILTER_NOTHING
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_JUNK
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 5 ) {
+				return 64000
+			}
+			if ( dbspec == 9 ) {
+				return 99999
+			}
+			if ( dbspec == 20 ) {
+				return 300
+			}
+			if ( dbspec == 19 ) {
+				return
+			}
+			if ( dbspec == 18 ) {
+				return 0
+			}
+			if ( dbspec == 7 ) {
+				return 1
+			}
+			if ( dbspec == 8 ) {
+				return 500
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "小さなガラス玉。近年では観賞用を兼ねて様々な模様・色のものが用いられている。名前の由来は不明だが、古代の言葉でガラスを意味するビードロが変化してビーダマという説、等級がＢの玉だったのでビーダマという説、Ｂ魂に反応する玉だからビーダマという説の３つが有力とされている。内部に模様が入っているタイプは模様をフレイムと呼称することがある。こちらについては、特に名前がなかったところにガセ用語が定着したという説、Ｂ魂に反応して燃える炎のように見えることがあるのでフレイムという説の２つが有力。\n#?私の愛する幾千ものガラクタ?"
+				description(1) = ""
+				description(2) = ""
+				description(3) = "ラムネの栓だ。特に他の使い道はない。\n#?鑑定報告書：＜廃品＞カテゴリ?"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
 	if ( dbid == ITEM_ID_CORK_PACK ) {
 		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
 			inv(INV_ITEM_VALUE, ci) = 1000
@@ -40483,7 +40773,7 @@
 			fixeditemenc = 0
 			inv(INV_ITEM_EFFECT, ci) = EFFECT_LASER_BAZOOKA
 			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
-			inv((9 /*!!!@[INV_ITEM_AMMO @@@ INV_ITEM_CHARGE @@@ INV_ITEM_CLIENT @@@ INV_ITEM_FILE @@@ INV_ITEM_NEXT_PERIOD]@!!! */), ci) = 2 + rnd(2) - rnd(2)
+			inv(INV_ITEM_CHARGE, ci) = 2 + rnd(2) - rnd(2)
 			ibitmod ITEM_BIT_CHARGE_ITEM, ci, TRUE
 			return
 		}
@@ -124057,6 +124347,12 @@
 	return -999
 
 *db_setFilterItem
+	filter_item(ITEM_ID_DERNEFIA) = ""
+	rffilter_item(ITEM_ID_DERNEFIA) = "/hana/"
+	filter_item(ITEM_ID_BOTTLE_CAP) = ""
+	rffilter_item(ITEM_ID_BOTTLE_CAP) = ""
+	filter_item(ITEM_ID_B_DAMA) = ""
+	rffilter_item(ITEM_ID_B_DAMA) = ""
 	filter_item(ITEM_ID_CORK_PACK) = ""
 	rffilter_item(ITEM_ID_CORK_PACK) = ""
 	filter_item(ITEM_ID_LASER_BAZOOKA) = ""
@@ -126612,6 +126908,45 @@
 	return
 
 *db_setItem
+	ilight(ITEM_ID_DERNEFIA) = LIGHT_TYPE_NONE
+	ialphanameref(ITEM_ID_DERNEFIA) = ""
+	iorgweight(ITEM_ID_DERNEFIA) = 300
+	if ( jp ) {
+		ioriginalnameref(ITEM_ID_DERNEFIA) = "デルネフィアの花"
+	}
+	else {
+		ioriginalnameref(ITEM_ID_DERNEFIA) = "dernefia"
+		ioriginalnameref2(ITEM_ID_DERNEFIA) = ""
+	}
+	ipicref(ITEM_ID_DERNEFIA) = xy2pic(4, 37)
+	iknownnameref(ITEM_ID_DERNEFIA) = ioriginalnameref(ITEM_ID_DERNEFIA)
+	icolref(ITEM_ID_DERNEFIA) = COLOR_DEFAULT
+	ilight(ITEM_ID_BOTTLE_CAP) = LIGHT_TYPE_NONE
+	ialphanameref(ITEM_ID_BOTTLE_CAP) = ""
+	iorgweight(ITEM_ID_BOTTLE_CAP) = 5
+	if ( jp ) {
+		ioriginalnameref(ITEM_ID_BOTTLE_CAP) = "ボトルキャップ"
+	}
+	else {
+		ioriginalnameref(ITEM_ID_BOTTLE_CAP) = "bottle cap"
+		ioriginalnameref2(ITEM_ID_BOTTLE_CAP) = ""
+	}
+	ipicref(ITEM_ID_BOTTLE_CAP) = xy2pic(3, 37)
+	iknownnameref(ITEM_ID_BOTTLE_CAP) = ioriginalnameref(ITEM_ID_BOTTLE_CAP)
+	icolref(ITEM_ID_BOTTLE_CAP) = COLOR_DEFAULT
+	ilight(ITEM_ID_B_DAMA) = LIGHT_TYPE_NONE
+	ialphanameref(ITEM_ID_B_DAMA) = ""
+	iorgweight(ITEM_ID_B_DAMA) = 15
+	if ( jp ) {
+		ioriginalnameref(ITEM_ID_B_DAMA) = "ビーダマ"
+	}
+	else {
+		ioriginalnameref(ITEM_ID_B_DAMA) = "b-dama"
+		ioriginalnameref2(ITEM_ID_B_DAMA) = ""
+	}
+	ipicref(ITEM_ID_B_DAMA) = xy2pic(0, 37)
+	iknownnameref(ITEM_ID_B_DAMA) = ioriginalnameref(ITEM_ID_B_DAMA)
+	icolref(ITEM_ID_B_DAMA) = COLOR_DEFAULT
 	ilight(ITEM_ID_CORK_PACK) = LIGHT_TYPE_NONE
 	ialphanameref(ITEM_ID_CORK_PACK) = ""
 	iorgweight(ITEM_ID_CORK_PACK) = 1000
