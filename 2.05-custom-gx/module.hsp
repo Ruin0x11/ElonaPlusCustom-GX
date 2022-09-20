@@ -1046,7 +1046,7 @@
         gzoom 22,20,BUFFER_CHR,chipc(CHIPC_X, cch)+8,chipc(CHIPC_Y, cch)+4+(chipc(CHIPC_HEIGHT, cch)>inf_tiles)*8,chipc(CHIPC_WIDTH, cch)-16,chipc(CHIPC_HEIGHT, cch)-8-(chipc(CHIPC_HEIGHT, cch)>inf_tiles)*10,1
         pos 6,974
         gcopy BUFFER_ITEM,0,1008,22,20
-        gsel BUFFER_CUR
+        gsel selcur
         return
     }
 
@@ -1058,7 +1058,7 @@
         pos 0,960+(chipc(CHIPC_HEIGHT, cch)=inf_tiles)*48
         gcopy BUFFER_ITEM,144,768+(chipc(CHIPC_HEIGHT, cch)>inf_tiles)*48,inf_tiles,chipc(CHIPC_HEIGHT, cch)+(chipc(CHIPC_HEIGHT, cch)>inf_tiles)*48 // * 0
         gmode 2
-        gsel BUFFER_CUR
+        gsel selcur
         return
     }
 
@@ -1066,7 +1066,7 @@
 	    pos 0, 1055 - chipc(CHIPC_HEIGHT, cch)
 	    gcopy BUFFER_CHR, chipc(CHIPC_X, cch), chipc(CHIPC_Y, cch), chipc(CHIPC_WIDTH, cch), chipc(CHIPC_HEIGHT, cch)
         gmode 2
-        gsel BUFFER_CUR
+        gsel selcur
         return
     }
 
@@ -1075,7 +1075,7 @@
 		gcopy BUFFER_CHR, chipc(CHIPC_X, cch), chipc(CHIPC_Y, cch), chipc(CHIPC_WIDTH, cch), chipc(CHIPC_HEIGHT, cch)
 		gfini chipi(CHIPI_WIDTH, ich), chipi(CHIPI_HEIGHT, ich)
 		gfdec2 0, 0, 255
-        gsel BUFFER_CUR
+        gsel selcur
         return
     }
 
@@ -1083,7 +1083,7 @@
     gcopy BUFFER_ITEM,chipi(CHIPI_X, ich),chipi(CHIPI_Y, ich),chipi(CHIPI_WIDTH, ich),chipi(CHIPI_HEIGHT, ich)
     gfini@ chipi(CHIPI_WIDTH, ich),chipi(CHIPI_HEIGHT, ich)
     gfdec2@ c_col@(0,cch),c_col@(1,cch),c_col@(2,cch)
-    gsel BUFFER_CUR
+    gsel selcur
 
     return
 
@@ -1449,13 +1449,471 @@
 			reph(3)--
 		}
 	}
-	locvar_cell_draw_dy = (reph(1) - scy) * inf_tiles + inf_screeny + locvar_cell_draw_syfix
+
+	cell_draw2 FALSE
+
+	if ( locvar_cell_draw_light < 25 ) {
+		locvar_cell_draw_light = 25
+	}
+	if ( mdata(MDATA_TYPE) == MAP_TYPE_WORLD ) {
+		repeat 12
+			gmode 5, , , 7 + cnt * 2
+			locvar_cell_draw_x = (cloud(CLOUD_X, cnt) - cdata(CDATA_X, CHARA_PLAYER) * 48 + sxfix) * 100 / (40 + cnt * 5) + scrturn * 100 / (50 + cnt * 20)
+			locvar_cell_draw_y = (cloud(CLOUD_Y, cnt) - cdata(CDATA_Y, CHARA_PLAYER) * 48 + syfix) * 100 / (40 + cnt * 5)
+			locvar_cell_draw_x = locvar_cell_draw_x \ (windoww + cloud(CLOUD_WIDTH, cnt)) - cloud(CLOUD_WIDTH, cnt)
+			locvar_cell_draw_y = locvar_cell_draw_y \ (inf_very + cloud(CLOUD_HEIGHT, cnt)) - cloud(CLOUD_HEIGHT, cnt)
+			locvar_cell_draw_h = cloud(CLOUD_HEIGHT, cnt)
+			if ( locvar_cell_draw_y + cloud(CLOUD_HEIGHT, cnt) >= inf_very ) {
+				locvar_cell_draw_h = inf_very - locvar_cell_draw_y
+			}
+			if ( locvar_cell_draw_y < inf_very ) {
+				pos locvar_cell_draw_x, locvar_cell_draw_y
+				gcopy 2, cloud(CLOUD_PX, cnt), cloud(CLOUD_PY, cnt), cloud(CLOUD_WIDTH, cnt), locvar_cell_draw_h
+			}
+		loop
+	}
+	if ( cfg_shadow != 0 ) {
+		color 0, 0, 0
+		gmode 6, inf_tiles, inf_tiles, locvar_cell_draw_light
+		locvar_cell_draw_y = 2
+		locvar_cell_draw_dy = inf_screeny
+		repeat inf_screenh
+			locvar_cell_draw_x = 2
+			locvar_cell_draw_dx = inf_screenx
+			repeat inf_screenw
+				if ( slight(locvar_cell_draw_x, locvar_cell_draw_y) >= 1000 ) {
+					pos locvar_cell_draw_dx, locvar_cell_draw_dy
+					gcopy 3, 144, 752
+				}
+				locvar_cell_draw_x++
+				locvar_cell_draw_dx += inf_tiles
+			loop
+			locvar_cell_draw_y++
+			locvar_cell_draw_dy += inf_tiles
+		loop
+		gmode 2
+		randomize
+		return
+	}
+	gmode 6, inf_tiles, inf_tiles, locvar_cell_draw_light
+	if ( scrollanime == 0 ) {
+		locvar_cell_draw_y = 2
+		locvar_cell_draw_dy = inf_screeny + locvar_cell_draw_syfix * (scrollp > 3)
+		repeat inf_screenh
+			locvar_cell_draw_x = 2
+			locvar_cell_draw_dx = inf_screenx + locvar_cell_draw_sxfix * (scrollp > 3)
+			locvar_cell_draw_cnt2 = cnt
+			repeat inf_screenw
+				locvar_cell_draw_p = slight(locvar_cell_draw_x, locvar_cell_draw_y)
+				if ( locvar_cell_draw_p > 0 ) {
+					if ( locvar_cell_draw_p < 300 ) {
+						repeat 1 + (deco(2, locvar_cell_draw_p) != 0)
+							if ( deco(0, locvar_cell_draw_p) < 0 | cnt ) {
+								if ( cnt == 1 ) {
+									deco2 = deco(2, locvar_cell_draw_p)
+								}
+								else {
+									deco2 = deco(1, locvar_cell_draw_p)
+								}
+								repeat 1
+									if ( deco2 == 1 ) {
+										pos locvar_cell_draw_dx, locvar_cell_draw_dy
+										gcopy 3, 0 + 168, 656 + 24, 24, 24
+										break
+									}
+									if ( deco2 == 2 ) {
+										pos locvar_cell_draw_dx + 24, locvar_cell_draw_dy + 24
+										gcopy 3, 0 + 144, 656, 24, 24
+										break
+									}
+									if ( deco2 == 3 ) {
+										pos locvar_cell_draw_dx, locvar_cell_draw_dy + 24
+										gcopy 3, 0 + 168, 656, 24, 24
+										break
+									}
+									if ( deco2 == 4 ) {
+										pos locvar_cell_draw_dx + 24, locvar_cell_draw_dy
+										gcopy 3, 0 + 144, 656 + 24, 24, 24
+										break
+									}
+									if ( deco2 == 5 ) {
+										pos locvar_cell_draw_dx + 24, locvar_cell_draw_dy + 24
+										gcopy 3, 0 + 144, 656, 24, 24
+										pos locvar_cell_draw_dx, locvar_cell_draw_dy
+										gcopy 3, 0 + 168, 656 + 24, 24, 24
+										break
+									}
+									if ( deco2 == 6 ) {
+										pos locvar_cell_draw_dx, locvar_cell_draw_dy + 24
+										gcopy 3, 0 + 168, 656, 24, 24
+										pos locvar_cell_draw_dx + 24, locvar_cell_draw_dy
+										gcopy 3, 0 + 144, 656 + 24, 24, 24
+										break
+									}
+									if ( deco2 == 7 ) {
+										pos locvar_cell_draw_dx, locvar_cell_draw_dy + 24
+										gcopy 3, 0 + 168, 656, 24, 24
+										pos locvar_cell_draw_dx + 24, locvar_cell_draw_dy + 24
+										gcopy 3, 0 + 144, 656, 24, 24
+										break
+									}
+									if ( deco2 == 8 ) {
+										pos locvar_cell_draw_dx, locvar_cell_draw_dy
+										gcopy 3, 0 + 168, 656 + 24, 24, 24
+										pos locvar_cell_draw_dx + 24, locvar_cell_draw_dy
+										gcopy 3, 0 + 144, 656 + 24, 24, 24
+										break
+									}
+									if ( deco2 == 9 ) {
+										pos locvar_cell_draw_dx, locvar_cell_draw_dy
+										gcopy 3, 0 + 168, 656 + 24, 24, 24
+										pos locvar_cell_draw_dx, locvar_cell_draw_dy + 24
+										gcopy 3, 0 + 168, 656, 24, 24
+										break
+									}
+									if ( deco2 == 10 ) {
+										pos locvar_cell_draw_dx + 24, locvar_cell_draw_dy
+										gcopy 3, 0 + 144, 656 + 24, 24, 24
+										pos locvar_cell_draw_dx + 24, locvar_cell_draw_dy + 24
+										gcopy 3, 0 + 144, 656, 24, 24
+										break
+									}
+									if ( deco2 == 20 ) {
+										pos locvar_cell_draw_dx, locvar_cell_draw_dy
+										gcopy 3, 0, 656 + 48, 24, 48
+										pos locvar_cell_draw_dx + 24, locvar_cell_draw_dy
+										gcopy 3, 0 + 120, 656 + 48, 24, 48
+										break
+									}
+									if ( deco2 == 21 ) {
+										pos locvar_cell_draw_dx, locvar_cell_draw_dy
+										gcopy 3, 0 + 48, 656, 48, 24
+										pos locvar_cell_draw_dx, locvar_cell_draw_dy + 24
+										gcopy 3, 0 + 48, 656 + 120, 48, 24
+										break
+									}
+									if ( deco2 == 30 ) {
+										pos locvar_cell_draw_dx, locvar_cell_draw_dy
+										gcopy 3, 0, 656, 48, 24
+										pos locvar_cell_draw_dx, locvar_cell_draw_dy + 24
+										gcopy 3, 0, 656 + 120, 48, 24
+										break
+									}
+									if ( deco2 == 31 ) {
+										pos locvar_cell_draw_dx, locvar_cell_draw_dy
+										gcopy 3, 0 + 96, 656, 48, 24
+										pos locvar_cell_draw_dx, locvar_cell_draw_dy + 24
+										gcopy 3, 0 + 96, 656 + 120, 48, 24
+										break
+									}
+									if ( deco2 == 32 ) {
+										pos locvar_cell_draw_dx, locvar_cell_draw_dy
+										gcopy 3, 0, 656, 24, 48
+										pos locvar_cell_draw_dx + 24, locvar_cell_draw_dy
+										gcopy 3, 0 + 120, 656, 24, 48
+										break
+									}
+									if ( deco2 == 33 ) {
+										pos locvar_cell_draw_dx, locvar_cell_draw_dy
+										gcopy 3, 0, 656 + 96, 24, 48
+										pos locvar_cell_draw_dx + 24, locvar_cell_draw_dy
+										gcopy 3, 0 + 120, 656 + 96, 24, 48
+										break
+									}
+								loop
+							}
+							else {
+								pos locvar_cell_draw_dx, locvar_cell_draw_dy
+								gcopy 3, 0 + deco(0, locvar_cell_draw_p) * inf_tiles, 656 + deco(1, locvar_cell_draw_p) * inf_tiles
+							}
+						loop
+					}
+					else {
+						locvar_cell_draw_p2 = (locvar_cell_draw_p - 1000) \ 16
+						locvar_cell_draw_i = 0
+						if ( locvar_cell_draw_p2 == 15 ) {
+							locvar_cell_draw_p2 = (locvar_cell_draw_p - 1000) \ 256
+							if ( locvar_cell_draw_p2 == 127 ) {
+								locvar_cell_draw_i = 13
+							}
+							if ( locvar_cell_draw_p2 == 223 ) {
+								locvar_cell_draw_i = 14
+							}
+							if ( locvar_cell_draw_p2 == 191 ) {
+								locvar_cell_draw_i = 15
+							}
+							if ( locvar_cell_draw_p2 == 239 ) {
+								locvar_cell_draw_i = 16
+							}
+							if ( locvar_cell_draw_p2 == 207 | locvar_cell_draw_p2 == 63 ) {
+								locvar_cell_draw_i = 17
+							}
+						}
+						else {
+							locvar_cell_draw_i = shadowmap(locvar_cell_draw_p2)
+						}
+						pos locvar_cell_draw_dx, locvar_cell_draw_dy
+						gcopy 3, 144 + locvar_cell_draw_i * inf_tiles, 752
+					}
+				}
+				locvar_cell_draw_x++
+				locvar_cell_draw_dx += inf_tiles
+			loop
+			locvar_cell_draw_y++
+			locvar_cell_draw_dy += inf_tiles
+		loop
+	}
+	else {
+		locvar_cell_draw_f = 0
+		if ( scrollp > 3 | mdata(MDATA_TYPE) == MAP_TYPE_DUNGEON ) {
+			locvar_cell_draw_f = 1
+		}
+		locvar_cell_draw_y = 1
+		locvar_cell_draw_dy = inf_screeny + locvar_cell_draw_syfix * locvar_cell_draw_f - 48
+		repeat inf_screenh + 2
+			if ( locvar_cell_draw_dy <= -inf_tiles | locvar_cell_draw_dy >= windowh - inf_verh ) {
+				locvar_cell_draw_dy += inf_tiles
+				locvar_cell_draw_y++
+				continue
+			}
+			locvar_cell_draw_x = 1
+			locvar_cell_draw_dx = inf_screenx + locvar_cell_draw_sxfix * locvar_cell_draw_f - 48
+			repeat inf_screenw + 2
+				locvar_cell_draw_p = slight(locvar_cell_draw_x, locvar_cell_draw_y)
+				if ( locvar_cell_draw_p > 0 ) {
+					if ( locvar_cell_draw_p < 300 ) {
+						repeat 1 + (deco(2, locvar_cell_draw_p) != 0)
+							if ( deco(0, locvar_cell_draw_p) < 0 | cnt ) {
+								if ( cnt == 1 ) {
+									deco2 = deco(2, locvar_cell_draw_p)
+								}
+								else {
+									deco2 = deco(1, locvar_cell_draw_p)
+								}
+								repeat 1
+									if ( deco2 == 1 ) {
+										pos locvar_cell_draw_dx, locvar_cell_draw_dy
+										gcopy 3, 0 + 168, 656 + 24, 24, 24
+										break
+									}
+									if ( deco2 == 2 ) {
+										pos locvar_cell_draw_dx + 24, locvar_cell_draw_dy + 24
+										gcopy 3, 0 + 144, 656, 24, 24
+										break
+									}
+									if ( deco2 == 3 ) {
+										pos locvar_cell_draw_dx, locvar_cell_draw_dy + 24
+										gcopy 3, 0 + 168, 656, 24, 24
+										break
+									}
+									if ( deco2 == 4 ) {
+										pos locvar_cell_draw_dx + 24, locvar_cell_draw_dy
+										gcopy 3, 0 + 144, 656 + 24, 24, 24
+										break
+									}
+									if ( deco2 == 5 ) {
+										pos locvar_cell_draw_dx + 24, locvar_cell_draw_dy + 24
+										gcopy 3, 0 + 144, 656, 24, 24
+										pos locvar_cell_draw_dx, locvar_cell_draw_dy
+										gcopy 3, 0 + 168, 656 + 24, 24, 24
+										break
+									}
+									if ( deco2 == 6 ) {
+										pos locvar_cell_draw_dx, locvar_cell_draw_dy + 24
+										gcopy 3, 0 + 168, 656, 24, 24
+										pos locvar_cell_draw_dx + 24, locvar_cell_draw_dy
+										gcopy 3, 0 + 144, 656 + 24, 24, 24
+										break
+									}
+									if ( deco2 == 7 ) {
+										pos locvar_cell_draw_dx, locvar_cell_draw_dy + 24
+										gcopy 3, 0 + 168, 656, 24, 24
+										pos locvar_cell_draw_dx + 24, locvar_cell_draw_dy + 24
+										gcopy 3, 0 + 144, 656, 24, 24
+										break
+									}
+									if ( deco2 == 8 ) {
+										pos locvar_cell_draw_dx, locvar_cell_draw_dy
+										gcopy 3, 0 + 168, 656 + 24, 24, 24
+										pos locvar_cell_draw_dx + 24, locvar_cell_draw_dy
+										gcopy 3, 0 + 144, 656 + 24, 24, 24
+										break
+									}
+									if ( deco2 == 9 ) {
+										pos locvar_cell_draw_dx, locvar_cell_draw_dy
+										gcopy 3, 0 + 168, 656 + 24, 24, 24
+										pos locvar_cell_draw_dx, locvar_cell_draw_dy + 24
+										gcopy 3, 0 + 168, 656, 24, 24
+										break
+									}
+									if ( deco2 == 10 ) {
+										pos locvar_cell_draw_dx + 24, locvar_cell_draw_dy
+										gcopy 3, 0 + 144, 656 + 24, 24, 24
+										pos locvar_cell_draw_dx + 24, locvar_cell_draw_dy + 24
+										gcopy 3, 0 + 144, 656, 24, 24
+										break
+									}
+									if ( deco2 == 20 ) {
+										pos locvar_cell_draw_dx, locvar_cell_draw_dy
+										gcopy 3, 0, 656 + 48, 24, 48
+										pos locvar_cell_draw_dx + 24, locvar_cell_draw_dy
+										gcopy 3, 0 + 120, 656 + 48, 24, 48
+										break
+									}
+									if ( deco2 == 21 ) {
+										pos locvar_cell_draw_dx, locvar_cell_draw_dy
+										gcopy 3, 0 + 48, 656, 48, 24
+										pos locvar_cell_draw_dx, locvar_cell_draw_dy + 24
+										gcopy 3, 0 + 48, 656 + 120, 48, 24
+										break
+									}
+									if ( deco2 == 30 ) {
+										pos locvar_cell_draw_dx, locvar_cell_draw_dy
+										gcopy 3, 0, 656, 48, 24
+										pos locvar_cell_draw_dx, locvar_cell_draw_dy + 24
+										gcopy 3, 0, 656 + 120, 48, 24
+										break
+									}
+									if ( deco2 == 31 ) {
+										pos locvar_cell_draw_dx, locvar_cell_draw_dy
+										gcopy 3, 0 + 96, 656, 48, 24
+										pos locvar_cell_draw_dx, locvar_cell_draw_dy + 24
+										gcopy 3, 0 + 96, 656 + 120, 48, 24
+										break
+									}
+									if ( deco2 == 32 ) {
+										pos locvar_cell_draw_dx, locvar_cell_draw_dy
+										gcopy 3, 0, 656, 24, 48
+										pos locvar_cell_draw_dx + 24, locvar_cell_draw_dy
+										gcopy 3, 0 + 120, 656, 24, 48
+										break
+									}
+									if ( deco2 == 33 ) {
+										pos locvar_cell_draw_dx, locvar_cell_draw_dy
+										gcopy 3, 0, 656 + 96, 24, 48
+										pos locvar_cell_draw_dx + 24, locvar_cell_draw_dy
+										gcopy 3, 0 + 120, 656 + 96, 24, 48
+										break
+									}
+								loop
+							}
+							else {
+								pos locvar_cell_draw_dx, locvar_cell_draw_dy
+								gcopy 3, 0 + deco(0, locvar_cell_draw_p) * inf_tiles, 656 + deco(1, locvar_cell_draw_p) * inf_tiles
+							}
+						loop
+					}
+					else {
+						locvar_cell_draw_p2 = (locvar_cell_draw_p - 1000) \ 16
+						locvar_cell_draw_i = 0
+						if ( locvar_cell_draw_p2 == 15 ) {
+							locvar_cell_draw_p2 = (locvar_cell_draw_p - 1000) \ 256
+							if ( locvar_cell_draw_p2 == 127 ) {
+								locvar_cell_draw_i = 13
+							}
+							if ( locvar_cell_draw_p2 == 223 ) {
+								locvar_cell_draw_i = 14
+							}
+							if ( locvar_cell_draw_p2 == 191 ) {
+								locvar_cell_draw_i = 15
+							}
+							if ( locvar_cell_draw_p2 == 239 ) {
+								locvar_cell_draw_i = 16
+							}
+							if ( locvar_cell_draw_p2 == 207 | locvar_cell_draw_p2 == 63 ) {
+								locvar_cell_draw_i = 17
+							}
+						}
+						else {
+							locvar_cell_draw_i = shadowmap(locvar_cell_draw_p2)
+						}
+						pos locvar_cell_draw_dx, locvar_cell_draw_dy
+						gcopy 3, 144 + locvar_cell_draw_i * inf_tiles, 752, 48, 48
+					}
+				}
+				locvar_cell_draw_x++
+				locvar_cell_draw_dx += inf_tiles
+			loop
+			locvar_cell_draw_y++
+			locvar_cell_draw_dy += inf_tiles
+		loop
+	}
+	gmode 2
+	randomize
+	return
+
+#deffunc outputmapimage
+	locvar_cell_draw_sxfix = 0
+	locvar_cell_draw_syfix = 0
+	locvar_cell_draw_scrturn = scrturn / 5
+	locvar_cell_draw_scrturnnew = FALSE
+	locvar_cell_draw_light = gdata(GDATA_LIGHT)
+	randomize locvar_cell_draw_scrturn
+	if ( gdata(GDATA_LIGHT_SOURCE) == 1 ) {
+		if ( mdata(MDATA_TYPE) >= MAP_TYPE_DUNGEON_MIN & mdata(MDATA_TYPE) <= MAP_TYPE_DUNGEON_MAX ) {
+			locvar_cell_draw_light -= 50
+		}
+	}
+	if ( gdata(GDATA_HOUR) > 17 | gdata(GDATA_HOUR) < 6 ) {
+		locvar_cell_draw_flick = rnd(10)
+	}
+	else {
+		locvar_cell_draw_flick = -15
+	}
+	repw = mdata(MDATA_WIDTH), 0
+	reph = mdata(MDATA_HEIGHT), 0
+	repw(2) = cdata(CDATA_X, CHARA_PLAYER) + 1
+	reph(2) = cdata(CDATA_Y, CHARA_PLAYER) + 1
+	reph(3) = reph(2) + 1
+	scxbk2 = scx
+	scybk2 = scy
+	sxfixbk = sxfix
+	syfixbk = syfix
+
+	scx = 0
+	scy = 0
+	sxfix = 0
+	syfix = 0
+
+	bkselcur = selcur
+	selcur = 34
+	buffer 34, mdata(MDATA_WIDTH) * inf_tiles, mdata(MDATA_HEIGHT) * inf_tiles
+
+	redraw 0
+
+	cell_draw2 TRUE
+
+	redraw 1
+	gsel selcur
+
+	repeat 999999
+		locvar_outputmapimage_filename = exedir + strf("mapimage_%06d.bmp", cnt)
+		exist locvar_outputmapimage_filename
+		if ( strsize == (-1) ) {
+			bmpsave locvar_outputmapimage_filename
+			break
+		}
+	loop
+
+	buffer 34, 1, 1
+	selcur = bkselcur
+	gsel selcur
+	scx = scxbk2
+	scy = scybk2
+	sxfix = sxfixbk
+	syfix = syfixbk
+
+	gmode 2
+	return
+
+#deffunc cell_draw2 int cell_draw2_ignore_seen
 	locvar_cell_draw_ly = 1
+	locvar_cell_draw_dy = (reph(1) - scy) * inf_tiles + inf_screeny + locvar_cell_draw_syfix
 	repeat reph, reph(1)
 		locvar_cell_draw_y = cnt
 		locvar_cell_draw_dx = (repw(1) + repw - 1 - scx) * inf_tiles + inf_screenx + locvar_cell_draw_sxfix
 		locvar_cell_draw_lx = 1
-		if ( locvar_cell_draw_dy <= -inf_tiles | locvar_cell_draw_dy >= windowh - inf_verh ) {
+		if ( ( locvar_cell_draw_dy <= -inf_tiles | locvar_cell_draw_dy >= windowh - inf_verh ) & ( cell_draw2_ignore_seen == FALSE ) ) {
 			locvar_cell_draw_dy += inf_tiles
 			locvar_cell_draw_lx++
 			continue
@@ -1519,14 +1977,14 @@
 										pos locvar_cell_draw_px + 12 + cdata(CDATA_MARK_ITEM_X, CHARA_PLAYER), locvar_cell_draw_py + 18 + cdata(CDATA_MARK_ITEM_Y, CHARA_PLAYER) + (chipm(CHIPM_ROLE, locvar_cell_draw_ground) == MAP_CHIP_ROLE_WATER) * 16 - (cbit(CHARA_BIT_SANDBAG, CHARA_PLAYER) == 1) * 24
 									}
 
-                                    preparePicItem cdata(CDATA_MARK_ITEM_PIC, CHARA_PLAYER), cdata(CDATA_MARK_ITEM_COL, CHARA_PLAYER)
+									preparePicItem cdata(CDATA_MARK_ITEM_PIC, CHARA_PLAYER), cdata(CDATA_MARK_ITEM_COL, CHARA_PLAYER)
 
 									gmode 2, 48, 48
 									grotate 1, 0, 960, cdata(CDATA_MARK_ITEM_ADJUST_R, CHARA_PLAYER) * 6.54498469498, 24 + cdata(CDATA_MARK_ITEM_ADJUST_W, CHARA_PLAYER) * 2, 24 + cdata(CDATA_MARK_ITEM_ADJUST_L, CHARA_PLAYER) * 2
 								}
 							}
 						}
-						if ( locvar_cell_draw_py < windowh - inf_verh - 24 ) {
+						if ( locvar_cell_draw_py < windowh - inf_verh - 24 | cell_draw2_ignore_seen != FALSE ) {
 							if ( cdata(CDATA_ROW_ACT, CHARA_PLAYER) == ACTION_FISH ) {
 								locvar_cell_draw_ani = 0
 							}
@@ -1711,7 +2169,7 @@
 					}
 				}
 			}
-			if ( locvar_cell_draw_dx <= -inf_tiles | locvar_cell_draw_dx >= windoww ) {
+			if ( ( locvar_cell_draw_dx <= -inf_tiles | locvar_cell_draw_dx >= windoww ) & ( cell_draw2_ignore_seen == FALSE ) ) {
 				locvar_cell_draw_dx -= inf_tiles
 				locvar_cell_draw_lx++
 				continue
@@ -1844,7 +2302,7 @@
 						locvar_cell_draw_p = inv(INV_ITEM_PIC, locvar_cell_draw_flooritem(locvar_cell_draw_cnt2))
 						locvar_cell_draw_i = inv(INV_ITEM_COL, locvar_cell_draw_flooritem(locvar_cell_draw_cnt2))
 
-                        preparePicItem locvar_cell_draw_p, locvar_cell_draw_i 
+                        preparePicItem locvar_cell_draw_p, locvar_cell_draw_i
 
 						if ( mdata(MDATA_TYPE) == MAP_TYPE_WORLD ) {
 							gmode 2, chipi(CHIPI_WIDTH, locvar_cell_draw_p), chipi(CHIPI_HEIGHT, locvar_cell_draw_p)
@@ -1888,7 +2346,7 @@
 					locvar_cell_draw_i = wpeek(map(locvar_cell_draw_x, locvar_cell_draw_y, 5), 2)
 					locvar_cell_draw_p = wpeek(map(locvar_cell_draw_x, locvar_cell_draw_y, 5), 0)
 *skipitemDraw
-                    preparePicItem locvar_cell_draw_p, locvar_cell_draw_i 
+                    preparePicItem locvar_cell_draw_p, locvar_cell_draw_i
 
 					if ( mdata(MDATA_TYPE) == MAP_TYPE_WORLD ) {
 						gmode 2, chipi(CHIPI_WIDTH, locvar_cell_draw_p), chipi(CHIPI_HEIGHT, locvar_cell_draw_p)
@@ -2133,7 +2591,7 @@
 			}
 			if ( map(locvar_cell_draw_x, locvar_cell_draw_y, 1) != 0 ) {
 				locvar_cell_draw_c = map(locvar_cell_draw_x, locvar_cell_draw_y, 1) - 1
-				if ( synccheck(locvar_cell_draw_c, -1) ) {
+				if ( synccheck(locvar_cell_draw_c, -1) | cell_draw2_ignore_seen != FALSE ) {
 					if ( cbit(CHARA_BIT_INVISIBLE, locvar_cell_draw_c) == 1 ) {
 						if ( cbit(CHARA_BIT_SEE_INVISIBLE, CHARA_PLAYER) == 0 ) {
 							if ( gdata(GDATA_SENSE_OBJECT) != 10 ) {
@@ -2746,7 +3204,7 @@
 				}
 			}
 			if ( map(locvar_cell_draw_x, locvar_cell_draw_y, 1) != 0 ) {
-				if ( synccheck(map(locvar_cell_draw_x, locvar_cell_draw_y, 1) - 1, -1) ) {
+				if ( synccheck(map(locvar_cell_draw_x, locvar_cell_draw_y, 1) - 1, -1) | cell_draw2_ignore_seen != FALSE ) {
 					if ( cdata(CDATA_IN_TAGTEAM, map(locvar_cell_draw_x, locvar_cell_draw_y, 1) - 1) != 0 ) {
 						locvar_cell_draw_c = cdata(CDATA_TAGTEAM_PARTNER, map(locvar_cell_draw_x, locvar_cell_draw_y, 1) - 1)
 						if ( cdata(CDATA_IN_TAGTEAM, locvar_cell_draw_c) == 1 ) {
@@ -3306,7 +3764,7 @@
 			if ( map(locvar_cell_draw_x, locvar_cell_draw_y, 9) != 0 ) {
 				locvar_cell_draw_p = map(locvar_cell_draw_x, locvar_cell_draw_y, 9)
 				if ( gdata(GDATA_HOUR) > 17 | gdata(GDATA_HOUR) < 6 | lightdata(LIGHTDATA_TIME, locvar_cell_draw_p) ) {
-					if ( mapsync(locvar_cell_draw_x, locvar_cell_draw_y) == msync ) {
+					if ( mapsync(locvar_cell_draw_x, locvar_cell_draw_y) == msync | cell_draw2_ignore_seen != FALSE ) {
 						locvar_cell_draw_light -= (6 - limit(dist(cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), locvar_cell_draw_x, locvar_cell_draw_y), 0, 6)) * lightdata(LIGHTDATA_POWER, locvar_cell_draw_p)
 						pos locvar_cell_draw_dx, locvar_cell_draw_dy - lightdata(LIGHTDATA_Y, locvar_cell_draw_p)
 						gmode 5, inf_tiles, inf_tiles, lightdata(LIGHTDATA_BRIGHT, locvar_cell_draw_p) + rnd(lightdata(LIGHTDATA_FLICK, locvar_cell_draw_p) + 1)
@@ -3339,7 +3797,12 @@
 						if ( locvar_cell_draw_p != tile_fog ) {
 							if ( locvar_cell_draw_dy > 20 ) {
 								pos locvar_cell_draw_dx, locvar_cell_draw_dy - 12
-								gcopy locvar_cell_draw_sel, locvar_cell_draw_ground \ 33 * inf_tiles, locvar_cell_draw_ground / 33 * inf_tiles, inf_tiles - (locvar_cell_draw_dx > windoww - inf_tiles) * (locvar_cell_draw_dx + inf_tiles - windoww), 12
+								if ( cell_draw2_ignore_seen ) {
+									gcopy locvar_cell_draw_sel, locvar_cell_draw_ground \ 33 * inf_tiles, locvar_cell_draw_ground / 33 * inf_tiles, inf_tiles, 12
+								}
+								else {
+									gcopy locvar_cell_draw_sel, locvar_cell_draw_ground \ 33 * inf_tiles, locvar_cell_draw_ground / 33 * inf_tiles, inf_tiles - (locvar_cell_draw_dx > windoww - inf_tiles) * (locvar_cell_draw_dx + inf_tiles - windoww), 12
+								}
 								pos locvar_cell_draw_dx + (locvar_cell_draw_dx < 0) * (-locvar_cell_draw_dx), locvar_cell_draw_dy - 20
 								gfini inf_tiles - (locvar_cell_draw_dx > windoww - inf_tiles) * (locvar_cell_draw_dx + inf_tiles - windoww) + (locvar_cell_draw_dx < 0) * locvar_cell_draw_dx, 8
 								gfdec2 25, 25, 25
@@ -3354,395 +3817,6 @@
 		locvar_cell_draw_dy += inf_tiles
 		locvar_cell_draw_ly++
 	loop
-	if ( locvar_cell_draw_light < 25 ) {
-		locvar_cell_draw_light = 25
-	}
-	if ( mdata(MDATA_TYPE) == MAP_TYPE_WORLD ) {
-		repeat 12
-			gmode 5, , , 7 + cnt * 2
-			locvar_cell_draw_x = (cloud(CLOUD_X, cnt) - cdata(CDATA_X, CHARA_PLAYER) * 48 + sxfix) * 100 / (40 + cnt * 5) + scrturn * 100 / (50 + cnt * 20)
-			locvar_cell_draw_y = (cloud(CLOUD_Y, cnt) - cdata(CDATA_Y, CHARA_PLAYER) * 48 + syfix) * 100 / (40 + cnt * 5)
-			locvar_cell_draw_x = locvar_cell_draw_x \ (windoww + cloud(CLOUD_WIDTH, cnt)) - cloud(CLOUD_WIDTH, cnt)
-			locvar_cell_draw_y = locvar_cell_draw_y \ (inf_very + cloud(CLOUD_HEIGHT, cnt)) - cloud(CLOUD_HEIGHT, cnt)
-			locvar_cell_draw_h = cloud(CLOUD_HEIGHT, cnt)
-			if ( locvar_cell_draw_y + cloud(CLOUD_HEIGHT, cnt) >= inf_very ) {
-				locvar_cell_draw_h = inf_very - locvar_cell_draw_y
-			}
-			if ( locvar_cell_draw_y < inf_very ) {
-				pos locvar_cell_draw_x, locvar_cell_draw_y
-				gcopy 2, cloud(CLOUD_PX, cnt), cloud(CLOUD_PY, cnt), cloud(CLOUD_WIDTH, cnt), locvar_cell_draw_h
-			}
-		loop
-	}
-	if ( cfg_shadow != 0 ) {
-		color 0, 0, 0
-		gmode 6, inf_tiles, inf_tiles, locvar_cell_draw_light
-		locvar_cell_draw_y = 2
-		locvar_cell_draw_dy = inf_screeny
-		repeat inf_screenh
-			locvar_cell_draw_x = 2
-			locvar_cell_draw_dx = inf_screenx
-			repeat inf_screenw
-				if ( slight(locvar_cell_draw_x, locvar_cell_draw_y) >= 1000 ) {
-					pos locvar_cell_draw_dx, locvar_cell_draw_dy
-					gcopy 3, 144, 752
-				}
-				locvar_cell_draw_x++
-				locvar_cell_draw_dx += inf_tiles
-			loop
-			locvar_cell_draw_y++
-			locvar_cell_draw_dy += inf_tiles
-		loop
-		gmode 2
-		randomize
-		return
-	}
-	gmode 6, inf_tiles, inf_tiles, locvar_cell_draw_light
-	if ( scrollanime == 0 ) {
-		locvar_cell_draw_y = 2
-		locvar_cell_draw_dy = inf_screeny + locvar_cell_draw_syfix * (scrollp > 3)
-		repeat inf_screenh
-			locvar_cell_draw_x = 2
-			locvar_cell_draw_dx = inf_screenx + locvar_cell_draw_sxfix * (scrollp > 3)
-			locvar_cell_draw_cnt2 = cnt
-			repeat inf_screenw
-				locvar_cell_draw_p = slight(locvar_cell_draw_x, locvar_cell_draw_y)
-				if ( locvar_cell_draw_p > 0 ) {
-					if ( locvar_cell_draw_p < 300 ) {
-						repeat 1 + (deco(2, locvar_cell_draw_p) != 0)
-							if ( deco(0, locvar_cell_draw_p) < 0 | cnt ) {
-								if ( cnt == 1 ) {
-									deco2 = deco(2, locvar_cell_draw_p)
-								}
-								else {
-									deco2 = deco(1, locvar_cell_draw_p)
-								}
-								repeat 1
-									if ( deco2 == 1 ) {
-										pos locvar_cell_draw_dx, locvar_cell_draw_dy
-										gcopy 3, 0 + 168, 656 + 24, 24, 24
-										break
-									}
-									if ( deco2 == 2 ) {
-										pos locvar_cell_draw_dx + 24, locvar_cell_draw_dy + 24
-										gcopy 3, 0 + 144, 656, 24, 24
-										break
-									}
-									if ( deco2 == 3 ) {
-										pos locvar_cell_draw_dx, locvar_cell_draw_dy + 24
-										gcopy 3, 0 + 168, 656, 24, 24
-										break
-									}
-									if ( deco2 == 4 ) {
-										pos locvar_cell_draw_dx + 24, locvar_cell_draw_dy
-										gcopy 3, 0 + 144, 656 + 24, 24, 24
-										break
-									}
-									if ( deco2 == 5 ) {
-										pos locvar_cell_draw_dx + 24, locvar_cell_draw_dy + 24
-										gcopy 3, 0 + 144, 656, 24, 24
-										pos locvar_cell_draw_dx, locvar_cell_draw_dy
-										gcopy 3, 0 + 168, 656 + 24, 24, 24
-										break
-									}
-									if ( deco2 == 6 ) {
-										pos locvar_cell_draw_dx, locvar_cell_draw_dy + 24
-										gcopy 3, 0 + 168, 656, 24, 24
-										pos locvar_cell_draw_dx + 24, locvar_cell_draw_dy
-										gcopy 3, 0 + 144, 656 + 24, 24, 24
-										break
-									}
-									if ( deco2 == 7 ) {
-										pos locvar_cell_draw_dx, locvar_cell_draw_dy + 24
-										gcopy 3, 0 + 168, 656, 24, 24
-										pos locvar_cell_draw_dx + 24, locvar_cell_draw_dy + 24
-										gcopy 3, 0 + 144, 656, 24, 24
-										break
-									}
-									if ( deco2 == 8 ) {
-										pos locvar_cell_draw_dx, locvar_cell_draw_dy
-										gcopy 3, 0 + 168, 656 + 24, 24, 24
-										pos locvar_cell_draw_dx + 24, locvar_cell_draw_dy
-										gcopy 3, 0 + 144, 656 + 24, 24, 24
-										break
-									}
-									if ( deco2 == 9 ) {
-										pos locvar_cell_draw_dx, locvar_cell_draw_dy
-										gcopy 3, 0 + 168, 656 + 24, 24, 24
-										pos locvar_cell_draw_dx, locvar_cell_draw_dy + 24
-										gcopy 3, 0 + 168, 656, 24, 24
-										break
-									}
-									if ( deco2 == 10 ) {
-										pos locvar_cell_draw_dx + 24, locvar_cell_draw_dy
-										gcopy 3, 0 + 144, 656 + 24, 24, 24
-										pos locvar_cell_draw_dx + 24, locvar_cell_draw_dy + 24
-										gcopy 3, 0 + 144, 656, 24, 24
-										break
-									}
-									if ( deco2 == 20 ) {
-										pos locvar_cell_draw_dx, locvar_cell_draw_dy
-										gcopy 3, 0, 656 + 48, 24, 48
-										pos locvar_cell_draw_dx + 24, locvar_cell_draw_dy
-										gcopy 3, 0 + 120, 656 + 48, 24, 48
-										break
-									}
-									if ( deco2 == 21 ) {
-										pos locvar_cell_draw_dx, locvar_cell_draw_dy
-										gcopy 3, 0 + 48, 656, 48, 24
-										pos locvar_cell_draw_dx, locvar_cell_draw_dy + 24
-										gcopy 3, 0 + 48, 656 + 120, 48, 24
-										break
-									}
-									if ( deco2 == 30 ) {
-										pos locvar_cell_draw_dx, locvar_cell_draw_dy
-										gcopy 3, 0, 656, 48, 24
-										pos locvar_cell_draw_dx, locvar_cell_draw_dy + 24
-										gcopy 3, 0, 656 + 120, 48, 24
-										break
-									}
-									if ( deco2 == 31 ) {
-										pos locvar_cell_draw_dx, locvar_cell_draw_dy
-										gcopy 3, 0 + 96, 656, 48, 24
-										pos locvar_cell_draw_dx, locvar_cell_draw_dy + 24
-										gcopy 3, 0 + 96, 656 + 120, 48, 24
-										break
-									}
-									if ( deco2 == 32 ) {
-										pos locvar_cell_draw_dx, locvar_cell_draw_dy
-										gcopy 3, 0, 656, 24, 48
-										pos locvar_cell_draw_dx + 24, locvar_cell_draw_dy
-										gcopy 3, 0 + 120, 656, 24, 48
-										break
-									}
-									if ( deco2 == 33 ) {
-										pos locvar_cell_draw_dx, locvar_cell_draw_dy
-										gcopy 3, 0, 656 + 96, 24, 48
-										pos locvar_cell_draw_dx + 24, locvar_cell_draw_dy
-										gcopy 3, 0 + 120, 656 + 96, 24, 48
-										break
-									}
-								loop
-							}
-							else {
-								pos locvar_cell_draw_dx, locvar_cell_draw_dy
-								gcopy 3, 0 + deco(0, locvar_cell_draw_p) * inf_tiles, 656 + deco(1, locvar_cell_draw_p) * inf_tiles
-							}
-						loop
-					}
-					else {
-						locvar_cell_draw_p2 = (locvar_cell_draw_p - 1000) \ 16
-						locvar_cell_draw_i = 0
-						if ( locvar_cell_draw_p2 == 15 ) {
-							locvar_cell_draw_p2 = (locvar_cell_draw_p - 1000) \ 256
-							if ( locvar_cell_draw_p2 == 127 ) {
-								locvar_cell_draw_i = 13
-							}
-							if ( locvar_cell_draw_p2 == 223 ) {
-								locvar_cell_draw_i = 14
-							}
-							if ( locvar_cell_draw_p2 == 191 ) {
-								locvar_cell_draw_i = 15
-							}
-							if ( locvar_cell_draw_p2 == 239 ) {
-								locvar_cell_draw_i = 16
-							}
-							if ( locvar_cell_draw_p2 == 207 | locvar_cell_draw_p2 == 63 ) {
-								locvar_cell_draw_i = 17
-							}
-						}
-						else {
-							locvar_cell_draw_i = shadowmap(locvar_cell_draw_p2)
-						}
-						pos locvar_cell_draw_dx, locvar_cell_draw_dy
-						gcopy 3, 144 + locvar_cell_draw_i * inf_tiles, 752
-					}
-				}
-				locvar_cell_draw_x++
-				locvar_cell_draw_dx += inf_tiles
-			loop
-			locvar_cell_draw_y++
-			locvar_cell_draw_dy += inf_tiles
-		loop
-	}
-	else {
-		locvar_cell_draw_f = 0
-		if ( scrollp > 3 | mdata(MDATA_TYPE) == MAP_TYPE_DUNGEON ) {
-			locvar_cell_draw_f = 1
-		}
-		locvar_cell_draw_y = 1
-		locvar_cell_draw_dy = inf_screeny + locvar_cell_draw_syfix * locvar_cell_draw_f - 48
-		repeat inf_screenh + 2
-			if ( locvar_cell_draw_dy <= -inf_tiles | locvar_cell_draw_dy >= windowh - inf_verh ) {
-				locvar_cell_draw_dy += inf_tiles
-				locvar_cell_draw_y++
-				continue
-			}
-			locvar_cell_draw_x = 1
-			locvar_cell_draw_dx = inf_screenx + locvar_cell_draw_sxfix * locvar_cell_draw_f - 48
-			repeat inf_screenw + 2
-				locvar_cell_draw_p = slight(locvar_cell_draw_x, locvar_cell_draw_y)
-				if ( locvar_cell_draw_p > 0 ) {
-					if ( locvar_cell_draw_p < 300 ) {
-						repeat 1 + (deco(2, locvar_cell_draw_p) != 0)
-							if ( deco(0, locvar_cell_draw_p) < 0 | cnt ) {
-								if ( cnt == 1 ) {
-									deco2 = deco(2, locvar_cell_draw_p)
-								}
-								else {
-									deco2 = deco(1, locvar_cell_draw_p)
-								}
-								repeat 1
-									if ( deco2 == 1 ) {
-										pos locvar_cell_draw_dx, locvar_cell_draw_dy
-										gcopy 3, 0 + 168, 656 + 24, 24, 24
-										break
-									}
-									if ( deco2 == 2 ) {
-										pos locvar_cell_draw_dx + 24, locvar_cell_draw_dy + 24
-										gcopy 3, 0 + 144, 656, 24, 24
-										break
-									}
-									if ( deco2 == 3 ) {
-										pos locvar_cell_draw_dx, locvar_cell_draw_dy + 24
-										gcopy 3, 0 + 168, 656, 24, 24
-										break
-									}
-									if ( deco2 == 4 ) {
-										pos locvar_cell_draw_dx + 24, locvar_cell_draw_dy
-										gcopy 3, 0 + 144, 656 + 24, 24, 24
-										break
-									}
-									if ( deco2 == 5 ) {
-										pos locvar_cell_draw_dx + 24, locvar_cell_draw_dy + 24
-										gcopy 3, 0 + 144, 656, 24, 24
-										pos locvar_cell_draw_dx, locvar_cell_draw_dy
-										gcopy 3, 0 + 168, 656 + 24, 24, 24
-										break
-									}
-									if ( deco2 == 6 ) {
-										pos locvar_cell_draw_dx, locvar_cell_draw_dy + 24
-										gcopy 3, 0 + 168, 656, 24, 24
-										pos locvar_cell_draw_dx + 24, locvar_cell_draw_dy
-										gcopy 3, 0 + 144, 656 + 24, 24, 24
-										break
-									}
-									if ( deco2 == 7 ) {
-										pos locvar_cell_draw_dx, locvar_cell_draw_dy + 24
-										gcopy 3, 0 + 168, 656, 24, 24
-										pos locvar_cell_draw_dx + 24, locvar_cell_draw_dy + 24
-										gcopy 3, 0 + 144, 656, 24, 24
-										break
-									}
-									if ( deco2 == 8 ) {
-										pos locvar_cell_draw_dx, locvar_cell_draw_dy
-										gcopy 3, 0 + 168, 656 + 24, 24, 24
-										pos locvar_cell_draw_dx + 24, locvar_cell_draw_dy
-										gcopy 3, 0 + 144, 656 + 24, 24, 24
-										break
-									}
-									if ( deco2 == 9 ) {
-										pos locvar_cell_draw_dx, locvar_cell_draw_dy
-										gcopy 3, 0 + 168, 656 + 24, 24, 24
-										pos locvar_cell_draw_dx, locvar_cell_draw_dy + 24
-										gcopy 3, 0 + 168, 656, 24, 24
-										break
-									}
-									if ( deco2 == 10 ) {
-										pos locvar_cell_draw_dx + 24, locvar_cell_draw_dy
-										gcopy 3, 0 + 144, 656 + 24, 24, 24
-										pos locvar_cell_draw_dx + 24, locvar_cell_draw_dy + 24
-										gcopy 3, 0 + 144, 656, 24, 24
-										break
-									}
-									if ( deco2 == 20 ) {
-										pos locvar_cell_draw_dx, locvar_cell_draw_dy
-										gcopy 3, 0, 656 + 48, 24, 48
-										pos locvar_cell_draw_dx + 24, locvar_cell_draw_dy
-										gcopy 3, 0 + 120, 656 + 48, 24, 48
-										break
-									}
-									if ( deco2 == 21 ) {
-										pos locvar_cell_draw_dx, locvar_cell_draw_dy
-										gcopy 3, 0 + 48, 656, 48, 24
-										pos locvar_cell_draw_dx, locvar_cell_draw_dy + 24
-										gcopy 3, 0 + 48, 656 + 120, 48, 24
-										break
-									}
-									if ( deco2 == 30 ) {
-										pos locvar_cell_draw_dx, locvar_cell_draw_dy
-										gcopy 3, 0, 656, 48, 24
-										pos locvar_cell_draw_dx, locvar_cell_draw_dy + 24
-										gcopy 3, 0, 656 + 120, 48, 24
-										break
-									}
-									if ( deco2 == 31 ) {
-										pos locvar_cell_draw_dx, locvar_cell_draw_dy
-										gcopy 3, 0 + 96, 656, 48, 24
-										pos locvar_cell_draw_dx, locvar_cell_draw_dy + 24
-										gcopy 3, 0 + 96, 656 + 120, 48, 24
-										break
-									}
-									if ( deco2 == 32 ) {
-										pos locvar_cell_draw_dx, locvar_cell_draw_dy
-										gcopy 3, 0, 656, 24, 48
-										pos locvar_cell_draw_dx + 24, locvar_cell_draw_dy
-										gcopy 3, 0 + 120, 656, 24, 48
-										break
-									}
-									if ( deco2 == 33 ) {
-										pos locvar_cell_draw_dx, locvar_cell_draw_dy
-										gcopy 3, 0, 656 + 96, 24, 48
-										pos locvar_cell_draw_dx + 24, locvar_cell_draw_dy
-										gcopy 3, 0 + 120, 656 + 96, 24, 48
-										break
-									}
-								loop
-							}
-							else {
-								pos locvar_cell_draw_dx, locvar_cell_draw_dy
-								gcopy 3, 0 + deco(0, locvar_cell_draw_p) * inf_tiles, 656 + deco(1, locvar_cell_draw_p) * inf_tiles
-							}
-						loop
-					}
-					else {
-						locvar_cell_draw_p2 = (locvar_cell_draw_p - 1000) \ 16
-						locvar_cell_draw_i = 0
-						if ( locvar_cell_draw_p2 == 15 ) {
-							locvar_cell_draw_p2 = (locvar_cell_draw_p - 1000) \ 256
-							if ( locvar_cell_draw_p2 == 127 ) {
-								locvar_cell_draw_i = 13
-							}
-							if ( locvar_cell_draw_p2 == 223 ) {
-								locvar_cell_draw_i = 14
-							}
-							if ( locvar_cell_draw_p2 == 191 ) {
-								locvar_cell_draw_i = 15
-							}
-							if ( locvar_cell_draw_p2 == 239 ) {
-								locvar_cell_draw_i = 16
-							}
-							if ( locvar_cell_draw_p2 == 207 | locvar_cell_draw_p2 == 63 ) {
-								locvar_cell_draw_i = 17
-							}
-						}
-						else {
-							locvar_cell_draw_i = shadowmap(locvar_cell_draw_p2)
-						}
-						pos locvar_cell_draw_dx, locvar_cell_draw_dy
-						gcopy 3, 144 + locvar_cell_draw_i * inf_tiles, 752, 48, 48
-					}
-				}
-				locvar_cell_draw_x++
-				locvar_cell_draw_dx += inf_tiles
-			loop
-			locvar_cell_draw_y++
-			locvar_cell_draw_dy += inf_tiles
-		loop
-	}
-	gmode 2
-	randomize
-	return
 
 #deffunc cell_itemlist int cell_itemlist_arg1, int cell_itemlist_arg2
 	listmax = 0

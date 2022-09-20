@@ -4021,25 +4021,31 @@
 		goto *console_write
 	}
 
-    /********** RUIN0X11 CUSTOM - BEGINNING **********/
+	/********** RUIN0X11 CUSTOM - BEGINNING **********/
 
-    if ( instr(buff, 0, "dump_buffers") != (-1) ) {
-        gosub *DumpBuffers
-        noteadd "Done."
-        goto *console_write
-    }
-    if ( instr(buff, 0, "export_itemlist") != (-1) ) {
-        gosub *Save_Item_Highlights
-        notesel dbm
-        noteadd "Done."
-        goto *console_write
-    }
-    if ( instr(buff, 0, "cgx207mapfix") != (-1) ) {
-        gdata(GDATA_WORLD_RENEW) = TRUE
-        notesel dbm
-        noteadd "Done."
-        goto *console_write
-    }
+	if ( instr(buff, 0, "dump_buffers") != (-1) ) {
+		gosub *DumpBuffers
+		noteadd "Done."
+		goto *console_write
+	}
+	if ( instr(buff, 0, "export_itemlist") != (-1) ) {
+		gosub *Save_Item_Highlights
+		notesel dbm
+		noteadd "Done."
+		goto *console_write
+	}
+	if ( instr(buff, 0, "cgx207mapfix") != (-1) ) {
+		gdata(GDATA_WORLD_RENEW) = TRUE
+		notesel dbm
+		noteadd "Done."
+		goto *console_write
+	}
+
+	if ( instr(buff, 0, "save_map_image") != (-1) ) {
+		outputmapimage
+		noteadd "Done."
+		goto *console_write
+	}
 
     /********** RUIN0X11 CUSTOM - ENDING **********/
 
@@ -4243,6 +4249,7 @@
     noteadd "\twizard\t\tEnables wizard mode."
     noteadd "\tdump_buffers\tDump the graphics buffers to .bmp files."
     noteadd "\texport_itemlist\tCreates a default ItemList.txt file."
+    noteadd "\tsave_map_image\tTakes a screenshot of the current map."
     noteadd ""
     noteadd "\tThe commands below can be used in the Wizard mode."
     noteadd "\tgain_spell\tPC gains all spells."
