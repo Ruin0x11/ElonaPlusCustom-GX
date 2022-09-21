@@ -18226,9 +18226,7 @@
 		}
 	}
 	if ( cdata(CDATA_ROLE, tc) == ROLE_SHOP_MAGIC ) {
-		list(0, listmax) = 113
-		listn(0, listmax) = lang("ポーションの栓を分けて欲しい", "I want potion plugs.")
-		listmax++
+		chatList 113, lang("ポーションの栓を分けて欲しい", "I want potion plugs.")
 	}
 	if ( cdata(CDATA_CONDITION_DRUNK, tc) != 0 ) {
 		if ( gdata(GDATA_AREA) != AREA_SHOW_HOUSE ) {
@@ -20123,7 +20121,7 @@
 		}
 		goto *chat_end
 	}
-	if ( chatval == 113 ) {
+	if ( chatval == 113 & cbit(CHARA_BIT_BIRTHED_CHILD, tc) == TRUE ) {
 		cost = 10000
 		buff = lang("(" + cdatan(CDATAN_NAME, tc) + "の教育に" + cost + "goldを投資する？)", "(Invest " + cost + " gold pieces in " + cdatan(CDATAN_NAME, tc) + " education?)")
 		list(0, listmax) = 0
