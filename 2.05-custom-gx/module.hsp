@@ -1844,7 +1844,7 @@
 
 #deffunc outputmapimage
 	locvar_cell_draw_sxfix = 0
-	locvar_cell_draw_syfix = 16
+	locvar_cell_draw_syfix = 0
 	locvar_cell_draw_scrturn = scrturn / 5
 	locvar_cell_draw_scrturnnew = FALSE
 	locvar_cell_draw_light = gdata(GDATA_LIGHT)
@@ -1869,11 +1869,15 @@
 	scybk2 = scy
 	sxfixbk = sxfix
 	syfixbk = syfix
+	inf_screenybk = inf_screeny
+	windowwbk = windoww
 
 	scx = 0
 	scy = 0
 	sxfix = 0
 	syfix = 0
+	inf_screeny = 0
+	windoww = inf_tiles * mdata(MDATA_WIDTH)
 
 	bkselcur = selcur
 	selcur = 34
@@ -1902,6 +1906,8 @@
 	scy = scybk2
 	sxfix = sxfixbk
 	syfix = syfixbk
+	inf_screeny = inf_screenybk
+	windoww = windowwbk
 
 	gmode 2
 	return
@@ -2591,7 +2597,7 @@
 			}
 			if ( map(locvar_cell_draw_x, locvar_cell_draw_y, 1) != 0 ) {
 				locvar_cell_draw_c = map(locvar_cell_draw_x, locvar_cell_draw_y, 1) - 1
-				if ( synccheck(locvar_cell_draw_c, -1) | cell_draw2_ignore_seen != FALSE ) {
+				if ( synccheck(locvar_cell_draw_c, -1) | ( cell_draw2_ignore_seen & map(locvar_cell_draw_x, locvar_cell_draw_y, 0) == map(locvar_cell_draw_x, locvar_cell_draw_y, 2) ) ) {
 					if ( cbit(CHARA_BIT_INVISIBLE, locvar_cell_draw_c) == 1 ) {
 						if ( cbit(CHARA_BIT_SEE_INVISIBLE, CHARA_PLAYER) == 0 ) {
 							if ( gdata(GDATA_SENSE_OBJECT) != 10 ) {
@@ -3204,7 +3210,7 @@
 				}
 			}
 			if ( map(locvar_cell_draw_x, locvar_cell_draw_y, 1) != 0 ) {
-				if ( synccheck(map(locvar_cell_draw_x, locvar_cell_draw_y, 1) - 1, -1) | cell_draw2_ignore_seen != FALSE ) {
+				if ( synccheck(map(locvar_cell_draw_x, locvar_cell_draw_y, 1) - 1, -1) | ( cell_draw2_ignore_seen & map(locvar_cell_draw_x, locvar_cell_draw_y, 0) == map(locvar_cell_draw_x, locvar_cell_draw_y, 2) ) ) {
 					if ( cdata(CDATA_IN_TAGTEAM, map(locvar_cell_draw_x, locvar_cell_draw_y, 1) - 1) != 0 ) {
 						locvar_cell_draw_c = cdata(CDATA_TAGTEAM_PARTNER, map(locvar_cell_draw_x, locvar_cell_draw_y, 1) - 1)
 						if ( cdata(CDATA_IN_TAGTEAM, locvar_cell_draw_c) == 1 ) {
@@ -3775,7 +3781,7 @@
 			if ( locvar_cell_draw_wall == 0 ) {
 				if ( locvar_cell_draw_ground != tile_fog ) {
 					if ( locvar_cell_draw_y > 0 ) {
-						if ( locvar_cell_draw_dy > 48 ) {
+						if ( locvar_cell_draw_dy > 48 | cell_draw2_ignore_seen ) {
 							locvar_cell_draw_ground = map(locvar_cell_draw_x, locvar_cell_draw_y - 1, 0)
 							if ( chipm(CHIPM_WALL, locvar_cell_draw_ground) ) {
 								pos locvar_cell_draw_dx + (locvar_cell_draw_dx < 0) * (-locvar_cell_draw_dx), locvar_cell_draw_dy
@@ -3817,6 +3823,7 @@
 		locvar_cell_draw_dy += inf_tiles
 		locvar_cell_draw_ly++
 	loop
+	return
 
 #deffunc cell_itemlist int cell_itemlist_arg1, int cell_itemlist_arg2
 	listmax = 0
