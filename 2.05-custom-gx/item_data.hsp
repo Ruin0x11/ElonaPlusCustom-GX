@@ -570,69 +570,69 @@
 
 			/********** ANNA CUSTOM - ENDING **********/
 		}
-		if ( val == ENCHANT_ABSORB_MP ) {
-			rtval = 4
-			s = lang("攻撃対象からMPを吸収する", "absorbs MP from an enemy.") + " ["
-			putenclv val(1) / 50
-			s += "]"
-			if ( val(3) == FILTER_ITEM_FOOD | val(3) == FILTER_JUNK ) {
-				s = lang("MPを回復する成分を含む", "can heal your MP.") + " ["
-				putenclv val(1) / 50
-				s += "]"
-
-				/********** ANNA CUSTOM - BEGINNING **********/ // Show Enchant Strength With Objet of Heart
-
-				item_find ITEM_ID_OBJET_HEART, 3
-				if ( stat != (-1) & TweakData(TWEAK_UI_SHOW_ENCHANT_STRENGTH, TWEAK_CATEGORY_UI) >= 1 ) {
-					s += "(" + val(1) + ")"
-				}
-
-				/********** ANNA CUSTOM - ENDING **********/
-
-			}
-            else {
-				/********** ANNA CUSTOM - BEGINNING **********/ // Show Enchant Strength With Objet of Heart
-
-				item_find ITEM_ID_OBJET_HEART, 3
-				if ( stat != (-1) & TweakData(TWEAK_UI_SHOW_ENCHANT_STRENGTH, TWEAK_CATEGORY_UI) == 2 ) {
-					s += " (" + val(1) + ")"
-				}
-
-				/********** ANNA CUSTOM - ENDING **********/
-            }
-		}
-		if ( val == ENCHANT_ABSORB_STAMINA ) {
-			rtval = 4
-			s = lang("攻撃対象からスタミナを吸収する", "absorbs stamina from an enemy.") + " ["
-			putenclv val(1) / 50
-			s += "]"
-			if ( val(3) == FILTER_ITEM_FOOD | val(3) == FILTER_JUNK ) {
-				s = lang("スタミナを回復する成分を含む", "can heal your SP.") + " ["
-				putenclv val(1) / 50
-				s += "]"
-
-				/********** ANNA CUSTOM - BEGINNING **********/ // Show Enchant Strength With Objet of Heart
-
-				item_find ITEM_ID_OBJET_HEART, 3
-				if ( stat != (-1) & TweakData(TWEAK_UI_SHOW_ENCHANT_STRENGTH, TWEAK_CATEGORY_UI) >= 1 ) {
-					s += "(" + val(1) + ")"
-				}
-
-				/********** ANNA CUSTOM - ENDING **********/
-
-			}
-            else {
-				/********** ANNA CUSTOM - BEGINNING **********/ // Show Enchant Strength With Objet of Heart
-
-				item_find ITEM_ID_OBJET_HEART, 3
-				if ( stat != (-1) & TweakData(TWEAK_UI_SHOW_ENCHANT_STRENGTH, TWEAK_CATEGORY_UI) == 2 ) {
-					s += " (" + val(1) + ")"
-				}
-
-				/********** ANNA CUSTOM - ENDING **********/
-            }
-		}
 		return
+	}
+	if ( val == ENCHANT_ABSORB_MP ) {
+		rtval = 4
+		s = lang("攻撃対象からMPを吸収する", "absorbs MP from an enemy.") + " ["
+		putenclv val(1) / 50
+		s += "]"
+		if ( val(3) == FILTER_ITEM_FOOD | val(3) == FILTER_JUNK ) {
+			s = lang("MPを回復する成分を含む", "can heal your MP.") + " ["
+			putenclv val(1) / 50
+			s += "]"
+
+			/********** ANNA CUSTOM - BEGINNING **********/ // Show Enchant Strength With Objet of Heart
+
+			item_find ITEM_ID_OBJET_HEART, 3
+			if ( stat != (-1) & TweakData(TWEAK_UI_SHOW_ENCHANT_STRENGTH, TWEAK_CATEGORY_UI) >= 1 ) {
+				s += "(" + val(1) + ")"
+			}
+
+			/********** ANNA CUSTOM - ENDING **********/
+
+		}
+		else {
+			/********** ANNA CUSTOM - BEGINNING **********/ // Show Enchant Strength With Objet of Heart
+
+			item_find ITEM_ID_OBJET_HEART, 3
+			if ( stat != (-1) & TweakData(TWEAK_UI_SHOW_ENCHANT_STRENGTH, TWEAK_CATEGORY_UI) == 2 ) {
+				s += " (" + val(1) + ")"
+			}
+
+			/********** ANNA CUSTOM - ENDING **********/
+		}
+	}
+	if ( val == ENCHANT_ABSORB_STAMINA ) {
+		rtval = 4
+		s = lang("攻撃対象からスタミナを吸収する", "absorbs stamina from an enemy.") + " ["
+		putenclv val(1) / 50
+		s += "]"
+		if ( val(3) == FILTER_ITEM_FOOD | val(3) == FILTER_JUNK ) {
+			s = lang("スタミナを回復する成分を含む", "can heal your SP.") + " ["
+			putenclv val(1) / 50
+			s += "]"
+
+			/********** ANNA CUSTOM - BEGINNING **********/ // Show Enchant Strength With Objet of Heart
+
+			item_find ITEM_ID_OBJET_HEART, 3
+			if ( stat != (-1) & TweakData(TWEAK_UI_SHOW_ENCHANT_STRENGTH, TWEAK_CATEGORY_UI) >= 1 ) {
+				s += "(" + val(1) + ")"
+			}
+
+			/********** ANNA CUSTOM - ENDING **********/
+
+		}
+		else {
+			/********** ANNA CUSTOM - BEGINNING **********/ // Show Enchant Strength With Objet of Heart
+
+			item_find ITEM_ID_OBJET_HEART, 3
+			if ( stat != (-1) & TweakData(TWEAK_UI_SHOW_ENCHANT_STRENGTH, TWEAK_CATEGORY_UI) == 2 ) {
+				s += " (" + val(1) + ")"
+			}
+
+			/********** ANNA CUSTOM - ENDING **********/
+		}
 	}
 
 	if ( val == 0 ) {
