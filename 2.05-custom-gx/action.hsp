@@ -16785,6 +16785,10 @@
 					}
 					if ( strmid(cdatan(CDATAN_NAME, tc), 0, strlen(evold)) == evold ) {
 						cdatan(CDATAN_NAME, tc) = evname + strmid(cdatan(CDATAN_NAME, tc), strlen(evold), strlen(cdatan(CDATAN_NAME, tc)) - strlen(evold))
+					} else {
+						if ( strmid(cdatan(CDATAN_NAME, tc), strlen(cdatan(CDATAN_NAME, tc)) - strlen(evold), strlen(evold)) == evold ) {
+							cdatan(CDATAN_NAME, tc) = strmid(cdatan(CDATAN_NAME, tc), 0, strlen(cdatan(CDATAN_NAME, rc)) - strlen(evold)) + evname
+						}
 					}
 					inv(INV_ITEM_NUM, ci)--
 					cell_refresh inv(INV_ITEM_X, ci), inv(INV_ITEM_Y, ci)

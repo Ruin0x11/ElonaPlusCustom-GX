@@ -2528,6 +2528,10 @@
 		evold = lang("人狼", "werewolf")
 		if ( strmid(cdatan(CDATAN_NAME, rc), 0, strlen(evold)) == evold ) {
 			cdatan(CDATAN_NAME, rc) = evname + strmid(cdatan(CDATAN_NAME, rc), strlen(evold), strlen(cdatan(CDATAN_NAME, rc)) - strlen(evold))
+		} else {
+			if ( strmid(cdatan(CDATAN_NAME, rc), strlen(cdatan(CDATAN_NAME, rc)) - strlen(evold), strlen(evold)) == evold ) {
+				cdatan(CDATAN_NAME, rc) = strmid(cdatan(CDATAN_NAME, rc), 0, strlen(cdatan(CDATAN_NAME, rc)) - strlen(evold)) + evname
+			}
 		}
 		gosub *supplyEquip
 		repeat 2
@@ -2576,6 +2580,10 @@
 		evold = lang("人狼探偵", "werewolf detective")
 		if ( strmid(cdatan(CDATAN_NAME, rc), 0, strlen(evold)) == evold ) {
 			cdatan(CDATAN_NAME, rc) = evname + strmid(cdatan(CDATAN_NAME, rc), strlen(evold), strlen(cdatan(CDATAN_NAME, rc)) - strlen(evold))
+		} else {
+			if ( strmid(cdatan(CDATAN_NAME, rc), strlen(cdatan(CDATAN_NAME, rc)) - strlen(evold), strlen(evold)) == evold ) {
+				cdatan(CDATAN_NAME, rc) = strmid(cdatan(CDATAN_NAME, rc), 0, strlen(cdatan(CDATAN_NAME, rc)) - strlen(evold)) + evname
+			}
 		}
 		gosub *supplyEquip
 		cdata(CDATA_RELATION_ORG, rc) = 0
@@ -2584,9 +2592,13 @@
 	}
 	if ( cdata(CDATA_ID, rc) == CREATURE_ID_FOX_SPIRIT & mdata(MDATA_TYPE) == MAP_TYPE_TOWN ) {
 		evname = lang("市民", "citizen")
-		evold = lang("妖狐", "fox")
+		evold = lang("妖狐", "fox spirit")
 		if ( strmid(cdatan(CDATAN_NAME, rc), 0, strlen(evold)) == evold ) {
 			cdatan(CDATAN_NAME, rc) = evname + strmid(cdatan(CDATAN_NAME, rc), strlen(evold), strlen(cdatan(CDATAN_NAME, rc)) - strlen(evold))
+		} else {
+			if ( strmid(cdatan(CDATAN_NAME, rc), strlen(cdatan(CDATAN_NAME, rc)) - strlen(evold), strlen(evold)) == evold ) {
+				cdatan(CDATAN_NAME, rc) = strmid(cdatan(CDATAN_NAME, rc), 0, strlen(cdatan(CDATAN_NAME, rc)) - strlen(evold)) + evname
+			}
 		}
 		gosub *supplyEquip
 		repeat 3
@@ -2625,6 +2637,10 @@
 		evold = lang("スンバラリア星人", "sunbararian")
 		if ( strmid(cdatan(CDATAN_NAME, rc), 0, strlen(evold)) == evold ) {
 			cdatan(CDATAN_NAME, rc) = evname + strmid(cdatan(CDATAN_NAME, rc), strlen(evold), strlen(cdatan(CDATAN_NAME, rc)) - strlen(evold))
+		} else {
+			if ( strmid(cdatan(CDATAN_NAME, rc), strlen(cdatan(CDATAN_NAME, rc)) - strlen(evold), strlen(evold)) == evold ) {
+				cdatan(CDATAN_NAME, rc) = strmid(cdatan(CDATAN_NAME, rc), 0, strlen(cdatan(CDATAN_NAME, rc)) - strlen(evold)) + evname
+			}
 		}
 		gosub *supplyEquip
 		repeat 2

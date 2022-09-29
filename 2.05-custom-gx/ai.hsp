@@ -80,6 +80,18 @@
 			if ( strmid(cdatan(CDATAN_NAME, cc), 0, strlen(evold)) == evold ) {
 				cdatan(CDATAN_NAME, cc) = evname + strmid(cdatan(CDATAN_NAME, cc), strlen(evold), strlen(cdatan(CDATAN_NAME, cc)) - strlen(evold))
 			}
+			if ( strmid(cdatan(CDATAN_NAME, cc), strlen(cdatan(CDATAN_NAME, cc)) - strlen(evold), strlen(evold)) == evold ) {
+				cdatan(CDATAN_NAME, cc) = strmid(cdatan(CDATAN_NAME, cc), 0, strlen(cdatan(CDATAN_NAME, cc)) - strlen(evold)) + evname
+			}
+		} else {
+			evold = lang("人狼", "werewolf")
+			evname = lang("市民", "citizen")
+			if ( strmid(cdatan(CDATAN_NAME, cc), 0, strlen(evold)) == evold ) {
+				cdatan(CDATAN_NAME, cc) = evname + strmid(cdatan(CDATAN_NAME, cc), strlen(evold), strlen(cdatan(CDATAN_NAME, cc)) - strlen(evold))
+			}
+			if ( strmid(cdatan(CDATAN_NAME, cc), strlen(cdatan(CDATAN_NAME, cc)) - strlen(evold), strlen(evold)) == evold ) {
+				cdatan(CDATAN_NAME, cc) = strmid(cdatan(CDATAN_NAME, cc), 0, strlen(cdatan(CDATAN_NAME, cc)) - strlen(evold)) + evname
+			}
 		}
 	}
 	if ( cdata(CDATA_ID, cc) == CREATURE_ID_WEREWOLF_DETECTIVE ) {
@@ -97,6 +109,18 @@
 			if ( strmid(cdatan(CDATAN_NAME, cc), 0, strlen(evold)) == evold ) {
 				cdatan(CDATAN_NAME, cc) = evname + strmid(cdatan(CDATAN_NAME, cc), strlen(evold), strlen(cdatan(CDATAN_NAME, cc)) - strlen(evold))
 			}
+			if ( strmid(cdatan(CDATAN_NAME, cc), strlen(cdatan(CDATAN_NAME, cc)) - strlen(evold), strlen(evold)) == evold & strmid(cdatan(CDATAN_NAME, cc), strlen(cdatan(CDATAN_NAME, cc)) - strlen(evold), strlen(evname)) != evname ) {
+				cdatan(CDATAN_NAME, cc) = strmid(cdatan(CDATAN_NAME, cc), 0, strlen(cdatan(CDATAN_NAME, cc)) - strlen(evold)) + evname
+			}
+		} else {
+			evold = lang("人狼探偵", "werewolf detective")
+			evname = lang("探偵", "detective")
+			if ( strmid(cdatan(CDATAN_NAME, cc), 0, strlen(evold)) == evold ) {
+				cdatan(CDATAN_NAME, cc) = evname + strmid(cdatan(CDATAN_NAME, cc), strlen(evold), strlen(cdatan(CDATAN_NAME, cc)) - strlen(evold))
+			}
+			if ( strmid(cdatan(CDATAN_NAME, cc), strlen(cdatan(CDATAN_NAME, cc)) - strlen(evold), strlen(evold)) == evold ) {
+				cdatan(CDATAN_NAME, cc) = strmid(cdatan(CDATAN_NAME, cc), 0, strlen(cdatan(CDATAN_NAME, cc)) - strlen(evold)) + evname
+			}
 		}
 	}
 	if ( cdata(CDATA_EVOCHAT_POINTS, cc) > 0 ) {
@@ -111,10 +135,22 @@
 			if ( cdata(CDATA_PIC, cc) == xy2pic(4, 4) | cdata(CDATA_PIC, cc) == xy2pic(21, 4) | cdata(CDATA_PIC, cc) == xy2pic(5, 4) | cdata(CDATA_PIC, cc) == xy2pic(23, 9) ) {
 				cdata(CDATA_PIC, cc) = xy2pic(5, 23)
 			}
-			evname = lang("妖狐", "fox")
+			evname = lang("妖狐", "fox spirit")
 			evold = lang("市民", "citizen")
 			if ( strmid(cdatan(CDATAN_NAME, cc), 0, strlen(evold)) == evold ) {
 				cdatan(CDATAN_NAME, cc) = evname + strmid(cdatan(CDATAN_NAME, cc), strlen(evold), strlen(cdatan(CDATAN_NAME, cc)) - strlen(evold))
+			}
+			if ( strmid(cdatan(CDATAN_NAME, cc), strlen(cdatan(CDATAN_NAME, cc)) - strlen(evold), strlen(evold)) == evold ) {
+				cdatan(CDATAN_NAME, cc) = strmid(cdatan(CDATAN_NAME, cc), 0, strlen(cdatan(CDATAN_NAME, cc)) - strlen(evold)) + evname
+			}
+		} else {
+			evold = lang("妖狐", "fox spirit")
+			evname = lang("市民", "citizen")
+			if ( strmid(cdatan(CDATAN_NAME, cc), 0, strlen(evold)) == evold ) {
+				cdatan(CDATAN_NAME, cc) = evname + strmid(cdatan(CDATAN_NAME, cc), strlen(evold), strlen(cdatan(CDATAN_NAME, cc)) - strlen(evold))
+			}
+			if ( strmid(cdatan(CDATAN_NAME, cc), strlen(cdatan(CDATAN_NAME, cc)) - strlen(evold), strlen(evold)) == evold ) {
+				cdatan(CDATAN_NAME, cc) = strmid(cdatan(CDATAN_NAME, cc), 0, strlen(cdatan(CDATAN_NAME, cc)) - strlen(evold)) + evname
 			}
 		}
 	}
@@ -127,6 +163,18 @@
 				if ( strmid(cdatan(CDATAN_NAME, cc), 0, strlen(evold)) == evold ) {
 					cdatan(CDATAN_NAME, cc) = evname + strmid(cdatan(CDATAN_NAME, cc), strlen(evold), strlen(cdatan(CDATAN_NAME, cc)) - strlen(evold))
 				}
+				if ( strmid(cdatan(CDATAN_NAME, cc), strlen(cdatan(CDATAN_NAME, cc)) - strlen(evold), strlen(evold)) == evold ) {
+					cdatan(CDATAN_NAME, cc) = strmid(cdatan(CDATAN_NAME, cc), 0, strlen(cdatan(CDATAN_NAME, cc)) - strlen(evold)) + evname
+				}
+			}
+		} else {
+			evold = lang("スンバラリア星人", "sunbararian")
+			evname = lang("市民", "citizen")
+			if ( strmid(cdatan(CDATAN_NAME, cc), 0, strlen(evold)) == evold ) {
+				cdatan(CDATAN_NAME, cc) = evname + strmid(cdatan(CDATAN_NAME, cc), strlen(evold), strlen(cdatan(CDATAN_NAME, cc)) - strlen(evold))
+			}
+			if ( strmid(cdatan(CDATAN_NAME, cc), strlen(cdatan(CDATAN_NAME, cc)) - strlen(evold), strlen(evold)) == evold ) {
+				cdatan(CDATAN_NAME, cc) = strmid(cdatan(CDATAN_NAME, cc), 0, strlen(cdatan(CDATAN_NAME, cc)) - strlen(evold)) + evname
 			}
 		}
 	}
