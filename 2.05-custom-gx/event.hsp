@@ -2904,7 +2904,13 @@
 		autosave = 1 * (gdata(GDATA_AREA) != AREA_SHOW_HOUSE)
 	}
 	if ( gdata(GDATA_DAY) == 1 ) {
-		if ( gdata(GDATA_YEAR) > 517 ) {
+		if ( TweakData(TWEAK_GAMEPLAY_REVERT_POST_213_EXP_CHANGES, TWEAK_CATEGORY_GAMEPLAY) == TRUE ) {
+			locvar_event_income_is_taxed = cdata(CDATA_LEVEL, CHARA_PLAYER) >= 10
+		}
+		else {
+			locvar_event_income_is_taxed = gdata(GDATA_YEAR) > 517
+		}
+		if ( locvar_event_income_is_taxed ) {
 			autosave = 1 * (gdata(GDATA_AREA) != AREA_SHOW_HOUSE)
 			if ( gdata(STARTING_GDATA_FLAG + 359) <= 0 ) {
 				gdata(STARTING_GDATA_FLAG + 359) = 0
@@ -2969,7 +2975,12 @@
 		}
 		else {
 			txtmore
-			txt lang("初年度は納税の義務がない。", "You don't have to pay tax until new Year.")
+			if ( TweakData(TWEAK_GAMEPLAY_REVERT_POST_213_EXP_CHANGES, TWEAK_CATEGORY_GAMEPLAY) == TRUE ) {
+				txt lang("レベルが10に達していないので納税の義務はない。", "You don't have to pay tax until you hit level 10.")
+			}
+			else {
+				txt lang("初年度は納税の義務がない。", "You don't have to pay tax until New Year's.")
+			}
 		}
 	}
 	file = "shop" + invfile + ".s2"

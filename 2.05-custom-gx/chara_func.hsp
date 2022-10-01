@@ -3530,32 +3530,60 @@
 			}
 		}
 	}
-	locvar_check_talk_exp = limit(cdata(CDATA_LEVEL, check_talk_arg2), 1, 400) * limit(cdata(CDATA_LEVEL, check_talk_arg2) + 1, 1, 400) * limit(cdata(CDATA_LEVEL, check_talk_arg2) + 2, 1, 400) / 10 + 10
-	if ( check_talk_arg1 == 0 ) {
-		if ( cdata(CDATA_LEVEL, check_talk_arg2) < cdata(CDATA_LEVEL, check_talk_arg1) ) {
-			locvar_check_talk_exp = locvar_check_talk_exp / 100 + 5
+	if ( TweakData(TWEAK_GAMEPLAY_REVERT_POST_213_EXP_CHANGES, TWEAK_CATEGORY_GAMEPLAY) == TRUE ) {
+		locvar_check_talk_exp = limit(cdata(CDATA_LEVEL, check_talk_arg2), 1, 400) * limit(cdata(CDATA_LEVEL, check_talk_arg2) + 1, 1, 400) * limit(cdata(CDATA_LEVEL, check_talk_arg2) + 2, 1, 400) / 10 + 8
+		if ( check_talk_arg1 == 0 ) {
+			if ( cdata(CDATA_LEVEL, check_talk_arg2) < cdata(CDATA_LEVEL, check_talk_arg1) ) {
+				locvar_check_talk_exp = locvar_check_talk_exp / 100 + 10
+			}
 		}
-	}
-	if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, check_talk_arg2) | cbit(CHARA_BIT_SPLIT_NO_EFFECT, check_talk_arg2) ) {
-		locvar_check_talk_exp = 0
-	}
-	if ( cdata(CDATA_RELATION, check_talk_arg1) == RELATION_ALLY | check_talk_arg1 == 0 ) {
-		if ( gdata(GDATA_SLEEP_EXP) > 1000000000 ) {
-			gdata(GDATA_SLEEP_EXP) = 1000000000
+		if ( check_talk_arg1 == 0 ) {
+			if ( cdata(CDATA_LEVEL, check_talk_arg2) > cdata(CDATA_LEVEL, check_talk_arg1) ) {
+				locvar_check_talk_exp *= limit(cdata(CDATA_LEVEL, check_talk_arg2) * 2 / cdata(CDATA_LEVEL, CHARA_PLAYER), 1, 10)
+			}
 		}
-		gdata(GDATA_SLEEP_EXP) += locvar_check_talk_exp
-		if ( gdata(GDATA_SLEEP_EXP) > 1000000000 ) {
-			gdata(GDATA_SLEEP_EXP) = 1000000000
+		if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, check_talk_arg2) | cbit(CHARA_BIT_SPLIT_NO_EFFECT, check_talk_arg2) ) {
+			locvar_check_talk_exp = 0
 		}
-	}
-	if ( check_talk_arg1 == 0 ) {
-		if ( cdata(CDATA_LEVEL, check_talk_arg2) > cdata(CDATA_LEVEL, check_talk_arg1) ) {
-			if ( locvar_check_talk_exp > 10 ) {
-				locvar_check_talk_exp = locvar_check_talk_exp * limit(cdata(CDATA_LEVEL, check_talk_arg2) * 30 / cdata(CDATA_LEVEL, CHARA_PLAYER), 10, 100) / 10
+		cdata(CDATA_EXP, check_talk_arg1) += locvar_check_talk_exp
+		if ( check_talk_arg1 == 0 ) {
+			if ( gdata(GDATA_SLEEP_EXP) > 1000000000 ) {
+				gdata(GDATA_SLEEP_EXP) = 1000000000
+			}
+			gdata(GDATA_SLEEP_EXP) += locvar_check_talk_exp
+			if ( gdata(GDATA_SLEEP_EXP) > 1000000000 ) {
+				gdata(GDATA_SLEEP_EXP) = 1000000000
 			}
 		}
 	}
-	cdata(CDATA_EXP, check_talk_arg1) += locvar_check_talk_exp
+	else {
+		locvar_check_talk_exp = limit(cdata(CDATA_LEVEL, check_talk_arg2), 1, 400) * limit(cdata(CDATA_LEVEL, check_talk_arg2) + 1, 1, 400) * limit(cdata(CDATA_LEVEL, check_talk_arg2) + 2, 1, 400) / 10 + 10
+		if ( check_talk_arg1 == 0 ) {
+			if ( cdata(CDATA_LEVEL, check_talk_arg2) < cdata(CDATA_LEVEL, check_talk_arg1) ) {
+				locvar_check_talk_exp = locvar_check_talk_exp / 100 + 5
+			}
+		}
+		if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, check_talk_arg2) | cbit(CHARA_BIT_SPLIT_NO_EFFECT, check_talk_arg2) ) {
+			locvar_check_talk_exp = 0
+		}
+		if ( cdata(CDATA_RELATION, check_talk_arg1) == RELATION_ALLY | check_talk_arg1 == 0 ) {
+			if ( gdata(GDATA_SLEEP_EXP) > 1000000000 ) {
+				gdata(GDATA_SLEEP_EXP) = 1000000000
+			}
+			gdata(GDATA_SLEEP_EXP) += locvar_check_talk_exp
+			if ( gdata(GDATA_SLEEP_EXP) > 1000000000 ) {
+				gdata(GDATA_SLEEP_EXP) = 1000000000
+			}
+		}
+		if ( check_talk_arg1 == 0 ) {
+			if ( cdata(CDATA_LEVEL, check_talk_arg2) > cdata(CDATA_LEVEL, check_talk_arg1) ) {
+				if ( locvar_check_talk_exp > 10 ) {
+					locvar_check_talk_exp = locvar_check_talk_exp * limit(cdata(CDATA_LEVEL, check_talk_arg2) * 30 / cdata(CDATA_LEVEL, CHARA_PLAYER), 10, 100) / 10
+				}
+			}
+		}
+		cdata(CDATA_EXP, check_talk_arg1) += locvar_check_talk_exp
+	}
 	cdata(CDATA_AI_AGGRO, check_talk_arg1) = 0
 	return
 
@@ -6713,30 +6741,58 @@
 			cdata(CDATA_TARGET, dmghp_source) = 0
 			customtalk dmghp_source, DBMODE_FLAVOR_KILL
 			gosub *convert_word
-			locvar_dmghp_exp = limit(cdata(CDATA_LEVEL, dmghp_charid), 1, 400) * limit(cdata(CDATA_LEVEL, dmghp_charid) + 1, 1, 400) * limit(cdata(CDATA_LEVEL, dmghp_charid) + 2, 1, 400) / 10 + 10
-			if ( dmghp_source == DAMAGE_FROM_CHARA ) {
-				if ( cdata(CDATA_LEVEL, dmghp_charid) < cdata(CDATA_LEVEL, dmghp_source) ) {
-					locvar_dmghp_exp = locvar_dmghp_exp / 100 + 5
+			if ( TweakData(TWEAK_GAMEPLAY_REVERT_POST_213_EXP_CHANGES, TWEAK_CATEGORY_GAMEPLAY) == TRUE ) {
+				locvar_dmghp_exp = limit(cdata(CDATA_LEVEL, dmghp_charid), 1, 400) * limit(cdata(CDATA_LEVEL, dmghp_charid) + 1, 1, 400) * limit(cdata(CDATA_LEVEL, dmghp_charid) + 2, 1, 400) / 10 + 8
+				if ( dmghp_source == DAMAGE_FROM_CHARA ) {
+					if ( cdata(CDATA_LEVEL, dmghp_charid) < cdata(CDATA_LEVEL, dmghp_source) ) {
+						locvar_dmghp_exp = locvar_dmghp_exp / 100 + 10
+					}
+				}
+				if ( dmghp_source == DAMAGE_FROM_CHARA ) {
+					if ( cdata(CDATA_LEVEL, dmghp_charid) > cdata(CDATA_LEVEL, dmghp_source) ) {
+						locvar_dmghp_exp *= limit(cdata(CDATA_LEVEL, dmghp_charid) * 2 / cdata(CDATA_LEVEL, CHARA_PLAYER), 1, 10)
+					}
+				}
+				if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, dmghp_charid) | cbit(CHARA_BIT_SPLIT_NO_EFFECT, dmghp_charid) ) {
+					locvar_dmghp_exp = 0
+				}
+				cdata(CDATA_EXP, dmghp_source) += locvar_dmghp_exp
+				if ( dmghp_source == DAMAGE_FROM_CHARA ) {
+					if ( gdata(GDATA_SLEEP_EXP) > 1000000000 ) {
+						gdata(GDATA_SLEEP_EXP) = 1000000000
+					}
+					gdata(GDATA_SLEEP_EXP) += locvar_dmghp_exp
+					if ( gdata(GDATA_SLEEP_EXP) > 1000000000 ) {
+						gdata(GDATA_SLEEP_EXP) = 1000000000
+					}
 				}
 			}
-			if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, dmghp_charid) | cbit(CHARA_BIT_SPLIT_NO_EFFECT, dmghp_charid) ) {
-				locvar_dmghp_exp = 0
-			}
-			if ( cdata(CDATA_RELATION, dmghp_source) == RELATION_ALLY | dmghp_source == CHARA_PLAYER ) {
-				if ( gdata(GDATA_SLEEP_EXP) > 1000000000 ) {
-					gdata(GDATA_SLEEP_EXP) = 1000000000
+			else {
+				locvar_dmghp_exp = limit(cdata(CDATA_LEVEL, dmghp_charid), 1, 400) * limit(cdata(CDATA_LEVEL, dmghp_charid) + 1, 1, 400) * limit(cdata(CDATA_LEVEL, dmghp_charid) + 2, 1, 400) / 10 + 10
+				if ( dmghp_source == DAMAGE_FROM_CHARA ) {
+					if ( cdata(CDATA_LEVEL, dmghp_charid) < cdata(CDATA_LEVEL, dmghp_source) ) {
+						locvar_dmghp_exp = locvar_dmghp_exp / 100 + 5
+					}
 				}
-				gdata(GDATA_SLEEP_EXP) += locvar_dmghp_exp
-				if ( gdata(GDATA_SLEEP_EXP) > 1000000000 ) {
-					gdata(GDATA_SLEEP_EXP) = 1000000000
+				if ( cbit(CHARA_BIT_SPLIT_KEEP_EFFECT, dmghp_charid) | cbit(CHARA_BIT_SPLIT_NO_EFFECT, dmghp_charid) ) {
+					locvar_dmghp_exp = 0
 				}
-			}
-			if ( dmghp_source == CHARA_PLAYER ) {
-				if ( cdata(CDATA_LEVEL, dmghp_charid) > cdata(CDATA_LEVEL, dmghp_source) ) {
-					locvar_dmghp_exp = locvar_dmghp_exp * limit(cdata(CDATA_LEVEL, dmghp_charid) * 20 / cdata(CDATA_LEVEL, dmghp_source), 10, 100) / 10
+				if ( cdata(CDATA_RELATION, dmghp_source) == RELATION_ALLY | dmghp_source == CHARA_PLAYER ) {
+					if ( gdata(GDATA_SLEEP_EXP) > 1000000000 ) {
+						gdata(GDATA_SLEEP_EXP) = 1000000000
+					}
+					gdata(GDATA_SLEEP_EXP) += locvar_dmghp_exp
+					if ( gdata(GDATA_SLEEP_EXP) > 1000000000 ) {
+						gdata(GDATA_SLEEP_EXP) = 1000000000
+					}
 				}
+				if ( dmghp_source == CHARA_PLAYER ) {
+					if ( cdata(CDATA_LEVEL, dmghp_charid) > cdata(CDATA_LEVEL, dmghp_source) ) {
+						locvar_dmghp_exp = locvar_dmghp_exp * limit(cdata(CDATA_LEVEL, dmghp_charid) * 20 / cdata(CDATA_LEVEL, dmghp_source), 10, 100) / 10
+					}
+				}
+				cdata(CDATA_EXP, dmghp_source) += locvar_dmghp_exp
 			}
-			cdata(CDATA_EXP, dmghp_source) += locvar_dmghp_exp
 			cdata(CDATA_AI_AGGRO, dmghp_source) = 0
 		}
 		if ( dmghp_source >= DAMAGE_FROM_CHARA ) {
