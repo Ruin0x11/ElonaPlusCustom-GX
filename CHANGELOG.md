@@ -1,3 +1,22 @@
+# 2.14.1.0
+
+## Added
+- Ported all changes from Elona+ 2.14.
+- Added English translations for some item descriptions (potions, drinks, music disc).
+- Added a message displaying how much gold pets receive when they enact prostitution.
+- Added a new console command for taking a screenshot of the entire map (`save_map_image`).
+- Added a tweak to revert changes to the experience formula after Elona+ 2.13. 
+  + Addresses "increased experience multipliers when defeating enemies above the player character's (PC) level".
+  + Toggling this also reverts the change to taxation coming into effect after New Year's.
+
+## Fixed
+- Fixed the incorrect sprite being used for the laser bazooka attack animation.
+- Fixed the effect of Element Eyes not being applied to Variable Breath when it was used by custom AI.
+- Fixed crashes with high-quality item shadows and DPI scaling. Be sure to copy the included `elona.dll` to your install directory to apply the fix, overwriting the existing file.
+- Fixed the NPC name changes for pet evolution and the werewolf game for some character types.
+
+Thanks to @Regaccio and @JianmengYu for contributing.
+
 # 2.13.1.0
 
 ## Added
