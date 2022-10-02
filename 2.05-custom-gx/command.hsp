@@ -5526,6 +5526,7 @@
 	}
 	if ( develop | gdata(GDATA_WIZARD) ) {
 		promptAdd lang("情報", "Information"), "null", 6
+		promptAdd lang("カスタムＡＩ", "Custom AI"), "null", 998
 	}
 	if ( cdata(CDATA_ID, tc) == CREATURE_ID_ITZPALT | cdata(CDATA_ID, tc) == CREATURE_ID_YACATECT | cdata(CDATA_ID, tc) == CREATURE_ID_JURE | cdata(CDATA_ID, tc) == CREATURE_ID_LULWY | cdata(CDATA_ID, tc) == CREATURE_ID_EHEKATL | cdata(CDATA_ID, tc) == CREATURE_ID_OPATOS | cdata(CDATA_ID, tc) == CREATURE_ID_KUMIROMI | cdata(CDATA_ID, tc) == CREATURE_ID_MANI | cdata(CDATA_ID, tc) == CREATURE_ID_WAR_SPIRIT | cdata(CDATA_ID, tc) == CREATURE_ID_MAGIC_SPIRIT | cdata(CDATA_ID, tc) == CREATURE_ID_PUDDING_SPIRIT | cdata(CDATA_ID, tc) == CREATURE_ID_GUN_SPIRIT ) {
 		if ( cbit(CHARA_BIT_LIVESTOCK, tc) != 1 ) {
@@ -5960,6 +5961,11 @@
 				}
 			}
 		loop
+		goto *pc_turn
+	}
+
+	if ( p == 998 ) {
+		gosub *PetMenu
 		goto *pc_turn
 	}
 

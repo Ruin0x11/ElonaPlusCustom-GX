@@ -97,15 +97,24 @@
 			if ( CAIComparator(cnt, cc) == CUSTOM_AI_CONDITION_HP ) { ; If condition is equal to "HP"
 				if ( CAIValue(cnt, cc) > 99 & CAIValue(cnt, cc) - 100 < 100 ) { ; If value is a percentage
 					if ( ActionTarget == -2 ) {
-						LoopCount = 0
-
-						while ( LoopCount < MAX_CHARA_FOLLOWER )
+						if ( cc < MAX_CHARA_FOLLOWER ) {
+							LoopCount = 0
+							LoopMax = MAX_CHARA_FOLLOWER
+						}
+						else {
+							LoopCount = MAX_CHARA_SAVE
+							LoopMax = MAX_CHARA_TOTAL
+						}
+						while ( LoopCount < LoopMax )
 							if ( cdata(CDATA_EXIST, LoopCount) != CHAR_STATE_ALIVE ) {
 								LoopCount++
 								_continue
 							}
 							if ( LoopCount == cc ) {
 								LoopCount++
+								_continue
+							}
+							if ( cc >= MAX_CHARA_FOLLOWER & cdata(CDATA_RELATION_ORG, LoopCount) > RELATION_ENEMY ) {
 								_continue
 							}
 							dx = cdata(CDATA_X, LoopCount)
@@ -169,9 +178,15 @@
 			if ( CAIComparator(cnt, cc) == CUSTOM_AI_CONDITION_MP ) { ; If condition is equal to "MP"
 				if ( CAIValue(cnt, cc) > 99 & CAIValue(cnt, cc) - 100 < 100 ) { ; If value is a percentage
 					if ( ActionTarget == -2 ) {
-						LoopCount = 0
-
-						while ( LoopCount < MAX_CHARA_FOLLOWER )
+						if ( cc < MAX_CHARA_FOLLOWER ) {
+							LoopCount = 0
+							LoopMax = MAX_CHARA_FOLLOWER
+						}
+						else {
+							LoopCount = MAX_CHARA_SAVE
+							LoopMax = MAX_CHARA_TOTAL
+						}
+						while ( LoopCount < LoopMax )
 							if ( cdata(CDATA_EXIST, LoopCount) != CHAR_STATE_ALIVE ) {
 								LoopCount++
 								_continue
@@ -184,6 +199,9 @@
 							}
 							if ( LoopCount == cc ) {
 								LoopCount++
+								_continue
+							}
+							if ( cc >= MAX_CHARA_FOLLOWER & cdata(CDATA_RELATION_ORG, LoopCount) > RELATION_ENEMY ) {
 								_continue
 							}
 							if ( (((cdata(CDATA_MP, LoopCount)*100) / cdata(CDATA_MAX_MP, LoopCount)) == AITextData(CAIValue(cnt, cc) - 100, 4)) & (CAIComparatorFix(cnt, cc) == 3 | CAIComparatorFix(cnt, cc) == 5 | CAIComparatorFix(cnt, cc) == 6) ) {
@@ -241,15 +259,24 @@
 			if ( CAIComparator(cnt, cc) == CUSTOM_AI_CONDITION_DISTANCE ) { ; If condition is equal to "distance"
 				if ( CAIValue(cnt, cc) > 99 & CAIValue(cnt, cc) - 200 < 100 & CAIValue(cnt, cc) - 200 >= 0 ) { ; If value is a distance
 					if ( ActionTarget == -2 ) {
-						LoopCount = 0
-
-						while ( LoopCount < MAX_CHARA_FOLLOWER )
+						if ( cc < MAX_CHARA_FOLLOWER ) {
+							LoopCount = 0
+							LoopMax = MAX_CHARA_FOLLOWER
+						}
+						else {
+							LoopCount = MAX_CHARA_SAVE
+							LoopMax = MAX_CHARA_TOTAL
+						}
+						while ( LoopCount < LoopMax )
 							if ( cdata(CDATA_EXIST, LoopCount) != CHAR_STATE_ALIVE ) {
 								LoopCount++
 								_continue
 							}
 							if ( LoopCount == cc ) {
 								LoopCount++
+								_continue
+							}
+							if ( cc >= MAX_CHARA_FOLLOWER & cdata(CDATA_RELATION_ORG, LoopCount) > RELATION_ENEMY ) {
 								_continue
 							}
 							dx = cdata(CDATA_X, LoopCount)
@@ -315,15 +342,24 @@
 			if ( CAIComparator(cnt, cc) == CUSTOM_AI_CONDITION_BUFF ) { ; If condition is equal to "buff"
 				if ( CAIValue(cnt, cc) < MAX_BUFF ) { ; If value is a valid buff ID
 					if ( ActionTarget == -2 ) {
-						LoopCount = 0
-
-						while ( LoopCount < MAX_CHARA_FOLLOWER )
+						if ( cc < MAX_CHARA_FOLLOWER ) {
+							LoopCount = 0
+							LoopMax = MAX_CHARA_FOLLOWER
+						}
+						else {
+							LoopCount = MAX_CHARA_SAVE
+							LoopMax = MAX_CHARA_TOTAL
+						}
+						while ( LoopCount < LoopMax )
 							if ( cdata(CDATA_EXIST, LoopCount) != CHAR_STATE_ALIVE ) {
 								LoopCount++
 								_continue
 							}
 							if ( LoopCount == cc ) {
 								LoopCount++
+								_continue
+							}
+							if ( cc >= MAX_CHARA_FOLLOWER & cdata(CDATA_RELATION_ORG, LoopCount) > RELATION_ENEMY ) {
 								_continue
 							}
 							dx = cdata(CDATA_X, LoopCount)
@@ -359,36 +395,45 @@
 			if ( CAIComparator(cnt, cc) == CUSTOM_AI_CONDITION_GAUGE ) { ; If condition is equal to "Gauge"
 				if ( CAIValue(cnt, cc) > 99 & CAIValue(cnt, cc) - 100 < 100 ) { ; If value is a percentage
 					if ( ActionTarget == -2 ) {
-						LoopCount = 0
-
-						while ( LoopCount < MAX_CHARA_FOLLOWER )
-						if ( cdata(CDATA_EXIST, LoopCount) != CHAR_STATE_ALIVE ) {
+						if ( cc < MAX_CHARA_FOLLOWER ) {
+							LoopCount = 0
+							LoopMax = MAX_CHARA_FOLLOWER
+						}
+						else {
+							LoopCount = MAX_CHARA_SAVE
+							LoopMax = MAX_CHARA_TOTAL
+						}
+						while ( LoopCount < LoopMax )
+							if ( cdata(CDATA_EXIST, LoopCount) != CHAR_STATE_ALIVE ) {
+								LoopCount++
+								_continue
+							}
+							dx = cdata(CDATA_X, LoopCount)
+							dy = cdata(CDATA_Y, LoopCount)
+							if ( fov_los(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), dx, dy) == 0 & (CAIAction(cnt, cc) != 3 & CAIAction(cnt, cc) != 4) ) {
+								LoopCount++
+								_continue
+							}
+							if ( LoopCount == cc ) {
+								LoopCount++
+								_continue
+							}
+							if ( cc >= MAX_CHARA_FOLLOWER & cdata(CDATA_RELATION_ORG, LoopCount) > RELATION_ENEMY ) {
+								_continue
+							}
+							if ( (cdata(CDATA_POWER_GAUGE, LoopCount) == AITextData(CAIValue(cnt, cc) - 100, 4)) & (CAIComparatorFix(cnt, cc) == 3 | CAIComparatorFix(cnt, cc) == 5 | CAIComparatorFix(cnt, cc) == 6) ) {
+								ActionTarget = LoopCount
+								_break
+							}
+							if ( (cdata(CDATA_POWER_GAUGE, LoopCount) > AITextData(CAIValue(cnt, cc) - 100, 4)) & (CAIComparatorFix(cnt, cc) == 2 | CAIComparatorFix(cnt, cc) == 5 | CAIComparatorFix(cnt, cc) == 4) ) {
+								ActionTarget = LoopCount
+								_break
+							}
+							if ( (cdata(CDATA_POWER_GAUGE, LoopCount) < AITextData(CAIValue(cnt, cc) - 100, 4)) & (CAIComparatorFix(cnt, cc) == 1 | CAIComparatorFix(cnt, cc) == 6 | CAIComparatorFix(cnt, cc) == 4) ) {
+								ActionTarget = LoopCount
+								_break
+							}
 							LoopCount++
-							_continue
-						}
-						dx = cdata(CDATA_X, LoopCount)
-						dy = cdata(CDATA_Y, LoopCount)
-						if ( fov_los(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), dx, dy) == 0 & (CAIAction(cnt, cc) != 3 & CAIAction(cnt, cc) != 4) ) {
-							LoopCount++
-							_continue
-						}
-						if ( LoopCount == cc ) {
-							LoopCount++
-							_continue
-						}
-						if ( (cdata(CDATA_POWER_GAUGE, LoopCount) == AITextData(CAIValue(cnt, cc) - 100, 4)) & (CAIComparatorFix(cnt, cc) == 3 | CAIComparatorFix(cnt, cc) == 5 | CAIComparatorFix(cnt, cc) == 6) ) {
-							ActionTarget = LoopCount
-							_break
-						}
-						if ( (cdata(CDATA_POWER_GAUGE, LoopCount) > AITextData(CAIValue(cnt, cc) - 100, 4)) & (CAIComparatorFix(cnt, cc) == 2 | CAIComparatorFix(cnt, cc) == 5 | CAIComparatorFix(cnt, cc) == 4) ) {
-							ActionTarget = LoopCount
-							_break
-						}
-						if ( (cdata(CDATA_POWER_GAUGE, LoopCount) < AITextData(CAIValue(cnt, cc) - 100, 4)) & (CAIComparatorFix(cnt, cc) == 1 | CAIComparatorFix(cnt, cc) == 6 | CAIComparatorFix(cnt, cc) == 4) ) {
-							ActionTarget = LoopCount
-							_break
-						}
-						LoopCount++
 						wend
 					}
 					if ( ActionTarget == -2 ) {
@@ -431,9 +476,15 @@
 			if ( CAIComparator(cnt, cc) == CUSTOM_AI_CONDITION_CLASS ) { ; If condition is equal to "Class"
 				if ( CAIValue(cnt, cc) > 99 & CAIValue(cnt, cc) - 300 < 100 & CAIValue(cnt, cc) - 300 >= 0 ) { ; If value is a percentage
 					if ( ActionTarget == -2 ) {
-						LoopCount = 0
-
-						while ( LoopCount < MAX_CHARA_FOLLOWER )
+						if ( cc < MAX_CHARA_FOLLOWER ) {
+							LoopCount = 0
+							LoopMax = MAX_CHARA_FOLLOWER
+						}
+						else {
+							LoopCount = MAX_CHARA_SAVE
+							LoopMax = MAX_CHARA_TOTAL
+						}
+						while ( LoopCount < LoopMax )
 							if ( cdata(CDATA_EXIST, LoopCount) != CHAR_STATE_ALIVE ) {
 								LoopCount++
 								_continue
@@ -446,6 +497,9 @@
 							}
 							if ( LoopCount == cc ) {
 								LoopCount++
+								_continue
+							}
+							if ( cc >= MAX_CHARA_FOLLOWER & cdata(CDATA_RELATION_ORG, LoopCount) > RELATION_ENEMY ) {
 								_continue
 							}
 							if ( (cdatan(CDATAN_CLASS, LoopCount) == AITextData(CAIValue(cnt, cc) - 300, 6) & CAIComparatorFix(cnt, cc) == (3)) | (cdatan(CDATAN_CLASS, LoopCount) != AITextData(CAIValue(cnt, cc) - 300, 6) & CAIComparatorFix(cnt, cc) == (4)) ) {
@@ -475,8 +529,15 @@
 			if ( CAIComparator(cnt, cc) == CUSTOM_AI_CONDITION_STATUS ) {; If condition is equal to "Status"
 				if ( CAIValue(cnt, cc) > 99 & CAIValue(cnt, cc) - 400 < 100 & CAIValue(cnt, cc) - 400 >= 0 ) { ; Ensure value is a status
 					if ( ActionTarget == -2 ) {
-						LoopCount = 0
-						while ( LoopCount < MAX_CHARA_FOLLOWER )
+						if ( cc < MAX_CHARA_FOLLOWER ) {
+							LoopCount = 0
+							LoopMax = MAX_CHARA_FOLLOWER
+						}
+						else {
+							LoopCount = MAX_CHARA_SAVE
+							LoopMax = MAX_CHARA_TOTAL
+						}
+						while ( LoopCount < LoopMax )
 							if ( cdata(CDATA_EXIST, LoopCount) != CHAR_STATE_ALIVE ) {
 								LoopCount++
 								_continue
@@ -489,6 +550,9 @@
 							}
 							if ( LoopCount == cc ) {
 								LoopCount++
+								_continue
+							}
+							if ( cc >= MAX_CHARA_FOLLOWER & cdata(CDATA_RELATION_ORG, LoopCount) > RELATION_ENEMY ) {
 								_continue
 							}
 							if ( (cdata(StatusOffsets(CAIValue(cnt, cc) \ 100), LoopCount) > 0 & CAIComparatorFix(cnt, cc) == (3)) | (cdata(StatusOffsets(CAIValue(cnt, cc) \ 100), LoopCount) == 0 & CAIComparatorFix(cnt, cc) == (4)) ) {
@@ -706,7 +770,7 @@
 
 	; Failure
 	if ( CAIQuiet(cc) == 0 ) {
-		txt "" + name(cc) + " doesn't know how to respond to the situation based on the instructions you've given " + him(cc) + "!"
+		txt lang("" + name(cc) + "はあなたの指示によって、どのように対応すればいいのか分からない！", "" + name(cc) + " doesn't know how to respond to the situation based on the instructions you've given " + him(cc) + "!")
 	}
 	goto *turn_end
 	return
@@ -3130,7 +3194,7 @@
 	key_check
 	cursor_check
 
-	repeat MAX_CHARA_FOLLOWER - 1
+	repeat CUSTOM_AI_MAX_TACTICS
 		if ( key == key_select(cnt) & cnt < NumActions + 1 ) {
 			if ( cnt < NumActions ) {
 				CAIComparatorFix(CurrentTactic, tc) = AIComparatorFix(cnt)

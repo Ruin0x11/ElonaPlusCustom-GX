@@ -2361,14 +2361,14 @@
 				if ( importmode == 0 ) {
 					cdata(CDATA_ROLE, tg) = ROLE_USER
 					cdata(CDATA_GOLD, tg) = 0
-					if ( cdata(CDATA_RELATION, tg) >= 10 ) {
+					if ( cdata(CDATA_RELATION, tg) >= RELATION_ALLY ) {
 						if ( userrelation == 0 ) {
-							cdata(CDATA_RELATION, tg) = 0
-							cdata(CDATA_RELATION_ORG, tg) = 0
+							cdata(CDATA_RELATION, tg) = RELATION_NEUTRAL
+							cdata(CDATA_RELATION_ORG, tg) = RELATION_NEUTRAL
 						}
 						else {
-							cdata(CDATA_RELATION, tg) = -3
-							cdata(CDATA_RELATION_ORG, tg) = -3
+							cdata(CDATA_RELATION, tg) = RELATION_ENEMY
+							cdata(CDATA_RELATION_ORG, tg) = RELATION_ENEMY
 						}
 					}
 					cxinit = cdata(CDATA_X, tg)
@@ -2379,8 +2379,8 @@
 					if ( enemyteam == (-1) ) {
 						enemyteam = rc
 					}
-					cdata(CDATA_RELATION, rc) = -3
-					cdata(CDATA_RELATION_ORG, rc) = -3
+					cdata(CDATA_RELATION, rc) = RELATION_ENEMY
+					cdata(CDATA_RELATION_ORG, rc) = RELATION_ENEMY
 					map_placearena rc, 1
 				}
 			}
