@@ -2225,6 +2225,11 @@
 		}
 	}
 	if ( fmode == 22 | fmode == 21 ) {
+		; .pet files are compressed archives with 4 entries per character:
+		; c1_0.t ... cdata
+		; c2_0.t ... sdata
+		; c3_0.t ... inv
+		; c4_0.t ... cdatan
 		procid = (procid + 1) \ 4
 		proclist(procid) = "ctrlFile" + fmode + " ct:" + ct
 		folder = exedir + "user\\"
@@ -2241,6 +2246,7 @@
 		sdim untaglist
 		repeat MAX_CHARA_TOTAL
 			if ( fread == 0 ) {
+				; Only save characters that were picked in the arena entrant dialog.
 				if ( list(0, cnt) == 0 ) {
 					continue
 				}
@@ -2252,7 +2258,7 @@
 					break
 				}
 				tg = 0
-				repeat MAX_CHARA_TOTAL - MAX_CHARA_SAVE, MAX_CHARA_SAVE
+				repeat MAX_CHARA_TOTAL - MAX_CHARA_SAVE, MAX_CHARA_SAVE ; 57 - 245
 					if ( cdata(CDATA_EXIST, cnt) == CHAR_STATE_DEAD ) {
 						tg = cnt
 						break

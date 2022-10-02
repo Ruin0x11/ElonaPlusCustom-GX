@@ -1,3 +1,36 @@
+*InitCustomAI
+	dim ItemHighlight, 1500
+	dim CustomVal, 1200, 250
+	dim EnemyAI, 250, 1000
+
+	// NOTE: Previous versions of custom only allowed the usage of custom AI for
+	// party members. Custom-GX now allows custom AI usage by NPCs. However,
+	// when game data is saved, only the first 15 entries of AIData (for the
+	// player's party) will be saved to aidata.s1, not the 244 that are allocated
+	// here.
+	//
+	// The usage of custom AI for NPCs is currently limited to EX Team pet arena
+	// battles, for which no saved data is necessary.
+	dim AIData, 125, MAX_CHARA_TOTAL - 1
+
+	dim TweakData, 100, 5
+	sdim AITextData, 30, 15, 7
+	dim PlaceholderMoveList, 20
+	sdim AIStatusNames, 30, 25, 2
+	dim StatusOffsets, 25
+
+	AIStatusNames(0, 0) = "Afraid", "Atrophy", "Bind", "Bleeding", "Blind", "Brainwash", "Chills", "Confused", "Dim", "Fury", "Gravity", "Insane", "Jiu-Jitsu", "Metal", "MPoison", "Oil", "Paralyzed", "Poisoned", "Sleep", "Wet", "Wince", "NULL"
+	StatusOffsets(0) = CDATA_CONDITION_FEAR, CDATA_CONDITION_ATROPHY, CDATA_CONDITION_BIND, CDATA_CONDITION_BLEED, CDATA_CONDITION_BLIND, CDATA_CONDITION_BRAINWASH, CDATA_CONDITION_CHILLS, CDATA_CONDITION_CONFUSE, CDATA_CONDITION_DIM, CDATA_CONDITION_ANGRY, CDATA_CONDITION_GRAVITY, CDATA_CONDITION_INSANE, CDATA_CONDITION_JIU_JITSU, CDATA_CONDITION_METAL, CDATA_CONDITION_MPOISON, CDATA_CONDITION_OIL, CDATA_CONDITION_PARALYZE, CDATA_CONDITION_POISON, CDATA_CONDITION_SLEEP, CDATA_CONDITION_WET, CDATA_CONDITION_WINCE
+	AITextData(0, 0) = "Not Set", "Attack (Melee)", "Attack (Ranged)", "Move (Away)", "Move (Forward)", "And", "Do Nothing", "NULL"
+	AITextData(0, 1) = "Not Set", "Self", "Target", "Ally", "Player", "NULL"
+	AITextData(0, 2) = "Not Set", "HP", "MP", "Distance", "Buff", "Gauge", "Class", "Status", "NULL"
+	AITextData(0, 3) = "Not Set", "<", ">", "=", "!=", ">=", "<=", "NULL"
+	AITextData(0, 4) = "10", "20", "25", "30", "40", "50", "60", "70", "75", "80", "90", "100", "NULL"
+	AITextData(0, 5) = "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "NULL"
+	AITextData(0, 6) = "warrior", "thief", "wizard", "farmer", "predator", "archer", "warmage", "tourist", "pianist", "gunner", "priest", "claymore", "NULL"
+
+	return
+
 *AnnaCustomAI
 	if ( AIData(6, cc-1) >= 1 ) {
 		cdata(CDATA_AI_DISTANCE, cc) = AIData(6, cc-1)
@@ -61,7 +94,7 @@
 			HoldTarget = AIData(10+cnt, cc-1) / 1000
 
 			; HP Condition Handling
-			if ( AIData(25+cnt, cc-1) == 1 ) { ; If condition is equal to "HP"
+			if ( AIData(25+cnt, cc-1) == CUSTOM_AI_CONDITION_HP ) { ; If condition is equal to "HP"
 				if ( AIData(55+cnt, cc-1) > 99 & AIData(55+cnt, cc-1) - 100 < 100 ) { ; If value is a percentage
 					if ( ActionTarget == -2 ) {
 						LoopCount = 0
@@ -133,7 +166,7 @@
 			} ; End HP Handling
 
 			; MP Condition Handling
-			if ( AIData(25+cnt, cc-1) == 2 ) { ; If condition is equal to "MP"
+			if ( AIData(25+cnt, cc-1) == CUSTOM_AI_CONDITION_MP ) { ; If condition is equal to "MP"
 				if ( AIData(55+cnt, cc-1) > 99 & AIData(55+cnt, cc-1) - 100 < 100 ) { ; If value is a percentage
 					if ( ActionTarget == -2 ) {
 						LoopCount = 0
@@ -205,7 +238,7 @@
 			} ; End MP Handling
 
 			; Distance Condition Handling
-			if ( AIData(25+cnt, cc-1) == 3 ) { ; If condition is equal to "distance"
+			if ( AIData(25+cnt, cc-1) == CUSTOM_AI_CONDITION_DISTANCE ) { ; If condition is equal to "distance"
 				if ( AIData(55+cnt, cc-1) > 99 & AIData(55+cnt, cc-1) - 200 < 100 & AIData(55+cnt, cc-1) - 200 >= 0 ) { ; If value is a distance
 					if ( ActionTarget == -2 ) {
 						LoopCount = 0
@@ -279,7 +312,7 @@
 			} ; End Distance Handling
 
 			; Buff Condition Handling
-			if ( AIData(25+cnt, cc-1) == 4 ) { ; If condition is equal to "buff"
+			if ( AIData(25+cnt, cc-1) == CUSTOM_AI_CONDITION_BUFF ) { ; If condition is equal to "buff"
 				if ( AIData(55+cnt, cc-1) < MAX_BUFF ) { ; If value is a valid buff ID
 					if ( ActionTarget == -2 ) {
 						LoopCount = 0
@@ -323,7 +356,7 @@
 			} ; End Buff Handling
 
 			; Gauge Condition Handling
-			if ( AIData(25+cnt, cc-1) == 5 ) { ; If condition is equal to "Gauge"
+			if ( AIData(25+cnt, cc-1) == CUSTOM_AI_CONDITION_GAUGE ) { ; If condition is equal to "Gauge"
 				if ( AIData(55+cnt, cc-1) > 99 & AIData(55+cnt, cc-1) - 100 < 100 ) { ; If value is a percentage
 					if ( ActionTarget == -2 ) {
 						LoopCount = 0
@@ -395,7 +428,7 @@
 			} ; End Gauge Handling
 
 			; Class Handling
-			if ( AIData(25+cnt, cc-1) == 6 ) { ; If condition is equal to "Class"
+			if ( AIData(25+cnt, cc-1) == CUSTOM_AI_CONDITION_CLASS ) { ; If condition is equal to "Class"
 				if ( AIData(55+cnt, cc-1) > 99 & AIData(55+cnt, cc-1) - 300 < 100 & AIData(55+cnt, cc-1) - 300 >= 0 ) { ; If value is a percentage
 					if ( ActionTarget == -2 ) {
 						LoopCount = 0
@@ -439,7 +472,7 @@
 			} ; End Class Handling
 
 			; Status Handling
-			if ( AIData(25 + cnt, cc - 1) == 7 ) {; If condition is equal to "Status"
+			if ( AIData(25 + cnt, cc - 1) == CUSTOM_AI_CONDITION_STATUS ) {; If condition is equal to "Status"
 				if ( AIData(55 + cnt, cc - 1) > 99 & AIData(55 + cnt, cc - 1) - 400 < 100 & AIData(55 + cnt, cc - 1) - 400 >= 0 ) { ; Ensure value is a status
 					if ( ActionTarget == -2 ) {
 						LoopCount = 0
