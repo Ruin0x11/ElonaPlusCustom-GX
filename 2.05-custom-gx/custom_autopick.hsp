@@ -307,6 +307,16 @@
 				sreplace s, s, lang("祝福された", " blessed "), " "
 				p(1) = 1
 			}
+			if ( instr(s, 0, lang("呪われていない", " uncursed ")) != (-1) ) {
+				if ( inv(INV_ITEM_KNOWN, cnt2) < ITEM_KNOWN_QUALITY ) {
+					continue
+				}
+				if ( inv(INV_ITEM_STATUS, cnt2) != ITEM_STATUS_NORMAL ) {
+					continue
+				}
+				sreplace s, s, lang("呪われていない", " uncursed "), " "
+				p(1) = 1
+			}
 			if ( instr(s, 0, lang("呪われた", " cursed ")) != (-1) ) {
 				if ( inv(INV_ITEM_KNOWN, cnt2) < ITEM_KNOWN_QUALITY ) {
 					continue
