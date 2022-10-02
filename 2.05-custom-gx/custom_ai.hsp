@@ -32,8 +32,8 @@
 	return
 
 *AnnaCustomAI
-	if ( AIData(6, cc-1) >= 1 ) {
-		cdata(CDATA_AI_DISTANCE, cc) = AIData(6, cc-1)
+	if ( CAISavedDistance(cc) >= 1 ) {
+		cdata(CDATA_AI_DISTANCE, cc) = CAISavedDistance(cc)
 	}
 	else {
 		cdata(CDATA_AI_DISTANCE, cc) = 1
@@ -49,7 +49,7 @@
 	repeat CUSTOM_AI_MAX_TACTICS
 		PassTactic = 0
 		if ( ContinueTactic == 2 ) {
-			if ( AIData(70+cnt, cc-1) != 5 ) {
+			if ( CAIAction(cnt, cc) != 5 ) {
 				ContinueTactic = 0
 			}
 			continue
@@ -58,8 +58,8 @@
 			HoldTarget = 0
 			PreservedTarget = -1
 		}
-		if ( AIData(10+cnt, cc-1) \ 1000 != 0 & AIData(25+cnt, cc-1) != 0 & AIData(40+cnt, cc-1) != 0 & AIData(55+cnt, cc-1) != 0 & AIData(70+cnt, cc-1) != 0 ) { ; Check that tactic has no "not set" parts
-			if ( AIData(70+cnt, cc-1) == 5 ) { ; Processed
+		if ( CAIEntity(cnt, cc) \ 1000 != 0 & CAIComparator(cnt, cc) != 0 & CAIComparatorFix(cnt, cc) != 0 & CAIValue(cnt, cc) != 0 & CAIAction(cnt, cc) != 0 ) { ; Check that tactic has no "not set" parts
+			if ( CAIAction(cnt, cc) == 5 ) { ; Processed
 				ContinueTactic = 2
 			}
 			else {
@@ -67,7 +67,7 @@
 			}
 
 			; Switch to set target based on AIData value
-			switch AIData(10+cnt, cc-1) \ 1000
+			switch CAIEntity(cnt, cc) \ 1000
 				case 1 ; Self
 					ActionTarget = cc
 					swbreak
@@ -84,18 +84,18 @@
 					swbreak
 			swend
 
-			if ( ActionTarget != (-2) & AIData(70 + cnt, cc - 1) != 3 & AIData(70 + cnt, cc - 1) != 4 ) {
+			if ( ActionTarget != (-2) & CAIAction(cnt, cc) != 3 & CAIAction(cnt, cc) != 4 ) {
 				dx = cdata(CDATA_X, ActionTarget)
 				dy = cdata(CDATA_Y, ActionTarget)
 				if ( fov_los(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), dx, dy) == 0 ) {
 					continue
 				}
 			}
-			HoldTarget = AIData(10+cnt, cc-1) / 1000
+			HoldTarget = CAIEntity(cnt, cc) / 1000
 
 			; HP Condition Handling
-			if ( AIData(25+cnt, cc-1) == CUSTOM_AI_CONDITION_HP ) { ; If condition is equal to "HP"
-				if ( AIData(55+cnt, cc-1) > 99 & AIData(55+cnt, cc-1) - 100 < 100 ) { ; If value is a percentage
+			if ( CAIComparator(cnt, cc) == CUSTOM_AI_CONDITION_HP ) { ; If condition is equal to "HP"
+				if ( CAIValue(cnt, cc) > 99 & CAIValue(cnt, cc) - 100 < 100 ) { ; If value is a percentage
 					if ( ActionTarget == -2 ) {
 						LoopCount = 0
 
@@ -110,19 +110,19 @@
 							}
 							dx = cdata(CDATA_X, LoopCount)
 							dy = cdata(CDATA_Y, LoopCount)
-							if ( fov_los(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), dx, dy) == 0 & (AIData(70 + cnt, cc - 1) != 3 & AIData(70 + cnt, cc - 1) != 4) ) {
+							if ( fov_los(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), dx, dy) == 0 & (CAIAction(cnt, cc) != 3 & CAIAction(cnt, cc) != 4) ) {
 								LoopCount++
 								_continue
 							}
-							if ( (((cdata(CDATA_HP, LoopCount) * 100) / cdata(CDATA_MAX_HP, LoopCount)) == AITextData(AIData(55+cnt, cc-1) - 100, 4)) & (AIData(40+cnt, cc-1) == 3 | AIData(40+cnt, cc-1) == 5 | AIData(40+cnt, cc-1) == 6) ) {
+							if ( (((cdata(CDATA_HP, LoopCount) * 100) / cdata(CDATA_MAX_HP, LoopCount)) == AITextData(CAIValue(cnt, cc) - 100, 4)) & (CAIComparatorFix(cnt, cc) == 3 | CAIComparatorFix(cnt, cc) == 5 | CAIComparatorFix(cnt, cc) == 6) ) {
 								ActionTarget = LoopCount
 								_break
 							}
-							if ( (((cdata(CDATA_HP, LoopCount) * 100) / cdata(CDATA_MAX_HP, LoopCount)) > AITextData(AIData(55+cnt, cc-1) - 100, 4)) & (AIData(40+cnt, cc-1) == 2 | AIData(40+cnt, cc-1) == 5 | AIData(40+cnt, cc-1) == 4) ) {
+							if ( (((cdata(CDATA_HP, LoopCount) * 100) / cdata(CDATA_MAX_HP, LoopCount)) > AITextData(CAIValue(cnt, cc) - 100, 4)) & (CAIComparatorFix(cnt, cc) == 2 | CAIComparatorFix(cnt, cc) == 5 | CAIComparatorFix(cnt, cc) == 4) ) {
 								ActionTarget = LoopCount
 								_break
 							}
-							if ( (((cdata(CDATA_HP, LoopCount) * 100) / cdata(CDATA_MAX_HP, LoopCount)) < AITextData(AIData(55+cnt, cc-1) - 100, 4)) & (AIData(40+cnt, cc-1) == 1 | AIData(40+cnt, cc-1) == 6 | AIData(40+cnt, cc-1) == 4) ) {
+							if ( (((cdata(CDATA_HP, LoopCount) * 100) / cdata(CDATA_MAX_HP, LoopCount)) < AITextData(CAIValue(cnt, cc) - 100, 4)) & (CAIComparatorFix(cnt, cc) == 1 | CAIComparatorFix(cnt, cc) == 6 | CAIComparatorFix(cnt, cc) == 4) ) {
 								ActionTarget = LoopCount
 								_break
 							}
@@ -132,8 +132,8 @@
 					if ( ActionTarget == -2 ) {
 						continue
 					}
-					if ( (((cdata(CDATA_HP, ActionTarget) * 100) / cdata(CDATA_MAX_HP, ActionTarget)) == AITextData(AIData(55+cnt, cc-1) - 100, 4)) & (AIData(40+cnt, cc-1) == 3 | AIData(40+cnt, cc-1) == 5 | AIData(40+cnt, cc-1) == 6) ) {
-						act = AIData(70+cnt, cc-1)
+					if ( (((cdata(CDATA_HP, ActionTarget) * 100) / cdata(CDATA_MAX_HP, ActionTarget)) == AITextData(CAIValue(cnt, cc) - 100, 4)) & (CAIComparatorFix(cnt, cc) == 3 | CAIComparatorFix(cnt, cc) == 5 | CAIComparatorFix(cnt, cc) == 6) ) {
+						act = CAIAction(cnt, cc)
 						gosub *ProcessTactic
 						if ( ContinueTactic == 1 | PassTactic == 1 ) {
 							continue
@@ -142,8 +142,8 @@
 							break
 						}
 					}
-					if ( (((cdata(CDATA_HP, ActionTarget) * 100) / cdata(CDATA_MAX_HP, ActionTarget)) > AITextData(AIData(55+cnt, cc-1) - 100, 4)) & (AIData(40+cnt, cc-1) == 2 | AIData(40+cnt, cc-1) == 5 | AIData(40+cnt, cc-1) == 4) ) {
-						act = AIData(70+cnt, cc-1)
+					if ( (((cdata(CDATA_HP, ActionTarget) * 100) / cdata(CDATA_MAX_HP, ActionTarget)) > AITextData(CAIValue(cnt, cc) - 100, 4)) & (CAIComparatorFix(cnt, cc) == 2 | CAIComparatorFix(cnt, cc) == 5 | CAIComparatorFix(cnt, cc) == 4) ) {
+						act = CAIAction(cnt, cc)
 						gosub *ProcessTactic
 						if ( ContinueTactic == 1 | PassTactic == 1 ) {
 							continue
@@ -152,8 +152,8 @@
 							break
 						}
 					}
-					if ( (((cdata(CDATA_HP, ActionTarget) * 100) / cdata(CDATA_MAX_HP, ActionTarget)) < AITextData(AIData(55+cnt, cc-1) - 100, 4)) & (AIData(40+cnt, cc-1) == 1 | AIData(40+cnt, cc-1) == 6 | AIData(40+cnt, cc-1) == 4) ) {
-						act = AIData(70+cnt, cc-1)
+					if ( (((cdata(CDATA_HP, ActionTarget) * 100) / cdata(CDATA_MAX_HP, ActionTarget)) < AITextData(CAIValue(cnt, cc) - 100, 4)) & (CAIComparatorFix(cnt, cc) == 1 | CAIComparatorFix(cnt, cc) == 6 | CAIComparatorFix(cnt, cc) == 4) ) {
+						act = CAIAction(cnt, cc)
 						gosub *ProcessTactic
 						if ( ContinueTactic == 1 | PassTactic == 1 ) {
 							continue
@@ -166,8 +166,8 @@
 			} ; End HP Handling
 
 			; MP Condition Handling
-			if ( AIData(25+cnt, cc-1) == CUSTOM_AI_CONDITION_MP ) { ; If condition is equal to "MP"
-				if ( AIData(55+cnt, cc-1) > 99 & AIData(55+cnt, cc-1) - 100 < 100 ) { ; If value is a percentage
+			if ( CAIComparator(cnt, cc) == CUSTOM_AI_CONDITION_MP ) { ; If condition is equal to "MP"
+				if ( CAIValue(cnt, cc) > 99 & CAIValue(cnt, cc) - 100 < 100 ) { ; If value is a percentage
 					if ( ActionTarget == -2 ) {
 						LoopCount = 0
 
@@ -178,7 +178,7 @@
 							}
 							dx = cdata(CDATA_X, LoopCount)
 							dy = cdata(CDATA_Y, LoopCount)
-							if ( fov_los(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), dx, dy) == 0 & (AIData(70 + cnt, cc - 1) != 3 & AIData(70 + cnt, cc - 1) != 4) ) {
+							if ( fov_los(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), dx, dy) == 0 & (CAIAction(cnt, cc) != 3 & CAIAction(cnt, cc) != 4) ) {
 								LoopCount++
 								_continue
 							}
@@ -186,15 +186,15 @@
 								LoopCount++
 								_continue
 							}
-							if ( (((cdata(CDATA_MP, LoopCount)*100) / cdata(CDATA_MAX_MP, LoopCount)) == AITextData(AIData(55+cnt, cc-1) - 100, 4)) & (AIData(40+cnt, cc-1) == 3 | AIData(40+cnt, cc-1) == 5 | AIData(40+cnt, cc-1) == 6) ) {
+							if ( (((cdata(CDATA_MP, LoopCount)*100) / cdata(CDATA_MAX_MP, LoopCount)) == AITextData(CAIValue(cnt, cc) - 100, 4)) & (CAIComparatorFix(cnt, cc) == 3 | CAIComparatorFix(cnt, cc) == 5 | CAIComparatorFix(cnt, cc) == 6) ) {
 								ActionTarget = LoopCount
 								_break
 							}
-							if ( (((cdata(CDATA_MP, LoopCount)*100) / cdata(CDATA_MAX_MP, LoopCount)) > AITextData(AIData(55+cnt, cc-1) - 100, 4)) & (AIData(40+cnt, cc-1) == 2 | AIData(40+cnt, cc-1) == 5 | AIData(40+cnt, cc-1) == 4) ) {
+							if ( (((cdata(CDATA_MP, LoopCount)*100) / cdata(CDATA_MAX_MP, LoopCount)) > AITextData(CAIValue(cnt, cc) - 100, 4)) & (CAIComparatorFix(cnt, cc) == 2 | CAIComparatorFix(cnt, cc) == 5 | CAIComparatorFix(cnt, cc) == 4) ) {
 								ActionTarget = LoopCount
 								_break
 							}
-							if ( (((cdata(CDATA_MP, LoopCount)*100) / cdata(CDATA_MAX_MP, LoopCount)) < AITextData(AIData(55+cnt, cc-1) - 100, 4)) & (AIData(40+cnt, cc-1) == 1 | AIData(40+cnt, cc-1) == 6 | AIData(40+cnt, cc-1) == 4) ) {
+							if ( (((cdata(CDATA_MP, LoopCount)*100) / cdata(CDATA_MAX_MP, LoopCount)) < AITextData(CAIValue(cnt, cc) - 100, 4)) & (CAIComparatorFix(cnt, cc) == 1 | CAIComparatorFix(cnt, cc) == 6 | CAIComparatorFix(cnt, cc) == 4) ) {
 								ActionTarget = LoopCount
 								_break
 							}
@@ -204,8 +204,8 @@
 					if ( ActionTarget == -2 ) {
 						continue
 					}
-					if ( (((cdata(CDATA_MP, ActionTarget) * 100) / cdata(CDATA_MAX_MP, ActionTarget)) == AITextData(AIData(55+cnt, cc-1) - 100, 4)) & (AIData(40+cnt, cc-1) == 3 | AIData(40+cnt, cc-1) == 5 | AIData(40+cnt, cc-1) == 6) ) {
-						act = AIData(70+cnt, cc-1)
+					if ( (((cdata(CDATA_MP, ActionTarget) * 100) / cdata(CDATA_MAX_MP, ActionTarget)) == AITextData(CAIValue(cnt, cc) - 100, 4)) & (CAIComparatorFix(cnt, cc) == 3 | CAIComparatorFix(cnt, cc) == 5 | CAIComparatorFix(cnt, cc) == 6) ) {
+						act = CAIAction(cnt, cc)
 						gosub *ProcessTactic
 						if ( ContinueTactic == 1 | PassTactic == 1 ) {
 							continue
@@ -214,8 +214,8 @@
 							break
 						}
 					}
-					if ( (((cdata(CDATA_MP, ActionTarget) * 100) / cdata(CDATA_MAX_MP, ActionTarget)) > AITextData(AIData(55+cnt, cc-1) - 100, 4)) & (AIData(40+cnt, cc-1) == 2 | AIData(40+cnt, cc-1) == 5 | AIData(40+cnt, cc-1) == 4) ) {
-						act = AIData(70+cnt, cc-1)
+					if ( (((cdata(CDATA_MP, ActionTarget) * 100) / cdata(CDATA_MAX_MP, ActionTarget)) > AITextData(CAIValue(cnt, cc) - 100, 4)) & (CAIComparatorFix(cnt, cc) == 2 | CAIComparatorFix(cnt, cc) == 5 | CAIComparatorFix(cnt, cc) == 4) ) {
+						act = CAIAction(cnt, cc)
 						gosub *ProcessTactic
 						if ( ContinueTactic == 1 | PassTactic == 1 ) {
 							continue
@@ -224,8 +224,8 @@
 							break
 						}
 					}
-					if ( (((cdata(CDATA_MP, ActionTarget) * 100) / cdata(CDATA_MAX_MP, ActionTarget)) < AITextData(AIData(55+cnt, cc-1) - 100, 4)) & (AIData(40+cnt, cc-1) == 1 | AIData(40+cnt, cc-1) == 6 | AIData(40+cnt, cc-1) == 4) ) {
-						act = AIData(70+cnt, cc-1)
+					if ( (((cdata(CDATA_MP, ActionTarget) * 100) / cdata(CDATA_MAX_MP, ActionTarget)) < AITextData(CAIValue(cnt, cc) - 100, 4)) & (CAIComparatorFix(cnt, cc) == 1 | CAIComparatorFix(cnt, cc) == 6 | CAIComparatorFix(cnt, cc) == 4) ) {
+						act = CAIAction(cnt, cc)
 						gosub *ProcessTactic
 						if ( ContinueTactic == 1 | PassTactic == 1 ) {
 							continue
@@ -238,8 +238,8 @@
 			} ; End MP Handling
 
 			; Distance Condition Handling
-			if ( AIData(25+cnt, cc-1) == CUSTOM_AI_CONDITION_DISTANCE ) { ; If condition is equal to "distance"
-				if ( AIData(55+cnt, cc-1) > 99 & AIData(55+cnt, cc-1) - 200 < 100 & AIData(55+cnt, cc-1) - 200 >= 0 ) { ; If value is a distance
+			if ( CAIComparator(cnt, cc) == CUSTOM_AI_CONDITION_DISTANCE ) { ; If condition is equal to "distance"
+				if ( CAIValue(cnt, cc) > 99 & CAIValue(cnt, cc) - 200 < 100 & CAIValue(cnt, cc) - 200 >= 0 ) { ; If value is a distance
 					if ( ActionTarget == -2 ) {
 						LoopCount = 0
 
@@ -254,19 +254,19 @@
 							}
 							dx = cdata(CDATA_X, LoopCount)
 							dy = cdata(CDATA_Y, LoopCount)
-							if ( fov_los(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), dx, dy) == 0 & (AIData(70 + cnt, cc - 1) != 3 & AIData(70 + cnt, cc - 1) != 4) ) {
+							if ( fov_los(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), dx, dy) == 0 & (CAIAction(cnt, cc) != 3 & CAIAction(cnt, cc) != 4) ) {
 								LoopCount++
 								_continue
 							}
-							if ( (dist(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), dx, dy) == AITextData(AIData(55+cnt, cc-1) - 200, 5)) & (AIData(40+cnt, cc-1) == 3 | AIData(40+cnt, cc-1) == 5 | AIData(40+cnt, cc-1) == 6) ) {
+							if ( (dist(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), dx, dy) == AITextData(CAIValue(cnt, cc) - 200, 5)) & (CAIComparatorFix(cnt, cc) == 3 | CAIComparatorFix(cnt, cc) == 5 | CAIComparatorFix(cnt, cc) == 6) ) {
 								ActionTarget = LoopCount
 								_break
 							}
-							if ( (dist(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), dx, dy) > AITextData(AIData(55+cnt, cc-1) - 200, 5)) & (AIData(40+cnt, cc-1) == 2 | AIData(40+cnt, cc-1) == 5 | AIData(40+cnt, cc-1) == 4) ) {
+							if ( (dist(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), dx, dy) > AITextData(CAIValue(cnt, cc) - 200, 5)) & (CAIComparatorFix(cnt, cc) == 2 | CAIComparatorFix(cnt, cc) == 5 | CAIComparatorFix(cnt, cc) == 4) ) {
 								ActionTarget = LoopCount
 								_break
 							}
-							if ( (dist(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), dx, dy) < AITextData(AIData(55+cnt, cc-1) - 200, 5)) & (AIData(40+cnt, cc-1) == 1 | AIData(40+cnt, cc-1) == 6 | AIData(40+cnt, cc-1) == 4) ) {
+							if ( (dist(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), dx, dy) < AITextData(CAIValue(cnt, cc) - 200, 5)) & (CAIComparatorFix(cnt, cc) == 1 | CAIComparatorFix(cnt, cc) == 6 | CAIComparatorFix(cnt, cc) == 4) ) {
 								ActionTarget = LoopCount
 								_break
 							}
@@ -278,8 +278,8 @@
 					}
 					dx = cdata(CDATA_X, ActionTarget)
 					dy = cdata(CDATA_Y, ActionTarget)
-					if ( (dist(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), dx, dy) == AITextData(AIData(55+cnt, cc-1) - 200, 5)) & (AIData(40+cnt, cc-1) == 3 | AIData(40+cnt, cc-1) == 5 | AIData(40+cnt, cc-1) == 6) ) {
-						act = AIData(70+cnt, cc-1)
+					if ( (dist(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), dx, dy) == AITextData(CAIValue(cnt, cc) - 200, 5)) & (CAIComparatorFix(cnt, cc) == 3 | CAIComparatorFix(cnt, cc) == 5 | CAIComparatorFix(cnt, cc) == 6) ) {
+						act = CAIAction(cnt, cc)
 						gosub *ProcessTactic
 						if ( ContinueTactic == 1 | PassTactic == 1 ) {
 							continue
@@ -288,8 +288,8 @@
 							break
 						}
 					}
-					if ( (dist(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), dx, dy) > AITextData(AIData(55+cnt, cc-1) - 200, 5)) & (AIData(40+cnt, cc-1) == 2 | AIData(40+cnt, cc-1) == 5 | AIData(40+cnt, cc-1) == 4) ) {
-						act = AIData(70+cnt, cc-1)
+					if ( (dist(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), dx, dy) > AITextData(CAIValue(cnt, cc) - 200, 5)) & (CAIComparatorFix(cnt, cc) == 2 | CAIComparatorFix(cnt, cc) == 5 | CAIComparatorFix(cnt, cc) == 4) ) {
+						act = CAIAction(cnt, cc)
 						gosub *ProcessTactic
 						if ( ContinueTactic == 1 | PassTactic == 1 ) {
 							continue
@@ -298,8 +298,8 @@
 							break
 						}
 					}
-					if ( (dist(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), dx, dy) < AITextData(AIData(55+cnt, cc-1) - 200, 5)) & (AIData(40+cnt, cc-1) == 1 | AIData(40+cnt, cc-1) == 6 | AIData(40+cnt, cc-1) == 4) ) {
-						act = AIData(70+cnt, cc-1)
+					if ( (dist(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), dx, dy) < AITextData(CAIValue(cnt, cc) - 200, 5)) & (CAIComparatorFix(cnt, cc) == 1 | CAIComparatorFix(cnt, cc) == 6 | CAIComparatorFix(cnt, cc) == 4) ) {
+						act = CAIAction(cnt, cc)
 						gosub *ProcessTactic
 						if ( ContinueTactic == 1 | PassTactic == 1 ) {
 							continue
@@ -312,8 +312,8 @@
 			} ; End Distance Handling
 
 			; Buff Condition Handling
-			if ( AIData(25+cnt, cc-1) == CUSTOM_AI_CONDITION_BUFF ) { ; If condition is equal to "buff"
-				if ( AIData(55+cnt, cc-1) < MAX_BUFF ) { ; If value is a valid buff ID
+			if ( CAIComparator(cnt, cc) == CUSTOM_AI_CONDITION_BUFF ) { ; If condition is equal to "buff"
+				if ( CAIValue(cnt, cc) < MAX_BUFF ) { ; If value is a valid buff ID
 					if ( ActionTarget == -2 ) {
 						LoopCount = 0
 
@@ -328,11 +328,11 @@
 							}
 							dx = cdata(CDATA_X, LoopCount)
 							dy = cdata(CDATA_Y, LoopCount)
-							if ( fov_los(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), dx, dy) == 0 & (AIData(70 + cnt, cc - 1) != 3 & AIData(70 + cnt, cc - 1) != 4) ) {
+							if ( fov_los(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), dx, dy) == 0 & (CAIAction(cnt, cc) != 3 & CAIAction(cnt, cc) != 4) ) {
 								LoopCount++
 								_continue
 							}
-							if ( (findbuff(LoopCount, AIData(55+cnt, cc-1)) == (-1) & AIData(40+cnt, cc-1) == (4)) | (findbuff(LoopCount, AIData(55+cnt, cc-1)) != (-1) & AIData(40+cnt, cc-1) == (3)) ) {
+							if ( (findbuff(LoopCount, CAIValue(cnt, cc)) == (-1) & CAIComparatorFix(cnt, cc) == (4)) | (findbuff(LoopCount, CAIValue(cnt, cc)) != (-1) & CAIComparatorFix(cnt, cc) == (3)) ) {
 								ActionTarget = LoopCount
 								_break
 							}
@@ -342,8 +342,8 @@
 					if ( ActionTarget == -2 ) {
 						continue
 					}
-					if ( (findbuff(ActionTarget, AIData(55+cnt, cc-1)) == (-1) & AIData(40+cnt, cc-1) == (4)) | (findbuff(ActionTarget, AIData(55+cnt, cc-1)) != (-1) & AIData(40+cnt, cc-1) == (3)) ) {
-						act = AIData(70+cnt, cc-1)
+					if ( (findbuff(ActionTarget, CAIValue(cnt, cc)) == (-1) & CAIComparatorFix(cnt, cc) == (4)) | (findbuff(ActionTarget, CAIValue(cnt, cc)) != (-1) & CAIComparatorFix(cnt, cc) == (3)) ) {
+						act = CAIAction(cnt, cc)
 						gosub *ProcessTactic
 						if ( ContinueTactic == 1 | PassTactic == 1 ) {
 							continue
@@ -356,8 +356,8 @@
 			} ; End Buff Handling
 
 			; Gauge Condition Handling
-			if ( AIData(25+cnt, cc-1) == CUSTOM_AI_CONDITION_GAUGE ) { ; If condition is equal to "Gauge"
-				if ( AIData(55+cnt, cc-1) > 99 & AIData(55+cnt, cc-1) - 100 < 100 ) { ; If value is a percentage
+			if ( CAIComparator(cnt, cc) == CUSTOM_AI_CONDITION_GAUGE ) { ; If condition is equal to "Gauge"
+				if ( CAIValue(cnt, cc) > 99 & CAIValue(cnt, cc) - 100 < 100 ) { ; If value is a percentage
 					if ( ActionTarget == -2 ) {
 						LoopCount = 0
 
@@ -368,7 +368,7 @@
 						}
 						dx = cdata(CDATA_X, LoopCount)
 						dy = cdata(CDATA_Y, LoopCount)
-						if ( fov_los(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), dx, dy) == 0 & (AIData(70 + cnt, cc - 1) != 3 & AIData(70 + cnt, cc - 1) != 4) ) {
+						if ( fov_los(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), dx, dy) == 0 & (CAIAction(cnt, cc) != 3 & CAIAction(cnt, cc) != 4) ) {
 							LoopCount++
 							_continue
 						}
@@ -376,15 +376,15 @@
 							LoopCount++
 							_continue
 						}
-						if ( (cdata(CDATA_POWER_GAUGE, LoopCount) == AITextData(AIData(55+cnt, cc-1) - 100, 4)) & (AIData(40+cnt, cc-1) == 3 | AIData(40+cnt, cc-1) == 5 | AIData(40+cnt, cc-1) == 6) ) {
+						if ( (cdata(CDATA_POWER_GAUGE, LoopCount) == AITextData(CAIValue(cnt, cc) - 100, 4)) & (CAIComparatorFix(cnt, cc) == 3 | CAIComparatorFix(cnt, cc) == 5 | CAIComparatorFix(cnt, cc) == 6) ) {
 							ActionTarget = LoopCount
 							_break
 						}
-						if ( (cdata(CDATA_POWER_GAUGE, LoopCount) > AITextData(AIData(55+cnt, cc-1) - 100, 4)) & (AIData(40+cnt, cc-1) == 2 | AIData(40+cnt, cc-1) == 5 | AIData(40+cnt, cc-1) == 4) ) {
+						if ( (cdata(CDATA_POWER_GAUGE, LoopCount) > AITextData(CAIValue(cnt, cc) - 100, 4)) & (CAIComparatorFix(cnt, cc) == 2 | CAIComparatorFix(cnt, cc) == 5 | CAIComparatorFix(cnt, cc) == 4) ) {
 							ActionTarget = LoopCount
 							_break
 						}
-						if ( (cdata(CDATA_POWER_GAUGE, LoopCount) < AITextData(AIData(55+cnt, cc-1) - 100, 4)) & (AIData(40+cnt, cc-1) == 1 | AIData(40+cnt, cc-1) == 6 | AIData(40+cnt, cc-1) == 4) ) {
+						if ( (cdata(CDATA_POWER_GAUGE, LoopCount) < AITextData(CAIValue(cnt, cc) - 100, 4)) & (CAIComparatorFix(cnt, cc) == 1 | CAIComparatorFix(cnt, cc) == 6 | CAIComparatorFix(cnt, cc) == 4) ) {
 							ActionTarget = LoopCount
 							_break
 						}
@@ -394,8 +394,8 @@
 					if ( ActionTarget == -2 ) {
 						continue
 					}
-					if ( (cdata(CDATA_POWER_GAUGE, ActionTarget) == AITextData(AIData(55+cnt, cc-1) - 100, 4)) & (AIData(40+cnt, cc-1) == 3 | AIData(40+cnt, cc-1) == 5 | AIData(40+cnt, cc-1) == 6) ) {
-						act = AIData(70+cnt, cc-1)
+					if ( (cdata(CDATA_POWER_GAUGE, ActionTarget) == AITextData(CAIValue(cnt, cc) - 100, 4)) & (CAIComparatorFix(cnt, cc) == 3 | CAIComparatorFix(cnt, cc) == 5 | CAIComparatorFix(cnt, cc) == 6) ) {
+						act = CAIAction(cnt, cc)
 						gosub *ProcessTactic
 						if ( ContinueTactic == 1 | PassTactic == 1 ) {
 							continue
@@ -404,8 +404,8 @@
 							break
 						}
 					}
-					if ( (cdata(CDATA_POWER_GAUGE, ActionTarget) > AITextData(AIData(55+cnt, cc-1) - 100, 4)) & (AIData(40+cnt, cc-1) == 2 | AIData(40+cnt, cc-1) == 5 | AIData(40+cnt, cc-1) == 4) ) {
-						act = AIData(70+cnt, cc-1)
+					if ( (cdata(CDATA_POWER_GAUGE, ActionTarget) > AITextData(CAIValue(cnt, cc) - 100, 4)) & (CAIComparatorFix(cnt, cc) == 2 | CAIComparatorFix(cnt, cc) == 5 | CAIComparatorFix(cnt, cc) == 4) ) {
+						act = CAIAction(cnt, cc)
 						gosub *ProcessTactic
 						if ( ContinueTactic == 1 | PassTactic == 1 ) {
 							continue
@@ -414,8 +414,8 @@
 							break
 						}
 					}
-					if ( (cdata(CDATA_POWER_GAUGE, ActionTarget) < AITextData(AIData(55+cnt, cc-1) - 100, 4)) & (AIData(40+cnt, cc-1) == 1 | AIData(40+cnt, cc-1) == 6 | AIData(40+cnt, cc-1) == 4) ) {
-						act = AIData(70+cnt, cc-1)
+					if ( (cdata(CDATA_POWER_GAUGE, ActionTarget) < AITextData(CAIValue(cnt, cc) - 100, 4)) & (CAIComparatorFix(cnt, cc) == 1 | CAIComparatorFix(cnt, cc) == 6 | CAIComparatorFix(cnt, cc) == 4) ) {
+						act = CAIAction(cnt, cc)
 						gosub *ProcessTactic
 						if ( ContinueTactic == 1 | PassTactic == 1 ) {
 							continue
@@ -428,8 +428,8 @@
 			} ; End Gauge Handling
 
 			; Class Handling
-			if ( AIData(25+cnt, cc-1) == CUSTOM_AI_CONDITION_CLASS ) { ; If condition is equal to "Class"
-				if ( AIData(55+cnt, cc-1) > 99 & AIData(55+cnt, cc-1) - 300 < 100 & AIData(55+cnt, cc-1) - 300 >= 0 ) { ; If value is a percentage
+			if ( CAIComparator(cnt, cc) == CUSTOM_AI_CONDITION_CLASS ) { ; If condition is equal to "Class"
+				if ( CAIValue(cnt, cc) > 99 & CAIValue(cnt, cc) - 300 < 100 & CAIValue(cnt, cc) - 300 >= 0 ) { ; If value is a percentage
 					if ( ActionTarget == -2 ) {
 						LoopCount = 0
 
@@ -440,7 +440,7 @@
 							}
 							dx = cdata(CDATA_X, LoopCount)
 							dy = cdata(CDATA_Y, LoopCount)
-							if ( fov_los(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), dx, dy) == 0 & (AIData(70 + cnt, cc - 1) != 3 & AIData(70 + cnt, cc - 1) != 4) ) {
+							if ( fov_los(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), dx, dy) == 0 & (CAIAction(cnt, cc) != 3 & CAIAction(cnt, cc) != 4) ) {
 								LoopCount++
 								_continue
 							}
@@ -448,7 +448,7 @@
 								LoopCount++
 								_continue
 							}
-							if ( (cdatan(CDATAN_CLASS, LoopCount) == AITextData(AIData(55+cnt, cc-1) - 300, 6) & AIData(40+cnt, cc-1) == (3)) | (cdatan(CDATAN_CLASS, LoopCount) != AITextData(AIData(55+cnt, cc-1) - 300, 6) & AIData(40+cnt, cc-1) == (4)) ) {
+							if ( (cdatan(CDATAN_CLASS, LoopCount) == AITextData(CAIValue(cnt, cc) - 300, 6) & CAIComparatorFix(cnt, cc) == (3)) | (cdatan(CDATAN_CLASS, LoopCount) != AITextData(CAIValue(cnt, cc) - 300, 6) & CAIComparatorFix(cnt, cc) == (4)) ) {
 								ActionTarget = LoopCount
 								_break
 							}
@@ -458,8 +458,8 @@
 					if ( ActionTarget == -2 ) {
 						continue
 					}
-					if ( (cdatan(CDATAN_CLASS, ActionTarget) == AITextData(AIData(55+cnt, cc-1) - 300, 6) & AIData(40+cnt, cc-1) == (3)) | (cdatan(CDATAN_CLASS, ActionTarget) != AITextData(AIData(55+cnt, cc-1) - 300, 6) & AIData(40+cnt, cc-1) == (4)) ) {
-						act = AIData(70+cnt, cc-1)
+					if ( (cdatan(CDATAN_CLASS, ActionTarget) == AITextData(CAIValue(cnt, cc) - 300, 6) & CAIComparatorFix(cnt, cc) == (3)) | (cdatan(CDATAN_CLASS, ActionTarget) != AITextData(CAIValue(cnt, cc) - 300, 6) & CAIComparatorFix(cnt, cc) == (4)) ) {
+						act = CAIAction(cnt, cc)
 						gosub *ProcessTactic
 						if ( ContinueTactic == 1 | PassTactic == 1 ) {
 							continue
@@ -472,8 +472,8 @@
 			} ; End Class Handling
 
 			; Status Handling
-			if ( AIData(25 + cnt, cc - 1) == CUSTOM_AI_CONDITION_STATUS ) {; If condition is equal to "Status"
-				if ( AIData(55 + cnt, cc - 1) > 99 & AIData(55 + cnt, cc - 1) - 400 < 100 & AIData(55 + cnt, cc - 1) - 400 >= 0 ) { ; Ensure value is a status
+			if ( CAIComparator(cnt, cc) == CUSTOM_AI_CONDITION_STATUS ) {; If condition is equal to "Status"
+				if ( CAIValue(cnt, cc) > 99 & CAIValue(cnt, cc) - 400 < 100 & CAIValue(cnt, cc) - 400 >= 0 ) { ; Ensure value is a status
 					if ( ActionTarget == -2 ) {
 						LoopCount = 0
 						while ( LoopCount < MAX_CHARA_FOLLOWER )
@@ -483,7 +483,7 @@
 							}
 							dx = cdata(CDATA_X, LoopCount)
 							dy = cdata(CDATA_Y, LoopCount)
-							if ( fov_los(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), dx, dy) == 0 & (AIData(70 + cnt, cc - 1) != 3 & AIData(70 + cnt, cc - 1) != 4) ) {
+							if ( fov_los(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), dx, dy) == 0 & (CAIAction(cnt, cc) != 3 & CAIAction(cnt, cc) != 4) ) {
 								LoopCount++
 								_continue
 							}
@@ -491,7 +491,7 @@
 								LoopCount++
 								_continue
 							}
-							if ( (cdata(StatusOffsets(AIData(55 + cnt, cc - 1) \ 100), LoopCount) > 0 & AIData(40 + cnt, cc - 1) == (3)) | (cdata(StatusOffsets(AIData(55 + cnt, cc - 1) \ 100), LoopCount) == 0 & AIData(40 + cnt, cc - 1) == (4)) ) {
+							if ( (cdata(StatusOffsets(CAIValue(cnt, cc) \ 100), LoopCount) > 0 & CAIComparatorFix(cnt, cc) == (3)) | (cdata(StatusOffsets(CAIValue(cnt, cc) \ 100), LoopCount) == 0 & CAIComparatorFix(cnt, cc) == (4)) ) {
 								ActionTarget = LoopCount
 								_break
 							}
@@ -501,8 +501,8 @@
 					if ( ActionTarget == -2 ) {
 						continue
 					}
-					if ( (cdata(StatusOffsets(AIData(55 + cnt, cc - 1) \ 100), ActionTarget) > 0 & AIData(40 + cnt, cc - 1) == (3)) | (cdata(StatusOffsets(AIData(55 + cnt, cc - 1) \ 100), ActionTarget) == 0 & AIData(40 + cnt, cc - 1) == (4)) ) {
-						act = AIData(70 + cnt, cc - 1)
+					if ( (cdata(StatusOffsets(CAIValue(cnt, cc) \ 100), ActionTarget) > 0 & CAIComparatorFix(cnt, cc) == (3)) | (cdata(StatusOffsets(CAIValue(cnt, cc) \ 100), ActionTarget) == 0 & CAIComparatorFix(cnt, cc) == (4)) ) {
+						act = CAIAction(cnt, cc)
 						gosub *ProcessTactic
 						if ( ContinueTactic == 1 | PassTactic == 1 ) {
 							continue
@@ -629,7 +629,7 @@
 
 	; Movement
 	if ( act == CUSTOM_AI_ACTION_MOVE_AWAY | act == CUSTOM_AI_ACTION_MOVE_FORWARD ) {
-		AIData(6, cc-1) = cdata(CDATA_AI_DISTANCE, cc)
+		CAISavedDistance(cc) = cdata(CDATA_AI_DISTANCE, cc)
 		distance = dist(cdata(CDATA_X, tc), cdata(CDATA_Y, tc), cdata(CDATA_X, cc), cdata(CDATA_Y, cc))
 		if ( act == CUSTOM_AI_ACTION_MOVE_AWAY ) {
 			cdata(CDATA_AI_DISTANCE, cc) = distance+1
@@ -705,7 +705,7 @@
     }
 
 	; Failure
-	if ( AIData(7, cc-1) == 0 ) {
+	if ( CAIQuiet(cc) == 0 ) {
 		txt "" + name(cc) + " doesn't know how to respond to the situation based on the instructions you've given " + him(cc) + "!"
 	}
 	goto *turn_end
@@ -714,8 +714,8 @@
 *GetFatigue
 	LoopCount = 0
 	while( LoopCount < 20 )
-	if ( AIData(85+LoopCount, cc-1) == act ) {
-		FatigueLevel = AIData(105+LoopCount, cc-1)
+	if ( CAIAction2(LoopCount, cc) == act ) {
+		FatigueLevel = CAIActionFatigue(LoopCount, cc)
 		_break
 	}
 	LoopCount++
@@ -726,14 +726,14 @@
 *IncrementFatigue
 	LoopCount = 0
 	while( LoopCount < 20 )
-		if ( AIData(85+LoopCount, cc-1) < MAX_ACTION_THROW & AIData(85+LoopCount, cc-1) >= ACTION_THROW ) {
-			if ( AIData(105+LoopCount, cc-1) < 15 ) {
-				AIData(105+LoopCount, cc-1)++
+		if ( CAIAction2(LoopCount, cc) < MAX_ACTION_THROW & CAIAction2(LoopCount, cc) >= ACTION_THROW ) {
+			if ( CAIActionFatigue(LoopCount, cc) < 15 ) {
+				CAIActionFatigue(LoopCount, cc)++
 			}
 		}
-		if ( AIData(85+LoopCount, cc-1) >= STARTING_SKILL_SPACT ) {
-			if ( AIData(105+LoopCount, cc-1) < ((sdataref(SKILL_DATAREF_COST, AIData(85+LoopCount, cc-1))/10) * 5) & AIData(105+LoopCount, cc-1) < 20 ) {
-				AIData(105+LoopCount, cc-1)++
+		if ( CAIAction2(LoopCount, cc) >= STARTING_SKILL_SPACT ) {
+			if ( CAIActionFatigue(LoopCount, cc) < ((sdataref(SKILL_DATAREF_COST, CAIAction2(LoopCount, cc))/10) * 5) & CAIActionFatigue(LoopCount, cc) < 20 ) {
+				CAIActionFatigue(LoopCount, cc)++
 			}
 		}
 		LoopCount++
@@ -744,12 +744,12 @@
 *ProcessFatigue
 	LoopCount = 0
 	while( LoopCount < 20 )
-		if ( AIData(85+LoopCount, cc-1) == act ) {
+		if ( CAIAction2(LoopCount, cc) == act ) {
 			if ( act < MAX_ACTION_THROW & act >= ACTION_THROW ) {
-				AIData(105+LoopCount, cc-1) -= 4
+				CAIActionFatigue(LoopCount, cc) -= 4
 			}
 			else {
-				AIData(105+LoopCount, cc-1) -= (limit(sdataref(SKILL_DATAREF_COST, act)/10, 1, 20) + 1)
+				CAIActionFatigue(LoopCount, cc) -= (limit(sdataref(SKILL_DATAREF_COST, act)/10, 1, 20) + 1)
 			}
 			_break
 		}
@@ -764,7 +764,7 @@
 	LoopCount = 0
 
 	while( LoopCount < 20 )
-		if ( AIData(85+LoopCount, cc-1) == ActionToFind ) {
+		if ( CAIAction2(LoopCount, cc) == ActionToFind ) {
 			FoundAction = 1
 			_break
 		}
@@ -775,34 +775,34 @@
 		LoopCount = 0
 
 		while( LoopCount < 20 )
-			if ( AIData(85+LoopCount, cc-1) == 0 ) {
-				AIData(85+LoopCount, cc-1) = act
-				AIData(3, cc-1) = 0
-				AIData(4, cc-1) = 0
+			if ( CAIAction2(LoopCount, cc) == 0 ) {
+				CAIAction2(LoopCount, cc) = act
+				CAIActionLearning(cc) = 0
+				CAIActionLearnProgress(cc) = 0
 				_break
 			}
 			LoopCount++
 		wend
 	}
 	else {
-		AIData(3, cc-1) = 0
-		AIData(4, cc-1) = 0
+		CAIActionLearning(cc) = 0
+		CAIActionLearnProgress(cc) = 0
 	}
 	return
 
 *ProcessTactic
-	if ( act == AIData(3, cc-1) ) {
-		if ( rnd(100) > limit(AIData(4, cc-1)/2, 1, 20) | TriedLearnedSkill == 1 ) {
+	if ( act == CAIActionLearning(cc) ) {
+		if ( rnd(100) > limit(CAIActionLearnProgress(cc)/2, 1, 20) | TriedLearnedSkill == 1 ) {
 			PassTactic = 1
 			act = -10
 		}
 		else {
 			if ( rnd(4) == 0 & cbit(CHARA_BIT_SANDBAG, tc) != 1 ) {
-				AIData(4, cc-1)++
-				if ( AIData(4, cc-1) > 100 ) {
-					AIData(4, cc-1) = 100
+				CAIActionLearnProgress(cc)++
+				if ( CAIActionLearnProgress(cc) > 100 ) {
+					CAIActionLearnProgress(cc) = 100
 				}
-				if ( AIData(4, cc-1) == 100 ) {
+				if ( CAIActionLearnProgress(cc) == 100 ) {
 					gosub *AILearnAbility
 				}
 			}
@@ -816,7 +816,7 @@
 			act = -10
 		}
 	}
-	if ( act >= STARTING_SKILL_SPACT & act != AIData(3, cc-1) ) {
+	if ( act >= STARTING_SKILL_SPACT & act != CAIActionLearning(cc) ) {
 		gosub *GetFatigue
 		if ( FatigueLevel < sdataref(SKILL_DATAREF_COST, act)/10 ) {
 			PassTactic = 1
@@ -835,7 +835,7 @@
 	return
 
 *PrintAIInfo
-	if ( AIData(0, tc-1) == 1 ) {
+	if ( CAIEnabled(tc) == 1 ) {
 		s = "Currently using custom AI."
 	}
 	else {
@@ -843,15 +843,15 @@
 	}
 	pos wx + 400, wy + 378
 	mes s
-	s = "Currently Available Slots: " + AIData(1, tc-1)
+	s = "Currently Available Slots: " + CAIAvailableSlots(tc)
 	pos wx + 400, wy + 397
 	mes s
-	if ( AIData(3, tc-1) < 400 ) {
-		AIData(3, tc-1) = 0
+	if ( CAIActionLearning(tc) < 400 ) {
+		CAIActionLearning(tc) = 0
 	}
-	ActionToGet = AIData(3, tc-1)
+	ActionToGet = CAIActionLearning(tc)
 	gosub *GetActionName
-	if ( AIData(3, tc-1) == 0 ) {
+	if ( CAIActionLearning(tc) == 0 ) {
 		s = "Currently Learning: N/A"
 	}
 	else {
@@ -859,11 +859,11 @@
 	}
 	pos wx + 400, wy + 416
 	mes s
-	if ( AIData(3, tc-1) == 0 ) {
+	if ( CAIActionLearning(tc) == 0 ) {
 		s = "Current Progress: N/A"
 	}
 	else {
-		s = "Current Progress: " + AIData(4, tc-1) + "%"
+		s = "Current Progress: " + CAIActionLearnProgress(tc) + "%"
 	}
 	pos wx + 400, wy + 435
 	mes s
@@ -873,12 +873,12 @@
 	HeldTactic = -1
 	pagesize = 0
 	redraw 0
-	AIData(1, tc-1) = sdata(SKILL_ATTR_LER, CHARA_PLAYER) / 5
-	if ( AIData(1, tc-1) > sdata(SKILL_ATTR_LER, tc) /5 ) {
-		AIData(1, tc-1) = sdata(SKILL_ATTR_LER, tc) / 5
+	CAIAvailableSlots(tc) = sdata(SKILL_ATTR_LER, CHARA_PLAYER) / 5
+	if ( CAIAvailableSlots(tc) > sdata(SKILL_ATTR_LER, tc) /5 ) {
+		CAIAvailableSlots(tc) = sdata(SKILL_ATTR_LER, tc) / 5
 	}
-	AIData(1, tc-1) = limit(AIData(1, tc-1), 3, 15)
-	if ( AIData(2, tc-1) == 0 ) {
+	CAIAvailableSlots(tc) = limit(CAIAvailableSlots(tc), 3, 15)
+	if ( CAIActionsInitialized(tc) == 0 ) {
 		gosub *AIInitActions
 	}
 	s = "Tactical Instructions", strhint3b
@@ -905,14 +905,14 @@
 
 	font lang(cfg_font1, cfg_font2), 13 - en * 2, 0
 	gosub *PrintAIInfo
-	repeat AIData(1, tc-1)
-	s = AITextData(AIData(10+cnt, tc-1) \ 1000, 1)
+	repeat CAIAvailableSlots(tc)
+	s = AITextData(CAIEntity(cnt, tc) \ 1000, 1)
 	pos wx + 48, wy + 60 + cnt * 19 + 2
 	mes s
-	s = AITextData(AIData(25+cnt, tc-1), 2)
+	s = AITextData(CAIComparator(cnt, tc), 2)
 	pos wx + 148, wy + 60 + cnt * 19 + 2
 	mes s
-	s = AITextData(AIData(40+cnt, tc-1), 3)
+	s = AITextData(CAIComparatorFix(cnt, tc), 3)
 	pos wx + 273, wy + 60 + cnt * 19 + 2
 	mes s
 	SlotID = cnt
@@ -920,7 +920,7 @@
 	s = ValueName
 	pos wx + 408, wy + 60 + cnt * 19 + 2
 	mes s
-	ActionToGet = AIData(70+SlotID, tc-1)
+	ActionToGet = CAIAction(SlotID, tc)
 	gosub *GetActionName
 	s = ActionName
 	pos wx + 508, wy + 60 + cnt * 19 + 2
@@ -1015,11 +1015,11 @@
 	gosub *screen_drawMsg2
 
 	repeat 20
-		if ( AIData(85+cnt, tc-1) == 0 ) {
+		if ( CAIAction2(cnt, tc) == 0 ) {
 			listn(0, cnt) = "Blank"
 		}
 		else {
-			ActionToGet = AIData(85+cnt, tc-1)
+			ActionToGet = CAIAction2(cnt, tc)
 			gosub *GetActionName
 			listn(0, cnt) = ActionName
 		}
@@ -1049,15 +1049,15 @@
 			LoopCount = 0
 
 			while( LoopCount < 15 )
-				if ( AIData(70+LoopCount, tc-1) == AIData(85+cnt, tc-1) ) {
-					AIData(70+LoopCount, tc-1) = 0
+				if ( CAIAction(LoopCount, tc) == CAIAction2(cnt, tc) ) {
+					CAIAction(LoopCount, tc) = 0
 				}
 				LoopCount++
 			wend
 
-			if ( AIData(85+cnt, tc-1) != 0 ) {
-				AIData(85+cnt, tc-1) = 0
-				AIData(5, tc-1)--
+			if ( CAIAction2(cnt, tc) != 0 ) {
+				CAIAction2(cnt, tc) = 0
+				CAILearnedActionCount(tc)--
 			}
 			key = key_cancel
 		}
@@ -1111,7 +1111,7 @@
 		LoopCount = 0
 
 		while ( LoopCount < 20 )
-			if ( AIData(85+LoopCount, tc-1) == key ) {
+			if ( CAIAction2(LoopCount, tc) == key ) {
 				txt "" + name(tc) + " already knows that spell."
 				p = 0
 				break
@@ -1122,14 +1122,14 @@
 		LoopCount = 0
 
 		while ( LoopCount < 15 )
-			if ( AIData(70+LoopCount, tc-1) == AIData(3, tc-1) ) {
-				AIData(70+LoopCount, tc-1) = 0
+			if ( CAIAction(LoopCount, tc) == CAIActionLearning(tc) ) {
+				CAIAction(LoopCount, tc) = 0
 			}
 			LoopCount++
 		wend
 
-		AIData(3, tc-1) = key
-		AIData(4, tc-1) = 0
+		CAIActionLearning(tc) = key
+		CAIActionLearnProgress(tc) = 0
 
 		break
 	}
@@ -1186,7 +1186,7 @@
 		if ( key == cnt ) {
 			LoopCount = 0
 			while ( LoopCount < 20 )
-				if ( AIData(85+LoopCount, tc-1) == key ) {
+				if ( CAIAction2(LoopCount, tc) == key ) {
 					txt "" + name(tc) + " already knows that ability."
 					p = 0
 					break
@@ -1197,14 +1197,14 @@
 			LoopCount = 0
 
 			while ( LoopCount < 15 )
-				if ( AIData(70+LoopCount, tc-1) == AIData(3, tc-1) ) {
-					AIData(70+LoopCount, tc-1) = 0
+				if ( CAIAction(LoopCount, tc) == CAIActionLearning(tc) ) {
+					CAIAction(LoopCount, tc) = 0
 				}
 				LoopCount++
 			wend
 
-			AIData(3, tc-1) = key
-			AIData(4, tc-1) = 0
+			CAIActionLearning(tc) = key
+			CAIActionLearnProgress(tc) = 0
 
 			break
 		}
@@ -1230,22 +1230,22 @@
 	s = "Teach Your Pet"
 	gosub *screen_drawMsg2
 
-	repeat AIData(1, tc-1)
+	repeat CAIAvailableSlots(tc)
 		listn(0, cnt) = "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\\t\t\t\t\t\t\t\t\t\t\t\t\t\\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
 	loop
 
-	listn(0, AIData(1, tc-1)) = "Toggle AI"
-	listn(0, AIData(1, tc-1)+1) = "Re-Initialize Actions"
-	if ( AIData(7, tc-1) == 0 ) {
-		listn(0, AIData(1, tc-1)+2) = "Be quiet."
+	listn(0, CAIAvailableSlots(tc)) = "Toggle AI"
+	listn(0, CAIAvailableSlots(tc)+1) = "Re-Initialize Actions"
+	if ( CAIQuiet(tc) == 0 ) {
+		listn(0, CAIAvailableSlots(tc)+2) = "Be quiet."
 	}
 	else {
-		listn(0, AIData(1, tc-1)+2) = "Tell me when you're confused."
+		listn(0, CAIAvailableSlots(tc)+2) = "Tell me when you're confused."
 	}
-	listn(0, AIData(1, tc-1)+3) = "Back"
+	listn(0, CAIAvailableSlots(tc)+3) = "Back"
 	font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
 
-	repeat AIData(1, tc-1) + 4
+	repeat CAIAvailableSlots(tc) + 4
 		key_list(cnt) = key_select(cnt)
 		keyrange = cnt + 1
 		pos wx + 18, wy + 60 + cnt * 19 - 2
@@ -1256,14 +1256,14 @@
 	font lang(cfg_font1, cfg_font2), 13 - en * 2, 0
 	gosub *PrintAIInfo
 
-	repeat AIData(1, tc-1)
-		s = AITextData(AIData(10+cnt, tc-1) \ 1000, 1)
+	repeat CAIAvailableSlots(tc)
+		s = AITextData(CAIEntity(cnt, tc) \ 1000, 1)
 		pos wx + 48, wy + 60 + cnt * 19 + 2
 		mes s
-		s = AITextData(AIData(25+cnt, tc-1), 2)
+		s = AITextData(CAIComparator(cnt, tc), 2)
 		pos wx + 148, wy + 60 + cnt * 19 + 2
 		mes s
-		s = AITextData(AIData(40+cnt, tc-1), 3)
+		s = AITextData(CAIComparatorFix(cnt, tc), 3)
 		pos wx + 273, wy + 60 + cnt * 19 + 2
 		mes s
 		SlotID = cnt
@@ -1271,7 +1271,7 @@
 		s = ValueName
 		pos wx + 408, wy + 60 + cnt * 19 + 2
 		mes s
-		ActionToGet = AIData(70+SlotID, tc-1)
+		ActionToGet = CAIAction(SlotID, tc)
 		gosub *GetActionName
 		s = ActionName
 		pos wx + 508, wy + 60 + cnt * 19 + 2
@@ -1288,26 +1288,26 @@
 			HeldTactic = cs
 		}
 		else {
-			TempSwap = AIData(10+cs, tc-1)
-			AIData(10+cs, tc - 1) = AIData(10+HeldTactic, tc-1)
-			AIData(10+HeldTactic, tc-1) = TempSwap
-			TempSwap = AIData(25+cs, tc-1)
-			AIData(25+cs, tc - 1) = AIData(25+HeldTactic, tc-1)
-			AIData(25+HeldTactic, tc-1) = TempSwap
-			TempSwap = AIData(40+cs, tc-1)
-			AIData(40+cs, tc - 1) = AIData(40+HeldTactic, tc-1)
-			AIData(40+HeldTactic, tc-1) = TempSwap
-			TempSwap = AIData(55+cs, tc-1)
-			AIData(55+cs, tc - 1) = AIData(55+HeldTactic, tc-1)
-			AIData(55+HeldTactic, tc-1) = TempSwap
-			TempSwap = AIData(70+cs, tc-1)
-			AIData(70+cs, tc - 1) = AIData(70+HeldTactic, tc-1)
-			AIData(70+HeldTactic, tc-1) = TempSwap
+			TempSwap = CAIEntity(cs, tc)
+			CAIEntity(cs, tc) = CAIEntity(10+HeldTactic, tc)
+			CAIEntity(HeldTactic, tc) = TempSwap
+			TempSwap = CAIComparator(cs, tc)
+			CAIComparator(cs, tc) = CAIComparator(HeldTactic, tc)
+			CAIComparator(HeldTactic, tc) = TempSwap
+			TempSwap = CAIComparatorFix(cs, tc)
+			CAIComparatorFix(cs, tc) = CAIComparatorFix(HeldTactic, tc)
+			CAIComparatorFix(HeldTactic, tc) = TempSwap
+			TempSwap = CAIValue(cs, tc)
+			CAIValue(cs, tc) = CAIValue(HeldTactic, tc)
+			CAIValue(HeldTactic, tc) = TempSwap
+			TempSwap = CAIAction(cs, tc)
+			CAIAction(cs, tc) = CAIAction(HeldTactic, tc)
+			CAIAction(HeldTactic, tc) = TempSwap
 			HeldTactic = -1
 		}
 	}
 
-	repeat AIData(1, tc-1)
+	repeat CAIAvailableSlots(tc)
 		if ( key == key_select(cnt) ) {
 			CurrentTactic = cnt
 			cs = 0
@@ -1319,32 +1319,32 @@
 	if ( GoConfig == 1 ) {
 		goto *AITacticConfigMenu
 	}
-	if ( key == key_select(AIData(1, tc-1)) ) {
-		if ( AIData(0, tc-1) == 1 ) {
-			cdata(CDATA_AI_DISTANCE, tc) = AIData(6, tc-1)
-			AIData(6, tc-1) = 0
-			AIData(0, tc-1) = 0
+	if ( key == key_select(CAIAvailableSlots(tc)) ) {
+		if ( CAIEnabled(tc) == TRUE ) {
+			cdata(CDATA_AI_DISTANCE, tc) = CAISavedDistance(tc)
+			CAISavedDistance(tc) = 0
+			CAIEnabled(tc) = FALSE
 		}
 		else {
-			AIData(0, tc-1) = 1
-			AIData(6, tc-1) = cdata(CDATA_AI_DISTANCE, tc)
+			CAIEnabled(tc) = TRUE
+			CAISavedDistance(tc) = cdata(CDATA_AI_DISTANCE, tc)
 		}
 	}
-	if ( key == key_select(AIData(1, tc-1)+1) ) {
+	if ( key == key_select(CAIAvailableSlots(tc)+1) ) {
 		dialog "Re-Initialize this pet's spells and abilities?", 3
 		if ( stat == 6 ) {
 			gosub *AIInitActions
 		}
 	}
-	if ( key == key_select(AIData(1, tc-1)+2) ) {
-		if ( AIData(7, tc-1) == 0 ) {
-			AIData(7, tc-1) = 1
+	if ( key == key_select(CAIAvailableSlots(tc)+2) ) {
+		if ( CAIQuiet(tc) == FALSE ) {
+			CAIQuiet(tc) = TRUE
 		}
 		else {
-			AIData(7, tc-1) = 0
+			CAIQuiet(tc) = FALSE
 		}
 	}
-	if ( key == key_cancel | key == key_select(AIData(1, tc-1)+3) ) {
+	if ( key == key_cancel | key == key_select(CAIAvailableSlots(tc)+3) ) {
 		goto *AIMainMenu
 	}
 	goto *AIConfigMenu
@@ -1356,17 +1356,17 @@
 	display_window (windoww - 680) / 2 + inf_screenx, winposy(500, 1) + 20, 680, 500
 	s = "Teach Your Pet"
 	gosub *screen_drawMsg2
-	listn(0, 0) = "Modify Entity. (Current: " + AITextData(AIData(10+CurrentTactic, tc-1) \ 1000, 1) + ")"
-	listn(0, 1) = "Modify Condition. (Current: " + AITextData(AIData(25+CurrentTactic, tc-1), 2) + ")"
-	listn(0, 2) = "Modify Comparator. (Current: " + AITextData(AIData(40+CurrentTactic, tc-1), 3) + ")"
+	listn(0, 0) = "Modify Entity. (Current: " + AITextData(CAIEntity(CurrentTactic, tc) \ 1000, 1) + ")"
+	listn(0, 1) = "Modify Condition. (Current: " + AITextData(CAIComparator(CurrentTactic, tc), 2) + ")"
+	listn(0, 2) = "Modify Comparator. (Current: " + AITextData(CAIComparatorFix(CurrentTactic, tc), 3) + ")"
 	SlotID = CurrentTactic
 	gosub *GetValueName
 	listn(0, 3) = "Modify Value. (Current: " + ValueName + ")"
 	SlotID = CurrentTactic
-	ActionToGet = AIData(70+SlotID, tc-1)
+	ActionToGet = CAIAction(SlotID, tc)
 	gosub *GetActionName
 	listn(0, 4) = "Modify Action. (Current: " + ActionName + ")"
-	if ( AIData(10+CurrentTactic, tc-1) / 1000 == 1 ) {
+	if ( CAIEntity(CurrentTactic, tc) / 1000 == 1 ) {
 		listn(0, 5) = "Toggle Preserve Entity As Target. (Currently: On)"
 	}
 	else {
@@ -1411,11 +1411,11 @@
 		goto *AIActionSetMenu
 	}
 	if ( key == key_select(5) ) {
-		if ( AIData(10+CurrentTactic, tc-1) / 1000 == 1 ) {
-			AIData(10+CurrentTactic, tc-1) -= 1000
+		if ( CAIEntity(CurrentTactic, tc) / 1000 == 1 ) {
+			CAIEntity(CurrentTactic, tc) -= 1000
 		}
 		else {
-			AIData(10+CurrentTactic, tc-1) += 1000
+			CAIEntity(CurrentTactic, tc) += 1000
 		}
 	}
 	if ( key == key_cancel | key == key_select(6) ) {
@@ -1444,8 +1444,8 @@
 		}
 	loop
 
-	if ( AIData(3, tc-1) != 0 ) {
-		ActionToGet = AIData(3, tc - 1)
+	if ( CAIActionLearning(tc) != 0 ) {
+		ActionToGet = CAIActionLearning(tc )
 		gosub *GetActionName
 		listn(0, NumActions) = ActionName
 		key_list(NumActions) = NumActions + 100
@@ -1453,8 +1453,8 @@
 	}
 
 	repeat 20
-		if ( AIData(85+cnt, tc-1) != 0 ) {
-			ActionToGet = AIData(85+cnt, tc-1)
+		if ( CAIAction2(cnt, tc) != 0 ) {
+			ActionToGet = CAIAction2(cnt, tc)
 			gosub *GetActionName
 			listn(0, NumActions) = ActionName
 			key_list(NumActions) = cnt
@@ -1483,17 +1483,17 @@
 	repeat 115
 		if ( key == cnt ) {
 			if ( cnt < 100 ) {
-				AIData(70+CurrentTactic, tc-1) = AIData(85+cnt, tc-1)
+				CAIAction(CurrentTactic, tc) = CAIAction2(cnt, tc)
 				key = key_cancel
 				break
 			}
 			if ( cnt == 100 + CUSTOM_AI_ACTION_DO_NOTHING + 1 ) {
-				AIData(70+CurrentTactic, tc-1) = AIData(3, tc-1)
+				CAIAction(CurrentTactic, tc) = CAIActionLearning(tc)
 				key = key_cancel
 				break
 			}
 			if ( cnt >= 100 ) {
-				AIData(70+CurrentTactic, tc-1) = cnt - 100
+				CAIAction(CurrentTactic, tc) = cnt - 100
 				key = key_cancel
 				break
 			}
@@ -1512,7 +1512,7 @@
 	LoopCount = 0
 
 	while( LoopCount < 20 )
-		if ( AIData(85+LoopCount, tc-1) == ActionToFind ) {
+		if ( CAIAction2(LoopCount, tc) == ActionToFind ) {
 			FoundAction = 1
 			_break
 		}
@@ -1522,29 +1522,29 @@
 	return
 
 *AIInitActions
-	if ( AIData(2, tc-1) == 1 ) {
+	if ( CAIActionsInitialized(tc) == 1 ) {
 		repeat 20
-			PlaceholderMoveList(cnt) = AIData(85+cnt, tc-1)
-			AIData(70+cnt, tc-1) = 0
-			AIData(85+cnt, tc-1) = 0
-			AIData(105+cnt, tc-1) = 0
+			PlaceholderMoveList(cnt) = CAIAction2(cnt, tc)
+			CAIAction(cnt, tc) = 0
+			CAIAction2(cnt, tc) = 0
+			CAIActionFatigue(cnt, tc) = 0
 		loop
 
-		AIData(5, tc-1) = 0
+		CAILearnedActionCount(tc) = 0
 		ReInitActions = 1
 	}
 	gosub *AIGetEvolveActions
 
 	repeat 10
 		if ( (cdata(STARTING_CDATA_ACT_MAIN+cnt, tc) > STARTING_SKILL_SPELL & cdata(STARTING_CDATA_ACT_MAIN+cnt, tc) != SKILL_SPELL_METEOR) | (cdata(STARTING_CDATA_ACT_MAIN+cnt, tc) < MAX_ACTION_THROW & cdata(STARTING_CDATA_ACT_MAIN+cnt, tc) >= ACTION_THROW) ) {
-			AIData(85+AIData(5, tc-1), tc-1) = cdata(STARTING_CDATA_ACT_MAIN+cnt, tc)
-			AIData(5, tc-1)++
+			CAIAction2(CAILearnedActionCount(tc), tc) = cdata(STARTING_CDATA_ACT_MAIN+cnt, tc)
+			CAILearnedActionCount(tc)++
 		}
 	loop
 
 	if ( (cdata(CDATA_ACT_HEAL, tc) > STARTING_SKILL_SPELL & cdata(CDATA_ACT_HEAL, tc) != SKILL_SPELL_METEOR) | (cdata(CDATA_ACT_HEAL, tc) < MAX_ACTION_THROW & cdata(CDATA_ACT_HEAL, tc) >= ACTION_THROW) ) {
-		AIData(85+AIData(5, tc-1), tc-1) = cdata(CDATA_ACT_HEAL, tc)
-		AIData(5, tc-1)++
+		CAIAction2(CAILearnedActionCount(tc), tc) = cdata(CDATA_ACT_HEAL, tc)
+		CAILearnedActionCount(tc)++
 	}
 	if ( cbit(CHARA_BIT_AWAKE_INSULT, tc) == 1 ) {
 		ActionToFind = SKILL_SPACT_INSULT
@@ -1673,13 +1673,13 @@
 			}
 		loop
 	}
-	AIData(2, tc-1) = 1
+	CAIActionsInitialized(tc) = 1
 	return
 
 *AIAddAction
-	if ( FoundAction == 0 & AIData(5, tc-1) < 20 ) {
-		AIData(85+AIData(5, tc-1), tc-1) = ActionToFind
-		AIData(5, tc-1)++
+	if ( FoundAction == 0 & CAILearnedActionCount(tc) < 20 ) {
+		CAIAction2(CAILearnedActionCount(tc), tc) = ActionToFind
+		CAILearnedActionCount(tc)++
 	}
 	return
 
@@ -2862,7 +2862,7 @@
 	listn(0, NumActions) = "Not Set"
 	key_list(NumActions) = 0
 	NumActions++
-	if ( AIData(25+CurrentTactic, tc-1) == 1 | AIData(25+CurrentTactic, tc-1) == 2 | AIData(25+CurrentTactic, tc-1) == 5 ) {
+	if ( CAIComparator(CurrentTactic, tc) == 1 | CAIComparator(CurrentTactic, tc) == 2 | CAIComparator(CurrentTactic, tc) == 5 ) {
 		repeat length(AITextData)
 			if ( AITextData(cnt,4) != "NULL" ) {
 				listn(0, NumActions) = AITextData(cnt, 4) + "%"
@@ -2874,7 +2874,7 @@
 			}
 		loop
 	}
-	if ( AIData(25+CurrentTactic, tc-1) == 3 ) {
+	if ( CAIComparator(CurrentTactic, tc) == 3 ) {
 		repeat length(AITextData)
 			if ( AITextData(cnt, 5) != "NULL" ) {
 				listn(0, NumActions) = AITextData(cnt, 5)
@@ -2886,7 +2886,7 @@
 			}
 		loop
 	}
-	if ( AIData(25+CurrentTactic, tc-1) == 6 ) {
+	if ( CAIComparator(CurrentTactic, tc) == 6 ) {
 		repeat length(AITextData)
 			if ( AITextData(cnt, 6) != "NULL" ) {
 				listn(0, NumActions) = AITextData(cnt, 6)
@@ -2898,14 +2898,14 @@
 			}
 		loop
 	}
-	if ( AIData(25+CurrentTactic, tc-1) == 4 ) {
+	if ( CAIComparator(CurrentTactic, tc) == 4 ) {
 		repeat MAX_BUFF-1, 1
 			listn(0, NumActions) = buffname(cnt)
 			key_list(NumActions) = cnt
 			NumActions++
 		loop
 	}
-	if ( AIData(25+CurrentTactic, tc-1) == 7 ) {
+	if ( CAIComparator(CurrentTactic, tc) == 7 ) {
 		repeat length(AIStatusNames)
 			if ( AIStatusNames(cnt, 0) != "NULL" ) {
 				listn(0, NumActions) = AIStatusNames(cnt, 0)
@@ -2937,7 +2937,7 @@
 
 	repeat 500
 		if ( key == cnt ) {
-			AIData(55+CurrentTactic, tc-1) = key
+			CAIValue(CurrentTactic, tc) = key
 			cs = 0
 			key = key_cancel
 		}
@@ -2952,24 +2952,24 @@
 
 *GetValueName
 	ValueName = ""
-	if ( AIData(55+SlotID, tc-1) == 0 ) {
+	if ( CAIValue(SlotID, tc) == 0 ) {
 		ValueName = "Not Set"
 		return
 	}
-	if ( AIData(55+SlotID, tc-1) < 100 ) {
-		ValueName = buffname(AIData(55+SlotID, tc-1))
+	if ( CAIValue(SlotID, tc) < 100 ) {
+		ValueName = buffname(CAIValue(SlotID, tc))
 	}
-	if ( AIData(55+SlotID, tc-1) >= 100 & AIData(55+SlotID, tc-1) < 200 ) {
-		ValueName = AITextData(AIData(55+SlotID, tc-1) \ 100, 4) + "%"
+	if ( CAIValue(SlotID, tc) >= 100 & CAIValue(SlotID, tc) < 200 ) {
+		ValueName = AITextData(CAIValue(SlotID, tc) \ 100, 4) + "%"
 	}
-	if ( AIData(55+SlotID, tc-1) >= 200 & AIData(55+SlotID, tc-1) < 300 ) {
-		ValueName = AITextData(AIData(55+SlotID, tc-1) \ 200, 5)
+	if ( CAIValue(SlotID, tc) >= 200 & CAIValue(SlotID, tc) < 300 ) {
+		ValueName = AITextData(CAIValue(SlotID, tc) \ 200, 5)
 	}
-	if ( AIData(55+SlotID, tc-1) >= 300 & AIData(55+SlotID, tc-1) < 400 ) {
-		ValueName = AITextData(AIData(55+SlotID, tc-1) \ 300, 6)
+	if ( CAIValue(SlotID, tc) >= 300 & CAIValue(SlotID, tc) < 400 ) {
+		ValueName = AITextData(CAIValue(SlotID, tc) \ 300, 6)
 	}
-	if ( AIData(55+SlotID, tc-1) >= 400 & AIData(55+SlotID, tc-1) < 500 ) {
-		ValueName = AIStatusNames(AIData(55+SlotID, tc-1) \ 400, 0)
+	if ( CAIValue(SlotID, tc) >= 400 & CAIValue(SlotID, tc) < 500 ) {
+		ValueName = AIStatusNames(CAIValue(SlotID, tc) \ 400, 0)
 	}
 	return
 
@@ -3013,7 +3013,7 @@
 	repeat NumActions+1
 		if ( key == key_select(cnt) ) {
 			if ( cnt < NumActions ) {
-				AIData(10+CurrentTactic, tc-1) = cnt + (AIData(10+CurrentTactic, tc-1) / 1000) * 1000
+				CAIEntity(CurrentTactic, tc) = cnt + (CAIEntity(CurrentTactic, tc) / 1000) * 1000
 			}
 			cs = 0
 			key = key_cancel
@@ -3067,11 +3067,11 @@
 	repeat NumActions+1
 		if ( key == key_select(cnt) ) {
 			if ( cnt < NumActions ) {
-				AIData(25+CurrentTactic, tc-1) = cnt
+				CAIComparator(CurrentTactic, tc) = cnt
 				if ( cnt == 4 | cnt == 6 | cnt == 7 ) {
-					AIData(40+CurrentTactic, tc-1) = 0
+					CAIComparatorFix(CurrentTactic, tc) = 0
 				}
-				AIData(55+CurrentTactic, tc-1) = 0
+				CAIValue(CurrentTactic, tc) = 0
 			}
 			cs = 0
 			key = key_cancel
@@ -3098,7 +3098,7 @@
 	repeat length(AITextData)
 		if ( AITextData(cnt, 3) != "NULL" ) {
 			; "Not Set", "=" and "!=" are always included
-			if ( cnt == 0 | (AIData(25+CurrentTactic, tc-1) != 4 & AIData(25+CurrentTactic, tc-1) != 6 & AIData(25+CurrentTactic, tc-1) != 7 ) | (cnt == 3) | (cnt == 4) ) {
+			if ( cnt == 0 | (CAIComparator(CurrentTactic, tc) != 4 & CAIComparator(CurrentTactic, tc) != 6 & CAIComparator(CurrentTactic, tc) != 7 ) | (cnt == 3) | (cnt == 4) ) {
 				listn(0, NumActions) = AITextData(cnt, 3)
 				key_list(NumActions) = key_select(NumActions)
 				AIComparatorFix(NumActions) = cnt
@@ -3133,7 +3133,7 @@
 	repeat MAX_CHARA_FOLLOWER - 1
 		if ( key == key_select(cnt) & cnt < NumActions + 1 ) {
 			if ( cnt < NumActions ) {
-				AIData(40+CurrentTactic, tc-1) = AIComparatorFix(cnt)
+				CAIComparatorFix(CurrentTactic, tc) = AIComparatorFix(cnt)
 			}
 			cs = 0
 			key = key_cancel

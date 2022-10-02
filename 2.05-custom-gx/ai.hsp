@@ -1069,10 +1069,10 @@
 			retreat = 0
 		}
 
-		/********** ANNA CUSTOM - BEGINNING **********/ // Change Zeome's AI.
+		/********** ANNA CUSTOM - BEGINNING **********/ // Custom AI & Change Zeome's AI.
 
 		if ( cc < MAX_CHARA_FOLLOWER & cc != CHARA_PLAYER ) {
-			if ( AIData(0, cc - 1) == 1 & (cdata(CDATA_DIRECTIVE_MODE, cc) == DIRECTIVE_MODE_OFFENSIVE | gdata(GDATA_AREA) == AREA_PET_ARENA) ) {
+			if ( CAIEnabled(cc) == 1 & (cdata(CDATA_DIRECTIVE_MODE, cc) == DIRECTIVE_MODE_OFFENSIVE | gdata(GDATA_AREA) == AREA_PET_ARENA) ) {
 				goto *AnnaCustomAI
 			}
 		}

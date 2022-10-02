@@ -6950,6 +6950,24 @@
 
 #define global	CUSTOM_AI_MAX_TACTICS	15
 
+#define global ctype CAIEnabled(%1)	AIData@(0,%1-1)
+#define global ctype CAIAvailableSlots(%1)	AIData@(1,%1-1)
+#define global ctype CAIActionsInitialized(%1)	AIData@(2,%1-1)
+#define global ctype CAIActionLearning(%1)	AIData@(3,%1-1)
+#define global ctype CAIActionLearnProgress(%1)	AIData@(4,%1-1)
+#define global ctype CAILearnedActionCount(%1)	AIData@(5,%1-1)
+#define global ctype CAISavedDistance(%1)	AIData@(6,%1-1)
+#define global ctype CAIQuiet(%1)	AIData@(7,%1-1)
+
+// Array slices of length 15 (max tactics count)
+#define global ctype CAIEntity(%1,%2)	AIData@(10+%1,%2-1)
+#define global ctype CAIComparator(%1,%2)	AIData@(25+%1,%2-1)
+#define global ctype CAIComparatorFix(%1,%2)	AIData@(40+%1,%2-1)
+#define global ctype CAIValue(%1,%2)	AIData@(55+%1,%2-1)
+#define global ctype CAIAction(%1,%2)	AIData@(70+%1,%2-1)
+#define global ctype CAIAction2(%1,%2)	AIData@(85+%1,%2-1)
+#define global ctype CAIActionFatigue(%1,%2)	AIData@(105+%1,%2-1)
+
 // Damage Popups
 #define global	DMGPOPUP_NONE	0
 #define global	DMGPOPUP_ADD_HEX	1
