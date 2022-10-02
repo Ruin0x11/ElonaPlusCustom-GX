@@ -324,7 +324,7 @@
 				txt lang("ファイルの取得に失敗した。", "Failed to retrieve designated files.")
 				goto *com_import_loop_pgchk
 			}
-			if ( list(2, p) == 100002 ) {
+			if ( list(2, p) == NET_VERSION ) {
 				if ( comctrl == 1 ) {
 					s = ".pet"
 				}
@@ -924,7 +924,7 @@
 				continue
 			}
 			i = list(0, cnt)
-			if ( cdata(CDATA_EXIST, i) != CHAR_STATE_ALLY_DEAD ) {
+			if ( cdata(CDATA_EXIST, i) != CHAR_STATE_ALLY_DEAD & cdata(CDATA_EXIST, i) != CHAR_STATE_ALLY_WAIT & cdata(CDATA_EXIST, i) != CHAR_STATE_SUSPEND & cdata(CDATA_EXIST, i) != CHAR_STATE_ALLY_WORK ) {
 				followerin(i) = 1
 				p++
 				if ( p == arenaop(1) ) {
@@ -1259,8 +1259,18 @@
 				snd SOUNDLIST_OK1
 				return 1
 			}
-			if ( cdata(CDATA_EXIST, p) == CHAR_STATE_ALLY_DEAD ) {
+			if ( cdata(CDATA_EXIST, p) == CHAR_STATE_ALLY_DEAD | cdata(CDATA_EXIST, p) == CHAR_STATE_SUSPEND ) {
 				txt lang("死んでいる。", he(p) + " " + is(p) + " dead.")
+				snd SOUNDLIST_FAIL1
+				goto *com_ally_loop_WHILE1_CONTINUE
+			}
+			if ( cdata(CDATA_EXIST, p) == CHAR_STATE_ALLY_WAIT ) {
+				txt lang("待っている。", he(p) + " " + is(p) + " waiting.")
+				snd SOUNDLIST_FAIL1
+				goto *com_ally_loop_WHILE1_CONTINUE
+			}
+			if ( cdata(CDATA_EXIST, p) == CHAR_STATE_ALLY_WORK ) {
+				txt lang("働いている。", he(p) + " " + is(p) + " working.")
 				snd SOUNDLIST_FAIL1
 				goto *com_ally_loop_WHILE1_CONTINUE
 			}
@@ -5965,6 +5975,7 @@
 	}
 
 	if ( p == 998 ) {
+		snd SOUNDLIST_OK1
 		gosub *PetMenu
 		goto *pc_turn
 	}
@@ -15083,11 +15094,11 @@
 	return 1
 
 *com_dump
-	if ( gdata(GDATA_WIZARD) ) {
-		snd SOUNDLIST_FAIL1
-		txt lang("デバッグモードでは無効だ。", "This function is disabled in wizard mode.")
-		return
-	}
+	// if ( gdata(GDATA_WIZARD) ) {
+	// 	snd SOUNDLIST_FAIL1
+	// 	txt lang("デバッグモードでは無効だ。", "This function is disabled in wizard mode.")
+	// 	return
+	// }
 	if ( gdata(GDATA_AREA) == AREA_SHOW_HOUSE | gdata(GDATA_AREA) == AREA_ARENA | gdata(GDATA_AREA) == AREA_PET_ARENA ) {
 		redraw 0
 		snd SOUNDLIST_FAIL1

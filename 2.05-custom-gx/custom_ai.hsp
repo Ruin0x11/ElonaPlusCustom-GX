@@ -115,6 +115,7 @@
 								_continue
 							}
 							if ( cc >= MAX_CHARA_FOLLOWER & cdata(CDATA_RELATION_ORG, LoopCount) > RELATION_ENEMY ) {
+								LoopCount++
 								_continue
 							}
 							dx = cdata(CDATA_X, LoopCount)
@@ -202,6 +203,7 @@
 								_continue
 							}
 							if ( cc >= MAX_CHARA_FOLLOWER & cdata(CDATA_RELATION_ORG, LoopCount) > RELATION_ENEMY ) {
+								LoopCount++
 								_continue
 							}
 							if ( (((cdata(CDATA_MP, LoopCount)*100) / cdata(CDATA_MAX_MP, LoopCount)) == AITextData(CAIValue(cnt, cc) - 100, 4)) & (CAIComparatorFix(cnt, cc) == 3 | CAIComparatorFix(cnt, cc) == 5 | CAIComparatorFix(cnt, cc) == 6) ) {
@@ -277,6 +279,7 @@
 								_continue
 							}
 							if ( cc >= MAX_CHARA_FOLLOWER & cdata(CDATA_RELATION_ORG, LoopCount) > RELATION_ENEMY ) {
+								LoopCount++
 								_continue
 							}
 							dx = cdata(CDATA_X, LoopCount)
@@ -360,6 +363,7 @@
 								_continue
 							}
 							if ( cc >= MAX_CHARA_FOLLOWER & cdata(CDATA_RELATION_ORG, LoopCount) > RELATION_ENEMY ) {
+								LoopCount++
 								_continue
 							}
 							dx = cdata(CDATA_X, LoopCount)
@@ -419,6 +423,7 @@
 								_continue
 							}
 							if ( cc >= MAX_CHARA_FOLLOWER & cdata(CDATA_RELATION_ORG, LoopCount) > RELATION_ENEMY ) {
+								LoopCount++
 								_continue
 							}
 							if ( (cdata(CDATA_POWER_GAUGE, LoopCount) == AITextData(CAIValue(cnt, cc) - 100, 4)) & (CAIComparatorFix(cnt, cc) == 3 | CAIComparatorFix(cnt, cc) == 5 | CAIComparatorFix(cnt, cc) == 6) ) {
@@ -500,6 +505,7 @@
 								_continue
 							}
 							if ( cc >= MAX_CHARA_FOLLOWER & cdata(CDATA_RELATION_ORG, LoopCount) > RELATION_ENEMY ) {
+								LoopCount++
 								_continue
 							}
 							if ( (cdatan(CDATAN_CLASS, LoopCount) == AITextData(CAIValue(cnt, cc) - 300, 6) & CAIComparatorFix(cnt, cc) == (3)) | (cdatan(CDATAN_CLASS, LoopCount) != AITextData(CAIValue(cnt, cc) - 300, 6) & CAIComparatorFix(cnt, cc) == (4)) ) {
@@ -553,6 +559,7 @@
 								_continue
 							}
 							if ( cc >= MAX_CHARA_FOLLOWER & cdata(CDATA_RELATION_ORG, LoopCount) > RELATION_ENEMY ) {
+								LoopCount++
 								_continue
 							}
 							if ( (cdata(StatusOffsets(CAIValue(cnt, cc) \ 100), LoopCount) > 0 & CAIComparatorFix(cnt, cc) == (3)) | (cdata(StatusOffsets(CAIValue(cnt, cc) \ 100), LoopCount) == 0 & CAIComparatorFix(cnt, cc) == (4)) ) {
@@ -770,7 +777,12 @@
 
 	; Failure
 	if ( CAIQuiet(cc) == 0 ) {
-		txt lang("" + name(cc) + "はあなたの指示によって、どのように対応すればいいのか分からない！", "" + name(cc) + " doesn't know how to respond to the situation based on the instructions you've given " + him(cc) + "!")
+		if ( cc < MAX_CHARA_FOLLOWER ) {
+			txt lang("" + name(cc) + "はあなたの指示によって、どのように対応すればいいのか分からない！", "" + name(cc) + " doesn't know how to respond to the situation based on the instructions you've given " + him(cc) + "!")
+		}
+		else {
+			txt lang("" + name(cc) + "は自分の指示によって、どのように対応すればいいのか分からない！", "" + name(cc) + " doesn't know how to respond to the situation based on the instructions " + he(cc) + " " + have(cc) + " been given!")
+		}
 	}
 	goto *turn_end
 	return
@@ -1014,13 +1026,16 @@
 	key_check
 	cursor_check
 	if ( key == key_select(0) ) {
+		snd SOUNDLIST_OK1
 		cs = 0
 		goto *AIConfigMenu
 	}
 	if ( key == key_select(1) ) {
+		snd SOUNDLIST_OK1
 		goto *AITeachConfigMenu
 	}
 	if ( key == key_select(2) ) {
+		snd SOUNDLIST_OK1
 		goto *chat_end
 	}
 	if ( key == key_cancel ) {
@@ -1057,15 +1072,22 @@
 	key_check
 	cursor_check
 	if ( key == key_select(0) ) {
+		snd SOUNDLIST_OK1
 		goto *AISpellLearnMenu
 	}
 	if ( key == key_select(1) ) {
+		snd SOUNDLIST_OK1
 		goto *AIAbilityLearnMenu
 	}
 	if ( key == key_select(2) ) {
+		snd SOUNDLIST_OK1
 		goto *AIDeleteAbilityMenu
 	}
-	if ( key == key_cancel | key == key_select(3) ) {
+	if ( key == key_select(3) ) {
+		snd SOUNDLIST_OK1
+		goto *AIMainMenu
+	}
+	if ( key == key_cancel ) {
 		goto *AIMainMenu
 	}
 	goto *AITeachConfigMenu
@@ -1110,6 +1132,7 @@
 
 	repeat 20
 		if ( key == cnt ) {
+			snd SOUNDLIST_OK1
 			LoopCount = 0
 
 			while( LoopCount < 15 )
@@ -1127,7 +1150,11 @@
 		}
 	loop
 
-	if ( key == key_cancel | key == 20 ) {
+	if ( key == 20 ) {
+		snd SOUNDLIST_OK1
+		goto *AITeachConfigMenu
+	}
+	if ( key == key_cancel ) {
 		goto *AITeachConfigMenu
 	}
 	goto *AIDeleteAbilityMenu
@@ -1172,6 +1199,7 @@
 	cursor_check
 	repeat (MAX_SPELL - STARTING_SKILL_SPELL) - 1, STARTING_SKILL_SPELL
 	if ( key == cnt ) {
+		snd SOUNDLIST_OK1
 		LoopCount = 0
 
 		while ( LoopCount < 20 )
@@ -1198,7 +1226,12 @@
 		break
 	}
 	loop
-	if ( key == key_cancel | key == 999 ) {
+	if ( key == 999 ) {
+		snd SOUNDLIST_OK1
+		cs = 0
+		goto *AITeachConfigMenu
+	}
+	if ( key == key_cancel ) {
 		cs = 0
 		goto *AITeachConfigMenu
 	}
@@ -1248,6 +1281,7 @@
 
 	repeat (MAX_SKILL - STARTING_SKILL_SPACT), STARTING_SKILL_SPACT
 		if ( key == cnt ) {
+			snd SOUNDLIST_OK1
 			LoopCount = 0
 			while ( LoopCount < 20 )
 				if ( CAIAction2(LoopCount, tc) == key ) {
@@ -1274,7 +1308,12 @@
 		}
 	loop
 
-	if ( key == key_cancel | key == 999 ) {
+	if ( key == 999 ) {
+		snd SOUNDLIST_OK1
+		cs = 0
+		goto *AITeachConfigMenu
+	}
+	if ( key == key_cancel ) {
 		cs = 0
 		goto *AITeachConfigMenu
 	}
@@ -1348,6 +1387,7 @@
 	key_check
 	cursor_check
 	if ( key == key_mode2 ) {
+		snd SOUNDLIST_OK1
 		if ( HeldTactic == -1 ) {
 			HeldTactic = cs
 		}
@@ -1373,6 +1413,7 @@
 
 	repeat CAIAvailableSlots(tc)
 		if ( key == key_select(cnt) ) {
+			snd SOUNDLIST_OK1
 			CurrentTactic = cnt
 			cs = 0
 			GoConfig = 1
@@ -1384,6 +1425,7 @@
 		goto *AITacticConfigMenu
 	}
 	if ( key == key_select(CAIAvailableSlots(tc)) ) {
+		snd SOUNDLIST_OK1
 		if ( CAIEnabled(tc) == TRUE ) {
 			cdata(CDATA_AI_DISTANCE, tc) = CAISavedDistance(tc)
 			CAISavedDistance(tc) = 0
@@ -1395,12 +1437,14 @@
 		}
 	}
 	if ( key == key_select(CAIAvailableSlots(tc)+1) ) {
+		snd SOUNDLIST_OK1
 		dialog "Re-Initialize this pet's spells and abilities?", 3
 		if ( stat == 6 ) {
 			gosub *AIInitActions
 		}
 	}
 	if ( key == key_select(CAIAvailableSlots(tc)+2) ) {
+		snd SOUNDLIST_OK1
 		if ( CAIQuiet(tc) == FALSE ) {
 			CAIQuiet(tc) = TRUE
 		}
@@ -1408,7 +1452,11 @@
 			CAIQuiet(tc) = FALSE
 		}
 	}
-	if ( key == key_cancel | key == key_select(CAIAvailableSlots(tc)+3) ) {
+	if ( key == key_select(CAIAvailableSlots(tc)+3) ) {
+		snd SOUNDLIST_OK1
+		goto *AIMainMenu
+	}
+	if ( key == key_cancel ) {
 		goto *AIMainMenu
 	}
 	goto *AIConfigMenu
@@ -1455,26 +1503,32 @@
 	key_check
 	cursor_check
 	if ( key == key_select(0) ) {
+		snd SOUNDLIST_OK1
 		cs = 0
 		goto *AIEntitySetMenu
 	}
 	if ( key == key_select(1) ) {
+		snd SOUNDLIST_OK1
 		cs = 0
 		goto *AIConditionSetMenu
 	}
 	if ( key == key_select(2) ) {
+		snd SOUNDLIST_OK1
 		cs = 0
 		goto *AIComparatorSetMenu
 	}
 	if ( key == key_select(3) ) {
+		snd SOUNDLIST_OK1
 		cs = 0
 		goto *AIValueSetMenu
 	}
 	if ( key == key_select(4) ) {
+		snd SOUNDLIST_OK1
 		cs = 0
 		goto *AIActionSetMenu
 	}
 	if ( key == key_select(5) ) {
+		snd SOUNDLIST_OK1
 		if ( CAIEntity(CurrentTactic, tc) / 1000 == 1 ) {
 			CAIEntity(CurrentTactic, tc) -= 1000
 		}
@@ -1482,7 +1536,12 @@
 			CAIEntity(CurrentTactic, tc) += 1000
 		}
 	}
-	if ( key == key_cancel | key == key_select(6) ) {
+	if ( key == key_select(6) ) {
+		snd SOUNDLIST_OK1
+		cs = 0
+		goto *AIConfigMenu
+	}
+	if ( key == key_cancel ) {
 		cs = 0
 		goto *AIConfigMenu
 	}
@@ -1546,6 +1605,7 @@
 
 	repeat 115
 		if ( key == cnt ) {
+			snd SOUNDLIST_OK1
 			if ( cnt < 100 ) {
 				CAIAction(CurrentTactic, tc) = CAIAction2(cnt, tc)
 				key = key_cancel
@@ -1564,7 +1624,12 @@
 		}
 	loop
 
-	if ( key == key_cancel | key == 999 ) {
+	if ( key == 999 ) {
+		snd SOUNDLIST_OK1
+		cs = 0
+		goto *AITacticConfigMenu
+	}
+	if ( key == key_cancel ) {
 		cs = 0
 		goto *AITacticConfigMenu
 	}
@@ -3001,13 +3066,19 @@
 
 	repeat 500
 		if ( key == cnt ) {
+			snd SOUNDLIST_OK1
 			CAIValue(CurrentTactic, tc) = key
 			cs = 0
 			key = key_cancel
 		}
 	loop
 
-	if ( key == key_cancel | key == 999 ) {
+	if ( key == 999 ) {
+		snd SOUNDLIST_OK1
+		cs = 0
+		goto *AITacticConfigMenu
+	}
+	if ( key == key_cancel ) {
 		cs = 0
 		goto *AITacticConfigMenu
 	}
@@ -3076,6 +3147,7 @@
 
 	repeat NumActions+1
 		if ( key == key_select(cnt) ) {
+			snd SOUNDLIST_OK1
 			if ( cnt < NumActions ) {
 				CAIEntity(CurrentTactic, tc) = cnt + (CAIEntity(CurrentTactic, tc) / 1000) * 1000
 			}
@@ -3130,6 +3202,7 @@
 
 	repeat NumActions+1
 		if ( key == key_select(cnt) ) {
+			snd SOUNDLIST_OK1
 			if ( cnt < NumActions ) {
 				CAIComparator(CurrentTactic, tc) = cnt
 				if ( cnt == 4 | cnt == 6 | cnt == 7 ) {
@@ -3196,6 +3269,7 @@
 
 	repeat CUSTOM_AI_MAX_TACTICS
 		if ( key == key_select(cnt) & cnt < NumActions + 1 ) {
+			snd SOUNDLIST_OK1
 			if ( cnt < NumActions ) {
 				CAIComparatorFix(CurrentTactic, tc) = AIComparatorFix(cnt)
 			}
@@ -3206,7 +3280,12 @@
 		}
 	loop
 
-	if ( key == key_cancel | key == key_select(16) ) {
+	if ( key == key_select(16) ) {
+		snd SOUNDLIST_OK1
+		cs = 0
+		goto *AITacticConfigMenu
+	}
+	if ( key == key_cancel ) {
 		cs = 0
 		goto *AITacticConfigMenu
 	}

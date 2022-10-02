@@ -1157,6 +1157,10 @@
 	if ( cbit(CHARA_BIT_NECRO, chara_vanquish_charid) != 1 ) {
 		check_quest
 	}
+	if ( chara_vanquish_charid >= MAX_CHARA_FOLLOWER ) {
+		AllyID = chara_vanquish_charid
+		gosub *DeleteAIInfo
+	}
 	return
 
 #deffunc turn_aggro int turn_aggro_arg1, int turn_aggro_arg2, int turn_aggro_arg3
@@ -7331,6 +7335,10 @@
 			}
 			if ( dmghp_charid < MAX_CHARA_FOLLOWER ) {
 				txt lang("あなたは悲しくなった。", "You feel sad for a moment.")
+			}
+			else {
+				AllyID = dmghp_charid
+				gosub *DeleteAIInfo
 			}
 		}
 		gdata(GDATA_CROWD)--
