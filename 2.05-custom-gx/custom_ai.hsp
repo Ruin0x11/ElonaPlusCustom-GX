@@ -46,7 +46,7 @@
 	PreservedTarget = -1
 	TriedLearnedSkill = 0
 	gosub *IncrementFatigue
-	repeat MAX_CHARA_FOLLOWER - 1
+	repeat CUSTOM_AI_MAX_TACTICS
 		PassTactic = 0
 		if ( ContinueTactic == 2 ) {
 			if ( AIData(70+cnt, cc-1) != 5 ) {
@@ -1433,7 +1433,7 @@
 	gosub *screen_drawMsg2
 	NumActions = 0
 
-	repeat MAX_CHARA_FOLLOWER - 1
+	repeat length(AITextData)
 		if ( AITextData(cnt, 0) != "NULL" ) {
 			listn(0, NumActions) = AITextData(cnt, 0)
 			key_list(NumActions) = NumActions + 100
@@ -2863,7 +2863,7 @@
 	key_list(NumActions) = 0
 	NumActions++
 	if ( AIData(25+CurrentTactic, tc-1) == 1 | AIData(25+CurrentTactic, tc-1) == 2 | AIData(25+CurrentTactic, tc-1) == 5 ) {
-		repeat MAX_CHARA_FOLLOWER - 1
+		repeat length(AITextData)
 			if ( AITextData(cnt,4) != "NULL" ) {
 				listn(0, NumActions) = AITextData(cnt, 4) + "%"
 				key_list(NumActions) = 100+cnt
@@ -2875,7 +2875,7 @@
 		loop
 	}
 	if ( AIData(25+CurrentTactic, tc-1) == 3 ) {
-		repeat MAX_CHARA_FOLLOWER - 1
+		repeat length(AITextData)
 			if ( AITextData(cnt, 5) != "NULL" ) {
 				listn(0, NumActions) = AITextData(cnt, 5)
 				key_list(NumActions) = 200+cnt
@@ -2887,7 +2887,7 @@
 		loop
 	}
 	if ( AIData(25+CurrentTactic, tc-1) == 6 ) {
-		repeat MAX_CHARA_FOLLOWER - 1
+		repeat length(AITextData)
 			if ( AITextData(cnt, 6) != "NULL" ) {
 				listn(0, NumActions) = AITextData(cnt, 6)
 				key_list(NumActions) = 300+cnt
@@ -2906,7 +2906,7 @@
 		loop
 	}
 	if ( AIData(25+CurrentTactic, tc-1) == 7 ) {
-		repeat 25
+		repeat length(AIStatusNames)
 			if ( AIStatusNames(cnt, 0) != "NULL" ) {
 				listn(0, NumActions) = AIStatusNames(cnt, 0)
 				key_list(NumActions) = 400+cnt
@@ -2981,7 +2981,7 @@
 	gosub *screen_drawMsg2
 	NumActions = 0
 
-	repeat MAX_CHARA_FOLLOWER - 1
+	repeat length(AITextData)
 		if ( AITextData(cnt, 1) != "NULL" ) {
 			listn(0, cnt) = AITextData(cnt, 1)
 			NumActions++
@@ -3035,7 +3035,7 @@
 	gosub *screen_drawMsg2
 	NumActions = 0
 
-	repeat MAX_CHARA_FOLLOWER - 1
+	repeat length(AITextData)
 		if ( AITextData(cnt, 2) != "NULL" ) {
 			listn(0, cnt) = AITextData(cnt, 2)
 			NumActions++
@@ -3095,7 +3095,7 @@
 
 	sdim AIComparatorFix, 30, 15
 
-	repeat MAX_CHARA_FOLLOWER - 1
+	repeat length(AITextData)
 		if ( AITextData(cnt, 3) != "NULL" ) {
 			; "Not Set", "=" and "!=" are always included
 			if ( cnt == 0 | (AIData(25+CurrentTactic, tc-1) != 4 & AIData(25+CurrentTactic, tc-1) != 6 & AIData(25+CurrentTactic, tc-1) != 7 ) | (cnt == 3) | (cnt == 4) ) {
