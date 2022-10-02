@@ -5718,3 +5718,27 @@
 		}
 	}
 
+#deffunc sreplace var sreplace_prm0, str sreplace_prm1, str sreplace_prm2, str sreplace_prm3
+	sdim srep_array, 512, 1
+	srep_str = sreplace_prm1
+	split srep_str, sreplace_prm2, srep_array
+	if ( length(srep_array) >= 2 ) {
+		srep_str = srep_array(0)
+		repeat length(srep_array) - 1, 1
+			srep_str = srep_str + sreplace_prm3 + srep_array(cnt)
+		loop
+		sreplace_prm0 = srep_str
+	}
+	return length(srep_array) - 1
+
+#deffunc delstr var delstr_prm0, str delstr_prm1
+	repeat
+		if ( instr(delstr_prm0, 0, delstr_prm1) == (-1) ) {
+			break
+		}
+		else {
+			memcpy delstr_prm0, delstr_prm0, strlen(delstr_prm0) - (instr(delstr_prm0, 0, delstr_prm1) + strlen(delstr_prm1)), instr(delstr_prm0, 0, delstr_prm1), instr(delstr_prm0, 0, delstr_prm1) + strlen(delstr_prm1)
+			memset delstr_prm0, 0, strlen(delstr_prm1), strlen(delstr_prm0) - strlen(delstr_prm1)
+		}
+	loop
+	return

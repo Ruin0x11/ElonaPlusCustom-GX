@@ -814,7 +814,9 @@
 
 	 		********** ORIGINAL - ENDING **********/
 
-			snd SOUNDLIST_GETGOLD1
+			if ( locvar_is_autopick == FALSE | cfg_autopicksound ) {
+				snd SOUNDLIST_GETGOLD1
+			}
 			ti = ci
 			in = inv(INV_ITEM_NUM, ci)
 			inv(INV_ITEM_NUM, ci) = 0
@@ -895,7 +897,7 @@
 				}
 			}
 		}
-		if ( inv(INV_ITEM_PROPERTY, ci) == PROP_CONSTRUCT ) {
+		if ( inv(INV_ITEM_PROPERTY, ci) == PROP_CONSTRUCT & locvar_is_autopick == FALSE ) {
 			txt lang(itemname(ci) + "を撤去する？ ", "Do you want to remove " + itemname(ci) + "? ")
 			promptYesNo
 			if ( rtval == 0 ) {
@@ -919,6 +921,9 @@
 			}
 		}
 		if ( inv_getfreeid(cc) == (-1) ) {
+			if ( locvar_is_autopick ) {
+				txt lang("[自動拾い]", "[Autopickup]")
+			}
 			txt_invfull2
 			return 0
 		}
@@ -982,6 +987,9 @@
 				txt lang("店の倉庫が一杯のため売れない。", "Shopkeeper's inventory is full.")
 			}
 			else {
+				if ( locvar_is_autopick ) {
+					txt lang("[自動拾い]", "[Autopickup]")
+				}
 				txt_invfull2
 			}
 			return 0
@@ -1107,7 +1115,12 @@
 	else {
 		cell_refresh inv(INV_ITEM_X, ci), inv(INV_ITEM_Y, ci)
 		map(inv(INV_ITEM_X, ci), inv(INV_ITEM_Y, ci), 5) = map(inv(INV_ITEM_X, ci), inv(INV_ITEM_Y, ci), 4)
-		snd SOUNDLIST_GET1 + rnd(2)
+		if( locvar_is_autopick == FALSE | cfg_autopicksound ) {
+			snd SOUNDLIST_GET1 + rnd(2)
+		}
+		if ( locvar_is_autopick ) {
+			txt lang("[自動拾い]", "[Autopickup]")
+		}
 		msgkeep = 1
 		txt lang(name(cc) + "は" + itemname(ti, in) + "を拾った。", name(cc) + " pick" + _s(cc) + " up " + itemname(ti, in) + ".")
 	}
@@ -2375,7 +2388,19 @@
 		}
 		if ( map(x, y, 4) != 0 ) {
 			if ( cdata(CDATA_CONDITION_BLIND, CHARA_PLAYER) == 0 ) {
-				txt txtitemoncell(x, y)
+				if ( cfg_autopick ) {
+					if ( adata(ADATA_TYPE, gdata(GDATA_AREA)) != MAP_TYPE_HOME | adata(ADATA_TYPE, gdata(GDATA_AREA)) == AREA_RANCH | adata(ADATA_TYPE, gdata(GDATA_AREA)) == AREA_SHELTER ) {
+						if ( key_ctrl != 1 ) {
+							x = cdata(CDATA_X, CHARA_PLAYER)
+							y = cdata(CDATA_Y, CHARA_PLAYER)
+							cnt3 = 0
+							gosub *AutoPickTest
+						}
+					}
+				}
+				if ( map(x, y, 4) != 0 ) {
+					txt txtitemoncell(x, y)
+				}
 			}
 			else {
 				txt lang("地面に何かがあるようだ。", "You sense something under your foot.")

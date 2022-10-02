@@ -2976,6 +2976,34 @@
 	if ( a ) {
 		goto *game_debug
 	}
+	getkey a, 8 ; Backspace
+	if ( a ) {
+		getkey a, 16 ; Shift
+		if ( a ) {
+			gosub *AutoPickReloadSettingsFile
+			goto *pc_turn
+		}
+		if ( key_ctrl ) {
+			AutoPickOpenSettingsFile AutoPickCurrentSettingsFileIndex
+			await 200
+			gosub *screen_draw
+			goto *pc_turn
+		}
+		if ( key_alt ) {
+			snd SOUNDLIST_AMMO
+			if ( cfg_autopick ) {
+				cfg_autopick = FALSE
+				txt lang("自動拾いは無効になっている。", "Autopickup is now disabled.")
+			}
+			else {
+				cfg_autopick = TRUE
+				txt lang("自動拾いは有効になっている。", "Autopickup is now enabled.")
+			}
+			await 200
+			gosub *screen_draw
+			goto *pc_turn
+		}
+	}
 	if ( key == "" ) {
 		goto *pc_turn
 	}

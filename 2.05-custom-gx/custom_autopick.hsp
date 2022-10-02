@@ -1,0 +1,640 @@
+// Ports omake's autopickup.
+
+#deffunc AutoPickLoadSettingsFile int locvar_autopick_file_index
+	sdim autopickbuff, 256, 500
+	if ( locvar_autopick_file_index == 0 ) {
+		exist exedir + "save\\" + playerid + "\\" + "autopick.txt"
+		if ( strsize != (-1) ) {
+			notesel autopickbuff
+			noteload exedir + "save\\" + playerid + "\\" + "autopick.txt"
+			noteunsel
+		}
+	}
+	else {
+		exist exedir + "save\\" + playerid + "\\" + "autopick_" + locvar_autopick_file_index + ".txt"
+		if ( strsize != (-1) ) {
+			notesel autopickbuff
+			noteload exedir + "save\\" + playerid + "\\" + "autopick_" + locvar_autopick_file_index + ".txt"
+			noteunsel
+		}
+	}
+	AutoPickCurrentSettingsFileIndex = locvar_autopick_file_index
+	return
+
+#deffunc AutoPickOpenSettingsFile int locvar_autopick_file_index
+	if ( locvar_autopick_file_index == 0 ) {
+		exist exedir + "save\\" + playerid + "\\" + "autopick.txt"
+		if ( strsize != (-1) ) {
+			exec exedir + "save\\" + playerid + "\\" + "autopick.txt", 16
+		}
+	}
+	else {
+		exist exedir + "save\\" + playerid + "\\" + "autopick_" + locvar_autopick_file_index + ".txt"
+		if ( strsize != (-1) ) {
+			exec exedir + "save\\" + playerid + "\\" + "autopick_" + locvar_autopick_file_index + ".txt", 16
+		}
+	}
+	return
+
+#deffunc AutoPickWriteDefaultSettingsFile
+	notesel locvar_autopick_notebuff
+	noteload exedir + "data\\autopick.txt"
+	notesave exedir + "save\\" + playerid + "\\" + "autopick.txt"
+	noteunsel
+	return
+
+*AutoPickReloadSettingsFile
+	promptmax = 0
+	exist exedir + "save\\" + playerid + "\\" + "autopick.txt"
+	if ( strsize != (-1) ) {
+		promptl(0, promptmax) = "autopick.txt", "null", "" + 0
+		promptmax++
+	}
+	repeat 9, 1
+		exist exedir + "save\\" + playerid + "\\" + "autopick_" + cnt + ".txt"
+		if ( strsize != (-1) ) {
+			promptl(0, promptmax) = "autopick_" + cnt + ".txt", "null", "" + cnt
+			promptmax++
+		}
+	loop
+	if ( promptmax == 0 ) {
+		txt lang("autopick.txtは見つかりませんでした。作成する？", "There's no autopick.txt for this save. Create one?")
+		promptYesNo
+		if ( rtval == 0 ) {
+			AutoPickWriteDefaultSettingsFile
+			exec exedir + "save\\" + playerid + "\\" + "autopick.txt", 16
+		}
+		else {
+			gosub *screen_draw
+			return
+		}
+		promptmax = 0
+		rtval = 0
+	}
+	else {
+		if ( promptmax > 1 ) {
+			txt lang("どのファイルを再読み込みする？", "Which autopickup file do you want to load?")
+			val = promptx, prompty, 220, 1
+			gosub *prompt_key
+			if ( rtval == (-1) ) {
+				rtval = 0
+			}
+		}
+		else {
+			promptmax = 0
+			rtval = 0
+		}
+	}
+	AutoPickLoadSettingsFile rtval
+	if ( rtval == 0 ) {
+		txt lang("autopick.txtを再読み込みした。", "Reloaded autopick.txt.")
+	}
+	else {
+		txt lang("autopick_" + rtval + ".txtを再読み込みした。", "Reloaded autopick_" + rtval + ".txt.")
+	}
+	await 200
+	gosub *screen_draw
+	return
+
+*AutoPickTest
+	inv_getheader -1
+	repeat invrange, invhead
+		notesel autopickbuff
+		if ( inv(INV_ITEM_NUM, cnt) <= 0 ) {
+			continue
+		}
+		if ( inv(INV_ITEM_PROPERTY, cnt) >= PROP_NPC ) {
+			continue
+		}
+		if ( inv(INV_ITEM_X, cnt) != x | inv(INV_ITEM_Y, cnt) != y ) {
+			continue
+		}
+		item_checkknown cnt
+		cnt2 = cnt
+		locvar_autopick_itemtype = refitem(inv(INV_ITEM_ID, cnt2), DBSPEC_TYPE)
+		repeat noteinfo(0)
+			p = 0
+			p(1) = 0
+			noteget buff, cnt
+			locvar_autopick_commentpos = instr(buff, 0, "#")
+			if ( locvar_autopick_commentpos != (-1) ) {
+				buff = strmid(buff, 0, locvar_autopick_commentpos)
+			}
+			s = buff
+			if ( instr(s, 0, "!!") != (-1) ) {
+				getstr s, s, 2
+			}
+			else {
+				if ( instr(s, 0, "!") != (-1) | instr(s, 0, "~") != (-1) ) {
+					getstr s, s, 1
+				}
+			}
+			locvar_autopick_charpos = instr(s, 0, "?")
+			locvar_autopick_prompt = FALSE
+			if ( locvar_autopick_charpos != (-1) ) {
+				locvar_autopick_prompt = TRUE
+				s = strmid(s, 0, locvar_autopick_charpos)
+			}
+			locvar_autopick_charpos = instr(s, 0, ":sound")
+			if ( locvar_autopick_charpos != (-1)) {
+				s = strmid(s, 0, locvar_autopick_charpos)
+			}
+			s = strtrim(s, 0, 32)
+			while instr(s, 0, "  ") != (-1) != 0
+				sreplace s, s, "  ", " "
+			wend
+			if ( s == "" | s == " " ) {
+				continue
+			}
+			s = " " + s + " "
+			if ( instr(s, 0, lang("すべての", " all ")) != (-1) ) {
+				p(1) = 1
+				delstr s, lang("すべての", " all ")
+				sreplace s, s, lang("すべての", " all "), " "
+			}
+			if ( instr(s, 0, lang("名称不明の", " unknown ")) != (-1) ) {
+				if ( inv(INV_ITEM_KNOWN, cnt2) != ITEM_KNOWN_NONE ) {
+					continue
+				}
+				sreplace s, s, lang("名称不明の", " unknown "), " "
+				p(1) = 1
+			}
+			if ( instr(s, 0, lang("鑑定段階1の", " name identified ")) != (-1) ) {
+				if ( inv(INV_ITEM_KNOWN, cnt2) != ITEM_KNOWN_NAME ) {
+					continue
+				}
+				sreplace s, s, lang("鑑定段階1の", " name identified "), " "
+				p(1) = 1
+			}
+			if ( instr(s, 0, lang("鑑定段階2の", " quality identified ")) != (-1) ) {
+				if ( inv(INV_ITEM_KNOWN, cnt2) != ITEM_KNOWN_QUALITY ) {
+					continue
+				}
+				sreplace s, s, lang("鑑定段階2の", " quality identified "), " "
+				p(1) = 1
+			}
+			if ( instr(s, 0, lang("鑑定段階3の", " fully identified ")) != (-1) ) {
+				if ( inv(INV_ITEM_KNOWN, cnt2) != ITEM_KNOWN_FULL ) {
+					continue
+				}
+				sreplace s, s, lang("鑑定段階3の", " fully identified "), " "
+				p(1) = 1
+			}
+			if ( instr(s, 0, lang("無価値の", " worthless ")) != (-1) ) {
+				if ( inv(INV_ITEM_VALUE, cnt2) > 10 ) {
+					continue
+				}
+				sreplace s, s, lang("無価値の", " worthless "), " "
+				p(1) = 1
+			}
+			if ( instr(s, 0, lang("腐った", " rotten ")) != (-1) ) {
+				if ( locvar_autopick_itemtype != FILTER_ITEM_FOOD ) {
+					continue
+				}
+				if ( inv(INV_ITEM_PARAM3, cnt2) >= 0 ) {
+					continue
+				}
+				sreplace s, s, lang("腐った", " rotten "), " "
+				p(1) = 1
+			}
+			// if ( instr(s, 0, lang("腐りきった", " zombie ")) != (-1) ) {
+			// 	if ( locvar_autopick_itemtype != FILTER_ITEM_FOOD ) {
+			// 		continue
+			// 	}
+			// 	if ( inv(INV_ITEM_SUB_NAME, cnt2) != 21 & inv(INV_ITEM_SUB_NAME, cnt2) != 47 & inv(INV_ITEM_SUB_NAME, cnt2) != 48 & inv(INV_ITEM_SUB_NAME, cnt2) != 49 & inv(INV_ITEM_SUB_NAME, cnt2) != 99 & inv(INV_ITEM_SUB_NAME, cnt2) != 100 & inv(INV_ITEM_SUB_NAME, cnt2) != 101 & inv(INV_ITEM_SUB_NAME, cnt2) != 257 & inv(INV_ITEM_SUB_NAME, cnt2) != 254 ) {
+			// 		continue
+			// 	}
+			// 	sreplace s, s, lang("腐りきった", " zombie "), " "
+			// 	p(1) = 1
+			// }
+			// if ( instr(s, 0, lang("ドラゴンの", " dragon's ")) != (-1) ) {
+			// 	if ( inv(INV_ITEM_ID, cnt2) != ITEM_ID_CORPSE & locvar_autopick_itemtype != FILTER_REMAINS ) {
+			// 		continue
+			// 	}
+			// 	if ( inv(INV_ITEM_SUB_NAME, cnt2) != 120 & inv(INV_ITEM_SUB_NAME, cnt2) != 121 & inv(INV_ITEM_SUB_NAME, cnt2) != 122 & inv(INV_ITEM_SUB_NAME, cnt2) != 123 & inv(INV_ITEM_SUB_NAME, cnt2) != 124 & inv(INV_ITEM_SUB_NAME, cnt2) != 125 ) {
+			// 		continue
+			// 	}
+			// 	sreplace s, s, lang("ドラゴンの", " dragon's "), " "
+			// 	p(1) = 1
+			// }
+			if ( instr(s, 0, lang("空っぽの", " empty ")) != (-1) ) {
+				if ( locvar_autopick_itemtype != FILTER_CONTAINER ) {
+					continue
+				}
+				if ( inv(INV_ITEM_PARAM1, cnt2) != 0 ) {
+					continue
+				}
+				sreplace s, s, lang("空っぽの", " empty "), " "
+				p(1) = 1
+			}
+			if ( instr(s, 0, lang("粗悪な", " bad ")) != (-1) ) {
+				if ( inv(INV_ITEM_KNOWN, cnt2) < ITEM_KNOWN_QUALITY ) {
+					continue
+				}
+				if ( inv(INV_ITEM_QUALITY, cnt2) != FIX_QUALITY_BAD ) {
+					continue
+				}
+				sreplace s, s, lang("粗悪な", " bad "), " "
+				p(1) = 1
+			}
+			if ( instr(s, 0, lang("良質な", " good ")) != (-1) ) {
+				if ( inv(INV_ITEM_KNOWN, cnt2) < ITEM_KNOWN_QUALITY ) {
+					continue
+				}
+				if ( inv(INV_ITEM_QUALITY, cnt2) != FIX_QUALITY_GOOD ) {
+					continue
+				}
+				sreplace s, s, lang("良質な", " good "), " "
+				p(1) = 1
+			}
+			if ( instr(s, 0, lang("高品質な", " great ")) != (-1) ) {
+				if ( inv(INV_ITEM_KNOWN, cnt2) < ITEM_KNOWN_QUALITY ) {
+					continue
+				}
+				if ( inv(INV_ITEM_QUALITY, cnt2) != FIX_QUALITY_GREAT ) {
+					continue
+				}
+				sreplace s, s, lang("高品質な", " great "), " "
+				p(1) = 1
+			}
+			if ( instr(s, 0, lang("奇跡の", " miracle ")) != (-1) ) {
+				if ( inv(INV_ITEM_KNOWN, cnt2) < ITEM_KNOWN_QUALITY ) {
+					continue
+				}
+				if ( inv(INV_ITEM_QUALITY, cnt2) != FIX_QUALITY_MIRACLE ) {
+					continue
+				}
+				sreplace s, s, lang("奇跡の", " miracle "), " "
+				p(1) = 1
+			}
+			if ( instr(s, 0, lang("神器の", " godly ")) != (-1) ) {
+				if ( inv(INV_ITEM_KNOWN, cnt2) < ITEM_KNOWN_QUALITY ) {
+					continue
+				}
+				if ( inv(INV_ITEM_QUALITY, cnt2) != FIX_QUALITY_GODLY ) {
+					continue
+				}
+				sreplace s, s, lang("神器の", " godly "), " "
+				p(1) = 1
+			}
+			if ( instr(s, 0, lang("特別な", " special ")) != (-1) ) {
+				if ( inv(INV_ITEM_KNOWN, cnt2) < ITEM_KNOWN_QUALITY ) {
+					continue
+				}
+				if ( inv(INV_ITEM_QUALITY, cnt2) != FIX_QUALITY_UNIQUE ) {
+					continue
+				}
+				sreplace s, s, lang("特別な", " special "), " "
+				p(1) = 1
+			}
+			if ( instr(s, 0, lang("貴重な", " precious ")) != (-1) ) {
+				if ( inv(INV_ITEM_KNOWN, cnt2) < ITEM_KNOWN_QUALITY ) {
+					continue
+				}
+				if ( ibit(ITEM_BIT_PRECIOUS, cnt2) != TRUE ) {
+					continue
+				}
+				sreplace s, s, lang("貴重な", " precious "), " "
+				p(1) = 1
+			}
+			if ( instr(s, 0, lang("祝福された", " blessed ")) != (-1) ) {
+				if ( inv(INV_ITEM_KNOWN, cnt2) < ITEM_KNOWN_QUALITY ) {
+					continue
+				}
+				if ( inv(INV_ITEM_STATUS, cnt2) != ITEM_STATUS_BLESSED ) {
+					continue
+				}
+				sreplace s, s, lang("祝福された", " blessed "), " "
+				p(1) = 1
+			}
+			if ( instr(s, 0, lang("呪われた", " cursed ")) != (-1) ) {
+				if ( inv(INV_ITEM_KNOWN, cnt2) < ITEM_KNOWN_QUALITY ) {
+					continue
+				}
+				if ( inv(INV_ITEM_STATUS, cnt2) != ITEM_STATUS_CURSED ) {
+					continue
+				}
+				sreplace s, s, lang("呪われた", " cursed "), " "
+				p(1) = 1
+			}
+			if ( instr(s, 0, lang("堕落した", " doomed ")) != (-1) ) {
+				if ( inv(INV_ITEM_KNOWN, cnt2) < ITEM_KNOWN_QUALITY ) {
+					continue
+				}
+				if ( inv(INV_ITEM_STATUS, cnt2) != ITEM_STATUS_DOOMED ) {
+					continue
+				}
+				sreplace s, s, lang("堕落した", " doomed "), " "
+				p(1) = 1
+			}
+			if ( instr(s, 0, lang("生きている", " alive ")) != (-1) ) {
+				if ( ibit(ITEM_BIT_ALIVE, cnt2) != TRUE ) {
+					continue
+				}
+				sreplace s, s, lang("生きている", " alive "), " "
+				p(1) = 1
+			}
+			s = strtrim(s, 0, 32)
+			while instr(s, 0, "  ") != (-1) != 0
+				sreplace s, s, "  ", " "
+			wend
+			s(1) = cnvitemname(inv(INV_ITEM_ID, cnt2))
+			if ( instr(s(1), 0, s) != (-1) & inv(INV_ITEM_KNOWN, cnt2) != ITEM_KNOWN_NONE ) {
+				p = 1
+			}
+			else {
+				if ( p(1) == 0 ) { ; At least one modifier must match to match by type.
+					continue
+				}
+				if ( instr(s, 0, lang("アイテム", "item")) != (-1) ) {
+					p = 1
+				}
+				if ( instr(s, 0, lang("装備品", "equipment")) != (-1) ) {
+					if ( locvar_autopick_itemtype >= FILTER_ITEM_MIN ) {
+						continue
+					}
+					p = 1
+				}
+				if ( instr(s, 0, lang("近接武器", "melee weapon")) != (-1) ) {
+					if ( locvar_autopick_itemtype != FILTER_WEAPON ) {
+						continue
+					}
+					p = 1
+				}
+				if ( instr(s, 0, lang("兜", "helm")) != (-1) ) {
+					if ( locvar_autopick_itemtype != FILTER_HELM ) {
+						continue
+					}
+					p = 1
+				}
+				if ( instr(s, 0, lang("盾", "shield")) != (-1) ) {
+					if ( locvar_autopick_itemtype != FILTER_SHIELD ) {
+						continue
+					}
+					p = 1
+				}
+				if ( instr(s, 0, lang("鎧", "armor")) != (-1) ) {
+					if ( locvar_autopick_itemtype != FILTER_ARMOR ) {
+						continue
+					}
+					p = 1
+				}
+				if ( instr(s, 0, lang("靴", "boot")) != (-1) ) {
+					if ( locvar_autopick_itemtype != FILTER_BOOTS ) {
+						continue
+					}
+					p = 1
+				}
+				if ( instr(s, 0, lang("腰当", "belt")) != (-1) ) {
+					if ( locvar_autopick_itemtype != FILTER_GIRDLE ) {
+						continue
+					}
+					p = 1
+				}
+				if ( instr(s, 0, lang("マント", "cloak")) != (-1) ) {
+					if ( locvar_autopick_itemtype != FILTER_CLOAK ) {
+						continue
+					}
+					p = 1
+				}
+				if ( instr(s, 0, lang("グローブ", "glove")) != (-1) ) {
+					if ( locvar_autopick_itemtype != FILTER_GLOVES ) {
+						continue
+					}
+					p = 1
+				}
+				if ( instr(s, 0, lang("遠隔武器", "ranged weapon")) != (-1) ) {
+					if ( locvar_autopick_itemtype != FILTER_RANGE ) {
+						continue
+					}
+					p = 1
+				}
+				if ( instr(s, 0, lang("矢弾", "ammo")) != (-1) ) {
+					if ( locvar_autopick_itemtype != FILTER_AMMO ) {
+						continue
+					}
+					p = 1
+				}
+				if ( instr(s, 0, lang("指輪", "ring")) != (-1) ) {
+					if ( locvar_autopick_itemtype != FILTER_ACCESSORY_RING ) {
+						continue
+					}
+					p = 1
+				}
+				if ( instr(s, 0, lang("首輪", "necklace")) != (-1) ) {
+					if ( locvar_autopick_itemtype != FILTER_ACCESSORY_AMULET ) {
+						continue
+					}
+					p = 1
+				}
+				if ( instr(s, 0, lang("ポーション", "potion")) != (-1) ) {
+					if ( locvar_autopick_itemtype != FILTER_ITEM_POTION ) {
+						continue
+					}
+					p = 1
+				}
+				if ( instr(s, 0, lang("巻物", "scroll")) != (-1) ) {
+					if ( locvar_autopick_itemtype != FILTER_ITEM_SCROLL ) {
+						continue
+					}
+					p = 1
+				}
+				if ( instr(s, 0, lang("魔法書", "spellbook")) != (-1) ) {
+					if ( locvar_autopick_itemtype != FILTER_ITEM_SPELLBOOK ) {
+						continue
+					}
+					p = 1
+				}
+				if ( instr(s, 0, lang("本", "book")) != (-1) ) {
+					if ( locvar_autopick_itemtype != FILTER_ITEM_BOOK ) {
+						continue
+					}
+					p = 1
+				}
+				if ( instr(s, 0, lang("魔法の杖", "rod")) != (-1) ) {
+					if ( locvar_autopick_itemtype != FILTER_ITEM_ROD ) {
+						continue
+					}
+					p = 1
+				}
+				if ( instr(s, 0, lang("食べ物", "food")) != (-1) ) {
+					if ( locvar_autopick_itemtype != FILTER_ITEM_FOOD & (inv(INV_ITEM_ID, cnt2) == ITEM_ID_BOTTLE_MILK & inv(INV_ITEM_PARAM2, cnt2) != 0) == 0 ) {
+						continue
+					}
+					p = 1
+				}
+				if ( instr(s, 0, lang("道具", "tool")) != (-1) ) {
+					if ( locvar_autopick_itemtype != FILTER_ITEM_TOOL ) {
+						continue
+					}
+					p = 1
+				}
+				if ( instr(s, 0, lang("家具", "furniture")) != (-1) ) {
+					if ( locvar_autopick_itemtype != FILTER_FURNITURE ) {
+						continue
+					}
+					p = 1
+				}
+				if ( instr(s, 0, lang("井戸", "well")) != (-1) ) {
+					if ( locvar_autopick_itemtype != FILTER_FURNITURE_WELL ) {
+						continue
+					}
+					p = 1
+				}
+				if ( instr(s, 0, lang("祭壇", "altar")) != (-1) ) {
+					if ( locvar_autopick_itemtype != FILTER_FURNITURE_ALTAR ) {
+						continue
+					}
+					p = 1
+				}
+				if ( instr(s, 0, lang("残骸", "remains")) != (-1) ) {
+					if ( locvar_autopick_itemtype != FILTER_REMAINS ) {
+						continue
+					}
+					p = 1
+				}
+				if ( instr(s, 0, lang("ジャンク", "junk")) != (-1) ) {
+					if ( locvar_autopick_itemtype != FILTER_JUNK ) {
+						continue
+					}
+					p = 1
+				}
+				if ( instr(s, 0, lang("金貨", "gold piece")) != (-1) ) {
+					if ( locvar_autopick_itemtype != FILTER_GOLD ) {
+						continue
+					}
+					p = 1
+				}
+				if ( instr(s, 0, lang("プラチナ硬貨", "platinum coin")) != (-1) ) {
+					if ( locvar_autopick_itemtype != FILTER_PLATINUM ) {
+						continue
+					}
+					p = 1
+				}
+				if ( instr(s, 0, lang("宝箱", "chest")) != (-1) ) {
+					if ( locvar_autopick_itemtype != FILTER_CONTAINER ) {
+						continue
+					}
+					p = 1
+				}
+				if ( instr(s, 0, lang("鉱石", "ore")) != (-1) ) {
+					if ( locvar_autopick_itemtype != FILTER_ORE ) {
+						continue
+					}
+					p = 1
+				}
+				if ( instr(s, 0, lang("樹木", "tree")) != (-1) ) {
+					if ( locvar_autopick_itemtype != FILTER_ENVIRONMENT ) {
+						continue
+					}
+					p = 1
+				}
+				if ( instr(s, 0, lang("旅糧", "traveler's food")) != (-1) ) {
+					if ( locvar_autopick_itemtype != FILTER_CARGO_FOOD ) {
+						continue
+					}
+					p = 1
+				}
+				if ( instr(s, 0, lang("交易品", "cargo")) != (-1) ) {
+					if ( locvar_autopick_itemtype != FILTER_CARGO_TRADE ) {
+						continue
+					}
+					p = 1
+				}
+			}
+			if ( p == 1 ) { ; Item name/type match?
+				if ( instr(buff, 0, "!") != (-1) ) { ; Autodestroy (!/!!)
+					if ( ibit(ITEM_BIT_PRECIOUS, cnt2) == FALSE | instr(buff, 0, "!!") != (-1) ) {
+						if ( locvar_autopick_prompt ) { ; Prompting (?)
+							if ( cnt3 == 0 ) {
+								txt lang(itemname(cnt2) + "を破壊する？", "Destroy " + itemname(cnt2) + "?")
+								promptl(0, 0) = stryes, "y", "0"
+								promptl(0, 1) = strno, "n", "1"
+								promptmax = 2
+								val = promptx, prompty, 160, 1
+								gosub *prompt_key
+								if ( rtval != 0 ) {
+									gosub *screen_draw
+									break
+								}
+							}
+							else {
+								txt lang(name(cnt3) + "に" + itemname(cnt2) + "を破壊してもらう？", "Let" + name(cnt3) + " destroy " + itemname(cnt2) + "?")
+								promptl(0, 0) = stryes, "y", "0"
+								promptl(0, 1) = strno, "n", "1"
+								promptmax = 2
+								val = promptx, prompty, 160, 1
+								gosub *prompt_key
+								if ( rtval != 0 ) {
+									gosub *screen_draw
+									break
+								}
+							}
+						}
+						if ( cfg_autodestroysound ) {
+							snd SOUNDLIST_CRUSH1
+						}
+						inv(INV_ITEM_NUM, cnt2) = 0
+						if ( synccheck(cnt3, -1) ) {
+							txt lang(name(cnt3) + "は" + itemname(cnt2) + "を破壊した。", itemname(cnt2) + " was destroyed. ")
+						}
+						cell_refresh x, y
+						map(x, y, MAP_ITEM_CHIPS_MEMORY) = map(x, y, MAP_ITEM_CHIPS)
+					}
+					break
+				}
+				if ( instr(buff, 0, "~") != (-1) ) { ; Ignore (~)
+					break
+				}
+				if ( locvar_autopick_prompt ) { ; Prompting (?)
+					if ( cnt3 == 0 ) {
+						txt lang(itemname(cnt2) + "を拾う？", "Pick up " + itemname(cnt2) + "?")
+						promptl(0, 0) = stryes, "y", "0"
+						promptl(0, 1) = strno, "n", "1"
+						promptmax = 2
+						val = promptx, prompty, 160, 1
+						gosub *prompt_key
+						if ( rtval != 0 ) {
+							gosub *screen_draw
+							break
+						}
+					}
+					else {
+						txt lang(name(cnt3) + "に" + itemname(cnt2) + "を拾ってもらう？", "Let " + name(cnt3) + " pick up " + itemname(cnt2) + "?")
+						promptl(0, 0) = stryes, "y", "0"
+						promptl(0, 1) = strno, "n", "1"
+						promptmax = 2
+						val = promptx, prompty, 160, 1
+						gosub *prompt_key
+						if ( rtval != 0 ) {
+							gosub *screen_draw
+							break
+						}
+					}
+				}
+				in = inv(INV_ITEM_NUM, cnt2)
+				ci = cnt2
+				cc = cnt3
+				locvar_is_autopick = TRUE
+				gosub *act_get
+				locvar_is_autopick = FALSE
+				notesel autopickbuff
+				if ( stat == 1 | stat == (-1) ) { ; Only if pickup succeeded
+					if ( instr(buff, 0, "%") != (-1) ) { ; Autosave (%)
+						autosave = 1 * (gdata(GDATA_AREA) != AREA_SHOW_HOUSE)
+					}
+					if ( instr(buff, 0, "=") != (-1) ) { ; Set no-drop (=)
+						txt lang(itemname(cnt2) + "を大事なものに指定した。", "You set " + itemname(cnt2) + " as no-drop.")
+						ibitmod ITEM_BIT_NO_DROP, cnt2, TRUE
+					}
+					locvar_autopick_charpos = instr(buff, 0, ":sound")
+					if ( locvar_autopick_charpos  != (-1) ) { ; Play sound (:sound123)
+						snd int(strmid(buff, locvar_autopick_charpos + strlen(":sound"), strlen(buff)))
+					}
+				}
+				break
+			}
+		loop
+	loop
+	noteunsel
+	return

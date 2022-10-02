@@ -921,6 +921,16 @@
 		mes _burden(cdata(CDATA_BURDEN, CHARA_PLAYER))
 		sy -= 20
 	}
+	if ( cfg_autopick ) {
+		if ( adata(ADATA_TYPE, gdata(GDATA_AREA)) != MAP_TYPE_HOME | adata(ADATA_TYPE, gdata(GDATA_AREA)) == AREA_RANCH | adata(ADATA_TYPE, gdata(GDATA_AREA)) == AREA_SHELTER ) {
+			color 0, 0, 0
+			pos sx, sy
+			gcopy 3, 0, 416, 65 + en * 15, 15
+			pos sx + 6, sy + 1
+			mes lang("自動拾い", "Autopickup")
+			sy -= 20
+		}
+	}
 	color 0
 	if ( navi == (-1) ) {
 		navi = 0

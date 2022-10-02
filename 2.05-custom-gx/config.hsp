@@ -286,6 +286,12 @@
 		cfgRead "dmgPopupFontSize.", cfg_dmgfont = int(rtvaln)
 		cfgRead "dmgPopupSpeed.", cfg_dmgspeed = int(rtvaln)
 
+		// Autopickup options
+
+		cfgRead "autopick.", cfg_autopick = int(rtvaln)
+		cfgRead "autopick_sound.", cfg_autopicksound = int(rtvaln)
+		cfgRead "autodestroy_sound.", cfg_autodestroysound = int(rtvaln)
+
         // Other options
 
 		cfgRead "showFps.", cfg_showfps = int(rtvaln)
@@ -468,7 +474,7 @@
 
 	dim monitorInfo, 10 + 8 ; MONITORINFOEX
 	monitorInfo(0) = 40 + 32
-	dim devMode, 44 ; DEVMODEA 
+	dim devMode, 44 ; DEVMODEA
 	MonitorFromPoint 0, 0, 0 ; Get primary monitor at (0, 0)
 	if ( stat ) {
 		GetMonitorInfo stat, varptr(monitorInfo)
@@ -543,7 +549,7 @@
 	}
 	if ( submenu == 0 ) {
 		q = lang("オプション", "Option")
-		s = lang("ゲームの設定", "Game Setting"), lang("画面と音の設定", "Screen & Sound"), lang("ネット機能の設定", "Network Setting"), lang("詳細な設定", "Detailed Setting"), lang("ゲームパッド", "Game Pad"), lang("メッセージとログ", "Message & Log"), lang("言語(Language)", "Language"), lang("拡張設定1(表示)", "EX Setting 1 (Display)"), ""
+		s = lang("ゲームの設定", "Game Setting"), lang("画面と音の設定", "Screen & Sound"), lang("ネット機能の設定", "Network Setting"), lang("詳細な設定", "Detailed Setting"), lang("ゲームパッド", "Game Pad"), lang("メッセージとログ", "Message & Log"), lang("言語(Language)", "Language"), lang("拡張設定1", "EX Setting 1"), lang("拡張設定2(表示)", "EX Setting 2 (Display)"), ""
 
 		dx = 370
 		dy = 290
@@ -591,7 +597,13 @@
 		dy = 300
 	}
 	if ( submenu == 8 ) {
-        q = lang("拡張設定1(表示)", "EX Setting 1 (Display)")
+        q = lang("拡張設定1", "EX Setting 1")
+        s = lang("自動拾い＆自動破壊", "Auto pickup & destroy"), lang("自動拾い時の効果音", "Autopick sound"), lang("自動破壊時の効果音", "Autodestroy sound"), ""
+		dx = 440
+		dy = 300
+	}
+	if ( submenu == 9 ) {
+        q = lang("拡張設定2(表示)", "EX Setting 2 (Display)")
         s = lang("ダメージ表示", "Damage Popups"), lang("　HEX+バフ", "  Hexes/Buffs"), lang("　状態異常", "  Ailments"), lang("　回避", "  Evade"), lang("　フォントサイズ", "  Font Size"), lang("　表示速度", "  Display Duration"), ""
 		dx = 440
 		dy = 300
@@ -891,6 +903,20 @@
 			}
 		}
 		if ( submenu == 8 ) {
+			if ( cnt == 0 ) {
+				s = lang("使わない", "Disable"), lang("使う", "Enable")
+				mes s(cfg_autopick)
+			}
+			if ( cnt == 1 ) {
+				s = lang("なし", "Off"), lang("あり", "On")
+				mes s(cfg_autopicksound)
+			}
+			if ( cnt == 2 ) {
+				s = lang("なし", "Off"), lang("あり", "On")
+				mes s(cfg_autodestroysound)
+			}
+		}
+		if ( submenu == 9 ) {
 			if ( cnt == 0 ) {
 				s = lang("しない", "Off"), lang("する", "On")
 				mes s(cfg_dmgpopups)
@@ -1720,7 +1746,19 @@
 			}
 		}
 		if ( submenu == 8 ) {
-            snd SOUNDLIST_OK1
+			snd SOUNDLIST_OK1
+			if ( cs == 0 ) {
+				setBoolOption cfg_autopick, "autopick"
+			}
+			if ( cs == 1 ) {
+				setBoolOption cfg_autopicksound, "autopick_sound"
+			}
+			if ( cs == 2 ) {
+				setBoolOption cfg_autodestroysound, "autodestroy_sound"
+			}
+		}
+		if ( submenu == 9 ) {
+			snd SOUNDLIST_OK1
 			if ( cs == 0 ) {
 				setBoolOption cfg_dmgpopups, "dmgPopups"
 			}

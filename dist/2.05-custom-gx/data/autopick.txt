@@ -1,0 +1,168 @@
+### Elona+ Custom-GX Autopickup Settings ###
+
+# To use this, enable the autopickup feature in EX Setting 1 from the settings menu.
+# This file should be saved as "autopick.txt" in your character's save folder.
+# Press [Shift+Backspace] while in-game to reload this file.
+# Press [Ctrl+Backspace] to open the currently loaded autopickup settings file in your text editor.
+# Press [Alt+Backspace] to quickly toggle autopickup on/off.
+# Hold [Ctrl] while moving to temporarily disable autopickup.
+#
+# Syntax:
+# '#' denotes a comment.
+# '~' before an entry means to not pick it up and ignore any following matchers.
+# '!' before an entry means to destroy it.
+# '!!' before an entry means to destroy it, even if it's precious.
+# '?' after an entry means to prompt for picking/destroying it first.
+# '%' after an entry means to autosave when it's picked up.
+# '=' after an entry means to set the item as no-drop when it's picked up.
+# ':sound123' after an entry means to play the sound with ID 123 when it's picked up.
+#
+# You can store up to 10 sets of autopickup rules in each save folder,
+# named autopick.txt, autopick_1.txt, autopick_2.txt, and so on.
+#
+# NOTE: Autopickup will not trigger inside player-owned locations (except ranches and shelters).
+#
+# See the wiki for more information: https://elona.fandom.com/wiki/Autopickup
+# (Note however that there are some differences from omake's syntax.)
+
+### Example usage ###
+
+# Ignore cursed items.
+# If a matcher higher up in the file matches, the rest of the matchers will be prevented from running.
+~cursed item
+~doomed item
+
+# Pick up precious items, then autosave and set as no-drop.
+precious item%=
+
+# Pick up gold, platinum, and small medals.
+gold piece
+platinum coin
+small medal
+
+# Pick up bottles of water, but prompt the player first.
+bottle of water?
+
+# Destroy worthless fake gold bars.
+# Item name matchers will only work if the item's name has been identified.
+!worthless fake gold bar
+
+# Destroy corpses, but prompt the player first.
+!corpse?
+
+# Multiple matchers can be chained together.
+# Quality and curse state matchers will only work if the item's quality has been identified.
+blessed fully identified potion
+
+# Play a sound if a piece of ore is picked up.
+all ore:sound24
+
+### All supported matchers ###
+
+# all item
+# unknown item
+# name identified item
+# quality identified item
+# fully identified item
+# worthless item
+# rotten item
+# empty item
+# bad item
+# good item
+# great item
+# miracle item
+# godly item
+# special item
+# precious item
+# blessed item
+# cursed item
+# doomed item
+# alive item
+
+# all equipment
+# all melee weapon
+# all helm
+# all shield
+# all armor
+# all boot
+# all belt
+# all cloak
+# all glove
+# all ranged weapon
+# all ammo
+# all ring
+# all necklace
+# all potion
+# all scroll
+# all spellbook
+# all book
+# all rod
+# all food
+# all tool
+# all furniture
+# all well
+# all altar
+# all remain
+# all junk
+# all gold piece
+# all platinum coin
+# all chest
+# all ore
+# all tree
+# all traveler's food
+# all cargo
+
+### 日本語 ###
+
+# すべてのアイテム
+# 名称不明のアイテム
+# 鑑定段階 1 のアイテム
+# 鑑定段階 2 のアイテム
+# 鑑定段階 3 のアイテム
+# 無価値のアイテム
+# 腐ったアイテム
+# 空っぽのアイテム
+# 粗悪なアイテム
+# 良質なアイテム
+# 高品質なアイテム
+# 奇跡のアイテム
+# 神器のアイテム
+# 特別なアイテム
+# 貴重なアイテム
+# 祝福されたアイテム
+# 呪われたアイテム
+# 堕落したアイテム
+# 生きているアイテム
+
+# すべての装備品
+# すべての近接武器
+# すべての兜
+# すべての盾
+# すべての鎧
+# すべての靴
+# すべての腰当
+# すべてのマント
+# すべてのグローブ
+# すべての遠隔武器
+# すべての矢弾
+# すべての指輪
+# すべての首輪
+# すべてのポーション
+# すべての巻物
+# すべての魔法書
+# すべての本
+# すべての魔法の杖
+# すべての食べ物
+# すべての道具
+# すべての家具
+# すべての井戸
+# すべての祭壇
+# すべての残骸
+# すべてのジャンク
+# すべての金貨
+# すべてのプラチナ硬貨
+# すべての宝箱
+# すべての鉱石
+# すべての樹木
+# すべての旅糧
+# すべての交易品
