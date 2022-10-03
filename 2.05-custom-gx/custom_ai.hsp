@@ -909,6 +909,12 @@
 			act = -10
 		}
 	}
+	if ( act == CUSTOM_AI_ACTION_USE_SHIFT_CORE ) {
+		if ( cdata(CDATA_POWER_GAUGE, cc) < 50 | cdata(CDATA_SHIFT_FORM, cc) != SHIFT_FORM_NONE ) {
+			PassTactic = 1
+			act = -10
+		}
+	}
 	if ( PassTactic == 1 ) {
 		return
 	}
