@@ -2061,114 +2061,8 @@
 			goto *ai_followMove
 		}
 	}
-	if ( cdata(CDATA_POWER_GAUGE, cc) >= 50 & cdata(CDATA_DIRECTIVE_MODE, cc) == DIRECTIVE_MODE_INTERCEPT & cdata(CDATA_SHIFT_FORM, cc) == SHIFT_FORM_NONE ) {
-		cic = -1
-		inv_find ITEM_ID_ALPHA_SHIFT_CORE, cc
-		if ( stat != (-1) ) {
-			if ( gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 >= inv(INV_ITEM_CHARGE, stat) ) {
-				cic = stat
-			}
-		}
-		inv_find ITEM_ID_BETA_SHIFT_CORE, cc
-		if ( stat != (-1) ) {
-			if ( gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 >= inv(INV_ITEM_CHARGE, stat) ) {
-				cic = stat
-			}
-		}
-		inv_find ITEM_ID_GAMMA_SHIFT_CORE, cc
-		if ( stat != (-1) ) {
-			if ( gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 >= inv(INV_ITEM_CHARGE, stat) ) {
-				cic = stat
-			}
-		}
-		inv_find ITEM_ID_DELTA_SHIFT_CORE, cc
-		if ( stat != (-1) ) {
-			if ( gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 >= inv(INV_ITEM_CHARGE, stat) ) {
-				cic = stat
-			}
-		}
-		inv_find ITEM_ID_OMEGA_SHIFT_CORE, cc
-		if ( stat != (-1) ) {
-			if ( gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 >= inv(INV_ITEM_CHARGE, stat) ) {
-				cic = stat
-			}
-		}
-		if ( cic != (-1) ) {
-			inv(INV_ITEM_NUM, cic) > 0
-			inv(INV_ITEM_CHARGE, cic) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 + inv(INV_ITEM_PARAM3, cic)
-			hikae = cdatan(CDATAN_NAME, cc)
-			cdatan(CDATAN_NAME, cc) = cdatan(CDATAN_FORM_SHIFT_NAME, cc)
-			cdatan(CDATAN_FORM_SHIFT_NAME, cc) = hikae
-			if ( cdatan(CDATAN_NAME, cc) == "" ) {
-				cdatan(CDATAN_NAME, cc) = cdatan(CDATAN_FORM_SHIFT_NAME, cc) + lang("／アルター", "-altered")
-			}
-			hikae = cdata(CDATA_PORTRAIT, cc)
-			cdata(CDATA_PORTRAIT, cc) = cdata(CDATA_FORM_SHIFT_PORTRAIT, cc)
-			cdata(CDATA_FORM_SHIFT_PORTRAIT, cc) = hikae
-			hikae = cdata(CDATA_FACE, cc)
-			cdata(CDATA_FACE, cc) = cdata(CDATA_FORM_SHIFT_FACE, cc)
-			cdata(CDATA_FORM_SHIFT_FACE, cc) = hikae
-			hikae = pcc(PCC_HAIR, cc)
-			pcc(PCC_HAIR, cc) = cdata(CDATA_FORM_SHIFT_PCC_HAIR, cc)
-			cdata(CDATA_FORM_SHIFT_PCC_HAIR, cc) = hikae
-			hikae = pcc(PCC_SUB_HAIR, cc)
-			pcc(PCC_SUB_HAIR, cc) = cdata(CDATA_FORM_SHIFT_PCC_SUB_HAIR, cc)
-			cdata(CDATA_FORM_SHIFT_PCC_SUB_HAIR, cc) = hikae
-			hikae = pcc(PCC_BODY, cc)
-			pcc(PCC_BODY, cc) = cdata(CDATA_FORM_SHIFT_PCC_BODY, cc)
-			cdata(CDATA_FORM_SHIFT_PCC_BODY, cc) = hikae
-			hikae = pcc(PCC_CLOTH, cc)
-			pcc(PCC_CLOTH, cc) = cdata(CDATA_FORM_SHIFT_PCC_CLOTH, cc)
-			cdata(CDATA_FORM_SHIFT_PCC_CLOTH, cc) = hikae
-			hikae = pcc(PCC_PANTS, cc)
-			pcc(PCC_PANTS, cc) = cdata(CDATA_FORM_SHIFT_PCC_PANTS, cc)
-			cdata(CDATA_FORM_SHIFT_PCC_PANTS, cc) = hikae
-			hikae = pcc(PCC_ETC1, cc)
-			pcc(PCC_ETC1, cc) = cdata(CDATA_FORM_SHIFT_PCC_ETC1, cc)
-			cdata(CDATA_FORM_SHIFT_PCC_ETC1, cc) = hikae
-			hikae = pcc(PCC_ETC2, cc)
-			pcc(PCC_ETC2, cc) = cdata(CDATA_FORM_SHIFT_PCC_ETC2, cc)
-			cdata(CDATA_FORM_SHIFT_PCC_ETC2, cc) = hikae
-			hikae = pcc(PCC_ETC3, cc)
-			pcc(PCC_ETC3, cc) = cdata(CDATA_FORM_SHIFT_PCC_ETC3, cc)
-			cdata(CDATA_FORM_SHIFT_PCC_ETC3, cc) = hikae
-			hikae = pcc(PCC_EYE, cc)
-			pcc(PCC_EYE, cc) = cdata(CDATA_FORM_SHIFT_PCC_EYE, cc)
-			cdata(CDATA_FORM_SHIFT_PCC_EYE, cc) = hikae
-			hikae = pcc(PCC_RIDE, cc)
-			pcc(PCC_RIDE, cc) = cdata(CDATA_FORM_SHIFT_PCC_RIDE, cc)
-			cdata(CDATA_FORM_SHIFT_PCC_RIDE, cc) = hikae
-			if ( pcc(PCC_BODY, cc) == 0 ) {
-				pcc(PCC_BODY, cc) = 1
-			}
-			hikae = cdata(CDATA_PIC, cc)
-			cdata(CDATA_PIC, cc) = cdata(CDATA_FORM_SHIFT_PIC, cc)
-			cdata(CDATA_FORM_SHIFT_PIC, cc) = hikae
-			create_pcpic cc, 0
-			customtalk cc, DBMODE_FLAVOR_SHIFT
-			gosub *convert_word
-			if ( gdata(GDATA_CUSTOM_TALK) == 100 ) {
-				txt lang("「変身！」", cnvtalk("Transform!")), lang("「フォームアップ！」", cnvtalk("Form Up!")), lang("「ドレスアップ！」", cnvtalk("Dress Up!")), lang("「トランスフォーム！」", cnvtalk("Transform!"))
-			}
-			if ( inv(INV_ITEM_ID, cic) == ITEM_ID_ALPHA_SHIFT_CORE ) {
-				addbuff cc, BUFF_FORM_SHIFT_ALPHA, 200, 200
-			}
-			if ( inv(INV_ITEM_ID, cic) == ITEM_ID_BETA_SHIFT_CORE ) {
-				addbuff cc, BUFF_FORM_SHIFT_BETA, 200, 200
-			}
-			if ( inv(INV_ITEM_ID, cic) == ITEM_ID_GAMMA_SHIFT_CORE ) {
-				addbuff cc, BUFF_FORM_SHIFT_GAMMA, 200, 200
-			}
-			if ( inv(INV_ITEM_ID, cic) == ITEM_ID_DELTA_SHIFT_CORE ) {
-				addbuff cc, BUFF_FORM_SHIFT_DELTA, 200, 200
-			}
-			if ( inv(INV_ITEM_ID, cic) == ITEM_ID_OMEGA_SHIFT_CORE ) {
-				addbuff cc, BUFF_FORM_SHIFT_OMEGA, 150, 150
-			}
-			animeid = ANIMATION_GENE
-			anic = cc
-			gosub *anime
-		}
+	if ( cdata(CDATA_DIRECTIVE_MODE, cc) == DIRECTIVE_MODE_INTERCEPT ) {
+		gosub *ai_useShiftCore
 	}
 	powai = 0
 	if ( gdata(GDATA_FLAG_MAIN) < 350 ) {
@@ -4092,3 +3986,119 @@
 		goto *turn_end
 	}
 
+*ai_useShiftCore
+	if ( cdata(CDATA_POWER_GAUGE, cc) < 50 | cdata(CDATA_SHIFT_FORM, cc) != SHIFT_FORM_NONE ) {
+		return
+	}
+	cic = -1
+	inv_find ITEM_ID_ALPHA_SHIFT_CORE, cc
+	if ( stat != (-1) ) {
+		if ( gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 >= inv(INV_ITEM_CHARGE, stat) ) {
+			cic = stat
+		}
+	}
+	inv_find ITEM_ID_BETA_SHIFT_CORE, cc
+	if ( stat != (-1) ) {
+		if ( gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 >= inv(INV_ITEM_CHARGE, stat) ) {
+			cic = stat
+		}
+	}
+	inv_find ITEM_ID_GAMMA_SHIFT_CORE, cc
+	if ( stat != (-1) ) {
+		if ( gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 >= inv(INV_ITEM_CHARGE, stat) ) {
+			cic = stat
+		}
+	}
+	inv_find ITEM_ID_DELTA_SHIFT_CORE, cc
+	if ( stat != (-1) ) {
+		if ( gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 >= inv(INV_ITEM_CHARGE, stat) ) {
+			cic = stat
+		}
+	}
+	inv_find ITEM_ID_OMEGA_SHIFT_CORE, cc
+	if ( stat != (-1) ) {
+		if ( gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 >= inv(INV_ITEM_CHARGE, stat) ) {
+			cic = stat
+		}
+	}
+	if ( cic != (-1) ) {
+		inv(INV_ITEM_NUM, cic) > 0
+		inv(INV_ITEM_CHARGE, cic) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 + inv(INV_ITEM_PARAM3, cic)
+		hikae = cdatan(CDATAN_NAME, cc)
+		cdatan(CDATAN_NAME, cc) = cdatan(CDATAN_FORM_SHIFT_NAME, cc)
+		cdatan(CDATAN_FORM_SHIFT_NAME, cc) = hikae
+		if ( cdatan(CDATAN_NAME, cc) == "" ) {
+			cdatan(CDATAN_NAME, cc) = cdatan(CDATAN_FORM_SHIFT_NAME, cc) + lang("／アルター", "-altered")
+		}
+		hikae = cdata(CDATA_PORTRAIT, cc)
+		cdata(CDATA_PORTRAIT, cc) = cdata(CDATA_FORM_SHIFT_PORTRAIT, cc)
+		cdata(CDATA_FORM_SHIFT_PORTRAIT, cc) = hikae
+		hikae = cdata(CDATA_FACE, cc)
+		cdata(CDATA_FACE, cc) = cdata(CDATA_FORM_SHIFT_FACE, cc)
+		cdata(CDATA_FORM_SHIFT_FACE, cc) = hikae
+		hikae = pcc(PCC_HAIR, cc)
+		pcc(PCC_HAIR, cc) = cdata(CDATA_FORM_SHIFT_PCC_HAIR, cc)
+		cdata(CDATA_FORM_SHIFT_PCC_HAIR, cc) = hikae
+		hikae = pcc(PCC_SUB_HAIR, cc)
+		pcc(PCC_SUB_HAIR, cc) = cdata(CDATA_FORM_SHIFT_PCC_SUB_HAIR, cc)
+		cdata(CDATA_FORM_SHIFT_PCC_SUB_HAIR, cc) = hikae
+		hikae = pcc(PCC_BODY, cc)
+		pcc(PCC_BODY, cc) = cdata(CDATA_FORM_SHIFT_PCC_BODY, cc)
+		cdata(CDATA_FORM_SHIFT_PCC_BODY, cc) = hikae
+		hikae = pcc(PCC_CLOTH, cc)
+		pcc(PCC_CLOTH, cc) = cdata(CDATA_FORM_SHIFT_PCC_CLOTH, cc)
+		cdata(CDATA_FORM_SHIFT_PCC_CLOTH, cc) = hikae
+		hikae = pcc(PCC_PANTS, cc)
+		pcc(PCC_PANTS, cc) = cdata(CDATA_FORM_SHIFT_PCC_PANTS, cc)
+		cdata(CDATA_FORM_SHIFT_PCC_PANTS, cc) = hikae
+		hikae = pcc(PCC_ETC1, cc)
+		pcc(PCC_ETC1, cc) = cdata(CDATA_FORM_SHIFT_PCC_ETC1, cc)
+		cdata(CDATA_FORM_SHIFT_PCC_ETC1, cc) = hikae
+		hikae = pcc(PCC_ETC2, cc)
+		pcc(PCC_ETC2, cc) = cdata(CDATA_FORM_SHIFT_PCC_ETC2, cc)
+		cdata(CDATA_FORM_SHIFT_PCC_ETC2, cc) = hikae
+		hikae = pcc(PCC_ETC3, cc)
+		pcc(PCC_ETC3, cc) = cdata(CDATA_FORM_SHIFT_PCC_ETC3, cc)
+		cdata(CDATA_FORM_SHIFT_PCC_ETC3, cc) = hikae
+		hikae = pcc(PCC_EYE, cc)
+		pcc(PCC_EYE, cc) = cdata(CDATA_FORM_SHIFT_PCC_EYE, cc)
+		cdata(CDATA_FORM_SHIFT_PCC_EYE, cc) = hikae
+		hikae = pcc(PCC_RIDE, cc)
+		pcc(PCC_RIDE, cc) = cdata(CDATA_FORM_SHIFT_PCC_RIDE, cc)
+		cdata(CDATA_FORM_SHIFT_PCC_RIDE, cc) = hikae
+		if ( pcc(PCC_BODY, cc) == 0 ) {
+			pcc(PCC_BODY, cc) = 1
+		}
+		hikae = cdata(CDATA_PIC, cc)
+		cdata(CDATA_PIC, cc) = cdata(CDATA_FORM_SHIFT_PIC, cc)
+		cdata(CDATA_FORM_SHIFT_PIC, cc) = hikae
+		create_pcpic cc, 0
+		customtalk cc, DBMODE_FLAVOR_SHIFT
+		gosub *convert_word
+		if ( gdata(GDATA_CUSTOM_TALK) == 100 ) {
+			txt lang("「変身！」", cnvtalk("Transform!")), lang("「フォームアップ！」", cnvtalk("Form Up!")), lang("「ドレスアップ！」", cnvtalk("Dress Up!")), lang("「トランスフォーム！」", cnvtalk("Transform!"))
+		}
+		if ( inv(INV_ITEM_ID, cic) == ITEM_ID_ALPHA_SHIFT_CORE ) {
+			addbuff cc, BUFF_FORM_SHIFT_ALPHA, 200, 200
+		}
+		if ( inv(INV_ITEM_ID, cic) == ITEM_ID_BETA_SHIFT_CORE ) {
+			addbuff cc, BUFF_FORM_SHIFT_BETA, 200, 200
+		}
+		if ( inv(INV_ITEM_ID, cic) == ITEM_ID_GAMMA_SHIFT_CORE ) {
+			addbuff cc, BUFF_FORM_SHIFT_GAMMA, 200, 200
+		}
+		if ( inv(INV_ITEM_ID, cic) == ITEM_ID_DELTA_SHIFT_CORE ) {
+			addbuff cc, BUFF_FORM_SHIFT_DELTA, 200, 200
+		}
+		if ( inv(INV_ITEM_ID, cic) == ITEM_ID_OMEGA_SHIFT_CORE ) {
+			addbuff cc, BUFF_FORM_SHIFT_OMEGA, 150, 150
+		}
+		animeid = ANIMATION_GENE
+		anic = cc
+		gosub *anime
+		rtval = 1
+	}
+	else {
+		rtval = -1
+	}
+	return
