@@ -19071,13 +19071,14 @@
 			if ( gdata(GDATA_RANK_PET_ARENA) / 100 == 1 & adata(ADATA_PET_ARENA_WIN, gdata(GDATA_AREA)) >= 29 ) {
 				chatMore lang("ようこそペットの王！" + _kimi(3) + "のペットと戦うため、今日も挑戦者がやってきている" + _yo(2), "Welcome! A challenger has come to fight with your pet!")
 			}
-			buff = lang("" + arenaop(1) + "人同士のチームバトルで、対戦相手はレベル" + arenaop(2) + "の相手複数" + _da() + "挑戦する" + _noka(1), "It's a " + arenaop(1) + " vs " + arenaop(1) + " match. The opponent's group is formed by the pets less than " + arenaop(2) + " levels. What you say? You have " + (petArenaMatchLimit - adata(ADATA_ARENA_MATCHES_FOUGHT, gdata(GDATA_AREA))) + " attempts left today.")
+			buff = lang("" + arenaop(1) + "人同士のチームバトルで、対戦相手はレベル" + arenaop(2) + "の相手複数" + _da() + "挑戦する" + _noka(1), "It's a " + arenaop(1) + " vs " + arenaop(1) + " match. The opponent's group is formed by the pets less than " + arenaop(2) + " levels. What do you say? You have " + (petArenaMatchLimit - adata(ADATA_ARENA_MATCHES_FOUGHT, gdata(GDATA_AREA))) + " attempts left today.")
 		}
 		if ( chatval == 49 ) {
 			arenaop = 1, 2, rtval(1)
 			enemylv = rtval(1)
 			arenaop(1) = rtval
-			buff = lang("" + arenaop(1) + "人同士のチームバトルで、対戦相手はレベル" + arenaop(2) + "以下の相手複数" + _da() + "挑戦する" + _noka(1), "It's a " + arenaop(1) + " vs " + arenaop(1) + " match. The opponent's group is formed by the pets less than " + arenaop(2) + " levels. What you say? You have " + (petArenaMatchLimit - adata(ADATA_ARENA_MATCHES_FOUGHT, gdata(GDATA_AREA))) + " attempts left today.")
+			locvar_arena_creator = rtvaln
+			buff = lang("" + locvar_arena_creator + "が組み立てたチーム" + _dana() + arenaop(1) + "人同士のチームバトルで、対戦相手はレベル" + arenaop(2) + "以下の相手複数" + _da() + "挑戦する" + _noka(1), "That team was put together by an adventurer by the name of " + locvar_arena_creator  + ". This will be a " + arenaop(1) + "v" + arenaop(1) + " match. The opponent's group is formed by pets with an average level of " + arenaop(2) + ". What do you say?")
 		}
 		chatList 1, lang("挑戦する", "I'll send my pet.")
 		chatList 0, lang("やめる", "I'll pass.")

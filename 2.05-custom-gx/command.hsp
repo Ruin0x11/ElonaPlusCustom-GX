@@ -207,6 +207,7 @@
 		dirlist buff, folder + "*.pet"
 	}
 	notesel buff
+	sdim listn2, 40, 2, 500
 	repeat stat
 		noteget file, cnt
 		if ( file == "temp.eum" | file == "temp.ept" | file == "temp.pum" | file == "temp.pet" ) {
@@ -216,9 +217,12 @@
 		notesel headtemp
 		noteget s, 0
 		noteget s(1), 1
-		noteget s(2), 4
-		list(0, listmax) = listmax, 0, int(s(2))
+		noteget s(2), 3
+		noteget s(3), 4
+		sreplace s(2), s(2), "ElonaPlus Custom-GX ", ""
+		list(0, listmax) = listmax, 0, int(s(3))
 		listn(0, listmax) = "(" + file + ") " + s + " " + s(1), file
+		listn2(0, listmax) = s(2)
 		listmax++
 		noteunsel
 	loop
@@ -288,7 +292,7 @@
 		cutname s, 64
 		cs_list s, wx + 84, wy + 66 + cnt * 19 - 1, 19
 		pos wx + 570, wy + 66 + cnt * 19
-		mes "" + (list(2, p) \ 1000 + 1) + ".0"
+		mes listn2(0, p)
 	loop
 	if ( keyrange != 0 ) {
 		cs_bk = cs
@@ -343,12 +347,14 @@
 		notesel headtemp
 		noteget s, 5
 		noteget s(1), 6
+		noteget s(2), 1
 		if ( comctrl == 0 | comctrl == 2 ) {
 			username = "" + s
 			userrelation = int(s(1))
 		}
 		if ( comctrl == 1 ) {
 			rtval = int(s), int(s(1))
+			rtvaln = s(2)
 		}
 		return 1
 	}
