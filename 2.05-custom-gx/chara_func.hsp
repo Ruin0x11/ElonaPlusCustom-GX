@@ -2722,7 +2722,7 @@
 				txt lang(name(dmgcon_charid) + "は恐怖に侵された。", name(dmgcon_charid) + " " + is(dmgcon_charid) + " frightened.")
                 DamagePopupAdd "" + _confear, dmgcon_charid, DMGPOPUP_ADD_CONDITION, CONDITION_FEAR
 			}
-			if ( TweakData(TWEAK_GAMEPLAY_CG_DISABLE_THIRST, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
+			if ( TweakData(TWEAK_GAMEPLAY_CG_DISABLE_THIRST, TWEAK_CATEGORY_GAMEPLAY) == FALSE & TweakData(TWEAK_GAMEPLAY_DISABLE_URINATION_FROM_FEAR, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
 				if ( cdata(CDATA_THIRST, dmgcon_charid) > 12000 ) {
 					if ( synccheck(dmgcon_charid, -1) ) {
 						snd SOUNDLIST_WATERM
@@ -6100,28 +6100,9 @@
 								txtmore
 								txtef COLOR_BLUE
 								txt lang(name(dmghp_charid) + "は恐怖して逃げ出した。", name(dmghp_charid) + " run" + _s(dmghp_charid) + " away in terror.")
-								if ( TweakData(TWEAK_GAMEPLAY_CG_DISABLE_THIRST, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
+								if ( TweakData(TWEAK_GAMEPLAY_CG_DISABLE_THIRST, TWEAK_CATEGORY_GAMEPLAY) == FALSE & TweakData(TWEAK_GAMEPLAY_DISABLE_URINATION_FROM_FEAR, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
 									if ( cdata(CDATA_THIRST, dmghp_charid) > 12000 ) {
-										if ( synccheck(dmghp_charid, -1) ) {
-											snd SOUNDLIST_WATERM
-											txt lang(name(dmghp_charid) + "は漏らした。", name(dmghp_charid) + " is incontinent.")
-											if ( dmghp_charid != CHARA_PLAYER ) {
-												txt lang("「…スッキリ！」", cnvtalk("Do not look at me!"))
-											}
-										}
-										if ( mdata(MDATA_TYPE) != MAP_TYPE_WORLD ) {
-											if ( cfg_dust_select == 0 ) {
-												flt
-												itemcreate -1, ITEM_ID_URINE, cdata(CDATA_X, dmghp_charid), cdata(CDATA_Y, dmghp_charid), 0
-												if ( stat != 0 ) {
-													if ( dmghp_charid != CHARA_PLAYER ) {
-														inv(INV_ITEM_SUB_NAME, ci) = cdata(CDATA_ID, dmghp_charid)
-														item_stack -1, ci
-													}
-												}
-											}
-										}
-										cdata(CDATA_THIRST, dmghp_charid) = 5000
+										chara_morasi dmghp_charid
 									}
 								}
 							}

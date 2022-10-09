@@ -2103,23 +2103,25 @@
 		}
 		if ( cdata(CDATA_CONDITION_FEAR, r1) > 0 ) {
 			if ( cdata(CDATA_THIRST, r1) > 12000 ) {
-				if ( synccheck(r1, -1) ) {
-					snd SOUNDLIST_WATERM
-					txt lang(name(r1) + "は漏らした。", name(r1) + " wets " + yourself(r1) + ".")
-				}
-				if ( mdata(MDATA_TYPE) != MAP_TYPE_WORLD ) {
-					if ( cfg_dust_select == 0 ) {
-						flt
-						itemcreate -1, ITEM_ID_URINE, cdata(CDATA_X, r1), cdata(CDATA_Y, r1), 0
-						if ( stat != 0 ) {
-							if ( r1 != 0 ) {
-								inv(INV_ITEM_SUB_NAME, ci) = cdata(CDATA_ID, r1)
-								item_stack -1, ci
+				if ( TweakData(TWEAK_GAMEPLAY_DISABLE_URINATION_FROM_FEAR, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
+					if ( synccheck(r1, -1) ) {
+						snd SOUNDLIST_WATERM
+						txt lang(name(r1) + "は漏らした。", name(r1) + " wet" + _s(r1) + " " + yourself(r1) + ".")
+					}
+					if ( mdata(MDATA_TYPE) != MAP_TYPE_WORLD ) {
+						if ( cfg_dust_select == 0 ) {
+							flt
+							itemcreate -1, ITEM_ID_URINE, cdata(CDATA_X, r1), cdata(CDATA_Y, r1), 0
+							if ( stat != 0 ) {
+								if ( r1 != 0 ) {
+									inv(INV_ITEM_SUB_NAME, ci) = cdata(CDATA_ID, r1)
+									item_stack -1, ci
+								}
 							}
 						}
 					}
+					cdata(CDATA_THIRST, r1) = 5000
 				}
-				cdata(CDATA_THIRST, r1) = 5000
 			}
 		}
 		healcon r1, CONDITION_INSANE, 1
