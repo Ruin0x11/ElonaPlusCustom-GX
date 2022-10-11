@@ -1407,13 +1407,19 @@
 	page_change *com_blend_material_loop_WHILE1_CONTINUE
 	if ( p != (-1) ) {
 		ci = p
-		snd SOUNDLIST_DRINK1
-		rpref(10 + step * 2) = ci, inv(INV_ITEM_ID, ci)
 		if ( inv(INV_ITEM_ID, ci) == ITEM_ID_RAW_RUBYNUS_ORE | inv(INV_ITEM_ID, ci) == ITEM_ID_RAW_EMERALD_ORE | inv(INV_ITEM_ID, ci) == ITEM_ID_RAW_DIAMOND_ORE | inv(INV_ITEM_ID, ci) == ITEM_ID_SKULL_SWORD | inv(INV_ITEM_ID, ci) == ITEM_ID_MAGISTUS | inv(INV_ITEM_ID, ci) == ITEM_ID_TRISMAGISTUS | inv(INV_ITEM_ID, ci) == ITEM_ID_VIOLENT_SKULL_SWORD | inv(INV_ITEM_ID, ci) == ITEM_ID_EMPTY_BASKET | (rpdata(RPDATA_ITEM, rpid) == ITEM_ID_DEED & inv(INV_ITEM_ID, ci) == ITEM_ID_WOOD_MATERIAL) ) {
 			if ( inv_getfreeid(CHARA_PLAYER) != (-1) ) {
 				item_separate ci
 			}
+			else {
+				snd SOUNDLIST_FAIL1
+				txt_invfull
+				p = rpdiff(rpid, step, step - 1)
+				goto *com_blend_step
+			}
 		}
+		snd SOUNDLIST_DRINK1
+		rpref(10 + step * 2) = ci, inv(INV_ITEM_ID, ci)
 		txt lang(itemname(ci) + "を選んだ。", "You add " + itemname(ci) + ".")
 		step++
 		p = rpdiff(rpid, step, step - 1)
