@@ -1,0 +1,4002 @@
+#defcfunc istileempty int istileempty_x, int istileempty_y
+	if ( istileempty_x < 0 | istileempty_y < 0 | istileempty_x >= mdata(MDATA_WIDTH) | istileempty_y >= mdata(MDATA_HEIGHT) ) {
+		return 0
+	}
+	cell_featread istileempty_x, istileempty_y
+	return ( map(istileempty_x, istileempty_y, 0) == 3 | map(istileempty_x, istileempty_y, 0) >= 90 | feat(1) == CELL_FEATURE_DOOR_CLOSED )
+
+#defcfunc istilewall int istileempty_x, int istileempty_y
+	if ( istileempty_x < 0 | istileempty_y < 0 | istileempty_x >= mdata(MDATA_WIDTH) | istileempty_y >= mdata(MDATA_HEIGHT) ) {
+		return 1
+	}
+	return ( map(istileempty_x, istileempty_y, 0) != 3 & map(istileempty_x, istileempty_y, 0) < 90 )
+
+#deffunc cleanatile int digatile_x, int digatile_y, int digatile_tile
+	if ( digatile_x <= 0 | digatile_y <= 0 | digatile_x >= mdata(MDATA_WIDTH) - 1 | digatile_y >= mdata(MDATA_HEIGHT) - 1 ) {
+		return 0
+	}
+	cell_refresh digatile_x, digatile_y
+	inv_getheader -1
+	repeat invrange, invhead
+		if ( inv(INV_ITEM_NUM, cnt) > 0 ) {
+			if ( inv(INV_ITEM_X, cnt) == digatile_x & inv(INV_ITEM_Y, cnt) == digatile_y ) {
+				inv(INV_ITEM_NUM, cnt) = 0
+			}
+		}
+	loop
+	if ( digatile_tile > 0 ) {
+		map(digatile_x, digatile_y, 0) = digatile_tile
+	}
+	cell_refresh digatile_x, digatile_y
+    return 1
+    
+#deffunc digatile int digatile_x, int digatile_y, int digatile_tile
+	if ( digatile_x <= 0 | digatile_y <= 0 | digatile_x >= mdata(MDATA_WIDTH) - 1 | digatile_y >= mdata(MDATA_HEIGHT) - 1 ) {
+		return 0
+	}
+	map(digatile_x, digatile_y, 0) = digatile_tile
+    cell_featset digatile_x, digatile_y, 0, 0, 0, 0
+	return 1
+
+#deffunc map_initialize_custom
+	map_furniture_initialize
+	no_spider_web@NT = 0
+	yes_spider_web@NT = 0
+	vaultroom@NT = 0
+	fur_spawn_rate_multiplier@NT = 1
+	roomsum = 0
+	rdroomdownstair = (-1)
+	rdroomupstair = (-1)
+	rdmonsterhouse = 0
+	rdcreaturepack = 0
+	map_furniture_setgroup 0
+	if ( adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_RANDOM_DUNGEON ) {
+		if ( mdata(MDATA_WIDTH) < 10 ) {
+			mdata(MDATA_WIDTH) = 10
+		}
+		if ( mdata(MDATA_HEIGHT) < 10 ) {
+			mdata(MDATA_HEIGHT) = 10
+		}
+	}
+	return
+
+#deffunc map_room_populate_custom
+	monsterhouselimit@NT = 3
+	if ( rdsize < 0 ) {
+		return
+	}
+	// Custom - Vaultroom
+	if ( currentroomcount@NT == vaultroom@NT - 1 ) {
+		rdmonsterhouse++
+		vaultroom_monster_limit@NT = limit(rh * rw/2, 10+rnd(20), 70)
+		repeat rh, ry
+			rdy3 = cnt
+			repeat rw, rx
+				rdx3 = cnt
+				if ( rnd(rh * rw) > vaultroom_monster_limit@NT ) { continue }
+				if ( rdx3 < 0 | rdy3 < 0 | rdx3 >= mdata(MDATA_WIDTH) | rdy3 >= mdata(MDATA_HEIGHT) ) { continue }
+				gosub *fltChara
+				characreate -1, CREATURE_ID_BUG, rdx3, rdy3
+			loop
+		loop
+		repeat rnd(3) + rnd(3) + 1
+			dx@NT = rnd(rw) + rx
+			dy@NT = rnd(rh) + ry
+			if ( dx@NT < 0 | dy@NT < 0 | dx@NT >= mdata(MDATA_WIDTH) | dy@NT >= mdata(MDATA_HEIGHT) ) { continue }
+			if ( istilewall(dx@NT, dy@NT) ) { continue } 
+			flt
+			flttypemajor = FILTER_CONTAINER
+			itemcreate -1, ITEM_ID_DUMMY, dx@NT, dy@NT, 0
+			if ( adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_RANDOM_DUNGEON ) {
+				if ( gdata(STARTING_GDATA_FLAG + 353) == 100 ) {
+					item_identify ci, ITEM_KNOWN_FULL
+				}
+			}
+		loop
+		return
+	}
+	repeat rnd(rdsize / (8 + currentroomcount@NT / 2) + 2)
+		dx@NT = rnd(rw) + rx
+		dy@NT = rnd(rh) + ry
+		// cell_refresh dx@NT, dy@NT
+		if ( dx@NT < 0 | dy@NT < 0 | dx@NT >= mdata(MDATA_WIDTH) | dy@NT >= mdata(MDATA_HEIGHT) ) { continue }
+		if ( map(dx@NT, dy@NT, 4) != 0 | istilewall(dx@NT, dy@NT) ) { continue } // Skip tiles with furniture
+		if ( gdata(STARTING_GDATA_FLAG + 353) == 100 & adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_RANDOM_DUNGEON ) {
+			flt calcobjlv(gdata(GDATA_LEVEL) * 3 / 2), calcfixlv(FIX_QUALITY_GOOD)
+			flttypemajor = fltsetdungeon()
+			itemcreate -1, ITEM_ID_DUMMY, dx@NT, dy@NT, 0
+			item_identify ci, ITEM_KNOWN_FULL
+		}
+		else {
+			flt calcobjlv(gdata(GDATA_LEVEL)), calcfixlv(FIX_QUALITY_GOOD)
+			flttypemajor = fltsetdungeon()
+			itemcreate -1, ITEM_ID_DUMMY, dx@NT, dy@NT, 0
+		}
+		gosub *fltChara
+		characreate -1, CREATURE_ID_BUG, dx@NT, dy@NT
+		if ( stat == 1 ) {
+			if ( gdata(GDATA_LEVEL) > 3 ) {
+				if ( creaturepack != FILTER_NOTHING & rdmonsterhouse < monsterhouselimit@NT ) {
+					rdmonsterhouse++
+					if ( rnd(rdcreaturepack * 5 + 5) == 0 ) {
+						rdcreaturepack++
+						repeat 10 + rnd(20)
+							flt cdata(CDATA_LEVEL, rc), calcfixlv(FIX_QUALITY_GOOD)
+							flttypemajor = creaturepack
+							characreate -1, CREATURE_ID_BUG, dx@NT, dy@NT
+						loop
+						break
+					}
+				}
+			}
+		}
+	loop
+	if ( currentroomcount@NT == rdroomdownstair ) {
+		return
+	}
+	if ( currentroomcount@NT == rdroomupstair ) {
+		return
+	}
+	if ( rdmonsterhouse < monsterhouselimit@NT | rdtype == 2 ) {
+		if ( rnd(8) == 0 ) {
+			if ( rw * rh < 40 ) {
+				rdmonsterhouse++
+				repeat rh, ry
+					rdy3 = cnt
+					repeat rw, rx
+						rdx3 = cnt
+						if ( rnd(rw * rh) > 20 ) { continue } // limit monster room monster count
+						gosub *fltChara
+						characreate -1, CREATURE_ID_BUG, rdx3, rdy3
+					loop
+				loop
+				if ( rdtype != 2 & rdmonsterhouse == 1 ) {
+					repeat rnd(3) + 1
+						flt
+						flttypemajor = FILTER_CONTAINER
+						itemcreate -1, ITEM_ID_DUMMY, rnd(rw) + rx, rnd(rh) + ry, 0
+						if ( adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_RANDOM_DUNGEON ) {
+							if ( gdata(STARTING_GDATA_FLAG + 353) == 100 ) {
+								item_identify ci, ITEM_KNOWN_FULL
+							}
+						}
+					loop
+				}
+			}
+		}
+	}
+	return
+
+#deffunc map_tileset_custom int map_tileset_arg1
+	dim p2@NT, 0
+	dim p3@NT, 0
+	tile_wall_wood@NT = 400
+	tile_room_wood@NT = 73, 1, 1
+	p@nt = rnd(7), 1
+	if ( p@NT == 1 ) {
+		tile_wall_wood@NT = 481
+		tile_room_wood@NT = 73, 3, 5
+	}
+	if ( p@NT == 2 ) {
+		tile_wall_wood@NT = 396
+		tile_room_wood@NT = 148, 2, 2
+	}
+	if ( p@NT == 3 ) {
+		tile_wall_wood@NT = 400
+		tile_room_wood@NT = 70, 2, 2
+	}
+	if ( p@NT >= 4 ) {
+		p2@NT = 398, 402, 405, 467
+		p3@NT = 71, 72, 73, 118, 218, 219, 224
+		tile_wall_wood@NT = p2@NT(rnd(length(p2@NT)))
+		tile_room_wood@NT = p3@NT(rnd(length(p3@NT)))
+	}
+
+	dim p2@NT, 0
+	dim p3@NT, 0
+	p2@NT = 397, 404, 463, 465, 471, 482
+	p3@NT = 81, 103, 106, 108, 109, 110, 111, 113, 135, 136, 206, 207, 210, 212, 217, 227, 228
+	tile_wall_brick@NT = p2@NT(rnd(length(p2@NT)))
+	tile_room_brick@NT = p3@NT(rnd(length(p3@NT)))
+
+	dim p2@NT, 0
+	dim p3@NT, 0
+	p2@NT = 399, 401, 405, 462, 464, 470, 472, 473, 476, 477, 478, 479, 480, 486, 487, 488, 490, 491, 493, 494 
+	p3@NT = 99, 100, 102, 132, 133, 138, 153, 211
+	tile_wall_dungeon@NT = p2@NT(rnd(length(p2@NT)))
+	tile_room_dungeon@NT = p3@NT(rnd(length(p3@NT)))
+
+	if ( map_tileset_arg1 == 300 ) {
+		tile_wall_wood@NT = 400
+		tile_room_wood@NT = 70, 2, 2
+	}
+
+	return
+
+#deffunc map_converttile_custom
+	repeat mdata(MDATA_HEIGHT)
+		y = cnt
+		repeat mdata(MDATA_WIDTH)
+			x = cnt
+			if ( map(x, y, 0) == 475 & tile_default == 475 ) {
+				if ( rnd(2) == 0 ) {
+					map(x, y, 0) = 508
+				}
+			}
+			if ( map(x, y, 0) == 0 ) {
+				map(x, y, 0) = tile_default + (rnd(tile_default(2)) == 0) * rnd(tile_default(1))
+				if ( tile_wall == 475 & rnd(5) == 0 ) {
+					if ( y > 0 ) {
+						if ( map(x, y-1, 0) == 475 | map(x, y-1, 0) == 508 ) {
+							map(x, y, 0) = 508
+						}
+					}
+				}
+				continue
+			}
+			if ( map(x, y, 0) >= 100 ) {
+				map(x, y, 0) = tile_tunnel + (rnd(tile_tunnel(2)) == 0) * rnd(tile_tunnel(1))
+				continue
+			}
+			if ( map(x, y, 0) == 1 ) {
+				map(x, y, 0) = tile_wall + (rnd(tile_wall(2)) == 0) * rnd(tile_wall(1))
+				if ( tile_wall == 475 & rnd(5) == 0 ) {
+					if ( y > 0 ) {
+						if ( map(x, y-1, 0) == 475 | map(x, y-1, 0) == 508 ) {
+							map(x, y, 0) = 508
+						}
+					}
+				}
+				continue
+			}
+			if ( map(x, y, 0) == 3 ) {
+				map(x, y, 0) = tile_room + (rnd(tile_room(2)) == 0) * rnd(tile_room(1))
+				continue
+			}
+			if ( map(x, y, 0) == 4 ) {
+				map(x, y, 0) = tile_default + (rnd(tile_default(2)) == 0) * rnd(tile_default(1))
+				continue
+			}
+			if ( map(x, y, 0) == 80 ) {
+				map(x, y, 0) = tile_wall_wood@NT
+				continue
+			}
+			if ( map(x, y, 0) == 81 ) {
+				map(x, y, 0) = tile_wall_brick@NT
+				continue
+			}
+			if ( map(x, y, 0) == 82 ) {
+				map(x, y, 0) = tile_wall_dungeon@NT
+				continue
+			}
+			// void
+			if ( map(x, y, 0) == 83 ) {
+				map(x, y, 0) = 736
+				continue
+			}
+			// water
+			if ( map(x, y, 0) == 84 ) {
+				map(x, y, 0) = 594
+				if ( y > 1 ) {
+					if ( map(x, y-1, 0) != 84 & map(x, y-1, 0) != 628 & map(x, y-1, 0) != 594 & map(x, y-1, 0) != 637 ) {
+						map(x, y, 0) = 628
+						if ( tile_default == 475 ) {
+							map(x, y, 0) = 637
+						}
+					}
+				}
+				continue
+			}
+			// lava
+			if ( map(x, y, 0) == 85 ) {
+				map(x, y, 0) = 561
+				if ( y > 1 & y < mdata(MDATA_HEIGHT) - 1 & tile_room == 38 ) {
+					// If tile below is lava, tile above is not lava
+					if ( map(x, y+1, 0) == 85 & map(x, y-1, 0) != 85 & map(x, y-1, 0) != 642 & map(x, y-1, 0) != 561 ) {
+						map(x, y, 0) = 642
+					}
+				}
+				continue
+			}
+			// trees
+			if ( map(x, y, 0) == 86 ) {
+				map(x, y, 0) = 475
+				if ( rnd(5) == 0 ) {
+					if ( y > 0 ) {
+						if ( map(x, y-1, 0) == 475 | map(x, y-1, 0) == 508 ) {
+							map(x, y, 0) = 508
+						}
+					}
+				}
+				continue
+			}
+			// smoothwall
+			if ( map(x, y, 0) == 87 ) {
+				map(x, y, 0) = 643
+				if ( y < mdata(MDATA_HEIGHT) - 2 ) {
+					if ( map(x, y+1, 0) != 83 & map(x, y+1, 0) != 84 & map(x, y+1, 0) != 85 ) {
+						map(x, y, 0) = 644
+					}
+				}
+				continue
+			}
+			// Boxes
+			if ( map(x, y, 0) == 88 ) {
+				map(x, y, 0) = 662 + rnd(4)
+				if ( rnd(5) == 0 ) {
+					map(x, y, 0) = 632
+				}
+				continue
+			}
+			// Boxes (Open)
+			if ( map(x, y, 0) == 89 ) {
+				map(x, y, 0) = 633 + rnd(2)
+				if ( rnd(3) == 0 ) {
+					map(x, y, 0) = 631
+				}
+				continue
+			}
+			if ( map(x, y, 0) == 90 ) {
+				map(x, y, 0) = tile_room_wood@NT + (rnd(tile_room_wood@NT(2)) == 0) * rnd(tile_room_wood@NT(1))
+				continue
+			}
+			if ( map(x, y, 0) == 91 ) {
+				map(x, y, 0) = tile_room_brick@NT
+				continue
+			}
+			if ( map(x, y, 0) == 92 ) {
+				map(x, y, 0) = tile_room_dungeon@NT
+				continue
+			}
+			// sand
+			if ( map(x, y, 0) == 93 ) {
+				map(x, y, 0) = 19 + ( rnd(3) == 0 ) * rnd(4)
+				if (x > 1) {
+					if ( map(x - 1, y, 0) == 165 ) {
+						us@NT = 0 // upper is water
+						if ( y >= 1 ) {
+							if ( map(x, y-1, 0) == 165 ) {
+								us@NT = 1
+							}
+						}
+						ls@NT = 0 // lower left is sand
+						if (  y < mdata(MDATA_HEIGHT) - 1  ) {
+							if ( map(x-1, y+1, 0) == 93 ) {
+								ls@NT = 1
+							}
+						}
+						if ( us@NT == 0 & ls@NT == 0) { map(x, y, 0) = 308 }
+						if ( us@NT == 0 & ls@NT == 1) { map(x, y, 0) = 311 }
+						if ( us@NT == 1 & ls@NT == 0) { map(x, y, 0) = 305 }
+						if ( us@NT == 1 & ls@NT == 1) { map(x, y, 0) = 302 }
+					}
+				}
+				continue
+			}
+			// shallow water
+			if ( map(x, y, 0) == 94 ) {
+				map(x, y, 0) = 165
+				continue
+			}
+			// deep water
+			if ( map(x, y, 0) == 95 ) {
+				map(x, y, 0) = 168
+				continue
+			}
+			// red carpet
+			if ( map(x, y, 0) == 96 ) {
+				map(x, y, 0) = 222
+				continue
+			}
+			// stairs
+			if ( map(x, y, 0) == 97 ) {
+				map(x, y, 0) = 216
+				continue
+			}
+			// 1x1 carpet
+			if ( map(x, y, 0) == 98 ) {
+				p = rnd(4)
+				if (p == 0) { map(x, y, 0) = 101 }
+				if (p == 1) { map(x, y, 0) = 201 }
+				if (p == 2) { map(x, y, 0) = 203 }
+				if (p == 3) { map(x, y, 0) = 204 }
+				continue
+			}
+			// display area
+			if ( map(x, y, 0) == 99 ) {
+				map(x, y, 0) = 387
+				continue
+			}
+		loop
+	loop
+	return
+
+*custom_void_boss
+	gosub *custom_void_boss_init
+
+	randomize ( gdata(GDATA_YEAR) * 360 + gdata(GDATA_MONTH) * 30 + gdata(GDATA_DAY) ) / 5 + gdata(GDATA_LEVEL)
+	target@NT = rnd(voidboss_count@NT)
+	if (designate_void_target@NT > 0) {
+		target@NT = ( designate_void_target@NT - 1 ) \ voidboss_count@NT
+		designate_void_target@NT = 0
+	}
+
+	c@NT = voidboss@NT(0, target@NT)
+	randomize
+	flt
+	fixlv = FIX_QUALITY_MIRACLE
+	initlv = limit(gdata(GDATA_LEVEL) + 20, 1, 6666)
+	if ( voidboss@NT(1, target@NT) == 0 ) {
+		fixlv = FIX_QUALITY_GODLY
+		initlv = limit(initlv + 50, 1, 6666)
+	}
+	novoidlv = 1
+	characreate -1, c@NT, -3, 0
+	cdata(CDATA_RELATION, rc) = -3
+	cdata(CDATA_RELATION_ORG, rc) = -3
+	cbitmod CHARA_BIT_PRECIOUS, rc, 1
+	bossrc@NT = rc
+	bosscnt@NT = 1
+
+	repeat 14
+		c@NT = voidboss@NT(1 + cnt * 2, target@NT)
+		p@NT = voidboss@NT(2 + cnt * 2, target@NT)
+		if ( c@NT == 0 | p@NT == 0 ) {
+			break
+		}
+		if ( p@NT == (-1) ) {
+			flt
+			fixlv = FIX_QUALITY_MIRACLE
+			initlv = limit(gdata(GDATA_LEVEL) + 20, 1, 6666)
+			novoidlv = 1
+			characreate -1, c@NT, -3, 0
+			cdata(CDATA_RELATION, rc) = -3
+			cdata(CDATA_RELATION_ORG, rc) = -3
+
+			bosscnt@NT++
+			if (rnd(bosscnt@NT) == 0) {
+				cbitmod CHARA_BIT_PRECIOUS, bossrc@NT, 0
+				cbitmod CHARA_BIT_PRECIOUS, rc, 1
+				bossrc@NT = rc
+			}
+		} else {
+			repeat p@NT
+				flt
+				fixlv = FIX_QUALITY_GOOD
+				initlv = limit(gdata(GDATA_LEVEL) + 20, 1, 6666)
+				if ( p@NT <= 3 ) { fixlv = FIX_QUALITY_GREAT }
+				if ( p@NT == 1 ) { fixlv = FIX_QUALITY_MIRACLE }
+				cc@NT = c@NT
+				if ( c@NT == CREATURE_ID_HOUND ) {
+					localmoblist@NT = CREATURE_ID_HOUND, CREATURE_ID_FIRE_HOUND, CREATURE_ID_ICE_HOUND, CREATURE_ID_LIGHTNING_HOUND, CREATURE_ID_DARK_HOUND, CREATURE_ID_ILLUSION_HOUND, CREATURE_ID_NERVE_HOUND, CREATURE_ID_POISON_HOUND, CREATURE_ID_SOUND_HOUND, CREATURE_ID_NETHER_HOUND, CREATURE_ID_CHAOS_HOUND
+					cc@NT = localmoblist@NT(rnd(11))
+				}
+				if ( c@NT == CREATURE_ID_YEEK ) {
+					localmoblist@NT = CREATURE_ID_YEEK_HARD_WORKER, CREATURE_ID_YEEK, CREATURE_ID_YEEK_WARRIOR, CREATURE_ID_YEEK_ARCHER, CREATURE_ID_MASTER_YEEK, CREATURE_ID_KAMIKAZE_YEEK
+					cc@NT = localmoblist@NT(rnd(6))
+				}
+				if ( c@NT == CREATURE_ID_MINOTAUR ) {
+					localmoblist@NT = CREATURE_ID_MINOTAUR, CREATURE_ID_MINOTAUR_MAGICIAN, CREATURE_ID_MINOTAUR_BOXER, CREATURE_ID_MINOTAUR_KING
+					cc@NT = localmoblist@NT(rnd(4))
+				}
+				novoidlv = 1
+				characreate -1, cc@NT, cdata(CDATA_X, bossrc@NT), cdata(CDATA_Y, bossrc@NT)
+				if ( cdatan(CDATAN_RACE, rc) == "piece" ) {
+					if ( cnt >= p@NT / 2) {
+						cdata(CDATA_PIC, rc) += COLOR_RED * COLOR_TINT_MULT
+					}
+				}
+				if ( voidboss@NT(0, target@NT) == CREATURE_ID_ORPHE_THE_PRINCE_OF_LOST_KINGDOM ) {
+					cdata(CDATA_PIC, rc) = rnd(xy2pic(0, 1)) * 2 + 1 + cdata(CDATA_SEX, rc)
+					cdatan(CDATAN_NAME, rc) = lang(cdatan(CDATAN_NAME, rc) + "の" + randomname(), "<" + randomname() + ">, " + random_title())
+				}
+				cdata(CDATA_RELATION, rc) = -3
+				cdata(CDATA_RELATION_ORG, rc) = -3
+			loop
+		}
+	loop
+
+	adata(ADATA_BOSS, gdata(GDATA_AREA)) = bossrc@NT
+	txtef COLOR_RED
+	txtmore
+	txt lang("気をつけろ！この階は" + mapname(gdata(GDATA_AREA)) + "の守護者、" + cdatan(CDATAN_NAME, bossrc@NT) + "によって守られている。", "Be aware! This level is guarded by the lord of " + mapname(gdata(GDATA_AREA)) + ", " + cdatan(CDATAN_NAME, bossrc@NT) + ".")
+	return
+
+*custom_void_boss_init
+	dim voidboss@NT, 29, 50
+	voidboss_count@NT = 0
+	
+	voidboss@NT(0, voidboss_count@NT) = CREATURE_ID_CRIMSON_DARK_GUARDIAN, CREATURE_ID_BLUE_DARK_GUARDIAN, (-1), CREATURE_ID_GREEN_DARK_GUARDIAN, (-1)
+	voidboss_count@NT++
+	voidboss@NT(0, voidboss_count@NT) = CREATURE_ID_UNITDEAD_KING, CREATURE_ID_UNITDEAD_QUEEN, (-1), CREATURE_ID_UNITDEAD_JACK, (-1), CREATURE_ID_UNITDEAD_JOKER, (-1)
+	voidboss_count@NT++
+	voidboss@NT(0, voidboss_count@NT) = CREATURE_ID_AT_SIGN, CREATURE_ID_QUANTUM_CREATURE, 3
+	voidboss_count@NT++
+	// voidboss@NT(0, voidboss_count@NT) = CREATURE_ID_IMARITUKA_THE_ZASIKI_WARAI, CREATURE_ID_WAR_SPIRIT, 6, CREATURE_ID_GUN_SPIRIT, 6, CREATURE_ID_MAGIC_SPIRIT, 6
+	// voidboss_count@NT++
+	voidboss@NT(0, voidboss_count@NT) = CREATURE_ID_SCARD_THE_HAPPY_SWALLOW, CREATURE_ID_YOUNG_SWALLOW, 20
+	voidboss_count@NT++
+	voidboss@NT(0, voidboss_count@NT) = CREATURE_ID_OXODE_THE_QUEEN_BEE, CREATURE_ID_MAGIC_BEE, 20
+	voidboss_count@NT++
+	voidboss@NT(0, voidboss_count@NT) = CREATURE_ID_TELHUREZA_THE_HOUSE_GUARD, CREATURE_ID_TALON_SOLDIER, 3, CREATURE_ID_FIN_CROCODILE, 3
+	voidboss_count@NT++
+	if ( gdata(GDATA_FLAG_SUB_GUILD_WARS1) >= 3 ) {
+		voidboss@NT(0, voidboss_count@NT) = CREATURE_ID_WRANG_WRANG, CREATURE_ID_WRANG_WRANG, 9, CREATURE_ID_MAGE_GUILD_MEMBER, 12
+		voidboss_count@NT++
+	}
+	if ( gdata(GDATA_FLAG_GUILD_FIGHTER) != 1 ) {
+		voidboss@NT(0, voidboss_count@NT) = CREATURE_ID_FRAY_THE_FIGHTER_GUILDMASTER, CREATURE_ID_DORIA_THE_FIGHTER_WATCHMAN, 1, CREATURE_ID_RATIN_THE_FIGHTER_REPORTER, 1, CREATURE_ID_FIGHTER_GUILD_MEMBER, 12
+		voidboss_count@NT++
+	}
+	if ( gdata(GDATA_FLAG_GUILD_MAGE) != 1 ) {
+		voidboss@NT(0, voidboss_count@NT) = CREATURE_ID_REVLUS_THE_MAGE_GUILDMASTER, CREATURE_ID_LEXUS_THE_MAGE_WATCHMAN, 1, CREATURE_ID_LENAS_THE_MAGE_REPORTER, 1, CREATURE_ID_MAGE_GUILD_MEMBER, 12
+		voidboss_count@NT++
+	}
+	if ( gdata(GDATA_FLAG_GUILD_THIEF) != 1 ) {
+		voidboss@NT(0, voidboss_count@NT) = CREATURE_ID_SIN_THE_THIEF_GUILDMASTER, CREATURE_ID_ABYSS_THE_THIEF_WATCHMAN, 1, CREATURE_ID_NAGA_THE_THIEF_REPORTER, 1, CREATURE_ID_THIEF_GUILD_MEMBER, 12
+		voidboss_count@NT++
+	}
+
+	if ( gdata(GDATA_FLAG_MAIN) >= 100 ) {
+		voidboss@NT(0, voidboss_count@NT) = CREATURE_ID_XABI_THE_KING_OF_PALMIA, CREATURE_ID_SLAN_THE_SHADOW_OF_PALMIA, 1, CREATURE_ID_KARAM_THE_LONELY_WOLF_OF_KARUNE, 1, CREATURE_ID_ZANAN_ASSASSIN, 8, CREATURE_ID_ZANAN_OLD_SOLDIER, 5, CREATURE_ID_ZANAN_HEAVILY_ARMED, 5, CREATURE_ID_ZANAN_ENHANCED_SOLDIER, 2
+		voidboss_count@NT++
+	}
+	if ( gdata(GDATA_FLAG_MAIN_FOOL) = 1 ) {
+		voidboss@NT(0, voidboss_count@NT) = CREATURE_ID_ISSIZZLE_THE_DARK_ABOMINATION
+		if ( gdata(GDATA_FLAG_MAIN) <= 180 ) {
+			voidboss@NT(0, voidboss_count@NT) = CREATURE_ID_ISSIZZLE_THE_DARK_ABOMINATION, CREATURE_ID_AZZRSSIL_THE_IMPURE, (-1)
+		}
+		if ( gdata(GDATA_FLAG_MAIN) <= 350 ) {
+			voidboss@NT(0, voidboss_count@NT) = CREATURE_ID_ISSIZZLE_THE_DARK_ABOMINATION, CREATURE_ID_AZZRSSIL_THE_IMPURE, (-1), CREATURE_ID_ULZASSIL_THE_DEAD_EMPEROR, (-1)
+		}
+		voidboss_count@NT++
+	}
+	if ( gdata(GDATA_FLAG_MAIN_SAGE) = 1 ) {
+		voidboss@NT(0, voidboss_count@NT) = CREATURE_ID_QURUIZA_THE_RED_EYED_DECEIVER, CREATURE_ID_CORGON_THE_STEEL_DRAGON, (-1)
+		voidboss_count@NT++
+	}
+	if ( gdata(GDATA_FLAG_MAIN_KING) = 1 ) {
+		voidboss@NT(0, voidboss_count@NT) = CREATURE_ID_WYNAN_THE_LORD_OF_THE_ANCIENT_CASTLE, CREATURE_ID_KING, 2, CREATURE_ID_QUEEN, 2, CREATURE_ID_KNIGHT, 4, CREATURE_ID_BISHOP, 4, CREATURE_ID_ROOK, 4, CREATURE_ID_PAWN, 16
+		voidboss_count@NT++
+	}
+	if ( gdata(GDATA_FLAG_MAIN) >= 180 ) {
+		voidboss@NT(0, voidboss_count@NT) = CREATURE_ID_ORPHE_THE_CHAOS_CHILD
+		if ( gdata(GDATA_FLAG_MAIN) <= 269 ) {
+			voidboss@NT(0, voidboss_count@NT) = CREATURE_ID_ORPHE_THE_CHAOS_CHILD, CREATURE_ID_ORPHE_THE_CHAOS_FOLLOWER, (-1)
+		}
+		if ( gdata(GDATA_FLAG_MAIN) <= 845 ) {
+			voidboss@NT(0, voidboss_count@NT) = CREATURE_ID_ORPHE_THE_CHAOS_CHILD, CREATURE_ID_ORPHE_THE_CHAOS_FOLLOWER, (-1), CREATURE_ID_ORPHE_THE_CHAOS_DISCPLE, (-1)
+		}
+		voidboss_count@NT++
+	}
+	if ( gdata(GDATA_FLAG_MAIN) >= 180 ) {
+		voidboss@NT(0, voidboss_count@NT) = CREATURE_ID_ZEOME_THE_FALSE_PROPHET
+		voidboss_count@NT++
+	}
+	if ( gdata(GDATA_FLAG_MAIN) >= 180 ) {
+		voidboss@NT(0, voidboss_count@NT) = CREATURE_ID_WHOM_DWELL_IN_THE_VANITY
+		voidboss_count@NT++
+	}
+	if ( gdata(GDATA_FLAG_MAIN) >= 180 ) {
+		voidboss@NT(0, voidboss_count@NT) = CREATURE_ID_VESDA_THE_FIRE_DRAGON
+		if ( gdata(GDATA_FLAG_MAIN) >= 350 ) {
+			voidboss@NT(0, voidboss_count@NT) = CREATURE_ID_VESDA_THE_FIRE_DRAGON, CREATURE_ID_METAL_VESDA_THE_FIRE_MACHINE, (-1)
+		}
+		if ( gdata(GDATA_FLAG_SUB_WHEN_THE_FLAME_BURNS_OUT) >= 1000 ) {
+			voidboss@NT(0, voidboss_count@NT) = CREATURE_ID_VESDA_THE_FIRE_DRAGON, CREATURE_ID_METAL_VESDA_THE_FIRE_MACHINE, (-1), CREATURE_ID_METAL_VESDA_THE_FIRE_MACHINE, (-1)
+		}
+		voidboss_count@NT++
+	}
+	if ( gdata(GDATA_FLAG_MAIN) >= 266 ) {
+		voidboss@NT(0, voidboss_count@NT) = CREATURE_ID_MOBILE_COMMUNICATION_EQUIPMENT, CREATURE_ID_YERLES_MORTAR, 8, CREATURE_ID_XEREN_ELECTRIC_TANK, 8, CREATURE_ID_BLADE_KING, 8, CREATURE_ID_XEREN_SATELLITE_UNIT, 6, CREATURE_ID_METAL_ZILLA, 2
+		voidboss_count@NT++
+	}
+	if ( gdata(GDATA_FLAG_MAIN) >= 350 ) {
+		voidboss@NT(0, voidboss_count@NT) = CREATURE_ID_UTIMA_THE_DESTROYER_OF_XEREN, CREATURE_ID_XEREN_AUTO_TANK, 10, CREATURE_ID_XEREN_ELECTRIC_TANK, 10, CREATURE_ID_XEREN_SATELLITE_UNIT, 5
+		voidboss_count@NT++
+	}
+	if ( gdata(GDATA_FLAG_MAIN) >= 350 ) {
+		voidboss@NT(0, voidboss_count@NT) = CREATURE_ID_SIVA_THE_DESTRUCTION, CREATURE_ID_HOUND, 30
+		voidboss_count@NT++
+	}
+	if ( gdata(GDATA_FLAG_MAIN) >= 350 ) {
+		voidboss@NT(0, voidboss_count@NT) = CREATURE_ID_YERLESWOOD_THE_SAVAGE_MACHINE, CREATURE_ID_YERLES_COMBAT_PLANE, 8, CREATURE_ID_YERLES_MORTAR, 8, CREATURE_ID_YERLES_CYBORG_SOLDIER, 4, CREATURE_ID_YERLES_LATEST_OUTFIT_SOLDIER, 4, CREATURE_ID_YERLESWOOD_TYPE_M, 8
+		voidboss_count@NT++
+	}
+	if ( gdata(GDATA_FLAG_MAIN) >= 390 ) {
+		voidboss@NT(0, voidboss_count@NT) = CREATURE_ID_AIKAGE_THE_SHINOBI_MASK, CREATURE_ID_CHAOS_SHAMAN, 8, CREATURE_ID_CHAOS_PALADIN, 8, CREATURE_ID_CHAOS_HUNTER, 8
+		voidboss_count@NT++
+	}
+	if ( gdata(GDATA_FLAG_MAIN) = 640 ) {
+		voidboss@NT(0, voidboss_count@NT) = CREATURE_ID_ALFRED_THE_CANGNAN_WIND, CREATURE_ID_LANKATA_THE_LIGHTNING_OF_BLUE, 1, CREATURE_ID_LOTHRIAN_AGENT, 8, CREATURE_ID_ZANAN_ENHANCED_SOLDIER, 8
+		voidboss_count@NT++
+	}
+	if ( gdata(GDATA_FLAG_MAIN) >= 735 ) {
+		voidboss@NT(0, voidboss_count@NT) = CREATURE_ID_MELUGAST_AO_I_THE_DIMENSION_DRIVER
+		voidboss_count@NT++
+	}
+	if ( gdata(GDATA_FLAG_MAIN) >= 1000 ) { 
+		voidboss@NT(0, voidboss_count@NT) = CREATURE_ID_ORPHE_THE_PRINCE_OF_LOST_KINGDOM, CREATURE_ID_MERCENARY_WARRIOR, 8, CREATURE_ID_MERCENARY_ARCHER, 8, CREATURE_ID_MERCENARY_WIZARD, 8
+		voidboss_count@NT++
+	}
+
+	if ( gdata(GDATA_FLAG_SUB_YEEK) >= 1000 ) {
+		voidboss@NT(0, voidboss_count@NT) = CREATURE_ID_RODLOB_THE_YEEK_CHIEF, CREATURE_ID_YEEK, 30
+		voidboss_count@NT++
+	}
+	if ( gdata(GDATA_FLAG_SUB_MINOTAUR) >= 1000 ) {
+		voidboss@NT(0, voidboss_count@NT) = CREATURE_ID_UNGAGA_THE_MINOTAUR_KING, CREATURE_ID_MINOTAUR, 30
+		voidboss_count@NT++
+	}
+	if ( gdata(GDATA_FLAG_SUB_CAT) >= 1000 ) {
+		voidboss@NT(0, voidboss_count@NT) = CREATURE_ID_CACY_THE_CAT_TAMER, CREATURE_ID_LION, 20, CREATURE_ID_CARBUNCLE, 15, CREATURE_ID_STRAY_CAT, 10
+		voidboss_count@NT++
+	}
+	if ( gdata(GDATA_FLAG_SUB_PIRATE_HUNTING) >= 1000 ) {
+		voidboss@NT(0, voidboss_count@NT) = CREATURE_ID_EBARTH_THE_PIRATE_BOSS, CREATURE_ID_PIRATE, 30
+		voidboss_count@NT++
+	}
+	if ( gdata(GDATA_FLAG_SUB_H_SISTER) >= 1000 ) {
+		voidboss@NT(0, voidboss_count@NT) = CREATURE_ID_H_SISTER, CREATURE_ID_H_SISTER2, 15, CREATURE_ID_YOUNGER_SISTER, 15
+		voidboss_count@NT++
+	}
+	if ( gdata(GDATA_FLAG_SUB_DOGS_TAIL) >= 1000 ) {
+		voidboss@NT(0, voidboss_count@NT) = CREATURE_ID_ESTORK_THE_DOGGOD
+		voidboss_count@NT++
+	}
+	if ( gdata(GDATA_FLAG_SUB_THE_RESULT_OF_REVENGE) >= 1004 ) {
+		voidboss@NT(0, voidboss_count@NT) = CREATURE_ID_CONDUCTOR_KOALA, CREATURE_ID_DARK_KOALA, 30
+		voidboss_count@NT++
+	}
+	if ( gdata(GDATA_FLAG_SUB_MOTHER) >= 1000 ) {
+		voidboss@NT(0, voidboss_count@NT) = CREATURE_ID_PAELS_MOM_LILY, CREATURE_ID_H_SISTER2, 4, CREATURE_ID_WHITE_YOUNG_LADY, 4, CREATURE_ID_LAZY_OLDER_SISTER, 4, CREATURE_ID_M_GIRL, 4, CREATURE_ID_S_BOY, 4, CREATURE_ID_SILVER_FOX_BROTHER, 4, CREATURE_ID_OLD_BUTLER, 4, CREATURE_ID_SICKFULL_OLDER_BROTHER, 4, CREATURE_ID_FOX_BROTHER, 4
+		voidboss_count@NT++
+	}
+	if ( gdata(GDATA_FLAG_SUB_PYRAMID) >= 1000 ) {
+		voidboss@NT(0, voidboss_count@NT) = CREATURE_ID_TUWEN_THE_MASTER_OF_THE_PYRAMID, CREATURE_ID_LESSER_MUMMY, 16, CREATURE_ID_MUMMY, 8, CREATURE_ID_GREATER_MUMMY, 4, CREATURE_ID_ANCIENT_COFFIN, 8, CREATURE_ID_CURSED_COFFIN, 4
+		if ( gdata(GDATA_FLAG_MAIN) >= 350 ) {
+			voidboss@NT(0, voidboss_count@NT) = CREATURE_ID_TUWEN_THE_MASTER_OF_THE_PYRAMID, CREATURE_ID_ANUBIS_THE_MASTER_OF_DEATH, (-1), CREATURE_ID_LESSER_MUMMY, 16, CREATURE_ID_MUMMY, 8, CREATURE_ID_GREATER_MUMMY, 4, CREATURE_ID_ANCIENT_COFFIN, 8, CREATURE_ID_CURSED_COFFIN, 4
+		}
+		voidboss_count@NT++
+	}
+	if ( gdata(GDATA_FLAG_SUB_LAW_OF_NINJAS) >= 1000 ) {
+		if ( gdata(GDATA_FLAG_MAIN) >= 560 & rnd(2) == 0 ) {
+			voidboss@NT(0, voidboss_count@NT) = CREATURE_ID_GETUEI_THE_NINJA_MASTER, CREATURE_ID_FASHIONABLE_KUNOICHI, (-1), CREATURE_ID_NINJA, 15, CREATURE_ID_RED_NINJA, 15
+		} else {
+			voidboss@NT(0, voidboss_count@NT) = CREATURE_ID_GETUEI_THE_NINJA_MASTER, CREATURE_ID_EILA_THE_FUGITIVE_KUNOICHI, (-1), CREATURE_ID_NINJA, 15, CREATURE_ID_RED_NINJA, 15
+		}
+		voidboss_count@NT++
+	}
+	if ( gdata(GDATA_FLAG_SUB_MANSION_FOR_SALE) >= 1005 ) {
+		voidboss@NT(0, voidboss_count@NT) = CREATURE_ID_KING_COCKROACH, CREATURE_ID_MURDER_COCKROACH, 20, CREATURE_ID_GOKIBURI, 20
+		voidboss_count@NT++
+		voidboss@NT(0, voidboss_count@NT) = CREATURE_ID_PRO_JET, CREATURE_ID_PRO_JET, 4, CREATURE_ID_CLEANER, 15
+		voidboss_count@NT++
+	}
+	if ( gdata(GDATA_FLAG_GWEN_STAGE) >= 1000 ) {
+		voidboss@NT(0, voidboss_count@NT) = CREATURE_ID_GWEN_THE_PITILESS, CREATURE_ID_GWEN_THE_INNOCENT, 5
+		voidboss_count@NT++
+	}
+	return
+
+#deffunc dighole_dla_explosion int dighole_count, int dla_explosion_count, int dla_explosion_size, int dla_explosion_minsquare, int map_makesimpleroom_arg5, int map_makesimpleroom_arg6, int map_furniture_roomtype_input
+	p@NT = 0
+	p2@NT = 0
+	repeat 10000
+		if ( p@NT >= dighole_count | p2@NT >= dla_explosion_count ) {
+			break
+		}
+		dighole_dla_shoot map_makesimpleroom_arg5
+		if ( tx@NT < dla_explosion_size | ty@NT < dla_explosion_size | tx@NT >= mdata(MDATA_WIDTH) - dla_explosion_size | ty@NT >= mdata(MDATA_HEIGHT) - dla_explosion_size ) {
+			continue
+		}
+		px@NT = tx@NT
+		py@NT = ty@NT
+		px@NT += (dla_explosion_size) * digref@NT(0)
+		py@NT += (dla_explosion_size) * digref@NT(1)
+		if ( px@NT < dla_explosion_size | py@NT < dla_explosion_size | px@NT >= mdata(MDATA_WIDTH) - dla_explosion_size | py@NT >= mdata(MDATA_HEIGHT) - dla_explosion_size ) {
+			continue
+		}
+		f@NT = 0
+		repeat dla_explosion_size * 2 + 1
+			dx@NT = px@NT + cnt - dla_explosion_size
+			repeat dla_explosion_size * 2 + 1
+				dy@NT = py@NT + cnt - dla_explosion_size
+				if ( istilewall(dx@NT, dy@NT) ) {
+					f@NT++
+				}
+			loop
+		loop
+		if ( f@NT < dla_explosion_minsquare ) {
+			continue
+		}
+		f@NT = 1
+		repeat roomsum
+			if ( px@NT + dla_explosion_minsquare * 2 + 1 > roomx(cnt) & px@NT < roomx(cnt) + roomwidth(cnt) & py@NT + dla_explosion_minsquare * 2 + 1 > roomy(cnt) & py@NT < roomy(cnt) + roomheight(cnt) ) {
+				f@NT = 0
+			}
+		loop
+		if ( f@NT == 0 ) {
+			continue
+		}
+		map_furniture_setgroup map_furniture_roomtype_input
+		map_createroom_circular px@NT, py@NT, dla_explosion_size, dla_explosion_size, map_makesimpleroom_arg5, map_makesimpleroom_arg6
+		map_createroomdoor_surround
+	loop
+	return
+
+#deffunc dighole_diffusion_limited_aggregation int dighole_count, int dighole_tile
+	p@NT = 0
+	repeat 10000
+		if ( p@NT >= dighole_count ) {
+			break
+		}
+		dighole_dla_shoot dighole_tile
+	loop
+	return
+	
+#deffunc dighole_dla_shoot int dighole_tile
+	dx@NT = 1 + rnd(mdata(MDATA_WIDTH) - 2)
+	dy@NT = 1 + rnd(mdata(MDATA_HEIGHT) - 2)
+	if ( istilewall(dx@NT, dy@NT) ) {
+		return 0
+	}
+	direction@NT = rnd(4)
+	if (direction@NT == 0) { digref@NT = 0,-1,1,0 }
+	if (direction@NT == 1) { digref@NT = 1,0,0,1 }
+	if (direction@NT == 2) { digref@NT = 0,1,-1,0 }
+	if (direction@NT == 3) { digref@NT = -1,0,0,-1 }
+	dlaf@NT = 0
+	repeat 200
+		tx@NT = dx@NT + digref@NT(0) * cnt
+		ty@NT = dy@NT + digref@NT(1) * cnt
+		if ( tx@NT < 1 | ty@NT < 1 | tx@NT >= mdata(MDATA_WIDTH) - 1 | ty@NT >= mdata(MDATA_HEIGHT) - 1 ) {
+			break
+		}
+		cell_featread tx@NT, ty@NT
+		if ( istileempty(tx@NT, ty@NT) & feat(1) != CELL_FEATURE_DOOR_CLOSED ) {
+			continue
+		}
+		if ( istilewall(tx@NT, ty@NT) | feat(1) == CELL_FEATURE_DOOR_CLOSED ) {
+			map(tx@NT, ty@NT, 0) = dighole_tile
+			cell_featset digatile_x, digatile_y, 0, 0, 0, 0
+			p@NT++
+			dlaf@NT = 1
+			break
+		}
+	loop
+	return dlaf@NT
+
+#defcfunc perlin_interpolate double perlin_a0, double perlin_a1, double perlin_w
+	return (perlin_a1 - perlin_a0) * perlin_w + perlin_a0
+#defcfunc perlin_dot_gradient double perlin_ix, double perlin_iy, double perlin_cx, double perlin_cy, double perlin_gx, double perlin_gy
+	perlin_dx@NT = perlin_ix - perlin_cx
+	perlin_dy@NT = perlin_iy - perlin_cy
+	return (perlin_dx@NT * perlin_gx + perlin_dy@NT * perlin_gy)
+#deffunc dighole_perlin_noise int map_makesimpleroom_arg1, int map_makesimpleroom_arg2, int map_makesimpleroom_arg3, int map_makesimpleroom_arg4, int perlin_ratio, int perlin_threshold1, int perlin_threshold2, int perlin_tile1, int perlin_tile2, int perlin_tile3
+	pnx@NT = map_makesimpleroom_arg3 / perlin_ratio + 5
+	pny@NT = map_makesimpleroom_arg4 / perlin_ratio + 5
+	dimtype matrix_pn@NT, vartype("double"), pnx@NT, pny@NT, 2
+	repeat pnx@NT
+		dx@NT = cnt
+		repeat pny@NT
+			dy@NT = cnt
+			p@NT = 3.14159 * 2 * rnd(1000) / 1000
+			matrix_pn@NT(dx@NT, dy@NT, 0) = cos(p@NT)
+			matrix_pn@NT(dx@NT, dy@NT, 1) = sin(p@NT)
+		loop
+	loop
+	ix@NT = 1.0 * rnd(1000) / 1000
+	iy@NT = 1.0 * rnd(1000) / 1000
+	dimtype matrix_pe@NT, vartype("double"), map_makesimpleroom_arg3, map_makesimpleroom_arg4
+	repeat map_makesimpleroom_arg3
+		dx@NT = cnt + map_makesimpleroom_arg1
+		tx@NT = ix@NT + 1.0 * cnt / perlin_ratio
+		px0@NT = int(tx@NT)
+		px1@NT = px0@NT + 1
+		sx@NT = tx@NT - px0@NT
+		repeat map_makesimpleroom_arg4
+			dy@NT = cnt + map_makesimpleroom_arg2
+			if ( dx@NT < 1 | dy@NT < 1 | dx@NT >= mdata(MDATA_WIDTH) - 1 | dy@NT >= mdata(MDATA_HEIGHT) - 1 ) {
+				continue
+			}
+			ty@NT = iy@NT + 1.0 * cnt / perlin_ratio
+			py0@NT = int(ty@NT)
+			py1@NT = py0@NT + 1
+			sy@NT = ty@NT - py0@NT
+
+			n0@NT = perlin_dot_gradient(tx@NT, ty@NT, px0@NT, py0@NT, matrix_pn@NT(px0@NT, py0@NT, 0), matrix_pn@NT(px0@NT, py0@NT, 1))
+			n1@NT = perlin_dot_gradient(tx@NT, ty@NT, px1@NT, py0@NT, matrix_pn@NT(px1@NT, py0@NT, 0), matrix_pn@NT(px1@NT, py0@NT, 1))
+			n2@NT = perlin_dot_gradient(tx@NT, ty@NT, px0@NT, py1@NT, matrix_pn@NT(px0@NT, py1@NT, 0), matrix_pn@NT(px0@NT, py1@NT, 1))
+			n3@NT = perlin_dot_gradient(tx@NT, ty@NT, px1@NT, py1@NT, matrix_pn@NT(px1@NT, py1@NT, 0), matrix_pn@NT(px1@NT, py1@NT, 1))
+			
+			p@NT = perlin_interpolate(perlin_interpolate(n0@NT, n1@NT, sx@NT), perlin_interpolate(n2@NT, n3@NT, sx@NT), sy@NT) * 50 + 50
+			matrix_pe@NT(dx@NT - map_makesimpleroom_arg1, dy@NT - map_makesimpleroom_arg2) = p@NT
+			if ( perlin_tile1 >= 0 ) {
+				map(dx@NT, dy@NT, 0) = perlin_tile1
+			}
+			if ( p@NT > perlin_threshold1 & perlin_tile2 >= 0 ) {
+				map(dx@NT, dy@NT, 0) = perlin_tile2
+			}
+			if ( p@NT > perlin_threshold2 & perlin_tile3 >= 0 ) {
+				map(dx@NT, dy@NT, 0) = perlin_tile3
+			}
+		loop
+	loop
+	return
+
+#deffunc dighole_dogleg int dighole_beginx, int dighole_beginy, int dighole_endx, int dighole_endy, int dighole_tile, int dighole_hiddenchance
+	diffx@NT = abs(dighole_beginx - dighole_endx)
+	diffy@NT = abs(dighole_beginy - dighole_endy)
+	dirx@NT = 1 + ( dighole_endx < dighole_beginx ) * (-2)
+	diry@NT = 1 + ( dighole_endy < dighole_beginy ) * (-2)
+	dx@NT = dighole_beginx
+	dy@NT = dighole_beginy
+	leg@NT = rnd(2)
+	digwall@NT = FALSE
+	repeat 2
+		leg@NT = (leg@NT + 1) \ 2
+		if (leg@NT == 0) {
+			dx@NT -= dirx@NT
+			repeat diffx@NT + 1
+				dx@NT += dirx@NT
+				if ( dx@NT < 1 | dy@NT < 1 | dx@NT >= mdata(MDATA_WIDTH) - 1 | dy@NT >= mdata(MDATA_HEIGHT) - 1 ) { continue }
+				if ( istilewall(dx@NT, dy@NT) ) { 
+					cleanatile dx@NT, dy@NT, dighole_tile
+					if ( rnd(100) < dighole_hiddenchance ) {
+						map(dx@NT, dy@NT, 0) = 4
+						cell_featset dx@NT, dy@NT, 0, CELL_FEATURE_HIDDEN_PATH
+					}
+				} 
+			loop
+		}
+		if (leg@NT == 1) {
+			dy@NT -= diry@NT
+			repeat diffy@NT + 1
+				dy@NT += diry@NT
+				if ( dx@NT < 1 | dy@NT < 1 | dx@NT >= mdata(MDATA_WIDTH) - 1 | dy@NT >= mdata(MDATA_HEIGHT) - 1 ) { continue }
+				if ( istilewall(dx@NT, dy@NT) ) { 
+					cleanatile dx@NT, dy@NT, dighole_tile
+					if ( rnd(100) < dighole_hiddenchance ) {
+						map(dx@NT, dy@NT, 0) = 4
+						cell_featset dx@NT, dy@NT, 0, CELL_FEATURE_HIDDEN_PATH
+					}
+				} 
+			loop
+
+		}
+	loop
+	return
+
+#deffunc dighole_directiondrunk int dighole_beginx, int dighole_beginy, int dighole_endx, int dighole_endy, int dighole_digmin, int dighole_digmax, int dighole_tile
+	dighole_stepmax = 6
+	dighole_drunk = 3
+	dighole_beginx2 = dighole_beginx
+	dighole_beginy2 = dighole_beginy
+	repeat 100
+		if (dighole_beginx2 == dighole_endx & dighole_beginy2 == dighole_endy ) { break }
+		dighole_distancex = abs(dighole_beginx2 - dighole_endx)
+		dighole_distancey = abs(dighole_beginy2 - dighole_endy)
+		dighole_distancexy = int(sqrt(dighole_distancex * dighole_distancex + dighole_distancey * dighole_distancey)) + 1
+		if ( abs(dighole_beginx2 - dighole_endx) <= dighole_stepmax ) { 
+			dighole_tempx = (dighole_endx - dighole_beginx2) + rnd(dighole_drunk * 2 + 1) - dighole_drunk
+		} else {
+			dighole_tempx = (dighole_endx - dighole_beginx2) * 6 / dighole_distancexy + rnd(dighole_drunk * 2 + 1) - dighole_drunk
+		}
+		if ( abs(dighole_beginy2 - dighole_endy) <= dighole_stepmax ) { 
+			dighole_tempy =  (dighole_endy - dighole_beginy2) + rnd(dighole_drunk * 2 + 1) - dighole_drunk
+		} else {
+			dighole_tempy = (dighole_endy - dighole_beginy2) * 6 / dighole_distancexy + rnd(dighole_drunk * 2 + 1) - dighole_drunk
+		}
+		if ( abs(dighole_beginx2 - dighole_endx) <= dighole_stepmax & abs(dighole_beginy2 - dighole_endy) <= dighole_stepmax ) { 
+			dighole_tempx = (dighole_endx - dighole_beginx2)
+			dighole_tempy =  (dighole_endy - dighole_beginy2)
+		}
+		dighole_direction0 = 0 - dighole_tempy
+		dighole_direction1 = dighole_tempx - 0
+		dighole_direction2 = dighole_tempy - 0
+		dighole_direction3 = 0 - dighole_tempx
+		dighole_directionbase = 0
+		dighole_directiondist = 0
+		dighole_directionshift = 0
+		if (dighole_direction0 >= dighole_direction1 & dighole_direction0 >= dighole_direction2 & dighole_direction0 >= dighole_direction3) {
+			dighole_directionbase = 0
+			dighole_directiondist = dighole_tempy * (-1)
+			dighole_directionshift = dighole_tempx
+		}
+		if (dighole_direction1 >= dighole_direction0 & dighole_direction1 >= dighole_direction2 & dighole_direction1 >= dighole_direction3) {
+			dighole_directionbase = 1
+			dighole_directiondist = dighole_tempx
+			dighole_directionshift = dighole_tempy
+		}
+		if (dighole_direction2 >= dighole_direction1 & dighole_direction2 >= dighole_direction2 & dighole_direction2 >= dighole_direction3) {
+			dighole_directionbase = 2
+			dighole_directiondist = dighole_tempy
+			dighole_directionshift = dighole_tempx * (-1)
+		}
+		if (dighole_direction3 >= dighole_direction1 & dighole_direction3 > dighole_direction2 & dighole_direction3 >= dighole_direction0) {
+			dighole_directionbase = 3
+			dighole_directiondist = dighole_tempx * (-1)
+			dighole_directionshift = dighole_tempy * (-1)
+		}
+		dighole_direction dighole_beginx2, dighole_beginy2, dighole_directionbase, dighole_directiondist, dighole_directionshift, dighole_digmin, dighole_digmax, dighole_digmin, dighole_digmax, dighole_tile
+		dighole_beginx2 = dx
+		dighole_beginy2 = dy
+	loop
+	return 
+
+#deffunc dighole_direction int dighole_beginx, int dighole_beginy, int dighole_dir, int dighole_distance, int dighole_shift, int dighole_cdigmin, int dighole_cdigmax, int dighole_adigmin, int dighole_adigmax, int dighole_tile
+	digref@NT = 0,0,0,0
+	if (dighole_dir == 0) { digref@NT = 0,-1,1,0 }
+	if (dighole_dir == 1) { digref@NT = 1,0,0,1 }
+	if (dighole_dir == 2) { digref@NT = 0,1,-1,0 }
+	if (dighole_dir == 3) { digref@NT = -1,0,0,-1 }
+
+	if (dighole_cdigmax > dighole_cdigmin) {
+		dighole_csize = dighole_cdigmin + rnd(dighole_cdigmax - dighole_cdigmin + 1)
+	} else {
+		dighole_csize = dighole_cdigmin
+	}
+	if (dighole_adigmax > dighole_adigmin) {
+		dighole_asize = dighole_adigmin + rnd(dighole_adigmax - dighole_adigmin + 1)
+	} else {
+		dighole_asize = dighole_adigmin
+	}
+
+	if (dighole_distance == 0) {
+		dx = dighole_beginx
+		dy = dighole_beginy
+		return
+	}
+
+	repeat dighole_distance + 1
+
+		digshift = dighole_shift * cnt / dighole_distance
+		dx = limit(dighole_beginx + cnt * digref@NT(0) + digshift * digref@NT(2), 1, mdata(MDATA_WIDTH) - 2 )
+		dy = limit(dighole_beginy + cnt * digref@NT(1) + digshift * digref@NT(3), 1, mdata(MDATA_HEIGHT) - 2 )
+		if (dighole_cdigmax > dighole_cdigmin) { dighole_csize = limit(dighole_csize + rnd(3) - 1, dighole_cdigmin, dighole_cdigmax) } 
+		if (dighole_adigmax > dighole_adigmin) { dighole_asize = limit(dighole_asize + rnd(3) - 1, dighole_adigmin, dighole_adigmax) } 
+
+		repeat 1 + dighole_csize
+			tx = dx + cnt * digref@NT(2)
+			ty = dy + cnt * digref@NT(3)
+			digatile tx, ty, dighole_tile
+		loop
+		
+		repeat 1 + dighole_asize
+			tx = dx + cnt * digref@NT(2) * (-1)
+			ty = dy + cnt * digref@NT(3) * (-1)
+			digatile tx, ty, dighole_tile
+		loop
+	
+	loop
+	return
+
+#deffunc dighole_voronoi_diagram int map_makesimpleroom_arg1, int map_makesimpleroom_arg2, int map_makesimpleroom_arg3, int map_makesimpleroom_arg4, int vd_points, int vd_mindist, int map_makesimpleroom_arg5, int map_makesimpleroom_arg6
+	matrix_w@NT = map_makesimpleroom_arg3 + 1
+	matrix_h@NT = map_makesimpleroom_arg4 + 1
+	dim matrix_vd, matrix_w@NT, matrix_h@NT
+	repeat matrix_w@NT
+		dx@NT = cnt
+		repeat matrix_h@NT
+			dy@NT = cnt
+			matrix_vd(dx@NT, dy@NT) = 0
+		loop
+	loop
+	dim matrix_rp, matrix_w@NT * matrix_h@NT
+	repeat matrix_w@NT * matrix_h@NT
+		matrix_rp(cnt) = cnt
+	loop
+	dimmix matrix_rp
+
+	dim matrix_pt@NT, 2, vd_points
+	count@NT = 0
+	repeat matrix_w@NT * matrix_h@NT
+		dx@NT = matrix_rp(cnt) \ matrix_w@NT
+		dy@NT = matrix_rp(cnt) / matrix_w@NT
+		if ( matrix_vd(dx@NT, dy@NT) > 0 | count@NT == vd_points ) {
+			continue
+		}
+		matrix_pt@NT(0, count@NT) = dx@NT + 2
+		matrix_pt@NT(1, count@NT) = dy@NT + 2
+		count@NT++
+
+		repeat vd_mindist * 2 + 1
+			tx@NT = dx@NT - vd_mindist + cnt
+			repeat vd_mindist * 2 + 1
+				ty@NT = dy@NT - vd_mindist + cnt
+				if ( (dx@NT - tx@NT) * (dx@NT - tx@NT) + (dy@NT - ty@NT) * (dy@NT - ty@NT) > vd_mindist * vd_mindist + 1 ) { continue }
+				if ( ty@NT < 0 | ty@NT >= matrix_h@NT | tx@NT < 0 | tx@NT >= matrix_w@NT ) { continue }
+				closest@NT = 0
+				repeat count@NT
+					if ( closest@NT == cnt ) { continue }
+					dist1@NT = (matrix_pt@NT(0, closest@NT) - tx@NT) * (matrix_pt@NT(0, closest@NT) - tx@NT) + (matrix_pt@NT(1, closest@NT) - ty@NT) * (matrix_pt@NT(1, closest@NT) - ty@NT)
+					dist2@NT = (matrix_pt@NT(0, cnt) - tx@NT) * (matrix_pt@NT(0, cnt) - tx@NT) + (matrix_pt@NT(1, cnt) - ty@NT) * (matrix_pt@NT(1, cnt) - ty@NT)
+					if ( dist2@NT < dist1@NT ) {
+						closest@NT = cnt
+					}
+				loop
+				matrix_vd(tx@NT, ty@NT) = closest@NT + 1
+			loop
+		loop
+	loop
+
+	repeat map_makesimpleroom_arg3
+		dx@NT = cnt
+		repeat map_makesimpleroom_arg4
+			dy@NT = cnt
+			if ( matrix_vd(dx@NT, dy@NT) == matrix_vd(dx@NT + 1, dy@NT) & matrix_vd(dx@NT + 1, dy@NT) == matrix_vd(dx@NT + 1, dy@NT + 1) & matrix_vd(dx@NT + 1, dy@NT + 1) == matrix_vd(dx@NT, dy@NT + 1) & matrix_vd(dx@NT, dy@NT + 1) == matrix_vd(dx@NT, dy@NT) ) {
+				if (map_makesimpleroom_arg5 >= 0) {
+					map(map_makesimpleroom_arg1 + dx@NT, map_makesimpleroom_arg2 + dy@NT, 0) = map_makesimpleroom_arg5
+				}
+			} else {
+				if (map_makesimpleroom_arg6 >= 0) {
+					map(map_makesimpleroom_arg1 + dx@NT, map_makesimpleroom_arg2 + dy@NT, 0) = map_makesimpleroom_arg6
+				}
+			}
+		loop
+	loop
+
+	return
+
+#deffunc dighole_cellular_automata int map_makesimpleroom_arg1, int map_makesimpleroom_arg2, int map_makesimpleroom_arg3, int map_makesimpleroom_arg4, int ca_chance, int ca_limit_birth, int ca_limit_death, int ca_steps, int map_makesimpleroom_arg5, int map_makesimpleroom_arg6
+	matrix_w@NT = map_makesimpleroom_arg3
+	matrix_h@NT = map_makesimpleroom_arg4
+	dim matrix_ca, matrix_w@NT, matrix_h@NT
+	dim matrix_ca2, matrix_w@NT, matrix_h@NT
+	repeat matrix_w@NT
+		locvar_map_line_tx = cnt
+		repeat matrix_h@NT
+			locvar_map_line_ty = cnt
+			if ( rnd(100) <= ca_chance | locvar_map_line_tx == 0 | locvar_map_line_ty == 0 | locvar_map_line_tx == matrix_w@NT - 1 | locvar_map_line_ty == matrix_h@NT - 1 ) {
+				matrix_ca(locvar_map_line_tx, locvar_map_line_ty) = 1
+			} else {
+				matrix_ca(locvar_map_line_tx, locvar_map_line_ty) = 0
+			}
+		loop
+	loop
+
+	repeat ca_steps
+		repeat matrix_w@NT - 2
+			locvar_map_line_tx = cnt + 1
+			repeat matrix_h@NT - 2
+				locvar_map_line_ty = cnt + 1
+				ca_neighbour = 0
+				repeat 3
+					locvar_map_line_dx = locvar_map_line_tx + cnt - 1
+					repeat 3
+						locvar_map_line_dy = locvar_map_line_ty + cnt - 1
+						if (locvar_map_line_dx == locvar_map_line_tx & locvar_map_line_dy == locvar_map_line_ty) {
+							continue
+						}
+						ca_neighbour += matrix_ca(locvar_map_line_dx, locvar_map_line_dy)
+					loop
+				loop
+				matrix_ca2(locvar_map_line_tx, locvar_map_line_ty) = matrix_ca(locvar_map_line_tx, locvar_map_line_ty)
+				if (matrix_ca(locvar_map_line_tx, locvar_map_line_ty) == 0 & ca_neighbour > ca_limit_birth) {
+					matrix_ca2(locvar_map_line_tx, locvar_map_line_ty) = 1
+				} 
+				if (matrix_ca(locvar_map_line_tx, locvar_map_line_ty) == 1 & ca_neighbour < ca_limit_death) {
+					matrix_ca2(locvar_map_line_tx, locvar_map_line_ty) = 0
+				}
+			loop
+		loop
+		repeat matrix_w@NT - 2
+			locvar_map_line_tx = cnt + 1
+			repeat matrix_h@NT - 2
+				locvar_map_line_ty = cnt + 1
+				matrix_ca(locvar_map_line_tx, locvar_map_line_ty) = matrix_ca2(locvar_map_line_tx, locvar_map_line_ty)
+			loop
+		loop
+	loop
+
+	repeat map_makesimpleroom_arg3
+		locvar_map_line_tx = cnt + map_makesimpleroom_arg1
+		locvar_map_line_dx = cnt
+		repeat map_makesimpleroom_arg4
+			locvar_map_line_ty = cnt + map_makesimpleroom_arg2
+			locvar_map_line_dy = cnt
+			if ( locvar_map_line_tx >= mdata(MDATA_WIDTH) | locvar_map_line_tx < 0 | locvar_map_line_ty >= mdata(MDATA_HEIGHT) | locvar_map_line_ty < 0 ) {
+				continue
+			}
+			if ( matrix_ca(locvar_map_line_dx, locvar_map_line_dy) == 1) {
+				if ( map_makesimpleroom_arg6 >= 0 ) {
+					map(locvar_map_line_tx, locvar_map_line_ty, 0) = map_makesimpleroom_arg6
+				}
+			} else {
+				if ( map_makesimpleroom_arg5 >= 0 ) {
+					map(locvar_map_line_tx, locvar_map_line_ty, 0) = map_makesimpleroom_arg5
+				}
+			}
+		loop
+	loop
+	return stat
+
+#deffunc dighole_custom int dighole_beginx, int dighole_beginy, int dighole_classx, int dighole_classy, int dighole_pathx, int dighole_pathy, int dighole_blockx, int dighole_blocky, int dighole_tile
+	dighole_maxwidth = dighole_beginx + dighole_classx * dighole_pathx + (dighole_classx - 1) * dighole_blockx + 1
+	dighole_maxheight = dighole_beginy + dighole_classy * dighole_pathy + (dighole_classy - 1) * dighole_blocky + 1
+
+	dim maze, dighole_classx * dighole_classy
+	mdig = 0
+	_hole = 0
+	sdigx = dighole_beginx
+	sdigy = dighole_beginy
+	maze(mdig) = 7
+	dim way, 4
+	repeat 4
+		way(cnt) = cnt
+	loop
+	i = 0
+	repeat
+		dimmix way
+		digno = 0
+		repeat 4
+			pmdig = mdig
+			if ( way(cnt) == 0 ) {
+				if ( pmdig / dighole_classx == 0 ) {
+					continue
+				}
+				else {
+					mdig -= dighole_classx
+				}
+			}
+			if ( way(cnt) == 1 ) {
+				if ( pmdig \ dighole_classx == dighole_classx - 1 ) {
+					continue
+				}
+				else {
+					mdig++
+				}
+			}
+			if ( way(cnt) == 2 ) {
+				if ( pmdig / dighole_classx == dighole_classy - 1 ) {
+					continue
+				}
+				else {
+					mdig += dighole_classx
+				}
+			}
+			if ( way(cnt) == 3 ) {
+				if ( pmdig \ dighole_classx == 0 ) {
+					continue
+				}
+				else {
+					mdig--
+				}
+			}
+			if ( maze(mdig) != _hole ) {
+				mdig = pmdig
+				continue
+			}
+			i++
+			sdigx = dighole_beginx + pmdig \ dighole_classx * (dighole_pathx + dighole_blockx)
+			sdigy = dighole_beginy + pmdig / dighole_classx * (dighole_pathy + dighole_blocky)
+			if ( way(cnt) == 0 ) {
+				maze(mdig) = 3
+				repeat (dighole_pathy * 2 + dighole_blocky)
+					y = sdigy + (dighole_pathy-1) - cnt
+					repeat dighole_pathx
+						x = sdigx + cnt
+						if ( x < 0 | y < 0 | x >= mdata(MDATA_WIDTH) | y >= mdata(MDATA_HEIGHT) ) { continue }
+						map(x, y, 0) = dighole_tile
+					loop
+				loop
+			}
+			if ( way(cnt) == 1 ) {
+				maze(mdig) = 4
+				repeat dighole_pathy
+					y = sdigy + cnt
+					repeat (dighole_pathx * 2 + dighole_blockx)
+						x = sdigx + cnt
+						if ( x < 0 | y < 0 | x >= mdata(MDATA_WIDTH) | y >= mdata(MDATA_HEIGHT) ) { continue }
+						map(x, y, 0) = dighole_tile
+					loop
+				loop
+			}
+			if ( way(cnt) == 2 ) {
+				maze(mdig) = 1
+				repeat (dighole_pathy * 2 + dighole_blocky)
+					y = sdigy + cnt
+					repeat dighole_pathx
+						x = sdigx + cnt
+						if ( x < 0 | y < 0 | x >= mdata(MDATA_WIDTH) | y >= mdata(MDATA_HEIGHT) ) { continue }
+						map(x, y, 0) = dighole_tile
+					loop
+				loop
+			}
+			if ( way(cnt) == 3 ) {
+				maze(mdig) = 2
+				repeat dighole_pathy
+					y = sdigy + cnt
+					repeat (dighole_pathx * 2 + dighole_blockx)
+						x = sdigx + (dighole_pathx-1) - cnt
+						if ( x < 0 | y < 0 | x >= mdata(MDATA_WIDTH) | y >= mdata(MDATA_HEIGHT) ) { continue }
+						map(x, y, 0) = dighole_tile
+					loop
+				loop
+			}
+			digno = 1
+			break
+		loop
+		if ( digno == 1 ) {
+			continue
+		}
+		if ( maze(mdig) == 7 ) {
+			break
+		}
+		if ( maze(mdig) == 1 ) {
+			mdig -= dighole_classx
+			continue
+		}
+		if ( maze(mdig) == 2 ) {
+			mdig++
+			continue
+		}
+		if ( maze(mdig) == 3 ) {
+			mdig += dighole_classx
+			continue
+		}
+		if ( maze(mdig) == 4 ) {
+			mdig--
+		}
+	loop
+	return
+
+#deffunc map_place_stairs_in_this_room int placestairs_stairtype
+	rx = roomx(roomsum-1) + 1
+	rw = roomwidth(roomsum-1) - 2
+	ry = roomy(roomsum-1) + 1
+	rh = roomheight(roomsum-1) - 2
+	if ( rw <= 0 | rh <= 0 ) {
+		return
+	}
+	repeat 1000
+		dx@NT = rx + rnd(rw)
+		dy@NT = ry + rnd(rh)
+		if ( placestairs_stairtype / 10 == 1 ) {
+			dx@NT = rx + (rnd(2) == 0) * (rw - 1)
+			dy@NT = ry + (rnd(2) == 0) * (rh - 1)
+		}
+		if ( placestairs_stairtype / 10 == 2 & rw > 2 & rh > 2 ) {
+			dx@NT = rx + rnd(rw - 2) + 1
+			dy@NT = ry + rnd(rh - 2) + 1
+		}
+		if ( istileempty(dx@NT, dy@NT) ) {
+			if ( placestairs_stairtype \ 10 == 0 ) {
+				rdroomupstair = roomsum - 1
+				map_placeupstairs dx@NT, dy@NT
+				upx@NT = dx@NT
+				upy@NT = dy@NT
+			} 
+			if ( placestairs_stairtype \ 10 == 1 ) {
+				rdroomdownstair = roomsum - 1
+				map_placedownstairs dx@NT, dy@NT
+				downx@NT = dx@NT
+				downy@NT = dy@NT
+			}
+			break
+		}
+	loop
+	return
+
+#deffunc map_placetwostairs_on_point int placestairs_mindistance
+    if (count@NT < 2 ) {
+        map_placetwostairs
+        return
+    }
+    repeat 1000
+        p@NT = rnd(count@NT)
+        x@NT = matrix_pt@NT(0,p@NT)
+        y@NT = matrix_pt@NT(1,p@NT)
+        if ( istilewall(x@NT, y@NT) ) {
+            continue
+        }
+        p2@NT = rnd(count@NT)
+        dx@NT = matrix_pt@NT(0,p2@NT)
+        dy@NT = matrix_pt@NT(1,p2@NT)
+        if ( istilewall(dx@NT, dy@NT) ) {
+            continue
+        }
+        if ( dist(x@NT, y@NT, dx@NT, dy@NT) < placestairs_mindistance - cnt / 10 ) {
+            if ( cnt < 500 ) {
+                continue
+            }
+        }
+		map_placeupstairs x@NT, y@NT
+		rdroomupstair = p@NT
+        map_placedownstairs dx@NT, dy@NT
+		rdroomdownstair = p2@NT
+        break
+    loop
+	return
+	
+#deffunc map_placetwostairs int placestairs_mindistance
+	repeat 10000
+		x@NT = rnd(mdata(MDATA_WIDTH))
+		y@NT = rnd(mdata(MDATA_HEIGHT))
+		if ( istilewall(x@NT, y@NT) ) {
+			continue
+		}
+		dx@NT = rnd(mdata(MDATA_WIDTH))
+		dy@NT = rnd(mdata(MDATA_HEIGHT))
+		if ( istilewall(dx@NT, dy@NT) ) {
+			continue
+		}
+		if ( dist(x@NT, y@NT, dx@NT, dy@NT) < placestairs_mindistance - cnt / 100) {
+			if ( cnt < 9000 ) {
+				continue
+			}
+		}
+		map_placeupstairs x@NT, y@NT
+		map_placedownstairs dx@NT, dy@NT
+		break
+	loop
+	return
+
+#deffunc map_furniture_initialize
+	map_fur_table1@NT = ITEM_ID_RAGGED_TABLE, ITEM_ID_CHEAP_CHAIR, ITEM_ID_SQUARE_CHAIR
+	map_fur_table2@NT = ITEM_ID_COMFORTABLE_TABLE, ITEM_ID_ROUND_CHAIR, ITEM_ID_ROUND_CHAIR
+	map_fur_table3@NT = ITEM_ID_BIG_TABLE, ITEM_ID_CHEAP_CHAIR, ITEM_ID_SQUARE_CHAIR
+	map_fur_table4@NT = ITEM_ID_NARROW_DINING_TABLE, ITEM_ID_NARROW_DINING_TABLE
+	map_fur_table5@NT = ITEM_ID_MODERN_TABLE, ITEM_ID_STYLISH_CHAIR, ITEM_ID_ROUND_CHAIR
+	map_fur_table6@NT = ITEM_ID_DINING_TABLE, ITEM_ID_STYLISH_CHAIR, ITEM_ID_ROUND_CHAIR
+
+	map_fur_trashtrash@NT = ITEM_ID_GARBAGE, ITEM_ID_WOOD_CHIP, ITEM_ID_WASHINGS, ITEM_ID_BROKEN_SWORD, ITEM_ID_BONE_FRAGMENT, ITEM_ID_SKELETON, ITEM_ID_ORE_PIECE
+	map_fur_trashremains@NT = ITEM_ID_SKIN, ITEM_ID_BONE, ITEM_ID_EYE, ITEM_ID_BLOOD, ITEM_ID_SKIN
+	map_fur_trashmining@NT = ITEM_ID_BRAZIER_STAND, ITEM_ID_LANTERN, ITEM_ID_PICKAXE
+	map_fur_trashburial@NT = ITEM_ID_TOMBSTONE, ITEM_ID_BRAZIER_STAND, ITEM_ID_LANTERN, ITEM_ID_PICKAXE, ITEM_ID_COFFIN
+	map_fur_trashcook@NT = ITEM_ID_PORTABLE_COOKING_TOOL, ITEM_ID_POT, ITEM_ID_CAMPFIRE, ITEM_ID_DISH
+	map_fur_trashparty@NT = ITEM_ID_MESSY_CLOTH, ITEM_ID_LOT_ALCOHOLS
+	map_fur_trashalchemy@NT = ITEM_ID_ALCHEMY_TOOLS, ITEM_ID_BEAKER, ITEM_ID_MAGIC_CIRCLE
+	map_fur_trashclothes@NT = ITEM_ID_MESSY_CLOTH, ITEM_ID_SILK_CLOTH, ITEM_ID_TOWEL, ITEM_ID_SEWING_KIT
+	map_fur_trashbook@NT = ITEM_ID_DISORDERLY_BOOKS, ITEM_ID_LOT_BOOKS
+	map_fur_trashtoy@NT = ITEM_ID_PLUSH_DOLL, ITEM_ID_TOY
+	map_fur_trashstorage@NT = ITEM_ID_SEALED_VASE, ITEM_ID_OPEN_VASE, ITEM_ID_BARREL, ITEM_ID_RICE_BARREL, ITEM_ID_RATION
+
+	map_fur_shopbar@NT = ITEM_ID_MENU_BOARD, ITEM_ID_GOLDEN_PEDESTAL, ITEM_ID_NARROW_DINING_TABLE, ITEM_ID_STYLISH_CHAIR
+	map_fur_shopcasino@NT = ITEM_ID_MENU_BOARD, ITEM_ID_SLOT_MACHINE, ITEM_ID_CASINO_TABLE, ITEM_ID_PACHISURO_MACHINE, ITEM_ID_GOLDEN_STATUE
+	map_fur_shopgrocery@NT = ITEM_ID_VARIOUS_ACCESSORIES, ITEM_ID_VARIETY_TOOLS, ITEM_ID_VARIETY_GOODS, ITEM_ID_RACK_GOODS, ITEM_ID_FIGURINE_WARRIOR, ITEM_ID_FIGURINE_SWORD
+	map_fur_shopcloth@NT = ITEM_ID_DECORATED_CLOTHING, ITEM_ID_DRESS, ITEM_ID_VARIETY_CLOTHES, ITEM_ID_TOWEL, ITEM_ID_SILK_CLOTH
+	map_fur_shoparmory@NT = ITEM_ID_DECORATED_ARMOR, ITEM_ID_DECORATED_CLOTHING, ITEM_ID_BOWS, ITEM_ID_WEAPONS, ITEM_ID_WELL_KEPT_ARMOR
+
+	map_fur_siteforest@NT = ITEM_ID_TREE_BEECH, ITEM_ID_TREE_CEDAR, ITEM_ID_TREE_FRUITLESS, ITEM_ID_TREE_ASH
+	map_fur_siteforestdead@NT = ITEM_ID_TREE_DEAD_TREE, ITEM_ID_TREE_ZELKOVA, ITEM_ID_STUMP
+	map_fur_siteritual@NT = ITEM_ID_MAGIC_CIRCLE, ITEM_ID_GORGEOUS_CANDLESTICK, ITEM_ID_BLACK_CRYSTAL, ITEM_ID_SUMMONING_CRYSTAL
+	map_fur_sitegraves@NT = ITEM_ID_OLD_GRAVE, ITEM_ID_BRAND_NEW_GRAVE, ITEM_ID_GRAVE_ORNAMENTED_WITH_FLOWERS, ITEM_ID_CRUMBLED_GRAVE, ITEM_ID_COLLAPSED_GRAVE, ITEM_ID_ANCIENT_TOMB
+	map_fur_sitefancy@NT = ITEM_ID_BLACK_CRYSTAL, ITEM_ID_GORGEOUS_CANDLESTICK, ITEM_ID_VASE, ITEM_ID_GOLDEN_STATUE, ITEM_ID_GOLDEN_PEDESTAL, ITEM_ID_UPRIGHT_PIANO
+	map_fur_sitebeach@NT = ITEM_ID_TREE_PALM, ITEM_ID_SAND_CASTLE, ITEM_ID_SAND_CASTLE, ITEM_ID_LOT_ALCOHOLS
+	map_fur_sitegallery@NT = ITEM_ID_PAINTING_MADAM, ITEM_ID_PAINTING_LANDSCAPE, ITEM_ID_PAINTING_SUNFLOWER, ITEM_ID_STATUE_CAT, ITEM_ID_BLACK_CRYSTAL
+	map_fur_sitebarrels@NT = ITEM_ID_BARREL, ITEM_ID_BARREL, ITEM_ID_BARREL, ITEM_ID_RICE_BARREL, ITEM_ID_SEALED_VASE, ITEM_ID_OPEN_VASE
+
+	map_fur_bedroom1@NT = ITEM_ID_CHEAP_BED2, ITEM_ID_BUNK_BED, ITEM_ID_STRAW
+	map_fur_bedroom2@NT = ITEM_ID_PLAIN_BED, ITEM_ID_WRITING_DESK, ITEM_ID_CHEAP_RACK
+	map_fur_bedroom3@NT = ITEM_ID_CHEAP_BED, ITEM_ID_CHEAP_BED, ITEM_ID_CHEAP_BED, ITEM_ID_WRITING_DESK, ITEM_ID_NEAT_RACK, ITEM_ID_SIMPLE_DRESSER, ITEM_ID_FIREPLACE
+	map_fur_bedroom4@NT = ITEM_ID_COMFORTABLE_BED, ITEM_ID_COMFORTABLE_BED, ITEM_ID_COMFORTABLE_BED, ITEM_ID_WRITING_DESK, ITEM_ID_NEAT_RACK, ITEM_ID_SIMPLE_DRESSER, ITEM_ID_FIREPLACE
+	map_fur_bedroom5@NT = ITEM_ID_SOFT_BED, ITEM_ID_SOFT_BED, ITEM_ID_SOFT_BED, ITEM_ID_MODERN_RACK, ITEM_ID_DRESSER, ITEM_ID_BOOKSHELF, ITEM_ID_CABINET, ITEM_ID_CLOTHES_CHEST, ITEM_ID_SOFA
+	map_fur_bedroom6@NT = ITEM_ID_CLEAN_BED, ITEM_ID_CLEAN_BED, ITEM_ID_CLEAN_BED, ITEM_ID_MODERN_RACK, ITEM_ID_DRESSER, ITEM_ID_BOOKSHELF, ITEM_ID_CABINET, ITEM_ID_CLOTHES_CHEST, ITEM_ID_KING_DRAWER, ITEM_ID_SOFA
+	map_fur_bedroom7@NT = ITEM_ID_GIANT_BED, ITEM_ID_GIANT_BED, ITEM_ID_GIANT_BED, ITEM_ID_MODERN_RACK, ITEM_ID_HIGH_GRADE_DRESSER, ITEM_ID_BOOKSHELF, ITEM_ID_CABINET, ITEM_ID_CLOTHES_CHEST, ITEM_ID_KING_DRAWER, ITEM_ID_LUXURY_CABINET, ITEM_ID_SOFA
+	
+	map_fur_roombakery@NT = ITEM_ID_BREAD_DISPLAY, ITEM_ID_OVEN, ITEM_ID_STICK_BREAD, ITEM_ID_STOVE, ITEM_ID_MENU_BOARD
+	map_fur_roomkitchen@NT = ITEM_ID_KITCHEN, ITEM_ID_SINK, ITEM_ID_KITCHEN_OVEN, ITEM_ID_OVEN, ITEM_ID_FOOD_PROCESSOR, ITEM_ID_BIG_CUPBOARD
+	map_fur_roomshop@NT = ITEM_ID_POTION_RACK, ITEM_ID_SIMPLE_SHELF, ITEM_ID_STORAGE_RACK, ITEM_ID_CHEAP_RACK, ITEM_ID_OLD_SHELF
+	map_fur_roomstorage@NT = ITEM_ID_STORAGE_RACK, ITEM_ID_CHEAP_RACK, ITEM_ID_OLD_SHELF, ITEM_ID_BARREL, ITEM_ID_SHED
+	map_fur_roomlibrary@NT = ITEM_ID_TIDY_BOOKSHELF, ITEM_ID_OLD_BOOKSHELF, ITEM_ID_BOOKSHELF
+	map_fur_roomchurch@NT = ITEM_ID_STATUE_CROSS, ITEM_ID_TABLE, ITEM_ID_SACRED_ALTAR, ITEM_ID_UPRIGHT_PIANO
+	map_fur_roombar@NT = ITEM_ID_CABINET, ITEM_ID_BAR_TABLE_ALPHA, ITEM_ID_BAR_TABLE_BETA, ITEM_ID_UPRIGHT_PIANO, ITEM_ID_NEAT_BAR_TABLE, ITEM_ID_MENU_BOARD
+	map_fur_roomcasino@NT = ITEM_ID_BAR_TABLE_ALPHA, ITEM_ID_BAR_TABLE_BETA, ITEM_ID_UPRIGHT_PIANO, ITEM_ID_NEAT_BAR_TABLE, ITEM_ID_MENU_BOARD, ITEM_ID_BLACK_BOARD, ITEM_ID_SOFA
+	map_fur_roomblacksmith@NT = ITEM_ID_WATER_TUB, ITEM_ID_ANVIL, ITEM_ID_SMELTER, ITEM_ID_WEAPONS, ITEM_ID_WELL_KEPT_ARMOR
+
+	// map_fur_pinitems@NT = ITEM_ID_THRONE, ITEM_ID_SOLEMN_TOMB, ITEM_ID_STATUE_CREATOR
+	map_fur_centertorture@NT = ITEM_ID_GUILLOTINE, ITEM_ID_IRON_MAIDEN
+	map_fur_centerwell@NT = ITEM_ID_WELL, ITEM_ID_FOUNTAIN
+	map_fur_centeraltar@NT = ITEM_ID_ALTAR, ITEM_ID_CEREMONY_ALTAR
+
+	map_fur_gen_safe@NT = 0
+	map_fur_place_carpet@NT = 0
+	map_fur_set_prop@NT = 0
+	map_fur_wall_r@NT = 0
+	map_fur_wall_r2@NT = 0
+	map_fur_floor_r@NT = 0
+	map_fur_floor_r2@NT = 0
+	map_fur_samp_r@NT = 0
+	dim map_fur_wall@NT, 0
+	dim map_fur_wall2@NT, 0
+	dim map_fur_floor@NT, 0
+	dim map_fur_floor2@NT, 0
+	map_fur_samp@NT = 0
+	map_fur_cent@NT = 0
+	roomwall = 0
+	roomdoor = 0
+
+	return
+#deffunc map_furniture_setwall array map_furniture_group, int map_furniture_chance
+	map_fur_wall_r@NT = limit(map_furniture_chance,0,100)
+	dim map_fur_wall@NT, length(map_furniture_group)
+	repeat length(map_furniture_group)
+		map_fur_wall@NT(cnt) = map_furniture_group(cnt)
+	loop
+	return
+#deffunc map_furniture_setwall2 array map_furniture_group, int map_furniture_chance
+	map_fur_wall_r2@NT = limit(map_furniture_chance,0,100)
+	dim map_fur_wall2@NT, length(map_furniture_group)
+	repeat length(map_furniture_group)
+		map_fur_wall@NT(cnt) = map_furniture_group(cnt)
+	loop
+	return
+#deffunc map_furniture_setfloor array map_furniture_group, int map_furniture_chance
+	map_fur_floor_r@NT = limit(map_furniture_chance,0,100)
+	dim map_fur_floor2@NT, length(map_furniture_group)
+	repeat length(map_furniture_group)
+		map_fur_floor@NT(cnt) = map_furniture_group(cnt)
+	loop
+	return
+#deffunc map_furniture_setfloor2 array map_furniture_group, int map_furniture_chance
+	map_fur_floor_r2@NT = limit(map_furniture_chance,0,100)
+	dim map_fur_floor2@NT, length(map_furniture_group)
+	repeat length(map_furniture_group)
+		map_fur_floor2@NT(cnt) = map_furniture_group(cnt)
+	loop
+	return
+#deffunc map_furniture_setgroup int map_furniture_roomtype_input
+	map_furniture_roomtype = map_furniture_roomtype_input
+	map_furniture_initialize
+
+	fur_base_wall_spawn_rate@NT = 40 * fur_spawn_rate_multiplier@NT
+	fur_base_floor_spawn_rate@NT = 10 * fur_spawn_rate_multiplier@NT
+	fur_spawn_rate_multiplier@NT = 1
+
+	if ( map_furniture_roomtype == 10 ) {
+		map_furniture_roomtype = 100
+		if ( adata(ADATA_TYPE, gdata(GDATA_AREA)) == MAP_TYPE_DUNGEON ) {
+		}
+		if ( adata(ADATA_TYPE, gdata(GDATA_AREA)) == MAP_TYPE_FOREST ) {
+		}
+		if ( adata(ADATA_TYPE, gdata(GDATA_AREA)) == MAP_TYPE_TOWER ) {
+		}
+		if ( adata(ADATA_TYPE, gdata(GDATA_AREA)) == MAP_TYPE_FORT ) {
+			if (rnd(5)==0) { map_furniture_roomtype = 230 }
+		}
+		if ( adata(ADATA_TYPE, gdata(GDATA_AREA)) == MAP_TYPE_NEST ) {
+		}
+		if ( adata(ADATA_TYPE, gdata(GDATA_AREA)) == MAP_TYPE_CEMETERY ) {
+			map_furniture_roomtype = 250
+			if ( rnd(9) == 0 ) { map_furniture_roomtype = 160 }
+			if ( rnd(10) == 0 ) { map_furniture_roomtype = 100 }
+		}
+		if ( adata(ADATA_TYPE, gdata(GDATA_AREA)) == MAP_TYPE_MINE ) {
+			if (rnd(3)==0) { map_furniture_roomtype = 260 }
+		}
+		if ( adata(ADATA_TYPE, gdata(GDATA_AREA)) == MAP_TYPE_LAKE ) {
+		}
+	}
+	if ( map_furniture_roomtype == 100 ) {
+		map_furniture_roomtype = 110
+		if ( rnd(3) == 0 ) { map_furniture_roomtype = 120 }
+		if ( rnd(4) == 0 ) { map_furniture_roomtype = 130 }
+		if ( rnd(5) == 0 ) { map_furniture_roomtype = 140 }
+		if ( rnd(9) == 0 ) { map_furniture_roomtype = 190 }
+		if ( rnd(10) == 0 ) { map_furniture_roomtype = 150 }
+		if ( rnd(18) == 0 ) { map_furniture_roomtype = 160 }
+		if ( rnd(19) == 0 ) { map_furniture_roomtype = 170 }
+		if ( rnd(20) == 0 ) { map_furniture_roomtype = 180 }
+	}
+	// Generic Bedrooms
+	if ( map_furniture_roomtype == 110 ) {
+		map_furniture_roomtype = 111
+		if ( rnd(2) == 0 ) { map_furniture_roomtype = 112 + rnd(3) }
+		if ( rnd(5) == 0 ) { map_furniture_roomtype = 115 + rnd(3) }
+	}
+	if ( map_furniture_roomtype == 111 ) {
+		map_furniture_setwall map_fur_bedroom1@NT, fur_base_wall_spawn_rate@NT
+		map_furniture_setfloor map_fur_trashtrash@NT, fur_base_floor_spawn_rate@NT
+	}
+	if ( map_furniture_roomtype == 112 ) {
+		map_furniture_setwall map_fur_bedroom2@NT, fur_base_wall_spawn_rate@NT
+		map_furniture_setfloor map_fur_table1@NT, fur_base_floor_spawn_rate@NT
+	}
+	if ( map_furniture_roomtype == 113 ) {
+		map_furniture_setwall map_fur_bedroom3@NT, fur_base_wall_spawn_rate@NT
+		map_furniture_setfloor map_fur_table2@NT, fur_base_floor_spawn_rate@NT
+	}
+	if ( map_furniture_roomtype == 114 ) {
+		map_furniture_setwall map_fur_bedroom4@NT, fur_base_wall_spawn_rate@NT
+		map_furniture_setfloor map_fur_table3@NT, fur_base_floor_spawn_rate@NT
+	}
+	if ( map_furniture_roomtype == 115 ) {
+		map_furniture_setwall map_fur_bedroom5@NT, fur_base_wall_spawn_rate@NT
+		map_furniture_setfloor map_fur_table4@NT, fur_base_floor_spawn_rate@NT / 2
+		map_fur_gen_safe@NT = 1 
+	}
+	if ( map_furniture_roomtype == 116 ) {
+		map_furniture_setwall map_fur_bedroom6@NT, fur_base_wall_spawn_rate@NT
+		map_furniture_setfloor map_fur_table5@NT, fur_base_floor_spawn_rate@NT
+		map_fur_gen_safe@NT = 1 
+	}
+	if ( map_furniture_roomtype == 117 ) {
+		map_furniture_setwall map_fur_bedroom7@NT, fur_base_wall_spawn_rate@NT
+		map_furniture_setfloor map_fur_table6@NT, fur_base_floor_spawn_rate@NT
+		map_fur_gen_safe@NT = 1 
+		if (rnd(10) == 0) {
+			map_fur_place_carpet@NT = 1
+			map_fur_cent@NT = ITEM_ID_STATUE_CREATOR
+		}
+	}
+	if ( map_furniture_roomtype >= 111 & map_furniture_roomtype <= 117 ) {
+		fur_base_floor_spawn_rate@NT = fur_base_floor_spawn_rate@NT / 2
+		map_furniture_roomtype = 910 + rnd(11)
+	}
+	// Kitchen
+	if ( map_furniture_roomtype == 120 ) {
+		map_furniture_setwall map_fur_roomkitchen@NT, fur_base_wall_spawn_rate@NT
+		if (rnd(2) == 0) {
+			map_furniture_setwall map_fur_roombakery@NT, fur_base_wall_spawn_rate@NT
+		}
+		map_furniture_roomtype = 121 + rnd(6)
+	}
+	if ( map_furniture_roomtype == 121 ) { map_furniture_setfloor map_fur_table1@NT, fur_base_floor_spawn_rate@NT }
+	if ( map_furniture_roomtype == 122 ) { map_furniture_setfloor map_fur_table2@NT, fur_base_floor_spawn_rate@NT }
+	if ( map_furniture_roomtype == 123 ) { map_furniture_setfloor map_fur_table3@NT, fur_base_floor_spawn_rate@NT }
+	if ( map_furniture_roomtype == 124 ) { map_furniture_setfloor map_fur_table4@NT, fur_base_floor_spawn_rate@NT / 2 }
+	if ( map_furniture_roomtype == 125 ) { map_furniture_setfloor map_fur_table5@NT, fur_base_floor_spawn_rate@NT }
+	if ( map_furniture_roomtype == 126 ) { map_furniture_setfloor map_fur_table6@NT, fur_base_floor_spawn_rate@NT }
+	if ( map_furniture_roomtype >= 121 & map_furniture_roomtype <= 126 ) {
+		fur_base_floor_spawn_rate@NT = fur_base_floor_spawn_rate@NT / 2
+		map_furniture_roomtype = 914 + rnd(2)
+	}
+	// Storage
+	if ( map_furniture_roomtype == 130 ) {
+		map_furniture_setwall map_fur_roomstorage@NT, fur_base_wall_spawn_rate@NT
+		map_furniture_roomtype = 811 + rnd(6)
+	}
+	// Shop
+	if ( map_furniture_roomtype == 140 ) {
+		map_furniture_setwall map_fur_roomshop@NT, fur_base_wall_spawn_rate@NT
+		map_furniture_roomtype = 811 + rnd(6)
+	}
+	// Library
+	if ( map_furniture_roomtype == 150 ) {
+		map_furniture_setwall map_fur_roomlibrary@NT, fur_base_wall_spawn_rate@NT
+		map_furniture_setfloor map_fur_trashbook@NT, fur_base_floor_spawn_rate@NT
+	}
+	// Church
+	if ( map_furniture_roomtype == 160 ) {
+		map_furniture_setwall map_fur_roomchurch@NT, fur_base_wall_spawn_rate@NT
+		map_furniture_setfloor map_fur_trashbook@NT, fur_base_floor_spawn_rate@NT
+		if ( rnd(10)==0 ) { map_fur_cent@NT = map_fur_centeraltar@NT(rnd(2)) }
+		fur_base_floor_spawn_rate@NT = fur_base_floor_spawn_rate@NT / 2
+		map_furniture_roomtype = 913 + (rnd(2) == 0) * 5
+	}
+	// Bars
+	if ( map_furniture_roomtype == 170 ) {
+		map_furniture_setwall map_fur_roombar@NT, fur_base_wall_spawn_rate@NT
+		map_furniture_setfloor map_fur_shopbar@NT, fur_base_floor_spawn_rate@NT
+		map_furniture_roomtype = 914 + rnd(2)
+	}
+	// Casino
+	if ( map_furniture_roomtype == 180 ) {
+		map_furniture_setwall map_fur_roomcasino@NT, fur_base_wall_spawn_rate@NT
+		map_furniture_setfloor map_fur_shopbar@NT, fur_base_floor_spawn_rate@NT
+		map_furniture_roomtype = 914 + rnd(2)
+	}
+	// Blacksmith
+	if ( map_furniture_roomtype == 190 ) {
+		map_furniture_setwall map_fur_roomblacksmith@NT, fur_base_wall_spawn_rate@NT
+		map_furniture_setfloor map_fur_shoparmory@NT, fur_base_floor_spawn_rate@NT
+	}
+	// Forest Trees
+	if ( map_furniture_roomtype == 221 ) {
+        map_furniture_setwall map_fur_siteforest@NT, 50
+        map_furniture_setfloor map_fur_siteforest@NT, 30
+		//if ( rnd(50)==0 ) { map_fur_cent@NT = map_fur_centerwell@NT(rnd(2)) }
+		//if ( rnd(50)==0 ) { map_fur_cent@NT = map_fur_centeraltar@NT(rnd(2)) }
+	}
+	// Fort
+	if ( map_furniture_roomtype == 230 ) {
+		map_furniture_roomtype = 232
+		if ( rnd(4) == 0 ) { map_furniture_roomtype = 233 }
+	}
+	// Fort Throne
+	if ( map_furniture_roomtype == 231 ) {
+		map_furniture_setwall map_fur_sitegallery@NT, fur_base_wall_spawn_rate@NT * 3
+		map_furniture_setfloor map_fur_sitefancy@NT, fur_base_floor_spawn_rate@NT
+		map_fur_gen_safe@NT = 1 
+		map_fur_cent@NT = ITEM_ID_THRONE
+		if (rnd(5) == 0) {
+			map_fur_place_carpet@NT = 1
+		}
+	}
+	// Fort Armory
+	if ( map_furniture_roomtype == 232 ) {
+		map_fur_wall@NT = ITEM_ID_ARMOR, ITEM_ID_DECORATED_ARMOR, ITEM_ID_ARMOR_STATUE, ITEM_ID_BOWS, ITEM_ID_WEAPONS, ITEM_ID_WEAPONS, ITEM_ID_WEAPONS 
+		map_fur_wall_r@NT = limit(fur_base_wall_spawn_rate@NT * 2,0,100)
+		map_fur_floor@NT = ITEM_ID_LONG_SWORD, ITEM_ID_DAGGER, ITEM_ID_HAND_AXE, ITEM_ID_CLUB
+		map_fur_floor_r@NT = limit(fur_base_floor_spawn_rate@NT * 2,0,100)
+	}
+	// Fort Blacksmith
+	if ( map_furniture_roomtype == 233 ) {
+		map_furniture_setwall map_fur_roomblacksmith@NT, fur_base_wall_spawn_rate@NT
+		map_furniture_setfloor map_fur_shoparmory@NT, fur_base_floor_spawn_rate@NT
+	}
+	// Graves
+	if ( map_furniture_roomtype == 250 ) {
+		map_furniture_roomtype = 252
+		if ( rnd(4) == 0 ) { map_furniture_roomtype = 253 }
+	}
+	// Grave Trees
+	if ( map_furniture_roomtype == 251 ) {
+        map_furniture_setwall map_fur_siteforestdead@NT, fur_base_wall_spawn_rate@NT
+        map_furniture_setfloor map_fur_siteforestdead@NT, fur_base_floor_spawn_rate@NT
+		//if ( rnd(50)==0 ) { map_fur_cent@NT = map_fur_centerwell@NT(rnd(2)) }
+		//if ( rnd(50)==0 ) { map_fur_cent@NT = map_fur_centeraltar@NT(rnd(2)) }
+	}
+	// Grave Graves
+	if ( map_furniture_roomtype == 252 ) {
+        map_furniture_setwall map_fur_sitegraves@NT, fur_base_wall_spawn_rate@NT
+        map_furniture_setfloor map_fur_sitegraves@NT, fur_base_floor_spawn_rate@NT
+		if ( rnd(50)==0 ) { map_fur_cent@NT = ITEM_ID_SOLEMN_TOMB }
+	}
+	// Grave Burial
+	if ( map_furniture_roomtype == 253 ) {
+        map_furniture_setwall map_fur_sitegraves@NT, fur_base_wall_spawn_rate@NT
+        map_furniture_setfloor map_fur_trashburial@NT, fur_base_floor_spawn_rate@NT
+	}
+	// Mine
+	if ( map_furniture_roomtype == 260 ) {
+		map_furniture_roomtype = 260
+		if ( rnd(4) == 0 ) { map_furniture_roomtype = 261 }
+	}
+	// Mine Deposit
+	if ( map_furniture_roomtype == 261 ) {
+		map_fur_samp@NT = 2
+		map_fur_samp_r@NT = 3
+		map_furniture_setwall map_fur_trashmining@NT, fur_base_wall_spawn_rate@NT
+		map_furniture_setfloor map_fur_trashmining@NT, fur_base_floor_spawn_rate@NT
+	}
+	if ( map_furniture_roomtype == 262 ) {
+		map_furniture_setwall map_fur_sitebarrels@NT, fur_base_wall_spawn_rate@NT
+		map_furniture_setfloor map_fur_trashmining@NT, fur_base_floor_spawn_rate@NT
+	}
+	// Lake
+	if ( map_furniture_roomtype == 270 ) {
+		if ( rnd(3) == 0 ) { map_furniture_roomtype = 271 }
+	}
+	// Fishing Spot
+	if ( map_furniture_roomtype == 271 ) {
+		map_fur_samp@NT = 3
+		map_fur_samp_r@NT = 5
+	}
+	// Room Object
+	if ( map_furniture_roomtype == 811 ) { map_furniture_setfloor map_fur_shopbar@NT, fur_base_floor_spawn_rate@NT }
+	if ( map_furniture_roomtype == 812 ) { map_furniture_setfloor map_fur_shopcasino@NT, fur_base_floor_spawn_rate@NT }
+	if ( map_furniture_roomtype == 813 ) { map_furniture_setfloor map_fur_shopgrocery@NT, fur_base_floor_spawn_rate@NT }
+	if ( map_furniture_roomtype == 814 ) { map_furniture_setfloor map_fur_shopcloth@NT, fur_base_floor_spawn_rate@NT }
+	if ( map_furniture_roomtype == 815 ) { map_furniture_setfloor map_fur_shoparmory@NT, fur_base_floor_spawn_rate@NT }
+	if ( map_furniture_roomtype == 816 ) { map_furniture_setfloor map_fur_shopblacksmith@NT, fur_base_floor_spawn_rate@NT }
+	if ( map_furniture_roomtype >= 811 & map_furniture_roomtype <= 816 ) {
+		if ( rnd(2) == 0 ) {
+			map_furniture_roomtype = 916 + rnd(5)
+		}
+	}
+	// Room Trash
+	if ( map_furniture_roomtype == 910 ) { map_furniture_setfloor2 map_fur_trashtrash@NT, fur_base_floor_spawn_rate@NT }
+	if ( map_furniture_roomtype == 911 ) { map_furniture_setfloor2 map_fur_trashremains@NT, fur_base_floor_spawn_rate@NT / 2 }
+	if ( map_furniture_roomtype == 912 ) { map_furniture_setfloor2 map_fur_trashmining@NT, fur_base_floor_spawn_rate@NT }
+	if ( map_furniture_roomtype == 913 ) { map_furniture_setfloor2 map_fur_trashburial@NT, fur_base_floor_spawn_rate@NT / 2 }
+	if ( map_furniture_roomtype == 914 ) { map_furniture_setfloor2 map_fur_trashcook@NT, fur_base_floor_spawn_rate@NT / 2 }
+	if ( map_furniture_roomtype == 915 ) { map_furniture_setfloor2 map_fur_trashparty@NT, fur_base_floor_spawn_rate@NT }
+	if ( map_furniture_roomtype == 916 ) { map_furniture_setfloor2 map_fur_trashalchemy@NT, fur_base_floor_spawn_rate@NT / 2 }
+	if ( map_furniture_roomtype == 917 ) { map_furniture_setfloor2 map_fur_trashclothes@NT, fur_base_floor_spawn_rate@NT }
+	if ( map_furniture_roomtype == 918 ) { map_furniture_setfloor2 map_fur_trashbook@NT, fur_base_floor_spawn_rate@NT }
+	if ( map_furniture_roomtype == 919 ) { map_furniture_setfloor2 map_fur_trashtoy@NT, fur_base_floor_spawn_rate@NT }
+	if ( map_furniture_roomtype == 920 ) { map_furniture_setfloor2 map_fur_trashstorage@NT, fur_base_floor_spawn_rate@NT }
+	return
+
+#deffunc map_furniture_populate
+	if (roomheight(cr) > 2 | roomheight(cr) > 2 ) {
+		repeat roomheight(cr) - 2
+			mfy@NT = roomy(cr) + cnt + 1
+			repeat roomwidth(cr) - 2
+				mfx@NT = roomx(cr) + cnt + 1
+				if ( mfx@NT < 0 | mfy@NT < 0 | mfx@NT >= mdata(MDATA_WIDTH) | mfy@NT >= mdata(MDATA_HEIGHT) | istilewall(mfx@NT, mfy@NT) ) {
+					continue
+				}
+				if ( map(mfx@NT, mfy@NT, 4) != 0 | istileempty(mfx@NT, mfy@NT) != TRUE ) {
+					continue
+				}
+				if ( map_fur_place_carpet@NT & istileempty(mfx@NT, mfy@NT) & mfx@NT > 0 & mfy@NT > 0 & mfx@NT < mdata(MDATA_WIDTH) - 1 & mfy@NT < mdata(MDATA_HEIGHT) - 1 ) {
+					map(mfx@NT, mfy@NT, 0) = 96
+				}
+				fur_place@NT = 0
+				if ( fur_place@NT == 0 & map_fur_cent@NT > 0 & mfy@NT == roomy(cr) + roomheight(cr) / 2 & mfx@NT == roomx(cr) + roomwidth(cr) / 2 & roomwidth(cr) >= 3 & roomheight(cr) >= 3 ) {
+					if ( istileempty(mfx@NT, mfy@NT - 1) & istileempty(mfx@NT, mfy@NT + 1) & istileempty(mfx@NT + 1, mfy@NT) & istileempty(mfx@NT - 1, mfy@NT) ) {
+						fur_place@NT = map_fur_cent@NT
+						map(mfx@NT, mfy@NT, 0) = 99
+						map_fur_set_prop@NT = 1
+					}
+					map_fur_cent@NT = 0
+				}
+				if ( fur_place@NT == 0 & istilewall(mfx@NT, mfy@NT - 1) & istileempty(mfx@NT, mfy@NT) & length(map_fur_wall@NT) > 0 & rnd(100) < map_fur_wall_r@NT ) {
+					fur_place@NT = map_fur_wall@NT(rnd(length(map_fur_wall@NT)))
+					if ( rnd(10) == 0 & map_fur_gen_safe@NT > 0 ) {
+						map_fur_gen_safe@NT = 0 
+						fur_place@NT = ITEM_ID_SAFE
+						map(mfx@NT, mfy@NT, 0) = 98
+					}
+				}
+				if ( fur_place@NT == 0 & istilewall(mfx@NT, mfy@NT - 1) & istileempty(mfx@NT, mfy@NT) & length(map_fur_wall2@NT) > 0 & rnd(100) < map_fur_wall_r2@NT ) {
+					fur_place@NT = map_fur_wall2@NT(rnd(length(map_fur_wall2@NT)))
+				}
+				if ( fur_place@NT == 0 & istileempty(mfx@NT, mfy@NT) & length(map_fur_floor@NT) > 0 & rnd(100) < map_fur_floor_r@NT ) {
+					fur_place@NT = map_fur_floor@NT(rnd(length(map_fur_floor@NT)))
+				}
+				if ( fur_place@NT == 0 & istileempty(mfx@NT, mfy@NT) & length(map_fur_floor2@NT) > 0 & rnd(100) < map_fur_floor_r2@NT ) {
+					fur_place@NT = map_fur_floor2@NT(rnd(length(map_fur_floor2@NT)))
+				}
+				if ( fur_place@NT == 0 & istileempty(mfx@NT, mfy@NT) & rnd(100) < map_fur_samp_r@NT ) {
+					if ( map_fur_samp@NT == 1 ) { cell_featset mfx@NT, mfy@NT, 243, CELL_FEATURE_SAMPLING_SPOT_GENE_ENGINEER }
+					if ( map_fur_samp@NT == 2 ) { cell_featset mfx@NT, mfy@NT, 244, CELL_FEATURE_SAMPLING_SPOT_MINING }
+					if ( map_fur_samp@NT == 3 ) { cell_featset mfx@NT, mfy@NT, 245, CELL_FEATURE_SAMPLING_SPOT_FISHING }
+					if ( map_fur_samp@NT == 4 ) { cell_featset mfx@NT, mfy@NT, 246, CELL_FEATURE_SAMPLING_SPOT_GARDENING }
+				}
+
+				if ( fur_place@NT <= 0 ) { continue }
+				mfdy@NT = 0
+				if ( mfy@NT >= 1 & (fur_place@NT == ITEM_ID_PAINTING_MADAM | fur_place@NT == ITEM_ID_PAINTING_LANDSCAPE | fur_place@NT == ITEM_ID_PAINTING_SUNFLOWER) ) {
+					mfdy@NT = -1
+				}
+				if ( fur_place@NT == ITEM_ID_STATUE_CREATOR ) {
+					if ( rnd(2) == 0 ) { fur_place@NT = ITEM_ID_STATUE_CAT }
+					// if ( rnd(1000) == 0 ) { fur_place@NT = ITEM_ID_STATUE_OPATOS }
+					// if ( rnd(1000) == 0 ) { fur_place@NT = ITEM_ID_STATUE_LULWY }
+					if ( rnd(100) == 0 ) { fur_place@NT = ITEM_ID_STATUE_MANI }
+					if ( rnd(100) == 0 ) { fur_place@NT = ITEM_ID_STATUE_ITZPALT }
+					if ( rnd(100) == 0 ) { fur_place@NT = ITEM_ID_STATUE_JURE }
+					if ( rnd(200) == 0 ) { fur_place@NT = ITEM_ID_STATUE_KUMIROMI }
+					if ( rnd(400) == 0 ) { fur_place@NT = ITEM_ID_STATUE_YACATECT }
+					if ( rnd(10000) == 0 ) { fur_place@NT = ITEM_ID_STATUE_EHEKATL }
+					map(mfx@NT, mfy@NT, 0) = 99
+					map_fur_set_prop@NT = 1
+				}
+				nooracle = 1
+				itemcreate -1, fur_place@NT, mfx@NT, mfy@NT + mfdy@NT, 0
+				if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_FURNITURE | refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_CONTAINER | refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_ENVIRONMENT ) {
+					inv(INV_ITEM_PROPERTY, ci) = PROP_NPC
+				}
+				if ( map_fur_set_prop@NT > 0 ) { 
+					inv(INV_ITEM_PROPERTY, ci) = PROP_NPC 
+				}
+				// cell_refresh mfx@NT, mfy@NT + mfdy@NT
+				nooracle = 0
+			loop
+		loop
+	}
+	map_furniture_setgroup 0
+    return
+#deffunc map_furniture_scatter array map_furniture_group, int map_furniture_chance, int map_specific_tile
+	if (length(map_furniture_group) < 1 ) {
+		return
+	}
+    repeat mdata(MDATA_WIDTH)
+        mfx@NT = cnt
+        repeat mdata(MDATA_HEIGHT)
+            mfy@NT = cnt
+            if ( mfx@NT < 0 | mfy@NT < 0 | mfx@NT >= mdata(MDATA_WIDTH) | mfy@NT >= mdata(MDATA_HEIGHT) | istilewall(mfx@NT, mfy@NT) ) {
+                continue
+			}
+			if ( map_specific_tile > 0 ) {
+				if ( map(mfx@NT, mfy@NT, 0) != map_specific_tile ) {
+					continue
+				}
+			}
+			if ( map(mfx@NT, mfy@NT, 4) != 0 ) {
+				continue
+			}
+            cell_featread mfx@NT, mfy@NT
+            if ( map(mfx@NT, mfy@NT, 4) == 0 & rnd(100) < map_furniture_chance ) {
+                fur_place@NT = map_furniture_group(rnd(length(map_furniture_group)))
+				nooracle = 1
+                itemcreate -1, fur_place@NT, mfx@NT, mfy@NT, 0
+                if ( refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_FURNITURE | refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_CONTAINER | refitem(inv(INV_ITEM_ID, ci), DBSPEC_TYPE) == FILTER_ENVIRONMENT ) {
+                    inv(INV_ITEM_PROPERTY, ci) = PROP_NPC
+                }
+                if ( map_fur_set_prop@NT > 0 ) { 
+                    inv(INV_ITEM_PROPERTY, ci) = PROP_NPC 
+                }
+                // cell_refresh mfx@NT, mfy@NT
+				nooracle = 0
+            }
+        loop
+    loop
+    return
+
+#deffunc map_find_rooms_binary_partition int map_minsize_x, int map_minsize_y, int map_maxpoints
+	mapx@NT = mdata(MDATA_WIDTH) - 3
+	mapy@NT = mdata(MDATA_HEIGHT) - 3
+	dim matrix_bp@NT, 4, map_maxpoints
+	matrix_bp@NT(0, 0) = 1, 1, mapx@NT, mapy@NT
+	bp_count@NT = 1
+	repeat map_maxpoints - 1
+		pp@NT = (-1)
+		sd@NT = 0
+		repeat 1000
+			p@NT = rnd(bp_count@NT)
+			if ( matrix_bp@NT(2, p@NT) > map_minsize_x * 2 ) {
+				pp@NT = p@NT
+				sd@NT = 1
+			}
+			if ( matrix_bp@NT(3, p@NT) > map_minsize_y * 2 ) {
+				pp@NT = p@NT
+				sd@NT = 2 - ( sd@NT == 1 ) * rnd(2)
+			}
+			if ( sd@NT > 0 ) {
+				break
+			}
+		loop
+		if ( sd@NT == 0 | pp@NT == (-1) ) {
+			break
+		}
+		matrix_bp@NT(0, bp_count@NT) = matrix_bp@NT(0, pp@NT)
+		matrix_bp@NT(1, bp_count@NT) = matrix_bp@NT(1, pp@NT)
+		matrix_bp@NT(2, bp_count@NT) = matrix_bp@NT(2, pp@NT)
+		matrix_bp@NT(3, bp_count@NT) = matrix_bp@NT(3, pp@NT)
+		
+		if ( sd@NT == 1 ) {
+			sx@NT = rnd( matrix_bp@NT(2, pp@NT) - 2 * map_minsize_x ) + map_minsize_x
+			matrix_bp@NT(0, bp_count@NT) += sx@NT
+			matrix_bp@NT(2, bp_count@NT) -= sx@NT
+			matrix_bp@NT(2, pp@NT) = sx@NT
+		} 
+		if ( sd@NT == 2 ) {
+			sy@NT = rnd( matrix_bp@NT(3, pp@NT) - 2 * map_minsize_y ) + map_minsize_y
+			matrix_bp@NT(1, bp_count@NT) += sy@NT
+			matrix_bp@NT(3, bp_count@NT) -= sy@NT
+			matrix_bp@NT(3, pp@NT) = sy@NT
+		} 
+		bp_count@NT++
+	loop
+	return
+
+#deffunc map_find_points int map_mindist, int map_minsize, int map_maxpoints, int map_specific_tile
+	mapx@NT = mdata(MDATA_WIDTH) - 4
+	mapy@NT = mdata(MDATA_HEIGHT) - 4
+
+	dim matrix_ca, mapx@NT * mapy@NT
+	dim matrix_rp, mapx@NT * mapy@NT
+	repeat mapx@NT * mapy@NT
+		matrix_ca(cnt) = 0
+		matrix_rp(cnt) = cnt
+		dx@NT = cnt \ mapx@NT + 2
+		dy@NT = cnt / mapx@NT + 2
+		if ( istilewall(dx@NT, dy@NT) ) {
+			matrix_ca(cnt) = 1
+		}
+	loop
+	dimmix matrix_rp
+
+	dim matrix_pt@NT, 4, map_maxpoints
+	count@NT = 0
+	repeat mapx@NT * mapy@NT
+		dx@NT = matrix_rp(cnt) \ mapx@NT
+		dy@NT = matrix_rp(cnt) / mapx@NT
+		if ( matrix_ca(matrix_rp(cnt)) > 0 | count@NT == map_maxpoints ) {
+			continue
+		}
+		count2@NT = 0
+		repeat 5
+			tx@NT = dx@NT - 2 + cnt + 2
+			repeat 5 
+				ty@NT = dy@NT - 2 + cnt + 2
+				if ( map_specific_tile > 0 ) {
+					if ( map(tx@NT, ty@NT, 0) == map_specific_tile ) {
+						count2@NT++
+					}
+					continue
+				}
+				if ( istileempty(tx@NT, ty@NT) ) {
+					count2@NT++
+					continue
+				}
+			loop
+		loop
+		if (count2@NT > map_minsize) {
+			matrix_pt@NT(0, count@NT) = dx@NT + 2
+			matrix_pt@NT(1, count@NT) = dy@NT + 2
+			matrix_pt@NT(3, count@NT) = count2@NT
+			count@NT++
+
+			repeat map_mindist * 2 + 1
+				tx@NT = dx@NT - map_mindist + cnt
+				repeat map_mindist * 2 + 1
+					ty@NT = dy@NT - map_mindist + cnt
+					if ( ty@NT < 0 | ty@NT >= mapy@NT | tx@NT < 0 | tx@NT >= mapx@NT ) { continue }
+					matrix_ca(tx@NT + ty@NT * mapx@NT) = count@NT
+				loop
+			loop
+		}
+	loop
+
+	if (count@NT == 0) { return }
+
+	// Make point furthest from center the first point
+	index@NT = 0
+	max@NT = 0
+	repeat count@NT
+		tx@NT = matrix_pt@NT(0, cnt) - mdata(MDATA_WIDTH) / 2
+		ty@NT = matrix_pt@NT(1, cnt) - mdata(MDATA_HEIGHT) / 2
+		dist@NT = tx@NT*tx@NT+ty@NT*ty@NT
+		if (dist@NT > max@NT) {
+			max@NT = dist@NT
+			index@NT = cnt
+		}
+	loop
+	dx@NT = matrix_pt@NT(0, index@NT)
+	dy@NT = matrix_pt@NT(1, index@NT)
+	matrix_pt@NT(0, index@NT) = matrix_pt@NT(0, 0)
+	matrix_pt@NT(1, index@NT) = matrix_pt@NT(1, 0)
+	matrix_pt@NT(0, 0) = dx@NT
+	matrix_pt@NT(1, 0) = dy@NT
+
+	// Add the remaining points on map to the tree by connecting nearest pairs. 
+	matrix_pt@NT(2, 0) = 0
+	matrix_pt@NT(2, 0) = 1
+	repeat count@NT - 1
+		sorted@NT = cnt + 1
+		min@NT = 99999999
+		index@NT = 0
+		index2@NT = 0
+		repeat sorted@NT
+			dx@NT = matrix_pt@NT(0, cnt)
+			dy@NT = matrix_pt@NT(1, cnt)
+			dp@NT = cnt
+			repeat count@NT - sorted@NT
+				tp@NT = cnt + sorted@NT
+				tx@NT = matrix_pt@NT(0, tp@NT) - dx@NT
+				ty@NT = matrix_pt@NT(1, tp@NT) - dy@NT
+				dist@NT = tx@NT*tx@NT+ty@NT*ty@NT
+				if (dist@NT < min@NT) {
+					min@NT = dist@NT
+					index@NT = tp@NT
+					index2@NT = dp@NT
+				}
+			loop
+		loop
+		dx@NT = matrix_pt@NT(0, index@NT)
+		dy@NT = matrix_pt@NT(1, index@NT)
+		matrix_pt@NT(0, index@NT) = matrix_pt@NT(0, sorted@NT)
+		matrix_pt@NT(1, index@NT) = matrix_pt@NT(1, sorted@NT)
+		matrix_pt@NT(0, sorted@NT) = dx@NT
+		matrix_pt@NT(1, sorted@NT) = dy@NT
+		matrix_pt@NT(2, sorted@NT) = index2@NT
+		matrix_pt@NT(3, sorted@NT) = matrix_pt@NT(3, index2@NT) + 1
+	loop
+
+	return
+
+#deffunc map_make_beach int map_makesimpleroom_arg1, int map_makesimpleroom_arg2, int map_makesimpleroom_arg3, int map_makesimpleroom_arg4
+	beginx1@NT = map_makesimpleroom_arg3 * 0 / 6 + rnd(3) - 1
+	beginx2@NT = map_makesimpleroom_arg3 * 2 / 6 + rnd(3) - 1
+	beginx3@NT = map_makesimpleroom_arg3 * 3 / 6 + rnd(3) + 1
+	beginx4@NT = map_makesimpleroom_arg3 * 4 / 6 + rnd(3) + 1
+	beginy@NT = map_makesimpleroom_arg2 + map_makesimpleroom_arg4 - 1
+	bwidth@NT = map_makesimpleroom_arg3 * 2 / 6
+	diglength@NT = map_makesimpleroom_arg4 / bwidth@NT + 1
+	repeat bwidth@NT
+		cx1@NT = rnd(diglength@NT - 2) + 1 
+		cx2@NT = rnd(diglength@NT - 2) + 1 
+		cx3@NT = rnd(diglength@NT - 2) + 1 
+		cx4@NT = rnd(diglength@NT - 2) + 1 
+		repeat diglength@NT
+			dy@NT = map_makesimpleroom_arg2 + beginy@NT
+			dxl@NT = cnt
+			repeat map_makesimpleroom_arg4
+				dx@NT = map_makesimpleroom_arg1 + cnt
+				if ( dx@NT < 0 | dy@NT < 0 | dx@NT >= mdata(MDATA_WIDTH) | dy@NT >= mdata(MDATA_HEIGHT) ) {
+					continue
+				}
+				map(dx@NT, dy@NT, 0) = 0
+				if ( cnt < beginx4@NT + (dxl@NT >= cx4@NT) ) {
+					map(dx@NT, dy@NT, 0) = 1
+				}
+				if ( cnt < beginx3@NT + (dxl@NT >= cx3@NT) ) {
+					map(dx@NT, dy@NT, 0) = 93
+				}
+				if ( cnt < beginx2@NT + (dxl@NT >= cx2@NT) ) {
+					map(dx@NT, dy@NT, 0) = 94
+				}
+				if ( cnt < beginx1@NT + (dxl@NT >= cx1@NT) ) {
+					map(dx@NT, dy@NT, 0) = 95
+				}
+			loop
+			beginy@NT -= 1
+		loop
+		beginx1@NT += 1
+		beginx2@NT += 1
+		beginx3@NT += 1
+		beginx4@NT += 1
+		if (beginy@NT < 0) { 
+			break 
+		}
+	loop
+	return
+
+#deffunc map_make_plug int map_makesimpleroom_arg3, int map_makesimpleroom_arg4, int map_makesimpleroom_arg6
+	mapx@NT = mdata(MDATA_WIDTH) - map_makesimpleroom_arg3
+	mapy@NT = mdata(MDATA_HEIGHT) - map_makesimpleroom_arg4
+	dim matrix_rp, mapx@NT * mapy@NT
+	repeat mapx@NT * mapy@NT
+		matrix_rp(cnt) = cnt
+	loop
+	dimmix matrix_rp
+	repeat mapx@NT * mapy@NT
+		dx@NT = matrix_rp(cnt) \ mapx@NT
+		dy@NT = matrix_rp(cnt) / mapx@NT
+		p@NT = 1
+		repeat map_makesimpleroom_arg3
+			if ( p@NT == 0 ) { break }
+			tx@NT = dx@NT + cnt
+			repeat map_makesimpleroom_arg4
+				ty@NT = dy@NT + cnt
+				if ( istilewall(tx@NT, ty@NT) ) {
+					p@NT = 0
+					break
+				}
+			loop
+		loop
+		if ( p@NT == 1 ) {
+			repeat map_makesimpleroom_arg3 - 2
+				tx@NT = cnt + 1
+				repeat map_makesimpleroom_arg4 - 2
+					ty@NT = cnt + 1
+					if ( tx@NT == 1 & rnd(4) == 0 ) { continue }
+					if ( ty@NT == 1 & rnd(4) == 0 ) { continue }
+					if ( tx@NT == map_makesimpleroom_arg3 - 2 & rnd(4) == 0 ) { continue }
+					if ( ty@NT == map_makesimpleroom_arg4 - 2 & rnd(4) == 0 ) { continue }
+					map(dx@NT + tx@NT, dy@NT + ty@NT, 0) = map_makesimpleroom_arg6
+				loop
+			loop
+			break
+		}
+	loop
+	return 
+
+#deffunc map_makesimpleroom_randomwalk int map_makesimpleroom_arg1, int map_makesimpleroom_arg2, int map_makesimpleroom_arg3, int map_makesimpleroom_arg4, int rw_percent, int rw_connect, int map_makesimpleroom_arg5
+	if ( map_makesimpleroom_arg1 + map_makesimpleroom_arg3 > mdata(MDATA_WIDTH) | map_makesimpleroom_arg1 < 0 | map_makesimpleroom_arg3 < 1 | map_makesimpleroom_arg2 + map_makesimpleroom_arg4 > mdata(MDATA_HEIGHT) | map_makesimpleroom_arg2 < 0 | map_makesimpleroom_arg4 < 1 ) {
+		return 
+	}
+	randomwalk_max@NT = map_makesimpleroom_arg3 * map_makesimpleroom_arg4 * rw_percent / 100
+	if ( randomwalk_max@NT < 1 | ( map_makesimpleroom_arg5 < 90 & map_makesimpleroom_arg5 != 3 ) ) {
+		return
+	}
+	if ( randomwalk_max@NT > map_makesimpleroom_arg3 * map_makesimpleroom_arg4 ) {
+		randomwalk_max@NT = map_makesimpleroom_arg3 * map_makesimpleroom_arg4
+	}
+	digref@NT = 0, -1, 1, 0, 0, 1, -1, 0 
+	repeat randomwalk_max@NT + 10
+		empty@NT = 0
+		repeat map_makesimpleroom_arg3
+			dx@NT = cnt + map_makesimpleroom_arg1
+			repeat map_makesimpleroom_arg4
+				dy@NT = cnt + map_makesimpleroom_arg2
+				if (istileempty(dx@NT, dy@NT)) {
+					empty@NT++
+				}
+			loop
+		loop
+		if (empty@NT > randomwalk_max@NT & rw_connect == 0) {
+			break
+		}
+		if ( rw_connect > 0 ) {
+			fx1@NT = 0
+			fx2@NT = 0
+			fy1@NT = 0
+			fy2@NT = 0
+			repeat map_makesimpleroom_arg3
+				dx@NT = cnt + map_makesimpleroom_arg1
+				if ( istileempty(dx@NT, map_makesimpleroom_arg2) ) {
+					fy1@NT = 1
+				}
+				if ( istileempty(dx@NT, map_makesimpleroom_arg2 + map_makesimpleroom_arg4 - 1) ) {
+					fy2@NT = 1
+				}
+			loop
+
+			repeat map_makesimpleroom_arg4
+				dy@NT = cnt + map_makesimpleroom_arg2
+				if ( istileempty(map_makesimpleroom_arg1, dy@NT) ) {
+					fx1@NT = 1
+				}
+				if ( istileempty(map_makesimpleroom_arg1 + map_makesimpleroom_arg3 - 1, dy@NT)) {
+					fx2@NT = 1
+				}
+			loop
+			if (empty@NT > randomwalk_max@NT & fx1@NT = 1 & fx2@NT = 1 & fy1@NT = 1 & fy2@NT = 1) {
+				break
+			}
+		}
+		repeat 1000
+			dx@NT = rnd(map_makesimpleroom_arg3) + map_makesimpleroom_arg1
+			dy@NT = rnd(map_makesimpleroom_arg4) + map_makesimpleroom_arg2
+			if ( istileempty(dx@NT, dy@NT) | empty@NT == 0 ) {
+				break
+			}
+		loop
+		direction@NT = rnd(4)
+		repeat 20
+			dx@NT += digref@NT(direction@NT*2)
+			dy@NT += digref@NT(direction@NT*2+1)
+			if ( dx@NT >= map_makesimpleroom_arg1 + map_makesimpleroom_arg3 | dx@NT < map_makesimpleroom_arg1 | dy@NT >= map_makesimpleroom_arg2 + map_makesimpleroom_arg4 | dy@NT < map_makesimpleroom_arg2 ) {
+				break 
+			}
+			if (istilewall(dx@NT, dy@NT)) {
+				map(dx@NT, dy@NT, 0) = map_makesimpleroom_arg5
+				empty@NT++
+			}
+			direction@NT = (direction@NT + 2 + (1 + rnd(3))) \ 4
+		loop
+	loop
+	return
+
+#deffunc map_makesimpleroom2 int map_makesimpleroom_arg1, int map_makesimpleroom_arg2, int map_makesimpleroom_arg3, int map_makesimpleroom_arg4, int map_makesimpleroom_arg5, int map_makesimpleroom_arg6
+	repeat map_makesimpleroom_arg4
+		locvar_map_line_ty = cnt + map_makesimpleroom_arg2
+		if ( locvar_map_line_ty >= mdata(MDATA_HEIGHT) | locvar_map_line_ty < 0 ) {
+			continue
+		}
+		repeat map_makesimpleroom_arg3
+			locvar_map_line_tx = cnt + map_makesimpleroom_arg1
+			if ( locvar_map_line_tx >= mdata(MDATA_WIDTH) | locvar_map_line_tx < 0 ) {
+				continue
+			}
+			if ( locvar_map_line_tx == map_makesimpleroom_arg1 | locvar_map_line_ty == map_makesimpleroom_arg2 | locvar_map_line_tx == map_makesimpleroom_arg1 + map_makesimpleroom_arg3 - 1 | locvar_map_line_ty == map_makesimpleroom_arg2 + map_makesimpleroom_arg4 - 1 ) {
+				if ( map_makesimpleroom_arg6 >= 0 ) {
+					map(locvar_map_line_tx, locvar_map_line_ty, 0) = map_makesimpleroom_arg6
+				}	
+			} else {
+				if ( map_makesimpleroom_arg5 >= 0 ) {
+					map(locvar_map_line_tx, locvar_map_line_ty, 0) = map_makesimpleroom_arg5
+				}	
+			}
+		loop
+	loop
+	return
+
+#deffunc map_makesimpleroom_circular int map_makesimpleroom_arg1, int map_makesimpleroom_arg2, int map_makesimpleroom_arg3, int map_makesimpleroom_arg4, int map_makesimpleroom_arg5, int map_makesimpleroom_arg6
+	map_makesimpleroom_radp1 = (map_makesimpleroom_arg3+1) * (map_makesimpleroom_arg3+1) * (map_makesimpleroom_arg4+1) * (map_makesimpleroom_arg4+1)
+	map_makesimpleroom_rad = map_makesimpleroom_arg3 * map_makesimpleroom_arg3 * map_makesimpleroom_arg4 * map_makesimpleroom_arg4
+	map_makesimpleroom_radm1 = (map_makesimpleroom_arg3-1) * (map_makesimpleroom_arg3-1) * (map_makesimpleroom_arg4-1) * (map_makesimpleroom_arg4-1)
+	repeat map_makesimpleroom_arg4 * 2 + 1
+		locvar_map_line_ty = cnt + map_makesimpleroom_arg2 - map_makesimpleroom_arg4
+		locvar_map_line_dy = cnt - map_makesimpleroom_arg4
+		repeat map_makesimpleroom_arg3 * 2 + 1
+			locvar_map_line_tx = cnt + map_makesimpleroom_arg1 - map_makesimpleroom_arg3
+			locvar_map_line_dx = cnt - map_makesimpleroom_arg3
+			if ( locvar_map_line_tx >= mdata(MDATA_WIDTH) | locvar_map_line_tx < 0 | locvar_map_line_ty >= mdata(MDATA_HEIGHT) | locvar_map_line_ty < 0 ) {
+				continue
+			}
+			map_makesimpleroom_distp1 = locvar_map_line_dx * locvar_map_line_dx * (map_makesimpleroom_arg4+1) * (map_makesimpleroom_arg4+1) + locvar_map_line_dy * locvar_map_line_dy * (map_makesimpleroom_arg3+1) * (map_makesimpleroom_arg3+1)
+			map_makesimpleroom_dist = locvar_map_line_dx * locvar_map_line_dx * map_makesimpleroom_arg4 * map_makesimpleroom_arg4 + locvar_map_line_dy * locvar_map_line_dy * map_makesimpleroom_arg3 * map_makesimpleroom_arg3
+			map_makesimpleroom_distm1 = locvar_map_line_dx * locvar_map_line_dx * (map_makesimpleroom_arg4-1) * (map_makesimpleroom_arg4-1) + locvar_map_line_dy * locvar_map_line_dy * (map_makesimpleroom_arg3-1) * (map_makesimpleroom_arg3-1)
+			if ( map_makesimpleroom_distp1 <= map_makesimpleroom_radp1 + 1) {
+				if ( map_makesimpleroom_arg6 >= 0 ) {
+					map(locvar_map_line_tx, locvar_map_line_ty, 0) = map_makesimpleroom_arg6
+				}  
+			}
+			if ( map_makesimpleroom_arg5 == map_makesimpleroom_arg6 | map_makesimpleroom_arg5 < 0 ) {
+				continue
+			}
+			if ( map_makesimpleroom_distm1 <= map_makesimpleroom_radm1 & locvar_map_line_dx < map_makesimpleroom_arg3 & locvar_map_line_dx > (-1) * map_makesimpleroom_arg3 & locvar_map_line_dy < map_makesimpleroom_arg4 & locvar_map_line_dy > (-1) * map_makesimpleroom_arg4 ) {
+				map(locvar_map_line_tx, locvar_map_line_ty, 0) = map_makesimpleroom_arg5
+			}
+			if ( (locvar_map_line_dx == map_makesimpleroom_arg3 - 1 | (-1) * locvar_map_line_dx == map_makesimpleroom_arg3 - 1 ) & locvar_map_line_dy < map_makesimpleroom_arg4 / 2 & locvar_map_line_dy * (-1) < map_makesimpleroom_arg4 / 2 ) {
+				map(locvar_map_line_tx, locvar_map_line_ty, 0) = map_makesimpleroom_arg5
+			}
+			if ( (locvar_map_line_dy == map_makesimpleroom_arg4 - 1 | (-1) * locvar_map_line_dy == map_makesimpleroom_arg4 - 1 ) & locvar_map_line_dx < map_makesimpleroom_arg3 / 2 & locvar_map_line_dx * (-1) < map_makesimpleroom_arg3 / 2 ) {
+				map(locvar_map_line_tx, locvar_map_line_ty, 0) = map_makesimpleroom_arg5
+			}
+		loop
+	loop
+	return
+
+#deffunc map_createroom_there int map_makesimpleroom_arg1, int map_makesimpleroom_arg2, int map_makesimpleroom_arg3, int map_makesimpleroom_arg4
+	if ( map_makesimpleroom_arg1 + map_makesimpleroom_arg3 >= mdata(MDATA_WIDTH) - 1 | map_makesimpleroom_arg2 + map_makesimpleroom_arg4 >= mdata(MDATA_HEIGHT) - 1 | map_makesimpleroom_arg1 < 1 | map_makesimpleroom_arg2 < 1 ) {
+		return
+	}
+	roomwidth(roomsum) = map_makesimpleroom_arg3
+	roomheight(roomsum) = map_makesimpleroom_arg4
+	roomx(roomsum) = map_makesimpleroom_arg1
+	roomy(roomsum) = map_makesimpleroom_arg2
+	cr = roomsum
+	roomsum++
+	return
+
+#deffunc map_createroom_circular int map_makesimpleroom_arg1, int map_makesimpleroom_arg2, int map_makesimpleroom_arg3, int map_makesimpleroom_arg4, int map_makesimpleroom_arg5, int map_makesimpleroom_arg6
+	roomwidth(roomsum) = map_makesimpleroom_arg3 * 2 + 1
+	roomheight(roomsum) = map_makesimpleroom_arg4 * 2 + 1
+	roomx(roomsum) = map_makesimpleroom_arg1 - map_makesimpleroom_arg3
+	roomy(roomsum) = map_makesimpleroom_arg2 - map_makesimpleroom_arg4
+	map_makesimpleroom_circular map_makesimpleroom_arg1, map_makesimpleroom_arg2, map_makesimpleroom_arg3, map_makesimpleroom_arg4, map_makesimpleroom_arg5, map_makesimpleroom_arg6
+	cr = roomsum
+	roomsum++
+	map_furniture_populate
+	return 
+
+#deffunc map_createroom_randomwalk int map_makesimpleroom_arg1, int map_makesimpleroom_arg2, int map_makesimpleroom_arg3, int map_makesimpleroom_arg4, int rw_percent, int map_makesimpleroom_arg5, int map_makesimpleroom_arg6
+	if ( map_makesimpleroom_arg6 > (-1) ) {
+		repeat map_makesimpleroom_arg3
+			dx@NT = cnt + map_makesimpleroom_arg1
+			repeat map_makesimpleroom_arg4
+				dy@NT = cnt + map_makesimpleroom_arg2
+				if ( dx@NT < 0 | dy@NT < 0 | dx@NT >= mdata(MDATA_WIDTH) | dy@NT >= mdata(MDATA_HEIGHT) ) {
+					continue
+				}
+				map(dx@NT, dy@NT, 0) = map_makesimpleroom_arg6
+				cleanatile dx@NT, dy@NT, map_makesimpleroom_arg6
+			loop
+		loop
+	}
+	roomwidth(roomsum) = map_makesimpleroom_arg3 
+	roomheight(roomsum) = map_makesimpleroom_arg4
+	roomx(roomsum) = map_makesimpleroom_arg1
+	roomy(roomsum) = map_makesimpleroom_arg2
+	map_makesimpleroom_randomwalk map_makesimpleroom_arg1 + 1, map_makesimpleroom_arg2 + 1, map_makesimpleroom_arg3 - 2, map_makesimpleroom_arg4 - 2, rw_percent, 1, map_makesimpleroom_arg5
+	cr = roomsum
+	roomsum++
+	map_furniture_populate
+	return 1
+
+#deffunc map_createroom_adjacent int roomposw, int roomposh, int map_makesimpleroom_arg5, int map_makesimpleroom_arg6
+	if ( roomposw > mdata(MDATA_WIDTH) | roomposh > mdata(MDATA_HEIGHT) | roomposw < 3 | roomposh < 3 ) {
+		return
+	}
+	roomposxlimit@NT = mdata(MDATA_WIDTH) - roomposw + 1
+	roomposylimit@NT = mdata(MDATA_HEIGHT) - roomposh + 1
+	mdataarea@NT = roomposxlimit@NT * roomposylimit@NT
+	dim way@NT, mdataarea@NT
+	repeat mdataarea@NT
+		way@NT(cnt) = cnt
+	loop
+	dimmix way@NT
+	repeat mdataarea@NT
+		roomposxl@NT = way@NT(cnt) \ roomposxlimit@NT
+		roomposyl@NT = way@NT(cnt) / roomposxlimit@NT
+		p@NT = 1
+		p2@NT = 0
+		repeat roomposw
+			dx@NT = roomposxl@NT + cnt
+			repeat roomposh
+				dy@NT = roomposyl@NT + cnt
+				p@NT = p@NT & istilewall(dx@NT, dy@NT)
+			loop
+		loop
+		repeat roomposw - 2
+			p2@NT = p2@NT | istileempty(roomposxl@NT+cnt+1, roomposyl@NT-1) | istileempty(roomposxl@NT+cnt+1, roomposyl@NT+roomposh)
+		loop
+		repeat roomposh - 2
+			p2@NT = p2@NT | istileempty(roomposxl@NT-1, roomposyl@NT+cnt+1) | istileempty(roomposxl@NT+roomposw, roomposyl@NT+cnt+1)
+		loop
+		if (p@NT == 0 | p2@NT == 0) {
+			continue
+		}
+		roominterconnect = 1
+		map_createroom_specific roomposxl@NT,roomposyl@NT,roomposw,roomposh,map_makesimpleroom_arg5,map_makesimpleroom_arg6
+		break
+	loop
+	if (stat == 1) {return 1}
+	return 0
+
+#deffunc map_createroom_specific int roomposx, int roomposy, int roomposw, int roomposh, int map_makesimpleroom_arg5, int map_makesimpleroom_arg6
+	roomwidth(roomsum) = roomposw
+	roomheight(roomsum) = roomposh
+	roomx(roomsum) = roomposx
+	roomy(roomsum) = roomposy
+	roompos = (-1)
+	map_createroom_custom map_makesimpleroom_arg5, map_makesimpleroom_arg6
+	if (stat == 0) {
+		return 0
+	}
+	return 1
+
+#deffunc map_createroom_custom int map_makesimpleroom_arg5, int map_makesimpleroom_arg6
+	cr = roomsum
+	f = 0
+	repeat 1
+		x = roomx(cr) + roomwidth(cr) - 1
+		y = roomy(cr) + roomheight(cr) - 1
+		if ( x < 0 | y < 0 | x >= mdata(MDATA_WIDTH) | y >= mdata(MDATA_HEIGHT) ) {
+			continue
+		}
+		// Doesn't intersect with other room
+		success@NT = TRUE
+		repeat cr
+			x1 = roomx(cnt) - 1 - roomx(cr)
+			x2 = -roomwidth(cnt) - 2 < x1 & x1 < roomwidth(cr)
+			y1 = roomy(cnt) - 1 - roomy(cr)
+			y2 = -roomheight(cnt) - 2 < y1 & y1 < roomheight(cr)
+			if (roominterconnect > 0) {
+				x2 = roomx(cr) <= roomx(cnt) + roomwidth(cnt) - 2 & roomx(cnt) <= roomx(cr) + roomwidth(cr) - 2
+				y2 = roomy(cr) <= roomy(cnt) + roomheight(cnt) - 2 & roomy(cnt) <= roomy(cr) + roomheight(cr) - 2
+			}
+			if ( x2 & y2 ) {
+				success@NT = FALSE
+				break
+			}
+		loop
+		if ( success@NT != TRUE ) {
+			continue
+		}
+		roomsum++
+		f = 1
+		break
+	loop
+	if ( f == 0 ) {
+		return 0
+	}
+	repeat roomheight(cr)
+		y = roomy(cr) + cnt
+		cnt2 = cnt
+		repeat roomwidth(cr)
+			x = roomx(cr) + cnt
+			if ( x < 0 | y < 0 | x >= mdata(MDATA_WIDTH) | y >= mdata(MDATA_HEIGHT) ) { continue }
+			if ( map_makesimpleroom_arg5 >= 0 ) {
+				map(x, y, 0) = map_makesimpleroom_arg5
+			}
+			if ( cnt == 0 | cnt2 == 0 | cnt == roomwidth(cr) - 1 | cnt2 == roomheight(cr) - 1 ) {
+				if ( map_makesimpleroom_arg6 >= 0 ) {
+					map(x, y, 0) = map_makesimpleroom_arg6
+				}
+			}
+		loop
+	loop
+	repeat 4
+		rdpos = cnt
+		map_createroomdoor_custom
+	loop
+	map_furniture_populate
+	roominterconnect = 0
+	return 1
+
+#deffunc map_createroomdoor_surround
+	roomdoor = 2
+	repeat 4
+		rdpos = cnt
+		map_createroomdoor_custom
+	loop
+
+#deffunc map_createroomdoor_custom
+	if ( rdpos == 3 | rdpos == 0 ) {
+		if ( roomwidth(cr) < 3 ) {
+			return
+		}
+		p = roomwidth(cr)
+	}
+	else {
+		if ( roomheight(cr) < 3 ) {
+			return
+		}
+		p = roomheight(cr)
+	}
+	dim rddoorpos
+	repeat p - 2
+		rddoorpos(cnt) = cnt
+	loop
+	rndshuffle rddoorpos
+	repeat p - 2
+		if ( rdpos == 3 ) {
+			x = rddoorpos(cnt) + roomx(cr) + 1
+			y = roomy(cr) + roomheight(cr) - 1
+			p = 0, 0, -1, 1
+		}
+		if ( rdpos == 0 ) {
+			x = rddoorpos(cnt) + roomx(cr) + 1
+			y = roomy(cr)
+			p = 0, 0, -1, 1
+		}
+		if ( rdpos == 1 ) {
+			y = rddoorpos(cnt) + roomy(cr) + 1
+			x = roomx(cr) + roomwidth(cr) - 1
+			p = -1, 1, 0, 0
+		}
+		if ( rdpos == 2 ) {
+			y = rddoorpos(cnt) + roomy(cr) + 1
+			x = roomx(cr)
+			p = -1, 1, 0, 0
+		}
+		f = 1
+		repeat 2
+			dx = x + p(cnt)
+			dy = y + p(cnt + 2)
+			if ( (dx >= 0 & dy >= 0 & dx < mdata(MDATA_WIDTH) & dy < mdata(MDATA_HEIGHT)) == 0 ) {
+				f = 0
+				break
+			}
+			if ( istilewall(dx, dy) ) {
+				f = 0
+				break
+			}
+		loop
+		if ( x < 0 | y < 0 | x >= mdata(MDATA_WIDTH) | y >= mdata(MDATA_HEIGHT) ) {
+			continue
+		}
+		// Don't create Door on Door
+		cell_featread x, y
+		if ( feat(1) == CELL_FEATURE_DOOR_CLOSED ) {
+			continue
+		}
+		if ( f == 1 ) {
+			map(x, y, 0) = 3
+			if ( roomdoor != 3 ) {
+				cell_featset x, y, tile_doorclosed, CELL_FEATURE_DOOR_CLOSED, rnd(limit(gdata(GDATA_LEVEL) * 3 / 2 + 1, 1, 300))
+			}
+			break
+		}
+	loop
+	return
+
+*map_createDungeonSample
+	mdata(MDATA_WIDTH) = 100
+	mdata(MDATA_HEIGHT) = 30
+	map_initialize
+
+	no_convert_tile@NT = 1
+	map_makesimpleroom2 0, 0, 100, 30, 330, 330
+	map_placeupstairs 3, 3
+	map_placedownstairs 3, 6
+	repeat 231
+		dx@nt = cnt \ 33
+		dy@nt = cnt / 33
+		map(dx@nt * 3 + 1, dy@nt * 3 + 1, 0) = cnt
+		map(dx@nt * 3 + 2, dy@nt * 3 + 1, 0) = cnt
+		map(dx@nt * 3 + 1, dy@nt * 3 + 2, 0) = cnt
+		map(dx@nt * 3 + 2, dy@nt * 3 + 2, 0) = cnt
+	loop
+	
+	repeat 12
+		dx@nt = cnt \ 33
+		dy@nt = cnt / 33
+		map(dx@nt * 3 + 1, dy@nt * 3 + 24, 0) = cnt + 396
+		map(dx@nt * 3 + 2, dy@nt * 3 + 24, 0) = cnt + 396
+		map(dx@nt * 3 + 1, dy@nt * 3 + 25, 0) = cnt + 396
+		map(dx@nt * 3 + 2, dy@nt * 3 + 25, 0) = cnt + 396
+	loop
+
+	repeat 33
+		dx@nt = cnt \ 33
+		dy@nt = cnt / 33
+		map(dx@nt * 3 + 1, dy@nt * 3 + 27, 0) = cnt + 462
+		map(dx@nt * 3 + 2, dy@nt * 3 + 27, 0) = cnt + 462
+		map(dx@nt * 3 + 1, dy@nt * 3 + 28, 0) = cnt + 462
+		map(dx@nt * 3 + 2, dy@nt * 3 + 28, 0) = cnt + 462
+	loop
+
+	return
+
+*map_createDungeonDebug
+	mdata(MDATA_WIDTH) = 40
+	mdata(MDATA_HEIGHT) = 40
+	map_initialize
+
+	map_makesimpleroom_randomwalk 1, 1, 38, 38, 20, 0, 100
+
+	map_validate_and_clean
+	return
+
+*map_createDungeonCaveHobbit
+	mdata(MDATA_WIDTH) = 50
+	mdata(MDATA_HEIGHT) = 50
+	mdata(MDATA_MODERATE_CROWD) = mdata(MDATA_WIDTH) * mdata(MDATA_HEIGHT) / 20
+	map_initialize
+
+	map_makesimpleroom2 3, 3, 44, 44, 3, 3
+	map_find_points 12, 5, 20
+	map_makesimpleroom2 3, 3, 44, 44, 0, 0
+
+    repeat count@NT
+        map_furniture_setgroup 911
+        map_createroom_circular matrix_pt@NT(0,cnt), matrix_pt@NT(1,cnt), 2+rnd(2), 2+rnd(2), 3, 3
+    loop
+	repeat count@NT
+		dighole_directiondrunk matrix_pt@NT(0,cnt), matrix_pt@NT(1,cnt), matrix_pt@NT(0,matrix_pt@NT(2,cnt)), matrix_pt@NT(1,matrix_pt@NT(2,cnt)), 1, 1+rnd(2), 100
+		if ( rnd(2) == 0 ) {
+			p@NT = ( cnt + count@NT / 2 ) \ count@NT
+			dighole_directiondrunk matrix_pt@NT(0,cnt), matrix_pt@NT(1,cnt), matrix_pt@NT(0,p@NT), matrix_pt@NT(1,p@NT), 1, 1+rnd(2), 100
+		}
+	loop
+	
+	repeat 6
+		map_furniture_setgroup 112
+		map_createroom_adjacent 5 + rnd(3), 5 + rnd(3), 3, 1
+	loop
+	repeat 3
+		map_furniture_setgroup 112 + rnd(3)
+		map_createroom_adjacent 4 + rnd(2), 4 + rnd(2), 92, 82
+	loop
+
+    map_placetwostairs_on_point 50
+	map_validate_and_clean
+	return
+
+*map_createDungeonCaveSlums
+	mdata(MDATA_WIDTH) = 40 + rnd(11)
+	mdata(MDATA_HEIGHT) = 40 + rnd(11)
+	map_initialize
+
+	repeat mdata(MDATA_WIDTH) - 2
+		dx@NT = cnt + 1
+		repeat mdata(MDATA_HEIGHT) - 2
+			dy@NT = cnt + 1
+			map(dx@NT, dy@NT, 0) = 1
+		loop
+	loop
+
+	map_find_rooms_binary_partition 6 + rnd(3), 6 + rnd(3), 100
+	p@NT = rnd(3)
+	repeat bp_count@NT - 1
+		dx@NT = matrix_bp@NT(0, cnt) + (matrix_bp@NT(2, cnt) + 1) / 2
+		dy@NT = matrix_bp@NT(1, cnt) + (matrix_bp@NT(3, cnt) + 1) / 2
+		tx@NT = matrix_bp@NT(0, cnt+1) + (matrix_bp@NT(2, cnt+1) + 1) / 2
+		ty@NT = matrix_bp@NT(1, cnt+1) + (matrix_bp@NT(3, cnt+1) + 1) / 2
+		dighole_dogleg dx@NT, dy@NT, tx@NT, ty@NT, 100, 20
+	loop
+	repeat bp_count@NT
+		if ( cnt \ 3 != p@NT ) { continue }
+		map_makesimpleroom2 matrix_bp@NT(0, cnt) - 1, matrix_bp@NT(1, cnt) - 1, matrix_bp@NT(2, cnt) + 3, matrix_bp@NT(3, cnt) + 3, 100, (-1)
+		roominterconnect = 1
+		// fur_spawn_rate_multiplier@NT = 4
+		map_furniture_setgroup 10
+		map_createroom_randomwalk matrix_bp@NT(0, cnt) + 1, matrix_bp@NT(1, cnt) + 1, matrix_bp@NT(2, cnt) - 1, matrix_bp@NT(3, cnt) - 1, 70, 90 + rnd(3), 80 + rnd(3)
+		map_createroomdoor_surround
+	loop
+
+	dighole_diffusion_limited_aggregation 100, 3
+
+	repeat 4 + rnd(5)
+		roominterconnect = 1
+		map_furniture_setgroup 10
+		map_createroom_adjacent 4 + rnd(3), 4 + rnd(3), 90, 80
+	loop
+	
+	if ( mdata(MDATA_TILESET) == 16 ) {
+		repeat 6 + rnd(6)
+			map_make_plug 4 + rnd(3), 3 + rnd(3), 1
+		loop
+	}
+
+	map_find_points 10, 15, 30
+    map_placetwostairs_on_point 60
+	
+	map_validate_and_clean
+	return
+
+*map_createDungeonNestDragon
+	mdata(MDATA_WIDTH) = 50
+	mdata(MDATA_HEIGHT) = 50
+	mdata(MDATA_MODERATE_CROWD) = mdata(MDATA_WIDTH) * mdata(MDATA_HEIGHT) / 12
+	map_initialize
+	
+	tile_default = 468
+	tile_fog = 535
+	tile_tunnel = 38, 5, 5
+	tile_wall = 468
+	tile_room = 38, 5, 5
+
+	dighole_cellular_automata 3, 3, 44, 44, 40, 4, 2, 5, 100, 0
+	dighole_cellular_automata 16, 16, 18, 18, 40, 4, 2, 5, 100, (-1)
+	dighole_cellular_automata 16, 16, 18, 18, 40, 4, 3, 5, 100, (-1)
+	map_createroom_circular mdata(MDATA_WIDTH) / 2, mdata(MDATA_HEIGHT) / 2, 5, 5, 3, 3
+	vaultroom@NT = 1	
+
+	map_find_points 10, 5, 30
+    repeat count@NT
+        map_makesimpleroom_circular matrix_pt@NT(0,cnt), matrix_pt@NT(1,cnt), 1+rnd(2), 1+rnd(2), 3, 3
+    loop
+	repeat count@NT
+		dighole_directiondrunk matrix_pt@NT(0,cnt), matrix_pt@NT(1,cnt), matrix_pt@NT(0,matrix_pt@NT(2,cnt)), matrix_pt@NT(1,matrix_pt@NT(2,cnt)), 1, 1+rnd(2), 100
+	loop
+	rsquare@NT = 120 + rnd(80)
+	repeat 30
+		dx@NT = cnt - 15
+		repeat 30
+			dy@NT = cnt - 15
+			if ( dx@NT * dx@NT + dy@NT * dy@NT > rsquare@NT ) { 
+				continue 
+			}
+			if ( istilewall(dx@NT + 25, dy@NT + 25) ) {
+				map(dx@NT + 25, dy@NT + 25, 0) = 85
+			}
+		loop
+	loop
+	repeat 3 + rnd(4)
+		map_make_plug 5 + rnd(3), 4 + rnd(3), 85
+	loop
+
+    map_placetwostairs_on_point 50
+	map_validate_and_clean
+	return
+
+*map_createDungeonNestSpider
+	mdata(MDATA_WIDTH) = 40
+	mdata(MDATA_HEIGHT) = 40
+	mdata(MDATA_MODERATE_CROWD) = mdata(MDATA_WIDTH) * mdata(MDATA_HEIGHT) / 12
+	map_initialize
+
+	dighole_voronoi_diagram 1, 1, 38, 38, 100, 8, 1, 3
+	dighole_diffusion_limited_aggregation 150, 3
+
+	map_find_points 15, 5, 30
+    repeat count@NT
+        map_createroom_circular matrix_pt@NT(0,cnt), matrix_pt@NT(1,cnt), 1+rnd(2), 1+rnd(2), 3, 3
+	loop
+	dighole_diffusion_limited_aggregation 100, 3
+	
+    map_placetwostairs_on_point 50
+	map_validate_and_clean
+	return
+
+*map_createDungeonCaveSpiral
+	mdata(MDATA_WIDTH) = 40
+	mdata(MDATA_HEIGHT) = 40
+	mdata(MDATA_MODERATE_CROWD) = mdata(MDATA_WIDTH) * mdata(MDATA_HEIGHT) / 12
+	map_initialize
+
+	map_createroom_circular 20, 20, 4, 4, 100, 100
+
+	map_spiral = rnd(4)
+	dighole_direction 20, 20, map_spiral, 2, 0, 0, 0, 0, 0, 100
+	repeat 9
+		dighole_direction dx, dy, (map_spiral + cnt + 1) \ 4, 8 + cnt / 2 * 8, 3, 1, 3, 1, 3 + (cnt / 7 * 3), 100
+	loop
+	map_placeupstairs dx, dy
+
+	repeat 10
+		roominterconnect = 1
+		roomdoor = 3
+		map_createroom_adjacent 4 + rnd(3), 4 + rnd(3), 3, 1
+	loop
+	map_placedownstairs 20, 20
+	map_validate_and_clean
+	return
+
+*map_createDungeonFortKnightCastle
+	mdata(MDATA_WIDTH) = 60
+	mdata(MDATA_HEIGHT) = 40
+	mdata(MDATA_MODERATE_CROWD) = mdata(MDATA_WIDTH) * mdata(MDATA_HEIGHT) / 12
+	map_initialize
+
+	if ( rnd(2) == 0 | gdata(GDATA_LEVEL) == adata(ADATA_MIN_LEVEL, gdata(GDATA_AREA)) ) {
+		// Draw forest
+		dighole_cellular_automata 0, 0, 60, 40, 40, 4, 3, 5, 100, 86
+	} else {
+		dighole_cellular_automata 0, 0, 60, 40, 40, 4, 3, 5, 100, 1
+	}
+
+	rivertype@NT = rnd(4)
+	if ( rivertype@NT == 1 ) {
+		dighole_directiondrunk 0, rnd(mdata(MDATA_HEIGHT)), mdata(MDATA_WIDTH) - 1, rnd(mdata(MDATA_HEIGHT)), 1, 2, 94
+	}
+	if ( rivertype@NT >= 2 ) {
+		dighole_directiondrunk rnd(mdata(MDATA_WIDTH)), 0, rnd(mdata(MDATA_WIDTH)), mdata(MDATA_HEIGHT) - 1, 1, 2, 94
+	}
+
+	// Find Castle
+	map_find_points 6, 5, 50
+	castlex@NT = 15 + (rnd(2) == 0) * 30
+	castley@NT = 10 + (rnd(2) == 0) * 20
+	repeat count@NT
+		if ( matrix_pt@NT(0,cnt) > 8 & matrix_pt@NT(0,cnt) < 52 & matrix_pt@NT(1,cnt) > 8 & matrix_pt@NT(1,cnt) < 32 ) {
+			if ( dist(mdata(MDATA_WIDTH)/2, mdata(MDATA_HEIGHT)/2, matrix_pt@NT(0,cnt), matrix_pt@NT(1,cnt)) < 20 ) { continue }
+			castlex@NT = matrix_pt@NT(0,cnt) 
+			castley@NT = matrix_pt@NT(1,cnt)
+		}
+	loop
+
+	// Connect Path
+	repeat count@NT
+		dighole_directiondrunk matrix_pt@NT(0,cnt), matrix_pt@NT(1,cnt), matrix_pt@NT(0,matrix_pt@NT(2,cnt)), matrix_pt@NT(1,matrix_pt@NT(2,cnt)), 1, 1+rnd(2), 100
+		// dighole_directiondrunk matrix_pt@NT(0,cnt), matrix_pt@NT(1,cnt), matrix_pt@NT(0,matrix_pt@NT(2,cnt)), matrix_pt@NT(1,matrix_pt@NT(2,cnt)), 0, 0, 92
+	loop
+
+	// Draw little rooms along the path
+	repeat count@NT
+		if ( dist(castlex@NT, castley@NT, matrix_pt@NT(0,cnt), matrix_pt@NT(1,cnt)) < 20 ) { continue }
+		if ( rnd(3) == 0 ) {
+			map_makesimpleroom_circular castlex@NT + 5, castley@NT + 5, 3, 3, 100, 100
+			map_createroom_specific matrix_pt@NT(0,cnt) - 2, matrix_pt@NT(1,cnt) - 2, 5, 5, 90, 80
+		}
+	loop
+
+	repeat 6 + rnd(4)
+		map_make_plug 5 + rnd(3), 4 + rnd(3), 88 + rnd(2)
+	loop
+
+	// Draw castle
+	castlex@NT -= 15
+	castley@NT -= 15
+	map_makesimpleroom2 castlex@NT + 3, castley@NT + 2, 22, 27, 92, 92
+	map_makesimpleroom2 castlex@NT + 2, castley@NT + 3, 27, 22, 92, 92
+	map_makesimpleroom_circular castlex@NT + 5, castley@NT + 5, 5, 5, 92, 92
+	map_makesimpleroom_circular castlex@NT + 5, castley@NT + 5, 3, 3, 91, 82
+	map_makesimpleroom_circular castlex@NT + 25, castley@NT + 5, 5, 5, 92, 92
+	map_makesimpleroom_circular castlex@NT + 25, castley@NT + 5, 3, 3, 91, 82
+	map_makesimpleroom_circular castlex@NT + 5, castley@NT + 25, 5, 5, 92, 92
+	map_makesimpleroom_circular castlex@NT + 5, castley@NT + 25, 3, 3, 91, 82
+	map_makesimpleroom_circular castlex@NT + 25, castley@NT + 25, 5, 5, 92, 92
+	map_makesimpleroom_circular castlex@NT + 25, castley@NT + 25, 3, 3, 91, 82
+	map_makesimpleroom2 castlex@NT + 8, castley@NT + 8, 15, 15, 81, 81
+	dighole_custom castlex@NT + 8, castley@NT + 8, 8, 8, 1, 1, 1, 1, 96
+	roominterconnect = 1
+	map_furniture_setgroup 232
+	map_createroom_specific castlex@NT + 4, castley@NT + 8, 4, 15, 91, 82
+	map_createroomdoor_surround
+	roominterconnect = 1
+	map_furniture_setgroup 232
+	map_createroom_specific castlex@NT + 23, castley@NT + 8, 4, 15, 91, 82
+	map_createroomdoor_surround
+	roominterconnect = 1
+	map_furniture_setgroup 232
+	map_createroom_specific castlex@NT + 8, castley@NT + 4, 15, 4, 91, 82
+	map_createroomdoor_surround
+	roominterconnect = 1
+	map_furniture_setgroup 232
+	map_createroom_specific castlex@NT + 8, castley@NT + 23, 15, 4, 91, 82
+	map_createroomdoor_surround
+	roominterconnect = 1
+	map_furniture_setgroup 231
+	map_createroom_specific castlex@NT + 11, castley@NT + 11, 9, 9, 92, 81
+	map_createroomdoor_surround
+	map_place_stairs_in_this_room 11
+	map_createroom_specific castlex@NT + 8, castley@NT + 8, 15, 15, 92, 81
+	vaultroom@NT = roomsum
+	repeat 20, 5
+		dx@NT = castlex@NT + cnt
+		repeat 20, 5
+			dy@NT = castley@NT + cnt
+			if ( dx@NT < 0 | dy@NT < 0 | dx@NT >= mdata(MDATA_WIDTH) | dy@NT >= mdata(MDATA_HEIGHT) ) { continue }
+			if ( map(dx@NT, dy@NT, 0) == 82 ) {
+				map(dx@NT, dy@NT, 0) = 81
+			}
+		loop
+	loop
+
+	// Make Random Rooms
+	repeat 7
+		roominterconnect = 1
+		map_furniture_setgroup 10
+		map_createroom_adjacent 4 + rnd(3), 4 + rnd(3), 90, 80
+	loop
+
+	// Cleanup
+	repeat mdata(MDATA_WIDTH)
+		map(cnt, 0, 0) = 82
+		map(cnt, mdata(MDATA_HEIGHT) - 1, 0) = 82
+		cleanatile cnt, 0
+		cleanatile cnt, mdata(MDATA_HEIGHT) - 1
+	loop
+	repeat mdata(MDATA_HEIGHT)
+		map(0, cnt, 0) = 82
+		map(mdata(MDATA_WIDTH) - 1, cnt, 0) = 82
+		cleanatile 0, cnt
+		cleanatile mdata(MDATA_WIDTH) - 1, cnt
+	loop
+	repeat mdata(MDATA_WIDTH) - 2
+		dx@NT = cnt + 1
+		repeat mdata(MDATA_HEIGHT) - 2
+			dy@NT = cnt + 1
+			if (map(dx@NT, dy@NT, 0) == 94) { 
+				map(dx@NT, dy@NT, 0) = 84 
+			}
+		loop
+	loop
+
+	//map_placetwostairs 100
+	map_validate_and_clean
+	return
+
+*map_createDungeonFortHeroQuest
+	mdata(MDATA_WIDTH) = 27
+	mdata(MDATA_HEIGHT) = 39
+	mdata(MDATA_MODERATE_CROWD) = mdata(MDATA_WIDTH) * mdata(MDATA_HEIGHT) / 12
+	map_initialize
+
+	dighole_custom 1, 1, 3, 5, 1, 1, 11, 8, 100
+
+	p@NT = rnd(2)
+
+	map_makesimpleroom2 9, 6, 9, 9, 100, 100
+	map_makesimpleroom2 10, 7, 7, 7, 1, 1
+	fur_spawn_rate_multiplier@NT = 2
+	map_furniture_setgroup 150 + 10 * rnd(4)
+	roomwall = 2
+	roomdoor = 2
+	map_createroom_specific 10, 7, 7, 7, 3, 1
+	if (p@NT == 0) {
+		vaultroom@NT = roomsum
+		map_place_stairs_in_this_room 11
+	}
+
+	map_makesimpleroom2 9, 24, 9, 9, 100, 100
+	map_makesimpleroom2 10, 25, 7, 7, 1, 1
+	fur_spawn_rate_multiplier@NT = 2
+	map_furniture_setgroup 150 + 10 * rnd(4)
+	roomwall = 2
+	roomdoor = 2
+	map_createroom_specific 10, 25, 7, 7, 3, 1
+	if (p@NT == 1) {
+		vaultroom@NT = roomsum
+		map_place_stairs_in_this_room 11
+	}
+
+	repeat 30
+		roominterconnect = 1
+		map_furniture_setgroup 10
+		map_createroom_adjacent 5 + rnd(2), 4 + rnd(2), 90 + rnd(3), 1
+	loop
+
+	// map_placetwostairs 40
+	map_validate_and_clean
+	return
+
+*map_createDungeonFortPalaceGrounds
+	mdata(MDATA_WIDTH) = 45
+	mdata(MDATA_HEIGHT) = 45
+	mdata(MDATA_MODERATE_CROWD) = mdata(MDATA_WIDTH) * mdata(MDATA_HEIGHT) / 12
+	map_initialize
+
+	repeat 3
+		dighole_custom 1, 1, 4, 4, 1, 1, 13, 13, 100
+	loop
+
+	// 0 # 1
+	// # # #
+	// 2 # 3
+	repeat 4
+		dx@NT = 1 + (cnt\2==1) * 28
+		dy@NT = 1 + (cnt/2==1) * 28
+		p@NT = rnd(4)
+
+		if ( p@NT == 0 ) {
+			// Hedgemaze
+			map_makesimpleroom2 dx@NT, dy@NT, 15, 15, 86, 86
+			dighole_custom dx@NT, dy@NT, 8, 8, 1, 1, 1, 1, 100
+		}
+		if ( p@NT == 1 ) {
+			// Pond
+			map_makesimpleroom2 dx@NT + 1, dy@NT + 1, 13, 13, 91, 91
+			dighole_perlin_noise dx@NT + 2, dy@NT + 2, 11, 11, 4, 48, 60, 94, 100, 86
+		}
+		if ( p@NT == 2 ) {
+			// Park
+			map_makesimpleroom2 dx@NT + 1, dy@NT + 1, 13, 13, 86, 86
+			dighole_cellular_automata dx@NT, dy@NT, 15, 15, 40, 4, 5, 5, 100, (-1)
+			map_makesimpleroom2 dx@NT + 6, dy@NT + 1, 3, 13, 100, 100
+			map_makesimpleroom2 dx@NT + 1, dy@NT + 6, 13, 3, 100, 100
+			map_makesimpleroom_circular dx@NT + 7, dy@NT + 7, 3, 3, 94, 94
+		}
+	loop
+
+	// Plaza
+	// # 1 #
+	// 3 # 5
+	// # 7 #
+	p@NT = rnd(4) * 2 + 1
+	dx@NT = 1 + p@NT \ 3 * 14
+	dy@NT = 1 + p@NT / 3 * 14
+	map_makesimpleroom2 dx@NT + 1, dy@NT + 1, 13, 13, 92, 92
+	map_makesimpleroom2 dx@NT + 2, dy@NT + 2, 11, 11, 91, 81
+	map_makesimpleroom2 dx@NT + 6, dy@NT + 1, 3, 13, 100, 100
+	map_makesimpleroom2 dx@NT + 1, dy@NT + 6, 13, 3, 100, 100
+	map_createroom_there dx@NT + 2, dy@NT + 2, 11, 11
+	vaultroom@NT = roomsum
+	map_place_stairs_in_this_room 11
+	
+	repeat 5
+		roominterconnect = 1
+		fur_spawn_rate_multiplier@NT = 2
+		map_furniture_setgroup 150 + 10 * rnd(4)
+		map_createroom_adjacent 7 + rnd(4), 7 + rnd(4), 91, 1
+	loop
+	repeat 20
+		roominterconnect = 1
+		map_furniture_setgroup 10
+		map_createroom_adjacent 4 + rnd(3), 4 + rnd(3), 90, 1
+	loop
+
+	repeat mdata(MDATA_WIDTH) - 2
+		dx@NT = cnt + 1
+		repeat mdata(MDATA_HEIGHT) - 2
+			dy@NT = cnt + 1
+			if (map(dx@NT, dy@NT, 0) == 0) { 
+				map(dx@NT, dy@NT, 0) = 92 
+			}
+		loop
+	loop
+
+	repeat 4 + rnd(4)
+		map_make_plug 5 + rnd(3), 4 + rnd(3), 88 + rnd(2)
+	loop
+
+	// map_placetwostairs 100
+	map_validate_and_clean
+	return
+
+*map_createDungeonFortComplex
+	mdata(MDATA_WIDTH) = 40
+	mdata(MDATA_HEIGHT) = 30
+	mdata(MDATA_MODERATE_CROWD) = mdata(MDATA_WIDTH) * mdata(MDATA_HEIGHT) / 20
+	map_initialize
+
+	map_furniture_setgroup 10
+	p@NT = rnd(3)
+	if ( p@NT == 0 ) {
+		roomwall = 2
+		roomdoor = 2
+		map_createroom_specific 14, 9, 12, 12, 91, 0
+		vaultroom@NT = roomsum
+	}
+	if ( p@NT == 1 ) {
+		map_makesimpleroom2 18, 1, 4, 28, 91, 0
+		map_makesimpleroom2 1, 13, 38, 4, 91, (-1)
+		map_createroom_there 16, 11, 6, 6
+		vaultroom@NT = roomsum
+	}
+	if ( p@NT == 2 ) {
+		map_createroom_circular 11, 15, 4, 4, 91, 0
+		map_createroom_circular 30, 15, 4, 4, 91, 0
+		vaultroom@NT = roomsum - (rnd(2) == 0)
+		map_makesimpleroom2 10, 13, 20, 5, 91, (-1)
+	}
+
+	repeat 5
+		roominterconnect = 1
+		fur_spawn_rate_multiplier@NT = 2
+		map_furniture_setgroup 150 + 10 * rnd(4)
+		if ( mdata(MDATA_TILESET) = 16 ) { map_furniture_setgroup 10 }
+		map_createroom_adjacent 7 + rnd(4), 7 + rnd(4), 91, 0
+	loop
+	repeat 20
+		roominterconnect = 1
+		map_furniture_setgroup 10
+		map_createroom_adjacent 5 + rnd(2), 5 + rnd(2), 92, 0
+	loop
+	repeat 10
+		roominterconnect = 1
+		if (cnt \ 2 == 0) {
+			map_createroom_adjacent 3, 8 - cnt / 4, 97, 0
+			if ( rdroomupstair == (-1) & stat == 1 ) {
+				map_place_stairs_in_this_room 10
+			} else {
+				if ( rdroomdownstair == (-1) & stat == 1 ) {
+					if ( (roomx(roomsum-1) - upx@NT) * (roomx(roomsum-1) - upx@NT) + (roomy(roomsum-1) - upy@NT) * (roomy(roomsum-1) - upy@NT) > 200 ) {
+						map_place_stairs_in_this_room 11
+					}
+				}
+			}
+		} else {
+			map_createroom_adjacent 8 - cnt / 4, 3, 100, 0
+		}
+	loop
+
+	if ( mdata(MDATA_TILESET) == 16 ) {
+		repeat 10 + rnd(10)
+			map_make_plug 4 + rnd(5), 3 + rnd(5), 1
+		loop
+	} else {
+		repeat 4 + rnd(4)
+			map_make_plug 5 + rnd(3), 4 + rnd(3), 88 + rnd(2)
+		loop
+	}
+
+	map_validate_and_clean
+	return
+
+*map_createDungeonMineTunnel
+	minetunneldepth@NT = 4 + rnd(3)
+	mdata(MDATA_WIDTH) = 36
+	mdata(MDATA_HEIGHT) = 12 + 7 * minetunneldepth@NT
+	mdata(MDATA_MODERATE_CROWD) = mdata(MDATA_WIDTH) * mdata(MDATA_HEIGHT) / 8
+	map_initialize
+	
+	repeat mdata(MDATA_WIDTH) - 2
+		dx@NT = cnt + 1
+		repeat mdata(MDATA_HEIGHT) - 2
+			dy@NT = cnt + 1
+			map(dx@NT, dy@NT, 0) = 1
+		loop
+	loop
+
+	dighole_custom 1, 1, 5, minetunneldepth@NT, 2, 2, 6, 5, 100
+	dighole_custom 9, 1, 3, minetunneldepth@NT, 2, 2, 6, 5, 100
+
+	dighole_directiondrunk rnd(mdata(MDATA_WIDTH)-8)+4, 1, rnd(mdata(MDATA_WIDTH)-8)+4, mdata(MDATA_HEIGHT)-2, 1, 1, 100
+	dighole_directiondrunk rnd(mdata(MDATA_WIDTH)-8)+4, 6 * minetunneldepth@NT, rnd(mdata(MDATA_WIDTH)-8)+4, mdata(MDATA_HEIGHT)-2, 1, 1, 100
+	dighole_directiondrunk rnd(mdata(MDATA_WIDTH)-8)+4, 1, rnd(mdata(MDATA_WIDTH)-8)+4, 6 * minetunneldepth@NT, 1, 1, 100
+
+	dighole_diffusion_limited_aggregation 50, 100
+	
+
+	if ( mdata(MDATA_TILESET) == 16 ) {
+		repeat 6 + rnd(6)
+			map_make_plug 4 + rnd(3), 3 + rnd(3), 1
+		loop
+	} else {
+		repeat 4 + rnd(4)
+			map_make_plug 5 + rnd(3), 4 + rnd(3), 88
+		loop
+	}
+
+	repeat
+		dx@NT = rnd(mdata(MDATA_WIDTH))
+		dy@NT = mdata(MDATA_HEIGHT) - 1 - rnd(5)
+		if ( map(dx@NT, dy@NT, 0) == 100 ) {
+			map_furniture_setgroup roomtypegroup@NT
+			map_createroom_circular dx@NT, dy@NT, 3, 3, 100, 100
+			map_placeupstairs dx@NT, dy@NT
+			break
+		}
+	loop
+
+	repeat minetunneldepth@NT - 2
+		map_furniture_setgroup roomtypegroup@NT
+		map_createroom_adjacent 6 + rnd(3), 6, 3, 0
+		map_furniture_setgroup roomtypegroup@NT
+		map_createroom_adjacent 6, 6 + rnd(3), 3, 0
+		map_furniture_setgroup roomtypegroup@NT
+		map_createroom_adjacent 4, 5 + rnd(4), 3, 0
+		map_furniture_setgroup roomtypegroup@NT
+		map_createroom_adjacent 5 + rnd(4), 4, 3, 0
+	loop
+
+	if ( mdata(MDATA_TILESET) == 16 ) {
+		repeat 6 + rnd(6)
+			map_make_plug 4 + rnd(3), 3 + rnd(3), 1
+		loop
+	}
+
+	map_validate_and_clean
+	return
+	
+*map_createDungeonMineDeposit
+	mdata(MDATA_WIDTH) = 30
+	mdata(MDATA_HEIGHT) = 60 + rnd(30)
+	mdata(MDATA_MODERATE_CROWD) = mdata(MDATA_WIDTH) * mdata(MDATA_HEIGHT) / 20
+	map_initialize
+
+	tile_doorclosed = 733
+	tile_dooropen = 265
+
+	beginx@NT = 15 // rnd(mdata(MDATA_WIDTH)-20)+10
+	endx@NT = 16 // rnd(mdata(MDATA_WIDTH)-10)+5
+
+	dighole_directiondrunk beginx@NT, 1, endx@NT, mdata(MDATA_HEIGHT)-2, 2, 3, 100
+	dighole_dla_explosion 200, 40, 3, 20, 3, 1, roomtypegroup@NT
+	dighole_directiondrunk beginx@NT, 1, endx@NT, mdata(MDATA_HEIGHT)-2, 1, 1, 100
+	dighole_dla_explosion 50, 50, 3, 5, 3, 1, roomtypegroup@NT
+
+	repeat
+		dx@NT = rnd(mdata(MDATA_WIDTH))
+		dy@NT = mdata(MDATA_HEIGHT) - 1 - rnd(5)
+		if ( map(dx@NT, dy@NT, 0) == 100 ) {
+			map_placeupstairs dx@NT, dy@NT
+			break
+		}
+	loop
+
+	map_validate_and_clean
+	return
+	
+*map_createDungeonMineTunnelSnake
+	mdata(MDATA_WIDTH) = 40
+	mdata(MDATA_HEIGHT) = 40
+	mdata(MDATA_MODERATE_CROWD) = mdata(MDATA_WIDTH) * mdata(MDATA_HEIGHT) / 20
+	map_initialize
+
+	tile_doorclosed = 733
+	tile_dooropen = 265
+
+	map_makesimpleroom2 5, 5, 30, 30, 3, 3
+	map_find_points 3, 5, 200
+	map_makesimpleroom2 0, 0, 40, 40, 0, 0
+	
+	repeat rdroomnum
+		map_createroom 1
+		map_furniture_setgroup roomtypegroup@NT
+		map_furniture_populate
+	loop
+	map_connectroom
+	map_makedoor
+
+	repeat roomsum - 1
+		dighole_dogleg roomx(cnt) + roomwidth(cnt) / 2, roomy(cnt) + roomheight(cnt) / 2, roomx(cnt+1) + roomwidth(cnt+1) / 2, roomy(cnt+1) + roomheight(cnt+1) / 2, 100
+	loop
+
+	max@NT = 0
+	index@NT = 0
+	repeat count@NT
+		if ( matrix_pt@NT(3, cnt) >= max@NT ) {
+			max@NT = matrix_pt@NT(3, cnt)
+			index@NT = cnt
+		}
+	loop
+
+	repeat 100
+		dighole_directiondrunk matrix_pt@NT(0,index@NT), matrix_pt@NT(1,index@NT), matrix_pt@NT(0,matrix_pt@NT(2,index@NT)), matrix_pt@NT(1,matrix_pt@NT(2,index@NT)), 1, 1, 100
+		index@NT = matrix_pt@NT(2, index@NT)
+		if ( matrix_pt@NT(3, index@NT) == 1 | matrix_pt@NT(2, index@NT) == index@NT ) { break }
+	loop
+
+	repeat 6 + rnd(6)
+		map_make_plug 5 + rnd(3), 4 + rnd(3), 85 + rnd(2) * 3
+	loop
+
+	map_makesimpleroom_circular dx@NT, dy@NT, 4, 4, 100, 100
+	map_placeupstairs matrix_pt@NT(0,index@NT), matrix_pt@NT(1,index@NT)
+
+	map_validate_and_clean
+	return
+
+*map_createDungeonMineMoltenCore
+	mdata(MDATA_WIDTH) = 40
+	mdata(MDATA_HEIGHT) = 40
+	mdata(MDATA_MODERATE_CROWD) = mdata(MDATA_WIDTH) * mdata(MDATA_HEIGHT) / 12
+	map_initialize
+
+	map_makesimpleroom2 5, 5, 30, 30, 3, 3
+	map_makesimpleroom2 16, 16, 8, 8, 85, 85
+	map_find_points 18, 5, 20
+	if ( count@NT < 3 ) { 
+		matrix_pt@NT(0, 2) = 20
+		matrix_pt@NT(1, 2) = 20
+	}
+	map_makesimpleroom2 0, 0, 40, 40, 85, 85
+
+	map_createroom_circular matrix_pt@NT(0,0), matrix_pt@NT(1,0), 4, 4, 3, 3
+	map_createroom_circular matrix_pt@NT(0,1), matrix_pt@NT(1,1), 4, 4, 3, 3
+	map_createroom_circular matrix_pt@NT(0,2), matrix_pt@NT(1,2), 4, 4, 3, 3
+	dighole_directiondrunk matrix_pt@NT(0,0), matrix_pt@NT(1,0), matrix_pt@NT(0,1), matrix_pt@NT(1,1), 1, 1+rnd(2), 100
+	dighole_directiondrunk matrix_pt@NT(0,1), matrix_pt@NT(1,1), matrix_pt@NT(0,2), matrix_pt@NT(1,2), 1, 1+rnd(2), 100
+	dighole_directiondrunk matrix_pt@NT(0,2), matrix_pt@NT(1,2), matrix_pt@NT(0,0), matrix_pt@NT(1,0), 1, 1+rnd(2), 100
+	map_placeupstairs matrix_pt@NT(0,0), matrix_pt@NT(1,0)
+	map_placedownstairs matrix_pt@NT(0,1), matrix_pt@NT(1,1)
+	rdroomupstair = 0
+	rdroomdownstair = 1
+	vaultroom@NT = 3
+	
+	map_validate_and_clean
+	return
+
+*map_createDungeonLakeTunnelOfLove
+	mdata(MDATA_WIDTH) = 50
+	mdata(MDATA_HEIGHT) = 50
+	mdata(MDATA_MODERATE_CROWD) = mdata(MDATA_WIDTH) * mdata(MDATA_HEIGHT) / 20
+	map_initialize
+
+	map_makesimpleroom2 3, 3, 44, 44, 3, 3
+	map_find_points 8, 5, 30
+	map_makesimpleroom2 3, 3, 44, 44, 0, 0
+	
+	repeat count@NT
+		dighole_directiondrunk matrix_pt@NT(0,cnt), matrix_pt@NT(1,cnt), matrix_pt@NT(0,matrix_pt@NT(2,cnt)), matrix_pt@NT(1,matrix_pt@NT(2,cnt)), 1, 1+rnd(2), 100
+		dighole_directiondrunk matrix_pt@NT(0,cnt), matrix_pt@NT(1,cnt), matrix_pt@NT(0,matrix_pt@NT(2,cnt)), matrix_pt@NT(1,matrix_pt@NT(2,cnt)), 1, 1, 3
+        map_makesimpleroom_circular matrix_pt@NT(0,cnt), matrix_pt@NT(1,cnt), 1+rnd(2), 1+rnd(2), 3, 3
+	loop
+
+	dighole_diffusion_limited_aggregation 300, 100
+	
+	if ( mdata(MDATA_TILESET) == 300 ) {
+		repeat 15 + rnd(10)
+			map_make_plug 6 + rnd(5), 6 + rnd(5), 84
+		loop
+
+		repeat count@NT
+			dighole_directiondrunk matrix_pt@NT(0,cnt), matrix_pt@NT(1,cnt), matrix_pt@NT(0,matrix_pt@NT(2,cnt)), matrix_pt@NT(1,matrix_pt@NT(2,cnt)), 0, 0, 100
+			map_makesimpleroom_circular matrix_pt@NT(0,cnt), matrix_pt@NT(1,cnt), 1+rnd(2), 1+rnd(2), 3, 3
+		loop
+
+		map_furniture_scatter map_fur_siteforest@NT, 20, 3
+	}
+
+    map_placetwostairs_on_point 50
+	map_validate_and_clean
+	return
+
+*map_createDungeonLakeBranch
+	mdata(MDATA_WIDTH) = 30
+	mdata(MDATA_HEIGHT) = 80 + rnd(40)
+	mdata(MDATA_MODERATE_CROWD) = mdata(MDATA_WIDTH) * mdata(MDATA_HEIGHT) / 20
+	map_initialize
+
+	repeat 3 + rnd(2)
+		dighole_directiondrunk 20, 1, rnd(mdata(MDATA_WIDTH)), mdata(MDATA_HEIGHT) - 1, 1, 3, 3
+	loop
+	map_makesimpleroom_circular 20, 6, 5, 5, 3, 3
+	repeat 1 + rnd(2)
+		dighole_directiondrunk 20, 1, rnd(mdata(MDATA_WIDTH) - 5) + 2, mdata(MDATA_HEIGHT) - 1, 1, 2, 100
+	loop
+
+	repeat
+		dx@NT = rnd(mdata(MDATA_WIDTH))
+		dy@NT = rnd(6)
+		if ( map(dx@NT, dy@NT, 0) == 100 ) {
+			map_placeupstairs dx@NT, dy@NT
+			break
+		}
+	loop
+	repeat
+		dx@NT = rnd(mdata(MDATA_WIDTH))
+		dy@NT = mdata(MDATA_HEIGHT) - rnd(6) - 1
+		if ( map(dx@NT, dy@NT, 0) == 100 ) {
+			map_placedownstairs dx@NT, dy@NT
+			break
+		}
+	loop
+
+	repeat 4
+		map_furniture_setgroup 111
+		map_createroom_adjacent 6, 7 + rnd(5), 100, 1
+	loop
+	
+	//dighole_dla_explosion 50, 10, 3, 20, 3, 1
+
+	map_validate_and_clean
+	return
+
+*map_createDungeonLakeWide
+	mdata(MDATA_WIDTH) = 50
+	mdata(MDATA_HEIGHT) = 50
+	mdata(MDATA_MODERATE_CROWD) = mdata(MDATA_WIDTH) * mdata(MDATA_HEIGHT) / 12
+	map_initialize
+
+	dighole_cellular_automata 7, 7, 36, 36, 40, 4, 3, 5, 100, (-1)
+
+	dighole_directiondrunk rnd(mdata(MDATA_WIDTH)), 1, 25, 25, 2, 3, 3
+	dighole_directiondrunk mdata(MDATA_WIDTH) - 2, rnd(mdata(MDATA_HEIGHT)), 25, 25, 2, 3, 3
+	dighole_directiondrunk rnd(mdata(MDATA_WIDTH)), mdata(MDATA_HEIGHT) - 2, 25, 25, 2, 3, 3
+	dighole_directiondrunk 1, rnd(mdata(MDATA_HEIGHT)), 25, 25, 2, 3, 3
+
+	upstairs_loc@NT = rnd(4)
+	downstairs_loc@NT = (downstairs_loc@NT + 2) \ 4
+
+	if ( upstairs_loc@NT == 0 | downstairs_loc@NT == 0 ) {
+		dighole_directiondrunk rnd(mdata(MDATA_WIDTH)), 1, 25, 25, 2, 3, 100
+		repeat 500
+			x = rnd(mdata(MDATA_WIDTH))
+			y = rnd(6)
+			if ( map(x, y, 0) == 100 ) {
+				if ( upstairs_loc@NT == 0 )  {map_placeupstairs x, y }
+				if ( downstairs_loc@NT == 0 )  {map_placedownstairs x, y }
+				break
+			}
+		loop
+	}
+	if ( upstairs_loc@NT == 1 | downstairs_loc@NT == 1 ) {
+		dighole_directiondrunk mdata(MDATA_WIDTH) - 2, rnd(mdata(MDATA_HEIGHT)), 25, 25, 2, 3, 100
+		repeat 500
+			y = rnd(mdata(MDATA_HEIGHT))
+			x = mdata(MDATA_WIDTH) - rnd(6) - 1
+			if ( map(x, y, 0) == 100 ) {
+				if ( upstairs_loc@NT == 1 )  {map_placeupstairs x, y }
+				if ( downstairs_loc@NT == 1 )  {map_placedownstairs x, y }
+				break
+			}
+		loop
+	}
+	if ( upstairs_loc@NT == 2 | downstairs_loc@NT == 2 ) {
+		dighole_directiondrunk rnd(mdata(MDATA_WIDTH)), mdata(MDATA_HEIGHT) - 2, 25, 25, 2, 3, 100
+		repeat 500
+			x = rnd(mdata(MDATA_WIDTH))
+			y = mdata(MDATA_HEIGHT) - rnd(6) - 1
+			if ( map(x, y, 0) == 100 ) {
+				if ( upstairs_loc@NT == 2 )  {map_placeupstairs x, y }
+				if ( downstairs_loc@NT == 2 )  {map_placedownstairs x, y }
+				break
+			}
+		loop
+	}
+	if ( upstairs_loc@NT == 3 | downstairs_loc@NT == 3 ) {
+		dighole_directiondrunk 1, rnd(mdata(MDATA_HEIGHT)), 25, 25, 2, 3, 100
+		repeat 500
+			y = rnd(mdata(MDATA_HEIGHT))
+			x = rnd(6)
+			if ( map(x, y, 0) == 100 ) {
+				if ( upstairs_loc@NT == 3 )  {map_placeupstairs x, y }
+				if ( downstairs_loc@NT == 3 )  {map_placedownstairs x, y }
+				break
+			}
+		loop
+	}
+
+	dighole_cellular_automata 12, 12, 26, 26, 50, 4, 3, 5, 3, (-1)
+	repeat 3
+		map_furniture_setgroup roomtypegroup@NT
+		map_createroom_circular rnd(20) + 15, rnd(20) + 15, 5, 5, 3, 100
+	loop
+
+	map_validate_and_clean
+	return
+
+*map_createDungeonLakeviewCabin
+	mdata(MDATA_WIDTH) = 60
+	mdata(MDATA_HEIGHT) = 40
+	mdata(MDATA_MODERATE_CROWD) = mdata(MDATA_WIDTH) * mdata(MDATA_HEIGHT) / 8
+	map_initialize
+
+	no_spider_web@NT = 1
+	cabin@NT = 0
+	is_tropical@NT = 0
+	if ( rnd(3) != 0 | gdata(GDATA_LEVEL) == adata(ADATA_MIN_LEVEL, gdata(GDATA_AREA)) ) {
+		tile_default = 475
+		tile_fog = 528
+		tile_tunnel = 19, 4, 4
+		// tile_wall = 475
+		tile_room = 165
+		is_tropical@NT = 1
+	} else {
+		cabin@NT += rnd(3)
+	}
+
+	dighole_perlin_noise 1, 1, 58, 38, 6, 48, 60, 3, 100, 0
+	sx@NT = 23 + (rnd(2)==1) * 14
+	sy@NT = 13 + (rnd(2)==1) * 14
+	repeat 58
+		dx@NT = cnt
+		repeat 38
+			dy@NT = cnt
+			p@NT = matrix_pe@NT(dx@NT, dy@NT) - 20 + sqrt((dx@NT+1-sx@NT)*(dx@NT+1-sx@NT)+(dy@NT+1-sy@NT)*(dy@NT+1-sy@NT)) 
+			map(dx@NT+1, dy@NT+1, 0) = 3
+			if (p@NT > 48) { map(dx@NT+1, dy@NT+1, 0) = 100 } // land
+			if (p@NT > 60) { map(dx@NT+1, dy@NT+1, 0) = 0 } // wall
+			if (p@NT > 70) { map(dx@NT+1, dy@NT+1, 0) = 1 } // wall (default)
+			if (p@NT < 39) { map(dx@NT+1, dy@NT+1, 0) = 95 } // deepwater
+		loop
+	loop
+
+	map_find_points 12, 15, 20, 100
+	repeat count@NT
+		if ( (matrix_pt@NT(0,cnt) - sx@NT) * (matrix_pt@NT(0,cnt) - sx@NT) + (matrix_pt@NT(1,cnt) - sy@NT) * (matrix_pt@NT(1,cnt) - sy@NT) < 400 ) {
+			continue
+		}
+		dighole_directiondrunk matrix_pt@NT(0,cnt), matrix_pt@NT(1,cnt), matrix_pt@NT(0,matrix_pt@NT(2,cnt)), matrix_pt@NT(1,matrix_pt@NT(2,cnt)), 1, 1, 100
+	loop
+	repeat 5 + rnd(5)
+		map_furniture_setgroup 10
+		map_createroom_adjacent 4+rnd(3), 4+rnd(3), 90 + cabin@NT, 80 + cabin@NT
+	loop
+
+	if (is_tropical@NT) {
+		map_furniture_scatter map_fur_sitebeach@NT, 3, 100
+		map_furniture_scatter map_fur_trashtrash@NT, 4, 100
+	}
+
+	map_placetwostairs_on_point 60
+	map_validate_and_clean
+	return
+
+*map_createDungeonLakeBeachWalk
+	mdata(MDATA_WIDTH) = 20
+	mdata(MDATA_HEIGHT) = 50
+	mdata(MDATA_MODERATE_CROWD) = mdata(MDATA_WIDTH) * mdata(MDATA_HEIGHT) / 8
+	map_initialize
+
+	no_spider_web@NT = 1
+	tile_wall = 475
+
+	map_make_beach 0, 0, 20, 50
+
+	repeat 3 + rnd(3)
+		map_furniture_setgroup 10
+		map_createroom_adjacent 4+rnd(3), 4+rnd(3), 90, 80
+	loop
+
+	repeat mdata(MDATA_WIDTH)
+		dx@NT = cnt
+		repeat mdata(MDATA_HEIGHT)
+			dy@NT = cnt
+			if (map(dx@NT, dy@NT, 0) == 95) { 
+				map(dx@NT, dy@NT, 0) = 84 
+			}
+		loop
+	loop
+
+    map_furniture_scatter map_fur_sitebeach@NT, 4, 93
+	map_furniture_scatter map_fur_trashtrash@NT, 5, 93
+
+	map_find_points 3, 5, 50, 93
+	map_placetwostairs_on_point 60
+	map_validate_and_clean
+	return
+
+*map_createDungeonTowerBubbles
+	mdata(MDATA_WIDTH) = 50
+	mdata(MDATA_HEIGHT) = 50
+	mdata(MDATA_MODERATE_CROWD) = mdata(MDATA_WIDTH) * mdata(MDATA_HEIGHT) / 20
+	map_initialize
+
+	tile_doorclosed = 733
+	tile_dooropen = 265
+
+	map_makesimpleroom2 5, 5, 40, 40, 3, 3
+	map_find_points 12, 5, 30
+	map_makesimpleroom2 0, 0, 50, 50, 0, 0
+	voidtile@NT = 83 + rnd(3)
+
+	dim matrix_mt@NT, mdata(MDATA_WIDTH), mdata(MDATA_HEIGHT)
+	repeat mdata(MDATA_WIDTH)
+		px@NT = cnt
+		repeat mdata(MDATA_HEIGHT)
+			py@NT = cnt
+			md@NT = 999
+			repeat count@NT
+				md2@NT = dist(px@NT, py@NT, matrix_pt@NT(0,cnt), matrix_pt@NT(1,cnt)) - 5
+				if (md2@NT < md@NT) {
+					md@NT = md2@NT
+				}
+			loop
+			matrix_mt@NT(px@NT, py@NT) = md@NT
+		loop
+	loop
+
+	repeat mdata(MDATA_WIDTH)
+		px@NT = cnt
+		repeat mdata(MDATA_HEIGHT)
+			py@NT = cnt
+			md@NT = matrix_mt@NT(px@NT, py@NT)
+			if (md@NT > -2) {
+				map(px@NT, py@NT, 0) = 1
+			}
+			if (md@NT > -1) {
+				map(px@NT, py@NT, 0) = 87
+			}
+			if (md@NT > 0) {
+				map(px@NT, py@NT, 0) = voidtile@NT
+			}
+		loop
+	loop
+
+	repeat count@NT
+		fur_spawn_rate_multiplier@NT = 2
+		map_furniture_setgroup 10
+		map_createroom_circular matrix_pt@NT(0,cnt), matrix_pt@NT(1,cnt), 5, 5, 90+rnd(2), 81+rnd(2)
+	loop
+
+	dighole_diffusion_limited_aggregation 30, 90
+
+	repeat count@NT
+		dighole_dogleg matrix_pt@NT(0,cnt), matrix_pt@NT(1,cnt), matrix_pt@NT(0,matrix_pt@NT(2,cnt)), matrix_pt@NT(1,matrix_pt@NT(2,cnt)), 92
+		if ( rnd(2) == 0 ) {
+			p@NT = ( cnt + count@NT / 2 ) \ count@NT
+			dighole_dogleg matrix_pt@NT(0,cnt), matrix_pt@NT(1,cnt), matrix_pt@NT(0,p@NT), matrix_pt@NT(1,p@NT), 92
+		}
+	loop
+
+	repeat mdata(MDATA_WIDTH)
+		px@NT = cnt
+		repeat mdata(MDATA_HEIGHT)
+			py@NT = cnt
+			if (matrix_mt@NT(px@NT, py@NT) == 0 & map(px@NT, py@NT, 0) == 92 ) {
+				cell_featset px@NT, py@NT, tile_doorclosed, CELL_FEATURE_DOOR_CLOSED, rnd(limit(gdata(GDATA_LEVEL) * 3 / 2 + 1, 1, 300))
+			}
+		loop
+	loop
+
+    map_placetwostairs_on_point 60
+	map_validate_and_clean
+	return
+
+*map_createDungeonTowerMickeyMouse
+	mdata(MDATA_WIDTH) = 40
+	mdata(MDATA_HEIGHT) = 40
+	mdata(MDATA_MODERATE_CROWD) = mdata(MDATA_WIDTH) * mdata(MDATA_HEIGHT) / 20
+	map_initialize
+
+	centerx@NT = mdata(MDATA_WIDTH) / 2
+	centery@NT = mdata(MDATA_HEIGHT) / 2
+	centerr@NT = mdata(MDATA_WIDTH) / 2 - 8
+	voidtile@NT = 83 + rnd(3)
+	tile_doorclosed = 733
+	tile_dooropen = 265
+
+	map_makesimpleroom2 5, 5, 30, 30, 3, 3
+	map_makesimpleroom_circular centerx@NT, centery@NT, centerr@NT + 3, centerr@NT + 3, 1, 1
+	map_find_points 12, 5, 30
+	map_makesimpleroom2 0, 0, 40, 40, 0, 0
+
+	roomwall = 2
+	roomdoor = 2
+	map_createroom_specific centerx@NT - 3, centery@NT - 3, 6, 6, 100, 1
+	vaultroom@NT = roomsum
+
+	repeat 5
+		roominterconnect = 1
+		fur_spawn_rate_multiplier@NT = 2
+		map_furniture_setgroup 10
+		map_createroom_adjacent 8 + rnd(4), 8 + rnd(4), 91, 1
+	loop
+	repeat 30
+		roominterconnect = 1
+		map_furniture_setgroup 10
+		map_createroom_adjacent 5 + rnd(2), 5 + rnd(2), 3, 1
+	loop
+	repeat 30
+		roominterconnect = 1
+		map_furniture_setgroup 10
+		map_createroom_adjacent 3 + cnt \ 2 + rnd(2), 3 + (cnt+1) \ 2 + rnd(2), 3, 1
+	loop
+	repeat 10
+		roominterconnect = 1
+		if (cnt \ 2 == 0) {
+			map_createroom_adjacent 3, 8 - cnt / 4, 97, 1
+		} else {
+			map_createroom_adjacent 8 - cnt / 4, 3, 100, 1
+		}
+	loop
+	
+	dim matrix_mt@NT, mdata(MDATA_WIDTH), mdata(MDATA_HEIGHT)
+	repeat mdata(MDATA_WIDTH)
+		px@NT = cnt
+		repeat mdata(MDATA_HEIGHT)
+			py@NT = cnt
+			md@NT = dist(px@NT, py@NT, centerx@NT, centery@NT) - centerr@NT
+			repeat count@NT
+				md2@NT = dist(px@NT, py@NT, matrix_pt@NT(0,cnt), matrix_pt@NT(1,cnt)) - 5
+				if (md2@NT < md@NT) {
+					md@NT = md2@NT
+				}
+			loop
+			matrix_mt@NT(px@NT, py@NT) = md@NT
+		loop
+	loop
+
+	repeat mdata(MDATA_WIDTH)
+		px@NT = cnt
+		repeat mdata(MDATA_HEIGHT)
+			py@NT = cnt
+			md@NT = matrix_mt@NT(px@NT, py@NT)
+			if (md@NT > -2) {
+				map(px@NT, py@NT, 0) = 1
+				cleanatile px@, py@NT
+				cell_featset px@NT, py@NT, 0, 0, 0, 0
+			}
+			if (md@NT > -1) {
+				map(px@NT, py@NT, 0) = 87
+			}
+			if (md@NT > 0) {
+				map(px@NT, py@NT, 0) = voidtile@NT
+			}
+		loop
+	loop
+
+	repeat roomsum
+		f@NT = 0
+		if ( roomx(cnt) + roomwidth(cnt) >= mdata(MDATA_WIDTH) | roomwidth(cnt) < 3 | roomy(cnt) + roomheight(cnt) >= mdata(MDATA_HEIGHT) | roomheight(cnt) < 3 ) {
+			continue
+		} 
+		if ( matrix_mt@NT(roomx(cnt),roomy(cnt)) > -2 ) { f@NT++ }
+		if ( matrix_mt@NT(roomx(cnt)+roomwidth(cnt),roomy(cnt)) > -2 ) { f@NT++ }
+		if ( matrix_mt@NT(roomx(cnt),roomy(cnt)+roomheight(cnt)) > -2 ) { f@NT++ }
+		if ( matrix_mt@NT(roomx(cnt)+roomwidth(cnt),roomy(cnt)+roomheight(cnt)) > -2 ) { f@NT++ }
+		if ( f@NT >= 3 ) {
+			roomx(cnt) = 0
+			roomy(cnt) = 0
+			roomwidth(cnt) = 0
+			roomheight(cnt) = 0
+		}
+	loop
+
+	repeat count@NT
+		digshiftdir@NT = abs(matrix_pt@NT(0,cnt) - centerx@NT) > abs(matrix_pt@NT(1,cnt) - centery@NT)
+		digshiftlr@NT = ((-6) + 12 * (matrix_pt@NT(0,cnt) - centerx@NT > 0)) * (digshiftdir@NT == TRUE)
+		digshifttb@NT = ((-6) + 12 * (matrix_pt@NT(1,cnt) - centery@NT > 0)) * (digshiftdir@NT != TRUE)
+		dighole_dogleg matrix_pt@NT(0,cnt), matrix_pt@NT(1,cnt), centerx@NT + digshiftlr@NT, centery@NT + digshifttb@NT, 92
+	loop
+
+	repeat mdata(MDATA_WIDTH)
+		px@NT = cnt
+		repeat mdata(MDATA_HEIGHT)
+			py@NT = cnt
+			if (matrix_mt@NT(px@NT, py@NT) == -1 & map(px@NT, py@NT, 0) == 92 ) {
+				cell_featset px@NT, py@NT, tile_doorclosed, CELL_FEATURE_DOOR_CLOSED, rnd(limit(gdata(GDATA_LEVEL) * 3 / 2 + 1, 1, 300))
+			}
+		loop
+	loop
+
+    map_placetwostairs_on_point 50
+	map_validate_and_clean
+	return
+
+*map_createDungeonTowerOcto
+	// It's similar to DCSS:layout_concentric_octagons but much worse, looks good but boring to play.
+	wall@NT = 1 + rnd(2) * 2
+	pass@NT = limit(wall@NT + rnd(2),2,5)
+	layer@NT = 4 + rnd(3)
+	octo@NT = limit(4 + rnd(3), pass@NT+2,9)
+	passmindist@NT = 5
+	passwindow@NT = 10
+	mdata(MDATA_WIDTH) = (octo@NT * 3 - 2) + 2 * (pass@NT + wall@NT) * layer@NT + 4
+	mdata(MDATA_HEIGHT) = (octo@NT * 3 - 2) + 2 * (pass@NT + wall@NT) * layer@NT + 4
+	mdata(MDATA_MODERATE_CROWD) = mdata(MDATA_WIDTH) * mdata(MDATA_HEIGHT) / 12
+	map_initialize
+
+	// (Optional) Draw Void
+	voidtile@NT = 83 + rnd(3)
+	passlen@NT = (octo@NT * 3 - 2 + (2 * (pass@NT + wall@NT) * layer@NT)) / 3
+	beginx@NT =  passlen@NT + 1
+	beginy@NT =  2
+	repeat mdata(MDATA_HEIGHT)
+		map(0, cnt, 0) = voidtile@NT
+		map(1, cnt, 0) = voidtile@NT
+		map(mdata(MDATA_WIDTH) - 3, cnt, 0) = voidtile@NT
+		map(mdata(MDATA_WIDTH) - 2, cnt, 0) = voidtile@NT
+		map(mdata(MDATA_WIDTH) - 1, cnt, 0) = voidtile@NT
+	loop 
+	repeat mdata(MDATA_WIDTH)
+		map(cnt, 0, 0) = voidtile@NT
+		map(cnt, 1, 0) = voidtile@NT
+		map(cnt, mdata(MDATA_HEIGHT) - 3, 0) = voidtile@NT
+		map(cnt, mdata(MDATA_HEIGHT) - 2, 0) = voidtile@NT
+		map(cnt, mdata(MDATA_HEIGHT) - 1, 0) = voidtile@NT
+	loop 
+	repeat 8
+		direction@NT = (cnt + 2) \ 8
+		dighole_direction beginx@NT, beginy@NT, direction@NT / 2, passlen@NT, (direction@NT \ 2) * passlen@NT, 0, 0, passlen@NT, passlen@NT, voidtile@NT
+		beginx@NT = dx
+		beginy@NT = dy
+	loop
+
+	// Generate center
+	beginx@NT =  (pass@NT + wall@NT) * layer@NT + 1
+	beginy@NT =  (pass@NT + wall@NT) * layer@NT + octo@NT + 1
+	repeat octo@NT
+		//cell_featset (beginx@NT + cnt), (beginy@NT - cnt), 244, CELL_FEATURE_SAMPLING_SPOT_MINING
+		map_makesimpleroom2 (beginx@NT + cnt), (beginy@NT - cnt), (3 * octo@NT - 2 - cnt * 2), (octo@NT + cnt * 2), 3, 3
+	loop
+
+	// Generate passage
+	repeat layer@NT
+		curr@NT = cnt
+		passlen@NT = (octo@NT * 3 - 2 + (2 * (pass@NT + wall@NT) * (curr@NT + 1))) / 3
+		beginx@NT =  (pass@NT + wall@NT) * (layer@NT - cnt - 1) + passlen@NT + 1
+		beginy@NT =  (pass@NT + wall@NT) * (layer@NT - cnt - 1) + 2
+		isblocked@NT = 1
+		passlocation@NT = rnd(passmindist@NT) + rnd(passwindow@NT) + 1
+		if (cnt == 0) { passlocation@NT = rnd(8)}
+		rotate@NT = rnd(8) + 1
+		repeat 8 + rotate@NT
+			direction@NT = (cnt + 2) \ 8
+			// Generate Circle Path
+			//cell_featset beginx@NT, beginy@NT, 244, CELL_FEATURE_SAMPLING_SPOT_MINING
+			dighole_direction beginx@NT, beginy@NT, direction@NT / 2, passlen@NT, (direction@NT \ 2) * passlen@NT, pass@NT - 1, pass@NT - 1, 0, 0, 100
+			beginx@NT = dx
+			beginy@NT = dy
+
+			if (cnt < rotate@NT) {continue}
+			// Make maze
+			passprev@NT = (octo@NT * 3 - 2 + (2 * (pass@NT + wall@NT) * (curr@NT))) / 3
+			passdiff@NT = (passlen@NT - passprev@NT) / 2
+			repeat passprev@NT - pass@NT + 1
+				backtrack@NT = (passprev@NT - cnt - 1) + passdiff@NT
+				passlocation@NT -= 1
+				if (passlocation@NT < 0) {
+					passlocation@NT = passmindist@NT + rnd(passwindow@NT) + pass@NT
+				}
+				if (passlocation@NT == 0) {
+					passlocation@NT = passmindist@NT + rnd(passwindow@NT) + pass@NT
+					directionbackward@NT = ((direction@NT + 4) \ 8)
+					directionrighthand@NT = ((direction@NT + 2) \ 8)
+					if (isblocked@NT == 1 | rnd(5) == 0) {
+						// generate path across layers
+						isblocked@NT = 0
+						dighole_direction beginx@NT, beginy@NT, directionbackward@NT / 2, backtrack@NT, directionbackward@NT \ 2 * (backtrack@NT), 0, 0, 0, 0, 100
+						//cell_featset dx, dy, 244, CELL_FEATURE_SAMPLING_SPOT_MINING
+						diglen@NT = pass@NT + wall@NT - 2 * (directionrighthand@NT \ 2)
+						dighole_direction dx, dy, directionrighthand@NT / 2, diglen@NT, directionrighthand@NT \ 2 * (diglen@NT), pass@NT - 1, pass@NT - 1, 0, 0, 100
+
+					} else {
+						// generate stub
+						isblocked@NT = 1
+						dighole_direction beginx@NT, beginy@NT, directionbackward@NT / 2, backtrack@NT + pass@NT, directionbackward@NT \ 2 * (backtrack@NT + pass@NT), 0, 0, 0, 0, 100
+						//cell_featset dx, dy, 244, CELL_FEATURE_SAMPLING_SPOT_MINING
+						diglen@NT = pass@NT
+						dighole_direction dx, dy, directionrighthand@NT / 2, diglen@NT, directionrighthand@NT \ 2 * (diglen@NT), 0, 0, pass@NT - 1, pass@NT - 1, 0
+					}
+					
+				}
+			loop
+		loop
+	loop
+	
+	map_placedownstairs mdata(MDATA_WIDTH)/2,mdata(MDATA_HEIGHT)/2
+	repeat 1000
+		x = rnd(mdata(MDATA_WIDTH))
+		y = rnd(mdata(MDATA_HEIGHT))
+		if ( x < 2 + pass@NT | y < 2 + pass@NT | x >= mdata(MDATA_WIDTH) - 2 - pass@NT | y >= mdata(MDATA_HEIGHT) - 2 - pass@NT ) {
+			cell_featread x, y
+			if ( istilewall(x, y) ) {
+				continue
+			}
+			map_placeupstairs x, y
+			break
+		}
+	loop
+
+	vaultroom@NT = 1	
+	octo@NT = limit(octo@NT, 1, 7)
+	roomwidth(0) = 2 * octo@NT
+	roomheight(0) = 2 * octo@NT
+	roomx(0) = (pass@NT + wall@NT) * layer@NT + octo@NT / 2
+	roomy(0) = (pass@NT + wall@NT) * layer@NT + octo@NT / 2
+	roomsum++
+
+	map_validate_and_clean
+    return
+	
+*map_createDungeonTowerLadder
+	floors@NT = 10 + rnd(5) 
+	mdata(MDATA_WIDTH) = 18
+	mdata(MDATA_HEIGHT) = floors@NT * 5 - 2
+	mdata(MDATA_MODERATE_CROWD) = mdata(MDATA_WIDTH) * mdata(MDATA_HEIGHT) / 12
+	map_initialize
+
+	tile_doorclosed = 733
+	tile_dooropen = 265
+
+	dighole_custom 2, 1, 2, floors@NT, 1, 1, 12, 4, 100
+	dighole_custom 2, 1, 2, floors@NT, 1, 1, 12, 4, 100
+	
+	repeat mdata(MDATA_HEIGHT)
+		map(0, cnt, 0) = 100
+		map(1, cnt, 0) = 100
+		map(mdata(MDATA_WIDTH)-2, cnt, 0) = 100
+		map(mdata(MDATA_WIDTH)-1, cnt, 0) = 100
+	loop
+
+	repeat 40
+		roominterconnect = 1
+		map_furniture_setgroup 10
+		map_createroom_adjacent 12, 6 - cnt / 10, 3, 1
+	loop
+	
+	repeat mdata(MDATA_HEIGHT)
+		map(0, cnt, 0) = 0
+		map(mdata(MDATA_WIDTH)-1, cnt, 0) = 0
+		if ( cnt \ 5 == 1 ) {
+			map(1, cnt, 0) = 98
+			map(mdata(MDATA_WIDTH)-2, cnt, 0) = 98
+
+			cell_featset 1, cnt, 0, CELL_FEATURE_TRAP, CELL_SUB_FEATURE_TRAP_TELEPORT
+			cell_featset mdata(MDATA_WIDTH)-2, cnt, 0, CELL_FEATURE_TRAP, CELL_SUB_FEATURE_TRAP_TELEPORT
+
+			nooracle = 1
+			itemcreate -1, ITEM_ID_MAGIC_CIRCLE,1, cnt, 0
+			inv(INV_ITEM_PROPERTY, ci) = PROP_NPC 
+			cell_refresh 1, cnt
+			itemcreate -1, ITEM_ID_MAGIC_CIRCLE, mdata(MDATA_WIDTH)-2, cnt, 0
+			inv(INV_ITEM_PROPERTY, ci) = PROP_NPC 
+			cell_refresh mdata(MDATA_WIDTH)-2, cnt
+			nooracle = 0
+		} else {
+			map(1, cnt, 0) = 1
+			map(mdata(MDATA_WIDTH)-2, cnt, 0) = 1
+		}
+	loop
+
+	repeat mdata(MDATA_HEIGHT) - 2, 1
+		if ( istileempty(2, cnt - 1) & istileempty(2, cnt) & istileempty(2, cnt + 1) & istilewall(3, cnt) & istilewall(1, cnt) ) {
+			map(2, cnt) = 97
+		}
+		if ( istileempty(mdata(MDATA_WIDTH)-3, cnt - 1) & istileempty(mdata(MDATA_WIDTH)-3, cnt) & istileempty(mdata(MDATA_WIDTH)-3, cnt + 1) & istilewall(mdata(MDATA_WIDTH)-4, cnt) & istilewall(mdata(MDATA_WIDTH)-2, cnt)) {
+			map(mdata(MDATA_WIDTH)-3, cnt) = 97
+		}
+	loop
+
+	repeat 1000
+		x = rnd(mdata(MDATA_WIDTH))
+		y = rnd(mdata(MDATA_HEIGHT))
+		if ( y < 5 & x > 2 & x < mdata(MDATA_WIDTH) - 2 ) {
+			cell_featread x, y
+			if ( istilewall(x, y) ) {
+				continue
+			}
+			map_placedownstairs x, y
+			break
+		}
+	loop
+
+	repeat 1000
+		x = rnd(mdata(MDATA_WIDTH))
+		y = rnd(mdata(MDATA_HEIGHT))
+		if ( y >= mdata(MDATA_HEIGHT) - 5 & x > 2 & x < mdata(MDATA_WIDTH) - 2 ) {
+			cell_featread x, y
+			if ( istilewall(x, y) ) {
+				continue
+			}
+			map_placeupstairs x, y
+			break
+		}
+	loop
+	map_validate_and_clean
+	return
+	
+*map_createDungeonForestTrail
+	mdata(MDATA_WIDTH) = 60
+	mdata(MDATA_HEIGHT) = 40
+	mdata(MDATA_MODERATE_CROWD) = mdata(MDATA_WIDTH) * mdata(MDATA_HEIGHT) / 12
+    map_initialize
+    
+	dighole_cellular_automata 0, 0, 60, 40, 40, 4, 3, 5, 3, 1
+
+	rivertype@NT = rnd(4)
+	treetype@NT = 0
+	if ( mdata(MDATA_TILESET) == 96 ) {
+		rivertype@NT = 0
+		treetype@NT = 1
+	}
+	if ( mdata(MDATA_TILESET) == 16 ) {
+		rivertype@NT = rnd(3)
+		treetype@NT = 1
+	}
+	if ( rivertype@NT == 1 ) {
+		dighole_directiondrunk 0, rnd(mdata(MDATA_HEIGHT)), mdata(MDATA_WIDTH) - 1, rnd(mdata(MDATA_HEIGHT)), 2, 3, 84
+	}
+	if ( rivertype@NT >= 2 ) {
+		dighole_directiondrunk rnd(mdata(MDATA_WIDTH)), 0, rnd(mdata(MDATA_WIDTH)), mdata(MDATA_HEIGHT) - 1, 1, 3, 84
+	}
+	if ( rivertype@NT >= 3 ) {
+		dighole_directiondrunk rnd(mdata(MDATA_WIDTH)), 0, rnd(mdata(MDATA_WIDTH)), mdata(MDATA_HEIGHT) - 1, 1, 2, 84
+	}
+	if ( treetype@NT == 0 ) {
+		map_furniture_scatter map_fur_siteforest@NT, 10
+	}
+
+	map_find_points 15, 5, 40
+	repeat count@NT
+		dighole_directiondrunk matrix_pt@NT(0,cnt), matrix_pt@NT(1,cnt), matrix_pt@NT(0,matrix_pt@NT(2,cnt)), matrix_pt@NT(1,matrix_pt@NT(2,cnt)), rnd(2), 1+rnd(2), 100
+    loop
+    repeat count@NT
+        map_furniture_setgroup 221 + 30 * treetype@NT
+		fur_spawn_rate_multiplier@NT = 3
+        map_createroom_circular matrix_pt@NT(0,cnt), matrix_pt@NT(1,cnt), 3, 3, 3, 3
+	loop
+	if ( treetype@NT == 0 ) {
+		map_furniture_scatter map_fur_siteforest@NT, 5, 3
+	}
+	if ( treetype@NT == 1 ) {
+		map_furniture_scatter map_fur_siteforestdead@NT, 10, 3
+	}
+    map_placetwostairs_on_point 60
+	map_validate_and_clean
+	return
+	
+#deffunc map_validate_and_clean
+	empty@NT = 0
+	hasup@NT = 0
+	upx@NT = (-1)
+	upy@NT = (-1)
+	hasdown@NT = 0
+	downx@NT = (-1)
+	downy@NT = (-1)
+	repeat mdata(MDATA_WIDTH)
+		dx@NT = cnt
+		repeat mdata(MDATA_HEIGHT)
+			dy@NT = cnt
+			if (istileempty(dx@NT, dy@NT)) {
+				empty@NT++
+			}
+			cell_featread dx@NT, dy@NT
+			if ( feat(1) == CELL_FEATURE_UPSTAIRS ) { 
+				hasup@NT++
+				upx@NT = dx@NT
+				upy@NT = dy@NT
+			}
+			if ( feat(1) == CELL_FEATURE_DOWNSTAIRS ) { 
+				hasdown@NT++
+				downx@NT = dx@NT
+				downy@NT = dy@NT
+			}
+		loop
+	loop
+	if ( gdata(GDATA_LEVEL) >= adata(ADATA_MAX_LEVEL, gdata(GDATA_AREA)) ) {
+		hasdown@NT++
+		downx@NT = mdata(MDATA_HEIGHT) / 2
+		downy@NT = mdata(MDATA_WIDTH) / 2
+	}
+	// Create a dummy room if there are no spaces
+	if ( empty@NT <= 10 ) {
+		map_makesimpleroom 1, 1, 6, 6, 100, 100
+	}
+	// Remove invalid rooms from room list.
+	validroom@NT = 0
+	repeat roomsum
+		if ( roomx(cnt) + roomwidth(cnt) >= mdata(MDATA_WIDTH) | roomwidth(cnt) < 3 | roomy(cnt) + roomheight(cnt) >= mdata(MDATA_HEIGHT) | roomheight(cnt) < 3 ) {
+			if ( cnt == vaultroom@NT - 1 ) { vaultroom@NT = 0 }
+			continue
+		}
+		roomx(validroom@NT) = roomx(cnt)
+		roomy(validroom@NT) = roomy(cnt)
+		roomwidth(validroom@NT) = roomwidth(cnt)
+		roomheight(validroom@NT) = roomheight(cnt)
+		if ( cnt == rdroomupstair ) { rdroomupstair = validroom@NT }
+		if ( cnt == rdroomdownstair ) { rdroomdownstair = validroom@NT }
+		if ( cnt == vaultroom@NT - 1 ) { 
+			vaultroom@NT = validroom@NT + 1 
+		} 
+		if ( upx@NT > roomx(cnt) & upx@NT < roomx(cnt) + roomwidth(cnt) - 1 & upy@NT > roomy(cnt) & upy@NT < roomy(cnt) + roomheight(cnt) - 1 ) {
+			rdroomupstair = validroom@NT
+		}
+		if ( downx@NT > roomx(cnt) & downx@NT < roomx(cnt) + roomwidth(cnt) - 1 & downx@NT > roomy(cnt) & downx@NT < roomy(cnt) + roomheight(cnt) - 1 ) {
+			rdroomdownstair = validroom@NT
+		}
+		validroom@NT++
+	loop
+	roomsum = validroom@NT
+	// Place the stairs, if the stairs hasn't been placed yet.
+	if ( hasup@NT == 0 && hasdown@NT == 0 ) {
+		map_placetwostairs 10
+	}
+	if ( hasup@NT == 0 && hasdown@NT > 0 ) {
+		expdist@NT = limit(mdata(MDATA_WIDTH), mdata(MDATA_HEIGHT), 100)
+		repeat 1000
+			dx@NT = rnd(mdata(MDATA_WIDTH))
+			dy@NT = rnd(mdata(MDATA_HEIGHT))
+			if ( istilewall(dx@NT, dy@NT) ) {
+				continue
+			}
+			if ( dist(dx@NT, dy@NT, downx@NT, downy@NT) < limit(expdist@NT-cnt/10,2,100) ) {
+				if ( cnt < 500 ) {
+					continue
+				}
+			}
+			map_placeupstairs dx@NT, dy@NT
+			break
+		loop
+	}
+	if ( hasup@NT > 0 && hasdown@NT == 0 ) {
+		expdist@NT = limit(mdata(MDATA_WIDTH), mdata(MDATA_HEIGHT), 100)
+		repeat 1000
+			dx@NT = rnd(mdata(MDATA_WIDTH))
+			dy@NT = rnd(mdata(MDATA_HEIGHT))
+			if ( istilewall(dx@NT, dy@NT) ) {
+				continue
+			}
+			if ( dist(dx@NT, dy@NT, upx@NT, upy@NT) < limit(expdist@NT-cnt/10,2,100) ) {
+				if ( cnt < 500 ) {
+					continue
+				}
+			}
+			map_placedownstairs dx@NT, dy@NT
+			break
+		loop
+	}
+	// Clean obstacles near door and stairs
+	repeat mdata(MDATA_WIDTH) - 2
+		dx@NT = cnt + 1
+		repeat mdata(MDATA_HEIGHT) - 2
+			dy@NT = cnt + 1
+			cell_featread dx@NT, dy@NT
+			if ( feat(1) == CELL_FEATURE_UPSTAIRS | feat(1) == CELL_FEATURE_DOWNSTAIRS | feat(1) == CELL_FEATURE_DOOR_CLOSED ) { 
+				cleanatile dx@NT, dy@NT, 98
+				cleanatile dx@NT + 1, dy@NT, 0
+				cleanatile dx@NT - 1, dy@NT, 0
+				cleanatile dx@NT, dy@NT + 1, 0
+				cleanatile dx@NT, dy@NT - 1, 0
+			}
+			if ( feat(1) >= CELL_FEATURE_SAMPLING_SPOT_DETECTION & feat(1) <= CELL_FEATURE_SAMPLING_SPOT_GARDENING ) {
+				cleanatile dx@NT, dy@NT, 0
+			}
+		loop
+	loop
+	// Clean item
+	inv_getheader -1
+	repeat invrange, invhead
+		if ( inv(INV_ITEM_NUM, cnt) > 0 ) {
+			if ( inv(INV_ITEM_X, cnt) >= mdata(MDATA_WIDTH) | inv(INV_ITEM_X, cnt) < 0 | inv(INV_ITEM_Y, cnt) >= mdata(MDATA_HEIGHT) | inv(INV_ITEM_Y, cnt) < 0 ) {
+				continue
+			}
+			if ( istilewall(inv(INV_ITEM_X, cnt), inv(INV_ITEM_Y, cnt)) ) {
+				if ( (inv(INV_ITEM_ID, cnt) == ITEM_ID_PAINTING_MADAM | inv(INV_ITEM_ID, cnt) == ITEM_ID_PAINTING_LANDSCAPE | inv(INV_ITEM_ID, cnt) == ITEM_ID_PAINTING_SUNFLOWER) ) {
+					continue
+				}
+				inv(INV_ITEM_NUM, cnt) = 0
+				cell_refresh inv(INV_ITEM_X, cnt), inv(INV_ITEM_Y, cnt)
+			}
+		}
+	loop
+    return 1
