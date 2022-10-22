@@ -74,6 +74,12 @@
 	return
 
 #deffunc map_converttile
+	/********** CUSTOM NEFIA TYPES - BEGINNING **********/
+	if ( TweakData(TWEAK_GAMEPLAY_USE_CUSTOM_NEFIA_TYPES, TWEAK_CATEGORY_GAMEPLAY) != 0 ) {
+		map_converttile_custom
+		return
+	}
+	/********** CUSTOM NEFIA TYPES - ENDING **********/
 	repeat mdata(MDATA_HEIGHT)
 		y = cnt
 		repeat mdata(MDATA_WIDTH)
@@ -399,6 +405,11 @@
 	}
 	procid = (procid + 1) \ 4
 	proclist(procid) = "map_tileSet:End" + " ct:" + ct
+	/********** CUSTOM NEFIA TYPES - BEGINNING **********/
+	if ( TweakData(TWEAK_GAMEPLAY_USE_CUSTOM_NEFIA_TYPES, TWEAK_CATEGORY_GAMEPLAY) != 0 ) {
+		map_tileset_custom map_tileset_arg1
+	}
+	/********** CUSTOM NEFIA TYPES - ENDING **********/
 	return
 
 #deffunc map_initcustom str map_initcustom_mapname
@@ -498,6 +509,9 @@
 	repeat 30
 		roomexist(cnt) = 0
 	loop
+	/********** CUSTOM NEFIA TYPES - BEGINNING **********/
+	map_initialize_custom
+	/********** CUSTOM NEFIA TYPES - ENDING **********/
 	dim map, mdata(MDATA_WIDTH), mdata(MDATA_HEIGHT), 10
 	dim mapsync, mdata(MDATA_WIDTH), mdata(MDATA_HEIGHT)
 	dim mef, 9, 200

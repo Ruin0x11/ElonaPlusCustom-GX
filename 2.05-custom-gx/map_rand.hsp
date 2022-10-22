@@ -259,6 +259,114 @@
 			return
 		}
 	}
+	/********** CUSTOM NEFIA TYPES - BEGINNING **********/
+	if ( TweakData(TWEAK_GAMEPLAY_USE_CUSTOM_NEFIA_TYPES, TWEAK_CATEGORY_GAMEPLAY) > rnd(100) & adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_RANDOM_DUNGEON ) {
+		if ( adata(ADATA_TYPE, gdata(GDATA_AREA)) == MAP_TYPE_DUNGEON ) {
+			mdata(MDATA_TILESET) = 0
+			// if ( rnd(20) == 0 ) { mdata(MDATA_TILESET) = 10 }
+			// if ( rnd(5) == 0 ) { mdata(MDATA_TILESET) = 99 }
+			if ( rnd(1) == 0 ) { rdtype = 69201 }
+			if ( rnd(2) == 0 ) { rdtype = 69202 }
+			if ( rnd(3) == 0 ) { rdtype = 69241 }
+			if ( rnd(4) == 0 ) { rdtype = 69242 }
+			if ( rnd(5) == 0 ) { rdtype = 69262 }
+			if ( rnd(39) == 0 ) { rdtype = 69204 }
+			if ( rnd(40) == 0 ) { 
+				mdata(MDATA_TILESET) = 18
+				rdtype = 69274 
+			}
+		}
+		if ( adata(ADATA_TYPE, gdata(GDATA_AREA)) == MAP_TYPE_TOWER ) {
+			mdata(MDATA_TILESET) = 100
+			if ( rnd(40) == 0 ) { mdata(MDATA_TILESET) = 10 }
+			if ( rnd(5) == 0 ) { mdata(MDATA_TILESET) = 97 }
+			if ( rnd(1) == 0 ) { rdtype = 69211 }
+			if ( rnd(2) == 0 ) { rdtype = 69212 }
+			if ( rnd(3) == 0 ) { rdtype = 69213 }
+			if ( rnd(20) == 0 ) { rdtype = 69214 }
+		}
+		if ( adata(ADATA_TYPE, gdata(GDATA_AREA)) == MAP_TYPE_FOREST ) {
+			mdata(MDATA_TILESET) = 300
+			if ( rnd(5) == 0 ) { mdata(MDATA_TILESET) = 96 }
+			if ( rnd(1) == 0 ) { rdtype = 69223 }
+			if ( rnd(3) == 0 ) { rdtype = 69242 }
+			if ( rnd(20) == 0 ) { rdtype = 69233 }
+		}
+		if ( adata(ADATA_TYPE, gdata(GDATA_AREA)) == MAP_TYPE_FORT ) {
+			mdata(MDATA_TILESET) = 200
+			if ( rnd(40) == 0 ) { mdata(MDATA_TILESET) = 10 }
+			if ( rnd(5) == 0 ) { mdata(MDATA_TILESET) = 98 }
+			if ( rnd(1) == 0 ) { rdtype = 69231 }
+			if ( rnd(2) == 0 ) { rdtype = 69232 }
+			if ( rnd(3) == 0 ) { rdtype = 69233 }
+			if ( rnd(10) == 0 ) { rdtype = 69234 }
+			if ( gdata(GDATA_LEVEL) == adata(ADATA_MIN_LEVEL, gdata(GDATA_AREA)) & rnd(2) == 0) { rdtype = 69233 }
+		}
+		if ( adata(ADATA_TYPE, gdata(GDATA_AREA)) == MAP_TYPE_NEST ) {
+			mdata(MDATA_TILESET) = 15
+			if ( rnd(1) == 0 ) { rdtype = 69241 }
+			if ( rnd(2) == 0 ) { rdtype = 69242 }
+			if ( rnd(3) == 0 ) { rdtype = 69262 }
+			if ( rnd(40) == 0 ) { rdtype = 69204 }
+		}
+		if ( adata(ADATA_TYPE, gdata(GDATA_AREA)) == MAP_TYPE_CEMETERY ) {
+			mdata(MDATA_TILESET) = 16
+			if ( rnd(1) == 0 ) { rdtype = 69223 }
+			if ( rnd(2) == 0 ) { rdtype = 69202 }
+			if ( rnd(3) == 0 ) { rdtype = 69261 }
+			if ( rnd(9) == 0 ) { rdtype = 69231 }
+			if ( rnd(10) == 0 ) { rdtype = 69211 }
+			if ( rnd(40) == 0 ) { rdtype = 69214 }
+		}
+		if ( adata(ADATA_TYPE, gdata(GDATA_AREA)) == MAP_TYPE_MINE ) {
+			mdata(MDATA_TILESET) = 17
+			if ( rnd(1) == 0 ) { rdtype = 69261 }
+			if ( rnd(2) == 0 ) { rdtype = 69262 }
+			if ( rnd(3) == 0 ) { rdtype = 69263 }
+			if ( rnd(4) == 0 ) { rdtype = 69241 }
+			if ( rnd(20) == 0 ) { rdtype = 69264 }
+			if ( gdata(GDATA_LEVEL) == adata(ADATA_MIN_LEVEL, gdata(GDATA_AREA)) & rnd(2) == 0) { rdtype = 69261 }
+		}
+		if ( adata(ADATA_TYPE, gdata(GDATA_AREA)) == MAP_TYPE_LAKE ) {
+			mdata(MDATA_TILESET) = 18
+			if ( rnd(1) == 0 ) { rdtype = 69271 }
+			if ( rnd(2) == 0 ) { rdtype = 69272 }
+			if ( rnd(3) == 0 ) { rdtype = 69273 }
+			if ( rnd(19) == 0 ) { rdtype = 69274 }
+			if ( rnd(20) == 0 ) { rdtype = 69275 }
+			if ( gdata(GDATA_LEVEL) == adata(ADATA_MIN_LEVEL, gdata(GDATA_AREA)) & rnd(2) == 0) { rdtype = 69273 }
+		}
+		roomtypegroup@NT = adata(ADATA_TYPE, gdata(GDATA_AREA)) * 10
+	}
+	mapseed@NT = 50000 + rnd(150000)
+	rdtype@NT = rdtype
+	randomize mapseed@NT
+	if ( rdtype == 69000 ) { gosub *map_createDungeonDebug }
+	if ( rdtype == (-1) ) { gosub *map_createDungeonSample }
+	if ( rdtype == 69201 ) { gosub *map_createDungeonCaveHobbit }
+	if ( rdtype == 69202 ) { gosub *map_createDungeonCaveSlums }
+	if ( rdtype == 69204 ) { gosub *map_createDungeonCaveSpiral }
+	if ( rdtype == 69211 ) { gosub *map_createDungeonTowerLadder }
+	if ( rdtype == 69212 ) { gosub *map_createDungeonTowerMickeyMouse }
+	if ( rdtype == 69213 ) { gosub *map_createDungeonTowerBubbles }
+	if ( rdtype == 69214 ) { gosub *map_createDungeonTowerOcto }
+	if ( rdtype == 69223 ) { gosub *map_createDungeonForestTrail }
+	if ( rdtype == 69231 ) { gosub *map_createDungeonFortComplex }
+	if ( rdtype == 69232 ) { gosub *map_createDungeonFortPalaceGrounds }
+	if ( rdtype == 69233 ) { gosub *map_createDungeonFortKnightCastle }
+	if ( rdtype == 69234 ) { gosub *map_createDungeonFortHeroQuest }
+	if ( rdtype == 69241 ) { gosub *map_createDungeonNestDragon }
+	if ( rdtype == 69242 ) { gosub *map_createDungeonNestSpider }
+	if ( rdtype == 69261 ) { gosub *map_createDungeonMineTunnel }
+	if ( rdtype == 69262 ) { gosub *map_createDungeonMineDeposit }
+	if ( rdtype == 69263 ) { gosub *map_createDungeonMineTunnelSnake }
+	if ( rdtype == 69264 ) { gosub *map_createDungeonMineMoltenCore }
+	if ( rdtype == 69271 ) { gosub *map_createDungeonLakeBranch }
+	if ( rdtype == 69272 ) { gosub *map_createDungeonLakeWide }
+	if ( rdtype == 69273 ) { gosub *map_createDungeonLakeviewCabin }
+	if ( rdtype == 69274 ) { gosub *map_createDungeonLakeTunnelOfLove }
+	if ( rdtype == 69275 ) { gosub *map_createDungeonLakeBeachWalk }
+	/********** CUSTOM NEFIA TYPES - ENDING **********/
 	if ( rdtype == 2 ) {
 		gosub *map_createDungeonWide
 	}
@@ -305,6 +413,13 @@
 		ry = roomy(cnt) + 1
 		rh = roomheight(cnt) - 2
 		rdsize = rw * rh
+		/********** CUSTOM NEFIA TYPES - BEGINNING **********/
+		if ( TweakData(TWEAK_GAMEPLAY_USE_CUSTOM_NEFIA_TYPES, TWEAK_CATEGORY_GAMEPLAY) != 0 ) {
+			currentroomcount@NT = cnt
+			map_room_populate_custom
+			continue
+		}
+		/********** CUSTOM NEFIA TYPES - ENDING **********/
 		repeat rnd(rdsize / 8 + 2)
 			if ( gdata(STARTING_GDATA_FLAG + 353) == 100 & adata(ADATA_ID, gdata(GDATA_AREA)) == AREA_RANDOM_DUNGEON ) {
 				flt calcobjlv(gdata(GDATA_LEVEL) * 3 / 2), calcfixlv(FIX_QUALITY_GOOD)
@@ -428,6 +543,16 @@
 		if ( rnd(5) == 0 ) {
 			p = rnd(mdata(MDATA_WIDTH) * mdata(MDATA_HEIGHT) / 5)
 		}
+		/********** CUSTOM NEFIA TYPES - BEGINNING **********/
+		if ( no_spider_web@NT != 0 ) {
+			p = 0
+		}
+		if ( yes_spider_web@NT != 0 ) {
+			p = rnd(mdata(MDATA_WIDTH) * mdata(MDATA_HEIGHT) / 5) * yes_spider_web@NT
+		}
+		no_spider_web@NT = 0
+		yes_spider_web@NT = 0
+		/********** CUSTOM NEFIA TYPES - ENDING **********/
 		repeat p
 			map_web 0, 0, gdata(GDATA_LEVEL) * 10 + 100
 		loop

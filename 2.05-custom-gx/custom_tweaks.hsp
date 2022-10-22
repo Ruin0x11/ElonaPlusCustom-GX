@@ -51,6 +51,7 @@ TweakData(67, 2) = "Increased variety of hireable home servants."
 TweakData(68, 2) = "Disable stamina depletion when attacking."
 TweakData(69, 2) = "Revert post-2.13 experience formula changes."
 TweakData(70, 2) = "Disable urination from fear."
+TweakData(71, 2) = "(Experimental) Use Custom Map Layouts in Nefia."
 
 TweakData(x, 3) = "AI Tweaks"
 TweakData(0, 3) = "Change Zeome's AI."
@@ -514,7 +515,8 @@ TweakData(51, 4) = "Disable cicada noises."
 	listn(0, 25) = "Disable stamina depletion when attacking." + GetTStatus(TWEAK_CATEGORY_GAMEPLAY, TWEAK_GAMEPLAY_DISABLE_ATTACK_STAMINA_DEPLETION)
 	listn(0, 26) = "Revert post-2.13 experience formula changes." + GetTStatus(TWEAK_CATEGORY_GAMEPLAY, TWEAK_GAMEPLAY_REVERT_POST_213_EXP_CHANGES)
 	listn(0, 27) = "Disable urination from fear." + GetTStatus(TWEAK_CATEGORY_GAMEPLAY, TWEAK_GAMEPLAY_DISABLE_URINATION_FROM_FEAR)
-	listn(0, 28) = "Return"
+	listn(0, 28) = "(Experimental) Use Custom Map Layouts in Nefia." + GetTStatus(TWEAK_CATEGORY_GAMEPLAY, TWEAK_GAMEPLAY_USE_CUSTOM_NEFIA_TYPES) + "% Chance."
+	listn(0, 29) = "Return"
 
 	font lang(cfg_font1, cfg_font2), 14 - en * 2, 0
 
@@ -623,6 +625,9 @@ TweakData(51, 4) = "Disable cicada noises."
 				s = "Prevents characters from urinating when they are afflicted with fear."
 			}
 			if ( p == 28 ) {
+				s = "Uses Custom Map Layouts in Nefia. \nThis replaces the existing mapgen algorithm with the given percentage chance. \nWARNING: This may causes crashes, game hanging, create layouts with unreachable exits.\nYou may want to enable savescumming before using this."
+			}
+			if ( p == 29 ) {
 				s = "Return to the previous menu."
 			}
 			pos wx + 38, wy + 343
@@ -785,6 +790,13 @@ TweakData(51, 4) = "Disable cicada noises."
 		gosub *ToggleTweak
 	}
 	if ( p == 28 ) {
+		tc = TWEAK_CATEGORY_GAMEPLAY
+		tn = TWEAK_GAMEPLAY_USE_CUSTOM_NEFIA_TYPES
+		ts = 10 // Increments by
+		tm = 100 // Max
+		gosub *IncrementTweak
+	}
+	if ( p == 29 ) {
 		snd SOUNDLIST_OK1
 		return
 	}
