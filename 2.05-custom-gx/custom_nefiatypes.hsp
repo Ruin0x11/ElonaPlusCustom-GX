@@ -95,7 +95,8 @@
 		loop
 		return
 	}
-	repeat rnd(rdsize / (8 + currentroomcount@NT / 2) + 2)
+	// Generate Items in room
+	repeat rnd(rdsize / 8 + 2)
 		dx@NT = rnd(rw) + rx
 		dy@NT = rnd(rh) + ry
 		// cell_refresh dx@NT, dy@NT
@@ -112,6 +113,10 @@
 			flttypemajor = fltsetdungeon()
 			itemcreate -1, ITEM_ID_DUMMY, dx@NT, dy@NT, 0
 		}
+	loop
+	repeat rnd(rdsize / 8 + 2)
+		dx@NT = rnd(rw) + rx
+		dy@NT = rnd(rh) + ry
 		gosub *fltChara
 		characreate -1, CREATURE_ID_BUG, dx@NT, dy@NT
 		if ( stat == 1 ) {
@@ -2483,7 +2488,7 @@
 *map_createDungeonCaveHobbit
 	mdata(MDATA_WIDTH) = 50
 	mdata(MDATA_HEIGHT) = 50
-	mdata(MDATA_MODERATE_CROWD) = mdata(MDATA_WIDTH) * mdata(MDATA_HEIGHT) / 20
+	mdata(MDATA_MODERATE_CROWD) = mdata(MDATA_WIDTH) * mdata(MDATA_HEIGHT) / 12
 	map_initialize
 
 	map_makesimpleroom2 3, 3, 44, 44, 3, 3
@@ -2518,6 +2523,7 @@
 *map_createDungeonCaveSlums
 	mdata(MDATA_WIDTH) = 40 + rnd(11)
 	mdata(MDATA_HEIGHT) = 40 + rnd(11)
+	mdata(MDATA_MODERATE_CROWD) = mdata(MDATA_WIDTH) * mdata(MDATA_HEIGHT) / 8
 	map_initialize
 
 	repeat mdata(MDATA_WIDTH) - 2
@@ -2627,6 +2633,11 @@
         map_createroom_circular matrix_pt@NT(0,cnt), matrix_pt@NT(1,cnt), 1+rnd(2), 1+rnd(2), 3, 3
 	loop
 	dighole_diffusion_limited_aggregation 100, 3
+	
+	if ( mdata(MDATA_TILESET) == 300 ) {
+		dighole_diffusion_limited_aggregation 100, 3
+		map_furniture_scatter map_fur_siteforest@NT, 20, 3
+	}
 	
     map_placetwostairs_on_point 50
 	map_validate_and_clean
@@ -3060,6 +3071,11 @@
 	mdata(MDATA_MODERATE_CROWD) = mdata(MDATA_WIDTH) * mdata(MDATA_HEIGHT) / 20
 	map_initialize
 
+	tile_default = 468
+	tile_fog = 535
+	tile_tunnel = 38, 5, 5
+	tile_wall = 468
+	tile_room = 38, 5, 5
 	tile_doorclosed = 733
 	tile_dooropen = 265
 
