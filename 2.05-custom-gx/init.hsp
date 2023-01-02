@@ -358,7 +358,7 @@ if instr(s,0,%1)!-1{	%c\
 #deffunc setunid int setunid_charid, int setunid_unid
 	cdata(CDATA_USERNPC_ID, setunid_charid) = setunid_unid
 	if ( cdata(CDATA_PIC, setunid_charid) < xy2pic(0, 21) | cdata(CDATA_PIC, setunid_charid) > xy2pic(31, 21) ) {
-		cdata(CDATA_PIC, setunid_charid) = xy2pic(34, 0) + setunid_unid
+		cdata(CDATA_PIC, setunid_charid) = xy2pic(0, SPRITE_SHEET_ROWS_CHARA) + setunid_unid
 		cdata(CDATA_PIC, setunid_charid) += COLOR_DEFAULT * COLOR_TINT_MULT
 		cdata(CDATA_CHARA_PIC, setunid_charid) = xy2pic(1, 0)
 	}
@@ -1197,6 +1197,16 @@ if instr(s,0,%1)!-1{	%c\
 				break
 			}
 			if ( msglen + p@txtfunc > inf_maxmsglen ) {
+				if ( p@txtfunc > inf_maxmsglen ) {
+					msg_newline
+					p@txtfunc = inf_maxmsglen
+					mst@txtfunc = strmid(msgtemp, 0, p@txtfunc)
+					msg(msgline \ inf_maxlog) += mst@txtfunc
+					msg_write mst@txtfunc
+					msglen += p@txtfunc
+					msgtemp = strmid(msgtemp, p@txtfunc, strlen(msgtemp) - p@txtfunc)
+					continue
+				}
 				msg_newline
 				continue
 			}
