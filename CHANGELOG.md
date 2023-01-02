@@ -2,7 +2,19 @@
 
 ## Added
 - Ported all changes from Elona+ 2.15R.
+- Added a tweak to disable urination from fear-related effects.
 - Added a tweak to add a chance of generating new experimental Nefia layouts, courtesy of @JianmengYu. 
+- Added "Use Shift Core" custom AI action.
+- Added a "Custom AI" option to the wizard menu.
+
+## Changed
+- Custom AI can now be used by non-ally NPCs.
+- Custom AI will now be saved to pet arena teams in `.pet` files and applied when the team is loaded for battling.
+- Blending will now inform the player if their inventory is full when a stacked ingredient is about to be separated.
+
+## Fixed
+- Fixed asking for potion plugs bringing up the wrong menu.
+- Fixed Hydro Fang being missing from the Custom AI skill list.
 
 # 2.14.1.0
 
