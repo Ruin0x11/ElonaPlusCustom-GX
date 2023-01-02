@@ -6680,10 +6680,12 @@
 	}
 	cdata(CDATA_DAMAGE_FIX, cc) = dmgfix
 	if ( TweakData(TWEAK_GAMEPLAY_CG_REVERT_DAMAGE_CALC_NERFS, TWEAK_CATEGORY_GAMEPLAY) == FALSE ) {
-		if ( attacknum > 2 ) {
-			repeat attacknum - 2
-				dmgfix = dmgfix * 3 / 5
-			loop
+		if ( attackrange == 0 ) {
+			if ( attacknum > 2 ) {
+				repeat attacknum - 2
+					dmgfix = dmgfix * 3 / 5
+				loop
+			}
 		}
 	}
 	if ( calcattackdmg_arg1 == 1 ) {
@@ -6759,6 +6761,9 @@
 		}
 	}
 	damage = damage * dmgmulti / 100
+	if ( critical ) {
+		damage += sdata(SKILL_NORMAL_EYE_OF_MIND, cc) * sqrt(sdata(SKILL_NORMAL_EYE_OF_MIND, cc) + 1)
+	}
 	if ( findbuff(cc, BUFF_CHARGE) != (-1) ) {
 		if ( cc != CHARA_PLAYER | cdata(CDATA_RELATION, tc) == (-3) ) {
 			damage = damage * 10
@@ -7372,9 +7377,6 @@
 		else {
 			spact(SKILL_SPACT_VORACITY_FANG - STARTING_SKILL_SPACT) = 0
 		}
-	}
-	if ( sdata(SKILL_NORMAL_EYE_OF_MIND, r1) ) {
-		cdata(CDATA_CRIT_CHANCE, r1) += int(sqrt(sdata(SKILL_NORMAL_EYE_OF_MIND, r1))) + 2
 	}
 	repeat MAX_SKILL_ATTR - STARTING_SKILL_ATTR
 		if ( cdata(STARTING_CDATA_ATTR + cnt, r1) != 0 ) {

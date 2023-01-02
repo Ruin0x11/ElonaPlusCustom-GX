@@ -1731,9 +1731,10 @@
 			cell_swap cc, tc
 			snd SOUNDLIST_BASH1
 			txt lang(name(cc) + "は" + name(tc) + "を轢いた。", name(cc) + " ran over " + name(tc) + ".")
-			dmghp tc, (sdata(SKILL_ACTIVE_RIDING, cc) / 4 + 4) * (sdata(SKILL_ATTR_WIL, cc) / 4 + 3) + rnd(sdata(SKILL_ATTR_SPD, cc) + 5), cc, SKILL_RESDMG_CRUSH, 1000
-			if ( cdata(CDATA_CONDITION_WINCE, tc) < 0 ) {
-				cdata(CDATA_CONDITION_WINCE, tc) = 1
+			dmghp tc, (sdata(SKILL_ATTR_WIL, cc) / 5 + 5) * ((sdata(SKILL_ACTIVE_RIDING, cc) + 1) / 5 + 5) + rnd(sdata(SKILL_ATTR_SPD, cc) + 5) + (limit(cdata(CDATA_LEVEL, cc) - 50, 1, 2000) + limit(cdata(CDATA_LEVEL, cc) - 100, 1, 2000)) * 2 * sqrt(limit(cdata(CDATA_LEVEL, cc), 1, 2000) * 3) + 30, cc, SKILL_RESDMG_CRUSH, 1000
+			if ( cdata(CDATA_CONDITION_WINCE, tc) <= 0 ) {
+				cdata(CDATA_CONDITION_WINCE, tc) = 10
+				txt lang(name(tc) + "は怯んだ。", name(tc) + " " + is(tc) + " faltered.")
 			}
 			if ( charaGivesExp(tc) & tc != CHARA_PLAYER ) {
 				skillexp SKILL_ACTIVE_RIDING, cc, 30
@@ -3050,11 +3051,29 @@
 			}
 		}
 	}
-	if ( cdata(CDATA_ID, cc) == CREATURE_ID_HELRAUNE ) {
+	if ( cdata(CDATA_ID, cc) == CREATURE_ID_HELRAUNE | cdata(CDATA_ID, cc) == CREATURE_ID_DAGANOTOSUS ) {
 		if ( cdata(CDATA_POWER_GAUGE, cc) < 80 ) {
 			if ( cdata(CDATA_POWER_GAUGE, cc) >= 25 ) {
 				if ( rnd(10) == 0 ) {
 					act = SKILL_SPACT_VENOTRATE
+				}
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, cc) == CREATURE_ID_MOSTMUSCYLLA | cdata(CDATA_ID, cc) == CREATURE_ID_OOTEGUCHI | cdata(CDATA_ID, cc) == CREATURE_ID_HEROYEEK | cdata(CDATA_ID, cc) == CREATURE_ID_MUSCLE_GOLEM | cdata(CDATA_ID, cc) == CREATURE_ID_SNAIL_THE_ANDROID_RIDER | cdata(CDATA_ID, cc) == CREATURE_ID_OPATOS | cdata(CDATA_ID, cc) == CREATURE_ID_MAGIC_HAWK_MOTH | cdata(CDATA_ID, cc) == CREATURE_ID_OXODE_THE_QUEEN_BEE ) {
+		if ( cdata(CDATA_POWER_GAUGE, cc) < 85 ) {
+			if ( cdata(CDATA_DRAIN_HP, cc) >= 15 ) {
+				if ( rnd(10) == 0 ) {
+					act = SKILL_SPACT_POSING
+				}
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, cc) == CREATURE_ID_NIGHTMARE_SHARK | cdata(CDATA_ID, cc) == CREATURE_ID_RAGING_SHARK | cdata(CDATA_ID, cc) == CREATURE_ID_CAPTAIN_SHARK | cdata(CDATA_ID, cc) == CREATURE_ID_SP_CHAMPION ) {
+		if ( cdata(CDATA_POWER_GAUGE, cc) < 80 ) {
+			if ( dist(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), cdata(CDATA_X, tc), cdata(CDATA_Y, tc)) == 1 ) {
+				if ( rnd(6) == 0 ) {
+					act = SKILL_SPACT_SHARK_TRADE
 				}
 			}
 		}

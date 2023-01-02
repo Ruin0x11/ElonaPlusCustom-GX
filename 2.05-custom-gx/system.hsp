@@ -1224,7 +1224,7 @@
 	sdim usertxt, 80 * 100, usernpcmax + 1
 	sdim untaglist
 	gdata(GDATA_USERNPC_COUNT) = 0
-	buffer 5, 33 * 48, (34 + (usernpcmax / 33 + 1) * 2) * 48
+	buffer 5, SPRITE_SHEET_COLS_CHARA * 48, (SPRITE_SHEET_ROWS_CHARA + (usernpcmax / SPRITE_SHEET_COLS_CHARA + 1) * 2) * 48
 	pos 0, 0
 	picload exedir + "\\graphic\\character" + devfile + ".bmp", 1
 	gmode 0
@@ -1356,7 +1356,7 @@
 			chipc(CHIPC_X, SPRITE_SHEET_COLS_CHARA * SPRITE_SHEET_ROWS_CHARA + tg) = tg \ SPRITE_SHEET_COLS_CHARA * inf_tiles, SPRITE_SHEET_ROWS_CHARA * inf_tiles + tg / SPRITE_SHEET_COLS_CHARA * inf_tiles * 2, inf_tiles, inf_tiles, 16
 		}
 		gsel 5
-		pos tg \ SPRITE_SHEET_COLS_CHARA * 48, SPRITE_SHEET_ROWS_CHARA * 48 + tg / SPRITE_SHEET_COLS_CHARA * 96
+		pos tg \ SPRITE_SHEET_COLS_CHARA * inf_tiles, SPRITE_SHEET_ROWS_CHARA * inf_tiles + tg / SPRITE_SHEET_COLS_CHARA * (inf_tiles * 2)
 		gcopy 9, 0, 0, 48, 96
 		tg++
 	loop

@@ -4,7 +4,106 @@
 	}
 	dbmax = 0
 	dbsum = 0
-//*db_item_DERNEFIA
+//*db_item_SLIME_FUKAGURUMI
+	if ( 1 > objlv ) {
+		goto *db_item_SLIME_MOLD
+	}
+	if ( fltselect != 1 ) {
+		goto *db_item_SLIME_MOLD
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_JUNK ) {
+			goto *db_item_SLIME_MOLD
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_NONE ) {
+			goto *db_item_SLIME_MOLD
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_SLIME_FUKAGURUMI), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_SLIME_MOLD
+		}
+	}
+	dbsum += 1000000 / (1000 + abs(objlv - 1) * 10) + 1
+	dblist(0, dbmax) = ITEM_ID_SLIME_FUKAGURUMI, dbsum
+	dbmax++
+
+*db_item_SLIME_MOLD
+	if ( 1 > objlv ) {
+		goto *db_item_NECRO_PARTS
+	}
+	if ( fltselect != 1 ) {
+		goto *db_item_NECRO_PARTS
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_ITEM_TOOL ) {
+			goto *db_item_NECRO_PARTS
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_NONE ) {
+			goto *db_item_NECRO_PARTS
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_SLIME_MOLD), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_NECRO_PARTS
+		}
+	}
+	dbsum += 50000 / (1000 + abs(objlv - 1) * 10) + 1
+	dblist(0, dbmax) = ITEM_ID_SLIME_MOLD, dbsum
+	dbmax++
+
+*db_item_NECRO_PARTS
+	if ( 1 > objlv ) {
+		goto *db_item_DERNEFIA
+	}
+	if ( fltselect != 1 ) {
+		goto *db_item_DERNEFIA
+	}
+	if ( flttypemajor != FILTER_NOTHING ) {
+		if ( flttypemajor != FILTER_ITEM_TOOL ) {
+			goto *db_item_DERNEFIA
+		}
+	}
+	if ( flttypeminor != FILTER_NOTHING ) {
+		if ( flttypeminor != FILTER_NONE ) {
+			goto *db_item_DERNEFIA
+		}
+	}
+	if ( filtermax != 0 ) {
+		dbtmp = 1
+		repeat filtermax
+			if ( instr(filter_item(ITEM_ID_NECRO_PARTS), 0, filtern(cnt)) == (-1) ) {
+				dbtmp = 0
+				break
+			}
+		loop
+		if ( dbtmp == 0 ) {
+			goto *db_item_DERNEFIA
+		}
+	}
+	dbsum += 50000 / (1000 + abs(objlv - 1) * 10) + 1
+	dblist(0, dbmax) = ITEM_ID_NECRO_PARTS, dbsum
+	dbmax++
+
+*db_item_DERNEFIA
 	if ( 1 > objlv ) {
 		goto *db_item_BOTTLE_CAP
 	}
@@ -34,7 +133,7 @@
 		}
 	}
 	dbsum += 1000000 / (1000 + abs(objlv - 1) * 10) + 1
-	dblist(0, dbmax) = 1264, dbsum
+	dblist(0, dbmax) = ITEM_ID_DERNEFIA, dbsum
 	dbmax++
 
 *db_item_BOTTLE_CAP
@@ -67,7 +166,7 @@
 		}
 	}
 	dbsum += 500000 / (1000 + abs(objlv - 1) * 10) + 1
-	dblist(0, dbmax) = 1263, dbsum
+	dblist(0, dbmax) = ITEM_ID_BOTTLE_CAP, dbsum
 	dbmax++
 
 *db_item_B_DAMA
@@ -100,7 +199,7 @@
 		}
 	}
 	dbsum += 500000 / (1000 + abs(objlv - 1) * 10) + 1
-	dblist(0, dbmax) = 1262, dbsum
+	dblist(0, dbmax) = ITEM_ID_B_DAMA, dbsum
 	dbmax++
 *db_item_CORK_PACK
 	if ( 1 > objlv ) {
@@ -40502,6 +40601,201 @@
 	return
 
 *db_item_set
+	if ( dbid == ITEM_ID_SLIME_FUKAGURUMI ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 100
+			inv(INV_ITEM_WEIGHT, ci) = 1000
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_SLIME_FUKAGURUMI
+			inv(INV_ITEM_PIC, ci) = xy2pic(7, 37)
+			reftype = FILTER_JUNK
+			reftypeminor = FILTER_NOTHING
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_EFFECT, ci) = EFFECT_CHAIR
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_JUNK
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 5 ) {
+				return 64000
+			}
+			if ( dbspec == 9 ) {
+				return 99999
+			}
+			if ( dbspec == 20 ) {
+				return 100
+			}
+			if ( dbspec == 19 ) {
+				return
+			}
+			if ( dbspec == 11 ) {
+				return 1
+			}
+			if ( dbspec == 18 ) {
+				return 0
+			}
+			if ( dbspec == 7 ) {
+				return 1
+			}
+			if ( dbspec == 8 ) {
+				return 1000
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "でっかいサメのぬいぐるみ。なかなかジョーズに作られており、とってもフカフカ。しかしイルヴァのサメはぬいぐるみに制作者が名前をつけるのが主流。そのため、ぬいぐるみに自分で名前をつけたい派の人類からは敬遠されているし、ぬいぐるみに名前をつけない派の人類からは幼稚とされ、あまり需要がない。\n#〜サメ信者大全〜"
+				description(1) = ""
+				description(2) = ""
+				description(3) = "何度でも使用することができる。\n#〜鑑定報告書：＜器具＞カテゴリ〜"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == ITEM_ID_SLIME_MOLD ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 1000
+			inv(INV_ITEM_WEIGHT, ci) = 100
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_SLIME_MOLD
+			inv(INV_ITEM_PIC, ci) = xy2pic(5, 37)
+			reftype = FILTER_ITEM_TOOL
+			reftypeminor = FILTER_NOTHING
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_EFFECT, ci) = EFFECT_SLIME_MOLD
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_ITEM_TOOL
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 5 ) {
+				return 59000
+			}
+			if ( dbspec == 9 ) {
+				return 99999
+			}
+			if ( dbspec == 20 ) {
+				return 1000
+			}
+			if ( dbspec == 19 ) {
+				return
+			}
+			if ( dbspec == 11 ) {
+				return 1
+			}
+			if ( dbspec == 18 ) {
+				return 0
+			}
+			if ( dbspec == 7 ) {
+				return 1
+			}
+			if ( dbspec == 8 ) {
+				return 50
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "特殊な粘菌の集合体。コンピュータのような機能を備えており、電気信号で自在に動く。かつての文明ではこの粘菌に個人の人格やスキルなどをダウンロードする技術もあった。粘菌によって構成されたアンデッド兵器は、当時の戦争を激変させたという。\n#〜ロストテクノロジー、その片鱗〜"
+				description(1) = ""
+				description(2) = ""
+				description(3) = "特殊な素材だ。特定の死体に使うことができる(使い捨て)。\n#〜鑑定報告書：＜遺物＞カテゴリ〜"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
+	if ( dbid == ITEM_ID_NECRO_PARTS ) {
+		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_VALUE, ci) = 100
+			inv(INV_ITEM_WEIGHT, ci) = 500
+		}
+		if ( dbmode == DBMODE_SET ) {
+			inv(INV_ITEM_ID, ci) = ITEM_ID_NECRO_PARTS
+			inv(INV_ITEM_PIC, ci) = xy2pic(6, 37)
+			reftype = FILTER_ITEM_TOOL
+			reftypeminor = FILTER_NOTHING
+			inv(INV_ITEM_NUM, ci) = 1
+			fixeditemenc = 0
+			inv(INV_ITEM_EFFECT, ci) = EFFECT_NECRO_PARTS
+			inv(INV_ITEM_IDENTIFY_LEVEL, ci) = 0
+			return
+		}
+		if ( dbmode == DBMODE_REF ) {
+			ichargelevel = 0
+			infilterref = ""
+			reftype = FILTER_ITEM_TOOL
+			return
+		}
+		if ( dbmode == DBMODE_REF_SPEC ) {
+			if ( dbspec == 5 ) {
+				return 59000
+			}
+			if ( dbspec == 9 ) {
+				return 99999
+			}
+			if ( dbspec == 20 ) {
+				return 100
+			}
+			if ( dbspec == 19 ) {
+				return
+			}
+			if ( dbspec == 11 ) {
+				return 1
+			}
+			if ( dbspec == 18 ) {
+				return 0
+			}
+			if ( dbspec == 7 ) {
+				return 1
+			}
+			if ( dbspec == 8 ) {
+				return 50
+			}
+			return 0
+		}
+		if ( dbmode == DBMODE_DESC ) {
+			if ( jp ) {
+				description(0) = "バラバラ死体に構成粘菌を充填したもの。対象者にくっつけると自在に動かすことができるが、現代の技術では該当部位を既に持っていると拒絶反応が出てくっつかない。\n#〜ロストテクノロジー、その片鱗〜"
+				description(1) = ""
+				description(2) = "「腕を一本生やすにしても、キミの好みは美品？異形？メカニカル？どうせ組むなら細部のパーツもこだわりたい！キミだけのカスタマイズでバトルを勝ち抜け！」\n#〜退屈ネクロマンサーの言葉〜"
+				description(3) = "部位を獲得できる義肢だ。使うことができる(使い捨て)。\n#〜鑑定報告書：＜遺物＞カテゴリ〜"
+			}
+			else {
+				description(0) = ""
+				description(1) = ""
+				description(3) = ""
+			}
+			return
+		}
+		return 0
+	}
 	if ( dbid == ITEM_ID_DERNEFIA ) {
 		if ( dbmode == DBMODE_SET_STATS | dbmode == DBMODE_SET ) {
 			inv(INV_ITEM_MATERIAL, ci) = ITEM_MATERIAL_RAW
@@ -44694,7 +44988,7 @@
 		if ( dbmode == DBMODE_DESC ) {
 			if ( jp ) {
 				description(0) = "\t\t守護者の体内から見つかる謎の結晶。記憶と化合することで力を生み出すという。ネフィア症候群の末期患者を解剖したところ、体内に同様の結晶が形成されつつあったという記録もある。\n#〜イルヴァ幻想辞典〜\n"
-				description(1) = ""
+				description(1) = "\t\t該当スキルが低すぎると、ボーナスに変換できずスキルそのものが消えて無くなってしまうらしい。不要なスキルなどないので活用は難しそうだ。\n#〜遺跡荒らしのメモ〜"
 				description(2) = ""
 				description(3) = "\t\tスキル半減し僅かにボーナスを得る結晶。使用することができる（使い捨て）。\n#〜鑑定報告書：＜遺物＞カテゴリ〜\n"
 			}
@@ -45561,9 +45855,9 @@
 		if ( dbmode == DBMODE_DESC ) {
 			if ( jp ) {
 				description(0) = "\t\t守護者となってしまった者が遺す破片。ネフィアから与えられた知識や過去の技術、守護者自身の記憶などがかすかに宿っている。技術や知識を吸収することができるが、他人の記憶が流れ込んでくるので気が狂いそうになる。もしもネフィア症候群の末期患者が使った場合、意識を失い、新たなネフィアの守護者となってしまうだろう。\n#〜イルヴァ幻想辞典〜\n"
-				description(1) = ""
+				description(1) = "持っているスキルなら経験を得られ、持っていないスキルなら習得することができるお宝だ。まれに拒絶反応でスキルを習得できない体質のやつもいるらしいが、本当だろうか。\n#〜遺跡荒らしのメモ〜"
 				description(2) = "\t\t「抵抗力のある者であればネフィアに取り込まれず、記憶片を集めて強くなれる。何事にも穴はあるものだ。…いや待てよ。抵抗力のある者に力を集中させることが本来の目的だとしたら…？」\n#〜遺跡研究者『メローキア』の言葉〜\n"
-				description(3) = "\t\tスキル経験を得られる欠片。使用することができる（使い捨て）。\n#〜鑑定報告書：＜遺物＞カテゴリ〜\n"
+				description(3) = "\t\tスキルの記憶を秘めた欠片。使用することができる（使い捨て）。\n#〜鑑定報告書：＜遺物＞カテゴリ〜\n"
 			}
 			else {
 				description(0) = ""
@@ -45631,9 +45925,9 @@
 		if ( dbmode == DBMODE_DESC ) {
 			if ( jp ) {
 				description(0) = "\t\t陸上戦艦の所有権を得られる証書。機械文明時代の遺跡から発掘されたものを、ジャンク屋が独自修復したらしい。ちょっとした金持ち程度では維持費を工面できない、ロマンの塊。全盛期の性能こそ発揮できないがそこは腐っても戦艦。野良モンスター程度なら先制攻撃で蹴散らせる。かなり重い荷物を運べるし、重すぎても速度が落ちにくい。空調設備もあるので砂漠でも快適だ。\n#〜今日から君も冒険者・旅用マニュアル〜\n"
-				description(1) = ""
+				description(1) = "\t\t権利書を染めることで塗装を指定可能。ｓキーで音を鳴らすことができるが特に意味はない。もしも徒歩で旅したくなったら同じ種類の権利書を読むこと。なお、税金は期間中に使用した最も高価な乗り物で計算されるので注意。\n#〜旅用マニュアル注釈〜"
 				description(2) = "\t\t「よりにもよってコイツばかり発掘されるとはな。…まぁ現代では問題にならないだろう」\n#〜現場を見た専門家の言葉〜\n"
-				description(3) = "\t\t読むことでワールドマップでの乗り物を変える権利書だ。染めれば色も指定可能。\n#〜鑑定報告書：＜証書＞カテゴリ〜\n"
+				description(3) = "\t\tワールドマップでの乗り物の権利書だ。何度でも読むことができる。\n#〜鑑定報告書：＜証書＞カテゴリ〜"
 			}
 			else {
 				description(0) = ""
@@ -45701,9 +45995,9 @@
 		if ( dbmode == DBMODE_DESC ) {
 			if ( jp ) {
 				description(0) = "\t\t魔法で動く機関車の所有権が得られる証書。魔法のレールを展開して走るため、雪原地帯でも移動に影響を受けない。また、やや重い荷物も牽引でき、重すぎても速度が落ちにくい。ただし魔力炉を活性化させていないと走行に支障が出る弱点があり、少量でもＭＰを投入し続ける必要がある。出力の調整や整備がなかなか面倒な点もあり、エウダーナ国内でも珍品扱いである。\n#〜今日から君も冒険者・旅用マニュアル〜\n"
-				description(1) = ""
+				description(1) = "\t\t権利書を染めることで塗装を指定可能。ｓキーで音を鳴らすことができるが特に意味はない。もしも徒歩で旅したくなったら同じ種類の権利書を読むこと。なお、税金は期間中に使用した最も高価な乗り物で計算されるので注意。\n#〜旅用マニュアル注釈〜"
 				description(2) = "\t\t「俺は天才だ！俺の魔導機関が評価されないのはベルム家の陰謀だ！」\n#〜自称天才魔道具技師の言葉〜\n"
-				description(3) = "\t\t読むことでワールドマップでの乗り物を変える権利書だ。染めれば色も指定可能。\n#〜鑑定報告書：＜証書＞カテゴリ〜\n"
+				description(3) = "ワールドマップでの乗り物の権利書だ。何度でも読むことができる。\n#〜鑑定報告書：＜証書＞カテゴリ〜"
 			}
 			else {
 				description(0) = ""
@@ -45770,10 +46064,10 @@
 		}
 		if ( dbmode == DBMODE_DESC ) {
 			if ( jp ) {
-				description(0) = "\t\t輸送車の所有権が得られる証書。悪路でもそれなりに速く走れるよう設計されているが、整備された道ならより速く進むことができる。\n#〜今日から君も冒険者・旅用マニュアル〜\n"
-				description(1) = ""
+				description(0) = "\t\t輸送車の所有権が得られる証書。悪路でもそれなりに速く走れるよう設計されているが、整備された道ならより速く進むことができる。権利書を染めることで塗装を指定可能。\n#〜今日から君も冒険者・旅用マニュアル〜"
+				description(1) = "\t\t権利書を染めることで塗装を指定可能。ｓキーで音を鳴らすことができるが特に意味はない。もしも徒歩で旅したくなったら同じ種類の権利書を読むこと。なお、税金は期間中に使用した最も高価な乗り物で計算されるので注意。\n#〜旅用マニュアル注釈〜"
 				description(2) = ""
-				description(3) = "\t\t読むことでワールドマップでの乗り物を変える権利書だ。染めれば色も指定可能。\n#〜鑑定報告書：＜証書＞カテゴリ〜\n"
+				description(3) = "\t\tワールドマップでの乗り物の権利書だ。何度でも読むことができる。\n#〜鑑定報告書：＜証書＞カテゴリ〜"
 			}
 			else {
 				description(0) = ""
@@ -45841,9 +46135,9 @@
 		if ( dbmode == DBMODE_DESC ) {
 			if ( jp ) {
 				description(0) = "\t\t大型馬車の所有権が得られる証書。専用の訓練を受けた馬もセット。徒歩よりは旅がはかどるだろう。\n#〜今日から君も冒険者・旅用マニュアル〜\n"
-				description(1) = ""
+				description(1) = "\t\t権利書を染めることで塗装を指定可能。ｓキーで音を鳴らすことができるが特に意味はない。もしも徒歩で旅したくなったら同じ種類の権利書を読むこと。なお、税金は期間中に使用した最も高価な乗り物で計算されるので注意。\n#〜旅用マニュアル注釈〜"
 				description(2) = ""
-				description(3) = "\t\t読むことでワールドマップでの乗り物を変える権利書だ。染めれば色も指定可能。\n#〜鑑定報告書：＜証書＞カテゴリ〜\n"
+				description(3) = "\t\tワールドマップでの乗り物の権利書だ。何度でも読むことができる。\n#〜鑑定報告書：＜証書＞カテゴリ〜"
 			}
 			else {
 				description(0) = ""
@@ -124401,6 +124695,12 @@
 	return -999
 
 *db_setFilterItem
+	filter_item(ITEM_ID_SLIME_FUKAGURUMI) = ""
+	rffilter_item(ITEM_ID_SLIME_FUKAGURUMI) = ""
+	filter_item(ITEM_ID_SLIME_MOLD) = ""
+	rffilter_item(ITEM_ID_SLIME_MOLD) = ""
+	filter_item(ITEM_ID_NECRO_PARTS) = ""
+	rffilter_item(ITEM_ID_NECRO_PARTS) = ""
 	filter_item(ITEM_ID_DERNEFIA) = ""
 	rffilter_item(ITEM_ID_DERNEFIA) = "/hana/"
 	filter_item(ITEM_ID_BOTTLE_CAP) = ""
@@ -126962,6 +127262,55 @@
 	return
 
 *db_setItem
+	ilight(ITEM_ID_SLIME_FUKAGURUMI) = LIGHT_TYPE_NONE
+	ialphanameref(ITEM_ID_SLIME_FUKAGURUMI) = ""
+	iorgweight(ITEM_ID_SLIME_FUKAGURUMI) = 1000
+	if ( jp ) {
+		ioriginalnameref(ITEM_ID_SLIME_FUKAGURUMI) = "フカグルミ"
+	}
+	else {
+		ioriginalnameref(ITEM_ID_SLIME_FUKAGURUMI) = "fukagurumi"
+		ioriginalnameref2(ITEM_ID_SLIME_FUKAGURUMI) = ""
+	}
+	ipicref(ITEM_ID_SLIME_FUKAGURUMI) = xy2pic(7, 37)
+	iknownnameref(ITEM_ID_SLIME_FUKAGURUMI) = ioriginalnameref(ITEM_ID_SLIME_FUKAGURUMI)
+	icolref(ITEM_ID_SLIME_FUKAGURUMI) = COLOR_DEFAULT
+	ilight(ITEM_ID_SLIME_MOLD) = LIGHT_TYPE_NONE
+	ialphanameref(ITEM_ID_SLIME_MOLD) = ""
+	iorgweight(ITEM_ID_SLIME_MOLD) = 100
+	if ( jp ) {
+		ioriginalnameref(ITEM_ID_SLIME_MOLD) = "構成粘菌"
+	}
+	else {
+		ioriginalnameref(ITEM_ID_SLIME_MOLD) = "slime mold"
+		ioriginalnameref2(ITEM_ID_SLIME_MOLD) = ""
+	}
+	ipicref(ITEM_ID_SLIME_MOLD) = xy2pic(5, 37)
+	if ( jp ) {
+		iknownnameref(ITEM_ID_SLIME_MOLD) = "ねばねば"
+	}
+	else {
+		iknownnameref(ITEM_ID_SLIME_MOLD) = ""
+	}
+	icolref(ITEM_ID_SLIME_MOLD) = COLOR_DEFAULT
+	ilight(ITEM_ID_NECRO_PARTS) = LIGHT_TYPE_NONE
+	ialphanameref(ITEM_ID_NECRO_PARTS) = ""
+	iorgweight(ITEM_ID_NECRO_PARTS) = 500
+	if ( jp ) {
+		ioriginalnameref(ITEM_ID_NECRO_PARTS) = ""
+	}
+	else {
+		ioriginalnameref(ITEM_ID_NECRO_PARTS) = ""
+		ioriginalnameref2(ITEM_ID_NECRO_PARTS) = ""
+	}
+	ipicref(ITEM_ID_NECRO_PARTS) = xy2pic(6, 37)
+	if ( jp ) {
+		iknownnameref(ITEM_ID_NECRO_PARTS) = "死体パーツ"
+	}
+	else {
+		iknownnameref(ITEM_ID_NECRO_PARTS) = "necro parts"
+	}
+	icolref(ITEM_ID_NECRO_PARTS) = COLOR_DEFAULT
 	ilight(ITEM_ID_DERNEFIA) = LIGHT_TYPE_NONE
 	ialphanameref(ITEM_ID_DERNEFIA) = ""
 	iorgweight(ITEM_ID_DERNEFIA) = 300

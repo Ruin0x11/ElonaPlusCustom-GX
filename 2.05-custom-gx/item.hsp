@@ -1022,6 +1022,58 @@
 						inv(INV_ITEM_AMUR_CAGE, ci) = 1
 					}
 				}
+				inv(INV_ITEM_SHOP_SAMPLE, ci) = 0
+				repeat 30, 100
+					p = cdata(cnt, rc) / EXT_EQUIP_SLOTS
+					if ( p == 0 ) {
+						break
+					}
+					if ( p == 1 ) {
+						if ( inv(INV_ITEM_SHOP_SAMPLE, ci) < 1 ) {
+							inv(INV_ITEM_SHOP_SAMPLE, ci) += 1
+						}
+					}
+					if ( p == 2 ) {
+						if ( inv(INV_ITEM_SHOP_SAMPLE, ci) < 10 ) {
+							inv(INV_ITEM_SHOP_SAMPLE, ci) += 10
+						}
+					}
+					if ( p == 3 ) {
+						if ( inv(INV_ITEM_SHOP_SAMPLE, ci) < 100 ) {
+							inv(INV_ITEM_SHOP_SAMPLE, ci) += 100
+						}
+					}
+					if ( p == 4 ) {
+						if ( inv(INV_ITEM_SHOP_SAMPLE, ci) < 1000 ) {
+							inv(INV_ITEM_SHOP_SAMPLE, ci) += 1000
+						}
+					}
+					if ( p == 5 ) {
+						if ( inv(INV_ITEM_SHOP_SAMPLE, ci) < 10000 ) {
+							inv(INV_ITEM_SHOP_SAMPLE, ci) += 10000
+						}
+					}
+					if ( p == 6 ) {
+						if ( inv(INV_ITEM_SHOP_SAMPLE, ci) < 100000 ) {
+							inv(INV_ITEM_SHOP_SAMPLE, ci) += 100000
+						}
+					}
+					if ( p == 7 ) {
+						if ( inv(INV_ITEM_SHOP_SAMPLE, ci) < 1000000 ) {
+							inv(INV_ITEM_SHOP_SAMPLE, ci) += 1000000
+						}
+					}
+					if ( p == 8 ) {
+						if ( inv(INV_ITEM_SHOP_SAMPLE, ci) < 10000000 ) {
+							inv(INV_ITEM_SHOP_SAMPLE, ci) += 10000000
+						}
+					}
+					if ( p == 9 ) {
+						if ( inv(INV_ITEM_SHOP_SAMPLE, ci) < 100000000 ) {
+							inv(INV_ITEM_SHOP_SAMPLE, ci) += 100000000
+						}
+					}
+				loop
 				remain_make ci, rc
 				if ( stat != 0 ) {
 					remain_make ci, rc
@@ -1333,6 +1385,30 @@
 			if ( gdata(GDATA_FLAG_RARE_DROP) == 100 ) {
 				flt
 				itemcreate -1, ITEM_ID_POTION_EVOLUTION, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_SLIME ) {
+		if ( rnd(60) == 0 ) {
+			if ( gdata(GDATA_FLAG_RARE_DROP) == 100 ) {
+				flt
+				itemcreate -1, ITEM_ID_SLIME_MOLD, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_ZOMBIE_GIRL ) {
+		if ( rnd(15) == 0 ) {
+			if ( gdata(GDATA_FLAG_RARE_DROP) == 100 ) {
+				flt
+				itemcreate -1, ITEM_ID_SLIME_MOLD, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
+			}
+		}
+	}
+	if ( cdata(CDATA_ID, rc) == CREATURE_ID_ZOMBIE_QUEEN | cdata(CDATA_ID, rc) == CREATURE_ID_REQUIEM | cdata(CDATA_ID, rc) == CREATURE_ID_GOTHIC ) {
+		if ( rnd(6) == 0 ) {
+			if ( gdata(GDATA_FLAG_RARE_DROP) == 100 ) {
+				flt
+				itemcreate -1, ITEM_ID_SLIME_MOLD, cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 0
 			}
 		}
 	}
@@ -2155,6 +2231,9 @@
 	}
 	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_SPIRITIUM ) {
 		inv(INV_ITEM_PARAM1, ci) = rnd(36) + 1
+	}
+	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_SLIME_FUKAGURUMI ) {
+		inv(INV_ITEM_PARAM1, ci) = rnd(1000) + 1
 	}
 	if ( inv(INV_ITEM_ID, ci) == ITEM_ID_RED_BOOK ) {
 		if ( inv(INV_ITEM_BOOK_ID, ci) == 0 ) {
@@ -3093,8 +3172,7 @@
 			txtef COLOR_RED
 			txt lang(name(cc) + "は白目を剥いてぶっ倒れた。", name(cc) + " rolls back " + his(cc, 1) + " eyes and collapses.")
 		}
-		dmg = (sdata(SKILL_NORMAL_GENE_ENGINEER, CHARA_PLAYER) + 2) / 2 * sqrt(sdata(SKILL_NORMAL_GENE_ENGINEER, CHARA_PLAYER) + 1) + rnd(sdata(SKILL_NORMAL_GENE_ENGINEER, CHARA_PLAYER) * 2 + 5)
-		dmghp cc, dmg, DAMAGE_FROM_CHARA
+		dmghp tc, (sdata(SKILL_NORMAL_GENE_ENGINEER, CHARA_PLAYER) / 5 + 5) * ((sdata(SKILL_NORMAL_GENE_ENGINEER, CHARA_PLAYER) + 1) / 5 + 5) + rnd(sdata(SKILL_NORMAL_GENE_ENGINEER, CHARA_PLAYER) * 2 + 5) + (limit(cdata(CDATA_LEVEL, CHARA_PLAYER) - 50, 1, 2000) + limit(cdata(CDATA_LEVEL, CHARA_PLAYER) - 100, 1, 2000)) * 2 * sqrt(limit(cdata(CDATA_LEVEL, CHARA_PLAYER), 1, 2000) * 3) + 30, (0 /*!!!@[CHARA_PLAYER @@@ DAMAGE_FROM_CHARA]@!!! */), SKILL_RESDMG_CONSTITUTION, 1000
 		if ( cdata(CDATA_EXIST, cc) == CHAR_STATE_ALIVE ) {
 			if ( fatal == 0 ) {
 				chara_vomit cc

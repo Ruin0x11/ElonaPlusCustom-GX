@@ -1861,9 +1861,10 @@
 					snd SOUNDLIST_BASH1
 					txt lang(name(tc) + "を轢いた。", "You ran over " + name(tc) + ".")
 					txtmore
-					dmghp tc, (sdata(SKILL_ACTIVE_RIDING, CHARA_PLAYER) / 4 + 4) * (sdata(SKILL_ATTR_WIL, CHARA_PLAYER) / 4 + 3) + rnd(sdata(SKILL_ATTR_SPD, CHARA_PLAYER) + 5), DAMAGE_FROM_CHARA, SKILL_RESDMG_CRUSH, 1000
-					if ( cdata(CDATA_CONDITION_WINCE, tc) < 0 ) {
-						cdata(CDATA_CONDITION_WINCE, tc) = 1
+					dmghp tc, (sdata(SKILL_ATTR_WIL, cc) / 5 + 5) * ((sdata(SKILL_ACTIVE_RIDING, cc) + 1) / 5 + 5) + rnd(sdata(SKILL_ATTR_SPD, cc) + 5) + (limit(cdata(CDATA_LEVEL, cc) - 50, 1, 2000) + limit(cdata(CDATA_LEVEL, cc) - 100, 1, 2000)) * 2 * sqrt(limit(cdata(CDATA_LEVEL, cc), 1, 2000) * 3) + 30, cc, SKILL_RESDMG_CRUSH, 1000
+					if ( cdata(CDATA_CONDITION_WINCE, tc) <= 0 ) {
+						cdata(CDATA_CONDITION_WINCE, tc) = 10
+						txt lang(name(tc) + "は怯んだ。", name(tc) + " " + is(tc) + " faltered.")
 					}
 					if ( charaGivesExp(tc) & tc != CHARA_PLAYER ) {
 						skillexp SKILL_ACTIVE_RIDING, CHARA_PLAYER, 30
@@ -2927,6 +2928,9 @@
 
 *lockpick_val
 	nannido = val
+	if ( nannido > 2000 ) {
+		nannido = 2000
+	}
 *lockpick
 	item_find ITEM_ID_LOCKPICK, 3
 	if ( stat == (-1) ) {
@@ -5382,7 +5386,7 @@
 			else {
 				txt lang("さらに反撃を叩き込まれた！", "Furthermore, a counterattack is delivered!")
 			}
-			dmghp cc, sdata(SKILL_NORMAL_EVASION, tc) * 5 + rnd(sdata(SKILL_NORMAL_EVASION, tc) + 10), tc
+			dmghp cc, ((sdata(SKILL_NORMAL_EVASION, tc) + 1) / 5 + 5) * ((sdata(SKILL_NORMAL_EVASION, tc) + 1) / 5 + 5) / 5 + (limit(cdata(CDATA_LEVEL, tc) - 30, 1, 2000) * 4 * sqrt(limit(cdata(CDATA_LEVEL, tc), 1, 2000) * 5) + 1) / 5, tc, SKILL_RESDMG_CRUSH, 1000
 		}
 	}
 	if ( tc == CHARA_PLAYER ) {
@@ -8686,9 +8690,33 @@
 		 ********** ORIGINAL - ENDING **********/
 
 		if ( sorg(inv(INV_ITEM_PARAM1, ci), tc) < 5 ) {
-			txt lang("対応するスキルのレベルが5は必要だ。", "The corresponding skill needs to be at least level 5.")
-			gosub *screen_draw
-			goto *pc_turn
+			txtef COLOR_RED
+			txt lang("ボーナスに変換するには、対応するスキルのレベルが5は必要だ。このまま使うとスキルが消滅するが、本当に使う？", "The corresponding skill needs to be at least level 5. If you use this now, the skill will disappear. Do you really want to use this?")
+			txtselectuse 2
+			repeat 2
+				promptl(0, promptmax) = s(cnt), key_select(cnt), "" + promptmax
+				promptmax++
+			loop
+			val = promptx, prompty, 200, 1
+			gosub *prompt_key
+			if ( stat == 0 ) {
+				gosub *screen_draw
+				goto *pc_turn
+			}
+			if ( rtval == 1 ) {
+				snd SOUNDLIST_OFFER2
+				animeload 23, tc
+				p = inv(INV_ITEM_PARAM1, ci)
+				txtef COLOR_PINK
+				txt lang("" + name(tc) + "は" + skillname(p) + "の技術を失った…。", name(tc) + " lost the skill " + skillname(p) + "...")
+				sdata(inv(INV_ITEM_PARAM1, ci) + STARTING_SKILL_SPACT, tc) = 0
+				inv(INV_ITEM_NUM, ci)--
+				cell_refresh inv(INV_ITEM_X, ci), inv(INV_ITEM_Y, ci)
+				r1 = tc
+				gosub *charaRefresh
+				gosub *calcBurdenPc
+			}
+			goto *act_use_SWEND1
 		}
 		txtef COLOR_RED
 		txt lang("対応スキルが半減するが、本当に使う？", "Corresponding skills will be halved, do you really use it?")
@@ -8770,10 +8798,36 @@
 			gosub *screen_draw
 			goto *pc_turn
 		}
+		if ( inv(INV_ITEM_PARAM1, ci) == 0 ) {
+			inv(INV_ITEM_PARAM1, ci) = 165
+		}
+		if ( inv(INV_ITEM_PARAM2, ci) == 0 ) {
+			inv(INV_ITEM_PARAM2, ci) = 1
+		}
+		if ( tc == CHARA_PLAYER ) {
+			if ( sorg(inv(INV_ITEM_PARAM1, ci), tc) == 0 ) {
+				txt lang("あなたは対応するスキルを覚えようとしたが、拒絶反応が出てあきらめた…。", name(tc) + " has no corresponding skill, and gave up because of the rejection reaction...")
+				gosub *screen_draw
+				goto *pc_turn
+			}
+		}
 		if ( sorg(inv(INV_ITEM_PARAM1, ci), tc) == 0 ) {
-			txt lang(name(tc) + "は対応するスキルを持っていない。", name(tc) + " doesn't know the relevant skill.")
-			gosub *screen_draw
-			goto *pc_turn
+			snd SOUNDLIST_OFFER2
+			animeload 23, tc
+			txtef COLOR_PINK
+			txt lang(name(tc) + "の頭に情報が流れ込んだ。", "Memories flow into " + name(tc) + your(tc) + " head!")
+			p = inv(INV_ITEM_PARAM1, ci)
+			skillgain tc, p, 1
+			modgrowth tc, p, limit(inv(INV_ITEM_PARAM2, ci), 1, 300)
+			txtef COLOR_GREEN
+			txt lang("" + name(tc) + "は" + skillname(p) + "の技術を獲得した！", name(tc) + " gain" + _s(tc) + " the skill " + skillname(p) + "!")
+			dmgsan tc, 5
+			inv(INV_ITEM_NUM, ci)--
+			cell_refresh inv(INV_ITEM_X, ci), inv(INV_ITEM_Y, ci)
+			r1 = tc
+			gosub *charaRefresh
+			gosub *calcBurdenPc
+			goto *act_use_SWEND1
 		}
 		if ( sgrowth(inv(INV_ITEM_PARAM1, ci), tc) < 50 ) {
 			txt lang("対応するスキルの潜在能力が50％は必要だ。", "The corresponding skill's potential needs to be at least 50%.")
@@ -9471,8 +9525,8 @@
 							txt_guard
 						}
 					}
-					dmg = 1000 + (sdata(SKILL_NORMAL_CARPENTRY, cc) + 50) / 5 * limit(sdata(SKILL_NORMAL_DISARM_TRAP, cc) + 50, 50, 1000) + sdata(SKILL_NORMAL_MARKSMAN, cc) / 40 * sdata(SKILL_NORMAL_MARKSMAN, cc)
-					dmghp tc, dmg, cc
+					dmg = 1000 + ((sdata(SKILL_NORMAL_CARPENTRY, cc) + 50) / 5 + 5) * ((sdata(SKILL_NORMAL_MARKSMAN, cc) + 1) / 5 + 5) + rnd(sdata(SKILL_NORMAL_DISARM_TRAP, cc) * 2 + 50) + (limit(cdata(CDATA_LEVEL, cc) - 50, 1, 2000) + limit(cdata(CDATA_LEVEL, cc) - 100, 1, 2000)) * 2 * sqrt(limit(cdata(CDATA_LEVEL, cc), 1, 2000) * 3) + 30
+					dmghp tc, dmg, cc, SKILL_RESDMG_CRUSH, 1000
 				}
 				mapitem_fire dx, dy
 			loop
@@ -9542,16 +9596,13 @@
 		animeid = ANIMATION_LASER_BAZOOKA
 		gosub *anime
 		if ( cdata(CDATA_DRAIN_HP, tc) < 100 ) {
-			cdata(CDATA_DRAIN_HP, tc) += 30
+			cdata(CDATA_DRAIN_HP, tc) += 20
 			if ( cdata(CDATA_DRAIN_HP, tc) >= 100 ) {
 				cdata(CDATA_DRAIN_HP, tc) = 99
 			}
 		}
-		dmg = rnd(50) + sdata(SKILL_ATTR_DEX, cc) * 2 + sdata(SKILL_NORMAL_MARKSMAN, cc) / 40 * sdata(SKILL_NORMAL_MARKSMAN, cc)
-		if ( dmg < 0 ) {
-			dmg = 5
-		}
-		dmghp tc, dmg, cc
+		dmg = (sdata(SKILL_ATTR_DEX, cc) / 5 + 5) * ((sdata(SKILL_NORMAL_MARKSMAN, cc) + 1) / 5 + 5) + rnd(sdata(SKILL_NORMAL_MARKSMAN, cc) * 2 + 5) + (limit(cdata(CDATA_LEVEL, cc) - 50, 1, 2000) + limit(cdata(CDATA_LEVEL, cc) - 100, 1, 2000)) * 2 * sqrt(limit(cdata(CDATA_LEVEL, cc), 1, 2000) * 3) + 30
+		dmghp tc, dmg, cc, SKILL_RESDMG_CRUSH, 1000
 		if ( cdata(CDATA_EXIST, cc) == CHAR_STATE_ALIVE ) {
 			skillexp SKILL_ATTR_DEX, cc, 80
 			skillexp SKILL_NORMAL_MARKSMAN, cc, 80
@@ -9620,11 +9671,8 @@
 		aniy = cdata(CDATA_Y, tc)
 		gosub *anime
 		cdata(CDATA_PROT_PENALTY, tc) = 3
-		dmg = rnd(50) + sdata(SKILL_ATTR_PER, cc) * 2 + sdata(SKILL_NORMAL_MARKSMAN, cc) / 40 * sdata(SKILL_NORMAL_MARKSMAN, cc)
-		if ( dmg < 0 ) {
-			dmg = 5
-		}
-		dmghp tc, dmg, cc
+		dmg = (sdata(SKILL_ATTR_PER, cc) / 5 + 5) * ((sdata(SKILL_NORMAL_MARKSMAN, cc) + 1) / 5 + 5) + rnd(sdata(SKILL_NORMAL_MARKSMAN, cc) * 2 + 5) + (limit(cdata(CDATA_LEVEL, cc) - 50, 1, 2000) + limit(cdata(CDATA_LEVEL, cc) - 100, 1, 2000)) * 2 * sqrt(limit(cdata(CDATA_LEVEL, cc), 1, 2000) * 3) + 30
+		dmghp tc, dmg, cc, SKILL_RESDMG_CRUSH, 1000
 		if ( cdata(CDATA_EXIST, cc) == CHAR_STATE_ALIVE ) {
 			skillexp SKILL_ATTR_PER, cc, 80
 			skillexp SKILL_NORMAL_MARKSMAN, cc, 80
@@ -10090,6 +10138,7 @@
 					txt lang(name(tc) + "とあなたの間に、運命の糸が結ばれた。", "A thread of fate was tied between " + name(tc) + " and you.")
 					snd SOUNDLIST_OFFER2
 					inv(INV_ITEM_NUM, ci)--
+					flt
 					itemcreate -1, ITEM_ID_SOUL_SPINDLE, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
 					if ( stat ) {
 						inv(INV_ITEM_SUB_NAME, ci) = cdata(CDATA_ID, tc)
@@ -12022,10 +12071,361 @@
 		}
 		goto *act_use_SWEND1
 	}
+	if ( _switch_val == EFFECT_SLIME_MOLD | _switch_sw ) {
+		_switch_sw = 0
+		if ( cc != CHARA_PLAYER ) {
+			txt_nothinghappens
+			goto *act_use_SWEND1
+		}
+		cibk = ci
+		invsubroutine = 1
+		invctrl = INVCTRL_MATERIAL_ENCHANT, 27
+		snd SOUNDLIST_INV
+		gosub *com_inventory
+		if ( stat == 1 ) {
+			cibk2 = ci
+			snd SOUNDLIST_CRACK2
+			txt lang(itemname(ci) + "を小分けにして粘菌を使った。", itemname(ci) + " became vessels for the slime mold.")
+			if ( inv(INV_ITEM_SHOP_SAMPLE, cibk2) \ 10 == 1 ) {
+				flt
+				itemcreate -1, ITEM_ID_NECRO_PARTS, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
+				inv(INV_ITEM_WEIGHT, ci) = inv(INV_ITEM_WEIGHT, cibk2) / 8
+				inv(INV_ITEM_SUB_NAME, ci) = inv(INV_ITEM_SUB_NAME, cibk2)
+				inv(INV_ITEM_SHOP_SAMPLE, ci) = 1
+				inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+			}
+			item_identify ci, ITEM_KNOWN_FULL
+			if ( inv(INV_ITEM_SHOP_SAMPLE, cibk2) \ 100 >= 10 ) {
+				flt
+				itemcreate -1, ITEM_ID_NECRO_PARTS, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
+				inv(INV_ITEM_WEIGHT, ci) = inv(INV_ITEM_WEIGHT, cibk2) / 20
+				inv(INV_ITEM_SUB_NAME, ci) = inv(INV_ITEM_SUB_NAME, cibk2)
+				inv(INV_ITEM_SHOP_SAMPLE, ci) = 2
+				inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+			}
+			item_identify ci, ITEM_KNOWN_FULL
+			if ( inv(INV_ITEM_SHOP_SAMPLE, cibk2) \ 1000 >= 100 ) {
+				flt
+				itemcreate -1, ITEM_ID_NECRO_PARTS, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
+				inv(INV_ITEM_WEIGHT, ci) = inv(INV_ITEM_WEIGHT, cibk2) / 15
+				inv(INV_ITEM_SUB_NAME, ci) = inv(INV_ITEM_SUB_NAME, cibk2)
+				inv(INV_ITEM_SHOP_SAMPLE, ci) = 3
+				inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+			}
+			item_identify ci, ITEM_KNOWN_FULL
+			if ( inv(INV_ITEM_SHOP_SAMPLE, cibk2) \ 10000 >= 1000 ) {
+				flt
+				itemcreate -1, ITEM_ID_NECRO_PARTS, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
+				inv(INV_ITEM_WEIGHT, ci) = inv(INV_ITEM_WEIGHT, cibk2) / 8
+				inv(INV_ITEM_SUB_NAME, ci) = inv(INV_ITEM_SUB_NAME, cibk2)
+				inv(INV_ITEM_SHOP_SAMPLE, ci) = 4
+				inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+			}
+			item_identify ci, ITEM_KNOWN_FULL
+			if ( inv(INV_ITEM_SHOP_SAMPLE, cibk2) \ 100000 >= 10000 ) {
+				flt
+				itemcreate -1, ITEM_ID_NECRO_PARTS, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
+				inv(INV_ITEM_WEIGHT, ci) = inv(INV_ITEM_WEIGHT, cibk2) / 20
+				inv(INV_ITEM_SUB_NAME, ci) = inv(INV_ITEM_SUB_NAME, cibk2)
+				inv(INV_ITEM_SHOP_SAMPLE, ci) = 5
+				inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+			}
+			item_identify ci, ITEM_KNOWN_FULL
+			if ( inv(INV_ITEM_SHOP_SAMPLE, cibk2) \ 1000000 >= 100000 ) {
+				flt
+				itemcreate -1, ITEM_ID_NECRO_PARTS, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
+				inv(INV_ITEM_WEIGHT, ci) = inv(INV_ITEM_WEIGHT, cibk2) / 20
+				inv(INV_ITEM_SUB_NAME, ci) = inv(INV_ITEM_SUB_NAME, cibk2)
+				inv(INV_ITEM_SHOP_SAMPLE, ci) = 6
+				inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+			}
+			item_identify ci, ITEM_KNOWN_FULL
+			if ( inv(INV_ITEM_SHOP_SAMPLE, cibk2) \ 10000000 >= 1000000 ) {
+				flt
+				itemcreate -1, ITEM_ID_NECRO_PARTS, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
+				inv(INV_ITEM_WEIGHT, ci) = inv(INV_ITEM_WEIGHT, cibk2) / 15
+				inv(INV_ITEM_SUB_NAME, ci) = inv(INV_ITEM_SUB_NAME, cibk2)
+				inv(INV_ITEM_SHOP_SAMPLE, ci) = 7
+				inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+			}
+			item_identify ci, ITEM_KNOWN_FULL
+			if ( inv(INV_ITEM_SHOP_SAMPLE, cibk2) \ 100000000 >= 10000000 ) {
+				flt
+				itemcreate -1, ITEM_ID_NECRO_PARTS, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
+				inv(INV_ITEM_WEIGHT, ci) = inv(INV_ITEM_WEIGHT, cibk2) / 15
+				inv(INV_ITEM_SUB_NAME, ci) = inv(INV_ITEM_SUB_NAME, cibk2)
+				inv(INV_ITEM_SHOP_SAMPLE, ci) = 8
+				inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+			}
+			item_identify ci, ITEM_KNOWN_FULL
+			if ( inv(INV_ITEM_SHOP_SAMPLE, cibk2) \ 1000000000 >= 100000000 ) {
+				flt
+				itemcreate -1, ITEM_ID_NECRO_PARTS, cdata(CDATA_X, CHARA_PLAYER), cdata(CDATA_Y, CHARA_PLAYER), 0
+				inv(INV_ITEM_WEIGHT, ci) = inv(INV_ITEM_WEIGHT, cibk2) / 8
+				inv(INV_ITEM_SUB_NAME, ci) = inv(INV_ITEM_SUB_NAME, cibk2)
+				inv(INV_ITEM_SHOP_SAMPLE, ci) = 9
+				inv(INV_ITEM_STATUS, ci) = ITEM_STATUS_NORMAL
+			}
+			item_identify ci, ITEM_KNOWN_FULL
+			inv(INV_ITEM_NUM, cibk)--
+			inv(INV_ITEM_NUM, cibk2)--
+			if ( cibk >= 5080 ) {
+				cell_refresh inv(INV_ITEM_X, cibk), inv(INV_ITEM_Y, cibk)
+			}
+			if ( cibk2 >= 5080 ) {
+				cell_refresh inv(INV_ITEM_X, cibk2), inv(INV_ITEM_Y, cibk2)
+			}
+			r1 = cc
+			gosub *charaRefresh
+		}
+		else {
+			obvious = 0
+		}
+		goto *act_use_SWEND1
+		_switch_sw++
+	}
+	if ( _switch_val == EFFECT_NECRO_PARTS | _switch_sw ) {
+		_switch_sw = 0
+		txt lang("誰に使う？", "Who is the target?")
+		gosub *screen_draw
+		val = 0
+		gosub *prompt_direction
+		f = 0
+		if ( stat != 0 ) {
+			if ( map(x, y, MAP_CHARA_INDEX_PLUS_ONE) > 0 ) {
+				tc = map(x, y, MAP_CHARA_INDEX_PLUS_ONE) - 1
+				if ( cdata(CDATA_IN_TAGTEAM, tc) != 0 ) {
+					txtselecttc 2
+					repeat 2
+						promptl(0, promptmax) = s(cnt), key_select(cnt), "" + promptmax
+						promptmax++
+					loop
+					val = promptx, prompty, 200, 1
+					gosub *prompt_key
+					if ( stat == 0 ) {
+						gosub *screen_draw
+						goto *pc_turn
+					}
+					if ( rtval == 1 ) {
+						tc = cdata(CDATA_TAGTEAM_PARTNER, tc)
+					}
+				}
+				if ( tc != CHARA_PLAYER ) {
+					if ( tc >= MAX_CHARA_FOLLOWER ) {
+						txt_impossible
+						goto *pc_turn
+					}
+				}
+				dame = 0
+				damehead = 0
+				dameneck = 0
+				dameback = 0
+				damechest = 0
+				damehand = 0
+				damefinger = 0
+				damearm = 0
+				damewaist = 0
+				dameleg = 0
+				repeat 30, 100
+					p = cdata(cnt, tc) / EXT_EQUIP_SLOTS
+					if ( p == 0 ) {
+						break
+					}
+					if ( p == 1 ) {
+						damehead = 1
+					}
+					if ( p == 2 ) {
+						dameneck = 1
+					}
+					if ( p == 3 ) {
+						dameback = 1
+					}
+					if ( p == 4 ) {
+						damechest = 1
+					}
+					if ( p == 5 ) {
+						damehand = 1
+					}
+					if ( p == 6 ) {
+						damefinger = 1
+					}
+					if ( p == 7 ) {
+						damearm = 1
+					}
+					if ( p == 8 ) {
+						damewaist = 1
+					}
+					if ( p == 9 ) {
+						dameleg = 1
+					}
+				loop
+				r1 = tc
+				repeat 30, 100
+					if ( cdata(cnt, r1) != 0 ) {
+						continue
+					}
+					if ( inv(INV_ITEM_SHOP_SAMPLE, ci) == 1 ) {
+						if ( damehead == 1 ) {
+							dame = 100
+							break
+						}
+						cdata(cnt, r1) = 1 * 10000
+						if ( cm ) {
+							break
+						}
+						else {
+							txt lang(name(r1) + "は新たな" + bodyn(1) + "を獲得した！", name(r1) + " grow" + _s(r1) + " a new " + bodyn(1) + "!")
+							break
+						}
+					}
+					if ( inv(INV_ITEM_SHOP_SAMPLE, ci) == 2 ) {
+						if ( dameneck == 1 ) {
+							dame = 100
+							break
+						}
+						cdata(cnt, r1) = 2 * 10000
+						if ( cm ) {
+							break
+						}
+						else {
+							txt lang(name(r1) + "は新たな" + bodyn(2) + "を獲得した！", name(r1) + " grow" + _s(r1) + " a new " + bodyn(2) + "!")
+							break
+						}
+					}
+					if ( inv(INV_ITEM_SHOP_SAMPLE, ci) == 3 ) {
+						if ( dameback == 1 ) {
+							dame = 100
+							break
+						}
+						cdata(cnt, r1) = 3 * 10000
+						if ( cm ) {
+							break
+						}
+						else {
+							txt lang(name(r1) + "は新たな" + bodyn(3) + "を獲得した！", name(r1) + " grow" + _s(r1) + " a new " + bodyn(3) + "!")
+							break
+						}
+					}
+					if ( inv(INV_ITEM_SHOP_SAMPLE, ci) == 4 ) {
+						if ( damechest == 1 ) {
+							dame = 100
+							break
+						}
+						cdata(cnt, r1) = 4 * 10000
+						if ( cm ) {
+							break
+						}
+						else {
+							txt lang(name(r1) + "は新たな" + bodyn(4) + "を獲得した！", name(r1) + " grow" + _s(r1) + " a new " + bodyn(4) + "!")
+							break
+						}
+					}
+					if ( inv(INV_ITEM_SHOP_SAMPLE, ci) == 5 ) {
+						if ( damehand == 1 ) {
+							dame = 100
+							break
+						}
+						cdata(cnt, r1) = 5 * 10000
+						if ( cm ) {
+							break
+						}
+						else {
+							txt lang(name(r1) + "は新たな" + bodyn(5) + "を獲得した！", name(r1) + " grow" + _s(r1) + " a new " + bodyn(5) + "!")
+							break
+						}
+					}
+					if ( inv(INV_ITEM_SHOP_SAMPLE, ci) == 6 ) {
+						if ( damefinger == 1 ) {
+							dame = 100
+							break
+						}
+						cdata(cnt, r1) = 6 * 10000
+						if ( cm ) {
+							break
+						}
+						else {
+							txt lang(name(r1) + "は新たな" + bodyn(6) + "を獲得した！", name(r1) + " grow" + _s(r1) + " a new " + bodyn(6) + "!")
+							break
+						}
+					}
+					if ( inv(INV_ITEM_SHOP_SAMPLE, ci) == 7 ) {
+						if ( damearm == 1 ) {
+							dame = 100
+							break
+						}
+						cdata(cnt, r1) = 7 * 10000
+						if ( cm ) {
+							break
+						}
+						else {
+							txt lang(name(r1) + "は新たな" + bodyn(7) + "を獲得した！", name(r1) + " grow" + _s(r1) + " a new " + bodyn(7) + "!")
+							break
+						}
+					}
+					if ( inv(INV_ITEM_SHOP_SAMPLE, ci) == 8 ) {
+						if ( damewaist == 1 ) {
+							dame = 100
+							break
+						}
+						cdata(cnt, r1) = 8 * 10000
+						if ( cm ) {
+							break
+						}
+						else {
+							txt lang(name(r1) + "は新たな" + bodyn(8) + "を獲得した！", name(r1) + " grow" + _s(r1) + " a new " + bodyn(8) + "!")
+							break
+						}
+					}
+					if ( inv(INV_ITEM_SHOP_SAMPLE, ci) == 9 ) {
+						if ( dameleg == 1 ) {
+							dame = 100
+							break
+						}
+						cdata(cnt, r1) = 9 * 10000
+						if ( cm ) {
+							break
+						}
+						else {
+							txt lang(name(r1) + "は新たな" + bodyn(9) + "を獲得した！", name(r1) + " grow" + _s(r1) + " a new " + bodyn(9) + "!")
+							break
+						}
+					}
+					break
+				loop
+				damehead = 0
+				dameneck = 0
+				dameback = 0
+				damechest = 0
+				damehand = 0
+				damefinger = 0
+				damearm = 0
+				damewaist = 0
+				dameleg = 0
+				if ( dame == 100 ) {
+					dame = 0
+					snd SOUNDLIST_ATK_ELEC
+					txtef COLOR_PURPLE
+					txt lang("既存の部位の影響で、拒絶反応が出て失敗した…。", "Due to the influence of the existing body parts, rejection occurred and the operation was a failure...")
+					goto *act_use_SWEND1
+				}
+				gosub *calcBodyFix
+				inv(INV_ITEM_NUM, ci)--
+				cell_refresh inv(INV_ITEM_X, ci), inv(INV_ITEM_Y, ci)
+				animeload 8, tc
+				snd SOUNDLIST_AMMO
+				f = 1
+			}
+		}
+		if ( f == 0 ) {
+			txt_impossible
+		}
+		goto *act_use_SWEND1
+		_switch_sw++
+	}
 	if ( _switch_val == EFFECT_BIO_PRINTER | _switch_sw ) {
 		_switch_sw = 0
 		txtef COLOR_PURPLE
-		txt lang("「スキャン及び採取の対象を選択して下さい」", "Please select a target for scanning.")
+		txt lang("「スキャン及び採取の対象を選択して下さい」", "Please select a target to be scanned.")
 		gosub *screen_draw
 		val = 0
 		gosub *prompt_direction
@@ -13529,7 +13929,7 @@
 						}
 					}
 					map(dx, dy, 0) = 12
-					dmg = 300 + sdata(SKILL_ATTR_PER, CHARA_PLAYER) / 40 * limit(sdata(SKILL_ATTR_PER, CHARA_PLAYER), 1, 1000) + sdata(SKILL_NORMAL_MARKSMAN, CHARA_PLAYER) / 40 * sdata(SKILL_NORMAL_MARKSMAN, CHARA_PLAYER)
+					dmg = 300 + (sdata(SKILL_ATTR_PER, cc) / 5 + 5) * ((sdata(SKILL_NORMAL_MARKSMAN, cc) + 1) / 5 + 5) + rnd(sdata(SKILL_ATTR_PER, cc) * 2 + 5) + (limit(cdata(CDATA_LEVEL, cc) - 50, 1, 2000) + limit(cdata(CDATA_LEVEL, cc) - 100, 1, 2000)) * 2 * sqrt(limit(cdata(CDATA_LEVEL, cc), 1, 2000) * 3) + 30
 					if ( synccheck(tc, -1) ) {
 						txtmore
 						if ( tc >= MAX_CHARA_FOLLOWER ) {
@@ -13541,7 +13941,7 @@
 							txt lang("荷電粒子は" + name(tc) + "に命中した。", "The laser hits " + name(tc) + ".")
 						}
 					}
-					dmghp tc, dmg, cc, SKILL_RESDMG_CRUSH, 1000
+					dmghp tc, dmg, cc, SKILL_RES_LIGHTNING, 1000
 				}
 			loop
 		loop

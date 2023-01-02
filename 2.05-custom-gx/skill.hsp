@@ -370,7 +370,7 @@
 
 	sdataref(SKILL_DATAREF_USE, SKILL_NORMAL_EYE_OF_MIND) = SKILL_ATTR_WIL, SKILL_TYPE_SP, 0, TARGET_TYPE_NONE, 0
 	skillname(SKILL_NORMAL_EYE_OF_MIND) = lang("心眼", "Eye of Mind")
-	skilldesc(SKILL_NORMAL_EYE_OF_MIND) = lang("クリティカル率を高める", "Increases your chance to deliver critical hits.")
+	skilldesc(SKILL_NORMAL_EYE_OF_MIND) = lang("クリティカル時の威力を高める", "Increases the power of critical hits.")
 	skillencdesc(SKILL_NORMAL_EYE_OF_MIND) = lang("心眼の技術を上昇させる", "")
 
 	sdataref(SKILL_DATAREF_USE, SKILL_NORMAL_GREATER_EVASION) = SKILL_ATTR_PER, SKILL_TYPE_SP, 0, TARGET_TYPE_NONE, 0
@@ -952,6 +952,10 @@
 	skillname(SKILL_SPACT_ABSORB_MAGIC) = lang("魔力の吸収", "Absorb Magic")
 	skilldesc(SKILL_SPACT_ABSORB_MAGIC) = lang("マナ回復", "Heal MP")
 
+	sdataref(SKILL_DATAREF_USE, SKILL_SPACT_POSING) = SKILL_ATTR_WIL, SKILL_TYPE_SP, 5, TARGET_TYPE_SELF_ONLY, 500
+	skillname(SKILL_SPACT_POSING) = lang("ポージング", "Posing")
+	skilldesc(SKILL_SPACT_POSING) = lang("ｹﾞｰｼﾞ15％増加/ｶﾞｰﾄﾞﾌﾞﾚｲｸ15％減少", "Gauge +15%/Guard Break -15%")
+
 	sdataref(SKILL_DATAREF_USE, SKILL_SPACT_LULWYS_TRICK) = SKILL_ATTR_DEX, STARTING_SKILL_TYPE_BUFF + BUFF_LULWYS_TRICK, 20, TARGET_TYPE_SELF_ONLY, 500
 	skillname(SKILL_SPACT_LULWYS_TRICK) = lang("ルルウィの憑依", "Lulwy's Trick")
 	skilldesc(SKILL_SPACT_LULWYS_TRICK) = ""
@@ -1006,7 +1010,7 @@
 
 	sdataref(SKILL_DATAREF_USE, SKILL_SPACT_EYE_OF_DIMNESS) = SKILL_ATTR_CHA, SKILL_TYPE_SP, 5, TARGET_TYPE_ENEMY + SKILL_TYPE_FOV_BALL, 0
 	skillname(SKILL_SPACT_EYE_OF_DIMNESS) = lang("朦朧の眼差し", "Eye of Dimness")
-	skilldesc(SKILL_SPACT_EYE_OF_DIMNESS) = lang("対象朦朧", "Dim target")
+	skilldesc(SKILL_SPACT_EYE_OF_DIMNESS) = lang("対象を朦朧とさせパワーゲージも微低下", "Makes the target dim and the power gauge drops slightly.")
 
 	sdataref(SKILL_DATAREF_USE, SKILL_SPACT_SUMMON_CATS) = SKILL_ATTR_MAG, SKILL_TYPE_SUMMON, 15, TARGET_TYPE_ENEMY + SKILL_TYPE_FOV_BOLT, 200
 	skillname(SKILL_SPACT_SUMMON_CATS) = lang("猫召喚", "Summon Cats")
@@ -1046,7 +1050,7 @@
 
 	sdataref(SKILL_DATAREF_USE, SKILL_SPACT_INSULT) = SKILL_ATTR_CHA, SKILL_TYPE_SP, 10, TARGET_TYPE_ENEMY + 4, 0
 	skillname(SKILL_SPACT_INSULT) = lang("罵倒", "Insult")
-	skilldesc(SKILL_SPACT_INSULT) = lang("対象朦朧", "Insult target")
+	skilldesc(SKILL_SPACT_INSULT) = lang("対象を朦朧とさせパワーゲージも微低下", "Makes the target dim and the power gauge drops slightly.")
 
 	sdataref(SKILL_DATAREF_USE, SKILL_SPACT_SHINING_WAVE) = SKILL_ATTR_STR, SKILL_TYPE_SP, 27, TARGET_TYPE_ENEMY + 4, 0
 	skillname(SKILL_SPACT_SHINING_WAVE) = lang("衝撃波動", "Shining Wave")
@@ -1218,7 +1222,7 @@
 
 	sdataref(SKILL_DATAREF_USE, SKILL_SPACT_GRAVITY_SPHERE) = SKILL_ATTR_CON, SKILL_TYPE_SP, 8, TARGET_TYPE_ENEMY + SKILL_TYPE_FOV_BOLT, 0
 	skillname(SKILL_SPACT_GRAVITY_SPHERE) = lang("重力球", "Gravity Sphere")
-	skilldesc(SKILL_SPACT_GRAVITY_SPHERE) = lang("階層依存ダメージ", "Gravity Damage")
+	skilldesc(SKILL_SPACT_GRAVITY_SPHERE) = lang("階層重力依存耐久属性攻撃/鈍足判定", "Gravity and CON attack")
 
 	sdataref(SKILL_DATAREF_USE, SKILL_SPACT_ATTRIBUTE) = SKILL_ATTR_WIL, SKILL_TYPE_SP, 24, TARGET_TYPE_SELF_ONLY, 500
 	skillname(SKILL_SPACT_ATTRIBUTE) = lang("アトリビウト", "Attribute")
@@ -1314,7 +1318,7 @@
 
 	sdataref(SKILL_DATAREF_USE, SKILL_SPACT_SQUEEZE) = SKILL_ATTR_STR, SKILL_TYPE_SP, 10, TARGET_TYPE_DIRECTION, 0
 	skillname(SKILL_SPACT_SQUEEZE) = lang("スクイーズ", "Squeeze")
-	skilldesc(SKILL_SPACT_SQUEEZE) = lang("不仲締め上げ/友好抱擁/家畜搾乳", "Hold enemy/Hug friend/milking livestock")
+	skilldesc(SKILL_SPACT_SQUEEZE) = lang("不仲耐久属性攻撃/友好抱擁/家畜搾乳", "CON attack enemy/Hug friend/milking livestock")
 
 	sdataref(SKILL_DATAREF_USE, SKILL_SPACT_DISTURBANCE) = SKILL_ATTR_DEX, SKILL_TYPE_SP, 10, TARGET_TYPE_ENEMY + 7, 0
 	skillname(SKILL_SPACT_DISTURBANCE) = lang("撹乱", "Disturbance")
@@ -1471,6 +1475,10 @@
 	sdataref(SKILL_DATAREF_USE, SKILL_SPACT_VORACITY_FANG) = SKILL_ATTR_STR, SKILL_TYPE_HAND, 12, TARGET_TYPE_ENEMY, 0
 	skillname(SKILL_SPACT_VORACITY_FANG) = lang("貪食の牙", "Voracity Fang")
 	skilldesc(SKILL_SPACT_VORACITY_FANG) = lang("体力吸収・満腹時無効", "Drain HP")
+
+	sdataref(SKILL_DATAREF_USE, SKILL_SPACT_SHARK_TRADE) = SKILL_ATTR_WIL, SKILL_TYPE_SP, 8, TARGET_TYPE_ENEMY, 0
+	skillname(SKILL_SPACT_SHARK_TRADE) = lang("シャークトレード", "Shark Trade")
+	skilldesc(SKILL_SPACT_SHARK_TRADE) = lang("アイテムを押し付けゲージ20％奪う", "Drain Gauge 20%")
 
 	sdataref(SKILL_DATAREF_USE, SKILL_SPACT_SHIELD_STRIKE) = SKILL_ATTR_DEX, SKILL_TYPE_SP, 30, TARGET_TYPE_ENEMY, 0
 	skillname(SKILL_SPACT_SHIELD_STRIKE) = lang("盾殴り", "Shield Strike")
@@ -1631,6 +1639,7 @@
 	sdataref(SKILL_DATAREF_USE, SKILL_SPACT_GIGA_GRAVITATION) = SKILL_ATTR_CON, SKILL_TYPE_SP, 18, TARGET_TYPE_SELF + SKILL_TYPE_FOV_BOLT, 0
 	skillname(SKILL_SPACT_GIGA_GRAVITATION) = lang("超重圧殺", "Giga Gravitation")
 	skilldesc(SKILL_SPACT_GIGA_GRAVITATION) = lang("周辺の敵に重力依存ダメージ/MP10％消費", "Gravity Damage Surround/Consumes 10% MP")
+	skilldesc(SKILL_SPACT_GIGA_GRAVITATION) = lang("重力依存耐久属性攻撃/MP10％消費", "Gravity and CON attack Surround/Consumes 10% MP")
 
 	sdataref(SKILL_DATAREF_USE, SKILL_SPACT_HYPER_DASH) = SKILL_ATTR_WIL, SKILL_TYPE_SP, 21, TARGET_TYPE_SELF_ONLY, 500
 	skillname(SKILL_SPACT_HYPER_DASH) = lang("烈走破", "Hyper Dash")
@@ -1642,7 +1651,7 @@
 
 	sdataref(SKILL_DATAREF_USE, SKILL_SPACT_POLLEN_CANNON) = SKILL_ATTR_LER, SKILL_TYPE_SP, 8, 2000 + 6, 500
 	skillname(SKILL_SPACT_POLLEN_CANNON) = lang("強烈花粉砲", "Pollen Cannon")
-	skilldesc(SKILL_SPACT_POLLEN_CANNON) = lang("対象弱体・マナダメージ・神特効", "Damage MP and weaken")
+	skilldesc(SKILL_SPACT_POLLEN_CANNON) = lang("対象弱体・状態異常", "Status ailment and weaken")
 
 	sdataref(SKILL_DATAREF_USE, SKILL_SPACT_MISTELTEIN) = SKILL_ATTR_LER, SKILL_TYPE_SP, 8, TARGET_TYPE_ENEMY + SKILL_TYPE_FOV_BOLT, 500
 	skillname(SKILL_SPACT_MISTELTEIN) = lang("ミストルティン", "Misteltein")
@@ -1670,7 +1679,7 @@
 
 	sdataref(SKILL_DATAREF_USE, SKILL_SPACT_FORMLESS_FETTER) = SKILL_ATTR_MAG, SKILL_TYPE_SP, 27, TARGET_TYPE_SELF, 0
 	skillname(SKILL_SPACT_FORMLESS_FETTER) = lang("無形の枷", "Formless Fetter")
-	skilldesc(SKILL_SPACT_FORMLESS_FETTER) = lang("マップエフェクト上の敵を攻撃束縛", "Bind on map effects")
+	skilldesc(SKILL_SPACT_FORMLESS_FETTER) = lang("ﾏｯﾌﾟｴﾌｪｸﾄ上の敵に耐久属性攻撃束縛", "Bind and CON attack on map effects")
 
 	sdataref(SKILL_DATAREF_USE, SKILL_SPACT_BLOOD_STREAM) = SKILL_ATTR_CON, SKILL_TYPE_SP, 18, TARGET_TYPE_ENEMY + 7, 0
 	skillname(SKILL_SPACT_BLOOD_STREAM) = lang("鮮血の撃刃", "Blood Stream")
@@ -1951,7 +1960,7 @@
 		dice2 = calcskill_spellpower_dice_y / 15 + 4 + 1
 		bonus = 0
 		ele = SKILL_RES_DARKNESS
-		elep = 150 + calcskill_spellpower_dice_y / 3
+		elep = 150 + calcskill_spellpower_dice_y / 30
 		return 1
 	}
 	if ( calcskill_skillid == SKILL_SPELL_NETHER_ARROW ) {
@@ -1959,7 +1968,7 @@
 		dice2 = calcskill_spellpower_dice_y / 15 + 4 + 1
 		bonus = 0
 		ele = SKILL_RES_NETHER
-		elep = 150 + calcskill_spellpower_dice_y / 3
+		elep = 150 + calcskill_spellpower_dice_y / 30
 		return 1
 	}
 	if ( calcskill_skillid == SKILL_SPELL_CHAOS_EYE ) {
@@ -1967,7 +1976,7 @@
 		dice2 = calcskill_spellpower_dice_y / 15 + 4 + 1
 		bonus = 0
 		ele = SKILL_RES_CHAOS
-		elep = 150 + calcskill_spellpower_dice_y / 3
+		elep = 150 + calcskill_spellpower_dice_y / 30
 		return 1
 	}
 	if ( calcskill_skillid == SKILL_SPELL_NERVE_ARROW ) {
@@ -1975,7 +1984,7 @@
 		dice2 = calcskill_spellpower_dice_y / 15 + 4 + 1
 		bonus = 0
 		ele = SKILL_RES_NERVE
-		elep = 150 + calcskill_spellpower_dice_y / 3
+		elep = 150 + calcskill_spellpower_dice_y / 30
 		return 1
 	}
 	if ( calcskill_skillid == SKILL_SPELL_FIRE_CLAW ) {
@@ -1983,7 +1992,7 @@
 		dice2 = calcskill_spellpower_dice_y / 15 + 4 + 1
 		bonus = 0
 		ele = SKILL_RES_FIRE
-		elep = 150 + calcskill_spellpower_dice_y / 3
+		elep = 150 + calcskill_spellpower_dice_y / 30
 		return 1
 	}
 	if ( calcskill_skillid == SKILL_SPELL_COLD_BLADE ) {
@@ -1991,7 +2000,7 @@
 		dice2 = calcskill_spellpower_dice_y / 15 + 4 + 1
 		bonus = 0
 		ele = SKILL_RES_COLD
-		elep = 150 + calcskill_spellpower_dice_y / 3
+		elep = 150 + calcskill_spellpower_dice_y / 30
 		return 1
 	}
 	if ( calcskill_skillid == SKILL_SPELL_LIGHTNING_SPEAR ) {
@@ -1999,7 +2008,7 @@
 		dice2 = calcskill_spellpower_dice_y / 15 + 4 + 1
 		bonus = 0
 		ele = SKILL_RES_LIGHTNING
-		elep = 150 + calcskill_spellpower_dice_y / 3
+		elep = 150 + calcskill_spellpower_dice_y / 30
 		return 1
 	}
 	if ( calcskill_skillid == SKILL_SPELL_MIND_THORN ) {
@@ -2007,7 +2016,7 @@
 		dice2 = calcskill_spellpower_dice_y / 15 + 4 + 1
 		bonus = 0
 		ele = SKILL_RES_MIND
-		elep = 150 + calcskill_spellpower_dice_y / 3
+		elep = 150 + calcskill_spellpower_dice_y / 30
 		return 1
 	}
 	if ( calcskill_skillid == SKILL_SPELL_POISON_MUCUS ) {
@@ -2015,7 +2024,7 @@
 		dice2 = calcskill_spellpower_dice_y / 15 + 4 + 1
 		bonus = 0
 		ele = SKILL_RES_POISON
-		elep = 150 + calcskill_spellpower_dice_y / 3
+		elep = 150 + calcskill_spellpower_dice_y / 30
 		return 1
 	}
 	if ( calcskill_skillid == SKILL_SPELL_SOUND_CANNONBALL ) {
@@ -2023,7 +2032,7 @@
 		dice2 = calcskill_spellpower_dice_y / 15 + 4 + 1
 		bonus = 0
 		ele = SKILL_RES_SOUND
-		elep = 150 + calcskill_spellpower_dice_y / 3
+		elep = 150 + calcskill_spellpower_dice_y / 30
 		return 1
 	}
 	if ( calcskill_skillid == SKILL_SPELL_HYDRO_FANG ) {
@@ -2031,7 +2040,7 @@
 		dice2 = calcskill_spellpower_dice_y / 20 + 4 + 1
 		bonus = 0
 		ele = SKILL_RESDMG_CRUSH
-		elep = 150 + calcskill_spellpower_dice_y / 3
+		elep = 150 + calcskill_spellpower_dice_y / 30
 		return 1
 	}
 	if ( calcskill_skillid == SKILL_SPELL_CRYSTAL_SPEAR ) {
@@ -2047,7 +2056,7 @@
 		dice2 = calcskill_spellpower_dice_y / 15 + 4 + 1
 		bonus = 0
 		ele = SKILL_RES_COLD
-		elep = 150 + calcskill_spellpower_dice_y / 4
+		elep = 150 + calcskill_spellpower_dice_y / 40
 		return 1
 	}
 	if ( calcskill_skillid == SKILL_SPELL_FIRE_BOLT ) {
@@ -2055,7 +2064,7 @@
 		dice2 = calcskill_spellpower_dice_y / 15 + 4 + 1
 		bonus = 0
 		ele = SKILL_RES_FIRE
-		elep = 150 + calcskill_spellpower_dice_y / 4
+		elep = 150 + calcskill_spellpower_dice_y / 40
 		return 1
 	}
 	if ( calcskill_skillid == SKILL_SPELL_LIGHTNING_BOLT ) {
@@ -2063,7 +2072,7 @@
 		dice2 = calcskill_spellpower_dice_y / 15 + 4 + 1
 		bonus = 0
 		ele = SKILL_RES_LIGHTNING
-		elep = 150 + calcskill_spellpower_dice_y / 4
+		elep = 150 + calcskill_spellpower_dice_y / 40
 		return 1
 	}
 	if ( calcskill_skillid == SKILL_SPELL_DARKNESS_BOLT ) {
@@ -2071,7 +2080,7 @@
 		dice2 = calcskill_spellpower_dice_y / 15 + 4 + 1
 		bonus = 0
 		ele = SKILL_RES_DARKNESS
-		elep = 150 + calcskill_spellpower_dice_y / 4
+		elep = 150 + calcskill_spellpower_dice_y / 40
 		return 1
 	}
 	if ( calcskill_skillid == SKILL_SPELL_MIND_BOLT ) {
@@ -2079,7 +2088,7 @@
 		dice2 = calcskill_spellpower_dice_y / 15 + 4 + 1
 		bonus = 0
 		ele = SKILL_RES_MIND
-		elep = 150 + calcskill_spellpower_dice_y / 4
+		elep = 150 + calcskill_spellpower_dice_y / 40
 		return 1
 	}
 	if ( calcskill_skillid == SKILL_SPELL_WATER_BOLT ) {
@@ -2095,7 +2104,7 @@
 		dice2 = calcskill_spellpower_dice_y / 15 + 4 + 1
 		bonus = 0
 		ele = SKILL_RES_NETHER
-		elep = 150 + calcskill_spellpower_dice_y / 4
+		elep = 150 + calcskill_spellpower_dice_y / 40
 		return 1
 	}
 	if ( calcskill_skillid == SKILL_SPELL_POISON_BOLT ) {
@@ -2103,7 +2112,7 @@
 		dice2 = calcskill_spellpower_dice_y / 15 + 4 + 1
 		bonus = 0
 		ele = SKILL_RES_POISON
-		elep = 150 + calcskill_spellpower_dice_y / 4
+		elep = 150 + calcskill_spellpower_dice_y / 40
 		return 1
 	}
 	if ( calcskill_skillid == SKILL_SPELL_SOUND_BOLT ) {
@@ -2111,7 +2120,7 @@
 		dice2 = calcskill_spellpower_dice_y / 15 + 4 + 1
 		bonus = 0
 		ele = SKILL_RES_SOUND
-		elep = 150 + calcskill_spellpower_dice_y / 4
+		elep = 150 + calcskill_spellpower_dice_y / 40
 		return 1
 	}
 	if ( calcskill_skillid == SKILL_SPELL_CHAOS_BOLT ) {
@@ -2119,7 +2128,7 @@
 		dice2 = calcskill_spellpower_dice_y / 15 + 4 + 1
 		bonus = 0
 		ele = SKILL_RES_CHAOS
-		elep = 150 + calcskill_spellpower_dice_y / 4
+		elep = 150 + calcskill_spellpower_dice_y / 40
 		return 1
 	}
 	if ( calcskill_skillid == SKILL_SPELL_NERVE_BOLT ) {
@@ -2127,7 +2136,7 @@
 		dice2 = calcskill_spellpower_dice_y / 15 + 4 + 1
 		bonus = 0
 		ele = SKILL_RES_NERVE
-		elep = 150 + calcskill_spellpower_dice_y / 4
+		elep = 150 + calcskill_spellpower_dice_y / 40
 		return 1
 	}
 	if ( calcskill_skillid == SKILL_SPELL_ICE_BALL ) {
@@ -2135,7 +2144,7 @@
 		dice2 = calcskill_spellpower_dice_y / 15 + 4 + 1
 		bonus = 0
 		ele = SKILL_RES_COLD
-		elep = 150 + calcskill_spellpower_dice_y / 5
+		elep = 150 + calcskill_spellpower_dice_y / 50
 		return 1
 	}
 	if ( calcskill_skillid == SKILL_SPELL_FIRE_BALL ) {
@@ -2143,7 +2152,7 @@
 		dice2 = calcskill_spellpower_dice_y / 15 + 4 + 1
 		bonus = 0
 		ele = SKILL_RES_FIRE
-		elep = 150 + calcskill_spellpower_dice_y / 5
+		elep = 150 + calcskill_spellpower_dice_y / 50
 		return 1
 	}
 	if ( calcskill_skillid == SKILL_SPELL_CHAOS_BALL ) {
@@ -2151,7 +2160,7 @@
 		dice2 = calcskill_spellpower_dice_y / 15 + 4 + 1
 		bonus = 0
 		ele = SKILL_RES_CHAOS
-		elep = 150 + calcskill_spellpower_dice_y / 5
+		elep = 150 + calcskill_spellpower_dice_y / 50
 		return 1
 	}
 	if ( calcskill_skillid == SKILL_SPELL_RAGING_ROAR ) {
@@ -2159,7 +2168,7 @@
 		dice2 = calcskill_spellpower_dice_y / 15 + 4 + 1
 		bonus = 0
 		ele = SKILL_RES_SOUND
-		elep = 150 + calcskill_spellpower_dice_y / 5
+		elep = 150 + calcskill_spellpower_dice_y / 50
 		return 1
 	}
 	if ( calcskill_skillid == SKILL_SPELL_MAGIC_STORM ) {
@@ -2175,7 +2184,7 @@
 		dice2 = calcskill_spellpower_dice_y / 15 + 4 + 1
 		bonus = 0
 		ele = SKILL_RES_DARKNESS
-		elep = 150 + calcskill_spellpower_dice_y / 5
+		elep = 150 + calcskill_spellpower_dice_y / 50
 		return 1
 	}
 	if ( calcskill_skillid == SKILL_SPELL_THUNDER_VORTEX ) {
@@ -2183,7 +2192,7 @@
 		dice2 = calcskill_spellpower_dice_y / 15 + 4 + 1
 		bonus = 0
 		ele = SKILL_RES_LIGHTNING
-		elep = 150 + calcskill_spellpower_dice_y / 5
+		elep = 150 + calcskill_spellpower_dice_y / 50
 		return 1
 	}
 	if ( calcskill_skillid == SKILL_SPELL_NETHER_WAVE ) {
@@ -2191,7 +2200,7 @@
 		dice2 = calcskill_spellpower_dice_y / 15 + 4 + 1
 		bonus = 0
 		ele = SKILL_RES_NETHER
-		elep = 150 + calcskill_spellpower_dice_y / 5
+		elep = 150 + calcskill_spellpower_dice_y / 50
 		return 1
 	}
 	if ( calcskill_skillid == SKILL_SPELL_POISON_STORM ) {
@@ -2199,7 +2208,7 @@
 		dice2 = calcskill_spellpower_dice_y / 15 + 4 + 1
 		bonus = 0
 		ele = SKILL_RES_POISON
-		elep = 150 + calcskill_spellpower_dice_y / 5
+		elep = 150 + calcskill_spellpower_dice_y / 50
 		return 1
 	}
 	if ( calcskill_skillid == SKILL_SPELL_ILLUSION_ROAR ) {
@@ -2207,7 +2216,7 @@
 		dice2 = calcskill_spellpower_dice_y / 15 + 4 + 1
 		bonus = 0
 		ele = SKILL_RES_MIND
-		elep = 150 + calcskill_spellpower_dice_y / 5
+		elep = 150 + calcskill_spellpower_dice_y / 50
 		return 1
 	}
 	if ( calcskill_skillid == SKILL_SPELL_ANGUISH_JAIL ) {
@@ -2215,7 +2224,7 @@
 		dice2 = calcskill_spellpower_dice_y / 15 + 4 + 1
 		bonus = 0
 		ele = SKILL_RES_NERVE
-		elep = 150 + calcskill_spellpower_dice_y / 5
+		elep = 150 + calcskill_spellpower_dice_y / 50
 		return 1
 	}
 	if ( calcskill_skillid == SKILL_SPELL_BUBBLE_STORM ) {

@@ -1,3 +1,9 @@
+# 2.15R.1.0
+
+## Added
+- Ported all changes from Elona+ 2.15R.
+- Added a tweak to add a chance of generating new experimental Nefia layouts, courtesy of @JianmengYu. 
+
 # 2.14.1.0
 
 ## Added

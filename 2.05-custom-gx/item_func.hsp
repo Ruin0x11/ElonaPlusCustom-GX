@@ -929,7 +929,7 @@
 			locvar_itemowner_s += "" + fishdatan(inv(INV_ITEM_SUB_NAME, itemowner_itemid))
 		}
 		else {
-			if ( locvar_itemowner_a == FILTER_ITEM_FOOD | locvar_itemowner_a == FILTER_REMAINS | inv(INV_ITEM_ID, itemowner_itemid) == ITEM_ID_FIGURINE | inv(INV_ITEM_ID, itemowner_itemid) == ITEM_ID_CARD | inv(INV_ITEM_ID, itemowner_itemid) == ITEM_ID_SHIT | inv(INV_ITEM_ID, itemowner_itemid) == ITEM_ID_BOTTLE_MILK | inv(INV_ITEM_ID, itemowner_itemid) == ITEM_ID_SOUL_SPINDLE | inv(INV_ITEM_ID, itemowner_itemid) == ITEM_ID_GOLDEN_DOLL | inv(INV_ITEM_ID, itemowner_itemid) == ITEM_ID_SOCKS2 ) {
+			if ( locvar_itemowner_a == FILTER_ITEM_FOOD | locvar_itemowner_a == FILTER_REMAINS | inv(INV_ITEM_ID, itemowner_itemid) == ITEM_ID_FIGURINE | inv(INV_ITEM_ID, itemowner_itemid) == ITEM_ID_CARD | inv(INV_ITEM_ID, itemowner_itemid) == ITEM_ID_SHIT | inv(INV_ITEM_ID, itemowner_itemid) == ITEM_ID_BOTTLE_MILK | inv(INV_ITEM_ID, itemowner_itemid) == ITEM_ID_SOUL_SPINDLE | inv(INV_ITEM_ID, itemowner_itemid) == ITEM_ID_GOLDEN_DOLL | inv(INV_ITEM_ID, itemowner_itemid) == ITEM_ID_SOCKS2 | inv(INV_ITEM_ID, itemowner_itemid) == ITEM_ID_NECRO_PARTS ) {
 				if ( inv(INV_ITEM_ID, itemowner_itemid) == ITEM_ID_SOUL_SPINDLE ) {
 					if ( inv(INV_ITEM_SUB_NAME, itemowner_itemid) < 0 | inv(INV_ITEM_SUB_NAME, itemowner_itemid) >= MAX_DB ) {
 						locvar_itemowner_s += "/bugged/"
@@ -951,6 +951,35 @@
 						locvar_itemowner_s += lang("", " of ") + refchara(inv(INV_ITEM_SUB_NAME, itemowner_itemid), DBSPEC_CHARA_NAME_ORG, 1)
 						if ( jp ) {
 							locvar_itemowner_s += "の"
+						}
+					}
+					if ( inv(INV_ITEM_ID, itemowner_itemid) == ITEM_ID_NECRO_PARTS ) {
+						if ( inv(INV_ITEM_SHOP_SAMPLE, itemowner_itemid) == 1 ) {
+							locvar_itemowner_s += lang("あたま", "head")
+						}
+						if ( inv(INV_ITEM_SHOP_SAMPLE, itemowner_itemid) == 2 ) {
+							locvar_itemowner_s += lang("くび", "neck")
+						}
+						if ( inv(INV_ITEM_SHOP_SAMPLE, itemowner_itemid) == 3 ) {
+							locvar_itemowner_s += lang("せなか", "back")
+						}
+						if ( inv(INV_ITEM_SHOP_SAMPLE, itemowner_itemid) == 4 ) {
+							locvar_itemowner_s += lang("どうたい", "chest")
+						}
+						if ( inv(INV_ITEM_SHOP_SAMPLE, itemowner_itemid) == 5 ) {
+							locvar_itemowner_s += lang("て", "hand")
+						}
+						if ( inv(INV_ITEM_SHOP_SAMPLE, itemowner_itemid) == 6 ) {
+							locvar_itemowner_s += lang("ゆび", "finger")
+						}
+						if ( inv(INV_ITEM_SHOP_SAMPLE, itemowner_itemid) == 7 ) {
+							locvar_itemowner_s += lang("うで", "arm")
+						}
+						if ( inv(INV_ITEM_SHOP_SAMPLE, itemowner_itemid) == 8 ) {
+							locvar_itemowner_s += lang("こし", "waist")
+						}
+						if ( inv(INV_ITEM_SHOP_SAMPLE, itemowner_itemid) == 9 ) {
+							locvar_itemowner_s += lang("あし", "leg")
 						}
 					}
 				}
@@ -1783,6 +1812,17 @@
 		}
 		if ( inv(INV_ITEM_ID, itemname_itemid) == ITEM_ID_BOTTLE_DYE ) {
 			locvar_itemowner_s += " (No." + inv(INV_ITEM_COL, itemname_itemid) + ")"
+		}
+		if ( inv(INV_ITEM_ID, itemname_itemid) == ITEM_ID_SLIME_FUKAGURUMI ) {
+			locvar_itemowner_s += lang("", " of ")
+			if ( jp ) {
+				locvar_itemowner_s += "の"
+			}
+			randomize inv(INV_ITEM_PARAM1, itemname_itemid)
+			locvar_itemowner_s += randomname()
+			if ( jp ) {
+				locvar_itemowner_s += "ちゃん"
+			}
 		}
 		if ( inv(INV_ITEM_ID, itemname_itemid) == ITEM_ID_CF_POTIOMAN | inv(INV_ITEM_ID, itemname_itemid) == ITEM_ID_CRUSH_POTIOMAN | inv(INV_ITEM_ID, itemname_itemid) == ITEM_ID_BATTLE_POTIOMAN | inv(INV_ITEM_ID, itemname_itemid) == ITEM_ID_SUPER_POTIOMAN ) {
 			locvar_itemowner_s += lang("(装弾数" + inv(INV_ITEM_PARAM2, itemname_itemid) + ")", "(Bullets: " + inv(INV_ITEM_PARAM2, itemname_itemid) + ")")

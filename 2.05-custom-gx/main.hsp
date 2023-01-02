@@ -17,9 +17,9 @@
 #include "mock_defines.hsp"
 #endif
 
-#define global VARIANT_NAME "ElonaPlus Custom-GX 2.14.1.1"
-#define global VARIANT_TITLE "Elona+ Custom-GX 2.14.1.1"
-#define global VERSION_STRING "6.14"
+#define global VARIANT_NAME "ElonaPlus Custom-GX 2.15R.1.0"
+#define global VARIANT_TITLE "Elona+ Custom-GX 2.15R.1.0"
+#define global VERSION_STRING "6.15"
 #define global VERSION_NUMBER int(double(VERSION_STRING) * 1000)
 #define global NET_VERSION	200000
 
@@ -4447,18 +4447,22 @@
 			}
 			tc = findchara(CREATURE_ID_BLACK_GAUNTLET_LEOLD)
 			if ( tc != CHARA_PLAYER ) {
+				kaiwaev = 1
 				gosub *chat
 			}
 			tc = findchara(CREATURE_ID_BETHEL_THE_WHITE_HAWK)
 			if ( tc != CHARA_PLAYER ) {
+				kaiwaev = 1
 				gosub *chat
 			}
 			tc = findchara(CREATURE_ID_MELUGAST_AO_I_THE_DIMENSION_DRIVER)
 			if ( tc != CHARA_PLAYER ) {
+				kaiwaev = 1
 				gosub *chat
 			}
 			tc = findchara(CREATURE_ID_RAIZEL_THE_OLD_WIZARD)
 			if ( tc != CHARA_PLAYER ) {
+				kaiwaev = 1
 				gosub *chat
 			}
 			gdata(GDATA_FLAG_MAIN) = 760
@@ -4473,19 +4477,23 @@
 				cdata(CDATA_RELATION_ORG, rc) = 10
 			}
 			tc = findchara(CREATURE_ID_BLACK_GAUNTLET_LEOLD)
+			kaiwaev = 1
 			gosub *chat
 		}
 		if ( gdata(GDATA_FLAG_MAIN) == 745 ) {
 			tc = findchara(CREATURE_ID_BLACK_GAUNTLET_LEOLD)
 			if ( tc != CHARA_PLAYER ) {
+				kaiwaev = 1
 				gosub *chat
 			}
 			tc = findchara(CREATURE_ID_BETHEL_THE_WHITE_HAWK)
 			if ( tc != CHARA_PLAYER ) {
+				kaiwaev = 1
 				gosub *chat
 			}
 			tc = findchara(CREATURE_ID_MELUGAST_AO_I_THE_DIMENSION_DRIVER)
 			if ( tc != CHARA_PLAYER ) {
+				kaiwaev = 1
 				gosub *chat
 			}
 			snd SOUNDLIST_EXITMAP1
@@ -4516,10 +4524,12 @@
 		if ( gdata(GDATA_FLAG_MAIN) == 735 ) {
 			tc = findchara(CREATURE_ID_BLACK_GAUNTLET_LEOLD)
 			if ( tc != CHARA_PLAYER ) {
+				kaiwaev = 1
 				gosub *chat
 			}
 			tc = findchara(CREATURE_ID_BETHEL_THE_WHITE_HAWK)
 			if ( tc != CHARA_PLAYER ) {
+				kaiwaev = 1
 				gosub *chat
 			}
 			snd SOUNDLIST_TELEPORT1
@@ -4539,12 +4549,14 @@
 			cdata(CDATA_RELATION, rc) = 10
 			cdata(CDATA_RELATION_ORG, rc) = 10
 			tc = findchara(CREATURE_ID_MELUGAST_AO_I_THE_DIMENSION_DRIVER)
+			kaiwaev = 1
 			gosub *chat
 			gdata(GDATA_FLAG_MAIN) = 740
 		}
 		if ( gdata(GDATA_FLAG_MAIN) == 725 ) {
 			tc = findchara(CREATURE_ID_BLACK_GAUNTLET_LEOLD)
 			if ( tc != CHARA_PLAYER ) {
+				kaiwaev = 1
 				gosub *chat
 			}
 			repeat 4
@@ -4570,6 +4582,7 @@
 			cdata(CDATA_RELATION, rc) = 10
 			cdata(CDATA_RELATION_ORG, rc) = 10
 			tc = findchara(CREATURE_ID_BETHEL_THE_WHITE_HAWK)
+			kaiwaev = 1
 			gosub *chat
 			gdata(GDATA_FLAG_MAIN) = 730
 		}
@@ -4598,6 +4611,7 @@
 				cdata(CDATA_RELATION_ORG, rc) = 10
 			}
 			tc = findchara(CREATURE_ID_BLACK_GAUNTLET_LEOLD)
+			kaiwaev = 1
 			gosub *chat
 			txtef COLOR_RED
 			txt lang("何かがエンテュメイシスの腹から飛び出してきた！獣の咆哮が辺りに響く…。", "Something splits <Enthumesis> body and breaks out!")
@@ -4630,6 +4644,7 @@
 		characreate -1, CREATURE_ID_THE_CHAOS_CHILD, 10, 10
 		cbitmod CHARA_BIT_SUMMONED, rc, 1
 		tc = findchara(CREATURE_ID_BLACK_GAUNTLET_LEOLD)
+		kaiwaev = 1
 		gosub *chat
 		goto *event_SWEND1
 	}
@@ -4714,6 +4729,7 @@
 			cdata(CDATA_TARGET, rc) = 0
 			cdata(CDATA_AI_AGGRO, rc) = 30
 			tc = findchara(CREATURE_ID_ALSAPIA_THE_MURDERER_MASK)
+			kaiwaev = 1
 			gosub *chat
 			music = MUSICLIST_MCBATTLE2
 			gosub *music_play
@@ -4744,6 +4760,7 @@
 			cdata(CDATA_TARGET, rc) = 0
 			cdata(CDATA_AI_AGGRO, rc) = 30
 			tc = findchara(CREATURE_ID_GILPHEM_THE_MAGIC_STEEL)
+			kaiwaev = 1
 			gosub *chat
 			music = MUSICLIST_MCBATTLE2
 			gosub *music_play
@@ -4870,12 +4887,14 @@
 	if ( _switch_val == EVENT_LANKATA | _switch_sw ) {
 		_switch_sw = 0
 		tc = findchara(CREATURE_ID_LANKATA_THE_LIGHTNING_OF_BLUE)
+		kaiwaev = 1
 		gosub *chat
 		goto *event_SWEND1
 	}
 	if ( _switch_val == EVENT_AIKAGE | _switch_sw ) {
 		_switch_sw = 0
 		tc = findchara(CREATURE_ID_AIKAGE_THE_SHINOBI_MASK)
+		kaiwaev = 1
 		gosub *chat
 		music = MUSICLIST_MCBOSS4
 		gosub *music_play
@@ -4888,6 +4907,7 @@
 		snd SOUNDLIST_BASH1
 		txt lang("階段を下りた瞬間、あなたは銀髪の冒険者とぶつかった。", "So you are also of the same genus as the others...")
 		tc = findchara(CREATURE_ID_MARKA_THE_SILVER_BEAR)
+		kaiwaev = 1
 		gosub *chat
 		if ( tc > MAX_CHARA_FOLLOWER ) {
 			chara_vanquish tc
@@ -4900,6 +4920,7 @@
 			if ( gdata(GDATA_LEVEL) == 31 | gdata(GDATA_LEVEL) == 32 ) {
 				if ( soulstage == 2 ) {
 					tc = findunique(CREATURE_ID_STRAY_SOUL)
+					kaiwaev = 1
 					gosub *chat
 				}
 			}
@@ -4907,6 +4928,7 @@
 		if ( gdata(GDATA_AREA) == AREA_AMUR_CAGE ) {
 			if ( gdata(GDATA_LEVEL) == 1 ) {
 				tc = findunique(CREATURE_ID_STRAY_SOUL)
+				kaiwaev = 1
 				gosub *chat
 			}
 		}
@@ -4914,6 +4936,7 @@
 			if ( gdata(GDATA_LEVEL) == 11 | gdata(GDATA_LEVEL) == 12 ) {
 				if ( soulstage == 3 ) {
 					tc = findunique(CREATURE_ID_HELLABYRINTH_RULER)
+					kaiwaev = 1
 					gosub *chat
 				}
 			}
@@ -5052,6 +5075,7 @@
 			cdata(CDATA_AI_CALM, rc) = 3
 			tc = rc
 			cbitmod CHARA_BIT_EVENT_TALK, tc, TRUE
+			kaiwaev = 1
 			gosub *chat
 		}
 		tc = findcharawork(CREATURE_ID_WORKER_02)
@@ -5059,6 +5083,7 @@
 			cdata(CDATA_CONDITION_SLEEP, tc) = 0
 			rowactend tc
 		}
+		kaiwaev = 1
 		gosub *chat
 		goto *event_SWEND1
 		_switch_sw++
@@ -5067,6 +5092,7 @@
 		_switch_sw = 0
 		gdata(GDATA_FLAG_MAIN) = 850
 		tc = findchara(CREATURE_ID_ORPHE_THE_CHAOS_DISCPLE)
+		kaiwaev = 1
 		gosub *chat
 		goto *event_SWEND1
 		_switch_sw++
@@ -5083,6 +5109,7 @@
 			cdata(CDATA_RELATION_ORG, rc) = RELATION_ALLY
 		}
 		tc = findchara(CREATURE_ID_YAYAUHQUI_TEZCATLIPOCA)
+		kaiwaev = 1
 		gosub *chat
 		goto *event_SWEND1
 		_switch_sw++
@@ -5099,6 +5126,7 @@
 			cdata(CDATA_RELATION_ORG, rc) = RELATION_ALLY
 		}
 		tc = findchara(CREATURE_ID_JALDABAOTH_THE_CHAOS_CHILD)
+		kaiwaev = 1
 		gosub *chat
 		goto *event_SWEND1
 		_switch_sw++
@@ -5108,12 +5136,14 @@
 		if ( gdata(GDATA_FLAG_MAIN) == 880 ) {
 			tc = findchara(CREATURE_ID_JALDABAOTH_THE_CHAOS_CHILD)
 			if ( tc != CHARA_PLAYER ) {
+				kaiwaev = 1
 				gosub *chat
 			}
 		}
 		if ( gdata(GDATA_FLAG_MAIN) == 890 ) {
 			tc = findchara(CREATURE_ID_JALDABAOTH_THE_CHAOS_CHILD)
 			if ( tc != CHARA_PLAYER ) {
+				kaiwaev = 1
 				gosub *chat
 			}
 		}
@@ -5132,6 +5162,7 @@
 		cdata(CDATA_PIC, rc) = xy2pic(0, 24)
 		tc = findchara(CREATURE_ID_JALDABAOTH_THE_CHAOS_CHILD)
 		if ( tc != CHARA_PLAYER ) {
+			kaiwaev = 1
 			gosub *chat
 		}
 		goto *event_SWEND1
@@ -6379,6 +6410,7 @@
 		_switch_sw = 0
 		txt lang("あなたは無事に護衛の任務を終えた。", "You complete the escort.")
 		tc = evdata2(evnum - (evnum != 0) * 1)
+		kaiwaev = 1
 		gosub *chat
 		rq = evdata1(evnum - (evnum != 0) * 1)
 		gosub *quest_success

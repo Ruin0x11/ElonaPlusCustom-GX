@@ -8901,7 +8901,7 @@
 		mes lang("回避", "Evade")
 		pos wx + 564 - en * 10, wy + 263
 		mes lang("魔法威力", "SpellPow")
-		hoseis = limit(cdata(CDATA_ENHANCE_SPELL, cc) * 2 / 3, 0, 1000) / 10 + limit(sdata(SKILL_ATTR_MAG, cc) / 5, 0, 300) + 100
+		hoseis = limit(cdata(CDATA_ENHANCE_SPELL, cc) * 2 / 3, 0, 1000) / 10 + limit(sdata(SKILL_ATTR_MAG, cc) / 10, 0, 150) + 100
 		if ( cdata(CDATA_EQUIP_WEIGHT, cc) < 35000 & cdata(CDATA_EQUIP_WEIGHT, cc) >= 15000 & findbuff(cc, BUFF_MAGIC_EQUIP) != (-1) ) {
 			hoseis = hoseis * 6 / 5
 		}
@@ -9122,6 +9122,14 @@
 				if ( list(0, p) >= STARTING_SKILL_RESIST & list(0, p) < STARTING_SKILL_WEAPON ) {
 					p(1) = limit(sdata(list(0, p), cc) / (50 * 2), 0, 8)
 					s = _resist(p(1))
+					keigen = sdata(list(0, p), cc) / 50
+					if ( keigen < 3 ) {
+						keigen2 = 150 * 100 / limit(keigen * 50 + 50, 40, 150)
+					}
+					else {
+						keigen2 = 100 * 100 / (keigen * 50 + 50)
+					}
+					keigen2 = keigen2 * 100 / (sdata(SKILL_RES_MAGIC, cc) / 2 + 50)
 				}
 				else {
 					if ( csctrl == 300 ) {
@@ -9156,8 +9164,20 @@
 				else {
 					pos wx + 280 - strlen(s) * 7, wy + 66 + cnt * 19 + 2
 					mes s
-					pos wx + 330, wy + 66 + cnt * 19 + 2
-					mes skilldesc(i)
+					if ( list(0, p) >= 50 & list(0, p) < 100 ) {
+						if ( keigen2 > 0 ) {
+							pos wx + 330, wy + 66 + cnt * 19 + 2
+							mes lang("(最終被ダメージ" + keigen2 + "%)", "Damage" + keigen2 + "%") + skilldesc(i)
+						}
+						if ( keigen2 == 0 ) {
+							pos wx + 330, wy + 66 + cnt * 19 + 2
+							mes lang("(最終被ダメージ1%未満)", "Damage less than1%") + skilldesc(i)
+						}
+					}
+					else {
+						pos wx + 330, wy + 66 + cnt * 19 + 2
+						mes skilldesc(i)
+					}
 				}
 				if ( csctrl == 2 | csctrl == 3 ) {
 					if ( csctrl == 2 ) {
@@ -11631,6 +11651,17 @@
 						continue
 					}
 					if ( inv(INV_ITEM_PARAM2, cnt) >= calcexpalive(inv(INV_ITEM_PARAM1, cnt)) ) {
+						continue
+					}
+				}
+				if ( invctrl(1) == 27 ) {
+					if ( inv(INV_ITEM_ID, cnt) != ITEM_ID_CORPSE ) {
+						continue
+					}
+					if ( inv(INV_ITEM_SHOP_SAMPLE, cnt) == 0 ) {
+						continue
+					}
+					if ( inv(INV_ITEM_PARAM2, cnt) != 0 ) {
 						continue
 					}
 				}

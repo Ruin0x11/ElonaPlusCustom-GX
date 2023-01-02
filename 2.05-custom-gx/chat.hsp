@@ -204,9 +204,11 @@
 	if ( evid() == EVENT_CLIENT_REACHED ) {
 		goto *chat_evReached
 	}
-	if ( cdata(CDATA_CONDITION_SLEEP, tc) != 0 ) {
-		chatMore "(" + name(tc) + lang("はぐっすり眠っている…", " is sleeping.") + ")", strbye
-		goto *chat_end
+	if ( kaiwaev == 0 ) {
+		if ( cdata(CDATA_CONDITION_SLEEP, tc) != 0 ) {
+			chatMore "(" + name(tc) + lang("はぐっすり眠っている…", " is sleeping.") + ")", strbye
+			goto *chat_end
+		}
 	}
 	if ( birth != 0 ) {
 		chatMore lang(_birth(2), "Happy birthday!")
@@ -229,14 +231,19 @@
 			chatMore lang("この…鈴の音は…ランカータ…？なぜ…ここ…に。いや、違う…！", "Is that a bell I hear... Lankata, is that you? Why would he be here...? No wait, it couldn't be!")
 		}
 	}
-	if ( cdata(CDATA_CONDITION_DIM, tc) > 60 ) {
-		chatMore "(" + name(tc) + lang("は気絶している…", " is stunned.") + ")", strbye
-		goto *chat_end
+	if ( kaiwaev == 0 ) {
+		if ( cdata(CDATA_CONDITION_DIM, tc) > 60 ) {
+			chatMore "(" + name(tc) + lang("は気絶している…", " is stunned.") + ")", strbye
+			goto *chat_end
+		}
 	}
-	if ( cdata(CDATA_ROW_ACT, tc) ) {
-		chatMore "(" + name(tc) + lang("はお取り込み中だ…", " is in the middle of something...") + ")", strbye
-		goto *chat_end
+	if ( kaiwaev == 0 ) {
+		if ( cdata(CDATA_ROW_ACT, tc) ) {
+			chatMore "(" + name(tc) + lang("はお取り込み中だ…", " is in the middle of something...") + ")", strbye
+			goto *chat_end
+		}
 	}
+	kaiwaev = 0
 	if ( cdata(CDATA_ID, tc) == CREATURE_ID_ALFRED_THE_CANGNAN_WIND & gdata(GDATA_AREA) == AREA_CHAOS_CRADLE & gdata(GDATA_LEVEL) == 173 & cdata(CDATA_ALLIED, tc) == 0 ) {
 		chatMore lang("誰…ですか…貴方…は？", "W-Who... who are you?")
 		chatMore lang("冒険者が…ここまで？私は…どれだけの時間…気絶…していた！？", "An adventurer... down here? Just how long have I been unconscious for...?!")
@@ -4686,7 +4693,7 @@
 					chatMore lang("盗賊ギルドに加入したいというのか…我々は知ってのとおり闇の世界に身を置いている。まずは、お前が信頼に足る者かどうか試させてもらおう。", "So, you're interested in our guild? We hide in the shadows of society. You must win our trust to enter the guild.")
 					gdata(GDATA_FLAG_SUB_GUILD_THIEF) = 1
 					txt_questupdate
-					chatMore lang("なに、簡単な試験だ。一定のレベルを越えた冒険者には、税金が毎月徴収されるのは知っているな？その税金を4ヶ月滞納するだけだ。無論、お前は犯罪者となり、国の犬に追われる事になるだろう。その覚悟がないならば、盗賊ギルドに入るなど諦めることだ。", "It's a simple task: We require you to not pay your taxes for 4 months. Take it for granted the guards will try to hunt you down. If you aren't ready to face it, just forget it.")
+					chatMore lang("なに、簡単な試験だ。一定期間経過した冒険者には税金が毎月徴収されるのは知っているな？その税金を4ヶ月滞納するだけだ。無論、お前は犯罪者となり、国の犬に追われる事になるだろう。その覚悟がないならば、盗賊ギルドに入るなど諦めることだ。", "It's a simple task. Are you aware that, after a certain amount of time has passed for new adventurers, they are required to pay taxes each month? Just don't pay those taxes for 4 months. Take it for granted the guards will try to hunt you down. If you aren't ready to face it, just forget it.")
 					goto *chat_unique
 				}
 				if ( gdata(GDATA_BILL) <= 4 ) {
@@ -5133,6 +5140,11 @@
 				if ( cdata(CDATA_PRECIOUS_ALLY, rc) == 1 ) {
 					snd SOUNDLIST_FAIL1
 					txt_preciousally
+					goto *chat_end
+				}
+				if ( cbit(CHARA_BIT_BIRTHED_CHILD, rc) == TRUE ) {
+					snd SOUNDLIST_FAIL1
+					txt lang("それは成長が足りていない。", "It has not grown enough.")
 					goto *chat_end
 				}
 				if ( cdata(CDATA_IN_TAGTEAM, rc) == (-1) ) {
@@ -5917,6 +5929,11 @@
 					txt_preciousally
 					goto *chat_end
 				}
+				if ( cbit(CHARA_BIT_BIRTHED_CHILD, rc) == TRUE ) {
+					snd SOUNDLIST_FAIL1
+					txt lang("それは成長が足りていない。", "It has not grown enough.")
+					goto *chat_end
+				}
 				if ( cdata(CDATA_IN_TAGTEAM, rc) == (-1) ) {
 					ttc = cdata(CDATA_TAGTEAM_PARTNER, rc)
 					cell_findspace cdata(CDATA_X, rc), cdata(CDATA_Y, rc), 1
@@ -6139,6 +6156,11 @@
 				if ( cdata(CDATA_PRECIOUS_ALLY, rc) == 1 ) {
 					snd SOUNDLIST_FAIL1
 					txt_preciousally
+					goto *chat_end
+				}
+				if ( cbit(CHARA_BIT_BIRTHED_CHILD, rc) == TRUE ) {
+					snd SOUNDLIST_FAIL1
+					txt lang("それは成長が足りていない。", "It has not grown enough.")
 					goto *chat_end
 				}
 				if ( cdata(CDATA_IN_TAGTEAM, rc) == (-1) ) {
@@ -12742,7 +12764,7 @@
 				chatMore lang("今日は街の依頼などについて学びましょうか。", "Shall we learn about town requests and such today?")
 				chatMore lang("街の掲示板に触れてみれば、色々な依頼があることに気がつくと思います。達成すれば様々なアイテムやプラチナ硬貨、金貨、名声、発言力、カルマなどが得られます。ただし、失敗すると名声が低下します。ものによってはカルマも減って危険なので、最初から手当たり次第に依頼を受けるのはやめましょう。", "Touching the bulletin board of the town, you will notice that there are various requests. If you complete them, you get various items and platinum coins, gold coins, fame, karma and so on. However, if you fail, your reputation will decline. Depending on the request, your karma might decrease, which is dangerous, so don't just take requests thoughtlessly.")
 				chatMore lang("給料と税金についても話しておきます。毎月１日と１５日に、家の給料箱へ給料や補給品が振り込まれます。税金を滞納していないと補給品の質がよくなるみたいですね。そして給料の額は冒険者としての各種ランキングによって決まります。ランキングについてはjキー…journal（日誌）で確認しましょう。", "I'll also talk about salary and taxes. On the 1st and 15th of each month, salaries and supplies are transferred to the house's salary box. It seems that the quality of supplies will drop if you are not paying taxes. And the amount of salary is determined by ranking as an adventurer. To see your ranking, check your journal with the [j] key.")
-				chatMore lang("さて、レベル１０以上になると毎月１日に給料と一緒に税金の請求書も届くはずです。これはこのゼミから東にあるパルミア大使館に持っていくと支払えます。税金は所持金と所有物件から算出されます。もし悪人として生きていきたくても、最初のうちは毎月ちゃんと払ってください。４か月税金を滞納すると、カルマが減って一発アウトですから。", "By the way, once your level is 10 or higher you should receive a bill along with your salary on the 1st of every month. To pay your taxes, bring it to Palmia Embassy, which is east of here. Taxes are calculated from money carried and properties owned. Even if you want to live as a bad person, you should pay every month in the beginning. If you do not pay your taxes for 4 months, you will lose 60 karma.")
+				chatMore lang("さて、最初の１月を迎えてからは毎月１日に給料と一緒に税金の請求書も届くようになります。これはこのゼミから東にあるパルミア大使館に持っていくと支払えます。税金は所持金と所有物件、雇用から算出されます。もし悪人として生きていきたくても、最初のうちは毎月ちゃんと払ってください。４か月税金を滞納するとあっという間に指名手配されてしまい、生活が困難になります。", "By the way, once the first January has passed you should receive a bill along with your salary on the 1st of every month. To pay your taxes, bring it to Palmia Embassy, which is east of here. Taxes are calculated from money carried and properties owned. Even if you want to live as a bad person, you should pay every month in the beginning. If you do not pay your taxes for 4 months, you will lose 60 karma.")
 			}
 			if ( gdata(STARTING_GDATA_FLAG + 329) == 3 ) {
 				chatMore lang("今回は信仰について説明しますよ。神々の干渉がほとんどなかった時代には、いるのかもよくわからない存在に頼らないと自分を律することができない人や、架空の神をでっち上げて人々から金をむしり取る罰当たりもいたそうですが、現在のイルヴァは確実に存在する八柱の神によって統治されています。", "I will explain about faith this time. In the era when there was hardly any interference of the gods it seems that there were people who can not rule themselves unless they rely on existence which is not well understood or there was a punishment to pick up the fictional god by making up the imaginary god. Current Irva is ruled by the gods of the eight pillars which are surely present.")
@@ -18127,7 +18149,6 @@
 			}
 		}
 		if ( cdata(CDATA_ROLE, tc) == ROLE_SHOP_DEED ) {
-			chatList 99, lang("乗り物を破棄したい", "I want to discard my world-vehicle.")
         }
 		if ( cdata(CDATA_ROLE, tc) == ROLE_INFORMER ) {
 			chatList 18, lang("冒険者の情報(100Gold)", "Show me the list of adventurers.(100Gold)")
@@ -20160,7 +20181,7 @@
 			listn(0, listmax) = lang("勉強スキルの教育に投資する", "Invest in study skills.")
 			listmax++
 		}
-		chatesc = 1
+		chatesc = 0
 		gosub *chat_select
 		if ( chatval == 0 ) {
 			buff = lang("冷やかし" + _ka(1), "You kidding? ")
@@ -20171,9 +20192,7 @@
 		cdata(CDATA_FRIENDSHIP, tc)++
 		gosub *expInvesting
 		cdata(CDATA_INTEREST, tc) -= 80
-		if ( 0 ) {
-			cdata(CDATA_INTEREST, tc) += 80
-		}
+		cdata(CDATA_INTEREST_RENEW, tc) = gdata(GDATA_HOUR) + gdata(GDATA_DAY) * 24 + gdata(GDATA_MONTH) * 24 * 30 + gdata(GDATA_YEAR) * 24 * 30 * 12 + 12
 		buff = lang(_thanks(2), "Thanks!")
 		kitae = 300 + sdata(SKILL_ATTR_LER, CHARA_PLAYER) / 20
 		gdata(GDATA_SENSE_OBJECT) = 1

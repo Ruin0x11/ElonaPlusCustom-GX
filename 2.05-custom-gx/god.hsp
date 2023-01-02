@@ -356,7 +356,7 @@
 	gcopy 4, 0, 0, windoww, windowh - inf_verh
 	gmode 2
 	gosub *screen_drawStatus
-	dx = 520
+	dx = 650
 	dy = 270
 	window2 (windoww - dx) / 2 + inf_screenx, winposy(dy), dx, dy, 4, 6
 	wx = (windoww - dx) / 2 + inf_screenx
@@ -365,9 +365,65 @@
 	color 30, 30, 30
 	pos wx + 20, wy + 20
 	color 0, 0, 0
-	bmes lang("《 ", "< ") + godname(inv(INV_ITEM_GOD, ci)) + lang(" 》", " >"), 255, 255, 255
+	if ( inv(INV_ITEM_PARAM1, ci) == 0 ) {
+		bmes lang("《 ", "< ") + godname(inv(INV_ITEM_PARAM1, ci)) + lang(" 》", " >"), 85, 85, 85
+	}
+	if ( inv(INV_ITEM_PARAM1, ci) == 1 ) {
+		bmes lang("《 ", "< ") + godname(inv(INV_ITEM_PARAM1, ci)) + lang(" 》", " >"), 155, 155, 155
+	}
+	if ( inv(INV_ITEM_PARAM1, ci) == 2 ) {
+		bmes lang("《 ", "< ") + godname(inv(INV_ITEM_PARAM1, ci)) + lang(" 》", " >"), 155, 125, 205
+	}
+	if ( inv(INV_ITEM_PARAM1, ci) == 3 ) {
+		bmes lang("《 ", "< ") + godname(inv(INV_ITEM_PARAM1, ci)) + lang(" 》", " >"), 255, 255, 205
+	}
+	if ( inv(INV_ITEM_PARAM1, ci) == 4 ) {
+		bmes lang("《 ", "< ") + godname(inv(INV_ITEM_PARAM1, ci)) + lang(" 》", " >"), 105, 255, 255
+	}
+	if ( inv(INV_ITEM_PARAM1, ci) == 5 ) {
+		bmes lang("《 ", "< ") + godname(inv(INV_ITEM_PARAM1, ci)) + lang(" 》", " >"), 255, 155, 105
+	}
+	if ( inv(INV_ITEM_PARAM1, ci) == 6 ) {
+		bmes lang("《 ", "< ") + godname(inv(INV_ITEM_PARAM1, ci)) + lang(" 》", " >"), 255, 255, 255
+	}
+	if ( inv(INV_ITEM_PARAM1, ci) == 7 ) {
+		bmes lang("《 ", "< ") + godname(inv(INV_ITEM_PARAM1, ci)) + lang(" 》", " >"), 105, 255, 105
+	}
+	if ( inv(INV_ITEM_PARAM1, ci) == 8 ) {
+		bmes lang("《 ", "< ") + godname(inv(INV_ITEM_PARAM1, ci)) + lang(" 》", " >"), 255, 155, 255
+	}
+	if ( inv(INV_ITEM_PARAM1, ci) != 0 ) {
+		font lang(cfg_font1, cfg_font2), 15 - en * 2, 0
+		color 30, 30, 30
+		pos wx + 20, wy + 45
+		color 0, 0, 0
+		if ( inv(INV_ITEM_PARAM1, ci) == 1 ) {
+			bmes lang("「…機械に興味があるのか？」", "--- Are you... interested in machines? ---"), 155, 155, 155
+		}
+		if ( inv(INV_ITEM_PARAM1, ci) == 2 ) {
+			bmes lang("「ノロマは死ぬ、ってことにようやく気づいたみたいね」", "--- Ahaha! Looks like you finally realized that slow is going to die! ---"), 155, 125, 205
+		}
+		if ( inv(INV_ITEM_PARAM1, ci) == 3 ) {
+			bmes lang("「元素は汝の大いなる力となるであろう」", "--- Elements will be your great power ---"), 255, 255, 205
+		}
+		if ( inv(INV_ITEM_PARAM1, ci) == 4 ) {
+			bmes lang("「たらばがに、すき！！！」", "--- Mewmewmew! Coconut crab! ---"), 105, 255, 255
+		}
+		if ( inv(INV_ITEM_PARAM1, ci) == 5 ) {
+			bmes lang("「フハハー！鍛えたボディは最後までお前の味方だっ」", "--- Muwahaha! A well-trained body will be your friend until the end! ---"), 255, 155, 105
+		}
+		if ( inv(INV_ITEM_PARAM1, ci) == 6 ) {
+			bmes lang("「け、怪我を治してあげるって言ってんのよ…」", "--- I-I say that I will heal your wounds... ---"), 255, 255, 255
+		}
+		if ( inv(INV_ITEM_PARAM1, ci) == 7 ) {
+			bmes lang("「僕、活力…与える…」", "--- I give...vitality... ---"), 105, 255, 105
+		}
+		if ( inv(INV_ITEM_PARAM1, ci) == 8 ) {
+			bmes lang("「何するにしても資産は有ったほうがええやろ？ウチの出番やん！」", "--- Yeah~! No matter what you do, it's better to have property, right? ---"), 255, 155, 255
+		}
+	}
 	gmesx = HIGHDPI_X(wx + 23)
-	gmesy = HIGHDPI_Y(wy + 60)
+	gmesy = HIGHDPI_Y(wy + 70)
 	gmesw = HIGHDPI_X(dx - 60)
 	gmescol = 30, 30, 30
 	gmestype = 1

@@ -785,7 +785,7 @@
 	}
 	if ( sdata(SKILL_NORMAL_CASTING, calcspellpower_charid) == 0 ) {
 		if ( calcspellpower_charid >= MAX_CHARA_FOLLOWER ) {
-			return cdata(CDATA_LEVEL, calcspellpower_charid) * 6 + 10
+			return limit(cdata(CDATA_LEVEL, calcspellpower_charid), 1, 1000) * 6 + 10
 		}
 	}
 	return sdata(SKILL_NORMAL_CASTING, calcspellpower_charid) * 10 + 50

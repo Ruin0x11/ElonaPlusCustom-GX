@@ -358,7 +358,7 @@ if instr(s,0,%1)!-1{	%c\
 #deffunc setunid int setunid_charid, int setunid_unid
 	cdata(CDATA_USERNPC_ID, setunid_charid) = setunid_unid
 	if ( cdata(CDATA_PIC, setunid_charid) < xy2pic(0, 21) | cdata(CDATA_PIC, setunid_charid) > xy2pic(31, 21) ) {
-		cdata(CDATA_PIC, setunid_charid) = xy2pic(0, 34) + setunid_unid
+		cdata(CDATA_PIC, setunid_charid) = xy2pic(34, 0) + setunid_unid
 		cdata(CDATA_PIC, setunid_charid) += COLOR_DEFAULT * COLOR_TINT_MULT
 		cdata(CDATA_CHARA_PIC, setunid_charid) = xy2pic(1, 0)
 	}
@@ -2140,6 +2140,7 @@ if instr(s,0,%1)!-1{	%c\
 	invkey = "", "" + key_inventory, "" + key_drop, "", "", "" + key_eat, "", "" + key_read, "" + key_drink, "" + key_zap, "", "", "", "", "" + key_use, "" + key_open, "", "" + key_dip
 	invkey(26) = "" + key_throw
 	invicon = -1, 7, 8, -1, -1, 2, -1, 3, 0, 1, 17, -1, -1, -1, 5, 4, -1, 6, -1, -1, -1, -1, 17, -1, 17, 17, 18, -1, -1, -1, -1, -1, -1, -1, -1
+	hour_played = 0
 	if ( cfg_autonumlock ) {
 		GetKeyboardState keybd_st
 		if ( peek(keybd_st, 144) == 1 ) {
