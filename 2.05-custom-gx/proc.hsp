@@ -16956,7 +16956,7 @@
 			if ( synccheck(cc, -1) ) {
 				snd SOUNDLIST_SONIC
 			}
-			dmghp tc, (sdata(SKILL_ATTR_PER, cc) / 5 + 5) * ((sdata(SKILL_NORMAL_MARKSMAN, cc) + 1) / 5 + 5) + (rnd(sdata(SKILL_ATTR_PER, cc) * 2 + 5) + (limit(cdata(CDATA_LEVEL, cc) - 50, 1, 2000) + limit(cdata(CDATA_LEVEL, cc) - 100, 1, 2000)) * 2 * sqrt(limit(cdata(CDATA_LEVEL, cc), 1, 2000) * 3) + 30) / homing, cc, SKILL_RESDMG_CRUSH, 1000
+			dmghp tc, sdata(SKILL_NORMAL_CONTROL_MAGIC, cc) * 2 + 5, cc, SKILL_RESDMG_CUT, 100
 			dmgcon tc, CONDITION_BLEED, cdata(CDATA_INIT_SPEED, tc)
 		loop
 		goto *effect_end
