@@ -11389,7 +11389,6 @@
 		animeid = ANIMATION_BURN_SCROLLS
 		gosub *anime
 		cfg_animewait = waitbk
-		efp = sdata(SKILL_NORMAL_LITERACY, cc) * 20 + 100
 		dmg = (sdata(SKILL_ATTR_MAG, cc) / 5 + 5) * ((sdata(SKILL_NORMAL_LITERACY, cc) + 1) / 5 + 5) + rnd(sdata(SKILL_ATTR_MAG, cc) * 2 + 5) + ((limit(cdata(CDATA_LEVEL, cc) - 50, 1, 2000) + limit(cdata(CDATA_LEVEL, cc) - 100, 1, 2000)) * 2 * sqrt(limit(cdata(CDATA_LEVEL, cc), 1, 2000) * 3) + 30 + 1) * 3 / 2
 		dmghp tc, dmg, cc, SKILL_RES_FIRE, 1000
 		if ( cdata(CDATA_EXIST, tc) == CHAR_STATE_ALIVE ) {
@@ -16996,7 +16995,7 @@
 			goto *effect_end
 		}
 		txtef COLOR_YELLOW
-		txt lang(name(cc) + "は周囲の敵に狙いを定めた。", name(cc) + " emanated blades of wind.")
+		txt lang(name(cc) + "は周囲の敵に狙いを定めた。", name(cc) + " aim" + _s(cc) + " at nearby enemies.")
 		snd SOUNDLIST_SHOTS
 		animeload 49, cc
 		snd SOUNDLIST_SHOTS
@@ -17030,7 +17029,7 @@
 			if ( fov_los(cdata(CDATA_X, cc), cdata(CDATA_Y, cc), dx, dy) == 0 ) {
 				continue
 			}
-			dmghp tc, (sdata(SKILL_ATTR_PER, cc) / 30 * limit(sdata(SKILL_ATTR_PER, cc), 1, 1000) + rnd(sdata(SKILL_NORMAL_MARKSMAN, cc) + 1) + (sdata(SKILL_NORMAL_MARKSMAN, cc) + 1) / 30 * sdata(SKILL_NORMAL_MARKSMAN, cc)) / homing + 1, cc, SKILL_RESDMG_CRUSH, 100
+			dmghp tc, (sdata(SKILL_ATTR_PER, cc) / 5 + 5) * ((sdata(SKILL_NORMAL_MARKSMAN, cc) + 1) / 5 + 5) + (rnd(sdata(SKILL_ATTR_PER, cc) * 2 + 5) + (limit(cdata(CDATA_LEVEL, cc) - 50, 1, 2000) + limit(cdata(CDATA_LEVEL, cc) - 100, 1, 2000)) * 2 * sqrt(limit(cdata(CDATA_LEVEL, cc), 1, 2000) * 3) + 30) / homing, cc, SKILL_RESDMG_CRUSH, 1000
 		loop
 		homing = 0
 		goto *effect_end
