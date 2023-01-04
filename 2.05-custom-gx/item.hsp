@@ -3172,7 +3172,7 @@
 			txtef COLOR_RED
 			txt lang(name(cc) + "は白目を剥いてぶっ倒れた。", name(cc) + " rolls back " + his(cc, 1) + " eyes and collapses.")
 		}
-		dmghp tc, (sdata(SKILL_NORMAL_GENE_ENGINEER, CHARA_PLAYER) / 5 + 5) * ((sdata(SKILL_NORMAL_GENE_ENGINEER, CHARA_PLAYER) + 1) / 5 + 5) + rnd(sdata(SKILL_NORMAL_GENE_ENGINEER, CHARA_PLAYER) * 2 + 5) + (limit(cdata(CDATA_LEVEL, CHARA_PLAYER) - 50, 1, 2000) + limit(cdata(CDATA_LEVEL, CHARA_PLAYER) - 100, 1, 2000)) * 2 * sqrt(limit(cdata(CDATA_LEVEL, CHARA_PLAYER), 1, 2000) * 3) + 30, (0 /*!!!@[CHARA_PLAYER @@@ DAMAGE_FROM_CHARA]@!!! */), SKILL_RESDMG_CONSTITUTION, 1000
+		dmghp tc, (sdata(SKILL_NORMAL_GENE_ENGINEER, CHARA_PLAYER) / 5 + 5) * ((sdata(SKILL_NORMAL_GENE_ENGINEER, CHARA_PLAYER) + 1) / 5 + 5) + rnd(sdata(SKILL_NORMAL_GENE_ENGINEER, CHARA_PLAYER) * 2 + 5) + (limit(cdata(CDATA_LEVEL, CHARA_PLAYER) - 50, 1, 2000) + limit(cdata(CDATA_LEVEL, CHARA_PLAYER) - 100, 1, 2000)) * 2 * sqrt(limit(cdata(CDATA_LEVEL, CHARA_PLAYER), 1, 2000) * 3) + 30, DAMAGE_FROM_CHARA, SKILL_RESDMG_CONSTITUTION, 1000
 		if ( cdata(CDATA_EXIST, cc) == CHAR_STATE_ALIVE ) {
 			if ( fatal == 0 ) {
 				chara_vomit cc
