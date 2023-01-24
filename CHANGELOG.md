@@ -1,3 +1,15 @@
+# 2.15R.1.1
+
+## Changed
+- Added the unidentified item name for the Slim Mold.
+
+## Fixed
+- Fixed custom NPCs using an incorrect sprite ID.
+- Fixed hanging when trying to display a message larger than the message box.
+- Fixed a few incorrect formulas in spacts.
+
+Thanks to @JianmengYu for contributing. 
+
 # 2.15R.1.0
 
 ## Added
