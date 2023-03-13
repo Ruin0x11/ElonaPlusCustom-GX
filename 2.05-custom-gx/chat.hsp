@@ -23397,9 +23397,10 @@
 		inv(INV_ITEM_NUM, cnt) = 0
 	loop
 	p = 40 + cdata(CDATA_ROLE_SHOP_LEVEL, tc) * 2 / 3
-	if ( p > 120 ) {
-		p = 120
+	if ( p > 200 ) {
+		p = 200
 	}
+	p += int(sdata(SKILL_NORMAL_NEGOTIATION, CHARA_PLAYER)/50)
 	if ( cdata(CDATA_ROLE, tc) == ROLE_SHOP_BLACKMARKET ) {
 		p = 7 + limit(cdata(CDATA_ROLE_SHOP_LEVEL, tc) / 7, 1, 30)
 	}
